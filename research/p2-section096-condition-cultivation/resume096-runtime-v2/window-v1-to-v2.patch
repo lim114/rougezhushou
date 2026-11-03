@@ -1,0 +1,178 @@
+--- frozen-v1/window.py
+
++++ v2/window.py
+
+@@ -132,6 +132,9 @@
+
+     fresh_windows = 0
+     explicit_buttons = 0
+     explicit_texts = 0
++    level_restore_buttons = 0
++    repeat_level_probes = 0
++    auxiliary_actions = []
+     finished = threading.Event()
+     progress_lock = threading.Lock()
+     folders = ExitStack()
+@@ -151,6 +154,8 @@
+
+                    'placeholder/overview': 'After sparse-run, actual overview contains recruited Susuro; expect original numerical behaviour, not an empty overview.',
+                    'empty_overview_constructor_probe': 'In first fresh empty run, use real empty overview and restore original owner before observing ordinary signals.',
+                    'damage_tab_visibility': 'Select the actual damage page in both modes before asserting source row visibility.',
++                   'module_below_gate_preserved_manual_level': 'Same-owner account observation intentionally preserves a manual level. Use the real read-level restore button before every explicit below-gate fixture, retaining the actual preserved-preview capture.',
++                   'repeated_same_level_value': 'After each genuinely changed level action, separately set the same value and require no level signal, no new calculation or durable mutation.',
+                },
+                'global_profile_or_trace_installed': False,
+                'observed_entrypoints': ['calculate_damage', '_prepare_damage', 'MainWindow.calculate',
+@@ -555,7 +560,7 @@
+
+         return freeze(empty_probe)
+ 
+     def action(step):
+-        nonlocal phase
++        nonlocal phase, level_restore_buttons, repeat_level_probes
+         phase = 'automatic_action'
+         kind = step['action']
+         if kind == 'account_observation':
+@@ -566,6 +571,32 @@
+
+             for key, value in data['fields'].items():
+                 assert_native_equal(window.account_cache.records[data['id']]['fields'].get(key), value,
+                                     'Actual account observation ' + key)
++            if step['id'].startswith('module/') and step['id'].endswith('/below-P4'):
++                # Account observation keeps an existing same-owner manual
++                # preview by design. Restore via the existing real UI action
++                # so this named below-gate test genuinely uses the read level.
++                before_restore = durable_snapshot()
++                preserved = capture(step)
++                restore_counts = dict(counts)
++                restore_signals = len(signals)
++                phase = 'actual_use_read_level_restore_button'
++                button = next(button for button in window.findChildren(QPushButton)
++                              if button.text() == '使用读取等级')
++                button.click()
++                level_restore_buttons += 1
++                application.processEvents()
++                assert window.level.value() == data['fields']['level']
++                assert window.level_override is False
++                assert counts['MainWindow.calculate'] > restore_counts.get('MainWindow.calculate', 0)
++                assert not any(row['binding'].get('widget') == 'level' for row in signals[restore_signals:]), 'Read-level restoration deliberately blocks the widget valueChanged signal'
++                assert_native_equal(durable_snapshot(), before_restore,
++                                    'Actual read-level restore does not mutate account/run/files')
++                restored = capture(step)
++                auxiliary_actions.append(freeze({'kind': 'actual_read_level_restore', 'step': current,
++                    'preserved_manual_preview': preserved, 'restored_read_level': restored,
++                    'entry_counts': delta(restore_counts, counts), 'durable_before': before_restore,
++                    'durable_after': durable_snapshot(), 'signals': signals[restore_signals:]}))
++                phase = 'automatic_action'
+         elif kind == 'run_observation':
+             assert window.apply_run_observation(freeze(step['observation']), step['captured_at'])
+             application.processEvents()
+@@ -589,8 +620,36 @@
+
+             assert_native_equal(actual[0]['emitted_value'], step['value'], 'Exactly one actual condition signal')
+             assert_native_equal(actual[0]['current_widget_value'], step['value'], 'Actual current raw widget value')
+         elif kind == 'level':
+-            assert window.level.value() != step['value']
++            before_level = window.level.value()
++            assert before_level != step['value'], 'A declared changed-level step must really change the current value'
++            signal_start = len(signals)
+             window.level.setValue(step['value'])
++            application.processEvents()
++            emitted = [row for row in signals[signal_start:] if row['binding'].get('widget') == 'level']
++            assert len(emitted) == 1
++            assert_native_equal(emitted[0]['emitted_value'], step['value'], 'Genuine changed-level valueChanged')
++            assert window.level_override is True and window.level.value() == step['value']
++            changed = capture(step)
++            repeat_durable = durable_snapshot()
++            repeat_counts = dict(counts)
++            repeat_signals = len(signals)
++            phase = 'actual_repeat_same_level_value'
++            window.level.setValue(step['value'])
++            repeat_level_probes += 1
++            application.processEvents()
++            assert window.level.value() == step['value'] and window.level_override is True
++            assert len(signals) == repeat_signals, 'Setting the same QSpinBox value must not emit a fresh signal'
++            assert dict(counts) == repeat_counts, 'Same-value level setter must not recalculate or format'
++            repeat_after_setter = dict(counts)
++            assert_native_equal(durable_snapshot(), repeat_durable, 'Same-value level setter preserves complete state/files')
++            repeated = capture(step)
++            assert_native_equal(repeated, changed, 'Same-value level setter preserves full native/UI/three texts/presentation')
++            auxiliary_actions.append(freeze({'kind': 'actual_repeat_same_level_value', 'step': current,
++                'changed_value': changed, 'same_value': repeated, 'level_before_genuine_change': before_level,
++                'level_after': step['value'], 'new_signal_count': len(signals) - repeat_signals,
++                'setter_entries_before_formatter_probe': delta(repeat_counts, repeat_after_setter),
++                'durable_before': repeat_durable, 'durable_after': durable_snapshot()}))
++            phase = 'automatic_action'
+         elif kind in ('technical', 'raw', 'use_run_training'):
+             widget = getattr(window, {'technical': 'damage_technical', 'raw': 'raw_damage',
+                                       'use_run_training': 'use_run_training'}[kind])
+@@ -658,6 +717,7 @@
+
+         count_before = dict(counts)
+         call_before = len(calls)
+         signal_before = len(signals)
++        auxiliary_before = len(auxiliary_actions)
+         record = {'id': current, 'planned': freeze(step), 'passed': False,
+                   'window_before': window_id, 'durable_before': durable_snapshot()}
+         if step['action'] == 'fresh_window':
+@@ -703,7 +763,8 @@
+
+         check_deadline()
+         record.update(window_after=window_id, durable_after=durable_snapshot(),
+                       entry_counts=delta(count_before, counts),
+-                      completed_native_calls=calls[call_before:], actual_signals=signals[signal_before:])
++                      completed_native_calls=calls[call_before:], actual_signals=signals[signal_before:],
++                      auxiliary_actions=auxiliary_actions[auxiliary_before:])
+         assert all(row['outcome'] != 'pending' for row in record['completed_native_calls'])
+         external_idle()
+         if baseline:
+@@ -711,6 +772,18 @@
+
+             for key in ('id', 'planned', 'window_before', 'window_after', 'durable_before', 'durable_after',
+                         'entry_counts', 'completed_native_calls', 'actual_signals'):
+                 assert_native_equal(record[key], old[key], 'Complete old behaviour pair: ' + key)
++            assert len(record['auxiliary_actions']) == len(old['auxiliary_actions'])
++            for probe, old_probe in zip(record['auxiliary_actions'], old['auxiliary_actions']):
++                assert probe['kind'] == old_probe['kind']
++                capture_keys = (('preserved_manual_preview', 'restored_read_level')
++                                if probe['kind'] == 'actual_read_level_restore' else ('changed_value', 'same_value'))
++                for key in probe:
++                    assert key in old_probe
++                    if key in capture_keys:
++                        assert_native_equal(comparable_capture(probe[key]), comparable_capture(old_probe[key]),
++                                            'Actual auxiliary full native/UI/three-text pair: ' + key)
++                    else:
++                        assert_native_equal(probe[key], old_probe[key], 'Actual auxiliary signal/state/entry pair: ' + key)
+             if 'durable_after_automatic' in record:
+                 assert_native_equal(record['durable_after_automatic'], old['durable_after_automatic'], 'Full automatic durable pair')
+             if 'constructor_empty_probe' in record:
+@@ -776,6 +849,7 @@
+
+             run_step(step, sequence)
+         close_window()
+         assert len(record_refs) == 146 and fresh_windows == 2 and explicit_buttons == 144
++        assert level_restore_buttons == 24 and repeat_level_probes == 26
+         assert not qt_exceptions
+         assert all(row['outcome'] != 'pending' for row in calls)
+         if args.mode == 'candidate':
+@@ -790,7 +864,8 @@
+
+         try:
+             receipt['unfinished'] = write_record(output, 1, freeze({
+                 'step': current, 'phase': phase, 'calls': calls, 'signals': signals,
+-                'Qt_slot_exceptions': qt_exceptions, 'durable': durable_snapshot()}))
++                'Qt_slot_exceptions': qt_exceptions, 'durable': durable_snapshot(),
++                'auxiliary_actions': auxiliary_actions}))
+         except BaseException as evidence_error:
+             receipt['unfinished_save_error'] = str(evidence_error)
+     finally:
+@@ -810,6 +885,8 @@
+
+             receipt.update(passed=False, workflow_complete=False)
+         receipt.update(steps_completed=len(record_refs), fresh_windows=fresh_windows,
+                        explicit_button_requests=explicit_buttons, explicit_three_text_requests=explicit_texts,
++                       actual_read_level_restore_button_requests=level_restore_buttons,
++                       actual_repeat_same_level_value_probes=repeat_level_probes,
+                        actual_wrapped_calls=len(calls), actual_signal_count=len(signals),
+                        actual_entry_counts=dict(counts), Qt_slot_exceptions=qt_exceptions,
+                        elapsed_seconds=round(time.perf_counter() - started, 3),

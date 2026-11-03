@@ -1,0 +1,23 @@
+{
+  "title": "本局地图读取覆盖与按信息来源查找",
+  "change": "探索地图整合本局已保存区域的读取覆盖：已读或历史类型、模板固定类型和尚待确认类型分开计数，并可按这三类筛选查找列表。刷新保留筛选和准确选中项，未知类型仍可定位查阅，但不以模板或唯一候选冒充已读。",
+  "limits": "统计只说明本机已保存地图中的类型信息覆盖，不表示游戏实际已走节点、真实生成总量或事件身份确认。筛选不修改地图候选、历史概率、本局记忆或路线。",
+  "criteria": [
+    "覆盖分类互斥完整",
+    "候选不冒充已读",
+    "查找按来源筛选与状态保持",
+    "缺资料保持未知且不重置本局"
+  ],
+  "source_files": [
+    "rouge/player_map.py",
+    "rouge/player_map_find.py",
+    "rouge/player_map_reference.py"
+  ],
+  "test": "tests.test_player_feature_440",
+  "native": "scripts/verify_player_feature_window_440.py",
+  "next": "第440节完整发布后暂停，不启动441；P3/P2/P1尚未全部完成，识别最后。",
+  "unit_receipt": "verification/sections/440-player-checks-attempt3/process.json",
+  "native_receipt": "verification/sections/440-repair391-native-440/window.json",
+  "native_process_receipt": "verification/sections/440-repair391-process-440/process.json",
+  "source_receipt": "verification/sections/440-reference.json"
+}

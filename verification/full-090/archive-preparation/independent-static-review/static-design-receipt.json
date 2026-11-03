@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "status": "STATIC_DESIGN_REVIEW_COMPLETE_NOT_EXECUTED",
+  "reviewed_source_path": "/workspace/.continuation/archive-full-090.revision1.py",
+  "reviewed_source_sha256": "3d0785d977811a916d7fcc93b8ee2fa3ec11a7d7fb95a74c1d8963a5117b3775",
+  "actual_execution_allowed_to_reviewer": false,
+  "application_calls": {
+    "API": 0,
+    "helper": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "archive_script": 0
+  },
+  "root_exclusive_mutations": [
+    "tracked source",
+    "actual archive writes",
+    "Git stage",
+    "Git commit",
+    "validation tag"
+  ],
+  "scope": [
+    "AST/text only; draft not imported or executed",
+    "not final UI gate approval",
+    "not completed full090 validation"
+  ],
+  "static_findings": [
+    {
+      "check": "337 full runner selector / 730 context scope",
+      "finding": "revision1 exact selector expressions match current source_hashes; its expected 337 key/value map is compared exactly with receipts and bound as subset of 730 independently verified context",
+      "selector_source_path": "/workspace/rougezhushou/scripts/verify_full_available.py",
+      "selector_source_sha256": "ea4481c9cd95fb9438f673b76c14c9386263469e12b2855fa04e9a47d7c63dcc"
+    },
+    {
+      "check": "payload and docs Git index closure",
+      "finding": "first force-stage every explicit payload and four docs, require exact staged pathset and per-path index bytes; then generate closure and archive manifest and repeat exact full index verification"
+    },
+    {
+      "check": "commit closure",
+      "finding": "require exact parent, unchanged maintained sources, every committed payload/doc Git blob exact, clean worktree before validation tag; actual result external to avoid self-commit cycle"
+    },
+    {
+      "check": "explicit source packets",
+      "finding": "absolute regular source_path / normalized safe unique archive_path, bytes/SHA validation; earlier independent intake verified 092 negative20 and 091 positive34, neither completed numbered section"
+    },
+    {
+      "check": "reserved generated names",
+      "finding": "add() currently permits top-level archive-manifest.json and git-index-payload-closure.json as explicit input names which are overwritten by generated closure output; require final spec no such names, or explicit prewrite rejection",
+      "severity": "conditional input-validation recommendation; no actual failed execution"
+    }
+  ],
+  "pending": [
+    "final UI packet/preflight/result/inspection and explicit CLI spec are not yet frozen or reviewed",
+    "root must execute all required runtime checks; reviewer did not start or repeat checks"
+  ],
+  "prior_preparation": {
+    "initial_draft_337_vs_730_contract": "author/root preparation corrected in revision1, original retained; reviewer never executed either version"
+  }
+}

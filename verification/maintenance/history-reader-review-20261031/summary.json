@@ -1,0 +1,78 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "历史地图按已读记录累积、历史资源联动与统计筛选精简",
+  "baseline_commit": "74b1f592434c5c39384580d9f9fd6ab26024391e",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_section_started": false,
+  "implemented_scope_passed": true,
+  "related_unique_tests": 73,
+  "related_receipt": {
+    "path": "verification/maintenance/history-reader-review-20261031/tests-current-final/results.json",
+    "sha256": "dd96414d5ffa51054046c04af64a8f9b592a228da4ea60ea7a1ea980edf462a8",
+    "bytes": 753
+  },
+  "native_ranges": [
+    {
+      "receipt": {
+        "path": "verification/maintenance/history-reader-review-20261031/native-current-final/window.json",
+        "sha256": "5b15f033a4f34725be428070b47b34b6cfd23aba691fcf8287af221e195d4cf3",
+        "bytes": 166303
+      },
+      "checks": 42,
+      "scope": "Current historical map/read-only archive workflow"
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/history-reader-review-20261031/native-statistics-final/window.json",
+        "sha256": "fe302204e3abd36eba71a59a3deaf9b1a7a3ab1e4671c5a8b94cde9084f9560c",
+        "bytes": 165061
+      },
+      "checks": 19,
+      "scope": "Final statistics/sample sources unchanged after independent historical-map top-margin adjustment; earlier native scope reused, not whole current source proof."
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/history-reader-review-20261031/native-samples-final/window.json",
+        "sha256": "f25bb50ef721a7afd3ba670d448de6fe02fca7333b805cb8f8d1796a3718e0fb",
+        "bytes": 165049
+      },
+      "checks": 19,
+      "scope": "Final statistics/sample sources unchanged after independent historical-map top-margin adjustment; earlier native scope reused, not whole current source proof."
+    }
+  ],
+  "native_ranges_overlap_not_summed": true,
+  "comparison": {
+    "path": "verification/maintenance/history-reader-review-20261031/before-after-current-final.json",
+    "sha256": "313e86cee2f7b41a89c9850372328ff95e762d47b269e8e78595650c707e2017",
+    "bytes": 2079
+  },
+  "source_review": {
+    "path": "verification/maintenance/history-reader-review-20261031/source-review.json",
+    "sha256": "44c2bdc952b447cacef38c00faec9a2e6467b653a59da297c98ac0b4d2839919",
+    "bytes": 5352
+  },
+  "image_review": {
+    "path": "verification/maintenance/history-reader-review-20261031/image-review.json",
+    "sha256": "2eb9518c4032461e45615390b547b49016e39a96ea35f3af990dff1a561f3d54",
+    "bytes": 4124
+  },
+  "runtime": {
+    "path": "verification/maintenance/history-reader-review-20261031/live-window/desktop-review.json",
+    "sha256": "590d31beab9d97ca920e485d6423fcedb7e24c2244a2c694d5554110dec53ea1",
+    "bytes": 410
+  },
+  "first_failure": "New test appended a mutable fixture by reference then altered it, unintentionally changing an earlier saved test event. Corrected append to deepcopy; initial 72-test failure retained. Product history binding was not weakened.",
+  "later_view_fix": "Actual screenshot showed historical position caption clipped. Reserve 30 logical pixels above recorded map and verify marker lies within view; final map native scope rerun.",
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "private_data_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "publication_binding": "enclosing maintenance commit, ordinary push and actual remote/blob check follows"
+}

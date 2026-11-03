@@ -1,0 +1,25 @@
+{
+  "title": "补齐拓展一藏品图鉴、分档说明与分类查询",
+  "change": "保留路标拓展一251条完整图鉴，按名称与图标双重精确匹配固定游戏条目；藏品面板新增游戏内类别筛选，按所选资料范围阅读效果、解锁与取得说明，掉落查询同步补齐六件战术道具名称及分档效果。",
+  "limits": "仅补充公开资料阅读，不推断已解锁、已领取或当前强化档位，不改变伤害计算或本局记录；未证明DLC2或全部DLC1事件/掉落完整。原片其它浮窗外观仍待对照。",
+  "criteria": [
+    "251条图鉴保持完整且全部唯一匹配，歧义与未知不猜测",
+    "本体说明不被拓展一覆盖，未知来源不借用固定补充包",
+    "游戏内类别可筛选，完整分档效果与取得条件可读",
+    "刷新保留选择与阅读，来源丢失清除补充说明",
+    "六件战术道具在对应掉落池有准确名称且统计口径不改变",
+    "不改计算数值、私人配置或本局状态"
+  ],
+  "test": "tests.test_player_compendium_413",
+  "native": "scripts/verify_player_compendium_window_413.py",
+  "additional_tests": [
+    "tests.test_player_inventory_386",
+    "tests.test_player_reference_391",
+    "tests.test_player_item_sources_394"
+  ],
+  "next": "继续按原片核对其它浮窗、地图与资料呈现，并审计拓展一其余事件/掉落漏项；完整验证425，414尚未启动。",
+  "source_receipt": "verification/sections/413-dlc1-audit.json",
+  "unit_receipt": "verification/sections/413-player-checks-attempt4/process.json",
+  "native_receipt": "verification/sections/413-player-window-attempt4/window.json",
+  "native_process_receipt": "verification/sections/413-player-window-process-attempt4/process.json"
+}

@@ -1,0 +1,22 @@
+{
+  "title": "场景笔记自动保存与冲突保护",
+  "change": "编辑停顿后自动将文字保存到当前准确场景的本机笔记；可关闭自动保存，手动保存仍保留。保存冲突或失败时暂停自动写入，保留原件和未保存正文，切换场景不得带走旧稿。",
+  "limits": "只写本机笔记目录，不上传、聊天或修改本局；外部软件不参与本程序的锁，不能宣称系统级原子比较写入。",
+  "criteria": [
+    "连续编辑合并保存，精确场景不串稿",
+    "冲突/权限错误停止自动写入且不丢稿",
+    "关闭/放弃停止待保存任务",
+    "手动保存与预览导出原保护保持"
+  ],
+  "additional_tests": [
+    "tests.test_player_note_preview_398",
+    "tests.test_player_note_export_400",
+    "tests.test_player_feature_419"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_420",
+  "native": "scripts/verify_player_feature_window_420.py",
+  "unit_receipt": "verification/sections/420-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/420-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/420-player-window-process-attempt2/process.json"
+}

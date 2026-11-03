@@ -1,0 +1,33 @@
+{
+  "initial_new_tests": {
+    "run": 8,
+    "passed": 7,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "category": "test expectation for an inactive legacy timing field",
+  "actual_error": "new haruka_repeat text ValueError, which the test incorrectly claimed should be overridden by initial_target_windows validation",
+  "source_diagnosis": "HarukaS2 is INCREASE_WITH_TIME. Without applicable attack_sp rules, its original initial-SP path does not parse initial_target_windows, including wine97 deployment path. The attack-SP charge helpers own the initial_* range parsing.",
+  "correction": "Preserve the original accepted timing declaration and classify its otherwise-valid text repeat input as active text rejection; do not add timing validation or change a clock.",
+  "production_guard_unchanged": true,
+  "baseline_or_author_matrix_calls_repeated": 0,
+  "raw_artifacts_preserved": [
+    "new-tests84-initial-inactive-timing-assumption-failure.log",
+    "test_haruka_repeat_text_input-before-inactive-timing-correction.py",
+    "draft-freeze84-before-test-correction.json"
+  ],
+  "additional_readonly_preparation": "Earlier lead search included one nonexistent haruka_healing_target_reference.py name, discovered actual haruka_healing_targets.py with rg --files; no API/production edits for that read.",
+  "tracked_edits": false,
+  "gui_executed": false,
+  "wine_executed": false,
+  "transport_preparation_failure": {
+    "command": "make-root-transport84.py with relative output-patch filename",
+    "exit_code": 1,
+    "cause": "Patch was written in external cwd, then git apply --numstat ran from repository cwd with the same unresolved relative filename.",
+    "correction": "Resolve output paths before writing and before readonly git use; new output filenames retain initial patch/log/script.",
+    "repository_changes": 0,
+    "new_calculate_calls": 0,
+    "product_source_and_matrix_unchanged": true
+  }
+}

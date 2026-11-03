@@ -1,0 +1,8 @@
+{
+  "scope": "Maintenance evidence recorder, not product or UI verification",
+  "actual_reported_exit": 1,
+  "failure": "AssertionError at record_compact_window.py line49: application_source_files==543",
+  "cause_verified": "The recorder counted Python only (540); historical543 source inventory also includes3 bridge .cjs files. No untracked production Python source.",
+  "correction": "Use explicit Python plus bridge CommonJS inventory, preserving543 definition; production files and product tests unchanged.",
+  "original_failure_source": "Retained tools.exec_command result, not an original disk stderr log."
+}

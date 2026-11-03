@@ -1,0 +1,11 @@
+{
+  "command": "python -m unittest tests.test_run_common_skill_reference tests.test_skill_cultivation_118",
+  "tests_run": 31,
+  "passed": 30,
+  "failures": 0,
+  "errors": 1,
+  "original_error": "KeyError: sp_cost in test_selected_common_rank_changes_real_healing_and_skill_budget",
+  "cause": "test used a catalog parameter name rather than existing estimate.skill.recharge_seconds output",
+  "repair": "compare the actual recharge_seconds output; retain numerical healing and cancellation checks",
+  "passing_acceptance": false
+}

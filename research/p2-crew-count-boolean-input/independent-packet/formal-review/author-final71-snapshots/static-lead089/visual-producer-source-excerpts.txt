@@ -1,0 +1,15 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/visual_recognition.py
+Full source SHA256 14dc12ce491f606b16109cedf6270aadb3b8b53f185124b3b1f04174d99e4de1
+Full source bytes 10583
+
+Lines 134-143
+134:             from .run_config import confirmed_config
+135:             config=confirmed_config(run_context)
+136:             icons=resolve_difficulty_icons(match_held_icons(im,anchor,None,cache=icon_cache),config.get('difficulty'))
+137:             run={'page':'run_map','operators':[],'crew_count':None,'config':config,'resources':{},
+138:                 'config_reuse':{'run_id':(run_context or {}).get('run_id'),'fields':sorted(config)},
+139:                 'relics':{'ids':sorted({r['id'] for r in icons if r['confirmed'] and r['id'] in catalog()['relics']}),
+140:                          'icons':icons,'count':None,'source':'visual_held_bar'},
+141:                 'tactical_tools':{'ids':sorted({r['id'] for r in icons if r['confirmed'] and r['id'] in tactical_tools()}),'source':'visual_held_bar'},
+142:                 'limitations':['纯视觉实验不读取数量、难度和文字；图标多解保持未知，库存不宣称完整。']}
+143:         result={'observed_at':time.time(),'page':page,'size':viewport['source_size'],'texts':[],'nodes':[],

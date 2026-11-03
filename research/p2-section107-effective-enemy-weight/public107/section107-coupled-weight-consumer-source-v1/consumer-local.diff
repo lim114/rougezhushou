@@ -1,0 +1,7 @@
+--- rouge/operator_engine.py (original consumer)
++++ rouge/operator_engine.py (Source candidate)
+@@
+             weight=self.option('enemy_weight',3,maximum=100,integer=True)
++            # Base declarations stay validated; prepared signed deltas also feed the talent.
++            weight+=self.s.get('_relic_enemy_effects',{}).get('weight_delta',0)
+             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')

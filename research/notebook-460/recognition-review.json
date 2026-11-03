@@ -1,0 +1,11 @@
+{
+  "profile": "../../verification/sections/460-notebook/run-profile/results.json",
+  "mask_inventory": "../../verification/sections/460-notebook/run-profile/mask-duplicates.json",
+  "finding": "Held-item template matching is a major part of run parsing, especially its projected/coarse screening. The95s sample records1788ms in read_run and1579.5ms in match_held_icons under cProfile.",
+  "scope": "Two reference-video composites after52s warm-up; includes profiling overhead and overlays. Current-game accuracy or gameplay throughput is not measured.",
+  "coverage_note": "For60s the exported Python-call table lacks the enclosing read_run/interpret entries; use its available child entries and stage timings only. The95s enclosing/child entries are present.",
+  "mask_cache_decision": "Do not introduce a large correlation cache for this evidence:956 templates have917 distinct masks, only39 correlations could be shared at the audited canonical height900.",
+  "next": "Compare mature batched/correlation implementations and inspect current OpenCV/thread interaction on properly bounded game-client fixtures; validate original outputs before adopting a replacement.",
+  "recognition_algorithm_changed": false,
+  "speedup_claimed": false
+}

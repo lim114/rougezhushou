@@ -1,0 +1,55 @@
+test_bad_timing_input_clears_current_import_cache_without_losing_drafts_and_can_recover (tests.test_calculation_context_review.CalculationContextReviewTests.test_bad_timing_input_clears_current_import_cache_without_losing_drafts_and_can_recover) ... FAIL
+test_batched_input_does_not_publish_an_intermediate_invalid_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_batched_input_does_not_publish_an_intermediate_invalid_cache) ... ok
+test_empty_operator_selection_clears_current_import_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_empty_operator_selection_clears_current_import_cache) ... FAIL
+test_no_selected_skill_clears_current_import_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_no_selected_skill_clears_current_import_cache) ... FAIL
+test_original_nine_skill_scenarios_results_and_reports_remain_equal (tests.test_calculation_context_review.CalculationContextReviewTests.test_original_nine_skill_scenarios_results_and_reports_remain_equal) ... ok
+test_unimplemented_operator_clears_previous_current_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_unimplemented_operator_clears_previous_current_cache) ... FAIL
+
+======================================================================
+FAIL: test_bad_timing_input_clears_current_import_cache_without_losing_drafts_and_can_recover (tests.test_calculation_context_review.CalculationContextReviewTests.test_bad_timing_input_clears_current_import_cache_without_losing_drafts_and_can_recover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 37, in test_bad_timing_input_clears_current_import_cache_without_losing_drafts_and_can_recover
+    w.timing_scenario.setPlainText('{');self.cleared()
+                                        ^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 29, in cleared
+    self.assertTrue(all(p._scenario is None for p in self.importers()),'A previous scenario remains importable as current')
+AssertionError: False is not true : A previous scenario remains importable as current
+
+======================================================================
+FAIL: test_empty_operator_selection_clears_current_import_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_empty_operator_selection_clears_current_import_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 43, in test_empty_operator_selection_clears_current_import_cache
+    w.calculate();self.cleared();self.assertIn('暂无已确认招募',w.damage_text.toPlainText())
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 29, in cleared
+    self.assertTrue(all(p._scenario is None for p in self.importers()),'A previous scenario remains importable as current')
+AssertionError: False is not true : A previous scenario remains importable as current
+
+======================================================================
+FAIL: test_no_selected_skill_clears_current_import_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_no_selected_skill_clears_current_import_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 46, in test_no_selected_skill_clears_current_import_cache
+    w.calculate();self.cleared();self.assertIn('尚无已实现的技能',w.damage_text.toPlainText())
+                  ^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 29, in cleared
+    self.assertTrue(all(p._scenario is None for p in self.importers()),'A previous scenario remains importable as current')
+AssertionError: False is not true : A previous scenario remains importable as current
+
+======================================================================
+FAIL: test_unimplemented_operator_clears_previous_current_cache (tests.test_calculation_context_review.CalculationContextReviewTests.test_unimplemented_operator_clears_previous_current_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 50, in test_unimplemented_operator_clears_previous_current_cache
+    self.window.select_operator(identity);self.window.calculate();self.cleared()
+                                                                  ^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_context_review.py", line 29, in cleared
+    self.assertTrue(all(p._scenario is None for p in self.importers()),'A previous scenario remains importable as current')
+AssertionError: False is not true : A previous scenario remains importable as current
+
+----------------------------------------------------------------------
+Ran 6 tests in 14.022s
+
+FAILED (failures=4)

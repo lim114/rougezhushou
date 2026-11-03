@@ -1,0 +1,25 @@
+# 第107节派生重量与天赋共同消费
+
+2026-10-09T21:55:27.104895+08:00（北京时间）。本报告只在全部实际raw0、完整Source守恒、Saved读回和Root四图查看成功后生成；随本节真实提交推送，自身未来commit hash不虚构。
+
+既有重力减重派生值与安洁重量天赋共同消费；保留原base校验、signed参考、固定身份、培养、低重和报告边界。12个新增API测试方法（初版11方法中的1个边界预期按真实旧连续行为局部修正并新增独立控制）；Linux相关223/221PASS/skip1/U1父项；Wine相关223/221PASS/skip1/U1父项；精选118登记1341运行/skip1，均0失败0错误。两次Gold尝试（首次fixture失败原raw1保留），最终13Gold/13候选×6完整快照；62同输入完整Gold点、16有意变化按原manual完整components/estimate.skill及旧fixedmetadata核对；1876Saved原件、26实际close后JSON加载、四图已看；Source750+CORE不漂移。S1/S2无实际normal调用，仅S3实际原plan；未验证新floor/stacking/绝对gamephase、逐formatter独立prepost、跨分freeze alias、二次MainWindow、自然OCR或原生Windows/游戏/聊天。
+
+原公开API观察仍是748 Source、14caller+2preview、74显式消费者/1原catalog getter/89native。候选750 Source的同组观察原件也保留89native、0消费者错误/blocked；两份都标observation-only/product_passFalse，是否修复由独立Saved原/候选74调用配对证明，不能把观察运行本身计产品PASS。
+
+新增测试初次Linux相关实际222运行/219PASS/skip1/U1父项/1失败0错误/raw1，失败原件完整封存。Root随后实际12调用诊断确认连续参考并不消费空target_windows，而frames空范围及两类零边界保持0。仅该新增测试从11至12方法：10旧方法字节保留、1方法保所有合法零边界和四个原断言、1独立连续参考方法完整比较返回值（只在先断言False/True之后对齐既有timing.scenario_provided输入标记）。该测试修正没有改产品timing/计算/registry；它只保留旧连续参考，不解决连续空范围族，该未完成问题另列pending109。修正独审及test-only applier、前后750 guard、失败与原诊断都存档。报告的最终相关成功来自fresh实际receipt，不将首次失败覆盖或计PASS。
+
+只有engine原base option校验之后、既有天赋阈值之前，对局部weight加原relics.prepare已生成的signed weight_delta一次。原caller/场景baseweight、固定身份优先、原低重量与负参考、培养资格、其他干员输出、报告/preview producer均保持原合同。没有增加游戏下限、不同物品叠加法则、位移模型或新起飞/结束时钟。
+
+第一次Gold真实失败：22.206313399990904秒，raw1、0完成窗口/4native，原保存资格正确拒绝缺config.zone.name的fixture。Root原validator对13旧fixture+13仅补publicname版本实际26次诊断：13原拒绝、13修正合格且输入守恒。Source v1/v2/v3与独审、首次失败全部封存；当前是第二次真实Gold最终成功，Source v3不是第三次实际尝试，未放宽产品validator或原断言。
+
+原真实健康Gold runner976保持不变，候选runner9ab独立SHA明确不同；四个元数据块和两处精确替换剥离后全字节恢复976。只放行这组已通过Source749、无107test导入的原Gold；旧Gold值和失败证据未重写，不能称新旧runner同SHA。
+
+最终Gold：13窗口/843native/366实际原numeric调用/12实际原normal调用/333.8681435000035秒。候选：13窗口/855native/366实际numeric/12实际normal/255.91031560000556秒。每窗口六个最终快照；S1/S2原调用路径捕获0 normal，只有S3可达原plan被记录，不把空normal列表冒称执行或完整gamephase。正常分支与changed oracle均用真实原调用返回，无伪计算。
+
+Saved实际解码1876原件：API原/候选178条、74完整消费者配对，其中14项有意变化/60项原输出完整保持；窗口156快照、580共同UI prepost、156共同三formatter组prepost、24真实normal原件、62完整同输入Gold/16原manual oracle变化点、26 close后直接RunState加载实际保存JSON整图。变化点保原fixed metadata和全盘，不把旧缺陷fixed结果作必须相等的oracle。
+
+四候选PNG由Root实际打开并绑定该candidate receipt和Saved。窗口每步共同state/disks和共同三formatter组已保存可读回；每一个formatter独立prepost、跨分freeze live alias没有证明。JSON不保证原内存别名；没有第二MainWindow重开、自然OCR、原生Windows、游戏或聊天验收。
+
+精选仅prepend107至118；原full helper和NEW41全字节保留，真实full main自动union cloud后241。相关Linux/Wine仍原AvailableResult分类，原skip/不可用父项与记录保留、不计PASS。精选原断言未改；本节不重复105全量，last_full105和旧95三次deferred保持，下一五节全量110。
+
+其余P2/P3项目继续依据PROJECT_PROGRESS原待办和已证实公开资料推进；本节没有替未知机制补公式。归档后真正commit/push，CP更新107/next108、dueFalse、nextfull110；108区域输入工作仍需先真实原API观察、Source审阅和独立实际验收，不提前计完成。

@@ -1,0 +1,65 @@
+# 106真实窗口runner · 非作者Source独审
+
+结论：对该冻结runner声明的Gold/候选、原API和窗口恢复范围，未发现Source阻断。此报告不替代Root实际Gold、候选测试、窗口运行、完整native Saved审计或4PNG查看，不计106完成。第105第一次新GUI尝试已由Root报告真实600秒超时，未完成不等于PASS；必须按Root最新105完成/发布约束再推进106实际应用。
+
+本次仅只读Source/公开JSON、标准库hash/AST/内存compile。没有执行项目、runner、helper/native codec、Qt、Wine、测试或Git，没有tracked写入。未解码Root原native记录，实际解码比较路径仅在本runner Source中审阅。
+
+## 本次冻结版本
+
+- window106.py：32743字节，SHA256 `d4076884a45a8044778a6d358e1a4e54921edde7f6baeb545a3a4c35ed65d520`。
+- README：6699字节，`25f8d163f236f2f9a8695d22190d6ef7a4acca629622d2d3882bc9d67cd296df`。
+- MANIFEST：1213字节，`0fb4d9a91d4b8d7012dd927461da732af0829936e6ea46d49fa33dfc9027a02a`。
+- AUTHOR_SOURCE_CHECK：913字节，`c023eb63b7774c935db7366af02a4a2cbee5bab4c807e10cf166c3614a9a954e`。
+- helper：6468字节，`f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a`，与已独审原106 helper逐字节同。
+- original-fixture-manifest：8682字节，`2e8f3e9b74a84cb9d4ef7cee49df8bc8510c6b2bc3e09afd74b94d6af32ce217`，与原包逐字节同。
+- exact-local-transports：7008字节，`028063cf676eee596c07046fd009b18cf48b2bc71ed2665ac12fc477988e9624`，与final106候选v2逐字节同。
+
+独立3ad29f/0核manifest全部长度/hash，两py AST及compile-only、三份copy bytes exact；没有exec编译对象。666c6c/0读取全部snapshot/formatter分支，419425/ac9242/3c2dba/14fef2等工具只读实际MainWindow、BranchChoice、AccountCache、RunState/数值/显示消费者。
+
+## 运行前实际基线与Gold绑定
+
+Gold要求748 Source map实际等于Root原106 receipt.before/after，CORE同原实际CORE，五产品before hash精确匹配；candidate要求749、唯一新增test_environment_input_106.py/6cd75f…、唯一变更五产品after及verify_cloud登记，原Source其它文件无变化。原receipt c09e542f…及原raw0必须真实存在，原33场景/284calls/350native、observationComplete/Source守恒均须符合；原productPass必须False，不能把观察脚本raw0算候选验收。
+
+candidate先绑定同runner actualGold raw0、passed/workflow_complete、9健康row、Gold原Source及CORE前后同、Qt_errors空。最终再全Source/CORE及guard bytes守护，变化会把结果置false。future候选guard和registry仍须Root实际完成，Source没有编造749 map。
+
+helper在顶层import，内容是此前固定f040标准库helper，无project import；Root执行时仍核helper字节及所有fixture/transport pin后再项目导入。本review没有import它。所有Root native输入都由read_record验证压缩/解码hash、受限无globals反序列化；不能以本静态审阅当这些实际原件已复核。
+
+## 原direct API比较真正同条件
+
+11direct fixture使用原manifest.base_calculation、原target deepcopy及原run_config value2/source public-normal-control，dict插入顺序沿同manifest。原probe保存before是 `(args, None, None)`；新runner比较 `((caller,),None,None)`恰好同shape，不把observed包装器的args/kwargs dict误认原before。Deepcopy只复制同一JSON图，没有额外外部alias要求。
+
+Observed透传真实calculator，成功和异常均严格native比较caller前后并存原结果/trace；未替换产品计算返回。Gold所有原成功调用包括bool/float/int/inactive完整result与各自原native严格同；candidate两个active bool改为精确旧身份ValueError，原callee返回成功记录作为改变前提。其它原错误比较type/message，保存trace但不要求跨根路径相等。
+
+preview使用同sid/eid/level/原config四参数，严格对齐原 `(args_preview,None,None)` before图。正常integer preview完整原result同，原bool和float ValueError合同保持。不能把Qt产生bool/float选项的能力编造出来；真正target控件只负责合法整数路径。
+
+## 真实窗口/消费者及原文件范围
+
+Gold9健康：mode/source缺省、mode NORMAL、modeDifficulty NORMAL0、双NORMAL15、空/空白/文字来源、两个固定integer target。Candidate同9健康加五mode、四坏grade、五source共23。公开账号和本局成员mechanist E2 max90/S3 rank10、无未知buff、不依赖实际游戏。固定started_at0/last_read1000、fresh1001真正能经过RunState时间门。
+
+真实MainWindow构造前，RUN_STATE/OPERATOR_STATE/SETTINGS重定向到fresh public folder，DesktopBackend透传真实类但data_dir限定该folder/chat。AccountCache用真实公开账号JSON；GameCapture和ScreenReader只真实构造，未connect/采样/OCR，desktop无start/request。idle要求窗口可见、auto false、timer停、busy/chat/desktop_request false、desktop.process None/pending空、Qt exception hook空。refresh_windows是原窗口枚举，不捕获游戏帧，不拿实际用户账号/run/settings。
+
+BranchChoice.select_value会从真实public groups揭示身份/关卡；Source存在对应真实两stage/enemy档案及S3选项，S3 findData明确assert>=0。target选择后真实combo currentData必须只有手写target的三个键，str/int值及类型一致；刻意不强绑Qt mapping顺序。实际发给数值API的dict图仍完整保存并与真实Gold比较，不拿手工dict顺序误判Qt。
+
+初始构造后严格固定run/account原bytes、既有run.tmp sentinel和account.tmp不存在，原config native等于saved并同runID，无unreadable/save_issue。每次pure真实选择/calculate/tab动作，durable完整run/account图和当前disk bytes/exists前后native同。合法apply/save另独立phase，允许run.tmp被真正write/replace消耗；close及reload仍按已经保存的当前盘phase比较，不声称整个窗口从未写盘。isolated settings是正常UI允许写的文件，不计作禁止保存对象。
+
+snapshot要求真实最后一次callee caller为mechanist/S3，raw run_config与当前原配置native同。成功保存完整damage_result、三全文、summary/inventory/reuse/UI和run/account/files；格式化后完整damage_result native不变、整个raw durable/disk前后同。三文本从实际format_estimate、format_report默认/technical生成，estimate==default；实际控件默认文本按Qt NBSP归一显示比较。这里formatter三调用共同前后比较结果，未逐formatter建立单独durable快照；报告不能扩大成逐个formatter独立IO审计。
+
+callee caller内图、durable内图及result内图的type/order/floatbits/alias由native检查；一些snapshot durable及caller是各自freeze拷贝，不能额外宣称证明caller与live state之间跨快照对象身份一直相同。实际传入raw config值/types/图被核对，healthy same-input完整math graph/原始scenario/三文本严格对真实Gold。此边界不妨碍已声明的健康窗口对照。
+
+坏mode/grade必须真实ValueError、damage_result None、真实damage_text精确原错误、preset enabled+未确认tooltip、summary未确认且confirmed_config不复用。真实选择preset15后再calculate，snapshot仍要求raw环境进入API且相同错误，分析UI不能替代本局或绕过模式保护。坏source保持正常grade确认、真实calculate成功，raw source在resolution等于原JSON，并直接assert精确未知来源note；不是把来源metadata转换为已确认出处。
+
+## 健康Gold、正常恢复、close/重载
+
+同case Gold记录先核kind/case/phase，再提取view/durable/disks，严格native比较initial和fresh后的完整snapshot，避免把包装phase标记当产品差异。Gold与candidate均使用同样公开固定时间和状态原字节，路径字符串不进入durable或math对照；不存在把不同Root/output临时绝对路径错误强比的Source前提。
+
+所有case真正 `window.apply_run_observation`→RunState.apply/save，caller纯读，原operators图保持。observed没有members/crew/relic变化，所以不会触发成员离队/recipient失效；diff新记录精确value2/text source/captured1001，public_opaque保留。真实S3选择后重算、reuse/difficulty UI恢复。Healthy初始及fresh两阶段完整Gold比，而坏模式初始错误不算数值成功。
+
+close前记录live/disk图，真正close之后比较原状态和当前run/account盘不改。真实读取当前UTF8 disk JSON作oracle，再真实RunState重载整个图native相等；不拿原live aliases当JSON必须保留的合同。固定fixture恢复notice与保存notice一致、默认完整键按原RunState顺序保存再update，未发现旧false alias/notice断言。restart.reuse与after完整reuse同，并保存live_state_before_close/persisted_json/restarted等不同图。此处不是第二MainWindow重开、不是天然OCR生产者验收。
+
+## 4PNG、预算与最终Root职责
+
+Candidate实际4图为healthy-normal-environment/tab0、mode-unconfirmed-original-retained/tab0、source-unconfirmed-calculate-retained/tab1、legal-new-normal-observation-recovered/tab1。real window.grab保存并记录bytes/hash，Root仍须实际打开验证呈现；文件存在不替代查看。
+
+450秒watchdog从preimport开始覆盖11direct加本phase全部窗口，只os._exit124本进程，不全局profile/trace、不杀别的Wine、不热循环全Sourcehash。timeout保存当前case/phase，可能没有完整receipt；不能当PASS。Qt错误hook、任何assert/异常会进入failure，Source/CORE漂移最终强制false；实际raw0、passed/workflow_complete、预定9/23row及11direct/4图全部齐后Root才能接收。
+
+Root实际执行、原native压缩/解码验证、完整健康pair/纯读审计、合法保存重载和图像查看仍未在本Source审阅执行。源文件可在Root完成105真实收口后作为实际Gold/候选验证脚本使用；不改变P2机制待证、不借旧full100/105或原probe记录提前计106通过。

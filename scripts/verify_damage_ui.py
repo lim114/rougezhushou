@@ -36,7 +36,7 @@ try:
                      (window.charge_count,op=='mechanist' and skill==3),
                      (window.shield_breaks,op=='mechanist' and skill==2),
                      (window.shield_duration,op=='mechanist' and skill==2),
-                     (window.continuous_attacks,app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][-1]['sp_type']=='INCREASE_WHEN_ATTACK'),
+                     (window.continuous_attacks,app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][window.skill_rank_value()-1]['sp_type'] in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')),
                      (window.healing_targets,op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and skill==2)),
                      *[(w,op=='silverash' and skill==2) for w in (window.activation_count,window.companion_attack,window.stacks)]]
             for widget,visible in options:

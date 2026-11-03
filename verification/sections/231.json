@@ -1,0 +1,58 @@
+{
+  "title": "有限声明路线的行动力与基础战斗收益比较",
+  "remaining_item": "P3探索路线收益评价；只关闭明确方案的移动/基础战斗分项连贯比较",
+  "new_capability": "共同声明图和库存下并列核算1–20条路线，付款/次数/首次返还独立账本；未知或受阻尾链、重复战斗不虚增奖励，同终点只按闭合净AP/基础经验/源石锭区间保守比较；实际最优和完整收益未知。真实局外工具中文表/四预设/显式地图链接接入且刷新不覆盖工作。",
+  "source_evidence": [
+    "既有exploration-reference/node-arrival原件及步骤规则，第220节首次到达来源保持；未改移动公式。",
+    "第223节PRTS433770完整基础结算表/a550关卡身份，source reconstruction230保留原documented_floors；不新增服务器机制假设。"
+  ],
+  "acceptance": [
+    "新14 API+5实际临时Qt：区间端点、AP返还、尾链、重复奖励、未知/失败、非法数据、输入隔离、四预设、状态保留及过期地图链接。",
+    "原10+结算+新增路线12查询和所有既有七边界/六羽瞰点/七基础奖励预设全部保留执行，不缩减测试。"
+  ],
+  "limitations": [
+    "Finite supplied plans and explicitly listed battle components only; no route enumeration/probability/success or server eligibility inferred.",
+    "Conditional dominance ignores unverified event rewards, failures, ending prerequisites, dynamic residents, difficulty reward modifiers and complete pools; it is never actual optimal route.",
+    "Repeated reward eligibility and zero-AP callback order remain unknown; independent tail documentation is not admitted to known totals.",
+    "Temporary Qt checks, not game or original visible-window verification; original0.90 remains available and new query checked at grouped window update."
+  ],
+  "files": [
+    "rouge/route_comparison.py",
+    "rouge/exploration_planning.py",
+    "rouge/offline_tools_view.py",
+    "rouge/data/exploration-examples.json",
+    "tests/test_route_comparison.py",
+    "tests/test_route_comparison_view.py",
+    "tests/test_exploration_tools_view.py",
+    "tests/test_base_settlement_planning.py",
+    "ROUTE_COMPARISON.md",
+    "scripts/verify_cloud.py"
+  ],
+  "test_selectors": [
+    "tests.test_route_comparison",
+    "tests.test_route_comparison_view",
+    "tests.test_exploration_tools_view",
+    "tests.test_base_settlement_planning",
+    "tests.test_exploration_planning",
+    "tests.test_node_arrival_planning"
+  ],
+  "preparation_failures": [
+    "Public draft initially used invalid raw BATTLE instead of BATTLE_NORMAL; corrected fixture, exact type guard unchanged.",
+    "Imported-node Qt fixture initially lacked zone_id, so existing link guard properly rejected it; source declaration now complete without weakening guard."
+  ],
+  "ops_maintenance": "Finisher now always stages cloud selector registration after a full-gate preflight, preventing earlier generated registrations from being left only local. Existing map051 union preserved.",
+  "section": 231,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T03:20:17.568078+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 80,
+    "passed": 80,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-231/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}

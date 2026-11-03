@@ -1,0 +1,13 @@
+...........................................F..................................................................................
+======================================================================
+FAIL: test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart (tests.test_run_persistence_099.RunPersistenceTests.test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 291, in test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart
+    self.assertEqual(run.file.read_bytes(), original)
+AssertionError: b'{\n[104 chars]884035.944754,\n  "operators": {},\n  "crew_co[2225 chars]"\n}' != b'{\n[104 chars]884034.944754,\n  "operators": {},\n  "crew_co[1510 chars]"\n}'
+
+----------------------------------------------------------------------
+Ran 126 tests in 0.699s
+
+FAILED (failures=1)

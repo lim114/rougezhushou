@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "source": {
+    "community_file": "research/p3-stage-context/community-main.html",
+    "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+    "community_revision": 433770,
+    "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+    "community_license": "CC BY-NC-SA 4.0",
+    "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+    "light_original_type": "LIGHT",
+    "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+    "facts": [
+      "到达羽瞰点获得1AP；占领仍可获得。",
+      "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+      "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+    ],
+    "unverified": [
+      "Complete range geometry and actual revealed node identities.",
+      "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+      "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+      "Other node effects, movement modifiers and complete server/state eligibility."
+    ],
+    "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+    "reuse": [
+      ".cache/research/routes-049/evidence.json",
+      "research/p3-exploration-planning/source-receipt.json"
+    ],
+    "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+    "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+    "original_node_record": {
+      "name": "羽瞰点",
+      "subName": "视野",
+      "description": "所见并非所得，做好标记后别忘了计算行程。"
+    },
+    "targeted_unknown_review": {
+      "queries": [
+        "site:prts.wiki 羽瞰点 再次 领取 行动力",
+        "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+        "site:prts.wiki 分裂 羽瞰点 周围24格"
+      ],
+      "date": "2026-10-12",
+      "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+      "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+    }
+  },
+  "first_arrival_admission": {
+    "original_type": "LIGHT",
+    "source_quantity": 1,
+    "first_entry_declaration_required": true,
+    "reward_received_declaration_required": false,
+    "repeated_behavior_verified": false
+  },
+  "visibility_count_parameters": {
+    "base": {
+      "spawn": 4,
+      "arrival": 12
+    },
+    "upgraded": {
+      "spawn": 12,
+      "arrival": 24
+    },
+    "minimum_difficulty": 3,
+    "requires_split_unlocked": true,
+    "range_geometry": null,
+    "actual_revealed_nodes": null
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "platform": "Windows",
+  "os_name": "nt",
+  "actual_tempfile_file": "Z:\\workspace\\.compat\\python-windows\\package\\tools\\Lib\\tempfile.py",
+  "forced_candidate_names_only": true,
+  "os_mkdir_or_file_IO_mocked": false,
+  "rows": [
+    {
+      "collision_kind": "regular",
+      "allocated_fresh_name": true,
+      "original_before": {
+        "collision_is_symlink": false,
+        "target_exists": false,
+        "collision_bytes_hex": "5055424c4943204f524947494e414c2046494c45"
+      },
+      "original_after": {
+        "collision_is_symlink": false,
+        "target_exists": false,
+        "collision_bytes_hex": "5055424c4943204f524947494e414c2046494c45"
+      },
+      "original_unchanged": true,
+      "error": null
+    },
+    {
+      "collision_kind": "directory",
+      "allocated_fresh_name": true,
+      "original_before": {
+        "collision_is_symlink": false,
+        "target_exists": false,
+        "collision_children": {
+          "original.txt": "5055424c4943204f524947494e414c204449524543544f5259204348494c44"
+        }
+      },
+      "original_after": {
+        "collision_is_symlink": false,
+        "target_exists": false,
+        "collision_children": {
+          "original.txt": "5055424c4943204f524947494e414c204449524543544f5259204348494c44"
+        }
+      },
+      "original_unchanged": true,
+      "error": null
+    },
+    {
+      "collision_kind": "live_directory_symlink",
+      "allocated_fresh_name": true,
+      "original_before": {
+        "collision_is_symlink": true,
+        "target_exists": true,
+        "link_text": "public-target-directory",
+        "target_children": {
+          "original.txt": "5055424c4943204f524947494e414c20544152474554204348494c44"
+        }
+      },
+      "original_after": {
+        "collision_is_symlink": true,
+        "target_exists": true,
+        "link_text": "public-target-directory",
+        "target_children": {
+          "original.txt": "5055424c4943204f524947494e414c20544152474554204348494c44"
+        }
+      },
+      "original_unchanged": true,
+      "error": null
+    },
+    {
+      "collision_kind": "dangling_directory_symlink",
+      "allocated_fresh_name": true,
+      "original_before": {
+        "collision_is_symlink": true,
+        "target_exists": false,
+        "link_text": "public-target-directory"
+      },
+      "original_after": {
+        "collision_is_symlink": true,
+        "target_exists": false,
+        "link_text": "public-target-directory"
+      },
+      "original_unchanged": true,
+      "error": null
+    }
+  ],
+  "passed": true,
+  "private_state_accessed": false,
+  "game_actions": 0,
+  "chat_requests": 0
+}

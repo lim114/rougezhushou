@@ -1,0 +1,128 @@
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -351,6 +351,9 @@
+                 self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb["hp_recovery_per_sec"]*duration*count:g}，生命回复不计直接治疗。')
+             self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')
+         elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):
++            if (op=='char_298_susuro' and '微创治疗' in self.tv and
++                    isinstance(self.s.get('low_cost_healing_target'),str)):
++                raise ValueError('low_cost_healing_target 不接受文本条件；请使用布尔值。')
+             recipient_factor=self.talent('微创治疗','heal_scale',1) if (
+                 op=='char_298_susuro' and self.s.get('low_cost_healing_target')) else 1
+             if normal and op=='char_298_susuro':regular('healing',scale=recipient_factor,times=min(1,healing_targets),name='普通治疗')
+diff --git a/tests/test_susuro_condition_text_input.py b/tests/test_susuro_condition_text_input.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_susuro_condition_text_input.py
+@@ -0,0 +1,110 @@
++"""Susuro's selected recipient condition requires an actual nontext declaration."""
++from copy import deepcopy
++import unittest
++from rouge.catalog import catalog
++from rouge.damage import calculate_damage
++from rouge.reporting import format_report
++
++OP='char_298_susuro'
++FIELD='low_cost_healing_target'
++ERROR=FIELD+' 不接受文本条件；请使用布尔值。'
++TEXTS=('', 'false', 'False', '0', 'true', '1', ' 未知 ', '\t')
++
++def scenario(skill=1,mode='frames',**extra):
++    return {'operator':OP,'skill':skill,'timing_mode':mode,'base_attack':1000,
++            'window_seconds':10,**extra}
++
++class SusuroConditionTextInputTests(unittest.TestCase):
++    def reject(self,args):
++        before=deepcopy(args)
++        with self.assertRaises(ValueError) as raised:
++            calculate_damage(args)
++        self.assertEqual(str(raised.exception),ERROR)
++        self.assertEqual(args,before)
++
++    def test_selected_recipient_talent_rejects_text_in_both_skills_and_modes(self):
++        for elite,rank in ((1,7),(2,10)):
++            for skill in (1,2):
++                for mode in ('frames','continuous'):
++                    for text in TEXTS:
++                        with self.subTest(elite=elite,skill=skill,mode=mode,text=repr(text)):
++                            self.reject(scenario(skill,mode,elite=elite,skill_rank=rank,**{FIELD:text}))
++
++    def test_boolean_and_legacy_nontext_truthiness_preserve_whole_results(self):
++        for skill in (1,2):
++            for mode in ('frames','continuous'):
++                args=scenario(skill,mode)
++                false=calculate_damage({**args,FIELD:False})
++                true=calculate_damage({**args,FIELD:True})
++                self.assertEqual(calculate_damage(args),false)
++                for value in (None,0,0.0,[],{}):
++                    self.assertEqual(calculate_damage({**args,FIELD:value}),false)
++                for value in (1,1.0,2,-1,[False],{'enabled':False}):
++                    self.assertEqual(calculate_damage({**args,FIELD:value}),true)
++                self.assertAlmostEqual(true['estimate']['skill']['cycle_healing'],
++                                       false['estimate']['skill']['cycle_healing']*1.2)
++
++    def test_e0_unselected_talent_keeps_text_inactive(self):
++        for mode in ('frames','continuous'):
++            args=scenario(1,mode,elite=0,level=1,skill_rank=1)
++            expected=calculate_damage(args)
++            for value in (False,True,*TEXTS):
++                self.assertEqual(calculate_damage({**args,FIELD:value}),expected)
++
++    def test_other_owner_fields_remain_inactive(self):
++        for operator,skill in (('char_196_sunbr',1),('char_2025_shu',3),
++                               ('kaltsit',1),('char_110_deepcl',1)):
++            for mode in ('frames','continuous'):
++                args=scenario(skill,mode,operator=operator)
++                expected=calculate_damage(args)
++                for value in ('','false'):
++                    self.assertEqual(calculate_damage({**args,FIELD:value}),expected)
++
++    def test_potential_and_module_boundaries_still_bind_the_selected_talent(self):
++        for potential,level,stage in ((4,39,3),(5,39,3),(4,40,1),(5,40,1),
++                                      (4,40,2),(5,40,2),(4,40,3),(5,40,3)):
++            for mode in ('frames','continuous'):
++                self.reject(scenario(1,mode,potential=potential,level=level,
++                                     module_id='uniequip_002_susuro',module_level=stage,**{FIELD:'false'}))
++
++    def test_empty_observation_recipient_and_enemy_do_not_remove_source(self):
++        for condition in ({'window_seconds':0},{'base_attack':0},{'healing_targets':0},
++                          {'timing':{'target_disappears_seconds':0}},
++                          {'timing':{'target_windows':[]}}):
++            for skill in (1,2):
++                for mode in ('frames','continuous'):
++                    self.reject(scenario(skill,mode,**{**condition,FIELD:'false'}))
++
++    def test_existing_validation_errors_keep_priority(self):
++        invalid=({'skill':2,'elite':0,'skill_rank':1},{'elite':1,'skill_rank':10},
++                 {'elite':True},{'skill':True},{'skill_rank':0},{'potential':7},
++                 {'healing_targets':True},{'healing_targets':-1},
++                 {'skill':2,'casts_used':True},{'skill':2,'casts_used':2},
++                 {'skill':2,'casts_used':3},{'timing_mode':'unknown'},
++                 {'timing':[]},{'timing':{'target_windows':[[2,1]]}},{'window_seconds':-1})
++        for changes in invalid:
++            errors=[]
++            for value in (False,'false'):
++                args=scenario(**{**changes,FIELD:value})
++                before=deepcopy(args)
++                with self.assertRaises((ValueError,TypeError)) as raised:
++                    calculate_damage(args)
++                errors.append((type(raised.exception),str(raised.exception)))
++                self.assertEqual(args,before)
++            self.assertEqual(errors[0],errors[1])
++            self.assertNotEqual(errors[0][1],ERROR)
++
++    def test_success_error_and_reports_leave_unknowns_and_public_inputs_isolated(self):
++        cached=deepcopy(catalog())
++        self.reject(scenario(**{FIELD:'false'},timing={'target_windows':[]}))
++        args=scenario(**{FIELD:True},timing={'target_disappears_seconds':0})
++        before=deepcopy(args)
++        result=calculate_damage(args)
++        expected=deepcopy(result)
++        self.assertIn('真实友方获取时钟未核验',format_report(result))
++        result['estimate']['skill']['cycle_healing']=-1
++        self.assertEqual(calculate_damage(args),expected)
++        self.assertEqual(args,before)
++        self.assertEqual(catalog(),cached)
++
++if __name__=='__main__':unittest.main()

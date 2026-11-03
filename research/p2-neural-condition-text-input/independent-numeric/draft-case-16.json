@@ -1,0 +1,29 @@
+{
+  "case": "selected-boss-overrides-boss-only-break-still-active",
+  "scenario": {
+    "operator": "char_4204_mantra",
+    "skill": 3,
+    "skill_rank": 7,
+    "elite": 2,
+    "level": 1,
+    "potential": 6,
+    "base_attack": 997,
+    "timing_mode": "frames",
+    "window_seconds": 3.3,
+    "enemy_is_boss": "false",
+    "enemy_in_neural_break": "false",
+    "target_enemy": {
+      "stage_id": "ro6_b_3",
+      "enemy_id": "enemy_2143_shwksc",
+      "level": 0
+    }
+  },
+  "expectation": "reject",
+  "field": "enemy_in_neural_break",
+  "error": {
+    "type": "ValueError",
+    "message": "enemy_in_neural_break 不接受文本条件；请使用布尔值。"
+  },
+  "actual_public_calls": 1,
+  "caller_input_preserved": true
+}

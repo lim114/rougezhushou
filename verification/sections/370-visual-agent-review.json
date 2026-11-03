@@ -1,0 +1,125 @@
+{
+  "schema": "section370_final_actual_subagent_visual_review_v1",
+  "section": 370,
+  "attempt": 1,
+  "actor": "/root/full350_312_timeout_review",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-24T01:49:44.194719+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/370-native-attempt1/process.json",
+    "sha256": "671e1655c065bd34c8e94eadb8039b3f63ebbe600842ce7a30fd38bd1ecf9c81",
+    "passed_reported_by_root_before_review": true,
+    "passed_observed_after_review": true,
+    "actual_observed_exit": 0
+  },
+  "native_receipt": {
+    "path": "verification/sections/370-native-attempt1/actual/window.json",
+    "sha256": "ef266ba6af94fceb6cd157c453f018654da4aec5efa1ee4cc9d8e14409f9b762"
+  },
+  "method": "七个最终实际PNG分别调用tools.view_image(detail=original)，按3张和4张返回原图后逐张阅读可见像素，随后核对每张完整PNG字节SHA未变。不是凭文件名、元数据或断言判定已看。",
+  "images": [
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-ordinary-stage-entry.png",
+      "bytes": 144452,
+      "sha256": "89508380d5ab7766b6286e6181d0c006e15f092358de989df23ff9f63f4f6015",
+      "width": 1851,
+      "height": 1277,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "普通关卡页的按敌人查找关卡按钮位于中文搜索下方，层数与作战来源为独立下拉分支；184份关卡配置与不是本局必出关卡池的说明可读。左侧列表按中文关卡名展示，未选条目时右侧没有旧关卡正文或地图。当前空白提示不代表所有地图都缺失。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-not-counted-original-tier.png",
+      "bytes": 209218,
+      "sha256": "2b9529ea27d1759016f67ece8ecd5930dab2f9118f8d9e1c53603ab56dda6009",
+      "width": 1737,
+      "height": 1242,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "原设置不计入敌人数筛选显示10条记录和10份关卡配置，所选好朋友仍清楚标为精英并配对应图片；正文明确不计入总数不证明一定是辅助单位、不保证本局出现，未把筛选条件强改成敌人类别。跳转按钮及中文分组清晰，无文字遮挡。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-chinese-intersecting-filters.png",
+      "bytes": 167082,
+      "sha256": "c11aa94757e4e208972b5e5748ea6148a5db1682613eba806f8dba39293052b7",
+      "width": 1737,
+      "height": 1242,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "鸭爵中文检索与精英、第1层、普通作战同时显示，4条结果分别保留关卡名称；所选猎犬病原的头像、层数、来源和精英分类对应。顶部明确结果是资料记录而非实际出场数量，同名资料不合并等级、技能或最终面板。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-same-name-unknown-exact-reference.png",
+      "bytes": 208649,
+      "sha256": "2f184cced43c99425838eccde98475986efc319b5852d39c6974e93e688b0d86",
+      "width": 1737,
+      "height": 1242,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "空植体按类别未确认分支列出8条资料、涉及2份关卡配置，普通与紧急作战及同关多个记录分别列出。所选普通作战记录10显示对应图片，正文明确类别未知不按普通敌人归类、资料编号不是出场顺序、本关独立配置不套同名图鉴，结构和跳转入口可读。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-missing-exact-image.png",
+      "bytes": 121780,
+      "sha256": "21323e185e50795de6e1c4a10b192437f264198be8fc44b1aaab39259d9ac694",
+      "width": 1737,
+      "height": 1242,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "净浊之焰显示1条痛苦将息关联记录；图片位置明确提示未取得可核对图片，正文再次说明保留空缺、不借同名图。第5层、险路恶敌与类别未确认分开展示，未残留上一项空植体头像；对应关卡入口清晰。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-actual-exact-stage-fixed-map.png",
+      "bytes": 532141,
+      "sha256": "f5274c43ac92d3d5e27c529d909afd71aa67efe55cc7368f337b18d5be3eeb60",
+      "width": 1647,
+      "height": 1197,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "对应死箱固定作战预览显示真实原图、地图格子入口和地图、敌人、出怪、奖励等页签。正文把6条敌人或实体引用与实际敌人数区分，明确完整位置校准、出怪时刻、奖励池和本局修正面板仍待核对；原图与正文没有互相遮挡。"
+    },
+    {
+      "path": "verification/sections/370-native-attempt1/actual/window-source-loss.png",
+      "bytes": 143296,
+      "sha256": "8b22bb73c0ad0e51366d28c4078a011c75235401fb5da021970153db67688760",
+      "width": 1851,
+      "height": 1277,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "敌人反向索引来源失效后，普通关卡目录184份资料仍保留，按敌人查找关卡按钮呈禁用灰色，右侧回到请选择一项资料且无旧敌人或地图正文。截图只显示普通父页当前状态，不能单凭照片证明已关闭全部子窗口或完成恢复后手选。"
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张实际原分辨率截图未发现文字遮挡、阅读阻断、同名资料合并、未知分类强套普通、缺图借图或来源失效后旧敌人残留。中文交叉检索、独立不计数筛选、准确关卡入口及固定地图的可见提示清晰。",
+  "limits": [
+    "本次仅证明七张图片中实际可见内容与外观，不替代32项必要检查、55项原生交互及准确引用核验。",
+    "2060条记录是逐资料引用核对范围，绝不是打开2060个窗口；本次只实际查看七张指定PNG。",
+    "截图不覆盖全部分类展开项、全部184配置和2060记录的逐项正文，也不代表完整技术来源页签或所有滚动原文已逐像素核对。",
+    "非零阅读保持、同名等级准确跳转、来源失效后的整树关闭、恢复手选及窗口退出，仍由原生实际检查另证，不由静态图单独推定。",
+    "来源失效截图显示普通父目录保留与入口禁用；未拍到子目录清空过程，不将其称为照片直接观察。",
+    "固定原图可读不等于完整格子校准、本局出怪或完整预测面板已完成；本局状态、服务器行为和领取均不由截图证明。",
+    "真实查看者为本子代理，不声称根代理直接查看；本次未开始371或修改批次暂停状态。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false,
+  "all2060_windows_claimed_open": false
+}

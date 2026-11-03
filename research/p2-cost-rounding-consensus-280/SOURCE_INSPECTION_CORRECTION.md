@@ -1,0 +1,7 @@
+# 280来源检查更正记录
+
+首次原PDF检查脚本使用标题子串筛选，额外匹配了V4FMADDSS/V4FNMADDSS，并误将这个额外命中标记成ADDSS说明。其余四个目标页已真实读取；首次inspection JSON和脚本完整保留，不覆盖成从未发生错误。该错误只在未发布的准备检查中，没有核心代码/产品数值实现采用它。
+
+v2仅按标题破折号前的完整指令名筛选ADDSS、CVTDQ2PS、MULSS、ROUNDSD四项，另存原PDF复读回执；不把fused operation当本次成本源指令。
+
+另外，首次Python下载因本机CA验证失败而停止，未关闭证书校验；Windows原生下载www.intel URL收到Access Denied，命令exit0不能冒称下载成功。官方CDN的Volume2abcd实际下载成功并独立SHA核对。一次试图生成v2的PowerShell内联字符串在解析阶段失败（chunk337f23），没有创建或修改文件；随后以明确缓存脚本处理。

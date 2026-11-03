@@ -1,0 +1,24 @@
+{
+  "source_only": true,
+  "runtime_executed": false,
+  "path": "audit_saved121.py",
+  "blocks": [
+    {
+      "before": "GUI_RUNNER_SHA='72cfce3c776a18c032feae4e59a0f21973bcbe5406016b9c8f717b0d9ee2bcc2'",
+      "after": "GUI_RUNNER_SHA='e14494e1ff2c21bce7ee58959917a7ad4436393cb7a12ca7e15cbad098d52fd6'",
+      "required_count": 1
+    },
+    {
+      "before": "near(skill['window_damage'],hits*per,'known magic observation damage')",
+      "after": "near(skill.get('window_damage',result['total_damage']),hits*per,'known magic observation damage')",
+      "required_count": 1
+    },
+    {
+      "before": "same(formatter['before'],{'damage_result':value['damage_result'],'joint':initial},'entire formatter input/context with cross-container aliases')",
+      "after": "same(formatter['before'],{'damage_result':value['damage_result'],'joint':value['state_and_disks']},'entire formatter input/context with cross-container aliases')\n        same(formatter['before']['joint'],initial,'whole formatter joint equals original accepted public graph')",
+      "required_count": 1
+    }
+  ],
+  "exact_inverse_byte_reconstruction": true,
+  "scope": "Read-only validation contract correction: existing window damage fallback, complete saved formatter cross-alias, corresponding latest GUI Source pin. Native integrity and all existing exact wholeconsumer guards are retained."
+}

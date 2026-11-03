@@ -1,0 +1,4246 @@
+{
+  "captured_at_utc": "2026-10-07T19:13:11.618780+00:00",
+  "public_entrypoint": "rouge.damage.calculate_damage",
+  "draft_only": true,
+  "calls": 32,
+  "source_receipt_sha256": "6bd713edc513ff11579254c3ea684ee0852d8c9b5d2181478dc3667bf38c0915",
+  "baseline_default_parameter_clock_comparisons": [
+    {
+      "mode": "frames",
+      "original_audit_label": "default",
+      "checks": {
+        "initial_seconds": true,
+        "duration_seconds": true,
+        "recharge_seconds": true,
+        "cycle_seconds": true,
+        "total_damage": true,
+        "phase_damage": true,
+        "cycle_damage": true,
+        "cycle_dps": true
+      }
+    },
+    {
+      "mode": "continuous",
+      "original_audit_label": "default",
+      "checks": {
+        "initial_seconds": true,
+        "duration_seconds": true,
+        "recharge_seconds": true,
+        "cycle_seconds": true,
+        "total_damage": true,
+        "phase_damage": true,
+        "cycle_damage": true,
+        "cycle_dps": true
+      }
+    }
+  ],
+  "known_continuous_limitation": "General owner supply, blocking and projectile phase remain unsupported; local exact global absence guards only.",
+  "results": [
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.06666666666666667,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1433.0357142857142,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [
+            1
+          ],
+          "times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_impact_frames": [
+            1
+          ],
+          "emitted_times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [
+            1
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 26,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1433.0357142857142,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 1.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1433.0357142857142,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [
+            1
+          ],
+          "times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_impact_frames": [
+            1
+          ],
+          "emitted_times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [
+            1
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "window20",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1433.0357142857142,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [
+            1
+          ],
+          "times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_impact_frames": [
+            1
+          ],
+          "emitted_times_seconds": [
+            0.03333333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [
+            1
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "late10",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            10.033333333333333
+          ],
+          "window": [
+            10.033333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            10.033333333333333
+          ],
+          "window": [
+            10.033333333333333
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 10.066666666666666,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 13.733333333333333,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 389.56310679611653,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            300
+          ],
+          "release_frames": [
+            301
+          ],
+          "impact_frames": [
+            301
+          ],
+          "times_seconds": [
+            10.033333333333333
+          ],
+          "emitted_impact_frames": [
+            301
+          ],
+          "emitted_times_seconds": [
+            10.033333333333333
+          ],
+          "emitted_release_frames": [
+            301
+          ],
+          "hit_release_frames": [
+            301
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "late_on_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 10.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [
+            10.033333333333333
+          ],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            10.033333333333333
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 10.066666666666666,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 13.733333333333333,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 389.56310679611653,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "late1000",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": [
+            [
+              1000,
+              1001
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [
+            1000.0333333333333
+          ],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            1000.0333333333333
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 1000.0666666666667,
+          "recharge_seconds": null,
+          "cycle_seconds": null,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "no_target",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": null,
+          "recharge_seconds": null,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "life0",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": null,
+          "recharge_seconds": null,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 20,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": null,
+          "recharge_seconds": null,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "explicit_zero",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.03333333333333333,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.0
+          ],
+          "window": [
+            0.0
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.0
+          ],
+          "window": [
+            0.0
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.03333333333333333,
+          "recharge_seconds": 3.7,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1433.0357142857142,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 0,
+              "recovery_frames": 0,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                27,
+                55,
+                83
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_impact_frames": [
+                27,
+                55,
+                83
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333,
+                2.7666666666666666
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            0
+          ],
+          "impact_frames": [
+            0
+          ],
+          "times_seconds": [
+            0.0
+          ],
+          "emitted_impact_frames": [
+            0
+          ],
+          "emitted_times_seconds": [
+            0.0
+          ],
+          "emitted_release_frames": [
+            0
+          ],
+          "hit_release_frames": [
+            0
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 27,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "six_frame_wine",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "relic_ids": [
+          "rogue_6_relic_legacy_97"
+        ],
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.23333333333333334,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.2
+          ],
+          "window": [
+            0.2
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.2
+          ],
+          "window": [
+            0.2
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 0.0,
+          "duration_seconds": 0.23333333333333334,
+          "recharge_seconds": 2.566666666666667,
+          "cycle_seconds": 2.8000000000000003,
+          "total_damage": 2140.0,
+          "phase_damage": 2140.0,
+          "cycle_damage": 4280.0,
+          "cycle_dps": 1528.5714285714284,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 6,
+              "recovery_frames": 9,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                21,
+                49
+              ],
+              "release_frames": [
+                27,
+                55
+              ],
+              "impact_frames": [
+                27,
+                55
+              ],
+              "times_seconds": [
+                0.9,
+                1.8333333333333333
+              ],
+              "emitted_impact_frames": [
+                27,
+                55
+              ],
+              "emitted_times_seconds": [
+                0.9,
+                1.8333333333333333
+              ],
+              "emitted_release_frames": [
+                27,
+                55
+              ],
+              "hit_release_frames": [
+                27,
+                55
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 6,
+          "recovery_frames": 9,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            6
+          ],
+          "impact_frames": [
+            6
+          ],
+          "times_seconds": [
+            0.2
+          ],
+          "emitted_impact_frames": [
+            6
+          ],
+          "emitted_times_seconds": [
+            0.2
+          ],
+          "emitted_release_frames": [
+            6
+          ],
+          "hit_release_frames": [
+            6
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 21,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "projectile_before",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 1.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            2.033333333333333
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 3210.0,
+          "cycle_dps": 859.8214285714286,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                87
+              ],
+              "times_seconds": [
+                2.9
+              ],
+              "emitted_impact_frames": [
+                87,
+                115,
+                143
+              ],
+              "emitted_times_seconds": [
+                2.9,
+                3.8333333333333335,
+                4.766666666666667
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [
+            61
+          ],
+          "emitted_times_seconds": [
+            2.033333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "projectile_on_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 2.033333333333333,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 2.033333333333333,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            2.033333333333333
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 3210.0,
+          "cycle_dps": 859.8214285714286,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                87
+              ],
+              "times_seconds": [
+                2.9
+              ],
+              "emitted_impact_frames": [
+                87,
+                115,
+                143
+              ],
+              "emitted_times_seconds": [
+                2.9,
+                3.8333333333333335,
+                4.766666666666667
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [
+            61
+          ],
+          "emitted_times_seconds": [
+            2.033333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "projectile_after",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 2.066666666666667,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 2.066666666666667,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [
+            0.03333333333333333
+          ],
+          "window": [
+            0.03333333333333333
+          ]
+        },
+        "impact_times_reference": {
+          "cast": [
+            2.033333333333333
+          ],
+          "window": [
+            2.033333333333333
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": 3.6666666666666665,
+          "cycle_seconds": 3.7333333333333334,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 3210.0,
+          "cycle_dps": 859.8214285714286,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": [
+            {
+              "unit": "char_133_mm",
+              "known_animation": true,
+              "exact_binding": false,
+              "reference_binding": true,
+              "animation": "Attack_Loop",
+              "windup_frames": 1,
+              "recovery_frames": 27,
+              "interval_frames": 28,
+              "interval_seconds": 0.9333333333333333,
+              "start_frames": [
+                26,
+                54,
+                82
+              ],
+              "release_frames": [
+                27,
+                55,
+                83
+              ],
+              "impact_frames": [
+                87
+              ],
+              "times_seconds": [
+                2.9
+              ],
+              "emitted_impact_frames": [
+                87,
+                115,
+                143
+              ],
+              "emitted_times_seconds": [
+                2.9,
+                3.8333333333333335,
+                4.766666666666667
+              ],
+              "emitted_release_frames": [
+                27,
+                55,
+                83
+              ],
+              "hit_release_frames": [
+                27
+              ],
+              "interval_frames_by_attack": [
+                28,
+                28,
+                28
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+            }
+          ]
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [
+            61
+          ],
+          "times_seconds": [
+            2.033333333333333
+          ],
+          "emitted_impact_frames": [
+            61
+          ],
+          "emitted_times_seconds": [
+            2.033333333333333
+          ],
+          "emitted_release_frames": [
+            1
+          ],
+          "hit_release_frames": [
+            1
+          ],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "projectile_life_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 3,
+        "timing": {
+          "projectile_travel_seconds": 2,
+          "target_disappears_seconds": 2.033333333333333
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 3.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.8,
+          "duration_seconds": 0.06666666666666667,
+          "recharge_seconds": null,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": 0,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": [
+        {
+          "unit": "char_133_mm",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": true,
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 27,
+          "interval_frames": 28,
+          "interval_seconds": 0.9333333333333333,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            1
+          ],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [
+            28
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.9345794392523364,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 1.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "window20",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "late10",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "late_on_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 10.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "late1000",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": [
+            [
+              1000,
+              1001
+            ]
+          ]
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "no_target",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": null,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "life0",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": null,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 20,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": 0
+        },
+        "window_seconds": 20.0,
+        "window_healing": 0,
+        "window_dps": 0.0,
+        "window_hps": 0.0
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 0,
+          "per_hit": 2140.0,
+          "total": 0.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified"
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [],
+          "window": []
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": null,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": null,
+          "total_damage": 0.0,
+          "phase_damage": null,
+          "cycle_damage": null,
+          "cycle_dps": null,
+          "cycle_healing": null,
+          "cycle_hps": null,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "explicit_zero",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.9345794392523364,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "six_frame_wine",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "relic_ids": [
+          "rogue_6_relic_legacy_97"
+        ],
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 0.9345794392523364,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 0.0,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.8,
+          "cycle_seconds": 3.7345794392523364,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 4280.0,
+          "cycle_dps": 1146.046046046046,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "projectile_before",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 1.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "projectile_on_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 2.033333333333333,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 2.033333333333333,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "projectile_after",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 2.066666666666667,
+        "timing": {
+          "projectile_travel_seconds": 2
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 2.066666666666667,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    },
+    {
+      "label": "projectile_life_end",
+      "scenario": {
+        "operator": "char_133_mm",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 3,
+        "timing": {
+          "projectile_travel_seconds": 2,
+          "target_disappears_seconds": 2.033333333333333
+        }
+      },
+      "public_total_damage": null,
+      "skill": {
+        "name": "麻痹弹",
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1070.0,
+        "skill_attack_speed": 107.0,
+        "skill_attack_speed_reference": 107.0,
+        "sp_recovery_per_second": null,
+        "mode": "next_attack",
+        "hit_counts": {
+          "麻痹弹": null
+        },
+        "window_seconds": 3.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "components": [
+        {
+          "name": "麻痹弹",
+          "damage_type": "physical",
+          "hits": 1,
+          "per_hit": 2140.0,
+          "total": 2140.0,
+          "timing_reference": "next attack conditional reference; actual S1 binding unverified",
+          "actual_total": null
+        }
+      ],
+      "mei_s1_reference": {
+        "per_hit_damage_reference": 2140.0,
+        "attack_scale_parameter": 2.0,
+        "sluggish_duration_parameter_seconds": 2.5,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "source_acquisition_times": {
+          "cast": [],
+          "window": []
+        },
+        "impact_times_reference": {
+          "cast": [
+            0.9345794392523364
+          ],
+          "window": [
+            0.9345794392523364
+          ]
+        },
+        "parameter_clock_reference": {
+          "initial_seconds": 2.803738317757009,
+          "duration_seconds": 0.9345794392523364,
+          "recharge_seconds": 2.803738317757009,
+          "cycle_seconds": 3.7383177570093458,
+          "total_damage": 2140.0,
+          "phase_damage": 0.0,
+          "cycle_damage": 5350.0,
+          "cycle_dps": 1431.125,
+          "cycle_healing": 0,
+          "cycle_hps": 0.0,
+          "recharge_streams": []
+        },
+        "parameter_clock_binding_verified": false,
+        "skill_binding_verified": false,
+        "actual_cast_end_seconds": null
+      },
+      "timing_streams": []
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+# 106 provisional候选v1 · 非作者Source审阅（测试前提阻断）
+
+产品五个局部改动本次未发现Source阻断；测试v1有确定前提错误，不能称23测试可验收、不能把它产生的失败计产品缺陷。原实现真实观察、候选应用、运行测试及GUI均由Root完成。审阅没有执行项目/helper/codec/测试/Qt/Wine/Git，没有修改tracked文件；仅读Source/公开JSON、stdlib AST/hash/内存compile与drytransport。
+
+冻结原件：transport 6365字节SHA256 `c6c17e2a5440e223f7bcdf16ee069587d2dd31d3821ce044f3cd8d4f04d2f678`；test 14928字节 `e661e4fd2a8bb33ae37f9e1f812cdcce9d74b921e6799b152fe4957c68d2feaf`；README 5397字节 `00f04657af710afcd93e113268727d91c48bedf4f4e852594c4a6fee6264eabf`。本报告不覆盖作者文件，后续应生成fresh版本。
+
+## 确定测试阻断
+
+`test_invalid_incoming_mode_does_not_replace_valid_saved_difficulty`在105行开始，先对不存在路径构造RunState(path)，此时真实reset(save=False)令started_at=time.time()，随后却run.apply(valid,1001)。apply第一门判断captured_at < max(started_at,last_read or0)；2026环境下1001早于started_at，直接False，于是assertTrue失败，根本没有达合法初始难度和后续坏mode保留的逻辑。
+
+这来自Source直读，不是测试运行结果。修复应先写公开合法缓存fixture started_at1000再构造，或从该真实实例started_at派生两次递增时间；不能mock产品时钟或移除产品旧观察保护。已即时通知Root和作者，保留e661原件待freshv2独审。其它使用fixture始于1000、fresh1002的恢复测试没有同类时间错误。
+
+## 独立精确运输与AST范围
+
+五条before与当前实际Source SHA一致，各唯一一次，after SHA均与manifest相同，after唯一且精确inverse返回原bytes。原CRLF/LF按各文件保留，五候选均仅内存AST/compile，未应用repo。把各指定变更function body清空后，整个module AST严格相同，证明其它顶层变量/import/classes/函数/装饰器/正文没有变化，保留103/104及原数值保护。
+
+- run_config：5835字节/3c96897d…，只difficulty_value变；另外4个FunctionDef（包含嵌套plain）不变。
+- enemy_environment：8213/d55a1ad9…，只resolve_enemy变；另外3个FunctionDef（包含嵌套multiply）不变。
+- reporting：98978/0f77990b…，只build_report变；另外14个FunctionDef不变。
+- app：99132/f3577a3e…，只MainWindow.sync_run_config变。实际ASTwalk65个FunctionDef，64个其余节点不变；top-level/class方法域的其余61个及3个嵌套work全不变。manifest的unchanged_method_count62采用按名字去重域，3个同名work被折叠，不能误称全部FunctionDef只有63个；这不是产品运输差异，整module AST已独立证明全部其它节点相同。
+- run_state：54623/ee46af93…，只RunState.summary变；另外24个FunctionDef（含validator内嵌套）不变。
+
+工具18f87e/0独立核5forward/inverse/current/after hash及23方法列表；364475/0补足app/run_state整module仅指定body不同；a848b4是审阅脚本对app函数计数口径的断言1，原因是manifest去重域，不能记为产品/候选编译失败。其它内存compile已通过，没有exec编译对象。
+
+## 产品合同核对
+
+difficulty_value对modeDifficulty及mode按既有prepare_run的NORMAL资格一致判断，缺省两alias、合法0–15仍合格；显式None/list/bool/非NORMAL或冲突失格，原strict int不放宽。confirmed_config和apply共享这个现有helper，因此坏mode不复用、不替换有效缓存，合法新观察可替换原坏记录；raw accepted cache留存，历史处理不扩展。prepare_run原unsupportedmode ValueError及优先次序未改，未知squad.effect_verified原raw复用合同未扩成strict过滤。
+
+resolve_enemy只在有效stage/preview后、引用唯一匹配前拒active bool level，原错误字符串沿用。top-levelFalse/{}仍在not target门短路；数字float0.0/1.0保持旧相等匹配，旧文本/null/list错误及stage错误先后不被宽化。enemy_preview没有改动，原enemy_skill_reference已拒bool及非int，不重复修。
+
+build_report仅在原difficulty来源字符串拼接点把显式非str显示成“未确认（来源字段不是文本）”；来源缺键default、空串、原文字（含空白）保留，raw resolution.source不改，grade资格不因来源metadata强加限制。新的source局部变量在此处之后没有被用回先前技能profile合同，未发现对后续module reference或数值的Source影响。不能把未知来源label说成来源已确认。
+
+sync_run_config用grade资格决定控件enabled/tooltip/findData，合法0通过is not None处理；失格缓存提示原记录保留。difficulty.currentData仍只用于分析preset/settings/context显示，真实calculate仍用原run.state.config，BattlePreview也收原config，没有将preset冒充本局事实。summary同资格显示当前grade或待确认，正常缺省和合格数字/无记录文字保持；不洗缓存，不改其他资源/藏品/队伍summary。
+
+## 测试质量与待Root实际边界
+
+23方法Source分10资格/恢复、6target身份、7来源边界。包含全部16等级与两mode aliases、冲突/未知、原ValueError优先、正常观察保留、cache原盘和.tmp纯读、合法fresh实际apply/save后RunState重载；来源未知仅两明确presentation leaves以外完整结果比较，rawcaller和值类型保留。公开矛头分队rogue_6_band_6/name由固定JSON核实，不把未知legacy flag改作确认。正常target/S3公开健康条件此前probe独审已确认。
+
+这些普通unittest equality不是native alias/floatbits证据；来源mask比较是当前候选同condition控制，不是原Gold完整结果对照，整数与float各自完整原native结果仍需Root实际pair。缓存纯读原盘不能泛化为apply/save之后仍不写。无Qt控件、三全文完整gold、PNG或实际重开证据；README对此诚实保留未来Root步骤。
+
+future Root实际105 guard和registry_transport仍NULL/pending，不能直接应用或称全量登记完成。Root后发原观察33cases/284calls/350native/raw0的消息属于Root真实证据，本Source报告未执行codec或读取native作再认证；实际结果应另绑定候选final及正式receipt。保持105真实全量关闭与发布前不apply106约束。必须先修时间fixture，再fresh版本独审、实际验证后决定完成。

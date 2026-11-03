@@ -1,0 +1,85 @@
+--- full100-bounded-validation-source-v1/window.py
++++ full100-bounded-window-fixture-source-v2-complete/window.py
+@@ -1372,7 +1372,7 @@
+         window.timing_scenario.clear();window.frame_timing.setChecked(True);window.limit_window.setChecked(True);window.window_seconds.setValue(1)
+         window.window_seconds.setValue(10)
+         op='char_437_mizuki'
+-        window.operator_observations[op]={'fields':{'elite':2,'level':60,'potential':1,'trust':100,'module_id':'uniequip_003_mizuki','module_level':2},'skill_ranks':{'1':10,'2':10,'3':10}}
++        window.operator_observations[op]={'id':op,'fields':{'elite':2,'level':60,'potential':1,'trust':100,'module_id':'uniequip_003_mizuki','module_level':2},'skill_ranks':{'1':10,'2':10,'3':10}}
+         window.select_operator(op);window.update_operator()
+         for skill in (1,2,3):
+             window.skill.setCurrentIndex(window.skill.findData(skill));window.calculate();app.processEvents()
+@@ -1383,7 +1383,7 @@
+             assert '模组实际额外回复：未知' in window.damage_text.toPlainText()
+             checks.append({'scope':'actual_mizuki_amb_y_readonly_cultivation_preview','skill':skill,'module_level':2,'level':60,'actual_extra_healing':None,'passed':True})
+         def train(op,fields,ranks=None):
+-            window.operator_observations[op]={'fields':fields,'skill_ranks':ranks or {'1':10,'2':10,'3':10}}
++            window.operator_observations[op]={'id':op,'fields':fields,'skill_ranks':ranks or {'1':10,'2':10,'3':10}}
+             window.select_operator(op);window.update_operator()
+         def calculate_result():
+             window.calculate();app.processEvents()
+@@ -1825,7 +1825,7 @@
+                 window.use_run_training.setChecked(True)
+         finally:
+             window.run.state=state_snapshot
+-            window.operator_observations=account_snapshot
++            window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account_snapshot));assert window.operator_observations is window.account_cache.records
+             window.use_run_training.setChecked(run_training_snapshot)
+             window.update_operator();relics([])
+         receipt['section58_state_scope']='Recruitment origins are injected only into this temporary MainWindow public in-memory state, then restored. This checks current_operator_state, the real run-training checkbox, scenario serialization, relic pending/known output and report; no actual OCR/recruitment/private-state lifecycle is certified.'
+@@ -2595,7 +2595,7 @@
+                     'input_design':requested075,'state_scope':'temporary public in-memory observation/config only',
+                     'actual_account_source_or_clock_verified':False,'passed':True})
+         finally:
+-            window.run.state=state075;window.operator_observations=account075
++            window.run.state=state075;window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account075));assert window.operator_observations is window.account_cache.records
+             window.use_run_training.setChecked(run_training075)
+             window.run_summary.setText(summary075);window.sync_run_config()
+             if not state075.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty075)
+@@ -2828,7 +2828,7 @@
+                     'state_scope':'temporary public readonly cultivation observation; no editable module/elite selector',
+                     'native_clock_attachment_or_actual_recipient_verified':False,'passed':True})
+         finally:
+-            window.run.state=state080;window.operator_observations=account080
++            window.run.state=state080;window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account080));assert window.operator_observations is window.account_cache.records
+             window.use_run_training.setChecked(run_training080)
+             window.run_summary.setText(summary080);window.sync_run_config()
+             if not state080.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty080)
+@@ -3013,7 +3013,7 @@
+                     'near_previous_deployment':args085.get('near_previous_deployment'),
+                     'native_stack_or_recipient_clock_verified':False,'passed':True})
+         finally:
+-            window.run.state=state085;window.operator_observations=account085
++            window.run.state=state085;window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account085));assert window.operator_observations is window.account_cache.records
+             window.use_run_training.setChecked(run_training085);window.run_summary.setText(summary085);window.sync_run_config()
+             if not state085.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty085)
+             assert window.target_stage_choices.select_value(stage085)
+@@ -3194,8 +3194,8 @@
+             consumer_records090=[]
+             for saved89_090 in saved89_states090:
+                 for use89_090 in (False,True):
+-                    window.operator_observations['mechanist']=_copy090.deepcopy(fixture89_090)
+-                    window.operator_observations['char_151_myrtle']=_copy090.deepcopy(fixture89_090)
++                    window.operator_observations['mechanist']={**_copy090.deepcopy(fixture89_090),'id':'mechanist'}
++                    window.operator_observations['char_151_myrtle']={**_copy090.deepcopy(fixture89_090),'id':'char_151_myrtle'}
+                     window.run.state=_copy090.deepcopy(saved89_090['state'])
+                     replay_before090=native090(window.run.state)
+                     expected89_row090=expected89_contract090[(saved89_090['saved_sequence'],use89_090)]
+@@ -3206,7 +3206,7 @@
+                     window.select_operator('mechanist');window.update_operator(preserve_level=False)
+                     member89_090=saved89_090['state']['operators']['mechanist']
+                     expected_run89_090=use89_090 and member89_090['present']
+-                    expected_state89_090=_copy090.deepcopy(fixture89_090)
++                    expected_state89_090={**_copy090.deepcopy(fixture89_090),'id':'mechanist'}
+                     if expected_run89_090:
+                         expected_state89_090={**fixture89_090,**member89_090,
+                             'fields':{**fixture89_090['fields'],**member89_090['fields']},
+@@ -3254,7 +3254,7 @@
+             assert source_hashes()==source090_before
+         finally:
+             profile_case090=None;_count_enabled100=previous090
+-            window.run.state=state090;window.operator_observations=account090
++            window.run.state=state090;window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account090));assert window.operator_observations is window.account_cache.records
+             window.use_run_training.setChecked(use090);window.run_summary.setText(summary090);window.sync_run_config()
+             window.animation_previews=animation090;window.animation_preview_key=None
+             window.continuous_attacks.setChecked(continuous090)

@@ -1,0 +1,73 @@
+{
+  "section": 239,
+  "title": "必经避开顺序检查点与准入条件路线规划",
+  "remaining_item": "P3有限声明图路线缺少结局前置/用户访问要求及未知准入范围",
+  "new_capability": "在有限声明图中按必经、避开、顺序检查点和明确准入条件构造路线；未知资格停留前沿，不补后续奖励；独立中文路线约束页与原地图位置链接，刷新保留输入和结果来源",
+  "limitations": [
+    "声明访问政策不证明游戏结局脚本或实际资格",
+    "有限简单路线不穷举隐藏连线、概率或真实最优",
+    "未知或到零边界仍停止依赖链",
+    "离屏Qt不是原Windows游戏验收；完整实际窗口在245分组检查"
+  ],
+  "files": [
+    "research/p3-route-continuation/README.md",
+    "research/p3-route-continuation/sealed-files.json",
+    "research/p3-route-continuation/source-receipt.json",
+    "research/p3-route-continuation/verification.json",
+    "rouge/app.py",
+    "rouge/route_constraints.py",
+    "rouge/route_constraints_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_route_constraints.py",
+    "tests/test_route_constraints_view.py",
+    "verification/section-239/tests.txt",
+    "verification/section-239/validation.json"
+  ],
+  "source_evidence": [
+    "复用固定a550f5e探索移动原件及已封行程/结算来源，未新增数值机制",
+    "每条分支独立库存/AP/羽瞰点账本，策略剪枝先于结果数量截断"
+  ],
+  "acceptance": [
+    "41项约束、Qt及既有路线搜索/比较相关检查通过",
+    "新声明政策、未知前沿、上限边界、旧输入快照与过期地图链接均检查"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T12:59:02.986936+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "cb3dbbe349b347de08d695f13189cedf6ba97a82",
+  "required_raw_sha256": {
+    "research/p3-route-continuation/README.md": "63bc243db978cc6fa28ac65b79872055b08a0b234b4628709043d3096728ff87",
+    "research/p3-route-continuation/sealed-files.json": "145ec1b5071b6b16e5991eaaf727153367bea6fd778d7746de0549b1c58cf2ee",
+    "research/p3-route-continuation/source-receipt.json": "39f7135668f9a45275512dda6031e8b14902e7b5fb01e3adc645b7f8f67f03f3",
+    "research/p3-route-continuation/verification.json": "8c2a8c1a47279bf375ede6da95a05c9b31f4f680d568c62262d699eb9dd0ce89",
+    "rouge/app.py": "04111e5126480fa7cfdf8d663e81c234144d4482472adf5fb5e57a3b6b27d3b2",
+    "rouge/route_constraints.py": "fe504cac9cd9a760e119f594fc0470e88dd218c12724dd59857aafee5523f645",
+    "rouge/route_constraints_view.py": "29b91e0998130db13d333dd75c21283a50eb39dd4c79b7f496ca60fe685bd755",
+    "scripts/verify_cloud.py": "15ab04cb75ab528503fd73f0f4c3ee899a1b292963575d33373909373686603c",
+    "tests/test_route_constraints.py": "fb90e80248022fabef5262899b86c15527cf60640c7b5771640b8bb743b6d15e",
+    "tests/test_route_constraints_view.py": "f590fcc136d3b9e9d42dd4d73ecb358c5ee387f69b7d6c4a8c1c59fb8a35a70f",
+    "verification/section-239/tests.txt": "5cb5e2c19246868917905b66733f002961a8edf5e2c28810850411d46de1fa7f",
+    "verification/section-239/validation.json": "cbb1f09302bd008affe50447ff1572167de9e79c26ac314aeb46a33c54033690"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_route_constraints",
+      "tests.test_route_constraints_view",
+      "tests.test_route_search",
+      "tests.test_route_comparison"
+    ],
+    "tests_run": 41,
+    "passed": 41,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}

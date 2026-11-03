@@ -1,0 +1,14 @@
+{
+  "status": "PREPARATION_ASSERTION_FAILURE_NOT_PRODUCT_FAILURE",
+  "attempt": 1,
+  "guard_expression": "assert s[make.col_offset:]==s # col offset is zero on method nodes? Static plain string guard below controls actual insertion.",
+  "cause": "The method AST has class indentation col_offset=4, so slicing whole source at it cannot equal full source. This superfluous source guard failed before any candidate write.",
+  "corrective_scope": "Use actual method lineno/end_lineno source span and unique end-of-method return anchor, not an assumed column offset.",
+  "candidate_generated_before_failure": false,
+  "project_API_calls": 0,
+  "Qt_calls": 0,
+  "Wine_calls": 0,
+  "tests_executed": 0,
+  "network_calls": 0,
+  "tracked_writes": 0
+}

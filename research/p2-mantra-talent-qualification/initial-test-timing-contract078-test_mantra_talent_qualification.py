@@ -1,0 +1,149 @@
+"""Declared global palsy is separate from an actually selected damage talent."""
+import copy
+import json
+import unittest
+from rouge.catalog import catalog
+from rouge.damage import calculate_damage
+from rouge.operator_engine import selected_talents
+
+OP='char_4204_mantra'
+NAME='麻痹触发天赋'
+LABEL='声明当前目标麻痹触发次数'
+
+def scenario(**extra):
+    return {'operator':OP,'skill':1,'elite':0,'level':1,'skill_rank':1,
+            'base_attack':1000,'window_seconds':10,**extra}
+
+def canonical(value):
+    return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+
+def component(result):
+    return next(c for c in result['components'] if c['name']==NAME)
+
+def zero_count_with_declared_metadata(request, declared):
+    expected=json.loads(canonical(calculate_damage({**request,'palsy_triggers':0})))
+    references=[expected['external_event_reference']]
+    if 'window_reference' in references[0]:references.append(references[0]['window_reference'])
+    for ref in references:
+        next(r for r in ref['parameter_rows'] if r[0]==LABEL)[1]=float(declared)
+    section=next(s for s in expected['report']['sections'] if s['id']=='external_events')
+    next(m for m in section['metrics'] if m['key']=='parameter_0')['value']=float(declared)
+    return expected
+
+
+class MantraTalentQualificationTests(unittest.TestCase):
+    def test_E0_declared_palsy_keeps_known_direct_cast_and_cycle(self):
+        for mode in ('frames','continuous'):
+            request=scenario(timing_mode=mode)
+            self.assertEqual(selected_talents(catalog()['operators'][OP],request)[0],[])
+            for declared in (1,3,10000):
+                result=calculate_damage({**request,'palsy_triggers':declared})
+                self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,declared)))
+                self.assertEqual(result['total_damage'],1900)
+                self.assertEqual(result['estimate']['skill']['total_damage'],1900)
+                self.assertEqual(result['estimate']['skill']['phase_damage'],1900)
+                self.assertGreater(result['estimate']['skill']['cycle_damage'],0)
+                self.assertGreater(result['estimate']['skill']['cycle_dps'],0)
+                self.assertEqual((component(result)['hits'],component(result)['per_hit'],component(result)['total']),(0,0,0))
+                self.assertNotIn('actual_total',component(result))
+                self.assertNotIn('known_damage_subtotals',result)
+                self.assertTrue(result['external_event_reference']['source_possible'])
+                self.assertIsNone(result['external_event_reference']['actual_event_times_seconds'])
+
+    def test_raw_count_contract_survives_absent_talent_and_old_error_precedence(self):
+        for mode in ('frames','continuous'):
+            for declared in (1,1.0,'1','1.0','1e0'):
+                result=calculate_damage(scenario(timing_mode=mode,palsy_triggers=declared))
+                self.assertEqual(result['external_event_reference']['parameter_rows'][0][1],1)
+                self.assertEqual(result['total_damage'],1900)
+            for value in (False,True,-1,.5,10001):
+                with self.assertRaisesRegex(ValueError,'palsy_triggers需要范围内的有限非负整数'):
+                    calculate_damage(scenario(timing_mode=mode,palsy_triggers=value))
+            for field in ({'skill':2},{'skill':3},{'skill_rank':10}):
+                with self.assertRaisesRegex(ValueError,'当前精英阶段'):
+                    calculate_damage(scenario(timing_mode=mode,palsy_triggers=False,**field))
+
+    def test_four_exact_talent_source_candidates_keep_conditional_unknowns(self):
+        for mode in ('frames','continuous'):
+            for elite,potential,scale in ((1,1,1.0),(1,5,1.1),(2,1,1.35),(2,5,1.45)):
+                result=calculate_damage(scenario(elite=elite,potential=potential,timing_mode=mode,
+                                                 palsy_triggers=2,enemy_elemental_resistance=50))
+                reference=next(c for c in result['external_event_reference']['conditional_components'] if c['name']==NAME)
+                self.assertEqual(reference['hits'],2)
+                self.assertAlmostEqual(reference['total'],1000*scale)
+                self.assertIsNone(component(result)['actual_total'])
+                self.assertIsNone(result['total_damage'])
+                self.assertIsNone(result['estimate']['skill']['cycle_damage'])
+                self.assertIsNone(result['estimate']['skill']['cycle_dps'])
+                self.assertIsNone(result['external_event_reference']['actual_event_times_seconds'])
+
+    def test_selected_zero_attack_or_element_immunity_does_not_erase_source(self):
+        for mode in ('frames','continuous'):
+            for elite in (1,2):
+                for condition in ({'base_attack':0},{'enemy_elemental_resistance':100}):
+                    result=calculate_damage(scenario(elite=elite,timing_mode=mode,palsy_triggers=1,**condition))
+                    self.assertEqual(component(result)['per_hit'],0)
+                    self.assertEqual(component(result)['hits'],1)
+                    self.assertIsNone(component(result)['actual_total'])
+                    self.assertIsNone(result['total_damage'])
+
+    def test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts(self):
+        for mode in ('frames','continuous'):
+            for observation in ({'window_seconds':0},{'timing':{'target_disappears_seconds':0}},
+                                {'timing':{'target_windows':[]}}):
+                request=scenario(timing_mode=mode,**observation)
+                result=calculate_damage({**request,'palsy_triggers':1})
+                self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,1)))
+                self.assertEqual(result['total_damage'],0)
+            qualified=calculate_damage(scenario(elite=1,timing_mode=mode,palsy_triggers=1,
+                                                 timing={'target_windows':[]}))
+            self.assertTrue(qualified['external_event_reference']['source_possible'])
+            self.assertIsNone(qualified['total_damage'])
+            self.assertEqual(qualified['known_damage_subtotals']['window_damage'],0)
+
+    def test_S3_overflow_count_is_independent_of_palsy_damage_talent_count(self):
+        for mode in ('frames','continuous'):
+            result=calculate_damage(scenario(elite=2,level=90,skill=3,skill_rank=10,
+                    timing_mode=mode,palsy_triggers=0,palsy_overflow_hits=2,window_seconds=1))
+            refs={c['name']:c for c in result['external_event_reference']['conditional_components']}
+            self.assertEqual(refs[NAME]['hits'],0)
+            self.assertEqual(refs['无言为真溢出跳跃']['hits'],2)
+            self.assertGreater(refs['无言为真溢出跳跃']['total'],0)
+            overflow=next(c for c in result['components'] if c['name']=='无言为真溢出跳跃')
+            self.assertIsNone(overflow['actual_total'])
+            self.assertIsNone(result['total_damage'])
+            self.assertIn(('溢出跳跃间隔原表参数',1.5,'秒'),result['external_event_reference']['parameter_rows'])
+
+    def test_S1_neural_and_river_uncertainty_is_not_inferred_away(self):
+        for mode in ('frames','continuous'):
+            for condition in ({'initial_neural_buildup':999},
+                              {'enemy_in_neural_break':True,'relic_ids':['rogue_6_relic_fight_22']}):
+                request=scenario(timing_mode=mode,**condition)
+                result=calculate_damage({**request,'palsy_triggers':1})
+                self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,1)))
+                self.assertFalse(result['complete'])
+                if condition.get('relic_ids'):
+                    self.assertIsNone(result['total_damage'])
+                    self.assertIn('neural_relic_reference',result)
+
+    def test_zero_declarations_and_inactive_other_owner_fields_keep_full_output(self):
+        for mode in ('frames','continuous'):
+            expected=calculate_damage(scenario(timing_mode=mode))
+            for declared in (0,0.0,'0','0.0'):
+                self.assertEqual(canonical(calculate_damage(scenario(timing_mode=mode,palsy_triggers=declared))),canonical(expected))
+            plain={'operator':'silverash','skill':3,'timing_mode':mode,'window_seconds':10}
+            self.assertEqual(canonical(calculate_damage({**plain,'palsy_triggers':False,'palsy_overflow_hits':'unused'})),
+                             canonical(calculate_damage(plain)))
+
+    def test_caller_and_selected_source_caches_remain_isolated(self):
+        old=copy.deepcopy(catalog());request=scenario(palsy_triggers=1);original=copy.deepcopy(request)
+        result=calculate_damage(request);component(result)['hits']=999
+        result['external_event_reference']['conditional_components'][0]['hits']=999
+        again=calculate_damage(request)
+        self.assertEqual(component(again)['hits'],0)
+        self.assertEqual(again['external_event_reference']['conditional_components'][0]['hits'],0)
+        self.assertEqual(request,original)
+        self.assertEqual(catalog(),old)
+
+
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,68 @@
+{
+  "section": 241,
+  "title": "凯尔希银灰攻击状态与原件动作序列等待诊断",
+  "remaining_item": "P2首批真实firstAttack门、动作候选及连续动作相对等待应用",
+  "new_capability": "按显式entry或continue、原件候选和参考周期逐步计算三段等待与状态组归属；换候选不自行重开first门；分列累计等待与误把每步当entry的差值；真实测试应用独立序列页",
+  "limitations": [
+    "仅同版已证凯尔希normal/S1和银灰normal；机械师未套此模型",
+    "累计为请求等待分项之和，不是实际攻击轴或完整耗时",
+    "真实首击结束、随机选择及完整循环保持未知",
+    "同版酒神结束阈值和机械师屏障损耗缺证延期，不计功能完成"
+  ],
+  "files": [
+    "research/p2-direct-continuation/attack-state-sequence-source.json",
+    "research/p2-direct-continuation/attack-state-sequence-validation.json",
+    "research/p2-direct-continuation/wine-mechanist-deferred-source-gaps.json",
+    "rouge/app.py",
+    "rouge/attack_state_sequence.py",
+    "rouge/attack_state_sequence_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_attack_state_sequence.py",
+    "verification/section-241/tests.txt",
+    "verification/section-241/validation.json"
+  ],
+  "source_evidence": [
+    "同版AttackState.OnEnter/_NextAttackOrExit与SilverAsh RandomGroup转发门完整CFG、8精确指令锚点和原件SHA",
+    "复用原件three-part当前属性与FP等待规则，未改变旧默认计算"
+  ],
+  "acceptance": [
+    "48项源、状态序列、输入和真实Qt相关检查通过",
+    "新13项与旧35项统一在根目录复验；首轮错误测试字段KeyError回执保留"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:05:10.709070+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "a947de6c7940895903c4e43a15384e1cd47b9d4d",
+  "required_raw_sha256": {
+    "research/p2-direct-continuation/attack-state-sequence-source.json": "d737f9bff5713d862c0db5d8247b7b7c03a7d40b232a90e75896cecd557079cf",
+    "research/p2-direct-continuation/attack-state-sequence-validation.json": "f01b0f4b707f2ab02f1f3f369e4f842e4b97aba75c7aa702b0b52736783cd006",
+    "research/p2-direct-continuation/wine-mechanist-deferred-source-gaps.json": "a2cefa1bafa1a8f139513b1af91c5db76d2f39e7574f62752c067f2d97b0bc0e",
+    "rouge/app.py": "7e592c2d4e3c743fe556822c37556832066ccd07b552c5f5a6d7abb24b538e05",
+    "rouge/attack_state_sequence.py": "365119af8ff43f066bd744aff8833ba16970764b7b532db59169660b8ac2f15e",
+    "rouge/attack_state_sequence_view.py": "291da8cc1f60c25e4513e8181d02cea9812663ad63d962b577f9b9c5bbe90089",
+    "scripts/verify_cloud.py": "e35afe40143162fa8380ca4a4c733ff7189d69752e322ecee587cd3a4c48f26b",
+    "tests/test_attack_state_sequence.py": "07a6db7d5f2c112b593d104510c8da141a1383f207c98a6882b4aa8a17140bca",
+    "verification/section-241/tests.txt": "ffbe7a65aaf7ed14de0a3668a0da016cc19b62d1f5700401228470f557843194",
+    "verification/section-241/validation.json": "0ad4710c04b8b1847fb8b51c29009ad8956d7b282e0ac126fc563787eb7ca11d"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_attack_state_sequence",
+      "tests.test_three_part_static_reference_current",
+      "tests.test_three_part_wait_budget_current"
+    ],
+    "tests_run": 48,
+    "passed": 48,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}

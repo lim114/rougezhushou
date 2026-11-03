@@ -1,0 +1,14 @@
+{
+  "kind": "historical_assertion_migration_for_new_documented_main_floor_scope",
+  "old_source": "verification/sections/298-preparation/before/tests/test_node_catalog.py",
+  "old_sha256": "79a65deeb3a49adcede74ab8606ee26763987492f65c4ee35fc72f51d6404916",
+  "new_source": "tests/test_node_catalog.py",
+  "new_sha256": "6d5ea92a97a4181a36cdd4b945f19c92fa171cdbb8801c9fece94debc0af3aef",
+  "unchanged_other_test_methods": 31,
+  "changed_method": "test_172",
+  "old_method": "def test_172(self):\n    a = c.event_candidates('不期而遇', floor=1)\n    b = c.event_candidates('不期而遇', floor=3)\n    self.assertIn('桑尼的邀请', [e['title'] for e in a['rows']])\n    self.assertNotIn('桑尼的邀请', [e['title'] for e in b['rows']])\n    self.assertIn('桑尼的邀请', [e['title'] for e in c.event_candidates('不期而遇', floor=3, special_region=True)['rows']])\n    self.assertTrue(c.event_candidates('先行一步', floor=6)['rows'])\n    with self.assertRaises(ValueError):\n        c.event_candidates(floor=True)",
+  "new_method": "def test_172(self):\n    a = c.event_candidates('不期而遇', floor=1)\n    b = c.event_candidates('不期而遇', floor=3)\n    self.assertIn('桑尼的邀请', [e['title'] for e in a['rows']])\n    self.assertNotIn('桑尼的邀请', [e['title'] for e in b['rows']])\n    self.assertIn('桑尼的邀请', [e['title'] for e in c.event_candidates('不期而遇', floor=3, special_region=True)['rows']])\n    r = c.event_candidates('先行一步', floor=6)\n    self.assertFalse(r['rows'])\n    self.assertEqual([e['id'] for e in r['excluded']], ['community_group_024'])\n    self.assertFalse(r['excluded'][0]['natural_requirement_reference']['documented_floor_match'])\n    with self.assertRaises(ValueError):\n        c.event_candidates(floor=True)",
+  "reason": "The previous fixed event DOM lacked floors for this event; section298 now binds an independent explicit natural-main-floor negative rule. Preserve the old source and replace precisely its outdated allowance assertion with no candidate, exact excluded identity, and false documentary floor match. New tests cover all36 contexts and content/history/source failure boundaries.",
+  "product_or_test_failure_claimed": false,
+  "coverage_scope_reduced": false
+}

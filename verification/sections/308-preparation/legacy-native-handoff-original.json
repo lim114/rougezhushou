@@ -1,0 +1,111 @@
+{
+  "kind": "CURRENT308_LEGACY_NATIVE_VARIANTS_CACHE_ONLY",
+  "status": "READY_NOT_EXECUTED",
+  "promotion_files": {
+    "scripts/verify_direct_map_window_303_full308.py": {
+      "sha256": "ae300910efaa30ec3bd2e74ec08e147cadec541eb5ba6263e642890301cace58",
+      "bytes": 46066
+    },
+    "scripts/verify_direct_map_window_294_full308.py": {
+      "sha256": "53e2c3d9887b090c8fd47fa37a7a06103f869a16b55e467587123ce0e3458cce",
+      "bytes": 39062
+    }
+  },
+  "source_pins": {
+    "research/p3-map-direct-ground-308/prior-direct-references.json": {
+      "sha256": "dc43bbbe70eab6f11cc8661c3bfeab994000ea614ea0f8c999a596f5cb2c445a",
+      "bytes": 58293
+    },
+    "research/p3-map-direct-ground-308/source-manifest.json": {
+      "bytes": 3437,
+      "sha256": "a47baddc0d8201afd63b415602f7ebf572d70efcc09fd6d9e4c0875fbba2ddff"
+    },
+    "scripts/extend_direct_landmark_308.py": {
+      "bytes": 26363,
+      "sha256": "525a83a372fbad9440b65a99e0367df73d6f2826ce8bafaea7f19d72167ef919"
+    },
+    "research/p3-map-direct-ground-308/build-receipt.json": {
+      "bytes": 73859,
+      "sha256": "5aab9ac1d1c96f2d602c1ebb0d2dfeda534e14f61689ddd8b5b7b201d655bbf7"
+    },
+    "rouge/data/fixed-landmark-references.json": {
+      "bytes": 71935,
+      "sha256": "7e8044bcbdb5cf9605152f55fa2d262336e19bbf5fc74f8a8b9352f2a6fc1dde"
+    }
+  },
+  "static_reviews": [
+    {
+      "original": "scripts/verify_direct_map_window_303.py",
+      "original_sha256": "06a2856aec1bc7e6d927b8a480022620749e0d0983862780c1220c752e5d8d63",
+      "candidate": "scripts/verify_direct_map_window_303_full308.py",
+      "AST_parsed": true,
+      "main_AST_identical": true,
+      "old_source_contract_AST_identical_after_only_added_308_guard_and_current_data_pin_normalization": true,
+      "old_manifest_and_comparison_pins_unchanged": true,
+      "original_require_calls_preserved": 61,
+      "stages_unchanged": [
+        "ro6_b_6",
+        "ro6_n_2_3",
+        "ro6_e_2_3"
+      ],
+      "sizes_unchanged": [
+        [
+          1280,
+          850
+        ],
+        [
+          1440,
+          900
+        ],
+        [
+          1520,
+          940
+        ]
+      ],
+      "diff": "verify_direct_map_window_303_full308.diff"
+    },
+    {
+      "original": "scripts/verify_direct_map_window_294_full305.py",
+      "original_sha256": "31af04ccb39d2ced0367bd502f7c1982584df9b8878ad2db148756d13f4d24b3",
+      "candidate": "scripts/verify_direct_map_window_294_full308.py",
+      "AST_parsed": true,
+      "main_AST_identical": true,
+      "old_source_contract_AST_identical_after_only_added_308_guard_and_current_data_pin_normalization": true,
+      "old_manifest_and_comparison_pins_unchanged": true,
+      "original_require_calls_preserved": 52,
+      "stages_unchanged": [
+        "ro6_n_3_2",
+        "ro6_e_3_2",
+        "ro6_t_5",
+        "ro6_e_t_5"
+      ],
+      "sizes_unchanged": [
+        [
+          1280,
+          850
+        ],
+        [
+          1440,
+          900
+        ],
+        [
+          1520,
+          940
+        ]
+      ],
+      "diff": "verify_direct_map_window_294_full308.diff"
+    }
+  ],
+  "prior107_strict_entire_reference_stage_preservation": true,
+  "current_total_scope": [
+    14,
+    25,
+    123
+  ],
+  "kept_old_original_bound_files": true,
+  "added_308_full_manifest_closure": true,
+  "source_contract_executed": false,
+  "Qt_tests_Git_executed": false,
+  "production_modified": false,
+  "notice": "A source contract success is not native acceptance; all old main/QTest paths still need actual later full validation."
+}

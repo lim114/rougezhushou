@@ -1,0 +1,95 @@
+test_absent_sources_and_known_zero_do_not_acquire_pending_source_labels (public_contract_059.DamageSubtotalSourceTests.test_absent_sources_and_known_zero_do_not_acquire_pending_source_labels) ... FAIL
+test_bait_primary_limit_is_preserved_alongside_incoming_and_real_river (public_contract_059.DamageSubtotalSourceTests.test_bait_primary_limit_is_preserved_alongside_incoming_and_real_river) ... FAIL
+test_binding_incoming_and_river_causes_are_all_visible_without_duplicate_subtotal (public_contract_059.DamageSubtotalSourceTests.test_binding_incoming_and_river_causes_are_all_visible_without_duplicate_subtotal) ... FAIL
+test_real_river_alone_keeps_its_existing_subtotal_warning_and_numbers (public_contract_059.DamageSubtotalSourceTests.test_real_river_alone_keeps_its_existing_subtotal_warning_and_numbers) ... FAIL
+test_s3_primary_limit_is_preserved_alongside_incoming_and_real_river (public_contract_059.DamageSubtotalSourceTests.test_s3_primary_limit_is_preserved_alongside_incoming_and_real_river) ... FAIL
+test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) ... 
+  test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='frames', skill=1) ... FAIL
+  test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='frames', skill=2) ... FAIL
+  test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='continuous', skill=1) ... FAIL
+  test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='continuous', skill=2) ... FAIL
+
+======================================================================
+FAIL: test_absent_sources_and_known_zero_do_not_acquire_pending_source_labels (public_contract_059.DamageSubtotalSourceTests.test_absent_sources_and_known_zero_do_not_acquire_pending_source_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 113, in test_absent_sources_and_known_zero_do_not_acquire_pending_source_labels
+    self.assertIn('暗夜回声', '\n'.join(subtotal(r)['notes']))
+AssertionError: '暗夜回声' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_bait_primary_limit_is_preserved_alongside_incoming_and_real_river (public_contract_059.DamageSubtotalSourceTests.test_bait_primary_limit_is_preserved_alongside_incoming_and_real_river)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 83, in test_bait_primary_limit_is_preserved_alongside_incoming_and_real_river
+    self.assertIn('堕梦', '\n'.join(notes))
+AssertionError: '堕梦' not found in '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
+
+======================================================================
+FAIL: test_binding_incoming_and_river_causes_are_all_visible_without_duplicate_subtotal (public_contract_059.DamageSubtotalSourceTests.test_binding_incoming_and_river_causes_are_all_visible_without_duplicate_subtotal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 53, in test_binding_incoming_and_river_causes_are_all_visible_without_duplicate_subtotal
+    self.assertIn('暗夜回声', notes)
+AssertionError: '暗夜回声' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_real_river_alone_keeps_its_existing_subtotal_warning_and_numbers (public_contract_059.DamageSubtotalSourceTests.test_real_river_alone_keeps_its_existing_subtotal_warning_and_numbers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 96, in test_real_river_alone_keeps_its_existing_subtotal_warning_and_numbers
+    self.assertEqual(subtotal(r)['notes'][1:], [river_note])
+AssertionError: Lists differ: [] != ['这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+- []
++ ['这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']
+
+======================================================================
+FAIL: test_s3_primary_limit_is_preserved_alongside_incoming_and_real_river (public_contract_059.DamageSubtotalSourceTests.test_s3_primary_limit_is_preserved_alongside_incoming_and_real_river)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 71, in test_s3_primary_limit_is_preserved_alongside_incoming_and_real_river
+    self.assertIn('堕梦', '\n'.join(notes))
+AssertionError: '堕梦' not found in '这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='frames', skill=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 35, in test_unselected_river_is_not_named_as_binding_or_incoming_source
+    self.assertIn(cause, notes)
+AssertionError: '束缚倍率首次生效与刷新' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='frames', skill=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 35, in test_unselected_river_is_not_named_as_binding_or_incoming_source
+    self.assertIn(cause, notes)
+AssertionError: '目标普通攻击次数没有事件时刻' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='continuous', skill=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 35, in test_unselected_river_is_not_named_as_binding_or_incoming_source
+    self.assertIn(cause, notes)
+AssertionError: '束缚倍率首次生效与刷新' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+======================================================================
+FAIL: test_unselected_river_is_not_named_as_binding_or_incoming_source (public_contract_059.DamageSubtotalSourceTests.test_unselected_river_is_not_named_as_binding_or_incoming_source) (mode='continuous', skill=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-derived-report-059/draft/tests/test_damage_subtotal_sources.py", line 35, in test_unselected_river_is_not_named_as_binding_or_incoming_source
+    self.assertIn(cause, notes)
+AssertionError: '目标普通攻击次数没有事件时刻' not found in '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.358s
+
+FAILED (failures=9)
+{"package_directory": "/workspace/.continuation/p2-after-055-audit/derived-report/frozen", "tests_run": 6, "failures": 9, "errors": 0, "skipped": 0, "passed": false, "native_windows_or_game_validation": false}

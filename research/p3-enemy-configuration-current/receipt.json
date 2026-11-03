@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-12",
+  "scope": "Independent compiled enemy config merge review; no functional milestone",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "methods": 16,
+  "unique_physical_instruction_checks": 1415,
+  "metadata_and_binding_byte_spans": 283,
+  "all_bytes_match": true,
+  "runtime_binding_verified": false,
+  "current_hotfix_equivalence_proven": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "rules": {
+    "blackboard": "For each incoming pair remove every same-key target pair, then append reconstructed numeric/string pair; unmatched target order retained",
+    "talents": "Allocate only if computed board is null and incoming list nonnull/nonempty; then per-key helper merge. Null/empty incoming preserves old board. Initial null remains null.",
+    "skills": "For each delta find first old same-prefab. Only if found and delta board nonempty: deep-clone delta, copy old nonempty board or new empty board, apply incoming pair merge, remove all old same-prefab, append clone. Otherwise remove all and append whole delta without pair normalization.",
+    "skill_caller": "Begin from old skill array copy or empty list. Incoming null/empty does not clear old list. Final empty list is stored as null; nonempty stored as array.",
+    "pair_numeric": "valueStr null/empty -> incoming value retained, valueStr null",
+    "pair_string": "valueStr nonempty -> value set0, valueStr retained",
+    "clone": "Exact ObjectExtensions.DeepClone<ESkillData>; BinaryFormatter/MemoryStream roundtrip. Delta scalar values including zero preserved; old scalars are not merged."
+  },
+  "review_corrections": [
+    {
+      "issue": "Initial talents claim of unconditional board rebuild was wrong",
+      "cause": "Reviewer clipped caller window at0x182417cea and omitted old-board guard atce3/ce8",
+      "corrected_gate": [
+        "0x182417ce3 cmp qword ptr[rbx+0x68],0",
+        "0x182417ce8 jne0x182417d33"
+      ],
+      "wrong_rule_used_for_contract": false
+    }
+  ],
+  "limitations": [
+    "Compiled baseline only; source parameters and active hotfix/controller are distinct.",
+    "No execution of target DLL, BinaryFormatter, game, or runtime calls.",
+    "Serialization conclusion restricted to this six-field Serializable ESkillData with no custom methods/interfaces; no general clone guarantee for arbitrary types.",
+    "No level fallback, stage alias, controller, skill activation/first/cycle clock inferred."
+  ],
+  "artifact_sha256": {
+    "native-proof.json": "e82ab574adf013a920cb46188cfb479a6c1dc6871efafcbf44e8d87cde2665e8",
+    "metadata-bindings.json": "6717c2827808f7d072b9616d3d922305e4a6ef48569ddf1b2a0c95d79bcd2445",
+    "verify_native.py": "6d24f8c0b493e1a7d08dd0840bb85cd46d24b074cbeb89b1d37aabb17ea8e5fe"
+  }
+}

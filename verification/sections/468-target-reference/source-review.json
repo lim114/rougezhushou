@@ -1,0 +1,35 @@
+{
+  "section": 468,
+  "changed_or_new_sources": {
+    "rouge/app.py": {
+      "sha256": "d8ce8a6b97e9bc784e51173f5a8a79c4a48453314f3fc1192d5566dd62ea602b",
+      "bytes": 165257
+    },
+    "rouge/battle_view.py": {
+      "sha256": "21c3050142ee147193e788850ea52f218aef1ed78aab7ffd2c36c5111b0f7e5f",
+      "bytes": 58059
+    },
+    "rouge/current_battle_view.py": {
+      "sha256": "f508e598d505e530d469e328b62092f5aa8ce245bea645ca1143d22c03204543",
+      "bytes": 54645
+    },
+    "rouge/player_calculation_target.py": {
+      "sha256": "7a6dd0951368866c9f2fb08cd68ae3749cfd6aec5a23d4dd76923875052fe81a",
+      "bytes": 2190
+    },
+    "rouge/reference_copy.py": {
+      "sha256": "c6b6bf32396afca94e5ea07d281fc73414a8809f49aa2d6262db0c11abf3b4ac",
+      "bytes": 21653
+    },
+    "tests/test_calculation_target_468.py": {
+      "sha256": "671ae880cd715cf1b493ad4dc7b374257a38072debaeaf9d20ab56d65e08323c",
+      "bytes": 6561
+    },
+    "tests/test_expansion_integration_313.py": {
+      "sha256": "0c30fc324d7a7365859f2847d3411c2bc3d89f3dd52c6fa0eb4f290ed8b79bc7",
+      "bytes": 2964
+    }
+  },
+  "review": "New target route reuses the existing fixed-stage reader and source-bound shared window. Calculator and legacy target pages retain independent source contexts. Only one exact enemy id/level match is preselected; otherwise the stage overview opens. Cached same-source pages retain reading, while changed target or calculation scope invalidates the old reference chain. The new header returns to the unchanged original calculator. First unique-enemy opening gets a readable height and a single native deferred scroll, cached reopen does not scroll again. The existing mechanism_copy dictionary shortens exact presentation sentences only. Enemy details_toggle reveals the unchanged full model report and all qualifications; images, numeric calculations and source data remain intact. No new retries, catch blocks, provider calls or game controls.",
+  "whole_program_review_complete": false
+}

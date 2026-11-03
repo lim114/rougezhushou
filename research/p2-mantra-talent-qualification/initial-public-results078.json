@@ -1,0 +1,4069 @@
+{
+  "utc": "2026-10-08T00:03:55.164536+00:00",
+  "fixed_package_baseline": "225cb66dc89143a3cd3a884bd6c62f47ed9d36bc",
+  "public_calls": 8,
+  "records": [
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 0,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "palsy_triggers": 0
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": 1900.0,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 0.0,
+            "total": 0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified"
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0
+              ],
+              "release_frames": [
+                48
+              ],
+              "impact_frames": [
+                48
+              ],
+              "times_seconds": [
+                1.6
+              ],
+              "emitted_impact_frames": [
+                48
+              ],
+              "emitted_times_seconds": [
+                1.6
+              ],
+              "emitted_release_frames": [
+                48
+              ],
+              "hit_release_frames": [
+                48
+              ],
+              "interval_frames_by_attack": [
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0,
+                48,
+                96
+              ],
+              "release_frames": [
+                48,
+                96,
+                144
+              ],
+              "impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "emitted_times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "hit_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "interval_frames_by_attack": [
+                48,
+                48,
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "unplaced_components": [],
+          "resource_and_damage_shared_clock": true,
+          "initial_seconds": 6.4,
+          "cycle_seconds": 8.033333333333333
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 773,
+            "attack": 1000.0,
+            "defense": 52,
+            "resistance": 5.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.033333333333333,
+            "duration_seconds": 1.6333333333333333,
+            "total_damage": 1900.0,
+            "total_healing": 0,
+            "phase_damage": 1900.0,
+            "phase_healing": 0,
+            "cycle_dps": 609.9585062240664,
+            "cycle_hps": 0.0,
+            "cycle_damage": 4900.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": 0
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 190.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 0,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 0.0,
+              "hits": 0.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              0.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 0.0,
+                "hits": 0.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                0.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 19.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6333333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.033333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 48,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.6,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1163.265306122449,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 190.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 609.9585062240664,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 0.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "当前情景元素伤害",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在总伤中计入，不再相加。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": []
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 0,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "palsy_triggers": 1
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 1.0,
+            "per_hit": 0.0,
+            "total": 0.0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified",
+            "actual_total": null
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0
+              ],
+              "release_frames": [
+                48
+              ],
+              "impact_frames": [
+                48
+              ],
+              "times_seconds": [
+                1.6
+              ],
+              "emitted_impact_frames": [
+                48
+              ],
+              "emitted_times_seconds": [
+                1.6
+              ],
+              "emitted_release_frames": [
+                48
+              ],
+              "hit_release_frames": [
+                48
+              ],
+              "interval_frames_by_attack": [
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0,
+                48,
+                96
+              ],
+              "release_frames": [
+                48,
+                96,
+                144
+              ],
+              "impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "emitted_times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "hit_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "interval_frames_by_attack": [
+                48,
+                48,
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "unplaced_components": [
+            "麻痹触发天赋"
+          ],
+          "resource_and_damage_shared_clock": true,
+          "initial_seconds": 6.4,
+          "cycle_seconds": 8.033333333333333
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 773,
+            "attack": 1000.0,
+            "defense": 52,
+            "resistance": 5.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.033333333333333,
+            "duration_seconds": 1.6333333333333333,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": null
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": null,
+            "window_hps": 0.0,
+            "window_damage": null
+          },
+          "training": {
+            "elite": 0,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。",
+            "尚未统一排入时间轴的输出分项：麻痹触发天赋。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 0.0,
+              "hits": 1.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              1.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 0.0,
+                "hits": 1.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                1.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "known_damage_subtotals": {
+          "total_damage": 1900.0,
+          "phase_damage": 1900.0,
+          "window_damage": 1900.0,
+          "cycle_damage": 4900.0,
+          "cycle_dps": 609.9585062240664,
+          "window_dps": 190.0
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 19.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6333333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.033333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 48,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.6,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 1.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 4900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 609.9585062240664,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "已建模元素伤害小计",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在已建模伤害小计中计入；不含未排程的河谷持续伤害。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": []
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 1,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "palsy_triggers": 0
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": 1900.0,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 1000.0,
+            "total": 0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified"
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0
+              ],
+              "release_frames": [
+                48
+              ],
+              "impact_frames": [
+                48
+              ],
+              "times_seconds": [
+                1.6
+              ],
+              "emitted_impact_frames": [
+                48
+              ],
+              "emitted_times_seconds": [
+                1.6
+              ],
+              "emitted_release_frames": [
+                48
+              ],
+              "hit_release_frames": [
+                48
+              ],
+              "interval_frames_by_attack": [
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0,
+                48,
+                96
+              ],
+              "release_frames": [
+                48,
+                96,
+                144
+              ],
+              "impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "emitted_times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "hit_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "interval_frames_by_attack": [
+                48,
+                48,
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "unplaced_components": [],
+          "resource_and_damage_shared_clock": true,
+          "initial_seconds": 6.4,
+          "cycle_seconds": 8.033333333333333
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1004,
+            "attack": 1000.0,
+            "defense": 79,
+            "resistance": 10.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.033333333333333,
+            "duration_seconds": 1.6333333333333333,
+            "total_damage": 1900.0,
+            "total_healing": 0,
+            "phase_damage": 1900.0,
+            "phase_healing": 0,
+            "cycle_dps": 609.9585062240664,
+            "cycle_hps": 0.0,
+            "cycle_damage": 4900.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": 0
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 190.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 1,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 1000.0,
+              "hits": 0.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              0.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 1000.0,
+                "hits": 0.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                0.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 21.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6333333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.033333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 48,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.6,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1163.265306122449,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 190.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 609.9585062240664,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 0.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "当前情景元素伤害",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在总伤中计入，不再相加。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "场上敌人触发麻痹效果时立即受到相当于真言攻击力100%的元素伤害，且触发麻痹时有8%概率不消耗麻痹层数",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "噤声限域",
+          "description": "场上敌人触发<$ba.palsy>麻痹</>效果时立即受到相当于真言攻击力100%的元素伤害，且触发<$ba.palsy>麻痹</>时有8%概率不消耗<$ba.palsy>麻痹</>层数",
+          "values": {
+            "atk_scale": 1.0,
+            "prob": 0.08
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 1,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "palsy_triggers": 1
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 1.0,
+            "per_hit": 1000.0,
+            "total": 1000.0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified",
+            "actual_total": null
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0
+              ],
+              "release_frames": [
+                48
+              ],
+              "impact_frames": [
+                48
+              ],
+              "times_seconds": [
+                1.6
+              ],
+              "emitted_impact_frames": [
+                48
+              ],
+              "emitted_times_seconds": [
+                1.6
+              ],
+              "emitted_release_frames": [
+                48
+              ],
+              "hit_release_frames": [
+                48
+              ],
+              "interval_frames_by_attack": [
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "char_4204_mantra",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 48,
+              "interval_seconds": 1.6,
+              "start_frames": [
+                0,
+                48,
+                96
+              ],
+              "release_frames": [
+                48,
+                96,
+                144
+              ],
+              "impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_impact_frames": [
+                48,
+                96,
+                144
+              ],
+              "emitted_times_seconds": [
+                1.6,
+                3.2,
+                4.8
+              ],
+              "emitted_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "hit_release_frames": [
+                48,
+                96,
+                144
+              ],
+              "interval_frames_by_attack": [
+                48,
+                48,
+                48
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "unplaced_components": [
+            "麻痹触发天赋"
+          ],
+          "resource_and_damage_shared_clock": true,
+          "initial_seconds": 6.4,
+          "cycle_seconds": 8.033333333333333
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1004,
+            "attack": 1000.0,
+            "defense": 79,
+            "resistance": 10.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.033333333333333,
+            "duration_seconds": 1.6333333333333333,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": null
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": null,
+            "window_hps": 0.0,
+            "window_damage": null
+          },
+          "training": {
+            "elite": 1,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。",
+            "尚未统一排入时间轴的输出分项：麻痹触发天赋。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 1000.0,
+              "hits": 1.0,
+              "total": 1000.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              1.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 1000.0,
+                "hits": 1.0,
+                "total": 1000.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                1.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "known_damage_subtotals": {
+          "total_damage": 1900.0,
+          "phase_damage": 1900.0,
+          "window_damage": 1900.0,
+          "cycle_damage": 4900.0,
+          "cycle_dps": 609.9585062240664,
+          "window_dps": 190.0
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 21.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6333333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.033333333333333,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 48,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.6,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 1000.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 1.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 4900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 609.9585062240664,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "已建模元素伤害小计",
+                  "value": 1000.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在已建模伤害小计中计入；不含未排程的河谷持续伤害。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "场上敌人触发麻痹效果时立即受到相当于真言攻击力100%的元素伤害，且触发麻痹时有8%概率不消耗麻痹层数",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "噤声限域",
+          "description": "场上敌人触发<$ba.palsy>麻痹</>效果时立即受到相当于真言攻击力100%的元素伤害，且触发<$ba.palsy>麻痹</>时有8%概率不消耗<$ba.palsy>麻痹</>层数",
+          "values": {
+            "atk_scale": 1.0,
+            "prob": 0.08
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 0,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "palsy_triggers": 0
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": 1900.0,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 0.0,
+            "total": 0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified"
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 773,
+            "attack": 1000.0,
+            "defense": 52,
+            "resistance": 5.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.0,
+            "duration_seconds": 1.6,
+            "total_damage": 1900.0,
+            "total_healing": 0,
+            "phase_damage": 0.0,
+            "phase_healing": 0,
+            "cycle_dps": 737.5,
+            "cycle_hps": 0.0,
+            "cycle_damage": 5900.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": 0
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 190.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 0,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 0.0,
+              "hits": 0.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              0.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 0.0,
+                "hits": 0.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                0.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 19.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 0.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 190.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 737.5,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 0.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "当前情景元素伤害",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在总伤中计入，不再相加。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": []
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 0,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "palsy_triggers": 1
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 1.0,
+            "per_hit": 0.0,
+            "total": 0.0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified",
+            "actual_total": null
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 773,
+            "attack": 1000.0,
+            "defense": 52,
+            "resistance": 5.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.0,
+            "duration_seconds": 1.6,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": null
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": null,
+            "window_hps": 0.0,
+            "window_damage": null
+          },
+          "training": {
+            "elite": 0,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 0.0,
+              "hits": 1.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              1.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 0.0,
+                "hits": 1.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                1.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "known_damage_subtotals": {
+          "total_damage": 1900.0,
+          "phase_damage": 0.0,
+          "window_damage": 1900.0,
+          "cycle_damage": 5900.0,
+          "cycle_dps": 737.5,
+          "window_dps": 190.0
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 19.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 1.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 5900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 737.5,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "已建模元素伤害小计",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在已建模伤害小计中计入；不含未排程的河谷持续伤害。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": []
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 1,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "palsy_triggers": 0
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": 1900.0,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 1000.0,
+            "total": 0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified"
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1004,
+            "attack": 1000.0,
+            "defense": 79,
+            "resistance": 10.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.0,
+            "duration_seconds": 1.6,
+            "total_damage": 1900.0,
+            "total_healing": 0,
+            "phase_damage": 0.0,
+            "phase_healing": 0,
+            "cycle_dps": 737.5,
+            "cycle_hps": 0.0,
+            "cycle_damage": 5900.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": 0
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 190.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 1,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 1000.0,
+              "hits": 0.0,
+              "total": 0.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              0.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 1000.0,
+                "hits": 0.0,
+                "total": 0.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                0.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 21.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 0.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 190.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 737.5,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 0.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 0.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "当前情景元素伤害",
+                  "value": 0.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在总伤中计入，不再相加。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "场上敌人触发麻痹效果时立即受到相当于真言攻击力100%的元素伤害，且触发麻痹时有8%概率不消耗麻痹层数",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "噤声限域",
+          "description": "场上敌人触发<$ba.palsy>麻痹</>效果时立即受到相当于真言攻击力100%的元素伤害，且触发<$ba.palsy>麻痹</>时有8%概率不消耗<$ba.palsy>麻痹</>层数",
+          "values": {
+            "atk_scale": 1.0,
+            "prob": 0.08
+          }
+        }
+      ]
+    },
+    {
+      "request": {
+        "operator": "char_4204_mantra",
+        "skill": 1,
+        "elite": 1,
+        "level": 1,
+        "skill_rank": 1,
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "palsy_triggers": 1
+      },
+      "full_result": {
+        "attack": 1000.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.6,
+        "components": [
+          {
+            "name": "共鸣溃缩",
+            "damage_type": "magic",
+            "hits": 1,
+            "per_hit": 1900.0,
+            "total": 1900.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "damage_buildup": {
+              "element": "neural",
+              "ratio": 0.1
+            }
+          },
+          {
+            "name": "麻痹触发天赋",
+            "damage_type": "elemental",
+            "hits": 1.0,
+            "per_hit": 1000.0,
+            "total": 1000.0,
+            "source_unit": "operator",
+            "timing_reference": "unplaced conditional source; actual collision clock unverified",
+            "actual_total": null
+          },
+          {
+            "name": "潜在神经损伤积累（不是生命伤害）",
+            "damage_type": "buildup",
+            "hits": 1,
+            "per_hit": 190.0,
+            "total": 190.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              1.6
+            ],
+            "event_amounts": [
+              190.0
+            ]
+          },
+          {
+            "name": "神经损伤爆发",
+            "damage_type": "elemental",
+            "hits": 0,
+            "per_hit": 6000.0,
+            "total": 0.0,
+            "times_seconds": [],
+            "source_unit": "environment"
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1004,
+            "attack": 1000.0,
+            "defense": 79,
+            "resistance": 10.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "共鸣溃缩",
+            "initial_seconds": 6.4,
+            "recharge_seconds": 6.4,
+            "cycle_seconds": 8.0,
+            "duration_seconds": 1.6,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "sp_recovery_per_second": null,
+            "mode": "next_attack",
+            "hit_counts": {
+              "共鸣溃缩": 1,
+              "潜在神经损伤积累（不是生命伤害）": 1,
+              "神经损伤爆发": 0,
+              "麻痹触发天赋": null
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": null,
+            "window_hps": 0.0,
+            "window_damage": null
+          },
+          "training": {
+            "elite": 1,
+            "level": 1,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。",
+            "周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "external_event_reference": {
+          "conditional_components": [
+            {
+              "name": "麻痹触发天赋",
+              "damage_type": "elemental",
+              "per_hit": 1000.0,
+              "hits": 1.0,
+              "total": 1000.0
+            }
+          ],
+          "source_possible": true,
+          "observation_seconds": null,
+          "collision_clock_verified": false,
+          "kind": "mantra_events",
+          "parameter_rows": [
+            [
+              "声明当前目标麻痹触发次数",
+              1.0,
+              "次"
+            ]
+          ],
+          "notes": [
+            "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+            "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+          ],
+          "window_reference": {
+            "conditional_components": [
+              {
+                "name": "麻痹触发天赋",
+                "damage_type": "elemental",
+                "per_hit": 1000.0,
+                "hits": 1.0,
+                "total": 1000.0
+              }
+            ],
+            "source_possible": true,
+            "observation_seconds": 10.0,
+            "collision_clock_verified": false,
+            "kind": "mantra_events",
+            "parameter_rows": [
+              [
+                "声明当前目标麻痹触发次数",
+                1.0,
+                "次"
+              ]
+            ],
+            "notes": [
+              "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+              "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+            ]
+          },
+          "actual_event_times_seconds": null
+        },
+        "known_damage_subtotals": {
+          "total_damage": 1900.0,
+          "phase_damage": 0.0,
+          "window_damage": 1900.0,
+          "cycle_damage": 5900.0,
+          "cycle_dps": 737.5,
+          "window_dps": 190.0
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 21.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_4204_mantra",
+            "name": "真言",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 1,
+          "mode": "next_attack",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 6.4,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 1.6,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 8.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 6.4,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "external_events",
+              "title": "独立条件来源 · 事件时钟待核验",
+              "metrics": [
+                {
+                  "key": "source_0",
+                  "label": "麻痹触发天赋条件总量",
+                  "value": 1000.0,
+                  "unit": "伤害"
+                },
+                {
+                  "key": "parameter_0",
+                  "label": "声明当前目标麻痹触发次数",
+                  "value": 1.0,
+                  "unit": "次"
+                },
+                {
+                  "key": "events",
+                  "label": "实际事件时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。",
+                "不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 1900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 5900.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 737.5,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。"
+              ]
+            },
+            {
+              "id": "elemental",
+              "title": "元素机制",
+              "metrics": [
+                {
+                  "key": "potential_buildup",
+                  "label": "潜在损伤积累",
+                  "value": 190.0,
+                  "unit": "损伤值"
+                },
+                {
+                  "key": "bursts",
+                  "label": "当前情景损伤爆发次数",
+                  "value": 0,
+                  "unit": "次"
+                },
+                {
+                  "key": "elemental_damage",
+                  "label": "已建模元素伤害小计",
+                  "value": 1000.0,
+                  "unit": ""
+                }
+              ],
+              "notes": [
+                "潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。",
+                "元素伤害已在已建模伤害小计中计入；不含未排程的河谷持续伤害。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "场上敌人触发麻痹效果时立即受到相当于真言攻击力100%的元素伤害，且触发麻痹时有8%概率不消耗麻痹层数",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "下次攻击造成攻击力190%的法术伤害并附带伤害10%的神经损伤，若目标处于神经损伤爆发期间则额外造成150%攻击力的元素伤害"
+              ]
+            }
+          ]
+        }
+      },
+      "selected_talents": [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "噤声限域",
+          "description": "场上敌人触发<$ba.palsy>麻痹</>效果时立即受到相当于真言攻击力100%的元素伤害，且触发<$ba.palsy>麻痹</>时有8%概率不消耗<$ba.palsy>麻痹</>层数",
+          "values": {
+            "atk_scale": 1.0,
+            "prob": 0.08
+          }
+        }
+      ]
+    }
+  ]
+}

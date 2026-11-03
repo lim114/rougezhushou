@@ -1,0 +1,22 @@
+{
+  "kind": "EXACT_LOCAL_SECTION107_NEW_TEST_CONTRACT_CORRECTION",
+  "STOPWRITE": true,
+  "Runtime_executed": false,
+  "product_pass": false,
+  "source_count_before": null,
+  "source_count_after": null,
+  "source_count_note": "One existing test Source replacement; Root actual full guard supplies unchanged750 count. No new module or registry edit.",
+  "replacements": [
+    {
+      "path": "tests/test_aglna_gravity_weight_107.py",
+      "before_sha256": "62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c",
+      "before_bytes": 13845,
+      "after_sha256": "2c5eab4be5f484ca3eaf45d19eeb1f1067661a36c42ea41297a5ad1ec22ecc51",
+      "after_bytes": 15991,
+      "exact_occurrences": 1,
+      "before": "            for empty in ({'window_seconds': 0}, {'timing': {'target_disappears_seconds': 0}},\n                          {'timing': {'target_windows': []}}):\n                result = calculate_damage(request(TARGETS[4], timing_mode=mode,\n                                                  relic_ids=[GRAVITY], **empty))\n                self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))\n                self.assertEqual(talent(result)['times_seconds'], [])\n",
+      "after": "            empty_cases = [{'window_seconds': 0}, {'timing': {'target_disappears_seconds': 0}}]\n            if mode == 'frames':\n                empty_cases.append({'timing': {'target_windows': []}})\n            for empty in empty_cases:\n                with self.subTest(mode=mode, boundary=empty):\n                    result = calculate_damage(request(TARGETS[4], timing_mode=mode,\n                                                      relic_ids=[GRAVITY], **empty))\n                    self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))\n                    self.assertEqual(talent(result)['times_seconds'], [])\n\n    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):\n        # Root's actual twelve-call diagnosis confirms that the legacy\n        # continuous reference does not consume target_windows. The timing\n        # family gap remains pending section109; gravity changes only per-hit\n        # weight qualification here, without adding acquisition/game timing.\n        references = []\n        for relic_ids in ([], [GRAVITY]):\n            with self.subTest(mode='continuous', relic_ids=relic_ids):\n                caller = request(TARGETS[4], timing_mode='continuous', relic_ids=relic_ids)\n                caller_before = deepcopy(caller)\n                baseline = calculate_damage(caller)\n                self.assertEqual(caller, caller_before)\n                empty_caller = {**caller, 'timing': {'target_windows': []}}\n                empty_caller_before = deepcopy(empty_caller)\n                empty = calculate_damage(empty_caller)\n                self.assertEqual(empty_caller, empty_caller_before)\n                self.assertGreater(talent(baseline)['hits'], 0)\n                self.assertEqual(talent(empty), talent(baseline))\n                # This exact flag records whether timing input was provided\n                # (timing.py output); every other returned leaf is compared.\n                self.assertIs(baseline['timing']['scenario_provided'], False)\n                self.assertIs(empty['timing']['scenario_provided'], True)\n                baseline_comparable = deepcopy(baseline)\n                empty_comparable = deepcopy(empty)\n                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']\n                self.assertEqual(empty_comparable, baseline_comparable)\n                references.append(talent(empty))\n        self.assertEqual(references[0]['hits'], references[1]['hits'])\n        self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])\n"
+    }
+  ],
+  "scope": "Test fixture only. No product/timing/mechanism/registry edits. 10 old methods exact, 1 old method localized, 1 new method; 11 to12 methods."
+}

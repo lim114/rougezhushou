@@ -1,0 +1,18 @@
+--- window113.py
++++ window114.py
+@@ -62,13 +62,13 @@
+     assert sha((artifact/'native_evidence.py').read_bytes())==HELPER_SHA
+     guard_raw=guard_path.read_bytes();guard=json.loads(guard_raw)
+     expected=guard['source_sha256'];extra=guard['source_additional_sha256']
+-    assert guard['section']==113 and len(expected)==args.source_count and source_map(root)==expected
++    assert guard['section']==114 and len(expected)==args.source_count and source_map(root)==expected
+     assert set(extra)=={'CORE_0.70_VERIFICATION.json'}
+     for name,want in extra.items():assert sha((root/name).read_bytes())==want
+     out.mkdir();(out/'records').mkdir();(out/'public-state').mkdir()
+     rows=[];records=[];pngs=[];calls=[];errors=[];pairs=[];active={'case':'bootstrap','phase':'constructor'}
+     started=time.perf_counter();done=threading.Event();window=None;module=None;backend=None;calculator=None
+-    receipt={'kind':'ROOT_ACTUAL_113_REAL_MAINWINDOW','phase':'candidate','passed':False,
++    receipt={'kind':'ROOT_ACTUAL_114_REAL_MAINWINDOW','phase':'candidate','passed':False,
+         'workflow_complete':False,'runner_sha256':sha(Path(__file__).read_bytes()),
+         'native_helper_sha256':HELPER_SHA,'source_guard_sha256':sha(guard_raw),
+         'source_before':expected,'source_additional_before':extra,'source_count':args.source_count,

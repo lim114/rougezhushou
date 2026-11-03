@@ -1,0 +1,52 @@
+--- original/rouge/spawn_candidates.py
++++ revision2/rouge/spawn_candidates.py
+@@ -13,6 +13,7 @@
+ STAGE_IDS = ('ro6_n_1_1', 'ro6_n_1_2', 'ro6_n_1_3', 'ro6_n_1_4', 'ro6_n_2_1', 'ro6_n_2_2', 'ro6_n_2_3', 'ro6_n_2_4', 'ro6_n_2_5', 'ro6_n_3_1', 'ro6_n_3_2', 'ro6_n_3_3', 'ro6_n_3_4', 'ro6_n_3_5', 'ro6_n_3_6', 'ro6_n_4_1', 'ro6_n_4_2', 'ro6_n_4_3', 'ro6_n_4_4', 'ro6_n_4_5', 'ro6_n_4_6', 'ro6_n_4_7', 'ro6_n_5_1', 'ro6_n_5_2', 'ro6_n_5_3', 'ro6_n_5_4', 'ro6_n_5_5', 'ro6_n_5_6', 'ro6_n_5_7', 'ro6_n_6_1', 'ro6_n_6_2', 'ro6_b_2_b', 'ro6_b_6', 'ro6_t_2', 'ro6_t_12', 'ro6_duel_1', 'ro6_duel_2', 'ro6_c_2', 'ro6_e_1_1', 'ro6_e_1_2', 'ro6_e_1_3', 'ro6_e_1_4', 'ro6_e_2_1', 'ro6_e_2_2', 'ro6_e_2_3', 'ro6_e_2_4', 'ro6_e_2_5', 'ro6_e_3_1', 'ro6_e_3_2', 'ro6_e_3_3', 'ro6_e_3_4', 'ro6_e_3_5', 'ro6_e_3_6', 'ro6_e_4_1', 'ro6_e_4_2', 'ro6_e_4_3', 'ro6_e_4_4', 'ro6_e_4_5', 'ro6_e_4_6', 'ro6_e_4_7', 'ro6_e_5_1', 'ro6_e_5_2', 'ro6_e_5_3', 'ro6_e_5_4', 'ro6_e_5_5', 'ro6_e_5_6', 'ro6_e_5_7', 'ro6_e_6_1', 'ro6_e_6_2')
+ NOTICE = '这里只查阅固定资料中的候选与关联包，不会选择游戏结果。原键相同不证明同时出现、唯一入选或互斥次数；不提供概率，也不把单条数量相加为实际敌人数。'
+ _CACHE = {}
++_CACHE_DIGESTS = {}
+ TOKEN_KEYS = {'kind', 'stage_id', 'scope_key', 'origin_action_id', 'relation_id',
+               'relation_kind', 'queue_id', 'relation_key', 'action_id',
+               'member_reference_id', 'source_identity'}
+@@ -26,6 +27,22 @@
+     if type(expected) is list:
+         return len(value) == len(expected) and all(_same(a, b) for a, b in zip(value, expected))
+     return value == expected
++
++def _snapshot_digest(packet):
++    """Only the selected query snapshot, preserving exact JSON value types."""
++    selected = {'stage': packet['stage'], 'expected_stage': packet['expected_stage'],
++                'global_source': packet['battle']['source'], 'manifest': packet['manifest']}
++    def check(value):
++        if type(value) is dict:
++            if any(type(key) is not str for key in value): raise ValueError('Non-JSON snapshot key')
++            for child in value.values(): check(child)
++        elif type(value) is list:
++            for child in value: check(child)
++        elif value is not None and type(value) not in (str, int, float, bool):
++            raise ValueError('Non-JSON snapshot value')
++    check(selected)
++    return _sha(json.dumps(selected, ensure_ascii=False, sort_keys=True,
++                           separators=(',', ':'), allow_nan=False).encode('utf8'))
+ 
+ def _path(name):
+     if not _str(name) or Path(name).is_absolute() or '..' in Path(name).parts or '\\' in name: raise ValueError('Unsafe public path')
+@@ -75,14 +92,17 @@
+                 for original_fragment, built_fragment in zip(original_wave['fragments'], built_wave['fragments']):
+                     if not _same(original_fragment['actions'], [r['action'] for r in built_fragment['actions']]): return None
+             _CACHE.clear()
++            _CACHE_DIGESTS.clear()
+             _CACHE[key] = {'data': data, 'stage': stage, 'battle': battle, 'expected_stage': expected,
+                            'manifest': manifest, 'level': level}
++            _CACHE_DIGESTS[key] = _snapshot_digest(_CACHE[key])
+         packet = _CACHE[key]
++        if _snapshot_digest(packet) != _CACHE_DIGESTS.get(key): return None
+         actual = battle_preview.battle_data()
+         if (not _same(actual['source'], packet['battle']['source'])
+                 or not _same(actual['stages'][stage_id], packet['expected_stage'])): return None
+         return packet
+-    except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError):
++    except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError, RecursionError):
+         return None
+ 
+ def _identity(packet):

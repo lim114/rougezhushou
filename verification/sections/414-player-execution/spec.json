@@ -1,0 +1,24 @@
+{
+  "title": "按原片改为藏品图标网格与可收起阅读栏",
+  "change": "收藏品浮窗改为深色多列图标网格、底部稀有度快捷筛选与图标缩放；更多条件折叠，点击或键盘选中后展开说明，关闭说明仍保留选中与筛选。窗口缩放时网格自动重排。",
+  "limits": "本节实现收藏品列表的布局和交互，不宣称所有浮窗、图标资源或整套视频外观已一致；数据范围、当前档位和领取限制保持。",
+  "criteria": [
+    "默认多列图标而非长文字列表",
+    "稀有度快捷按钮与现有筛选一致",
+    "缩放图标和窗口自动重排且不丢选择",
+    "点击与键盘可打开说明并可收起",
+    "完整资料和本局记录边界保持"
+  ],
+  "additional_tests": [
+    "tests.test_player_inventory_386",
+    "tests.test_player_compendium_413",
+    "tests.test_player_item_sources_394"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_414",
+  "native": "scripts/verify_player_feature_window_414.py",
+  "unit_receipt": "verification/sections/414-player-checks/process.json",
+  "native_receipt": "verification/sections/414-player-window/window.json",
+  "native_process_receipt": "verification/sections/414-player-window-process/process.json",
+  "source_receipt": "verification/sections/414-reference.json"
+}

@@ -1,0 +1,50 @@
+test_ambiguous_exact_id_level_is_not_silently_selected (tests.test_calculation_target_468.CalculationTargetTests.test_ambiguous_exact_id_level_is_not_silently_selected) ... ok
+test_calculation_mode_change_expires_target_reader (tests.test_calculation_target_468.CalculationTargetTests.test_calculation_mode_change_expires_target_reader) ... FAIL
+test_exact_target_enemy_opens_in_shared_host_without_changing_calculation (tests.test_calculation_target_468.CalculationTargetTests.test_exact_target_enemy_opens_in_shared_host_without_changing_calculation) ... ok
+test_legacy_stage_entry_uses_its_own_source_without_overwriting_calculator_target (tests.test_calculation_target_468.CalculationTargetTests.test_legacy_stage_entry_uses_its_own_source_without_overwriting_calculator_target) ... ok
+test_missing_stage_keeps_calculation_and_shows_short_notice (tests.test_calculation_target_468.CalculationTargetTests.test_missing_stage_keeps_calculation_and_shows_short_notice) ... ok
+test_no_selected_stage_has_no_visible_entry_or_new_window (tests.test_calculation_target_468.CalculationTargetTests.test_no_selected_stage_has_no_visible_entry_or_new_window) ... ok
+test_reopen_keeps_original_reader_query_manual_enemy_and_reading (tests.test_calculation_target_468.CalculationTargetTests.test_reopen_keeps_original_reader_query_manual_enemy_and_reading) ... ok
+test_target_change_expires_reference_and_map_descendant (tests.test_calculation_target_468.CalculationTargetTests.test_target_change_expires_reference_and_map_descendant) ... FAIL
+test_unmatched_enemy_level_keeps_fixed_stage_without_name_fallback (tests.test_calculation_target_468.CalculationTargetTests.test_unmatched_enemy_level_keeps_fixed_stage_without_name_fallback) ... ok
+test_all_nine_first_three_skills_reach_original_models_without_opening_settings (tests.test_calculator_layout_467.CalculatorLayoutTests.test_all_nine_first_three_skills_reach_original_models_without_opening_settings) ... ok
+test_archive_preview_is_explicit_and_preserves_current_grade16_record (tests.test_calculator_layout_467.CalculatorLayoutTests.test_archive_preview_is_explicit_and_preserves_current_grade16_record) ... ok
+test_heading_is_bold_and_debug_replaces_old_navigation (tests.test_calculator_layout_467.CalculatorLayoutTests.test_heading_is_bold_and_debug_replaces_old_navigation) ... ok
+test_report_navigation_only_contains_current_capabilities (tests.test_calculator_layout_467.CalculatorLayoutTests.test_report_navigation_only_contains_current_capabilities) ... ok
+test_result_first_controls_and_read_only_stats_keep_original_output (tests.test_calculator_layout_467.CalculatorLayoutTests.test_result_first_controls_and_read_only_stats_keep_original_output) ... ok
+test_same_source_refresh_retains_navigation_and_text_selection (tests.test_calculator_layout_467.CalculatorLayoutTests.test_same_source_refresh_retains_navigation_and_text_selection) ... ok
+test_settings_open_close_preserves_inputs_and_does_not_recalculate (tests.test_calculator_layout_467.CalculatorLayoutTests.test_settings_open_close_preserves_inputs_and_does_not_recalculate) ... ok
+test_development_is_not_default_navigation (tests.test_player_workspace_381.WorkspaceTests.test_development_is_not_default_navigation) ... ok
+test_exact_reader_routes_and_keeps_instances (tests.test_player_workspace_381.WorkspaceTests.test_exact_reader_routes_and_keeps_instances) ... ok
+test_explicit_developer_dialog_is_current_and_product_navigation_returns (tests.test_player_workspace_381.WorkspaceTests.test_explicit_developer_dialog_is_current_and_product_navigation_returns) ... ok
+test_five_player_groups (tests.test_player_workspace_381.WorkspaceTests.test_five_player_groups) ... ok
+test_group_navigation_uses_exact_first_page_without_new_instances (tests.test_player_workspace_381.WorkspaceTests.test_group_navigation_uses_exact_first_page_without_new_instances) ... ok
+test_leaf_changes_emit_and_unknown_target_is_safe (tests.test_player_workspace_381.WorkspaceTests.test_leaf_changes_emit_and_unknown_target_is_safe) ... ok
+test_branch_after_back_replaces_only_forward_history (tests.test_reference_window_451.ReferenceWindowTests.test_branch_after_back_replaces_only_forward_history) ... ok
+test_close_reopen_refreshes_current_page_and_retains_header (tests.test_reference_window_451.ReferenceWindowTests.test_close_reopen_refreshes_current_page_and_retains_header) ... ok
+test_same_native_host_and_back_forward_preserve_reading_and_size (tests.test_reference_window_451.ReferenceWindowTests.test_same_native_host_and_back_forward_preserve_reading_and_size) ... ok
+test_unregistered_pages_stay_hidden_and_do_not_force_other_page_size (tests.test_reference_window_451.ReferenceWindowTests.test_unregistered_pages_stay_hidden_and_do_not_force_other_page_size) ... ok
+test_unsaved_notes_veto_switch_close_and_back_without_changing_history (tests.test_reference_window_451.ReferenceWindowTests.test_unsaved_notes_veto_switch_close_and_back_without_changing_history) ... ok
+
+======================================================================
+FAIL: test_calculation_mode_change_expires_target_reader (tests.test_calculation_target_468.CalculationTargetTests.test_calculation_mode_change_expires_target_reader)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_target_468.py", line 27, in test_calculation_mode_change_expires_target_reader
+    w=self.window;self.target();page=self.opened();w.compact_window.open_full(w.damage_page);w.calculation_scope.setCurrentIndex(w.calculation_scope.findData('archive'));host=w.compact_window.reference_window;host.navigate(host.cursor+1);self.assertNotIn(page,host.history);self.assertEqual(self.opened().link_context[-1],'archive')
+                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <rouge.player_reference_window.ToolPage(0x24d12a54850, name="mapReferenceWindow") at 0x0000024D07C12140> unexpectedly found in [<rouge.player_reference_window.ToolPage(0x24d0f9a4fc0, name="mapReferenceWindow") at 0x0000024D0E2BA800>, <rouge.player_reference_window.ToolPage(0x24d12a54850, name="mapReferenceWindow") at 0x0000024D07C12140>, <rouge.player_reference_window.ToolPage(0x24d0f9a4fc0, name="mapReferenceWindow") at 0x0000024D0E2BA800>]
+
+======================================================================
+FAIL: test_target_change_expires_reference_and_map_descendant (tests.test_calculation_target_468.CalculationTargetTests.test_target_change_expires_reference_and_map_descendant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_calculation_target_468.py", line 25, in test_target_change_expires_reference_and_map_descendant
+    w=self.window;self.target();page=self.opened();self.assertTrue(page.panel.open_map_positions());mapped=w.compact_window.reference_window.pages.currentWidget();w.compact_window.open_full(w.damage_page);self.target('ro6_n_1_1');host=w.compact_window.reference_window;host.navigate(host.cursor+1);self.assertNotIn(page,host.history);self.assertNotIn(mapped,host.history);self.assertIs(host.pages.currentWidget(),w.compact_window.workspace_popup)
+                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <rouge.player_reference_window.ToolPage(0x24d844b9210, name="mapReferenceWindow") at 0x0000024D59F17900> unexpectedly found in [<rouge.player_reference_window.ToolPage(0x24d1edc4f20, name="mapReferenceWindow") at 0x0000024D26862E00>, <rouge.player_reference_window.ToolPage(0x24d844b9210, name="mapReferenceWindow") at 0x0000024D59F17900>, <rouge.player_reference_window.ToolPage(0x24d844b87f0, name="mapReferenceWindow") at 0x0000024D25EB1080>, <rouge.player_reference_window.ToolPage(0x24d1edc4f20, name="mapReferenceWindow") at 0x0000024D26862E00>]
+
+----------------------------------------------------------------------
+Ran 27 tests in 47.459s
+
+FAILED (failures=2)

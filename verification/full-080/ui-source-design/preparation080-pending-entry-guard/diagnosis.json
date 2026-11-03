@@ -1,0 +1,8 @@
+{
+  "scope": "Strengthen external pending design guard before any execution, no application/API/Qt/Wine was launched",
+  "earlier_behavior": "Pending guard asserted only at end of new loop, so accidental invocation could first initialize Qt and perform checks",
+  "corrected_behavior": "Add explicit main entry guard before imports and Qt initialization while pending; final sealed state removes only the pending condition",
+  "product_changed": false,
+  "actual_accidental_invocation_occurred": false,
+  "code_failure": false
+}

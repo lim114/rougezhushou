@@ -1,0 +1,36 @@
+{
+  "section": 121,
+  "files": [
+    {
+      "path": "rouge/timing.py",
+      "blocks": [
+        {
+          "before": "    if increment<=0:return None\r\n",
+          "after": "    if increment<=0 and required>0:return None\r\n"
+        },
+        {
+          "before": "    count=math.ceil(required/increment)\r\n",
+          "after": "    count=math.ceil(required/increment) if required>0 else 0\r\n"
+        },
+        {
+          "before": "    if len(frames)<count:return None\r\n    if wait_next_attack and timeline.mode=='frames':\r\n",
+          "after": "    if len(frames)<count:return None\r\n    if wait_next_attack and count==0 and timeline.mode=='continuous':\r\n        # SP is already ready: the existing continuous stream begins at 0.\r\n        # It still needs a legal emitted attack; an empty stream is unknown.\r\n        return 0.0 if events['start_frames'] else None\r\n    if wait_next_attack and timeline.mode=='frames':\r\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_next_attack_ready_stage.py",
+      "new_source": "/workspace/.continuation/p2-next-attack-ready-source-v1/candidate/tests/test_next_attack_ready_stage.py",
+      "new_source_sha256": "0f80ad4403766f368cbad99bb263d807fbc1eba1c93a3aaa4131d5aa39f797e1"
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "blocks": [
+        {
+          "before": "MODULES = (\n",
+          "after": "MODULES = (\n    \"tests.test_next_attack_ready_stage\",\n"
+        }
+      ]
+    }
+  ]
+}

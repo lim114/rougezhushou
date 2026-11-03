@@ -1,0 +1,129 @@
+{
+  "section": 52,
+  "baseline_head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+  "branch": "codex/p2-development",
+  "initial_discovery_head": "ab1a2f49332e9dbb577eb3ffa1a497c0bb969fa6",
+  "baseline_origin": "git archive of HEAD; current root changes excluded",
+  "sources": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_pinned_cache": true,
+      "current_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_pinned_cache": true,
+      "current_sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    }
+  },
+  "source_selectors": {
+    "skill_mapping": "character_table.char_002_amiya.skills[0].skillId",
+    "skill": "skill_table.skcom_magic_rage[3].levels[9]",
+    "talent": "character_table.char_002_amiya.talents[0].candidates[1]",
+    "base_interval": "character_table.char_002_amiya.phases[2].attributesKeyFrames[0].data.baseAttackTime"
+  },
+  "source_supports": "S1 AS90, nominal duration30, cost30/init15/natural1; base interval1.6; E2 attack-SP2/3 are parameters",
+  "unknowns": [
+    "native acquisition/release/impact first phase",
+    "finite positive lifetime and range clocks",
+    "post-skill target and mixed attack/natural-SP clock",
+    "actual skill-end/recharge/cycle binding"
+  ],
+  "source_receipts_reused": [
+    "research/p2-empty-enemy-scope/source-receipt.json",
+    "research/p2-empty-enemy-scope/NOTE.md",
+    "research/p2-phase-guards/source-receipt.json",
+    "research/p2-environment-and-lifecycle/source-receipt.json",
+    "/workspace/.continuation/p2-after-050/finite-positive-source/source-receipt.json"
+  ],
+  "public_cases": 708,
+  "unchanged_controls": 276,
+  "positive_observation_unknown": 216,
+  "zero_observation_with_unknown_cast": 108,
+  "empty_range_known_zero_damage_unknown_resource_clock": 108,
+  "positive_condition_references_match_all_old_clock_fields": true,
+  "initial_and_nominal_duration_unchanged": true,
+  "panels_and_cultivation_unchanged": true,
+  "restricted_scope_and_default_notes_labeled_conditional": true,
+  "all_inputs_and_catalogs_unchanged": true,
+  "native_replacement_hit_counts": null,
+  "existing_numeric_life0_path_unchanged": true,
+  "valid_numeric_string_zero": "accepted type boundary: actual recharge/cycle None versus numeric0 old30/60; conditional30/60 only",
+  "accepted_zero_types_semantically_normalized": false,
+  "zero_type_boundary_cases": 4,
+  "zero_type_boundary_receipt": "zero-type-boundary.json",
+  "zero_normalization_recovery_condition": "separate validated normalization with initial/source isolation checks; no native clock claim",
+  "new_tests": 19,
+  "related_tests_including_new": 156,
+  "failures": 0,
+  "errors": 0,
+  "frozen_baseline_hashes": {
+    "rouge/timing.py": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+    "rouge/operator_engine.py": "f50792dc0d8359988dd9eeb2bf0f7dfa083aa9e1d8f5635530820d08280fa249",
+    "rouge/reporting.py": "280a4b99a26c54d1f2ce8ed734205f426bebbf37ab8cd24226d24d38bed5db59",
+    "rouge/damage.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "rouge/catalog.py": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+  },
+  "draft_hashes": {
+    "rouge/timing.py": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+    "rouge/operator_engine.py": "d25728fb37845744e7f18854600382abba8f8a984eb949dcf3c9ca385d2a5878",
+    "rouge/reporting.py": "6613e898f50f3a4ffc1b933825e059fd354d43dfa08df480fe99e59b8061291e",
+    "rouge/damage.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "rouge/catalog.py": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+  },
+  "new_draft_file_hashes": {
+    "rouge/amiya_continuous_reference.py": "df85b088d8f96b2c130ff8420acfe275b109b94102444cd7d102ae34833c9b24",
+    "tests/test_amiya_continuous_lifetime.py": "8d18b408bacefbe0edae7ecb30329ac3473b5be11f43024140fb93e5d7358f6f"
+  },
+  "repo_mutations_by_this_agent": 0,
+  "private_state_read": false,
+  "game_actions": 0,
+  "messages_sent": 0,
+  "native_windows_verified": false,
+  "wine_verified_by_this_agent": false,
+  "final_patch_check": {
+    "head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+    "exit_code": 0,
+    "command": "git apply --check section52.patch"
+  },
+  "final_working_status": "",
+  "artifact_sha256": {
+    "code.patch": "b5fc8fe88cbb500fdf9990629d79c3725a892ca5e18c2c1c7e640fbb9390ae59",
+    "tests.patch": "9dca0520f46df7363abf7671524bb9c7a2274b7803e1c5b18a445d5bc7d39c29",
+    "section52.patch": "755fe0aa6bc3134559d76d88297102ec542fb9b5c80e10271e09d3047bf8fe62",
+    "NOTE.md": "216eb47bb8ecf3d14b76eb86b31cf2f2f4a64ce4a393acdc2b243537387d5a41",
+    "REVIEW.md": "4f7ca4ca7ebc147cfcb48a7df80870243bddcdf5c74c59b93291114afccab80d",
+    "ENGINE_REVIEW.md": "47d6524232fc2061540408489273aa5335e0ee9cf289be2359e6c382b7315100",
+    "zero-type-boundary.json": "143d95b8a9436e178cc0b2523b04c452b7b2ba75f529773c061dcdaded6694de",
+    "review-event-amounts-fixed-probe.json": "1aa5c5271e56440d6ad8efb91eda9409e9f57c5a80156eb7875f04d0ab6c51c8",
+    "review-scope-notes.json": "a9d00a8522471eca98aa47df50e15f788dc49d817205fbd6206a6a3718180b6e",
+    "related-tests.log": "c65de098f12a6c0265a651f5fad54473ec99a885cd74e694258083d968835944",
+    "public-inputs.json": "3b23bcd3e3248192e55e279aaac06245b6a68f91696a48337aa3ae054cd316e6",
+    "baseline-public-results.json": "c7aa5c9f932605f0f04a33ef5ab4e0b00934af92849d809bf1ec41909d3e56e1",
+    "draft-public-results.json": "8426ec4f73a36dee9d1dafc0c21211c0cefdc662762bc0c170e043de999fdeb7",
+    "zero-type-inputs.json": "ba21561a15ce27c16d2a3fb52021edfaea50ca2f79306fc78e8e54fe295dfefc",
+    "baseline-zero-type-results.json": "ddf387acf57754d47dd6bff9e4112f18c664a12e89198616720416c247faa03a",
+    "draft-zero-type-results.json": "4e987ac64dd92aff490a176f630e5ee4f33eb165f98758ce486dc1c738c26695",
+    "reproduce.py": "cd7345dde1b876899b0a57ca23707ace55244ea6d8faa8914c25c6b31a554795",
+    "regenerate_patch.py": "d96291d602dbd044b65c1228c256257a8152a20701525fcf06359d0372648892"
+  },
+  "review": {
+    "ordinary_public_blockers": 0,
+    "independent_new_tests_passed": 19,
+    "empty_event_arrays_invariant_fixed": true,
+    "restricted_scope_and_notes_independently_reviewed": true,
+    "accepted_zero_type_boundary_deferred": true
+  }
+}

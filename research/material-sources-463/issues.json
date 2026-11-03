@@ -1,0 +1,15 @@
+{
+  "original_failed_records": [
+    "../../verification/sections/463-material-sources/selected01/results.json",
+    "../../verification/sections/463-material-sources/native01/window.json"
+  ],
+  "corrections": [
+    "Concise default copy fits in a viewport that previously scrolled. The existing four-reader state test now explicitly constrains each viewport to60px; it still requires a real nonzero scrollbar and preserves all selection/filter/scroll assertions. Old qualification sentence is asserted in details instead of the default copy.",
+    "The first native check incorrectly expected the exchange reward record to include the preceding recipe cost. Source data confirms two records; an explicit recipe action now displays the original cost record without merging identities.",
+    "Layout probe measured586px content and52/152px excess scrolling at760x600/600x500. Tab vertical sizing now permits the content to fit the available body; final measurements retain source text and have zero outer scrolling at all three tested sizes.",
+    "An initial public-video frame write failed with the Unicode pathname in cv2.imwrite; imencode and pathlib saved exact decoded PNG bytes. Reference video and extracted frames remain local."
+  ],
+  "layout_before": "../../verification/sections/463-material-sources/layout-probe/layout.json",
+  "layout_after": "../../verification/sections/463-material-sources/native-final/layout.json",
+  "all_original_records_retained": true
+}

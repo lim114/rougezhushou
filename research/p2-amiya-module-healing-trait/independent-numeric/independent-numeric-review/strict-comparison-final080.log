@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-amiya-trait-080-independent-numeric/compare_saved80.py", line 176, in <module>
+    independent = compare(OUT / 'baseline-public080.json', OUT / 'draft-public080.json', 82)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-amiya-trait-080-independent-numeric/compare_saved80.py", line 166, in compare
+    group, paths = check_pair(x, y)
+                   ^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-amiya-trait-080-independent-numeric/compare_saved80.py", line 134, in check_pair
+    assert_close(skill['cycle_healing'] - skill['phase_healing'],
+  File "/workspace/.continuation/p2-amiya-trait-080-independent-numeric/compare_saved80.py", line 80, in assert_close
+    assert math.isclose(a, b, rel_tol=1e-10, abs_tol=1e-8), (context, a, b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('normal recharge same trait', 22200.0, 22000.0)

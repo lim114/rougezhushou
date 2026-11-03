@@ -1,0 +1,21 @@
+{
+  "section": 451,
+  "changed_or_new_sources": {
+    "rouge/player_reference_window.py": {
+      "sha256": "cbefc2612f9ce7e3206a5c97839612f3cde9dcca6b05c429afc0d48f3462fb1c",
+      "bytes": 5755
+    },
+    "rouge/player_compact.py": {
+      "sha256": "55d0b9651ba9d6794e315a7d6aa377d5743d4af71fbbc61e46f2085125ef4014",
+      "bytes": 25741
+    },
+    "tests/test_reference_window_451.py": {
+      "sha256": "b861f5da8ef3a052a4fa9feedc910b758842d4d22bb6feaf551664d9f47e133d",
+      "bytes": 4889
+    }
+  },
+  "review": "QWidget pages, not reparented native PlayerDialogs; single retained QStackedWidget/FramelessDialog host. Header/resources remain real widgets. Central close guard handles switch/back/close/Escape. Removed obsolete compact NotesPopover and duplicate page-close loop. External exact readers retain existing ToolPopover implementation.",
+  "no_new_game_input_chat_or_upload": true,
+  "low_probability_defensive_scaffolding_added": false,
+  "limits": "完整作战/敌人/事件详情、笔记目录、公开档案及完整工作区仍有独立窗口，尚未全部迁入；成熟网页尚未接入。首次打开部分页面仍会在下一轮界面更新后增高，笔记900×360变为约900×662的反例未通过，原因未明；不声称所有页面尺寸或全视频外观一致。导航按钮位置、密度、完整跨屏/游戏绑定仍需继续对照。未修改识别算法，不能宣称本轮识别提速或准确率提升。"
+}

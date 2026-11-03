@@ -1,0 +1,25 @@
+{
+  "kind": "observed_review_corrections",
+  "product_failures_claimed": false,
+  "observations": [
+    {
+      "source": "actual unittest tool result, first new test invocation",
+      "actual_observed_exit": 1,
+      "finding": "42 physical pixels compared to 28 logical pixels on 1.5 DPR; test assumption wrong",
+      "correction": "Check deviceIndependentSize; retain actual image decoding checks."
+    },
+    {
+      "source": "actual unittest tool result, next new test invocation",
+      "actual_observed_exit": 1,
+      "finding": "enemy_2156_shsmok has an explicit null portrait record; not an already available image",
+      "correction": "Keep explicit missing state; check actual rendering for every recorded image."
+    },
+    {
+      "source": "record_catalog_review.py actual exec exit1",
+      "finding": "Current batch status was changed without changing current_batch; delivery validator refused stale index",
+      "correction": "Preserve closed440 batch as history and bind active ongoing review coherently. Do not weaken validator."
+    }
+  ],
+  "final_checks": "final-checks/",
+  "raw_first_two_failure_logs_not_created_on_disk": true
+}

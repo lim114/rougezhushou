@@ -1,0 +1,493 @@
+{
+  "recorded_at_utc": "2026-10-07T21:13:17.081303+00:00",
+  "head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+  "baseline": "Integrated section51 only. Sections52–55 pending: preserve initial audit, rebaseline after55 before final56 closure.",
+  "public_calls": 760,
+  "all87_calls": 696,
+  "manual_option_calls": 64,
+  "all_inputs_unchanged": true,
+  "audited_files_unchanged": true,
+  "all87_numerically_affected_skills": {
+    "frames": 31,
+    "continuous": 79
+  },
+  "all87_alias_pairs_changed": {
+    "all87/frames": 114,
+    "all87/continuous": 237,
+    "manual/frames": 18,
+    "manual/continuous": 24
+  },
+  "evidence_reused": {
+    "path": "/workspace/rougezhushou/research/p2-empty-enemy-scope/source-receipt.json",
+    "sha256": "85fa91752c6ae012ebfb79ba4c11f391683c1cfc34342290d0271b2401d8c65e",
+    "source_scope": "87 supported skill selectors plus6 original character selectors and existing source contracts",
+    "limits": "Source establishes role/parameters, current public behavior and mathematical empty lifetime. It does not establish absent scripts, current hot updates, projectile/independent unit collision times, friend acquisition clocks or native integration. Do not cancel friend healing or explicit independent SP callbacks via an enemy-lifetime guard; do not reuse this skill-relative lifetime to invalidate intentionally separate deployment initial conditions."
+  },
+  "pinned_sources": [
+    {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_pinned_cache": true,
+      "actual_sha256_rechecked": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "hash_verified_now": true
+    },
+    {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_pinned_cache": true,
+      "actual_sha256_rechecked": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "hash_verified_now": true
+    }
+  ],
+  "public_validation": {
+    "entrypoint": "rouge.damage._prepare_damage",
+    "existing_raw_validator": "rouge.timing.AttackTimeline.__init__ at160–183",
+    "finite": "rouge.timing.finite at11–16 rejects bool before float, accepts nonnegative numeric strings and enforces0..3600 for disappearance."
+  },
+  "narrow_proposal": [
+    "At the end of common _prepare_damage, retain caller timing mapping and inspect only raw timing.target_disappears_seconds of type str.",
+    "Validate the original timing using existing AttackTimeline; only after that validation use existing finite(raw_disappearance,key,3600).",
+    "If and only if the validated numeric value equals0, create an internal dict copy of timing with only target_disappears_seconds set to numeric0.",
+    "Return the internal scenario to both engines; retain every current typed0 gate, instant/friendly/independent-source distinction and separately scoped deployment initial clock.",
+    "Leave every nonzero string/numeric value, other timing key, nested units override, caller nested objects, default and rejected raw bool unchanged."
+  ],
+  "integration_requirements": [
+    "Final56 work begins after section55 full Linux/Wine/actualUI passes, per root scheduling.",
+    "A provisional draft may be prepared against section51 but cannot replace later52/53/54/55 hunks or claim finalintegrated regression.",
+    "Re-run all87 and manual aliases against the final55 baseline; equality target is its numeric0 behavior, including52 caster natural30/cycle60 and53 source unknown/reference states."
+  ],
+  "examples": [
+    {
+      "category": "all87",
+      "operator": "kaltsit",
+      "skill": 1,
+      "timing_mode": "frames",
+      "extra": {},
+      "alias": "0",
+      "full_result_equal": false,
+      "numerical_summary_equal": false,
+      "numeric_sha256": "13fb8518e1efcca25e08fc68575df7c723ea6cc72bb81114cc80bdc1e2e45f93",
+      "alias_sha256": "d7046abf380a27a652241e08c0068022afe6a87ad0e6c1e803af9075c89d9130",
+      "numeric_summary": {
+        "attack": 1900.0,
+        "total_damage": 0,
+        "total_healing": 34200.0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": 70.0,
+          "duration_seconds": 35.0,
+          "window_seconds": 35.0,
+          "total_damage": 0,
+          "window_damage": 0.0,
+          "cycle_damage": 0.0,
+          "total_healing": 34200.0,
+          "window_healing": 34200.0,
+          "cycle_healing": 46200.0
+        }
+      },
+      "alias_summary": {
+        "attack": 1900.0,
+        "total_damage": 0,
+        "total_healing": 0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": 70.0,
+          "duration_seconds": 35.0,
+          "window_seconds": 35.0,
+          "total_damage": 0,
+          "window_damage": 0,
+          "cycle_damage": 0,
+          "total_healing": 0.0,
+          "window_healing": 0,
+          "cycle_healing": 0.0
+        }
+      },
+      "summary_differences": [
+        {
+          "path": "total_healing",
+          "numeric": 34200.0,
+          "alias": 0
+        },
+        {
+          "path": "estimate_skill.window_damage",
+          "numeric": 0.0,
+          "alias": 0
+        },
+        {
+          "path": "estimate_skill.total_healing",
+          "numeric": 34200.0,
+          "alias": 0.0
+        },
+        {
+          "path": "estimate_skill.cycle_damage",
+          "numeric": 0.0,
+          "alias": 0
+        },
+        {
+          "path": "estimate_skill.window_healing",
+          "numeric": 34200.0,
+          "alias": 0
+        },
+        {
+          "path": "estimate_skill.cycle_healing",
+          "numeric": 46200.0,
+          "alias": 0.0
+        }
+      ]
+    },
+    {
+      "category": "all87",
+      "operator": "kaltsit",
+      "skill": 2,
+      "timing_mode": "frames",
+      "extra": {},
+      "alias": "0",
+      "full_result_equal": false,
+      "numerical_summary_equal": false,
+      "numeric_sha256": "a519940bc02a1c9b4a9d077034bae04f26636daaa87ae794fee91d9cc1d1c75e",
+      "alias_sha256": "2dcc3c78c7101ed8beabba51c7712598c571e2eb95161a068388218e0ef90892",
+      "numeric_summary": {
+        "attack": 2500.0,
+        "total_damage": 0.0,
+        "total_healing": null,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": 63.7,
+          "duration_seconds": 28.7,
+          "window_seconds": 28.7,
+          "total_damage": 0.0,
+          "window_damage": 0,
+          "cycle_damage": 0,
+          "total_healing": 50000.0,
+          "window_healing": 50000.0,
+          "cycle_healing": 62000.0
+        }
+      },
+      "alias_summary": {
+        "attack": 2500.0,
+        "total_damage": 0.0,
+        "total_healing": null,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": null,
+          "duration_seconds": null,
+          "window_seconds": 0.0,
+          "total_damage": 0.0,
+          "window_damage": 0.0,
+          "cycle_damage": null,
+          "total_healing": 0.0,
+          "window_healing": 0.0,
+          "cycle_healing": null
+        }
+      },
+      "summary_differences": [
+        {
+          "path": "estimate_skill.window_damage",
+          "numeric": 0,
+          "alias": 0.0
+        },
+        {
+          "path": "estimate_skill.cycle_seconds",
+          "numeric": 63.7,
+          "alias": null
+        },
+        {
+          "path": "estimate_skill.total_healing",
+          "numeric": 50000.0,
+          "alias": 0.0
+        },
+        {
+          "path": "estimate_skill.window_seconds",
+          "numeric": 28.7,
+          "alias": 0.0
+        },
+        {
+          "path": "estimate_skill.cycle_damage",
+          "numeric": 0,
+          "alias": null
+        },
+        {
+          "path": "estimate_skill.duration_seconds",
+          "numeric": 28.7,
+          "alias": null
+        },
+        {
+          "path": "estimate_skill.window_healing",
+          "numeric": 50000.0,
+          "alias": 0.0
+        },
+        {
+          "path": "estimate_skill.cycle_healing",
+          "numeric": 62000.0,
+          "alias": null
+        }
+      ]
+    },
+    {
+      "category": "all87",
+      "operator": "kaltsit",
+      "skill": 2,
+      "timing_mode": "continuous",
+      "extra": {},
+      "alias": "0",
+      "full_result_equal": false,
+      "numerical_summary_equal": false,
+      "numeric_sha256": "79485306e6d6f3c4bbe692b662cf5996cf1b111e22cfc2dfd394bce780d72be7",
+      "alias_sha256": "e3a7e00aca4b72eb1b67dffd2d25d6d6849a40379a1a15bacf2bc638d5b7af44",
+      "numeric_summary": {
+        "attack": 2500.0,
+        "total_damage": 0.0,
+        "total_healing": null,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": 63.5,
+          "duration_seconds": 28.5,
+          "window_seconds": 28.5,
+          "total_damage": 0.0,
+          "window_damage": 0.0,
+          "cycle_damage": 0.0,
+          "total_healing": 50000.0,
+          "window_healing": 50000.0,
+          "cycle_healing": 62000.0
+        }
+      },
+      "alias_summary": {
+        "attack": 2500.0,
+        "total_damage": 95000.0,
+        "total_healing": null,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 35.0,
+          "cycle_seconds": 63.5,
+          "duration_seconds": 28.5,
+          "window_seconds": 28.5,
+          "total_damage": 95000.0,
+          "window_damage": 95000.0,
+          "cycle_damage": 95000.0,
+          "total_healing": 50000.0,
+          "window_healing": 50000.0,
+          "cycle_healing": 62000.0
+        }
+      },
+      "summary_differences": [
+        {
+          "path": "estimate_skill.window_damage",
+          "numeric": 0.0,
+          "alias": 95000.0
+        },
+        {
+          "path": "estimate_skill.total_damage",
+          "numeric": 0.0,
+          "alias": 95000.0
+        },
+        {
+          "path": "estimate_skill.cycle_damage",
+          "numeric": 0.0,
+          "alias": 95000.0
+        },
+        {
+          "path": "total_damage",
+          "numeric": 0.0,
+          "alias": 95000.0
+        }
+      ]
+    },
+    {
+      "category": "all87",
+      "operator": "char_002_amiya",
+      "skill": 1,
+      "timing_mode": "continuous",
+      "extra": {},
+      "alias": "0",
+      "full_result_equal": false,
+      "numerical_summary_equal": false,
+      "numeric_sha256": "19fefaf70daccf719d82591608a7df039584f30002b044de3dfbde2059e37d2c",
+      "alias_sha256": "969ef3689dbe5f18962f783b19d1f7e229253f13cafbcb4983a511106a5f5c73",
+      "numeric_summary": {
+        "attack": 1000.0,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 30.0,
+          "cycle_seconds": 60.0,
+          "duration_seconds": 30.0,
+          "window_seconds": 30.0,
+          "total_damage": 0.0,
+          "window_damage": null,
+          "cycle_damage": 0.0,
+          "total_healing": 0,
+          "window_healing": 0,
+          "cycle_healing": 0
+        }
+      },
+      "alias_summary": {
+        "attack": 1000.0,
+        "total_damage": 35000.0,
+        "total_healing": 0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 7.0,
+          "recharge_seconds": 13.999999999999995,
+          "cycle_seconds": 43.99999999999999,
+          "duration_seconds": 30.0,
+          "window_seconds": 30.0,
+          "total_damage": 35000.0,
+          "window_damage": null,
+          "cycle_damage": 43000.0,
+          "total_healing": 0,
+          "window_healing": 0,
+          "cycle_healing": 0
+        }
+      },
+      "summary_differences": [
+        {
+          "path": "estimate_skill.cycle_seconds",
+          "numeric": 60.0,
+          "alias": 43.99999999999999
+        },
+        {
+          "path": "estimate_skill.total_damage",
+          "numeric": 0.0,
+          "alias": 35000.0
+        },
+        {
+          "path": "estimate_skill.cycle_damage",
+          "numeric": 0.0,
+          "alias": 43000.0
+        },
+        {
+          "path": "estimate_skill.recharge_seconds",
+          "numeric": 30.0,
+          "alias": 13.999999999999995
+        },
+        {
+          "path": "total_damage",
+          "numeric": 0.0,
+          "alias": 35000.0
+        }
+      ]
+    },
+    {
+      "category": "all87",
+      "operator": "char_1037_amiya3",
+      "skill": 1,
+      "timing_mode": "continuous",
+      "extra": {},
+      "alias": "0",
+      "full_result_equal": false,
+      "numerical_summary_equal": false,
+      "numeric_sha256": "17ec6a27c1be6f36ac6a52b62096e89b0117a22c4bea49c70f09fc989632b5b0",
+      "alias_sha256": "93489f99cf70d31591e4fe91f1cdfd7b7f54a2c615921ed5d989b1d5f2265553",
+      "numeric_summary": {
+        "attack": 1000.0,
+        "total_damage": 0.0,
+        "total_healing": 0.0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 30.0,
+          "recharge_seconds": 70.0,
+          "cycle_seconds": 120.0,
+          "duration_seconds": 50.0,
+          "window_seconds": 50.0,
+          "total_damage": 0.0,
+          "window_damage": null,
+          "cycle_damage": 0.0,
+          "total_healing": 0.0,
+          "window_healing": 0.0,
+          "cycle_healing": 0.0
+        }
+      },
+      "alias_summary": {
+        "attack": 1000.0,
+        "total_damage": 54000.0,
+        "total_healing": 40500.0,
+        "known_damage_subtotals": null,
+        "known_healing_subtotals": null,
+        "estimate_skill": {
+          "initial_seconds": 30.0,
+          "recharge_seconds": 70.0,
+          "cycle_seconds": 120.0,
+          "duration_seconds": 50.0,
+          "window_seconds": 50.0,
+          "total_damage": 54000.0,
+          "window_damage": null,
+          "cycle_damage": 97000.0,
+          "total_healing": 40500.0,
+          "window_healing": 40500.0,
+          "cycle_healing": 62000.0
+        }
+      },
+      "summary_differences": [
+        {
+          "path": "total_healing",
+          "numeric": 0.0,
+          "alias": 40500.0
+        },
+        {
+          "path": "estimate_skill.total_healing",
+          "numeric": 0.0,
+          "alias": 40500.0
+        },
+        {
+          "path": "estimate_skill.total_damage",
+          "numeric": 0.0,
+          "alias": 54000.0
+        },
+        {
+          "path": "estimate_skill.cycle_damage",
+          "numeric": 0.0,
+          "alias": 97000.0
+        },
+        {
+          "path": "estimate_skill.window_healing",
+          "numeric": 0.0,
+          "alias": 40500.0
+        },
+        {
+          "path": "estimate_skill.cycle_healing",
+          "numeric": 0.0,
+          "alias": 62000.0
+        },
+        {
+          "path": "total_damage",
+          "numeric": 0.0,
+          "alias": 54000.0
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "No positive-lifetime clock modeling, stacking or target acquisition inference.",
+    "No GUI/Wine/native Windows/game validation during this audit."
+  ]
+}

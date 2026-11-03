@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "count": 35,
+  "cases": [
+    {
+      "label": "s1_default",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_zero_window",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 0
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_continuous",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "timing_mode": "continuous",
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_zero_recipient",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "healing_targets": 0,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_front_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_front_normal",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s1_back_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "s1_back_normal",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "s1_generic_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Skill"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "s2_default",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_zero_window",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 0
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_continuous",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing_mode": "continuous",
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_zero_recipient",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "healing_targets": 0,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_front_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_front_normal",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "s2_back_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "s2_back_normal",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "s2_generic_skill",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Skill"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "default_s2_11",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "back_s2_both",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "normal_animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_s2_manual",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_s2_half_open",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "window_seconds": 10.533333333333333,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_s2_empty_enemy",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "target_windows": []
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_s2_no_friend",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "healing_targets": 0,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_s2_continuous",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing_mode": "continuous",
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "new_back_success"
+    },
+    {
+      "label": "back_reject_Default",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Default"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "back_reject_Idle",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Idle"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "back_reject_Start",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Start"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "back_reject_Die",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Die"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "back_reject_Skill_2_Loop",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Skill_2_Loop"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "other_owner_reject",
+      "scenario": {
+        "operator": "kaltsit",
+        "skill": 3,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "old_invalid_training_first",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "elite": 4,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      },
+      "expect": "exact_error"
+    },
+    {
+      "label": "other_default_kaltsit",
+      "scenario": {
+        "operator": "kaltsit",
+        "skill": 3,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "other_default_mechanist",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    },
+    {
+      "label": "other_default_char_2025_shu",
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 1,
+        "window_seconds": 11
+      },
+      "expect": "unchanged"
+    }
+  ]
+}

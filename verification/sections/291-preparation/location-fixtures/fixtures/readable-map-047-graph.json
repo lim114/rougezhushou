@@ -1,0 +1,79 @@
+{
+  "status": "matched",
+  "zone_id": "zone_1",
+  "template_id": "1a",
+  "grid": {
+    "rows": 3,
+    "cols": 5
+  },
+  "current_node": "1,1",
+  "nodes": [
+    {
+      "id": "0,2",
+      "row": 0,
+      "col": 2,
+      "distance": 2,
+      "visible": true,
+      "observed_type": "作战",
+      "remembered_type": "作战",
+      "content": {
+        "kind": "battle",
+        "title": "遗忘时间",
+        "variant_id": "ro6_n_1_2"
+      },
+      "prediction": {
+        "candidates": [
+          "作战"
+        ],
+        "evidence": "visible_history"
+      }
+    },
+    {
+      "id": "1,1",
+      "row": 1,
+      "col": 1,
+      "distance": 0,
+      "visible": true,
+      "observed_type": "林间空地",
+      "template_type": "起点"
+    },
+    {
+      "id": "2,3",
+      "row": 2,
+      "col": 3,
+      "distance": 3,
+      "visible": false,
+      "observed_type": null,
+      "prediction": {
+        "candidates": [
+          "作战",
+          "紧急作战"
+        ],
+        "evidence": "community_constraints",
+        "probability": null
+      }
+    }
+  ],
+  "edges": [
+    [
+      "1,1",
+      "0,2"
+    ],
+    [
+      "0,2",
+      "2,3"
+    ]
+  ],
+  "source": {
+    "url": "https://arkrog.com/tool/blackflowmap"
+  },
+  "generation_budget": {
+    "作战": {
+      "fixed": 1,
+      "revealed_additional": 1,
+      "source_max": null,
+      "known_total": 2,
+      "random_eligible": true
+    }
+  }
+}

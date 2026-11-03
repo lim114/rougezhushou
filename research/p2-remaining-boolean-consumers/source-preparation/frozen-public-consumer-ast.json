@@ -1,0 +1,1254 @@
+{
+  "base_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+  "consumers": [
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "enemy_below_half",
+      "line": 225,
+      "expression": "self.s.get('enemy_below_half')",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 225,
+          "name_or_test": "op == 'char_437_mizuki' and self.s.get('enemy_below_half')"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 167,
+          "name_or_test": "apply_self_talents"
+        }
+      ],
+      "source_line": "        if op=='char_437_mizuki' and self.s.get('enemy_below_half'):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 1545,
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1545,
+          "name_or_test": "self.s['operator'] == 'char_206_gnosis' and self.n == 3 and self.s.get('frozen_at_skill_end', True)"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 1297,
+          "name_or_test": "calculate"
+        }
+      ],
+      "source_line": "        if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1313,
+      "expression": "self.s.get('double_charge', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1313,
+          "name_or_test": "self.s['operator'] == 'char_1048_orchd2' and self.n == 1 and self.s.get('double_charge', True)"
+        },
+        {
+          "kind": "If",
+          "line": 1310,
+          "name_or_test": "sp['sp_type'] == 'INCREASE_WITH_TIME'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 1297,
+          "name_or_test": "calculate"
+        }
+      ],
+      "source_line": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "reinforcement_blocks_target",
+      "line": 396,
+      "expression": "self.s.get('reinforcement_blocks_target')",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 396,
+          "name_or_test": "self.s.get('reinforcement_blocks_target')"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "            if self.s.get('reinforcement_blocks_target'):attack*=1.5"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1440,
+      "expression": "self.s.get('double_charge', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1439,
+          "name_or_test": "has_event_sp(self.s) and mode not in ('deployment', 'passive')"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 1297,
+          "name_or_test": "calculate"
+        }
+      ],
+      "source_line": "            cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 644,
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 644,
+          "name_or_test": "self.s.get('frozen_at_skill_end', True) and (window is None or window >= self.skill['duration'])"
+        },
+        {
+          "kind": "If",
+          "line": 636,
+          "name_or_test": "self.n == 2"
+        },
+        {
+          "kind": "If",
+          "line": 628,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 626,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ines_first_deployment",
+      "line": 688,
+      "expression": "self.s.get('ines_first_deployment', False)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 688,
+          "name_or_test": "self.s.get('ines_first_deployment', False)"
+        },
+        {
+          "kind": "If",
+          "line": 672,
+          "name_or_test": "self.n == 2"
+        },
+        {
+          "kind": "If",
+          "line": 664,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 663,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                if self.s.get('ines_first_deployment',False):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ranged_attack",
+      "line": 857,
+      "expression": "self.s.get('ranged_attack', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "organ_mode",
+      "line": 869,
+      "expression": "self.s.get('organ_mode', False)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 867,
+          "name_or_test": "self.n == 2"
+        },
+        {
+          "kind": "If",
+          "line": 860,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 859,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                organ=self.s.get('organ_mode',False)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "fever",
+      "line": 874,
+      "expression": "self.s.get('fever')",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 867,
+          "name_or_test": "self.n == 2"
+        },
+        {
+          "kind": "If",
+          "line": 860,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 859,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                regular('magic' if organ else 'physical',ranged_scale,2 if self.s.get('fever') else 1,"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "power_coating",
+      "line": 1026,
+      "expression": "self.s.get('power_coating', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "            bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1031,
+      "expression": "self.s.get('double_charge', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1031,
+          "name_or_test": "self.s.get('double_charge', True)"
+        },
+        {
+          "kind": "If",
+          "line": 1028,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 1027,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "steal_success",
+      "line": 1062,
+      "expression": "self.s.get('steal_success', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1062,
+          "name_or_test": "self.n == 2 and self.s.get('steal_success', True)"
+        },
+        {
+          "kind": "If",
+          "line": 1059,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 1058,
+          "name_or_test": "op == 'char_1041_angel2'"
+        },
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                if self.n==2 and self.s.get('steal_success',True):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "delivery_coordinate",
+      "line": 1080,
+      "expression": "self.s.get('delivery_coordinate', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1080,
+          "name_or_test": "self.n == 3 and self.s.get('delivery_coordinate', True)"
+        },
+        {
+          "kind": "If",
+          "line": 1059,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 1058,
+          "name_or_test": "op == 'char_1041_angel2'"
+        },
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                if self.n==3 and self.s.get('delivery_coordinate',True):"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "overload",
+      "line": 1109,
+      "expression": "self.s.get('overload', False)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1091,
+          "name_or_test": "op == 'char_1035_wisdel'"
+        },
+        {
+          "kind": "If",
+          "line": 1058,
+          "name_or_test": "op == 'char_1041_angel2'"
+        },
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "            overload=not normal and self.n==2 and self.s.get('overload',False)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1034,
+      "expression": "self.s.get('double_charge', True)",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 1028,
+          "name_or_test": "self.n == 1"
+        },
+        {
+          "kind": "If",
+          "line": 1027,
+          "name_or_test": "normal"
+        },
+        {
+          "kind": "If",
+          "line": 1025,
+          "name_or_test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "kind": "If",
+          "line": 1005,
+          "name_or_test": "op == 'char_2027_wang'"
+        },
+        {
+          "kind": "If",
+          "line": 955,
+          "name_or_test": "op == 'char_4204_mantra'"
+        },
+        {
+          "kind": "If",
+          "line": 908,
+          "name_or_test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "kind": "If",
+          "line": 880,
+          "name_or_test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "kind": "If",
+          "line": 853,
+          "name_or_test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "kind": "If",
+          "line": 808,
+          "name_or_test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "kind": "If",
+          "line": 773,
+          "name_or_test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "kind": "If",
+          "line": 704,
+          "name_or_test": "op == 'char_4202_haruka'"
+        },
+        {
+          "kind": "If",
+          "line": 662,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "If",
+          "line": 616,
+          "name_or_test": "op == 'char_206_gnosis'"
+        },
+        {
+          "kind": "If",
+          "line": 596,
+          "name_or_test": "op == 'char_437_mizuki'"
+        },
+        {
+          "kind": "If",
+          "line": 562,
+          "name_or_test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "kind": "If",
+          "line": 453,
+          "name_or_test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "kind": "If",
+          "line": 399,
+          "name_or_test": "op == 'char_1050_chen3'"
+        },
+        {
+          "kind": "If",
+          "line": 394,
+          "name_or_test": "op == 'char_4228_closur'"
+        },
+        {
+          "kind": "If",
+          "line": 353,
+          "name_or_test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "kind": "If",
+          "line": 333,
+          "name_or_test": "op == 'char_110_deepcl'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 284,
+          "name_or_test": "plan"
+        }
+      ],
+      "source_line": "                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),"
+    },
+    {
+      "path": "rouge/reporting.py",
+      "field": "ines_first_deployment",
+      "line": 149,
+      "expression": "scenario.get('ines_first_deployment')",
+      "parent_chain": [
+        {
+          "kind": "If",
+          "line": 149,
+          "name_or_test": "number == 3 and scenario.get('ines_first_deployment')"
+        },
+        {
+          "kind": "If",
+          "line": 146,
+          "name_or_test": "op == 'char_4087_ines'"
+        },
+        {
+          "kind": "FunctionDef",
+          "line": 100,
+          "name_or_test": "fee_section"
+        }
+      ],
+      "source_line": "        if number==3 and scenario.get('ines_first_deployment'):"
+    }
+  ],
+  "caution": "else branches require manual enclosing-branch review; no runtime call is established by AST alone"
+}

@@ -1,0 +1,1200 @@
+{
+  "app_actual_static_excerpts": [
+    {
+      "needle": "if isinstance(default,bool):",
+      "lines": [
+        {
+          "line": 663,
+          "text": "            for key,label,default,maximum,skills in entries:"
+        },
+        {
+          "line": 664,
+          "text": "                if key=='healing_targets':continue"
+        },
+        {
+          "line": 665,
+          "text": "                if isinstance(default,bool):"
+        },
+        {
+          "line": 666,
+          "text": "                    widget=QCheckBox(label);widget.setChecked(default)"
+        },
+        {
+          "line": 667,
+          "text": "                    widget.toggled.connect(lambda:self.calculate())"
+        },
+        {
+          "line": 668,
+          "text": "                elif isinstance(default,int):"
+        },
+        {
+          "line": 669,
+          "text": "                    widget=QSpinBox();widget.setRange(0,maximum);widget.setValue(default)"
+        }
+      ]
+    },
+    {
+      "needle": "self.damage_form.setRowVisible(widget,owner==op and skill in skills)",
+      "lines": [
+        {
+          "line": 967,
+          "text": "        for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)"
+        },
+        {
+          "line": 968,
+          "text": "        for owner,key,skills,widget in self.model_option_widgets:"
+        },
+        {
+          "line": 969,
+          "text": "            self.damage_form.setRowVisible(widget,owner==op and skill in skills)"
+        },
+        {
+          "line": 970,
+          "text": "            if owner==op=='char_110_deepcl' and key=='summon_count':"
+        },
+        {
+          "line": 971,
+          "text": "                from .summons import token_concurrent_limit"
+        },
+        {
+          "line": 972,
+          "text": "                cap=token_concurrent_limit(profile,{'operator':op,**self.training_conditions()},'token_10001_deepcl_tentac')"
+        },
+        {
+          "line": 973,
+          "text": "                widget.blockSignals(True)"
+        }
+      ]
+    },
+    {
+      "needle": "for owner,key,skills,widget in self.model_option_widgets:",
+      "lines": [
+        {
+          "line": 966,
+          "text": "                    *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]"
+        },
+        {
+          "line": 967,
+          "text": "        for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)"
+        },
+        {
+          "line": 968,
+          "text": "        for owner,key,skills,widget in self.model_option_widgets:"
+        },
+        {
+          "line": 969,
+          "text": "            self.damage_form.setRowVisible(widget,owner==op and skill in skills)"
+        },
+        {
+          "line": 970,
+          "text": "            if owner==op=='char_110_deepcl' and key=='summon_count':"
+        },
+        {
+          "line": 971,
+          "text": "                from .summons import token_concurrent_limit"
+        },
+        {
+          "line": 972,
+          "text": "                cap=token_concurrent_limit(profile,{'operator':op,**self.training_conditions()},'token_10001_deepcl_tentac')"
+        }
+      ]
+    },
+    {
+      "needle": "for owner,key,skills,widget in self.model_option_widgets:",
+      "lines": [
+        {
+          "line": 1033,
+          "text": "            'activation_count':self.activation_count.value(),'companion_attack':self.companion_attack.value(),"
+        },
+        {
+          "line": 1034,
+          "text": "            'deployment_stacks':self.stacks.value(),'relic_ids':ids}"
+        },
+        {
+          "line": 1035,
+          "text": "        for owner,key,skills,widget in self.model_option_widgets:"
+        },
+        {
+          "line": 1036,
+          "text": "            if owner==op and self.skill.currentData() in skills:"
+        },
+        {
+          "line": 1037,
+          "text": "                scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()"
+        },
+        {
+          "line": 1038,
+          "text": "        state=self.current_operator_state()"
+        },
+        {
+          "line": 1039,
+          "text": "        scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None"
+        }
+      ]
+    },
+    {
+      "needle": "scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()",
+      "lines": [
+        {
+          "line": 1035,
+          "text": "        for owner,key,skills,widget in self.model_option_widgets:"
+        },
+        {
+          "line": 1036,
+          "text": "            if owner==op and self.skill.currentData() in skills:"
+        },
+        {
+          "line": 1037,
+          "text": "                scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()"
+        },
+        {
+          "line": 1038,
+          "text": "        state=self.current_operator_state()"
+        },
+        {
+          "line": 1039,
+          "text": "        scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None"
+        },
+        {
+          "line": 1040,
+          "text": "        scenario['char_buff_ids']=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []"
+        },
+        {
+          "line": 1041,
+          "text": "        scenario['char_buffs_complete']=state.get('char_buffs_complete') is True if state.get('scope')=='run' else False"
+        }
+      ]
+    }
+  ],
+  "current_exact17_literal_consumers": [
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 225,
+      "field": "enemy_below_half",
+      "expression": "self.s.get('enemy_below_half')",
+      "function": "apply_self_talents",
+      "enclosing_conditions": [
+        "op == 'char_437_mizuki' and self.s.get('enemy_below_half')"
+      ],
+      "source_context": [
+        {
+          "line": 222,
+          "text": "            self.atk_bonus+=self.talent('铳弹协约','atk')*self.talent('铳弹协约','mult',2)"
+        },
+        {
+          "line": 223,
+          "text": "        if op=='char_4087_ines':"
+        },
+        {
+          "line": 224,
+          "text": "            self.atk_flat=self.talent('影织','steal_atk')*self.option('stolen_enemy_count',1,maximum=100,integer=True)"
+        },
+        {
+          "line": 225,
+          "text": "        if op=='char_437_mizuki' and self.s.get('enemy_below_half'):"
+        },
+        {
+          "line": 226,
+          "text": "            self.atk_bonus+=self.talent('反移情','atk')"
+        },
+        {
+          "line": 227,
+          "text": "        if op=='char_1046_sbell2':self.def_bonus+=2;self.res_bonus+=20"
+        },
+        {
+          "line": 228,
+          "text": "        if op=='char_4107_vrdant' and self.n==1:"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1545,
+      "field": "frozen_at_skill_end",
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "function": "calculate",
+      "enclosing_conditions": [
+        "self.s['operator'] == 'char_206_gnosis' and self.n == 3 and self.s.get('frozen_at_skill_end', True)"
+      ],
+      "source_context": [
+        {
+          "line": 1542,
+          "text": "        if mei_reference is not None:result['mei_airborne_module_reference']=mei_reference"
+        },
+        {
+          "line": 1543,
+          "text": "        if full['drone_trait_reference']:"
+        },
+        {
+          "line": 1544,
+          "text": "            result['drone_trait_reference']=full['drone_trait_reference']"
+        },
+        {
+          "line": 1545,
+          "text": "        if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):"
+        },
+        {
+          "line": 1546,
+          "text": "            cast=next((c for c in full['components'] if c['name']=='失温症终结'),None)"
+        },
+        {
+          "line": 1547,
+          "text": "            observed=next((c for c in shown['components'] if c['name']=='失温症终结'),None)"
+        },
+        {
+          "line": 1548,
+          "text": "            result['gnosis_terminal_reference']={"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1313,
+      "field": "double_charge",
+      "expression": "self.s.get('double_charge', True)",
+      "function": "calculate",
+      "enclosing_conditions": [
+        "self.s['operator'] == 'char_1048_orchd2' and self.n == 1 and self.s.get('double_charge', True)",
+        "sp['sp_type'] == 'INCREASE_WITH_TIME'"
+      ],
+      "source_context": [
+        {
+          "line": 1310,
+          "text": "        if sp['sp_type']=='INCREASE_WITH_TIME':"
+        },
+        {
+          "line": 1311,
+          "text": "            recharge=recharge_cost/rate if rate>0 else None"
+        },
+        {
+          "line": 1312,
+          "text": "            first=max(0,sp['sp_cost']-initial)/rate if rate>0 else None"
+        },
+        {
+          "line": 1313,
+          "text": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+        },
+        {
+          "line": 1314,
+          "text": "                recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None"
+        },
+        {
+          "line": 1315,
+          "text": "                first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None"
+        },
+        {
+          "line": 1316,
+          "text": "            if self.s['operator']=='char_002_amiya' and self.s.get('continuous_attacks',True):"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 396,
+      "field": "reinforcement_blocks_target",
+      "expression": "self.s.get('reinforcement_blocks_target')",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.s.get('reinforcement_blocks_target')",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 393,
+          "text": "                self.notes.append('播种地块生命回复与庇护不混入直接技能治疗；四岁/三职业等条件按所选情景。')"
+        },
+        {
+          "line": 394,
+          "text": "        elif op=='char_4228_closur':"
+        },
+        {
+          "line": 395,
+          "text": "            if not normal and self.n==1:attack=self.base_attack"
+        },
+        {
+          "line": 396,
+          "text": "            if self.s.get('reinforcement_blocks_target'):attack*=1.5"
+        },
+        {
+          "line": 397,
+          "text": "            regular(scale=bb.get('attack@atk_scale',1))"
+        },
+        {
+          "line": 398,
+          "text": "            self.notes.append('仅计可露希尔自身输出；指挥中心攻击为0，援军的独立攻击不相加。援军阻挡目标时才计150%特性。')"
+        },
+        {
+          "line": 399,
+          "text": "        elif op=='char_1050_chen3':"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1440,
+      "field": "double_charge",
+      "expression": "self.s.get('double_charge', True)",
+      "function": "calculate",
+      "enclosing_conditions": [
+        "has_event_sp(self.s) and mode not in ('deployment', 'passive')"
+      ],
+      "source_context": [
+        {
+          "line": 1437,
+          "text": "                if recharge is not None:recharge+=lockout"
+        },
+        {
+          "line": 1438,
+          "text": "        sp_events={}"
+        },
+        {
+          "line": 1439,
+          "text": "        if has_event_sp(self.s) and mode not in ('deployment','passive'):"
+        },
+        {
+          "line": 1440,
+          "text": "            cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)"
+        },
+        {
+          "line": 1441,
+          "text": "            attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp') if self.s['operator']=='char_002_amiya' else 0"
+        },
+        {
+          "line": 1442,
+          "text": "            sp_events['initial']=event_charge(self.s,sp,max(0,cost-initial),rate,self.normal_interval,"
+        },
+        {
+          "line": 1443,
+          "text": "                self.base_speed,attribute_speed=self.base_speed_reference,initial=True,attack_sp=attack_sp,wait_next_attack=mode=='next_attack')"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 644,
+      "field": "frozen_at_skill_end",
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.s.get('frozen_at_skill_end', True) and (window is None or window >= self.skill['duration'])",
+        "self.n == 2",
+        "self.n == 1",
+        "normal",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 641,
+          "text": "                if available:components[-1]['instant_event']=True"
+        },
+        {
+          "line": 642,
+          "text": "            else:"
+        },
+        {
+          "line": 643,
+          "text": "                events=attack_times();frost(attack,len(events),'失温症攻击',events)"
+        },
+        {
+          "line": 644,
+          "text": "                if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):"
+        },
+        {
+          "line": 645,
+          "text": "                    disappears=timeline.options.get('target_disappears_seconds')"
+        },
+        {
+          "line": 646,
+          "text": "                    # A target absent before the nominal end cannot receive"
+        },
+        {
+          "line": 647,
+          "text": "                    # this conditional terminal source. Equal-frame order is"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 688,
+      "field": "ines_first_deployment",
+      "expression": "self.s.get('ines_first_deployment', False)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.s.get('ines_first_deployment', False)",
+        "self.n == 2",
+        "self.n == 1",
+        "normal",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 685,
+          "text": "                emit('暗夜无明递增攻速攻击',attack,'physical',count,event_times=events)"
+        },
+        {
+          "line": 686,
+          "text": "            else:"
+        },
+        {
+          "line": 687,
+          "text": "                mode='deployment'"
+        },
+        {
+          "line": 688,
+          "text": "                if self.s.get('ines_first_deployment',False):"
+        },
+        {
+          "line": 689,
+          "text": "                    duration=0;self.notes.append('伊内丝首次部署仅放置影哨后离场，没有此次技能攻击。')"
+        },
+        {
+          "line": 690,
+          "text": "                else:"
+        },
+        {
+          "line": 691,
+          "text": "                    # The recalled shadow crosses an independent path. The"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 857,
+      "field": "ranged_attack",
+      "expression": "self.s.get('ranged_attack', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 854,
+          "text": "            notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)"
+        },
+        {
+          "line": 855,
+          "text": "            defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))"
+        },
+        {
+          "line": 856,
+          "text": "            resistance=self.enemy_res*(1-notes*self.talent('颂乐音符','magic_resist_penetrate_ratio'))"
+        },
+        {
+          "line": 857,
+          "text": "            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1"
+        },
+        {
+          "line": 858,
+          "text": "            if self.s.get('module_id') and not normal and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10:ranged_scale=1"
+        },
+        {
+          "line": 859,
+          "text": "            if normal:regular('physical',ranged_scale,defense=defense)"
+        },
+        {
+          "line": 860,
+          "text": "            elif self.n==1:"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 869,
+      "field": "organ_mode",
+      "expression": "self.s.get('organ_mode', False)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.n == 2",
+        "self.n == 1",
+        "normal",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 866,
+          "text": "                    'notes':['八音符倍率是条件来源参考；首个音符、后续间隔、独立碰撞与实际结束未绑定。']}"
+        },
+        {
+          "line": 867,
+          "text": "            elif self.n==2:"
+        },
+        {
+          "line": 868,
+          "text": "                mode='switch';duration=window if window is not None else 30"
+        },
+        {
+          "line": 869,
+          "text": "                organ=self.s.get('organ_mode',False)"
+        },
+        {
+          "line": 870,
+          "text": "                if organ:"
+        },
+        {
+          "line": 871,
+          "text": "                    speed_reference+=bb['attack@attack_speed'];speed=effective_attack_speed(speed_reference)"
+        },
+        {
+          "line": 872,
+          "text": "                    interval=self.a['interval']*100/speed"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 874,
+      "field": "fever",
+      "expression": "self.s.get('fever')",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.n == 2",
+        "self.n == 1",
+        "normal",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 871,
+          "text": "                    speed_reference+=bb['attack@attack_speed'];speed=effective_attack_speed(speed_reference)"
+        },
+        {
+          "line": 872,
+          "text": "                    interval=self.a['interval']*100/speed"
+        },
+        {
+          "line": 873,
+          "text": "                else:attack+=self.base*bb['attack@atk']"
+        },
+        {
+          "line": 874,
+          "text": "                regular('magic' if organ else 'physical',ranged_scale,2 if self.s.get('fever') else 1,"
+        },
+        {
+          "line": 875,
+          "text": "                        defense=defense,resistance=resistance)"
+        },
+        {
+          "line": 876,
+          "text": "            else:"
+        },
+        {
+          "line": 877,
+          "text": "                regular('physical',bb['attack@atk_scale']*ranged_scale,2,name='钢琴音符',defense=defense)"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1026,
+      "field": "power_coating",
+      "expression": "self.s.get('power_coating', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1023,
+          "text": "                             '连线与法抗穿透保留已有条件参考；首跳/刷新、棋子部署/进入地块及弹药创建消耗时钟未知，持续参数不扩长观察窗口。']}"
+        },
+        {
+          "line": 1024,
+          "text": "                self.notes.append('主动资源获取与被动棋子触发分开；所选触发/跳数不生成实际时钟，弹药耗尽不由攻速推导。')"
+        },
+        {
+          "line": 1025,
+          "text": "        elif op=='char_1048_orchd2':"
+        },
+        {
+          "line": 1026,
+          "text": "            bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1"
+        },
+        {
+          "line": 1027,
+          "text": "            if normal:regular(times=3)"
+        },
+        {
+          "line": 1028,
+          "text": "            elif self.n==1:"
+        },
+        {
+          "line": 1029,
+          "text": "                mode='instant';duration=0 if window is None else window"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1031,
+      "field": "double_charge",
+      "expression": "self.s.get('double_charge', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.s.get('double_charge', True)",
+        "self.n == 1",
+        "normal",
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1028,
+          "text": "            elif self.n==1:"
+        },
+        {
+          "line": 1029,
+          "text": "                mode='instant';duration=0 if window is None else window"
+        },
+        {
+          "line": 1030,
+          "text": "                emit('刚射',attack*bb['atk_scale_1']*bottle,'physical',4)"
+        },
+        {
+          "line": 1031,
+          "text": "                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)"
+        },
+        {
+          "line": 1032,
+          "text": "                unbound_cast_reference={'kind':'orchid_arrows',"
+        },
+        {
+          "line": 1033,
+          "text": "                    'parameter_rows':[('首轮箭矢数量参数',4,'支'),"
+        },
+        {
+          "line": 1034,
+          "text": "                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1062,
+      "field": "steal_success",
+      "expression": "self.s.get('steal_success', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.n == 2 and self.s.get('steal_success', True)",
+        "normal",
+        "op == 'char_1041_angel2'",
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1059,
+          "text": "            if normal:regular()"
+        },
+        {
+          "line": 1060,
+          "text": "            else:"
+        },
+        {
+          "line": 1061,
+          "text": "                mode='ammo';ammo=bb['attack@trigger_time'];cost=5 if self.n==3 else 1"
+        },
+        {
+          "line": 1062,
+          "text": "                if self.n==2 and self.s.get('steal_success',True):"
+        },
+        {
+          "line": 1063,
+          "text": "                    speed_reference+=bb['steal'];speed=effective_attack_speed(speed_reference)"
+        },
+        {
+          "line": 1064,
+          "text": "                    interval=(self.a['interval']+bb['base_attack_time'])*100/speed"
+        },
+        {
+          "line": 1065,
+          "text": "                    ammo+=bb['addtional_ammo_each']"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1080,
+      "field": "delivery_coordinate",
+      "expression": "self.s.get('delivery_coordinate', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.n == 3 and self.s.get('delivery_coordinate', True)",
+        "normal",
+        "op == 'char_1041_angel2'",
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1077,
+          "text": "                prob=self.talent('火力电台','prob')"
+        },
+        {
+          "line": 1078,
+          "text": "                components.append({'name':'火力电台期望轰炸','damage_type':'physical','hits':consumed*prob,"
+        },
+        {
+          "line": 1079,
+          "text": "                    'per_hit':per,'total':per*consumed*prob})"
+        },
+        {
+          "line": 1080,
+          "text": "                if self.n==3 and self.s.get('delivery_coordinate',True):"
+        },
+        {
+          "line": 1081,
+          "text": "                    emit('投递坐标轰炸',attack*bb['attack@cannon_atk_scale'],'physical',1)"
+        },
+        {
+          "line": 1082,
+          "text": "                    from .uncertain_sources import preserve_unplaced_sources"
+        },
+        {
+          "line": 1083,
+          "text": "                    external_event_reference={**preserve_unplaced_sources([components[-1]],window=window,"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1109,
+      "field": "overload",
+      "expression": "self.s.get('overload', False)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "op == 'char_1035_wisdel'",
+        "op == 'char_1041_angel2'",
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1106,
+          "text": "                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']"
+        },
+        {
+          "line": 1107,
+          "text": "            else:events=attack_times()"
+        },
+        {
+          "line": 1108,
+          "text": "            count=len(events)"
+        },
+        {
+          "line": 1109,
+          "text": "            overload=not normal and self.n==2 and self.s.get('overload',False)"
+        },
+        {
+          "line": 1110,
+          "text": "            if overload:count*=4;scale=bb['attack@atk_scale_ol']"
+        },
+        {
+          "line": 1111,
+          "text": "            emit('维什戴尔主攻击',attack*scale*main,'physical',count,"
+        },
+        {
+          "line": 1112,
+          "text": "                event_times=None if overload or mode=='next_attack' else events)"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1034,
+      "field": "double_charge",
+      "expression": "self.s.get('double_charge', True)",
+      "function": "plan",
+      "enclosing_conditions": [
+        "self.n == 1",
+        "normal",
+        "op == 'char_1048_orchd2'",
+        "op == 'char_2027_wang'",
+        "op == 'char_4204_mantra'",
+        "op == 'char_1042_phatm2'",
+        "op == 'char_1015_aglna2'",
+        "op == 'char_4182_oblvns'",
+        "op in ('char_328_cammou', 'char_1038_whitw2')",
+        "op == 'char_1046_sbell2'",
+        "op == 'char_4202_haruka'",
+        "op == 'char_4087_ines'",
+        "op == 'char_206_gnosis'",
+        "op == 'char_437_mizuki'",
+        "op == 'char_1044_hsgma2'",
+        "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')",
+        "op == 'char_1050_chen3'",
+        "op == 'char_4228_closur'",
+        "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')",
+        "op == 'char_110_deepcl'"
+      ],
+      "source_context": [
+        {
+          "line": 1031,
+          "text": "                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)"
+        },
+        {
+          "line": 1032,
+          "text": "                unbound_cast_reference={'kind':'orchid_arrows',"
+        },
+        {
+          "line": 1033,
+          "text": "                    'parameter_rows':[('首轮箭矢数量参数',4,'支'),"
+        },
+        {
+          "line": 1034,
+          "text": "                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),"
+        },
+        {
+          "line": 1035,
+          "text": "                                      ('可充能次数参数',self.skill['max_charges'],'次')],"
+        },
+        {
+          "line": 1036,
+          "text": "                    'notes':['四箭及可选五箭保留条件量；额外充能消费、发射/飞行、强击瓶逐箭覆盖和实际结束未绑定。']}"
+        },
+        {
+          "line": 1037,
+          "text": "            elif self.n==2:"
+        }
+      ]
+    },
+    {
+      "path": "rouge/reporting.py",
+      "line": 149,
+      "field": "ines_first_deployment",
+      "expression": "scenario.get('ines_first_deployment')",
+      "function": "fee_section",
+      "enclosing_conditions": [
+        "number == 3 and scenario.get('ines_first_deployment')",
+        "op == 'char_4087_ines'"
+      ],
+      "source_context": [
+        {
+          "line": 146,
+          "text": "    if op=='char_4087_ines':"
+        },
+        {
+          "line": 147,
+          "text": "        notes.append('按当前单目标持续供靶的有效攻击/伤害事件估算；持续法术跳数不当作额外回费。其他敌人的影哨路径命中未默认加入。')"
+        },
+        {
+          "line": 148,
+          "text": "        if unplaced_shadow:notes.append('影哨路径碰撞尚未定位；每个伤害事件回费只列参数，未确认开启时回费或完整技能回费。')"
+        },
+        {
+          "line": 149,
+          "text": "        if number==3 and scenario.get('ines_first_deployment'):"
+        },
+        {
+          "line": 150,
+          "text": "            notes.append('首次部署只放影哨后离场，此次没有伤害回费；免部署费是费用免除，不是产生费用。')"
+        },
+        {
+          "line": 151,
+          "text": "    return section('dp','费用收益',rows,notes)"
+        },
+        {
+          "line": 152,
+          "text": ""
+        }
+      ]
+    }
+  ],
+  "three_named_cultivation_talent_sources": {
+    "char_437_mizuki": [
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "反移情",
+        "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+10%",
+        "values": {
+          "hp_ratio": 0.5,
+          "atk": 0.1
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 4,
+        "name": "反移情",
+        "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+12%<@ba.talpu>（+2%）</>",
+        "values": {
+          "hp_ratio": 0.5,
+          "atk": 0.12
+        }
+      }
+    ],
+    "char_4182_oblvns": [
+      {
+        "phase": 0,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "颂乐音符",
+        "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失",
+        "values": {
+          "delay": 1.0,
+          "def_penetrate_ratio": 0.0,
+          "magic_resist_penetrate_ratio": 0.0,
+          "attack@angle": 20.0,
+          "max_cnt": 10.0
+        }
+      },
+      {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "颂乐音符",
+        "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人2.5%的防御力和1.5%法术抗性（最多叠加至10层）",
+        "values": {
+          "delay": 1.0,
+          "def_penetrate_ratio": 0.025,
+          "magic_resist_penetrate_ratio": 0.015,
+          "attack@angle": 20.0,
+          "max_cnt": 10.0
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "颂乐音符",
+        "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人3%的防御力和2%法术抗性（最多叠加至10层）",
+        "values": {
+          "delay": 1.0,
+          "def_penetrate_ratio": 0.03,
+          "magic_resist_penetrate_ratio": 0.02,
+          "attack@angle": 20.0,
+          "max_cnt": 10.0
+        }
+      }
+    ],
+    "char_1048_orchd2": [
+      {
+        "phase": 0,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至105%",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.05
+        }
+      },
+      {
+        "phase": 0,
+        "level": 1,
+        "potential_rank": 4,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%<@ba.talpu>（+5%）</>",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.1
+        }
+      },
+      {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.1
+        }
+      },
+      {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 4,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%<@ba.talpu>（+5%）</>",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.15
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.15
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 4,
+        "name": "强击瓶专家",
+        "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至120%<@ba.talpu>（+5%）</>",
+        "values": {
+          "power_attack_count": 50.0,
+          "power_attack_scale": 1.2
+        }
+      }
+    ]
+  },
+  "covered_Oblvns_module_boundary": {
+    "id": "uniequip_002_oblvns",
+    "unlock_elite": 2,
+    "unlock_level": 60,
+    "named_candidate_limits": [
+      {
+        "module_level": 1,
+        "named_candidate_max_cnt": []
+      },
+      {
+        "module_level": 2,
+        "named_candidate_max_cnt": [
+          12.0
+        ]
+      },
+      {
+        "module_level": 3,
+        "named_candidate_max_cnt": [
+          12.0
+        ]
+      }
+    ],
+    "selected_talents_qualification_source": "selected_talents elite/level/potential gate; parts are only applied after module unlock",
+    "skill_override_condition": "module_id and not normal and selected named max_cnt>10",
+    "normal_contribution_unknown_without_runtime_cycle_and_continuous_gates": true
+  }
+}

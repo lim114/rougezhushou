@@ -1,0 +1,351 @@
+# BEGIN FULL095 INSTRUMENTATION AND STRICT ADDITIVE REPORT EVIDENCE
+import gzip as _gzip095, threading as _threading095
+_previous_profile095=None;_previous_trace095=None;_previous_excepthook095=None
+_main_thread095=_threading095.get_ident();_old_delegate095=False
+_phase095='runtime_project_imports';_scope095='legacy_prefix4217';_case095=None
+_counts095={};_phase_entries095={};_code_keys095={};_pending095={};_caller_objects095={};_queue095=[];_state_queue095=[]
+_sequence095=0;_chunks095=[];_evidence_errors095=[];_qt_errors095=[];_api_sequence095=[]
+_source_lines095=Path(__file__).read_text(encoding='utf-8').splitlines()
+_runner_filename095=__file__.replace('\\','/').lower()
+_started_hooks095=False;_explicit_buttons095=0;_explicit_texts095=0
+
+def _native_only095(value):
+    graph=flat_native(value)
+    assert flat_native(native_inverse(graph))==graph
+    return {'native':graph,'native_inverse_verified':True,'JSON_projection_applicable':False}
+
+def _origin095(frame):
+    cursor=frame;origin=None;parent=None
+    while cursor is not None:
+        if parent is None and id(cursor) in _pending095:parent=_pending095[id(cursor)]
+        if cursor.f_code.co_filename.replace('\\','/').lower()==_runner_filename095:
+            origin={'runner_line':cursor.f_lineno,'function':cursor.f_code.co_qualname}
+            if cursor.f_lineno<=len(_source_lines095):origin['source']=_source_lines095[cursor.f_lineno-1]
+            if cursor.f_code.co_name=='<module>':break
+        cursor=cursor.f_back
+    phase=_phase095
+    if parent is not None:phase=parent['phase']
+    elif phase=='automatic_control_or_signal' and origin is not None:
+        source=origin.get('source','')
+        if '.click(' in source or 'click_result(' in source:phase='actual_manual_button'
+        elif 'window.calculate(' in source or 'calculate_result(' in source:phase='explicit_direct_calculate'
+    return phase,origin
+
+def _inputs095(frame,key):
+    local=frame.f_locals
+    if key in ('rouge/damage.py:calculate_damage','rouge/damage.py:_prepare_damage'):return {'scenario':local['scenario']}
+    if key.endswith(':RunState.apply'):return {k:local[k] for k in ('observed','captured_at')}
+    if key.endswith(':AccountCache.observe'):return {k:local[k] for k in ('operator','captured_at')}
+    if key.endswith(':AccountCache.view'):return {k:local[k] for k in ('op',) if k in local}
+    return None
+
+def _profile095(frame,event,arg):
+    global _sequence095
+    if _threading095.get_ident()!=_main_thread095:return
+    code=frame.f_code
+    if code not in _code_keys095:
+        path=code.co_filename.replace('\\','/').lower()
+        _code_keys095[code]=('rouge/'+path.split('/rouge/',1)[1]+':'+code.co_qualname) if '/rouge/' in path else None
+    key=_code_keys095[code]
+    if event=='call' and key is not None:
+        phase,origin=_origin095(frame)
+        _counts095[key]=_counts095.get(key,0)+1
+        phasekey=_scope095+'|'+phase
+        ledger=_phase_entries095.setdefault(phasekey,{})
+        ledger[key]=ledger.get(key,0)+1
+        targeted=(key in ('rouge/damage.py:calculate_damage','rouge/damage.py:_prepare_damage') or key.startswith(('rouge/app.py:MainWindow.calculate','rouge/run_state.py:RunState.','rouge/account_cache.py:AccountCache.')))
+        if targeted:
+            _sequence095+=1
+            record={'sequence':_sequence095,'entry':key,'scope':_scope095,'phase':phase,'case':_case095,'origin':origin,'outcome':'pending'}
+            inputs=_inputs095(frame,key)
+            if inputs is not None:
+                _caller_objects095[id(frame)]=inputs
+                record['caller_before']=snapshot(inputs)
+            _pending095[id(frame)]=record
+            if key=='rouge/damage.py:calculate_damage':_api_sequence095.append(_sequence095)
+    elif event=='return' and id(frame) in _pending095:
+        record=_pending095.pop(id(frame));key=record['entry'];inputs=_caller_objects095.pop(id(frame),None)
+        if inputs is not None:
+            record['caller_after']=snapshot(inputs)
+            record['caller_unchanged']=record['caller_before']['native']==record['caller_after']['native']
+            if key in ('rouge/damage.py:calculate_damage','rouge/damage.py:_prepare_damage'):assert record['caller_unchanged'] is True
+        if key in ('rouge/damage.py:calculate_damage','rouge/damage.py:_prepare_damage'):
+            record['outcome']='raised_exception' if arg is None and record.get('exception_events') else 'returned_'+type(arg).__name__
+            record['returned']=snapshot(arg)
+        elif key=='rouge/app.py:MainWindow.calculate':
+            owner=frame.f_locals['self']
+            record['returned_damage_result']=snapshot(owner.damage_result)
+            record['visible_status']=owner.damage_text.toPlainText()
+            record['outcome']='numerical_result_available' if owner.damage_result is not None else 'no_numerical_result'
+        elif type(arg) in (dict,list,tuple,bool,int,float,str) or arg is None:
+            record['returned']=snapshot(arg)
+            record['outcome']='returned_none_with_exception_events' if arg is None and record.get('exception_events') else 'returned_'+type(arg).__name__
+        else:
+            record['outcome']='returned_non_evidence_object';record['returned_type']=type(arg).__name__
+        _queue095.append(record)
+    if _old_delegate095:profile090(frame,event,arg)
+    if event=='return' and key is None and code.co_filename.replace('\\','/').lower()==_runner_filename095 and code.co_name in ('calculate_result','click_result') and len(_queue095)>=12:
+        _checkpoint095()
+
+def _trace_local095(frame,event,arg):
+    frame.f_trace_lines=False;frame.f_trace_opcodes=False
+    if event=='exception' and id(frame) in _pending095:
+        _pending095[id(frame)].setdefault('exception_events',[]).append({'type':arg[0].__name__,'message':str(arg[1]),'args':_native_only095(arg[1].args)})
+    return _trace_local095
+
+def _trace095(frame,event,arg):
+    path=frame.f_code.co_filename.replace('\\','/').lower()
+    if event=='call' and '/rouge/' in path:
+        frame.f_trace_lines=False;frame.f_trace_opcodes=False
+        return _trace_local095
+    return None
+
+def _qt_hook095(kind,value,tb):
+    _qt_errors095.append({'type':kind.__name__,'message':str(value),'traceback':''.join(traceback.format_exception(kind,value,tb)),'phase':_phase095,'scope':_scope095,'case':_case095})
+
+def _start095():
+    global _previous_profile095,_previous_trace095,_previous_excepthook095,_started_hooks095
+    _previous_profile095=sys.getprofile();_previous_trace095=sys.gettrace();_previous_excepthook095=sys.excepthook
+    _started_hooks095=True;sys.excepthook=_qt_hook095;sys.setprofile(_profile095);sys.settrace(_trace095)
+
+def _checkpoint095(force=False):
+    # All native capture, inverse checks, UI and product calls happen before this function.
+    if not _queue095 and not _state_queue095 and not force:return
+    records=list(_queue095);states=list(_state_queue095)
+    payload={'schema':'full-ui095-native-chunk-v1','source_guard_sha256':BINDING095['source_guard']['sha256'],'sequence':len(_chunks095)+1,'entries':records,'states':states,'phase':_phase095,'scope':_scope095,'case':_case095}
+    saved_profile=sys.getprofile();saved_trace=sys.gettrace()
+    sys.setprofile(_previous_profile095);sys.settrace(_previous_trace095)
+    try:
+        # Only materialized built-in dict/list/scalars, stdlib serialization/hash and public file I/O.
+        raw=json.dumps(payload,ensure_ascii=False,allow_nan=False).encode('utf-8');compressed=_gzip095.compress(raw,mtime=0)
+        path=_guard_native_out095/('wine-ui-full-native-095-%06d.json.gz'%(len(_chunks095)+1))
+        with path.open('xb') as handle:handle.write(compressed)
+        previous=_chunks095[-1]['chain_sha256'] if _chunks095 else '0'*64
+        row={'file':path.relative_to(_guard_out095).as_posix(),'bytes':len(compressed),'sha256':hashlib.sha256(compressed).hexdigest(),'decoded_bytes':len(raw),'decoded_sha256':hashlib.sha256(raw).hexdigest(),'entries':len(records),'entry_sequences':[x['sequence'] for x in records],'state_ids':[x['id'] for x in states]}
+        row['chain_sha256']=hashlib.sha256((previous+row['sha256']+row['decoded_sha256']).encode('ascii')).hexdigest();_chunks095.append(row)
+        index={'schema':'full-ui095-native-index-v1','source_guard_sha256':BINDING095['source_guard']['sha256'],'chunks':_chunks095,'records_completed':sum(x['entries'] for x in _chunks095),'states_committed':sum(len(x['state_ids']) for x in _chunks095),'pending_entry_sequences':[x['sequence'] for x in _pending095.values()],'chain_sha256':row['chain_sha256'],'outcome':'pending'}
+        target=_guard_native_out095/'wine-ui-full-native-index-095.json';temporary=_guard_native_out095/'wine-ui-full-native-index-095.json.tmp'
+        with temporary.open('xb') as handle:handle.write(json.dumps(index,ensure_ascii=False,allow_nan=False).encode('utf-8'))
+        temporary.replace(target)
+        del _queue095[:len(records)];del _state_queue095[:len(states)]
+    finally:
+        sys.settrace(saved_trace);sys.setprofile(saved_profile)
+
+def _processEvents095():
+    app.processEvents()
+    if len(_queue095)>=12:_checkpoint095()
+
+def _pointer095(value,pointer):
+    if pointer=='':return value
+    assert pointer.startswith('/')
+    for item in pointer[1:].split('/'):
+        item=item.replace('~1','/').replace('~0','~')
+        value=value[int(item)] if type(value) is list else value[item]
+    return value
+
+def _strict_baseline095(capture,baseline,case):
+    current=native_inverse(capture['damage_result']['native']);expected=native_inverse(baseline['damage_result']['native'])
+    if current is None or not case['delta']['has_addition']:
+        assert capture['damage_result']['native']==baseline['damage_result']['native'],case['id']
+        assert capture['three_texts']['applicable']==baseline['three_texts']['applicable'],case['id']
+        if capture['three_texts']['applicable']:assert capture['three_texts']['strings']==baseline['three_texts']['strings'],case['id']
+        assert capture['visible_status']==baseline['visible_status'],case['id']
+        return
+    assert type(current) is dict and type(expected) is dict
+    assert flat_native(current['scenario'])==flat_native(expected['scenario']),case['id']
+    delta_contract=case['delta'];path=delta_contract['reference_path']
+    assert path[:2]==['result','report'] and len(path)==3,'Only an exact additive report object may be inverted'
+    parent=current['result']['report'];reference=parent[path[2]]
+    assert flat_native(reference)==delta_contract['expected_reference_native'],case['id']
+    del parent[path[2]]
+    sections_path=delta_contract['sections_path'];assert sections_path[:2]==['result','report']
+    section_list=current
+    for key in sections_path:section_list=section_list[key]
+    matches=[i for i,section in enumerate(section_list) if section.get(delta_contract['section_id_key'])==delta_contract['section_id']]
+    assert len(matches)==1
+    assert matches[0]==len(section_list)-1,'Only a unique final notes-only095 section is authorized'
+    removed=section_list.pop(matches[0]);assert flat_native(removed)==delta_contract['expected_section_native'] and removed['metrics']==[]
+    assert flat_native(current)==baseline['damage_result']['native'],('Only exact qualified095 source block removed',case['id'])
+    assert capture['three_texts']['applicable'] is True and baseline['three_texts']['applicable'] is True
+    for mode in ('default','technical','estimate'):
+        text=baseline['three_texts']['strings'][mode]
+        insertions=delta_contract['text_insertions'][mode]
+        assert type(insertions) is list and insertions
+        previous=len(text)+1
+        for insertion in sorted(insertions,key=lambda x:x['offset'],reverse=True):
+            offset=insertion['offset'];assert type(offset) is int and 0<=offset<=len(text) and offset<previous
+            addition=insertion['text'];assert type(addition) is str and addition
+            assert hashlib.sha256(addition.encode('utf-8')).hexdigest()==insertion['sha256']
+            text=text[:offset]+addition+text[offset:];previous=offset
+        assert capture['three_texts']['strings'][mode]==text,(case['id'],mode)
+
+def _capture095(active):
+    global _explicit_texts095,_phase095
+    previous_phase=_phase095;_phase095='inspection_probe'
+    before=flat_native(active.damage_result)
+    capture={'damage_result':snapshot(active.damage_result),'visible_status':active.damage_text.toPlainText(),'UI':{'owner':active.operator.currentData(),'skill':active.skill.currentData(),'level':active.level.value(),'level_override':active.level_override,'use_run_training':active.use_run_training.isChecked(),'raw_damage':active.raw_damage.isChecked(),'technical':active.damage_technical.isChecked(),'training_status':active.training_status.text(),'current_operator_state':snapshot(active.current_operator_state())}}
+    if active.damage_result is None:capture['three_texts']={'applicable':False,'reason':'Existing error or natural early return','visible_status':capture['visible_status']}
+    else:
+        from rouge.estimate import format_estimate as _estimate095
+        result=active.damage_result['result'];before_texts=dict(_counts095)
+        _phase095='explicit_three_text_requests'
+        strings={'estimate':_estimate095(result),'default':format_report(result),'technical':format_report(result,technical=True)};_explicit_texts095+=3
+        assert strings['estimate']==strings['default']
+        display=json.dumps(active.damage_result,ensure_ascii=False,indent=2) if active.raw_damage.isChecked() else strings['technical' if active.damage_technical.isChecked() else 'default']
+        assert capture['visible_status']==display.replace(chr(160),' ')
+        capture['three_texts']={'applicable':True,'strings':strings}
+        capture['actual_explicit_formatter_entries']=delta(before_texts,_counts095)
+    assert flat_native(active.damage_result)==before
+    _phase095=previous_phase
+    return capture
+
+def _durable095(active,folder):
+    return {'run':snapshot(active.run.state),'account':snapshot(active.account_cache.records),'issues':snapshot(active.account_cache.issues),'preserve_original':active.account_cache.preserve_original,'alias_is_records':active.operator_observations is active.account_cache.records,'account_bytes':byte_evidence(file_bytes(active.account_cache.path)),'files':filesystem(folder)}
+
+def _action095(active,step,application):
+    action=step['action']
+    if action=='account_observation':
+        observation=clone(step['observation']);active.apply_operator_observation(observation,observation['captured_at'])
+        assert active.operator.currentData()==observation['id'] and active.skill.currentData()==step['skill']
+    elif action=='run_observation':
+        observation=clone(step['observation']);assert active.apply_run_observation(observation,step['captured_at'])
+        assert active.current_operator_state()['scope']=='run'
+    elif action=='level':assert active.level.value()!=step['value'];active.level.setValue(step['value'])
+    elif action=='technical':assert active.damage_technical.isChecked()!=step['value'];active.damage_technical.setChecked(step['value'])
+    elif action=='raw':assert active.raw_damage.isChecked()!=step['value'];active.raw_damage.setChecked(step['value'])
+    elif action=='use_run_training':assert active.use_run_training.isChecked()!=step['value'];active.use_run_training.setChecked(step['value'])
+    elif action=='timing_text':assert active.timing_scenario.toPlainText()!=step['value'];active.timing_scenario.setPlainText(step['value'])
+    elif action=='overview':assert active.operator_choices.select_branch('__overview__')
+    elif action=='select':
+        assert active.select_operator(step['owner']);index=active.skill.findData(step['skill']);assert index>=0;active.skill.setCurrentIndex(index)
+    elif action=='numeric_callback':
+        assert step['widget'] in BINDING095['qualified_callback_widgets']
+        widget=getattr(active,step['widget']);assert widget.value()==step['old_value'] and widget.value()!=step['value'];widget.setValue(step['value'])
+    else:raise AssertionError(('Unbound or unsupported095 action',action))
+    application.processEvents();_checkpoint095()
+
+def _new_subgroup095(application,module,backend):
+    global _scope095,_phase095,_case095,_explicit_buttons095
+    from contextlib import ExitStack
+    from rouge.run_state import RunState as _RunState095
+    original_paths=(module.RUN_STATE,module.OPERATOR_STATE,module.SETTINGS,module.DesktopBackend)
+    active=None;folder=None;records=[];initial_qt=len(_qt_errors095)
+    with ExitStack() as folders:
+        try:
+            for case in BINDING095['cases']:
+                _scope095='new095_behavior_subgroup';_case095=case['id'];_phase095='before_probe'
+                step=case['step'];before_counts=dict(_counts095);before_api=len(_api_sequence095)
+                row={'id':case['id'],'planned':snapshot(step),'baseline_source':case.get('baseline_file'),'baseline_pointer':case.get('baseline_pointer'),'passed':False}
+                if step['action']=='fresh_window':
+                    if active is not None:_phase095='window_close';active.close();application.processEvents()
+                    folder=Path(folders.enter_context(tempfile.TemporaryDirectory(prefix='public-full095-')))
+                    module.RUN_STATE=folder/'run.json';module.OPERATOR_STATE=folder/'account.json';module.SETTINGS=folder/'settings.json'
+                    module.RUN_STATE.write_text(json.dumps(BINDING095['public_run_initial'],ensure_ascii=False,allow_nan=False),encoding='utf-8')
+                    module.OPERATOR_STATE.write_text(json.dumps(step['fixture'],ensure_ascii=False,allow_nan=False),encoding='utf-8')
+                    module.DesktopBackend=lambda _path,callback:backend(folder/'chat',callback)
+                    _phase095='real_startup';active=module.MainWindow();active.show();application.processEvents()
+                    assert type(active.run) is _RunState095 and active.operator_observations is active.account_cache.records
+                    _phase095='common_controls'
+                    active.centralWidget().setCurrentIndex(1);active.auto_relics.setChecked(False);active.frame_timing.setChecked(False);active.limit_window.setChecked(False);active.target_enemy.setCurrentIndex(0);active.target_buff_test.setChecked(False);active.raw_damage.setChecked(False);active.damage_technical.setChecked(False);active.timing_scenario.clear();active.relic_context.clear();application.processEvents()
+                    row['automatic']=_capture095(active);row['durable_after']=_durable095(active,folder)
+                else:
+                    assert active is not None
+                    row['durable_before']=_durable095(active,folder);_phase095='automatic_control_or_signal'
+                    if step['action']=='numeric_callback':row['before_callback_damage_result']=snapshot(active.damage_result)
+                    _state_queue095.append({'id':case['id']+'/before-action','record':clone(row)})
+                    automatic_counts=dict(_counts095);automatic_api=len(_api_sequence095)
+                    _action095(active,step,application)
+                    row['automatic']=_capture095(active);row['automatic']['actual_entries']=delta(automatic_counts,_counts095);row['automatic']['API_sequences']=list(_api_sequence095[automatic_api:])
+                    after_auto=_durable095(active,folder);row['durable_after_automatic']=after_auto
+                    # Persist automatic full native/texts before requesting the actual manual button.
+                    _state_queue095.append({'id':case['id']+'/automatic-before-manual','record':clone(row)});_checkpoint095()
+                    _phase095='actual_manual_button';manual_counts=dict(_counts095);manual_api=len(_api_sequence095)
+                    button=next(b for b in active.findChildren(QPushButton) if b.text()=='计算属性与技能预估');_explicit_buttons095+=1;button.click();application.processEvents()
+                    row['manual']=_capture095(active);row['manual']['actual_entries']=delta(manual_counts,_counts095);row['manual']['API_sequences']=list(_api_sequence095[manual_api:])
+                    kind=step.get('expected',{}).get('kind','numerical_result')
+                    if kind=='JSON_error_before_numerical_API':
+                        assert row['automatic']['damage_result']['JSON_projection'] is None and not row['automatic']['API_sequences'] and not row['manual']['API_sequences']
+                        assert row['automatic']['visible_status']==step['expected']['message']
+                    elif kind=='natural_early_return':
+                        assert row['automatic']['damage_result']['JSON_projection'] is None and not row['automatic']['API_sequences'] and not row['manual']['API_sequences']
+                        assert step['expected']['text_contains'] in row['automatic']['visible_status']
+                    else:
+                        assert type(row['automatic']['damage_result']['JSON_projection']) is dict and len(row['manual']['API_sequences'])==1
+                        if step['action'] in ('technical','raw'):
+                            assert not row['automatic']['API_sequences']
+                            assert row['automatic']['actual_entries'].get('rouge/app.py:MainWindow.calculate',0)==0
+                            assert row['automatic']['actual_entries'].get('rouge/app.py:MainWindow.render_damage',0)>0
+                        else:assert row['automatic']['API_sequences']
+                    assert row['automatic']['damage_result']['native']==row['manual']['damage_result']['native']
+                    assert row['automatic']['three_texts']==row['manual']['three_texts'] and row['automatic']['visible_status']==row['manual']['visible_status']
+                    assert _durable095(active,folder)==after_auto,'Manual calculate and formatters may not mutate public run/account/files'
+                    if step['action'] not in ('account_observation','run_observation'):assert row['durable_before']==after_auto
+                    if case['comparison']=='paired_actual094':
+                        baseline=_pointer095(_baseline_documents095[case['baseline_file']],case['baseline_pointer'])
+                        _strict_baseline095(row['automatic'],baseline['automatic'],case);_strict_baseline095(row['manual'],baseline['manual'],case)
+                        assert row['automatic']['UI']['current_operator_state']['native']==baseline['automatic']['UI']['current_operator_state']['native']
+                    elif case['comparison']=='same_action_auto_manual':
+                        assert step['action']=='numeric_callback' and row['automatic']['damage_result']['JSON_projection'] is not None
+                        assert row['automatic']['API_sequences'],'Actual new94 callback must enter numerical API'
+                        before_result=native_inverse(row['before_callback_damage_result']['native'])
+                        after_result=native_inverse(row['automatic']['damage_result']['native'])
+                        reference_key=BINDING095['report_contract']['reference_key']
+                        assert flat_native(before_result['result']['report'][reference_key])==flat_native(after_result['result']['report'][reference_key])
+                    else:raise AssertionError(('Missing actual094 comparison binding',case['id']))
+                    row['full_native_JSON_three_texts_auto_manual_equal']=True
+                if step['action']=='fresh_window' and case['comparison']=='paired_actual094':
+                    baseline=_pointer095(_baseline_documents095[case['baseline_file']],case['baseline_pointer'])
+                    _strict_baseline095(row['automatic'],baseline['automatic'],case)
+                assert not _qt_errors095[initial_qt:]
+                assert not active.auto.isChecked() and active.capture.target is None and not active.desktop.process and not active.desktop_request_busy
+                assert active.operator_observations is active.account_cache.records
+                row['all_actual_entries_including_probes']=delta(before_counts,_counts095);row['all_API_sequences']=list(_api_sequence095[before_api:]);row['passed']=True
+                _state_queue095.append({'id':case['id'],'record':row});_checkpoint095();records.append({'id':case['id'],'action':step['action'],'passed':True})
+                checks.append({'scope':'actual_full095_source_bound_behavior','id':case['id'],'action':step['action'],'comparison':case['comparison'],'passed':True})
+                if step['action']=='numeric_callback':
+                    _phase095='post_callback_restore';getattr(active,step['widget']).setValue(step['restore_value']);application.processEvents();_checkpoint095()
+        except BaseException as error:
+            _phase095='failure_probe'
+            failed={'id':str(_case095)+'/failure','failure':{'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()},'passed':False}
+            if active is not None:
+                try:
+                    failed['actual_window']=_capture095(active);failed['durable']=_durable095(active,folder)
+                    screenshot=OUT/'wine-ui-subgroup-failure-095.png'
+                    if active.grab().save(str(screenshot)):failed['screenshot']=screenshot.name
+                except BaseException as context_error:failed['context_capture_error']={'type':type(context_error).__name__,'message':str(context_error)}
+            _state_queue095.append(failed)
+            raise
+        finally:
+            if active is not None:_phase095='window_close';active.close();application.processEvents()
+            module.RUN_STATE,module.OPERATOR_STATE,module.SETTINGS,module.DesktopBackend=original_paths
+            _scope095='legacy_final_close';_phase095='window_close';_case095=None
+    return records
+
+def _finish095(receipt):
+    global _started_hooks095
+    actual_after={};guard_error=None
+    try:actual_after=_validate_guard095()
+    except BaseException as error:guard_error={'type':type(error).__name__,'message':str(error)}
+    drift=[key for key in sorted(set(actual_after)|set(_maintained_before095)) if actual_after.get(key)!=_maintained_before095.get(key)]
+    try:_checkpoint095(force=True)
+    except BaseException as error:_evidence_errors095.append({'type':type(error).__name__,'message':str(error),'phase':'final_stdlib_checkpoint'})
+    receipt['source_guard095']={'path':BINDING095['source_guard']['path'],'sha256':BINDING095['source_guard']['sha256'],'before':_maintained_before095,'after':actual_after,'source_drift':drift,'read_error':guard_error}
+    receipt['actual_all_rouge_main_thread_entries095']=dict(_counts095);receipt['actual_phase_entries095']={key:dict(value) for key,value in _phase_entries095.items()}
+    receipt['full_native095']={'schema':'full-ui095-native-index-v1','file':'full095-ui-native-v3/wine-ui-full-native-index-095.json','directory':'full095-ui-native-v3','chunks':len(_chunks095),'targeted_call_records':sum(x['entries'] for x in _chunks095),'states':sum(len(x['state_ids']) for x in _chunks095),'chain_sha256':_chunks095[-1]['chain_sha256'] if _chunks095 else None}
+    receipt['fresh_evidence_directory095']={'path':str(_guard_native_out095),'relative_to_compat':'full095-ui-native-v3','existed_at_admission':False,'created_before_project_imports':True}
+    receipt['actual_explicit_buttons095']=_explicit_buttons095;receipt['actual_explicit_three_text_requests095']=_explicit_texts095
+    receipt['legacy090_source_fields_are_historical']=True
+    receipt['historical093_original_Wine_shell_status']=None
+    receipt['historical093_original_Wine_shell_status_reason']='Original final tool session disappeared; saved-validator primary0 is separate. No replay or invented shell status.'
+    receipt['full095_evidence_failure']={'pending_entry_sequences':[row['sequence'] for row in _pending095.values()],'Qt_slot_exceptions':list(_qt_errors095),'capture_or_write_errors':list(_evidence_errors095)}
+    if drift or guard_error is not None or _pending095 or _qt_errors095 or _evidence_errors095:
+        receipt['passed']=False;receipt['complete_ui_validation']=False
+    sys.settrace(_previous_trace095);sys.setprofile(_previous_profile095);sys.excepthook=_previous_excepthook095;_started_hooks095=False
+    # Cleanup and all project calls are complete; final metadata writes run with initial hooks.
+    index_path=_guard_native_out095/'wine-ui-full-native-index-095.json'
+    if index_path.exists():
+        index=json.loads(index_path.read_text(encoding='utf-8'));index['outcome']='passed' if receipt['passed'] else 'failed';index['full095_evidence_failure']=receipt['full095_evidence_failure'];index['source_drift']=drift
+        index_path.write_text(json.dumps(index,ensure_ascii=False,allow_nan=False),encoding='utf-8')
+        data=index_path.read_bytes();receipt['full_native095']['index_bytes']=len(data);receipt['full_native095']['index_sha256']=hashlib.sha256(data).hexdigest()
+    receipt['full_native095']['files']=[{'file':path.relative_to(_guard_out095).as_posix(),'bytes':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()} for path in sorted(_guard_native_out095.rglob('*')) if path.is_file()]
+# END FULL095 INSTRUMENTATION AND STRICT ADDITIVE REPORT EVIDENCE

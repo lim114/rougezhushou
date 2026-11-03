@@ -1,0 +1,275 @@
+{
+  "kind": "SECTION107_COUPLED_WEIGHT_CONSUMER_CANDIDATE_SOURCE_CONTRACT",
+  "status": "SOURCE_CANDIDATE_RUNTIME_PENDING",
+  "author_Runtime_executed": false,
+  "product_pass": false,
+  "section_complete": false,
+  "tracked_files_written": false,
+  "root_actual_guard_required": true,
+  "expected_before_source_count": null,
+  "expected_after_source_count": null,
+  "product_change": {
+    "path": "rouge/operator_engine.py",
+    "bytes_before": 156626,
+    "sha256_before": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50",
+    "bytes_composed": 156801,
+    "sha256_composed": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04",
+    "exact_reverse_byte_equality": true,
+    "old_anchor_exactly_once": true,
+    "all_original_product_assertions_AST_unchanged": true,
+    "composed_compile_codeobject_without_exec": true,
+    "whole_product_file_shipped": false,
+    "single_behavior_change": "Qualified talent compares validated base weight plus prepared signed enemy weight_delta; no producer/metadata or base validation rewrite."
+  },
+  "test_source": {
+    "path": "test_aglna_gravity_weight_107.py",
+    "bytes": 13845,
+    "sha256": "62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c",
+    "compile_codeobject_without_exec": true,
+    "method_count": 11,
+    "methods": [
+      "test_actual_crossing_cases_match_independent_original_manual_controls",
+      "test_fixed_zero_through_five_keep_signed_metadata_and_existing_light_damage",
+      "test_cultivation_potential_and_unlocked_skill_source_coefficients_survive",
+      "test_original_normal_plans_use_effective_branch_and_keep_base_scenario_weight",
+      "test_manual_without_identity_never_supplies_gravity_qualification",
+      "test_selected_identity_keeps_precedence_over_stale_manual_values",
+      "test_duplicate_inventory_and_weight_independent_mechanical_output_stay_unchanged",
+      "test_locked_talent_empty_enemies_and_zero_windows_do_not_create_hits",
+      "test_original_training_and_target_identity_errors_still_precede_consumer",
+      "test_report_and_estimate_preserve_signed_weight_and_preview_excludes_relics",
+      "test_caller_and_public_sources_survive_calculation_and_mutated_result"
+    ],
+    "imports": [
+      "from copy import deepcopy",
+      "import math",
+      "import unittest",
+      "from rouge.battle_preview import enemy_preview",
+      "from rouge.catalog import catalog, stage_previews",
+      "from rouge.damage import _prepare_damage, calculate_damage",
+      "from rouge.estimate import format_estimate",
+      "from rouge.operator_engine import Combat",
+      "from rouge.reporting import format_report"
+    ],
+    "skip_or_mock_present": false,
+    "ordinary_value_equalities_not_native_alias_or_floatbits_proof": true
+  },
+  "fixtures": [
+    {
+      "weight": 0,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2133_shdopl",
+        "level": 0
+      },
+      "name": "空值体",
+      "reference_stats": {
+        "maxHp": 5000,
+        "atk": 320,
+        "def": 100,
+        "magicResistance": 20.0,
+        "baseAttackTime": 1.4,
+        "massLevel": 0
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    },
+    {
+      "weight": 1,
+      "target": {
+        "stage_id": "ro6_n_1_2",
+        "enemy_id": "enemy_1093_ccsbr",
+        "level": 0
+      },
+      "name": "提亚卡乌战士",
+      "reference_stats": {
+        "maxHp": 2600,
+        "atk": 290,
+        "def": 60,
+        "magicResistance": 10.0,
+        "baseAttackTime": 1.8,
+        "massLevel": 1
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    },
+    {
+      "weight": 2,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2034_sythef",
+        "level": 0
+      },
+      "name": "流泪小子",
+      "reference_stats": {
+        "maxHp": 8000,
+        "atk": 300,
+        "def": 150,
+        "magicResistance": 20.0,
+        "baseAttackTime": 2.0,
+        "massLevel": 2
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    },
+    {
+      "weight": 3,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2001_duckmi",
+        "level": 0
+      },
+      "name": "鸭爵",
+      "reference_stats": {
+        "maxHp": 18000,
+        "atk": 100,
+        "def": 200,
+        "magicResistance": 30.0,
+        "baseAttackTime": 1.0,
+        "massLevel": 3
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    },
+    {
+      "weight": 4,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2002_bearmi",
+        "level": 0
+      },
+      "name": "高普尼克",
+      "reference_stats": {
+        "maxHp": 30000,
+        "atk": 2000,
+        "def": 200,
+        "magicResistance": 50.0,
+        "baseAttackTime": 3.5,
+        "massLevel": 4
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    },
+    {
+      "weight": 5,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2085_skzjxd",
+        "level": 0
+      },
+      "name": "圆仔",
+      "reference_stats": {
+        "maxHp": 50000,
+        "atk": 500,
+        "def": 0,
+        "magicResistance": 50.0,
+        "baseAttackTime": 1.0,
+        "massLevel": 5
+      },
+      "normal_stage_no_active_attribute_runes_no_global_buffs": true
+    }
+  ],
+  "Source_pin_refs": [
+    {
+      "path": "rouge/operator_engine.py",
+      "bytes": 156626,
+      "sha256": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50"
+    },
+    {
+      "path": "rouge/relics.py",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    {
+      "path": "rouge/enemy_environment.py",
+      "bytes": 8213,
+      "sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a"
+    },
+    {
+      "path": "rouge/damage.py",
+      "bytes": 31071,
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09"
+    },
+    {
+      "path": "rouge/reporting.py",
+      "bytes": 98978,
+      "sha256": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1"
+    },
+    {
+      "path": "rouge/battle_preview.py",
+      "bytes": 15499,
+      "sha256": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb"
+    },
+    {
+      "path": "rouge/catalog.py",
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    {
+      "path": "rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "path": "rouge/data/previews.json",
+      "bytes": 2601977,
+      "sha256": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586"
+    },
+    {
+      "path": "rouge/data/relic-mechanics.json",
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47"
+    },
+    {
+      "path": "tests/test_aglna_manual_weight.py",
+      "bytes": 3838,
+      "sha256": "9d566a1e90d4995d0d6b418528a50d0d32119780f74f940e78d46d9945b1b372"
+    },
+    {
+      "path": "tests/test_aglna_talent_qualification.py",
+      "bytes": 6789,
+      "sha256": "a98addaa26504aa3123175e5f67f103bf7f4204c0f380cface1dcb598343ca5d"
+    },
+    {
+      "path": "tests/test_relic_candidates_025.py",
+      "bytes": 11289,
+      "sha256": "2e4fd2b8db9baf2c1ef8436996265bcb05332c3fd4d4f1a6bab11b13f3992745"
+    }
+  ],
+  "original_actual_ref": {
+    "path": "/workspace/.continuation/section107-original-weight-actual-linux-v1/observations.json",
+    "bytes": 290680,
+    "sha256": "0a38276dda0ee3e6640f203cc61397686b6e83c365656578b6896dc461563d00",
+    "explicit_consumers": 74,
+    "loader": 1,
+    "native_records": 89,
+    "consumer_errors": 0,
+    "blocked_phases": 0,
+    "source_before_count": 748,
+    "source_and_CORE_unchanged": true,
+    "elapsed_seconds": 6.717854824004462,
+    "observation_only": true,
+    "product_pass": false,
+    "native_decoded_by_author": false
+  },
+  "independent_baseline_ref": {
+    "path": "/workspace/.continuation/section107-weight-fixture-contract-independent-source-v1/report.json",
+    "bytes": 12170,
+    "sha256": "c65213bc16625fed8f404e8cd1024d09c0b3e89d3c16443579a0b0f529f2090b"
+  },
+  "known_boundaries": [
+    "Derived negative metadata is already an original contract; no floor or displacement model is added.",
+    "Single gravity and duplicate identical inventory only; unknown different-item stacking not claimed.",
+    "Standalone preview intentionally excludes relics; calculation report already includes them.",
+    "Public calculate only accepts skill1..3; original normal=True plan is exercised separately.",
+    "Existing original mechanical window3 total0 is not nonzero numerical evidence; candidate test window30 must actually be >0.",
+    "Locked talent and skill phases retain original qualification; no gameplay state or timing proof is inferred.",
+    "Source snapshot refs may reflect original748 or completed106 Source at read time; they are documentary and do not replace Root actual guard."
+  ],
+  "root_actual_pending": [
+    "New test and related regression actual Linux/Wine statuses/counts",
+    "Fresh candidate full native caller/result/error/alias/floatbit records and unaffected original case comparison",
+    "Real UI Gold/candidate chain with correct signed and crossing branch expectations",
+    "Actual Source/CORE guards, local registry coverage, save/commit/push"
+  ]
+}

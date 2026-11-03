@@ -1,0 +1,17 @@
+候选按一个完整使用流程处理：选择合法技能与培养→启用/修改观察窗口→声明目标存在和时序范围→结果刷新并显示实际已计窗口。此包尚未完成小节，也不是实际窗口或数值验证。
+
+来源为已封固定2cbc的source33。实现前景基于第91节已冻结的app与reporting候选字节，因此保留持续普攻可见性/提示/刷新，以及深海色说明范围修正。这个base是已冻结91作者对象，不是已经存在的root91提交；root91正式归档后必须做实际源运输校验，不能借此前2cbc名字假称已当前集成。
+
+三个问题分别留证：
+
+1. 窗口开关和秒数有真实Qt控件与scenario读取，却没有自身刷新连接。候选在原初始化后连接 toggled/valueChanged 到已有calculate，保留number(40,3600,2)、控件身份、checkbox原默认及原native值，没有reset、迁移或新序列化。窗口未启用时秒数改变也沿同一计算路径，原scenario仍不包含window；这是现有选项的直接回调模式，实际Qt调用次数尚未测量。
+2. 有效观察长度0被damage分支truthiness隐藏；healing没有长度行。候选在原外层观察输出资格内，用is not None显示已有有效时长，包括0；原positive truthiness平均值计算保留。显示总量、有效长度、平均未知/省略与已有未定位来源说明一致，不把0秒推成所有特殊来源合计0。
+3. 输入窗口并非所有技能的原生持续时间，continuous普通参考也不按供靶/移动/中断区间逐帧调度。控件提示准确说明实际已计长度见报告、零时长平均不作计算、30Hz只是模拟帧、关闭逐帧后的普通参考范围，以及友方潜在治疗/未知时钟仍依已有来源。没有调整任何时间轴或计算资格。
+
+范围严格限app.make_damage_tab与reporting.build_report两函数、两文件。calculate/update_operator/prepare/damage/engine/estimate/timing/条件guards/registry全部不变；report中新添时长metric取自原skill.window_seconds，所以report结构和三文本预期会改变，不能假称整份result完全same。未来保存比较应要求除两类既有report窗口输出中新时长metric外，其余数值/typed/native/caller/timelines/unknowns精确保持；不做时间或None归一。
+
+当前未新增文本镜像test，也未运行API/helpers/formatters/tests/Qt/Wine。AST和严格字节inverse已通过。一次静态生成后仅把窗口tooltip中的“0秒”明确为“已计窗口为0秒”，再次生成，无运行失败；首次与精确提示日志同时留存。source33四项外部准备诊断亦全部保留且不改原件。
+
+真实GUI window字段来自有限范围数字控件；bool数值别名、负数和NaN的API例子不能当作该控件可输入。时序文本是独立JSON通道，其布尔/负值/NaN等实际已消费字段已有finite/ranges保护。旧83–89/finite085/commonrank20不重跑。当前没有确认新的正窗口算术缺陷。
+
+验收需root91完成后的实际baseline和明确预算：小量有区别的public结果保存比较，以及root唯一真实MainWindow组合流程。自动Qt调用、显式按钮、formatter/helper内部entry均按实际采集分列，不从UI action数量推算。测试所有输出已定位时才能断言0秒输出0；未定位/未知来源保留原语义。received/event资料与未知原生clock、目标获取/投射物/附着保持unknown。

@@ -1,0 +1,59 @@
+{
+  "status": "FROZEN_EXTERNAL_DRAFT_BUDGET_APPROVED",
+  "source_base_commit": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "transport_root_commit": "1ce970fd30aa3b42d8ef787cde02513f05682b66",
+  "source38_manifest": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-source/public-manifest.json",
+    "bytes": 10688,
+    "sha256": "adf1b2a619cadea7c747669e9bb2f9c710c5d12ce83de48a63afcc992b3b7aca"
+  },
+  "source_run_state_old_sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+  "files": [
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/draft/rouge/run_state.py",
+      "bytes": 42446,
+      "sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/draft/tests/test_run_crew_count_boolean_input.py",
+      "bytes": 6492,
+      "sha256": "cb76de22153bdb44a223252b5f0bd66c0a03d05eb6fc4daf1e22b0043e198671"
+    }
+  ],
+  "product_added_line": "if isinstance(crew,bool):crew=None",
+  "inverse_exact_source38_old_bytes": true,
+  "section_patch": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/section89.patch",
+    "bytes": 7155,
+    "sha256": "5f05fa36a07c07e9c1028e0beb2d739a3a98132180388e800f5602f5cd0efa00"
+  },
+  "registry_proposal": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/registry-proposal.json",
+    "bytes": 684,
+    "sha256": "5f693f0d39f4b33427a987d06350439d203d9c8d8f4ed4878e14dc33b6224073"
+  },
+  "new_test_methods": [
+    "test_false_empty_observation_preserves_known_count_members_and_reload",
+    "test_true_subset_keeps_other_member_and_merges_positive_observation",
+    "test_none_and_integer_zero_one_keep_existing_roster_contract",
+    "test_duplicate_ids_keep_unique_integer_count_semantics_and_bool_is_unread",
+    "test_valid_partial_roster_keeps_unseen_member_and_positive_fields",
+    "test_nonboolean_legacy_values_remain_compatible_without_producer_claim",
+    "test_stale_and_cross_run_observations_keep_old_early_ignored_contract"
+  ],
+  "approved_author_budget": {
+    "new_scenario_groups": 12,
+    "constructors_new": 12,
+    "constructors_reload": 2,
+    "seed_apply": 12,
+    "subject_apply": 12,
+    "actual_apply_entries": 24
+  },
+  "product_runtime_not_yet_executed": true,
+  "git_apply_check_returncode": 0,
+  "git_apply_check_stdout": "",
+  "git_apply_check_stderr": "",
+  "damage_app_training_formatter_Qt_Wine": 0,
+  "old5_source_repro_repeated": false,
+  "tracked_edits": 0
+}

@@ -1,0 +1,1253 @@
+
+
+
+
+Damage - Arknights Terra Wiki
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+		
+
+			
+				
+			
+		
+			
+			    
+			    Indie game deals
+			
+	
+
+	
+		
+
+		    
+		    
+		            
+Create account
+		            
+Log in
+		    
+		    
+		
+
+		
+
+			
+			Toggle personal tools menu
+
+			
+
+				
+
+				    
+				    
+				            
+Not logged in
+				            
+Talk
+				            
+Contributions
+				            
+Create account
+				            
+Log in
+				    
+				    
+				
+			
+		
+
+
+
+
+
+
+
+
+
+
+	
+
+		
+Navigation menu
+		
+
+			
+
+				
+
+
+	
+
+		Namespaces
+	
+	
+
+		
+		
+			
+			
+Page
+Discussion
+		
+		
+	
+
+
+				
+
+
+	
+	
+		English
+	
+	
+
+		
+		
+			
+			
+		
+		
+	
+
+
+			
+			
+
+				
+
+
+	
+
+		Views
+	
+	
+
+		
+		
+			
+			
+Read
+Edit
+View history
+		
+		
+	
+
+
+				
+
+
+	
+	
+		More
+	
+	
+
+		
+		
+			
+			
+		
+		
+	
+
+
+				
+
+
+	
+
+		
+
+			
+
+				
+					
+
+						
+
+							
+
+								
+							
+						
+					
+						Search
+					
+					
+				
+			
+		
+	
+
+
+			
+		
+		
+
+
+	
+
+		
+	
+	
+
+
+	
+
+		Navigation
+	
+	
+
+		
+		
+			
+			
+Main page
+Recent changes
+Random page
+About the wiki
+Help about MediaWiki
+Wiki Discord
+		
+		
+	
+
+
+	
+
+
+	
+
+		Arknights
+	
+	
+
+		
+		
+			
+			
+Operators
+Operations
+Enemies
+Events
+Items
+RIIC
+Headhunting
+Recruitment
+		
+		
+	
+
+
+
+
+	
+
+		Game modes
+	
+	
+
+		
+		
+			
+			
+Contingency Contract
+Integrated Strategies
+Stationary Security Service
+Trials for Navigator
+Reclamation Algorithm
+Icebreaker Games
+Vector Breakthrough
+Duel Channel
+		
+		
+	
+
+
+
+
+	
+
+		Miscellaneous
+	
+	
+
+		
+		
+			
+			
+Outfits
+Furniture
+Character voices
+Illustrators
+Soundtracks
+		
+		
+	
+
+
+
+
+	
+
+		Guides
+	
+	
+
+		
+		
+			
+			
+User interface
+Team building
+Advanced strategies
+Missions
+Path to Glory
+Store
+Headhunting
+Recruitment
+		
+		
+	
+
+
+
+
+	
+
+		Lore
+	
+	
+
+		
+		
+			
+			
+Terra
+Characters
+Factions
+Races
+Originium
+Stories
+Timeline
+Terra Historicus
+		
+		
+	
+
+
+
+
+	
+
+		Real-world
+	
+	
+
+		
+		
+			
+			
+Hypergryph
+Yostar
+Ambience Synesthesia
+		
+		
+	
+
+
+
+
+	
+
+		Community
+	
+	
+
+		
+		
+			
+			
+Administrators
+Policies and guidelines
+		
+		
+	
+
+
+
+
+	
+
+		Tools
+	
+	
+
+		
+		
+			
+			
+What links here
+Related changes
+New page
+Special pages
+Printable version
+Page information
+Database data
+		
+		
+	
+
+
+	
+
+
+	
+	
+
+		
+        
+
+
+
+		
+
+			
+				
+				
+
+
+[dismiss]
+
+
+
+The Arknights Terra Wiki is a collaborative, community-maintained wiki. If you notice an issue, please consider making an edit, starting a discussion on the article's talk page, or reaching out via the Arknights Terra Wiki Discord.
+
+				
+
+				
+				
+Damage
+				
+
+					
+From Arknights Terra Wiki
+					
+
+					
+
+					
+					
+
+					Jump to navigation
+					Jump to search
+					
+
+
+This article explains the mechanics of damage calculation in Arknights.
+
+
+
+
+Contents
+
+
+1 Overview
+
+
+1.1 Types
+
+1.2 Nature
+
+1.3 Sources
+
+1.4 Lethal
+
+
+
+2 Tips
+
+3 Visible Damage
+
+4 References
+
+5 Navigation
+
+
+
+
+Overview[edit]
+
+All damage is calculated to the exact value, including decimals. When damage is displayed in-game (see Trivia) or in a menu, the value is rounded to the closest integer (e.g. 99.9 is shown as 100 and 99.4 is shown as 99).
+
+In order to calculate DMG properly, there first needs to be an ATK calculation created by using the following formula:
+
+Atk = [FLOOR(Atkbase × Atkstage) × (1 + Atk+%)] + Atkex
+Atkfinal = FLOOR[Atk × ∏(1 - Atk-%)]
+
+Where:
+
+
+Atk represents the final ATK.
+
+Atkbase represents the original ATK before any skill, talent, buff, or debuff takes effect.
+
+Atkstage represents the ATK percentage increase caused by stage modifiers such as a Contingency Contract's risk levels, Challenge Mode conditions in regular stages, etc.
+
+Atk+% represents the sum of all ATK buffs (including Vigor), stacking additively.
+
+Atkex represents the sum of all ATK increased/decreased by Inspiration and/or Steal.
+
+Atkfinal represents the total amount of ATK after all buff/debuff calculations, before ATK multiplier from skills and/or talents take effect.
+
+Atk-% represents ATK decreased by Debuff effects, which stack multiplicatively.
+
+FLOOR represents the action of rounding down the value to the greatest integer with less value than the current value.
+
+∏, also known as product, represents an action of multiplying all values together.
+
+To make a DMG calculation, each of DMG type (Physical, Arts, True, and Elemental) uses their own separate formula and have their own separate interaction with the target's defensive stats (DEF, RES, and E-RES). Regardless of the type, the final amount of damage dealt will always be at least 5% of the attacker's ATK before independent percentage-based modifiers are factored in.
+
+
+Types[edit]
+
+Physical damage
+
+Arts damage
+
+True damage
+
+Elemental damage
+
+Technically HP recovery or healing is considered a damage type, but is not listed here due to its simplicity. It is worth noting however, that the healing "damage type" encompasses any form of HP restoration which shows the value as green numbers above the unit, such as those of Medics, and cannot be "inflicted" on targets with full HP.
+
+
+Nature[edit]
+
+Damage is also divided by nature.
+
+
+
+
+Nature
+
+Information
+
+
+
+Normal
+
+The basic nature of damage, which also applies to damage dealt by skills that modify the properties of normal attacks.
+
+
+
+Splash
+
+Damage that can affect targets other than the primary/main target.
+Examples: Artilleryman Snipers, Splash Casters
+
+
+
+Continuous
+
+Also known as damage-over-time (DOT), damage that is periodically inflicted through a continuous effect.
+Examples: Blue Poison's Neurotoxin, Thorns' Nerve Corrosion
+
+
+Note that the exact nature of damage dealt may not be intuitive, and testing may be required to identify the actual nature; for example the second and third hit of Pozëmka's Précis is treated as continuous damage in the game's code, and is thus affected by Tin Man's Shriveled Soul talent.[1]
+
+
+Sources[edit]
+
+Damage is also divided by the source that inflicted it.
+
+
+
+
+Source
+
+Information
+
+
+
+Additional
+
+All damage added to the unit's normal attacks. The additional damage is usually inflicted before the attack hits.
+Examples: Ceobe's Thresher, Mech-Accord Caster's Drone
+
+
+
+Skill
+
+All damage dealt through the unit's skills, including its associated effects. This also includes effects provided by a unit that can be inflicted by others.
+Examples: Archetto's Pursuing Arrows, Sesa's Delayed Concussive Parts
+
+
+
+Independent
+
+All damage that is not tied to the unit which inflicts them, thus units defeated through independent damage will not be considered defeated by the source.
+Examples: Blue Poison's Neurotoxin, Ethan's Fancy Maneuvers, W's D12
+
+
+
+Lethal
+
+See the Lethal section for more information.
+
+
+
+Environmental
+
+See Environmental effect for more information.
+
+
+Lethal[edit]
+
+Lethal or fatal damage is defined as any damage that exceeds the target's current HP, or in other words, overkill that would reduce the target's HP to 0 and keep going. Lethal damage will trigger certain effects depending on the calculation, which will be explained below; for instance, a Dreadnought Guards' DRE-Y Operator Module will reduce the fatal damage they receive to 0 and fully restores their HP once per deployment.
+
+Physical and True damage dealt will count as fatal if the value is equal to or greater than the target's current HP, while Arts and Elemental damage will only count as fatal if the value is greater than the target's current HP. Therefore, it is theoretically possible for a unit to survive with 0 HP when they take Arts or Elemental damage exactly equal to their current HP.
+
+The following are possible lethal damage calculations:
+
+
+
+
+Calculation
+
+Information
+
+
+
+OnTakeDamage
+
+If incoming damage exceeds current HP, even if non-lethal, the damage becomes lethal.
+Example: Horn's Bloodbath
+
+
+
+DoApplyModifier
+
+If incoming damage is non-lethal, it will leave the target with at least 1 HP, otherwise the damage becomes lethal.
+Example: Hemopoetic Inhibition
+
+
+
+SetHpInternal
+
+If the difference between the incoming damage and the target's current HP is 0 or lower, the damage becomes non-lethal and will never reduce the target's HP to below 1.
+Examples: Surtr's Remnant Ash, Silence the Paradigmatic's Dreadnought Protocol
+
+
+Tips[edit]
+
+As a general rule, enemies with high DEF usually have low RES and vice-versa, but certain elite enemies and most bosses have identical levels of DEF and RES. Against such enemies, the following should be used:
+
+
+Sources of True damage and ways to ignore DEF/RES.
+
+Extremely high Arts damage (at least 1000 in a single hit). For instance, when an Operator with 500 ATK hits enemies with an A rating on their DEF and RES (~800 and ~50, respectively), the enemy will take only ~25 physical damage but takes ~250 Arts damage (10 times the physical damage they would have taken).
+
+Conversely, if the Operator deals high enough physical damage, for example 1200, the enemy would take 400 physical damage, making it more effective than Arts at extremely high levels. However, such Operators are few and far in between, leaving Arts damage as the most reliable option.
+
+In general, physical damage has a higher damage ceiling, while Arts damage has a higher damage floor.
+
+DEF and/or RES debuffs.
+
+Damage amplification (only if the initial hit dealt a non-negligible amount of damage).
+
+Elemental damage (not to be confused with Elemental Injury) are able to bypass an enemy's defensive stats and damage reduction when dealing damage during Elemental Burst using each operator's specific conditioning.
+
+Visible Damage[edit]
+
+If the final damage (after factoring in skill, talents, and other effects) dealt by an attack is at least 50% higher than the original damage (i.e. if only visible ATK and DEF/RES were used for the calculation), the damage dealt will be displayed as a red (blue if the damage dealt is absorbed by Barrier) number above the target, similar to "critical attacks" in other games. This includes but is not limited to the following scenarios:
+
+On-hit ATK multipliers.
+
+Damage amplification, such as Fragile.
+
+Abilities that increase the 5% minimum damage threshold (like Projekt Red's Chill or Aciddrop's Slideshot Style).
+
+Attacks that ignore a certain amount of DEF or RES on hit.
+
+Attacks dealing Weakness Damage which changed their original damage type.
+
+Attacks that hit an invulnerable target (such as an attack fired at a target that was put to Sleep before it hit) will appear as dealing 0 damage.
+
+The displayed damage number is subject to rounding (e.g. 99.5 damage will be display as 100, and 99.4 damage will be display as 99), but only visually. The damage inflicted to the target will still use the raw value and is not subject to rounding.
+
+The critical damage indicator is capped at 10 digits (i.e. 9,999,999,999), although this normally cannot be achieved in gameplay.
+
+If the damage exceeds 7 digits, the damage number will be split into two rows with up to 5 digits each. Prior to an unspecified update, one way to see this was by using "Civilight Eterna" to increase the damage of Logos's  Perish (which executes enemies below the threshold by dealing 9,999,999 True damage to them) by 150%, dealing a visible 24,999,998 damage that is split into two rows (24999 and 998).
+
+References[edit]
+
+
+
+
+
+↑ Tin Man + Nymph combo (Unexpected things buffed by Tin Man’s DoT talent), 0:50
+
+
+
+Navigation
+
+
+View or edit this template
+Arknights mechanics
+
+
+
+
+Gameplay
+
+
+
+
+
+
+
+
+
+Aggression
+
+Dodge
+
+Deployment Point
+
+Environmental effect
+
+Life Point
+
+Resist
+
+Skill Point
+
+Shift
+
+
+
+Operation
+
+
+
+
+Active Originium Storm
+
+Beacon
+
+Blood Ledger
+
+Crystal
+
+Favor
+
+Frigid
+
+Gravity (Planetary Debris)
+
+High Tide
+
+Hui and Ming
+
+Intrusive Call
+
+Londinium Secondary Defense Artillery
+
+Moonlight
+
+Originium Pollution
+
+Poison Haze
+
+Realigned Flux
+
+Sandstorm
+
+Snowfall
+
+Steam
+
+Variation
+
+Toxic Pollution
+
+Visibility
+
+
+
+Attribute
+
+
+
+
+
+
+
+
+
+HP
+
+ATK
+
+DEF
+
+RES
+
+Attack interval
+
+
+
+Operator
+
+
+
+
+Block
+
+Cost
+
+Redeployment time
+
+
+
+Enemy
+
+
+
+
+Elemental RES (E-RES)
+
+Effect Resistance (ERST)
+
+Movement speed
+
+Weight
+
+
+
+Damage
+
+
+
+
+Physical
+
+Arts
+
+True
+
+Elemental
+
+
+
+Operator
+
+
+
+
+
+
+
+
+
+Base skill
+
+Continuously Attack
+
+EXP
+
+Fever
+
+Potential
+
+Promotion
+
+Talent
+
+Trust
+
+Weakness Damage
+
+
+
+Skill
+
+
+
+
+Ammunition
+
+Chanting
+
+Equipment Alteration
+
+Mana
+
+Move
+
+Overcharge
+
+Overload
+
+
+
+Enemy
+
+
+
+
+
+
+Races
+
+
+
+
+Apparition
+
+Arts Creation
+
+Collapsal
+
+Drone
+
+Infected Creature
+
+Machina
+
+Originium Creation
+
+Possessed
+
+Sarkaz
+
+Sea Monster
+
+Wild Beast
+
+
+
+Movement
+
+
+
+
+Pathing
+
+Collision
+
+
+
+Properties
+
+
+
+
+Low-Altitude Hovering
+
+Refraction
+
+
+
+Special
+
+
+
+
+Accuracy
+
+Ammunition
+
+Corruption
+
+Dominion
+
+Energy
+
+Identity
+
+Imprisonment
+
+Inspire
+
+Reborn Creation
+
+Straight Shot
+
+Waregeist
+
+
+
+Buff
+
+
+
+
+Barrier
+
+Camouflage
+
+Damage Reduction
+
+Inspiration
+
+Invisible
+
+Sanctuary
+
+Shield
+
+Status Resistance
+
+Take Off
+
+Tenacity
+
+Vigor
+
+
+
+Debuff
+
+
+
+
+Bind
+
+Critically Wounded
+
+Disarm
+
+Enfeeble
+
+Fragile
+
+Levitate
+
+Silence
+
+Sleep
+
+Slow
+
+Steal
+
+Weightless
+
+
+
+Negative Status
+
+
+
+
+Burning Breath
+
+Cold
+
+Fear
+
+Freeze
+
+Lure
+
+Paralysis
+
+Stun
+
+
+
+Elemental Injury
+
+
+
+
+Burn
+
+Corrosion
+
+Necrosis
+
+Nervous Impairment
+
+
+
+RIIC
+
+
+
+
+Attacking Team
+
+Causality & Karma
+
+Chain of Thought
+
+Defending Team
+
+Dreamland
+
+Felvine
+
+Intelligence Reserve
+
+Knight
+
+Measure
+
+Memory Fragments
+
+Monster Hunter Party
+
+Monster Meal
+
+Operation Platform
+
+Passion
+
+Perception Information
+
+Pure Gold Production Line
+
+Soundless Resonance
+
+Ursus Specialty Beverage
+
+Witchcraft Crystal
+
+Worldly Plight
+
+
+
+Advanced
+
+
+Unit flags
+
+
+
+
+
+
+Retrieved from "https://arknights.wiki.gg/wiki/Damage?oldid=759599"
+					
+
+Category: 
+Mechanics
+Hidden category: 
+Pages with navboxes
+				
+			
+			
+        
+
+
+        
+
+
+        
+
+        
+
+
+        
+
+            Report bad advertisement
+        
+
+
+		
+		
+        
+
+
+
+	
+
+
+
+	
+
+Cookies help us deliver our services. By using our services, you agree to our use of cookies.
+More informationOK
+
+
+
+
+	
+	
+ This page was last edited on 10 September 2026, at 20:15.
+	
+
+Pages that were created prior to September 2023 are adapted from the Arknights Fandom wiki.Page content is under Creative Commons Attribution-ShareAlike 4.0 License unless otherwise noted.
+
+
+	
+	
+Terms of Service
+	
+Privacy policy
+	
+Support Wiki
+	
+Send a ticket to wiki.gg
+	
+Status page
+	
+Manage cookie settings
+
+
+	
+	
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+

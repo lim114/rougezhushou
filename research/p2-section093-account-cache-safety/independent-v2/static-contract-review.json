@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "status": "FINAL_SOURCE_CONTRACT_PASS_ROOT_RUNTIME_PENDING_ATTEMPT2_STOPWRITE",
+  "qualification": "SOURCE_STATIC_CONTRACT_PASS_ONLY; ROOT_EXACT_TRANSPORT_FRESH_TESTS_AND_GUI_PENDING",
+  "same_target_attempt": 2,
+  "blocking_findings": [],
+  "closed_v1_findings_source_only": [
+    {
+      "id": "B1",
+      "status": "SOURCE_CLOSED_NOT_RUNTIME_PASS",
+      "source": "view183-187 and merged_record114-126",
+      "reason": "No deepcopy import/call remains. Only outer record and five consumed mapping containers copy shallowly; opaque nested values do not introduce recursion. Original shallow producer unions do not mutate supplied mappings. New draft checks exact500 nested arrays iteratively and ordinary save without its own recursive clone/deep equality. No invented nesting rule."
+    },
+    {
+      "id": "B2",
+      "status": "SOURCE_CLOSED_NOT_RUNTIME_PASS",
+      "source": "observe203-234",
+      "reason": "Incoming valid record/time guard retained. Good-old rejection at217 precedes union/context fallback, so older new contexts neither alter facts nor trigger new preservation. A bad normal union at223 sets permanent protection and rebuilds with saved={} at227. Incoming independently validated facts and actual supplied time now survive in usable record; absent rank/cultivation stay missing and use existing labeled previews. Good union never enters fallback; its field/rank/source/time and changed/save behavior stays exact."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "load-and-preserve",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:138-158",
+      "reason": "Read/lstat distinguish genuine absence; generic failures, invalid JSON/root preserve. Original v1 AST unchanged."
+    },
+    {
+      "id": "all-records-before-first-save",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:157-170,231,236-239",
+      "reason": "All consumable records screened at load and before any save; unknown catalog ids remain opaque and off UI."
+    },
+    {
+      "id": "identity-and-containers",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:35-46,172-187",
+      "reason": "Matching observed id and present mappings guarded; missing mappings preserve defaults. New view is top-level plus shallow five-container copies, retaining ignored nested values."
+    },
+    {
+      "id": "timestamp",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:23-32,47-48,207,217-218",
+      "reason": "Actual target-platform time conversion is the validation operation; omitted uses existing implicit0, explicit bad values reject, no current-time repair or invented epoch range."
+    },
+    {
+      "id": "consumed-cultivation-leaves",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:65-111",
+      "reason": "Original active consumer type/range/unlock guards retained; inert preferences/locked safe ranks stay unchanged. New context unsafe union handled by incoming-only recovery."
+    },
+    {
+      "id": "ignored-aliases-and-defaults",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:35-111,114-126,183-187",
+      "reason": "operator_profile/account, legitimate partial omissions, trust bool and falsy module identity/ignored stage unchanged; opaque values are not recursively normalized."
+    },
+    {
+      "id": "formatter-consumed-metadata",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:51-63,90-108;app.py:473-480",
+      "reason": "Consumed set/iter/string safety unchanged; account sample summary goes through the same safe view. Formatter contract unchanged."
+    },
+    {
+      "id": "account-run-separation",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:14-16,49-50,183;app.py:775-784,481-485",
+      "reason": "Run scope quarantined; operative run metadata removed from account view only; raw retained and genuine RunState branches remain unchanged."
+    },
+    {
+      "id": "stable-visible-recovery",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:172-201,223-231;app.py:786-791,815,860,996-998,1052-1057",
+      "reason": "B1 added recursive copy is removed; B2 now yields usable fresh facts and clears per-id issue. Notice/global protection and missing-rank preview paths remain. Actual visibility is root pending."
+    },
+    {
+      "id": "overlay-merge-and-issue-lifetime",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:114-126,203-234",
+      "reason": "Valid incoming checked; good-old older-time rejection precedes union/fallback. Good unions and changed decision unchanged. Unsafe union protects disk then rebuilds solely from validated incoming facts/supplied time; only per-id issue clears."
+    },
+    {
+      "id": "disk-write-guard",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "account_cache.py:160-170,236-244",
+      "reason": "Global protection never clears automatically. Save returns before mkdir/temp/write/replace even after per-id recovery; ordinary clean/missing save remains original."
+    },
+    {
+      "id": "no-numerical-or-mechanism-changes",
+      "status": "SOURCE_STATIC_PASS_ROOT_RUNTIME_PENDING",
+      "source": "app/registry v1 exact bytes;v1/actual92 AST review;transport four leaves",
+      "reason": "No changes to math, RunState, recognizers, profiles, formatter, public alias/error ordering or92 calculation logic; selected registry remains single genuine new pure module."
+    }
+  ],
+  "test_draft_qualification": {
+    "method_count": 39,
+    "status": "UNRUN",
+    "source22_status": "STATIC_PREDICTIONS_UNRUN",
+    "v1_37_status": "UNRUN",
+    "B1_control": "Iterative construction/check of500 layers in extras, ignored fields/ranks/sources/time leaves; load/view/observe/input and real ordinary save draft; no deep-copy fixture constructor for this case.",
+    "B2_control": "Numeric99 and masked-string variants, older99 rejection before protection, new200 incoming-only facts/time, permanent disk protection, later300 valid merge, good oldrank10 unchanged union/save.",
+    "old_test_change": "Only extra arbitrary nested-view mutation independence narrowed to top-level/five-container isolation;36 other old methods AST unchanged.",
+    "limitations": "Pure drafts cannot certify actual timestamp ranges, Qt labels, RunState precedence, sample callbacks or Windows/game behavior. No tests were imported or run."
+  },
+  "independent_subreview": {
+    "agent": "/root/account_cache_design093_review/v2_overlay_check",
+    "source_conclusion": "B2 closed, no new blocker in subreview scope;39 UNRUN;0 project calls/writes",
+    "evidence": "Good-old ordering and incoming-only fallback source trace; missing-rank label and unconfirmed_training unchanged; focused draft variants present."
+  },
+  "preserved_history": "Original v1 BLOCKED report and its differing consumption-safety subreview opinion remain byte-identical; no retrospective v1 PASS. Original source/design and candidate v1 are untouched.",
+  "external_full095_fixture_transport": "Root task only. Whole-map rebind and missing-id historical fixtures still require exact transport preserving helper.records alias and valid id-bearing inputs; no new rebind product API, no weakening identity, no clearing global protection, no sealed history writes.",
+  "root_required_pending": [
+    "Bind and transport exact four candidate leaves on actual92 commit/tag; reporting is unchanged control.",
+    "Run fresh39 meaningful pure boundary methods including B1/B2, relevant regression and saved complete native good-case before/after outputs/input immutability/aliases/errors. Report real counts, skips and failures.",
+    "Run actual temporary-public MainWindow/Wine startup, good and quarantined browsing, overview/no-skill/unimplemented, visible notices, B1 deep input, B2 incoming-only recovery and preview rank labels.",
+    "Verify safe account sample_received summary and genuine RunState priority/memory/files unchanged; do not use private sampling.",
+    "Verify corrupt original bytes/path after startup/browse/failed calculation/new valid overlay and ordinary clean/missing saves.",
+    "Retain timing/relic JSON whitespace, object, syntax/type, empty/valid target windows, needed/inactive context and recovery compatibility controls.",
+    "Complete external full095 alias/id fixture transport with source binding and fresh execution; no old source-only matrix counted as runtime."
+  ],
+  "attempt_policy": "Same target attempt2. Preserve prior failure/evidence/restart conditions. If same target remains unresolved after attempt3, defer with exact failures and explicit restart conditions. Neither this source PASS nor39 draft methods complete93.",
+  "counts": {
+    "project_imports": 0,
+    "project_API": 0,
+    "project_helpers": 0,
+    "formatter": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "private_reads": 0,
+    "network": 0,
+    "tracked_writes": 0
+  },
+  "fresh_project_runtime_PASS": 0,
+  "section093_completed": false
+}

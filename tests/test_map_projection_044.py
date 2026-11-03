@@ -49,7 +49,9 @@ class FixedMapTests(unittest.TestCase):
         self.assertLess(math.dist(blue,(98,129)),4)
 
     def test_unreviewed_bitmap_does_not_get_an_inferred_transform(self):
-        for sid in ('ro6_n_2_1','ro6_e_2_1','ro6_n_2_2'):
+        # The later frozen ground review binds 2_1; failed 2_2 and 3_1
+        # observations still cannot inherit a production transform.
+        for sid in ('ro6_n_2_2','ro6_e_2_2','ro6_n_3_1','ro6_e_3_1'):
             self.assertIsNone(self.load(battle_data()['stages'][sid]))
 
     def test_unbound_alias_cannot_inherit_matching_geometry(self):

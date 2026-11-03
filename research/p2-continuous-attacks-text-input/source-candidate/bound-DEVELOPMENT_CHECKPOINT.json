@@ -1,0 +1,598 @@
+{
+  "branch": "codex/p2-development",
+  "policy": {
+    "commit_after_each_section": true,
+    "full_validation_interval": 5,
+    "continuous_work_authorized": true,
+    "windows_compatibility": "Wine authorized; distinct from native Windows verification",
+    "scheduled_background_work": false,
+    "priority_order": [
+      "P2",
+      "P3"
+    ],
+    "max_failed_attempts_per_problem": 3,
+    "wrap_up_below_usage_percent": 15,
+    "usage_percent_available": false,
+    "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
+    "automatic_next_batch": true
+  },
+  "baseline_commit": "0015c20",
+  "completed_sections": 86,
+  "sections": [
+    {
+      "number": 1,
+      "completion_ref": "p2-section-001",
+      "topic": "堕梦计数不生成虚构事件",
+      "verification": "verification/sections/001.json"
+    },
+    {
+      "number": 2,
+      "completion_ref": "p2-section-002",
+      "topic": "机械师冲锋次数不自动归属完整技能和周期",
+      "verification": "verification/sections/002.json"
+    },
+    {
+      "number": 3,
+      "completion_ref": "p2-section-003",
+      "topic": "灵知普通攻击保留命中时间",
+      "verification": "verification/sections/003.json"
+    },
+    {
+      "number": 4,
+      "completion_ref": "p2-section-004",
+      "topic": "灵知S1无出手保护及两段未知边界",
+      "verification": "verification/sections/004.json"
+    },
+    {
+      "number": 5,
+      "completion_ref": "p2-section-005",
+      "topic": "灵知特殊技能目标生命周期保护",
+      "verification": "verification/sections/005.json"
+    },
+    {
+      "number": 6,
+      "completion_ref": "p2-section-006",
+      "topic": "本局分队与难度资格校验",
+      "verification": "verification/sections/006.json"
+    },
+    {
+      "number": 7,
+      "completion_ref": "p2-section-007",
+      "topic": "浮游单元保留既有命中时间参考",
+      "verification": "verification/sections/007.json"
+    },
+    {
+      "number": 8,
+      "completion_ref": "p2-section-008",
+      "topic": "桃金娘受疗人数边界",
+      "verification": "verification/sections/008.json"
+    },
+    {
+      "number": 9,
+      "completion_ref": "p2-section-009",
+      "topic": "古米烹饪后治疗时钟",
+      "verification": "verification/sections/009.json"
+    },
+    {
+      "number": 10,
+      "completion_ref": "p2-section-010",
+      "topic": "驭械术师已知模组特性参数",
+      "verification": "verification/sections/010.json"
+    },
+    {
+      "number": 11,
+      "completion_ref": "p2-section-011",
+      "topic": "古米期望攻击保留事件时间",
+      "verification": "verification/sections/011.json"
+    },
+    {
+      "number": 12,
+      "completion_ref": "p2-section-012",
+      "topic": "头狼跨阶段在场计时",
+      "verification": "verification/sections/012.json"
+    },
+    {
+      "number": 13,
+      "completion_ref": "p2-section-013",
+      "topic": "维什戴尔有效出手与次生事件未知保护",
+      "verification": "verification/sections/013.json"
+    },
+    {
+      "number": 14,
+      "completion_ref": "p2-section-014",
+      "topic": "狼群光环覆盖与跳伤未知保护",
+      "verification": "verification/sections/014.json"
+    },
+    {
+      "number": 15,
+      "completion_ref": "p2-section-015",
+      "topic": "特殊浮游单元独立攻击未知保护",
+      "verification": "verification/sections/015.json"
+    },
+    {
+      "number": 16,
+      "completion_ref": "p2-section-016",
+      "topic": "魂灵施放次数归属与时钟保护",
+      "verification": "verification/sections/016.json"
+    },
+    {
+      "number": 17,
+      "completion_ref": "p2-section-017",
+      "topic": "水月IS模组天赋身份保留",
+      "verification": "verification/sections/017.json"
+    },
+    {
+      "number": 18,
+      "completion_ref": "p2-section-018",
+      "topic": "水月下次攻击获取与零窗口保护",
+      "verification": "verification/sections/018.json"
+    },
+    {
+      "number": 19,
+      "completion_ref": "p2-section-019",
+      "topic": "伊内丝持续伤害命中依赖保护",
+      "verification": "verification/sections/019.json"
+    },
+    {
+      "number": 20,
+      "completion_ref": "p2-section-020",
+      "topic": "异格星熊手动关闭尾段保护",
+      "verification": "verification/sections/020.json"
+    },
+    {
+      "number": 21,
+      "completion_ref": "p2-section-021",
+      "topic": "安洁观察窗口与起飞阶段未知保护",
+      "verification": "verification/sections/021.json"
+    },
+    {
+      "number": 22,
+      "completion_ref": "p2-section-022",
+      "topic": "敌人专属关卡倍率选择器",
+      "verification": "verification/sections/022.json"
+    },
+    {
+      "number": 23,
+      "completion_ref": "p2-section-023",
+      "topic": "安洁手动重量预览与固定档案优先级",
+      "verification": "verification/sections/023.json"
+    },
+    {
+      "number": 24,
+      "completion_ref": "p2-section-024",
+      "topic": "古米与黍下次攻击治疗未知时钟保护",
+      "verification": "verification/sections/024.json"
+    },
+    {
+      "number": 25,
+      "completion_ref": "p2-section-025",
+      "topic": "圣聆初雪积雪覆盖与首次跳伤未知保护",
+      "verification": "verification/sections/025.json"
+    },
+    {
+      "number": 26,
+      "completion_ref": "p2-section-026",
+      "topic": "机械师召唤物结构化持续参数",
+      "verification": "verification/sections/026.json"
+    },
+    {
+      "number": 27,
+      "completion_ref": "p2-section-027",
+      "topic": "长期科技原始目录与只读浏览界面",
+      "verification": "verification/sections/027.json"
+    },
+    {
+      "number": 28,
+      "completion_ref": "p2-section-028",
+      "topic": "祥子八音符条件参考与实际时钟保护",
+      "verification": "verification/sections/028.json"
+    },
+    {
+      "number": 29,
+      "completion_ref": "p2-section-029",
+      "topic": "星熊盾牌独立接触与伤转治疗保护",
+      "verification": "verification/sections/029.json"
+    },
+    {
+      "number": 30,
+      "completion_ref": "p2-section-030",
+      "topic": "梓兰三技能观察窗口和未绑定箭矢保护",
+      "verification": "verification/sections/030.json"
+    },
+    {
+      "number": 31,
+      "completion_ref": "p2-section-031",
+      "topic": "夜刀部署多段条件伤害与实际时钟保护",
+      "verification": "verification/sections/031.json"
+    },
+    {
+      "number": 32,
+      "completion_ref": "p2-section-032",
+      "topic": "陈斩击后强化相位与独立剑气未知保护",
+      "verification": "verification/sections/032.json"
+    },
+    {
+      "number": 33,
+      "completion_ref": "p2-section-033",
+      "topic": "遥独立浮泡受疗与浮空跳伤归属保护",
+      "verification": "verification/sections/033.json"
+    },
+    {
+      "number": 34,
+      "completion_ref": "p2-section-034",
+      "topic": "望主动资源与被动棋子效果分离",
+      "verification": "verification/sections/034.json"
+    },
+    {
+      "number": 35,
+      "completion_ref": "p2-section-035",
+      "topic": "真言全场人工事件次数的未绑定时钟保护",
+      "verification": "verification/sections/035.json"
+    },
+    {
+      "number": 36,
+      "completion_ref": "p2-section-036",
+      "topic": "梅下次攻击获取与实际时钟保护",
+      "verification": "verification/sections/036.json"
+    },
+    {
+      "number": 37,
+      "completion_ref": "p2-section-037",
+      "topic": "水月AMB-Y天赋身份条件参考和额外回复未知边界",
+      "verification": "verification/sections/037.json"
+    },
+    {
+      "number": 38,
+      "completion_ref": "p2-section-038",
+      "topic": "初雪观察窗口与积雪经过事件归属保护",
+      "verification": "verification/sections/038.json"
+    },
+    {
+      "number": 39,
+      "completion_ref": "p2-section-039",
+      "topic": "独立部署影哨和坐标轰炸的碰撞与回费保护",
+      "verification": "verification/sections/039.json"
+    },
+    {
+      "number": 40,
+      "completion_ref": "p2-section-040",
+      "topic": "空敌方来源的攻击与治疗范围边界",
+      "verification": "verification/sections/040.json"
+    },
+    {
+      "number": 41,
+      "completion_ref": "p2-section-041",
+      "topic": "梓兰培养和同身份天赋再部署参数",
+      "verification": "verification/sections/041.json"
+    },
+    {
+      "number": 42,
+      "completion_ref": "p2-section-042",
+      "topic": "望TRP-X棋子固定模组费用参数",
+      "verification": "verification/sections/042.json"
+    },
+    {
+      "number": 43,
+      "completion_ref": "p2-section-043",
+      "topic": "已确认治疗倍率与已建模小计一致性",
+      "verification": "verification/sections/043.json"
+    },
+    {
+      "number": 44,
+      "completion_ref": "p2-section-044",
+      "topic": "召唤物显式手动属性与面板一致性",
+      "verification": "verification/sections/044.json"
+    },
+    {
+      "number": 45,
+      "completion_ref": "p2-section-045",
+      "topic": "异格阿米娅开启来源与后续阶段归属保护",
+      "verification": "verification/sections/045.json"
+    },
+    {
+      "number": 46,
+      "completion_ref": "p2-section-046",
+      "topic": "苏苏洛低费受疗资格覆盖充能期普通治疗",
+      "verification": "verification/sections/046.json"
+    },
+    {
+      "number": 47,
+      "completion_ref": "p2-section-047",
+      "topic": "医疗阿米娅公开命中人数输入资格",
+      "verification": "verification/sections/047.json"
+    },
+    {
+      "number": 48,
+      "completion_ref": "p2-section-048",
+      "topic": "灵知ISW-A完整天赋参考与隐藏持续法术边界",
+      "verification": "verification/sections/048.json"
+    },
+    {
+      "number": 49,
+      "completion_ref": "p2-section-049",
+      "topic": "遥BLS-Y治疗人数参数和等级资格",
+      "verification": "verification/sections/049.json"
+    },
+    {
+      "number": 50,
+      "completion_ref": "p2-section-050",
+      "topic": "连续模式友方来源说明的独立诊断和恢复",
+      "verification": "verification/sections/050.json"
+    },
+    {
+      "number": 51,
+      "completion_ref": "p2-section-051",
+      "topic": "整数培养字段排除布尔值",
+      "verification": "verification/sections/051.json"
+    },
+    {
+      "number": 52,
+      "completion_ref": "p2-section-052",
+      "topic": "术师阿米娅S1受限连续时序条件参考",
+      "verification": "verification/sections/052.json"
+    },
+    {
+      "number": 53,
+      "completion_ref": "p2-section-053",
+      "topic": "机械师S2未定位破屏来源的条件参考",
+      "verification": "verification/sections/053.json"
+    },
+    {
+      "number": 54,
+      "completion_ref": "p2-section-054",
+      "topic": "活动人数参数拒绝布尔值",
+      "verification": "verification/sections/054.json"
+    },
+    {
+      "number": 55,
+      "completion_ref": "p2-section-055",
+      "topic": "报告遵循已有模组资格门槛",
+      "verification": "verification/sections/055.json"
+    },
+    {
+      "number": 56,
+      "completion_ref": "p2-section-056",
+      "topic": "合法零生命周期输入一致性",
+      "verification": "verification/sections/056.json"
+    },
+    {
+      "number": 57,
+      "completion_ref": "p2-section-057",
+      "topic": "活动声明次数排除布尔值",
+      "verification": "verification/sections/057.json"
+    },
+    {
+      "number": 58,
+      "completion_ref": "p2-section-058",
+      "topic": "同行者应急招募条件保留未知",
+      "verification": "verification/sections/058.json"
+    },
+    {
+      "number": 59,
+      "completion_ref": "p2-section-059",
+      "topic": "伤害小计按实际未知来源说明",
+      "verification": "verification/sections/059.json"
+    },
+    {
+      "number": 60,
+      "completion_ref": "p2-section-060",
+      "topic": "黍四岁周期SP不折算为自然速率",
+      "verification": "verification/sections/060.json"
+    },
+    {
+      "number": 61,
+      "completion_ref": "p2-section-061",
+      "topic": "整数计数和状态编码在实际查询时拒绝布尔值",
+      "verification": "verification/sections/061.json"
+    },
+    {
+      "number": 62,
+      "completion_ref": "p2-section-062",
+      "topic": "已解锁四岁条件拒绝文本假确认",
+      "verification": "verification/sections/062.json"
+    },
+    {
+      "number": 63,
+      "completion_ref": "p2-section-063",
+      "topic": "触手报告合法数字文本计数复用已验证整数",
+      "verification": "verification/sections/063.json"
+    },
+    {
+      "number": 64,
+      "completion_ref": "p2-section-064",
+      "topic": "凛御银灰S3脆弱条件拒绝原始文本",
+      "verification": "verification/sections/064.json"
+    },
+    {
+      "number": 65,
+      "completion_ref": "p2-section-065",
+      "topic": "誘饵后处理复用已验证整数计数",
+      "verification": "verification/sections/065.json"
+    },
+    {
+      "number": 66,
+      "completion_ref": "p2-section-066",
+      "topic": "魂灵次数后处理遵守既有整数门禁",
+      "verification": "verification/sections/066.json"
+    },
+    {
+      "number": 67,
+      "completion_ref": "p2-section-067",
+      "topic": "堕梦次数元数据复用实际整数校验",
+      "verification": "verification/sections/067.json"
+    },
+    {
+      "number": 68,
+      "completion_ref": "p2-section-068",
+      "topic": "黍职业条件拒绝文本误触发",
+      "verification": "verification/sections/068.json"
+    },
+    {
+      "number": 69,
+      "completion_ref": "p2-section-069",
+      "topic": "协同覆盖文本拒绝与真实银灰技能绑定",
+      "verification": "verification/sections/069.json"
+    },
+    {
+      "number": 70,
+      "completion_ref": "p2-section-070",
+      "topic": "播种条件文本与地面敌人来源明确",
+      "verification": "verification/sections/070.json"
+    },
+    {
+      "number": 71,
+      "completion_ref": "p2-section-071",
+      "topic": "强化分队解锁条件与明确科技来源",
+      "verification": "verification/sections/071.json"
+    },
+    {
+      "number": 72,
+      "completion_ref": "p2-section-072",
+      "topic": "头狼参考遵守实际已解锁天赋资格",
+      "verification": "verification/sections/072.json"
+    },
+    {
+      "number": 73,
+      "completion_ref": "p2-section-073",
+      "topic": "梅MAR-X空中条件原参数与未覆盖边界",
+      "verification": "verification/sections/073.json"
+    },
+    {
+      "number": 74,
+      "completion_ref": "p2-section-074",
+      "topic": "魂灵之影两条本体召唤途径的培养资料",
+      "verification": "verification/sections/074.json"
+    },
+    {
+      "number": 75,
+      "completion_ref": "p2-section-075",
+      "topic": "紧急3–6静态移速符文参数与未知合成边界",
+      "verification": "verification/sections/075.json"
+    },
+    {
+      "number": 76,
+      "completion_ref": "p2-section-076",
+      "topic": "遥未解锁花火不误报未知治疗与派生伤害",
+      "verification": "verification/sections/076.json",
+      "summary_correction_ref": "p2-section-076-summary"
+    },
+    {
+      "number": 77,
+      "completion_ref": "p2-section-077",
+      "topic": "安洁莉娜未解锁天赋不生成虚假命中与时间参考",
+      "verification": "verification/sections/077.json"
+    },
+    {
+      "number": 78,
+      "completion_ref": "p2-section-078",
+      "topic": "真言未解锁天赋不再虚假遮蔽已知伤害",
+      "verification": "verification/sections/078.json"
+    },
+    {
+      "number": 79,
+      "completion_ref": "p2-section-079",
+      "topic": "医疗阿米娅未解锁回复天赋的虚假事件纠正",
+      "verification": "verification/sections/079.json"
+    },
+    {
+      "number": 80,
+      "completion_ref": "p2-section-080",
+      "topic": "医疗阿米娅INC-X同特性伤转疗比例修正",
+      "verification": "verification/sections/080.json"
+    },
+    {
+      "number": 81,
+      "completion_ref": "p2-section-081",
+      "topic": "未核验组合提示按声明顺序稳定输出",
+      "verification": "verification/sections/081.json"
+    },
+    {
+      "number": 82,
+      "completion_ref": "p2-section-082",
+      "topic": "苏苏洛受疗条件拒绝文本假确认",
+      "verification": "verification/sections/082.json"
+    },
+    {
+      "number": 83,
+      "completion_ref": "p2-section-083",
+      "topic": "神经损伤实际状态条件拒绝文本假确认",
+      "verification": "verification/sections/083.json"
+    },
+    {
+      "number": 84,
+      "completion_ref": "p2-section-084",
+      "topic": "遥S2重复开启条件拒绝文本假确认",
+      "verification": "verification/sections/084.json"
+    },
+    {
+      "number": 85,
+      "completion_ref": "p2-section-085",
+      "topic": "梓兰附近部署条件按实际天赋拒绝文本假确认",
+      "verification": "verification/sections/085.json"
+    },
+    {
+      "number": 86,
+      "completion_ref": "p2-section-086",
+      "topic": "剩余十二个布尔条件按实际消费者拒绝文本输入",
+      "verification": "verification/sections/086.json"
+    }
+  ],
+  "next_section": 87,
+  "next_action": "自动推进第87节古米Back已查证动画资料恢复，后续88–90按实际P2缺口查证；每节根端回归存档，第90节后完整可用Linux/Wine/真实MainWindow验证并自动继续下一组",
+  "full_validation_due": false,
+  "last_full_validation": {
+    "after_section": 85,
+    "completed_at": "2026-10-08T02:35:49.009948+00:00",
+    "completion_ref": "p2-validation-085",
+    "linux": "verification/full-085/linux.json",
+    "wine": "verification/full-085/wine.json",
+    "ui": "verification/full-085/wine-ui.json",
+    "complete_repository_validation": false,
+    "ui_available_checks_passed": true,
+    "complete_ui_validation": true,
+    "limits": "Missing evidence/private fixtures unavailable; Wine does not verify native Windows/game/desktop integration"
+  },
+  "windows_native_validation": "unavailable: attached environment is Linux",
+  "wine_validation": "第85节后2dfd9fa：Wine1753可用项、MainWindow87技能/4217条实际检查通过；保留旧3063；723源码零漂移。完整仓库/原生Windows/game/desktop未验收，缺失记录不计通过。",
+  "deferred_problems": [
+    {
+      "id": "friendly_clock_ui_explanation",
+      "failed_attempts": 3,
+      "status": "resolved_after_independent_diagnosis",
+      "scope": "Exact friendly acquisition clock explanation visible in actual MainWindow; portable calculation/assertions passed",
+      "evidence": [
+        "verification/full-040/initial-attempts/ui-initial.json",
+        "verification/full-040/initial-attempts/ui-second-text-failure.json",
+        "verification/full-040/initial-attempts/ui-third-text-failure.json"
+      ],
+      "restart_conditions": "Independently inspect actual UI scenario/report diagnostic and qualify source or preview mapping before retry; do not repeat exact assertion",
+      "counts_as_passed": false,
+      "diagnostic": "verification/full-040/wine-ui.json",
+      "resolution_receipt": "verification/full-050/wine-ui.json",
+      "current_available_checks_passed": true,
+      "original_failed_checks_count_as_passed": false,
+      "resolution": "Continuous semantic note lost in annotate_result early return; independent source/report diagnosis preceded successful actual Qt assertions in both modes. Old3failed receipts unchanged."
+    },
+    {
+      "problem": "Generic public archive manifest shape auto-detection",
+      "attempts": 3,
+      "status": "deferred; exact explicit-path archival completed independently",
+      "evidence": "research/p2-headwolf-talent-qualification/root-archive-preparation-deferred.json",
+      "restart_condition": "Only a formally normalized manifest contract with explicit versioned schema and a new concrete requirement"
+    },
+    {
+      "problem": "Section72 author outcome-summary harness",
+      "attempts": 3,
+      "status": "author harness deferred; independent strict whole-output comparison completed successfully",
+      "evidence": "research/p2-headwolf-talent-qualification/author/HANDOFF.md",
+      "restart_condition": "A new verified plan/result schema gap not covered by completed independent comparison; do not retry unchanged assumptions"
+    }
+  ],
+  "problem_attempts": {
+    "gnosis_attack_clock": {
+      "checks": 3,
+      "failed_checks": 2,
+      "status": "resolved; third check passed; failures were new fixture/indentation, not an unknown mechanism"
+    }
+  }
+}

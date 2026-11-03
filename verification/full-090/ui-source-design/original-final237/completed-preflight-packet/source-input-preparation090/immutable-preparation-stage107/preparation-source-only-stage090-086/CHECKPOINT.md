@@ -1,0 +1,17 @@
+# UI090 来源准备断点
+
+第85节已由root唯一一次实际Wine MainWindow通过：87skills、4217checks、178.067s，723源码零漂移，四PNG已查看。固定commit `9ef5a469673502754db3be320a8eece9a7fd18d4` / tag `p2-validation-085`；actual085 runner SHA `b6976652eb50e06909cca68490b0b9d3e11ea81fbc9a73ca87efcbb10354e306`。旧ui085封包和实际输出保持原件不变。
+
+本阶段仅准备第86节已授权12字段、8干员、17处直接消费者的真实复选框来源合同。16处在operator_engine，1处在reporting的Ines费用note；不把引擎单文件误当完整消费者范围。当前namedroot085的app/options/engine/catalog/reporting与旧封存b5来源完全相同，旧source36可作为历史合法布尔shape证据，不能称为currentfresh验证。只读提取24个合法False/True结果的键、类型和三文本哈希；旧文本输入仅保留来源总计说明，不生成UI文本case。另复用085已保存Orchid结果的实际公共键与未知reference。没有重做raw240、12modules、36API、有限值负审或已通过的矩阵。
+
+当前纯声明设计22个小配对、44个计划界面状态：12组生效条件、1组水月E1缺反移情资格、1组祥子合资格模组只覆盖技能倍率、8组隐藏控件False/True但scenario键省略。不是Cartesian矩阵，没有把新case接入runner，也不是已运行的44条。培养/模组来自真实档案预览状态；elite/potential/module显示只读，基础攻击从真实培养计算取得，不复制历史API手动base_attack1000为虚构控件。
+
+水月E0/E1虽显示checkbox，实际E2反移情缺资格；祥子满足E2L60且已选颂乐音符max_cnt12的模组2/3只令技能远程比例为1，normal仍消费.8/1，其公开贡献还受calculate中的cycle/continuous gates约束，不能说整APIinactive或宣称已实际执行普攻。Gnosis终结、Ines影哨、Orchid瓶数与箭矢/SP参数、Angel坐标及Wisdel过载均保留已有native时钟/附着/独立命中未知，不新增机制。
+
+pending090 runner SHA `d5d2c41049c604c14b598426a06b16d54b1012d9b66da18a02a9937ec50198dc`。第一条entry True guard在任何import/Qt前阻止执行；移除该guard并只反向7个085→090输出名后，完整4217旧正文逐字节恢复actual085。继承87skills和4217已有检验；没有执行候选或初始化窗口。第86节产品draft及87–90内容均未final，当前不得release guard、填充final90source占位或借未知后续范围。
+
+独立producer source-only审查已封，`review-producers086/source-producer-review086.json` SHA `3494650e832bfea6230ab011c8a42ab955d6c44e30944a241538bb16e317ad28`；7件manifest SHA `3055f3bdcd2379b0875af8cabaf3488e0fb8e463d6df16db7c5e18140fc9dc87`。该审查仅核当前12fields真实producer/资格和来源边界，不宣称新44状态执行通过。独审目录保持immutable。
+
+静态准备诊断全部保存：错误文件名、两次内联reader拼写、误把module.parts当顶层、漏reporting消费者和错算隐藏字段数。每项窄修后完成，不改产品、不做算例重试；原失败reader/trace/诊断分别保留。所有本阶段API、formatter、生产helper、测试、Qt、Wine、新窗口次数均为0，tracked修改0。
+
+下一步停止新调用，等root明确提供第86节final source后才准备后续被授权预检；87–90按真实新增范围逐节扩展。最终root90所有源确定后才冻结完整候选、一次新增API核验及独审，再由root唯一实际Qt/Wine运行。不得把本来源准备阶段记作完成编号小节。

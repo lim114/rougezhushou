@@ -1,0 +1,5721 @@
+{
+  "core_sha256": "08c31e5c7d3b5ee58d4e64eb310e1618420157d9414fd6594ee883c08f02f502",
+  "draft_only": true,
+  "not_a_completed_section": true,
+  "source_binding": {
+    "valid": true,
+    "status": "pinned_file_source_reference",
+    "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+    "method_count": 49,
+    "byte_span_count": 6859
+  },
+  "cases": [
+    {
+      "name": "public literal admission and independent payment requests",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.assign",
+            "kind": "assign_min",
+            "ordinary_native_path": true,
+            "blackboard_read": {
+              "id": "public.assign.bb",
+              "normal": true,
+              "value": -1
+            },
+            "store_returns_normally": true
+          },
+          {
+            "id": "public.set5",
+            "kind": "modify_min",
+            "ordinary_native_path": true,
+            "value": 5,
+            "store_returns_normally": true
+          },
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 5
+            }
+          },
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          },
+          {
+            "id": "public.changed_second",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.changed_second.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.changed_second.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.changed_second.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.changed_second.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.changed_second.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.changed_second.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.changed_second.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.changed_second.second_min",
+              "normal": true,
+              "value": 7
+            }
+          },
+          {
+            "id": "public.set_negative",
+            "kind": "modify_min",
+            "ordinary_native_path": true,
+            "value": -1,
+            "store_returns_normally": true
+          },
+          {
+            "id": "public.free_admission",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.free_admission.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.free_admission.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.free_admission.first_min",
+              "normal": true,
+              "value": -1
+            },
+            "free_read": {
+              "id": "public.free_admission.free",
+              "normal": true,
+              "value": true
+            },
+            "sp_owner_read": {
+              "id": "public.free_admission.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.free_admission.sp",
+              "normal": true,
+              "raw": 0
+            },
+            "decoded_cost_read": {
+              "id": "public.free_admission.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.free_admission.second_min",
+              "normal": true,
+              "value": 7
+            }
+          },
+          {
+            "id": "public.independent_debit",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.independent_debit.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.independent_debit.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.independent_debit.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.independent_debit",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.independent_debit.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": true
+          },
+          {
+            "id": "public.free_debit",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.free_debit.free",
+              "normal": true,
+              "value": true
+            },
+            "skip_virtual_read": {
+              "id": "public.free_debit.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.free_debit.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.free_debit",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.free_debit.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": true
+          },
+          {
+            "id": "public.min32",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": -2147483648,
+            "free_read": {
+              "id": "public.min32.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.min32.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.min32.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.min32",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.min32.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.assign",
+              "kind": "assign_min",
+              "ordinary_native_path": true,
+              "blackboard_read": {
+                "id": "public.assign.bb",
+                "normal": true,
+                "value": -1
+              },
+              "store_returns_normally": true
+            },
+            {
+              "id": "public.set5",
+              "kind": "modify_min",
+              "ordinary_native_path": true,
+              "value": 5,
+              "store_returns_normally": true
+            },
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 5
+              }
+            },
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            },
+            {
+              "id": "public.changed_second",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.changed_second.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.changed_second.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.changed_second.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.changed_second.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.changed_second.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.changed_second.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.changed_second.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.changed_second.second_min",
+                "normal": true,
+                "value": 7
+              }
+            },
+            {
+              "id": "public.set_negative",
+              "kind": "modify_min",
+              "ordinary_native_path": true,
+              "value": -1,
+              "store_returns_normally": true
+            },
+            {
+              "id": "public.free_admission",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.free_admission.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.free_admission.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.free_admission.first_min",
+                "normal": true,
+                "value": -1
+              },
+              "free_read": {
+                "id": "public.free_admission.free",
+                "normal": true,
+                "value": true
+              },
+              "sp_owner_read": {
+                "id": "public.free_admission.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.free_admission.sp",
+                "normal": true,
+                "raw": 0
+              },
+              "decoded_cost_read": {
+                "id": "public.free_admission.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.free_admission.second_min",
+                "normal": true,
+                "value": 7
+              }
+            },
+            {
+              "id": "public.independent_debit",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.independent_debit.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.independent_debit.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.independent_debit.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.independent_debit",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.independent_debit.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": true
+            },
+            {
+              "id": "public.free_debit",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.free_debit.free",
+                "normal": true,
+                "value": true
+              },
+              "skip_virtual_read": {
+                "id": "public.free_debit.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.free_debit.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.free_debit",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.free_debit.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": true
+            },
+            {
+              "id": "public.min32",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": -2147483648,
+              "free_read": {
+                "id": "public.min32.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.min32.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.min32.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.min32",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.min32.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.assign",
+            "kind": "assign_min",
+            "called": true,
+            "normal": true,
+            "status": "parameter_prefix_complete",
+            "stages": [
+              {
+                "name": "blackboard_result",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.assign.bb",
+                  "normal": true,
+                  "value": -1
+                }
+              },
+              {
+                "name": "parameter_store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "field": "m_costMinSp",
+                  "value": -1
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.set5",
+            "kind": "modify_min",
+            "called": true,
+            "normal": true,
+            "status": "parameter_prefix_complete",
+            "stages": [
+              {
+                "name": "parameter_store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "field": "m_costMinSp",
+                  "value": 5
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 21474836480
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.second_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 5,
+                  "threshold_raw": 21474836480,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 21474793530,
+                  "sp_raw": 21474836480,
+                  "result": true
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": {
+              "threshold_int32": 5,
+              "threshold_raw": 21474836480,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 21474793530,
+              "sp_raw": 21474836480,
+              "result": true
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.debit20",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.changed_second",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.sp",
+                  "normal": true,
+                  "raw": 21474836480
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.changed_second.second_min",
+                  "normal": true,
+                  "value": 7
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 7,
+                  "threshold_raw": 30064771072,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 30064728122,
+                  "sp_raw": 21474836480,
+                  "result": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "threshold_int32": 7,
+              "threshold_raw": 30064771072,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 30064728122,
+              "sp_raw": 21474836480,
+              "result": false
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.set_negative",
+            "kind": "modify_min",
+            "called": true,
+            "normal": true,
+            "status": "parameter_prefix_complete",
+            "stages": [
+              {
+                "name": "parameter_store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "field": "m_costMinSp",
+                  "value": -1
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": 5,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.free_admission",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "free_admission",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.free_admission.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.free_admission.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.free_admission.first_min",
+                  "normal": true,
+                  "value": -1
+                }
+              },
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.free_admission.free",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "sp_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "ge_comparison",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.independent_debit",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.independent_debit.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.independent_debit.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.independent_debit.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.independent_debit.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.independent_debit",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.independent_debit",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.independent_debit",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.independent_debit",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.free_debit",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "free_debit_skip",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.free_debit.free",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modifier_copy",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          },
+          {
+            "id": "public.min32",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -9223372036854775808,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.min32",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.min32",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "delta_int32": -2147483648,
+              "negated_int32": -2147483648,
+              "input_raw": -9223372036854775808
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 9223372036854775806,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.min32",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.min32",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.2.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.3.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.3.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.4.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.6.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.7.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.8.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.9.modifier_constructor_arguments.magnitude_raw",
+          "expected": 9223372036854775806,
+          "actual": 9223372036854775806,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "second min replaces rather than floors cost",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 7
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 7
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 21474836480
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.second_min",
+                  "normal": true,
+                  "value": 7
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 7,
+                  "threshold_raw": 30064771072,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 30064728122,
+                  "sp_raw": 21474836480,
+                  "result": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "threshold_int32": 7,
+              "threshold_raw": 30064771072,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 30064728122,
+              "sp_raw": 21474836480,
+              "result": false
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.threshold_int32",
+          "expected": 7,
+          "actual": 7,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "negative first min selects independently decoded data cost",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": -1
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 2
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 100
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": -1
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 2
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 100
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": -1
+                }
+              },
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 21474836480
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.data_cost",
+                  "normal": true,
+                  "value": 2
+                }
+              },
+              {
+                "name": "second_min_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 2,
+                  "threshold_raw": 8589934592,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 8589891642,
+                  "sp_raw": 21474836480,
+                  "result": true
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": {
+              "threshold_int32": 2,
+              "threshold_raw": 8589934592,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 8589891642,
+              "sp_raw": 21474836480,
+              "result": true
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.threshold_int32",
+          "expected": 2,
+          "actual": 2,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.7.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "strict EPS boundary 21474793530",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474793530
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 5
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474793530
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 5
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 21474793530
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.second_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 5,
+                  "threshold_raw": 21474836480,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 21474793530,
+                  "sp_raw": 21474793530,
+                  "result": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "threshold_int32": 5,
+              "threshold_raw": 21474836480,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 21474793530,
+              "sp_raw": 21474793530,
+              "result": false
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.comparison_rhs_raw",
+          "expected": 21474793530,
+          "actual": 21474793530,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "strict EPS boundary 21474793531",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474793531
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 5
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474793531
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 5
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 21474793531
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.second_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": 5,
+                  "threshold_raw": 21474836480,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 21474793530,
+                  "sp_raw": 21474793531,
+                  "result": true
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": {
+              "threshold_int32": 5,
+              "threshold_raw": 21474836480,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 21474793530,
+              "sp_raw": 21474793531,
+              "result": true
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.comparison_rhs_raw",
+          "expected": 21474793530,
+          "actual": 21474793530,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "MIN32 threshold subtraction wraps signed64",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 0
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 9223372036854775807
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": -2147483648
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 0
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 9223372036854775807
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": -2147483648
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "admission_reference_complete",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 0
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp",
+                  "normal": true,
+                  "raw": 9223372036854775807
+                }
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.second_min",
+                  "normal": true,
+                  "value": -2147483648
+                }
+              },
+              {
+                "name": "ge_comparison",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "threshold_int32": -2147483648,
+                  "threshold_raw": -9223372036854775808,
+                  "epsilon_raw": 42950,
+                  "comparison_rhs_raw": 9223372036854732858,
+                  "sp_raw": 9223372036854775807,
+                  "result": true
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": {
+              "threshold_int32": -2147483648,
+              "threshold_raw": -9223372036854775808,
+              "epsilon_raw": 42950,
+              "comparison_rhs_raw": 9223372036854732858,
+              "sp_raw": 9223372036854775807,
+              "result": true
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.threshold_raw",
+          "expected": -9223372036854775808,
+          "actual": -9223372036854775808,
+          "passed": true
+        },
+        {
+          "path": "rows.0.arithmetic_reference.comparison_rhs_raw",
+          "expected": 9223372036854732858,
+          "actual": 9223372036854732858,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "Unity-invalid initial owner completes false without SP read",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": true
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 5
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": true
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 5
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": true,
+            "status": "unity_owner_invalid",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "ge_comparison",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.2.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "independent second SP owner missing stops before getter",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "ordinary_native_path": true,
+            "owner_read": {
+              "id": "public.override.initial_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.A"
+            },
+            "unity_null_read": {
+              "id": "public.override.unity_null",
+              "normal": true,
+              "value": false
+            },
+            "first_min_read": {
+              "id": "public.override.first_min",
+              "normal": true,
+              "value": 5
+            },
+            "free_read": {
+              "id": "public.override.free",
+              "normal": true,
+              "value": false
+            },
+            "sp_owner_read": {
+              "id": "public.override.sp_owner",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.owner.B"
+            },
+            "sp_read": {
+              "id": "public.override.sp",
+              "normal": true,
+              "raw": 21474836480
+            },
+            "decoded_cost_read": {
+              "id": "public.override.data_cost",
+              "normal": true,
+              "value": 20
+            },
+            "second_min_read": {
+              "id": "public.override.second_min",
+              "normal": true,
+              "value": 5
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.override",
+              "kind": "admission",
+              "ordinary_native_path": true,
+              "owner_read": {
+                "id": "public.override.initial_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.A"
+              },
+              "unity_null_read": {
+                "id": "public.override.unity_null",
+                "normal": true,
+                "value": false
+              },
+              "first_min_read": {
+                "id": "public.override.first_min",
+                "normal": true,
+                "value": 5
+              },
+              "free_read": {
+                "id": "public.override.free",
+                "normal": true,
+                "value": false
+              },
+              "sp_owner_read": {
+                "id": "public.override.sp_owner",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.owner.B"
+              },
+              "sp_read": {
+                "id": "public.override.sp",
+                "normal": true,
+                "raw": 21474836480
+              },
+              "decoded_cost_read": {
+                "id": "public.override.data_cost",
+                "normal": true,
+                "value": 20
+              },
+              "second_min_read": {
+                "id": "public.override.second_min",
+                "normal": true,
+                "value": 5
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.override",
+            "kind": "admission",
+            "called": true,
+            "normal": false,
+            "status": "sp_owner_missing",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.initial_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.A"
+                }
+              },
+              {
+                "name": "unity_null_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.unity_null",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "first_min_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.first_min",
+                  "normal": true,
+                  "value": 5
+                }
+              },
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "sp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.override.sp_owner",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.owner.B"
+                }
+              },
+              {
+                "name": "sp_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "decoded_cost_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_min_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "ge_comparison",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown skip leaves future calls unknown free_read",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": null
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": null
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": null,
+            "status": "independent_read_value_unknown",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": null
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_call",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modifier_copy",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.2.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown skip leaves future calls unknown skip_virtual_read",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": null
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": null
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": null,
+            "status": "independent_read_value_unknown",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": null
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_call",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modifier_copy",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.2.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "zero delta skips all getters and calls",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 0,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 0,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "zero_delta_short_circuit",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "newsp_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modifier_copy",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": true,
+            "arithmetic_reference": null,
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": null,
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.0.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.1.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.2.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "first null owner can be NewSp source and target without dereference",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": false,
+              "identity": null
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": false,
+                "identity": null
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": false,
+                  "identity": null
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": null,
+                  "target_identity": null,
+                  "source_exists": false,
+                  "target_exists": false
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": null,
+              "target_identity": null,
+              "source_exists": false,
+              "target_exists": false,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.debit20",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.modifier_constructor_arguments.source_exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.modifier_constructor_arguments.target_exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "second null owner still precedes complete copy then blocks apply",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": false,
+            "status": "apply_owner_missing",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.4.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.reference.byte_count",
+          "expected": 136,
+          "actual": 136,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "failed or unknown copy preserves second owner read False",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": false,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": false,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": false,
+            "status": "call_failed",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": false,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "failed or unknown copy preserves second owner read None",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": null,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": null,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": null,
+            "status": "call_normality_unknown",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "apply_call",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": null,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 85899345920,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": null,
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown NewSp body may return opaque modifier but not constructor fields",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": 20,
+            "free_read": {
+              "id": "public.debit20.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.debit20.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.debit20.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": null,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.debit20",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.debit20.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.debit20",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": 20,
+              "free_read": {
+                "id": "public.debit20.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.debit20.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.debit20.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": null,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.debit20",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.debit20.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.debit20",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -85899345920,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.debit20.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.debit20",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "delta_int32": 20,
+              "negated_int32": -20,
+              "input_raw": -85899345920
+            },
+            "modifier_constructor_arguments": null,
+            "opaque_modifier_identity": "declared.modifier.public.debit20",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.debit20",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.modifier_constructor_arguments",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.apply_arguments.force",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "MIN32 NEG and FP Abs special preserve independent Apply false",
+      "input": {
+        "skill_exists": true,
+        "state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actions": [
+          {
+            "id": "public.min32",
+            "kind": "reduce",
+            "ordinary_native_path": true,
+            "delta": -2147483648,
+            "free_read": {
+              "id": "public.min32.free",
+              "normal": true,
+              "value": false
+            },
+            "skip_virtual_read": {
+              "id": "public.min32.virtual_skip",
+              "normal": true,
+              "value": false
+            },
+            "newsp_owner_read": {
+              "id": "public.min32.newsp_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.C"
+            },
+            "newsp_ordinary_native_path": true,
+            "newsp_returns_normally": true,
+            "returned_modifier_identity": "declared.modifier.public.min32",
+            "modifier_copy_returns_normally": true,
+            "apply_owner_read": {
+              "id": "public.min32.apply_owner",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner.D"
+            },
+            "apply_returns_normally": true,
+            "apply_return": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_sp_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+          "method_count": 49,
+          "byte_span_count": 6859
+        },
+        "payload": {
+          "skill_exists": true,
+          "state": {
+            "cost_min_sp": -1,
+            "cast_with_no_sp": false
+          },
+          "actions": [
+            {
+              "id": "public.min32",
+              "kind": "reduce",
+              "ordinary_native_path": true,
+              "delta": -2147483648,
+              "free_read": {
+                "id": "public.min32.free",
+                "normal": true,
+                "value": false
+              },
+              "skip_virtual_read": {
+                "id": "public.min32.virtual_skip",
+                "normal": true,
+                "value": false
+              },
+              "newsp_owner_read": {
+                "id": "public.min32.newsp_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.C"
+              },
+              "newsp_ordinary_native_path": true,
+              "newsp_returns_normally": true,
+              "returned_modifier_identity": "declared.modifier.public.min32",
+              "modifier_copy_returns_normally": true,
+              "apply_owner_read": {
+                "id": "public.min32.apply_owner",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner.D"
+              },
+              "apply_returns_normally": true,
+              "apply_return": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.min32",
+            "kind": "reduce",
+            "called": true,
+            "normal": true,
+            "status": "debit_call_prefix_complete",
+            "stages": [
+              {
+                "name": "free_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.free",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "skip_virtual_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.virtual_skip",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "newsp_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.newsp_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.C"
+                }
+              },
+              {
+                "name": "newsp_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value_raw": -9223372036854775808,
+                  "source_identity": "declared.owner.C",
+                  "target_identity": "declared.owner.C",
+                  "source_exists": true,
+                  "target_exists": true
+                }
+              },
+              {
+                "name": "apply_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.min32.apply_owner",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner.D"
+                }
+              },
+              {
+                "name": "modifier_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 136,
+                  "modifier_identity": "declared.modifier.public.min32",
+                  "fields": null
+                }
+              },
+              {
+                "name": "apply_call",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner.D",
+                  "modifier_identity": "declared.modifier.public.min32",
+                  "force": false
+                }
+              }
+            ],
+            "known_prefix_state": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "state_after": {
+              "cost_min_sp": -1,
+              "cast_with_no_sp": false
+            },
+            "result_reference": false,
+            "arithmetic_reference": {
+              "delta_int32": -2147483648,
+              "negated_int32": -2147483648,
+              "input_raw": -9223372036854775808
+            },
+            "modifier_constructor_arguments": {
+              "magnitude_raw": 9223372036854775806,
+              "delta_type_value": 2,
+              "delta_type_name": "MINUS",
+              "target_type_value": 1,
+              "target_type_name": "SP",
+              "player_side_value": 0,
+              "player_side_name": "DEFAULT",
+              "source_identity": "declared.owner.C",
+              "target_identity": "declared.owner.C",
+              "source_exists": true,
+              "target_exists": true,
+              "returned_payload_fields": null,
+              "cancel_reason_mask": null
+            },
+            "opaque_modifier_identity": "declared.modifier.public.min32",
+            "apply_arguments": {
+              "owner_identity": "declared.owner.D",
+              "modifier_identity": "declared.modifier.public.min32",
+              "force": false
+            },
+            "actual_owner_sp_after": null,
+            "actual_cost_paid": null,
+            "actual_cast_success": null,
+            "complete_cycle": null
+          }
+        ],
+        "final_declared_parameter_state": {
+          "cost_min_sp": -1,
+          "cast_with_no_sp": false
+        },
+        "actual_owner_sp_after": null,
+        "actual_cost_paid": null,
+        "actual_cast_success": null,
+        "complete_cycle": null
+      },
+      "checks": [
+        {
+          "path": "rows.0.arithmetic_reference.negated_int32",
+          "expected": -2147483648,
+          "actual": -2147483648,
+          "passed": true
+        },
+        {
+          "path": "rows.0.arithmetic_reference.input_raw",
+          "expected": -9223372036854775808,
+          "actual": -9223372036854775808,
+          "passed": true
+        },
+        {
+          "path": "rows.0.modifier_constructor_arguments.magnitude_raw",
+          "expected": 9223372036854775806,
+          "actual": 9223372036854775806,
+          "passed": true
+        },
+        {
+          "path": "rows.0.modifier_constructor_arguments.delta_type_value",
+          "expected": 2,
+          "actual": 2,
+          "passed": true
+        },
+        {
+          "path": "rows.0.modifier_constructor_arguments.target_type_value",
+          "expected": 1,
+          "actual": 1,
+          "passed": true
+        },
+        {
+          "path": "rows.0.modifier_constructor_arguments.player_side_value",
+          "expected": 0,
+          "actual": 0,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.result_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "probe_count": 17,
+  "check_count": 81,
+  "core_unchanged_during_probes": true,
+  "passed": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "game_or_chat_operated": false,
+  "qt_started": false,
+  "source_review_facts": [
+    "Native threshold is replacement, not a minimum cost floor.",
+    "ReduceSp zero/free/virtual guards precede NEG; two owner reads are separate.",
+    "NewSp caller arguments precede second owner read and136-byte clone; nullcheck comes after clone.",
+    "GE is strict signed > wrapped thresholdQ-EPS; MIN32 NEG wraps and AbsMIN64 returns FP.MaxValue.",
+    "Boolean Apply result references do not establish paid cost, actual SP, cast or complete cycle."
+  ],
+  "substantive_findings": []
+}

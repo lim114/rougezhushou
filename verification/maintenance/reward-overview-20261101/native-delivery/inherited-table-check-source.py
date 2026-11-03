@@ -1,0 +1,33 @@
+from pathlib import Path
+from hashlib import sha256
+import json
+from PySide6.QtCore import Qt,QPoint,QPointF
+from PySide6.QtGui import QWheelEvent
+from PySide6.QtWidgets import QApplication,QHeaderView,QAbstractItemView
+from PySide6.QtTest import QTest
+from rouge.player_map_reader import make_reader
+from rouge import current_battle_reference as model
+
+def check(window,gui,require,out):
+ before=json.loads(json.dumps(window.run.state));d=make_reader('battle',{'id':'ro6_b_5','title':'公开固定资料'},window.compact_window);d.show();gui.processEvents();p=d.panel
+ QTest.mouseClick(p.tabs.tabBar(),Qt.MouseButton.LeftButton,pos=p.tabs.tabBar().tabRect(1).center());gui.processEvents();t=p.enemy_overview.tree
+ def rows():return[t.topLevelItem(i).child(j)for i in range(t.topLevelItemCount())for j in range(t.topLevelItem(i).childCount())]
+ images=[];sizes=[]
+ def save(name):
+  path=out/(name+'.png');require(d.isVisible()and t.isVisible(),name+'_actual_visible');require(d.grab().save(str(path)),name+'_saved');images.append({'file':path.as_posix(),'sha256':sha256(path.read_bytes()).hexdigest()})
+ lookup={e['key']:e for e in p.result['enemies']};long=max(rows(),key=lambda i:len(i.text(6)));key=long.data(0,Qt.ItemDataRole.UserRole);index=t.indexFromItem(long,6);text=long.text(6)
+ require(text=='\n'.join(lookup[key]['abilities']),'mechanism_exact_public_long_text_in_actual_table')
+ for w in(760,920,1250):
+  d.resize(w,720);QTest.qWait(30);gui.processEvents();t.doItemsLayout();t.verticalScrollBar().setValue(0);t.horizontalScrollBar().setValue(0);gui.processEvents();sizes.append({'window_client_width':d.width(),'mechanism_width':t.columnWidth(6),'long_row_height':t.visualRect(index).height(),'full_text_characters':len(text)});require(long.text(6)==text,'mechanism_width_keeps_full_exact_text_'+str(w));require(t.columnWidth(6)>=240,'mechanism_default_readable_column_'+str(w));require(t.wordWrap()and t.textElideMode()==Qt.TextElideMode.ElideNone,'mechanism_no_ellipsis_'+str(w));save('full-table-'+str(w))
+ require(sizes[0]['long_row_height']>sizes[-1]['long_row_height'],'mechanism_real_window_width_reflows_original_long_row')
+ d.resize(920,720);gui.processEvents();t.header().setSectionResizeMode(6,QHeaderView.ResizeMode.Interactive);t.header().setStretchLastSection(False);heights=[]
+ for width in(170,320,600):t.setColumnWidth(6,width);t.doItemsLayout();gui.processEvents();heights.append(t.visualRect(index).height());require(t.columnWidth(6)==width,'mechanism_actual_interactive_width_'+str(width))
+ require(heights[0]>heights[1]>heights[2],'mechanism_header_width_changes_complete_row_height')
+ t.verticalScrollBar().setValue(40);t.horizontalScrollBar().setValue(45);gui.processEvents();offset=(t.verticalScrollBar().value(),t.horizontalScrollBar().value(),t.columnWidth(6));QTest.mouseClick(p.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(offset==(t.verticalScrollBar().value(),t.horizontalScrollBar().value(),t.columnWidth(6)),'mechanism_actual_parent_refresh_keeps_both_offsets_and_column_width')
+ group=t.topLevelItem(0);group_index=t.indexFromItem(group);t.horizontalScrollBar().setValue(0);t.scrollTo(group_index,QAbstractItemView.ScrollHint.PositionAtTop);gui.processEvents();QTest.mouseClick(t.viewport(),Qt.MouseButton.LeftButton,pos=QPoint(7,t.visualRect(group_index).center().y()));gui.processEvents();require(not group.isExpanded(),'mechanism_actual_group_arrow_collapses');QTest.mouseClick(p.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(not t.topLevelItem(0).isExpanded(),'mechanism_actual_fold_survives_parent_refresh');t.topLevelItem(0).setExpanded(True);gui.processEvents()
+ long=max(rows(),key=lambda i:len(i.text(6)));key=long.data(0,Qt.ItemDataRole.UserRole);index=t.indexFromItem(long,6);original=long.text(6);long.setText(6,'\n'.join('公开滚动验证第'+str(i)+'行'for i in range(80)));t.doItemsLayout();t.scrollTo(index,QAbstractItemView.ScrollHint.PositionAtTop);gui.processEvents();rect=t.visualRect(index);offset=t.verticalScrollBar().value();pos=t.viewport().rect().center();wheel=QWheelEvent(QPointF(pos),QPointF(t.viewport().mapToGlobal(pos)),QPoint(0,-23),QPoint(0,-120),Qt.MouseButton.NoButton,Qt.KeyboardModifier.NoModifier,Qt.ScrollPhase.NoScrollPhase,False);QApplication.sendEvent(t.viewport(),wheel);gui.processEvents();change=t.verticalScrollBar().value()-offset
+ require(t.verticalScrollMode()==QAbstractItemView.ScrollMode.ScrollPerPixel and rect.height()>t.viewport().height(),'mechanism_tall_row_has_pixel_scroll');require(change>0 and t.visualRect(index).top()==rect.top()-change,'mechanism_actual_wheel_reads_inside_tall_row_without_row_jump');save('synthetic-tall-row-wheel')
+ long.setText(6,original);p.refresh_reference();gui.processEvents();require(all(i.text(6)=='\n'.join(lookup[i.data(0,Qt.ItemDataRole.UserRole)]['abilities'])or i.text(6)==lookup[i.data(0,Qt.ItemDataRole.UserRole)]['description']or i.text(6)=='尚无独立说明，请查看完整资料。'for i in rows()),'mechanism_synthetic_fixture_removed_full_public_source_restored')
+ t.header().setSectionResizeMode(6,QHeaderView.ResizeMode.Interactive);t.setColumnWidth(6,240);t.header().setStretchLastSection(True);d.resize(920,720);gui.processEvents();t.verticalScrollBar().setValue(0);t.horizontalScrollBar().setValue(0);gui.processEvents();item=rows()[0];idx=t.indexFromItem(item);key=item.data(0,Qt.ItemDataRole.UserRole);QTest.mouseClick(t.viewport(),Qt.MouseButton.LeftButton,pos=t.visualRect(idx).center());gui.processEvents();require(p.enemy_key==key and p.enemy_player.isVisible(),'mechanism_actual_table_click_opens_exact_original_reader');require(p.enemy_player.toPlainText()==model.enemy_text(lookup[key]),'mechanism_original_complete_enemy_reader_not_rewritten');QTest.mouseClick(p.enemy_combo,Qt.MouseButton.LeftButton);QTest.keyClick(p.enemy_combo,Qt.Key.Key_Home);QTest.keyClick(p.enemy_combo,Qt.Key.Key_Enter);gui.processEvents();require(p.enemy_overview.isVisible(),'mechanism_actual_keyboard_returns_to_overview')
+ p.enemy_search.setText('公开不存在的敌人');gui.processEvents();require(t.topLevelItemCount()==0,'mechanism_empty_search_clears_full_table');p.enemy_search.clear();gui.processEvents();require(len(rows())==len(p.result['enemies']),'mechanism_search_recovery_restores_all_exact_candidates');save('full-table-final')
+ require(window.run.state==before,'mechanism_actual_table_workflow_keeps_temporary_run_state');d.close();gui.processEvents();require(not d.isVisible(),'mechanism_current_reader_normal_close');(out/'table-extra-images.json').write_text(json.dumps({'images':images,'sizes':sizes,'native_column_heights':heights,'public_fixed_data_and_one_explicit_synthetic_scroll_fixture':True,'not_real_game_or_complete_expected_numbers':True},ensure_ascii=False,indent=2)+'\n','utf8')

@@ -1,0 +1,286 @@
+--- a/rouge/run_state.py
++++ b/rouge/run_state.py
+@@ -7,6 +7,8 @@
+ from collections import Counter
+ from pathlib import Path
+ from .catalog import catalog,operator_profiles,tactical_tools
++from .record_flags import (record_flag,active_record,unconfirmed_record_ids,unconfirmed_item_ids,
++    memory_has_unconfirmed_items,metadata_mask,RUN_METADATA_KEYS,RECIPIENT_KEYS)
+ from .relic_recognition import resolve_owned_icons,resolve_difficulty_icons,difficulty_families
+ 
+ def _validate_saved_containers(saved):
+@@ -71,7 +73,7 @@
+     known_tools = tactical_tools()
+     for key, known in (('relics', known_relics), ('tactical_tools', known_tools)):
+         for identity, record in saved.get(key, {}).items():
+-            if record.get('held', True) and identity not in known:reject()
++            if active_record(record, 'held') and identity not in known:reject()
+             mapping(record, 'icon_evidence')
+             label = record.get('icon_evidence', {}).get('tier_label')
+             if label is not None and not isinstance(label, str):reject()
+@@ -289,6 +291,7 @@
+                   'char_buffs_origin_discovery_repaired','char_buff_absence_invalidated'}
+         for oid,member in self.state['operators'].items():
+             if (member.get('scope')!='run' or member.get('present') is not True
++                    or metadata_mask(member).intersection(('recruitment_kind',*RECIPIENT_KEYS))
+                     or member.get('char_buff_ids')!=[] or member.get('char_buffs_complete') is not False
+                     or member.get('recruitment_kind') not in ('non_emergency','emergency_hire')):continue
+             update=incoming.get(oid,{})
+@@ -358,11 +361,14 @@
+         signature=self.state.get('bar_signature');count=self.state.get('relic_count')
+         known=set(catalog()['relics'])|set(tactical_tools())
+         if not signature or type(count) is not int or len(signature)!=count:return
++        # A historical slot cannot overrule an unqualified possession flag.
++        unknown=set(unconfirmed_item_ids(self.state))
++        if any(unknown.intersection(candidates) for candidates in signature):return
+         icons=[]
+         for candidates in signature:
+             if not isinstance(candidates,list) or not candidates or not all(isinstance(r,str) and r in known for r in candidates):return
+             confirmed=[(rid,self.state['relics'][rid]) for rid in candidates
+-                if rid in self.state['relics'] and self.state['relics'][rid].get('held',True)]
++                if rid in self.state['relics'] and active_record(self.state['relics'][rid],'held')]
+             strong=[(rid,r) for rid,r in confirmed if r.get('icon_evidence',{}).get('name_usage_confirmed')]
+             icon={'id':candidates[0],'candidates':list(candidates),'confirmed':len(candidates)==1,
+                   'source':'historical_held_bar_signature','observed_at':self.state.get('inventory_confirmed_at')}
+@@ -381,7 +387,9 @@
+         """Keep bounded held-bar evidence and resolve it when grade arrives later."""
+         state=self.state;icons=copy.deepcopy(relics.get('icons',[]));count=relics.get('count')
+         expected=count if count is not None else state['relic_count']
+-        memory=copy.deepcopy(state.get('relic_icon_memory'))
++        retained_memory=state.get('relic_icon_memory')
++        suspended=memory_has_unconfirmed_items(state,retained_memory)
++        memory=None if suspended else copy.deepcopy(retained_memory)
+         if count is not None and (count==0 or count!=state['relic_count']):memory=None
+         # Exact owned tool cards are positive inventory evidence even when
+         # their small icons are outside the current crop. A contradicted bar
+@@ -422,7 +430,10 @@
+                 relics['source']='held_bar_memory_and_run_difficulty'
+                 memory['icons']=resolved
+             state['relic_icon_memory']=memory
+-        else:state['relic_icon_memory']=None
++        elif not (suspended and count is None and not icons and not current_ids and not tools):
++            state['relic_icon_memory']=None
++        # A metadata-only read leaves suspended raw memory intact; it cannot
++        # replay or silently delete that historical possession evidence.
+         relics['ids']=sorted(current_ids)
+         relics['icons']=icons
+         # A correction replaces only previous grade-derived identities. The
+@@ -433,11 +444,27 @@
+             group=groups[icon['id']][0]
+             for rid,record in state['relics'].items():
+                 if rid==icon['id'] or rid not in groups or groups[rid][0]!=group:continue
+-                if record.get('held',True) and record.get('source')=='held_icon_and_run_difficulty':
++                if active_record(record,'held') and record.get('source')=='held_icon_and_run_difficulty':
+                     record['held']=False
+                     state['history'].append({'at':captured_at,'kind':'relic_variant_corrected',
+                         'previous_id':rid,'current_id':icon['id'],'difficulty':state['config'].get('difficulty',{}).get('value')})
+         return relics
++
++    def confirm_record_flag(self,kind,identity,record,key,value,captured_at):
++        """Retain an unknown raw flag when fresh direct evidence qualifies it.
++
++        Qualification is not an acquisition, departure or recruitment event.
++        The caller supplies the already established observation's bool; this
++        method cannot infer a game lifecycle from an invalid old JSON value.
++        """
++        if record_flag(record,key) is None:
++            self.state['history'].append({'at':captured_at,'kind':'state_flag_reconfirmed',
++                'record_kind':kind,'id':identity,'field':key,
++                'previous_value':copy.deepcopy(record[key]),'value':value,
++                'previous_record':copy.deepcopy(record)})
++            if kind=='operator' and key=='present':
++                record['unconfirmed_run_metadata']=sorted(metadata_mask(record)|set(RUN_METADATA_KEYS))
++                record['qualified_char_buff_ids']=[]
+ 
+     def apply(self,observed,captured_at):
+         if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
+@@ -511,6 +538,7 @@
+         prior_icons=state.get('relic_icon_memory')
+         prior_inventory_verified=_inventory_confirmation_flag(state['inventory_verified'])
+         prior_held=set(self.held_relic_ids())
++        prior_unknown_held=set(unconfirmed_record_ids(state['relics'],'held'))
+         relics=self.reconcile_relic_icons(relics,captured_at,
+             observed_tool_ids=observed.get('tactical_tools',{}).get('ids',[]))
+         current_icons=state.get('relic_icon_memory')
+@@ -548,8 +576,10 @@
+         if full_bar:state['bar_signature']=signature
+         if count is not None:state['relic_count']=count
+         for rid in incoming:
+-            if rid not in state['relics'] or not state['relics'][rid].get('held',True):
++            prior=state['relics'].get(rid,{})
++            if rid not in state['relics'] or record_flag(prior,'held') is False:
+                 state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})
++            self.confirm_record_flag('relic',rid,prior,'held',True,captured_at)
+             evidence=next((i for i in relics['icons'] if i.get('confirmed') and i['id']==rid),{})
+             state['relics'][rid]={**state['relics'].get(rid,{}),
+                 'captured_at':evidence.get('observed_at',captured_at),'resolved_at':captured_at,
+@@ -557,8 +587,10 @@
+                 'icon_evidence':{k:v for k,v in evidence.items() if k in ('candidates','score','difficulty','difficulty_group',
+                     'difficulty_tier','tier_label','difficulty_source','name_usage_confirmed','difficulty_conflict')}}
+         for tid in incoming_tools:
+-            if tid not in state['tactical_tools'] or not state['tactical_tools'][tid].get('held',True):
++            prior=state['tactical_tools'].get(tid,{})
++            if tid not in state['tactical_tools'] or record_flag(prior,'held') is False:
+                 state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})
++            self.confirm_record_flag('tactical_tool',tid,prior,'held',True,captured_at)
+             state['tactical_tools'][tid]={**state['tactical_tools'].get(tid,{}),
+                 'captured_at':captured_at,'source':observed.get('tactical_tools',{}).get('source',relics['source']),'held':True}
+         # Fully identified current/valid historical slots (or explicit zero)
+@@ -566,13 +598,19 @@
+         if (count==0 and not incoming_items and not relics['icons']) or (isinstance(expected,(int,float)) and expected>0 and len(incoming_items)==expected and
+                 len(relics['icons'])==expected and all(i.get('confirmed') for i in relics['icons'])):
+             for rid,record in state['relics'].items():
+-                if rid not in incoming and record.get('held',True):
++                if rid not in incoming and record_flag(record,'held') is not False:
++                    prior=record_flag(record,'held')
++                    self.confirm_record_flag('relic',rid,record,'held',False,captured_at)
+                     record['held']=False
+-                    state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})
++                    if prior is True:
++                        state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})
+             for tid,record in state['tactical_tools'].items():
+-                if tid not in incoming_tools and record.get('held',True):
++                if tid not in incoming_tools and record_flag(record,'held') is not False:
++                    prior=record_flag(record,'held')
++                    self.confirm_record_flag('tactical_tool',tid,record,'held',False,captured_at)
+                     record['held']=False
+-                    state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})
++                    if prior is True:
++                        state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})
+             state['inventory_verified']=True
+             state['inventory_confirmed_at']=(state['relic_icon_memory'] or {}).get('captured_at') if relics.get('memory_replay') else captured_at
+         crew=observed.get('crew_count')
+@@ -582,20 +620,29 @@
+             state['crew_count']=crew
+         for member in observed.get('operators',[]):
+             previous=state['operators'].get(member['id'],{})
++            prior_presence=record_flag(previous,'present')
++            prior_metadata_mask=metadata_mask(previous)
+             fields={**previous.get('fields',{}),**member['fields']}
+             ranks={**previous.get('skill_ranks',{}),**{str(k):v for k,v in member.get('skill_ranks',{}).items()}}
+             invalid=set(previous.get('invalid_fields',[]))
+             invalid_ranks=set(previous.get('invalid_skill_ranks',[]))
+             origin=member.get('recruitment_kind')
+-            changed_origin=origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']
+-            returned=bool(previous) and not previous.get('present',True)
++            changed_origin=prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']
++            returned=bool(previous) and prior_presence is False
++            if prior_presence is None:
++                # Keep old leaves, but an identity re-read does not reconfirm
++                # the historical cultivation hidden by an unknown presence.
++                invalid.update(previous.get('fields',{}))
++                invalid_ranks.update(previous.get('skill_ranks',{}))
++            self.confirm_record_flag('operator',member['id'],previous,'present',True,captured_at)
+             prior_elite=previous.get('fields',{}).get('elite')
+             current_elite=member['fields'].get('elite')
+-            if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)
+-                    or previous.get('advanced') is False and member.get('advanced') is True):
++            elite_qualified=not ('unconfirmed_run_metadata' in previous and 'elite' in previous.get('invalid_fields',[]))
++            if (prior_presence is not None and ((elite_qualified and type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)
++                    or 'advanced' not in prior_metadata_mask and previous.get('advanced') is False and member.get('advanced') is True)):
+                 promoted_ids.add(member['id'])
+             origin_source=previous.get('sources',{}).get('recruitment_kind',{})
+-            corrected=(origin is not None and isinstance(origin_source,dict)
++            corrected=(prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and isinstance(origin_source,dict)
+                        and origin_source.get('source')=='金色应急雇佣标记')
+             if corrected:
+                 state['history'].append({'at':captured_at,'kind':'classification_corrected','id':member['id'],
+@@ -623,7 +670,7 @@
+             invalid.difference_update(member['fields'])
+             invalid_ranks.difference_update(str(k) for k in member.get('skill_ranks',{}))
+             advanced_changed='advanced' in member and member['advanced']!=previous.get('advanced')
+-            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or not previous.get('present',True) or advanced_changed:
++            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or prior_presence is False or advanced_changed:
+                 state['history'].append({'at':captured_at,'kind':'operator_updated','id':member['id'],
+                     'fields':member['fields'],'skill_ranks':member.get('skill_ranks',{}),
+                     'advanced':member.get('advanced'),'recruitment_kind':origin})
+@@ -639,6 +686,20 @@
+                 'merged_from_pages':True,
+                 'captured_at':captured_at if member['fields'] or member.get('skill_ranks') else previous.get('captured_at',captured_at),
+                 'present':True}
++            merged=state['operators'][member['id']]
++            mask=metadata_mask(merged)
++            if mask:
++                if origin is not None:mask.discard('recruitment_kind')
++                if 'advanced' in member:mask.discard('advanced')
++                if 'char_buff_ids' in member:
++                    if member.get('char_buffs_complete') is True:
++                        mask.difference_update(RECIPIENT_KEYS)
++                        merged.pop('qualified_char_buff_ids',None)
++                    elif mask.intersection(RECIPIENT_KEYS):
++                        prior=[] if changed_origin or returned else previous.get('qualified_char_buff_ids',[])
++                        if type(prior) is not list or any(type(bid) is not str for bid in prior):prior=[]
++                        merged['qualified_char_buff_ids']=list(dict.fromkeys(prior+member['char_buff_ids']))
++                merged['unconfirmed_run_metadata']=sorted(mask)
+             from .recipient_state import merge_recipient_evidence
+             merge_recipient_evidence(previous,member,state['operators'][member['id']],
+                                      changed_origin or returned,captured_at)
+@@ -648,11 +709,14 @@
+         if crew is not None and len({m['id'] for m in members})==crew:
+             current={m['id'] for m in members}
+             for key,member in state['operators'].items():
+-                if key not in current and member.get('present',True):
++                if key not in current and record_flag(member,'present') is not False:
++                    prior=record_flag(member,'present')
++                    self.confirm_record_flag('operator',key,member,'present',False,captured_at)
+                     member['present']=False
+-                    state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
++                    if prior is True:
++                        state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
+         from .recipient_state import invalidate_recipient_absence
+-        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held,promoted_ids,captured_at)
++        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)
+         state['last_read']=captured_at
+         if state['notice'].startswith('等待'):state['notice']='同一局信息持续累积并保存；开始另一局时请手动清空本局读取。'
+         self.save()
+@@ -729,16 +793,18 @@
+         count=self.state['relic_count'];known=len(self.held_relic_ids())
+         tools=len(self.held_tool_ids())
+         complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count
+-        return {'source':'run_capture','complete':complete,
++        unknown=unconfirmed_item_ids(self.state)
++        if complete and unknown:complete=False
++        return {**({'unconfirmed_item_ids':unknown} if unknown else {}),'source':'run_capture','complete':complete,
+                 'recognized':known,'recognized_tools':tools,'total_badge_count':count,
+                 'expected_count':count-tools if complete else None if tools else count,'run_id':self.state['id'],
+                 'confirmed_at':self.state.get('inventory_confirmed_at')}
+ 
+     def held_tool_ids(self):
+-        return sorted(tid for tid,record in self.state['tactical_tools'].items() if record.get('held',True))
++        return sorted(tid for tid,record in self.state['tactical_tools'].items() if active_record(record,'held'))
+ 
+     def held_relic_ids(self):
+-        return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))
++        return sorted(rid for rid,record in self.state['relics'].items() if active_record(record,'held'))
+ 
+     def relic_history_context(self):
+         """Derive retained-growth uncertainty from this run's positive evidence.
+@@ -776,9 +842,10 @@
+             notice=notice.replace('持续累积并保存','持续累积')+'\n'+self.persistence_notice()
+         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
+         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
+-        names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')
+-               +('（已进阶）' if member.get('advanced') else '')
+-               +('（应急雇佣，仅一次作战）' if member.get('recruitment_kind')=='emergency_hire' else '')
++        names=[operator_profiles()[key]['name']+('（在场状态未确认，保留记录）' if record_flag(member,'present') is None else
++                '（已离队，保留记录）' if record_flag(member,'present') is False else '')
++               +('（已进阶）' if record_flag(member,'present') is not None and 'advanced' not in metadata_mask(member) and member.get('advanced') else '')
++               +('（应急雇佣，仅一次作战）' if record_flag(member,'present') is not None and 'recruitment_kind' not in metadata_mask(member) and member.get('recruitment_kind')=='emergency_hire' else '')
+                for key,member in state['operators'].items()]
+         from .relics import mechanics
+         labels={'numeric':'有数值规则','conditional':'需条件','partial':'部分机制','pending':'机制待接入','non_output':'无输出加成'}
+@@ -793,7 +860,7 @@
+             time.strftime('%H:%M:%S',time.localtime(record['captured_at']))+
+             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
+             for key,record in state.get('resources',{}).items())
+-        present=sum(bool(member.get('present',True)) for member in state['operators'].values())
++        present=sum(active_record(member,'present') for member in state['operators'].values())
+         config=state['config']
+         from .run_config import difficulty_value
+         difficulty_record=config.get('difficulty',{})
+@@ -810,4 +877,5 @@
+             '藏品：'+('、'.join(relics) or '身份尚未确认'),
+             '战术道具：'+('、'.join(tactical_tools()[tid]['name'] for tid in self.held_tool_ids()) or '未读取到'),
+             resources or '源石锭/零件数尚未确认',
++            *(['部分记录的持有状态未确认；原记录保留，暂不自动套用对应持有效果与层数。'] if status.get('unconfirmed_item_ids') else []),
+             *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),notice])

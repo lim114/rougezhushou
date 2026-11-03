@@ -1,0 +1,95 @@
+{
+  "baseline_head": "a52a4bf9217aee3c11617135b7fc9cc6c38fd0f2",
+  "kind": "frozen public producer / state / scenario / API qualification selectors",
+  "files": [
+    {
+      "source_path": "rouge/run_recognition.py",
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "bytes": 23560,
+      "spans": [
+        {
+          "start_line": 150,
+          "end_line": 160,
+          "exact_text": "                    'complete':recipient_buffs['complete'],'issues':recipient_buffs['issues']}}}\n    if selected:\n        previous=next((m for m in members if m['id']==selected['id']),{})\n        members=[m for m in members if m['id']!=selected['id']]+[{**previous,**selected,\n            'skill_ranks':{**previous.get('skill_ranks',{}),**selected.get('skill_ranks',{})},\n            'sources':{**previous.get('sources',{}),**selected.get('sources',{})}}]\n    for member in members:\n        if member['fields'].get('elite')==2 and member.get('card_position'):\n            ranks=read_card_masteries(image,*member['card_position'],len(operator_profiles()[member['id']]['skills']),space=member.get('card_scale',(1,1)))\n            member['skill_ranks']={**member['skill_ranks'],**ranks}\n            if ranks:member['sources']['skill_ranks']='本局卡片各技能三个亮起专精标记分别确认'"
+        },
+        {
+          "start_line": 345,
+          "end_line": 381,
+          "exact_text": "            and (m:=re.fullmatch(r'(\\d{1,2})/?',t['text']))}\n    caps={int(t['text'][1:]) for t in texts if t['confidence']>=.9\n          and .07*ux<center(t)[0]-nx<.18*ux and .015*uy<center(t)[1]-ny<.12*uy\n          and re.fullmatch(r'/\\d{2}',t['text'])}\n    if len(caps)==1:\n        phases=[i for i,p in enumerate(profile['phases']) if p['max_level']==next(iter(caps))]\n        if len(phases)==1:fields['elite']=phases[0];sources['elite']='本局当前面板精英上限与档案唯一匹配'\n    if len(values)==1 and 'elite' in fields and 1<=next(iter(values))<=profile['phases'][fields['elite']]['max_level']:\n        fields['level']=next(iter(values));sources['level']='本局左侧当前等级；排除右侧账号卡片等级'\n    if not profile['modules'] or ('elite' in fields and all(fields['elite']<m['unlock_elite'] for m in profile['modules'])):\n        fields.update(module_id=None,module_level=0);sources['module_id']='本局精英阶段未开放模组'\n    required_titles={skill['levels'][-1]['name'] for skill in profile['skills']}\n    if not required_titles<={t['text'] for t in texts if t['confidence']>=.9}:\n        left=min(p[0] for p in name['box'])\n        x0=max(0,round((left-.01*ux)*w));x1=min(w,round((left+.26*ux)*w))\n        y0=max(0,round((center(panel)[1]+.025*uy)*h));y1=min(h,round((center(panel)[1]+.52*uy)*h))\n        roi=image[y0:y1,x0:x1]\n        if roi.size:\n            raw,_=engine(cv2.resize(roi,None,fx=2,fy=2))\n            texts=texts+[{'text':t.replace(' ',''),'confidence':float(score),'box':[[(px/2+x0)/w,(py/2+y0)/h] for px,py in box]} for box,t,score in raw or [] if score>=.85]\n    for i,skill in enumerate(profile['skills'],1):\n        anchor=next((t for t in texts if t['text']==skill['levels'][-1]['name'] and t['confidence']>=.9 and\n                     center(t)[0]<center(panel)[0]+.025*ux and center(t)[1]>center(panel)[1]),None)\n        if anchor is None:continue\n        _,y=center(anchor)\n        left=min(p[0] for p in name['box'])\n        crop=image[max(0,int((y-.12*uy)*h)):min(h,int((y-.083*uy)*h)),max(0,int((left-.007*ux)*w)):min(w,int((left+.012*ux)*w))]\n        if not crop.size:continue\n        raw,_=engine(cv2.resize(crop,None,fx=4,fy=4),use_cls=False)\n        badges={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch('[1-7]',text)}\n        if len(badges)==1:\n            rank=next(iter(badges))\n            # A seven badge at elite 2 needs separate mastery evidence; do not assume mastery zero.\n            if rank<7 or fields.get('elite',2)<2:ranks[i]=rank\n    required=['level','elite','potential','trust','module_id','module_level','selected_skill']\n    return {'id':key,'name':profile['name'],'scope':'run','fields':fields,'skill_ranks':ranks,'sources':sources,\n            'missing_fields':[f for f in required if f not in fields]}"
+        }
+      ]
+    },
+    {
+      "source_path": "rouge/run_state.py",
+      "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+      "bytes": 42402,
+      "spans": [
+        {
+          "start_line": 379,
+          "end_line": 390,
+          "exact_text": "            ranks={**previous.get('skill_ranks',{}),**{str(k):v for k,v in member.get('skill_ranks',{}).items()}}\n            invalid=set(previous.get('invalid_fields',[]))\n            invalid_ranks=set(previous.get('invalid_skill_ranks',[]))\n            origin=member.get('recruitment_kind')\n            changed_origin=origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']\n            returned=bool(previous) and not previous.get('present',True)\n            prior_elite=previous.get('fields',{}).get('elite')\n            current_elite=member['fields'].get('elite')\n            if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)\n                    or previous.get('advanced') is False and member.get('advanced') is True):\n                promoted_ids.add(member['id'])\n            corrected=origin is not None and previous.get('sources',{}).get('recruitment_kind',{}).get('source')=='金色应急雇佣标记'"
+        },
+        {
+          "start_line": 410,
+          "end_line": 426,
+          "exact_text": "            if 'elite' in member['fields'] and 'elite' in previous.get('fields',{}) and member['fields']['elite']!=previous['fields']['elite']:\n                # Keep historical evidence, but promotion does not prove a module or mastery.\n                invalid.update({'level','module_id','module_level','selected_skill'})\n                invalid_ranks.update(ranks)\n            invalid.difference_update(member['fields'])\n            invalid_ranks.difference_update(str(k) for k in member.get('skill_ranks',{}))\n            advanced_changed='advanced' in member and member['advanced']!=previous.get('advanced')\n            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or not previous.get('present',True) or advanced_changed:\n                state['history'].append({'at':captured_at,'kind':'operator_updated','id':member['id'],\n                    'fields':member['fields'],'skill_ranks':member.get('skill_ranks',{}),\n                    'advanced':member.get('advanced'),'recruitment_kind':origin})\n            state['operators'][member['id']]={**previous,**member,\n                'fields':fields,'skill_ranks':ranks,\n                'char_buff_ids':current_buffs,\n                'char_buffs_complete':member.get('char_buffs_complete',False) if 'char_buff_ids' in member else\n                                      False if changed_origin or returned else previous.get('char_buffs_complete',False),\n                'invalid_fields':sorted(invalid),'invalid_skill_ranks':sorted(invalid_ranks),"
+        }
+      ]
+    },
+    {
+      "source_path": "rouge/app.py",
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976,
+      "spans": [
+        {
+          "start_line": 767,
+          "end_line": 789,
+          "exact_text": "    def current_operator_state(self):\n        op=self.operator.currentData()\n        account=self.operator_observations.get(op,{})\n        member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None\n        if member and not member.get('present',True):member=None\n        if not member:return account\n        current={key:value for key,value in member['fields'].items() if key not in member.get('invalid_fields',[])}\n        ranks={key:value for key,value in member.get('skill_ranks',{}).items() if key not in member.get('invalid_skill_ranks',[])}\n        return {**account,**member,'fields':{**account.get('fields',{}),**current},\n                'skill_ranks':ranks,'run_confirmed_fields':list(current)}\n\n    def training_conditions(self):\n        op=self.operator.currentData()\n        fields=self.current_operator_state().get('fields',{})\n        elite=fields.get('elite',len(operator_profiles()[op]['phases'])-1)\n        return {'elite':elite,'level':self.level.value(),'trust':fields.get('trust',100),\n                'potential':fields.get('potential',1),'module_id':fields.get('module_id'),\n                'module_level':fields.get('module_level',0)}\n\n    def skill_rank_value(self):\n        known=self.current_operator_state().get('skill_ranks',{})\n        skill=self.skill.currentData()\n        return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))"
+        },
+        {
+          "start_line": 815,
+          "end_line": 825,
+          "exact_text": "        self.level.blockSignals(False)\n        self.level_override=preserve_level\n        previous=self.skill.currentData()\n        self.skill.blockSignals(True)\n        self.skill.clear()\n        choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]\n        for skill in choices:\n            name = profile['skills'][skill-1]['levels'][-1]['name']\n            self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),f'S{skill} · {name}',skill)\n        preferred=fields.get('selected_skill',{'kaltsit':2,'silverash':3,'mechanist':1}.get(op,1))\n        if self.skill_override and previous in choices:preferred=previous"
+        },
+        {
+          "start_line": 990,
+          "end_line": 998,
+          "exact_text": "        known=self.current_operator_state().get('skill_ranks',{})\n        if skill is None:\n            self.rank.setText('无可用技能')\n            if hasattr(self,'raw_damage'):self.calculate()\n            return\n        rank=self.skill_rank_value()\n        self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+\n                         ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))\n        if hasattr(self,'raw_damage'):self.calculate()"
+        },
+        {
+          "start_line": 1026,
+          "end_line": 1036,
+          "exact_text": "        scenario = {'operator':self.operator.currentData(),'skill':self.skill.currentData(),\n            **self.training_conditions(),'deployment_elapsed_seconds':self.deployment_elapsed.value(),\n            'healing_targets':self.healing_targets.value(),'continuous_attacks':self.continuous_attacks.isChecked(),\n            'skill_rank':self.skill_rank_value(),\n            'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value(),\n            'cooperative':self.cooperative.isChecked(),'preexisting_fragile':self.fragile.isChecked(),\n            'charge_count':self.charge_count.value(),'shield_break_count':self.shield_breaks.value(),\n            'activation_count':self.activation_count.value(),'companion_attack':self.companion_attack.value(),\n            'deployment_stacks':self.stacks.value(),'relic_ids':ids}\n        for owner,key,skills,widget in self.model_option_widgets:\n            if owner==op and self.skill.currentData() in skills:"
+        }
+      ]
+    },
+    {
+      "source_path": "rouge/damage.py",
+      "sha256": "84ff864244aed22307086df79686d485edf56700c727191ed7c3eca8bcbb9cec",
+      "bytes": 28530,
+      "spans": [
+        {
+          "start_line": 236,
+          "end_line": 251,
+          "exact_text": "    from .catalog import operator_attributes\n    scenario=dict(scenario)\n    profile=catalog()['operators'][scenario['operator']]\n    skill=scenario.get('skill');rank=scenario.get('skill_rank',10)\n    if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):\n        raise ValueError('请选择该干员的有效技能。')\n    if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:\n        raise ValueError('技能等级需要为1–10的整数。')\n    attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),\n                                   scenario.get('trust',100),scenario.get('potential',1),\n                                   scenario.get('module_id'),scenario.get('module_level',0))\n    scenario.setdefault('base_attack',attributes['attack'])\n    elite=scenario.get('elite',2)\n    if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):\n        raise ValueError('当前精英阶段尚未开放所选技能或专精。')\n    if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):"
+        }
+      ]
+    }
+  ],
+  "closed_current_code_contract": [
+    "run selected-member badges parse ranks1–7; E2 rank7 alone does not infer mastery0",
+    "roster mastery card markers queried only when fields.elite is2",
+    "RunState promotion preserves history and invalidates all old skill ranks until new evidence",
+    "current_operator_state uses only noninvalid run skill_ranks for a present run member, rather than borrowing account ranks",
+    "skill_rank_value uses known run rank or explicit preview default7 belowE2 and10 atE2",
+    "available skill choices use original profile skill.unlock_elite",
+    "initial scenario includes training_conditions and skill_rank_value",
+    "public API retains original skill unlock elite and belowE2 mastery gate"
+  ],
+  "does_not_prove": [
+    "actual account-to-roguelike temporary cultivation skill inheritance",
+    "actual client use cap for an account-trained common skill in an E0 temporary form",
+    "mastery use while current run form is belowE2"
+  ],
+  "new_game_rule_or_gate_changed": false
+}

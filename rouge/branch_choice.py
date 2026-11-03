@@ -1,23 +1,44 @@
 """A selectable category branch and its own filtered item choices."""
-from PySide6.QtCore import QSize
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QComboBox
+from PySide6.QtCore import QSize,QRect
+from PySide6.QtWidgets import QWidget,QFormLayout,QComboBox,QStyle,QStyleOptionComboBox
 
 OVERVIEW='__overview__'
 
 
+class CategoryCombo(QComboBox):
+    """Include the active style's arrow/padding in the full category width."""
+    def sizeHint(self):
+        size=super().sizeHint();option=QStyleOptionComboBox();self.initStyleOption(option)
+        option.rect=QRect(0,0,size.width(),size.height())
+        field=self.style().subControlRect(QStyle.ComplexControl.CC_ComboBox,option,
+                                         QStyle.SubControl.SC_ComboBoxEditField,self)
+        needed=max((self.fontMetrics().horizontalAdvance(self.itemText(i))+
+                    (self.iconSize().width()+4 if not self.itemIcon(i).isNull() else 0)
+                    for i in range(self.count())),default=0)
+        # Qt 6.11 QCommonStyle draws noneditable text inside an additional
+        # two-pixel margin on each side of SC_ComboBoxEditField.
+        return QSize(size.width()+max(0,needed+4-field.width()),size.height())
+
+    def minimumSizeHint(self):return self.sizeHint()
+
+
 class BranchChoice(QWidget):
-    def __init__(self,combo,groups,*,overview_label,placeholder=None,overview=None,empty_label='此分支暂无条目',notify_unchanged=False,branch_icons=None):
+    def __init__(self,combo,groups,*,overview_label,placeholder=None,overview=None,empty_label='此分支暂无条目',notify_unchanged=False,branch_icons=None,keep_empty_groups=False):
         super().__init__()
         self.combo=combo;self.groups=[];self.overview=overview
         self.overview_label=overview_label;self.placeholder=placeholder;self.empty_label=empty_label
         self.notify_unchanged=notify_unchanged
         self.branch_icons=branch_icons or {}
-        self.branch=QComboBox();self.branch.setAccessibleName(overview_label+'；选择分类分支')
-        self.branch.setIconSize(QSize(26,26))
-        self.branch.setMinimumContentsLength(7)
+        self.keep_empty_groups=keep_empty_groups
+        self.branch=CategoryCombo();self.branch.setAccessibleName(overview_label+'；选择分类分支')
+        self.branch.setIconSize(QSize(28,28))
         self.branch.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
-        layout=QHBoxLayout(self);layout.setContentsMargins(0,0,0,0)
-        layout.addWidget(self.branch);layout.addWidget(combo,1)
+        combo.setMinimumContentsLength(12)
+        combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+        layout=QFormLayout(self);layout.setContentsMargins(0,0,0,0)
+        layout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        layout.addRow(self.branch,combo)
         combo.setIconSize(QSize(28,28));combo.setMaxVisibleItems(24)
         self.set_groups(groups,emit=False)
         self.branch.currentIndexChanged.connect(self._branch_changed)
@@ -44,7 +65,14 @@ class BranchChoice(QWidget):
 
     def set_groups(self,groups,*,emit=True):
         previous=self.combo.currentData();key=self.branch.currentData()
-        self.groups=[(name,list(items)) for name,items in groups if items]
+        incoming=[(name,list(items)) for name,items in groups if items or self.keep_empty_groups]
+        if self.branch.count() and [(name,[(t,v)for t,v,_ in items])for name,items in incoming]==[(name,[(t,v)for t,v,_ in items])for name,items in self.groups]:
+            self.groups=incoming
+            offset=int(self.placeholder is not None)
+            for i,(_,_,icon)in enumerate(self.entries()):self.combo.setItemIcon(i+offset,icon)
+            if emit and not self.combo.signalsBlocked():self.combo.currentIndexChanged.emit(self.combo.currentIndex())
+            return
+        self.groups=incoming
         blocked=self.branch.blockSignals(True);self.branch.clear()
         self.branch.addItem(self.overview_label,OVERVIEW)
         for name,_ in self.groups:

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "source_artifacts_sha256": {
+    "research/p2-regeneration-clock-272/native-proof.json": "95c62b843a7a0cc2ef0cc109cb7ec0828396359613bc5da735a2e68beac9d76c",
+    "research/p2-regeneration-clock-272/metadata-proof.json": "8c5691c1c174720e2ffe05242d40bea1634487d46746c79b129a46831bf281b2",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19"
+  },
+  "dirty_attributes": [
+    13,
+    19
+  ],
+  "timer_type": "Torappu.PrecisePeriodicTimer",
+  "fp_one_raw": 4294967296,
+  "epsilon_raw": 42950,
+  "rate_order": "wrap(attr13 + FPmultiply(maxHP,attr19))",
+  "normal_can_recover": "rateRaw >42950",
+  "timer_valid": "periodRaw >42950",
+  "timer_ready": "remainingRaw <42950",
+  "update": "wrap(remaining-delta), no clamp",
+  "next": "if ready then wrap(remaining+period), each successful Next uses an independent HP getter and requests wrap(hp+ONE)",
+  "reconfigure_order": "drain0; first sum getter for canRecover; iftrue second independent sum getter for ONE/rate; inherited ResetButKeepPastTime; otherwise MarkInvalid(-ONE,-ONE)",
+  "reset": "past=wrap(oldPeriod-oldRemaining); newRemaining=max(0,wrap(newPeriod-past)); newPeriod stored directly",
+  "supported_division": "numeratorONE; denominator0 returns-ONE; nonzero abs denominator>=EPS safe domain extra quotient bit then unsigned +1/shift1 and sign; smaller nonzero denominator explicitly unknown",
+  "metadata_spans": 277,
+  "methods": 26,
+  "unique_instructions": 1589,
+  "current_hotfix_equivalence_proven": false,
+  "actual_attribute_combination_verified": false,
+  "actual_timer_instances_or_clock_verified": false,
+  "actual_hp_settlement_verified": false
+}

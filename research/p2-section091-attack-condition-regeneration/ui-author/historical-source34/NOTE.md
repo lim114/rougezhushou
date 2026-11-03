@@ -1,0 +1,17 @@
+# 第91节候选：隐藏的持续普攻条件
+
+此处是0 API、0 helper、0 formatter、0测试、0 Qt/Wine的只读来源审查。固定实际87归档commit `6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0`；第88节候选矩阵只复用已保存baseline证据，不称88已部署或91已完成。没有产品草案、控件改动或新计算；UI090的107件、最初35件及38行快照保持封存。
+
+源码足以成立一个界面声明候选。app.py566–568只创建一次QCheckBox并初始化True；对本属性的全部AST引用中，没有第二个setChecked/toggle/reset或切换时替换对象。owner currentIndexChanged524连接update_operator791–847，skill currentIndexChanged553连接skill_changed854–856，二者到update_skill_options949–998。960仅按当前技能sp_type是否攻击回复显示，967调用setRowVisible；1028每次仍无条件调用isChecked生成原生bool。更新干员与技能也会重新calculate，未因隐藏而删除该字段。
+
+因此，可读代码路径是先在机械师S1的可见复选框关掉条件，再切到术师阿米娅自然回复S1；复选框隐藏，旧False仍被序列化。原source16中的真实bool结果已保存：机械师S1 False初动/充能/周期为None，True初动8.433333333333334；阿米娅E2S1 False为15/30/60秒，True为6.000000000000002/11.2/41.2秒。engine1311–1336自然回复分支仍依据continuous_attacks使用实际所选情绪吸收参数。这里没有运行Qt切换，不能称实际GUI已经复现；0调用审查确立的是生产者与已有实际公共输出之间的可达数据流。
+
+第二个正例来自已有baseline60中的bool case33/34：实际记录owner为 `char_1050_chen3` S3，自然回复、正确职业匹配的折戟-浴血 `rogue_6_relic_legacy_67`。False初动7秒，True为2.9999999999999996秒；continuous模式的充能25和周期45均相同。只对该明确输入声称初动差异，不能把最终周期相同当成整个条件inactive。该藏品规范化原selector为 modify_sp[warrior]，攻击后2技力；relics.prepare先经offline_scope.partition和matches职业资格，再从active rules写回 `_relic_rules`，engine1337进入混合回复路径。不是将任意用户rule或仅持有ID当作生效证明。
+
+资格需要分开解释。阿米娅E2L1开始所选情绪吸收攻击回技力为2，P6为3；E0/E1只有无参数占位天赋，攻击额外技力为0。E0/E1不是本审的数值额外技力正例。但既有受限continuousS1仍公开attack_sp_enabled_in_reference，实际获取、命中、充能、周期时钟均未知；原60 case15–18确实保存了这些来源flag，原输入是文本，不能改称新的UI bool实测。陈S2从E1、S3从E2开放，职业藏品本身没有精英阶段条件，所以也不能把全部E0统一判inactive；E0/E1的新bool计算没有运行。数字8的无技力/部署类没有本次自然或攻击回复路径，纯受击/周期incoming_interval分支优先、无outgoing攻击credit也不据此显示攻击条件。
+
+已退役的received/event不能形成新正例。规范化118仍有received_sp原数据，但offline_scope.py的REFERENCE_KINDS把它划为资料，公共prepare不把它写入active规则。Gummy case19/20 False/True完整native结果相同；没有实际公共next-attack tail或新事件producer。Silverash无适用攻击SP规则的自然S3也由原16 False/True完整结果相同。未知原生clock、友方获取与附着边界保持原样。
+
+未来91可先采用保守显示范围：实际有效且已实现的所选技能为攻击回复或自然回复时显示该bool条件，其他种类按来源保持。此两种sp_type的显示并不声称每个自然技能都有攻击额外技力；同一False/True输入值和默认True不变，仅给用户看见并可修改仍传入的假设。更小的准确范围需要共享实际准备结果：攻击回复，或阿米娅自然条件/参考分支，或其他extended自然技能确有prepare后的active attack_sp。不能复制一个只看原始effects/ID/最终cycle的资格判定。未来精确实现还必须在藏品/技能/培养改变时同步显示。此处不实施该helper或改动计算。
+
+候选只安排在full90之后的未来91组；没有第91编号归档、测试通过或窗口通过的声明。本目录封存后停止写入。读取准备的两项字典/清单形状错误已分别窄修，原失败脚本/trace保留，均无产品调用。

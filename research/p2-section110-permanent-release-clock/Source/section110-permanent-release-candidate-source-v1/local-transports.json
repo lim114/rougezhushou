@@ -1,0 +1,150 @@
+{
+  "kind": "SECTION110_PERMANENT_RELEASE_IMPACT_LOCAL_SOURCE_CANDIDATE_NOT_APPLIED",
+  "STOPWRITE": true,
+  "section": 110,
+  "author_runtime_executed": false,
+  "project_helper_codec_imported": false,
+  "native_decoded": false,
+  "tracked_edits": false,
+  "product_pass": false,
+  "apply_ready": false,
+  "future_actual_complete_guard": null,
+  "future_actual_source_count": null,
+  "future_after_guard": null,
+  "future_after_source_count": null,
+  "basis": "Exact109 final candidate virtual after-bytes for timing/app/cloud/new109test; currentRoot109-applied bytes independently match those pins. This is not a110 application or proof109 publication completed. sp_events remains unchanged original until this future local proposal.",
+  "base109_transport_ref": {
+    "path": "/workspace/.continuation/section109-bounded-empty-candidate-source-v2/local-transports.json",
+    "bytes": 15639,
+    "sha256": "96060c7b3242d96dead272e4a0e06733b02794ddb9c986fae811e2e55166c35b"
+  },
+  "existing_changed_files": [
+    {
+      "path": "rouge/timing.py",
+      "before_bytes": 27444,
+      "before_sha256": "0f1bcd33306daccb04b769fef188282a4f833f57ce6b241d00fbebd2bfc0ac93",
+      "after_bytes": 28025,
+      "after_sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6",
+      "blocks": [
+        {
+          "old": "            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0\r\n",
+          "new": "            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0\r\n            if (self.target_scope=='enemy' and self.s['operator']=='char_4182_oblvns' and\r\n                    self.options.get('target_windows')==[] and self.options.get('target_disappears_seconds')!=0):\r\n                # Permanent releases may charge SP without a hostile impact.\r\n                # Keep the original continuous float clock, never frame-rounded.\r\n                stream['release_times_seconds']=times\r\n                stream['impact_frames']=[]\r\n                stream['times_seconds']=[]\r\n",
+          "occurrences": 1,
+          "purpose": "Only permanent continuous explicit enemy []: preserve original releases, starts/resume and floating release clock; clear known hostile impacts."
+        },
+        {
+          "old": "else events['times_seconds'][count-1]",
+          "new": "else events.get('release_times_seconds',events['times_seconds'])[count-1]",
+          "occurrences": 1,
+          "purpose": "Attack SP consumes exact original release clock if separate from impacts, unchanged fallback otherwise."
+        },
+        {
+          "old": "if timeline.mode=='frames' else stream['times_seconds']",
+          "new": "if timeline.mode=='frames' else stream.get('release_times_seconds',stream['times_seconds'])",
+          "occurrences": 1,
+          "purpose": "Mixed charge consumes same preserved release float clock; frames unchanged."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/sp_events.py",
+      "before_bytes": 10207,
+      "before_sha256": "0a878cf0adf384c29db41cd0918354a6f4a0887d67ff51e634d52d371e63822f",
+      "after_bytes": 10281,
+      "after_sha256": "b80b4258b82cb6cbbd0f41e5b2ae301b18b92e96cd77aff05cb4ed8923af2ddf",
+      "blocks": [
+        {
+          "old": "else [t + stun for t in stream['times_seconds']]",
+          "new": "else [t + stun for t in stream.get('release_times_seconds', stream['times_seconds'])]",
+          "occurrences": 1,
+          "purpose": "Classified outgoing attack SP uses releases independent of known hostile impacts."
+        },
+        {
+          "old": "max(0, t - interval) for t in stream['times_seconds']]",
+          "new": "max(0, t - interval) for t in stream.get('release_times_seconds', stream['times_seconds'])]",
+          "occurrences": 1,
+          "purpose": "Existing next-attack conditional slot reference follows the same original release float clock; do not recreate it from frames."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/app.py",
+      "before_bytes": 99393,
+      "before_sha256": "69e9096e30bb2d7f70cd65ccf20de756001b97a5cea536b0db77adc12105a657",
+      "after_bytes": 99513,
+      "after_sha256": "518532c5e88da2c17d9e4adabc75ca6d61d75255c16d1ee8d376fbf83dc5738f",
+      "blocks": [
+        {
+          "old": "永久攻击仍沿用既有参考。",
+          "new": "永久攻击在空供靶时保留出手与相应技力参考，但不产生已建模敌方命中；独立音符的实际碰撞仍按原说明保持未知。",
+          "occurrences": 1,
+          "purpose": "Explain new permanent release-versus-known-impact distinction, with independent collisions remaining unknown."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "tests/test_empty_owner_acquisition_109.py",
+      "before_bytes": 18129,
+      "before_sha256": "011bfbd246f8b58da331a63a4b9e493788882e864135a436e4755908004f1ed1",
+      "after_bytes": 18682,
+      "after_sha256": "e8624a0e8c67579a583ecf230e0b314bb1654e35b532b2cc390a05ccdf070983",
+      "blocks": [
+        {
+          "old": "    def test_permanent_attack_and_sp_reference_remain_excluded_from_ordinary_fix(self):\n        # Full original/candidate native replay covers all 40 permanent controls.\n        # This deliberately asserts the narrower existing continuous contract;\n        # release/impact separation belongs to a later independently proved fix.\n        for skill in (1, 3):\n            for relic_ids in ([], ['rogue_6_relic_legacy_67'], [FINITE_SPEED]):\n                with self.subTest(skill=skill, relic_ids=relic_ids):\n                    baseline = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10)\n                    empty = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10,\n                                     timing={'target_windows': [], 'initial_target_windows': []})\n                    self.assertEqual(empty['components'], baseline['components'])\n                    self.assertEqual(empty['estimate']['skill'], baseline['estimate']['skill'])\n",
+          "new": "    def test_permanent_empty_supply_preserves_release_sp_and_independent_note_reference(self):\n        # Section110 separates known hostile impacts from permanent releases.\n        # It retains the original SP clock and unbound S1 note parameters;\n        # owner absence does not prove those independent note collisions.\n        for skill in (1, 3):\n            for relic_ids in ([], ['rogue_6_relic_legacy_67'], [FINITE_SPEED]):\n                with self.subTest(skill=skill, relic_ids=relic_ids):\n                    baseline = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10)\n                    empty = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10,\n                                     timing={'target_windows': [], 'initial_target_windows': []})\n                    for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds', 'duration_seconds'):\n                        self.assertEqual(empty['estimate']['skill'][key], baseline['estimate']['skill'][key])\n                    if skill == 1:\n                        self.assertEqual(empty['components'], baseline['components'])\n                        self.assertIsNone(empty['total_damage'])\n                    else:\n                        self.assertGreater(baseline['total_damage'], 0)\n                        self.assertEqual(empty['total_damage'], 0)\n                        self.assertTrue(all(row['hits'] == 0 and row['times_seconds'] == []\n                                            for row in empty['components']))\n",
+          "occurrences": 1,
+          "purpose": "Update only109 permanent-exclusion method for actual110 scope; all other21 methods/module body preserved."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true,
+      "other_test_method_AST_unchanged": 21,
+      "methods_before": 22,
+      "methods_after": 22
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before_bytes": 5557,
+      "before_sha256": "7b5afd4d7ddebb92300e6a029e404bcfab81de9b46e847c8556bfd855e82bf24",
+      "after_bytes": 5602,
+      "after_sha256": "483e4f4b34b7983dc41f6ec71f51354ce1cf599601e9f27c78071eca4cd2e978",
+      "blocks": [
+        {
+          "old": "MODULES = (\n",
+          "new": "MODULES = (\n    \"tests.test_permanent_empty_target_110\",\n",
+          "occurrences": 1,
+          "purpose": "Append exactly one actual new test module by existing prepend convention; full registry unions this list."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    }
+  ],
+  "new_files": [
+    {
+      "repo_path": "tests/test_permanent_empty_target_110.py",
+      "packet_path": "test_permanent_empty_target_110.py",
+      "bytes": 21693,
+      "sha256": "8100060939608823b3df84dbfa3a0195f5d7e23e6145f3c44acb623a9a364f5c",
+      "must_not_preexist": true,
+      "test_method_count": 23,
+      "assertion_call_count": 84,
+      "compiled_noexec": true
+    }
+  ],
+  "Root_original_samples": "Original permanent40 and generic12 actual receipts stay immutable. Fresh Root110 complete guarded original/candidate observations and full validation are required. Unrun tests are not PASS.",
+  "clock_rule": "Preserve existing continuous release floats exactly; no conversion from release frames. New optional clock key appears only on explicit[] permanent enemy continuous nonzero lifetime. All SP consumers retain original fallback.",
+  "limits": [
+    "No positive continuous range schedule",
+    "No independent S1 note collision or end binding",
+    "No frames/default/positive/global-zero/friendly/independent-unit behavior expansion",
+    "No client clock, OCR/game or private state proof"
+  ],
+  "scope_includes_existing_skill2": "The operator-level permanent acquisition rule also applies to existing piano/organ S2. S2 switching has no known full duration/repeatable cycle; existing recharge parameter and initial SP remain original. Independent S1 note collision clocks stay unknown."
+}

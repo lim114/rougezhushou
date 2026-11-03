@@ -1,0 +1,106 @@
+--- immutable-first/declare_freeze305.py
++++ independent-attempt2/declare_freeze305.py
+@@ -4,7 +4,7 @@
+ import json
+ from pathlib import Path
+ 
+-from full305_common import BASE, ROOT, FREEZE, READY_PATH, git, native, public, runner_snapshot, native_source_snapshot, sha, tool_pins, write_new, input_bindings, now
++from full305_common import BASE, ROOT, PYTHON, FREEZE, READY_PATH, git, native, public, runner_snapshot, native_source_snapshot, sha, tool_pins, write_new, input_bindings, now
+ 
+ 
+ def source_map(record, key):
+@@ -33,6 +33,47 @@
+     return {'necessary': {'path': necessary_name, 'sha256': sha(necessary_path)},
+             'native': {'path': window_name, 'sha256': sha(window_path)},
+             'native_process': {'path': process_name, 'sha256': sha(process_path)}}
++
++
++def repaired_native296_receipts(window_name, process_name):
++    """Require the separate actual regression before another complete full run."""
++    script_name = 'scripts/verify_battle_entry_references_window_296_full305.py'
++    script = public(script_name)
++    if sha(script) != sha(BASE / 'candidate' / script_name):
++        raise ValueError('The exact reviewed new296 canonical must be promoted first.')
++    window_path = public(window_name); process_path = public(process_name)
++    window = json.loads(window_path.read_bytes()); process = json.loads(process_path.read_bytes())
++    before = source_map(window, 'source_sha256_before'); after = source_map(window, 'source_sha256_after')
++    proof = json.loads((BASE / 'native296-reviewed-preparation/static-proof.json').read_bytes())
++    if set(before) != set(proof['all_adapted_selected_sources']) or before != after:
++        raise ValueError('Actual repaired296 must retain the complete reviewed selected closure, stable before/after.')
++    if any(sha(public(name)) != expected for name, expected in after.items()):
++        raise ValueError('Actual repaired296 selected source differs from current public bytes.')
++    if (window.get('section') != 296 or window.get('kind') != 'isolated_native_windows_fixed_battle_entry_references'
++            or window.get('passed') is not True or window.get('failure') is not None
++            or window.get('qpa') != 'windows' or window.get('qt_exit_code') != 0
++            or window.get('verification_window_closed') is not True
++            or window.get('temporary_state_root') is not True
++            or window.get('private_state_read_copied_or_restored') is not False
++            or window.get('game_operated') is not False or window.get('game_captures') != 0
++            or window.get('chat_sent') is not False or window.get('chat_attempted') is not False):
++        raise ValueError('Actual isolated native repaired296 regression0 is required, not static proof or a prior PASS.')
++    attempts = window.get('external_operation_attempts')
++    if type(attempts) is not dict or not attempts or any(type(value) is not int or value != 0 for value in attempts.values()):
++        raise ValueError('Repaired296 actual external-operation counters must all be zero.')
++    pb = source_map(process, 'source_sha256_before'); pa = source_map(process, 'source_sha256_after')
++    child = process.get('child_argv')
++    if (process.get('section') not in (296, 305) or process.get('kind') != 'actual_native_window_owned_process_execution'
++            or process.get('status') != 'completed' or process.get('exit_code') != 0
++            or process.get('child_primary_exit') != 0 or process.get('timed_out') is not False
++            or process.get('owned_job_no_live_execution_verified') is not True
++            or process.get('owned_popen_retained') is not True
++            or process.get('window_receipt_sha256') != sha(window_path)
++            or pb != after or pa != after or type(child) is not list
++            or child[:6] != [str(PYTHON), '-B', '-X', 'utf8', str(script), '--receipt']):
++        raise ValueError('Actual repaired296 retained owned supervisor/child0/job-empty/source/argv receipt required.')
++    return {'native296_regression': {'path': window_name, 'sha256': sha(window_path)},
++            'native296_regression_process': {'path': process_name, 'sha256': sha(process_path)}}
+ 
+ 
+ def native_selected_names(relative, section, prepared):
+@@ -107,9 +148,15 @@
+     parser.add_argument('--declare-final305-full-inputs', action='store_true')
+     for name in ('expected-parent-commit', 'section305-native', 'necessary-receipt', 'window-receipt', 'window-process-receipt'):
+         parser.add_argument('--' + name, required=True)
++    parser.add_argument('--maintenance-receipt', required=True)
++    parser.add_argument('--first-archive-sha256', required=True)
++    parser.add_argument('--native296-receipt', required=True)
++    parser.add_argument('--native296-process-receipt', required=True)
+     args = parser.parse_args()
+     if not args.declare_final305_full_inputs: raise ValueError('Root explicit declaration required; no implicit freeze.')
+     native(); tool_pins()
++    from attempt2_lineage import first_closed_archive
++    lineage = first_closed_archive(args.first_archive_sha256)
+     if git('branch', '--show-current') != 'codex/p2-development' or git('rev-parse', 'HEAD') != args.expected_parent_commit:
+         raise ValueError('Actual current305 parent/branch changed.')
+     if FREEZE.exists(): raise FileExistsError('Never overwrite declared input freeze; use a reviewed new attempt.')
+@@ -128,6 +175,12 @@
+             or set(native_sources) - common != {'tests/offline_scope_retirement.py'}):
+         raise ValueError('Original typed-auditor full/native source relationship changed; do not weaken it.')
+     refs = functional_receipts(args.necessary_receipt, args.window_receipt, args.window_process_receipt)
++    refs.update(repaired_native296_receipts(args.native296_receipt, args.native296_process_receipt))
++    maintenance_path=public(args.maintenance_receipt);maintenance=json.loads(maintenance_path.read_bytes())
++    maintenance_before=source_map(maintenance,'source_sha256_before');maintenance_after=source_map(maintenance,'source_sha256_after')
++    if maintenance.get('exit_code')!=0 or maintenance_before!=maintenance_after or any(sha(public(name))!=value for name,value in maintenance_after.items()):
++        raise ValueError('Root actual source-stable maintenance check0 required before new full input declaration.')
++    refs['maintenance']={'path':args.maintenance_receipt,'sha256':sha(maintenance_path)}
+     scripts = dict(prepared['p3_scripts'])
+     if not args.section305_native.startswith('scripts/') or not args.section305_native.endswith('_305.py'):
+         raise ValueError('Canonical public305 native script required.')
+@@ -135,6 +188,7 @@
+     scripts = dict(sorted(scripts.items(), key=lambda pair: int(pair[0].split('_')[1])))
+     if len(scripts) != 20: raise ValueError('All original five and all subsequent native ranges through305 must be explicit.')
+     supplemental = set(old['supplemental_public_inputs_sha256'])
++    supplemental.update(reference['path'] for key,reference in lineage.items() if isinstance(reference,dict) and 'path' in reference)
+     script_options = {}; script_selected = {}
+     for name, relative in scripts.items():
+         if relative not in actual['source_sha256']: raise ValueError('Canonical native must be promoted before freeze: ' + relative)
+@@ -183,7 +237,8 @@
+     bindings = list(deduplicated.values()); locals_before = input_bindings(bindings)
+     supplemental, historical_manifest_bindings = public_manifest_closure(supplemental)
+     supplement_map = {name: sha(public(name)) for name in sorted(supplemental)}
+-    record = {'section': 305, 'root_declared': True, 'declared_at': now(), 'parent_commit': args.expected_parent_commit,
++    record = {'section': 305, 'actual_validation_attempt': 2, 'first_attempt_lineage': lineage,
++              'root_declared': True, 'declared_at': now(), 'parent_commit': args.expected_parent_commit,
+               **actual, 'supplemental_public_inputs_sha256': supplement_map,
+               'legacy_native_source_sha256': native_sources, 'legacy_external_additional_sha256': legacy_extra,
+               'local_public_input_bindings': bindings, 'local_public_input_sha256': locals_before,

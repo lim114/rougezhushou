@@ -1,0 +1,163 @@
+        #76-80 genuine Qt design. API textual/invalid values are separate.
+        next_start=len(checks);next_section_counts={};controls080={}
+        state080=deepcopy(window.run.state);account080=deepcopy(window.operator_observations)
+        run_training080=window.use_run_training.isChecked()
+        difficulty080=window.difficulty.currentIndex();summary080=window.run_summary.text()
+        target_stage080=window.target_stage.currentData();target_enemy080=deepcopy(window.target_enemy.currentData())
+        try:
+            window.run.state['operators']={};window.run.state['config']={}
+            window.use_run_training.setChecked(False);window.sync_run_config()
+            window.damage_technical.setChecked(False);relics([])
+            window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
+            window.cooperative.setChecked(False);window.fragile.setChecked(False)
+            window.limit_window.setChecked(True);window.deployment_elapsed.setValue(0)
+            for case080 in cases080():
+                requested080=case080['input'];owner080=requested080['operator'];number080=requested080['skill']
+                section080=case080['section']
+                fields080={k:requested080[k]for k in ('elite','level','potential','trust','module_id','module_level')}
+                train(owner080,fields080,ranks={str(n):requested080['skill_rank']for n in (1,2,3)})
+                reset_owner_options(owner080)
+                index080=window.skill.findData(number080);assert index080>=0
+                window.skill.setCurrentIndex(index080)
+                assert window.elite.text()==f'精英 {fields080["elite"]}'
+                assert window.potential.text()==str(fields080['potential'])
+                if fields080['module_id']:assert f'阶段 {fields080["module_level"]}'in window.module.text()
+                if fields080['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
+                if fields080['elite']==1:assert window.skill.findData(3)==-1
+                window.frame_timing.setChecked(requested080['timing_mode']=='frames')
+                window.window_seconds.setValue(requested080['window_seconds'])
+                window.healing_targets.setValue(requested080['healing_targets'])
+                window.timing_scenario.setPlainText(json.dumps(requested080['timing'])if requested080.get('timing')else '')
+                if requested080.get('target_enemy'):
+                    target080=requested080['target_enemy']
+                    assert window.target_stage_choices.select_value(target080['stage_id'])
+                    assert window.target_enemy_choices.select_value(target080)
+                    app.processEvents()
+                    assert window.target_enemy.currentData()==target080
+                else:
+                    window.target_enemy.setCurrentIndex(0)
+                if section080==76:
+                    bubble080=option_widgets[(owner080,'bubble_bursts')]
+                    repeat080=option_widgets[(owner080,'haruka_repeat')]
+                    levitate080=option_widgets[(owner080,'levitate_triggers')]
+                    assert isinstance(bubble080,QSpinBox) and bubble080.minimum()==0 and bubble080.maximum()==10000
+                    bubble080.setValue(requested080['bubble_bursts'])
+                    if number080==2:repeat080.setChecked(requested080['haruka_repeat'])
+                    if number080==3:levitate080.setValue(requested080['levitate_triggers'])
+                elif section080==77:
+                    weight080=option_widgets[(owner080,'enemy_weight')]
+                    assert isinstance(weight080,QSpinBox) and weight080.minimum()==0 and weight080.maximum()==100
+                    weight080.setValue(requested080['enemy_weight'])
+                elif section080==78:
+                    palsy080=option_widgets[(owner080,'palsy_triggers')]
+                    overflow080=option_widgets[(owner080,'palsy_overflow_hits')]
+                    assert isinstance(palsy080,QSpinBox) and palsy080.minimum()==0 and palsy080.maximum()==10000
+                    palsy080.setValue(requested080['palsy_triggers'])
+                    if number080==3:overflow080.setValue(requested080['palsy_overflow_hits'])
+                    if 'enemy_elemental_resistance'in requested080:
+                        elemental080=option_widgets[(owner080,'enemy_elemental_resistance')]
+                        assert isinstance(elemental080,QDoubleSpinBox) and elemental080.minimum()==0 and elemental080.maximum()==100
+                        elemental080.setValue(requested080['enemy_elemental_resistance'])
+                elif section080 in (79,80):
+                    medical_targets080=option_widgets[(owner080,'amiya_hit_targets')]
+                    assert isinstance(window.healing_targets,QSpinBox) and window.healing_targets.minimum()==0
+                    assert window.healing_targets.maximum()==(100 if number080==1 else 1)
+                    if number080==2:
+                        assert isinstance(medical_targets080,QSpinBox)
+                        assert medical_targets080.minimum()==1 and medical_targets080.maximum()==100
+                        medical_targets080.setValue(requested080['amiya_hit_targets'])
+                else:raise AssertionError('Unsealed section')
+                result080=click_result();args080=window.damage_result['scenario']
+                for key080 in ('operator','skill','elite','level','potential','trust','module_id','module_level',
+                               'skill_rank','timing_mode','window_seconds','healing_targets'):
+                    assert args080[key080]==requested080[key080],(case080,key080,args080[key080])
+                assert args080.get('timing',{})==requested080.get('timing',{})
+                if section080==76:
+                    require_real_int070(bubble080,args080,'bubble_bursts',requested080['bubble_bursts'])
+                    if number080==2:
+                        require_real_bool070(repeat080,args080,'haruka_repeat',requested080['haruka_repeat'])
+                    else:
+                        assert not repeat080.isVisible() and 'haruka_repeat'not in args080
+                    if number080==3:
+                        assert levitate080.minimum()==0 and levitate080.maximum()==1000
+                        require_real_int070(levitate080,args080,'levitate_triggers',requested080['levitate_triggers'])
+                    else:
+                        assert not levitate080.isVisible() and 'levitate_triggers'not in args080
+                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='bubble_bursts'})
+                    if requested080['bubble_bursts']==0:controls080[control_key080]=deepcopy(result080)
+                    assert control_key080 in controls080
+                    require_haruka080(result080,args080,window.damage_text.toPlainText(),controls080[control_key080])
+                elif section080==77:
+                    require_real_int070(weight080,args080,'enemy_weight',requested080['enemy_weight'])
+                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='enemy_weight'})
+                    if requested080.get('target_enemy'):
+                        assert args080['target_enemy']==requested080['target_enemy']
+                        if args080['enemy_weight']==0:controls080[control_key080]=deepcopy(result080)
+                        require_aglna_selected080(result080,args080,window.damage_text.toPlainText(),
+                            controls080[control_key080],case080['expected_reference_mass'])
+                    else:
+                        assert window.target_enemy.currentData() is None and 'target_enemy'not in args080
+                        control080=controls080.setdefault(control_key080,{})
+                        if args080['enemy_weight']==0:control080['light']=deepcopy(result080)
+                        if args080['enemy_weight']==4:control080['heavy']=deepcopy(result080)
+                        require_aglna080(result080,args080,window.damage_text.toPlainText(),control080)
+                elif section080==78:
+                    require_real_int070(palsy080,args080,'palsy_triggers',requested080['palsy_triggers'])
+                    if number080==3:
+                        assert overflow080.minimum()==0 and overflow080.maximum()==10000
+                        require_real_int070(overflow080,args080,'palsy_overflow_hits',requested080['palsy_overflow_hits'])
+                    else:
+                        assert not overflow080.isVisible() and 'palsy_overflow_hits'not in args080
+                    if 'enemy_elemental_resistance'in requested080:
+                        assert elemental080.isVisible() and elemental080.isEnabled()
+                        assert type(args080['enemy_elemental_resistance']) is float
+                        assert args080['enemy_elemental_resistance']==elemental080.value()==requested080['enemy_elemental_resistance']
+                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='palsy_triggers'})
+                    if args080['palsy_triggers']==0:controls080[control_key080]=deepcopy(result080)
+                    require_mantra080(result080,args080,window.damage_text.toPlainText(),controls080[control_key080])
+                elif section080 in (79,80):
+                    if number080==2:
+                        require_real_int070(medical_targets080,args080,'amiya_hit_targets',requested080['amiya_hit_targets'])
+                    else:
+                        assert not medical_targets080.isVisible() and 'amiya_hit_targets'not in args080
+                    if section080==79:require_medical_amiya080(result080,args080,window.damage_text.toPlainText())
+                    else:require_medical_trait080(result080,args080,window.damage_text.toPlainText(),case080['expected_trait_ratio'])
+                next_section_counts[section080]=next_section_counts.get(section080,0)+1
+                checks.append({'scope':{76:'actual_bubble_spin_and_readonly_talent_qualification_with_zero_control',
+                    77:'actual_manual_weight_spin_and_readonly_locked_talent_event_count',
+                    78:'actual_palsy_spin_and_readonly_talent_qualification_with_zero_control',
+                    79:'actual_medical_form_readonly_talent_qualification_and_opening_count_spin',
+                    80:'actual_medical_INC_X_same_trait_ratio_and_damage_dependent_healing'}[section080],
+                    'section':section080,'operator':owner080,'skill':number080,'mode':args080['timing_mode'],
+                    'context':case080['context'],'elite':args080['elite'],'potential':args080['potential'],
+                    'module_level':args080['module_level'],'bubble_bursts':args080.get('bubble_bursts'),
+                    'enemy_weight':args080.get('enemy_weight'),
+                    'selected_enemy':args080.get('target_enemy'),'reference_mass':case080.get('expected_reference_mass'),
+                    'haruka_repeat':args080.get('haruka_repeat'),'levitate_triggers':args080.get('levitate_triggers'),
+                    'palsy_triggers':args080.get('palsy_triggers'),'palsy_overflow_hits':args080.get('palsy_overflow_hits'),
+                    'enemy_elemental_resistance':args080.get('enemy_elemental_resistance'),
+                    'amiya_hit_targets':args080.get('amiya_hit_targets'),
+                    'expected_trait_ratio':case080.get('expected_trait_ratio'),
+                    'state_scope':'temporary public readonly cultivation observation; no editable module/elite selector',
+                    'native_clock_attachment_or_actual_recipient_verified':False,'passed':True})
+        finally:
+            window.run.state=state080;window.operator_observations=account080
+            window.use_run_training.setChecked(run_training080)
+            window.run_summary.setText(summary080);window.sync_run_config()
+            if not state080.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty080)
+            assert window.target_stage_choices.select_value(target_stage080)
+            if target_enemy080 is None:window.target_enemy.setCurrentIndex(0)
+            else:assert window.target_enemy_choices.select_value(target_enemy080)
+            window.update_operator();relics([]);window.timing_scenario.clear()
+        next_end=len(checks)
+        assert next_section_counts=={76:432,77:424,78:360,79:212,80:180},next_section_counts
+        receipt['supplemental_sections_76_80']=[76,77,78,79,80]
+        receipt['supplemental_checks_by_section_76_80']=next_section_counts
+        receipt['supplemental_checks_76_80']=next_end-next_start
+        receipt['section76_input_scope']='Genuine bubble QSpinBox int0/1/10000 retains declarations at every elite. Read-only public cultivation/module previews do not invent selectors. BeforeE2 only declared-count row and source exclusion note differ from same-window/count0 complete result; original ordinary healing/derived damage and other unknowns stay. E2 event clock, native attachment/composition and recipient/adjacency remain unknown. S2 repeat is real bool, S3 levitate count is separate int; inactive keys are omitted.'
+        receipt['section77_input_scope']='Real manual enemy-weight QSpinBox0/3/4/100 and read-only E0/E1/E2/potential1/3 retain source threshold and coefficients. E0 S1 locked extra component has zero hits/timestamps/full-skill count without changing ordinary damage; selected E1/E2 conditional per-hit references remain. Separate genuine stage/enemy selections verify exact fixed roster identity massLevel3/4 overrides raw manual0/100 without claiming actual spawn/live weight/extra attack snapshot/native ordering/takeoff clock.'
+        receipt['section78_input_scope']='Genuine palsy QSpinBox0/1/10000 preserves declarations beforeE1; only three declared-count metadata values differ from complete same-condition/count0 output with zero effective locked-talent damage. Qualified positive declarations, elemental immunity and separate S3 overflow hits retain unknown actual times/snapshots. Read-only module/elite observations introduce no selectors or native qualification inference.'
+        receipt['section79_input_scope']='Readonly medical Amiya form/cultivation, actual S2 opening-count QSpinBox1/5/100, E0S1 zero effective own-regeneration events without an unplaced-source warning. Qualified S1 retains its existing regeneration reference; qualified S2 retains unknown actual strengthening/end/order/complete output even with zero friendly targets or empty hostile lifetime. INC-X49/50/stages remain genuine readonly previews. No HP0, account form unlock, or real-game recipient/clock proof is invented.'
+        receipt['section80_input_scope']='The same medical damage-conversion trait uses its original0.5 below INC-X qualification and explicit same-template0.6 override at E2L50/all3stages. Real readonly cultivation and existing friendly-count controls verify damage-dependent treatment after dealt damage, separate S1 range healing, accepted healing factor and S2 opening subtotal; zero recipient/window/lifetime retain mathematical exclusions. Actual S2 end/order/recipient and complete totals remain unverified; no new selector or trait stacking guess.'
+        receipt['sections77_80_final_checks_pending']=True
+        assert receipt['sections77_80_final_checks_pending'] is False,'Final77-80 source/schema are pending'

@@ -1,0 +1,53 @@
+{
+  "kind": "INACTIVE107_V4_METADATA_ONLY_DRAFT",
+  "Source_only": true,
+  "runtime_executed": false,
+  "frozen": false,
+  "candidate_new_test_ready": false,
+  "placeholder_test_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "actual_legacy_Gold": {
+    "receipt_bytes": 571058,
+    "receipt_sha256": "f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634",
+    "Source_runner_sha256": "9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8",
+    "guard_sha256": "0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442",
+    "raw_exit": "0\\n"
+  },
+  "original_assert_count": 91,
+  "original_assert_AST_changed_count": 1,
+  "all_other_original_assert_AST_order_same": true,
+  "original_complete_source_inverse_exact": true,
+  "draft_sha256": "471207a6845cb0101e00bad1ef22f1d957f0ee70b23e251a458e24a3eb5898b5",
+  "draft_bytes": 43210,
+  "added_metadata_blocks": [
+    {
+      "tag": "01",
+      "indent": "",
+      "Source": "# BEGIN107_META_01\nGOLD_RUNNER_SHA='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'\nGOLD_RECEIPT_SHA='f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634'\nGOLD_GUARD_SHA='0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442'\nOLD_TEST_SHA='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'\n\n\ndef admit_legacy_gold(artifact,gold_raw,gold_exit_raw,current_source):\n    \"\"\"Read-only bootstrap: original Gold evidence is never rewritten.\"\"\"\n    assert TEST_SHA!='0'*64\n    assert gold_exit_raw==b'0\\n' and len(gold_raw)==571058 and sha(gold_raw)==GOLD_RECEIPT_SHA\n    legacy_path=artifact/'legacy-gold-window107.py'\n    guard_path=artifact/'legacy-gold-guard.json'\n    assert not legacy_path.is_symlink() and not guard_path.is_symlink()\n    legacy_source=legacy_path.read_bytes();legacy_guard_raw=guard_path.read_bytes()\n    assert len(legacy_source)==39470 and sha(legacy_source)==GOLD_RUNNER_SHA\n    assert len(legacy_guard_raw)==82361 and sha(legacy_guard_raw)==GOLD_GUARD_SHA\n    legacy_guard=json.loads(legacy_guard_raw);legacy_gold=json.loads(gold_raw)\n    assert legacy_gold['source_guard_sha256']==GOLD_GUARD_SHA\n    assert legacy_gold['source_before']==legacy_gold['source_after']==legacy_guard['source_sha256']\n    assert len(legacy_guard['source_sha256'])==749 and len(current_source)==750\n    assert 'tests/test_aglna_gravity_weight_107.py' not in legacy_guard['source_sha256']\n    assert current_source['tests/test_aglna_gravity_weight_107.py']==TEST_SHA\n    # Removing only declared metadata blocks and two exact replacements must\n    # recover all actual old runner bytes, including every fixture and loop.\n    recovered=Path(__file__).read_bytes()\n    candidate_runner_sha=sha(recovered)\n    for tag,indent in (('01',''),('02','    '),('03','        '),('04','    ')):\n        begin=(indent+'# BEGIN107_META_'+tag+'\\n').encode()\n        end=(indent+'# END107_META_'+tag+'\\n').encode()\n        assert recovered.count(begin)==recovered.count(end)==1\n        first=recovered.index(begin);last=recovered.index(end,first)+len(end)\n        recovered=recovered[:first]+recovered[last:]\n    newer=(\"TEST_SHA='\"+TEST_SHA+\"'\\n\").encode()\n    older=(\"TEST_SHA='\"+OLD_TEST_SHA+\"'\\n\").encode()\n    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)\n    newer=b\"gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA\"\n    older=b\"gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA\"\n    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)\n    assert recovered==legacy_source and sha(recovered)==GOLD_RUNNER_SHA\n    return {'kind':'ROOT107_METADATA_ONLY_GOLD_ADMISSION_V1',\n            'Gold_runner_sha256':GOLD_RUNNER_SHA,'candidate_runner_sha256':candidate_runner_sha,\n            'legacy_Gold_receipt_sha256':GOLD_RECEIPT_SHA,\n            'legacy_Gold_source_guard_sha256':GOLD_GUARD_SHA,\n            'legacy_Gold_primary_sha256':sha(gold_exit_raw),\n            'functional_source_inverse_sha256':sha(recovered),'candidate_test_sha256':TEST_SHA,\n            'legacy_Gold_source_count':749,'candidate_source_count':750,\n            'legacy_Gold_contains_107_test':False,'Window_imports_107_test':False,\n            'old_and_new_runners_are_identical':False,'legacy_Gold_values_rewritten':False}\n\n\n# END107_META_01\n"
+    },
+    {
+      "tag": "02",
+      "indent": "    ",
+      "Source": "    # BEGIN107_META_02\n    assert args.phase=='candidate' and TEST_SHA!='0'*64\n    # END107_META_02\n"
+    },
+    {
+      "tag": "03",
+      "indent": "        ",
+      "Source": "        # BEGIN107_META_03\n        compatibility=admit_legacy_gold(artifact,gold_raw,Path(args.gold_exit).read_bytes(),expected)\n        # END107_META_03\n"
+    },
+    {
+      "tag": "04",
+      "indent": "    ",
+      "Source": "    # BEGIN107_META_04\n    receipt['Gold_runner_compatibility']=compatibility\n    # END107_META_04\n"
+    }
+  ],
+  "unique_old_new_replacements": [
+    {
+      "before": "TEST_SHA='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'\n",
+      "after": "TEST_SHA='0000000000000000000000000000000000000000000000000000000000000000'\n"
+    },
+    {
+      "before": "        assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA\n",
+      "after": "        assert gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA\n"
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "kind": "SECTION115_EXTERNAL_ACCURACY_SOURCE_CANDIDATES",
+  "Source_only": true,
+  "actual_calculation_executed": false,
+  "Root_actual115_guard": null,
+  "Root_actual115_results": null,
+  "all_passed": null,
+  "sources": {
+    "wiki_damage_tips": {
+      "url": "https://arknights.wiki.gg/wiki/Damage#Tips",
+      "revision_url": "https://arknights.wiki.gg/wiki/Damage?oldid=759599",
+      "observed_revision_id": 759599,
+      "html": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/wiki-mechanics.html",
+        "bytes": 74651,
+        "sha256": "5d9de73c8e03d6c2e7c230450aefe196bcda8aec54aad4eb4029ad251b455425"
+      },
+      "text": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/wiki-mechanics.txt",
+        "bytes": 14034,
+        "sha256": "6e04c9a16d6b5e3f000fb6ac6586b4df24f149b4a9cfeb7138fa484ed64dab5e"
+      },
+      "publisher": "Arknights Terra Wiki community",
+      "is_official": false,
+      "retrieved_at_utc": "2026-10-09T15:46:45.365994+00:00",
+      "retrieved_at_asia_shanghai": "2026-10-09T23:46:45.365994+08:00",
+      "quotes": [
+        "Extremely high Arts damage (at least 1000 in a single hit). For instance, when an Operator with 500 ATK hits enemies with an A rating on their DEF and RES (~800 and ~50, respectively), the enemy will take only ~25 physical damage but takes ~250 Arts damage (10 times the physical damage they would have taken).",
+        "Conversely, if the Operator deals high enough physical damage, for example 1200, the enemy would take 400 physical damage, making it more effective than Arts at extremely high levels. However, such Operators are few and far in between, leaving Arts damage as the most reliable option."
+      ]
+    },
+    "taptap_guide": {
+      "url": "https://www.taptap.cn/moment/152911449218355181",
+      "title": "新手进阶 手把手教你学会方舟伤害计算（附光谱行动合约31复盘讲解）",
+      "author": "九龙湖咸鱼",
+      "observed_article_modified_date": "2021/06/19",
+      "html": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/taptap-damage-guide.html",
+        "bytes": 464512,
+        "sha256": "82a7b2a545dd2d639a41745c77a44b40c4e13e09d6954520c0c99a5e1bc1b1e2"
+      },
+      "text": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/taptap-damage-guide.txt",
+        "bytes": 33217,
+        "sha256": "786511759902f7af5bd8c3ed2546a8a563265ecfb78fa36e3b08dc1fc98050a1"
+      },
+      "publisher": "TapTap community article",
+      "is_official": false,
+      "retrieved_at_utc": "2026-10-09T15:51:31.447730+00:00",
+      "retrieved_at_asia_shanghai": "2026-10-09T23:51:31.447730+08:00",
+      "quote": "关于分母的攻速补正，每个干员的基础补正值均为100，额外补正在游戏中通常描述为“攻击速度+60”这种格式，比如女主阿米娅术士形态的1技能。意味着此时的实际攻速补正被修正为100+60=160。而阿米娅的基础攻击间隔为1.6s，则阿米娅开启7级二技能的最终攻速为1.6/（160/100）=1s，即由1.6s攻击一次变成1s攻击1次。"
+    },
+    "is_central_true_damage": {
+      "url": "https://is-central.github.io/general-knowledge/damage-calculations/#true-damage",
+      "observed_last_updated": "Oct 8, 2026",
+      "html": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/is-central-damage.html",
+        "bytes": 163333,
+        "sha256": "3633f01923d739fb74f2c28303d4468c10dbade6388958497ff27ed51fe61a4d"
+      },
+      "text": {
+        "path": "/workspace/.continuation/section115-accuracy-public-source-v1/is-central-damage.txt",
+        "bytes": 29847,
+        "sha256": "5cb06e6415120362af2afdd175dfcb3c5a4ae4b88a28588283d03a1720c41f57"
+      },
+      "publisher": "IS Central community guide",
+      "is_official": false,
+      "retrieved_at_utc": "2026-10-09T15:52:34.373938+00:00",
+      "retrieved_at_asia_shanghai": "2026-10-09T23:52:34.373938+08:00",
+      "images": [
+        {
+          "path": "/workspace/.continuation/section115-accuracy-public-source-v1/iscentral-amiya-final-atk.png",
+          "bytes": 336270,
+          "sha256": "95891c469b2bcdae9281ad845d8eb6c1de2d5efedd9fcf3646ea80cf97252965"
+        },
+        {
+          "path": "/workspace/.continuation/section115-accuracy-public-source-v1/iscentral-amiya-damage-output.png",
+          "bytes": 242479,
+          "sha256": "382e528e2808d855500755b9db30efb91c7a883067264f1c5d19bae444f91c97"
+        }
+      ],
+      "quoted_math_annotations": [
+        "715 \\cdot 1.68 \\cdot 4.8 = 5765",
+        "5765 \\cdot (1 + 1.5) = 14,412"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "wiki-nominal-physical-floor",
+      "source": "wiki_damage_tips",
+      "external_inputs": {
+        "attack": 500,
+        "enemy_defense_nominal": 800,
+        "enemy_resistance_nominal": 50,
+        "damage_type": "physical"
+      },
+      "external_expected": {
+        "per_hit": 25
+      },
+      "source_qualification": "The page marks DEF/RES and expected low-ATK damage with approximation signs. Exact comparison may use the stated nominal 800/50, but must be reported as agreement with the nominal example, not exact combat measurement or a general A-rating conversion.",
+      "candidate_scenario": {
+        "elite": 1,
+        "level": 1,
+        "trust": 0,
+        "potential": 1,
+        "skill_rank": 7,
+        "window_seconds": 5,
+        "timing_mode": "continuous",
+        "relic_ids": [],
+        "effects": [],
+        "operator": "char_4107_vrdant",
+        "skill": 1,
+        "enemy_defense": 800,
+        "enemy_resistance": 50,
+        "base_attack": 500
+      },
+      "candidate_result_selector": {
+        "field": "components",
+        "where": {
+          "damage_type": "physical"
+        },
+        "expected_unique_component": true,
+        "value": "per_hit"
+      },
+      "verification_scope": "Physical minimum damage at the external nominal input; operator is only a project carrier and is not specified by the source.",
+      "actual_result": null,
+      "Root_executed": false
+    },
+    {
+      "id": "wiki-nominal-arts-resistance",
+      "source": "wiki_damage_tips",
+      "external_inputs": {
+        "attack": 500,
+        "enemy_defense_nominal": 800,
+        "enemy_resistance_nominal": 50,
+        "damage_type": "magic"
+      },
+      "external_expected": {
+        "per_hit": 250
+      },
+      "source_qualification": "The page marks enemy DEF/RES and expected Arts damage approximate. Use nominal 50 RES without claiming a precise live measurement.",
+      "candidate_scenario": {
+        "elite": 1,
+        "level": 1,
+        "trust": 0,
+        "potential": 1,
+        "skill_rank": 7,
+        "window_seconds": 5,
+        "timing_mode": "continuous",
+        "relic_ids": [],
+        "effects": [],
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 500,
+        "enemy_defense": 800,
+        "enemy_resistance": 50
+      },
+      "candidate_result_selector": {
+        "field": "components",
+        "where": {
+          "damage_type": "magic"
+        },
+        "expected_unique_component": true,
+        "value": "per_hit"
+      },
+      "verification_scope": "Arts mitigation of the externally stated nominal raw 500 hit; selected Amiya S1 does not modify attack.",
+      "actual_result": null,
+      "Root_executed": false
+    },
+    {
+      "id": "wiki-nominal-physical-subtraction",
+      "source": "wiki_damage_tips",
+      "external_inputs": {
+        "attack": 1200,
+        "enemy_defense_nominal": 800,
+        "damage_type": "physical"
+      },
+      "external_expected": {
+        "per_hit": 400
+      },
+      "source_qualification": "Source explicitly gives 1200 and 400, referring back to the approximate 800 DEF enemy. Arithmetic at the nominal input can be exact; source encounter itself remains approximate.",
+      "candidate_scenario": {
+        "elite": 1,
+        "level": 1,
+        "trust": 0,
+        "potential": 1,
+        "skill_rank": 7,
+        "window_seconds": 5,
+        "timing_mode": "continuous",
+        "relic_ids": [],
+        "effects": [],
+        "operator": "char_4107_vrdant",
+        "skill": 1,
+        "enemy_defense": 800,
+        "enemy_resistance": 50,
+        "base_attack": 1200
+      },
+      "candidate_result_selector": {
+        "field": "components",
+        "where": {
+          "damage_type": "physical"
+        },
+        "expected_unique_component": true,
+        "value": "per_hit"
+      },
+      "verification_scope": "Physical subtraction at the external nominal raw input; carrier has no attack boost on S1.",
+      "actual_result": null,
+      "Root_executed": false
+    },
+    {
+      "id": "taptap-amiya-s1-r7-interval",
+      "source": "taptap_guide",
+      "external_inputs": {
+        "operator": "Amiya caster",
+        "base_attack_interval_seconds": 1.6,
+        "base_attack_speed": 100,
+        "skill_attack_speed_delta": 60,
+        "skill_rank": 7
+      },
+      "external_expected": {
+        "interval_seconds": 1.0,
+        "attack_speed": 160
+      },
+      "source_qualification": "Preserve the original paragraph: it first names caster S1 but later mistypes 7级二技能. Wiki Amiya Tactical Chant gamma R7 +60 and current pinned catalog confirm S1. No first-hit, wind-up, SP, total-hit or full-rotation claim follows from this interval example.",
+      "candidate_scenario": {
+        "elite": 1,
+        "level": 1,
+        "trust": 0,
+        "potential": 1,
+        "skill_rank": 7,
+        "window_seconds": 5,
+        "timing_mode": "continuous",
+        "relic_ids": [],
+        "effects": [],
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 500,
+        "enemy_defense": 800,
+        "enemy_resistance": 50
+      },
+      "candidate_result_selector": {
+        "fields": [
+          "interval_seconds",
+          "attack_speed"
+        ]
+      },
+      "verification_scope": "Explicit attack interval and speed under the declared S1 R7 parameters.",
+      "actual_result": null,
+      "Root_executed": false
+    },
+    {
+      "id": "iscentral-amiya-s3-true-hit-conditional",
+      "source": "is_central_true_damage",
+      "external_inputs": {
+        "operator": "Amiya caster",
+        "skill": 3,
+        "base_attack": 715,
+        "external_attack_bonuses": [
+          0.3,
+          0.3,
+          0.08
+        ],
+        "skill_attack_bonus": 2.3,
+        "internal_attack_bonus_triple_kings": 1.5,
+        "true_damage_taken_bonus_civilight_eterna": 1.5,
+        "enemy_defense": 2500,
+        "enemy_resistance": 60,
+        "source_theme": "IS5",
+        "enemy": "Theresis phase 2"
+      },
+      "external_expected": {
+        "displayed_skill_attack": 5765,
+        "displayed_true_per_hit": 14412
+      },
+      "source_qualification": "Conditional candidate requiring independent review and actual Root mapping. The public guide prints rounded intermediate equalities; its two original screenshots visibly show ATK 5765 and red damage 14412. These are display observations, not exact unrounded equations. Do not rewrite them as an unrounded expected 5765. The current project has a rune integer writer plus battle modifiers, but its automatic run context is IS6. Only an explicitly declared core-modifier calculation may be compared; do not claim full IS5 account/tree/relic acquisition, Theresis script or 90% reduction bypass unless those exact inputs are represented and verified. Screenshot reveals level50, but potential/trust/module level and first-hit timing are not explicitly provided in text.",
+      "candidate_scenario": {
+        "operator": "char_002_amiya",
+        "skill": 3,
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 50,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 715,
+        "enemy_defense": 2500,
+        "enemy_resistance": 60,
+        "window_seconds": 5,
+        "timing_mode": "continuous",
+        "relic_ids": [],
+        "effects": [
+          {
+            "kind": "attack_pct",
+            "value": 0.3,
+            "attribute_layer": "relic_rune",
+            "formula_item": "MULTIPLIER"
+          },
+          {
+            "kind": "attack_pct",
+            "value": 0.3,
+            "attribute_layer": "relic_rune",
+            "formula_item": "MULTIPLIER"
+          },
+          {
+            "kind": "attack_pct",
+            "value": 0.08,
+            "attribute_layer": "relic_rune",
+            "formula_item": "MULTIPLIER"
+          },
+          {
+            "kind": "attack_pct",
+            "value": 1.5
+          },
+          {
+            "kind": "damage_taken",
+            "damage_type": "true",
+            "value": 1.5
+          }
+        ]
+      },
+      "candidate_result_selector": {
+        "component_where": {
+          "damage_type": "true"
+        },
+        "value": "per_hit",
+        "secondary": "estimate.skill.skill_attack"
+      },
+      "verification_scope": "Conditional manually declared modifier-core example, including existing rune integer write. Does not automatically cover the source-specific IS5 encounter.",
+      "actual_result": null,
+      "Root_executed": false,
+      "apply_ready": false
+    }
+  ],
+  "case_count": 5,
+  "currently_supported_core_candidates": 4,
+  "conditional_candidates": 1,
+  "independent_review": null,
+  "source_boundary": "Expected numbers are present in original public webpages/images; project carrier scenarios are Source-only proposals. No example is claimed passed. Preserve approx/typo/display/IS-theme limits."
+}

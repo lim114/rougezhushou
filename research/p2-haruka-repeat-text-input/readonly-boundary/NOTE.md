@@ -1,0 +1,15 @@
+第82/83节之后的小范围来源/输入边界只读审阅
+
+证据基线为第81节 ea7866be6f2a8e89d382ec2982a45f1cb9231141 的 Git 对象；根随后完成第82节 b5a40f30683bfc0945decaabbd4db5914c28427f。现场读取遇到根正在增加82的苏苏洛guard，所以正式来源证据统一取既定Git blob，未混用工作树变化。没有新增API调用、模型草稿、选中helper调用、GUI/Wine、tracked编辑或commit。
+
+根已把84正式交给 source_081_leads：haruka_repeat。真实S2绑定为PHASE_1等级1，十级atk参数为.15/.15/.15/.20/.20/.20/.25/.30/.35/.40；每级原描述明确“第二次及以后”加攻击及持续无限。目录十级描述、duration和blackboard逐项等于固定完整原件。该字段default=False、只适用S2，并由真正的QCheckBox/isChecked静态路径提供布尔值；没有数值字符串解析合同。
+
+现repeat消费者仅在遥、非normal、S2分支读取原始字段truthiness，增加已存在的atk并将mode设为infinite。正常充能plan/S1/S3和其它owner不消费该flag。E1的S2已合法可用；76中E2扶摇花火门槛只抑制声明浮泡的独立治疗及其派生伤害，不能作为repeat文本拒绝的前提。已有76有效声明保留、原始bubble解析/错误以及已解锁来源actual_total=None边界必须保持。
+
+重复旗标最早消费者位于bubble_bursts=self.option以前。直接加早期guard会使“双非法：repeat文本+非法bubble”优先变为新错误。根进一步要求保留所有后续timing/initialsp/report等旧错误，已向作者传达完整报告后公共string guard的设计约束，而非移动旧validator或清空声明。现核心 _evaluate_damage_once 在全部annotate/finish/环境/属性/持续参考/build_report之后返回；83也安排于该处拒绝两neural owner文本字段，84只能独立surgical运输并在最终83之后apply-check，不得复制旧damage覆盖83。
+
+核心末报告位置只证明该次核心运算的旧检查在新guard之前。外层wine/deployment另有重复report，作者必须用真实old→draft窄公共证据证明这些路径旧错误仍保留；本只读审阅没有运行这些路径，也不把该约束写为已通过。保留所有旧非字符串truthiness alias、缺失False、S1/S3/其它owner忽略行为；零窗口/空目标/零受疗不会自动使已消费文本条件合法。不是根据API输入推断实际第二次开启，不新造触发顺序。
+
+候选下一节（仅静态线索，尚未数值复现）依次可看灵知frozen_at_skill_end、随后水月enemy_below_half。前者default=True，只适用S3并有plan末次条件伤害和calculate末次reference两个消费点，不能错误改成缺失False；既有terminal_clock_verified=False/移除顺序未知、窗口/生命周期来源门槛及ISW-A初始/全程来源争议继续保留。后者对应E2反移情真实候选，E0/E1没有此天赋，必须先核模组和当前选择再做边界，不能全局拒绝未消费字段。未进行新API复现，不能称这些项已成为确定的可实施数值修复。
+
+P2清单大部分剩余事项仍需要当前热更新/原生动作/附着/覆盖/时钟或账户来源证据；本节不据只读线索销项、不另计完成小节、不提前切P3。源不足的机制继续保留unknown。

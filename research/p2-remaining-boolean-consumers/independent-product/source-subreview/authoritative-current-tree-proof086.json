@@ -1,0 +1,11 @@
+{
+  "status": "PASS_FINAL_AUTHORITATIVE_PATH_TO_BLOB_BINDING",
+  "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "fixed_tree_paths_and_blob_ids_checked": 723,
+  "all_author_rows_equal_actual_fixed_tree": true,
+  "original_sealed11_manifest_sha256": "f2e5136968efd63d62135cb8631da8f07c450cf15046c1a4bc3b3ef8bc6f26ef",
+  "original11_files_immutable_and_rehashed": true,
+  "binding_method": "git ls-tree -r gives actual fixed commit path->blob IDs; every row equals fixed tree. Original audit already checked these exact blobs, baseline and draft bytes. This sidecar completes the transitive fixed-tree proof without repeating any runtime checks.",
+  "evidence_scope_correction": "Initial script checked Git blob existence/content and exact fixed-tree path set; this new sidecar additionally binds each blob ID to its actual current fixed path. No mismatch found, no product failure and no previous frozen evidence modified.",
+  "new_API_helper_tests_GUI_Wine_tracked": 0
+}

@@ -1,0 +1,36 @@
+{
+  "section": 153,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T22:56:41.941610+08:00",
+  "branch": "codex/p2-development",
+  "title": "首批三名九技能校准矩阵",
+  "remaining_item": "P2全部技能精度",
+  "new_capability": "一次列出9技能的初动/充能/周期参考、已计分项及完整总量未知，保留培养门和专属条件归属",
+  "acceptance": "直接API与CLI可用；来源及未知边界保留，独立相关测试通过；不读取/改写私人状态。",
+  "source_evidence": [
+    "固定游戏原表 a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "已有 .cache/research/relic-panel-056/REPORT.md 与 timing-048/REPORT.md 原件算式/动作资料"
+  ],
+  "limitations": [
+    "这是公开数据/算式交叉核对和声明观察比较，不是公开游戏成对实机验收。",
+    "当前热更新、原生事件时钟、未覆盖条件机制保持未知；没有操作游戏或发送聊天。"
+  ],
+  "files": [
+    "rouge/calibration.py",
+    "tests/test_calibration.py"
+  ],
+  "test_selectors": [
+    "tests.test_calibration.CalibrationTests.test_153_nine_skills_and_partial_unknown",
+    "tests.test_calibration.CalibrationTests.test_153_locked_skills_and_module_ownership"
+  ],
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-153/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 155
+}

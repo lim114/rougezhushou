@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "scope": "Newly reacquired fixed-ref public source and an unmodified official Spine reader; external source operation only",
+  "product_baseline_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "official_reader_commit": "8b4844bd4b193ba9e54487ed397a777993cbad56",
+  "result": "Back readSkeletonData returned source skeleton metadata and five animations",
+  "fresh_source_operation_counts": {
+    "resource_files_reacquired": 2,
+    "header_only_extraction_operations": 1,
+    "header_only_resources_read": 2,
+    "full_skeleton_parser_calls": 2,
+    "full_skeleton_parser_successes": 2,
+    "full_skeleton_parser_failures": 0,
+    "Front_saved_control_comparison_operations": 1,
+    "Front_records_compared": 9,
+    "application_calculate_helper_formatter_test_Qt_Wine_calls": 0,
+    "product_tests_patches_drafts_or_tracked_changes": 0
+  },
+  "historical_status": {
+    "visible_parse_failure_lower_bound": 1,
+    "visible_failure": "Error: boneData cannot be null.",
+    "total_old_attempts": null,
+    "old_parser_identity": null,
+    "old_failure_root_cause": null,
+    "old_cache_or_receipts_reconstructed": false,
+    "new_acquisition_is_old_cache": false
+  },
+  "Front_control": {
+    "bone_count": 47,
+    "slot_count": 49,
+    "animation_count": 9,
+    "compared_fields": ["spine_version", "raw_duration_seconds", "event_names_and_seconds", "source_bytes_SHA256_Git_blob"],
+    "all_compared_fields_exact": true,
+    "receipt": "front-control-receipt.json"
+  },
+  "Back_source": {
+    "bytes": 32563,
+    "sha256": "09526db9b53f6fa54ac51219ce31e6cd3903e618d9a47781f230bf68de3edfb2",
+    "git_blob_sha1": "473df5c69d7e3552f6937f749bd42dd9e974ca01",
+    "spine_version": "3.8.99",
+    "bone_count": 34,
+    "slot_count": 28,
+    "animation_names": ["Attack", "Default", "Idle", "Skill", "Start"],
+    "event_payload_count": 3,
+    "absent_Front_names_are_not_filled": ["Die", "Skill_2_Begin", "Skill_2_End", "Skill_2_Loop"],
+    "input_and_source_file_SHA256_unchanged_after_read": true,
+    "reader_source_unchanged": true,
+    "result_receipt": "parse-Back-result.json",
+    "operation_receipt": "parse-Back-operation.json"
+  },
+  "bounded_reference_candidates": [
+    {
+      "animation": "Attack",
+      "duration_seconds": 1.3333333730697632,
+      "events": [{"name": "OnAttack", "seconds": 0.5333333611488342}],
+      "candidate_basis": "Real source data has a positive animation duration and one OnAttack, with a name already allowed by the existing conservative source builder",
+      "reference_stage": "Source metadata candidate only; not a counted UI option or actual normal attack binding",
+      "runtime_binding_verified": false
+    },
+    {
+      "animation": "Skill",
+      "duration_seconds": 1.3333333730697632,
+      "events": [{"name": "OnAttack", "seconds": 0.4333333373069763}],
+      "candidate_basis": "Real source data has a positive animation duration and one OnAttack, with a name already allowed by the existing conservative source builder",
+      "reference_stage": "Keep the literal source name Skill. It has no skill number; do not bind it to S1/S2 or count it as a skill UI option",
+      "runtime_binding_verified": false
+    }
+  ],
+  "explicit_unknowns": [
+    "The historical reader implementation and reason for its old boneData null error",
+    "Final byte offset or exact EOF consumption: the unmodified public reader does not expose it",
+    "Atlas, image and texture authenticity, UVs, offsets, attachment geometry and rendering validity",
+    "Native normal/skill/skin binding, collision, current hot-update equality and live behavior",
+    "First damage/healing phase, skill ending, recovery, SP, idle/cycle clocks and native event ordering"
+  ],
+  "product_state": {
+    "production_original_animation_references_updated": false,
+    "production_missing_Back_status_cleared": false,
+    "actual_UI_choices_measured": false,
+    "numbered_section_completed_by_this_source_task": false,
+    "handoff": "Two source reference candidates are supported for root review; no product integration or runtime completeness claim is made"
+  }
+}

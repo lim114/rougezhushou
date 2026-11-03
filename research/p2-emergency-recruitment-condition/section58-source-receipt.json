@@ -1,0 +1,82 @@
+{
+  "candidate": "Emergency-source enum qualification for 同行者",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "existing_evidence_reused": [
+    "rouge/data/relic-mechanics.json",
+    "research/p2-run-eligibility/source-receipt.json"
+  ],
+  "original_topic_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "original_topic_bytes_rechecked_this_round": true,
+  "source_bytes": 17943244,
+  "source_path": "/workspace/.continuation/p2-after-055-audit/relic-scope/roguelike_topic_table.json",
+  "source_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+  "fetch": "Successful curl --fail --location using inherited proxy and normal TLS validation; raw original re-acquired after /tmp restart, not a new mechanism source.",
+  "selectors": {
+    "usage": {
+      "selector": "roguelike_topic_table.details.rogue_6.items.rogue_6_relic_cargo_10.usage",
+      "value": "应急助力节点中招募所需源石锭-50%，应急干员的生命值、攻击力和防御力+40%"
+    },
+    "buff": {
+      "selector": "roguelike_topic_table.details.rogue_6.relics.rogue_6_relic_cargo_10.buffs[1]",
+      "value": {
+        "key": "global_buff_normal",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "rogue_6_relic_employ"
+          },
+          {
+            "key": "atk",
+            "value": 0.4,
+            "valueStr": null
+          },
+          {
+            "key": "def",
+            "value": 0.4,
+            "valueStr": null
+          },
+          {
+            "key": "max_hp",
+            "value": 0.4,
+            "valueStr": null
+          }
+        ]
+      }
+    }
+  },
+  "raw_buffs_match_existing_parsed_mechanics": true,
+  "public_enum_contract_receipt": "/workspace/.continuation/p2-after-055-audit/relic-scope/source-contracts.json",
+  "valid_recruitment_kinds": [
+    "non_emergency",
+    "emergency_hire"
+  ],
+  "unknown_representation": [
+    "field omitted",
+    "None"
+  ],
+  "narrow_change_seam": "rouge.relics.context_value emergency_hire branch",
+  "no_relic_control_boundary": "Do not introduce validation for irrelevant recruitment_kind fields when no applicable effect queries the condition.",
+  "unknowns": [
+    "Actual native emergency-recipient attachment/lifecycle and current-hotfix equivalence remain unverified. No new attribute layer, stacking or game recruitment transition is inferred."
+  ],
+  "public_cases": 22,
+  "frozen_code_manifest": "/workspace/.continuation/p2-after-055-audit/relic-scope/freeze.json",
+  "public_reproduction": "/workspace/.continuation/p2-after-055-audit/relic-scope/public-reproduction.json",
+  "production_edits": 0,
+  "private_state_read": false,
+  "game_actions": 0,
+  "chat_messages_sent": 0,
+  "section": 58,
+  "historical_read_only_audit_policy": "Explicit other enum names/types should raise ValueError when an applicable emergency_hire condition needs the identity; do not reinterpret as confirmed non-emergency.",
+  "active_invalid_input_policy": "Only type(kind) is str and exact non_emergency/emergency_hire produce 0/1. Every other value yields existing None/missing_conditions/pending when an applicable emergency effect is queried; no new ValueError.",
+  "policy_override": "policy-override.json",
+  "implementation_patch_sha256": "16234cd506a350baed74e6b30adc613baaf5298c3fe1d7bb935fd3bb6606ca39",
+  "frozen_baseline_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+  "original_topic_sha256_rechecked_on_resumed_implementation": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "existing_baseline_22_cases_reused_without_recomputing": true,
+  "public_source_contracts_verified_against_frozen_manifest": true,
+  "new_numerical_rules": false,
+  "root_tracked_edits": 0,
+  "native_validation": false
+}

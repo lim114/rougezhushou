@@ -1,0 +1,293 @@
+{
+  "readings": [
+    {
+      "id": "init.refresh14",
+      "attribute": 14,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": true,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 30064771072
+      },
+      "calculation": {
+        "inventory_complete": true,
+        "enumeration_normal": true,
+        "modifiers": [],
+        "raw_read": {
+          "normal": true,
+          "raw": 30064771072
+        },
+        "range_read": {
+          "normal": true,
+          "override": false,
+          "metadata_range_matches": true,
+          "lower_raw": null,
+          "upper_raw": null
+        },
+        "cache_store_normal": true
+      }
+    },
+    {
+      "id": "new14",
+      "attribute": 14,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": true,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 8589934592
+      },
+      "calculation": {
+        "inventory_complete": true,
+        "enumeration_normal": true,
+        "modifiers": [],
+        "raw_read": {
+          "normal": true,
+          "raw": 8589934592
+        },
+        "range_read": {
+          "normal": true,
+          "override": false,
+          "metadata_range_matches": true,
+          "lower_raw": null,
+          "upper_raw": null
+        },
+        "cache_store_normal": true
+      }
+    },
+    {
+      "id": "new30",
+      "attribute": 30,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": true,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 4294967296
+      },
+      "calculation": {
+        "inventory_complete": true,
+        "enumeration_normal": true,
+        "modifiers": [],
+        "raw_read": {
+          "normal": true,
+          "raw": 4294967296
+        },
+        "range_read": {
+          "normal": true,
+          "override": false,
+          "metadata_range_matches": true,
+          "lower_raw": null,
+          "upper_raw": null
+        },
+        "cache_store_normal": true
+      }
+    },
+    {
+      "id": "can14",
+      "attribute": 14,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": false,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 4294967296
+      },
+      "calculation": null
+    },
+    {
+      "id": "can30",
+      "attribute": 30,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": false,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 4294967296
+      },
+      "calculation": null
+    },
+    {
+      "id": "ratio-over-one",
+      "attribute": 30,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": true,
+      "decoded_cache": {
+        "normal": true,
+        "raw": 12884901888
+      },
+      "calculation": {
+        "inventory_complete": true,
+        "enumeration_normal": true,
+        "modifiers": [],
+        "raw_read": {
+          "normal": true,
+          "raw": 12884901888
+        },
+        "range_read": {
+          "normal": true,
+          "override": false,
+          "metadata_range_matches": true,
+          "lower_raw": null,
+          "upper_raw": null
+        },
+        "cache_store_normal": true
+      }
+    },
+    {
+      "id": "negative14",
+      "attribute": 14,
+      "ordinary_native_path": true,
+      "attributes_exist": true,
+      "dirty": true,
+      "decoded_cache": {
+        "normal": true,
+        "raw": -4294967296
+      },
+      "calculation": {
+        "inventory_complete": true,
+        "enumeration_normal": true,
+        "modifiers": [],
+        "raw_read": {
+          "normal": true,
+          "raw": -4294967296
+        },
+        "range_read": {
+          "normal": true,
+          "override": false,
+          "metadata_range_matches": true,
+          "lower_raw": null,
+          "upper_raw": null
+        },
+        "cache_store_normal": true
+      }
+    }
+  ],
+  "rate_reads": [
+    {
+      "id": "new-rate",
+      "ordinary_native_path": true,
+      "first_attributes_getter_normal": true,
+      "second_attributes_getter_normal": true,
+      "flat_read_id": "new14",
+      "ratio_read_id": "new30",
+      "same_entity": true,
+      "unchanged_to_point": true,
+      "multiply_normally": true
+    },
+    {
+      "id": "can-rate",
+      "ordinary_native_path": true,
+      "first_attributes_getter_normal": true,
+      "second_attributes_getter_normal": true,
+      "flat_read_id": "can14",
+      "ratio_read_id": "can30",
+      "same_entity": true,
+      "unchanged_to_point": true,
+      "multiply_normally": true
+    }
+  ],
+  "initializations": [
+    {
+      "id": "slot0-into-raw14",
+      "ordinary_native_path": true,
+      "attributes_read": {
+        "id": "initial.attributes",
+        "normal": true,
+        "exists": true,
+        "identity": null
+      },
+      "sp_data_read": {
+        "id": "initial.spData",
+        "normal": true,
+        "exists": true,
+        "identity": null
+      },
+      "increments_read": {
+        "id": "initial.increments",
+        "normal": true,
+        "exists": true,
+        "identity": null,
+        "length": 4
+      },
+      "slot0_read": {
+        "id": "initial.slot0",
+        "normal": true,
+        "bits": 1069547520
+      },
+      "single_conversion_normally": true,
+      "raw_array_read": {
+        "id": "initial.raw-array",
+        "normal": true,
+        "exists": true,
+        "identity": null,
+        "length": 40
+      },
+      "raw_encoder_normally": true,
+      "raw_store_normally": true,
+      "mark_dirty_returns_normally": true,
+      "refresh_read_id": "init.refresh14",
+      "refresh_same_attributes": true,
+      "refresh_unchanged_to_point": true
+    }
+  ],
+  "notifications": [
+    {
+      "id": "dirty30-newrate-not-eligibility",
+      "attribute": 30,
+      "old_value_raw": 425201762304,
+      "ordinary_native_path": true,
+      "entity_exists": true,
+      "controller_read": {
+        "id": "notification.controller",
+        "normal": true,
+        "exists": true,
+        "identity": null
+      },
+      "new_rate_id": "new-rate",
+      "can_recover_rate_id": "can-rate",
+      "ordinary_controller_update_path": true,
+      "controller_matches_clock": true,
+      "precise_timer_identity": true,
+      "no_intervening_timer_changes": true,
+      "timer": {
+        "exists": true,
+        "period_raw": 4294967296,
+        "remaining_raw": 3221225472
+      },
+      "drain": {
+        "id": "independent-OnTick-zero",
+        "kind": "tick",
+        "ordinary_native_path": true,
+        "delta_raw": 0,
+        "enabled": false,
+        "gate_stop": {
+          "exists": true,
+          "normal": true,
+          "value": false
+        },
+        "full_read": {
+          "normal": true,
+          "value": false
+        },
+        "recovery": {
+          "ordinary_native_path": true,
+          "force": false,
+          "stop_read": {
+            "exists": true,
+            "normal": true,
+            "value": false
+          },
+          "sp_read": {
+            "exists": true,
+            "normal": true,
+            "raw": 0
+          },
+          "setter_returns_normally": true
+        }
+      }
+    }
+  ]
+}

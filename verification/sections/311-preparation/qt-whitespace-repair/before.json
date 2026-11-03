@@ -1,0 +1,19 @@
+{
+  "section": 311,
+  "kind": "original_failed_technical_display_preserved_before_repair",
+  "failure_receipt": "verification/sections/311-necessary-attempt1/process.json",
+  "failure_receipt_sha256": "54e60cbb9f90d832596f384146f53326b38063d2163d49c7aa77af82b83592cb",
+  "actual_installed_Qt": "6.11.2",
+  "official_source": "https://doc.qt.io/qt-6.11/qtextdocument.html#toPlainText",
+  "source_fact_paraphrase": "toPlainText converts U+00A0 to space and U+2028/U+2029 to line feed; raw document and plain output are distinct.",
+  "actual_data_character_counts": {
+    "U+00A0": 54,
+    "U+2028": 0,
+    "U+2029": 0
+  },
+  "original_files": {
+    "rouge/boss_hunt_view.py": "f6b5422167c0cd16e37fd6e2db27450a9c5a4d7975bff7da95ad313e737630c3",
+    "tests/test_boss_hunt_view_311.py": "1d21327d9f1c9f39b21eb0b6259aa54c520776eea2c111a7a1183061a8aa98d2"
+  },
+  "repair_scope": "JSON presentation escapes these three Unicode characters; Chinese remains readable, full decoded source must stay exactly equal; no original bytes changed or assertion relaxed."
+}

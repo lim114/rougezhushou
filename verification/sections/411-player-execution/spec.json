@@ -1,0 +1,25 @@
+{
+  "title": "随场景切换的备忘录与浅色笔记浮窗",
+  "change": "小窗备忘录自动展示最近已读场景的本机笔记，支持暂停跟随、刷新及进入原编辑器；场景变化不覆盖未保存编辑。笔记阅读和编辑采用参照录像的浅色浮窗与白色正文卡片。",
+  "limits": "最近读取不表示当前所在位置；同名且未确认变体仍明确提示共用旧笔记。只读跟随不自动创建或保存笔记，不混用手动固定资料笔记；录像的完整筛选层级、自动保存及其余界面外观仍待对齐。",
+  "criteria": [
+    "真实工具条按钮打开随场景更新的备忘录",
+    "同名不同变体不借用笔记且失去场景后清旧",
+    "未保存编辑不被跟随、刷新或关闭阅读窗改写",
+    "暂停跟随保持阅读并明确标注",
+    "浅色浮窗与白色正文卡片实际可见",
+    "仅隔离状态验收，不操作游戏和聊天"
+  ],
+  "test": "tests.test_player_recent_notes_411",
+  "native": "scripts/verify_player_recent_notes_window_411.py",
+  "additional_tests": [
+    "tests.test_player_notes_387",
+    "tests.test_player_note_preview_398",
+    "tests.test_player_reference_notes_410"
+  ],
+  "next": "继续P3的场景资料联动与视频外观对照，未指定新数字终点；下一到期全量425。",
+  "unit_receipt": "verification/sections/411-player-checks-attempt3/process.json",
+  "native_receipt": "verification/sections/411-player-window-attempt3/window.json",
+  "native_process_receipt": "verification/sections/411-player-window-process-attempt3/process.json",
+  "source_receipt": "verification/sections/411-video-appearance.json"
+}

@@ -1,0 +1,18 @@
+{
+  "title": "本局读取记录：保留原顺序的独立回顾",
+  "change": "小窗本局概况可打开独立只读记录页，按保存顺序阅读具名节点、资源及队伍等读取事实；新记录追加时保留当前阅读位置。",
+  "limits": "读取时间不是游戏动作时钟；没有观察到的步骤、奖励、胜负和结算不补写。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "原记录顺序不按时间重新猜排",
+    "未知时间与类型清楚说明",
+    "刷新保留选择，换局清旧阅读",
+    "查看不修改本局"
+  ],
+  "test": "tests.test_player_replay_401",
+  "native": "scripts/verify_player_replay_window_401.py",
+  "next": "继续第402节：手动新局前归档、历史与当前记录分开查看。",
+  "additional_tests": [],
+  "unit_receipt": "verification/sections/401-player-checks/process.json",
+  "native_receipt": "verification/sections/401-player-window/window.json",
+  "native_process_receipt": "verification/sections/401-player-window-process/process.json"
+}

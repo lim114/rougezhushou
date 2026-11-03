@@ -1,0 +1,26 @@
+[
+  {
+    "path": "rouge/run_state.py",
+    "before": "            corrected=origin is not None and previous.get('sources',{}).get('recruitment_kind',{}).get('source')=='金色应急雇佣标记'",
+    "after": "            origin_source=previous.get('sources',{}).get('recruitment_kind',{})\n            corrected=(origin is not None and isinstance(origin_source,dict)\n                       and origin_source.get('source')=='金色应急雇佣标记')",
+    "scope": "apply legacy correction proof capability only; do not sanitize preserved cache or change recruitment lifecycle"
+  },
+  {
+    "path": "rouge/run_state.py",
+    "before": "                if previous.get('name')==record['name'] and previous.get('effect_verified') and not record.get('effect_verified'):continue",
+    "after": "                previous_id=previous.get('id')\n                previous_squad=config_data()['squads'].get(previous_id) if isinstance(previous_id,str) else None\n                if (previous_squad and previous_squad['name']==previous.get('name')==record['name']\n                        and previous.get('effect_verified') is True and not record.get('effect_verified')):continue",
+    "scope": "Protect existing stronger squad only with known old ID/name and actual True; healthy strengthened trade identity retained; bad cached identity cannot block fresh legitimate badge recovery"
+  },
+  {
+    "path": "rouge/run_config.py",
+    "before": "    if isinstance(squad,dict) and squad.get('captured_at') is not None:",
+    "after": "    if (isinstance(squad,dict) and squad.get('captured_at') is not None\n            and isinstance(squad.get('id'),str)):",
+    "scope": "confirmed_config only before public squad lookup; root actual original squad observation still pending"
+  },
+  {
+    "path": "scripts/verify_cloud.py",
+    "before": "MODULES = (\n",
+    "after": "MODULES = (\n    \"tests.test_cache_recovery_103\",\n",
+    "scope": "future102 registry preserve all prior modules and prepend new coherent test module"
+  }
+]

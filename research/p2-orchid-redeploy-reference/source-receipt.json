@@ -1,0 +1,520 @@
+{
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "scope": "Orchid module/potential/talent redeploy parameter references only; no deployment event scheduled",
+  "sources": [
+    {
+      "name": "character_table",
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "expected_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+    },
+    {
+      "name": "battle_equip_table",
+      "path": "/tmp/p2-audit/drone-traits/battle_equip_table.json",
+      "bytes": 5710707,
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "expected_sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "sha256_matched": true,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+    },
+    {
+      "name": "uniequip_table",
+      "path": "/tmp/p2-audit/drone-traits/uniequip_table.json",
+      "bytes": 3365012,
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "expected_sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "sha256_matched": true,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+    }
+  ],
+  "selectors": [
+    {
+      "table": "character_table",
+      "selector": "$.char_1048_orchd2.phases[*].attributesKeyFrames[*].data.respawnTime",
+      "value": [
+        {
+          "phase": 0,
+          "values": [
+            70,
+            70
+          ]
+        },
+        {
+          "phase": 1,
+          "values": [
+            70,
+            70
+          ]
+        },
+        {
+          "phase": 2,
+          "values": [
+            70,
+            70
+          ]
+        }
+      ]
+    },
+    {
+      "table": "character_table",
+      "selector": "$.char_1048_orchd2.potentialRanks[1].buff.attributes.attributeModifiers",
+      "value": [
+        {
+          "attributeType": "RESPAWN_TIME",
+          "formulaItem": "ADDITION",
+          "value": -4.0,
+          "loadFromBlackboard": false,
+          "fetchBaseValueFromSourceEntity": false
+        }
+      ]
+    },
+    {
+      "table": "character_table",
+      "selector": "$.char_1048_orchd2.talents[1].candidates",
+      "value": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "翔虫机动",
+          "description": "再部署时间-15秒；部署至上次部署位置周围时，30秒内攻击力+10%并且可以部署在近战位",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "atk_duration",
+              "value": 30.0,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "projectile",
+              "value": 0.0,
+              "valueStr": "projectile_chr_orchd2_t"
+            },
+            {
+              "key": "ignore_build_type_target_range",
+              "value": 0.0,
+              "valueStr": "x-1"
+            },
+            {
+              "key": "ignore_build_type_target",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "ignore_build_type_target_dir",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "not_add_respawn_cost_cnt",
+              "value": 0.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        },
+        {
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "翔虫机动",
+          "description": "再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "atk_duration",
+              "value": 30.0,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.15,
+              "valueStr": null
+            },
+            {
+              "key": "projectile",
+              "value": 0.0,
+              "valueStr": "projectile_chr_orchd2_t"
+            },
+            {
+              "key": "ignore_build_type_target_range",
+              "value": 0.0,
+              "valueStr": "x-1"
+            },
+            {
+              "key": "ignore_build_type_target",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "ignore_build_type_target_dir",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "not_add_respawn_cost_cnt",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        }
+      ]
+    },
+    {
+      "table": "character_table",
+      "selector": "$.char_1048_orchd2.talents[3].candidates",
+      "value": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "3",
+          "name": null,
+          "description": null,
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "respawn_time",
+              "value": -15.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": true
+        }
+      ]
+    },
+    {
+      "table": "uniequip_table",
+      "selector": "$.equipDict.uniequip_002_orchd2.{charId,unlockEvolvePhase,unlockLevel}",
+      "value": {
+        "charId": "char_1048_orchd2",
+        "unlockEvolvePhase": "PHASE_2",
+        "unlockLevel": 60
+      }
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[0].attributeBlackboard",
+      "value": [
+        {
+          "key": "atk",
+          "value": 80.0,
+          "valueStr": null
+        },
+        {
+          "key": "def",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "respawn_time",
+          "value": -25.0,
+          "valueStr": null
+        }
+      ]
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[1].attributeBlackboard",
+      "value": [
+        {
+          "key": "atk",
+          "value": 100.0,
+          "valueStr": null
+        },
+        {
+          "key": "def",
+          "value": 13.0,
+          "valueStr": null
+        },
+        {
+          "key": "respawn_time",
+          "value": -25.0,
+          "valueStr": null
+        }
+      ]
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[1].parts[1]",
+      "value": {
+        "resKey": null,
+        "target": "TALENT_DATA_ONLY",
+        "isToken": false,
+        "validInGameTag": null,
+        "validInMapTag": null,
+        "addOrOverrideTalentDataBundle": {
+          "candidates": [
+            {
+              "displayRangeId": false,
+              "upgradeDescription": "再部署时间-17秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+20%并且可以部署在近战位",
+              "talentIndex": 1,
+              "validModeIndices": null,
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 60
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "翔虫机动",
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_duration",
+                  "value": 30.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile",
+                  "value": 0.0,
+                  "valueStr": "projectile_chr_orchd2_t"
+                },
+                {
+                  "key": "ignore_build_type_target_range",
+                  "value": 0.0,
+                  "valueStr": "x-1"
+                },
+                {
+                  "key": "ignore_build_type_target",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "ignore_build_type_target_dir",
+                  "value": 0.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_add_respawn_cost_cnt",
+                  "value": 1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        "overrideTraitDataBundle": {
+          "candidates": null
+        }
+      }
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[1].parts[2]",
+      "value": {
+        "resKey": null,
+        "target": "TALENT_DATA_ONLY",
+        "isToken": false,
+        "validInGameTag": null,
+        "validInMapTag": null,
+        "addOrOverrideTalentDataBundle": {
+          "candidates": [
+            {
+              "displayRangeId": false,
+              "upgradeDescription": "",
+              "talentIndex": 3,
+              "validModeIndices": null,
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 60
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "3",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "respawn_time",
+                  "value": -17.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        },
+        "overrideTraitDataBundle": {
+          "candidates": null
+        }
+      }
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[2].attributeBlackboard",
+      "value": [
+        {
+          "key": "atk",
+          "value": 120.0,
+          "valueStr": null
+        },
+        {
+          "key": "def",
+          "value": 16.0,
+          "valueStr": null
+        },
+        {
+          "key": "respawn_time",
+          "value": -25.0,
+          "valueStr": null
+        }
+      ]
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[2].parts[1]",
+      "value": {
+        "resKey": null,
+        "target": "TALENT_DATA_ONLY",
+        "isToken": false,
+        "validInGameTag": null,
+        "validInMapTag": null,
+        "addOrOverrideTalentDataBundle": {
+          "candidates": [
+            {
+              "displayRangeId": false,
+              "upgradeDescription": "再部署时间-18秒且不提高部署费用；部署至上次部署位置周围更大范围时，30秒内攻击力+20%并且可以部署在近战位",
+              "talentIndex": 1,
+              "validModeIndices": null,
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 60
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "翔虫机动",
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ignore_build_type_target_range",
+                  "value": 0.0,
+                  "valueStr": "x-2"
+                },
+                {
+                  "key": "atk_duration",
+                  "value": 30.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile",
+                  "value": 0.0,
+                  "valueStr": "projectile_chr_orchd2_t"
+                },
+                {
+                  "key": "ignore_build_type_target",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "ignore_build_type_target_dir",
+                  "value": 0.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_add_respawn_cost_cnt",
+                  "value": 1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        "overrideTraitDataBundle": {
+          "candidates": null
+        }
+      }
+    },
+    {
+      "table": "battle_equip_table",
+      "selector": "$.uniequip_002_orchd2.phases[2].parts[2]",
+      "value": {
+        "resKey": null,
+        "target": "TALENT_DATA_ONLY",
+        "isToken": false,
+        "validInGameTag": null,
+        "validInMapTag": null,
+        "addOrOverrideTalentDataBundle": {
+          "candidates": [
+            {
+              "displayRangeId": false,
+              "upgradeDescription": "",
+              "talentIndex": 3,
+              "validModeIndices": null,
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 60
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "3",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "respawn_time",
+                  "value": -18.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        },
+        "overrideTraitDataBundle": {
+          "candidates": null
+        }
+      }
+    }
+  ],
+  "facts": [
+    "All raw cultivated phase respawnTime values are70 seconds.",
+    "Potential3 unlocks direct RESPAWN_TIME/ADDITION=-4.",
+    "Module E2 level60 has direct attributeBlackboard respawn_time=-25 in each stage.",
+    "Original visible talent describes redeploy reduction15, same-identity hidden index3/prefab3 stores -15.",
+    "Module stage2/3 visible named talent describes17/18 seconds and same-identity index3/prefab3 TALENT_DATA_ONLY stores -17/-18."
+  ],
+  "unknowns": [
+    "Actual runtime attachment/current-hotupdate equivalence",
+    "Actual retreat/death and next deployment event times",
+    "Temporary30-second near-prior-location attack-buff actual start/expiry and skill collision/end clocks"
+  ],
+  "native_windows_verified": false
+}

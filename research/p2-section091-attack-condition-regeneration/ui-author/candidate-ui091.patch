@@ -1,0 +1,38 @@
+--- a/rouge/app.py
++++ b/rouge/app.py
+@@ -565,7 +565,9 @@
+         form.addRow('满额受疗目标数（当前技能）',self.healing_targets)
+         self.continuous_attacks=QCheckBox('持续进行普攻以回复技力')
+         self.continuous_attacks.setChecked(True)
+-        form.addRow('攻击回复条件',self.continuous_attacks)
++        self.continuous_attacks.setToolTip('声明估算时是否持续普攻；自然回复技能也可能通过适用的天赋或藏品使用此条件。显示此项不表示必有额外技力。未核验的技力来源仅作资料参考，未知回转保持未知。')
++        self.continuous_attacks.toggled.connect(lambda:self.calculate())
++        form.addRow('普攻回技力条件',self.continuous_attacks)
+         self.defense = number(0,100000,0)
+         self.target_stage=QComboBox()
+         self.target_stage_choices=BranchChoice(self.target_stage,
+@@ -954,10 +956,11 @@
+         current=profile['skills'][skill-1]['levels'][self.skill_rank_value()-1] if skill else {}
+         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
+         from .reporting import has_healing
+-        healer=op in catalog()['operators'] and has_healing(op,skill)
++        implemented=op in catalog()['operators']
++        healer=implemented and has_healing(op,skill)
+         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
+                     (self.healing_targets,healer),
+-                    (self.continuous_attacks,current.get('sp_type')=='INCREASE_WHEN_ATTACK'),
++                    (self.continuous_attacks,implemented and current.get('sp_type') in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')),
+                     (self.cooperative,op=='silverash' and skill==3),
+                     (self.fragile,op=='silverash' and skill==3),
+                     (self.charge_count,op=='mechanist' and skill==3),
+--- a/scripts/verify_damage_ui.py
++++ b/scripts/verify_damage_ui.py
+@@ -36,7 +36,7 @@
+                      (window.charge_count,op=='mechanist' and skill==3),
+                      (window.shield_breaks,op=='mechanist' and skill==2),
+                      (window.shield_duration,op=='mechanist' and skill==2),
+-                     (window.continuous_attacks,app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][-1]['sp_type']=='INCREASE_WHEN_ATTACK'),
++                     (window.continuous_attacks,app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][window.skill_rank_value()-1]['sp_type'] in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')),
+                      (window.healing_targets,op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and skill==2)),
+                      *[(w,op=='silverash' and skill==2) for w in (window.activation_count,window.companion_attack,window.stacks)]]
+             for widget,visible in options:

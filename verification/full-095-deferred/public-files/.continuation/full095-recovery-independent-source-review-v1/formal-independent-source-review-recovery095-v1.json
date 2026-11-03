@@ -1,0 +1,450 @@
+{
+  "format_version": 1,
+  "section": 95,
+  "checked_at": "2026-10-08T23:27:04.043300+00:00",
+  "status": "PASS_INDEPENDENT_RECOVERY_SOURCE_PACKET_ACTUAL_SPEC_PENDING",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "recovery_spec_sha256": null,
+  "source_manifest_sha256": "ddd25b0b953e56a76e756974b634d83322eca75d8ea5710cfc92d00d7f64e970",
+  "pending_context_sha256": "c6cc559284470739ccaff71305448788fc4c95315537df78d1f5791f3c6ef3c7",
+  "recovery_helper_sha256": "ad1b5a9c9c4979ccd736f9571e9705e3d5a946beaeb80f868ed56800ac9a9afa",
+  "sealer_sha256": "6c33286b57b184489c86ecf279b2ba9416bab6791a7c261e99dbf5f301ed7ef0",
+  "binding_validator_sha256": "b7a6c9b9517e3c93fb598d42b1a45ffe9969d8fb871cce04aee34d56594aa5ce",
+  "original_context_sha256": "cc28fb21c3f62d4377ae9c79af4014dff6d6d38dfcd080db18b4dbe40af96afc",
+  "source_manifest": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/public-artifacts-manifest-recovery095.json",
+    "bytes": 2519,
+    "sha256": "ddd25b0b953e56a76e756974b634d83322eca75d8ea5710cfc92d00d7f64e970"
+  },
+  "pending_context": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/full095_context_recovery_pending.py",
+    "bytes": 32372,
+    "sha256": "c6cc559284470739ccaff71305448788fc4c95315537df78d1f5791f3c6ef3c7"
+  },
+  "recovery_helper": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/recovery_binding095.py",
+    "bytes": 27595,
+    "sha256": "ad1b5a9c9c4979ccd736f9571e9705e3d5a946beaeb80f868ed56800ac9a9afa"
+  },
+  "sealer": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/seal_recovery095.py",
+    "bytes": 10933,
+    "sha256": "6c33286b57b184489c86ecf279b2ba9416bab6791a7c261e99dbf5f301ed7ef0"
+  },
+  "whole_source_inverse": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/recovery-context-inverse095.json",
+    "bytes": 20434,
+    "sha256": "6851d7ee5a0d3ce7ae67103588e51938a84bba890e945624170199183a1ae942"
+  },
+  "adapter_source_review": {
+    "path": "/workspace/.continuation/full095-wine-capability-independent-source-review-v1/formal-independent-source-review-wine-capability095-v1.json",
+    "bytes": 17460,
+    "sha256": "64287bab7192bb6afbd851d180fc35872b60ef3440c2ccbb8a46a7a25b73e758"
+  },
+  "adapter_manifest_sha256": "2bd5f970baba37a39f76ab6974dd5869678ce2bbde6acd8775bcbaf469a6eabe",
+  "adapter_runners": {
+    "wine_full": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_full095_capability_retry.py",
+      "bytes": 8147,
+      "sha256": "fb33a4ffd7971e05efc3dd2ffc6d25f12a8f2570c231b2cfff4bb5f2fa056731"
+    },
+    "wine_selected": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_selected095_capability.py",
+      "bytes": 6445,
+      "sha256": "6e1892db605ec9de26c45b302998a2110b431c5583638f86abff292d5a98945f"
+    }
+  },
+  "shared_admission": {
+    "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_symlink_capability095.py",
+    "bytes": 12785,
+    "sha256": "62cebdec5d8d78e689e1dc3ee653b1cfea0e8d51413dbbb785574337fe6fd4b3"
+  },
+  "adapter_execution_argv": {
+    "wine_full": [
+      "/workspace/.compat/run-wine-python.sh",
+      "Z:\\workspace\\.continuation\\full095-wine-capability-retry-pending-v1\\wine_full095_capability_retry.py",
+      "--wine",
+      "--output",
+      "Z:\\workspace\\.compat\\wine-full095-capability-retry-v1\\wine-available-full095.json"
+    ],
+    "wine_selected": [
+      "/workspace/.compat/run-wine-python.sh",
+      "Z:\\workspace\\.continuation\\full095-wine-capability-retry-pending-v1\\wine_selected095_capability.py",
+      "--wine"
+    ]
+  },
+  "future_execution_argv": {
+    "resume": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+      "resume"
+    ],
+    "finish": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+      "finish",
+      "--executions",
+      "/workspace/.continuation/root-full095-primary-exits.json",
+      "--ui-acceptance",
+      "/workspace/.continuation/root-full095-ui-extra-acceptance.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "R01",
+      "check": "STOPWRITE recovery source packet and actual manifest reference, no runtime or actual spec claims",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R02",
+      "check": "Exact 11 regular physical files and nine direct SOURCE payload members",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R03",
+      "check": "pending context parses as source without importing it",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R04",
+      "check": "recovery binding helper parses as source without importing it",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R05",
+      "check": "sealer parses as source without importing it",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R06",
+      "check": "original validator parses as source without importing it",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R07",
+      "check": "Original binding validator and historical classifications preserved as whole exact physical bytes",
+      "passed": true,
+      "evidence": {
+        "validator": {
+          "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/binding_validation095.py",
+          "bytes": 27489,
+          "sha256": "b7a6c9b9517e3c93fb598d42b1a45ffe9969d8fb871cce04aee34d56594aa5ce"
+        },
+        "historical": {
+          "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/historical-classifications090.json",
+          "bytes": 108760,
+          "sha256": "c17cfb0fbb87c3ecf9247b2d2492d23418b7c5782e9cb02c733b88acf749819b"
+        }
+      }
+    },
+    {
+      "id": "R08",
+      "check": "Exactly 15 uniquely bounded SOURCE deltas reverse to complete original context bytes",
+      "passed": true,
+      "evidence": {
+        "original": {
+          "path": "/workspace/.continuation/full095-regression-final-v1/full095_context_final.py",
+          "bytes": 26404,
+          "sha256": "cc28fb21c3f62d4377ae9c79af4014dff6d6d38dfcd080db18b4dbe40af96afc"
+        },
+        "inverse": {
+          "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/recovery-context-inverse095.json",
+          "bytes": 20434,
+          "sha256": "6851d7ee5a0d3ce7ae67103588e51938a84bba890e945624170199183a1ae942"
+        }
+      }
+    },
+    {
+      "id": "R09",
+      "check": "Fourteen original functions retain twelve complete byte-exact bodies and two bounded binding/witness changes",
+      "passed": true,
+      "evidence": {
+        "unchanged": [
+          "now",
+          "hashes",
+          "last_json",
+          "positive_int",
+          "nonnegative_int",
+          "actual_exit_code",
+          "full_receipt",
+          "selected_receipt",
+          "actual_ui_receipt",
+          "proof_file_binding",
+          "saved_review_execution",
+          "actual_ui_extra_acceptance"
+        ],
+        "changed": [
+          "load_actual_binding",
+          "require_primary_executions"
+        ],
+        "new_function": "wine_full_receipt"
+      }
+    },
+    {
+      "id": "R10",
+      "check": "All original Linux/selected/strict raw-zero/UI/saved/native/PNG acceptance functions remain whole exact",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R11",
+      "check": "Projection allowlist contains exactly two Wine contracts and fixed five new context/full sinks",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R12",
+      "check": "Original runner and real sealed original binding refs are exact current physical bytes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R13",
+      "check": "Pending root recovery template has no fabricated outcome/input reference or future source approval",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R14",
+      "check": "Recovery validates exact original root_spec and complete actual_inputs with original validator before any projection",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R15",
+      "check": "Original validator retains actual branch/HEAD/source735/physical archive/index blob gates",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R16",
+      "check": "Original immutable context, original primary-zero start log/status and original source map must match",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R17",
+      "check": "Reusable observation checks exact original contract, stdout/raw/ref, actual tool witness and original-epoch timestamps",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R18",
+      "check": "Only actually completed unchanged original-epoch jobs can be preserved; Linux full/pip mandatory and no Wine adapter reuse",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R19",
+      "check": "Prior failure remains exact primary one, session/chunk, original failed full receipt/log and both original IDs",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R20",
+      "check": "Exact adapter manifest/contract/shared source/runner/CLI/SOURCE review gates precede two narrow assignments",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R21",
+      "check": "Projection keeps all original outputs except five fixed paths and maintains unique disjoint file/native namespaces",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R22",
+      "check": "Saved capability validation reads source literal via AST only, never executes probe or adapter",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R23",
+      "check": "Saved capability receipt requires two honest unrun exact-ID records, zero passed credit and incomplete validation",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R24",
+      "check": "Saved actual capability identity, installed module SHA/bytes, exact source evidence and original failure must match",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R25",
+      "check": "Saved actual fresh probe requires two default-Temp same-folder/volume phantom patterns with explicit lstat/readlink/open errors",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R26",
+      "check": "Saved capability adapter four-source before/after map, no drift and actual Python argv must match exact projected contract",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R27",
+      "check": "New Wine-only full receipt copy retains complete original classifier/counts/selectors/old skip validations",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R28",
+      "check": "All eight original exact argv/cwd/runner/script/stdout/raw-zero witness gates remain and add strict preserved-row identity",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R29",
+      "check": "Two new adapter observations must start after actual new recovery epoch; unchanged original successes never replayed",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R30",
+      "check": "Actual resume inherits immutable original started_at and separately captures truthful new recovery_started_at",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R31",
+      "check": "Actual resume/finish preserve source735 and strict UI, saved, PNG/native set, pip and same-receipt checks",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R32",
+      "check": "Sealer requires actual root spec SHA and independent approval binding all seven explicit SOURCE fields",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R33",
+      "check": "All final source/input/namespace/freshness/inverse checks occur before exclusive new output write",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R34",
+      "check": "Pending to FINAL seal can replace only PENDING and actual recovery binding SHA literals",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R35",
+      "check": "Recovery metadata helper imports only stdlib and original binding validator, without target/project/Wine subprocess paths",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R36",
+      "check": "SOURCE scope explains current epoch proof reuse separately from historical selected reuse; Wine/native gaps stay explicit",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R37",
+      "check": "Actual current 735-file maintained source equals original sealed map and section95 guard",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "R38",
+      "check": "Actual section93-95 physical archives, complete manifest member sets and all payload bytes remain exact",
+      "passed": true,
+      "evidence": [
+        {
+          "section": 93,
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section093-account-cache-safety/archive-manifest.json",
+            "bytes": 26006,
+            "sha256": "3f6a0c9170395216f1ab49260589d37f4cd37de2b7ebfed9d5c63bd7b7441881"
+          },
+          "physical_files": 159,
+          "passed": true,
+          "index_claim_source": {
+            "path": "/workspace/.continuation/section093-archived-working-tree-closure.json",
+            "bytes": 491,
+            "sha256": "e0b50e3561ebe4ccae20a42df750765b713b6eb551506a538a52edae4ff7d61e"
+          },
+          "index_checked_by_this_reviewer": false
+        },
+        {
+          "section": 94,
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section094-offline-input-refresh/archive-manifest.json",
+            "bytes": 13935,
+            "sha256": "55f69ebd7a1cabbf37c4fa4bb90b6dedc9d3351b3519ef71e93c9e587c49ce7d"
+          },
+          "physical_files": 87,
+          "passed": true,
+          "index_claim_source": {
+            "path": "/workspace/.continuation/section094-archived-working-tree-closure.json",
+            "bytes": 490,
+            "sha256": "613d5956762bd7b0a19d15c15173df698890a8545a8d0e14253086aaf728f806"
+          },
+          "index_checked_by_this_reviewer": false
+        },
+        {
+          "section": 95,
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section095-selected-module-source-report/archive-manifest.json",
+            "bytes": 50757,
+            "sha256": "45a5f59f3afb3072a233bc22230b12806bc352ba81a8bb490dc9f89b42978a7f"
+          },
+          "physical_files": 292,
+          "passed": true,
+          "index_claim_source": {
+            "path": "/workspace/.continuation/section095-archived-working-tree-closure.json",
+            "bytes": 491,
+            "sha256": "98bcd412a155fa98e8049e8ca1dd79eee11f08b57230b3b5c14f8a6f8d698749"
+          },
+          "index_checked_by_this_reviewer": false
+        }
+      ]
+    },
+    {
+      "id": "R39",
+      "check": "Frozen recovery MF and every payload unchanged after independent SOURCE inspection",
+      "passed": true,
+      "evidence": null
+    }
+  ],
+  "source_checks": 39,
+  "blocking_checks": [],
+  "agent_target_executions": 0,
+  "agent_helper_executions": 0,
+  "agent_project_imports": 0,
+  "agent_codec_executions": 0,
+  "agent_tests_run": 0,
+  "agent_wine_executions": 0,
+  "agent_git_executions": 0,
+  "tracked_edits": 0,
+  "section_completion_increment": 0,
+  "native_windows_verified": false,
+  "index_validation_qualification": "This reviewer ran no Git. Exact original index/HEAD validator source is preserved and must run before root seal/resume/finish. Physical archives were independently checked; original closure index claims are bound historical evidence, not a new reviewer index execution.",
+  "future_actual_root_spec_review": null,
+  "future_actual_FINAL_review": null,
+  "future_actual_resume_primary": null,
+  "future_actual_adapter_primaries": null,
+  "required_root_next_actions": [
+    "Assemble actual source/evidence/previous-outcome fullrefs into new ROOT recovery spec.",
+    "Obtain separate independent SOURCE approval binding exact actual recovery spec SHA and the six current package hashes.",
+    "Seal, independently review actual FINAL inverse/projection, resume with real new recovery timestamp.",
+    "Run two new adapters after resume plus unfinished unchanged jobs; preserve successful original-epoch proofs.",
+    "Finish only exact eight actual zero witnesses and all strict actual UI/saved/native/PNG gates."
+  ],
+  "precision_notes": [
+    "Original start/failure/passed proofs are immutable and never rewritten or called new runs.",
+    "SOURCE packet approval has null actual-spec SHA and cannot satisfy sealer actual-spec review gate.",
+    "Two native symlink fixture assertions remain unverified and unavailable; original Linux bodies still run unchanged.",
+    "Original context source function count is14:12 whole bodies exact, two bounded changes, one added Wine-only receipt function."
+  ]
+}

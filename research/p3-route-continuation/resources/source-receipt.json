@@ -1,0 +1,76 @@
+{
+  "scope": "Finite declared plan source-grant quantities, explicit activation/end/exit phases and branch-local uncertain budgets.",
+  "baseline": "30d5dc25bc5e0bf036aa1ba043aa09d635e2cb83",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "prior_receipt": "research/p3-exploration-planning/source-receipt.json",
+      "facts": "M09hope2/M10gold4, passive documentedshield/randomrelicquantities and oneuse gates, temporaryM04/M07 mainexpiry."
+    },
+    {
+      "url": "https://m.prts.wiki/w/沉沦者的黑流树海/引擎配件目录",
+      "revision": 434637,
+      "file": "research/p3-route-continuation/resources/parts-current.html",
+      "sha256": "d18bc4a8e85adde5845642854c2080a159f957c87c3f5030ac8e851f3e5a077f",
+      "bytes": 244368,
+      "facts": "M04: entering or leaving special floor does not damage. M07: entering only is stated; return disposition remains unknown.",
+      "license": "CC BY-NC-SA4.0"
+    },
+    {
+      "prior_receipt": "research/p3-base-settlement/source-receipt.json",
+      "revision": "433770",
+      "sha256": "8df90d811ef9516f46bb877a15c8701d83bd7d36ff744a42d9b27cfede8551e4",
+      "facts": "Independent baseXP/gold; FINAL one加工品 then equalAPhope."
+    },
+    {
+      "file": "rouge/data/event-planning-reference.json",
+      "sha256": "b9de2c98dac306eafc40dba8fa3ee5765c6720afa18c907488ff1f4f199e4f14",
+      "selectors": [
+        "choice_ro6_final1_1",
+        "choice_ro6_final1_5",
+        "choice_ro6_final1_3"
+      ],
+      "facts": "Exact original等量希望choicewording forFINAL.",
+      "sources": {
+        "event_catalog_dom": {
+          "url": "https://m.prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E4%BA%8B%E4%BB%B6%E4%B8%80%E8%A7%88&oldid=427904",
+          "revision": "427904",
+          "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+          "scope": "exact fixed event DOM; current online page separately read"
+        },
+        "original_game": {
+          "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86"
+        }
+      }
+    }
+  ],
+  "new_lookup_reason": "Old ROUTE_RULES_SOURCE points at unavailable .cache receipt; targeted publicparts page was fetched and cardfootnotes directlyread to establish portal exception rather than trusting missing archivedevidence.",
+  "new_algorithm": [
+    "Separate per-route activation budget, no branch sharing and no activation inferred fromsource eligiblepath.",
+    "Unknown possible oneuse activation propagatesavailabilityNone to laterrows; source-conflicting declaredactivation retainsdiagnostic and prevents fullcomponentclosure.",
+    "Known documentquantitysubtotal+unknown/excludedsourcecomponents+exactunknownquantityNone, not actualresourcebalance.",
+    "Conditional exitresource flow based on source lasttype and separatelydeclaredsuccess; spentitems excludedfromexpiry.",
+    "Pairwise conditionalsourcequantitydeltas and conservativegoldinterval subtraction onlysamegoal/terminal+closedcomponentconditions, randomitemvalue nevercomparable."
+  ],
+  "unknowns": [
+    "Current server/client scripts, actual activation/received/exitcompleted.",
+    "Full randomrelic/moveitem pools, qualities, value, probabilities and complete rewards.",
+    "Boss exit hope conversion ratio; newregion totalAP, unknown movementtail and resourceclamps.",
+    "Actual feasible/better/best route and final private state."
+  ],
+  "licensing": "Community source attributed to PRTS under its stated CC BY-NC-SA4.0; originalgame materials remain Hypergryph copyright; no thirdparty program code copied.",
+  "review_corrections": {
+    "reviewer": "/root/route_functional_group/route_resource_readonly",
+    "mode": "read-only source/code audit, no tests rerun",
+    "findings": [
+      "Initial third-group summary incorrectly broadened M07 entering exception to returning; exact per-item source qualification now overrides legacy absent-cache generalization.",
+      "Synthetic passive terminal inventory IDs could collide with legal caller move-item IDs; generated IDs now avoid all caller IDs."
+    ],
+    "superseded_receipts": "superseded-before-source-review/",
+    "regression_tests_added": 2
+  }
+}

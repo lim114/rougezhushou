@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+  <head>
+	<!-- This site was made using Jekyll -->
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="/assets/css/styles.css">
+	<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+	<!-- The viewport meta tells the browser to use the actual size of the phone screen and not the internal resolution for responsiveness -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="/assets/js/script.js"></script>
+	<!-- This lets the website access jQuery, which is needed to make the gallery work -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js" charset="utf-8"></script>
+	<link type="application/atom+xml" rel="alternate" href="https://coolchulainn.neocities.org/feed.xml" title="Coolchulainn" />
+	<meta property="og:image" content="https://coolchulainn.neocities.org/assets/images/linkpreview.png" />
+	<meta property="og:image:height" content="269" />
+	<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Arknights Calculations | Coolchulainn</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Arknights Calculations" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://coolchulainn.neocities.org/series/arknights/gameplay/math.html" />
+<meta property="og:url" content="https://coolchulainn.neocities.org/series/arknights/gameplay/math.html" />
+<meta property="og:site_name" content="Coolchulainn" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Arknights Calculations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","headline":"Arknights Calculations","url":"https://coolchulainn.neocities.org/series/arknights/gameplay/math.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+	
+  </head>
+
+  <body>
+  	<div id="wrapper">
+		<header id="top">
+
+<a href="/"><div id="header"></div></a>
+
+<div id="mobilemenu"><p>
+	<a href="javascript:void(0)" onclick="menuFunctions.menu_open()"><span id="openmenu">open menu</span></a>
+	<a href="javascript:void(0)" onclick="menuFunctions.menu_close()"><span id="closemenu">close menu</span></a>
+</p></div></header>
+		
+		<div id="container">
+			<div id="leftbar">
+
+<nav id="menu"><ul>
+	<!-- this link only shows up when someone uses a keyboard to navigate the site. it lets them skip past the rest of the menu -->
+	<li><a href="#content" class="skipbutton">Skip to content</a></li> 
+		<li><a href="/">Site</a></li>
+	<ul>
+					<li><a href="/about.html">About</a></li>
+				
+					<li><a href="/blog/">Blog</a></li>
+				<ul>
+							<li><a href="/blog/tags.html">Tags list</a></li>
+						</ul>
+					<li><a href="/webmaster/">Webmastery</a></li>
+				<ul>
+							<li><a href="/webmaster/template.html">Site template</a></li>
+						
+							<li><a href="/webmaster/carousel-gallery.html">Carousel gallery</a></li>
+						</ul>
+					<li><a href="/guestbook.html">Guestbook</a></li>
+				</ul> 
+		<li><a href="/art/">My Art</a></li>
+	<ul>
+					<li><a href="/art/gallery/">Gallery</a></li>
+				
+					<li><a href="/art/accounts/">Accounts</a></li>
+				</ul> 
+		<li><a href="/series/type-moon/">Type-Moon</a></li>
+	<ul>
+					<li><a href="/series/type-moon/resources/">Resources</a></li>
+				
+					<li><a href="/series/type-moon/analysis/">Analysis</a></li>
+				<ul>
+							<li><a href="/series/type-moon/analysis/lancer.html">Cú Chulainn</a></li>
+						
+							<li><a href="/series/type-moon/analysis/scathach.html">Scáthach</a></li>
+						
+							<li><a href="/series/type-moon/analysis/holmesdoc.html">Holmes/EXTRA</a></li>
+						</ul></ul> 
+		<li><a href="/series/arknights/">Arknights</a></li>
+	<ul>
+					<li><a href="/series/arknights/resources/">Resources</a></li>
+				
+					<li><a href="/series/arknights/gameplay/">Gameplay</a></li>
+				<ul>
+							<li><a href="/series/arknights/gameplay/math.html">Calculations</a></li>
+						
+							<li><a href="/series/arknights/gameplay/snakeknights.html">Snakeknights</a></li>
+						</ul>
+					<li><a href="/series/arknights/analysis/">Analysis</a></li>
+				<ul>
+							<li><a href="/series/arknights/analysis/castleshalem.html">Castle Shalem theory</a></li>
+						</ul></ul></ul></nav></div>
+
+			<main id="content"><h1>Arknights Calculations</h1>
+
+<p>Here I collect information about how to calculate various things related to Arknights combat. When I find the time I'll also cook up a simple calculator to do this kind of math with.</p>
+
+<div class="tableofcontents">
+<ol>
+<li><a href="#damage">Damage calculation</a>
+<ol>
+	<li><a href="#base">Base stats</a></li>
+	<li><a href="#external">External modifiers</a></li>
+	<li><a href="#internal">Internal modifiers</a></li>
+	<li><a href="#outgoing">Outgoing damage</a></li>
+	<li><a href="#defensive">Defensive stats</a></li>
+	<li><a href="#incoming">Incoming damage</a></li>
+</ol>
+</li>
+<li><a href="#aspd">Attack interval</a></li>
+<li><a href="#elemental">Elemental injury</a></li>
+</ol>
+</div>
+
+<h2 id="damage">Damage calculation</h2>
+
+<p>The Damage Formula(TM) can be overwhelming when shown as just a formula, so I prefer to break it down into the order in which particular modifiers are applied. Values are rounded when displayed in-game, but internal calculations don't round any numbers.</p>
+
+<h3 id="base">Base stats</h3>
+
+<p>These are the stats as internally defined before any modifers. For operators, these are the stats when you look at the operator info screen. For enemies, these are the values you'll find listed on your wiki of choice. Some talents that unconditionally alter an operator's stats are already incorporated into the stats on the info screen and do not need to be manually applied in any further calculations, but others only take effect once you're in an operation. The distinction seems to be whether the operator has this talent from E0 already: Rose Salt's -5% atk is incorporated in the status screen, but Beagle's +10% def isn't. </p>
+
+<h3 id="external">External modifiers</h3>
+
+<p>The external modifiers are stat changes that are applied by the stage itself at the start of the operation, and which cannot change during the operation. This covers things such as challenge mode conditions, Integrated Strategies difficulty scaling, and various collectibles. These will not be reflected on the squad screen, but when you start the operation and select an undeployed operator, these modifiers will be reflected in the undeployed operator's stats. </p>
+
+<p>In Integrated Strategies, stat changes from collectibles and the skill tree are calculated separately from stat changes caused by difficulty levels, and the order in which certain modifiers are applied and whether they stack additively or multiplicatively will also differ per Integrated Strategies theme. When calculating operator stats, all external modifiers from collectibles and the skill tree stack additively (<code>x * (1 + a% + b% ...)</code>). When calculating enemy stats, all collectibles stack multiplicatively (<code>x * a% * b% ...</code>).</p>
+
+<p>Flat stat changes are generally applied before percent based stat changes in the same modifier.</p>
+
+<h3 id="internal">Internal modifiers</h3>
+
+<p>The internal modifiers are all changes that are applied while the operation is ongoing, which covers every stat change caused by operator or enemy skills or talents. Operator squad buffs such as the Abyssal Hunter talents and passive skills such as Hoshiguma s2 are internal modifiers, even though they are also represented on undeployed operators within the stage. Internal modifiers can be further divided into <b>initial</b> modifiers and <b>final</b> modifiers depending on the order in which they are calculated, and these stack differently.</p>
+
+<p>Initial and final modifiers are easy to distinguish when it comes to operators' atk buffs, because initial modifiers will always be phrased as increasing atk <i>by</i> a certain percentage, while final modifiers will say they increase atk <i>to</i> a certain percentage. For things like debuffs to enemies, what modifier they're on can often only be discovered through either experimenting in-game or datamining it. The <a href="https://tomimi.dev/en/recruit" target="_blank" rel="noreferrer noopener">Tomimi.dev recruitment filter</a> allows you to filter operators by what modifier their debuffs are on.</p>
+
+<h3 id="outgoing">Outgoing damage</h3>
+
+<p>Outgoing damage is the amount of damage an operator or enemy does after all offensive modifiers are applied and before any defensive stats are applied. Atk modifiers are applied in the following order:</p>
+
+<ol>
+<li>Take the unit's base atk <code>Y</code></li>
+<li>Apply the external modifiers however they apply on this stage: <code>Y1 = Y * (1 + a1%) * ...</code> </li>
+<li>Multiply by the sum of the initial percent modifiers: <code>Y2 = Y1 * (1 + b1% + b2% + ...)</code></li>
+<li>Add the sum of the final flat modifiers: <code>Y3 = Y2 + c1 + c2 + ...</code></li>
+<li>Multiply by each of the percent atk debuffs: <code>Y4 = Y3 * (1 - d1%) * (1 - d2%) * ...</code></li>
+<li>Multiply by each of the final percent modifiers: <code> Yfinal = Y4 * d1% * d2% * ...</code></li>
+</ol>
+
+<p>Y4 is the atk value that is displayed for your operator in combat, but there is actually a trick here: debuffs from enemies are also final percent modifiers! In terms of math, step 5 and 6 are functionally one step, and separating them is only relevant because of how the game determines what atk value to display.</p>
+
+<p class="box">All percent debuffs inflicted on operators are final modifier, but percent atk debuffs inflicted by operators can be initial or final modifier.</p>
+
+<p>Current flat atk modifiers from operators cover Inspiration and Steal, which are both final modifier, but initial flat atk modifiers for operators might be added in the future. Inspiration buffs are calculated using a final percent modifier over the source operator's displayed atk, so any other changes to the operator that gives out the buff will be calculated before determining the size of the inspiration buff.</p>
+
+<p>Let's take Ray as an example. She is e2 level 90, skill mastery 3, module X level 3, potential 1, max trust, and her second talent has reached full stacks. Pretty normal Ray use conditions.</p>
+
+<ol>
+<li>Ray as described has 1262 atk on the info screen, so <code>Y = 1262</code></li>
+<li>We're playing on a stage with no external modifiers, so <code>Y1 = Y = 1262</code></li>
+<li>Ray's second talent at max stacks gives +24% atk, so <code>Y2 = Y1 * (1 + 0.24) = 1564.88</code></li>
+<li>No flat modifiers or debuffs apply. <code>Y4 = Y3 = Y2 = 1564.88</code></li>
+<li>Ray has two final modifiers, 330% on her skill and 120% on her trait. <code>Yfinal =  1564.88 * 3.3 * 1.2 =  6196.9248</code></li>
+</ol>
+
+<p>After rounding for display, Ray's outgoing damage is <b>6197</b> per hit. That's a lot!</li>
+
+<p>Now let's complicate the situation. I am buffing Ray with Warfarin s2m3 and a max level/trust no module s2m3 Sora, and I also have Schwarz mod X level 3 in the squad. I'm using them on a stage where the challenge mode condition lowers my operators' atk by 10%. Finally, there's a Blade Helmet Knightclub Elite on the stage who debuffed Ray.</p>
+
+<ol>
+<li>Ray's base stats are unchanged, so <code>Y = 1262</code></li>
+
+<li>The stage's external modifier is -10%, so we get <code>Y1 = 1262 * (1 - 0.1) = 1135.8</code></li>
+
+<li>Warfarin s2 (+90% atk) and Schwarz's talent (+13% atk) are initial modifiers and stack additively with Ray's own talent. <code>Y2&nbsp;= 1135.8 * (1 + 0.9 + 0.13 + 0.24) = 2578.266</code></li>
+
+<li>Sora's inspiration buff is 100% of her own atk, which at max level and no module is 385. However, she is also affected by the challenge mode condition, so our flat modifier buff is <code>385 * (1 - 0.1) = 346.5</code> and we get <code>Y3 = 2578.266 + 346.5 = 2924.766</code></li>
+
+<li>The Blade Helmet's debuff is -50% atk. <code>Y4 = 2924.766 * (1 - 0.5) = 1462.383</code></li>
+
+<li>Ray's final modifiers remain unchanged: <code>Yfinal = 1462.383 * 3.3 * 1.2 = 5791.03668</code></li>
+</ol>
+
+<p>After rounding for display, Ray's outgoing damage is <b>5791</b> per hit in this situation. Although the buffs add up to +127% and the debuffs add up to -60%, the order in which they are calculated means Ray still comes out with lower damage per hit than before.</p>
+
+<h3 id="defensive">Defensive stats</h3>
+
+<p>Outgoing damage is reduced by the enemy's respective defensive stat. Defense reduces physical damage by a flat amount, while Resistance, Elemental Resistance, and Effect Resistance are percent reductions of arts damage, elemental damage, and elemental injury respectively. Defensive stats cannot be reduced below 0, but resistances can go above 100 (some enemies in waves 18 IS3 have over 100 res).</p>
+
+<p>Def and res modifiers are calculated the same way.</p>
+
+<ol>
+<li>Take the base value <code>X</code></li>
+<li>Apply the relevant external modifiers: <code>X1 = X * (1 + a1%) * ...</code></li>
+<li>Add the sum of the intitial flat modifiers: <code>X2 = X1 + b1 + b2 + ...</code></li>
+<li>Multiply by the sum of the initial percent modifiers: <code>X3 = X2 * (1 + c1% + c2% + ...)</code></li>
+<li>Add the sum of the final flat modifiers: <code>X4 = X3 + d1 + d2 + ...</code></li>
+<li>Multiply by each of the final percent modifiers: <code>X5 = X4 * e1% * e2% * ...</code></li>
+<li>Deduct the sum of flat ignore values: <code>X6 = X5 - f1 - f2 - ...</code></li>
+<li>Multiply by each of the percent ignore values: <code>Xfinal = X6 * (1 - f1%) * (1 - f2%) * ...</code></li>
+</ol>
+
+<p class="box">All percent defensive buffs from operators are initial modifiers, and all percent debuffs inflicted on operators are final modifier. However, defensive debuffs inflicted by operators can be initial or final.</p>
+
+<p>X5 is what is displayed when selecting the operator in combat, and Xfinal is what the outgoing damage will be tested against. Calculating these works the same as for atk, just identify what modifier each stat change falls on and go down the list. Again, you can use the <a href="https://tomimi.dev/en/recruit" target="_blank" rel="noreferrer noopener">Tomimi.dev recruitment filter</a> to check what modifier an operator's buffs or debuffs are on.</p>
+
+<h3 id="incoming">Incoming damage</h3>
+
+<p>To finally calculate our incoming damage <code>Z</code>, we reduce Yfinal by Xfinal in the appropriate way. Z will always be at least 5% of Yfinal. For physical damage you take </p>
+
+<p><code>Z = Yfinal - Xfinal</code> </p>
+
+<p>and for the others you take </p>
+
+<p><code>Z = Yfinal * (1 - Xfinal)</code></p>
+
+<p>There are various kinds of damage amplifications and reductions that apply after the outgoing damage is reduced by the target's defenses. All of these are multiplicative all the way down, although several of them, like fragile and sanctuary, will only have the highest value apply if multiple instances are active.</p>
+
+<p><code>Zfinal = Z * damage amplification 1 * damage amplification 2 * (1 - damage reduction 1) * (1 - damage reduction 2) ...</code></p>
+
+<p>Circling back to Ray, in the regular example she had 6197 outgoing damage. Let's say we calculated the enemy def to be 3200. Ray deals +20% physical damage to enemies in her Sandbeast's range, so our final incoming damage is <code>(6197 - 3200) * 1.20 = 3596</code> damage per hit. If this enemy also had a 20% damage reduction, it'd be <code>(6197 - 3200) * 1.20 * (1 - 0.2) = 2877</code> damage per hit.
+
+<h2 id="aspd">Attack interval</h2>
+<p><code>a = 100 ÷ (100 + x/b + y)</code></p>
+
+<p>a = final attack interval.<br>
+   b = base attack interval.<br>
+   x = sum of all base aspd modifiers.<br>
+   y = flat attack interval modifier.</p>
+   
+<p>All aspd buffs and debuffs are additive. Flat interval modifiers are only found in operators' personal skills and cannot be stacked.</p>
+
+<h2 id="elemental">Elemental injury</h2>
+
+<p>Normal and elite enemies and friendly units need 1000 elemental injury to trigger burst, and bosses need 2000. Take note of whether your source of elemental injury deals it as a percentage of the operator's attack, or as a percentage of their damage done.</p>
+
+<p>Elemental injury is reduced by a percentage based on the target's Effect Resistance. Elemental Damage is a damage type that can only be inflicted on targets under elemental injury burst, and is reduced by a percentage based on Elemental RES.</p>
+
+<div class="wide_object">
+<table>
+<tr><th></th><th>Target</th><th>Effect</th><th>Duration</th></tr>
+<tr><th rowspan="2">Nervous Impairment</th>
+<td>Friendly</td><td>Takes 1000 True damage and is Stunned.</td>
+<td rowspan="2">10 sec.</td></tr>
+<tr><td>Enemy</td><td>Takes 6000 Elemental damage and gains 3 stacks of Paralysis.</td></tr>
+
+<tr><th rowspan="2">Corrosion Damage</th>
+<td>Friendly</td><td>Takes 800 Physical damage and has -100 DEF (stacks indefinitely).</td>
+<td>10 sec.</td></tr>
+<tr><td>Enemy</td><td>Takes 5000 Elemental damage and has -120 DEF (stacks indefinitely).</td>
+<td>8 sec.</td></tr>
+
+<tr><th rowspan="2">Burn Damage</th>
+<td>Friendly</td><td>Takes 1200 Arts damage and has -20 RES.</td>
+<td rowspan="2">10 sec.</td></tr>
+<tr><td>Enemy</td><td>Takes 7000 Elemental damage and has -20 RES.</td></tr>
+
+<tr><th rowspan="2">Necrosis Damage</th>
+<td>Friendly</td><td> Takes 100 Arts damage every second, loses 1 SP per second, and cannot use skills.</td>
+<td rowspan="2">15 sec.</td></tr>
+<tr><td> Enemy</td><td>Takes 800 Elemental damage per second and has 50% enfeeble that decays over the duration.</td></tr>
+</table>
+</div></main>
+			
+			<div id="rightbar" >
+
+<div id="infobar"><p><a href="/feed.xml" target="_blank" rel="noreferrer noopener">
+			<img title="RSS feed" alt="A button for /feed.xml" src="/assets/images/rss button.gif" ></a> 
+			</p><hr><p>Friends of the channel</p><p><a href="https://versegm.neocities.org" target="_blank" rel="noreferrer noopener">
+			<img title="Versegm" alt="A button for versegm.neocities.org" src="/assets/images/versegm_button.png" ></a> 
+			<a href="https://theafictionado.wordpress.com/" target="_blank" rel="noreferrer noopener">
+			<img title="The Afictionado" alt="A button for theafictionado.wordpress.com/" src="/assets/images/theafictionado.png" ></a> 
+			<a href="https://mysterycubes.art" target="_blank" rel="noreferrer noopener">
+			<img title="Mysterycubes" alt="A button for mysterycubes.art" src="/assets/images/mysterycubes.png" ></a> 
+			</p><hr><p>Play Proverbs of Hell</p><p><a href="https://proverbsofhell.neocities.org/" target="_blank" rel="noreferrer noopener">
+			<img title="Proverbs of Hell" alt="A button for proverbsofhell.neocities.org/" src="/assets/images/proverbs of hell.png" ></a> 
+			</p><hr><p>Visual Novel</p><p><a href="https://arimiadev.com/" target="_blank" rel="noreferrer noopener">
+			<img title="Arimia" alt="A button for arimiadev.com/" src="/assets/images/arimiadev.gif" ></a> 
+			<a href="https://www.tmdict.com" target="_blank" rel="noreferrer noopener">
+			<img title="Type Moon Dictionary" alt="A button for www.tmdict.com" src="/assets/images/tmdict.png" ></a> 
+			<a href="https://www.tsukikan.com" target="_blank" rel="noreferrer noopener">
+			<img title="Tsuki-kan" alt="A button for www.tsukikan.com" src="/assets/images/tsukikan.png" ></a> 
+			<a href="https://www.readtsukihi.me" target="_blank" rel="noreferrer noopener">
+			<img title="Read Tsukihime" alt="A button for www.readtsukihi.me" src="/assets/images/readtsukihime.png" ></a> 
+			</p><hr><p>Cool site</p><p><a href="https://dragonflycave.com" target="_blank" rel="noreferrer noopener">
+			<img title="The Cave of Dragonflies" alt="A button for dragonflycave.com" src="/assets/images/dragonflycave.gif" ></a> 
+			<a href="https://rarebit.neocities.org/" target="_blank" rel="noreferrer noopener">
+			<img title="Rarebit webcomic template" alt="A button for rarebit.neocities.org/" src="/assets/images/rarebit.png" ></a> 
+			<a href="https://sadgrl.online" target="_blank" rel="noreferrer noopener">
+			<img title="sadgrl.online" alt="A button for sadgrl.online" src="/assets/images/sadgrlonline.gif" ></a> 
+			</p></div></div>
+		</div>
+		
+		<footer id="footer">
+
+<div>
+	
+	<p>This page was created on 08/10/2025 and last modified on 23/05/2026.</p>
+	
+	
+</div></footer>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+The corrected archive source resolves all three prior blockers. The format2 saved row binds the common eight-execution witness; every physical archive gate uses lstat and exact member/count/index checks; all eight launched contracts and physical zero status refs are exact-bound. Actual focused93/94/95 archives contain159/87/292 regular files, with their real original guards and exact hashes.
+
+This is SOURCE PASS only. Full095 executions and genuine fullUI/saved/visual proofs are future inputs. Root must review the actual helper+completed spec pair before any archive phase, then perform the single commit and normal push after actual fullPASS. Neither reviewed script was executed.

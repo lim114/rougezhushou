@@ -1,0 +1,7 @@
+# 第114节：既有浮点比例测试策略的局部更新
+
+完整阅读原test_integer_option_input_types.py。只替换最后current_hp_ratio接受bool的三行块；此前真正checkbox全部遍历及所有其它测试方法AST保持相同。旧False/True案例保留，改为新规则下exact ValueError；另验证0/1/0.0/1.0仍接受，两类均覆盖frames和continuous。没有删case或弱化校验，无产品公式/机制变更。
+
+现有范围错误文案在Root真实原件generic-consumed-ratio-numeric_fraction得到确认；bool拒绝来自第114节已应用的实际consumer资格Source。Root先保留原policy实际related失败，再正式应用此局部测试修正、重新冻结guard和最终验证。本Source未API/helper/native/测试/Qt/Wine/Git执行、未改tracked；只有stdlib AST/哈希/JSON/compile未执行代码对象。future PASS/guard/count均NULL，不把原policy冲突改写成未失败。
+
+检索维护tests中scalar/bool及accepted预期，静态过滤只找到此一明确旧接受冲突；该搜索不是完整runtime无缺陷证明。原测试公共档案和真正checkbox政策保持。

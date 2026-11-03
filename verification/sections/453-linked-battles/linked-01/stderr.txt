@@ -1,0 +1,18 @@
+test_back_and_repeat_open_keep_same_configuration_page_and_choice (tests.test_linked_battles_453.LinkedBattleTests.test_back_and_repeat_open_keep_same_configuration_page_and_choice) ... ok
+test_direct_documented_stage_and_ritual_related_stage_use_host (tests.test_linked_battles_453.LinkedBattleTests.test_direct_documented_stage_and_ritual_related_stage_use_host) ... ok
+test_discard_parent_removes_all_dependent_levels_not_unrelated_page (tests.test_linked_battles_453.LinkedBattleTests.test_discard_parent_removes_all_dependent_levels_not_unrelated_page) ... ok
+test_parent_condition_change_rejects_old_configuration_on_forward (tests.test_linked_battles_453.LinkedBattleTests.test_parent_condition_change_rejects_old_configuration_on_forward) ... FAIL
+test_variants_require_selection_and_nested_stage_uses_same_window (tests.test_linked_battles_453.LinkedBattleTests.test_variants_require_selection_and_nested_stage_uses_same_window) ... ok
+
+======================================================================
+FAIL: test_parent_condition_change_rejects_old_configuration_on_forward (tests.test_linked_battles_453.LinkedBattleTests.test_parent_condition_change_rejects_old_configuration_on_forward)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_linked_battles_453.py", line 83, in test_parent_condition_change_rejects_old_configuration_on_forward
+    self.assertIs(self.host.pages.currentWidget(), source)
+AssertionError: <rouge.player_reference_window.ToolPage(0x2b54a995570, name="mapReferenceWindow") at 0x000002B51D39E980> is not <rouge.player_reference_window.ToolPage(0x2b51bc78be0, name="playerPopover") at 0x000002B51E035980>
+
+----------------------------------------------------------------------
+Ran 5 tests in 8.986s
+
+FAILED (failures=1)

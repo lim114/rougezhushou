@@ -1,0 +1,13 @@
+{
+  "external_sources": [
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QListWidget.html#PySide6.QtWidgets.QListWidget.itemActivated",
+      "verified": "Official Qt documentation confirms activation by system-configured mouse action and Return on Windows; actual native probes verify the current machine.",
+      "adaptation": "Use the mature native activation signal and original button route for both keyboard and mouse navigation."
+    }
+  ],
+  "decision": "Keep mature Qt list/delegate/splitter controls and the existing exact fixed-map reader. These already implement the source-qualified identities needed here; adding a second renderer would duplicate state and navigation.",
+  "codebase_design_application": "Verified battle input crosses a narrow object-reading interface; standalone and embedded callers share the same derivation.",
+  "new_dependency": false,
+  "existing_external_adoption_not_counted_as_new": true
+}

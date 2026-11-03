@@ -2,6 +2,7 @@
 from functools import lru_cache
 import json
 import math
+from .condition_inputs import read_continuous_attacks
 from pathlib import Path
 
 from .attribute_limits import effective_attack_speed
@@ -11,7 +12,7 @@ FPS=30
 def finite(value,label,maximum=108000):
     if isinstance(value,bool):raise ValueError(label+'不能是布尔值。')
     try:value=float(value)
-    except (TypeError,ValueError):raise ValueError(label+'需要有限非负数。') from None
+    except (TypeError,ValueError,OverflowError):raise ValueError(label+'需要有限非负数。') from None
     if not math.isfinite(value) or not 0<=value<=maximum:raise ValueError(label+'需要范围内有限非负数。')
     return value
 
@@ -66,7 +67,7 @@ def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,
         if incoming_interval>0:
             step=frame_time(incoming_interval)
             events.extend((f+1,increment) for f in range(step,horizon,step))
-    elif scenario.get('continuous_attacks',True):
+    elif read_continuous_attacks(scenario,active=lambda:increment+sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')>0):
         increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
         events.extend((f+1,increment) for f in stream['release_frames'])
     charge=0;ready=0 if required<=0 else None
@@ -98,7 +99,7 @@ def charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=F
     if not initial:required=recharge_requirement(scenario,required)
     increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
     if required<=0 and not wait_next_attack:return 0
-    if increment<=0:return None
+    if increment<=0 and required>0:return None
     config=dict(scenario.get('timing',{}))
     if initial:
         for key in ('target_windows','movement_windows','interrupt_windows'):
@@ -111,16 +112,20 @@ def charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=F
     config['_resume_frames']=resume
     config['_deployment_initial']=initial
     timeline=AttackTimeline({**scenario,'timing':config},normal=True,offset=offset)
-    count=math.ceil(required/increment)
+    count=math.ceil(required/increment) if required>0 else 0
     events=timeline.attacks(max(0,3600-offset),interval,speed,attribute_speed=attribute_speed,limit=count+int(wait_next_attack))
     frames=events['release_frames']
     if len(frames)<count:return None
+    if wait_next_attack and count==0 and timeline.mode=='continuous':
+        # SP is already ready: the existing continuous stream begins at 0.
+        # It still needs a legal emitted attack; an empty stream is unknown.
+        return 0.0 if events['start_frames'] else None
     if wait_next_attack and timeline.mode=='frames':
         if len(events['start_frames'])<=count:return None
         return events['start_frames'][count]/FPS
     # SP credited on a release is usable on the following simulated logic tick.
     # This ordering keeps the charging hit within the prior cycle, once only.
-    return (frames[count-1]+1)/FPS if timeline.mode=='frames' else events['times_seconds'][count-1]
+    return (frames[count-1]+1)/FPS if timeline.mode=='frames' else events.get('release_times_seconds',events['times_seconds'])[count-1]
 
 
 def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=0,initial=False,stun=0,resume=0,blocked_seconds=0,attribute_speed=None):
@@ -143,7 +148,7 @@ def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=
     timeline=AttackTimeline({**scenario,'timing':config},normal=True,offset=offset)
     stream=timeline.attacks(max(0,3600-offset),interval,speed,attribute_speed=attribute_speed)
     charge=0;last=0
-    times=[frame/FPS for frame in stream['release_frames']] if timeline.mode=='frames' else stream['times_seconds']
+    times=[frame/FPS for frame in stream['release_frames']] if timeline.mode=='frames' else stream.get('release_times_seconds',stream['times_seconds'])
     for time in times:
         if time<blocked:continue
         last=max(last,blocked)
@@ -158,7 +163,9 @@ def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=
 
 
 class AttackTimeline:
-    def __init__(self,scenario,normal=False,offset=0):
+    def __init__(self,scenario,normal=False,offset=0,target_scope='enemy'):
+        if target_scope not in ('enemy','friendly'):raise ValueError('目标来源需要为enemy或friendly。')
+        self.target_scope=target_scope
         self.s=scenario;self.normal=normal;self.offset=frame_time(offset)
         self.mode=scenario.get('timing_mode','frames')
         if self.mode not in ('frames','continuous'):raise ValueError('时序模式需要为frames或continuous。')
@@ -171,7 +178,12 @@ class AttackTimeline:
             if key in self.options:finite(self.options[key],key)
         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
             if key in self.options:finite(self.options[key],key,3600)
-        self.streams=[];self.notes=[]
+        # Unit previews pass through here too. Keep the public input untouched,
+        # but make all accepted zero spellings use the same empty-target gate.
+        lifetime=self.options.get('target_disappears_seconds')
+        if isinstance(lifetime,str) and finite(lifetime,'target_disappears_seconds',3600)==0:
+            self.options={**self.options,'target_disappears_seconds':0}
+        self.streams=[];self.notes=[];self.target_scope_notes=[];self.unit_scenarios=[]
         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
         self.windows=self.ranges('target_windows')
         self.blocked=sorted(self.ranges('movement_windows')+self.ranges('interrupt_windows'))
@@ -189,6 +201,8 @@ class AttackTimeline:
         return sorted(found)
 
     def selectable(self,frame):
+        if self.target_scope=='friendly' and (self.options.get('target_disappears_seconds')==0 or
+                self.options.get('target_windows')==[]):return self.selectable_lifetime(frame)
         return self.selectable_lifetime(frame) and ('target_windows' not in self.options or any(a<=frame<b for a,b in self.windows))
 
     def unavailable(self,frame):return any(a<=frame<b for a,b in self.blocked)
@@ -201,7 +215,42 @@ class AttackTimeline:
         selected=p.get('normal') if self.normal else p.get('skills',{}).get(str(self.s['skill']))
         return selected or p.get('normal') or {},bool(selected)
 
-    def attacks(self,seconds,interval,speed=100,unit=None,limit=None,delay=0,start_delay=0,ramp=None,attribute_speed=None):
+    def attach_original_reference(self,stream,data,interval,wait_context=None):
+        if not data.get('reference_id'):return
+        from copy import deepcopy
+        original={k:data[k] for k in (
+            'reference_id','reference_label','original_orientation','skin','source_sha256','runtime_binding_verified')}
+        original['overridden_by_preview']=any(key in self.options for key in ('windup_frames','recovery_frames'))
+        if data.get('static_selection_verified'):
+            original.update({k:deepcopy(data[k]) for k in (
+                'static_selection_verified','mode_indices','static_action_binding','selection_source_evidence',
+                'frame_numbers_are_animation_segment_reference','actual_callback_frames',
+                'actual_activation_phase_seconds','actual_end_seconds')})
+        if data.get('three_part_reference'):
+            from .animation_reference import three_part_profile
+            original['body_event_is_not_first_release']=True
+            stream['three_part_reference']=three_part_profile(data,interval)
+            if wait_context is not None:
+                from .three_part_wait import project_wait_budget
+                stream['three_part_reference']['wait_budget']=project_wait_budget(
+                    stream['three_part_reference'],data['three_part_reference'],fps=FPS,
+                    **wait_context)
+            stream['actual_first_release_seconds']=None
+            note='三段动作的firstAttack门和实际启动未知；主体事件不能单独作为首次出手，未显式覆盖前摇时逐击预览保留延迟首击情景。'
+            if note not in self.notes:self.notes.append(note)
+        stream['original_animation_reference']=original
+
+    def attacks(self,seconds,interval,speed=100,unit=None,limit=None,delay=0,start_delay=0,ramp=None,attribute_speed=None,target_scope=None):
+        if target_scope is not None and target_scope!=self.target_scope:
+            child=AttackTimeline(self.s,normal=self.normal,offset=self.offset/FPS,target_scope=target_scope)
+            stream=child.attacks(seconds,interval,speed,unit=unit,limit=limit,delay=delay,
+                start_delay=start_delay,ramp=ramp,attribute_speed=attribute_speed)
+            self.streams.extend(child.streams)
+            self.unit_scenarios.extend(child.unit_scenarios)
+            note='空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。'
+            if target_scope=='friendly' and note not in self.notes:
+                self.notes.append(note);self.target_scope_notes.append(note)
+            return stream
         if attribute_speed is None:attribute_speed=speed
         if unit is not None:
             scoped=self.options.get('units',{})
@@ -209,15 +258,29 @@ class AttackTimeline:
             config=dict(scoped.get(unit,{}))
             if 'target_disappears_seconds' in self.options:config.setdefault('target_disappears_seconds',self.options['target_disappears_seconds'])
             child=AttackTimeline({**self.s,'operator':unit,'timing':config,
-                '_relic_rules':[r for r in self.s.get('_relic_rules',[]) if r['kind']!='deployment_attack_speed']},normal=True,offset=self.offset/FPS)
+                '_relic_rules':[r for r in self.s.get('_relic_rules',[]) if r['kind']!='deployment_attack_speed']},normal=True,offset=self.offset/FPS,target_scope=self.target_scope)
             stream=child.attacks(seconds,interval,speed,attribute_speed=attribute_speed,limit=limit,delay=delay,start_delay=start_delay)
             self.streams.extend(child.streams)
+            # These are supplied preview conditions, not verified acquisitions.
+            # Record them even when continuous scheduling stores no frame stream.
+            keys=('target_windows','movement_windows','interrupt_windows',
+                  'target_disappears_seconds','projectile_travel_seconds',
+                  'windup_frames','recovery_frames','start_delay_frames',
+                  'post_skill_lock_frames','sp_lockout_extra_seconds')
+            if self.mode=='continuous':keys=('target_windows','target_disappears_seconds')
+            from copy import deepcopy
+            self.unit_scenarios.append({'unit':unit,'target_scope':self.target_scope,
+                'options':deepcopy({k:v for k,v in child.options.items() if k in keys}),
+                'lifetime_source':('unit' if 'target_disappears_seconds' in scoped.get(unit,{}) else
+                    'owner' if 'target_disappears_seconds' in self.options else 'unspecified')})
             return stream
         duration=finite(seconds,'窗口秒数',3600)
+        ready=finite(start_delay,'起始延迟秒数',3600)
         deployment_speed=[r for r in self.s.get('_relic_rules',[]) if r['kind']=='deployment_attack_speed']
+        data,exact=self.descriptor(unit)
         if self.mode=='continuous':
             if deployment_speed:
-                times=[];starts=[];steps=[];now=0
+                times=[];starts=[];steps=[];now=ready
                 while now<duration and (limit is None or len(times)<limit):
                     age=(self.offset+self.deployment_offset)/FPS+now
                     bonus=sum(r['value'] for r in deployment_speed if age<r['duration'])
@@ -225,24 +288,41 @@ class AttackTimeline:
                     if now+step>duration+1e-9:break
                     starts.append(now);steps.append(step);now+=step;times.append(now)
             else:
-                count=math.floor(duration/interval+1e-9)
+                count=max(0,math.floor((duration-ready)/interval+1e-9))
                 if limit is not None:count=min(count,limit)
-                times=[(i+1)*interval for i in range(count)]
+                times=[ready+(i+1)*interval for i in range(count)]
                 starts=[t-interval for t in times];steps=[interval]*len(times)
+            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):
+                times=[];starts=[];steps=[]
             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
                 [cadence(t)-cadence(interval) for t in times]),
                 'release_frames':[cadence(t) for t in times],'impact_frames':[cadence(t) for t in times],
                 'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,
-                'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator']}
+                'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
+                'target_scope':self.target_scope}
+            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0
+            if (self.target_scope=='enemy' and self.s['operator']=='char_4182_oblvns' and
+                    self.options.get('target_windows')==[] and self.options.get('target_disappears_seconds')!=0):
+                # Permanent releases may charge SP without a hostile impact.
+                # Keep the original continuous float clock, never frame-rounded.
+                stream['release_times_seconds']=times
+                stream['impact_frames']=[]
+                stream['times_seconds']=[]
+            if data.get('three_part_reference'):
+                self.attach_original_reference(stream,data,interval)
             if deployment_speed:
                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)
                 self.streams.append(stream)
+            elif data.get('three_part_reference'):self.streams.append(stream)
             return stream
-        data,exact=self.descriptor(unit)
         # Per-scenario overrides are explicitly a preview, never account cultivation.
         raw_windup=self.options.get('windup_frames',data.get('windup_frames')) if unit is None else data.get('windup_frames')
         raw_recovery=self.options.get('recovery_frames',data.get('recovery_frames')) if unit is None else data.get('recovery_frames')
+        if data.get('three_part_reference') and (unit is not None or 'windup_frames' not in self.options):
+            # The raw body event excludes conditional begin and native playback
+            # scaling. It cannot fill a whole-ability first-release clock.
+            raw_windup=None;raw_recovery=None
         step=cadence(interval)
         known=raw_windup is not None
         if known:
@@ -308,7 +388,7 @@ class AttackTimeline:
                 emitted_releases.append(release)
                 if impact<end:impacts.append(impact);impact_releases.append(release)
             now+=step
-        stream={'unit':unit or self.s['operator'],'known_animation':known,'exact_binding':False,'reference_binding':exact,
+        stream={'unit':unit or self.s['operator'],'target_scope':self.target_scope,'known_animation':known,'exact_binding':False,'reference_binding':exact,
             'animation':data.get('animation'),'windup_frames':windup if known else None,
             'recovery_frames':recovery if known else None,'interval_frames':step,'interval_seconds':step/FPS,
             'start_frames':[x-self.offset for x in starts],'release_frames':[x-self.offset for x in releases],
@@ -322,11 +402,17 @@ class AttackTimeline:
             'attack_speed_sample':'攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准',
             'resume_frame':max(0,(starts[-1]+step-end)) if starts else 0,
             'source':data.get('source','未确认；保留延迟首击情景')}
-        if data.get('reference_id'):
-            stream['original_animation_reference']={k:data[k] for k in (
-                'reference_id','reference_label','original_orientation','skin','source_sha256','runtime_binding_verified')}
-            stream['original_animation_reference']['overridden_by_preview']=any(
-                key in self.options for key in ('windup_frames','recovery_frames'))
+        absolute_windows={key:self.ranges(key) for key in ('interrupt_windows','movement_windows','target_windows')
+                          if key in self.options}
+        def local_windows(key):
+            return [(max(0,a-self.offset),b-self.offset) for a,b in absolute_windows.get(key,[])
+                    if b>self.offset]
+        wait_context={'origin_frame':math.ceil(begin),'horizon_frames':frame_time(duration),
+            'interrupt_windows':local_windows('interrupt_windows'),
+            'movement_windows':local_windows('movement_windows'),
+            'target_windows':local_windows('target_windows') if 'target_windows' in self.options else None,
+            'declaration_offset_frame':self.offset,'absolute_declared_windows':absolute_windows}
+        self.attach_original_reference(stream,data,interval,wait_context)
         if fixed_impact:
             stream.update(fixed_impact_delay_frames=frame_time(fixed_impact['seconds']),
                 fixed_impact_delay_seconds=fixed_impact['seconds'],
@@ -337,13 +423,17 @@ class AttackTimeline:
 
     def selectable_lifetime(self,frame):
         # Leaving range alone does not destroy a previously locked projectile.
+        if self.target_scope=='friendly' and self.options.get('target_disappears_seconds')==0:return True
         ends=self.options.get('target_disappears_seconds')
         return ends is None or frame<frame_time(ends)
 
     def output(self):
+        from copy import deepcopy
         return {'mode':self.mode,'fps':FPS,'streams':self.streams,
+            **({'unit_scenarios':deepcopy(self.unit_scenarios)} if self.unit_scenarios else {}),
             'window_convention':'[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消',
             'scenario_provided':bool({k:v for k,v in self.options.items() if not k.startswith('_')}),
+            'target_scope_notes':list(self.target_scope_notes),
             'complete':False,
             'notes':['常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。',
                 '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。',*self.notes]}
@@ -366,10 +456,12 @@ def phase_totals(components,boundary):
 
 def annotate_result(scenario,result):
     timing=result.setdefault('timing',AttackTimeline(scenario).output())
-    if timing['mode']=='continuous':return
+    if timing['mode']=='continuous':
+        result['estimate']['notes'].extend(timing.get('target_scope_notes',[]))
+        return
     timing['unplaced_components']=[c['name'] for c in result.get('components',[]) if c.get('hits') and 'times_seconds' not in c]
     skill=result['estimate']['skill']
-    timing['resource_and_damage_shared_clock']=True
+    timing['resource_and_damage_shared_clock']=not timing.get('phase_clock_unbound',False)
     timing['initial_seconds']=skill['initial_seconds'];timing['cycle_seconds']=skill['cycle_seconds']
     if 'assumptions' in result:
         result['assumptions']=[n for n in result['assumptions'] if '未模拟首击、前后摇、帧取整及空转' not in n]

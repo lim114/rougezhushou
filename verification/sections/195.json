@@ -1,0 +1,218 @@
+{
+  "candidate_id": 201,
+  "title": "望棋子库存与手动在场限额进入培养、模组对照和实际配额窗口",
+  "remaining_item": "P2召唤物模组：望棋子额外部署数与库存/实际在场上限映射中的默认手动TokenCard限制",
+  "new_capability": "同精英/等级/潜能的库存和手动在场限制分别计算，TRP-X合法升级只增加手动在场限额；现有模组对照、预算配额与实际Qt配额表消费，增加默认库存越界提示。",
+  "source_evidence": [
+    {
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "sources": {
+        "character_table": {
+          "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+          "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+        },
+        "battle_equip_table": {
+          "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+          "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+        },
+        "uniequip_table": {
+          "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+          "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+        }
+      }
+    },
+    {
+      "current_compiled_native": {
+        "base_version": "26-09-13-15-28-10-30688348",
+        "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+        "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+        "token_bundle_sha256": "a007714067cb60dc4c2effd74838b7782f95b7656ab4e9bf640bfb5160586ed3",
+        "token_asset": "dyn/battle/prefabs/[uc]tokens/token_10064_wang_stone1.prefab",
+        "modifier_binding": [
+          {
+            "attributeType": 16,
+            "formulaItem": 0,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          },
+          {
+            "attributeType": 22,
+            "formulaItem": 0,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          }
+        ],
+        "method_count": 14,
+        "instructions": 3551,
+        "methods": [
+          {
+            "name": "Torappu.AttributesCalculator$$TryGetFinalData",
+            "address": "0x181a856c0",
+            "instructions": 573,
+            "sha256": "c2e19aad4b7fe79779c74f326bfa824af68c2b1c0f1f15b383281ef132da5c20"
+          },
+          {
+            "name": "Torappu.AttributesCalculator$$FetchUniEquipAttributeAddition",
+            "address": "0x181a84c20",
+            "instructions": 129,
+            "sha256": "a727f26edb5d7ec75065776b1a00bfc7c0d7a2905921ffbaabddce10c5072883"
+          },
+          {
+            "name": "Torappu.AttributesCalculator$$FetchEquipAttributesAdd",
+            "address": "0x181a84ae0",
+            "instructions": 79,
+            "sha256": "810a7abd72c40e4f4aab64ae7fa2a29dd16d0f282ca741fa1b7e6c8f88979123"
+          },
+          {
+            "name": "TokenCard$$get_isFull",
+            "address": "0x1806ecc00",
+            "instructions": 58,
+            "sha256": "7c286c5c1e6d1eb1fa41318ebd6a1b15a969a06a2cfe9613e8df9b3df34d6df6"
+          },
+          {
+            "name": "TokenCard$$get_isMaxDeployed",
+            "address": "0x1806ecdf0",
+            "instructions": 64,
+            "sha256": "407bef9634f725ebdd59e996e34e7f5190735af9d30a7d0201cb82667ba39b9b"
+          },
+          {
+            "name": "TokenCard$$Init",
+            "address": "0x1806eb5c0",
+            "instructions": 377,
+            "sha256": "8ba6e039241093d7cb10a29f7d6e7a4540d589b49f0a803cc1d2b8bb34c0b785"
+          },
+          {
+            "name": "TokenCard$$RefreshTokenDeployAndDeckStackCnt",
+            "address": "0x1806ec360",
+            "instructions": 157,
+            "sha256": "4a0224a0926711b46369578900e1fe22f4ff8d73a57c9bbfc9bec4a8b81d8503"
+          },
+          {
+            "name": "TokenCard$$OnSpawned",
+            "address": "0x1806ec020",
+            "instructions": 47,
+            "sha256": "74328dd47f4711cf11fed3b20514d8bad81d1e95be11a1c4ac720e080d703672"
+          },
+          {
+            "name": "TokenCard$$OnRecycle",
+            "address": "0x1806ebf10",
+            "instructions": 33,
+            "sha256": "0ea4f7ce6719cbb8dd8af9065a879b014fb8e92619b21e8dcb5f41da4119cfd2"
+          },
+          {
+            "name": "TokenCard$$OnFetchDataFromPrefab",
+            "address": "0x1806ebc10",
+            "instructions": 138,
+            "sha256": "357e7e043412460ee8b06605d090cc6f1314459e7ef97ed6a9e979f4472527a2"
+          },
+          {
+            "name": "Torappu.Battle.BattleDataConverter$$_ConvertToTokenData",
+            "address": "0x180abe960",
+            "instructions": 120,
+            "sha256": "d18ba91014a3d943834d28ca071ed236f84e590fd3074ae6d095999ec79adf79"
+          },
+          {
+            "name": "Torappu.Battle.BattleDataConverter$$_ConvertToTokenData",
+            "address": "0x180abe6e0",
+            "instructions": 142,
+            "sha256": "2d93559d287922372b51f0d2f5fdfcdcb0fbdd26eb715341c1a6fe68bb09565c"
+          },
+          {
+            "name": "Torappu.Battle.BattleDataConverter$$_ConvertToTokenData",
+            "address": "0x180abe610",
+            "instructions": 50,
+            "sha256": "6e4ef67c39fcc1c237272be341e3e75e8958bfd13dcb04fdcbe12dd4e62053dc"
+          },
+          {
+            "name": "Torappu.Battle.BattleDataConverter$$_ConvertInternal",
+            "address": "0x180abca50",
+            "instructions": 1584,
+            "sha256": "2fc1231009d27a3ee19a14460d1b6d6d95f6d7ffb2647fe254f56f7c193c7c70"
+          }
+        ],
+        "current_hotfix_verified": false,
+        "live_counts_verified": false
+      }
+    },
+    {
+      "paths": [
+        ".cache/batch186-285/p2-units/research/wang-token-prefab.json",
+        ".cache/batch186-285/p2-units/research/monoscripts-current.json",
+        ".cache/batch186-285/p2-units/research/selected-current-metadata.json",
+        ".cache/batch186-285/p2-units/research/wang-counts-current.json",
+        ".cache/batch186-285/p2-units/research/wang-convert-current.json"
+      ],
+      "shared_mapping": ".cache/batch186-285/p2-mechanics/evidence/metadata-layout-validation.json",
+      "typed_binding": "Current PassiveBuffAbility/Talent unique PropertiesHash; dummy holder1; ADDITION/MAX_DEPLOY_COUNT16/MAX_DECK_STACK_CNT22; exact byte-backed14CFGmethods3551instructions",
+      "key_native_points": [
+        "FetchUniEquipAttributeAddition 0x181a84d8c reads tokenAttributeBlackboard+0x28;0x181a84e10 calls direct equipment addition",
+        "FetchEquipAttributesAdd 0x181a84bc6 FP additive accumulate; no owner equipment stats inherited",
+        "TokenCard.Init indices0x10/0x16 read count/stock independently; normal _ConvertInternal tokenInitialCnt+0xa4 initialized0@0x180abd504",
+        "TokenCard.get_isMaxDeployed compares actual counted spawns vs maxDeploy; get_isFull separate stock guard"
+      ]
+    }
+  ],
+  "acceptance": [
+    "33necessary checks passed:7new count cases,2realQtDialog offscreen cases,24related existing checks",
+    "3elite x6potential boundaries; module59/60/90 x3stages, unrelatedidentity/module, unknown inputs and mutations passed",
+    "Actual existing quota dialog shows8stock/8manual limit forE2pot3TRP-X; visible manual scope and overflow notices, changed inputs require recalculation",
+    "Existing cost, relic regeneration, fixed damage and no-private-state tests preserved; only oldunknown-count expectations updated to new evidence"
+  ],
+  "limitations": [
+    "当前编译基包标量参考与固定公开培养表；未证明XLua/服务器热更新等价。",
+    "自动额外棋子、技能期间数量修改、全局部署位、地块及真实在场/库存未知；不把库存当并发上限，不保证实际可部署。",
+    "望在场输入明确只声明计入默认手动限制的棋子；自动棋子不混算。",
+    "Subagent Qt checks are real component/offscreen tests, not visible original Windows window or gameplay; root retains native window cadence."
+  ],
+  "files": [
+    "rouge/token_counts.py",
+    "rouge/data/token-count-reference.json",
+    "rouge/summons.py",
+    "rouge/token_module_comparison.py",
+    "rouge/token_budget.py",
+    "rouge/token_budget_view.py",
+    "scripts/build_wang_count_reference.py",
+    "tests/test_wang_count_reference.py",
+    "tests/test_wang_count_dialog.py",
+    "tests/test_token_module_comparison_126.py",
+    "tests/test_token_budget_130.py",
+    "tests/test_wang_token_module_reference.py"
+  ],
+  "test_selectors": [
+    "tests.test_wang_count_reference",
+    "tests.test_wang_count_dialog",
+    "tests.test_token_module_comparison_126",
+    "tests.test_token_budget_130",
+    "tests.test_wang_token_module_reference"
+  ],
+  "candidate_files_sha256": {
+    "rouge/token_counts.py": "f7a91b10de52644e29188f6c5fa60cd505f1b608e317314fc11ddc8cb08b7393",
+    "rouge/data/token-count-reference.json": "485dd6d4e4b9550747893e478bcc415a807bcb926b0d6929fba6ee9099b82199",
+    "rouge/summons.py": "93c6416e1cc155b20ccb824679deb8e63ea552aa52182f397cfbf0373a777415",
+    "rouge/token_module_comparison.py": "505ff4a23f7fa0af3359c3571ec1d3583a3a58d18d95ffe2e21ad384ae2be5eb",
+    "rouge/token_budget.py": "f77402491d8e48e5c772817b4574d19212251d8ec22543731c886c4e59bf1be7",
+    "rouge/token_budget_view.py": "22506b18554b0c92134d4e8649b3b4cb88e3da66272b1281ad99fa87fe640814",
+    "scripts/build_wang_count_reference.py": "8224f6066fe507a1deccd78ab980da5f782490d012ee897f5c5b9f181d9b5d71",
+    "tests/test_wang_count_reference.py": "bb3c1e43bb229612475ae14d78b776bbab5bf1342132cef9c8339173ac778a1e",
+    "tests/test_wang_count_dialog.py": "3782e0a17431e2e84758e6345c3a945833532a2f7f95aa1436bb660bf0f97c93",
+    "tests/test_token_module_comparison_126.py": "cc697f86fd31018f0bdb32d277e1a8a1b142cfebf62a17c83f087f1a8cf1ba90",
+    "tests/test_token_budget_130.py": "63cdeedc1930aa2a07403257a82e2ebacb82d6a2f038191bbf9a10aa742770e5",
+    "tests/test_wang_token_module_reference.py": "c16e03041861d9cc802069ddb6197f5155203733822f16b562f3dc5ff34ff303"
+  },
+  "section": 195,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:49:01.750059+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 33,
+    "passed": 33,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-195/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

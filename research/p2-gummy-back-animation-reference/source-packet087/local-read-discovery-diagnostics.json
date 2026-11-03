@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "scope": "Optional local path discovery only; transcribed observed tool output, not reconstructed old parser logs",
+  "operations_with_nonzero_exit": 2,
+  "diagnostics": [
+    {
+      "operation": "Optional rg search of documentation locations",
+      "exit_code": 2,
+      "observed_output": [
+        "rg: /workspace/rougezhushou/.continuation: No such file or directory (os error 2)",
+        "rg: /workspace/rougezhushou/ARCHIVE: No such file or directory (os error 2)"
+      ],
+      "resolution": "The external continuation root is /workspace/.continuation; no old cache was recreated and no dependent parse ran"
+    },
+    {
+      "operation": "Optional rg lookup of local AttachmentLoader source path",
+      "exit_code": 2,
+      "observed_output": [
+        "rg: /workspace/.continuation/p2-gummy-back-parser-source087-official-reader/official-source/spine-ts/core/src/AttachmentLoader.ts: IO error for operation on /workspace/.continuation/p2-gummy-back-parser-source087-official-reader/official-source/spine-ts/core/src/AttachmentLoader.ts: No such file or directory (os error 2)"
+      ],
+      "resolution": "The already acquired official path was core/src/attachments/AttachmentLoader.ts; no network retry or dependent parse ran"
+    }
+  ],
+  "network_requests": 0,
+  "resource_acquisitions": 0,
+  "full_skeleton_parser_calls": 0,
+  "application_calls_or_product_failures": 0,
+  "same_parse_problem_failure_budget_consumed": 0
+}

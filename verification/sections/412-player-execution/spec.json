@@ -1,0 +1,25 @@
+{
+  "title": "参照原片重做单排透明工具条与悬停胶囊",
+  "change": "移除工具条大底板、拖动点和第二行副标题，改为贴近原片的单排独立圆形按钮；悬停时按钮横向展开为深色名称胶囊，采用实心图标和原片顺序。支持按钮拖动、键盘操作和屏幕边缘约束。",
+  "limits": "本节只交付工具条布局、呈现与交互；项目图标不冒充原作者品牌，其它浮窗、地图和完整界面仍待逐项对照。参考录像只留本机，不随仓库分发；未操作游戏或发送聊天。",
+  "criteria": [
+    "实际窗口没有连续底板、第二行字幕或拖动点",
+    "单排圆形按钮按原片功能顺序排列",
+    "悬停名称在对应按钮内展开，离开收回",
+    "展开和拖动不越出可用屏幕且不误触功能",
+    "既有面板、置顶和快捷键保持可用",
+    "原片与实际窗口截图逐项对照，不以测试数替代相似度"
+  ],
+  "test": "tests.test_player_toolbar_412",
+  "native": "scripts/verify_player_toolbar_window_412.py",
+  "additional_tests": [
+    "tests.test_player_compact_389",
+    "tests.test_player_hotkey_393",
+    "tests.test_player_recent_notes_411"
+  ],
+  "next": "继续按原片核对工具条及其它浮窗、地图与资料呈现；未指定新数字终点，下一到期全量425。",
+  "unit_receipt": "verification/sections/412-player-checks-attempt5/process.json",
+  "native_receipt": "verification/sections/412-player-window-attempt5/window.json",
+  "native_process_receipt": "verification/sections/412-player-window-process-attempt5/process.json",
+  "source_receipt": "verification/sections/412-video-appearance.json"
+}

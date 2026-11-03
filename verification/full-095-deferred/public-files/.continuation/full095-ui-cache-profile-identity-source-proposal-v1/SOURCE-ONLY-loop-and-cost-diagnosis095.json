@@ -1,0 +1,235 @@
+{
+  "schema": "full-ui095-readonly-loop-cost-diagnosis-v1",
+  "Source_only": true,
+  "runtime_pass": false,
+  "actual_root_cause_established": false,
+  "actual_speedup_established": false,
+  "actual_total_or_completion_estimated": false,
+  "patch_applied": false,
+  "inputs": {
+    "runner": {
+      "path": "/workspace/.continuation/full095-ui-cache-retry-source-v1/wine-full-ui-095-cache-retry.py",
+      "bytes": 1184954,
+      "sha256": "e5dec2d704cecbde56762cf7c2f92016f5123b592633fae12840a892869e6bc5"
+    },
+    "official_cpython_v3_12_10_codeobject_source": {
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Objects-codeobject.c",
+      "bytes": 75495,
+      "sha256": "60365e71ac9fc8411c546f86de3a1f49b6190ebb40b893ed31c6ff0b2cb5493f"
+    },
+    "official_source_provenance": {
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/source-diagnosis-cpython-lineno095.json",
+      "bytes": 10509,
+      "sha256": "1e552536e85671507ed0cbfed536ce360855b64d7a55494bac764b7a1fe3a166"
+    },
+    "independent_instrumentation_diagnosis": {
+      "path": "/workspace/.continuation/full095-ui-cache-instrumentation-source-diagnosis-v1/instrumentation-source-diagnosis095.md",
+      "bytes": 6970,
+      "sha256": "d8c49397532f9397cca9559462e03640f5c17b4decd5f4b8c7c02ba0df99f2c7"
+    }
+  },
+  "runner_ast_assertions": 907,
+  "runner_line2705": {
+    "section": 66,
+    "successful_branch": "result=click_result();args=window.damage_result['scenario']",
+    "enclosing_finite_loops": [
+      {
+        "line": 2688,
+        "domain": "(1,2,3)"
+      },
+      {
+        "line": 2690,
+        "domain": "(True,False)"
+      },
+      {
+        "line": 2692,
+        "domain": "scopes070, the four literal scopes defined at2667-2669"
+      },
+      {
+        "line": 2694,
+        "domain": "((0,0),(0,1),(1,0),(1,1),(3,2))"
+      }
+    ],
+    "invalid_numeric_branch": [
+      2696,
+      2703
+    ],
+    "append_completed_check": [
+      2709,
+      2714
+    ],
+    "matrix_closure": [
+      2715,
+      2717
+    ],
+    "interpretation": "Repeated origin2705 can refer to different parameter cells and nested project calls. Finite Source loop domains do not prove a current invocation terminates, actual progress, or duration."
+  },
+  "normal_next_stages": [
+    {
+      "name": "67 Phatm incoming attack declarations",
+      "lines": [
+        2719,
+        2753
+      ]
+    },
+    {
+      "name": "68 Shu profession declarations",
+      "lines": [
+        2755,
+        2785
+      ]
+    },
+    {
+      "name": "69 cooperative and fragile declarations",
+      "lines": [
+        2787,
+        2823
+      ]
+    },
+    {
+      "name": "70 sown-tile checkbox",
+      "lines": [
+        2825,
+        2879
+      ]
+    },
+    {
+      "name": "71-75",
+      "lines": [
+        2881,
+        3029
+      ]
+    },
+    {
+      "name": "76-80",
+      "lines": [
+        3031,
+        3217
+      ]
+    },
+    {
+      "name": "81-85",
+      "lines": [
+        3219,
+        3403
+      ]
+    },
+    {
+      "name": "86-90, switches scope to legacy086_090",
+      "lines": [
+        3406,
+        3638
+      ]
+    },
+    {
+      "name": "legacy_footer",
+      "lines": [
+        3640,
+        3699
+      ]
+    },
+    {
+      "name": "new095 behavior subgroup, called only after original count closure",
+      "lines": [
+        3701,
+        3707
+      ]
+    },
+    {
+      "name": "close, final guard/native checkpoint, legacy gzip, receipt, exit",
+      "lines": [
+        3708,
+        3744
+      ]
+    }
+  ],
+  "scope_fact": {
+    "initialization_line": 1155,
+    "value": "legacy_prefix4217",
+    "next_normal_legacy_change_line": 3408,
+    "meaning": "This scope is broad; it does not distinguish earlier legacy sections or supply a progress fraction."
+  },
+  "definite_Source_costs": [
+    {
+      "name": "CodeType dictionary hashing",
+      "runner_lines": [
+        1205,
+        1209
+      ],
+      "official_source_lines": [
+        1862,
+        1898
+      ],
+      "fact": "On every main-thread profile event the current code is used for membership and indexing before any event-specific branch. CPython v3.12.10 code_hash hashes the constant/name/table fields and loops over the instruction stream through Py_SIZE(co), skipping inline caches. It does not cache its final hash."
+    },
+    {
+      "name": "Frame ancestry and filename normalization",
+      "runner_lines": [
+        1176,
+        1192,
+        1211,
+        1256,
+        1261
+      ],
+      "fact": "Every rouge Python call walks origin ancestry before the targeted-capture test; exception tracing separately normalizes filenames."
+    },
+    {
+      "name": "Full independent native snapshots",
+      "runner_lines": [
+        1121,
+        1124,
+        1223,
+        1229,
+        1234
+      ],
+      "fact": "Each snapshot builds native graph, inverses it, rebuilds and asserts equality; caller before, caller after, and return are independent evidence captures."
+    },
+    {
+      "name": "Cumulative checkpoint totals/index",
+      "runner_lines": [
+        1285,
+        1289
+      ],
+      "fact": "Each checkpoint scans every existing chunk twice for totals and serializes/atomically publishes the full cumulative index."
+    },
+    {
+      "name": "Full payload encoding/compression/hash",
+      "runner_lines": [
+        1277,
+        1284,
+        1292
+      ],
+      "fact": "Each materialized payload is encoded, gzip-compressed and hashed in compressed/decoded forms with profiling/tracing restored to their prior hooks during file work."
+    }
+  ],
+  "unapplied_patch": {
+    "patch": {
+      "path": "/workspace/.continuation/full095-ui-cache-profile-identity-source-proposal-v1/profile-identity-front-cache-unapplied.patch.txt",
+      "bytes": 1670,
+      "sha256": "435b028a2b446a5bbcdb7f2a3d820c796f6abb83e7a9652e5303dc26577c6267"
+    },
+    "exact_inverse": {
+      "path": "/workspace/.continuation/full095-ui-cache-profile-identity-source-proposal-v1/exact-inverse-profile-identity-unapplied095.json",
+      "bytes": 3339,
+      "sha256": "cc83242afae26832945515aa3c4ddb7d1da6c6a7d3ea1c4b297d6191339feb78"
+    },
+    "scope": "Only identity front-cache; no running totals, codec/capture/assertion/record thinning, output-path, BINDING095, maintained Source, product call, or runtime change.",
+    "numeric_runner_lines_preserved": true
+  },
+  "Source_validation": {
+    "compiler": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "target_compiler_measurement": false,
+    "target_bytecode_executed": false,
+    "whole_inverse_verified": true,
+    "line_neutral": true,
+    "assertion_segments": 907,
+    "assertion_segments_unchanged": true,
+    "evidence_branch_suffix_unchanged": true
+  },
+  "limits": [
+    "No process observation/attach/signal or runtime execution performed.",
+    "No current runner or actual metadata target modified.",
+    "Source cost presence does not establish wall-time share, actual root cause, improvement magnitude, remaining time, total records, or completion fraction.",
+    "The optional patch is unmaterialized and unapproved for execution; future full-batch source admission and binding/review remain Root work."
+  ]
+}

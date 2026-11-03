@@ -1,0 +1,25 @@
+test_repeated_confirmed_kettles_are_a_complete_statistical_sample (tests.test_history_statistics_layout_review.HistoryStatisticsLayoutReview.test_repeated_confirmed_kettles_are_a_complete_statistical_sample) ... FAIL
+test_holding_rate_and_its_exact_sample_rows_share_repeated_count (tests.test_history_statistics_layout_review.HistoryStatisticsLayoutReview.test_holding_rate_and_its_exact_sample_rows_share_repeated_count) ... FAIL
+
+======================================================================
+FAIL: test_repeated_confirmed_kettles_are_a_complete_statistical_sample (tests.test_history_statistics_layout_review.HistoryStatisticsLayoutReview.test_repeated_confirmed_kettles_are_a_complete_statistical_sample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_history_statistics_layout_review.py", line 23, in test_repeated_confirmed_kettles_are_a_complete_statistical_sample
+    r=self.run_state();observe(r,[KETTLE]*3+[OTHER,TOOL]);before=deepcopy(r.state);self.assertTrue(complete_inventory(r.state));self.assertEqual(r.state,before)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_holding_rate_and_its_exact_sample_rows_share_repeated_count (tests.test_history_statistics_layout_review.HistoryStatisticsLayoutReview.test_holding_rate_and_its_exact_sample_rows_share_repeated_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_history_statistics_layout_review.py", line 25, in test_holding_rate_and_its_exact_sample_rows_share_repeated_count
+    r=self.run_state();observe(r,[KETTLE]*3+[OTHER,TOOL]);records=[{'state':deepcopy(r.state),'state_sha256':'a'*64}];result=statistics(records,KETTLE);self.assertEqual(result['relic']['sample_count'],1);self.assertEqual(result['relic']['held_count'],1);self.assertEqual(result['relic']['fraction'],1);self.assertEqual(result['measures']['relic_count']['mean'],5);rows=sample_rows(records,'relic',KETTLE);self.assertTrue(rows[0]['included']);self.assertTrue(rows[0]['value'])
+                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.129s
+
+FAILED (failures=2)

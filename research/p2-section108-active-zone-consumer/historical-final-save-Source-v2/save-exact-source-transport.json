@@ -1,0 +1,28 @@
+{
+  "kind": "SOURCE_ONLY_108_LEAF_PIN_SAVER_EXACT_TRANSPORT",
+  "Runtime_executed": false,
+  "source": "/workspace/.continuation/root-section-save-v3.py",
+  "before_bytes": 6845,
+  "before_sha256": "67c7d8d8016c6c21caf147844f2fbff0293a44ada0e3792e5bd3a3bcce86212b",
+  "after_bytes": 8647,
+  "after_sha256": "6233ce34fd7c65f1a1fab3284acb501ad7447a900276b6f7a443c415fc5bd267",
+  "replacements": [
+    {
+      "before": "    stamp = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()\n",
+      "after": "    # Final 108 evidence uses only explicit regular public leaves with Source pins.\n    assert n == 108 and len(expected) == 751\n    actual = {p.relative_to(repo).as_posix(): digest(p)[\"sha256\"]\n              for folder in (\"rouge\", \"tests\", \"scripts\")\n              for p in sorted((repo / folder).rglob(\"*\"))\n              if p.is_file() and p.suffix in (\".py\", \".json\") and \"__pycache__\" not in p.parts}\n    assert actual == expected\n    seen = set()\n    for entry in spec[\"public_evidence\"]:\n        original_path = pathlib.Path(entry[\"source\"])\n        assert not original_path.is_symlink() and all(not q.is_symlink() for q in original_path.parents)\n        source = original_path.resolve()\n        assert source.is_file() and pathlib.Path(\"/workspace/.continuation\") in source.parents\n        assert repo not in source.parents\n        assert all(part not in (\".local\", \".venv\", \".git\", \"__pycache__\", \"private\", \"credentials\") for part in source.parts)\n        evidence_pin = entry[\"source_pin\"]\n        assert set(evidence_pin) == {\"path\", \"bytes\", \"sha256\"}\n        assert evidence_pin[\"path\"] == str(source)\n        assert digest(source) == {key: evidence_pin[key] for key in (\"bytes\", \"sha256\")}\n        destination = pathlib.Path(entry[\"destination\"])\n        assert not destination.is_absolute() and \"..\" not in destination.parts\n        assert destination.as_posix() not in seen\n        seen.add(destination.as_posix())\n    stamp = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()\n"
+    },
+    {
+      "before": "\"root-section-save-v3.py\"",
+      "after": "\"root-section108-save-v1.py\""
+    },
+    {
+      "before": "        assert receipt[\"passed\"] is True and receipt[\"workflow_complete\"] is True, path\n",
+      "after": "        assert receipt[\"passed\"] is True, path\n        if receipt.get(\"kind\") == \"ROOT_ACTUAL_108_PURE_SAVED_API_PAIR_AUDIT\":\n            assert receipt[\"workflow_checks_passed\"] is True and receipt[\"source_and_CORE_unchanged\"] is True, path\n        else:\n            assert receipt[\"workflow_complete\"] is True, path\n"
+    }
+  ],
+  "other_insertion": {
+    "before": "            original = digest(leaf)\n",
+    "after": "            original = digest(leaf)\n            if \"source_pin\" in entry:\n                assert original == {key: entry[\"source_pin\"][key] for key in (\"bytes\", \"sha256\")}\n"
+  },
+  "reason": "Before any tracked write, only exact regular public leaves and complete Source751 are admitted. Source pins are rechecked before copying. Existing archive/checkpoint/publication behavior is preserved."
+}

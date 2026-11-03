@@ -1,0 +1,24 @@
+--- .cache/seal_tools_303.py before
++++ .cache/seal_tools_303.py current
+@@ -23,13 +23,18 @@
+   if forbidden in raw.decode():raise ValueError('Previous functional scope leaked: '+str(path)+' '+forbidden)
+ cfg=constants(paths[0]);scope=json.loads((ROOT/'verification/sections/303-preparation/scope.json').read_bytes())
+ assert cfg['PARENT']==scope['parent_commit']=='c2b78e4aa4136fe739067b5ccf9d13b595142320'
+-assert cfg['DATA']=='rouge/data/fixed-landmark-references.json'and cfg['CHANGED_EXISTING']=={cfg['DATA']}
++assert cfg['DATA']=='rouge/data/fixed-landmark-references.json'
++assignments={node.targets[0].id:node.value for node in ast.parse(paths[0].read_bytes()).body
++ if isinstance(node,ast.Assign)and len(node.targets)==1 and isinstance(node.targets[0],ast.Name)}
++assert ast.dump(assignments['CHANGED_EXISTING'],include_attributes=False)==ast.dump(ast.Set(elts=[ast.Name(id='DATA',ctx=ast.Load())]),include_attributes=False)
+ assert cfg['MAINTENANCE']=={n:pin(ROOT/n)['sha256']for n in cfg['MAINTENANCE']}
+-assert cfg['MANIFEST_SHA']==pin(ROOT/cfg['MANIFEST'])['sha256']
++assert cfg['MANIFEST_SHA']==pin(ROOT/'research/p3-map-direct-ground-303/source-manifest.json')['sha256']
+ assert cfg['DATA_SHA']==pin(ROOT/cfg['DATA'])['sha256']
+-assert cfg['COMPARISON_SHA']==pin(ROOT/cfg['COMPARISON'])['sha256']
++assert cfg['COMPARISON_SHA']==pin(ROOT/'research/p3-map-direct-ground-303/build-receipt.json')['sha256']
+ for name in('stage_section','verify_publication'):
+  assert(PUB/(name+'_303.py')).read_bytes()==(PUB/(name+'_303.py.txt')).read_bytes()
++assert "index=text.index('## 功能第302节')"in(PUB/'verify_publication_303.py').read_text(encoding='utf8')
++assert "index=text.index('## 功能第301节')"not in(PUB/'verify_publication_303.py').read_text(encoding='utf8')
+ native_path=ROOT/'.cache/p3-303-native-window/READY.json';native=json.loads(native_path.read_bytes())
+ assert native['canonical']==cfg['CANONICAL']and native['prior_commit']==cfg['PARENT']and len(native['necessary_modules'])==5
+ backend=ROOT/'.cache/p3-303-backend/HANDOFF.json'

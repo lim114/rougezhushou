@@ -1,0 +1,46 @@
+{
+  "kind": "SOURCE_ONLY_NEW_AGGREGATE_LINUX_EXACT_PROJECTION_FIX",
+  "runtime_executed": false,
+  "product_pass": false,
+  "basis_path": "/workspace/.continuation/full120-125-gates-source-v1/aggregate_full_scope.py",
+  "basis_sha256": "7a7e338a91ea7b0b34d6c509c6049b98a6c9fbf6d6bec45e676ffe89ac8421f0",
+  "candidate_path": "candidate/aggregate_full_scope.py",
+  "candidate_sha256": "a8506619d9ef35884f625622b47a85868681f963d6dd9d2be8c8cc39278d7f2b",
+  "exact_forward_and_inverse": true,
+  "AST_compile_noexec": true,
+  "local_transports": [
+    {
+      "before": "import argparse\n",
+      "after": "import argparse\nimport ast\n",
+      "occurrences": 1
+    },
+    {
+      "before": "CORE_SHA = 'a75d9497ce34f68de787e3ba99704741f2c873c2c5fa9b5de01e6620b1f00f89'\n",
+      "after": "CORE_SHA = 'a75d9497ce34f68de787e3ba99704741f2c873c2c5fa9b5de01e6620b1f00f89'\nLINUX_SOURCE_FUNCTION_AST_SHA = '5c4254d500a1102352522613aa39d8288fefe7a0ae9dae5894d2b21c99bd14d6'\n",
+      "occurrences": 1
+    },
+    {
+      "before": "    count = source()\n",
+      "after": "    count = source()\n    # The maintained Linux runner records its exact original projection,\n    # rather than the complete rouge/tests/scripts guard. Bind that projection\n    # without weakening the separately checked full Source/CORE freeze.\n    def linux_source():\n        verifier = root / 'scripts/verify_full_available.py'\n        verifier_raw = verifier.read_bytes()\n        tree = ast.parse(verifier_raw)\n        nodes = [node for node in tree.body\n                 if isinstance(node, ast.FunctionDef) and node.name == 'source_hashes']\n        require(len(nodes) == 1 and sha(ast.dump(nodes[0], include_attributes=False).encode('utf-8'))\n                == LINUX_SOURCE_FUNCTION_AST_SHA,\n                'Maintained Linux Source projection changed; new independent Source review required')\n        files = [*root.glob('rouge/**/*.py'), *root.glob('rouge/data/**/*.json'),\n                 *root.glob('tests/test_*.py'), verifier]\n        projected = {}\n        for path in sorted(set(files)):\n            require(path.is_file() and not path.is_symlink(), 'Linux projection requires regular Source')\n            name = path.relative_to(root).as_posix()\n            digest = sha(path.read_bytes())\n            require(guard['source_sha256'].get(name) == digest,\n                    'Every exact Linux projection leaf must match the complete actual guard')\n            projected[name] = digest\n        require(projected, 'Nonempty actual maintained Linux Source projection required')\n        return projected\n    linux_receipt_source = linux_source()\n",
+      "occurrences": 1
+    },
+    {
+      "before": "                and value['source_sha256'] == guard['source_sha256']\n",
+      "after": "                and value['source_sha256'] == (guard['source_sha256'] if platform == 'wine' else linux_receipt_source)\n",
+      "occurrences": 1
+    },
+    {
+      "before": "    source()\n    for path, value in frozen.items():\n",
+      "after": "    source()\n    require(linux_source() == linux_receipt_source, 'Exact Linux projection drifted during aggregate')\n    for path, value in frozen.items():\n",
+      "occurrences": 1
+    },
+    {
+      "before": "        **full, 'selected': selected_summary, 'selected_passed_count_derived': False,\n",
+      "after": "        **full, 'selected': selected_summary, 'selected_passed_count_derived': False,\n        'linux_receipt_source_files': len(linux_receipt_source),\n        'linux_receipt_source_projection_AST_sha256': LINUX_SOURCE_FUNCTION_AST_SHA,\n        'linux_receipt_source_scope': 'Exact unchanged maintained source_hashes projection; complete current Source and CORE checked independently before and after all receipt reads.',\n",
+      "occurrences": 1
+    }
+  ],
+  "complete_Source_CORE_Wine_Saved_capability_and_scope_guards_unchanged": true,
+  "original_metadata_package_modified": false,
+  "tracked_modified": false
+}

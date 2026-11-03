@@ -1,0 +1,70 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "启动与目录读取精简、按需头像及39个藏品共图变体修复",
+  "baseline_commit": "b9f7b2efdef2e9305ab1d436dfe014c88947ba73",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_functional_section_started": false,
+  "implemented_fixes_passed": true,
+  "application_review_complete": false,
+  "source_review": {
+    "path": "verification/maintenance/catalog-review-20261031/review-source.json",
+    "sha256": "818214da6355db756fc9ff6a433731a3ddf1a744f118c975310e67189a18d162",
+    "bytes": 5047
+  },
+  "performance_scope": "public catalogs; isolated empty run; MainWindow construction excludes module imports and Python startup; not recognition or game performance",
+  "performance": {
+    "before": {
+      "construction_median_ms": 1929.0090000722557,
+      "refresh_median_of_per_process_medians_ms": 146.9737000297755
+    },
+    "after": {
+      "construction_median_ms": 1418.6591999605298,
+      "refresh_median_of_per_process_medians_ms": 36.986400140449405
+    }
+  },
+  "benchmark_processes": {
+    "path": "verification/maintenance/catalog-review-20261031/final-benchmark/benchmark-processes.json",
+    "sha256": "36b13a8cfcca65639a65005a7a1ae4bffcee43b91bd5a4d4e952a0b7d13b6c78",
+    "bytes": 3043
+  },
+  "semantic_comparison": {
+    "exact_result_sha256": "6cf48629737883c1e66e5126574be4030d4cba52eb88f033dceb99ad97452333",
+    "inventory_combinations": 432,
+    "category_modes": 20,
+    "operator_branches": 8
+  },
+  "initial_targeted_test_executions": 95,
+  "final_targeted_test_executions": 43,
+  "overlapping_test_executions_not_combined": true,
+  "native_checks": {
+    "414": 20,
+    "396": 21
+  },
+  "native_images_actually_viewed_by_root": [
+    "final-checks/native-414/window.png",
+    "final-checks/native-396/window.png"
+  ],
+  "original_video_frame_172_actually_viewed": true,
+  "video_frame_sha256": "cbd3b489b37b9c074b5a3e52a11866ce1305338c0aee381c6c26829679bad452",
+  "shared_artwork_variants_fixed": 39,
+  "remaining_inventory_image_entries_unavailable": 26,
+  "inventory_total_only_pinned_scope": 298,
+  "runtime": {
+    "path": "verification/maintenance/catalog-review-20261031/live-window/desktop-review.json",
+    "sha256": "1a624a27789c8088d98dffe0235928181d4e158b90ba4d0cbcacde31ec60015d",
+    "bytes": 579
+  },
+  "maintained_selectors_count": 690,
+  "full_scope_original_order_preserved": true,
+  "full_validation_rerun": false,
+  "prior_full_only_original_frozen_source": true,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "video_parity_complete": false,
+  "real_chat_sent": false,
+  "game_operated": false,
+  "private_data_included": false,
+  "publication_binding": "enclosing maintenance commit; verify real remote after ordinary push"
+}

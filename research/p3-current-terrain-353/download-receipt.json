@@ -1,0 +1,62 @@
+{
+  "schema": "current_terrain_353_download_v1",
+  "recorded_at": "2026-10-23T15:16:08.904700+00:00",
+  "sources": [
+    {
+      "file": "research/p3-current-terrain-353/prts-tiles-format.html",
+      "url": "https://m.prts.wiki/w/特殊地形/trapper/tilesformat.json",
+      "status": 200,
+      "bytes": 1182,
+      "sha256": "4af1738f410ca2dffff8cfd93cc48d3295b0ab769b1f457efbdd64250412307e",
+      "revision": null,
+      "usable_documentary_source": false,
+      "reason": "HTTP 200 body is an anti-bot challenge, not the requested documentary source."
+    },
+    {
+      "file": "research/p3-current-terrain-353/bwiki-terrain.html",
+      "url": "https://wiki.biligame.com/arknights/地形",
+      "status": 200,
+      "bytes": 146968,
+      "sha256": "506d0ad3965475da8c0f421a19815d9eb02bcf96a07a4f5131344c9b09e87452",
+      "revision": 352021,
+      "usable_documentary_source": true
+    },
+    {
+      "file": "research/p3-current-terrain-353/prts-basic-terrain.html",
+      "url": "https://m.prts.wiki/w/基本地形",
+      "status": 200,
+      "bytes": 41697,
+      "sha256": "cb0d21db3e4e4d5447668991088edc65f2c47f1107fdca502889f1d47a7d0ebe",
+      "revision": 428351,
+      "usable_documentary_source": true
+    },
+    {
+      "file": "research/p3-current-terrain-353/prts-wall.html",
+      "url": "https://m.prts.wiki/w/围墙",
+      "status": 200,
+      "bytes": 30760,
+      "sha256": "de5b5aea4ca8ec91c848f79b5b876216a91b744ad0741b763adc322c06129967",
+      "revision": 428434,
+      "usable_documentary_source": true
+    }
+  ],
+  "additional_failed_attempts": [
+    {
+      "method": "venv Python requests import",
+      "network_request_sent": false,
+      "result": "requests module unavailable"
+    },
+    {
+      "method": "stdlib urllib HTTPS to original PRTS template",
+      "result": "TLS unexpected EOF; no documentary body obtained"
+    },
+    {
+      "method": "PowerShell original PRTS action=raw",
+      "result": "TLS connection failed; no documentary body obtained"
+    },
+    {
+      "method": "web open original template",
+      "result": "Access denied / anti-bot redirect; not a usable source"
+    }
+  ]
+}

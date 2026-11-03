@@ -1,0 +1,22 @@
+--- a/tests/test_cache_consumers_101.py
++++ b/tests/test_cache_consumers_101.py
+@@ -148,13 +148,15 @@
+         self.assertEqual(run.state['relic_count'], 0.0)
+         self.assertEqual(run.held_relic_ids(), [])
+ 
+-    def test_summary_counts_present_members_with_the_existing_truthiness_gate(self):
+-        for value, expected in (('yes', 1), (None, 0), ([], 0), ([1], 1), ({}, 0),
+-                                ({'public': 1}, 1), (False, 0), (True, 1), (0, 0), (1, 1)):
++    def test_summary_counts_only_qualified_presence_and_retains_unknown_raw_flags(self):
++        # Section122 intentionally replaces the old non-bool truthiness claim.
++        # Boolean controls and the next method's missing-default contract stay.
++        for value in ('yes', None, [], [1], {}, {'public': 1}, False, True, 0, 1):
+             with self.subTest(value=value):
+                 run, raw = self.load({'operators': {'mechanist': {'present': value}}})
+                 text = self.view_unchanged(run, raw, run.summary)
+-                self.assertIn(f'当前已识别 {expected} /', text)
++                self.assertIn(f'当前已识别 {int(value is True)} /', text)
++                if type(value) is not bool:self.assertIn('在场状态未确认', text)
+                 self.assertEqual(native(run.state['operators']['mechanist']['present']), native(value))
+ 
+     def test_missing_presence_keeps_original_default_present_member(self):

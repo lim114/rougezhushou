@@ -1,0 +1,30 @@
+{
+  "format_version": 1,
+  "status": "AUTHOR_MANIFEST_TRANSPORT_SCHEMA_PREPARATION_RESOLVED",
+  "freeze_preflight_failed_attempts": 2,
+  "diagnostic_reader_failed_attempts": 1,
+  "error": "Overly strict assumed equality between archive_path and source_path relative to author root; author packet intentionally maps product/baseline-source/source-candidate and links the immutable old source packet.",
+  "actual_schema_evidence": {
+    "all_rows": 89,
+    "mapped_rows": 38,
+    "absolute_actual_source_paths": true,
+    "safe_unique_relative_archive_paths": true,
+    "source_roots": [
+      "/workspace/.continuation/p2-continuous-attacks-text-088-draft",
+      "/workspace/.continuation/p2-section088-candidate-audit"
+    ]
+  },
+  "correction": "Retain original failed preflight script; accept the two actual verified source roots and verify relative safe unique archive mapping separately from real source file bytes/hash.",
+  "second_preflight_failure": {
+    "error": "Frozen new test source is the author outer file, not draft/tests; product source seven and all125 baseline/current/draft maintained files had already passed.",
+    "actual_source_path": "/workspace/.continuation/p2-continuous-attacks-text-088-draft/test_continuous_attacks_text_input.py",
+    "bytes": 5975,
+    "sha256": "8f60e65bae208476eadd06650b7aa4c87f43442fe092a52254f1b3631c2ce9f3",
+    "correction": "Bind actual manifest source path separately; independent runner imports the unchanged original test at that exact path with frozen draft product imports. No copied or edited author test.",
+    "all_remaining_static_paths_checked_before_third_attempt": true
+  },
+  "author_frozen_originals_modified": false,
+  "fresh_API_helper_formatter_tests_at_failures": 0,
+  "product_failures": 0,
+  "same_unresolved_transport_no_fourth_attempt": true
+}

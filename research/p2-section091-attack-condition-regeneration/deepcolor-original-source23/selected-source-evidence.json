@@ -1,0 +1,230 @@
+{
+  "classification": "STATIC_SOURCE_AND_EXISTING_REAL_SAVED_RESULT",
+  "source_git_commit": "5e2ff697402d06e78b239e01f0b4307b50dd5633",
+  "pinned_game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "current_raw_table_downloads_or_rehashes": 0,
+  "catalog_s1_rank10_selector": "operators.char_110_deepcl.skills[0].levels[9]",
+  "catalog_s1_id": "skchr_deepcl_1",
+  "catalog_s1_rank10": {
+    "name": "光影之触",
+    "duration": 30.0,
+    "description": "所有触手攻击力和防御力<@ba.vup>+{atk:0%}</>，每秒恢复<@ba.vup>{hp_recovery_per_sec}</>点生命",
+    "duration_type": "NONE",
+    "sp_type": "INCREASE_WITH_TIME",
+    "sp_cost": 30,
+    "initial_sp": 0,
+    "sp_increment": 1.0,
+    "max_charges": 1,
+    "values": {
+      "atk": 0.6,
+      "def": 0.6,
+      "hp_recovery_per_sec": 70.0
+    }
+  },
+  "prior_original_table_receipt_reused": {
+    "source": "git-snapshots/research/p2-token-count-reporting/source-closure.json",
+    "fresh_pinned_raw_tables_historical_only": {
+      "character_table": {
+        "path": ".cache/p2-s1-binding/character_table.json",
+        "bytes": 14975251,
+        "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "fresh_local_content_rehashed": true,
+        "refetched_this_audit": false,
+        "matches_pinned_historical_receipt": true
+      },
+      "skill_table": {
+        "path": ".cache/p2-s1-binding/skill_table.json",
+        "bytes": 11447929,
+        "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "fresh_local_content_rehashed": true,
+        "refetched_this_audit": false,
+        "matches_pinned_historical_receipt": true
+      }
+    },
+    "s1_rank10": {
+      "skill_number": 1,
+      "rank": 10,
+      "binding_selector": "character_table.char_110_deepcl.skills[0]",
+      "unlock_condition": {
+        "phase": "PHASE_0",
+        "level": 1
+      },
+      "selector": "skill_table.skchr_deepcl_1.levels[9]",
+      "name": "光影之触",
+      "description": "所有触手攻击力和防御力<@ba.vup>+{atk:0%}</>，每秒恢复<@ba.vup>{hp_recovery_per_sec}</>点生命",
+      "skill_type": "MANUAL",
+      "duration_parameter_seconds": 30.0,
+      "blackboard": {
+        "atk": 0.6,
+        "def": 0.6,
+        "hp_recovery_per_sec": 70.0
+      },
+      "sp_data": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 30,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "catalog_parameters_match": true,
+      "actual_token_presence_or_regeneration_events_verified": false
+    }
+  },
+  "rose81_selector": "relics.rogue_6_relic_legacy_81",
+  "rose81": {
+    "name": "活玫瑰",
+    "usage": "所有我方单位受到的治疗和生命回复效果+20%",
+    "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "verification": "game_data_verified_runtime_pending",
+    "status": "numeric",
+    "effects": [
+      {
+        "kind": "healing_factor",
+        "value": 1.2,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "heal_scale",
+        "stacking": "unverified",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 0
+      },
+      {
+        "kind": "regeneration_factor",
+        "value": 1.2,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "received_regeneration",
+        "stacking": "unverified",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 1
+      },
+      {
+        "kind": "regeneration_factor",
+        "value": 1.2,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "received_regeneration",
+        "stacking": "unverified",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 2
+      }
+    ],
+    "pending": [],
+    "raw_buffs": [
+      {
+        "key": "global_buff_normal",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "heal_scale"
+          },
+          {
+            "key": "heal_scale",
+            "value": 1.2,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "key": "global_buff_normal",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "hp_recovery_per_sec[mul]"
+          },
+          {
+            "key": "hp_recovery_per_sec",
+            "value": 0.2,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "key": "global_buff_normal",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "hp_recovery_per_sec_by_max_hp_ratio[mul]"
+          },
+          {
+            "key": "hp_recovery_per_sec_by_max_hp_ratio",
+            "value": 0.2,
+            "valueStr": null
+          }
+        ]
+      }
+    ],
+    "bound_char_buffs": [],
+    "relic_params": {
+      "id": "rogue_6_relic_legacy_81",
+      "checkCharBoxTypes": [],
+      "checkCharBoxParams": []
+    }
+  },
+  "rose81_runtime_qualification": "game_data_verified_runtime_pending, stacking unverified; existing single-relic offline reference only",
+  "saved_record389": {
+    "source_archive_path": "git-snapshots/research/p2-token-count-reporting/validation-after61/draft63.json.gz",
+    "source_sha256": "d5f2324c2bc2349edcf9155b9ee362d8d54f558abab81566ed902a640320c167",
+    "selector": "records[388], id=389",
+    "copied_row_archive_path": "saved-real-record389.json",
+    "real_calls_in_prior_saved_receipt": 538,
+    "fresh_replay_calls_in_this_lead": 0,
+    "input": {
+      "operator": "char_110_deepcl",
+      "skill": 1,
+      "skill_rank": 10,
+      "timing": {
+        "mode": "continuous"
+      },
+      "window_seconds": 10,
+      "elite": 2,
+      "level": 70,
+      "module_id": "uniequip_002_deepcl",
+      "module_level": 3,
+      "summon_count": 2
+    },
+    "unqualified_total_notes": [
+      "触手数量 2；技能生命回复 4200，生命回复不计直接治疗。",
+      "触手数量 2；技能生命回复 1400，生命回复不计直接治疗。"
+    ],
+    "regeneration_multiplier": 1,
+    "regeneration_report": {
+      "id": "regeneration",
+      "title": "生命回复",
+      "metrics": [
+        {
+          "key": "per_token_rate",
+          "label": "每只触手生命回复速度",
+          "value": 70.0,
+          "unit": "生命/秒"
+        },
+        {
+          "key": "all_tokens_rate",
+          "label": "所选触手合计回复速度",
+          "value": 140.0,
+          "unit": "生命/秒"
+        }
+      ],
+      "notes": [
+        "生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。"
+      ]
+    }
+  },
+  "facts": {
+    "old_real_result_contains_two_different_totals_with_same_unqualified_label": true,
+    "old_real_record_has_rose81": false,
+    "single_rose81_note_rate_disagreement": "STATIC_CODE_PATH_PREDICTION_ONLY_NOT_A_NEW_REAL_REPRODUCTION",
+    "native_regeneration_tick_or_lifetime_or_hotupdate_verified": false
+  }
+}

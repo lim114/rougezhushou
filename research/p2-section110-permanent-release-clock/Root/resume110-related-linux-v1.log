@@ -1,0 +1,95 @@
+.............FF...EEEE..EEE..........................................................E
+======================================================================
+ERROR: test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence) (mode='frames', skill=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 321, in test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence
+    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sp_events'
+
+======================================================================
+ERROR: test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence) (mode='frames', skill=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 321, in test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence
+    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sp_events'
+
+======================================================================
+ERROR: test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence) (mode='continuous', skill=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 321, in test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence
+    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sp_events'
+
+======================================================================
+ERROR: test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence) (mode='continuous', skill=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 321, in test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence
+    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sp_events'
+
+======================================================================
+ERROR: test_s1_independent_note_parameters_and_unknown_actual_clocks_survive (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_s1_independent_note_parameters_and_unknown_actual_clocks_survive) (mode='continuous', relic_ids=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 256, in test_s1_independent_note_parameters_and_unknown_actual_clocks_survive
+    self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'resource_and_damage_shared_clock'
+
+======================================================================
+ERROR: test_s1_independent_note_parameters_and_unknown_actual_clocks_survive (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_s1_independent_note_parameters_and_unknown_actual_clocks_survive) (mode='continuous', relic_ids=['rogue_6_relic_legacy_67'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 256, in test_s1_independent_note_parameters_and_unknown_actual_clocks_survive
+    self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'resource_and_damage_shared_clock'
+
+======================================================================
+ERROR: test_s1_independent_note_parameters_and_unknown_actual_clocks_survive (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_s1_independent_note_parameters_and_unknown_actual_clocks_survive) (mode='continuous', relic_ids=['rogue_6_relic_legacy_105'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 256, in test_s1_independent_note_parameters_and_unknown_actual_clocks_survive
+    self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'resource_and_damage_shared_clock'
+
+======================================================================
+ERROR: test_sp_recovery_layers_063 (unittest.loader._FailedTest.test_sp_recovery_layers_063)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_sp_recovery_layers_063
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.test_sp_recovery_layers_063'
+
+
+======================================================================
+FAIL: test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events) (mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 328, in test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events
+    self.assertIsNone(result['estimate']['skill']['initial_seconds'])
+AssertionError: 9.366666666666667 is not None
+
+======================================================================
+FAIL: test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events (tests.test_permanent_empty_target_110.PermanentEmptyTarget110Tests.test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events) (mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_permanent_empty_target_110.py", line 328, in test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events
+    self.assertIsNone(result['estimate']['skill']['initial_seconds'])
+AssertionError: 9.285714285714286 is not None
+
+----------------------------------------------------------------------
+Ran 80 tests in 3.495s
+
+FAILED (failures=2, errors=8)

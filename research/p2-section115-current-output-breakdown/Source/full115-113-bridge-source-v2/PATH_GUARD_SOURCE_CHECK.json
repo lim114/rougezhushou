@@ -1,0 +1,95 @@
+{
+  "kind": "SOURCE_ONLY_LITERAL_PATH_VALIDATOR_CHECK",
+  "actual_Root_artifacts_read": false,
+  "project_or_codec_or_API_or_Qt_or_Wine_or_launcher_executed": false,
+  "future_guard_and_candidate_results": null,
+  "cases": [
+    {
+      "case": "seven unique canonical proofs leaves",
+      "accepted": true
+    },
+    {
+      "case": "reject launcher115.py",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject window.py",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject bridge115.py",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject expected-map115.json",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject supervisor115.py",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject ROOT_SOURCE_ACTIVATION.json",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject proofs/../launcher115.py",
+      "accepted": false,
+      "reason": "Portable lowercase proof path component required"
+    },
+    {
+      "case": "reject proofs//a.json",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject proofs\\a.json",
+      "accepted": false,
+      "reason": "Canonical portable forward-slash proof path required"
+    },
+    {
+      "case": "reject C:/proofs/a.json",
+      "accepted": false,
+      "reason": "Canonical portable forward-slash proof path required"
+    },
+    {
+      "case": "reject proofs/a.",
+      "accepted": false,
+      "reason": "Portable lowercase proof path component required"
+    },
+    {
+      "case": "reject proofs/con.json",
+      "accepted": false,
+      "reason": "Windows reserved proof component"
+    },
+    {
+      "case": "reject repeated destination",
+      "accepted": false,
+      "reason": "Duplicate/case-aliased proof destinations prohibited"
+    },
+    {
+      "case": "reject Windows case alias",
+      "accepted": false,
+      "reason": "Proof artifacts must be canonical leaves under proofs/"
+    },
+    {
+      "case": "reject file-directory prefix collision",
+      "accepted": false,
+      "reason": "Proof file/directory prefix collision prohibited"
+    },
+    {
+      "case": "reject missing proof field",
+      "accepted": false,
+      "reason": "Exact seven actual proof pins required"
+    }
+  ],
+  "all_expected_path_admissions_or_rejections_observed": true,
+  "section_or_product_pass": false,
+  "symlink_component_check_scope": "Source AST/read only; no actual proof tree used"
+}

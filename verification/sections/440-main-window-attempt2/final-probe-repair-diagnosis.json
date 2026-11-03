@@ -1,0 +1,34 @@
+{
+  "section": 440,
+  "first_failure_original": {
+    "file": "verification/sections/440-main-window-attempt2/final-probe-first-failure.json",
+    "sha256": "1c9f6314c7a96ef92dd8a26d8cbb632dc9a28a0724a05b925770f363248c29ba"
+  },
+  "first_failure_observation": "JSONDecodeError at the second read of the owned live-status JSON; process exited1, no PASS receipt written.",
+  "diagnosis_inference": "The owned timer writer uses non-atomic write_text; an incomplete rewrite is the supported explanation for the transient parse error, without an OS file-event trace.",
+  "known_writer_source": {
+    "file": "verification/sections/440-main-window-attempt2/launch-source.py",
+    "sha256": "ddba6fc811becd2d7fd984b7dac619f37650df2f4d159df69b685960dfbef42c"
+  },
+  "repair": "Only the verification reader retries OSError/JSONDecodeError at most10 times with20ms pauses; exhausted retries still fail. Actual successive timer values must advance.",
+  "successful_probe_source": {
+    "file": "verification/sections/440-main-window-attempt2/final-probe-source.py",
+    "sha256": "a251f3157a807f77206a0e501db555037b6e84194996ae86be1a5c5d1f4bf387"
+  },
+  "actual_root_observed_successful_exec_exit": 0,
+  "successful_response": {
+    "file": "verification/sections/440-main-window-attempt2/final-response.json",
+    "sha256": "8d885c0cfb3d54a2374429eb442543791d46e93aed66b2fea89fe61b1495d1fe"
+  },
+  "actual_after_full_desktop_review": {
+    "file": "verification/sections/440-main-window-attempt2/final-desktop-review.json",
+    "sha256": "8331b9ede557bf98e53552b965ecb0383f3b120f28fab1521aa7226f95f017f5"
+  },
+  "product_source_modified": false,
+  "original_failed_probe_preserved": true,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_contents_or_hashes_published": false,
+  "window_position_restore_attempted": false,
+  "window_geometry_note": "Final native rectangle is recorded independently from the initial placement; no cause for that change is inferred and no prior position or state is restored."
+}

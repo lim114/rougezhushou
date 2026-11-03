@@ -1,0 +1,20 @@
+{
+  "evaluated": [
+    {
+      "name": "Windows.Media.Ocr with Microsoft PowerToys usage pattern",
+      "source": "https://github.com/microsoft/PowerToys/blob/main/src/modules/AdvancedPaste/AdvancedPaste/Helpers/OcrHelpers.cs",
+      "official_api": "https://learn.microsoft.com/en-us/uwp/api/windows.media.ocr.ocrengine",
+      "license_in_source": "MIT",
+      "stack": "Windows SDK; tested through installed Windows PowerShell WinRT bridge, no package installation",
+      "result": "Prototype recognized one local fixture quickly but omitted visible important labels. Not adopted as production replacement or candidate-drop authority. No fabricated RapidOCR confidence."
+    },
+    {
+      "name": "RxPY ReplaySubject",
+      "source": "https://rxpy.readthedocs.io/en/latest/reference_subject.html",
+      "result": "Generic event retention/scheduling still needs this project capture-order and run/account reducer layer. No new framework dependency or upstream code copied."
+    }
+  ],
+  "adopted": "Keep pinned Qt and existing capture/recognition stack; use bounded deque selection plus a small domain observation journal. Reuse original state reducers instead of implementing another inventory/operator lifecycle.",
+  "third_party_program_fork_or_new_dependency": false,
+  "production_recognition_backend_replaced": false
+}

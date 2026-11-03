@@ -1,0 +1,149 @@
+def reproducible_context_sections(scenario,result):
+    """Display declared conditions and already resolved targets, without validation."""
+    skill=result['estimate']['skill'];timing=scenario.get('timing',{})
+    timing=timing if isinstance(timing,dict) else {}
+    def scalar(value):
+        return value if type(value) in (int,float,str) else None
+    rows=[metric('timing_mode','计算时序口径',
+        '30帧/秒事件参考' if result.get('timing',{}).get('mode')=='frames' else '连续供靶参数参考'),
+        metric('window','本次采用的观察窗口',skill.get('window_seconds'),'秒')]
+    if 'window_seconds' in scenario:
+        raw=scalar(scenario['window_seconds'])
+        rows.append(metric('declared_window','声明的观察窗口',str(raw)+' 秒' if raw is not None else None))
+    enemy=result.get('run_resolution',{}).get('enemy')
+    if isinstance(enemy,dict):
+        stats=enemy.get('stats',{})
+        rows.extend([metric('target_source','目标属性来源','所选关卡敌人资料及已接入修正'),
+            metric('enemy_defense','目标防御参考',stats.get('def')),
+            metric('enemy_resistance','目标法抗参考',stats.get('magicResistance'))])
+    else:
+        rows.extend([metric('target_source','目标属性来源','手动情景输入参考'),
+            metric('enemy_defense','当前情景防御参考',scalar(scenario.get('enemy_defense',0))),
+            metric('enemy_resistance','当前情景法抗参考',scalar(scenario.get('enemy_resistance',0)))])
+    notes=['这里复述当前报告情景或已返回的目标资料；不改变输入、输出或时序，也不证明当前游戏面板。',
+        '手动情景字段可能已经过既有预处理；本表不额外声称保留了修正前原输入或完整实际消费记录。' ,
+        '目标生命参考不用于截断攻击；这些条件不提供实际击杀时间。']
+    if scenario.get('timing_mode','frames')=='continuous':
+        notes.append('连续模式保持既有参数参考；正供靶、移动和打断区间不在此转换为帧事件，也不据此推算空转。')
+    def shown(value):
+        if type(value) is int or type(value) is float and math.isfinite(value):
+            try:return str(value)
+            except (ValueError,OverflowError):return '未确认'
+        if type(value) is str:return value
+        return '未确认'
+    def condition_lines(options,prefix):
+        found=[]
+        for key,label in (('target_windows','敌方可获取区间'),
+                          ('movement_windows','移动区间'),('interrupt_windows','打断区间'),
+                          ('initial_target_windows','初动敌方可获取区间'),
+                          ('initial_movement_windows','初动移动区间'),
+                          ('initial_interrupt_windows','初动打断区间')):
+            if key not in options:continue
+            value=options[key]
+            if isinstance(value,list):
+                if not value:text='明确为空'
+                elif all(isinstance(pair,(list,tuple)) and len(pair)==2 for pair in value):
+                    text='；'.join('['+shown(pair[0])+', '+shown(pair[1])+') 秒' for pair in value)
+                else:text='未确认'
+            else:text='未确认'
+            found.append(prefix+label+'：'+text+'。')
+        for key,label,unit in (('target_disappears_seconds','当前目标生命周期终点','秒'),
+                ('projectile_travel_seconds','手动弹道延迟','秒'),
+                ('windup_frames','前摇预览','帧'),('recovery_frames','后摇预览','帧'),
+                ('start_delay_frames','起始延迟预览','帧'),
+                ('post_skill_lock_frames','技能结束硬直预览','帧'),
+                ('sp_lockout_extra_seconds','额外阻回预览','秒')):
+            if key in options:found.append(prefix+label+'：'+shown(options[key])+' '+unit+'。')
+        return found
+    notes.extend(condition_lines(timing,'本体声明 · '))
+    active_units={stream.get('unit') for key in ('streams','recharge_streams')
+                  for stream in result.get('timing',{}).get(key,[]) if isinstance(stream,dict)}
+    units=timing.get('units',{})
+    if isinstance(units,dict):
+        tokens=catalog()['operators'][scenario['operator']].get('tokens',{})
+        for identity,options in units.items():
+            if identity not in active_units or not isinstance(options,dict):continue
+            name=tokens.get(identity,{}).get('name') or '独立单位'
+            notes.extend(condition_lines(options,name+'声明 · '))
+    if not any(key in timing for key in ('target_windows','target_disappears_seconds')):
+        notes.append('未声明敌方供靶或消失限制；沿用当前计算原有的连续供靶参考，不表示已观察到该条件。')
+    notes.append('敌方供靶不等于友方受疗资格；独立单位采用自己的已声明情景，未声明的获取/命中脚本继续未知。')
+    return [section('calculation_context','本次计算条件',rows,notes)]
+
+
+def event_clock_reference_sections(scenario,result):
+    """Keep each stored stream and its fields separate; no clock reconstruction."""
+    timing=result.get('timing',{})
+    if timing.get('mode')!='frames':return []
+    profile=catalog()['operators'][scenario['operator']]
+    tokens=catalog()['operators'][scenario['operator']].get('tokens',{})
+    blocks=[]
+    def sequence(stream,key):
+        value=stream.get(key)
+        if not isinstance(value,list) or not all(isinstance(item,(int,float)) and
+                not isinstance(item,bool) and math.isfinite(item) for item in value):return None
+        return value
+    for phase,key in (('当前情景','streams'),('本轮充能期','recharge_streams')):
+        for index,stream in enumerate(timing.get(key,[])):
+            identity=stream.get('unit')
+            name=(profile['name']+'本体' if identity==scenario['operator'] else
+                  tokens.get(identity,{}).get('name') or '独立单位')
+            scope={'enemy':'敌方获取参考','friendly':'友方获取参考'}.get(stream.get('target_scope'),'获取来源未确认')
+            rows=[metric('target_scope','获取来源',scope)]
+            for field,label,unit in (
+                    ('start_frames','攻击起始记录','帧'),('release_frames','出手记录','帧'),
+                    ('impact_frames','窗口内命中帧记录','帧'),
+                    ('times_seconds','输出时间参考记录','秒'),
+                    ('emitted_impact_frames','已释放的潜在命中帧记录','帧'),
+                    ('emitted_times_seconds','已释放的潜在命中时间记录','秒')):
+                values=sequence(stream,field)
+                rows.extend([metric(field+'_count',label+'数',len(values) if values is not None else None,'条'),
+                    metric(field+'_first',label+'首项',values[0] if values else None,unit),
+                    metric(field+'_last',label+'末项',values[-1] if values else None,unit)])
+            notes=['各条记录照既有序列保留；同单位的多条流和同帧多事件不合并、不去重，也不换算成实际攻击次数。',
+                '一条召唤物时序可供多只或零只单位的条件计算使用；记录数不证明真实在场数量或分项命中次数。',
+                '已释放的潜在命中记录可晚于观察窗口；不自动加入窗口、技能阶段或本轮周期输出。',
+                '输出时间与窗口内命中帧分别取自现有字段；部分完整施放路径的输出时间含尾段，不能据此改写窗口边界。',
+                '缺失记录保持未知，明确空序列保留零条；首末项未知不伪造零秒事件。',
+                '时刻为各自阶段的相对参考，不是游戏实测；本轮充能期不与当前情景合并成稳态时间线。']
+            if timing.get('phase_clock_unbound') or timing.get('parameter_clock_only') or timing.get('resource_and_damage_shared_clock') is False:
+                notes.append('当前技能阶段、获取/命中或资源时钟有未绑定部分；以下只展示已有局外/参数参考，实际时间和完整周期仍未知。')
+            if stream.get('known_animation') is False:
+                notes.append('前后摇资料未齐；保留原计算的延迟首击参考，不补成原生动画绑定。')
+            elif stream.get('known_animation') is not True:
+                notes.append('动作参数资格未确认；数值记录不证明动画资料齐全或原生绑定。')
+            blocks.append(section('event_clock_'+key+'_'+str(index),phase+' · '+name+' · 时序记录 '+str(index+1),rows,notes))
+    return blocks
+
+
+def output_domain_comparison_sections(scenario,result):
+    """Expose existing phase/domain totals; never subtract phases or add sources."""
+    op=scenario['operator'];number=scenario['skill'];skill=result['estimate']['skill'];blocks=[]
+    for kind,enabled,total,phase,window,cycle,average,unit in (
+            ('damage',has_damage(op,number),'total_damage','phase_damage','window_damage','cycle_damage','cycle_dps','伤害'),
+            ('healing',has_healing(op,number),'total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','治疗')):
+        if not enabled:continue
+        label='伤害' if kind=='damage' else '潜在治疗'
+        window_value=skill.get(window,result.get('total_damage') if kind=='damage' else None)
+        rows=[metric('window_seconds','观察窗口长度',skill.get('window_seconds'),'秒'),
+            metric('window_total','观察窗口'+label,window_value,unit),
+            metric('cast_total','完整本次施放'+label,skill.get(total),unit),
+            metric('duration_seconds','技能阶段长度',skill.get('duration_seconds'),'秒'),
+            metric('phase_total','技能阶段'+label,skill.get(phase),unit),
+            metric('recharge_seconds','本轮结束后充能长度',skill.get('recharge_seconds'),'秒'),
+            metric('cycle_seconds','本轮周期长度',skill.get('cycle_seconds'),'秒'),
+            metric('cycle_total','本轮周期'+label,skill.get(cycle),unit),
+            metric('cycle_average','本轮周期平均'+label,skill.get(average),unit+'/秒')]
+        subtotal=result.get('known_'+kind+'_subtotals')
+        if isinstance(subtotal,dict):
+            for key,suffix in ((window,'观察窗口'),(total,'完整施放'),(phase,'技能阶段'),(cycle,'本轮周期')):
+                if key in subtotal:rows.append(metric('known_'+key,suffix+'已计部分',subtotal[key],unit))
+        notes=['各项直接读取既有结果，未知仍未知；本表不重新结算、相加或由差值反推充能期输出。',
+            '完整施放按本次施放归属；技能阶段、观察窗口和本轮周期各有自己的截止边界。已释放尾段可使它们不同。',
+            '本轮周期使用当前技能与结束后充能的既有计算；跨多轮稳态、残留和未绑定事件没有因此得到确认。',
+            '已计部分只是受支持来源的小计，不能补成完整总量；独立生命回复、损伤积累和屏障仍采用各自口径。']
+        if kind=='healing':notes.append('潜在治疗不扣过量治疗，不等于实际有效受疗。')
+        blocks.append(section('output_domain_'+kind,label+'口径对照',rows,notes))
+    return blocks
+
+

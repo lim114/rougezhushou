@@ -1,0 +1,41 @@
+{
+  "section": 138,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T17:40:56.559908+08:00",
+  "prior_commit": "d78558b45ba53dfea676a4a7f1032443adefce45",
+  "title": "低星防御与生命回复预算",
+  "remaining_project_item": "P2技能特殊分项与多来源生命回复的可证参数",
+  "new_capability": "接入卡缇按天赋后最大生命回复、米格鲁防御加算和芙蓉技能治疗；声明次数共用一个生命缺口，分列有效/过量治疗，拒绝不可能的自身生命缺口。",
+  "acceptance": [
+    "天赋等级阈值",
+    "防御和治疗加算独立算例",
+    "生命缺口与零次边界",
+    "实际三干员窗口与超限失效"
+  ],
+  "limitations": [
+    "预算期间默认无新损失，不判断实际生存、复活或受疗资格",
+    "不代表多来源原生叠加/获取时钟或本局完整计算"
+  ],
+  "sources": [
+    "rouge/supplemental_skills.py",
+    "rouge/data/supplemental-skills.json",
+    "tests/test_supplemental_skills_138.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 3,
+    "test_output": "verification/section-138/tests.txt",
+    "window_receipt": "verification/section-138/window.json"
+  },
+  "source_sha256": {
+    "rouge/supplemental_skills.py": "959dae7adcec1297db701a3b1ad5597810652beace3aef222dff3770ca3c57a4",
+    "rouge/data/supplemental-skills.json": "fe9921554ce4f9fbb0f2244cbe03259a3507ef1b1f23f7321f158d42bf5bcae1",
+    "tests/test_supplemental_skills_138.py": "c54a27eef4742d77968529c7bed610828da4b3838aa20c119f70a5fbe24b790c"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

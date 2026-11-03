@@ -1,0 +1,15 @@
+{
+  "stage": "static source preparation",
+  "exit_code": 1,
+  "exception": "AssertionError: (char_1048_orchd2, 2)",
+  "reason": "Comparer incorrectly required catalog to keep original null-label hidden talent candidates; actual build_catalog.py line 49 deliberately retains named candidates only. Original hidden groups must remain in source extracts, without claiming engine talent selection or native attachment.",
+  "product_failure": false,
+  "public_calls_started": 0,
+  "dependent_checks_started": 0,
+  "preserved_artifacts": [
+    "prepare-source-attempt-1.py",
+    "baseline-git-object-freeze.json",
+    "original-source-hash-receipt.json"
+  ],
+  "correction": "Compare named candidates only according to captured builder, retain entire original group, reuse and reverify existing baseline bytes."
+}

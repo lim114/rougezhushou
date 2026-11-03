@@ -1,0 +1,548 @@
+{
+  "format_version": 1,
+  "version": 2,
+  "section": 95,
+  "status": "PASS_SOURCE_ONLY_ARCHIVE_V2_NOT_ACTUAL_SPEC_OR_RUNTIME",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "archive_helper_sha256": "1845b5bf5d3cd4f6d7b2122e7d5ce05ac5b1395ab1cdd41782e4112c4187c552",
+  "reviewed_archive_manifest_sha256": "58610756cf428b30325f30e7f119bb567d90f75c880305e8900a9d5a3c4ff510",
+  "publication_checker_sha256": "aaac20b067a2c893483dc1d723b60a8a4b5ec319f3caf59d43d670f1febe6946",
+  "publication_checker_source_gate_passed": true,
+  "actual_completed_archive_spec_sha256": null,
+  "actual_completed_archive_spec_review_passed": false,
+  "reviewed_template_sha256": "c3d844f368cd5132185f968b1df9c07213a601bdcefece9ce3b73869a781b84d",
+  "reviewed_archive_manifest": {
+    "path": "/workspace/.continuation/full095-batch-archive-pending-v2/public-artifacts-manifest-archive-pending095.json",
+    "bytes": 2449,
+    "sha256": "58610756cf428b30325f30e7f119bb567d90f75c880305e8900a9d5a3c4ff510"
+  },
+  "reviewed_handoff": {
+    "path": "/workspace/.continuation/full095-batch-archive-pending-v2/handoff-archive-pending095.json",
+    "bytes": 3793,
+    "sha256": "73137b7175dc9bd417dc93e03bbb21bca58d0beac4c9656f5808ac2c9be7961f"
+  },
+  "previous_BLOCKED_review": {
+    "path": "/workspace/.continuation/full095-batch-archive-independent-source-review-v1/formal-source-review-archive095.json",
+    "bytes": 25499,
+    "sha256": "43ea69b54177aa2491631235ded84483b5e3dc2dead4ff4d16037e71f4b4da26"
+  },
+  "resolved_blockers": [
+    {
+      "id": "B1_FORMAT2_SAVED_REVIEW_SCHEMA",
+      "resolved": true
+    },
+    {
+      "id": "B2_PHYSICAL_ARCHIVE_RECHECK",
+      "resolved": true
+    },
+    {
+      "id": "B3_EIGHT_PRIMARY_WITNESS_RECHECK",
+      "resolved": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "V01_exact_frozen_manifest_payload_handoff",
+      "passed": true,
+      "evidence": {
+        "manifest": {
+          "path": "/workspace/.continuation/full095-batch-archive-pending-v2/public-artifacts-manifest-archive-pending095.json",
+          "bytes": 2449,
+          "sha256": "58610756cf428b30325f30e7f119bb567d90f75c880305e8900a9d5a3c4ff510"
+        },
+        "handoff": {
+          "path": "/workspace/.continuation/full095-batch-archive-pending-v2/handoff-archive-pending095.json",
+          "bytes": 3793,
+          "sha256": "73137b7175dc9bd417dc93e03bbb21bca58d0beac4c9656f5808ac2c9be7961f"
+        },
+        "physical_source_files": 9,
+        "payload_count": 7
+      }
+    },
+    {
+      "id": "V02_three_old_functions_and_one_new_scanner_only",
+      "passed": true,
+      "evidence": {
+        "changed": [
+          "index",
+          "collect",
+          "main"
+        ],
+        "new": [
+          "physical_files"
+        ],
+        "byte_exact_unchanged": [
+          "require",
+          "sha",
+          "encode",
+          "relative",
+          "read",
+          "new",
+          "pointer",
+          "git",
+          "git_text",
+          "maintained",
+          "full_scope",
+          "ui_scope",
+          "selected",
+          "proof_binding",
+          "source_gate",
+          "stage",
+          "formal_gate",
+          "documents"
+        ],
+        "both_AST_parse": true
+      }
+    },
+    {
+      "id": "V03_publication_checker_whole_bytes_unchanged",
+      "passed": true,
+      "evidence": {
+        "path": "/workspace/.continuation/full095-batch-archive-pending-v2/verify_publication095_pending.py",
+        "bytes": 7194,
+        "sha256": "aaac20b067a2c893483dc1d723b60a8a4b5ec319f3caf59d43d670f1febe6946"
+      }
+    },
+    {
+      "id": "V04_original_blocked_review_preserved",
+      "passed": true,
+      "evidence": {
+        "prior": {
+          "path": "/workspace/.continuation/full095-batch-archive-independent-source-review-v1/formal-source-review-archive095.json",
+          "bytes": 25499,
+          "sha256": "43ea69b54177aa2491631235ded84483b5e3dc2dead4ff4d16037e71f4b4da26"
+        },
+        "old_manifest": {
+          "path": "/workspace/.continuation/full095-batch-archive-pending/public-artifacts-manifest-archive-pending095.json",
+          "bytes": 2504,
+          "sha256": "3d3135614c1ab163ab6b879e05af8e53ca4ee799f06ea0747debc16904d97aad"
+        }
+      }
+    },
+    {
+      "id": "V05_current_approved_format2_producer_packet",
+      "passed": true,
+      "evidence": {
+        "formal": {
+          "path": "/workspace/.continuation/full095-regression-formal-source-review-v2/source-only-formal-review095-v2.json",
+          "bytes": 26356,
+          "sha256": "8f15637aa8c5e6c2f552676ed99c7825b068c1455974285ab10ead87ff342b6d"
+        },
+        "manifest": {
+          "path": "/workspace/.continuation/full095-regression-source-pending-v2/public-artifacts-manifest-regression095.json",
+          "bytes": 7035,
+          "sha256": "d40747029700e942067cd32fafe1b6586dfa81f260f5e9af900bde967cdd04e7"
+        },
+        "contract": {
+          "path": "/workspace/.continuation/full095-regression-source-pending-v2/source-contract095.json",
+          "bytes": 4045,
+          "sha256": "06db3a38c73a2384d3466a80b9adb29fce8697fba420ec5d9bf09c40c8bc7966"
+        }
+      }
+    },
+    {
+      "id": "V06_sealed_binding_real_status_actual_inputs_interfaces_match_producer",
+      "passed": true,
+      "evidence": {
+        "format_version": 2,
+        "section": 95,
+        "binding_status": "SEALED_REAL95_SOURCE_NOT_RUNTIME_PASS",
+        "actual_inputs_keys": [
+          "actual_base_HEAD",
+          "source_sha256",
+          "execution_contracts",
+          "global_output_plan"
+        ]
+      }
+    },
+    {
+      "id": "V07_exact_eight_execution_names_and_role_mapping",
+      "passed": true,
+      "evidence": {
+        "names": [
+          "linux_full",
+          "wine_full",
+          "linux_selected",
+          "wine_selected",
+          "linux_pip",
+          "wine_pip",
+          "wine_ui",
+          "saved_review"
+        ],
+        "primary_exit_roles": {
+          "linux_full": "exit_linux_full",
+          "linux_selected": "exit_linux_selected",
+          "linux_pip": "exit_linux_pip",
+          "wine_full": "exit_wine_full",
+          "wine_selected": "exit_wine_selected",
+          "wine_pip": "exit_wine_pip",
+          "wine_ui": "exit_wine_ui",
+          "saved_review": "ui_saved_review_exit"
+        }
+      }
+    },
+    {
+      "id": "V08_entire_final_root_witness_source_bound",
+      "passed": true,
+      "evidence": {
+        "original_source_function": "require_primary_executions",
+        "source_before": "/source_sha256",
+        "final_witness_pointer": "/actual_root_primary_exits"
+      }
+    },
+    {
+      "id": "V09_full_argv_cwd_entry_kind_script_index_runner_exact",
+      "passed": true,
+      "evidence": {
+        "whole_argv_no_any_position_match": true,
+        "bound_source_contracts": true
+      }
+    },
+    {
+      "id": "V10_root_observations_fresh_integerzero_context_timewindow",
+      "passed": true,
+      "evidence": {
+        "trusted_root_process_observation_boundary": true,
+        "no_fabricated_status_execution": true
+      }
+    },
+    {
+      "id": "V11_eight_distinct_planned_physical_status_refs_strict_bytes",
+      "passed": true,
+      "evidence": {
+        "status_format": "0LF or0CRLF",
+        "all_fullref_paths_bytes_SHA_bound": true
+      }
+    },
+    {
+      "id": "V12_stdout_runner_and_saved_receipt_explicitly_public_bound",
+      "passed": true,
+      "evidence": {
+        "saved_review_is_eighth_common_execution": true,
+        "all_script_and_console_refs_exact": true
+      }
+    },
+    {
+      "id": "V13_B1_saved_row_execution_name_and_normalized_witness_exact",
+      "passed": true,
+      "evidence": {
+        "resolved": "B1_FORMAT2_SAVED_REVIEW_SCHEMA",
+        "actual_saved_witness_source": "witness.executions.saved_review",
+        "visual_saved_primary_is_None": true
+      }
+    },
+    {
+      "id": "V14_exact_one_saved_one_visual_extra_witness_and_proof_binding",
+      "passed": true,
+      "evidence": {
+        "saved_and_visual_true_pointers_commonrefs_artifactrefs_reread": true,
+        "real_view_image_pointer_required": true,
+        "context_saved_visual_links_future_actual_indices": {
+          "linux_full": "/checks/linux_full",
+          "wine_full": "/checks/wine_full",
+          "linux_selected": "/checks/linux_selected",
+          "wine_selected": "/checks/wine_selected",
+          "linux_pip_log": "/checks/linux_pip",
+          "wine_pip_log": "/checks/wine_pip",
+          "ui_receipt": "/checks/actual_ui",
+          "ui_extra_acceptance": "/checks/actual_ui_extra_acceptance",
+          "ui_saved_review": null,
+          "ui_visual_review": null,
+          "root_primary_exits": "/checks/root_primary_exits"
+        }
+      }
+    },
+    {
+      "id": "V15_B2_lstat_scanner_root_all_ancestors_all_descendants",
+      "passed": true,
+      "evidence": {
+        "resolved": "B2_PHYSICAL_ARCHIVE_RECHECK",
+        "no_filter_omits_symlinks_FIFO_devices": true,
+        "no_scanner_execution": true
+      }
+    },
+    {
+      "id": "V16_index_gate_always_prefix_physical_set_then_exact_index_blobs",
+      "passed": true,
+      "evidence": {
+        "archive_index_each_checkpoint": true,
+        "regular_resolved_git_index_mode_100644": true,
+        "actual_Git_calls_by_review": 0
+      }
+    },
+    {
+      "id": "V17_completed_sections_typed_source_count_uncommitted_real_fields",
+      "passed": true,
+      "evidence": {
+        "all93_94_95": true,
+        "no_tag_or_commit_invented": true
+      }
+    },
+    {
+      "id": "V18_completed_sections_exact_physical_manifest_closure_count_guard_copy",
+      "passed": true,
+      "evidence": {
+        "all_old_payload_hashes_and_exact_MFrefs_retained": true
+      }
+    },
+    {
+      "id": "V19_prepare_save_MF_physical_count_index_source_before_metadata",
+      "passed": true,
+      "evidence": {
+        "all_archive_regular_members_prefix_exact": true,
+        "duplicates_and_foreign_names_rejected": true,
+        "before_metadata_and_batch_staging": true
+      }
+    },
+    {
+      "id": "V20_generated_full_archive_payload_index_closure_exact",
+      "passed": true,
+      "evidence": {
+        "physical_all_files_equals_manifest_members_plus_manifest": true,
+        "strict_external_closure_count": true,
+        "self_exclusion_source_schema_matches_archive_producer": true
+      }
+    },
+    {
+      "id": "V21_actual93_94_95_closed_physical_archive_chain_verified",
+      "passed": true,
+      "evidence": [
+        {
+          "section": 93,
+          "receipt": {
+            "path": "/workspace/rougezhushou/verification/sections/093.json",
+            "bytes": 3200,
+            "sha256": "69e5d99bfa1336f159ac43a9f9ebfca8e102606ad6b6a451b26dd9738c08e4ac"
+          },
+          "closure": {
+            "path": "/workspace/.continuation/section093-archived-working-tree-closure.json",
+            "bytes": 491,
+            "sha256": "e0b50e3561ebe4ccae20a42df750765b713b6eb551506a538a52edae4ff7d61e"
+          },
+          "source_guard": {
+            "path": "/workspace/rougezhushou/research/p2-section093-account-cache-safety/root-source-093.json",
+            "bytes": 79084,
+            "sha256": "0fbfe28e2528ae9987f9f260bfed0068b1e16edf02274ea3349cd6d988aa2180"
+          },
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section093-account-cache-safety/archive-manifest.json",
+            "bytes": 26006,
+            "sha256": "3f6a0c9170395216f1ab49260589d37f4cd37de2b7ebfed9d5c63bd7b7441881"
+          },
+          "physical_regular_files": 159,
+          "exact_set_and_all_payload_hashes": true,
+          "archived_original_guard_exact": true,
+          "source_count": 732,
+          "actual_index_execution_by_this_review": false
+        },
+        {
+          "section": 94,
+          "receipt": {
+            "path": "/workspace/rougezhushou/verification/sections/094.json",
+            "bytes": 3453,
+            "sha256": "55dba304fe8075531e92de36f369c142f790da59ef69091edffc28299b97bac5"
+          },
+          "closure": {
+            "path": "/workspace/.continuation/section094-archived-working-tree-closure.json",
+            "bytes": 490,
+            "sha256": "613d5956762bd7b0a19d15c15173df698890a8545a8d0e14253086aaf728f806"
+          },
+          "source_guard": {
+            "path": "/workspace/rougezhushou/research/p2-section094-offline-input-refresh/root-source-094.json",
+            "bytes": 79524,
+            "sha256": "259370708fe45e974511d1c1c010901d66981ee9dc2d53e7bce1ac978d463211"
+          },
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section094-offline-input-refresh/archive-manifest.json",
+            "bytes": 13935,
+            "sha256": "55f69ebd7a1cabbf37c4fa4bb90b6dedc9d3351b3519ef71e93c9e587c49ce7d"
+          },
+          "physical_regular_files": 87,
+          "exact_set_and_all_payload_hashes": true,
+          "archived_original_guard_exact": true,
+          "source_count": 732,
+          "actual_index_execution_by_this_review": false
+        },
+        {
+          "section": 95,
+          "receipt": {
+            "path": "/workspace/rougezhushou/verification/sections/095.json",
+            "bytes": 3920,
+            "sha256": "d97dc5b3b2e29a7317e8446906b8e998570c95c7a8b821190b73e199849ec9c5"
+          },
+          "closure": {
+            "path": "/workspace/.continuation/section095-archived-working-tree-closure.json",
+            "bytes": 491,
+            "sha256": "98bcd412a155fa98e8049e8ca1dd79eee11f08b57230b3b5c14f8a6f8d698749"
+          },
+          "source_guard": {
+            "path": "/workspace/rougezhushou/research/p2-section095-selected-module-source-report/root-source-095-v2.json",
+            "bytes": 84227,
+            "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+          },
+          "archive_manifest": {
+            "path": "/workspace/rougezhushou/research/p2-section095-selected-module-source-report/archive-manifest.json",
+            "bytes": 50757,
+            "sha256": "45a5f59f3afb3072a233bc22230b12806bc352ba81a8bb490dc9f89b42978a7f"
+          },
+          "physical_regular_files": 292,
+          "exact_set_and_all_payload_hashes": true,
+          "archived_original_guard_exact": true,
+          "source_count": 735,
+          "actual_index_execution_by_this_review": false
+        }
+      ]
+    },
+    {
+      "id": "V22_dynamic_current735_UI129_source_metadata_not_completion_admission",
+      "passed": true,
+      "evidence": {
+        "guard": {
+          "path": "/workspace/rougezhushou/research/p2-section095-selected-module-source-report/root-source-095-v2.json",
+          "bytes": 84227,
+          "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+        },
+        "observed_maintained_count_only": 735,
+        "observed_UI_own_count_only": 129,
+        "no_future_fixed_count_assertion": true,
+        "source_guard_historical_section095_completed_field": false,
+        "source_guard_historical_full095_runtime_PASS_field": false,
+        "completion_from_actual_receipt_and_closure_not_guard_runtime_metadata": true,
+        "future_full095_runtime_not_started_or_read": true
+      }
+    },
+    {
+      "id": "V23_current_source_packets_use_explicit_actual_formats",
+      "passed": true,
+      "evidence": {
+        "current_regression_packet_v2": true,
+        "supported_explicit_styles": [
+          "source_archive_rows",
+          "local_artifact_dict",
+          "payload_file_rows",
+          "payload_ref_rows"
+        ],
+        "all_future_actual_context_final_formal_saved_proofs_need_exact_bindings": true,
+        "source_packet_not_counted_completed_section": true
+      }
+    },
+    {
+      "id": "V24_declared_actual_source_public_packet_bytes_hashes_exact",
+      "passed": true,
+      "evidence": {
+        "packets": [
+          {
+            "manifest_path": "/workspace/.continuation/full095-regression-source-pending-v2/public-artifacts-manifest-regression095.json",
+            "manifest_sha256": "d40747029700e942067cd32fafe1b6586dfa81f260f5e9af900bde967cdd04e7",
+            "payload_count": 19,
+            "style": "payload_file_rows",
+            "archive_prefix": "source-preparation/regression095-v2",
+            "numbered_section_completed": false,
+            "public": true,
+            "qualification": "Actually frozen SOURCE-only v2; actual context FINAL/public formal packages must be separately supplied before ready."
+          },
+          {
+            "manifest_path": "/workspace/.continuation/full095-ui-final-v1/public-artifacts-manifest-final095.json",
+            "manifest_sha256": "ffb440d4b8d3ef6eff0a5a3f5a1a5d1a78ad336f150b8747db53ba247bfabe64",
+            "payload_count": 3,
+            "style": "local_artifact_dict",
+            "archive_prefix": "source-preparation/fullUI-FINAL-v1",
+            "numbered_section_completed": false,
+            "public": true,
+            "qualification": "Actual sealed FINAL source only; actual fullUI runtime and saved/visual proofs remain pending."
+          }
+        ],
+        "future_runtime_receipts_consulted": false
+      }
+    },
+    {
+      "id": "V25_no_helper_commit_push_tag_or_network_launch",
+      "passed": true,
+      "evidence": {
+        "source_only_Git_argv_names": [
+          "-c",
+          "add",
+          "-c",
+          "branch",
+          "rev-parse",
+          null,
+          null,
+          "diff",
+          "ls-files",
+          "diff",
+          "diff",
+          "rev-parse",
+          "show",
+          "branch",
+          "status",
+          null,
+          "diff-tree",
+          "show"
+        ],
+        "stage_only_explicit_paths": true,
+        "no_Git_add_dot": true,
+        "preflight_no_mutation": true,
+        "archive_prepare_emit_commit_push_false": true,
+        "actual_root_commit_normal_push_only_after_real_fullPASS": true
+      }
+    },
+    {
+      "id": "V26_checkpoint_future96_not_counted_and_publication_parent92_verified",
+      "passed": true,
+      "evidence": {
+        "ready_commit_SHA_null": true,
+        "exact_one_commit_and_all_blobs": true,
+        "normal_remote_equality_true_only_after_root_observed_push": true,
+        "new_external_closure_no_circular_own_SHA_rewrite": true,
+        "publication_helper_execution": 0
+      }
+    },
+    {
+      "id": "V27_actual_spec_formal_review_cannot_reuse_pending_approval",
+      "passed": true,
+      "evidence": {
+        "future_formal_review_must_bind_exact_actual_spec_SHA": true,
+        "current_actual_completed_archive_spec_sha256": null,
+        "future_full_outputs_witness_UI_saved_visual_values_remain_null": true
+      }
+    }
+  ],
+  "passed_checks": 27,
+  "failed_checks": 0,
+  "new_blockers": [],
+  "readonly_evidence": {
+    "path": "/workspace/.continuation/full095-batch-archive-independent-source-review-v2/readonly-source-evidence095-v2.json",
+    "bytes": 6238,
+    "sha256": "904fe5a5e2d2b47f93a6f3abc003fdbfba82a7deddea8840a0a697e837aeea08"
+  },
+  "scope": "Independent stdlib AST/JSON/bytes/hash source review only. Corrected pending machinery is approved; genuine full095 runtime completion and a new helper+actual-spec-bound formal review remain required before archive phases. Actual focused95 receipt/closure/archive was read as real completed prerequisites; guard metadata remains its immutable source-admission snapshot.",
+  "trust_boundaries": [
+    "All actual93/94/95 regular physical file sets, closure counts, manifests/payload hashes and archived guards were independently read and checked. No Git/index command was executed by this reviewer; source-required runtime index/blob gates remain root-only.",
+    "Actual status files supplement trusted root observations; their hashes do not independently prove processes executed. Current future full095 eight-execution witness and saved/visual acceptance were not produced, read or inferred.",
+    "735/129 are observed current maps only, not future acceptance constants. Before source map uses real /source_sha256, not invented /source_sha256_before.",
+    "Source approval is not actual-spec approval. formal_gate requires the exact future completed spec SHA; this report has no such SHA and must not be reused as that gate.",
+    "Publication checker is exact7194B original aaac body and retains normal push/one parent92 commit/exact all blobs/fresh remote equality; no publication occurred here. Its optional strict newline hardening note from original review remains nonblocking.",
+    "Existing old blocked source review and first-runtime failure evidence remain immutable; this new PASS does not relabel them."
+  ],
+  "calls": {
+    "packet_import": 0,
+    "helper": 0,
+    "project": 0,
+    "codec": 0,
+    "test": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "Git": 0,
+    "network": 0
+  },
+  "repository_mutations": 0,
+  "frozen_packets_modified": 0,
+  "completed_section_increment": 0,
+  "native_windows_verified": false,
+  "actual_full095_pass": false,
+  "commit_performed": false,
+  "push_performed": false,
+  "recorded_at": "2026-10-08T22:06:38.800493+00:00",
+  "STOPWRITE": true
+}

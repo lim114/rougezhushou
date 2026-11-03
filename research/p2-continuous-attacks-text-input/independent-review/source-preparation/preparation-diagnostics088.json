@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_PREPARATION_ONLY_LOCAL_QUERY_DIAGNOSTICS",
+  "optional_path_queries": [
+    {
+      "path": "rouge/engine.py",
+      "attempts": 2,
+      "outcome": "ENOENT during optional rg; actual engine is operator_engine.py and legacy helper is damage.py/estimate.py.",
+      "followup": "Stop guessed-path query; use actual file inventory and bound source paths.",
+      "new_project_calls": 0
+    },
+    {
+      "path": "app.py",
+      "attempts": 1,
+      "outcome": "ENOENT during optional rg; actual producer path found by file inventory is rouge/app.py.",
+      "new_project_calls": 0
+    },
+    {
+      "path": "rouge/operator_profiles.py",
+      "attempts": 1,
+      "outcome": "ENOENT during optional rg; actual source facts are existing operator-profiles.json and original skill_table.json.",
+      "new_project_calls": 0
+    },
+    {
+      "path": "/workspace/.continuation/p2-continuous-attacks-088-independent",
+      "attempts": 1,
+      "outcome": "Optional initial file inventory before new directory existed; then created new external preparation directory.",
+      "new_project_calls": 0
+    }
+  ],
+  "public_API_failures": 0,
+  "helper_or_test_failures": 0,
+  "source_verifier_failures": 0,
+  "child_manifest_import_preparation": {
+    "failed_attempts": 1,
+    "error": "The sealed child manifest uses source_path for original provenance and an absolute archive_path for its actual artifact; initial root-standard source_path import hit FileNotFoundError on generated external readonly preparation artifact.",
+    "diagnosis": "Read actual sealed row schema; retain all old child originals, create an explicit v1 sidecar with actual source_path and relative archive_path.",
+    "new_project_calls": 0,
+    "dependent_seal_or_product_work_started_on_failure": false
+  },
+  "product_failures": 0,
+  "preparation_failures_are_not_product_failure_counts": true,
+  "all_sealed087_sources_unchanged": true,
+  "same_unresolved_problem_no_fourth_attempt": true
+}

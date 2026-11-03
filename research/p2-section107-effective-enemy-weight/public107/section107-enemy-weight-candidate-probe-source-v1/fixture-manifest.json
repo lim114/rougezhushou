@@ -1,0 +1,983 @@
+{
+  "kind": "SECTION107_ROOT_ONLY_CANDIDATE_WEIGHT_PROBE_SOURCE_FIXTURES",
+  "author_Runtime_executed": false,
+  "product_pass": false,
+  "source_regular_py_json_count": 750,
+  "source_snapshot_counts": {
+    "rouge": 133,
+    "tests": 224,
+    "scripts": 393
+  },
+  "CORE_snapshot_sha256": "a75d9497ce34f68de787e3ba99704741f2c873c2c5fa9b5de01e6620b1f00f89",
+  "target_source_sha256": {
+    "rouge/damage.py": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09",
+    "rouge/operator_engine.py": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04",
+    "rouge/relics.py": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+    "rouge/run_modifiers.py": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+    "rouge/enemy_environment.py": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a",
+    "rouge/estimate.py": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91",
+    "rouge/reporting.py": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1",
+    "rouge/battle_preview.py": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb",
+    "rouge/catalog.py": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+    "rouge/data/operator-profiles.json": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957",
+    "rouge/data/previews.json": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586",
+    "rouge/data/relic-mechanics.json": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+    "rouge/data/run-config.json": "d35b08029a4dee14b7955136d127c0af22529858ffb559d652ac77e4e7f2c19e",
+    "rouge/data/enemy-difficulty-rules.json": "cb1a2c652b306e62a13c8439a99176bf5526c31e8c13461dc00b608cad76d7e8",
+    "tests/test_aglna_manual_weight.py": "9d566a1e90d4995d0d6b418528a50d0d32119780f74f940e78d46d9945b1b372",
+    "tests/test_relic_candidates_025.py": "2e4fd2b8db9baf2c1ef8436996265bcb05332c3fd4d4f1a6bab11b13f3992745"
+  },
+  "source_references": [
+    {
+      "path": "rouge/damage.py",
+      "bytes": 31071,
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "bytes": 156801,
+      "sha256": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04"
+    },
+    {
+      "path": "rouge/relics.py",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    {
+      "path": "rouge/enemy_environment.py",
+      "bytes": 8213,
+      "sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a"
+    },
+    {
+      "path": "rouge/estimate.py",
+      "bytes": 21980,
+      "sha256": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91"
+    },
+    {
+      "path": "rouge/reporting.py",
+      "bytes": 98978,
+      "sha256": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1"
+    },
+    {
+      "path": "rouge/battle_preview.py",
+      "bytes": 15499,
+      "sha256": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb"
+    },
+    {
+      "path": "rouge/catalog.py",
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    {
+      "path": "rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "path": "rouge/data/operator-profiles.json",
+      "bytes": 1592209,
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957"
+    },
+    {
+      "path": "rouge/data/previews.json",
+      "bytes": 2601977,
+      "sha256": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586"
+    },
+    {
+      "path": "rouge/data/relic-mechanics.json",
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47"
+    },
+    {
+      "path": "rouge/data/run-config.json",
+      "bytes": 81421,
+      "sha256": "d35b08029a4dee14b7955136d127c0af22529858ffb559d652ac77e4e7f2c19e"
+    },
+    {
+      "path": "rouge/data/enemy-difficulty-rules.json",
+      "bytes": 1550,
+      "sha256": "cb1a2c652b306e62a13c8439a99176bf5526c31e8c13461dc00b608cad76d7e8"
+    },
+    {
+      "path": "tests/test_aglna_manual_weight.py",
+      "bytes": 3838,
+      "sha256": "9d566a1e90d4995d0d6b418528a50d0d32119780f74f940e78d46d9945b1b372"
+    },
+    {
+      "path": "tests/test_relic_candidates_025.py",
+      "bytes": 11289,
+      "sha256": "2e4fd2b8db9baf2c1ef8436996265bcb05332c3fd4d4f1a6bab11b13f3992745"
+    }
+  ],
+  "base_calculation": {
+    "skill": 1,
+    "skill_rank": 10,
+    "elite": 2,
+    "trust": 100,
+    "potential": 1,
+    "base_attack": 1000,
+    "window_seconds": 3
+  },
+  "public_fixed_config": {
+    "difficulty": {
+      "value": 4,
+      "modeDifficulty": "NORMAL",
+      "mode": "NORMAL",
+      "source": "public107-original-fixed-normal-control"
+    },
+    "zone": {
+      "id": "zone_1",
+      "source": "public107-original-main-region-control"
+    }
+  },
+  "fixed_stage_record": {
+    "name": "猎犬病原",
+    "levelId": "Obt/Roguelike/RO6/level_rogue6_1-1",
+    "code": "ISW-NO",
+    "description": "猎犬是由被它们撕咬吞噬的病人转化成的？你怎么会有这种可怕而不切实际的想法。\\n<@rolv.rem>场地中有对敌我造成伤害的<源石祭坛></>",
+    "difficulty": "NORMAL",
+    "isBoss": 0,
+    "isElite": 0
+  },
+  "fixed_preview_scope": {
+    "runes": [
+      {
+        "difficultyMask": "FOUR_STAR",
+        "key": "enemy_attribute_mul",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 1.2,
+            "valueStr": null
+          },
+          {
+            "key": "max_hp",
+            "value": 1.4,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "difficultyMask": "NORMAL",
+        "key": "level_hidden_group_enable",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "normal"
+          }
+        ]
+      },
+      {
+        "difficultyMask": "FOUR_STAR",
+        "key": "level_hidden_group_enable",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "raid"
+          }
+        ]
+      }
+    ],
+    "global_buffs": [],
+    "limitations": [
+      "敌人表含随机特殊敌人；列表不是必定出场名单。",
+      "数值为关卡敌人引用的参考属性，未应用本局难度、环境或藏品修正。",
+      "不据此推算藏品掉落概率。"
+    ]
+  },
+  "fixed_enemies": [
+    {
+      "id": "enemy_2002_bearmi",
+      "level": 0,
+      "name": "高普尼克",
+      "level_type": "ELITE",
+      "description": "鸭爵雇佣的乌萨斯保安，无法被眩晕，击倒后获得宝物",
+      "reference_stats": {
+        "maxHp": 30000,
+        "atk": 2000,
+        "def": 200,
+        "magicResistance": 50.0,
+        "baseAttackTime": 3.5,
+        "massLevel": 4
+      }
+    },
+    {
+      "id": "enemy_2085_skzjxd",
+      "level": 0,
+      "name": "圆仔",
+      "level_type": "ELITE",
+      "description": "鸭爵的合伙人和徒弟，伶牙俐齿的投机者。",
+      "reference_stats": {
+        "maxHp": 50000,
+        "atk": 500,
+        "def": 0,
+        "magicResistance": 50.0,
+        "baseAttackTime": 1.0,
+        "massLevel": 5
+      }
+    }
+  ],
+  "public_relic": {
+    "name": "重力蔑视机关",
+    "usage": "所有敌人重量-2",
+    "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "verification": "game_data_verified_runtime_pending",
+    "status": "numeric",
+    "effects": [
+      {
+        "kind": "enemy_weight_delta",
+        "value": -2.0,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "enemy_lighter",
+        "stacking": "unverified",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 0
+      }
+    ],
+    "pending": [],
+    "raw_buffs": [
+      {
+        "key": "global_buff_normal",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0.0,
+            "valueStr": "enemy_lighter"
+          },
+          {
+            "key": "mass_level",
+            "value": -2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    ],
+    "bound_char_buffs": [],
+    "relic_params": {
+      "id": "rogue_6_relic_legacy_56",
+      "checkCharBoxTypes": [],
+      "checkCharBoxParams": []
+    }
+  },
+  "catalog_operator_bindings": {
+    "char_1015_aglna2": {
+      "id": "char_1015_aglna2",
+      "name": "予愿安洁莉娜",
+      "profession": "special",
+      "skill1_rank10": {
+        "name": "极速送达",
+        "duration": 60.0,
+        "description": "部署后立刻<$ba.liftoff>起飞</>，攻击范围<@ba.vup>扩大</>，攻击力<@ba.vup>+{atk:0%}</>，同时攻击两个目标",
+        "duration_type": "NONE",
+        "sp_type": 8,
+        "sp_cost": 0,
+        "initial_sp": 0,
+        "sp_increment": 0.0,
+        "max_charges": 0,
+        "values": {
+          "atk": 1.35,
+          "attack@max_target": 2.0
+        }
+      },
+      "talents": [
+        [
+          {
+            "phase": 1,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "飘浮大地之上",
+            "description": "予愿安洁莉娜攻击额外造成相当于攻击力13%的法术伤害，攻击重量较轻（小于等于3）的敌人时则额外造成相当于攻击力20%的法术伤害；处于<$ba.liftoff>起飞</>状态时使攻击范围内的敌人<$ba.weightless>失重</>",
+            "values": {
+              "atk_scale_hi": 0.2,
+              "atk_scale_lo": 0.13,
+              "mass_level": 3.0
+            }
+          },
+          {
+            "phase": 1,
+            "level": 1,
+            "potential_rank": 2,
+            "name": "飘浮大地之上",
+            "description": "予愿安洁莉娜攻击额外造成相当于攻击力18%<@ba.talpu>（+5%）</>的法术伤害，攻击重量较轻（小于等于3）的敌人时则额外造成相当于攻击力30%<@ba.talpu>（+10%）</>的法术伤害；处于<$ba.liftoff>起飞</>状态时使攻击范围内的敌人<$ba.weightless>失重</>",
+            "values": {
+              "atk_scale_hi": 0.3,
+              "atk_scale_lo": 0.18,
+              "mass_level": 3.0
+            }
+          },
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "飘浮大地之上",
+            "description": "予愿安洁莉娜攻击额外造成相当于攻击力25%的法术伤害，攻击重量较轻（小于等于3）的敌人时则额外造成相当于攻击力35%的法术伤害；处于<$ba.liftoff>起飞</>状态时使攻击范围内的敌人<$ba.weightless>失重</>",
+            "values": {
+              "atk_scale_hi": 0.35,
+              "atk_scale_lo": 0.25,
+              "mass_level": 3.0
+            }
+          },
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 2,
+            "name": "飘浮大地之上",
+            "description": "予愿安洁莉娜攻击额外造成相当于攻击力30%<@ba.talpu>（+5%）</>的法术伤害，攻击重量较轻（小于等于3）的敌人时则额外造成相当于攻击力45%<@ba.talpu>（+10%）</>的法术伤害；处于<$ba.liftoff>起飞</>状态时使攻击范围内的敌人<$ba.weightless>失重</>",
+            "values": {
+              "atk_scale_hi": 0.45,
+              "atk_scale_lo": 0.3,
+              "mass_level": 3.0
+            }
+          }
+        ],
+        [
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "天穹间的舞步",
+            "description": "在场时，所有处于<$ba.liftoff>起飞</>状态的友方干员攻击力+13%且阻挡时每秒回复8%的最大生命值",
+            "values": {
+              "atk": 0.13,
+              "hp_recovery_per_sec_by_max_hp_ratio": 0.08
+            }
+          },
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 4,
+            "name": "天穹间的舞步",
+            "description": "在场时，所有处于<$ba.liftoff>起飞</>状态的友方干员攻击力+18%<@ba.talpu>（+5%）</>且阻挡时每秒回复10%<@ba.talpu>（+2%）</>的最大生命值",
+            "values": {
+              "atk": 0.18,
+              "hp_recovery_per_sec_by_max_hp_ratio": 0.1
+            }
+          }
+        ]
+      ]
+    },
+    "mechanist": {
+      "id": "char_4230_mcnist",
+      "name": "机械师",
+      "profession": "tank",
+      "skill1_rank10": {
+        "name": "聚类分析",
+        "duration": -1.0,
+        "description": "攻击间隔<@ba.vdown>增大</>，攻击变为<@ba.vup>五连击</>的群体攻击，每次造成攻击力<@ba.vup>{attack@atk_scale:0%}</>的范围物理伤害\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "duration_type": "AMMO",
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "sp_cost": 7,
+        "initial_sp": 0,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "attack@atk_scale": 1.55,
+          "attack@trigger_time": 3.0,
+          "attack@times": 5.0,
+          "base_attack_time": 1.3,
+          "attack@projectile_delay_time": 1.3,
+          "attack@projectile_range": 1.1,
+          "attack@interval": 0.2
+        }
+      },
+      "talents": [
+        [
+          {
+            "phase": 1,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "结构性原理",
+            "description": "可以使用一个持续20秒的结构性原理，拥有独立的再部署时间",
+            "values": {}
+          },
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "结构性原理",
+            "description": "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "values": {}
+          }
+        ],
+        [
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 0,
+            "name": "生命方程",
+            "description": "自身和结构性原理部署时获得最大生命30%的<$ba.barrier>屏障</>；来自自身的<$ba.barrier>屏障</>可以抵挡超额的伤害",
+            "values": {
+              "hp_ratio": 0.3
+            }
+          },
+          {
+            "phase": 2,
+            "level": 1,
+            "potential_rank": 4,
+            "name": "生命方程",
+            "description": "自身和结构性原理部署时获得最大生命40%<@ba.talpu>（+10%）</>的<$ba.barrier>屏障</>；来自自身的<$ba.barrier>屏障</>可以抵挡超额的伤害",
+            "values": {
+              "hp_ratio": 0.4
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "groups": 3,
+  "cases": [
+    {
+      "id": "fixed4-aglna-plain-manual0",
+      "group": "fixed-weight4",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2002_bearmi",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [],
+        "enemy_weight": 0
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed4-aglna-gravity-manual0",
+      "group": "fixed-weight4",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2002_bearmi",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ],
+        "enemy_weight": 0
+      },
+      "technical_report": true,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed4-aglna-gravity-manual100",
+      "group": "fixed-weight4",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2002_bearmi",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ],
+        "enemy_weight": 100
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed4-mechanist-plain",
+      "group": "fixed-weight4",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "mechanist",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2002_bearmi",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": []
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed4-mechanist-gravity",
+      "group": "fixed-weight4",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "mechanist",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2002_bearmi",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ]
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed5-aglna-plain-manual0",
+      "group": "fixed-weight5",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2085_skzjxd",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [],
+        "enemy_weight": 0
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed5-aglna-gravity-manual0",
+      "group": "fixed-weight5",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2085_skzjxd",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ],
+        "enemy_weight": 0
+      },
+      "technical_report": true,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed5-aglna-gravity-manual100",
+      "group": "fixed-weight5",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2085_skzjxd",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ],
+        "enemy_weight": 100
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed5-mechanist-plain",
+      "group": "fixed-weight5",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "mechanist",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2085_skzjxd",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": []
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "fixed5-mechanist-gravity",
+      "group": "fixed-weight5",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "mechanist",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "target_enemy": {
+          "stage_id": "ro6_n_1_1",
+          "enemy_id": "enemy_2085_skzjxd",
+          "level": 0
+        },
+        "run_config": {
+          "difficulty": {
+            "value": 4,
+            "modeDifficulty": "NORMAL",
+            "mode": "NORMAL",
+            "source": "public107-original-fixed-normal-control"
+          },
+          "zone": {
+            "id": "zone_1",
+            "source": "public107-original-main-region-control"
+          }
+        },
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ]
+      },
+      "technical_report": false,
+      "scope_note": "Selected fixed identity supplies DEF/MR/weight; caller manual weight cannot supply identity. No negative-weight or displacement rule is asserted."
+    },
+    {
+      "id": "manual4-plain",
+      "group": "manual-no-fixed-target",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 200,
+        "enemy_resistance": 50.0,
+        "enemy_weight": 4,
+        "relic_ids": []
+      },
+      "technical_report": false,
+      "scope_note": "Explicit manual reference only. Manual2 matches the bear DEF/MR and manual3 matches the round DEF/MR; these two controls are not equal-defense threshold pairs. Gravity without target remains an original missing-identity observation."
+    },
+    {
+      "id": "manual4-gravity-no-target",
+      "group": "manual-no-fixed-target",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 200,
+        "enemy_resistance": 50.0,
+        "enemy_weight": 4,
+        "relic_ids": [
+          "rogue_6_relic_legacy_56"
+        ]
+      },
+      "technical_report": false,
+      "scope_note": "Explicit manual reference only. Manual2 matches the bear DEF/MR and manual3 matches the round DEF/MR; these two controls are not equal-defense threshold pairs. Gravity without target remains an original missing-identity observation."
+    },
+    {
+      "id": "manual2-bear-compatible-control",
+      "group": "manual-no-fixed-target",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 200,
+        "enemy_resistance": 50.0,
+        "enemy_weight": 2,
+        "relic_ids": []
+      },
+      "technical_report": false,
+      "scope_note": "Explicit manual reference only. Manual2 matches the bear DEF/MR and manual3 matches the round DEF/MR; these two controls are not equal-defense threshold pairs. Gravity without target remains an original missing-identity observation."
+    },
+    {
+      "id": "manual3-round-compatible-control",
+      "group": "manual-no-fixed-target",
+      "scenario": {
+        "skill": 1,
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "window_seconds": 3,
+        "operator": "char_1015_aglna2",
+        "level": 90,
+        "enemy_defense": 0,
+        "enemy_resistance": 50.0,
+        "enemy_weight": 3,
+        "relic_ids": []
+      },
+      "technical_report": false,
+      "scope_note": "Explicit manual reference only. Manual2 matches the bear DEF/MR and manual3 matches the round DEF/MR; these two controls are not equal-defense threshold pairs. Gravity without target remains an original missing-identity observation."
+    }
+  ],
+  "previews": [
+    {
+      "id": "fixed4-standalone-preview",
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2002_bearmi",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 4,
+          "modeDifficulty": "NORMAL",
+          "mode": "NORMAL",
+          "source": "public107-original-fixed-normal-control"
+        },
+        "zone": {
+          "id": "zone_1",
+          "source": "public107-original-main-region-control"
+        }
+      },
+      "scope_note": "Original enemy_preview explicitly does not apply relics; retained as fixed-identity/environment observation, not expected to include gravity."
+    },
+    {
+      "id": "fixed5-standalone-preview",
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2085_skzjxd",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 4,
+          "modeDifficulty": "NORMAL",
+          "mode": "NORMAL",
+          "source": "public107-original-fixed-normal-control"
+        },
+        "zone": {
+          "id": "zone_1",
+          "source": "public107-original-main-region-control"
+        }
+      },
+      "scope_note": "Original enemy_preview explicitly does not apply relics; retained as fixed-identity/environment observation, not expected to include gravity."
+    }
+  ],
+  "maximum_public_consumer_calls": 74,
+  "unknown_boundaries": [
+    "No negative weight floor/clamp or displacement behavior is supplied.",
+    "Single legacy56 only; unverified stacking and gameplay runtime order are not inferred.",
+    "Standalone preview excludes relics by explicit existing contract.",
+    "Original errors and caller mutation are recorded; this observation packet contains no numerical product PASS criteria.",
+    "Account technology has no newly justified numeric formula; not part of this weight probe."
+  ],
+  "source_snapshot_counts_status": "PROJECTION_FROM_ACTUAL_106_749_PLUS_NEW_107_TEST_NOT_AN_ACTUAL_750_SNAPSHOT",
+  "candidate_base_guard_ref": {
+    "path": "/workspace/.continuation/resume106-applied-source-v1.json",
+    "bytes": 82361,
+    "sha256": "0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442",
+    "section": 106,
+    "actual_guard_source_count": 749,
+    "immutable_status_label": "ACTUALLY_APPLIED_RUNTIME_PENDING",
+    "status_label_is_historical_apply_stage_not_current_validation": true
+  },
+  "candidate_source_guard_still_required": true
+}

@@ -1,0 +1,221 @@
+{
+  "baseline_commit": "f40a86f812d584f08ac9349bc7f362a498e34db0",
+  "changed_source": [
+    {
+      "path": "rouge/reporting.py",
+      "sha256": "d04370224b6a965affd41bde82358d1a07bf5c33a2f04b05cfa9083756c22ee3",
+      "bytes": 139449
+    }
+  ],
+  "own_prior_source": {
+    "path": "research/relic-report-scope-review-20261031/before-reporting.py",
+    "sha256": "96ff8f874f52590acce3068530927d9cb27d7db48ce395cd2d743fe43ada264e",
+    "bytes": 137921
+  },
+  "all_other_reporting_functions_AST_equal": true,
+  "unchanged_calculators_state_and_requirements": [
+    {
+      "path": "rouge/damage.py",
+      "sha256": "fb3de5efa094c951f952f211cf24cce57c60ae95716bc7d021c7e668c7b40497",
+      "bytes": 30953
+    },
+    {
+      "path": "rouge/estimate.py",
+      "sha256": "d7a7aff356307a1279f6494f6729aad353d1a27e2bec7f0467f5e4b656c80ed3",
+      "bytes": 23955
+    },
+    {
+      "path": "rouge/relics.py",
+      "sha256": "bd78acde986988a3657f24c2abd204af957d6b930c67139f094293ab7ea9da22",
+      "bytes": 42221
+    },
+    {
+      "path": "rouge/relic_attributes.py",
+      "sha256": "9116f1fe75fd45b7bf6157b3ab4848edb643efd0936a99baf31ed6622ff51828",
+      "bytes": 3551
+    },
+    {
+      "path": "rouge/relic_damage_factors.py",
+      "sha256": "fc158e89e4cd6688b468b76f8e8f0f04ff3b823e37eaff2f6b3a0803dbdae42e",
+      "bytes": 4095
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "sha256": "c724dce00372cb4ca99716ad03a88c547c878087ea3265e89396944b15681a4c",
+      "bytes": 157746
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "sha256": "185e9273d78af55c66cc85f7b6797a386350d65d2d47313a23b4ad76f277fe46",
+      "bytes": 6836
+    },
+    {
+      "path": "rouge/timing.py",
+      "sha256": "d160a2b60121004b410ae52249daf16f1d50eaddac3a84931c475ac2f9723cf6",
+      "bytes": 32177
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "pinned_existing_mechanism_evidence": [
+    {
+      "id": "rogue_6_relic_legacy_60",
+      "name": "金酒之杯",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "effects": [
+        {
+          "kind": "attack_speed",
+          "value": 7.0,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "gold",
+          "divisor": 5.0,
+          "scale_by_condition": true,
+          "source_buff_key": "layer_char_attribute_add",
+          "attribute_layer": "relic_rune",
+          "formula_item": "ADDITION",
+          "native_count_scale": "float32_before_fp",
+          "source_buff_index": 0
+        }
+      ]
+    },
+    {
+      "id": "rogue_6_relic_cargo_10",
+      "name": "同行者",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "effects": [
+        {
+          "kind": "attack_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        },
+        {
+          "kind": "hp_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        },
+        {
+          "kind": "defense_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      ]
+    },
+    {
+      "id": "rogue_6_relic_legacy_84",
+      "name": "残破合影",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "effects": [
+        {
+          "kind": "enemy_def_delta",
+          "value": -0.1,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "enemy_def_down",
+          "stacking": "unverified",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 0
+        },
+        {
+          "kind": "enemy_hp_factor",
+          "value": 0.95,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "enemy_max_hp_down",
+          "stacking": "independent_instances",
+          "enemy_level": null,
+          "hp_composition": "final_scaler_verified",
+          "native_reference": "rouge/data/native-relic-reference.json",
+          "native_proof": "4a266d54a67bda8f329f00f985af7dd00cef0acee7699448cc9f51ff5911abff",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      ]
+    },
+    {
+      "id": "rogue_6_relic_legacy_85",
+      "name": "恐鱼干",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "effects": [
+        {
+          "kind": "enemy_def_delta",
+          "value": -0.2,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "enemy_def_down",
+          "stacking": "unverified",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 0
+        },
+        {
+          "kind": "enemy_hp_factor",
+          "value": 0.9,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "enemy_max_hp_down",
+          "stacking": "independent_instances",
+          "enemy_level": null,
+          "hp_composition": "final_scaler_verified",
+          "native_reference": "rouge/data/native-relic-reference.json",
+          "native_proof": "4a266d54a67bda8f329f00f985af7dd00cef0acee7699448cc9f51ff5911abff",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      ]
+    },
+    {
+      "id": "rogue_6_relic_legacy_100",
+      "name": "荣耀绶带",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "effects": [
+        {
+          "kind": "attack_pct",
+          "value": 1.0,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "blocked_enemies",
+          "predicate": "equals_one",
+          "scale_by_condition": true,
+          "unit_condition": true,
+          "source_buff_key": "char_ability_new",
+          "source_buff_index": 0
+        }
+      ]
+    }
+  ],
+  "scope": "Presentation correction only. Existing resolution.complete=False qualifies all reported numeric values as confirmed-effects references. Composite full result is explicitly unknown. No new dependency/stacking/activation claims; individual unaffected values are not erased. Legacy raw numeric estimate fields remain reference values and root report metadata records their scope; complete_result is null. Not a full field-by-field dependency graph.",
+  "before": "Unknown gold omitted Jinjiu bonus but report showed attack speed100 and an unqualified total-damage group. Unknown emergency origin similarly omitted companion bonuses. Existing generic incomplete status was insufficient near results.",
+  "reused": "Existing shared build_report, metric/section, format_report and actual MainWindow render path; no extra framework or per-operator duplicated coverage logic.",
+  "defensive_guards_removed": false,
+  "runtime_speedup_claimed": false,
+  "REA_scope": "Skill read. Complete Python source directly reviewed; no new REA call. Earlier actual toolbar bytecode and three CJS analyses remain separate."
+}

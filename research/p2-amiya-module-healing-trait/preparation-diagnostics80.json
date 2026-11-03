@@ -1,0 +1,30 @@
+{
+  "test_preparation_attempts": 1,
+  "initial_test_failure_preserved": true,
+  "issues": [
+    "legacy81 is both accepted direct-healing and regeneration factor1.2; test wrongly expected regeneration unchanged rather than preserving that existing factor",
+    "known_healing_subtotals is absent when fully zero-known; test assumed it always exists"
+  ],
+  "implementation_changed_for_preparation_errors": false,
+  "matrix_environment_issue": "initial two isolated subprocesses used random hash seeds, causing 24 existing multi-factor warning list permutations. Source/relics.py uses set group traversal. Preserve initial output; rerun under same explicit hash seed for strict whole-output comparison.",
+  "native_verified": false,
+  "strict_comparator_preparation_attempts": 2,
+  "strict_comparator_issue": "Assumed estimate.skill.window_damage key; existing public window damage is top-level total_damage. Corrected reference lookup only; no matrix/API rerun.",
+  "strict_comparator_second_issue": "Expected S1 healing delta omitted existing accepted healing factor1.2; original resolution unchanged. Read its single recorded factor, preserving unresolved multi-factor factor1. No matrix/API rerun.",
+  "warning_permutation_affected_cases": 12,
+  "warning_changed_leaf_positions_per_list": 24,
+  "warning_affected_case_indices": [
+    645,
+    658,
+    671,
+    684,
+    696,
+    708,
+    720,
+    733,
+    746,
+    759,
+    771,
+    783
+  ]
+}

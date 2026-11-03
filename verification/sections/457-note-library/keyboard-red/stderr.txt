@@ -1,0 +1,15 @@
+test_search_return_only_refreshes_after_an_action_had_focus (tests.test_note_library_457.LibraryPageTests.test_search_return_only_refreshes_after_an_action_had_focus) ... FAIL
+
+======================================================================
+FAIL: test_search_return_only_refreshes_after_an_action_had_focus (tests.test_note_library_457.LibraryPageTests.test_search_return_only_refreshes_after_an_action_had_focus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_note_library_457.py", line 65, in test_search_return_only_refreshes_after_an_action_had_focus
+    self.assertIs(self.host.pages.currentWidget(),self.owner.note_library_page);self.assertIsNone(self.owner.recent_notes_popup)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <rouge.player_reference_window.NotesPage(0x133b211a420, name="sceneNotesWindow") at 0x00000133D5EE5F00> is not <rouge.player_reference_window.ToolPage(0x133b1e42ce0, name="sceneNotesLibrary") at 0x00000133D66F4D40>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.853s
+
+FAILED (failures=1)

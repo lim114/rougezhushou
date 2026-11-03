@@ -1,0 +1,13 @@
+{
+  "failure": "Reviewer directly compared decoded native tuple to saved public JSON list instead of checking native tree and its JSON projection separately.",
+  "first_difference": {
+    "record_index_zero_based": 6,
+    "path": "result.external_event_reference.parameter_rows[0]",
+    "native_type": "tuple",
+    "JSON_type": "list"
+  },
+  "attempt": 1,
+  "new_API_calls": 0,
+  "product_failure": false,
+  "fix": "Exact native decode/reencode with tuple/list retained; separately strict-bind JSON projection to saved public JSON."
+}

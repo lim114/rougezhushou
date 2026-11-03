@@ -1,0 +1,20 @@
+{
+  "title": "场景笔记排版预览与多窗口保存保护",
+  "change": "场景笔记增加Markdown排版预览，保留原文、绑定与未保存保护；预览不加载外部图片、不自动打开链接，保存冲突保留双方文字。",
+  "limits": "保存保护针对本程序合作窗口并再次检查其他软件修改；不宣称跨所有软件的系统级原子比较更新。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "原文与预览分开，切页不隐式保存",
+    "本机与网络图片不自动加载",
+    "未保存文字不随场景改变",
+    "两个窗口与保存期间的外部修改不会被测试路径覆盖"
+  ],
+  "test": "tests.test_player_note_preview_398",
+  "native": "scripts/verify_player_note_preview_window_398.py",
+  "next": "继续第399节：本机笔记目录、正文搜索与准确场景回访。",
+  "additional_tests": [
+    "tests.test_player_notes_387"
+  ],
+  "unit_receipt": "verification/sections/398-player-checks/process.json",
+  "native_receipt": "verification/sections/398-player-window/window.json",
+  "native_process_receipt": "verification/sections/398-player-window-process/process.json"
+}

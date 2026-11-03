@@ -1,0 +1,12 @@
+--- v1/test_environment_input_106.py
++++ v2/test_environment_input_106.py
+@@ -105,6 +105,9 @@
+     def test_invalid_incoming_mode_does_not_replace_valid_saved_difficulty(self):
+         with tempfile.TemporaryDirectory() as directory:
+             path = Path(directory) / 'run.json'
++            # A public persisted run owns the deterministic 1001/1002 times.
++            # A nonexistent-path reset would use the real current started_at.
++            path.write_text(json.dumps(fixture({}), ensure_ascii=False), encoding='utf-8')
+             run = RunState(path)
+             valid = {'operators': [], 'config': {'difficulty': {'value': 0, 'source': 'public-normal'}}}
+             self.assertTrue(run.apply(valid, 1001))

@@ -1,0 +1,43 @@
+...............................................................................s...........s.ss..s.....sss.s...sssss...............s.ss..s.s.s....U.s....s.s.s.ss.......................ssssssssssssssssssssssssssssssssssssssssssss...............................................................U................................................................................U.........................................U.................U..U............U..U.......U.......................UU.....U...UU.......U........U....................U................U.UU.U.U..................UUU.U..................U.........................U.................................................U................ssssssssssssssUUUUUUUU.............UUUUUU...............................UU....................UUUUUUUUUUUUU.UU..UUUUUUUUU..............................................UUUU......UU.....U.U............U.............UUUUUUUUUUUUUUUU.U...............UUUUUUUUUUUUUUUUUUUUUUUUUUUUU......U.............................................................U....U........................................................................................................E...........................................................E......................F............................UU.....................U......................UU...............U....................UU................................................................................................................UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUEUUUUUUU...........................................................................................................................................................U..............U.....................................U...............U.........................U....................................................................U.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+ERROR: setUpClass (tests.test_direct_landmark_mapping.DirectLandmarkTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_direct_landmark_mapping.py", line 13, in setUpClass
+    def setUpClass(cls):cls.output,cls.receipt=build()
+                                               ^^^^^^^
+  File "/workspace/rougezhushou/scripts/build_fixed_landmark_references.py", line 49, in build
+    raise ValueError('A rejected original plane fit changed or was promoted.')
+ValueError: A rejected original plane fit changed or was promoted.
+
+======================================================================
+ERROR: setUpClass (tests.test_map_ground_extension.FrozenGroundExtensionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_map_ground_extension.py", line 31, in setUpClass
+    cls.output, cls.receipt = build()
+                              ^^^^^^^
+  File "/workspace/rougezhushou/scripts/extend_fixed_map_projections.py", line 96, in build
+    raise ValueError('The original observation cannot reproduce its first fit.')
+ValueError: The original observation cannot reproduce its first fit.
+
+======================================================================
+ERROR: test_event_same_title_and_description_preserve_ambiguous_scene_ids (tests.test_node_content.NodeContentTests.test_event_same_title_and_description_preserve_ambiguous_scene_ids)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_node_content.py", line 114, in test_event_same_title_and_description_preserve_ambiguous_scene_ids
+    raise RuntimeError('CJK font fixture unavailable: '+str(font_file)+
+RuntimeError: CJK font fixture unavailable: C:/Windows/Fonts/msyh.ttc; set ROUGE_TEST_CJK_FONT to a real font file containing Noto Sans CJK SC.
+
+======================================================================
+FAIL: test_new_query_all_eight_public_scenarios_run_and_render_in_qt (tests.test_base_settlement_planning.BaseSettlementViewTests.test_new_query_all_eight_public_scenarios_run_and_render_in_qt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_base_settlement_planning.py", line 180, in test_new_query_all_eight_public_scenarios_run_and_render_in_qt
+    self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),20)
+AssertionError: 21 != 20
+
+----------------------------------------------------------------------
+Ran 3443 tests in 66.976s
+
+FAILED (failures=1, errors=3, skipped=84)

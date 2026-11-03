@@ -1,0 +1,1336 @@
+{
+  "provider": "actual RapidOCR 1.4.4 / ONNX original calls",
+  "private_original230_replayed": false,
+  "protocol_checks_are_engine_doubles": true,
+  "same_exact_public_png_inputs": true,
+  "scenarios": {
+    "control_damaged": {
+      "input": {
+        "path": "work/adaptive-261-public-operator/public-control-damaged.png",
+        "png_sha256": "444e87a9e8c9fd37a0d3480128a846ee92cdc3dea0f9e359006ffa7375719c42",
+        "pixel_sha256": "b9c3cfdd015a9772db83e8b05f9eec707c3f85f81a0df5a53525812bbaeb17ed",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "full_discovery",
+        "pixels": 2312604,
+        "regions": 1
+      },
+      "after_ocr": {
+        "mode": "dirty_regions",
+        "pixels": 40572,
+        "requested_pixels": 40572,
+        "regions": 1
+      },
+      "before_routing": {
+        "strategy": "full_discovery",
+        "candidates": [],
+        "visual_ms": 44.541128001583274,
+        "fallback_reason": "unknown_or_incomplete_controls",
+        "feature_reuse": "none"
+      },
+      "after_routing": {
+        "strategy": "full_discovery",
+        "candidates": [],
+        "visual_ms": 38.06747999988147,
+        "fallback_reason": "unknown_or_incomplete_controls",
+        "feature_reuse": "none"
+      },
+      "current_operator_id": "char_123_fang",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0
+      },
+      "current_missing_fields": [
+        "selected_skill"
+      ],
+      "current_complete": false,
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_work": {
+        "phase": "default:control_damaged:control_damaged",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "actual_inference_ms": 863.343540000642
+      },
+      "actual_before_onnx_events": [
+        {
+          "phase": "default:control_damaged:control_damaged",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 488.26568700314965
+        },
+        {
+          "phase": "default:control_damaged:control_damaged",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 4.2707159991550725
+        },
+        {
+          "phase": "default:control_damaged:control_damaged",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 4.105257001356222
+        },
+        {
+          "phase": "default:control_damaged:control_damaged",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 113.88275099670864
+        },
+        {
+          "phase": "default:control_damaged:control_damaged",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            756
+          ],
+          "elapsed_ms": 252.81912900027237
+        }
+      ],
+      "actual_after_work": {
+        "phase": "control_damaged:changed",
+        "detector_calls": 1,
+        "recognizer_calls": 1,
+        "classifier_calls": 1,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              736,
+              768
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              2,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              2,
+              3,
+              48,
+              320
+            ]
+          }
+        ],
+        "ocr_request_shapes": [
+          [
+            196,
+            207,
+            3
+          ]
+        ],
+        "actual_inference_ms": 181.77299500166555
+      }
+    },
+    "icon_removed": {
+      "input": {
+        "path": "work/adaptive-261-public-operator/public-icon-removed.png",
+        "png_sha256": "cc8b384ad148d1a9b85738b789924061f1c08b8493a35ed71300163e5e52e7f2",
+        "pixel_sha256": "aa960840e0300bcb7766163f4da44d2a114efa8e911fa0df8a20a5e0babd7880",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 11,
+        "page_boxes": 10,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 11,
+        "page_first_batches": 2,
+        "cache_bytes": 386268
+      },
+      "after_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 11,
+        "page_boxes": 10,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 11,
+        "page_first_batches": 2,
+        "frame_signature": {
+          "shape": [
+            1127,
+            2052,
+            3
+          ],
+          "dtype": "|u1",
+          "sha256": "8daaada57dc2f2d1c80bb288df649b11180470af042fc14ec915c5a8bbdbc56a"
+        },
+        "raw_frame_size": [
+          2052,
+          1127
+        ],
+        "cache_bytes": 386268
+      },
+      "before_routing": {
+        "strategy": "full_discovery",
+        "candidates": [
+          "operator_detail"
+        ],
+        "visual_ms": 0.15847900067456067,
+        "fallback_reason": "semantic_validation_failed_complete_text",
+        "feature_reuse": "exact_controls",
+        "semantic_verified": false
+      },
+      "after_routing": {
+        "strategy": "full_discovery",
+        "candidates": [
+          "operator_detail"
+        ],
+        "visual_ms": 0.19658599921967834,
+        "fallback_reason": "semantic_validation_failed_complete_text",
+        "feature_reuse": "exact_controls",
+        "semantic_verified": false
+      },
+      "current_operator_id": "char_123_fang",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "module_id": null,
+        "module_level": 0,
+        "selected_skill": 1
+      },
+      "current_missing_fields": [
+        "potential"
+      ],
+      "current_complete": false,
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_work": {
+        "phase": "default:icon_removed:icon_removed",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "actual_inference_ms": 756.4937770002871
+      },
+      "actual_before_onnx_events": [
+        {
+          "phase": "default:icon_removed:icon_removed",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 429.0511869985494
+        },
+        {
+          "phase": "default:icon_removed:icon_removed",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 6.230599999980768
+        },
+        {
+          "phase": "default:icon_removed:icon_removed",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            5,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 3.208625999832293
+        },
+        {
+          "phase": "default:icon_removed:icon_removed",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 74.38043300135178
+        },
+        {
+          "phase": "default:icon_removed:icon_removed",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            5,
+            3,
+            48,
+            754
+          ],
+          "elapsed_ms": 243.62293100057286
+        }
+      ],
+      "actual_after_work": {
+        "phase": "icon_removed:changed",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              1088,
+              1984
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              5,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              320
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              5,
+              3,
+              48,
+              754
+            ]
+          }
+        ],
+        "ocr_request_shapes": [],
+        "actual_inference_ms": 952.1759640010714
+      }
+    },
+    "exterior_overlay": {
+      "input": {
+        "path": "work/adaptive-261-public-operator/public-exterior-overlay.png",
+        "png_sha256": "209fc82868fe681b7b56ed0a6c9923d7c0cfdb99de5e9144134bf0e0f0c0509b",
+        "pixel_sha256": "3dcdc21787b96507ffb14a6f6845c529b196add8ffed13a9d6d220765f1b825a",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 13,
+        "page_boxes": 11,
+        "guard_boxes": 2,
+        "recognized_batches": 3,
+        "reused_batches": 0,
+        "recognized_boxes": 13,
+        "page_first_batches": 2,
+        "cache_bytes": 472383
+      },
+      "after_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 13,
+        "page_boxes": 11,
+        "guard_boxes": 2,
+        "recognized_batches": 3,
+        "reused_batches": 0,
+        "recognized_boxes": 13,
+        "page_first_batches": 2,
+        "frame_signature": {
+          "shape": [
+            1127,
+            2052,
+            3
+          ],
+          "dtype": "|u1",
+          "sha256": "c893b6aefcb78493ab7775f8d336178a4b5497b50f43bd777983e1a7ea14810e"
+        },
+        "raw_frame_size": [
+          2052,
+          1127
+        ],
+        "cache_bytes": 472383
+      },
+      "before_routing": {
+        "strategy": "visual_region_ocr",
+        "candidates": [
+          "operator_detail"
+        ],
+        "visual_ms": 0.14891400132910348,
+        "fallback_reason": null,
+        "feature_reuse": "exact_controls",
+        "semantic_verified": true
+      },
+      "after_routing": {
+        "strategy": "visual_region_ocr",
+        "candidates": [
+          "operator_detail"
+        ],
+        "visual_ms": 0.15040699872770347,
+        "fallback_reason": null,
+        "feature_reuse": "exact_controls",
+        "semantic_verified": true
+      },
+      "current_operator_id": "char_123_fang",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0,
+        "selected_skill": 1
+      },
+      "current_missing_fields": [],
+      "current_complete": true,
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_work": {
+        "phase": "default:exterior_overlay:exterior_overlay",
+        "detector_calls": 1,
+        "recognizer_calls": 3,
+        "classifier_calls": 3,
+        "actual_inference_ms": 881.210135998117
+      },
+      "actual_before_onnx_events": [
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 467.5583589996677
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 4.882719000306679
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 3.325001001940109
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 1.3394889974733815
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 115.17623599866056
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            571
+          ],
+          "elapsed_ms": 234.23879999972996
+        },
+        {
+          "phase": "default:exterior_overlay:exterior_overlay",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            48,
+            757
+          ],
+          "elapsed_ms": 54.68953200033866
+        }
+      ],
+      "actual_after_work": {
+        "phase": "exterior_overlay:changed",
+        "detector_calls": 1,
+        "recognizer_calls": 3,
+        "classifier_calls": 3,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              1088,
+              1984
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              1,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              320
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              571
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              1,
+              3,
+              48,
+              757
+            ]
+          }
+        ],
+        "ocr_request_shapes": [],
+        "actual_inference_ms": 1081.7111579999619
+      }
+    },
+    "geometry_changed": {
+      "input": {
+        "path": "work/adaptive-261-public-operator/public-geometry-changed.png",
+        "png_sha256": "79ae797a7a32b9d7e1c397ee3facef18d69e1ccfbc0b99c56341f56773cbdc38",
+        "pixel_sha256": "606317822bdab79959b0195654d8624f097933a1ab62d15c9c15259bc4303e6a",
+        "shape": [
+          1800,
+          3200,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "full_discovery",
+        "pixels": 5760000,
+        "regions": 1
+      },
+      "after_ocr": {
+        "mode": "full_discovery",
+        "pixels": 5760000,
+        "regions": 1
+      },
+      "before_routing": {
+        "strategy": "full_discovery",
+        "candidates": [],
+        "visual_ms": 40.4297620007128,
+        "fallback_reason": "unknown_or_incomplete_controls",
+        "feature_reuse": "none"
+      },
+      "after_routing": {
+        "strategy": "full_discovery",
+        "candidates": [],
+        "visual_ms": 38.80054199908045,
+        "fallback_reason": "unknown_or_incomplete_controls",
+        "feature_reuse": "none"
+      },
+      "current_operator_id": "char_123_fang",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0,
+        "selected_skill": 1
+      },
+      "current_missing_fields": [],
+      "current_complete": true,
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_work": {
+        "phase": "default:geometry_changed:geometry_changed",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "actual_inference_ms": 1108.6017779962276
+      },
+      "actual_before_onnx_events": [
+        {
+          "phase": "default:geometry_changed:geometry_changed",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1120,
+            1984
+          ],
+          "elapsed_ms": 852.5652329990407
+        },
+        {
+          "phase": "default:geometry_changed:geometry_changed",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 4.700875000708038
+        },
+        {
+          "phase": "default:geometry_changed:geometry_changed",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            5,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 3.4308609974686988
+        },
+        {
+          "phase": "default:geometry_changed:geometry_changed",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 70.6856289980351
+        },
+        {
+          "phase": "default:geometry_changed:geometry_changed",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            5,
+            3,
+            48,
+            622
+          ],
+          "elapsed_ms": 177.21918000097503
+        }
+      ],
+      "actual_after_work": {
+        "phase": "geometry_changed:changed",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              1120,
+              1984
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              5,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              320
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              5,
+              3,
+              48,
+              622
+            ]
+          }
+        ],
+        "ocr_request_shapes": [
+          [
+            1800,
+            3200,
+            3
+          ]
+        ],
+        "actual_inference_ms": 1379.6728829984204
+      }
+    }
+  },
+  "owner_sequence": [
+    {
+      "input": {
+        "label": "fang_baseline",
+        "path": "work/adaptive-261-public-operator/public-baseline.png",
+        "declared_owner": "char_123_fang",
+        "png_sha256": "f3e6fd55fd5f9126f1192df02d99d90e5ee6bcdc6a5f5dad0d3d201124ac54e3",
+        "pixel_sha256": "d36449f0d565ceb3206ea6e5d7a48c20939df78ca0cdd5e10a99da3b4aa95062",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 12,
+        "page_boxes": 11,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 12,
+        "page_first_batches": 2,
+        "cache_bytes": 216234
+      },
+      "after_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 12,
+        "page_boxes": 11,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 12,
+        "page_first_batches": 2,
+        "frame_signature": {
+          "shape": [
+            1127,
+            2052,
+            3
+          ],
+          "dtype": "|u1",
+          "sha256": "374216cca69c73f8d31c02d00b288721ed2383472c038abe216d72a514054403"
+        },
+        "raw_frame_size": [
+          2052,
+          1127
+        ],
+        "cache_bytes": 216234
+      },
+      "current_owner": "char_123_fang",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0,
+        "selected_skill": 1
+      },
+      "current_missing_fields": [],
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_onnx_events": [
+        {
+          "phase": "sequence:fang_baseline",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 883.4431970026344
+        },
+        {
+          "phase": "sequence:fang_baseline",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 9.339295997051522
+        },
+        {
+          "phase": "sequence:fang_baseline",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 11.931542001548223
+        },
+        {
+          "phase": "sequence:fang_baseline",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 144.4355040002847
+        },
+        {
+          "phase": "sequence:fang_baseline",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            756
+          ],
+          "elapsed_ms": 513.5280390022672
+        }
+      ],
+      "actual_after_work": {
+        "phase": "owner_sequence:fang_baseline",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              1088,
+              1984
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              320
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              756
+            ]
+          }
+        ],
+        "ocr_request_shapes": [],
+        "actual_inference_ms": 1434.5029679971049
+      }
+    },
+    {
+      "input": {
+        "label": "vanilla_current",
+        "path": "work/adaptive-261-public-operator/public-owner-vanilla.png",
+        "declared_owner": "char_240_wyvern",
+        "png_sha256": "ddbbeb0d12968dc75e6ef4be21be0537fdc1d0487d0f752a33b0ca08f6d17001",
+        "pixel_sha256": "77a9fa88b6dbbc480ea36187caa56b38ec8d89c39df6cc3a07f927b19add4624",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 12,
+        "page_boxes": 11,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 12,
+        "page_first_batches": 2,
+        "cache_bytes": 442308
+      },
+      "after_ocr": {
+        "mode": "page_detected_batches",
+        "full_frame_input": true,
+        "coverage_verified": true,
+        "full_detection": true,
+        "full_text_coverage": true,
+        "complete_current_texts": true,
+        "fallback_reason": null,
+        "detected_boxes": 12,
+        "page_boxes": 11,
+        "guard_boxes": 1,
+        "recognized_batches": 2,
+        "reused_batches": 0,
+        "recognized_boxes": 12,
+        "page_first_batches": 2,
+        "frame_signature": {
+          "shape": [
+            1127,
+            2052,
+            3
+          ],
+          "dtype": "|u1",
+          "sha256": "89cd7828a4f6d313dac3474630a0ce58f986fd57415b672712714dd4ed071249"
+        },
+        "raw_frame_size": [
+          2052,
+          1127
+        ],
+        "cache_bytes": 442308
+      },
+      "current_owner": "char_240_wyvern",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0,
+        "selected_skill": 1
+      },
+      "current_missing_fields": [],
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_onnx_events": [
+        {
+          "phase": "sequence:vanilla_current",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 453.92262599852984
+        },
+        {
+          "phase": "sequence:vanilla_current",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 6.255738000618294
+        },
+        {
+          "phase": "sequence:vanilla_current",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 5.081929000880336
+        },
+        {
+          "phase": "sequence:vanilla_current",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 134.48982399859233
+        },
+        {
+          "phase": "sequence:vanilla_current",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            756
+          ],
+          "elapsed_ms": 270.5527779980912
+        }
+      ],
+      "actual_after_work": {
+        "phase": "owner_sequence:vanilla_current",
+        "detector_calls": 1,
+        "recognizer_calls": 2,
+        "classifier_calls": 2,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              1088,
+              1984
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              320
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              6,
+              3,
+              48,
+              756
+            ]
+          }
+        ],
+        "ocr_request_shapes": [],
+        "actual_inference_ms": 832.1873240056448
+      }
+    },
+    {
+      "input": {
+        "label": "vanilla_control_damaged",
+        "path": "work/adaptive-261-public-operator/public-owner-vanilla-control-damaged.png",
+        "declared_owner": "char_240_wyvern",
+        "png_sha256": "a0d24580843bbc86e5186c8339ff9c8a54a700787e2c26adda3bb6e93c69846f",
+        "pixel_sha256": "6eafd6c226914e08a83b6c1f3042f6200f1b6dbcaa9a787a59cfdf1a81d0ba3e",
+        "shape": [
+          703,
+          1280,
+          3
+        ],
+        "dtype": "|u1"
+      },
+      "before_ocr": {
+        "mode": "full_discovery",
+        "pixels": 2312604,
+        "regions": 1
+      },
+      "after_ocr": {
+        "mode": "dirty_regions",
+        "pixels": 40572,
+        "requested_pixels": 40572,
+        "regions": 1
+      },
+      "current_owner": "char_240_wyvern",
+      "current_fields": {
+        "level": 40,
+        "elite": 0,
+        "trust": 100,
+        "trust_display": 100,
+        "potential": 6,
+        "module_id": null,
+        "module_level": 0
+      },
+      "current_missing_fields": [
+        "selected_skill"
+      ],
+      "matches_saved_real_fresh_uncached_oracle": true,
+      "actual_before_onnx_events": [
+        {
+          "phase": "sequence:vanilla_control_damaged",
+          "model": "ch_PP-OCRv4_det_infer.onnx",
+          "input_shape": [
+            1,
+            3,
+            1088,
+            1984
+          ],
+          "elapsed_ms": 530.7901859996491
+        },
+        {
+          "phase": "sequence:vanilla_control_damaged",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 4.17662499967264
+        },
+        {
+          "phase": "sequence:vanilla_control_damaged",
+          "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            192
+          ],
+          "elapsed_ms": 3.940989001421258
+        },
+        {
+          "phase": "sequence:vanilla_control_damaged",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            320
+          ],
+          "elapsed_ms": 73.34058899868978
+        },
+        {
+          "phase": "sequence:vanilla_control_damaged",
+          "model": "ch_PP-OCRv4_rec_infer.onnx",
+          "input_shape": [
+            6,
+            3,
+            48,
+            756
+          ],
+          "elapsed_ms": 235.60622700097156
+        }
+      ],
+      "actual_after_work": {
+        "phase": "owner_sequence:vanilla_control_damaged",
+        "detector_calls": 1,
+        "recognizer_calls": 1,
+        "classifier_calls": 1,
+        "onnx_shapes": [
+          {
+            "model": "ch_PP-OCRv4_det_infer.onnx",
+            "shape": [
+              1,
+              3,
+              736,
+              768
+            ]
+          },
+          {
+            "model": "ch_ppocr_mobile_v2.0_cls_infer.onnx",
+            "shape": [
+              2,
+              3,
+              48,
+              192
+            ]
+          },
+          {
+            "model": "ch_PP-OCRv4_rec_infer.onnx",
+            "shape": [
+              2,
+              3,
+              48,
+              320
+            ]
+          }
+        ],
+        "ocr_request_shapes": [
+          [
+            196,
+            207,
+            3
+          ]
+        ],
+        "actual_inference_ms": 178.96349200236727
+      }
+    }
+  ],
+  "unit_tests": 66,
+  "unit_skips": [],
+  "production_hashes": {
+    "rouge/recognition.py": "99138a09df0126ee23d5182d4d55d903d8b4090cc0326ae91257b855565e1811",
+    "rouge/page_ocr.py": "a73a79f7ada205f809f609893d91aada5b08928c7907d73a75aadcdcbfecb6f0",
+    "rouge/dynamic_ocr.py": "eb668e09ffd2de9967abfc7bdfb91d3bea1c7c6a56973313cc44d7fa04c42fe8",
+    "tests/test_page_ocr_seed_bridge.py": "59c464a330a84e815417b948dece8f671645bfb48ea2df488fda15ba4201dce9"
+  },
+  "original_adaptive_test_unchanged_sha256": "188ecc89418b02d656f6807b2ecf6b0b6b139fdcdc8961331c9bdf935467fe4a"
+}

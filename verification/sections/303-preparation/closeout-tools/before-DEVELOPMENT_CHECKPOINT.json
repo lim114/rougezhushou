@@ -1,0 +1,4534 @@
+{
+  "branch": "codex/p2-development",
+  "policy": {
+    "commit_after_each_section": true,
+    "full_validation_interval": 15,
+    "continuous_work_authorized": true,
+    "windows_compatibility": "Wine authorized; distinct from native Windows verification",
+    "scheduled_background_work": false,
+    "priority_order": [
+      "P3",
+      "P2",
+      "P1"
+    ],
+    "max_failed_attempts_per_problem": 3,
+    "wrap_up_below_usage_percent": 15,
+    "usage_percent_available": true,
+    "usage_monitoring": "Native account-usage read is available; threshold checked for the active batch. Recheck at batch boundaries; do not infer unavailable windows.",
+    "automatic_next_batch": false,
+    "commit_interval": 1,
+    "commit_after_full_validation_pass": false,
+    "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
+    "push_after_batch_commit": true,
+    "development_paused_by_latest_user_request": false,
+    "summary_interval": 5,
+    "stop_after_section": null,
+    "each_section_requires_functional_progress": true,
+    "validation_is_additional_to_functional_progress": true,
+    "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
+    "full_validation_anchor_section": 125,
+    "next_full_validation_after": 305,
+    "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
+    "each_section_window_required": false,
+    "each_section_requires_meaningful_project_advancement": true,
+    "bugfix_only_counts_as_functional_section": false,
+    "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
+    "latest_functional_scope_requirement_Beijing": "2026-10-11",
+    "current_user_batch_target_section": null,
+    "current_user_batch_completed": false,
+    "requirements_synced_each_section": true,
+    "atomic_section_source_receipt_status_commit": true,
+    "verify_remote_head_after_each_push": true,
+    "uncommitted_or_unverified_preparations_count_as_completed": false,
+    "section_status_requirement_Beijing": "2026-10-13",
+    "repair_full_validation_after_functional_260": true,
+    "new_functional_sections_paused": false,
+    "requested_full_validation261_completed": true,
+    "historical_before_261_no_automatic_functional_261": true,
+    "historical_before_261_current_requested_full_validation_after": 261,
+    "historical_accuracy_validation_after_section_before261": 115,
+    "batch_target_section": null,
+    "highest_priority_project_requirements": {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "section": "项目级最高优先要求（2026-10-15）",
+      "agent_entry": "AGENTS.md 顶部同文规则",
+      "scope": "Project-internal highest priority: check premises, exercise independent judgment, verify sources, explain disagreement and surface overlooked variables/costs/biases."
+    },
+    "priority_changed_on_Beijing": "2026-10-15",
+    "player_readability": "Default player output requires no computing terminology: useful result/information first, game Chinese names, conditions/units/unknowns explained; raw IDs, numeric implementation and debug details expandable.",
+    "historical_long_term_target_section_before_p3_continuation": 400
+  },
+  "baseline_commit": "0015c20",
+  "completed_sections": 302,
+  "sections": [
+    {
+      "number": 1,
+      "completion_ref": "p2-section-001",
+      "topic": "堕梦计数不生成虚构事件",
+      "verification": "verification/sections/001.json"
+    },
+    {
+      "number": 2,
+      "completion_ref": "p2-section-002",
+      "topic": "机械师冲锋次数不自动归属完整技能和周期",
+      "verification": "verification/sections/002.json"
+    },
+    {
+      "number": 3,
+      "completion_ref": "p2-section-003",
+      "topic": "灵知普通攻击保留命中时间",
+      "verification": "verification/sections/003.json"
+    },
+    {
+      "number": 4,
+      "completion_ref": "p2-section-004",
+      "topic": "灵知S1无出手保护及两段未知边界",
+      "verification": "verification/sections/004.json"
+    },
+    {
+      "number": 5,
+      "completion_ref": "p2-section-005",
+      "topic": "灵知特殊技能目标生命周期保护",
+      "verification": "verification/sections/005.json"
+    },
+    {
+      "number": 6,
+      "completion_ref": "p2-section-006",
+      "topic": "本局分队与难度资格校验",
+      "verification": "verification/sections/006.json"
+    },
+    {
+      "number": 7,
+      "completion_ref": "p2-section-007",
+      "topic": "浮游单元保留既有命中时间参考",
+      "verification": "verification/sections/007.json"
+    },
+    {
+      "number": 8,
+      "completion_ref": "p2-section-008",
+      "topic": "桃金娘受疗人数边界",
+      "verification": "verification/sections/008.json"
+    },
+    {
+      "number": 9,
+      "completion_ref": "p2-section-009",
+      "topic": "古米烹饪后治疗时钟",
+      "verification": "verification/sections/009.json"
+    },
+    {
+      "number": 10,
+      "completion_ref": "p2-section-010",
+      "topic": "驭械术师已知模组特性参数",
+      "verification": "verification/sections/010.json"
+    },
+    {
+      "number": 11,
+      "completion_ref": "p2-section-011",
+      "topic": "古米期望攻击保留事件时间",
+      "verification": "verification/sections/011.json"
+    },
+    {
+      "number": 12,
+      "completion_ref": "p2-section-012",
+      "topic": "头狼跨阶段在场计时",
+      "verification": "verification/sections/012.json"
+    },
+    {
+      "number": 13,
+      "completion_ref": "p2-section-013",
+      "topic": "维什戴尔有效出手与次生事件未知保护",
+      "verification": "verification/sections/013.json"
+    },
+    {
+      "number": 14,
+      "completion_ref": "p2-section-014",
+      "topic": "狼群光环覆盖与跳伤未知保护",
+      "verification": "verification/sections/014.json"
+    },
+    {
+      "number": 15,
+      "completion_ref": "p2-section-015",
+      "topic": "特殊浮游单元独立攻击未知保护",
+      "verification": "verification/sections/015.json"
+    },
+    {
+      "number": 16,
+      "completion_ref": "p2-section-016",
+      "topic": "魂灵施放次数归属与时钟保护",
+      "verification": "verification/sections/016.json"
+    },
+    {
+      "number": 17,
+      "completion_ref": "p2-section-017",
+      "topic": "水月IS模组天赋身份保留",
+      "verification": "verification/sections/017.json"
+    },
+    {
+      "number": 18,
+      "completion_ref": "p2-section-018",
+      "topic": "水月下次攻击获取与零窗口保护",
+      "verification": "verification/sections/018.json"
+    },
+    {
+      "number": 19,
+      "completion_ref": "p2-section-019",
+      "topic": "伊内丝持续伤害命中依赖保护",
+      "verification": "verification/sections/019.json"
+    },
+    {
+      "number": 20,
+      "completion_ref": "p2-section-020",
+      "topic": "异格星熊手动关闭尾段保护",
+      "verification": "verification/sections/020.json"
+    },
+    {
+      "number": 21,
+      "completion_ref": "p2-section-021",
+      "topic": "安洁观察窗口与起飞阶段未知保护",
+      "verification": "verification/sections/021.json"
+    },
+    {
+      "number": 22,
+      "completion_ref": "p2-section-022",
+      "topic": "敌人专属关卡倍率选择器",
+      "verification": "verification/sections/022.json"
+    },
+    {
+      "number": 23,
+      "completion_ref": "p2-section-023",
+      "topic": "安洁手动重量预览与固定档案优先级",
+      "verification": "verification/sections/023.json"
+    },
+    {
+      "number": 24,
+      "completion_ref": "p2-section-024",
+      "topic": "古米与黍下次攻击治疗未知时钟保护",
+      "verification": "verification/sections/024.json"
+    },
+    {
+      "number": 25,
+      "completion_ref": "p2-section-025",
+      "topic": "圣聆初雪积雪覆盖与首次跳伤未知保护",
+      "verification": "verification/sections/025.json"
+    },
+    {
+      "number": 26,
+      "completion_ref": "p2-section-026",
+      "topic": "机械师召唤物结构化持续参数",
+      "verification": "verification/sections/026.json"
+    },
+    {
+      "number": 27,
+      "completion_ref": "p2-section-027",
+      "topic": "长期科技原始目录与只读浏览界面",
+      "verification": "verification/sections/027.json"
+    },
+    {
+      "number": 28,
+      "completion_ref": "p2-section-028",
+      "topic": "祥子八音符条件参考与实际时钟保护",
+      "verification": "verification/sections/028.json"
+    },
+    {
+      "number": 29,
+      "completion_ref": "p2-section-029",
+      "topic": "星熊盾牌独立接触与伤转治疗保护",
+      "verification": "verification/sections/029.json"
+    },
+    {
+      "number": 30,
+      "completion_ref": "p2-section-030",
+      "topic": "梓兰三技能观察窗口和未绑定箭矢保护",
+      "verification": "verification/sections/030.json"
+    },
+    {
+      "number": 31,
+      "completion_ref": "p2-section-031",
+      "topic": "夜刀部署多段条件伤害与实际时钟保护",
+      "verification": "verification/sections/031.json"
+    },
+    {
+      "number": 32,
+      "completion_ref": "p2-section-032",
+      "topic": "陈斩击后强化相位与独立剑气未知保护",
+      "verification": "verification/sections/032.json"
+    },
+    {
+      "number": 33,
+      "completion_ref": "p2-section-033",
+      "topic": "遥独立浮泡受疗与浮空跳伤归属保护",
+      "verification": "verification/sections/033.json"
+    },
+    {
+      "number": 34,
+      "completion_ref": "p2-section-034",
+      "topic": "望主动资源与被动棋子效果分离",
+      "verification": "verification/sections/034.json"
+    },
+    {
+      "number": 35,
+      "completion_ref": "p2-section-035",
+      "topic": "真言全场人工事件次数的未绑定时钟保护",
+      "verification": "verification/sections/035.json"
+    },
+    {
+      "number": 36,
+      "completion_ref": "p2-section-036",
+      "topic": "梅下次攻击获取与实际时钟保护",
+      "verification": "verification/sections/036.json"
+    },
+    {
+      "number": 37,
+      "completion_ref": "p2-section-037",
+      "topic": "水月AMB-Y天赋身份条件参考和额外回复未知边界",
+      "verification": "verification/sections/037.json"
+    },
+    {
+      "number": 38,
+      "completion_ref": "p2-section-038",
+      "topic": "初雪观察窗口与积雪经过事件归属保护",
+      "verification": "verification/sections/038.json"
+    },
+    {
+      "number": 39,
+      "completion_ref": "p2-section-039",
+      "topic": "独立部署影哨和坐标轰炸的碰撞与回费保护",
+      "verification": "verification/sections/039.json"
+    },
+    {
+      "number": 40,
+      "completion_ref": "p2-section-040",
+      "topic": "空敌方来源的攻击与治疗范围边界",
+      "verification": "verification/sections/040.json"
+    },
+    {
+      "number": 41,
+      "completion_ref": "p2-section-041",
+      "topic": "梓兰培养和同身份天赋再部署参数",
+      "verification": "verification/sections/041.json"
+    },
+    {
+      "number": 42,
+      "completion_ref": "p2-section-042",
+      "topic": "望TRP-X棋子固定模组费用参数",
+      "verification": "verification/sections/042.json"
+    },
+    {
+      "number": 43,
+      "completion_ref": "p2-section-043",
+      "topic": "已确认治疗倍率与已建模小计一致性",
+      "verification": "verification/sections/043.json"
+    },
+    {
+      "number": 44,
+      "completion_ref": "p2-section-044",
+      "topic": "召唤物显式手动属性与面板一致性",
+      "verification": "verification/sections/044.json"
+    },
+    {
+      "number": 45,
+      "completion_ref": "p2-section-045",
+      "topic": "异格阿米娅开启来源与后续阶段归属保护",
+      "verification": "verification/sections/045.json"
+    },
+    {
+      "number": 46,
+      "completion_ref": "p2-section-046",
+      "topic": "苏苏洛低费受疗资格覆盖充能期普通治疗",
+      "verification": "verification/sections/046.json"
+    },
+    {
+      "number": 47,
+      "completion_ref": "p2-section-047",
+      "topic": "医疗阿米娅公开命中人数输入资格",
+      "verification": "verification/sections/047.json"
+    },
+    {
+      "number": 48,
+      "completion_ref": "p2-section-048",
+      "topic": "灵知ISW-A完整天赋参考与隐藏持续法术边界",
+      "verification": "verification/sections/048.json"
+    },
+    {
+      "number": 49,
+      "completion_ref": "p2-section-049",
+      "topic": "遥BLS-Y治疗人数参数和等级资格",
+      "verification": "verification/sections/049.json"
+    },
+    {
+      "number": 50,
+      "completion_ref": "p2-section-050",
+      "topic": "连续模式友方来源说明的独立诊断和恢复",
+      "verification": "verification/sections/050.json"
+    },
+    {
+      "number": 51,
+      "completion_ref": "p2-section-051",
+      "topic": "整数培养字段排除布尔值",
+      "verification": "verification/sections/051.json"
+    },
+    {
+      "number": 52,
+      "completion_ref": "p2-section-052",
+      "topic": "术师阿米娅S1受限连续时序条件参考",
+      "verification": "verification/sections/052.json"
+    },
+    {
+      "number": 53,
+      "completion_ref": "p2-section-053",
+      "topic": "机械师S2未定位破屏来源的条件参考",
+      "verification": "verification/sections/053.json"
+    },
+    {
+      "number": 54,
+      "completion_ref": "p2-section-054",
+      "topic": "活动人数参数拒绝布尔值",
+      "verification": "verification/sections/054.json"
+    },
+    {
+      "number": 55,
+      "completion_ref": "p2-section-055",
+      "topic": "报告遵循已有模组资格门槛",
+      "verification": "verification/sections/055.json"
+    },
+    {
+      "number": 56,
+      "completion_ref": "p2-section-056",
+      "topic": "合法零生命周期输入一致性",
+      "verification": "verification/sections/056.json"
+    },
+    {
+      "number": 57,
+      "completion_ref": "p2-section-057",
+      "topic": "活动声明次数排除布尔值",
+      "verification": "verification/sections/057.json"
+    },
+    {
+      "number": 58,
+      "completion_ref": "p2-section-058",
+      "topic": "同行者应急招募条件保留未知",
+      "verification": "verification/sections/058.json"
+    },
+    {
+      "number": 59,
+      "completion_ref": "p2-section-059",
+      "topic": "伤害小计按实际未知来源说明",
+      "verification": "verification/sections/059.json"
+    },
+    {
+      "number": 60,
+      "completion_ref": "p2-section-060",
+      "topic": "黍四岁周期SP不折算为自然速率",
+      "verification": "verification/sections/060.json"
+    },
+    {
+      "number": 61,
+      "completion_ref": "p2-section-061",
+      "topic": "整数计数和状态编码在实际查询时拒绝布尔值",
+      "verification": "verification/sections/061.json"
+    },
+    {
+      "number": 62,
+      "completion_ref": "p2-section-062",
+      "topic": "已解锁四岁条件拒绝文本假确认",
+      "verification": "verification/sections/062.json"
+    },
+    {
+      "number": 63,
+      "completion_ref": "p2-section-063",
+      "topic": "触手报告合法数字文本计数复用已验证整数",
+      "verification": "verification/sections/063.json"
+    },
+    {
+      "number": 64,
+      "completion_ref": "p2-section-064",
+      "topic": "凛御银灰S3脆弱条件拒绝原始文本",
+      "verification": "verification/sections/064.json"
+    },
+    {
+      "number": 65,
+      "completion_ref": "p2-section-065",
+      "topic": "誘饵后处理复用已验证整数计数",
+      "verification": "verification/sections/065.json"
+    },
+    {
+      "number": 66,
+      "completion_ref": "p2-section-066",
+      "topic": "魂灵次数后处理遵守既有整数门禁",
+      "verification": "verification/sections/066.json"
+    },
+    {
+      "number": 67,
+      "completion_ref": "p2-section-067",
+      "topic": "堕梦次数元数据复用实际整数校验",
+      "verification": "verification/sections/067.json"
+    },
+    {
+      "number": 68,
+      "completion_ref": "p2-section-068",
+      "topic": "黍职业条件拒绝文本误触发",
+      "verification": "verification/sections/068.json"
+    },
+    {
+      "number": 69,
+      "completion_ref": "p2-section-069",
+      "topic": "协同覆盖文本拒绝与真实银灰技能绑定",
+      "verification": "verification/sections/069.json"
+    },
+    {
+      "number": 70,
+      "completion_ref": "p2-section-070",
+      "topic": "播种条件文本与地面敌人来源明确",
+      "verification": "verification/sections/070.json"
+    },
+    {
+      "number": 71,
+      "completion_ref": "p2-section-071",
+      "topic": "强化分队解锁条件与明确科技来源",
+      "verification": "verification/sections/071.json"
+    },
+    {
+      "number": 72,
+      "completion_ref": "p2-section-072",
+      "topic": "头狼参考遵守实际已解锁天赋资格",
+      "verification": "verification/sections/072.json"
+    },
+    {
+      "number": 73,
+      "completion_ref": "p2-section-073",
+      "topic": "梅MAR-X空中条件原参数与未覆盖边界",
+      "verification": "verification/sections/073.json"
+    },
+    {
+      "number": 74,
+      "completion_ref": "p2-section-074",
+      "topic": "魂灵之影两条本体召唤途径的培养资料",
+      "verification": "verification/sections/074.json"
+    },
+    {
+      "number": 75,
+      "completion_ref": "p2-section-075",
+      "topic": "紧急3–6静态移速符文参数与未知合成边界",
+      "verification": "verification/sections/075.json"
+    },
+    {
+      "number": 76,
+      "completion_ref": "p2-section-076",
+      "topic": "遥未解锁花火不误报未知治疗与派生伤害",
+      "verification": "verification/sections/076.json",
+      "summary_correction_ref": "p2-section-076-summary"
+    },
+    {
+      "number": 77,
+      "completion_ref": "p2-section-077",
+      "topic": "安洁莉娜未解锁天赋不生成虚假命中与时间参考",
+      "verification": "verification/sections/077.json"
+    },
+    {
+      "number": 78,
+      "completion_ref": "p2-section-078",
+      "topic": "真言未解锁天赋不再虚假遮蔽已知伤害",
+      "verification": "verification/sections/078.json"
+    },
+    {
+      "number": 79,
+      "completion_ref": "p2-section-079",
+      "topic": "医疗阿米娅未解锁回复天赋的虚假事件纠正",
+      "verification": "verification/sections/079.json"
+    },
+    {
+      "number": 80,
+      "completion_ref": "p2-section-080",
+      "topic": "医疗阿米娅INC-X同特性伤转疗比例修正",
+      "verification": "verification/sections/080.json"
+    },
+    {
+      "number": 81,
+      "completion_ref": "p2-section-081",
+      "topic": "未核验组合提示按声明顺序稳定输出",
+      "verification": "verification/sections/081.json"
+    },
+    {
+      "number": 82,
+      "completion_ref": "p2-section-082",
+      "topic": "苏苏洛受疗条件拒绝文本假确认",
+      "verification": "verification/sections/082.json"
+    },
+    {
+      "number": 83,
+      "completion_ref": "p2-section-083",
+      "topic": "神经损伤实际状态条件拒绝文本假确认",
+      "verification": "verification/sections/083.json"
+    },
+    {
+      "number": 84,
+      "completion_ref": "p2-section-084",
+      "topic": "遥S2重复开启条件拒绝文本假确认",
+      "verification": "verification/sections/084.json"
+    },
+    {
+      "number": 85,
+      "completion_ref": "p2-section-085",
+      "topic": "梓兰附近部署条件按实际天赋拒绝文本假确认",
+      "verification": "verification/sections/085.json"
+    },
+    {
+      "number": 86,
+      "completion_ref": "p2-section-086",
+      "topic": "剩余十二个布尔条件按实际消费者拒绝文本输入",
+      "verification": "verification/sections/086.json"
+    },
+    {
+      "number": 87,
+      "completion_ref": "p2-section-087",
+      "topic": "接入古米背面真实动画元资料并保留未绑定边界",
+      "verification": "verification/sections/087.json"
+    },
+    {
+      "number": 88,
+      "completion_ref": "p2-section-088",
+      "topic": "拒绝实际持续攻击消费者的文本误确认",
+      "verification": "verification/sections/088.json"
+    },
+    {
+      "number": 89,
+      "completion_ref": "p2-section-089",
+      "topic": "保护培养本局人数观察的布尔输入边界",
+      "verification": "verification/sections/089.json"
+    },
+    {
+      "number": 90,
+      "completion_ref": "p2-section-090",
+      "topic": "提供可迁移的原始动画来源只读校核命令",
+      "verification": "verification/sections/090.json"
+    },
+    {
+      "number": 91,
+      "completion_ref": "p2-section-091",
+      "topic": "联合完善普攻回技力条件流程与深海色回复参考口径",
+      "verification": "verification/sections/091.json"
+    },
+    {
+      "number": 92,
+      "completion_ref": "p2-section-092",
+      "topic": "观察窗口刷新、零秒与治疗报告及供靶时序使用流程",
+      "verification": "verification/sections/092.json"
+    },
+    {
+      "number": 93,
+      "completion_ref": "working-tree-section-093",
+      "topic": "账户缓存安全读取、原件保护与合法新观察恢复完整流程",
+      "verification": "verification/sections/093.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 94,
+      "completion_ref": "working-tree-section-094",
+      "topic": "十三项局外情景输入自动刷新与状态边界完整流程",
+      "verification": "verification/sections/094.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 95,
+      "completion_ref": "working-tree-section-095",
+      "topic": "所选模组原件追溯、覆盖边界与完整状态隔离",
+      "verification": "verification/sections/095.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 96,
+      "topic": "培养资格、条件声明与原件来源说明",
+      "verification": "verification/sections/096.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 97,
+      "topic": "账号保存异常连续使用、文字边界与原件保护",
+      "verification": "verification/sections/097.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 98,
+      "topic": "本局缓存消费保护和布尔库存计数边界",
+      "verification": "verification/sections/098.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 99,
+      "topic": "本局保存故障连续读取、新局边界与重启提示",
+      "verification": "verification/sections/099.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 100,
+      "topic": "培养消费安全视图和独立本局强化事实保护",
+      "verification": "verification/sections/100.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 101,
+      "topic": "缓存消费者安全和旧记录恢复",
+      "verification": "verification/sections/101.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 102,
+      "topic": "库存确认资格和52项原回归登记",
+      "verification": "verification/sections/102.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 103,
+      "topic": "来源证据消费和分队缓存合法恢复",
+      "verification": "verification/sections/103.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 104,
+      "topic": "资源读取准入与保存边界",
+      "verification": "verification/sections/104.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 105,
+      "topic": "测试登记与五节全量检验",
+      "verification": "verification/sections/105.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 106,
+      "topic": "环境适用资格与来源报告",
+      "verification": "verification/sections/106.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 107,
+      "topic": "派生重量与天赋共同消费",
+      "verification": "verification/sections/107.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 108,
+      "topic": "本局区域consumer输入资格",
+      "verification": "verification/sections/108.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 109,
+      "topic": "敌方空供靶与独立来源归属修复",
+      "verification": "verification/sections/109.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 110,
+      "topic": "永久技能空供靶释放与技力时钟分离",
+      "verification": "verification/sections/110.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 111,
+      "topic": "召唤物完整施放尾段归属",
+      "verification": "verification/sections/111.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 112,
+      "topic": "新局采样视图与保存状态同步",
+      "verification": "verification/sections/112.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 113,
+      "topic": "弹药观察窗口口径",
+      "verification": "verification/sections/113.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 114,
+      "topic": "公共数值输入类型边界",
+      "verification": "verification/sections/114.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 115,
+      "topic": "当前输出分项",
+      "verification": "verification/sections/115.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 116,
+      "topic": "陈原版阶段资料完整查看",
+      "verification": "verification/sections/116.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 117,
+      "topic": "完整计算条件与独立时序输出报告",
+      "verification": "verification/sections/117.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 118,
+      "topic": "技能等级读源与培养说明",
+      "verification": "verification/sections/118.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 119,
+      "topic": "有限弹药完整施放资格",
+      "verification": "verification/sections/119.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 120,
+      "topic": "情景输入保留与严格JSON",
+      "verification": "verification/sections/120.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 121,
+      "topic": "即时技能初动资格",
+      "verification": "verification/sections/121.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 122,
+      "topic": "本局保留状态资格",
+      "verification": "verification/sections/122.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 123,
+      "topic": "独立单位目标生命周期的零值边界",
+      "verification": "verification/sections/123.json"
+    },
+    {
+      "number": 124,
+      "topic": "独立单位时序情景来源与报告补全",
+      "verification": "verification/sections/124.json"
+    },
+    {
+      "number": 125,
+      "topic": "时序预览超范围数值的明确错误处理",
+      "verification": "verification/sections/125.json"
+    },
+    {
+      "number": 126,
+      "topic": "召唤物模组升级局外对照",
+      "verification": "verification/sections/126.json",
+      "functional_project_advancement": true
+    },
+    {
+      "number": 127,
+      "topic": "机械师S3逐次冲锋与多窗口测算",
+      "verification": "verification/sections/127.json",
+      "functional_project_advancement": true
+    },
+    {
+      "number": 128,
+      "topic": "长期科技账户资料与解锁状态",
+      "verification": "verification/sections/128.json",
+      "functional_project_advancement": true
+    },
+    {
+      "number": 129,
+      "completion_ref": "p2-section-129",
+      "topic": "账户资料联动的强化分队条件清单",
+      "verification": "verification/sections/129.json"
+    },
+    {
+      "number": 130,
+      "completion_ref": "p2-section-130",
+      "topic": "召唤物费用与配额测算",
+      "verification": "verification/sections/130.json"
+    },
+    {
+      "number": 131,
+      "completion_ref": "p2-section-131",
+      "topic": "机械师S2破屏与爆炸事件窗口测算",
+      "verification": "verification/sections/131.json"
+    },
+    {
+      "number": 132,
+      "completion_ref": "p2-section-132",
+      "topic": "逐友方有效治疗与生命预算",
+      "verification": "verification/sections/132.json"
+    },
+    {
+      "number": 133,
+      "completion_ref": "p2-section-133",
+      "topic": "同培养技能等级升级收益对照",
+      "verification": "verification/sections/133.json"
+    },
+    {
+      "number": 134,
+      "completion_ref": "p2-section-134",
+      "topic": "固定关卡敌人与难度条件批量对照",
+      "verification": "verification/sections/134.json"
+    },
+    {
+      "number": 135,
+      "completion_ref": "p2-section-135",
+      "topic": "独立局外情景库与条件差异对照",
+      "verification": "verification/sections/135.json"
+    },
+    {
+      "number": 136,
+      "completion_ref": "p2-section-136",
+      "topic": "低星近战攻击与即时回费参考",
+      "verification": "verification/sections/136.json",
+      "actual_commit": "aa65628cb6a899bc987ebbc8f4d89847421f1b81"
+    },
+    {
+      "number": 137,
+      "completion_ref": "p2-section-137",
+      "topic": "低星远程连击与暴击分支参考",
+      "verification": "verification/sections/137.json",
+      "actual_commit": "d78558b45ba53dfea676a4a7f1032443adefce45"
+    },
+    {
+      "number": 138,
+      "completion_ref": "p2-section-138",
+      "topic": "低星防御与生命回复预算",
+      "verification": "verification/sections/138.json",
+      "actual_commit": "4cf13efd041d82de2aad66d52e16b0077c1a5991"
+    },
+    {
+      "number": 139,
+      "completion_ref": "p2-section-139",
+      "topic": "逐敌人有效伤害与溢出预算",
+      "verification": "verification/sections/139.json",
+      "actual_commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db"
+    },
+    {
+      "number": 140,
+      "completion_ref": "p2-section-140",
+      "topic": "独立培养方案属性与技能收益对照",
+      "verification": "verification/sections/140.json",
+      "actual_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55"
+    },
+    {
+      "number": 141,
+      "completion_ref": "p2-section-141",
+      "topic": "七名低星干员的本局属性符文与单次技能对照",
+      "verification": "verification/sections/141.json",
+      "actual_commit": "4d32fdbe9317ac80d94a791bbb71b24e4fea9ec9"
+    },
+    {
+      "number": 142,
+      "completion_ref": "p2-section-142",
+      "topic": "七名低星干员稳定普通属性与单次技能修正",
+      "verification": "verification/sections/142.json",
+      "actual_commit": "3dbb7b51e328add588a285e0806e56ab7044a067"
+    },
+    {
+      "number": 143,
+      "topic": "七名低星干员部署费用与先锋开启回费",
+      "completion_ref": "p2-section-143",
+      "verification": "verification/sections/143.json"
+    },
+    {
+      "number": 144,
+      "topic": "低星技能技力参数与缺口对照",
+      "completion_ref": "p2-section-144",
+      "verification": "verification/sections/144.json"
+    },
+    {
+      "number": 145,
+      "topic": "低星单次治疗倍率与独立生命回复参考",
+      "completion_ref": "p2-section-145",
+      "verification": "verification/sections/145.json"
+    },
+    {
+      "number": 146,
+      "topic": "低星目标减防、定向穿透及伤害倍率",
+      "completion_ref": "p2-section-146",
+      "verification": "verification/sections/146.json"
+    },
+    {
+      "number": 147,
+      "topic": "低星同局技能等级收益批量对照",
+      "completion_ref": "p2-section-147",
+      "verification": "verification/sections/147.json"
+    },
+    {
+      "number": 148,
+      "topic": "低星同局培养与招募形态收益对照",
+      "completion_ref": "p2-section-148",
+      "verification": "verification/sections/148.json"
+    },
+    {
+      "number": 149,
+      "topic": "低星固定关卡敌人与保密等级对照",
+      "completion_ref": "p2-section-149",
+      "verification": "verification/sections/149.json"
+    },
+    {
+      "number": 150,
+      "topic": "低星逐目标与逐友方声明预算",
+      "completion_ref": "p2-section-150",
+      "verification": "verification/sections/150.json"
+    },
+    {
+      "number": 151,
+      "topic": "首批三名干员属性层分解校准",
+      "completion_ref": "p2-section-151",
+      "verification": "verification/sections/151.json"
+    },
+    {
+      "number": 152,
+      "topic": "同条件面板成对校准",
+      "completion_ref": "p2-section-152",
+      "verification": "verification/sections/152.json"
+    },
+    {
+      "number": 153,
+      "topic": "首批三名九技能校准矩阵",
+      "completion_ref": "p2-section-153",
+      "verification": "verification/sections/153.json"
+    },
+    {
+      "number": 154,
+      "topic": "连续培养曲线与独立贡献",
+      "completion_ref": "p2-section-154",
+      "verification": "verification/sections/154.json"
+    },
+    {
+      "number": 155,
+      "topic": "模组各阶段校准检视",
+      "completion_ref": "p2-section-155",
+      "verification": "verification/sections/155.json"
+    },
+    {
+      "number": 156,
+      "topic": "条件天赋与常态时间段对照",
+      "completion_ref": "p2-section-156",
+      "verification": "verification/sections/156.json"
+    },
+    {
+      "number": 157,
+      "topic": "原动画多方向事件校准台账",
+      "completion_ref": "p2-section-157",
+      "verification": "verification/sections/157.json"
+    },
+    {
+      "number": 158,
+      "topic": "银灰S2受益干员部署触发时间线",
+      "completion_ref": "p2-section-158",
+      "verification": "verification/sections/158.json"
+    },
+    {
+      "number": 159,
+      "topic": "九技能单包伤害治疗算式核对",
+      "completion_ref": "p2-section-159",
+      "verification": "verification/sections/159.json"
+    },
+    {
+      "number": 160,
+      "topic": "来源合格算例工作表回放",
+      "completion_ref": "p2-section-160",
+      "verification": "verification/sections/160.json"
+    },
+    {
+      "number": 161,
+      "topic": "完整固定关卡动作目录",
+      "completion_ref": "p2-section-161",
+      "verification": "verification/sections/161.json"
+    },
+    {
+      "number": 162,
+      "topic": "预置实体激活与位置绑定",
+      "completion_ref": "p2-section-162",
+      "verification": "verification/sections/162.json"
+    },
+    {
+      "number": 163,
+      "topic": "队列隔离的随机候选与伴随包",
+      "completion_ref": "p2-section-163",
+      "verification": "verification/sections/163.json"
+    },
+    {
+      "number": 164,
+      "topic": "全部动作的局部时间窗查询",
+      "completion_ref": "p2-section-164",
+      "verification": "verification/sections/164.json"
+    },
+    {
+      "number": 165,
+      "topic": "固定敌人引用的出场来源反查",
+      "completion_ref": "p2-section-165",
+      "verification": "verification/sections/165.json"
+    },
+    {
+      "number": 166,
+      "topic": "完整条件分支阶段目录",
+      "completion_ref": "p2-section-166",
+      "verification": "verification/sections/166.json"
+    },
+    {
+      "number": 167,
+      "topic": "消失与再出现的路线分段",
+      "completion_ref": "p2-section-167",
+      "verification": "verification/sections/167.json"
+    },
+    {
+      "number": 168,
+      "topic": "固定地块反查路径及预置实体",
+      "completion_ref": "p2-section-168",
+      "verification": "verification/sections/168.json"
+    },
+    {
+      "number": 169,
+      "topic": "敌人机制字段来源对照",
+      "completion_ref": "p2-section-169",
+      "verification": "verification/sections/169.json"
+    },
+    {
+      "number": 170,
+      "topic": "跨关卡敌人环境与机制差异比较",
+      "completion_ref": "p2-section-170",
+      "verification": "verification/sections/170.json"
+    },
+    {
+      "number": 171,
+      "topic": "全部具名事件入口与特殊来源目录",
+      "completion_ref": "p2-section-171",
+      "verification": "verification/sections/171.json"
+    },
+    {
+      "number": 172,
+      "topic": "按主层筛选事件并保留特殊区域未知条件",
+      "completion_ref": "p2-section-172",
+      "verification": "verification/sections/172.json"
+    },
+    {
+      "number": 173,
+      "topic": "隐藏节点联合候选与已通过节点历史分离",
+      "completion_ref": "p2-section-173",
+      "verification": "verification/sections/173.json"
+    },
+    {
+      "number": 174,
+      "topic": "同名事件分组及全部流程场景详情",
+      "completion_ref": "p2-section-174",
+      "verification": "verification/sections/174.json"
+    },
+    {
+      "number": 175,
+      "topic": "场景选择到结果的有证导航图",
+      "completion_ref": "p2-section-175",
+      "verification": "verification/sections/175.json"
+    },
+    {
+      "number": 176,
+      "topic": "完整条件路径浏览与循环分支说明",
+      "completion_ref": "p2-section-176",
+      "verification": "verification/sections/176.json"
+    },
+    {
+      "number": 177,
+      "topic": "事件选择的具名藏品奖励联查",
+      "completion_ref": "p2-section-177",
+      "verification": "verification/sections/177.json"
+    },
+    {
+      "number": 178,
+      "topic": "作战节点普通紧急与楼层全部关卡候选",
+      "completion_ref": "p2-section-178",
+      "verification": "verification/sections/178.json"
+    },
+    {
+      "number": 179,
+      "topic": "特殊传送事件与跨局支援独立预览",
+      "completion_ref": "p2-section-179",
+      "verification": "verification/sections/179.json"
+    },
+    {
+      "number": 180,
+      "topic": "按事件正文选项与奖励检索全部资料分组",
+      "completion_ref": "p2-section-180",
+      "verification": "verification/sections/180.json"
+    },
+    {
+      "number": 181,
+      "topic": "选择条件与实际按钮说明导航分栏对照",
+      "completion_ref": "p2-section-181",
+      "verification": "verification/sections/181.json"
+    },
+    {
+      "number": 182,
+      "topic": "地图位置绑定的全部节点内容档案",
+      "completion_ref": "p2-section-182",
+      "verification": "verification/sections/182.json"
+    },
+    {
+      "number": 183,
+      "topic": "路线沿途事件内容联合清单",
+      "completion_ref": "p2-section-183",
+      "verification": "verification/sections/183.json"
+    },
+    {
+      "number": 184,
+      "topic": "地图位置绑定的全部节点内容浏览界面",
+      "completion_ref": "p2-section-184",
+      "verification": "verification/sections/184.json"
+    },
+    {
+      "number": 185,
+      "topic": "主窗口可用的20项局外校准与固定关卡工具",
+      "completion_ref": "p2-section-185",
+      "verification": "verification/sections/185.json"
+    },
+    {
+      "number": 186,
+      "topic": "七低星本局自然回技速率与恢复类型资格",
+      "completion_ref": "p2-section-186",
+      "verification": "verification/sections/186.json"
+    },
+    {
+      "number": 187,
+      "topic": "加工品完整范围、次数与目的地候选规划",
+      "completion_ref": "p2-section-187",
+      "verification": "verification/sections/187.json"
+    },
+    {
+      "number": 188,
+      "topic": "加工品资源收益与概念体条件规划",
+      "completion_ref": "p2-section-188",
+      "verification": "verification/sections/188.json"
+    },
+    {
+      "number": 189,
+      "topic": "全区域目标与行动力耗尽预算",
+      "completion_ref": "p2-section-189",
+      "verification": "verification/sections/189.json"
+    },
+    {
+      "number": 190,
+      "topic": "完整固定敌人属性与漏怪等引用字段进入实际预览",
+      "completion_ref": "p2-section-190",
+      "verification": "verification/sections/190.json"
+    },
+    {
+      "number": 191,
+      "topic": "芬轻量化天赋接入符文整数后费用链",
+      "completion_ref": "p2-section-191",
+      "verification": "verification/sections/191.json"
+    },
+    {
+      "number": 192,
+      "topic": "自然物多事件估价与损坏账本",
+      "completion_ref": "p2-section-192",
+      "verification": "verification/sections/192.json"
+    },
+    {
+      "number": 193,
+      "topic": "完成与住民条件下的步行和加工品方案比较",
+      "completion_ref": "p2-section-193",
+      "verification": "verification/sections/193.json"
+    },
+    {
+      "number": 194,
+      "topic": "多步加工品与一次性概念体资源账本",
+      "completion_ref": "p2-section-194",
+      "verification": "verification/sections/194.json"
+    },
+    {
+      "number": 195,
+      "topic": "望棋子库存与手动在场限额进入培养、模组对照和实际配额窗口",
+      "completion_ref": "p2-section-195",
+      "verification": "verification/sections/195.json"
+    },
+    {
+      "number": 196,
+      "topic": "主区域与秘境进出库存/行动力转移条件",
+      "completion_ref": "p2-section-196",
+      "verification": "verification/sections/196.json"
+    },
+    {
+      "number": 197,
+      "topic": "流窜居民初始位置、移动全候选与声明路线风险",
+      "completion_ref": "p2-section-197",
+      "verification": "verification/sections/197.json"
+    },
+    {
+      "number": 198,
+      "topic": "活玫瑰、苍白花冠和涌动之餐的治疗/生命回复组合",
+      "completion_ref": "p2-section-198",
+      "verification": "verification/sections/198.json"
+    },
+    {
+      "number": 199,
+      "topic": "事件资格三态、特定选项条件与准确固定作战入口",
+      "completion_ref": "p2-section-199",
+      "verification": "verification/sections/199.json"
+    },
+    {
+      "number": 200,
+      "topic": "节点类型树、事件作战入口与本局地图位置双向预览",
+      "completion_ref": "p2-section-200",
+      "verification": "verification/sections/200.json"
+    },
+    {
+      "number": 201,
+      "topic": "节点选项费用与资源参考、末舞版本条件进入实际窗口",
+      "completion_ref": "p2-section-201",
+      "verification": "verification/sections/201.json"
+    },
+    {
+      "number": 202,
+      "topic": "机械师S2共享屏障补弹预算",
+      "completion_ref": "p2-section-202",
+      "verification": "verification/sections/202.json"
+    },
+    {
+      "number": 203,
+      "topic": "敌人技力整记录继承、条件默认初始化与精确等级门槛进入实际预览",
+      "completion_ref": "p2-section-203",
+      "verification": "verification/sections/203.json"
+    },
+    {
+      "number": 204,
+      "topic": "首批三名默认外观与静态动作选择绑定",
+      "completion_ref": "p2-section-204",
+      "verification": "verification/sections/204.json"
+    },
+    {
+      "number": 205,
+      "topic": "局外探索工具完整工作流与声明地图预览绑定",
+      "completion_ref": "p2-section-205",
+      "verification": "verification/sections/205.json"
+    },
+    {
+      "number": 206,
+      "topic": "原节点历史入口与本局已确认持有条件",
+      "completion_ref": "p2-section-206",
+      "verification": "verification/sections/206.json"
+    },
+    {
+      "number": 207,
+      "topic": "特殊节点来源、限定条件与随机作战池预览",
+      "completion_ref": "p2-section-207",
+      "verification": "verification/sections/207.json"
+    },
+    {
+      "number": 208,
+      "topic": "凯尔希普通/S1与银灰普通三段动作条件参考",
+      "completion_ref": "p2-section-208",
+      "verification": "verification/sections/208.json"
+    },
+    {
+      "number": 209,
+      "topic": "固定战斗奖励条件、来源与地图资料定位",
+      "completion_ref": "p2-section-209",
+      "verification": "verification/sections/209.json"
+    },
+    {
+      "number": 210,
+      "topic": "敌人招式黑板构建与目标计算资格统一",
+      "completion_ref": "p2-section-210",
+      "verification": "verification/sections/210.json"
+    },
+    {
+      "number": 211,
+      "topic": "条件分支来源与全部阶段动作检视",
+      "completion_ref": "p2-section-211",
+      "verification": "verification/sections/211.json"
+    },
+    {
+      "number": 212,
+      "topic": "凯尔希与银灰三段等待、声明中断和窗口预算",
+      "completion_ref": "p2-section-212",
+      "verification": "verification/sections/212.json"
+    },
+    {
+      "number": 213,
+      "topic": "事件与特殊战斗入口分类、主层条件和精确预览",
+      "completion_ref": "p2-section-213",
+      "verification": "verification/sections/213.json"
+    },
+    {
+      "number": 214,
+      "topic": "机械师模组防御前条件单包与既有窗口计算",
+      "completion_ref": "p2-section-214",
+      "verification": "verification/sections/214.json"
+    },
+    {
+      "number": 215,
+      "topic": "苏苏洛模组受疗生命条件与多来源治疗组合",
+      "completion_ref": "p2-section-215",
+      "verification": "verification/sections/215.json"
+    },
+    {
+      "number": 216,
+      "topic": "本局共享公共技能等级的显式参考与全技能使用资格",
+      "completion_ref": "p2-section-216",
+      "verification": "verification/sections/216.json"
+    },
+    {
+      "number": 217,
+      "topic": "梅 MAR-X 原生空中条件与防御前单包组合的显式计算",
+      "completion_ref": "p2-section-217",
+      "verification": "verification/sections/217.json"
+    },
+    {
+      "number": 218,
+      "topic": "固定同类承伤与双来源元素伤害组合进入局外计算",
+      "completion_ref": "p2-section-218",
+      "verification": "verification/sections/218.json"
+    },
+    {
+      "number": 219,
+      "topic": "古米与黍GUA-X独立生命条件与复合治疗",
+      "completion_ref": "p2-section-219",
+      "verification": "verification/sections/219.json"
+    },
+    {
+      "number": 220,
+      "topic": "羽瞰点首次到达与连续路线AP条件账本",
+      "completion_ref": "p2-section-220",
+      "verification": "verification/sections/220.json"
+    },
+    {
+      "number": 221,
+      "topic": "节点选择正文持有门与本局库存范围资格",
+      "completion_ref": "p2-section-221",
+      "verification": "verification/sections/221.json"
+    },
+    {
+      "number": 222,
+      "topic": "遥 BLS-Y 真实静态治疗选择上限与 S2 人数组合的显式计算",
+      "completion_ref": "p2-section-222",
+      "verification": "verification/sections/222.json"
+    },
+    {
+      "number": 223,
+      "topic": "固定战斗基础经验/源石锭来源与声明路线奖励分项",
+      "completion_ref": "p2-section-223",
+      "verification": "verification/sections/223.json"
+    },
+    {
+      "number": 224,
+      "topic": "关卡独立敌人构造、资源别名与局外目标计算",
+      "completion_ref": "p2-section-224",
+      "verification": "verification/sections/224.json"
+    },
+    {
+      "number": 225,
+      "topic": "虫虫游戏厅与枝头陷阱固定原图的地面位置映射",
+      "completion_ref": "p2-section-225",
+      "verification": "verification/sections/225.json"
+    },
+    {
+      "number": 226,
+      "topic": "宝藏敌人原生成来源与结算条件关联预览",
+      "completion_ref": "p2-section-226",
+      "verification": "verification/sections/226.json"
+    },
+    {
+      "number": 227,
+      "topic": "移速符文FP写回、关卡倍率与标准范围的条件分项",
+      "completion_ref": "p2-section-227",
+      "verification": "verification/sections/227.json"
+    },
+    {
+      "number": 228,
+      "topic": "第六层精确区域身份与节点/战斗分类浏览",
+      "completion_ref": "p2-section-228",
+      "verification": "verification/sections/228.json"
+    },
+    {
+      "number": 229,
+      "topic": "固定敌人共享技力数值门与声明请求预算",
+      "completion_ref": "p2-section-229",
+      "verification": "verification/sections/229.json"
+    },
+    {
+      "number": 230,
+      "topic": "固定地图逐格中心参考与原图点选联动",
+      "completion_ref": "p2-section-230",
+      "verification": "verification/sections/230.json"
+    },
+    {
+      "number": 231,
+      "topic": "有限声明路线的行动力与基础战斗收益比较",
+      "completion_ref": "p2-section-231",
+      "verification": "verification/sections/231.json"
+    },
+    {
+      "number": 232,
+      "topic": "辟路行进与命运共享逐格固定位置参考扩展",
+      "completion_ref": "p2-section-232",
+      "verification": "verification/sections/232.json"
+    },
+    {
+      "number": 233,
+      "topic": "具体敌人预制体次数门、初始冷却及能力启动失败成本",
+      "completion_ref": "p2-section-233",
+      "verification": "verification/sections/233.json"
+    },
+    {
+      "number": 234,
+      "topic": "有限声明图的路线候选构造与未知前沿",
+      "completion_ref": "p2-section-234",
+      "verification": "verification/sections/234.json"
+    },
+    {
+      "number": 235,
+      "topic": "四辅助实体来源与中文机制参考进入真实固定敌人面板",
+      "completion_ref": "p2-section-235",
+      "verification": "verification/sections/235.json"
+    },
+    {
+      "number": 236,
+      "topic": "首批三人藏品组合与面板差值诊断",
+      "completion_ref": "p2-section-236",
+      "verification": "verification/sections/236.json"
+    },
+    {
+      "number": 237,
+      "topic": "原件明确目的地导航与独立条件/作战预览",
+      "completion_ref": "p2-section-237",
+      "verification": "verification/sections/237.json"
+    },
+    {
+      "number": 238,
+      "topic": "首批三名前后成对面板校准与藏品差值联接",
+      "verification": "verification/sections/238.json"
+    },
+    {
+      "number": 239,
+      "topic": "必经避开顺序检查点与准入条件路线规划",
+      "verification": "verification/sections/239.json"
+    },
+    {
+      "number": 240,
+      "topic": "望卡片棋子跟子弹道与费用技力分池声明账本",
+      "verification": "verification/sections/240.json"
+    },
+    {
+      "number": 241,
+      "topic": "凯尔希银灰攻击状态与原件动作序列等待诊断",
+      "verification": "verification/sections/241.json"
+    },
+    {
+      "number": 242,
+      "topic": "远北猎场侵占家园独立逐格中心参考扩展",
+      "verification": "verification/sections/242.json"
+    },
+    {
+      "number": 243,
+      "topic": "狭路相逢左中右档次条件奖励与具名目录对照",
+      "verification": "verification/sections/243.json"
+    },
+    {
+      "number": 244,
+      "topic": "技能事件时钟账本与首次就绪回转实录对照",
+      "verification": "verification/sections/244.json"
+    },
+    {
+      "number": 245,
+      "topic": "失与得零件交换完整文档池资格与提供物比较",
+      "verification": "verification/sections/245.json"
+    },
+    {
+      "number": 246,
+      "topic": "居民路线分阶段候选与独立据点胜利驱逐复核",
+      "verification": "verification/sections/246.json"
+    },
+    {
+      "number": 247,
+      "topic": "种子培育零件来源与下次探索黄色襁褓对照",
+      "verification": "verification/sections/247.json"
+    },
+    {
+      "number": 248,
+      "topic": "藏品明确处理顺序的单精度逐步舍入与离散结果诊断",
+      "verification": "verification/sections/248.json"
+    },
+    {
+      "number": 249,
+      "topic": "令麦哲伦六召唤实体的模组明确端点与直接属性对照",
+      "verification": "verification/sections/249.json"
+    },
+    {
+      "number": 250,
+      "topic": "面板与技能时刻的联合有界实录校准",
+      "verification": "verification/sections/250.json"
+    },
+    {
+      "number": 251,
+      "topic": "有限路线加工品资源激活与终点结算声明账本",
+      "verification": "verification/sections/251.json"
+    },
+    {
+      "number": 252,
+      "topic": "三生灵自动资格与显式科技目标费用预算",
+      "verification": "verification/sections/252.json"
+    },
+    {
+      "number": 253,
+      "topic": "多情景路线状态矩阵与闭合分项敏感性比较",
+      "verification": "verification/sections/253.json"
+    },
+    {
+      "number": 254,
+      "topic": "高台四明确格独立顶部名义中心与战斗资料选择流",
+      "verification": "verification/sections/254.json"
+    },
+    {
+      "number": 255,
+      "topic": "多记录实验共同残差假设与训练留出联合复核",
+      "verification": "verification/sections/255.json"
+    },
+    {
+      "number": 256,
+      "topic": "受疗者HP原值分商精度与严格资格阈值诊断",
+      "verification": "verification/sections/256.json"
+    },
+    {
+      "number": 257,
+      "topic": "连续移动声明下的路线续接资源差异与有限重规划",
+      "verification": "verification/sections/257.json"
+    },
+    {
+      "number": 258,
+      "topic": "十二加工品获取清单与六来源机会条件审查",
+      "verification": "verification/sections/258.json"
+    },
+    {
+      "number": 259,
+      "topic": "藏果地独立标记放置覆盖与密道保留流程复核",
+      "verification": "verification/sections/259.json"
+    },
+    {
+      "number": 260,
+      "topic": "独立零件箱容量超载行动门与保留整理领取方案比较",
+      "verification": "verification/sections/260.json"
+    },
+    {
+      "number": 261,
+      "kind": "user_requested_repair_section",
+      "topic": "旧全量问题集中修复、完整复验与本批云端交接收尾",
+      "verification": "verification/sections/261.json"
+    },
+    {
+      "number": 262,
+      "kind": "functional_section",
+      "topic": "令S3基础/高级形态、技能状态与模组直接加值的分层面板对照",
+      "verification": "verification/sections/262.json"
+    },
+    {
+      "number": 263,
+      "kind": "functional_section",
+      "topic": "六召唤物宿主培养等级、单精度类型写回与逐属性分支组合",
+      "verification": "verification/sections/263.json"
+    },
+    {
+      "number": 264,
+      "kind": "functional_section",
+      "topic": "首批三名干员的全部合法等级与面板偏差排查",
+      "verification": "verification/sections/264.json"
+    },
+    {
+      "number": 265,
+      "kind": "functional_section",
+      "topic": "固定分支及阶段的全部资料位置总览与编号映射",
+      "verification": "verification/sections/265.json"
+    },
+    {
+      "number": 266,
+      "kind": "functional_section",
+      "topic": "机械师二技能有序入伤屏障吸收、破屏门及共享耗弹账本",
+      "verification": "verification/sections/266.json"
+    },
+    {
+      "number": 267,
+      "kind": "functional_section",
+      "topic": "机械师S2生命创建快照、藏品小计与黑板单精度屏障链",
+      "verification": "verification/sections/267.json"
+    },
+    {
+      "number": 268,
+      "kind": "functional_section",
+      "topic": "机械师S2逐实例来源屏障聚合、有序筛选与异常依赖",
+      "verification": "verification/sections/268.json"
+    },
+    {
+      "number": 269,
+      "kind": "functional_section",
+      "topic": "机械师S2爆炸双分支FP基础计算与独立晚期快照",
+      "verification": "verification/sections/269.json"
+    },
+    {
+      "number": 270,
+      "kind": "functional_section",
+      "topic": "只提供路线节点信息，撤下探索推荐与自动选路",
+      "verification": "verification/sections/270.json"
+    },
+    {
+      "number": 271,
+      "kind": "functional_section",
+      "topic": "藏品逐包FP修饰、独立模块与有限顺序数值参考",
+      "verification": "verification/sections/271.json"
+    },
+    {
+      "number": 272,
+      "kind": "functional_section",
+      "topic": "常态生命回复FP率、Precise逐点周期与独立改速读取",
+      "verification": "verification/sections/272.json"
+    },
+    {
+      "number": 273,
+      "kind": "functional_section",
+      "topic": "常态生命回复属性缓存、三花FP增量与独立周期读点",
+      "verification": "verification/sections/273.json"
+    },
+    {
+      "number": 274,
+      "kind": "functional_section",
+      "topic": "自然技力批量FP时钟、独立暂停与单次恢复请求",
+      "verification": "verification/sections/274.json"
+    },
+    {
+      "number": 275,
+      "kind": "functional_section",
+      "topic": "SP写入存活条件、独立上限与public返回/完整复制资格",
+      "verification": "verification/sections/275.json"
+    },
+    {
+      "number": 276,
+      "kind": "functional_section",
+      "topic": "初始技力双容量、数据切换与控制器重置参考",
+      "verification": "verification/sections/276.json"
+    },
+    {
+      "number": 277,
+      "kind": "functional_section",
+      "topic": "技能技力门槛覆盖、独立扣费意图与返回资格",
+      "verification": "verification/sections/277.json"
+    },
+    {
+      "number": 278,
+      "kind": "functional_section",
+      "topic": "技能费用逐次Single变换、整数缩放与独立更新资格",
+      "verification": "verification/sections/278.json"
+    },
+    {
+      "number": 279,
+      "kind": "functional_section",
+      "topic": "四槽技力增量初始化、按类型请求与已写前缀",
+      "verification": "verification/sections/279.json"
+    },
+    {
+      "number": 280,
+      "kind": "functional_section",
+      "topic": "非精确费用数值前缀的条件整数共识",
+      "verification": "verification/sections/280.json"
+    },
+    {
+      "number": 281,
+      "kind": "functional_section",
+      "topic": "费用共识接入完整读取、编码与保护值复制",
+      "verification": "verification/sections/281.json"
+    },
+    {
+      "number": 282,
+      "kind": "functional_section",
+      "topic": "技力回复属性14/30、初始化原值与变更计时器来源",
+      "verification": "verification/sections/282.json"
+    },
+    {
+      "number": 283,
+      "kind": "functional_section",
+      "topic": "主面板五属性原生算式、精度资格与四层同源核验",
+      "verification": "verification/sections/283.json"
+    },
+    {
+      "number": 284,
+      "kind": "functional_section",
+      "topic": "扩展技能本体面板的字段级输入与精度参考",
+      "verification": "verification/sections/284.json"
+    },
+    {
+      "number": 285,
+      "kind": "functional_section",
+      "topic": "32档案的同源四层面板、所选全部技能与条件隔离",
+      "verification": "verification/sections/285.json"
+    },
+    {
+      "number": 286,
+      "completion_ref": "p3-section-286",
+      "topic": "节点玩家说明、条件奖励与可读战斗预览",
+      "verification": "verification/sections/286.json"
+    },
+    {
+      "number": 287,
+      "completion_ref": "p3-section-287",
+      "topic": "移动恶笼草各等级条件奖励与箱型关联去重说明",
+      "verification": "verification/sections/287.json"
+    },
+    {
+      "number": 288,
+      "completion_ref": "p3-section-288",
+      "topic": "固定地图道路与地面逐格参考、中文地块说明",
+      "verification": "verification/sections/288.json"
+    },
+    {
+      "number": 289,
+      "completion_ref": "p3-section-289",
+      "topic": "沉寂之屋的两项零件奖励、独立费用与原文依据",
+      "verification": "verification/sections/289.json"
+    },
+    {
+      "number": 290,
+      "completion_ref": "p3-section-290",
+      "topic": "临时中介所四种招募结果、出现条件区分与完整可用范围复验",
+      "verification": "verification/sections/290.json"
+    },
+    {
+      "number": 291,
+      "completion_ref": "p3-section-291",
+      "topic": "和平守卫者单向结果说明、居民据点资料位置与两关独立预览",
+      "verification": "verification/sections/291.json"
+    },
+    {
+      "number": 292,
+      "completion_ref": "p3-section-292",
+      "topic": "按流程场景和完整选项筛选事件固定作战资料",
+      "verification": "verification/sections/292.json"
+    },
+    {
+      "number": 293,
+      "completion_ref": "p3-section-293",
+      "topic": "安眠一隅四条随机选择的后续资料与手动场景阅读",
+      "verification": "verification/sections/293.json"
+    },
+    {
+      "number": 294,
+      "completion_ref": "p3-section-294",
+      "topic": "生存习性与湖中魇的直接地格和固定途经点参考",
+      "verification": "verification/sections/294.json"
+    },
+    {
+      "number": 295,
+      "completion_ref": "p3-section-295",
+      "topic": "线人选项的沙盘α独立图标与完整物品说明",
+      "verification": "verification/sections/295.json"
+    },
+    {
+      "number": 296,
+      "completion_ref": "p3-section-296",
+      "topic": "固定战斗对应事件入口反查与无效验尸配置阅读",
+      "verification": "verification/sections/296.json"
+    },
+    {
+      "number": 297,
+      "completion_ref": "p3-section-297",
+      "topic": "未涉足之树派出、归来与休息结果和手动信标图文",
+      "verification": "verification/sections/297.json"
+    },
+    {
+      "number": 298,
+      "completion_ref": "p3-section-298",
+      "topic": "六项事件的自然主层已知禁区与已读资料保留",
+      "verification": "verification/sections/298.json"
+    },
+    {
+      "number": 299,
+      "completion_ref": "p3-section-299",
+      "topic": "完整候选组与关联条目的手动阅读和独立固定预览",
+      "verification": "verification/sections/299.json"
+    },
+    {
+      "number": 300,
+      "completion_ref": "p3-section-300",
+      "topic": "呼吸的红苔两项选择与希望的沃土三档后续效果阅读",
+      "verification": "verification/sections/300.json"
+    },
+    {
+      "number": 301,
+      "completion_ref": "p3-section-301",
+      "topic": "16条精确节点选项的13种具名物品图文阅读",
+      "verification": "verification/sections/301.json"
+    },
+    {
+      "number": 302,
+      "completion_ref": "p3-section-302",
+      "topic": "调谐仪式六个交付选项与三种首领削弱资料",
+      "verification": "verification/sections/302.json"
+    }
+  ],
+  "next_section": 303,
+  "next_action": "从303继续有证P3剩余事项，无数字终点；下次完整可用全量305。",
+  "full_validation_due": false,
+  "last_full_validation": {
+    "after_section": 290,
+    "receipt": "verification/full-290/summary.json",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_current_windows_gui_verified": true,
+    "native_windows_game_chat_verified": false,
+    "unresolved_available_failures": false,
+    "original_failed_attempts_preserved": true,
+    "component_freezes": {
+      "offline3": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "legacy4_and_original_typed": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "A2_current_and_P3": {
+        "path": "verification/full-290/source-freeze-repair.json",
+        "sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0"
+      }
+    },
+    "all_historical_source_maps_same_freeze": false,
+    "composite_proof": "verification/full-290/composite-admissibility.json",
+    "actual_offline_attempt": 3,
+    "actual_legacy_ordinal": 4,
+    "reused_current_P3_attempt": 2
+  },
+  "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
+  "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
+  "deferred_problems": [
+    {
+      "id": "friendly_clock_ui_explanation",
+      "failed_attempts": 3,
+      "status": "resolved_after_independent_diagnosis",
+      "scope": "Exact friendly acquisition clock explanation visible in actual MainWindow; portable calculation/assertions passed",
+      "evidence": [
+        "verification/full-040/initial-attempts/ui-initial.json",
+        "verification/full-040/initial-attempts/ui-second-text-failure.json",
+        "verification/full-040/initial-attempts/ui-third-text-failure.json"
+      ],
+      "restart_conditions": "Independently inspect actual UI scenario/report diagnostic and qualify source or preview mapping before retry; do not repeat exact assertion",
+      "counts_as_passed": false,
+      "diagnostic": "verification/full-040/wine-ui.json",
+      "resolution_receipt": "verification/full-050/wine-ui.json",
+      "current_available_checks_passed": true,
+      "original_failed_checks_count_as_passed": false,
+      "resolution": "Continuous semantic note lost in annotate_result early return; independent source/report diagnosis preceded successful actual Qt assertions in both modes. Old3failed receipts unchanged."
+    },
+    {
+      "problem": "Generic public archive manifest shape auto-detection",
+      "attempts": 3,
+      "status": "deferred; exact explicit-path archival completed independently",
+      "evidence": "research/p2-headwolf-talent-qualification/root-archive-preparation-deferred.json",
+      "restart_condition": "Only a formally normalized manifest contract with explicit versioned schema and a new concrete requirement"
+    },
+    {
+      "problem": "Section72 author outcome-summary harness",
+      "attempts": 3,
+      "status": "author harness deferred; independent strict whole-output comparison completed successfully",
+      "evidence": "research/p2-headwolf-talent-qualification/author/HANDOFF.md",
+      "restart_condition": "A new verified plan/result schema gap not covered by completed independent comparison; do not retry unchanged assumptions"
+    },
+    {
+      "id": "full095_ui_full_evidence_completion",
+      "status": "deferred_after_three_incomplete_attempts",
+      "incomplete_attempts": 3,
+      "product_assertion_failure_claimed": false,
+      "original_two_primary_exits": [
+        null,
+        null
+      ],
+      "third_primary_exit": 143,
+      "third_cancelled_by_root": true,
+      "runtime_budget_seconds": 1800,
+      "third_records_saved": 63075,
+      "third_closed_chunks": 1322,
+      "complete_ui_validation": false,
+      "available_full095_passed": false,
+      "evidence": "verification/full-095-deferred/archive-manifest.json",
+      "restart_conditions": "New concrete diagnosis and bounded evidence-collection plan, independent Source review, newly bound real HEAD/CP and explicit resumption of this deferred issue; no automatic fourth identical attempt."
+    }
+  ],
+  "problem_attempts": {
+    "gnosis_attack_clock": {
+      "checks": 3,
+      "failed_checks": 2,
+      "status": "resolved; third check passed; failures were new fixture/indentation, not an unknown mechanism"
+    },
+    "section109_bounded_candidate_window": {
+      "attempts": 3,
+      "status": "DEFERRED_AFTER_THREE_ATTEMPTS",
+      "attempt1_primary": 1,
+      "attempt2_primary": 1,
+      "attempt3_primary": null,
+      "candidate_complete": false,
+      "completed_prefix_cases": 15,
+      "saved_numeric_snow_zero_entry_verified": true,
+      "missing": [
+        "last gnosis/token window snapshots",
+        "close/direct reload",
+        "fourth visual"
+      ],
+      "restart_conditions": "Only after new diagnosis and a reliable owned display/terminal transport; no fourth unchanged workflow retry",
+      "evidence": "research/p2-section109-empty-owner-acquisition/root/root-section109-window-saved-audit-v1.json"
+    }
+  },
+  "archive_supplements": [
+    {
+      "after_section": 87,
+      "ref": "p2-archive-closure-087",
+      "verification": "verification/archive-closure-087.json"
+    }
+  ],
+  "current_batch_commit_policy": {
+    "effective_after_completed_section": 261,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 15,
+    "next_full_validation_after": 305,
+    "requirements_synced_each_section": true
+  },
+  "pending_batch_sections": [],
+  "pending_batch_save": false,
+  "current_full095_checkpoint": {
+    "recorded_at": "2026-10-09T13:41:52.507035+08:00",
+    "status": "DEFERRED_NOT_FULLPASS",
+    "archive": "verification/full-095-deferred",
+    "payload_files": 4667,
+    "source_guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
+    "completed_section_increment": 0,
+    "future_development_paused": true
+  },
+  "development_resumption": {
+    "at": "2026-10-09T14:27:58.743908+08:00",
+    "actual_start_HEAD": "5e4f67c59b8a21c8169fe770c6fb18424a7f0b23",
+    "next_section": 96,
+    "next_full_validation_after": 100,
+    "per_section_commit_and_push": true,
+    "source_guard": "/workspace/.continuation/resume096-baseline-v1.json",
+    "full095_deferred_preserved": true
+  },
+  "current_section_save": {
+    "section": 302,
+    "verification": "verification/sections/302.json",
+    "scope": "current_functional_section",
+    "binding": "enclosing_commit",
+    "commit_reference": "commit containing302 exact ritual weakening reader and manual fixed battle, real acceptance, requirements and index"
+  },
+  "last_verified_cloud_save": {
+    "section": 302,
+    "scope": "current_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "31d1b53b183c98ffb75b3aed1e8b4040d62b1783",
+    "proof": "verification/sections/302-publication.json",
+    "proof_sha256": "857c1072fd302d9ae4f822935f30e6c1e1b2c21d26749d7ae16e492dc59a89dd"
+  },
+  "current_full100_checkpoint": {
+    "after_section": 100,
+    "completed_section_increment": 0,
+    "status": "PASSED_AVAILABLE_MAINTAINED_AND_BOUNDED_GUI_SCOPE",
+    "available_checks_passed": true,
+    "batch_validation_closed": true,
+    "complete_repository_validation": false,
+    "native_windows_game_chat_verified": false,
+    "product_commit": "8436f906842cd45b7553d8f54f2b0efc0619f097",
+    "validated_at_Beijing": "2026-10-09T17:05:03.315330+08:00",
+    "archive": "verification/full-100",
+    "linux": {
+      "tests_run": 2036,
+      "tests_passed": 1876,
+      "historical_or_declared_skips": 84,
+      "unavailable_records": 126,
+      "unavailable_parent_count": 87,
+      "failures": 0,
+      "errors": 0
+    },
+    "linux_receipt_source_files": 350,
+    "wine": {
+      "tests_run": 2100,
+      "tests_passed": 1947,
+      "historical_or_declared_skips": 87,
+      "unavailable_records": 123,
+      "unavailable_parent_count": 84,
+      "failures": 0,
+      "errors": 0,
+      "environment_capability_skips": 3
+    },
+    "selected_wine": {
+      "tests_run": 1216,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "gui_passed": true,
+    "actual_gui_attempts": 3,
+    "main_source_files": 743,
+    "supplemental_CORE_verified": true,
+    "full095_deferred_preserved": true,
+    "old095_complete_function_vector_measured": false,
+    "saved_legacy_codec_aliases_verified": false,
+    "scope": "Maintained available selectors plus bounded healthy full090 functional Qt suite on current100; specialist96-100 receipts remain separately archived."
+  },
+  "current_full105_checkpoint": {
+    "after_section": 105,
+    "section_group": [
+      101,
+      102,
+      103,
+      104,
+      105
+    ],
+    "status": "PASSED_AVAILABLE_MAINTAINED_AND_BOUNDED_GUI_SCOPE",
+    "validated_at_Beijing": "2026-10-09T19:50:37.468245+08:00",
+    "available_checks_passed": true,
+    "batch_validation_closed": true,
+    "complete_repository_validation": false,
+    "native_windows_game_chat_verified": false,
+    "archive": "verification/full-105",
+    "linux": {
+      "tests_run": 2240,
+      "tests_passed": 2018,
+      "historical_or_declared_skips": 84,
+      "unavailable_records": 191,
+      "unavailable_parent_count": 150,
+      "failures": 0,
+      "errors": 0
+    },
+    "wine": {
+      "tests_run": 2307,
+      "tests_passed": 2094,
+      "historical_or_declared_skips": 87,
+      "unavailable_records": 186,
+      "unavailable_parent_count": 145,
+      "failures": 0,
+      "errors": 0
+    },
+    "environment_capability_skips": 3,
+    "source_files": 748,
+    "additional_CORE_verified": true,
+    "current_physical_test_modules": 221,
+    "full_actual_union_selectors": 239,
+    "gui_passed": true,
+    "actual_gui_attempts": 2,
+    "gui_attempts": [
+      {
+        "attempt": 1,
+        "status": "TIMED_OUT_INCOMPLETE_NOT_PASS",
+        "primary_exit": 124,
+        "child_primary_exit": -9,
+        "supervisor_exit": 124,
+        "timed_out": true,
+        "deadline_seconds": 600,
+        "elapsed_seconds": 600.1465337909904,
+        "partial_pngs_actually_viewed": 3,
+        "final_gui_receipt_present": false,
+        "supervisor": {
+          "source": "/workspace/.continuation/full105-window-supervisor-v1.json",
+          "bytes": 2489,
+          "sha256": "b49a2771bea0121cc2a84c6c4e0c6a113d7fb020ffc5b2aed9db81de8103cbb6"
+        },
+        "primary": {
+          "source": "/workspace/.continuation/full105-window-primary-v1.exit-code",
+          "bytes": 4,
+          "sha256": "ca2ebdf97d7469496b1f4b78958f9dc8447efdcb623953fee7b6996b762f6fff"
+        },
+        "partial_visual_ledger": {
+          "source": "/workspace/.continuation/full105-visual-partial-ledger-v1.json",
+          "bytes": 1296,
+          "sha256": "ac7c505ea21d59c7c9261126d6d9e369e9313bcd4901e813785167f26c8070f9"
+        }
+      },
+      {
+        "attempt": 2,
+        "status": "ACTUAL_COMPLETE_BOUNDED_GUI_PASS",
+        "primary_exit": 0,
+        "child_primary_exit": 0,
+        "supervisor_exit": 0,
+        "timed_out": false,
+        "deadline_seconds": 1200,
+        "elapsed_seconds": 711.2923778719996,
+        "actual_checks": 4283,
+        "saved_states": 52,
+        "argv": [
+          "/workspace/.compat/run-wine-python.sh",
+          "Z:\\workspace\\.continuation\\full105-progress-bounded-window-source-v2\\window.py",
+          "--root",
+          "Z:\\workspace\\rougezhushou",
+          "--guard",
+          "Z:\\workspace\\.continuation\\full105-source-suite-guard-v1.json",
+          "--out",
+          "Z:\\workspace\\.continuation\\full105-window-actual-v2"
+        ],
+        "runner": {
+          "source": "/workspace/.continuation/full105-progress-bounded-window-source-v2/window.py",
+          "bytes": 663293,
+          "sha256": "0004f90b316ec6bc576ac893ce67f52e09e9db4508edd8708f431676b36695a1"
+        },
+        "supervisor_source": {
+          "source": "/workspace/.continuation/full105-progress-bounded-window-source-v2/supervisor105.py",
+          "bytes": 9034,
+          "sha256": "477cf622f56e77a87850790f99c37dbdef3d6466b74697e9783417e83cf3efc3"
+        },
+        "supervisor": {
+          "source": "/workspace/.continuation/full105-window-supervisor-v2.json",
+          "bytes": 2392,
+          "sha256": "623e6deca9298cde63cdb0ec60dfa23ce122135bace208471bfc0d5e75c9572e"
+        },
+        "primary": {
+          "source": "/workspace/.continuation/full105-window-primary-v2.exit-code",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "final_gui_receipt": {
+          "source": "/workspace/.continuation/full105-window-actual-v2/wine-ui-100.json",
+          "bytes": 3767325,
+          "sha256": "47310fa2726d7c1cc2d0c4a35fc8ca2c6c8d7496103a1e98ba0078ebdc33b359"
+        },
+        "progress_partial_only": {
+          "source": "/workspace/.continuation/full105-window-actual-v2/full105-progress.json",
+          "bytes": 460,
+          "sha256": "4e6eaf735630a79c1f71b39b6c30211aadfbc6e977e8f69c313157005a4b8f88"
+        },
+        "saved_readback": {
+          "source": "/workspace/.continuation/root-full105-saved-audit-v1.json",
+          "bytes": 29101,
+          "sha256": "267674c469088de52d66785ddf9dbbb9c91a4acc7566d583c63d50df9a667fb9"
+        },
+        "actual_visual_ledger": {
+          "source": "/workspace/.continuation/full105-visual-audit-v1.json",
+          "bytes": 2581,
+          "sha256": "4bd44a74b89b6c515024c4a5bc6a973f6003120dfbd83b540babfeb9fd95e82d"
+        },
+        "no_live_owned_execution_verified": true,
+        "owned_session_absence_verified": false
+      }
+    ],
+    "actual_gui_checks": 4283,
+    "saved_states": 52,
+    "four_pngs_actually_viewed": true,
+    "saved_legacy_codec_aliases_verified": false,
+    "old_complete_fullGold_equality_verified": false,
+    "old095_complete_function_vector_measured": false,
+    "full095_deferred_preserved": true,
+    "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
+  },
+  "next_full_validation_after": 305,
+  "user_requested_wrap": false,
+  "current_full110_checkpoint": {
+    "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
+    "actual_raw_exits": 0,
+    "source_files": 753,
+    "CORE_verified": true,
+    "full_checks": 4283,
+    "saved_states": 52,
+    "specialist_states": 12,
+    "specialist_native_decoded": 116,
+    "next_section": 111
+  },
+  "current_full115_checkpoint": {
+    "status": "ACTUAL_AVAILABLE_VALIDATION_CLOSED_BATCH_STOPPED",
+    "after_section": 115,
+    "section_group": [
+      111,
+      112,
+      113,
+      114,
+      115
+    ],
+    "source_files": 758,
+    "CORE_verified": true,
+    "summary": "verification/full-115/summary.json",
+    "batch_report": "BATCH_111_115_REPORT.md",
+    "actual_legacy_GUI_checks": 4283,
+    "actual_legacy_saved_states": 52,
+    "public_examples_matched": 4,
+    "native_windows_game_chat_verified": false,
+    "stop_before_section116": true
+  },
+  "development_resumption_116_125": {
+    "requested_date_Asia_Shanghai": "2026-10-10",
+    "actual_prior_HEAD": "0cfb8813130a9c91a5f91820864a9f7154261a2e",
+    "branch": "codex/p2-development",
+    "start_section": 116,
+    "stop_after_section": 125,
+    "full_validation_sections": [
+      120,
+      125
+    ],
+    "per_section_commit_and_push": true,
+    "baseline_linux": {
+      "raw_exit": 0,
+      "tests_run": 1459,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    "P2_first": true,
+    "deferred095_and109_preserved": true
+  },
+  "current_available_full_validation": {
+    "section": 290,
+    "receipt": "verification/full-290/summary.json",
+    "available_scope_passed": true,
+    "native_windows_game_chat_verified": false,
+    "composite_proof": "verification/full-290/composite-admissibility.json",
+    "actual_offline_attempt": 3,
+    "actual_legacy_ordinal": 4,
+    "reused_current_P3_attempt": 2
+  },
+  "batch_stop_after_section": null,
+  "batch_status": "P3_SECTION302_PUBLISHED_CONTINUATION_READY",
+  "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
+  "environment_recovery": {
+    "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
+    "branch": "codex/p2-development",
+    "linux_dependency_check": "passed",
+    "wine_dependency_check": "passed",
+    "baseline_tests_reused": "Latest122 snapshot1567/1566passed/1existing skip from immediately preceding review; unchanged source",
+    "native_windows_game_chat_verified": false
+  },
+  "recent_section_scope_review": {
+    "123": "Maintenance: independent zero-lifetime bug fix; no P2 todo closed",
+    "124": "Report provenance improvement; no unresolved mechanics closed",
+    "125": "Maintenance: oversized timing input handling; no P2 todo closed",
+    "historical_commit_numbers_preserved": true,
+    "functional_progress_must_not_be_inferred_from_section_numbers": true,
+    "264": "Functional: exhaustive same-elite level/field constraints with usable paired-workspace diagnostic; actual panels/causes remain unverified, no P2 closure.",
+    "265": "Functional P3: simultaneous filtered source-position overlay and matching legend; branch route/clock/P2 actual gates not closed."
+  },
+  "functional_sections_since_latest_requirement": [
+    286,
+    287,
+    288,
+    289,
+    290,
+    291,
+    292,
+    293,
+    294,
+    295,
+    296,
+    297,
+    298,
+    299,
+    300,
+    301,
+    302
+  ],
+  "current_batch": {
+    "start": 286,
+    "end": null,
+    "status": "P3_SECTION302_PUBLISHED_CONTINUATION_READY",
+    "next_section": 303,
+    "next_section_started": false,
+    "next_full_validation_after": 305,
+    "batch_closed": false,
+    "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+    "receipt": "verification/sections/302.json"
+  },
+  "current_full140_checkpoint": {
+    "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
+    "after_section": 140,
+    "receipt": "verification/full-140/summary.json",
+    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "next_full_validation_after": 155
+  },
+  "local_sync_20261011": {
+    "type": "maintenance_not_functional_section",
+    "source_commit": "69497c98a17415ee4b635cef088e465aa6c9188c",
+    "branch": "codex/p2-development",
+    "live_checkout": "original Windows rouge",
+    "upstream": "origin/codex/p2-development",
+    "ordinary_push_required": true,
+    "private_state_preserved": true,
+    "native_selected_passed": true,
+    "remaining_native_full_failure_assertions": 12,
+    "complete_repository_validation": false,
+    "receipt": "verification/local-sync-20261011/summary.json",
+    "next_section_started_by_this_maintenance": false
+  },
+  "native_section141_validation": {
+    "receipt": "verification/sections/141.json",
+    "actual_window_tool": "Windows-mcp",
+    "necessary_tests": 31,
+    "isolated_entries": 7,
+    "actual_window_verified": true,
+    "complete_repository_validation": false
+  },
+  "native_section142_validation": {
+    "receipt": "verification/sections/142.json",
+    "actual_window_tool": "Windows-mcp",
+    "necessary_tests": 41,
+    "isolated_entries": 7,
+    "actual_window_verified": true,
+    "synthetic_conditions_distinguished": true,
+    "complete_repository_validation": false
+  },
+  "native_section150_validation": {
+    "receipt": "verification/batch-143-150/summary.json",
+    "actual_window_tool": "Windows-mcp",
+    "actual_window_verified": true,
+    "complete_repository_validation": false,
+    "native_game_or_chat_verified": false
+  },
+  "approved_decisions_20261011": {
+    "first_three_paired_calibration_first": true,
+    "unknown_totals_with_known_components": true,
+    "ordinary_chatgpt_usage_allowed": true,
+    "codex_analysis_backend_allowed": false,
+    "node_generation_probabilities_required": false,
+    "all_node_possible_events_required": true,
+    "independent_public_cases_first": true
+  },
+  "historical_last_full_validation_140": {
+    "after_section": 140,
+    "at_UTC": "2026-10-11T09:59:34.869978+00:00",
+    "passed": true,
+    "available_scope_passed": true,
+    "workflow_complete": true,
+    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "source_files": 809,
+    "source_drift": [],
+    "linux": {
+      "tests_run": 2613,
+      "tests_passed": 2390,
+      "historical_or_declared_skips": 84,
+      "failures": 0,
+      "errors": 0,
+      "unavailable_records": 192,
+      "unavailable_parent_count": 151
+    },
+    "wine": {
+      "tests_run": 2683,
+      "tests_passed": 2470,
+      "historical_or_declared_skips": 87,
+      "failures": 0,
+      "errors": 0,
+      "unavailable_records": 186,
+      "unavailable_parent_count": 145
+    },
+    "selected": {
+      "tests_run": 1678,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "actual_gui_checks": 4283,
+    "saved_states": 52,
+    "saved_audit_passed": true,
+    "actual_gui_attempts": 1,
+    "focused_window_cases": 14,
+    "specialist_window_sections": [
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140
+    ],
+    "specialist_window_cases": 64,
+    "actual_screenshots_viewed": 7,
+    "environment_capability_skips": 3,
+    "complete_repository_validation": false,
+    "native_windows_game_chat_verified": false,
+    "old095_and109_deferred_preserved": true,
+    "next_full_validation_after": 155,
+    "scope": "All maintained current Linux/Wine selector union and selected Wine regressions; original4283 Qt checks,52 saved states and14 focused cases retained; all126–140 added windows rerun. Missing migrated evidence and declared skips are not PASS.",
+    "inherited125_selector_scope_retained": true,
+    "original831_assert_AST_and_functional_try_unchanged": true,
+    "original42_projections_and_exact10_admissions_retained": true,
+    "linux_and_wine_dependencies_passed": true,
+    "functional_progress_not_inferred_from_section_numbers": true
+  },
+  "historical_batch_commit_policy_before186": {
+    "user_instruction": "每完成一个小节进行一次保存，5个小节的测试后进行一次当前进度总结",
+    "effective_after_completed_section": 95,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 5,
+    "next_full_validation_after": 120
+  },
+  "batch_start_section": 286,
+  "batch_target_section": null,
+  "suspended_target_section": 400,
+  "latest_user_resume": {
+    "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
+    "quote": "继续推进P3，按普通玩家能理解的方式展示节点、事件、掉落和战斗预览信息，每节完成后同步云端索引和项目要求。",
+    "kind": "explicit_p3_continuation",
+    "target_section": null,
+    "continuous_work_authorized": true
+  },
+  "latest_section_environment": {
+    "section": 302,
+    "receipt": "verification/sections/302.json",
+    "native_windows": "92 actual necessary; 76 unique native; 5 representative PNG including player text; original visible/private5 unchanged",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "new_Linux_Wine_full_run": false,
+    "last_full_receipt": "verification/full-290/summary.json"
+  },
+  "historical_stale_current_section_save_before260_maintenance": {
+    "section": 237,
+    "verification": "verification/sections/237.json",
+    "commit_reference": "enclosing commit; verify remote after ordinary push"
+  },
+  "historical_stale_last_verified_cloud_save_before260_maintenance": {
+    "section": 149,
+    "commit": "3a83f60a",
+    "remote_branch": "origin/codex/p2-development",
+    "verified_by": "successful ordinary push; section150 will contain this checkpoint and be verified after its ordinary push"
+  },
+  "historical_stale_current_batch_commit_policy_before260_maintenance": {
+    "effective_after_completed_section": 185,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 15,
+    "next_full_validation_after": 260,
+    "requirements_synced_each_section": true
+  },
+  "historical_stale_current_available_full_validation_before260_maintenance": {
+    "section": 140,
+    "available_scope_passed": true,
+    "receipt": "verification/full-140/summary.json",
+    "native_windows_game_chat_verified": false
+  },
+  "historical_stale_current_batch_before260_maintenance": {
+    "start": 143,
+    "end": 150,
+    "status": "COMPLETE_WITH_ACTUAL_WINDOWS_WINDOW_VERIFIED",
+    "next_section": 151,
+    "next_full_validation_after": 155,
+    "receipt": "verification/batch-143-150/summary.json"
+  },
+  "historical_last_full_validation245_before_maintenance": {
+    "after_section": 245,
+    "receipt": "verification/full-245/summary.json",
+    "available_checks_passed": false,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_windows_verified": false,
+    "unresolved_failures": true
+  },
+  "maintenance_after260": {
+    "at_Beijing": "2026-10-13T16:18:22.862516+08:00",
+    "functional_section_count_increased": false,
+    "commit_binding": "the enclosing maintenance commit; verify remote HEAD after ordinary push",
+    "receipt": "verification/full-260/summary.json",
+    "available_scope_repair_verified": true,
+    "full_native_and_private_evidence_pending": true,
+    "next_functional_section_started": false
+  },
+  "historical_stale_next_action_before260_maintenance": "功能目标260已完成，立即集中解决全量检查漏洞并完整重验：修复旧查询/地图浮点复验、首次保存保护与显式归档、兼容运行时和旧完整窗口；维护不增加功能节数，不自动启动261。",
+  "historical_stale_wine_validation_before260_maintenance": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
+  "historical_260_batch_before_user_requested261": {
+    "batch_start_section": 186,
+    "batch_target_section": 260,
+    "batch_stop_after_section": 260,
+    "batch_status": "FUNCTIONAL260_COMPLETE_AVAILABLE_REPAIRS_VERIFIED_EXTERNAL_EVIDENCE_PENDING",
+    "current_batch": {
+      "start": 186,
+      "end": 260,
+      "status": "FUNCTIONAL260_COMPLETE_AVAILABLE_REPAIRS_VERIFIED_EXTERNAL_EVIDENCE_PENDING",
+      "next_section": 261,
+      "next_section_started": false,
+      "next_full_validation_after": 275,
+      "receipt": "verification/full-260/summary.json"
+    },
+    "current_batch_commit_policy": {
+      "effective_after_completed_section": 185,
+      "commit_interval": 1,
+      "push_after_each_section": true,
+      "full_validation_interval": 15,
+      "next_full_validation_after": 261,
+      "requirements_synced_each_section": true
+    },
+    "next_action": "功能260及其后可用范围维护已完成，完整当前窗口已复验。261未启动，等待用户恢复；缺历史原件、私有样本及原Windows范围仍待补回和复验，下次定期全量275仅在恢复功能推进后适用。",
+    "last_verified_cloud_save": {
+      "section": 260,
+      "scope": "current_functional_section",
+      "binding": "verified_remote_commit",
+      "commit": "d29766f39be9b6885e07fbdba5cf4eccd620b17d",
+      "proof": "verification/full-260/functional260-publication.json",
+      "proof_sha256": "444ed7e8c5a84833a92cbcb1becdb7af8499b33463adba48c85abd06b61e2ef9"
+    }
+  },
+  "section261_user_request": {
+    "at_Beijing": "2026-10-13T17:24:38.435120+08:00",
+    "quote": "本批261节集中解决此前全量测试中出现的问题，并在完成后重跑一次全量测试，确定问题已经解决",
+    "kind": "user_requested_repair_section",
+    "status": "completed_and_fully_rechecked_available_scope",
+    "full_scope_required": true,
+    "original_failures_must_be_preserved": true,
+    "no_auto_section262": true,
+    "completed_at_Beijing": "2026-10-13T18:30:49.162033+08:00",
+    "cloud_save_verified": true,
+    "verified_repair_commit": "94709ed9fa0e82a946651709cdedb7ef49419e23"
+  },
+  "historical_before_section261_last_full_validation": {
+    "after_section": 260,
+    "receipt": "verification/full-260/summary.json",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_windows_verified": false,
+    "unresolved_available_failures": false,
+    "historical_native230_full_reverified": false,
+    "original_failed_attempts_preserved": true
+  },
+  "historical_before_section261_current_available_full_validation": {
+    "section": 260,
+    "available_scope_passed": true,
+    "receipt": "verification/full-260/summary.json",
+    "native_windows_game_chat_verified": false
+  },
+  "historical_before_section261_current_section_save": {
+    "section": 260,
+    "verification": "verification/sections/260.json",
+    "scope": "current_functional_section",
+    "binding": "enclosing_commit",
+    "commit_reference": "the commit containing this checkpoint",
+    "original_functional_commit": "d29766f39be9b6885e07fbdba5cf4eccd620b17d",
+    "current_maintenance_validation": "verification/full-260/summary.json"
+  },
+  "historical_before_section261_latest_user_resume": {
+    "at_Beijing": "2026-10-12T19:52:54.358534+08:00",
+    "target_section": 260,
+    "instruction": "刚才中断。恢复并继续；继续至260节"
+  },
+  "historical_before_section261_latest_user_pause": {
+    "at_Beijing": "2026-10-12T19:08:37.405567+08:00",
+    "instruction": "恢复断点并完成当前小节后结束",
+    "completed_section": 214,
+    "pending_candidate_manifest": "verification/section-214/local-candidate-checkpoint.json",
+    "new_section_authorized": false,
+    "long_term_target_not_completed": 400
+  },
+  "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
+  "latest_functional_section": 302,
+  "current_completed_section_kind": "functional_section",
+  "historical_previous260_verified_save_before261_publication": {
+    "section": 260,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "f4a0b964f8156bd29a84fa3e1be6d02cb6f75ac9",
+    "proof": "verification/full-261/prior-publication-260.json",
+    "proof_sha256": "60dfb23e8ad9f4999954dd9d31474c8b4cc0a84c914b18d289c4f4b8f95c4a95"
+  },
+  "historical_before_resume280": {
+    "policy": {
+      "commit_after_each_section": true,
+      "full_validation_interval": 15,
+      "continuous_work_authorized": true,
+      "windows_compatibility": "Wine authorized; distinct from native Windows verification",
+      "scheduled_background_work": false,
+      "priority_order": [
+        "P2",
+        "P3",
+        "P1"
+      ],
+      "max_failed_attempts_per_problem": 3,
+      "wrap_up_below_usage_percent": 15,
+      "usage_percent_available": false,
+      "usage_monitoring": "This cloud session exposes no Codex account-usage tool; unavailable is not zero or sufficient. Honor a later explicit low-usage signal.",
+      "automatic_next_batch": false,
+      "commit_interval": 1,
+      "commit_after_full_validation_pass": false,
+      "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
+      "push_after_batch_commit": true,
+      "development_paused_by_latest_user_request": true,
+      "summary_interval": 5,
+      "stop_after_section": 261,
+      "each_section_requires_functional_progress": true,
+      "validation_is_additional_to_functional_progress": true,
+      "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
+      "full_validation_anchor_section": 125,
+      "next_full_validation_after": 275,
+      "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
+      "each_section_window_required": false,
+      "each_section_requires_meaningful_project_advancement": true,
+      "bugfix_only_counts_as_functional_section": false,
+      "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
+      "latest_functional_scope_requirement_Beijing": "2026-10-11",
+      "current_user_batch_target_section": 261,
+      "current_user_batch_completed": true,
+      "requirements_synced_each_section": true,
+      "long_term_target_section": 400,
+      "atomic_section_source_receipt_status_commit": true,
+      "verify_remote_head_after_each_push": true,
+      "uncommitted_or_unverified_preparations_count_as_completed": false,
+      "section_status_requirement_Beijing": "2026-10-13",
+      "repair_full_validation_after_functional_260": true,
+      "new_functional_sections_paused": true,
+      "current_user_requested_repair_section": 261,
+      "section261_exception": "用户2026-10-13明确将261节用于集中修复此前全量问题，并要求完成后重跑一次完整全量；本节不宣称新增P2机制覆盖，不自动启动262。",
+      "no_automatic_section262": true,
+      "requested_full_validation261_completed": true,
+      "next_periodic_full275_only_if_user_resumes": true,
+      "historical_before_261_no_automatic_functional_261": true,
+      "historical_before_261_current_requested_full_validation_after": 261,
+      "historical_accuracy_validation_after_section_before261": 115
+    },
+    "current_batch": {
+      "start": 261,
+      "end": 261,
+      "status": "SECTION261_REPAIR_COMPLETE_FULL_AVAILABLE_PASS_BATCH_CLOSED_EXTERNAL_EVIDENCE_PENDING",
+      "next_section": 262,
+      "next_section_started": false,
+      "next_full_validation_after": 275,
+      "receipt": "verification/full-261/summary.json",
+      "batch_closed": true,
+      "user_requested_repair_section": true,
+      "next_periodic_full_only_if_user_resumes": true
+    },
+    "latest_user_resume": {
+      "at_Beijing": "2026-10-13T17:24:38.435120+08:00",
+      "quote": "本批261节集中解决此前全量测试中出现的问题，并在完成后重跑一次全量测试，确定问题已经解决",
+      "kind": "user_requested_repair_section",
+      "status": "completed_and_fully_rechecked_available_scope",
+      "full_scope_required": true,
+      "original_failures_must_be_preserved": true,
+      "no_auto_section262": true,
+      "completed_at_Beijing": "2026-10-13T18:30:49.162033+08:00"
+    },
+    "latest_user_pause": {
+      "at_Beijing": "2026-10-13T18:30:49.162033+08:00",
+      "after_section": 261,
+      "quote": "完成261节后结束本批并提交至云端，注意更新交接文档",
+      "batch_closed": true,
+      "section262_started": false
+    },
+    "current_section_save": {
+      "section": 261,
+      "verification": "verification/sections/261.json",
+      "scope": "current_requested_repair_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "the commit containing this checkpoint and tested repair sources",
+      "current_full_validation": "verification/full-261/summary.json",
+      "batch_closed": true
+    },
+    "latest_section_environment": {
+      "section": 261,
+      "Linux": "actual complete offline run",
+      "Wine": "11.19 actual Windows Python/Qt compatibility",
+      "native_windows_verified": false,
+      "source_freeze": "verification/full-261/source-freeze.json",
+      "managed_environment_spec_revision": "10"
+    },
+    "batch_status": "SECTION261_REPAIR_COMPLETE_FULL_AVAILABLE_PASS_BATCH_CLOSED_EXTERNAL_EVIDENCE_PENDING",
+    "next_action": "本批261修复及完整可用全量验收已完成并普通推送，云端94709ed9已真实核对；本次仅保存已验证发布证明与交接，262未启动，等待用户明确继续。原Windows/缺原件/私有样本未计通过，275仅恢复后适用。"
+  },
+  "historical_before262_publication": {
+    "section": 261,
+    "scope": "previous_requested_repair_section",
+    "binding": "verified_remote_commit",
+    "commit": "94709ed9fa0e82a946651709cdedb7ef49419e23",
+    "proof": "verification/full-261/section261-publication.json",
+    "proof_sha256": "c3dbe3ebcc9e06b37bf77a79f07f5db3dccddbe92846041f0fc634ce361a7950"
+  },
+  "historical_before262_cloud_publication_closeout": {
+    "kind": "publication_metadata_only_not_new_section",
+    "enclosing_commit_binding": true,
+    "verified_repair_commit": "94709ed9fa0e82a946651709cdedb7ef49419e23",
+    "source_changes_after_full_validation": false,
+    "completed_sections": 261,
+    "batch_closed": true,
+    "section262_started": false
+  },
+  "native_section262_validation": {
+    "section": 262,
+    "receipt": "verification/sections/262-main-window.json",
+    "original_window_visible_and_responding": true,
+    "game_or_chat_verified": false,
+    "full_native_scope_verified": false
+  },
+  "section263_research_checkpoint": {
+    "status": "qualified_into_functional263; actual flags/hotfix remain unknown",
+    "receipt": "research/p2-token-cultivation-current/continuation263.json",
+    "new_mechanism_or_function_written": true,
+    "completed_section_unchanged": 262
+  },
+  "historical_before263_publication": {
+    "section": 262,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "e638c4a6edfaf0e42b051e82558997fd9a2e674a",
+    "proof": "verification/sections/262-publication.json",
+    "proof_sha256": "e3d767862b0e36b707e7042e4a04ef6d78423f60eacfbf2ae720173536781b33"
+  },
+  "historical_before264_cloud_publication_closeout": {
+    "section": 263,
+    "functional_commit": "ae08ccb804bcc8ecf96814183433383c55dbdf20",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/263-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 264
+  },
+  "historical_functional_sections_since_latest_requirement_before264": [
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150
+  ],
+  "native_section264_validation": {
+    "receipt": "verification/sections/264-main-window.json",
+    "native_original_window_entry": true,
+    "scope": "Updated original Windows application entry and public paired template only; not full UI/game/chat verification",
+    "private_json_files_changed": 0
+  },
+  "historical_before265_cloud_publication_closeout": {
+    "section": 264,
+    "functional_commit": "6962b9c1f77b11ecb99b9948bcda5c33bab1d919",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/264-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 265
+  },
+  "section265_P2_research_checkpoint": {
+    "receipt": "research/p2-next-native-gates/NOTE.md",
+    "status": "source lookup extended, actual fields/callers/hotfix still unknown",
+    "numerical_model_changed": false,
+    "P2_closed": false
+  },
+  "native_section265_validation": {
+    "receipt": "verification/sections/265-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Updated original Windows application startup plus separate SHA-bound public changed-widget test; not full/game/chat verification",
+    "private_json_files_changed": 0
+  },
+  "historical_before266_cloud_publication_closeout": {
+    "section": 265,
+    "functional_commit": "70f64ac672fc3ef4a9596bcd759f341c00a72087",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/265-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 266
+  },
+  "native_section266_validation": {
+    "receipt": "verification/sections/266-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original Windows project startup; changed entry verified separately using temporary public MainWindow fixture, not full game/private integration",
+    "private_json_files_checked": 2,
+    "private_json_files_changed": 0
+  },
+  "historical_before266_publication": {
+    "section": 265,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "70f64ac672fc3ef4a9596bcd759f341c00a72087",
+    "proof": "verification/sections/265-publication.json",
+    "proof_sha256": "ec38bcea7ef15b71b50d556ea7d2ee43b7853a7fd10e6837b6db78f1a4ec2806"
+  },
+  "historical_before267_cloud_publication_closeout": {
+    "section": 266,
+    "functional_commit": "2067912e290d93dd8468fa68ce4b49375da7568e",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/266-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 267
+  },
+  "native_section267_validation": {
+    "receipt": "verification/sections/267-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original Windows app startup plus independent source-bound public changed MainWindow fixture, not full/game/private integration",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before267_publication": {
+    "section": 266,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "2067912e290d93dd8468fa68ce4b49375da7568e",
+    "proof": "verification/sections/266-publication.json",
+    "proof_sha256": "180620a0c0f089fe0644315e6e413ef218132f0fbea19d6b82e13057f0bc6c0e"
+  },
+  "historical_before268_cloud_publication_closeout": {
+    "section": 267,
+    "functional_commit": "777b10c909f4d3857f13a748971a0cf5f7fcf246",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/267-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 268
+  },
+  "native_section268_validation": {
+    "receipt": "verification/sections/268-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; public changed MainWindow fixture separately source-bound. Not full game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before268_publication": {
+    "section": 267,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "777b10c909f4d3857f13a748971a0cf5f7fcf246",
+    "proof": "verification/sections/267-publication.json",
+    "proof_sha256": "2871cd4b40131120b3bcebc8a57582535aabbe41ed4c22c8aa7e702db2f05f3d"
+  },
+  "historical_before269_cloud_publication_closeout": {
+    "section": 268,
+    "functional_commit": "17856074d5581fac6f9b3dd7e2903d9fe851dbf3",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/268-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 269
+  },
+  "native_section269_validation": {
+    "receipt": "verification/sections/269-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; public changed MainWindow fixture separately source-bound. Not full game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before269_publication": {
+    "section": 268,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "17856074d5581fac6f9b3dd7e2903d9fe851dbf3",
+    "proof": "verification/sections/268-publication.json",
+    "proof_sha256": "aabe133022405a19f2ba68ca7f3beddf293a9e6771abaa2d17f5f5fa35ed3183"
+  },
+  "historical_before270_cloud_publication_closeout": {
+    "section": 269,
+    "functional_commit": "edf9372e920a5d2469bd97d71531c1c981571f0b",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/269-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 270
+  },
+  "native_section270_validation": {
+    "receipt": "verification/sections/270-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; source-bound public current MainWindow separately validated. Not full game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "current_product_exploration_scope": {
+    "user_date": "2026-10-14",
+    "route_advice_required": false,
+    "node_information_required": true,
+    "node_conditions_and_battle_links_retained": true,
+    "fixed_enemy_routes_retained": true,
+    "historical_route_diagnostics_are_default_product": false
+  },
+  "historical_before270_publication": {
+    "section": 269,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "edf9372e920a5d2469bd97d71531c1c981571f0b",
+    "proof": "verification/sections/269-publication.json",
+    "proof_sha256": "f00216798117a809f2e0765273da22216d5e41475caffec4a8affe986fd489e8"
+  },
+  "historical_before271_cloud_publication_closeout": {
+    "section": 270,
+    "functional_commit": "af9ec5cbc6ab70b47b083aec84be8e6f04cb7980",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/270-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 271
+  },
+  "native_section271_validation": {
+    "receipt": "verification/sections/271-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before271_publication": {
+    "section": 270,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "af9ec5cbc6ab70b47b083aec84be8e6f04cb7980",
+    "proof": "verification/sections/270-publication.json",
+    "proof_sha256": "fb9abea311fb24ef68dfe6201f743627dbd6029a902d0075a774bc36728b6d50"
+  },
+  "historical_before272_cloud_publication_closeout": {
+    "section": 271,
+    "functional_commit": "c17936612f3c1ea862457513a2b24439f9091645",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/271-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 272
+  },
+  "native_section272_validation": {
+    "receipt": "verification/sections/272-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before272_publication": {
+    "section": 271,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "c17936612f3c1ea862457513a2b24439f9091645",
+    "proof": "verification/sections/271-publication.json",
+    "proof_sha256": "50dc15b0357d696a2d4e0069803fda0028af1c2e1c5216a718e8fcf942c0fd52"
+  },
+  "historical_before273_cloud_publication_closeout": {
+    "section": 272,
+    "functional_commit": "1e4ac260c57c7edcef35203f211cbad249b7bf4f",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/272-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 273
+  },
+  "native_section273_validation": {
+    "receipt": "verification/sections/273-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before273_publication": {
+    "section": 272,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "1e4ac260c57c7edcef35203f211cbad249b7bf4f",
+    "proof": "verification/sections/272-publication.json",
+    "proof_sha256": "43f4a00ed472fbe69bce59a970877757e4d50b344872fdb16638beafccddd628"
+  },
+  "historical_before274_cloud_publication_closeout": {
+    "section": 273,
+    "functional_commit": "315a579baad300e24c3d020203578e328edfebdd",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/273-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 274
+  },
+  "native_section274_validation": {
+    "receipt": "verification/sections/274-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before274_publication": {
+    "section": 273,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "315a579baad300e24c3d020203578e328edfebdd",
+    "proof": "verification/sections/273-publication.json",
+    "proof_sha256": "03da8ce7d578d9d54d4a718ae7a4037b83d93631362a75868a6666170b25acd3"
+  },
+  "historical_before275_cloud_publication_closeout": {
+    "section": 274,
+    "functional_commit": "6bd8a5616ca66fe4b1c95c50d99f7b8cacd5af06",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/274-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 280,
+    "next_section": 275
+  },
+  "historical_before275_last_full_validation": {
+    "after_section": 261,
+    "receipt": "verification/full-261/summary.json",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_windows_verified": false,
+    "unresolved_available_failures": false,
+    "historical_native230_full_reverified": false,
+    "original_failed_attempts_preserved": true
+  },
+  "native_section275_validation": {
+    "receipt": "verification/sections/275-main-window-reset-repair.json",
+    "native_original_window_startup": true,
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_user_resume280": {
+    "at_Beijing": "2026-10-14T06:51:41.130817+08:00",
+    "quote": "逐批推进至280节",
+    "kind": "explicit_goal",
+    "target_section": 280,
+    "continuous_work_authorized": true
+  },
+  "historical_before275_publication": {
+    "section": 274,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "6bd8a5616ca66fe4b1c95c50d99f7b8cacd5af06",
+    "proof": "verification/sections/274-publication.json",
+    "proof_sha256": "bab25d53da9b2e309d4dfa82fd19ba4a1dd54ca1ae64e7346d59650d222e93f3"
+  },
+  "historical_before276_cloud_publication_closeout": {
+    "section": 275,
+    "functional_commit": "943a1c0770084e204f7a048b78052dcd054b6329",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/275-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 276
+  },
+  "native_section276_validation": {
+    "receipt": "verification/sections/276-main-window.json",
+    "native_original_window_startup": true,
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before276_publication": {
+    "section": 275,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "943a1c0770084e204f7a048b78052dcd054b6329",
+    "proof": "verification/sections/275-publication.json",
+    "proof_sha256": "d0df66553575575afe24f3e75b10652e20c6fdf862fe69a7b2bfec205c6fd0ae"
+  },
+  "historical_before277_cloud_publication_closeout": {
+    "section": 276,
+    "functional_commit": "1893ed5531cbedaf26b9e91389fbaf2dcab60902",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/276-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 277
+  },
+  "native_section277_validation": {
+    "receipt": "verification/sections/277-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before277_publication": {
+    "section": 276,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "1893ed5531cbedaf26b9e91389fbaf2dcab60902",
+    "proof": "verification/sections/276-publication.json",
+    "proof_sha256": "30d2a1f074d1f7e1d680f978ebf5caeacd61cf6db4d496f3693d8ddc6aac9211"
+  },
+  "historical_before278_cloud_publication_closeout": {
+    "section": 277,
+    "functional_commit": "539d6c535872d5b7232086e69a12b0cb5154accf",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/277-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 278
+  },
+  "native_section278_validation": {
+    "receipt": "verification/sections/278-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before278_publication": {
+    "section": 277,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "539d6c535872d5b7232086e69a12b0cb5154accf",
+    "proof": "verification/sections/277-publication.json",
+    "proof_sha256": "c2a5c48a3d70db7368f44ec2b94e09e25a606c7506828efaa10f149dbf2342e7"
+  },
+  "historical_before279_cloud_publication_closeout": {
+    "section": 278,
+    "functional_commit": "acf335ece703e45a1d0c18f01d46dbe0e0a1de35",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/278-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 279
+  },
+  "native_section279_validation": {
+    "receipt": "verification/sections/279-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before279_publication": {
+    "section": 278,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "acf335ece703e45a1d0c18f01d46dbe0e0a1de35",
+    "proof": "verification/sections/278-publication.json",
+    "proof_sha256": "8978e5868d3b6799edb2d94251087bce19088746378fb45d3a7579d1cd7dca40"
+  },
+  "historical_before280_cloud_publication_closeout": {
+    "section": 279,
+    "functional_commit": "64e7679a0d5313614c637a994a23efe2f325ada1",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/279-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 280
+  },
+  "native_section280_validation": {
+    "receipt": "verification/sections/280-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before280_publication": {
+    "section": 279,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "64e7679a0d5313614c637a994a23efe2f325ada1",
+    "proof": "verification/sections/279-publication.json",
+    "proof_sha256": "ad6dd9111ecf59c9447a21892c6f147886ed0423db8a6bcfdab895246d6fb2e0"
+  },
+  "historical_before281_cloud_publication_closeout": {
+    "section": 280,
+    "functional_commit": "3de0513f15ee26b70f13a590c29811922cb2d691",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/280-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 281
+  },
+  "native_section281_validation": {
+    "receipt": "verification/sections/281-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before281_publication": {
+    "section": 280,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "3de0513f15ee26b70f13a590c29811922cb2d691",
+    "proof": "verification/sections/280-publication.json",
+    "proof_sha256": "9ab39605a76d85b189f44f2592023acf113220bd06c30bbd9dedbb8077398bb9"
+  },
+  "historical_before282_cloud_publication_closeout": {
+    "section": 281,
+    "functional_commit": "99905cbf5b6102e47ddfc836b1007c769ca61336",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/281-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 282
+  },
+  "native_section282_validation": {
+    "receipt": "verification/sections/282-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before282_publication": {
+    "section": 281,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "99905cbf5b6102e47ddfc836b1007c769ca61336",
+    "proof": "verification/sections/281-publication.json",
+    "proof_sha256": "336d4895e15f1253c3a501c7d658a82f60c288bf1edc4872e61c368c6c161939"
+  },
+  "historical_before283_cloud_publication_closeout": {
+    "section": 282,
+    "functional_commit": "a9defb7f98ccdad1b56823894c338c5e7d48cf75",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/282-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 300,
+    "next_section": 283
+  },
+  "historical_before285_goal_edit": {
+    "batch_target_section": 300,
+    "batch_stop_after_section": 300,
+    "latest_user_resume": {
+      "at_Beijing": "2026-10-14T23:14:35.608168+08:00",
+      "quote": "逐批推进至300节",
+      "kind": "explicit_goal",
+      "target_section": 300,
+      "continuous_work_authorized": true
+    },
+    "current_batch": {
+      "start": 262,
+      "end": 300,
+      "status": "ACTIVE_BATCH_262_300_SECTION282_PUBLISHED",
+      "next_section": 283,
+      "next_section_started": false,
+      "next_full_validation_after": 290,
+      "receipt": "verification/sections/282.json",
+      "batch_closed": false
+    },
+    "next_full_validation_after": 290,
+    "current_batch_commit_policy": {
+      "effective_after_completed_section": 261,
+      "commit_interval": 1,
+      "push_after_each_section": true,
+      "full_validation_interval": 15,
+      "next_full_validation_after": 290,
+      "requirements_synced_each_section": true
+    },
+    "policy": {
+      "commit_after_each_section": true,
+      "full_validation_interval": 15,
+      "continuous_work_authorized": true,
+      "windows_compatibility": "Wine authorized; distinct from native Windows verification",
+      "scheduled_background_work": false,
+      "priority_order": [
+        "P2",
+        "P3",
+        "P1"
+      ],
+      "max_failed_attempts_per_problem": 3,
+      "wrap_up_below_usage_percent": 15,
+      "usage_percent_available": true,
+      "usage_monitoring": "Native account-usage read is available; threshold checked for the active batch. Recheck at batch boundaries; do not infer unavailable windows.",
+      "automatic_next_batch": false,
+      "commit_interval": 1,
+      "commit_after_full_validation_pass": false,
+      "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
+      "push_after_batch_commit": true,
+      "development_paused_by_latest_user_request": false,
+      "summary_interval": 5,
+      "stop_after_section": 300,
+      "each_section_requires_functional_progress": true,
+      "validation_is_additional_to_functional_progress": true,
+      "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
+      "full_validation_anchor_section": 125,
+      "next_full_validation_after": 290,
+      "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
+      "each_section_window_required": false,
+      "each_section_requires_meaningful_project_advancement": true,
+      "bugfix_only_counts_as_functional_section": false,
+      "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
+      "latest_functional_scope_requirement_Beijing": "2026-10-11",
+      "current_user_batch_target_section": 300,
+      "current_user_batch_completed": false,
+      "requirements_synced_each_section": true,
+      "long_term_target_section": 400,
+      "atomic_section_source_receipt_status_commit": true,
+      "verify_remote_head_after_each_push": true,
+      "uncommitted_or_unverified_preparations_count_as_completed": false,
+      "section_status_requirement_Beijing": "2026-10-13",
+      "repair_full_validation_after_functional_260": true,
+      "new_functional_sections_paused": false,
+      "requested_full_validation261_completed": true,
+      "historical_before_261_no_automatic_functional_261": true,
+      "historical_before_261_current_requested_full_validation_after": 261,
+      "historical_accuracy_validation_after_section_before261": 115,
+      "batch_target_section": 300
+    }
+  },
+  "native_section283_validation": {
+    "receipt": "verification/sections/283-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
+  },
+  "historical_before283_publication": {
+    "section": 282,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "a9defb7f98ccdad1b56823894c338c5e7d48cf75",
+    "proof": "verification/sections/282-publication.json",
+    "proof_sha256": "aaa0c55b2012034892eeb89699acc718569e9db7bdaaa95c2a1fc973bba1bc36"
+  },
+  "historical_before284_cloud_publication_closeout": {
+    "section": 283,
+    "functional_commit": "da78d77ed08df5c2a75f27e69ecb264079ac7982",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/283-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 285,
+    "next_section": 284
+  },
+  "historical_before284_publication": {
+    "section": 283,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "da78d77ed08df5c2a75f27e69ecb264079ac7982",
+    "proof": "verification/sections/283-publication.json",
+    "proof_sha256": "7a07a5e5dc7c8c6aafd53ba7c96b1e5057ef285098872a63f053bfd90f3dd13c"
+  },
+  "historical_before285_cloud_publication_closeout": {
+    "section": 284,
+    "functional_commit": "748cda1ac194cc2b06ee36d78bf85a03eaafcfb2",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/284-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 285,
+    "next_section": 285
+  },
+  "historical_before285_full_validation": {
+    "last_full_validation": {
+      "after_section": 275,
+      "receipt": "verification/full-275/summary.json",
+      "available_checks_passed": true,
+      "complete_repository_validation": false,
+      "scope_not_reduced": true,
+      "native_current_windows_gui_verified": true,
+      "native_windows_game_chat_verified": false,
+      "unresolved_available_failures": false,
+      "original_failed_attempts_preserved": true
+    },
+    "current_available_full_validation": {
+      "section": 275,
+      "available_scope_passed": true,
+      "receipt": "verification/full-275/summary.json",
+      "native_windows_game_chat_verified": false
+    }
+  },
+  "historical_before285_publication": {
+    "section": 284,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "748cda1ac194cc2b06ee36d78bf85a03eaafcfb2",
+    "proof": "verification/sections/284-publication.json",
+    "proof_sha256": "11313045c8c1c3884a9329f1d1939a5246873363a6af175239493fe1d558f463"
+  },
+  "confirmed_next_stage_direction": {
+    "confirmed_on_Beijing": "2026-10-15",
+    "primary_track": "既有P3全部待办：节点/事件条件与掉落、固定战斗地图/出怪条件、敌人信息",
+    "version_scope": "当前国服；固定资料基准并检测版本差异",
+    "evidence_order": "独立公开算例优先；必要时少量本机后台只读采样",
+    "formula_references_are_independent_observations": false,
+    "next_functional_section_started": false,
+    "new_continuous_batch_target_assigned": false,
+    "deferred_accuracy_track": "首批三名面板与技能准确性闭环；仍未完成",
+    "latest_priority_correction": "用户更正P3优先，替代本次较早的首批三名校准优先选择",
+    "deferred_accuracy_operators": [
+      "kaltsit",
+      "silverash",
+      "mechanist"
+    ],
+    "last_completed_functional_section": 302
+  },
+  "last_requirements_maintenance": {
+    "date_Beijing": "2026-10-15",
+    "functional_section_added": false,
+    "scope": "Highest-priority project reasoning rules; latest P3 priority and player-readable output requirements; index generator reflects checkpoint priority.",
+    "necessary_validation": {
+      "selector": "tests.test_cloud_index_sync",
+      "methods_passed": 17,
+      "exit_code": 0,
+      "public_pointer_hashes_match": true
+    },
+    "full_validation_rerun": false,
+    "existing_full_receipt_scope": "verification/full-285/summary.json remains bound to its original frozen source; not a new full check of the maintenance tooling change."
+  },
+  "historical_cloud_publication_closeout_through_285": {
+    "section": 285,
+    "functional_commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/285-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 285,
+    "next_section": 286,
+    "batch_closed": true,
+    "next_section_started": false
+  },
+  "current_section_validation": {
+    "section": 302,
+    "receipt": "verification/sections/302.json",
+    "necessary_methods_passed": 92,
+    "native_isolated_window_checks": 76,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-290/summary.json",
+    "full_source_is_historical290": true
+  },
+  "historical_before287_resume_fields": {
+    "batch_stop_after_section": 285,
+    "latest_user_resume": {
+      "at_Beijing": "2026-10-15T13:45:18.622460+08:00",
+      "quote": "逐批推进至285节",
+      "kind": "explicit_goal_edit",
+      "target_section": 285,
+      "continuous_work_authorized": true
+    },
+    "cloud_publication_closeout": {
+      "section": 286,
+      "functional_commit": "493aa492610ffb9b0593fdafd4abacf4d726ffae",
+      "verified_published_commit": "41b9f67d26b043b233ae574cfbc05b690496c470",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/286-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 287,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null,
+      "public_failure_log_packaging_repaired": true
+    }
+  },
+  "historical_before287_publication": {
+    "section": 286,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "41b9f67d26b043b233ae574cfbc05b690496c470",
+    "proof": "verification/sections/286-publication.json",
+    "proof_sha256": "53871486e1bb8e85bfdbaa71f5516930a25fa3af87a3f536619078bef77d2088"
+  },
+  "historical_before288_cloud_publication_closeout": {
+    "section": 287,
+    "functional_commit": "376282d11dd305ba16d1c5d0146462734410095e",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/287-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "next_section": 288,
+    "batch_closed": false,
+    "next_section_started": false,
+    "numeric_continuation_target": null
+  },
+  "historical_before288_publication": {
+    "section": 287,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "376282d11dd305ba16d1c5d0146462734410095e",
+    "proof": "verification/sections/287-publication.json",
+    "proof_sha256": "71ff6a67fc545195927fe2fa43a69fd721124a5ea725fc01e66d5a90b35fc6f1"
+  },
+  "historical_before289_cloud_publication_closeout": {
+    "section": 288,
+    "functional_commit": "0a39503865724fe4f08888eea3272ff634167260",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/288-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "next_section": 289,
+    "batch_closed": false,
+    "next_section_started": false,
+    "numeric_continuation_target": null
+  },
+  "historical_before289_latest_section_environment": {
+    "section": 285,
+    "native_windows": "14 necessary+119 actualmain+native panel/skills fixture+final full285 actual original scope; original window visible/private3 unchanged",
+    "native_game_or_chat_verified": false,
+    "new_Linux_Wine_full_run": false,
+    "current_section_full_rerun": true,
+    "receipt": "verification/full-285/summary.json"
+  },
+  "historical_before289_functional_sections_since_latest_requirement": [
+    262,
+    263,
+    264,
+    265,
+    266,
+    267,
+    268,
+    269,
+    270,
+    271,
+    272,
+    273,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279,
+    280,
+    281,
+    282,
+    283,
+    284,
+    285
+  ],
+  "historical_before289_publication": {
+    "section": 288,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "0a39503865724fe4f08888eea3272ff634167260",
+    "proof": "verification/sections/288-publication.json",
+    "proof_sha256": "9a889edf954d4db7cd2ad6328a56259760336facd2f3ee445eb0d27176f3071c"
+  },
+  "historical_before290_current_pointers": {
+    "current_section_save": {
+      "section": 289,
+      "verification": "verification/sections/289.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing 289 source, required checks, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 289,
+      "receipt": "verification/sections/289.json",
+      "necessary_methods_passed": 191,
+      "native_isolated_window_checks": 56,
+      "full_suite_rerun": false
+    },
+    "latest_section_environment": {
+      "section": 289,
+      "native_windows": "191 necessary checks; isolated two-page MainWindow56 checks; original test window visible and responsive, private5 paths unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "receipt": "verification/sections/289.json"
+    },
+    "latest_functional_section": 289,
+    "last_full_validation": {
+      "after_section": 285,
+      "receipt": "verification/full-285/summary.json",
+      "available_checks_passed": true,
+      "complete_repository_validation": false,
+      "scope_not_reduced": true,
+      "native_current_windows_gui_verified": true,
+      "native_windows_game_chat_verified": false,
+      "unresolved_available_failures": false,
+      "original_failed_attempts_preserved": true
+    },
+    "current_available_full_validation": {
+      "section": 285,
+      "receipt": "verification/full-285/summary.json",
+      "available_scope_passed": true,
+      "native_windows_game_chat_verified": false
+    },
+    "cloud_publication_closeout": {
+      "section": 289,
+      "functional_commit": "1278420777d19dcaecda2b63d4a1163709d0d8c8",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/289-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 290,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    },
+    "active_section": {
+      "section": 290,
+      "status": "in_progress",
+      "remaining_item": "P3节点事件招募结果与条件区分",
+      "new_capability": "四组来源绑定的临时中介所职业招募结果进入现有玩家事件页；只分类精确职业结果说明",
+      "acceptance": "完整原件+独立全文匹配、费用培养实际结果未知、checks/status不变、源失效回退、必要/完整可用全量和实际窗口",
+      "validation_phase": "final_A3_legacy4_and_original_typed_actual_pass_sealed_offline3_running_retained_exec81080",
+      "local_control_checkpoint": ".cache/full290-live-checkpoint.json",
+      "source_freeze": "verification/full-290/source-freeze-final-A3.json",
+      "source_freeze_sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7",
+      "previous_source_freeze": "verification/full-290/source-freeze-repair.json",
+      "previous_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+      "source_freeze_declared": true
+    },
+    "next_periodic_full_validation_only_if_resumed": 290,
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION289_PUBLISHED_CONTINUATION_READY",
+      "next_section": 290,
+      "next_section_started": true,
+      "next_full_validation_after": 290,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/289.json"
+    },
+    "current_batch_commit_policy": {
+      "effective_after_completed_section": 261,
+      "commit_interval": 1,
+      "push_after_each_section": true,
+      "full_validation_interval": 15,
+      "next_full_validation_after": 290,
+      "requirements_synced_each_section": true
+    },
+    "confirmed_next_stage_direction": {
+      "confirmed_on_Beijing": "2026-10-15",
+      "primary_track": "既有P3全部待办：节点/事件条件与掉落、固定战斗地图/出怪条件、敌人信息",
+      "version_scope": "当前国服；固定资料基准并检测版本差异",
+      "evidence_order": "独立公开算例优先；必要时少量本机后台只读采样",
+      "formula_references_are_independent_observations": false,
+      "next_functional_section_started": true,
+      "new_continuous_batch_target_assigned": false,
+      "deferred_accuracy_track": "首批三名面板与技能准确性闭环；仍未完成",
+      "latest_priority_correction": "用户更正P3优先，替代本次较早的首批三名校准优先选择",
+      "deferred_accuracy_operators": [
+        "kaltsit",
+        "silverash",
+        "mechanist"
+      ],
+      "last_completed_functional_section": 289
+    },
+    "next_full_validation_after": 290
+  },
+  "historical_before290_publication": {
+    "section": 289,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "1278420777d19dcaecda2b63d4a1163709d0d8c8",
+    "proof": "verification/sections/289-publication.json",
+    "proof_sha256": "0cee5d4f868722120b24433ec260ee1832419c6553be4ef6fcc57308a8ab6b7a"
+  },
+  "historical_before291_current_pointers": {
+    "current_section_save": {
+      "section": 290,
+      "verification": "verification/sections/290.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing290 source, full/necessary receipts, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 290,
+      "receipt": "verification/sections/290.json",
+      "necessary_methods_passed": 46,
+      "display_migration_methods_passed": 69,
+      "native_isolated_window_checks": 70,
+      "full_suite_rerun": true,
+      "full_receipt": "verification/full-290/summary.json",
+      "fresh_final_source_module_methods": 15,
+      "old15_not_added": true,
+      "composite_proof": "verification/full-290/composite-admissibility.json"
+    },
+    "latest_section_environment": {
+      "section": 290,
+      "native_windows": "46 necessary and 69 display checks separately; canonical290 A2 70 checks; finalA3 full offline + legacy4/typed plus A2 current/P3 exact two nonproduction-input equivalence, original visible responsive window, private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": true,
+      "full_receipt": "verification/full-290/summary.json",
+      "receipt": "verification/sections/290.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION290_PUBLISHED_CONTINUATION_READY",
+      "next_section": 291,
+      "next_section_started": true,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/290.json"
+    },
+    "active_section": {
+      "section": 291,
+      "status": "in_progress",
+      "remaining_item": "P3和平守卫者节点条件、地图对应与固定作战入口",
+      "new_capability": "单向移动例外说明；独立已读据点位置入口与枯枝/败叶固定资料；保留事件阅读并在显式查看时切换",
+      "acceptance": "来源精确核对/不反推实际目标或完成；旧资格费用不变；当前历史位置与过期守卫；刷新阅读保留；必要检查和真实Windows三尺寸、两关入口；普通发布并更新要求索引",
+      "promotion_manifest": ".cache/p3-291-promotion-readiness/PROMOTION_FILES.json",
+      "phase": "native_attempt5_running_after_exact_premise_fixture_layout_and_disabled_button_repairs",
+      "necessary_actual135": "verification/sections/291-necessary-final-layout/process.json",
+      "native_retained_exec_session": 9227,
+      "native_container": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-291-window-4398485e519d4eb6b066d6ffdab090b2",
+      "native_previous_nonpassing_attempts": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "latest_canonical_source_hash": "58656ac382f1b3c985ed3d75cbd0f73bf8f869589cda565a3c2b37389ed2f12f",
+      "next_action": "Poll retained9227, inspect actual terminal/receipt and archive5. No source changes before closure. Then fresh necessary to bind final canonical tool, actual original-window restart/focus/private5, strict closeout/index/ordinary publication."
+    },
+    "cloud_publication_closeout": {
+      "section": 290,
+      "functional_commit": "ec6e6f604395543e012ab8d65835d854e8b1207b",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/290-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 291,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    },
+    "current_available_full_validation": {
+      "section": 290,
+      "receipt": "verification/full-290/summary.json",
+      "available_scope_passed": true,
+      "native_windows_game_chat_verified": false,
+      "composite_proof": "verification/full-290/composite-admissibility.json",
+      "actual_offline_attempt": 3,
+      "actual_legacy_ordinal": 4,
+      "reused_current_P3_attempt": 2
+    }
+  },
+  "historical_before291_publication": {
+    "section": 290,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "ec6e6f604395543e012ab8d65835d854e8b1207b",
+    "proof": "verification/sections/290-publication.json",
+    "proof_sha256": "f866f08ddcce2af47cab10b7c90f88d47354e1567c69dc3b7b3b21d26ae295b0"
+  },
+  "historical_before292_current_pointers": {
+    "current_section_save": {
+      "section": 291,
+      "verification": "verification/sections/291.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing291 source, necessary/native receipts, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 291,
+      "receipt": "verification/sections/291.json",
+      "necessary_methods_passed": 135,
+      "native_isolated_window_checks": 140,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 291,
+      "receipt": "verification/sections/291.json",
+      "native_windows": "135 necessary checks; canonical291 actual 140 unique native checks, three sizes/two previews; original visible responsive window private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 292,
+      "status": "in_progress",
+      "remaining_item": "P3节点事件与对应战斗资料的玩家阅读入口",
+      "new_capability": "按完整流程场景/具体选项手动筛选现有固定作战资料，保持刷新阅读和精确来源，失效候选不沿用",
+      "acceptance": "默认全集不减；同名/同关不同来源隔离；无战斗与未知下一层空入口；来源失败拒旧候选；刷新保筛选/完整token/文本滚动选区；实际隔离Windows预览；普通发布源码/要求/索引",
+      "phase": "reviewed_candidate_promoted_required_tests_pending",
+      "backend_mechanics_or_data_changed": false
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION291_PUBLISHED_CONTINUATION_READY",
+      "next_section": 292,
+      "next_section_started": true,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/291.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 291,
+      "functional_commit": "90c2f19072e9ef6f7371b6d7b0e3e0a6c5f03fbf",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/291-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 292,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before292_publication": {
+    "section": 291,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "90c2f19072e9ef6f7371b6d7b0e3e0a6c5f03fbf",
+    "proof": "verification/sections/291-publication.json",
+    "proof_sha256": "459034755a1811d14dff77cf6e1ccb6734b44da3d3659b8771a12e758f4de401"
+  },
+  "historical_before293_current_pointers": {
+    "current_section_save": {
+      "section": 292,
+      "verification": "verification/sections/292.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing292 UI source, necessary/native receipts, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 292,
+      "receipt": "verification/sections/292.json",
+      "necessary_methods_passed": 79,
+      "native_isolated_window_checks": 33,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 292,
+      "receipt": "verification/sections/292.json",
+      "native_windows": "79 actual necessary; 33 unique native UI checks at1050x720; original window visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 293,
+      "status": "source_bound_results_reader_in_preparation",
+      "remaining_item": "P3 node events and future reward information",
+      "new_capability": "A source-bound one-hop results reader for four resting-corner choices, with manual exact scene text navigation.",
+      "acceptance": [
+        "Four exact choices and nine source branches; six destination buttons; count conflicts preserved.",
+        "Future quantities never current grants; 99 gold unresolved original entry retained.",
+        "Fresh source validation, deep copies, non-target isolation and no eligibility/data/state mutation.",
+        "Manual isolated UI, source invalidation, refresh reading retention and no game/chat operations."
+      ],
+      "preparation_receipt": "verification/sections/293-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION292_PUBLISHED_CONTINUATION_READY",
+      "next_section": 293,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/292.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 292,
+      "functional_commit": "fd275b7a2175d7176e2e6f111c8e9979fa9c5faf",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/292-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 293,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before293_publication": {
+    "section": 292,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "fd275b7a2175d7176e2e6f111c8e9979fa9c5faf",
+    "proof": "verification/sections/292-publication.json",
+    "proof_sha256": "b1e22481f268233389b9c56cfac3eb2adf6f3e3520e9279f6a64efea0a45eb8a"
+  },
+  "historical_before294_current_pointers": {
+    "current_section_save": {
+      "section": 293,
+      "verification": "verification/sections/293.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing293 reading source, public references, necessary/native receipts, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 293,
+      "receipt": "verification/sections/293.json",
+      "necessary_methods_passed": 80,
+      "native_isolated_window_checks": 54,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 293,
+      "receipt": "verification/sections/293.json",
+      "native_windows": "80 actual necessary; 54 unique native UI checks, 1050x720 parent and at least900x660 dialog; original window visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 294,
+      "status": "source_bound_candidate_promoted_tests_pending",
+      "remaining_item": "P3 fixed-map location references",
+      "new_capability": "Two new fixed images /four exact stage IDs gain directly read approximate ground/checkpoint centers.",
+      "acceptance": [
+        "All18 frozen requests retained with exact unrounded <=4 agreement, no averaging or retuning.",
+        "Old40 points and12/24 whole-map references unchanged;81/59 whole-map gaps remain.",
+        "Exact image/level/grid/blob/alias identity, no fractional/inverse/interpolation/segment inference.",
+        "Actual isolated native grid and fixed SPAWN/MOVE display at three sizes, reading/selection retention, zero game/chat."
+      ],
+      "preparation_receipt": "verification/sections/294-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION293_PUBLISHED_CONTINUATION_READY",
+      "next_section": 294,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/293.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 293,
+      "functional_commit": "6b59ad14e30226fab12d1f3447da96b80208ff63",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/293-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 294,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before294_publication": {
+    "section": 293,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "6b59ad14e30226fab12d1f3447da96b80208ff63",
+    "proof": "verification/sections/293-publication.json",
+    "proof_sha256": "90a67a57ee6f232a6393bbb018bb40957c4f9b6645b2f9db8ca3ba114e1a8046"
+  },
+  "historical_before295_current_pointers": {
+    "current_section_save": {
+      "section": 294,
+      "verification": "verification/sections/294.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing294 direct-point data/source packet, necessary/native receipts, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 294,
+      "receipt": "verification/sections/294.json",
+      "necessary_methods_passed": 58,
+      "native_isolated_window_checks": 52,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 294,
+      "receipt": "verification/sections/294.json",
+      "native_windows": "58 actual necessary; 52 unique native checks, four stages/three exact sizes/four PNGs, original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 295,
+      "status": "documented_item_reader_preparation",
+      "remaining_item": "P3节点事件中的具名物品说明与图标",
+      "new_capability": "线人完整选项明确记载的沙盘α，新增独立文献物品入口，可手动查看图标、用途与完整说明。",
+      "acceptance": [
+        "原17条typed具名奖励契约与非目标事件输出保持，不借物品说明补原游戏入口。",
+        "每次检查绑定的当前资料完整字节，篡改/缺失后清空旧图标和说明，恢复后不自动重选。",
+        "独立弹窗默认未选，真实点击查看，刷新保留父页面及弹窗的选择、页签、选区与非零滚动。",
+        "资料解锁说明不同于本局资格；数量、实际领取、已持有及效果激活仍未知，25/57缺口保留。",
+        "隔离私态，验证不操作游戏/不发聊天；更新原测试窗口并保留私人五路径。"
+      ],
+      "preparation_receipt": "verification/sections/295-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION294_PUBLISHED_CONTINUATION_READY",
+      "next_section": 295,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/294.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 294,
+      "functional_commit": "639ed4531a19416711b690cbf83a11509b593b9b",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/294-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 295,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before295_publication": {
+    "section": 294,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "639ed4531a19416711b690cbf83a11509b593b9b",
+    "proof": "verification/sections/294-publication.json",
+    "proof_sha256": "4a221b98c2a8ef72018bf7bb802f0c8e4f2be6b4a537ccfa90d0454753397669"
+  },
+  "historical_before296_current_pointers": {
+    "current_section_save": {
+      "section": 295,
+      "verification": "verification/sections/295.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing295 documented item reader/source, actual validation, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 295,
+      "receipt": "verification/sections/295.json",
+      "necessary_methods_passed": 96,
+      "native_isolated_window_checks": 59,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 295,
+      "receipt": "verification/sections/295.json",
+      "native_windows": "96 actual necessary; 59 unique native checks; real MainWindow/850x650 item dialog/3PNG; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 296,
+      "status": "fixed_battle_entry_reading_preparation",
+      "remaining_item": "P3固定作战对应节点/事件入口及条件资料",
+      "new_capability": "从8个精确固定作战反查并手动打开完整事件/场景/选项；无效验尸补充四条标记入口配置和文献说明。",
+      "acceptance": [
+        "反向入口逐原ID保留，14原边中3条普通版明确紧急排除，11条资料入口不能当全部真实入口。",
+        "打开前fresh核对完整关卡/事件/场景/选项与来源token；无固定目标的泛用池不反推，同名/普通紧急不合并。",
+        "默认不选择/不跳转；手动打开只改变助手阅读，保留战斗页波次、敌人、条目、阅读、地图选点和上下文。",
+        "无效验尸四条原FEATURE及zone/bubble完整身份；3/4/5层来自中文用途，假层不猜主层或秘境；limit不是实际数量。",
+        "配置与文献分列，FEATURE实际获取/附着/引擎执行和本局生成仍未知，不改现有floor/资格规则或减少15全局缺口。",
+        "源失效清空旧条目/说明/token，换关清空；真实Windows隔离主入口/跳转与刷新保留，0游戏聊天和私态写入。"
+      ],
+      "preparation_receipt": "verification/sections/296-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION295_PUBLISHED_CONTINUATION_READY",
+      "next_section": 296,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/295.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 295,
+      "functional_commit": "9ebebcdf5d69612f6598aa3d3f18190a3592701a",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/295-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 296,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before296_publication": {
+    "section": 295,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "9ebebcdf5d69612f6598aa3d3f18190a3592701a",
+    "proof": "verification/sections/295-publication.json",
+    "proof_sha256": "79d9c96ec0ef20014b30f7c3b8342b9f9fabef3ea1e4574bbe7d091ae5f0b8f5"
+  },
+  "historical_before297_current_pointers": {
+    "current_section_save": {
+      "section": 296,
+      "verification": "verification/sections/296.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing296 combined documented entry reader/source, actual validation, requirements and index"
+    },
+    "current_section_validation": {
+      "section": 296,
+      "receipt": "verification/sections/296.json",
+      "necessary_methods_passed": 132,
+      "native_isolated_window_checks": 78,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 296,
+      "receipt": "verification/sections/296.json",
+      "native_windows": "132 actual necessary; 78 unique native; real MainWindow/entry reader/5 representative PNG; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 297,
+      "status": "expedition_return_reference_preparation",
+      "remaining_item": "P3具名奖励来源、具体选择及延后结果说明",
+      "new_capability": "未涉足之树三种选择的派出/休息/归来结果集中阅读；将源头归来2希望及怦然信标与休息即时2希望分开，提供信标图标和完整用途的手动阅读。",
+      "acceptance": [
+        "精确3具体选择/4原choice/4场景，source说明块为归来说明而非新实际按钮。",
+        "即时休息与延后归来资源不混合、不相加；仅展示资料，不改既有38事件资源/资格结果、17typed奖励、库存/培养或本局状态。",
+        "原文进入新区域/社区下一层分列，特殊区域对应和实际归来时钟未知；源头不进阶与正常是否进阶分开，喙不强套特殊奖励。",
+        "默认不选、不自动加载信标；手动打开图标/用途/说明，换选项或源失效清空旧物品与说明，恢复后仍需手动选择。",
+        "同事件和范围刷新保留完整选择、阅读页、实际非零滚动和选区；换事件清旧范围；真实Windows隔离MainWindow主入口与0外部操作。",
+        "首轮地图拟合两图均不达4像素，保留原33holdout/19fit读数及拒绝，regular12/24、direct10/18/58、81/59整图缺口不变。"
+      ],
+      "preparation_receipt": "verification/sections/297-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION296_PUBLISHED_CONTINUATION_READY",
+      "next_section": 297,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/296.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 296,
+      "functional_commit": "4a3f982eedbbeffac0a6b8abf879fad1760ac1f6",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/296-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 297,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before297_publication": {
+    "section": 296,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "4a3f982eedbbeffac0a6b8abf879fad1760ac1f6",
+    "proof": "verification/sections/296-publication.json",
+    "proof_sha256": "1a8b781abb4bdbdeec8fd590f564caa8d4f58da302d60d1bff1c55886d5ba6ec"
+  },
+  "historical_before298_current_pointers": {
+    "current_section_save": {
+      "section": 297,
+      "verification": "verification/sections/297.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing297 expedition source/manual item reader, actual validation, requirements and cloud index"
+    },
+    "current_section_validation": {
+      "section": 297,
+      "receipt": "verification/sections/297.json",
+      "necessary_methods_passed": 104,
+      "native_isolated_window_checks": 65,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 297,
+      "receipt": "verification/sections/297.json",
+      "native_windows": "104 actual necessary; 65 unique native; manual MainWindow/expedition dialog/beacon and 5PNG; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "new_Linux_Wine_full_run": false,
+      "current_section_full_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 298,
+      "status": "scope_defined_before_functional_changes",
+      "remaining_item": "P3难度、层数及前置对具体节点/事件资格的影响",
+      "new_capability": "5类节点、6组精确事件接入资料明确的自然主层禁区；目录和地图候选说明原因，已读/历史与手动资料入口保留；两项科技仅说明已知开启途径。",
+      "acceptance": [
+        "6事件×6主层完整矩阵；只对明确自然主层应用新禁区，允许层不等于必生成。",
+        "特殊区域、未知入口、加工品、已读内容、历史不借新禁区删除；本局与原目录不改。",
+        "完整来源与029继承类型声明核对，热缓存来源或实际目录对象变更不借旧限制。",
+        "默认190资源、38玩家输出不变；显式上下文只改变本组六事件，17typed/25场景57选项/10附注/15关卡层数不冒称补完。",
+        "真实隔离MainWindow可查看排除理由，手动读已排除项/历史；刷新保持选择、页签、实际滚动及选区；来源失效清旧限制回未知。",
+        "不采游戏、不发聊天、不覆盖私人5路径；必要验证及原窗口更新后逐字节普通推送要求、索引和源码。"
+      ],
+      "preparation_receipt": "verification/sections/298-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION297_PUBLISHED_CONTINUATION_READY",
+      "next_section": 298,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/297.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 297,
+      "functional_commit": "f7b6f10536aa3d62d0e5e0e64e6993492a7a93ec",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/297-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 298,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before298_publication": {
+    "section": 297,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "f7b6f10536aa3d62d0e5e0e64e6993492a7a93ec",
+    "proof": "verification/sections/297-publication.json",
+    "proof_sha256": "9e34d95e5dde1976c9e2e0a5534c49f2e8a9fe0ed82ef5e62fcd898eca6c442a"
+  },
+  "historical_before299_current_pointers": {
+    "current_section_save": {
+      "section": 298,
+      "verification": "verification/sections/298.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing298 exact main-floor negative rule integration, actual acceptance, requirements and index"
+    },
+    "current_section_validation": {
+      "section": 298,
+      "receipt": "verification/sections/298.json",
+      "necessary_methods_passed": 127,
+      "native_isolated_window_checks": 44,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 298,
+      "receipt": "verification/sections/298.json",
+      "native_windows": "127 actual necessary; 44 unique native;36 main-floor readings;5 representative PNG; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "current_section_full_rerun": false,
+      "new_Linux_Wine_full_run": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 299,
+      "status": "scope_defined_before_functional_changes",
+      "remaining_item": "P3固定出怪条件、分组关系及地图与敌人资料对应",
+      "new_capability": "普通战斗预览可从当前出怪条目查看同组完整固定候选，并手动浏览本关主队列的其它候选组与关联包；中文列明敌人、场景物件和空动作，手动跳转已支持的固定格图/敌人资料。",
+      "acceptance": [
+        "精确主队列+原组/包键+原action身份，不跨片段合并复用组键，不按同名敌人去重。",
+        "本关完整手动目录覆盖来源已绑定组和包，不能仅覆盖含SPAWN的组却宣称全覆盖；包中无group成员也保留。",
+        "SPAWN保留具体敌人及完整等级候选，ACTIVATE_PREDEFINED只按exactalias绑定物件，空key与EMPTY保持区别；不借其他头像或坐标。",
+        "不推实际选择、互斥次数、概率、同时出现、实际总数或绝对时间；分支不借主队列同名组。",
+        "新阅读默认未选；同范围刷新保留组/条目/页签/实际滚动选区；换关或来源失效清空旧资料和跳转，恢复不自动选择。",
+        "手动格图/敌人入口由父页重新核对精确原关卡与条目；过期/篡改身份拒绝，刷新不自动切换父筛选、地图选点或当前敌人。",
+        "必要功能与真实隔离MainWindow验证；原项目窗口更新、私人5不变；源码/要求/验收/索引逐节普通推送核对远端。"
+      ],
+      "preparation_receipt": "verification/sections/299-preparation/scope.json"
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION298_PUBLISHED_CONTINUATION_READY",
+      "next_section": 299,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/298.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 298,
+      "functional_commit": "ce17ab56ddc5def69ce2e998fcbc0d2c889c3379",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/298-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 299,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before299_publication": {
+    "section": 298,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "ce17ab56ddc5def69ce2e998fcbc0d2c889c3379",
+    "proof": "verification/sections/298-publication.json",
+    "proof_sha256": "bae566be2d70bbb7338153bbacd4189d78c27815c90f204745f11c21f5492edc"
+  },
+  "historical_before300_current_pointers": {
+    "current_section_save": {
+      "section": 299,
+      "verification": "verification/sections/299.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing299 exact fixed candidate reader, real acceptance, requirements and index"
+    },
+    "current_section_validation": {
+      "section": 299,
+      "receipt": "verification/sections/299.json",
+      "necessary_methods_passed": 168,
+      "native_isolated_window_checks": 61,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 299,
+      "receipt": "verification/sections/299.json",
+      "native_windows": "168 actual necessary; 61 unique native; 5 representative PNG including player text; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "current_section_full_rerun": false,
+      "new_Linux_Wine_full_run": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 300,
+      "scope": "verification/sections/300-preparation/scope.json",
+      "status": "implementation_not_yet_completed",
+      "functional_progress_claimed": false
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION299_PUBLISHED_CONTINUATION_READY",
+      "next_section": 300,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/299.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 299,
+      "functional_commit": "982edb2b6f3b54bec43345d019266eccb9e2317a",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/299-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 300,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before300_publication": {
+    "section": 299,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "982edb2b6f3b54bec43345d019266eccb9e2317a",
+    "proof": "verification/sections/299-publication.json",
+    "proof_sha256": "edc44df58bf2d723da73a1f692b5369cddc84acaa2803804c080b90845f41ccc"
+  },
+  "historical_before301_current_pointers": {
+    "current_section_save": {
+      "section": 300,
+      "verification": "verification/sections/300.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing300 exact next-region reference reader, real acceptance, requirements and index"
+    },
+    "current_section_validation": {
+      "section": 300,
+      "receipt": "verification/sections/300.json",
+      "necessary_methods_passed": 97,
+      "native_isolated_window_checks": 51,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 300,
+      "receipt": "verification/sections/300.json",
+      "native_windows": "97 actual necessary; 51 unique native; 5 representative PNG including player text; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "current_section_full_rerun": false,
+      "new_Linux_Wine_full_run": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 301,
+      "scope": "verification/sections/301-preparation/scope.json",
+      "status": "implementation_not_yet_completed",
+      "functional_progress_claimed": false
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION300_PUBLISHED_CONTINUATION_READY",
+      "next_section": 301,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/300.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 300,
+      "functional_commit": "27f99c33ddeb409a0f2dd2057f518b0a2f77e8c9",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/300-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 301,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before301_publication": {
+    "section": 300,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "27f99c33ddeb409a0f2dd2057f518b0a2f77e8c9",
+    "proof": "verification/sections/300-publication.json",
+    "proof_sha256": "ef9420ae6f20edfbd9fedbad3037adb1b5ee73e7195f9c7919ecf908a3dca230"
+  },
+  "historical_before302_current_pointers": {
+    "current_section_save": {
+      "section": 301,
+      "verification": "verification/sections/301.json",
+      "scope": "current_functional_section",
+      "binding": "enclosing_commit",
+      "commit_reference": "commit containing301 exact named reward item reader, real acceptance, requirements and index"
+    },
+    "current_section_validation": {
+      "section": 301,
+      "receipt": "verification/sections/301.json",
+      "necessary_methods_passed": 99,
+      "native_isolated_window_checks": 63,
+      "full_suite_rerun": false,
+      "last_full_receipt": "verification/full-290/summary.json",
+      "full_source_is_historical290": true
+    },
+    "latest_section_environment": {
+      "section": 301,
+      "receipt": "verification/sections/301.json",
+      "native_windows": "99 actual necessary; 63 unique native; 5 representative PNG including player text; original visible/private5 unchanged",
+      "native_game_or_chat_verified": false,
+      "current_section_full_rerun": false,
+      "new_Linux_Wine_full_run": false,
+      "last_full_receipt": "verification/full-290/summary.json"
+    },
+    "active_section": {
+      "section": 302,
+      "scope": "verification/sections/302-preparation/scope.json",
+      "status": "implementation_not_yet_completed",
+      "functional_progress_claimed": false
+    },
+    "current_batch": {
+      "start": 286,
+      "end": null,
+      "status": "P3_SECTION301_PUBLISHED_CONTINUATION_READY",
+      "next_section": 302,
+      "next_section_started": false,
+      "next_full_validation_after": 305,
+      "batch_closed": false,
+      "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+      "receipt": "verification/sections/301.json"
+    },
+    "cloud_publication_closeout": {
+      "section": 301,
+      "functional_commit": "e75d2b10aac63b8e10f2880170215384a6a2b972",
+      "functional_source_bytes_unchanged": true,
+      "proof": "verification/sections/301-publication.json",
+      "current_commit_kind": "publication metadata; no additional functional section",
+      "next_section": 302,
+      "batch_closed": false,
+      "next_section_started": false,
+      "numeric_continuation_target": null
+    }
+  },
+  "historical_before302_publication": {
+    "section": 301,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "e75d2b10aac63b8e10f2880170215384a6a2b972",
+    "proof": "verification/sections/301-publication.json",
+    "proof_sha256": "06b05dbc401e7db94cf0a72bfe101d7ee3f398863fa67c219e955570ed10b914"
+  },
+  "cloud_publication_closeout": {
+    "section": 302,
+    "functional_commit": "31d1b53b183c98ffb75b3aed1e8b4040d62b1783",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/302-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "next_section": 303,
+    "batch_closed": false,
+    "next_section_started": false,
+    "numeric_continuation_target": null
+  },
+  "active_section": {
+    "section": 303,
+    "scope": "verification/sections/303-preparation/scope.json",
+    "status": "implementation_not_yet_completed",
+    "functional_progress_claimed": false
+  }
+}

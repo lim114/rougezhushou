@@ -1,0 +1,90 @@
+{
+  "section": 454,
+  "kind": "functional_section",
+  "title": "敌人机制地图统一导航与说明精简",
+  "new_capability": "七类敌人机制和五类固定地图接入主资料窗，支持逐级返回、保留阅读与格子选择，关联敌人可返回对应敌人页。精简地图、事件、作战和机制页面的重复说明，来源与适用范围收进“资料说明”。",
+  "passed": true,
+  "passed_scope": "Native tests use real MainWindow factories, seven exact mechanisms and five maps. Legacy node catalogue does not bind ro6_b_7 and ro6_t_16; these use direct shared fixed-stage factories. Root map-binding chain retains section453 evidence.",
+  "limitations": "后续：事件材料与反查、目录和完整工作区统一，首次打开高度问题，视频外观细节与识别覆盖、准确率、耗时。",
+  "unit_tests_run": 49,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/454-enemy-navigation/navigation-final/results.json",
+      "process": "verification/sections/454-enemy-navigation/navigation-final/process.json",
+      "tests_run": 6,
+      "later_unrelated_test_assertion_change": [
+        "tests/test_battle_overview_sections_review.py"
+      ],
+      "product_and_executed_tests_unchanged": true
+    },
+    {
+      "result": "verification/sections/454-enemy-navigation/standalone-final/results.json",
+      "process": "verification/sections/454-enemy-navigation/standalone-final/process.json",
+      "tests_run": 21,
+      "later_unrelated_test_assertion_change": [
+        "tests/test_battle_overview_sections_review.py"
+      ],
+      "product_and_executed_tests_unchanged": true
+    },
+    {
+      "result": "verification/sections/454-enemy-navigation/copy-final2/results.json",
+      "process": "verification/sections/454-enemy-navigation/copy-final2/process.json",
+      "tests_run": 19,
+      "later_unrelated_test_assertion_change": [],
+      "product_and_executed_tests_unchanged": true
+    },
+    {
+      "result": "verification/sections/454-enemy-navigation/map-final2/results.json",
+      "process": "verification/sections/454-enemy-navigation/map-final2/process.json",
+      "tests_run": 2,
+      "later_unrelated_test_assertion_change": [],
+      "product_and_executed_tests_unchanged": true
+    },
+    {
+      "result": "verification/sections/454-enemy-navigation/guest-source-isolated/results.json",
+      "process": "verification/sections/454-enemy-navigation/guest-source-isolated/process.json",
+      "tests_run": 1,
+      "later_unrelated_test_assertion_change": [],
+      "product_and_executed_tests_unchanged": true
+    }
+  ],
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/454-enemy-navigation/native-final2/window.json",
+      "unique_checks": 147
+    }
+  },
+  "source_sha256": {
+    "rouge/battle_enemy_readers.py": "8100b0d9212533b6e45c5972b14352a6f96c8c80781c6dd05a3a82b23d22713a",
+    "rouge/current_battle_view.py": "45d9c86255ad76d1428da6454f4c976db07e794b78eea1d787e20daae3226e58",
+    "rouge/current_boss_documents_view.py": "d166d1c221bde66e23110845edc03c91b412a3ac7654cfe2ca1f3659e5e1d6cd",
+    "rouge/current_elbert_view.py": "74528e9f58f5b0829cc25f1a87118c0e8facb191662ce7bfae7c92eff1fd6052",
+    "rouge/current_event_battles_view.py": "2bdf54b0338f37a0f42dc7fe5c5c002723f43691e824da6820f1fff38fb52b58",
+    "rouge/current_hanko_view.py": "100d67c2a4669dda3b2737b8155fdf2254860f6a898ee84ab298ff71808fc754",
+    "rouge/current_map_position_view.py": "cd41130a2c2440f862621750e927249ca6b068b4e1b9e3ad1add2be12ce05a36",
+    "rouge/current_node_readers_view.py": "84f444beffe10f9c55652a5596f14dc2d8e3704f3f406268539f183d87460167",
+    "rouge/current_sun_boss_view.py": "1b5826638598f45d6a487ee6346e5196ad29dd6e837a65b03cf6bffa6284e183",
+    "rouge/documented_event_flow_view.py": "73fe7f09e71a6a406b18d6774af2aaa73d9a46f378dcb89cbea122b0fc991aae",
+    "rouge/guest_mechanism_view.py": "dc9801f7a15bcf502770196f40df52976f78d66d96291ea4f5a333fe6768a018",
+    "rouge/mechanism_reader_header.py": "e093ead7069afc43061f514b2d7901062ffa2a6a03cc72dcf54981b426f8850a",
+    "rouge/mechanism_reading.py": "6e768f96dbb259ecdabd7d982d7c3c69da7851e288280c9fd94538b1c004f782",
+    "rouge/player_map.py": "1495adbc6274ac2587d90702d590fc4b6e37f430b314a33b4462163625010051",
+    "rouge/player_overview.py": "b68289f87a55d9d4adf7f4f3f8061022e65a94fea073b4eb3453bad60746fa0a",
+    "rouge/player_reference_links.py": "2856dc846065ffbc882ad466d5aa72ab48979fc410a2f180e585f3cd7fdfcb9f",
+    "rouge/player_reference_window.py": "4ebc736fd87aea6938f9e9e1a051d820b1d4a7d98623cf99c248476352b32977",
+    "rouge/reference_copy.py": "3045d481b7bd61f31e6b61238d53eed0555b6c727c44a8908501ec9423f2cf95",
+    "tests/test_battle_overview_sections_review.py": "79ecfd05e2b5268687993eaed92ed5bfb071653aec89b775b3deb138dbbb62bd",
+    "tests/test_enemy_navigation_454.py": "fe9c92ed193a118afa8f975ec681e847621010836263d68b2d6404abd64e9c6d",
+    "tests/test_guest_readers_review.py": "cf89a4904a415ff78379fcd9141cd8e53aa0fc1f17ae9ff177ce35b6b78690fa",
+    "tests/test_map_reader_host_452.py": "1c660dcea3fd47c65d40bef19315068d921df150a10330f7fc4cdf6571d78cdf",
+    "tests/test_mechanism_reading_449.py": "4a8a3854fc838b8772ccf40b13cb853d68b3b20a243bd411b7cce8b4874d20dc",
+    "tests/test_reference_copy_454.py": "4ee3723f70289c775175967b808a84357acb685d9735e06f331df97e5b83d9e0"
+  },
+  "source_review": "verification/sections/454-enemy-navigation/source-review.json",
+  "actual_local_test_window": "verification/sections/454-enemy-navigation/live-window-final/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T15:06:05.733990+00:00"
+}

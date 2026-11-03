@@ -1,0 +1,77 @@
+{
+  "format_version": 2,
+  "status": "AUTHOR_SOURCE_TRACES_FORMAL_REREVIEW_PENDING",
+  "formal_original": {
+    "path": "/workspace/.continuation/full095-regression-formal-source-review/source-only-formal-review095.json",
+    "bytes": 27697,
+    "sha256": "a9926ba30f5527f0905453e06a99fd34af6f808cf743b2d7a3d69c552516ec8c"
+  },
+  "blockers": {
+    "S3": {
+      "predicate": "global_output_plan",
+      "lines": {
+        "line": 297,
+        "end_line": 338
+      },
+      "counterexample": "ui.console_log_path = context_start",
+      "reason": "Both enter canonical path map; canonical value cardinality must equal field count. All outputs are also checked against canonical immutable inputs and runtime package input paths.",
+      "static_conditions": [
+        "len(set(canonical.values())) == len(canonical)",
+        "inputs.intersection(canonical.values())",
+        "runtime_plan = global_output_plan"
+      ],
+      "runtime_counterexample_executed": false
+    },
+    "S4": {
+      "predicate": "actual_exit_code + require_primary_executions + execution_plan",
+      "lines": {
+        "line": 84,
+        "end_line": 127
+      },
+      "counterexample": "JSON0 with no physical status, or Python -c with bound runner only later in argv",
+      "reason": "Every one of eight rows requires full_ref status bound_bytes read and strict physical integer0; exact complete argv/cwd/entry/index must equal source-bound execution plan. UI/saved require actual script at argv[1] and hash-bound reviewed full CLI.",
+      "static_conditions": [
+        "actual_code = int(data.strip())",
+        "actual_exit_code(entry['exit_code_file']",
+        "entry['argv'] == contract['argv']",
+        "selected_script = wine_argument_path(argv[1]"
+      ],
+      "runtime_counterexample_executed": false
+    },
+    "S5": {
+      "predicate": "source_map + actual_ui_receipt",
+      "lines": {
+        "line": 178,
+        "end_line": 203
+      },
+      "counterexample": "before=after={UNBOUND_SOURCE_PENDING:null}",
+      "reason": "source_map rejects null digest shape first; exact key set and true maintained subset are required, then direct maintained[name] equality. Exact own selector is separately source-reviewed, not inferred from count.",
+      "static_conditions": [
+        "source_map(before)",
+        "expected_keys <= set(maintained)",
+        "before[name] == maintained[name]",
+        "exact_source_review(own["
+      ],
+      "runtime_counterexample_executed": false
+    },
+    "S7": {
+      "predicate": "archive_binding",
+      "lines": {
+        "line": 133,
+        "end_line": 195
+      },
+      "counterexample": "extra physical regular file absent from MF and Git index, wrong closure count, or symlink entry",
+      "reason": "Read-only actual physical regular-file set must exactly equal MF member set plus MF; closure archive_files has strict int equality; lstat rejects every symlink/nonregular entry; old index/payload hash gates remain.",
+      "static_conditions": [
+        "physical == expected_physical",
+        "type(closure['archive_files']) is int",
+        "stat.S_ISLNK(mode)",
+        "set(staged) == names"
+      ],
+      "runtime_counterexample_executed": false
+    }
+  },
+  "runtime_counterexamples_executed": false,
+  "formal_v2_source_gate_passed": false,
+  "project_calls": 0
+}

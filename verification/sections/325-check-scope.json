@@ -1,0 +1,21 @@
+{
+  "section": 325,
+  "passed": true,
+  "initial_59_receipt": "verification/sections/325-necessary-attempt1/process.json",
+  "initial_59_passed": true,
+  "later_runtime_fix": "Marker contradiction does not override a known insufficient payment; marker conflict only applies to curiosity, not informer.",
+  "later_new_boundary_method": 1,
+  "final_affected17_receipt": "verification/sections/325-necessary-attempt2/process.json",
+  "final_affected_methods_passed": 17,
+  "other43_unchanged_module_methods_reused_not_rerun": true,
+  "only_changed_files_since_initial59": [
+    "rouge/current_sand_reference.py",
+    "scripts/verify_current_sand_window_325.py",
+    "tests/test_current_sand_reference_325.py"
+  ],
+  "native_initial_failure": "Fixture used variable context for both saved old calculator state and local declared conditions, comparing different objects.",
+  "native_correction": "Rename only local declared_context; preserve all state comparisons and original error.",
+  "native_attempt2_passed_before_final_boundary_fix": true,
+  "final_native_attempt3_passed": true,
+  "full_suite_rerun": false
+}

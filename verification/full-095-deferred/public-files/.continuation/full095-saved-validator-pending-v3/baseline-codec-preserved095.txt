@@ -1,0 +1,82 @@
+def graph(value):
+    nodes, queue, aliases = [], [], {}
+
+    def allocate(item):
+        kind = type(item)
+        if kind in (dict, list, tuple) and id(item) in aliases:
+            return aliases[id(item)]
+        index = len(nodes)
+        nodes.append(None)
+        queue.append((index, item))
+        if kind in (dict, list, tuple):
+            aliases[id(item)] = index
+        return index
+
+    root = allocate(value)
+    while queue:
+        index, item = queue.pop()
+        kind = type(item)
+        if kind in (type(None), bool, int, str):
+            nodes[index] = {'type': kind.__name__, 'value': item}
+        elif kind is float:
+            nodes[index] = {'type': 'float', 'hex': item.hex()}
+        elif kind is bytes:
+            nodes[index] = {'type': 'bytes', 'hex': item.hex()}
+        elif kind is dict:
+            nodes[index] = {'type': 'dict', 'items': [
+                [allocate(key), allocate(child)] for key, child in item.items()]}
+        elif kind in (list, tuple):
+            nodes[index] = {'type': kind.__name__, 'items': [
+                allocate(child) for child in item]}
+        else:
+            raise TypeError(kind.__name__)
+    return {'schema': 'flat-typed-graph-v1', 'root': root, 'nodes': nodes}
+
+def decode(encoded):
+    check(encoded['schema'] == 'flat-typed-graph-v1', 'native schema')
+    nodes = encoded['nodes']
+    values, visiting = {}, set()
+    stack = [(encoded['root'], False)]
+    while stack:
+        index, finish = stack.pop()
+        check(type(index) is int and 0 <= index < len(nodes), 'node reference')
+        if index in values:
+            continue
+        node = nodes[index]
+        kind = node['type']
+        if kind in ('NoneType', 'bool', 'int', 'str'):
+            types = {'NoneType': type(None), 'bool': bool, 'int': int, 'str': str}
+            check(type(node['value']) is types[kind], 'native scalar type')
+            values[index] = node['value']
+        elif kind == 'float':
+            value = float.fromhex(node['hex'])
+            check(math.isfinite(value) and value.hex() == node['hex'], 'float hex')
+            values[index] = value
+        elif kind == 'bytes':
+            values[index] = bytes.fromhex(node['hex'])
+            check(values[index].hex() == node['hex'], 'bytes hex')
+        else:
+            check(kind in ('dict', 'list', 'tuple'), 'container type')
+            if not finish:
+                check(index not in visiting, 'acyclic native graph')
+                visiting.add(index)
+                stack.append((index, True))
+                children = ([child for pair in node['items'] for child in pair]
+                            if kind == 'dict' else node['items'])
+                stack.extend((child, False) for child in reversed(children)
+                             if child not in values)
+            else:
+                visiting.remove(index)
+                if kind == 'dict':
+                    values[index] = {values[key]: values[child]
+                                     for key, child in node['items']}
+                else:
+                    items = [values[child] for child in node['items']]
+                    values[index] = tuple(items) if kind == 'tuple' else items
+    result = values[encoded['root']]
+    check(graph(result) == encoded, 'complete type/order/alias roundtrip')
+    return result
+
+def encoded_json(value):
+    return json.dumps(value, ensure_ascii=False, allow_nan=False,
+                      separators=(',', ':'))

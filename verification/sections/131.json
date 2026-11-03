@@ -1,0 +1,49 @@
+{
+  "section": 131,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:29:39.122335+08:00",
+  "prior_commit": "72b5ddd3cdab5ba6a0ddf6ddc61743f6dd9176d1",
+  "title": "机械师S2破屏与爆炸事件窗口测算",
+  "remaining_project_item": "P2技能时序：机械师S2本体、结构破屏与碰撞",
+  "new_capability": "逐次声明本体或结构体破屏及独立命中秒数，支持未命中、多次同刻、多个窗口，分列破屏数、各来源命中、爆炸条件伤害与原普通攻击参考；复制完整条件。",
+  "acceptance": [
+    "破屏与命中分开",
+    "同刻事件保留",
+    "半开窗口边界",
+    "耗弹与结束保持未知",
+    "原普通攻击参考不改写",
+    "实际窗口错误撤销旧结果"
+  ],
+  "limitations": [
+    "原生碰撞、攻击快照、双方耗弹对应及实际结束仍未知",
+    "不将声明次数限制为弹药参数或计入完整施放和周期"
+  ],
+  "sources": [
+    "rouge/shield_timeline.py",
+    "rouge/reference_dialog.py",
+    "rouge/app.py",
+    "tests/test_shield_timeline_131.py"
+  ],
+  "evidence_reused": [
+    "research/p2-shield-break-reference/NOTE.md",
+    "rouge/shield_break_reference.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 20,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-131/tests.txt",
+    "window_receipt": "verification/section-131/window.json"
+  },
+  "source_sha256": {
+    "rouge/shield_timeline.py": "dd24e2dcbe8f0f64d155f3881dccf031f838f468c89b03e2cc41d7fb1f9aeb1a",
+    "rouge/reference_dialog.py": "85951dad83df3ba0b015d92aa5531c61ca0e3db81510b9d631aec00ecee5d115",
+    "rouge/app.py": "04d4133daa06729d73d5cb1ffe52505dbfc914bd49f88a1ec6b3ec2c52d551d2",
+    "tests/test_shield_timeline_131.py": "7118b3b03c2d265a0e0a1a97affa9ed5a8780ab69e5c1fedc3f0ea95792a30a1"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

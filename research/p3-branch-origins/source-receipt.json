@@ -1,0 +1,161 @@
+{
+  "title": "条件分支来源与全部阶段动作检视",
+  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "sources": {
+    "topic": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244
+    },
+    "character": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251
+    },
+    "levels": "Every68 level receipt URL/hash retained in branch-origin-reference.json"
+  },
+  "coverage": {
+    "stage_identities": 105,
+    "unique_levels": 68,
+    "branches": 151,
+    "phases": 160,
+    "actions": 203,
+    "spawn_actions": 194,
+    "activation_actions": 9,
+    "actual_empty_phases_in_fixed_version": 0,
+    "branches_with_explicit_parameter_reference": 136,
+    "parameter_references": 147,
+    "branches_with_unproven_origin": 15,
+    "all_activation_aliases_unique": true
+  },
+  "evidence_boundaries": [
+    "Only branch_id or explicit .branch_id/@branch_id parameter valueStr equality names the corresponding branch configuration.",
+    "136 branches/147 direct field references are configuration references; actual callback/trigger/frame remainunknown.",
+    "Three published device rules are applied only to exact original IDs, integer instance/skill level1 and fixed PHASE_0 declarations; other IDs/levels remainunknown.",
+    "Model terminal/midpoint docs never automatically apply to _a/_b cloned IDs, even if labels or prefab resemblance match.",
+    "Nine ACTIVATE_PREDEFINED actions map to unique explicit alias objects; no routeIndex or IDsuffix position inference.",
+    "SPAWN branch positions/routes stayNone; stages/phase catalog is reused without duplicate query wrappers or changingenemy inheritance."
+  ],
+  "online_observation": {
+    "observed_at": "2026-10-12",
+    "documentation_is_actual_trigger_proof": false,
+    "rules": {
+      "trap_219_fttreant": {
+        "entity_id": "trap_219_fttreant",
+        "documented_instance_levels": [
+          1
+        ],
+        "documented_skill_levels": [
+          1
+        ],
+        "source": {
+          "url": "https://m.prts.wiki/w/盾与墙",
+          "observed_revision": "421199",
+          "facts_lines": [
+            72,
+            77
+          ]
+        },
+        "trigger_reference": "攻击范围内出现我方干员时，按关卡配置召唤树盾或树墙，使召出敌人生命比例对应自身，随后强制击杀自身。",
+        "callback_or_frame_verified": false
+      },
+      "trap_086_larva": {
+        "entity_id": "trap_086_larva",
+        "documented_instance_levels": [
+          1
+        ],
+        "documented_skill_levels": [
+          1
+        ],
+        "source": {
+          "url": "https://m.prts.wiki/w/汲营枯枝",
+          "observed_revision": null,
+          "read_method": "本次搜索结果正文包含完整机制与精确trap_086_larva模型路径；直接页打开失败，不声称页脚版本固定"
+        },
+        "trigger_reference": "装置被摧毁，或者关卡内所有预配置敌方单位被击倒时，在自身位置尝试按预设路径召出食腐使徒；若未先被摧毁，召出后撤退自身。",
+        "callback_or_frame_verified": false
+      },
+      "trap_323_shsbox": {
+        "entity_id": "trap_323_shsbox",
+        "documented_instance_levels": [
+          1
+        ],
+        "documented_skill_levels": [
+          1
+        ],
+        "source": {
+          "url": "https://m.prts.wiki/w/箱型恶笼草",
+          "observed_revision": "410406",
+          "facts_lines": [
+            60,
+            63
+          ],
+          "reuse": "209本轮实际资料观察"
+        },
+        "trigger_reference": "受击后尝试按预设路径召出恶笼草；成功召出后装置无原因退场。装置与召出敌人为不同目标。",
+        "callback_or_frame_verified": false
+      }
+    },
+    "unapplied_documents": [
+      {
+        "url": "https://prts.wiki/w/“终点”",
+        "facts_lines": [
+          76,
+          78
+        ],
+        "reason": "公开模型召唤说明不自动应用于关卡内_a/_b等不同原ID；只有显式原件字段同值引用，实际触发保持未知。"
+      },
+      {
+        "url": "https://prts.wiki/w/中点",
+        "facts_lines": [
+          84,
+          86
+        ],
+        "reason": "来源页面为一般模型说明，不据prefab或ID前缀把所有场景变体视作精确同实体/同级别。"
+      }
+    ],
+    "failed_open_urls": [
+      "https://m.prts.wiki/w/汲营枯枝",
+      "https://m.prts.wiki/w/“汲营枯枝”",
+      "https://m.prts.wiki/w/终点",
+      "https://m.prts.wiki/w/狂躁异质裂兽"
+    ],
+    "license_note": "游戏原文本归鹰角及关联公司。PRTS其它内容CC BY-NC-SA 4.0；原数据全库许可未另行核实。"
+  },
+  "verification": {
+    "tests": 40,
+    "passed": 40,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_tests": 10,
+    "platform": "Windows Python/Qt temporary fixtures and actual project window",
+    "selectors": [
+      "tests.test_branch_reference",
+      "tests.test_battle_reward_planning",
+      "tests.test_node_catalog_view",
+      "tests.test_node_map_navigation.NodeMapNavigationTests",
+      "tests.test_supplemental_battle_view_142"
+    ],
+    "output": ".cache/batch209-400/p3/branch-origins/necessary-tests.txt",
+    "generator_object_exact": true,
+    "scope_preparation_correction": "Initial namespace matcher missed3 explicit talent@branch_id fields; literal audit identified exact keys and extractor now preserves that parameter namespace without interpreting its script.",
+    "actual_game_or_chat": false,
+    "private_state_used": false,
+    "writes_run": false,
+    "window_receipt": "verification/section-211/window.json",
+    "actual_original_window_verified": true
+  },
+  "baseline_source_sha256": {
+    "rouge/battle_view.py": "7e4977f54a5a7e74faa751e900cf4d5d2ed937b5222b297710bfa8d4cd89af94"
+  },
+  "limits": [
+    "同值branch_id与唯一alias仅证明配置引用，不证明实际触发。",
+    "不根据参数名Killed、summon或数值推断回调、阶段或绝对时钟。",
+    "敌人资料引用不证明已创建，原件字段不完整时保留来源未知。",
+    "预置来源位置与激活对象位置是资料坐标；SPAWN的路线数组和实际出生位置仍未知。",
+    "Actual branch callback, absolute clock, phase choice/loop, enemyeffective inherited script and routearray choice remainunknown.",
+    "No new independent map landmark calibration; calibratedimage constraints inherited from existing projection."
+  ],
+  "integrated_section": 211
+}

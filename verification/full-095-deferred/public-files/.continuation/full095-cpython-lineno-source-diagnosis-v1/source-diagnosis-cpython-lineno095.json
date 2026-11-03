@@ -1,0 +1,276 @@
+{
+  "status": "SOURCE_ONLY_PROVEN_NATIVE_LINE_TABLE_HOTSPOT_NOT_NONTERMINATION",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "project_calls": 0,
+  "Wine_executions": 0,
+  "tests_executed": 0,
+  "DLL_executions": 0,
+  "target_bytecode_executions": 0,
+  "process_attach_or_signal_or_mutations": 0,
+  "tracked_edits": 0,
+  "Git_commands": 0,
+  "inputs": {
+    "DLL": {
+      "path": "/workspace/.compat/python-windows/package/tools/python312.dll",
+      "bytes": 6945272,
+      "sha256": "9a0e3435aaa680d868150f87ab3e388ad2eebc22f87e036155c7b4eda8cd2120"
+    },
+    "runner": {
+      "path": "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py",
+      "bytes": 1184276,
+      "sha256": "83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee"
+    },
+    "root_native_sample": {
+      "path": "/workspace/.continuation/root-full095-readonly-native-location-v1.log",
+      "bytes": 1438,
+      "sha256": "8a155c46cc49f398d1c79e37a809110c0280d8e773cdb10ee006ae322350e38e"
+    }
+  },
+  "official_sources": {
+    "Objects/codeobject.c": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Objects/codeobject.c",
+      "tag": "v3.12.10",
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Objects-codeobject.c",
+      "bytes": 75495,
+      "sha256": "60365e71ac9fc8411c546f86de3a1f49b6190ebb40b893ed31c6ff0b2cb5493f"
+    },
+    "Objects/frameobject.c": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Objects/frameobject.c",
+      "tag": "v3.12.10",
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Objects-frameobject.c",
+      "bytes": 48493,
+      "sha256": "423f379926896ee9aba422ebdd18adf02ff9e09f8b176819850a21c726711ea7"
+    },
+    "Python/frame.c": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Python/frame.c",
+      "tag": "v3.12.10",
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Python-frame.c",
+      "bytes": 5657,
+      "sha256": "38802bde6c212d3ffdb8f9e92430df3ca510e6a95a8c91d3312f77d0817752fa"
+    },
+    "Python/instrumentation.c": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Python/instrumentation.c",
+      "tag": "v3.12.10",
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Python-instrumentation.c",
+      "bytes": 72632,
+      "sha256": "30b307969f2166f1bbb6d79e1e1d085c972cd46849ad3cb1495afef8739ae6ed"
+    },
+    "Include/cpython/code.h": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Include/cpython/code.h",
+      "tag": "v3.12.10",
+      "path": "/workspace/.continuation/full095-cpython-lineno-source-diagnosis-v1/Include-cpython-code.h",
+      "bytes": 16188,
+      "sha256": "d11649dd957102deb64de35f078f061735343f5c9a5c9c429a09722cd6a2931c"
+    }
+  },
+  "PE_exports": {
+    "named_export_count": 1706,
+    "selected": [
+      {
+        "name": "PyCode_Addr2Line",
+        "rva": "0x7a98",
+        "ordinal": 76,
+        "forwarder": false
+      },
+      {
+        "name": "PyFrame_GetLineNumber",
+        "rva": "0x7a60",
+        "ordinal": 369,
+        "forwarder": false
+      },
+      {
+        "name": "PyInterpreterState_Head",
+        "rva": "0x273164",
+        "ordinal": 441,
+        "forwarder": false
+      },
+      {
+        "name": "PyInterpreterState_ThreadHead",
+        "rva": "0x1a3768",
+        "ordinal": 445,
+        "forwarder": false
+      },
+      {
+        "name": "PyThreadState_GetFrame",
+        "rva": "0x68e4",
+        "ordinal": 801,
+        "forwarder": false
+      },
+      {
+        "name": "PyThreadState_Next",
+        "rva": "0x1a3778",
+        "ordinal": 806,
+        "forwarder": false
+      },
+      {
+        "name": "PyUnstable_InterpreterFrame_GetLine",
+        "rva": "0x7a7c",
+        "ordinal": 998,
+        "forwarder": false
+      },
+      {
+        "name": "_PyCode_CheckLineNumber",
+        "rva": "0x7af4",
+        "ordinal": 1151,
+        "forwarder": false
+      },
+      {
+        "name": "_PyRuntime",
+        "rva": "0x624000",
+        "ordinal": 1397,
+        "forwarder": false
+      }
+    ]
+  },
+  "native_samples_supplied_by_root": {
+    "RVA": [
+      "0x7b23",
+      "0x7b72"
+    ],
+    "both_inside": "_PyCode_CheckLineNumber at RVA 0x7af4",
+    "assembly_identity": [
+      "0x7a60 f_lineno field +0x28; when zero calls 0x7a7c",
+      "0x7a7c computes code-unit offset; tail jumps to PyCode_Addr2Line 0x7a98",
+      "0x7a98 initializes co_linetable, firstlineno and address-range stack fields",
+      "0x7ae2 calls _PyCode_CheckLineNumber 0x7af4",
+      "0x7b19-0x7b23 decodes (byte>>3)&15 line-delta class",
+      "0x7b52-0x7b63 copies ar_end to ar_start and advances ar_end by (byte&7+1)*2",
+      "0x7b66-0x7b76 increments lo_next and skips continuation bytes until high-bit marker or limit",
+      "0x7b78-0x7b7a compares ar_end to requested instruction offset and repeats"
+    ],
+    "Root_sample_scope": "Existing read-only diagnostic consumed only; this author did not attach/sample the process."
+  },
+  "source_chain": [
+    {
+      "source": "Objects/frameobject.c",
+      "lines": [
+        40,
+        59
+      ],
+      "fact": "frame_getlineno calls PyFrame_GetLineNumber; cached nonzero f_lineno bypasses lookup, otherwise InterpreterFrame_GetLine."
+    },
+    {
+      "source": "Python/frame.c",
+      "lines": [
+        163,
+        167
+      ],
+      "fact": "LASTI times code-unit size feeds PyCode_Addr2Line."
+    },
+    {
+      "source": "Objects/codeobject.c",
+      "lines": [
+        851,
+        880
+      ],
+      "fact": "Every ordinary Addr2Line lookup initializes a fresh range from the start of the co_linetable."
+    },
+    {
+      "source": "Objects/codeobject.c",
+      "lines": [
+        886,
+        898
+      ],
+      "fact": "CheckLineNumber traverses forward until ar_end > lasti, then backwards only if needed."
+    },
+    {
+      "source": "Objects/codeobject.c",
+      "lines": [
+        989,
+        1005
+      ],
+      "fact": "advance increases bytecode address by at least two, increments lo_next, checks limit, and skips continuation bytes."
+    },
+    {
+      "source": "Objects/codeobject.c",
+      "lines": [
+        1205,
+        1221
+      ],
+      "fact": "co_lines iterator merges consecutive same-line ranges; a small co_lines count does not imply a short raw table."
+    },
+    {
+      "source": "Python/instrumentation.c",
+      "lines": [
+        1157,
+        1163
+      ],
+      "fact": "Trace LINE temporarily assigns f_lineno then resets zero; a generic cache cannot assume arbitrary tracing/setter behavior is absent."
+    }
+  ],
+  "runner_SOURCE_only_compilation": {
+    "actual_compiler": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "not_Windows_bytecode_evidence": true,
+    "module_code_bytes": 257412,
+    "module_linetable_bytes": 529240,
+    "raw_line_table_header_count": 68339,
+    "merged_co_lines_count": 2647,
+    "line3_ranges": [
+      [
+        6,
+        79636,
+        3
+      ]
+    ],
+    "long_source_lines": [
+      {
+        "line": 3,
+        "bytes": 416521,
+        "prefix": "BINDING095 = {'status': 'ROOT_BOUND_ACTUAL095_AND_ACTUAL94_BASELINE', "
+      },
+      {
+        "line": 46,
+        "bytes": 75522,
+        "prefix": "    _SOURCE090={'rouge/__init__.py': '3f046774f9500f00b34d7ff71cd76541"
+      },
+      {
+        "line": 3413,
+        "bytes": 348043,
+        "prefix": "            rows090=[{'section': 86, 'pair_id': 'active:char_4228_clos"
+      },
+      {
+        "line": 3546,
+        "bytes": 48576,
+        "prefix": "            saved89_states090=[{'saved_sequence': 19, 'label': 'None u"
+      },
+      {
+        "line": 3547,
+        "bytes": 13903,
+        "prefix": "            expected89_contract090={(row['saved_sequence'],row['use_ru"
+      }
+    ],
+    "origin_function_lines": [
+      1167,
+      1182
+    ],
+    "f_lineno_reads_per_matching_runner_frame": 3,
+    "f_lineno_assignment_statements_in_runner": [],
+    "profile_scope": "On every project-function call, including non-targeted calls, _origin095 walks runner ancestors and computes f_lineno up to three times per matching ancestor. It keeps overwriting origin until matching <module> then breaks."
+  },
+  "conclusion": {
+    "proven": "The two actual native RIP samples are inside CPython line-table traversal. The external profiler repeatedly requests an expensive runner-module line lookup. This is a source-supported instrumentation overhead candidate.",
+    "not_proven": [
+      "Nontermination or corrupt bytecode/linetable",
+      "All wall time attributable to this hotspot",
+      "Qt callback corruption or product failure",
+      "Actual cache speedup or UI PASS",
+      "Windows code bytes/table counts equal Linux SOURCE compilation"
+    ],
+    "finite_valid_table_reason": "For a valid table and in-range lasti, ar_end monotonically advances by at least two, lo_next advances toward a finite limit. Native sampling inside the loop alone cannot establish a stuck single invocation."
+  },
+  "minimal_proposed_external_instrumentation_only_change": {
+    "proposal_not_applied_or_runtime_verified": true,
+    "cache_key": "(id(cursor.f_code), cursor.f_lasti), two integers; do not hash the potentially huge code object.",
+    "cache_value": "(code, original native cursor.f_lineno), holding code strongly to prevent code-id reuse; preserve None without coercion.",
+    "miss": "Read f_lineno exactly once; cache the returned native value; use the same value in origin and source lookup.",
+    "hit": "Use the previously observed native value for the same immutable code object and bytecode offset.",
+    "preserve": [
+      "Full stack/parent walk, matching filenames, outermost module selection and phase classification",
+      "All legacy whole assertions, product code, UI operations, input vectors and return/native evidence",
+      "Original failure evidence and fresh exact execution/observation after reviewed retry"
+    ],
+    "applicability_boundary": "This harness does not set f_lineno, runner frames have no trace callback, and project local trace disables line/opcode events. This narrow source scope must stay explicit; do not export the cache as a generic debugger replacement.",
+    "alternative_not_required": "A one-time co_lines index could avoid even first misses, but requires a stronger exact f_lineno/None/tracing-equivalence proof and is not proposed as the minimum change."
+  }
+}

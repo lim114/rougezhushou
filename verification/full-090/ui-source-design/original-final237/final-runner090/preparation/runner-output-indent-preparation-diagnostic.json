@@ -1,0 +1,9 @@
+{
+  "format_version": 1,
+  "product_API_helper_formatter_Qt_Wine_calls": 0,
+  "failure": "Stdlib ast.parse rejected generated runner with IndentationError: unexpected indent at final print(json.dumps(receipt,ensure_ascii=False)); the old final receipt write is inside an indented finally block.",
+  "source": "prepare-final-runner-before-output-indent-correction.py",
+  "correction": "Indent the additive lossless state-output sink to match the existing finally body and insert before the entire old receipt-write line, preserving that whole old line exactly.",
+  "failed_product_or_window_calls": 0,
+  "original_old_and_pending_runner_modified": false
+}

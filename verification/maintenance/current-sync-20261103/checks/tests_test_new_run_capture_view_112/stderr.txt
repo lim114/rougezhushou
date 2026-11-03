@@ -1,0 +1,20 @@
+test_new_run_clears_current_snapshot_and_preserves_real_account_file (tests.test_new_run_capture_view_112.NewRunCaptureView112Tests.test_new_run_clears_current_snapshot_and_preserves_real_account_file) ... ok
+test_new_valid_sample_fills_only_new_run_reading_after_reset (tests.test_new_run_capture_view_112.NewRunCaptureView112Tests.test_new_valid_sample_fills_only_new_run_reading_after_reset) ... FAIL
+test_old_epoch_and_pre_reset_frame_cannot_repopulate_cleared_view (tests.test_new_run_capture_view_112.NewRunCaptureView112Tests.test_old_epoch_and_pre_reset_frame_cannot_repopulate_cleared_view) ... ok
+test_reset_before_first_sample_and_repeated_reset_remain_usable (tests.test_new_run_capture_view_112.NewRunCaptureView112Tests.test_reset_before_first_sample_and_repeated_reset_remain_usable) ... ok
+
+======================================================================
+FAIL: test_new_valid_sample_fills_only_new_run_reading_after_reset (tests.test_new_run_capture_view_112.NewRunCaptureView112Tests.test_new_valid_sample_fills_only_new_run_reading_after_reset)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_new_run_capture_view_112.py", line 127, in test_new_valid_sample_fills_only_new_run_reading_after_reset
+    self.sample(observed)
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_new_run_capture_view_112.py", line 51, in sample
+    self.assertEqual(observation,before)
+AssertionError: {'pag[611 chars]': {'epoch': 1, 'generation': 2, 'updates_current_view': True}} != {'pag[611 chars]': {'epoch': 1, 'generation': 2}}
+Diff is 1218 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 4 tests in 5.385s
+
+FAILED (failures=1)

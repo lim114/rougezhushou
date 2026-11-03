@@ -1,0 +1,86 @@
+{
+  "kind": "SECTION110_TEST_CONTRACT_CORRECTION_INDEPENDENT_SOURCE_ONLY_REVIEW",
+  "verdict": "NO_SOURCE_BLOCKER_RUNTIME_PENDING",
+  "reviewer": "/root/resume097_account_io/full100_gui_producer_source_v2/training_fixture_inventory",
+  "packet": "/workspace/.continuation/section110-tests-contract-correction-source-v1",
+  "manifest": {
+    "bytes": 795,
+    "sha256": "eb48bde13174326434d7b14cd75b53cbbf918c273f1798583134f61217314498"
+  },
+  "verified_payloads": [
+    {
+      "path": "README.md",
+      "bytes": 1008,
+      "sha256": "da2e41fd6911ebd091ae3cc00bab1acccd3fbf7671121d1bbdc3d2143fc5b30e"
+    },
+    {
+      "path": "exact-diff.patch",
+      "bytes": 7208,
+      "sha256": "145e824a90bdf2197dfb4fca53566029a6e7bf1b63a11d10497a39586ef68aab"
+    },
+    {
+      "path": "local-test-transport.json",
+      "bytes": 16423,
+      "sha256": "8cafb56afc0c2d3bbf783d015f6501d2c2319e4ecdc8d868edb1d8921f946471"
+    },
+    {
+      "path": "test_permanent_empty_target_110.py",
+      "bytes": 24021,
+      "sha256": "3c4413140bf8d5af928b972399b0f63ae8056817a29f45d61725b6ea3dbbac6f"
+    }
+  ],
+  "exact_checks": {
+    "five_unique_blocks_forward_and_inverse_byte_exact": true,
+    "original_sealed_test": "/workspace/.continuation/section110-permanent-release-candidate-source-v2/test_permanent_empty_target_110.py",
+    "before_bytes": 21693,
+    "before_sha256": "8100060939608823b3df84dbfa3a0195f5d7e23e6145f3c44acb623a9a364f5c",
+    "after_bytes": 24021,
+    "after_sha256": "3c4413140bf8d5af928b972399b0f63ae8056817a29f45d61725b6ea3dbbac6f",
+    "current_repository_test_already_equals_candidate": true,
+    "test_methods": 23,
+    "assertion_calls": 100,
+    "other_test_methods_AST_identical": 19,
+    "renamed_direct_API_method_body_and_assertions_AST_identical": true,
+    "compiled_two_codeobjects_noexec": true,
+    "all_seven_source_refs_match": true,
+    "production_change": false
+  },
+  "source_contracts": [
+    {
+      "source": "rouge/timing.py:388; rouge/operator_engine.py:1617",
+      "finding": "Continuous annotate_result returns before frame-only shared-clock field. S1 phase_clock_unbound remains True; corrected test checks continuous field absence and frame False."
+    },
+    {
+      "source": "rouge/offline_scope.py:7; rouge/relics.py:90; tests/test_offline_scope_030.py:15",
+      "finding": "All event_sp/received_sp rules are public reference-only. HORN and old event tables cannot activate callbacks. Corrected comparisons preserve identical own-supply baselines, SP fields, complete components and totals; they assert sp_events absence explicitly."
+    },
+    {
+      "source": "rouge/relics.py:238; rouge/reporting.py:944",
+      "finding": "reference_effects, applied=[], reference_only, combat_effects_reference_only and report section relic_combat_reference are existing producer fields and supported by offline_scope_030. Missing HORN callbacks leave positive existing attack-charge initial time, rather than unknown."
+    },
+    {
+      "source": "corrected direct event_charge method",
+      "finding": "Renamed/documented as conditional direct outgoing-release/nextslot reference. Existing body/assertions unchanged; no public callback activation claim, injected rules or mocks."
+    }
+  ],
+  "immutable_failure": {
+    "path": "/workspace/.continuation/resume110-related-linux-v1.log",
+    "bytes": 7702,
+    "sha256": "ffcb02d7034ae88b5fdd304ee71545e42eab3b71023e17ff62e40f4381818f3f"
+  },
+  "failure_summary": "Original first related run: 80 tests, 2 failures, 8 errors. Failure retained; this review did not rerun it. Failed module selector is separately handled by Root.",
+  "historical_review_limitation": {
+    "path": "/workspace/.continuation/section110-permanent-release-independent-source-v1.json",
+    "sha256": "b91be4852a7b4d81a1412a2a6375cb9ce5289d8ff5ca0a9a957205bb23d35a87",
+    "finding": "Earlier Source review missed public callback admission; actual failure constrains the retained historical conclusion."
+  },
+  "execution": {
+    "project_API_tests_helper_codec_Qt_Wine_Git_executed": false,
+    "native_decoded": false,
+    "tracked_writes": false,
+    "future_actual_guard": null,
+    "future_actual_results": null,
+    "product_PASS": false
+  },
+  "next_step": "Root performs actual corrected related/full checks. Source review does not establish runtime success."
+}

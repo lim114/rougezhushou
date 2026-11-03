@@ -1,0 +1,18 @@
+{
+  "status": "AUTHOR_TEST_EXPECTATION_CORRECTED_FROM_ORIGINAL_SOURCE",
+  "attempt": 1,
+  "original_exit_code": 1,
+  "original_log": "author-new-tests-v1.log",
+  "product_failure": false,
+  "incorrect_expectation": "self.assertEqual(gnosis['raw_phase']['parts'][0]['validInGameTag'], 'roguelike')",
+  "original_source_fact": "battle_equip_table.uniequip_004_gnosis.phases[2].parts[0] is DISPLAY/tag null; parts[1] TRAIT/resKey gnosis_equip_3_1_p1/tag roguelike",
+  "corrected_expectation": "self.assertEqual(gnosis['raw_phase']['parts'][1]['validInGameTag'], 'roguelike')",
+  "product_code_changed": false,
+  "prior_source_lookup_diagnostics": [
+    "Read-only rg listed nonexistent data directory; actual data is rouge/data.",
+    "Read-only guessed uniequip_003_amiya3 key raised KeyError; actual selected module is uniequip_002_amiya3.",
+    "Read-only requested absent rouge/phrasing.py; formatter phrase is local in rouge/reporting.py.",
+    "Read-only rg named nonexistent relic-native-rules.json; actual mechanics is rouge/data/relic-mechanics.json."
+  ],
+  "completed_section_increment": 0
+}

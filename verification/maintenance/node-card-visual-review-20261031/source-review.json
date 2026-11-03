@@ -1,0 +1,56 @@
+{
+  "baseline_commit": "0d14332be97c18a2cee38f5095d35f1959c141d2",
+  "changed_source": [
+    {
+      "path": "rouge/player_map_hover.py",
+      "sha256": "77b7f5b29d1290361cd0f70c2cbfbfa0fda1ecba081c1d71c937ab4f65ed8091",
+      "bytes": 10754
+    },
+    {
+      "path": "rouge/player_map.py",
+      "sha256": "d5a95f34e092ba011c04a4e2093608572797d0504fd34e87c6d39689b6c05b48",
+      "bytes": 36313
+    },
+    {
+      "path": "rouge/player_game_map.py",
+      "sha256": "e678d8ba1eb13eb12410097e1dc41e60b6d2c3650068122a263ef0949313c51f",
+      "bytes": 10114
+    },
+    {
+      "path": "rouge/player_map_acceptance.py",
+      "sha256": "a47a8a5ff6840c02b7c84d9c4da13667dc08ce080ff90aa368de3e1cdb7caeab",
+      "bytes": 6307
+    }
+  ],
+  "unchanged_models": [
+    {
+      "path": "rouge/node_catalog.py",
+      "sha256": "5f31cd654df741bfbada56c55c6274cdecc6d85b15dfff71912c885a277c1ce3",
+      "bytes": 37126
+    },
+    {
+      "path": "rouge/player_map_reference.py",
+      "sha256": "3bc1191e35b64aedfb44950f20997e182efbad16549fd15f962e5d579781a8bb",
+      "bytes": 3722
+    },
+    {
+      "path": "rouge/public_node_statistics.py",
+      "sha256": "ab287fb1779e4cba4926b008177bb25f21d5bb1995f7c13d5f646c1cecec61bc",
+      "bytes": 7525
+    },
+    {
+      "path": "rouge/node_statistics_source.py",
+      "sha256": "dfff2dd55e2ff044c62c3bc19bcf9e54036d17043f5f47a0bcf5ec060165164f",
+      "bytes": 1205
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "7380141b503ff75614fc332b2879280fea3b5183c5f31e352b638f4a040ec959",
+      "bytes": 62139
+    }
+  ],
+  "review_scope": "Node hover layout, image painting, native button input, readable limits/source, size used by map/game-bound display; no changed capture, mechanics, matching, or data eligibility.",
+  "REA_scope": "Complete Python source reviewed with runtime validation under REA skill; prior REA bridge/toolbar records retained, no new reverse-analysis coverage claim.",
+  "reuse": "Existing QToolButton input/signals/accessibility, existing event art/identity, existing QPainter patterns in player_toolbar and player_catalog_grid; Qt docs checked, no new dependency or external project code copied.",
+  "rare_guards": "No private-state, identity, freshness or no-duplicate-send guard removed; replaces former independent icon-and-caption layout and repeated game card size with shared sizeHint."
+}

@@ -1,0 +1,513 @@
+{
+  "kind": "SECTION108_ZONE_INPUT_NONAUTHOR_SOURCE_CONTRACT_SCREEN",
+  "status": "CONCRETE_SOURCE_SHAPE_HAZARDS_ACTUAL_OBSERVATIONS_PENDING",
+  "scope": {
+    "stdlib_read_hash_JSON_AST_only": true,
+    "semantic_compile_codeobjects_without_exec": 13,
+    "target_project_helper_codec_API_tests_Qt_Wine_Git_executed_or_imported": false,
+    "native_decoded": false,
+    "private_state_read": false,
+    "tracked_written": false,
+    "candidate_written": false,
+    "product_pass": false,
+    "actual_Source_guard_assumed_or_generated": false
+  },
+  "primary_Source_hazards": [
+    {
+      "name": "truthy_nonmapping_zone_dereference",
+      "source_refs": [
+        "rouge/run_modifiers.py:5-10 validates only outerconfig/squad/difficulty, omittingzone",
+        "rouge/enemy_environment.py:65-85 reaches zone and (zone or {}).get only after selected target and confirmeddifficulty"
+      ],
+      "Source_inference": "Truthy JSON strings/lists/boolTrue/int1/float1.5 have no .get and would raise AttributeError. Falsey values are different: current short-circuit safely substitutes{}. This report does not execute these cases or assert normal OCR emits malformed values.",
+      "actual_evidence_required": "Root real prepare_run/calculate_damage and preview observations under a complete actual Source/CORE guard, recording full result/error/caller before/after."
+    },
+    {
+      "name": "unhashable_zone_identity_membership",
+      "source_refs": [
+        "rouge/enemy_environment.py:86 tests zone.get(id) in zones before multiplying",
+        "rouge/run_modifiers.py:40-53 confirms even grade4 difficulty then calls resolve_enemy"
+      ],
+      "Source_inference": "An object zone with id=[]/{} causes TypeError during dictionary membership. This executes before testing whether rate is nonzero, so grade4 zero-rate still reaches the hazard. Hashable nontext id is different: currently not a known ID and may use explicit main_zone_index fallback.",
+      "scope_limit": "No known ID is synthesized from these values; accepting a source-level fallback is not proof of real identity or game region. No runtime error count is claimed."
+    }
+  ],
+  "old_assertions_explicit": [
+    {
+      "path": "tests/test_enemy_environment.py:10-18",
+      "contract": "Public calculation already accepts zone only{id:zone_1} with no name; grade10 and chosen emergency warrior have known original modifier assertions."
+    },
+    {
+      "path": "tests/test_enemy_environment.py:20-32",
+      "contract": "Real RunState first acceptszone_2/name甜美的伤口 then hidden idNone/name未萌生的摇篮/candidates[1_1,1_2]; existing test asserts preserved main depth via maxHp3869.762. Direct same portal without established main stays maxHp3380 and区域深度尚未确认 pending. These are existing Source assertions, not reexecutedPASS."
+    },
+    {
+      "path": "tests/test_enemy_environment.py:74-86",
+      "contract": "Same public id-only zone_1 is accepted; first-region growth and pinned emergency DEF override are asserted independently of manual defense."
+    },
+    {
+      "path": "tests/test_run_config_validation.py:42-56",
+      "contract": "Explicit falsey nonobjects are rejected for squad/difficulty; None/{} remain absent. That test enumerates only these two fields, so it does not establish zone schema or zone falsey behavior."
+    },
+    {
+      "path": "tests/test_run_state_reliability.py:443-475, especially457-458",
+      "contract": "Saved malformed zone{id:zone_2} without name and zone{id:[],name:public} are rejected/protected; saved guards have a different consumer scope from public calculation."
+    }
+  ],
+  "Source_derived_compatibility_not_existing_testPASS": [
+    {
+      "fact": "Current public zone absence/null/{} and falsey False/0/emptytext/emptylist are safe under selectedtarget+confirmedgrade because (zone or{}) returns{} and ifzone is false.",
+      "reason": "Direct Source short-circuit; no dedicated old assertion/runtime was found for falsey zone."
+    },
+    {
+      "fact": "Known zone_4 and zone_4_1 both override caller main_zone_index to4 even if stale or malformed main was initially read.",
+      "reason": "enemy_environment.py:85-88 reads candidate main then parses known numeric-second-component ID before range validation."
+    },
+    {
+      "fact": "Known IDs zone1..6 derive main1..6; explicit portal IDs use second componentportal and therefore do not derive depth from later digits.",
+      "reason": "KnownID membership plus split[1].isdigit; hidden portal needs previously confirmed or explicitly supplied integer main1..6."
+    },
+    {
+      "fact": "Unknowntext/null/omittedid with explicit main int1..6 currently participates; bool, floats, strings, out-of-range, list/dictmain only produce missing-depth pending whenrate nonzero.",
+      "reason": "Only isinstance(main,int), notbool, range1..6 qualifies after knownID override. Tightening this fallback requires explicit before/after scope justification, not presumed new identity schema."
+    },
+    {
+      "fact": "Without selectedtarget, resolve_enemy returnsbeforezone; with selectedtarget but no confirmeddifficulty, zone is notread.",
+      "reason": "Inactive fields currently ignored. Top-level unconditionalzonevalidation would extend scope and change original error order/accepted ignored fields."
+    },
+    {
+      "fact": "Zero-rate grade0..4 still reads activezone before deciding to multiply.",
+      "reason": "rate is assigned line83, zone dereference/membership84–88, then ifrate89. Zero rate differs from absentdifficulty."
+    }
+  ],
+  "saved_restart_consumer_scope": {
+    "source_refs": [
+      "rouge/run_state.py:12-17 defines consumed-shapeguard and preserves unknown fields",
+      "rouge/run_state.py:53-54 requires difficulty/squad/zone mappings when present",
+      "rouge/run_state.py:91-93 requires nonemptyzone.name str and zone.id str orNone",
+      "rouge/run_state.py:113 uses zone.id to select consumedmap graph",
+      "rouge/run_state.py:807 indexes nonemptyzone.name in visible summary"
+    ],
+    "contract": "Missing zone and {} are valid saved shape. PresentNone/False/list are rejected by mapping, unlike the original public computation short-circuit. main_zone_index, hidden and candidates are not otherwise validated in this savedguard; they remain opaque until other consumers. Do not equate saved admission rules with public id-only calculation schema.",
+    "adjacent_fresh_apply_Source": "run_state.py:469 dereferences record,483 directly dict.get(record.id),484–485 checks portal candidate stringprefix,488 derives numeric second ID component and490–492 carries previous main. These are different fresh observation consumers; no actual failures or fix proposals are inferred without their own real input/state observations."
+  },
+  "actual_producer_source": {
+    "source_ref": "rouge/run_config.py:40-52",
+    "contract": "One confidence≥.95 exact fixed name emits a dict; uniqueordinaryIDs and the known4/4_1 shared-name pair emit a knownstringid. Shared hidden names emit idNone, truehidden and the real candidate list. The producer does not synthesize main_zone_index from portal suffixes and does not show ordinary generation of malformed zone containers."
+  },
+  "real_public_data": {
+    "source_url": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "normal_id_records": [
+      {
+        "id": "zone_1",
+        "name": "玻利瓦尔肤层",
+        "zoneIconId": "zone_1"
+      },
+      {
+        "id": "zone_2",
+        "name": "甜美的伤口",
+        "zoneIconId": "zone_2"
+      },
+      {
+        "id": "zone_3",
+        "name": "血色空脉",
+        "zoneIconId": "zone_3"
+      },
+      {
+        "id": "zone_4",
+        "name": "受害者腐殖",
+        "zoneIconId": "zone_4"
+      },
+      {
+        "id": "zone_4_1",
+        "name": "受害者腐殖",
+        "zoneIconId": "zone_4"
+      },
+      {
+        "id": "zone_5",
+        "name": "卡德霍之颅",
+        "zoneIconId": "zone_5"
+      },
+      {
+        "id": "zone_6",
+        "name": "源流交汇处",
+        "zoneIconId": "zone_6"
+      }
+    ],
+    "portal_ids": [
+      "zone_portal_normal_1_1",
+      "zone_portal_normal_1_2",
+      "zone_portal_normal_2_1",
+      "zone_portal_normal_2_2",
+      "zone_portal_normal_3_1",
+      "zone_portal_normal_3_2",
+      "zone_portal_normal_4_1",
+      "zone_portal_normal_4_2",
+      "zone_portal_normal_5_1",
+      "zone_portal_normal_5_2",
+      "zone_portal_normal_5_3",
+      "zone_portal_normal_6_1",
+      "zone_portal_normal_6_2",
+      "zone_portal_normal_6_3",
+      "zone_portal_normal_7_1",
+      "zone_portal_normal_7_2",
+      "zone_portal_normal_8_1",
+      "zone_portal_normal_8_2",
+      "zone_portal_normal_9"
+    ],
+    "portal_shared_name": "未萌生的摇篮",
+    "bossValue_by_grade": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 1,
+      "6": 2,
+      "7": 3,
+      "8": 5,
+      "9": 6,
+      "10": 7,
+      "11": 8,
+      "12": 10,
+      "13": 12,
+      "14": 16,
+      "15": 20
+    },
+    "formula_scope": "This audit verifies existing consumer qualification and public values only. It does not add region growth, map topology, actual progression or portal transition game rules."
+  },
+  "test_inventory_search": {
+    "physical_test_py_files_read_for_literal_search": 223,
+    "tokens": [
+      "main_zone_index",
+      "zone_4_1",
+      "zone_4"
+    ],
+    "literal_hits": [],
+    "meaning": "No existing explicit test literal found for these names; absence of a literal is not proof no indirect test coverage exists."
+  },
+  "minimal_Root_original_API_plan": {
+    "status": "SOURCE_ONLY_PROPOSAL_NOT_AUTHORED_RUNNER",
+    "healthy_selected_target": {
+      "stage_id": "ro6_n_1_2",
+      "enemy_id": "enemy_1093_ccsbr",
+      "level": 0
+    },
+    "healthy_target_name": "提亚卡乌战士",
+    "healthy_reference_stats": {
+      "maxHp": 2600,
+      "atk": 290,
+      "def": 60,
+      "magicResistance": 10.0,
+      "baseAttackTime": 1.8,
+      "massLevel": 1
+    },
+    "default_difficulty": {
+      "value": 10,
+      "modeDifficulty": "NORMAL",
+      "mode": "NORMAL"
+    },
+    "no_new_zone_names": true,
+    "cases_by_group": {
+      "A_absent_falsey_compatibility": [
+        {
+          "id": "omitted-zone",
+          "zone_field_present": false
+        },
+        {
+          "id": "zone-null",
+          "zone_field_present": true,
+          "zone": null
+        },
+        {
+          "id": "zone-empty-object",
+          "zone_field_present": true,
+          "zone": {}
+        },
+        {
+          "id": "zone-false",
+          "zone_field_present": true,
+          "zone": false
+        },
+        {
+          "id": "zone-zero",
+          "zone_field_present": true,
+          "zone": 0
+        },
+        {
+          "id": "zone-empty-text",
+          "zone_field_present": true,
+          "zone": ""
+        },
+        {
+          "id": "zone-empty-list",
+          "zone_field_present": true,
+          "zone": []
+        }
+      ],
+      "B_known_id_no_name_and_stale_main": [
+        {
+          "id": "zone_1"
+        },
+        {
+          "id": "zone_4"
+        },
+        {
+          "id": "zone_4_1"
+        },
+        {
+          "id": "zone_6"
+        },
+        {
+          "id": "zone_4",
+          "main_zone_index": null
+        },
+        {
+          "id": "zone_4_1",
+          "main_zone_index": "public-bad"
+        }
+      ],
+      "C_portal_and_unknown_depth": [
+        {
+          "id": null,
+          "hidden": true,
+          "name": "未萌生的摇篮",
+          "candidates": [
+            "zone_portal_normal_1_1",
+            "zone_portal_normal_1_2"
+          ],
+          "main_zone_index": 2
+        },
+        {
+          "id": null,
+          "hidden": true,
+          "name": "未萌生的摇篮",
+          "candidates": [
+            "zone_portal_normal_1_1",
+            "zone_portal_normal_1_2"
+          ]
+        },
+        {
+          "id": "zone_portal_normal_1_1",
+          "main_zone_index": 2
+        },
+        {
+          "id": "zone_portal_normal_1_1"
+        },
+        {
+          "id": "public-unknown-zone",
+          "main_zone_index": 2
+        },
+        {
+          "main_zone_index": 2
+        }
+      ],
+      "D_nonqualifying_main": [
+        {
+          "id": null,
+          "main_zone_index": true
+        },
+        {
+          "id": null,
+          "main_zone_index": 0
+        },
+        {
+          "id": null,
+          "main_zone_index": 7
+        },
+        {
+          "id": null,
+          "main_zone_index": -1
+        },
+        {
+          "id": null,
+          "main_zone_index": 2.0
+        },
+        {
+          "id": null,
+          "main_zone_index": "2"
+        },
+        {
+          "id": null,
+          "main_zone_index": []
+        },
+        {
+          "id": null,
+          "main_zone_index": {}
+        }
+      ],
+      "E_truthy_bad_zone_containers": [
+        "public-bad-zone",
+        true,
+        1,
+        1.5,
+        [
+          "public-bad-zone"
+        ]
+      ],
+      "F_unhashable_zone_ids": [
+        {
+          "id": []
+        },
+        {
+          "id": {}
+        },
+        {
+          "id": [
+            "public-id"
+          ]
+        }
+      ],
+      "G_hashable_nontext_id_observations": [
+        {
+          "id": true,
+          "main_zone_index": 2
+        },
+        {
+          "id": 1,
+          "main_zone_index": 2
+        },
+        {
+          "id": 1.5,
+          "main_zone_index": 2
+        }
+      ],
+      "H_inactive_and_zero_rate": [
+        {
+          "context": "no-target-difficulty10",
+          "zone": "public-bad-zone"
+        },
+        {
+          "context": "no-target-difficulty10",
+          "zone": {
+            "id": []
+          }
+        },
+        {
+          "context": "selected-target-no-difficulty",
+          "zone": "public-bad-zone"
+        },
+        {
+          "context": "selected-target-no-difficulty",
+          "zone": {
+            "id": []
+          }
+        },
+        {
+          "context": "selected-target-difficulty4-zero-rate",
+          "zone": "public-bad-zone"
+        },
+        {
+          "context": "selected-target-difficulty4-zero-rate",
+          "zone": {
+            "id": []
+          }
+        }
+      ],
+      "I_known_id_overrides_stale_main": [
+        {
+          "id": "zone_4",
+          "main_zone_index": []
+        },
+        {
+          "id": "zone_4",
+          "main_zone_index": true
+        },
+        {
+          "id": "zone_4_1",
+          "main_zone_index": 6
+        }
+      ]
+    },
+    "proposed_case_count": 47,
+    "proposed_calls": "For each caller Root can observe original prepare_run, calculate_damage, format_estimate, format_report and two explicit technical=True controls; dependent formatters must block on actual calculate error. Original no-relic enemy_preview8 compatible contexts can be observed separately. Native helper untouched; save raw status, source/CORE and complete caller/result/error graphs.",
+    "required_pinning": "Root supplies actual complete749 or750 map+CORE based on actual engine/test application. Stabletarget pins should exclude the advancing107 engine from assumptions; no wholeSource count is claimed by this report.",
+    "case_outcomes": "Source predicts hazards/short-circuit/knownpriority, but numerical or returned-error assertions must come from Root actual receipt. Input output error None/PASS is not prefilled here."
+  },
+  "ui_error_scope": {
+    "source_ref": "rouge/app.py:1212-1220",
+    "fact": "Calculation catches broadException, clears damage_result and displays str(error); do not claim zoneAttributeError necessarily crashes the entire Qt window. Original enemy_preview:92-97 catches onlyValueError/KeyError while resolving the environment; AttributeError/TypeError currently lie outside thatlocalcatch. Actual GUI behavior still needs realRoot validation."
+  },
+  "source_refs": [
+    {
+      "path": "/workspace/rougezhushou/rouge/run_modifiers.py",
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/enemy_environment.py",
+      "bytes": 8213,
+      "sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/run_state.py",
+      "bytes": 54623,
+      "sha256": "ee46af93155e210a47a3cd8dcbb4dfcecd0c7b2596c2e0f32e2bd9d4c5f6a9a9"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/run_config.py",
+      "bytes": 5835,
+      "sha256": "3c96897dd6b5c692489b9e55ac57f570adb352f1589038b7a52b3e9a8a891b70"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 99132,
+      "sha256": "f3577a3e1e40d19b4d302e2c8e5abe498fbec635497df40f81603f0dcd7dfebf"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/battle_preview.py",
+      "bytes": 15499,
+      "sha256": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/run-config.json",
+      "bytes": 81421,
+      "sha256": "d35b08029a4dee14b7955136d127c0af22529858ffb559d652ac77e4e7f2c19e"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/enemy-difficulty-rules.json",
+      "bytes": 1550,
+      "sha256": "cb1a2c652b306e62a13c8439a99176bf5526c31e8c13461dc00b608cad76d7e8"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/previews.json",
+      "bytes": 2601977,
+      "sha256": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_enemy_environment.py",
+      "bytes": 6415,
+      "sha256": "146d24c0a13fb5ca86624ff4dc4ccda05615b4e3ec8e5b9af725f719f4ed2fe9"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_difficulty_rules.py",
+      "bytes": 5322,
+      "sha256": "1db5ecaf862b183d4f94f167fb733c3c54fcdceef1c45d41388a4b7cc415d552"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_run_config_validation.py",
+      "bytes": 6092,
+      "sha256": "082ba6ee0a96d99f9c69585a429ace811ffc70cc7bbd97ebe83f8f6908a2ccfe"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_run_modifiers.py",
+      "bytes": 3631,
+      "sha256": "209ba2c9ba501f329b368235350197d86b08c9ab8db71bcb04fa01aadc015cba"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_run_state_reliability.py",
+      "bytes": 36201,
+      "sha256": "a02b77e38a42bdf25913bb3b4e0f39c82986debf8f4458c446f6f4acaf7d0f3e"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_run_config.py",
+      "bytes": 1944,
+      "sha256": "4de20afb0ccd2cfe36d6ed031ea4c1f390a57c191a8a140d44b6890ce45bff21"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_environment_input_106.py",
+      "bytes": 15174,
+      "sha256": "6cd75f91e466daa6b231a6e318b44795f596a2b8d292c0fd6939329117521a8e"
+    }
+  ]
+}

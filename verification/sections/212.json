@@ -1,0 +1,149 @@
+{
+  "title": "凯尔希与银灰三段等待、声明中断和窗口预算",
+  "remaining_item": "技能时序与精度：首批三人三段动作的等待/恢复条件与firstAttack来源；当前实际模式/状态/起点/步长及回调仍未知",
+  "new_capability": "已选凯normal/S1及银normal参考实际计算分列两门条件下每段等待预算、窗口内已消耗/未执行/仍待等待、声明中断取消预算与重新开始候选；各段用float32比值最近整数/中点取偶、至少1次，跳过段不调用等待；移动/供靶空窗不取消等待或重开门。",
+  "source_evidence": {
+    "receipt": "research/p2-three-part-wait-current/receipt.json",
+    "asset_baseline_version": "26-09-13-15-28-10-30688348",
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "physical_methods": 37,
+    "unique_physical_instructions": 3258,
+    "all_instruction_bytes_match": true,
+    "exact_float_wait": {
+      "factory_method_index": 64127,
+      "factory_address": "0x180647f20",
+      "iterator_declaring_type": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0",
+      "iterator_method_index": 64149,
+      "iterator_address": "0x180661350",
+      "time_offset": "0x20",
+      "frame_count_offset": "0x24",
+      "frame_index_offset": "0x28",
+      "operation": "float32(time / deltaPlayTime), nearest integer with midpoint-to-even, max(1); sampled once on first MoveNext",
+      "round_helper_address": "0x18059e290",
+      "round_helper_managed_symbol": "unresolved; linked numerical CFG used directly",
+      "yield": "Torappu.Battle.Yields.sharedWaitForFixedUpdate, field offset0 -> UnityEngine.WaitForFixedUpdate"
+    },
+    "first_attack_rule": "AttackState.OnEnter->true; same-state _NextAttackOrExit->false; bool forwarded to current attack and random child; short target gaps may not exit before escapeTime threshold",
+    "clear_source_boundary": "ThreePart.OnCastFinish and OnEvent(ON_DETACHED=1) call _ClearCoroutine; actual event occurrence is unknown; movement/target gaps are not bound to this call",
+    "actual_delta_boundary": "BattleController.get_deltaPlayTimeFP reads s_deltaPlayTimeFP+0x48; RestoreDeltaTimeScale/ReqChangeDeltaTimeFPInStepMode can write it; 30Hz only the existing offline preview grid",
+    "scheduler_boundary": "BattleController.StartBattleCoroutine selects Unity MonoBehaviour coroutine or deterministic CoroutineSimulator by current isDeterministic; simulator starts handler immediately, nested iterator stack resumes by SimulateTick; actual route/phase unknown",
+    "reused_selector_and_caller": "research/p2-three-part-static-current/native-proof.json; metadata_method_index94090",
+    "public_primary_references": [
+      {
+        "url": "https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Mathf.RoundToInt.html",
+        "scope": "version-matched nearest-even API corroboration only; does not prove private float helper identity or client callback phase"
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/dotnet/api/system.math.round?view=netframework-4.8.1",
+        "scope": "midpoint-to-even operation documentation, not current game origin/route proof"
+      }
+    ]
+  },
+  "acceptance": {
+    "unique_necessary_cases": 95,
+    "passed_at_least_once": 95,
+    "failures": 0,
+    "remaining_errors": 0,
+    "skips": 0,
+    "initial_aggregate": {
+      "tests_run": 92,
+      "passed": 91,
+      "errors": 1,
+      "cause": "missing copied public208 proof in isolation"
+    },
+    "failed_case_only_recheck": {
+      "tests_run": 1,
+      "passed": 1,
+      "fixture_only_fix": true
+    },
+    "final_change_specific_recheck": {
+      "tests_run": 18,
+      "passed": 18
+    },
+    "final_wording_recheck": {
+      "tests_run": 2,
+      "passed": 2
+    },
+    "actual_MainWindow_class_public_offscreen_cases": 4,
+    "visible_original_window_required_after_root_integration": false,
+    "git_apply_check": "Passed read-only git apply --check --ignore-space-change; existing CRLF context requires this flag; baseline text drift[]",
+    "packet_encoding_check": "0 CR bytes; one final LF",
+    "root_actual_window": "0.81 visible/restored/responsive; S1 Front selected, report wait budget and actual delta/resume unknown shown; five private files unchanged"
+  },
+  "acceptance_cases": [
+    "per-segment rounding differs from rounding combined duration; IEEE32 .25/previewDelta round7,2.25 round68",
+    "zero-time invoked wait min1 vs skipped begin/end0",
+    "partial/full/half-open zero or future-origin window budgets",
+    "explicit interruption: spent/unexecuted cancellation/pending0, restart is candidate only",
+    "adjacent/overlapping interruption+movement constraints for candidate restart",
+    "movement/target empty gaps do not clear waits or set firstAttack; possible no actual chain explicit",
+    "actual client delta/route/resume phase/callback/start/end allNone",
+    "fixed playback input condition and current native/FP-overload boundary",
+    "actual calculate_damage frame/recharge/result/text outputs, continuous does not fake frame budgets",
+    "default no explicit reference never calls new budget and all numbers unchanged",
+    "public temporary MainWindow-class rendering, old048 64 sources/timing/S2/movement-window constraints preserved",
+    "Normal declaration offset: prior intervals discarded locally, crossing interval clipped at zero, future intervals rebased; original absolute declarations preserved"
+  ],
+  "limitations": [
+    "firstAttack/FSM path and actual mode/skin/XLua remain unknown",
+    "movement or target gaps do not cancel waits or reopen firstAttack",
+    "only explicitly declared interrupt_windows cancel this reference chain as a model condition; actual native event occurrence unknown",
+    "input-period playback remains a fixed profile condition; actual midchain speed changes unknown",
+    "no actual callback, skill-end or absolute clock derived from wait counts",
+    "wait cancellation discards unexecuted budget; a restart candidate does not resume cancelled iterator or imply animation/event stop",
+    "a budget assumes a chain started at the existing preview anchor; generic attack-start rows/target acquisition do not prove that native origin",
+    "Declaration offset rebasing does not recover real native chain origin or callback phase."
+  ],
+  "files": [
+    "research/p2-three-part-wait-current/first-attack-rules.json",
+    "research/p2-three-part-wait-current/fresh-physical-verification.json",
+    "research/p2-three-part-wait-current/native-proof.json",
+    "research/p2-three-part-wait-current/receipt.json",
+    "research/p2-three-part-wait-current/selected-metadata.json",
+    "rouge/reporting.py",
+    "rouge/three_part_wait.py",
+    "rouge/timing.py",
+    "tests/test_static_action_window.py",
+    "tests/test_three_part_wait_budget_current.py",
+    "rouge/app.py",
+    "verification/section-212/native-static-bytes.json",
+    "verification/section-212/window.json"
+  ],
+  "test_selectors": [
+    "tests.test_three_part_wait_budget_current",
+    "tests.test_three_part_static_reference_current",
+    "tests.test_static_action_selection_current",
+    "tests.test_original_animation_048",
+    "tests.test_timing",
+    "tests.test_shield_break_reference",
+    "tests.test_shield_timeline_131",
+    "tests.test_static_action_window"
+  ],
+  "remaining_wording": "实际firstAttack/FSM进入退出路径、当前模式/外观/热更新、deltaPlayTime与调度支路/恢复相位、友方获取/首击/完整结束和银灰实际随机序列仍待依据；不按部署或空窗秒数补门。",
+  "author_original_errors_preserved": [
+    "UnityCore mapper initially retained CSharp byte literal; diagnostics retained, corrected exact name; map not used as behavior proof",
+    "initial92 aggregate omitted public208 source fixture; 91passed1error retained, copied exact public file then only failed source case passed; subsequent18/2 change-specific checks passed",
+    "Root offset-2 public case initially raised negative interval ValueError; fixed local interval rebase/clipping, retained absolute declarations and three regression cases. Earlier bare python invocation returned exit1 without output; venv interpreter used successfully."
+  ],
+  "tracked_source_modified_by_author": false,
+  "baseline_text_drift": [],
+  "patch_sha256": "e062f88df672ad99b9dc40f79a2a9e796b8d4cf06a115c41e9eb96fee281af4c",
+  "packet_line_endings": "LF, one final newline",
+  "root_actual_window_required": false,
+  "next_independent_group": "核对自然技力回复的倍率/负值/真实新增来源与既有186加法范围；先找明确原件ID和组合层，源码不足只封存，不复用等待诊断计节。",
+  "section": 212,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T15:13:56.366391+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 95,
+    "passed": 95,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-212/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

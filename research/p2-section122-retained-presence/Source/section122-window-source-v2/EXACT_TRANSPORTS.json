@@ -1,0 +1,117 @@
+{
+  "kind": "EXACT_SOURCE_ONLY_V1_TO_V2_TRANSPORTS",
+  "section": 122,
+  "runtime_executions": 0,
+  "old_manifest_sha256": "6e3d3d1e4843a82087b8fdc12b9ac6245d53ab25b6210d45167f2050d3bc5736",
+  "changes": [
+    {
+      "path": "README_ZH.md",
+      "old_bytes": 5623,
+      "old_sha256": "fccfc530a691181c5a6c14dfdab27cc357ba380ac65e708f49a2a6fc6b44a7c3",
+      "new_bytes": 6843,
+      "new_sha256": "910ec7cae14dc139b91f544a85f54df061680e867d1aeebd6c3425c120689e79",
+      "replacements": [
+        {
+          "old_utf8": "# 第 122 节真实窗口方案：Source 候选\n\n本目录只有公开源码、公开临时输入和执行提案。作者未导入或运行项目、候选、测试、helper、Qt、Wine、native、Saved、Git，未读取私态或解码 gzip，未修改 tracked 文件。AST/compile-noexec 是语法检查，不能记为 Runtime 通过。实际执行、图像检查和 Git 操作均由 Root 完成。\n\n产品修复仍绑定原封存候选 MF `44613f8d440e06543d569c69ca60776975050c7c0f46ee333a68536e8a2f893a` 及独立消费者 Source 审阅 MF `cabd576982c0735401ab57e5b45208cf5a9897e2b37a8177da185128afa02f65`。本窗口补充真实消费验证，不覆盖原产品包、不把候选快照全文件覆盖到当前 app。Root 必须先精确组合实际源码，再建立本次 Source guard。\n\n`cases.json` 包含全部六份 run/account 公开 JSON 和明确更新包：字符串、数字、null 未知标记；精确 True、False；缺少标记的旧合同。每个窗口从公开临时文件载入，初始及普通 UI/API/格式化操作均必须保留当前 run、账号与磁盘原始 bytes。真实已招募总览、自动藏品勾选、当前培养来源、原始培养摘要、来源/进阶/强化投影和计数资格一起检查，不能只测试 `bool` helper。\n\n计划共 42 个完整 GUI 状态，每个保存原实际调用、完整 caller/result/joint、一次新实际 API 参考、三种 formatter 的联合纯度、真实技术/普通报告切换、完整文本和投影。初始六个窗口各两种时序；字符串窗口 12 次逐项公开更新各两种时序；四次账号参考选择/取消；数字窗口一次明确零清单/空队伍更新后两种时序。普通步骤仍与当前完整 joint 相等；不能凭同 case 或 phase 放宽纯度。\n\n字符串窗口更新依序为身份、完整持有栏、等级、精英及其明确重读的培养字段、当前 S3 等级、来源、进阶标记、B 的部分强化弹窗、重复身份、A 的部分弹窗、独立新计数、完整空弹窗。旧字段/来源/强化/计数保持原证据，必须分别等待自己的新明确证据。原身份重新确认事件包含完整旧成员记录，未知持有转为 True 或 False 不制造旧的获得/失去/离队事件。数字窗口同时验证未知标记转为 False 的原始培养、强化和计数记录仍保留。\n\n**公开更新与普通纯度的边界：** `actual_ingress_begin` 到其唯一 `actual_ingress_end` 内只允许实际 numeric 回调。实际 `MainWindow.apply_run_observation` 在更新 UI 前已经调用 `RunState.save`，所以这些回调的完整 joint 必须等于 end 的精确 after；更新包 caller 前后全图纯净，账号内存与原始账号磁盘不变。end 后所有 setter/事件循环/API/格式化重新恢复普通 current-joint 检查。每个 native record 和 checkpoint 都 flush/fsync；900 秒 watchdog 保存明确失败断点并退出 124。\n\n**等级文案澄清：** 原产品包的计划句子把两种默认分支混在一起，此处根据完整实际第 118 节 `select_rank` Source 更正，不改原封包。未知在场初始回退到账号对象，该对象已读 S1/S3 等级 3，因此默认来源为 `account_reference`、等级 3。身份重新确认后，run scope 中旧等级仍被遮罩、有效等级为空，按既有 E2 默认使用 `preview_unconfirmed` 等级 10；显式勾选账号参考才选择 3，取消恢复 10。两者都不能作为本局确认等级。S3 等级 10 的固定公共 `sp_cost` 是 35，A 的原表系数 0.8 得 28；等级 7 是 41，不能混入该算例。B 的原表只增加攻击速度，不改变 SP 需求。\n\n**保存及重读的边界：** 明确保存检查实际平台的 JSON 序列化 raw bytes。live history 与成员可共享强化 list；JSON 不保存共享引用，因此不能用 native 图相等假定 JSON roundtrip 保留 live alias。六次真实 close 必须保持 live 图与所有磁盘；随后独立 RunState/AccountCache 重读。预期 run 从实际磁盘解析图及旧 constructor key order 推导，仅 restore notice 替换；所有其它 leaf/type/order/float bits 不得改变。普通内存 caller/result/report/joint 则完整保留双向 container alias 检查。没有第二个 live MainWindow 重启的声明。\n\n两幅 PNG 在对应完整 native snapshot 后立即生成：未知初始 run-summary QLabel 全部在真实 central-widget viewport 内，以及新确认 A 后的真实 damage metrics 连续文档块。保存完整图、文本、bounded cursor/label geometry 与原始 PNG bytes/hash。Saved 只审查指定可见范围和证据绑定；Root 必须另外查看原图，不宣称整份长报告或所有字段都在截图内。\n\nRoot 执行参数为 `--root`、`--guard`、`--out`、`--source-count`，必须提供本次实际值。guard section 必须为 122，Source count/map、CORE 原始 hash、runner/helper/cases 原始 hash 均绑定；输出必须是 checkout 外的新目录。未预填未来 HEAD、Source count、真实结果目录或 PASS。结束时恢复 app 的三个公开路径变量、DesktopBackend 和 calculate_damage，核对 Source/CORE/guard 无漂移、Qt 错误为空、全部状态和重读完成、deadline 未超时后才可写实际 passed。\n\n独立 Saved 在另一个目录准备，不运行项目、API、formatter 或 Qt；它严格核完整 refs/meta/hash、原始压缩 bytes、chronological current joint、每个显式更新 bracket 和完整 caller/result/report 图。Root 可以在实际窗口通过且 Saved 通过、两幅原图查看后，才将此项记为 Runtime 验证完成。\n",
+          "new_utf8": "# 第 122 节真实窗口方案：Source 候选\n\n本目录只有公开源码、公开临时输入和执行提案。作者未导入或运行项目、候选、测试、helper、Qt、Wine、native、Saved、Git，未读取私态或解码 gzip，未修改 tracked 文件。AST/compile-noexec 是语法检查，不能记为 Runtime 通过。实际执行、图像检查和 Git 操作均由 Root 完成。\n\n产品修复仍绑定原封存候选 MF `44613f8d440e06543d569c69ca60776975050c7c0f46ee333a68536e8a2f893a` 及独立消费者 Source 审阅 MF `cabd576982c0735401ab57e5b45208cf5a9897e2b37a8177da185128afa02f65`。本窗口补充真实消费验证，不覆盖原产品包、不把候选快照全文件覆盖到当前 app。Root 必须先精确组合实际源码，再建立本次 Source guard。\n\n`cases.json` 包含全部六份 run/account 公开 JSON 和明确更新包：字符串、数字、null 未知标记；精确 True、False；缺少标记的旧合同。每个窗口从公开临时文件载入，初始及普通 UI/API/格式化操作均必须保留当前 run、账号与磁盘原始 bytes。真实已招募总览、自动藏品勾选、当前培养来源、原始培养摘要、来源/进阶/强化投影和计数资格一起检查，不能只测试 `bool` helper。\n\n计划共 42 个完整 GUI 状态，每个保存原实际调用、完整 caller/result/joint、一次新实际 API 参考、三种 formatter 的联合纯度、真实技术/普通报告切换、完整文本和投影。初始六个窗口各两种时序；字符串窗口 12 次逐项公开更新各两种时序；四次账号参考选择/取消；数字窗口一次明确零清单/空队伍更新后两种时序。普通步骤仍与当前完整 joint 相等；不能凭同 case 或 phase 放宽纯度。\n\n字符串窗口更新依序为身份、完整持有栏、等级、精英及其明确重读的培养字段、当前 S3 等级、来源、进阶标记、B 的部分强化弹窗、重复身份、A 的部分弹窗、独立新计数、完整空弹窗。旧字段/来源/强化/计数保持原证据，必须分别等待自己的新明确证据。原身份重新确认事件包含完整旧成员记录，未知持有转为 True 或 False 不制造旧的获得/失去/离队事件。数字窗口同时验证未知标记转为 False 的原始培养、强化和计数记录仍保留。\n\n**公开更新与普通纯度的边界：** `actual_ingress_begin` 到其唯一 `actual_ingress_end` 内只允许实际 numeric 回调。实际 `MainWindow.apply_run_observation` 在更新 UI 前已经调用 `RunState.save`，所以这些回调的完整 joint 必须等于 end 的精确 after；更新包 caller 前后全图纯净，账号内存与原始账号磁盘不变。end 后所有 setter/事件循环/API/格式化重新恢复普通 current-joint 检查。每个 native record 和 checkpoint 都 flush/fsync；900 秒 watchdog 保存明确失败断点并退出 124。\n\n**等级文案澄清：** 原产品包的计划句子把两种默认分支混在一起，此处根据完整实际第 118 节 `select_rank` Source 更正，不改原封包。未知在场初始回退到账号对象，该对象已读 S1/S3 等级 3，因此默认来源为 `account_reference`、等级 3。身份重新确认后，run scope 中旧等级仍被遮罩、有效等级为空，按既有 E2 默认使用 `preview_unconfirmed` 等级 10；显式勾选账号参考才选择 3，取消恢复 10。两者都不能作为本局确认等级。S3 等级 10 的固定公共 `sp_cost` 是 35，A 的原表系数 0.8 得 28；等级 7 是 41，不能混入该算例。B 的原表只增加攻击速度，不改变 SP 需求。\n\n**保存及重读的边界：** 明确保存检查实际平台的 JSON 序列化 raw bytes。live history 与成员可共享强化 list；JSON 不保存共享引用，因此不能用 native 图相等假定 JSON roundtrip 保留 live alias。六次真实 close 必须保持 live 图与所有磁盘；随后独立 RunState/AccountCache 重读。预期 run 从实际磁盘解析图及旧 constructor key order 推导，仅 restore notice 替换；所有其它 leaf/type/order/float bits 不得改变。普通内存 caller/result/report/joint 则完整保留双向 container alias 检查。没有第二个 live MainWindow 重启的声明。\n\n两幅 PNG 在对应完整 native snapshot 后立即生成：未知初始 run-summary QLabel 全部在真实 central-widget viewport 内，以及新确认 A 后的真实 damage metrics 连续文档块。保存完整图、文本、bounded cursor/label geometry 与原始 PNG bytes/hash。Saved 只审查指定可见范围和证据绑定；Root 必须另外查看原图，不宣称整份长报告或所有字段都在截图内。\n\nRoot 执行参数为 `--root`、`--guard`、`--out`、`--source-count`，必须提供本次实际值。guard section 必须为 122，Source count/map、CORE 原始 hash、runner/helper/cases 原始 hash 均绑定；输出必须是 checkout 外的新目录。未预填未来 HEAD、Source count、真实结果目录或 PASS。结束时恢复 app 的三个公开路径变量、DesktopBackend 和 calculate_damage，核对 Source/CORE/guard 无漂移、Qt 错误为空、全部状态和重读完成、deadline 未超时后才可写实际 passed。\n\n独立 Saved 在另一个目录准备，不运行项目、API、formatter 或 Qt；它严格核完整 refs/meta/hash、原始压缩 bytes、chronological current joint、每个显式更新 bracket 和完整 caller/result/report 图。Root 可以在实际窗口通过且 Saved 通过、两幅原图查看后，才将此项记为 Runtime 验证完成。\n\n## v2 公开输入分类修正\n\n原 v1 held_bar 的 relics.ids 误把 rogue_6_active_tool_5 同时写入藏品与工具槽，先前作者及 Source 独审漏掉了此分类错误。真实 producer run_recognition.py:132、139–140、185–187 和 visual_recognition.py:139–141 将两个 ID 列表分开；icons/count 仍覆盖整个栏。既有 test_run_state_reliability.py:87–90、test_inventory_tools.py:34–45、test_inventory_confirmation_102.py:84–90/251–264 和 test_dynamic_resolution.py:32–37 采用同一契约。v2 只从该一次 relics.ids 中移除工具 ID，完整三个 icons、count=3、tactical_tools.ids、所有 expected、42 状态/13 ingress/6 close 双重重载/2 PNG 以及 900 秒时限均保持。\n\n窗口 writer 原 bytes 完全不改，仍为 38509 B / 83e96b323101d93d70c24a04f2e6519f3659ccac5f04f6475e88709ef41c54e7。这是验证输入修正，未改产品或放宽断言；旧 Source 封包及实际 v1 失败证据均保留。EXACT_TRANSPORTS.json 给出准确前后文本与 hash，Source-inputs 新增实际公开契约原件绑定，历史读取绑定仍原样保存。当前 v2 Runtime 为 0，等待父代理独立全文 Source 审阅后由 Root 重新实际运行。\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "cases.json",
+      "old_bytes": 41008,
+      "old_sha256": "ba420ec06d02f9476814a4b3da0b2b353a1703cfaa9885f464164c41be7af6e1",
+      "new_bytes": 40971,
+      "new_sha256": "8514b8dc41a0eff4a4b7e9c3e980c2f27bf371c02956f485e76c65175851b37b",
+      "replacements": [
+        {
+          "old_utf8": "            \"rogue_6_relic_legacy_15\",\n            \"rogue_6_relic_legacy_103\",\n            \"rogue_6_active_tool_5\"\n",
+          "new_utf8": "            \"rogue_6_relic_legacy_15\",\n            \"rogue_6_relic_legacy_103\"\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "source-checks.json",
+      "old_bytes": 785,
+      "old_sha256": "8f64c9167fd3340d3421a6cf9de61be2194759e6c203e0e9f855702bbb519a13",
+      "new_bytes": 1020,
+      "new_sha256": "56f512808b7f5e690771f3473c89909571aee19ae2b34158ddbe2e40bdb7a0e0",
+      "replacements": [
+        {
+          "old_utf8": "{\n  \"kind\": \"STDLIB_SOURCE_ONLY_CHECKS\",\n  \"section\": 122,\n  \"runtime_executions\": 0,\n  \"source_count_runtime_parameter\": true,\n  \"python_sources\": [\n    {\n      \"path\": \"native_evidence.py\",\n      \"bytes\": 6468,\n      \"sha256\": \"f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a\",\n      \"AST_parse\": true,\n      \"compile_noexec\": true,\n      \"executed\": false\n    },\n    {\n      \"path\": \"window122.py\",\n      \"bytes\": 38509,\n      \"sha256\": \"83e96b323101d93d70c24a04f2e6519f3659ccac5f04f6475e88709ef41c54e7\",\n      \"AST_parse\": true,\n      \"compile_noexec\": true,\n      \"executed\": false\n    }\n  ],\n  \"planned_contexts\": 6,\n  \"planned_rows\": 42,\n  \"planned_ingresses\": 13,\n  \"planned_close_and_dual_reloads\": 6,\n  \"planned_pngs\": 2,\n  \"checks_claimed_runtime\": false\n}\n",
+          "new_utf8": "{\n  \"kind\": \"STDLIB_SOURCE_ONLY_CHECKS\",\n  \"section\": 122,\n  \"runtime_executions\": 0,\n  \"source_count_runtime_parameter\": true,\n  \"python_sources\": [\n    {\n      \"path\": \"native_evidence.py\",\n      \"bytes\": 6468,\n      \"sha256\": \"f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a\",\n      \"AST_parse\": true,\n      \"compile_noexec\": true,\n      \"executed\": false\n    },\n    {\n      \"path\": \"window122.py\",\n      \"bytes\": 38509,\n      \"sha256\": \"83e96b323101d93d70c24a04f2e6519f3659ccac5f04f6475e88709ef41c54e7\",\n      \"AST_parse\": true,\n      \"compile_noexec\": true,\n      \"executed\": false\n    }\n  ],\n  \"planned_contexts\": 6,\n  \"planned_rows\": 42,\n  \"planned_ingresses\": 13,\n  \"planned_close_and_dual_reloads\": 6,\n  \"planned_pngs\": 2,\n  \"checks_claimed_runtime\": false,\n  \"revision\": 2,\n  \"window_writer_exact_v1_bytes\": true,\n  \"fixture_only_change\": \"/string_ingress/1/observed/relics/ids/2 removed tactical tool\",\n  \"planned_assertions_unchanged\": true,\n  \"independent_v2_source_review_pending\": true\n}\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "source-inputs.json",
+      "old_bytes": 4162,
+      "old_sha256": "eede55b87804ca6d6e65507f82f2f34cacbf657312a14900f2f6206eb283e7dc",
+      "new_bytes": 5595,
+      "new_sha256": "669605e79360bcfd26a0bbf93f5abd25ddccee76ad0a2a712b05bdc98901b9b3",
+      "replacements": [
+        {
+          "old_utf8": "{\n  \"kind\": \"PUBLIC_SOURCE_READ_INPUTS_NOT_RUNTIME\",\n  \"sources\": [\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/app.py\",\n      \"bytes\": 104973,\n      \"sha256\": \"370359f7ae7fc47d6cd0c735074f81ab95a09062dcd9b3ed66c08860954601d9\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/branch_choice.py\",\n      \"bytes\": 4510,\n      \"sha256\": \"5ba161c1be84222001d17511cd4de2048641fe3141ffadb26cb6fa08096cd3a3\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/skill_cultivation.py\",\n      \"bytes\": 8612,\n      \"sha256\": \"6a7c49aa3cf0971cfe3cdf338cc3c2765a66071669ab6f10fa794a1ca1e9b2f3\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/catalog.py\",\n      \"bytes\": 3404,\n      \"sha256\": \"92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/operator-profiles.json\",\n      \"bytes\": 1592209,\n      \"sha256\": \"82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/relic-mechanics.json\",\n      \"bytes\": 500847,\n      \"sha256\": \"6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/inventory-items.json\",\n      \"bytes\": 4001,\n      \"sha256\": \"0b99311944564bfd172270cf73e851c0a41e163a2b1e14ac5f89d7ab22a1bf62\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section119-window-source-v2/window119.py\",\n      \"bytes\": 32977,\n      \"sha256\": \"ac66f11d297dd6531295c18e835c562d5d42738feb49fe4eb0a9e8b55db12527\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section119-window-source-v2/native_evidence.py\",\n      \"bytes\": 6468,\n      \"sha256\": \"f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section118-window-saved-source-v3/audit_window118.py\",\n      \"bytes\": 40002,\n      \"sha256\": \"73aa004ddffc03c0f88b3e52c60d1da8e151ae8a0ddc2d117bdb343c9f35477b\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/MANIFEST.json\",\n      \"bytes\": 8097,\n      \"sha256\": \"44613f8d440e06543d569c69ca60776975050c7c0f46ee333a68536e8a2f893a\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-final-consumer-independent-source-v1/MANIFEST.json\",\n      \"bytes\": 519,\n      \"sha256\": \"cabd576982c0735401ab57e5b45208cf5a9897e2b37a8177da185128afa02f65\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/run_state.py\",\n      \"bytes\": 59949,\n      \"sha256\": \"f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/training_view.py\",\n      \"bytes\": 7077,\n      \"sha256\": \"fd38b92f2893f18369fc4364b9e2e80128151aa1b7625a2b15f0bfa1392f4dfb\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/record_flags.py\",\n      \"bytes\": 2691,\n      \"sha256\": \"9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/recipient_state.py\",\n      \"bytes\": 4666,\n      \"sha256\": \"837e7990a8983efb3f64228f1a11511a15749ff8e202305d2fdc10e8efa83785\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/relic_counter_semantics.py\",\n      \"bytes\": 5421,\n      \"sha256\": \"e0ebdb321a45c49d2f72141326cd8afd4ff97525f4f7a425334755834acba27d\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/run_metadata_view.py\",\n      \"bytes\": 2302,\n      \"sha256\": \"1af6da39c24a55d591647a98f5941ac66f3a6665788a0ec812d012f631f8b6be\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/account_cache.py\",\n      \"bytes\": 11551,\n      \"sha256\": \"29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e\"\n    }\n  ],\n  \"runtime_executions\": 0,\n  \"private_state_reads\": 0,\n  \"tracked_mutations\": 0,\n  \"gzip_decodes\": 0,\n  \"git_commands\": 0,\n  \"actual_root_source_map_required\": true\n}\n",
+          "new_utf8": "{\n  \"kind\": \"PUBLIC_SOURCE_READ_INPUTS_NOT_RUNTIME\",\n  \"sources\": [\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/app.py\",\n      \"bytes\": 104973,\n      \"sha256\": \"370359f7ae7fc47d6cd0c735074f81ab95a09062dcd9b3ed66c08860954601d9\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/branch_choice.py\",\n      \"bytes\": 4510,\n      \"sha256\": \"5ba161c1be84222001d17511cd4de2048641fe3141ffadb26cb6fa08096cd3a3\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/skill_cultivation.py\",\n      \"bytes\": 8612,\n      \"sha256\": \"6a7c49aa3cf0971cfe3cdf338cc3c2765a66071669ab6f10fa794a1ca1e9b2f3\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/catalog.py\",\n      \"bytes\": 3404,\n      \"sha256\": \"92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/operator-profiles.json\",\n      \"bytes\": 1592209,\n      \"sha256\": \"82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/relic-mechanics.json\",\n      \"bytes\": 500847,\n      \"sha256\": \"6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/data/inventory-items.json\",\n      \"bytes\": 4001,\n      \"sha256\": \"0b99311944564bfd172270cf73e851c0a41e163a2b1e14ac5f89d7ab22a1bf62\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section119-window-source-v2/window119.py\",\n      \"bytes\": 32977,\n      \"sha256\": \"ac66f11d297dd6531295c18e835c562d5d42738feb49fe4eb0a9e8b55db12527\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section119-window-source-v2/native_evidence.py\",\n      \"bytes\": 6468,\n      \"sha256\": \"f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section118-window-saved-source-v3/audit_window118.py\",\n      \"bytes\": 40002,\n      \"sha256\": \"73aa004ddffc03c0f88b3e52c60d1da8e151ae8a0ddc2d117bdb343c9f35477b\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/MANIFEST.json\",\n      \"bytes\": 8097,\n      \"sha256\": \"44613f8d440e06543d569c69ca60776975050c7c0f46ee333a68536e8a2f893a\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-final-consumer-independent-source-v1/MANIFEST.json\",\n      \"bytes\": 519,\n      \"sha256\": \"cabd576982c0735401ab57e5b45208cf5a9897e2b37a8177da185128afa02f65\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/run_state.py\",\n      \"bytes\": 59949,\n      \"sha256\": \"f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/training_view.py\",\n      \"bytes\": 7077,\n      \"sha256\": \"fd38b92f2893f18369fc4364b9e2e80128151aa1b7625a2b15f0bfa1392f4dfb\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/record_flags.py\",\n      \"bytes\": 2691,\n      \"sha256\": \"9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/recipient_state.py\",\n      \"bytes\": 4666,\n      \"sha256\": \"837e7990a8983efb3f64228f1a11511a15749ff8e202305d2fdc10e8efa83785\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/relic_counter_semantics.py\",\n      \"bytes\": 5421,\n      \"sha256\": \"e0ebdb321a45c49d2f72141326cd8afd4ff97525f4f7a425334755834acba27d\"\n    },\n    {\n      \"path\": \"/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/run_metadata_view.py\",\n      \"bytes\": 2302,\n      \"sha256\": \"1af6da39c24a55d591647a98f5941ac66f3a6665788a0ec812d012f631f8b6be\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/account_cache.py\",\n      \"bytes\": 11551,\n      \"sha256\": \"29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e\"\n    }\n  ],\n  \"runtime_executions\": 0,\n  \"private_state_reads\": 0,\n  \"tracked_mutations\": 0,\n  \"gzip_decodes\": 0,\n  \"git_commands\": 0,\n  \"actual_root_source_map_required\": true,\n  \"revision\": 2,\n  \"historical_v1_source_read_bindings_retained\": true,\n  \"v2_public_contract_sources\": [\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/run_recognition.py\",\n      \"bytes\": 23560,\n      \"sha256\": \"c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/visual_recognition.py\",\n      \"bytes\": 10583,\n      \"sha256\": \"14dc12ce491f606b16109cedf6270aadb3b8b53f185124b3b1f04174d99e4de1\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/rouge/run_state.py\",\n      \"bytes\": 59949,\n      \"sha256\": \"f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/tests/test_run_state_reliability.py\",\n      \"bytes\": 36201,\n      \"sha256\": \"a02b77e38a42bdf25913bb3b4e0f39c82986debf8f4458c446f6f4acaf7d0f3e\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/tests/test_inventory_tools.py\",\n      \"bytes\": 3922,\n      \"sha256\": \"1c5241a0dbd4b856c5c97b530f063ccce7ffcc55c5beaeccf75623b55cafbf66\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/tests/test_inventory_confirmation_102.py\",\n      \"bytes\": 15787,\n      \"sha256\": \"cf1b8422e2aac2397eaaf121dbd57b0b1e08b711003c3e5f2929db0ffef91dd1\"\n    },\n    {\n      \"path\": \"/workspace/rougezhushou/tests/test_dynamic_resolution.py\",\n      \"bytes\": 3866,\n      \"sha256\": \"8db4481e574189779b96311358bd4e1d794622a5c2cf30b4e21ff895d85cfe80\"\n    }\n  ]\n}\n",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "product_source_changes": 0,
+  "assertions_or_expected_changes": 0,
+  "private_state_reads": 0,
+  "tracked_mutations": 0,
+  "contract_sources": [
+    {
+      "path": "/workspace/rougezhushou/rouge/run_recognition.py",
+      "bytes": 23560,
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/visual_recognition.py",
+      "bytes": 10583,
+      "sha256": "14dc12ce491f606b16109cedf6270aadb3b8b53f185124b3b1f04174d99e4de1"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/run_state.py",
+      "bytes": 59949,
+      "sha256": "f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_run_state_reliability.py",
+      "bytes": 36201,
+      "sha256": "a02b77e38a42bdf25913bb3b4e0f39c82986debf8f4458c446f6f4acaf7d0f3e"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_inventory_tools.py",
+      "bytes": 3922,
+      "sha256": "1c5241a0dbd4b856c5c97b530f063ccce7ffcc55c5beaeccf75623b55cafbf66"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_inventory_confirmation_102.py",
+      "bytes": 15787,
+      "sha256": "cf1b8422e2aac2397eaaf121dbd57b0b1e08b711003c3e5f2929db0ffef91dd1"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_dynamic_resolution.py",
+      "bytes": 3866,
+      "sha256": "8db4481e574189779b96311358bd4e1d794622a5c2cf30b4e21ff895d85cfe80"
+    }
+  ],
+  "unchanged_python_sources": [
+    {
+      "path": "window122.py",
+      "bytes": 38509,
+      "sha256": "83e96b323101d93d70c24a04f2e6519f3659ccac5f04f6475e88709ef41c54e7"
+    },
+    {
+      "path": "native_evidence.py",
+      "bytes": 6468,
+      "sha256": "f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a"
+    }
+  ]
+}

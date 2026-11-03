@@ -1,0 +1,11 @@
+第88节SP consumer纯来源准备封存；等待作者明确source/test/matrix正式冻结，尚非正式产品独审。
+
+event_charge outgoing credit必须actual native_attack>0并且continuous truthy；incoming-only/native_attack0/wait=False此flag不决定该函数输出。wait_next_attack另行建stream，ready存在时又用continuous决定是否允许下个attack slot，因此不能把native_attack0一概忽略，更不能所有event-SP一概active。
+
+periodic_charge incoming_interval is not None分支优先，即0也跳过continuous outgoing；函数提前建stream，wait-next随后不读continuous找slot。保留这个与event_charge不同的旧合同。standalone helper原rawtruthiness不得因本准备而加验证/强制转换。
+
+extended与legacy eventcaller门控、attack_sp/wait-next参数不同；event schema/缺phase早return/incoming冲突/timeline与periodic config/stream错误先后已用固定代码片段记录。晚期per-core report和现83–86 guard之前旧路径错误保持；没有外推所有outer错误先后。
+
+现root在别的tracked路径集成87，不把全树称clean。本准备五个消费者实际bytes均与固定0f27027相同。只绑定旧16source/public metadata和gzip hash，没有解压、重比、重跑、累计或伪造formal预算计数。旧SP阴性、89lead、87及其它sealed目录全部不改。
+
+0API/helper/formatter/test/sourceparser/JSON输入解析/network/Qt/Wine/tracked/productdraft。记录一次外部cwd漏git-C导致的只读git failure及一次成功批读输出截断；最终脚本每项check=True、explicitgit-C，全部来源hash封好。原生clock/attachment/概率/叠加保持未知。

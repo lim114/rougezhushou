@@ -1,0 +1,49 @@
+{
+  "kind": "ROOT_SOURCE_SCHEMA_ADAPTER115",
+  "section": 115,
+  "source_only": true,
+  "runtime_executed": false,
+  "future_final_guard": null,
+  "original_candidate_manifest_sha256": "a4dc0afe3aa8fa7c9452920de40e6692521601b2c4f4ecc6923975866a1a1d3e",
+  "existing_changed_files": [
+    {
+      "path": "rouge/reporting.py",
+      "before_bytes": 98978,
+      "before_sha256": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1",
+      "after_bytes": 104731,
+      "after_sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f",
+      "blocks": [
+        {
+          "old": "\n\ndef build_report(scenario,result):\n",
+          "new": "\n\ndef current_output_breakdown_sections(result):\n    \"\"\"Show existing observation fields without rebuilding totals or clocks.\"\"\"\n    components=result.get('components')\n    legacy='components' not in result\n    if legacy:\n        components=[]\n        if 'hits' in result and 'per_hit' in result and 'total_damage' in result:\n            components.append({'name':'既有技能伤害字段',\n                'damage_type':result.get('damage_type','damage_reference'),\n                'hits':result['hits'],'per_hit':result['per_hit'],'total':result['total_damage']})\n        if 'hits' in result and 'per_heal' in result and 'total_healing' in result:\n            components.append({'name':'既有技能治疗字段','damage_type':'healing',\n                'hits':result['hits'],'per_hit':result['per_heal'],'total':result['total_healing']})\n    if not components:return []\n    categories={'damage':('伤害','伤害'), 'healing':('潜在治疗','治疗'),\n        'regeneration':('独立生命回复','生命'), 'buildup':('潜在损伤积累','损伤积累'),\n        'other':('其他输出字段','')}\n    labels={'physical':'物理伤害','magic':'法术伤害','true':'真实伤害',\n        'elemental':'元素伤害','weakness':'择优伤害（物理/法术）',\n        'damage_reference':'伤害（原结果未单列类型）',\n        'healing':'潜在治疗','regeneration':'独立生命回复','buildup':'潜在损伤积累'}\n    grouped={key:[] for key in categories}\n    group_notes={key:[] for key in categories}\n    for index,component in enumerate(components):\n        dtype=component.get('damage_type')\n        group=(dtype if dtype in ('healing','regeneration','buildup') else\n               'damage' if dtype in ('physical','magic','true','elemental','weakness','damage_reference') else 'other')\n        rows=grouped[group];notes=group_notes[group];unit=categories[group][1]\n        name=component.get('name') or '未命名分项'\n        prefix='component_'+str(index)+'_'\n        rows.append(metric(prefix+'type',name+' · 类型',labels.get(dtype,dtype if dtype is not None else None)))\n        count_label='期望次数/份额' if '期望' in name else '模型次数/份额'\n        rows.append(metric(prefix+'count',name+' · '+count_label,component.get('hits')))\n        amounts=component.get('event_amounts')\n        complete_amounts=(isinstance(amounts,list) and bool(amounts) and all(\n            isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value)\n            for value in amounts))\n        variable_amounts=complete_amounts and min(amounts)!=max(amounts)\n        per_label='单次量字段（事件量可变）' if variable_amounts else '单次量字段'\n        rows.append(metric(prefix+'per_hit',name+' · '+per_label,component.get('per_hit'),unit))\n        if variable_amounts:\n            rows.extend([metric(prefix+'event_mean',name+' · 已给逐事件量均值',sum(amounts)/len(amounts),unit),\n                metric(prefix+'event_min',name+' · 已给逐事件量下限',min(amounts),unit),\n                metric(prefix+'event_max',name+' · 已给逐事件量上限',max(amounts),unit)])\n            notes.append(name+'：均值和范围仅取自已有逐事件量；单次量字段照原值保留，不代表每次相同。')\n        elif isinstance(amounts,list) and any(value is None or not isinstance(value,(int,float))\n                or isinstance(value,bool) or not math.isfinite(value) for value in amounts):\n            notes.append(name+'：逐事件量含未知或不可用值，未生成均值和范围。')\n        pending='actual_total' in component and component['actual_total'] is None\n        rows.append(metric(prefix+'total',name+' · '+('条件总量参考' if pending else '分项模型总量'),\n            component.get('total'),unit))\n        if 'actual_total' in component:\n            rows.append(metric(prefix+'actual_total',name+' · 实际总量字段',component['actual_total'],unit))\n            if pending:notes.append(name+'：实际总量未知，条件总量不能补成已确认输出。')\n    blocks=[]\n    for key,(title,unit) in categories.items():\n        rows=grouped[key]\n        if not rows:continue\n        notes=['这里列当前情景返回的分项；有观察窗口时是该窗口字段，不是完整施放或本轮周期。',\n            '模型次数可表示命中、持续量或期望份额，不证明实际攻击次数；总量照原字段，不用单次量乘次数重算。',\n            '召唤、回复及元素专项表可能已汇总这些来源；本表只展开，不再相加。']\n        if legacy:notes.append('原结果未提供分项列表；这里只列已有技能字段，不生成事件、额外目标次数或类型。')\n        if key=='damage' and result.get('total_damage') is None:\n            notes.append('整体伤害仍未知；以下已有分项字段和条件参考不构成完整伤害总量。')\n        if key=='healing':\n            notes.append('潜在治疗不等于有效受疗；不反推受疗人数，也不包含独立生命回复。')\n            if result.get('total_healing') is None:notes.append('整体治疗仍未知；以下已有分项字段和条件参考不构成完整治疗总量。')\n        if key=='regeneration':notes.append('独立生命回复不并入伤害或直接治疗；是否实际生效继续按原情景和来源限制。')\n        if key=='buildup':notes.append('损伤积累不是敌人生命伤害，也不自动等于爆发次数或爆发伤害。')\n        blocks.append(section('output_breakdown_'+key,'当前情景输出分项 · '+title,rows,notes+group_notes[key]))\n    return blocks\n\n\ndef build_report(scenario,result):\n",
+          "purpose": "Insert pure current-result presentation helper; existing helpers unchanged.",
+          "occurrences": 1
+        },
+        {
+          "old": "    report={'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},\n",
+          "new": "    sections.extend(current_output_breakdown_sections(result))\n    report={'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},\n",
+          "purpose": "Add current observation detail before existing module coverage annotation and renderer.",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before_bytes": 5691,
+      "before_sha256": "6fa20640d5fdaf8b7163f26789d04245028c0bbd1f9c00c364a83bdf4a866f02",
+      "after_bytes": 5738,
+      "after_sha256": "644781fcbf652931205012751ca773fb7db863b799367d4dec39ef128bb9b15d",
+      "blocks": [
+        {
+          "old": "MODULES = (\n",
+          "new": "MODULES = (\n    \"tests.test_current_output_breakdown_115\",\n",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "new_files": [
+    "tests/test_current_output_breakdown_115.py"
+  ],
+  "scope": "Exact original reporting blocks and exactly one selector; registry preview provenance only and Root unique-anchor rebase preserves future114 insertion."
+}

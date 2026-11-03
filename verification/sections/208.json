@@ -1,0 +1,132 @@
+{
+  "title": "凯尔希普通/S1与银灰普通三段动作条件参考",
+  "remaining_item": "技能时序与精度：凯尔希normal/S1与银灰normal当前静态动作选择与分段生命周期参考；实际运行态门/选择/相位仍待核验",
+  "new_capability": "12个源绑定候选接入既有显式动作选择；实际计算及报告分列firstAttack门成立/不成立的源段合计、播放速度、缩放后begin/body/end和仅动画事件偏移；阻止单主体18帧或银灰随机候选被当完整首次出手；真实首次/结束仍None，不自动选参考。",
+  "source_evidence": {
+    "receipt": "research/p2-three-part-static-current/receipt.json",
+    "asset_baseline_version": "26-09-13-15-28-10-30688348",
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "exact_iterator": {
+      "declaring_type": "Torappu.Battle.Abilities.ThreePartOneshotAnimation+<DoPlayAnimation>d__21",
+      "metadata_method_index": 94090,
+      "address": "0x180f824e0",
+      "instructions": 122
+    },
+    "same_gameobject_behavior_gathering": "Awake passes encoded MethodSpec290589 Component.GetComponents<AbilityStandard.Behaviour> and stores result at m_behaviours+0x100; selected abilities and ThreePart components have exact same GameObject PPtrs",
+    "native_scaling": "InitAnimation compares onlyBegin flag+get_firstAttack; combines GetAnimationTime begin/end/body, cooldown/sum clamped at configured min/max, stores reciprocal playback speed; MoveNext plays each gated segment then WaitForFixedSeconds",
+    "silverash_selection": "SelectMethod enum0=Random,1=Loop; current _selectMethod0 and 3 exact child PPtrs; _GetAbilityInternal takes random branch; no probabilities or sequence assigned",
+    "fresh_physical_checks": {
+      "methods": 28,
+      "unique_instructions": 2748,
+      "all_bytes_matched": true,
+      "asset_sha_matches": 4
+    },
+    "public_struct_source": {
+      "url": "https://raw.githubusercontent.com/Perfare/Il2CppDumper/4741d46ba9cd6159c5d853eb9d6fc48b4bfa2b1a/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+      "commit": "4741d46ba9cd6159c5d853eb9d6fc48b4bfa2b1a",
+      "sha256": "e92cfbc617de4bc1dfade5df3dc5056e80b87038ca9b2a67efeedc9c1e939ecc",
+      "bytes": 10645,
+      "license_url": "https://raw.githubusercontent.com/Perfare/Il2CppDumper/4741d46ba9cd6159c5d853eb9d6fc48b4bfa2b1a/LICENSE",
+      "license_sha256": "373bd2ed813eaa8245d1290138985c6fb025d588db254602720697455ae36c6c"
+    }
+  },
+  "acceptance": {
+    "tests_run": 71,
+    "passed": 71,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "cases": [
+      "凯normal mode0/S1mode3各3方向、银normal6候选原件绑定",
+      "原件SHA/开始段时长/loop/方向篡改拒绝整条证明",
+      "两种firstAttack门下整体缩放与各段时长、源浮点边界",
+      "凯无max缩放限制允许慢放、银max1只压缩",
+      "完整首次出手不由body18帧填充、明确前摇情景覆盖仍可用",
+      "actual首击/回调/结束None、随机分支/概率/序列None",
+      "实际frame/continuous计算与文本/结构化报告输出",
+      "无显式选择默认数字完全不变、重复读取副本独立",
+      "048全64骨架hash/浮点归一化、既有timing/movement/window/机械师S2边界仍通过"
+    ],
+    "actual_window_ui_check_required_after_root_integration": true,
+    "first_failures_preserved": [
+      "首次手动hex误定位提取不入证明；method_index校准正确地址",
+      "首次测试在root cwd执行导致新隔离module未找到；root12旧例通过但不是候选验收，正确cwd71通过",
+      "MIT许可证首次请求RemoteDisconnected；第二次固定commit来源成功"
+    ],
+    "git_apply_check": "Passed read-only git apply --check --ignore-space-change against current root; existing CRLF files require this flag; baseline text drift []",
+    "patch_encoding_check": "0 CR bytes; exactly one final LF; pinned source and MIT license SHA match vendored files"
+  },
+  "limitations": [
+    "current XLua/hotfix, actual mode/skin/direction and firstAttack gate unknown",
+    "segment durations omit scheduler resume phase, interruption, projectile travel and callback phase",
+    "Ability end animation is independent of empty ThreePart.end; no actual skill end inferred",
+    "body event frames are not a whole-chain first attack; generic windup is suppressed unless explicitly overridden",
+    "conditional profiles use raw seconds and numerical formula references, never ceiling/normalized callback frames",
+    "默认外观当前静态资产而非当前运行态热更新证明；未检查其它皮肤",
+    "body-only逐击不标runtime/exact绑定；未显式前摇时仍沿既有延迟首击情景，不把它当实际时钟",
+    "正常技能/普通充能分别保留normal/skill动作作用域；变速表只按列出的输入周期，实际中途重算/动态采样未知"
+  ],
+  "files": [
+    "research/p2-three-part-static-current/behaviour-generic-binding.json",
+    "research/p2-three-part-static-current/fresh-physical-verification.json",
+    "research/p2-three-part-static-current/Il2CppClass.cs",
+    "research/p2-three-part-static-current/IL2CPPDUMPER_LICENSE",
+    "research/p2-three-part-static-current/native-proof.json",
+    "research/p2-three-part-static-current/prefab-bindings.json",
+    "research/p2-three-part-static-current/receipt.json",
+    "research/p2-three-part-static-current/selected-metadata.json",
+    "rouge/animation_reference.py",
+    "rouge/data/native-static-action-bindings.json",
+    "rouge/reporting.py",
+    "rouge/timing.py",
+    "tests/test_static_action_selection_current.py",
+    "tests/test_three_part_static_reference_current.py",
+    "rouge/app.py",
+    "tests/test_static_action_window.py",
+    "verification/section-208/native-static-bytes.json",
+    "verification/section-208/window.json",
+    "verification/section-208/independent-review.md"
+  ],
+  "test_selectors": [
+    "tests.test_three_part_static_reference_current",
+    "tests.test_static_action_selection_current",
+    "tests.test_original_animation_048",
+    "tests.test_timing",
+    "tests.test_shield_break_reference",
+    "tests.test_shield_timeline_131",
+    "tests.test_static_action_window"
+  ],
+  "next_remaining_wording": "凯尔希normal/S1的实际firstAttack门、当前模式/皮肤与调度恢复/友方获取/首击/结束相位；银灰normal实际随机分支与逐击序列/时钟；首批三人当前热更新与实际回调核验继续未知",
+  "baseline_text_drift": [],
+  "patch_sha256": "432c86df9b33d2b38a77863beb42016ec23e6bb2189c3dbe818c8b4dc8337662",
+  "patch_line_endings": "LF, exactly one final newline",
+  "tracked_source_edited_by_author": false,
+  "section": 208,
+  "root_acceptance": {
+    "necessary_tests": 74,
+    "passed": 74,
+    "actual_mainwindow_cases": 3,
+    "independent_default_results_compared": 22,
+    "independent_selected_profiles_compared": 24,
+    "native_physical_bytes_receipt": "verification/section-208/native-static-bytes.json",
+    "actual_original_window": "verification/section-208/window.json"
+  },
+  "preparation_errors": [
+    "Root physical-byte helper initially expected the older proof schema; read actual method_records schema and existing relative source paths, then independently verified all28 methods/2748 byte records.",
+    "Two added GUI tests initially looked up damage_result.estimate instead of the established damage_result.result wrapper; corrected the fixture access; calculations and assertions preserved."
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T11:23:44.315422+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 74,
+    "passed": 74,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-208/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

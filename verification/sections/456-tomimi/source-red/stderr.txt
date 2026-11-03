@@ -1,0 +1,15 @@
+test_missing_parent_source_removes_visible_dependent_page (tests.test_tomimi_456.BrowserNavigationTests.test_missing_parent_source_removes_visible_dependent_page) ... FAIL
+
+======================================================================
+FAIL: test_missing_parent_source_removes_visible_dependent_page (tests.test_tomimi_456.BrowserNavigationTests.test_missing_parent_source_removes_visible_dependent_page)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_tomimi_456.py", line 80, in test_missing_parent_source_removes_visible_dependent_page
+    self.qt.processEvents();self.assertNotIn(page,self.host.history);self.assertIs(self.host.pages.currentWidget(),self.root);self.assertIsNone(self.parent.result)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <rouge.player_reference_window.ToolPage(0x21b95de7eb0, name="mapReferenceWindow") at 0x0000021BC22F5300> unexpectedly found in [<rouge.player_reference_window.ToolPage(0x21b95de6f80, name="playerPopover") at 0x0000021BBF2F7A80>, <rouge.player_reference_window.ToolPage(0x21b95de7eb0, name="mapReferenceWindow") at 0x0000021BC22F5300>]
+
+----------------------------------------------------------------------
+Ran 1 test in 2.265s
+
+FAILED (failures=1)

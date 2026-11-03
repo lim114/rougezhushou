@@ -1,0 +1,37 @@
+{
+  "status": "SOURCE_ONLY_EXACT_THREE_CHANGE_INVERSE",
+  "original": {
+    "path": "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py",
+    "bytes": 1184276,
+    "sha256": "83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee"
+  },
+  "candidate": {
+    "path": "/workspace/.continuation/full095-ui-lineno-cache-source-pending-v1/wine-full-ui-095-lineno-cache-pending.py",
+    "bytes": 1184561,
+    "sha256": "1a6ac7f0db3096de170a9e0d035148bfbad372cc58f704bb7ad39da6cb7cfb6d"
+  },
+  "changes": [
+    {
+      "kind": "unique_global_insert",
+      "anchor": "_started_hooks095=False;_explicit_buttons095=0;_explicit_texts095=0\n",
+      "insert": "_runner_line_cache095={}\n"
+    },
+    {
+      "kind": "unique_helper_insert",
+      "anchor": "def _origin095(frame):\n",
+      "insert": "def _runner_line095(cursor):\n    code=cursor.f_code;key=(id(code),cursor.f_lasti)\n    cached=_runner_line_cache095.get(key)\n    if cached is not None:return cached[1]\n    line=cursor.f_lineno\n    _runner_line_cache095[key]=(code,line)\n    return line\n\n"
+    },
+    {
+      "kind": "exact_origin_line_replacement",
+      "old": "            origin={'runner_line':cursor.f_lineno,'function':cursor.f_code.co_qualname}\n            if cursor.f_lineno<=len(_source_lines095):origin['source']=_source_lines095[cursor.f_lineno-1]\n",
+      "new": "            line=_runner_line095(cursor)\n            origin={'runner_line':line,'function':cursor.f_code.co_qualname}\n            if line<=len(_source_lines095):origin['source']=_source_lines095[line-1]\n"
+    }
+  ],
+  "reverse_entire_UTF8_bytes_equal_original": true,
+  "original_arbitrary_assert_whole_text_preserved": true,
+  "assert_count": 907,
+  "assert_vector_sha256": "97274820d92ccd0c9d52c6f026a0725bd3c0b62849ccc9c88805286203d6a343",
+  "sole_existing_top_level_AST_change": "_origin095",
+  "new_helper": "_runner_line095",
+  "new_global": "_runner_line_cache095"
+}

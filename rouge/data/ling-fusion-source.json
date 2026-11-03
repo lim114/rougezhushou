@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "token_id": "token_10020_ling_soul3",
+  "owner_skill_id": "skchr_ling_3",
+  "token_skill_id": "sktok_ling_soul3",
+  "all_token_skill_levels_equal": true,
+  "merged_additions": {
+    "hp": 1.0,
+    "attack": 0.8,
+    "defense": 0.8,
+    "resistance": 1.0,
+    "base_interval": 0.8,
+    "block": 2.0
+  },
+  "owner_skill_levels": [
+    {
+      "rank": 1,
+      "attack": 0.4,
+      "defense": 0.4
+    },
+    {
+      "rank": 2,
+      "attack": 0.45,
+      "defense": 0.4
+    },
+    {
+      "rank": 3,
+      "attack": 0.5,
+      "defense": 0.4
+    },
+    {
+      "rank": 4,
+      "attack": 0.55,
+      "defense": 0.5
+    },
+    {
+      "rank": 5,
+      "attack": 0.6,
+      "defense": 0.5
+    },
+    {
+      "rank": 6,
+      "attack": 0.65,
+      "defense": 0.5
+    },
+    {
+      "rank": 7,
+      "attack": 0.7,
+      "defense": 0.6
+    },
+    {
+      "rank": 8,
+      "attack": 0.8,
+      "defense": 0.7
+    },
+    {
+      "rank": 9,
+      "attack": 0.9,
+      "defense": 0.85
+    },
+    {
+      "rank": 10,
+      "attack": 1.0,
+      "defense": 1.0
+    }
+  ],
+  "sources": {
+    "character_table": {
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+    },
+    "skill_table": {
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json"
+    }
+  },
+  "documentation": [
+    {
+      "url": "https://prts.wiki/w/%E2%80%9C%E5%BC%A6%E6%83%8A%E2%80%9D",
+      "checked_date": "2026-10-14",
+      "role": "community mechanics documentation, separate from native proof",
+      "facts": [
+        "高级形态参数按对应属性直接加算/乘算；高级形态普攻为法术，占用两部署位。",
+        "模式切换与阻挡重判属于实际生命周期，未由本算式验证。"
+      ]
+    },
+    {
+      "url": "https://prts.wiki/w/Ling",
+      "checked_date": "2026-10-14",
+      "role": "community same-layer clarification",
+      "facts": [
+        "技能攻击/防御百分比与高级形态同层累加，不做两个倍率的叠乘。"
+      ]
+    }
+  ],
+  "limitations": [
+    "This is documented formula arithmetic, not native fusion/attachment proof.",
+    "Token cultivation endpoints and equipment additions reuse their frozen reference.",
+    "No relic/squad combination, actual current panel, skill clocks or complete damage claim."
+  ]
+}

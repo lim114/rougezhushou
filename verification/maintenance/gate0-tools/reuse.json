@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "url": "https://github.com/python/cpython/blob/v3.12.14/Lib/logging/handlers.py",
+      "component": "QueueHandler and QueueListener",
+      "use": "Existing Python3.12.14 standard-library producer/listener pipeline; separate background I/O, own allowlisted JSON messages."
+    },
+    {
+      "url": "https://docs.python.org/3.12/howto/logging-cookbook.html#dealing-with-handlers-that-block",
+      "use": "Official recipe for separating handlers that can block from caller work."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QApplication.html#PySide6.QtWidgets.QApplication.topLevelWidgets",
+      "use": "Existing Qt6.11.2 visible application surfaces, not file/title counts."
+    }
+  ],
+  "new_packages_or_copied_upstream_program": false,
+  "choice": "Use mature installed standard-library/Qt facilities. A separate external telemetry backend or full tracing framework adds deployment/network/maintenance cost beyond this local Gate 0 scope.",
+  "no_personal_uploads": true
+}

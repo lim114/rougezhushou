@@ -132,7 +132,33 @@ def format_route(graph, node_id, *, historical=False, technical=False, compact=F
     return '\n'.join(lines)
 
 
-def format_node(graph, node_id, *, historical=False, technical=False):
+def format_connections(graph,node_id, *, historical=False):
+    node=next((n for n in (graph or {}).get('nodes',[]) if n['id']==node_id),None)
+    if node is None:return '请选择地图节点查看位置与相邻连接。'
+    neighbors=[]
+    for a,b in graph.get('edges',[]):
+        other=b if a==node_id else a if b==node_id else None
+        if other is not None and other not in neighbors:neighbors.append(other)
+    positions={n['id']:n for n in graph['nodes']}
+    lines=[('历史位置：' if historical else '所选位置：')+location(node,graph['grid']['rows']), '【模板相邻节点】']
+    for key in neighbors:
+        adjacent=positions.get(key)
+        if adjacent is None:lines.append('连接端点位置未确认');continue
+        observed=adjacent.get('observed_type');remembered=adjacent.get('remembered_type')
+        if observed=='林间空地' and remembered:kind='已通过：'+remembered+('（当时林间空地）' if historical else '（本帧林间空地）')
+        elif observed and not observed.startswith(('未知','类型未确认')):kind=('当时已读：' if historical else '已读：')+observed
+        elif remembered:kind='本局记录：'+remembered
+        elif adjacent.get('template_type'):kind='模板固定：'+adjacent['template_type']
+        else:
+            candidates=(adjacent.get('prediction') or {}).get('candidates',[])
+            kind='类型候选：'+' / '.join(candidates) if candidates else '类型未确认'
+        lines.append(location(adjacent,graph['grid']['rows'])+' · '+kind)
+    if not neighbors:lines.append('当前资料未列出相邻节点。')
+    lines.append('模板连线仅作位置资料；实际通行状态未核验，不自动选路。')
+    return '\n'.join(lines)
+
+
+def format_node(graph, node_id, *, historical=False, technical=False, include_historical_route_diagnostics=False):
     node = next((n for n in graph['nodes'] if n['id']==node_id), None) if graph else None
     if node is None:
         return ''
@@ -173,8 +199,11 @@ def format_node(graph, node_id, *, historical=False, technical=False):
         if prediction.get('notice'): lines.append(prediction['notice'])
         if prediction.get('evidence')!='visible_history':
             lines.append('候选没有统计概率，也不表示游戏已揭示。')
-    lines.extend(['', '【路线参考】', f"距初始起点最短 {node['distance']} 步（沿模板连线；不是从当前位置出发）"])
-    lines.append(format_route(graph,node_id,historical=historical,technical=technical))
+    if include_historical_route_diagnostics:
+        lines.extend(['', '【路线参考】', f"距初始起点最短 {node['distance']} 步（沿模板连线；不是从当前位置出发）"])
+        lines.append(format_route(graph,node_id,historical=historical,technical=technical))
+    else:
+        lines.extend(['',format_connections(graph,node_id,historical=historical)])
     budget=graph.get('generation_budget',{})
     counts=[name for name in (node.get('prediction') or {}).get('candidates',[]) if name in budget]
     if counts:

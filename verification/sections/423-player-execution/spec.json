@@ -1,0 +1,21 @@
+{
+  "title": "离开商店后回看已读商品",
+  "change": "商店文字核对成功时，只在新画面中全部名称标记仍一致的情况下记下已确认商品名称；收藏品大栏目内可切到商店记录，离开页面后继续查效果。记录属于本局，不当作持有，未读价格/刷新次数不补写。",
+  "limits": "目前记录可唯一对应目录的已读名称，不是完整库存；价格、刷新次数、购买状态和货物移除仍未确认。只有用户手动新局隔离本局记录。",
+  "criteria": [
+    "同帧新鲜名称证据才记入准确本局",
+    "歧义/换页/过期/新局不沿用",
+    "离开商店可查看图文与效果而不改变持有",
+    "未读价格和刷新次数明确未知"
+  ],
+  "additional_tests": [
+    "tests.test_player_feature_418",
+    "tests.test_player_parts_397"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_423",
+  "native": "scripts/verify_player_feature_window_423.py",
+  "unit_receipt": "verification/sections/423-player-checks/process.json",
+  "native_receipt": "verification/sections/423-player-window/window.json",
+  "native_process_receipt": "verification/sections/423-player-window-process/process.json"
+}

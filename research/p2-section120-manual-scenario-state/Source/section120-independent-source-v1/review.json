@@ -1,0 +1,111 @@
+{
+  "kind": "INDEPENDENT_SOURCE_ONLY_SECTION120_REVIEW",
+  "runtime_executed": false,
+  "project_imports_or_tests_executed": false,
+  "tracked_mutations": false,
+  "manifest": {
+    "bytes": 2503,
+    "sha256": "69a9abb4819d191fac517da9669cc7f46d106176359325af0d756c92dde7e952"
+  },
+  "verified_payloads": {
+    "AUTHOR_SOURCE_CHECK120.json": {
+      "bytes": 4083,
+      "sha256": "cb09f22b793b2e0ef5608848c850ce9e8447890673501011cf219b524e53b9dc"
+    },
+    "IMPLEMENTATION_CONTRACT120.md": {
+      "bytes": 6896,
+      "sha256": "39c0ee917adb68b386f10af3db4ac6dbfbe3078b9524a4d93413e49f234f530a"
+    },
+    "PUBLIC_VALIDATION_PLAN120.json": {
+      "bytes": 7354,
+      "sha256": "0632878404fba2cacc1f550ca624c249f13487080f5feebdd3bb14d6effc9bfb"
+    },
+    "candidate/rouge/app.py": {
+      "bytes": 100029,
+      "sha256": "19ddbe647157316e07301c5b4d383cad2d8f622257457a52a57429f20fe5e7b4"
+    },
+    "candidate/rouge/manual_scenario.py": {
+      "bytes": 1101,
+      "sha256": "1a15f179950e1cb0856e303d06fc02562b825f4ca730fd41489456b3d9c5f603"
+    },
+    "candidate/tests/test_manual_scenario_120.py": {
+      "bytes": 4659,
+      "sha256": "8ecaa04ece9e43a93e2890b4fe6e371b2bc85ed3d83b1039f15290f7261ae37c"
+    },
+    "candidate/verify_cloud.py": {
+      "bytes": 5818,
+      "sha256": "91f29accd20c88e8dbde68b91515a15a9b21b3a471aaa2f1bd2af9d480ca6d23"
+    },
+    "local-transports.json": {
+      "bytes": 6113,
+      "sha256": "9c2e10902d4800bcec5f924c76e67f1f899ca729e1840d9dc0a938e846280ef1"
+    },
+    "public-sources/QUOTED_RULES.json": {
+      "bytes": 7574,
+      "sha256": "9d4b9be977fdc4d46e28bdde51ad220a0980834f803f019b9ab36d25e32c9f44"
+    },
+    "public-sources/python312-json-plain.txt": {
+      "bytes": 25299,
+      "sha256": "c0405cfde1c12cf2f4d633fb433ff36670ec0b4d849ea6c7ebfab9f5c3dd7315"
+    },
+    "public-sources/python312-json.html": {
+      "bytes": 107891,
+      "sha256": "1a5e4ba18342b32f5f174d129f9c226a21a9445a89384f13a3f33ec327c2b68f"
+    },
+    "public-sources/python312-json.html.download.json": {
+      "bytes": 449,
+      "sha256": "e570890dcafc1e9b338632978624c4b6f0fefd77ca074d3861ec8a71e04dd689"
+    },
+    "public-sources/rfc8259.txt": {
+      "bytes": 28360,
+      "sha256": "61a5378f4255c720beb2a4b4a63b29540147c140f36988bf086291989b4cd2d7"
+    },
+    "public-sources/rfc8259.txt.download.json": {
+      "bytes": 448,
+      "sha256": "ea914fedfa027276a01c326cdceb764255f81a66d9512d34bae6b8e6003399bf"
+    }
+  },
+  "inverse_and_forward_app_bytes_exact": true,
+  "six_local_transport_anchors": 6,
+  "existing_MainWindow_AST_changes": [
+    "calculate"
+  ],
+  "added_MainWindow_method": [
+    "sync_scenario_previews"
+  ],
+  "quote_offsets_verified": 7,
+  "parser_test_methods": [
+    "test_top_level_duplicate_cannot_silently_reverse_empty_target_choice",
+    "test_nested_duplicate_cannot_silently_reverse_independent_unit_target_choice",
+    "test_relic_counter_duplicates_are_explicit_instead_of_last_value_wins",
+    "test_equivalent_escaped_key_is_duplicate_after_JSON_unescaping",
+    "test_same_key_on_separate_objects_preserves_independent_unit_choices",
+    "test_bare_nonfinite_constants_reject_inside_arrays_and_objects",
+    "test_float_overflow_is_an_app_finite_input_policy",
+    "test_text_spelling_nan_or_infinity_is_not_a_numeric_constant",
+    "test_normal_numbers_keep_types_float_bits_order_and_zero",
+    "test_valid_unicode_values_and_unknown_keys_remain_opaque",
+    "test_old_malformed_document_message_is_preserved",
+    "test_old_non_object_message_is_preserved"
+  ],
+  "blocking_findings": [],
+  "source_reasoning": [
+    "Original calculate returns before dual-editor cache advance for None/unimplemented/no-skill. Distinct temporary text changes in these actual UI states can contaminate prior owner on return when preview key still A. Candidate moves only this cache transition ahead of the returns and disables invalid editors.",
+    "Candidate preserves previous blockSignals state rather than forcing False. Keys require implemented operator and non-None current skill; GUI supplies actual selectable int index. All other MainWindow methods AST unchanged.",
+    "Parser object_pairs_hook rejects duplicates within each decoded object including escaped equivalent names, independently permits same names in different objects; parse_constant rejects NaN/Infinity, parse_float rejects finite-range overflow. Strict policy applies only consumed manual editor strings, not public dictionary calculator or persistence.",
+    "Official quoted RFC uses SHOULD unique, not MUST reject; 1e309 grammar legal but finite app policy rejects. Python defaults explicitly accept nonfinite and use last duplicate. All seven exact quotes verified physical Source offsets.",
+    "Relic condition needed/filter branch stays unchanged; bad hidden text remains ignored when needed empty. Blank timing omission and confirmed resource fallback unchanged. Legal JSON stays default types/order/float bits, no unknown-key validation added."
+  ],
+  "qualified_boundaries": [
+    "None/unsupported actual user-flow bug not yet Root Runtime reproduced",
+    "Candidate invalid editor disabled state only stops actual user editing; Source setter can bypass widgets and does not represent user ability",
+    "JSON parsing policy does not supply game acquisition/lifetime/collision or mechanics",
+    "Root actual paired legal API/native/text equivalence required beyond AST"
+  ],
+  "root_runtime_required": [
+    "Actual original A to Hibiscus/Lancet/no-skill/empty-overview and return pollution",
+    "Actual candidate old exact strings restore and clear/disabled invalid states",
+    "Six legal public API +14 real UI workflows and active/hidden unused needed gates",
+    "Read saved evidence and bounded PNGs, full120 gates, exact current Source rebind before application"
+  ]
+}

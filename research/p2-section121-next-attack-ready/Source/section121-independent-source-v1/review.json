@@ -1,0 +1,112 @@
+{
+  "kind": "INDEPENDENT_SOURCE_ONLY_SECTION121_REVIEW",
+  "runtime_executed": false,
+  "project_imports_or_tests_executed": false,
+  "tracked_mutations": false,
+  "manifest": {
+    "bytes": 1197,
+    "sha256": "1ce53019ad27976b44a01f4b79374a4ff65129bc86c76fd2c1c4eca88dde68d9"
+  },
+  "verified_payloads": {
+    "README_ZH.md": {
+      "bytes": 3812,
+      "sha256": "90c430cd152c5371adf9d7a97cb5c5525fc3a705495cd36106799064b7e08a90"
+    },
+    "baseline/rouge/timing.py": {
+      "bytes": 28025,
+      "sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6"
+    },
+    "candidate/rouge/timing.py": {
+      "bytes": 28342,
+      "sha256": "cac589f1f08871eda568c718904d9b40af3f34460a0220ca5eb14ad3916a8acf"
+    },
+    "candidate/tests/test_next_attack_ready_stage.py": {
+      "bytes": 6582,
+      "sha256": "0f80ad4403766f368cbad99bb263d807fbc1eba1c93a3aaa4131d5aa39f797e1"
+    },
+    "public-inputs.json": {
+      "bytes": 3795,
+      "sha256": "8b38f4901ac9afb8a21cdcb0c3e0d23550aab2408fdf5aa4211cc32cf622c42d"
+    },
+    "source-inputs.json": {
+      "bytes": 1489,
+      "sha256": "c816fbe0f4742f05e4fee9f258fc58d31d877ec80642b95c0a9887e8d282309f"
+    },
+    "transport.json": {
+      "bytes": 1160,
+      "sha256": "1ead3d7e7f1711435e2ed83865ecbc4aedf581cf0f706cd175f526edd7542b1c"
+    }
+  },
+  "literal_composition_exact": true,
+  "AST_changed_top_level_definitions": [
+    "charge_seconds"
+  ],
+  "compile_noexec": true,
+  "test_methods": [
+    "test_two_initial_sp_items_do_not_invent_an_extra_continuous_attack_charge",
+    "test_public_initial_sp_changes_initial_readiness_without_changing_cast_or_recharge",
+    "test_public_three_formatters_are_pure_and_show_zero_initial_time",
+    "test_zero_required_sp_does_not_require_a_positive_future_increment",
+    "test_ready_sp_still_requires_a_legal_attack_slot_and_empty_source_stays_unknown",
+    "test_frame_ready_stage_uses_first_legal_start_without_sp_credit_or_windup",
+    "test_zero_ready_stage_matches_existing_periodic_and_classified_charge_contract",
+    "test_positive_requirement_keeps_existing_continuous_charge_float_bits",
+    "test_ready_next_attack_stage_does_not_change_non_next_attack_zero_charge"
+  ],
+  "public_case_count": 6,
+  "blocking_findings": [],
+  "source_reasoning": [
+    "Public Combat.calculate line1348 max0 of Mantra R7 cost3 minus current initial_sp modifiers+12/+18 reaches wait_next_attack true, no periodic rules. Existing continuous attacks first legal start0 and first release1.6, hence old release[-1] for count0 gives1.6; frames already uses start index0.",
+    "Positive required branch unchanged: increment<=0 still None, ceil required/increment identical, third added condition is false when count positive. Existing continuous float multiplication/index and frame readiness ordering preserved.",
+    "Non-next required<=0 returns same int0 before new conditions. Zero ready next with increment0 no longer returns None or computes0/0; it still constructs existing timeline and requires a nonempty legal start.",
+    "Frames first valid start under initial target5-6 and offset2 normal source preserves existing5 and relative3, not windup release. Explicit empty source remains no starts in both timing modes.",
+    "Periodic/classified direct controls are conditional API contract references only. read_continuous_attacks default remains True even active0; active parameter governs deferred text-condition validation, not default value. Retired combat callback relics are not reactivated.",
+    "Continuous branch called without start_delay, and current continuous AttackTimeline starts ready0 including deployment-speed branch. Positive ranges/movement/interrupt remain unsupported continuous references; literal0.0 is valid only this existing contract."
+  ],
+  "literal_hand_arithmetic_not_API": {
+    "interval": 1.6,
+    "cost": 3,
+    "increment": 1.0,
+    "baseline_continuous_initial": 4.800000000000001,
+    "baseline_continuous_initial_float_hex": "0x1.3333333333334p+2",
+    "baseline_frames_initial": 4.8,
+    "initial_modifiers": {
+      "rogue_6_relic_legacy_98": [
+        {
+          "kind": "initial_sp",
+          "value": 12.0,
+          "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+          "position": "",
+          "subprofession": "",
+          "group": "modify_sp[born]",
+          "source_buff_key": "global_buff_stack",
+          "source_buff_index": 0
+        }
+      ],
+      "rogue_6_relic_legacy_99": [
+        {
+          "kind": "initial_sp",
+          "value": 18.0,
+          "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+          "position": "",
+          "subprofession": "",
+          "group": "modify_sp[born]",
+          "source_buff_key": "global_buff_stack",
+          "source_buff_index": 0
+        }
+      ]
+    },
+    "next_skill_one_magic_reference": 2750.0,
+    "next_skill_one_buildup_reference": 550.0
+  },
+  "qualified_boundaries": [
+    "Not native attack/skill binding or actual start/end proof",
+    "Do not expand positive continuous range/movement/interrupt support",
+    "Internal direct APIs and conditional SP events are not public combat-capture activation"
+  ],
+  "root_actual_required": [
+    "Original vs candidate six public cases plus direct zero/positive/empty/reference cases",
+    "Preserve full original/candidate native graph and three texts; positive float hex controls",
+    "Related timing/wine/received-SP/skill regressions and actual Mantra+initialSP window"
+  ]
+}

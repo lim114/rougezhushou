@@ -2,16 +2,22 @@
 
 
 def exclude_unplaced_neural_source(result,reference):
-    """An unplaced source changes burst state; retain known direct subtotals."""
+    """An unresolved neural source changes burst state; retain direct subtotals."""
     skill=result['estimate']['skill'];affected=reference['affected_damage_phases']
     excluded=reference['excluded_burst_damage']
-    subtotals={key:skill.get(key) for key in
-        ('total_damage','phase_damage','cycle_damage','cycle_dps','window_damage','window_dps')}
-    subtotals['window_damage']=skill.get('window_damage',result['total_damage'])
-    for key,phase in (('total_damage','cast'),('phase_damage','phase'),
-                      ('window_damage','window'),('cycle_damage','cycle')):
-        if subtotals[key] is not None:
-            subtotals[key]=max(0,subtotals[key]-excluded[phase])
+    existing=result.get('known_damage_subtotals')
+    if existing is not None:
+        # Several unresolved sources can affect the same burst sequence.
+        # The first finisher already excluded it; never subtract it twice.
+        subtotals=dict(existing)
+    else:
+        subtotals={key:skill.get(key) for key in
+            ('total_damage','phase_damage','cycle_damage','cycle_dps','window_damage','window_dps')}
+        subtotals['window_damage']=skill.get('window_damage',result['total_damage'])
+        for key,phase in (('total_damage','cast'),('phase_damage','phase'),
+                          ('window_damage','window'),('cycle_damage','cycle')):
+            if subtotals[key] is not None:
+                subtotals[key]=max(0,subtotals[key]-excluded[phase])
     cycle=skill['cycle_seconds'];window=skill['window_seconds']
     subtotals['cycle_dps']=subtotals['cycle_damage']/cycle if cycle else None
     subtotals['window_dps']=subtotals['window_damage']/window if window else None
@@ -49,6 +55,28 @@ def finish_neural_skill(result):
 
 
 def finish_neural_reference(result):
+    incoming=result.get('neural_incoming_reference')
+    if incoming:
+        exclude_unplaced_neural_source(result,incoming)
+        result['estimate']['notes'].append(
+            '堕梦的目标普通攻击次数没有提供事件时刻；不按技能或观察窗口时长均匀分配。'
+            '实际损伤积累、爆发序列及受影响的完整总伤未知，小计保留已排程的本体法伤。')
+    binding=result.get('neural_s1_reference')
+    if binding:
+        exclude_unplaced_neural_source(result,binding)
+        for component in result['components']:
+            if component['damage_type']=='buildup':
+                component['name']='未计束缚倍率的损伤基础参考（不是生命伤害）'
+                component['binding_multiplier_applied']=False
+                if binding['affected_damage_phases']['window']:
+                    component['actual_total']=None
+        result['complete_definition']='暗夜回声束缚倍率的首次生效与刷新尚未核验；法伤小计和未计束缚倍率的损伤基础参考独立展示。'
+        result['estimate']['notes'].append(
+            '暗夜回声束缚模板的神经损伤倍率已查明，但首次附着、黑板初始化与刷新顺序尚未闭合。'
+            '不将该倍率直接套在两段攻击上；受影响的损伤积累、爆发次数和完整总伤未知，'
+            '小计仅保留原版动作参考下的已排程法伤。')
+        river=result.get('neural_relic_reference')
+        if river:river['burst_schedule_status']='unknown_due_to_s1_binding'
     finish_neural_skill(result)
     bait=result.get('neural_bait_reference')
     if bait and any(bait['affected_damage_phases'].values()):
@@ -63,7 +91,9 @@ def finish_neural_reference(result):
     from .river_effects import RELIC_ID,reference as river_reference
     if reference.get('relic_id')==RELIC_ID:
         reference['lifecycle_reference']=river_reference()
-    secondary=result.get('neural_skill_reference',{}).get('affected_damage_phases',{}) or (bait or {}).get('affected_damage_phases',{})
+    sources=(incoming,binding,result.get('neural_skill_reference'),bait)
+    secondary={phase:any((source or {}).get('affected_damage_phases',{}).get(phase,False)
+        for source in sources) for phase in ('cast','window','cycle')}
     affected={phase:bool(reference[phase+'_burst_times'] or reference['preexisting_break_assumed'] or secondary.get(phase))
               for phase in ('cast','window','cycle')}
     reference['periodic_damage_possible']=any(affected.values())

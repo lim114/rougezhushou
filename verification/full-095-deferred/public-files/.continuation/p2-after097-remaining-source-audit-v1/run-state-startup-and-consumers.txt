@@ -1,0 +1,148 @@
+13:     def __init__(self,file):
+14:         self.file=Path(file)
+15:         self.preserve_unreadable=False
+16:         self.reset(save=False)
+17:         try:
+18:             saved=json.loads(self.file.read_text(encoding='utf-8'))
+19:             if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):
+20:                 raise ValueError('Invalid exploration record')
+21:             self.state.update(saved)
+22:             if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()
+23:             self.restore_passed_node_types()
+24:             self.state['notice']='已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'
+25:             if self.restore_origin_discovery_buffs():self.save()
+26:         except FileNotFoundError:pass
+27:         except (OSError,ValueError):
+28:             self.preserve_unreadable=True
+29:             self.state['notice']='原本局记录无法读取，已保留原文件；手动重置前不会覆盖它。'
+30: 
+31:     def restore_passed_node_types(self):
+32:         """Repair old clearing overwrites using this layout's recorded evidence only."""
+33:         from .map_recognition import predict_map
+34:         for zid,graph in self.state['maps'].items():
+35:             changed=False
+36:             for node in graph.get('nodes',[]):
+37:                 if node.get('remembered_type')!='林间空地':continue
+38:                 node.pop('remembered_type',None);node['visited']=True;changed=True
+39:                 for event in reversed(self.state['history']):
+40:                     if event.get('zone_id')!=zid:continue
+41:                     if event['kind'] in ('map_layout_changed','map_confirmed'):break
+42:                     if event['kind']!='map_node_revealed' or event.get('node_id')!=node['id']:continue
+43:                     original=event.get('previous') if event.get('type')=='林间空地' else event.get('type')
+44:                     if original and original!='林间空地' and not original.startswith('未知'):
+45:                         node['remembered_type']=original
+46:                         node['type_recovery_source']='same_run_same_layout_history'
+47:                         break
+48:             if changed:predict_map(graph)
+50:     def reset(self,save=True):
+51:         self.state={'id':str(uuid.uuid4()),'started_at':time.time(),'last_read':None,
+52:             'operators':{},'crew_count':None,'selected_operator':None,'relics':{},'relic_count':None,'bar_signature':None,
+53:             'inventory_verified':False,'inventory_confirmed_at':None,'relic_icon_memory':None,
+54:             'history':[],'resources':{},'tactical_tools':{},'config':{},'maps':{},
+55:             'last_node_content':None,'node_contents':[],
+56:             'notice':'等待本局页面读取；同一局记忆仅在手动开始新局后清空。'}
+57:         if save:
+58:             self.preserve_unreadable=False
+59:             self.save()
+60: 
+61:     def save(self):
+62:         if self.preserve_unreadable:return
+63:         self.file.parent.mkdir(exist_ok=True)
+64:         temporary=self.file.with_suffix('.tmp')
+65:         temporary.write_text(json.dumps(self.state,ensure_ascii=False,indent=2),encoding='utf-8')
+66:         temporary.replace(self.file)
+76:     def restore_origin_discovery_buffs(self,observed=None,*,repaired_at=None):
+77:         """Repair only the recorded unknown-to-known origin discovery clear.
+78: 
+79:         This uses current-run history and the retained owned-popup receipt. A
+80:         real recruitment change, departure, fresh complete list or conflicting
+81:         receipt cannot restore anything. Historical events remain untouched.
+82:         """
+83:         history=self.state.get('history',[])
+84:         if not isinstance(history,list):return False
+85:         incoming={m['id']:m for m in (observed or {}).get('operators',[])}
+86:         crew=(observed or {}).get('crew_count')
+87:         full_crew=type(crew) is int and len(incoming)==crew
+88:         changed=False
+89:         from .relics import mechanics
+90:         buffs=mechanics()['char_buffs'];profiles=operator_profiles()
+91:         barriers={'recruitment_changed','classification_corrected','operator_no_longer_present',
+92:                   'char_buffs_origin_discovery_repaired','char_buff_absence_invalidated'}
+93:         for oid,member in self.state['operators'].items():
+94:             if (member.get('scope')!='run' or member.get('present') is not True
+95:                     or member.get('char_buff_ids')!=[] or member.get('char_buffs_complete') is not False
+96:                     or member.get('recruitment_kind') not in ('non_emergency','emergency_hire')):continue
+159:     def restore_relic_icon_memory(self):
+160:         """Migrate recorded full-bar candidates, never invent an unseen slot."""
+161:         signature=self.state.get('bar_signature');count=self.state.get('relic_count')
+162:         known=set(catalog()['relics'])|set(tactical_tools())
+163:         if not signature or type(count) is not int or len(signature)!=count:return
+164:         icons=[]
+165:         for candidates in signature:
+166:             if not isinstance(candidates,list) or not candidates or not all(isinstance(r,str) and r in known for r in candidates):return
+167:             confirmed=[(rid,self.state['relics'][rid]) for rid in candidates
+168:                 if rid in self.state['relics'] and self.state['relics'][rid].get('held',True)]
+169:             strong=[(rid,r) for rid,r in confirmed if r.get('icon_evidence',{}).get('name_usage_confirmed')]
+170:             icon={'id':candidates[0],'candidates':list(candidates),'confirmed':len(candidates)==1,
+171:                   'source':'historical_held_bar_signature','observed_at':self.state.get('inventory_confirmed_at')}
+172:             if len(strong)==1:
+173:                 rid,record=strong[0];icon.update(id=rid,confirmed=True,source='held_icon_and_usage',name_usage_confirmed=True)
+174:                 icon['observed_at']=record.get('captured_at')
+175:             elif len(confirmed)==1 and confirmed[0][1].get('source')=='held_icon_and_run_difficulty':
+176:                 rid,record=confirmed[0]
+177:                 icon.update(record.get('icon_evidence',{}));icon.update(id=rid,confirmed=True,source=record['source'])
+178:                 icon['observed_at']=record.get('captured_at')
+179:             icons.append(icon)
+180:         self.state['relic_icon_memory']={'icons':icons,'count':count,'complete_bar':True,
+181:             'captured_at':self.state.get('inventory_confirmed_at'),'source':'legacy_same_run_signature'}
+520:     def inventory_status(self):
+521:         count=self.state['relic_count'];known=len(self.held_relic_ids())
+522:         tools=len(self.held_tool_ids())
+523:         complete=self.state['inventory_verified'] and count is not None and known+tools==count
+524:         return {'source':'run_capture','complete':complete,
+525:                 'recognized':known,'recognized_tools':tools,'total_badge_count':count,
+526:                 'expected_count':count-tools if complete else None if tools else count,'run_id':self.state['id'],
+527:                 'confirmed_at':self.state.get('inventory_confirmed_at')}
+528: 
+529:     def held_tool_ids(self):
+530:         return sorted(tid for tid,record in self.state['tactical_tools'].items() if record.get('held',True))
+531: 
+532:     def held_relic_ids(self):
+533:         return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))
+534: 
+535:     def relic_history_context(self):
+536:         """Derive retained-growth uncertainty from this run's positive evidence.
+537: 
+564:     def summary(self):
+565:         status=self.inventory_status();state=self.state
+566:         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
+567:         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
+568:         names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')
+569:                +('（已进阶）' if member.get('advanced') else '')
+570:                +('（应急雇佣，仅一次作战）' if member.get('recruitment_kind')=='emergency_hire' else '')
+571:                for key,member in state['operators'].items()]
+572:         from .relics import mechanics
+573:         labels={'numeric':'有数值规则','conditional':'需条件','partial':'部分机制','pending':'机制待接入','non_output':'无输出加成'}
+574:         relics=[catalog()['relics'][rid]['name']+('【'+state['relics'][rid]['icon_evidence']['tier_label']+'】'
+575:                 if state['relics'][rid].get('icon_evidence',{}).get('tier_label') else '')
+576:                 +'（'+labels[mechanics()['relics'][rid]['status']]+'）' for rid in self.held_relic_ids()]
+577:         conflicts=[catalog()['relics'][rid]['name'] for rid in self.held_relic_ids()
+578:                    if state['relics'][rid].get('icon_evidence',{}).get('difficulty_conflict')]
+579:         from .relic_counter_semantics import RESOURCE_LABELS
+580:         usable=self.calculation_resources()
+581:         resources='、'.join(RESOURCE_LABELS.get(key,key)+f' {record["value"]}（'+
+582:             time.strftime('%H:%M:%S',time.localtime(record['captured_at']))+
+583:             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
+584:             for key,record in state.get('resources',{}).items())
+585:         present=sum(member.get('present',True) for member in state['operators'].values())
+586:         config=state['config'];difficulty=config.get('difficulty',{}).get('value')
+587:         squad=config.get('squad',{})
+588:         info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')
+589:         if squad.get('level') is not None:info+='（强化）' if squad['level']==1 else '（基础）'
+590:         if config.get('zone'):info+=' · '+config['zone']['name']
+591:         return '\n'.join([info,f'本局队伍：当前已识别 {present} / {crew} 人', '、'.join(names) or '成员尚未确认',
+592:             f'本局持有：已识别 {status["recognized"]+status["recognized_tools"]} / {count} 件 · '+('持有清单已核对（本局记录）' if status['complete'] else '变更待核对或尚未读全'),
+593:             '藏品：'+('、'.join(relics) or '身份尚未确认'),
+594:             '战术道具：'+('、'.join(tactical_tools()[tid]['name'] for tid in self.held_tool_ids()) or '未读取到'),
+595:             resources or '源石锭/零件数尚未确认',
+596:             *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),state['notice']])

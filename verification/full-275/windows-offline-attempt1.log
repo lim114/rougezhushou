@@ -1,0 +1,290 @@
+...............................................................................s...........s.ss..s.....sss.s...sssss...............s.ss..s.s.s......s....s.s.s.ss.......................ssssssssssssssssssssssssssssssssssssssssssss...........................................................................................................................................................................................................................................................................................................................................F.............F.......................................F...................F.....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................FFFFFFFFFF.............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................EEEE....EEEE..EEEE.........E...................................EEE........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................s....................................................................................................s.......................s.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+ERROR: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='run', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 86, in test_dangling_temporary_symlink_does_not_create_the_target
+    path.with_suffix('.tmp').symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\run-False-absent.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\run-False.tmp'
+
+======================================================================
+ERROR: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='run', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 86, in test_dangling_temporary_symlink_does_not_create_the_target
+    path.with_suffix('.tmp').symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\run-True-absent.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\run-True.tmp'
+
+======================================================================
+ERROR: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='cache', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 86, in test_dangling_temporary_symlink_does_not_create_the_target
+    path.with_suffix('.tmp').symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\cache-False-absent.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\cache-False.tmp'
+
+======================================================================
+ERROR: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='cache', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 86, in test_dangling_temporary_symlink_does_not_create_the_target
+    path.with_suffix('.tmp').symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\cache-True-absent.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-2sku91y7\\cache-True.tmp'
+
+======================================================================
+ERROR: test_live_temporary_symlink_does_not_write_its_original_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_live_temporary_symlink_does_not_write_its_original_target) (kind='run', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 75, in test_live_temporary_symlink_does_not_write_its_original_target
+    temporary.symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\run-False-retained.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\run-False.tmp'
+
+======================================================================
+ERROR: test_live_temporary_symlink_does_not_write_its_original_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_live_temporary_symlink_does_not_write_its_original_target) (kind='run', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 75, in test_live_temporary_symlink_does_not_write_its_original_target
+    temporary.symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\run-True-retained.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\run-True.tmp'
+
+======================================================================
+ERROR: test_live_temporary_symlink_does_not_write_its_original_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_live_temporary_symlink_does_not_write_its_original_target) (kind='cache', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 75, in test_live_temporary_symlink_does_not_write_its_original_target
+    temporary.symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\cache-False-retained.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\cache-False.tmp'
+
+======================================================================
+ERROR: test_live_temporary_symlink_does_not_write_its_original_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_live_temporary_symlink_does_not_write_its_original_target) (kind='cache', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 75, in test_live_temporary_symlink_does_not_write_its_original_target
+    temporary.symlink_to(target)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\cache-True-retained.txt' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-k2souddv\\cache-True.tmp'
+
+======================================================================
+ERROR: test_private_directory_name_collision_never_enters_an_old_namespace (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_private_directory_name_collision_never_enters_an_old_namespace) (kind='run', entry_kind='live_link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 175, in test_private_directory_name_collision_never_enters_an_old_namespace
+    conflict.symlink_to(target, target_is_directory=True)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\run-live_link\\retained-target' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\run-live_link\\.rouge-record-collision'
+
+======================================================================
+ERROR: test_private_directory_name_collision_never_enters_an_old_namespace (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_private_directory_name_collision_never_enters_an_old_namespace) (kind='run', entry_kind='dangling_link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 175, in test_private_directory_name_collision_never_enters_an_old_namespace
+    conflict.symlink_to(target, target_is_directory=True)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\run-dangling_link\\retained-target' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\run-dangling_link\\.rouge-record-collision'
+
+======================================================================
+ERROR: test_private_directory_name_collision_never_enters_an_old_namespace (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_private_directory_name_collision_never_enters_an_old_namespace) (kind='cache', entry_kind='live_link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 175, in test_private_directory_name_collision_never_enters_an_old_namespace
+    conflict.symlink_to(target, target_is_directory=True)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\cache-live_link\\retained-target' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\cache-live_link\\.rouge-record-collision'
+
+======================================================================
+ERROR: test_private_directory_name_collision_never_enters_an_old_namespace (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_private_directory_name_collision_never_enters_an_old_namespace) (kind='cache', entry_kind='dangling_link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_temporary_no_clobber_261.py", line 175, in test_private_directory_name_collision_never_enters_an_old_namespace
+    conflict.symlink_to(target, target_is_directory=True)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\cache-dangling_link\\retained-target' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-temporary-record-261-jbjfcfzg\\cache-dangling_link\\.rouge-record-collision'
+
+======================================================================
+ERROR: test_unsafe_paths_symlinks_and_existing_receipts_are_preserved (tests.test_restore_public_validation_inputs_261.PublicSourceIndex261Tests.test_unsafe_paths_symlinks_and_existing_receipts_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_restore_public_validation_inputs_261.py", line 174, in test_unsafe_paths_symlinks_and_existing_receipts_are_preserved
+    p.symlink_to(outside)
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\tmpzok5ic90\\synthetic-other-table.json' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\tmpzok5ic90\\.cache\\game-data\\skill_table.json'
+
+======================================================================
+ERROR: test_manual_reset_retains_relative_link_text_and_target_resolution (tests.test_persistence_initial_install.InitialInstallTests.test_manual_reset_retains_relative_link_text_and_target_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_initial_install.py", line 81, in test_manual_reset_retains_relative_link_text_and_target_resolution
+    path.symlink_to(target.name);link=path.readlink()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'public-damaged-target.json' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-initial-install-fy05vbax\\run.json'
+
+======================================================================
+ERROR: test_raced_dangling_link_after_missing_load_survives_first_save (tests.test_persistence_initial_install.InitialInstallTests.test_raced_dangling_link_after_missing_load_survives_first_save) (kind='run')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_initial_install.py", line 130, in test_raced_dangling_link_after_missing_load_survives_first_save
+    path.symlink_to(target);self.assertTrue(path.is_symlink());link=path.readlink()
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-initial-install-yxgprmf7\\run-missing.json' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-initial-install-yxgprmf7\\run-race.json'
+
+======================================================================
+ERROR: test_raced_dangling_link_after_missing_load_survives_first_save (tests.test_persistence_initial_install.InitialInstallTests.test_raced_dangling_link_after_missing_load_survives_first_save) (kind='cache')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_persistence_initial_install.py", line 130, in test_raced_dangling_link_after_missing_load_survives_first_save
+    path.symlink_to(target);self.assertTrue(path.is_symlink());link=path.readlink()
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1386, in symlink_to
+    os.symlink(target, self, target_is_directory)
+OSError: [WinError 1314] 客户端没有所需的特权。: 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-initial-install-yxgprmf7\\cache-missing.json' -> 'C:\\Users\\李娜\\AppData\\Local\\Temp\\public-initial-install-yxgprmf7\\cache-race.json'
+
+======================================================================
+FAIL: test_numerical_and_reference_functions_are_identical_to_public_backup (tests.test_readable_battle_047.ReadableBattleTests.test_numerical_and_reference_functions_are_identical_to_public_backup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_readable_battle_047.py", line 28, in test_numerical_and_reference_functions_are_identical_to_public_backup
+    self.assertEqual(ast.dump(before,include_attributes=False),ast.dump(after,include_attributes=False),(file,name))
+AssertionError: "Func[2261 chars]])), Assign(targets=[Subscript(value=Name(id='[2403 chars]=[])" != "Func[2261 chars]])), ImportFrom(module='enemy_panel', names=[a[6514 chars]=[])"
+Diff is 13554 characters long. Set self.maxDiff to None to see it. : ('rouge/battle_preview.py', 'enemy_preview')
+
+======================================================================
+FAIL: test_constraints_remain_candidates_without_probabilities (tests.test_readable_map_047.ReadableMapTests.test_constraints_remain_candidates_without_probabilities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_readable_map_047.py", line 87, in test_constraints_remain_candidates_without_probabilities
+    self.assertIn('不是从当前位置出发', text)
+AssertionError: '不是从当前位置出发' not found in '下排 · 第4列\n\n【节点状态】\n位置由模板推测；该帧未观察到节点。\n具体事件/关卡尚未揭示；节点类型不能唯一决定内容。\n\n【类型候选】\n社区约束候选：作战 / 紧急作战\n候选没有统计概率，也不表示游戏已揭示。\n\n所选位置：下排 · 第4列\n【模板相邻节点】\n上排 · 第3列 · 已读：作战\n模板连线仅作位置资料；实际通行状态未核验，不自动选路。\n类型预算（固定格与已知格去重；不是概率）：\n作战：固定1 + 其他已知1；来源总上限未知\n\n【资料依据】\n来源：社区模板资料与本局已揭示记录；技术资料可查看对应引用。'
+
+======================================================================
+FAIL: test_unaccepted_wood_decorations_and_portal_probes_are_retained (tests.test_map_projection_048.GroundLandmarkTests.test_unaccepted_wood_decorations_and_portal_probes_are_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_map_projection_048.py", line 102, in test_unaccepted_wood_decorations_and_portal_probes_are_retained
+    self.assertIsNone(load(battle_data()['stages'][sid]))
+AssertionError: FixedLandmarkReference(points=((3, 1, 137, 114), (3, 2, 171, 114), (3, 3, 204, 114), (3, 4, 237, 114), (4, 2, 167, 145), (5, 1, 125, 176), (5, 2, 164, 176), (6, 2, 158, 211)), rows=8, cols=10, width=512, height=286, agreement_tolerance_px=4, mapping_mode='direct_verified_centers', supports_segment_reference=False) is not None
+
+======================================================================
+FAIL: test_failed_readings_retained_without_relaxed_pixel_gate (tests.test_map_projection_049.GroundReferenceTests.test_failed_readings_retained_without_relaxed_pixel_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_map_projection_049.py", line 104, in test_failed_readings_retained_without_relaxed_pixel_gate
+    self.assertIsNone(load(battle_data()['stages'][probe['input']['id']]))
+AssertionError: FixedLandmarkReference(points=((3, 1, 118, 116), (5, 1, 106, 175), (2, 4, 224, 88), (3, 8, 360, 116), (6, 5, 256, 211), (6, 7, 334, 211), (6, 8, 373, 211)), rows=8, cols=11, width=512, height=286, agreement_tolerance_px=4, mapping_mode='direct_verified_centers', supports_segment_reference=False) is not None
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mechanist_default')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 47, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[881 chars]t', 'target_scope': 'enemy', 'known_animation'[17809 chars]]}]}} != {'att[881 chars]t', 'known_animation': False, 'exact_binding':[8766 chars]]}]}}
+Diff is 59906 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='myrtle_default')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 47, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[553 chars]se, 'target_scope_notes': [], 'complete': Fals[8093 chars]]}]}} != {'att[553 chars]se, 'complete': False, 'notes': ['常规攻击按30Hz逐帧调[5430 chars]]}]}}
+Diff is 26965 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mantra_default')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 47, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[520 chars]s': 0, 'per_hit': 1019.2500000000001, 'total':[17338 chars]]}]}} != {'att[520 chars]s': 0.0, 'per_hit': 1019.2500000000001, 'total[7960 chars]]}]}}
+Diff is 49583 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mantra_other_relic')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 47, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[523 chars]s': 0, 'per_hit': 1783.6875000000002, 'total':[19315 chars]]}]}} != {'att[523 chars]s': 0.0, 'per_hit': 1783.6875000000002, 'total[9625 chars]]}]}}
+Diff is 54201 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mechanist_river')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 114, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[977 chars]t', 'target_scope': 'enemy', 'known_animation'[19332 chars]]}]}} != {'att[977 chars]t', 'known_animation': False, 'exact_binding':[10289 chars]]}]}}
+Diff is 63237 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='myrtle_river')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 114, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[649 chars]se, 'target_scope_notes': [], 'complete': Fals[9616 chars]]}]}} != {'att[649 chars]se, 'complete': False, 'notes': ['常规攻击按30Hz逐帧调[6953 chars]]}]}}
+Diff is 30296 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mantra_river')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 114, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[517 chars]s': 0, 'per_hit': 1019.2500000000001, 'total':[21038 chars]]}]}} != {'att[517 chars]s': 0.0, 'per_hit': 1019.2500000000001, 'total[11259 chars]]}]}}
+Diff is 58023 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mantra_river_no_supply')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 114, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[267 chars]s': 0, 'per_hit': 1019.2500000000001, 'total':[18280 chars]]}]}} != {'att[267 chars]s': 0.0, 'per_hit': 1019.2500000000001, 'total[9626 chars]]}]}}
+Diff is 44355 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='phantom_river')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 85, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current['total_damage'],1590)
+AssertionError: None != 1590
+
+======================================================================
+FAIL: test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing (tests.test_river_reporting_060.RiverReportingTests.test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing) (name='mantra_river_and_other')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_river_reporting_060.py", line 114, in test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing
+    self.assertEqual(current, before)
+AssertionError: {'att[517 chars]s': 0, 'per_hit': 1426.9500000000003, 'total':[22868 chars]]}]}} != {'att[517 chars]s': 0.0, 'per_hit': 1426.9500000000003, 'total[12793 chars]]}]}}
+Diff is 62440 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 4324 tests in 763.925s
+
+FAILED (failures=14, errors=16, skipped=73)

@@ -1,0 +1,20 @@
+..................................................................................................................................E........
+======================================================================
+ERROR: test_exact_seven_parent_bindings_and_recipient_effects_preserved (tests.test_recipient_binding_050.RecipientBinding050Tests.test_exact_seven_parent_bindings_and_recipient_effects_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_recipient_binding_050.py", line 53, in test_exact_seven_parent_bindings_and_recipient_effects_preserved
+    manifest = json.loads((ROOT / '.cache/batch-050-before/manifest.json').read_text(encoding='utf-8'))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-050-before/manifest.json'
+
+----------------------------------------------------------------------
+Ran 139 tests in 1.477s
+
+FAILED (errors=1)

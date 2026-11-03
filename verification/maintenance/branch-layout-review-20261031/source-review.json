@@ -1,0 +1,79 @@
+{
+  "baseline_commit": "46b831486bcc217c233f14f0c62bcf7f4d20de8c",
+  "changed_source": [
+    {
+      "path": "rouge/branch_choice.py",
+      "sha256": "ea6a27d9bf140d91fd70782ad0938b09f58ed348398a829ff77fb97f3f87ff6a",
+      "bytes": 5834
+    }
+  ],
+  "unchanged_selection_and_refresh_method_AST": [
+    "entries",
+    "_rebuild",
+    "set_groups",
+    "set_overview",
+    "select_branch",
+    "select_value",
+    "_branch_changed"
+  ],
+  "unchanged_readers_data_state_and_requirements": [
+    {
+      "path": "rouge/current_battle_view.py",
+      "sha256": "ee56ab9d68b4cbe8531c3a484cf8bc36eaad567eec905c22795bfcff69bdd1ce",
+      "bytes": 47944
+    },
+    {
+      "path": "rouge/current_reward_view.py",
+      "sha256": "bc1a5241585757886959232cfd772015c7d4227ffe295401900359265e80f8fc",
+      "bytes": 8108
+    },
+    {
+      "path": "rouge/player_map_reader.py",
+      "sha256": "bfc6511bddb6a6dfe7a1bec09f4b2ccc02eb35bc33985209ed573de212ca28c7",
+      "bytes": 2347
+    },
+    {
+      "path": "rouge/player_compact.py",
+      "sha256": "7ecb05ed113c1a962e9d491523c56e272c0533b2ec748986934f97857f85c4eb",
+      "bytes": 24035
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "7380141b503ff75614fc332b2879280fea3b5183c5f31e352b638f4a040ec959",
+      "bytes": 62139
+    },
+    {
+      "path": "rouge/node_catalog_view.py",
+      "sha256": "b473ab551e65a234e0c0bad1908f9230753f79247f2529c70dea6e6a5428692d",
+      "bytes": 95577
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "framework_reuse": "Existing installed Qt6.11.2 QFormLayout WrapLongRows and AllNonFixedFieldsGrow; the existing shared BranchChoice remains the single category implementation. No breakpoint, manual resize handler or polling added.",
+  "additional_code_reason": "A small shared CategoryCombo computes text/icon width through the active QStyle. Raw sizeHint clipped under the actual stylesheet; text rendering also subtracts two pixels each side, confirmed in pinned Qt source. Net production code is larger, not claimed a line-count reduction.",
+  "primary_sources": [
+    {
+      "url": "https://doc.qt.io/qt-6/qformlayout.html#RowWrapPolicy-enum",
+      "establishes": "Toolkit supplies automatic row wrapping and widget label/field roles."
+    },
+    {
+      "url": "https://doc.qt.io/qt-6/qcombobox.html#SizeAdjustPolicy-enum",
+      "establishes": "Minimum-contents policy avoids sizing a field to its entire longest entry."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/widgets/styles/qcommonstyle.cpp",
+      "establishes": "CE_ComboBoxLabel reserves icon width plus4 and two-pixel text margins each side; installed Qt6.11.2."
+    }
+  ],
+  "application_review_complete": false,
+  "whole_video_parity_complete": false
+}

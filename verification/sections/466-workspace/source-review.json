@@ -1,0 +1,23 @@
+{
+  "section": 466,
+  "changed_or_new_sources": {
+    "rouge/app.py": {
+      "sha256": "47e74273bc808a27b8f4ee45f261862f3a30cea902e0ff7c11de6baec68cf4fe",
+      "bytes": 161775
+    },
+    "rouge/player_compact.py": {
+      "sha256": "5fec7be469d9b5cb6698bde54e39110142891622a8657bdea83c90ef9f5dccdf",
+      "bytes": 30366
+    },
+    "tests/test_chat_layout_466.py": {
+      "sha256": "68318f9e7a9886b83f83b28625d4690c9c9904f3b6eec67960e55d6360648d69",
+      "bytes": 3669
+    },
+    "tests/test_workspace_reader_466.py": {
+      "sha256": "3fd23bdbcb0e431a10223cecd344c3d1f31a437947b3832a9913afdcbfc193e0",
+      "bytes": 4652
+    }
+  },
+  "review": "Qt takeCentralWidget transfers the one original PlayerWorkspace into the retained shared ToolPage. MainWindow keeps an explicit stable workspace field for its existing16 routes; ordinary show after transfer returns the shared host, diagnostic layout remains attached to its main window. Operator/chat shortcuts select the group without resetting its child; actual form instances and drafts remain. Original back shortcut is parented to the movable workspace. A header action invokes the original workspace history; host history retains cross-reader reading. Only chat uses ignored vertical size hints so hidden pages do not force its minimum height; other pages retain scrolling. Existing pinned superqt QCollapsible hides connection controls; original backend callbacks, credentials and protocol fields are reused, relevant rows follow the mode. Expanded height is recomputed after mode changes; default collapsed content is explicitly set to zero. No new retries, catches, side-effect validation or private persistence.",
+  "whole_program_review_complete": false
+}

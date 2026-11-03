@@ -1,0 +1,21 @@
+...................................................................s............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................E......................................................................
+======================================================================
+ERROR: test_report_distinguishes_conditional_slashes_and_distance_parameters (tests.test_yato_deployment_reference.YatoDeploymentReferenceTests.test_report_distinguishes_conditional_slashes_and_distance_parameters)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-after-051/target-bool/draft/tests/test_yato_deployment_reference.py", line 126, in test_report_distinguishes_conditional_slashes_and_distance_parameters
+    receipt=json.loads((Path(__file__).resolve().parents[1]/'research/p2-yato-deployment-reference/source-receipt.json').read_text())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/.continuation/p2-after-051/target-bool/draft/research/p2-yato-deployment-reference/source-receipt.json'
+
+----------------------------------------------------------------------
+Ran 727 tests in 5.335s
+
+FAILED (errors=1, skipped=1)
+{"passed": false, "platform": "Linux", "tests_run": 727, "skipped": 1, "failures": 0, "errors": 1, "scope": "portable calculation regression; no Windows UI/capture or private state"}

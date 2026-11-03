@@ -1,0 +1,45 @@
+{
+  "kind": "DRAFT107_SAVED_PHASE_SPECIFIC_COMPATIBILITY_TRANSPORT",
+  "Source_only": true,
+  "runtime_executed": false,
+  "sealed": false,
+  "actual_runtime_ready": false,
+  "candidate_window_pin": null,
+  "corrected_test_pin": null,
+  "old_code": {
+    "bytes": 40205,
+    "sha256": "d2aa4c454cc0a477a91a83c1dca80235d6e84d1dee2a321821a74c20e112fcea"
+  },
+  "changes": [
+    {
+      "old": "WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'",
+      "new": "GOLD_WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'\nCANDIDATE_WINDOW=None  # Draft only: wait for final compatible runner Source pin.\nGOLD_RECEIPT='f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634'\nGOLD_GUARD='0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442'",
+      "old_count": 1
+    },
+    {
+      "old": "TEST='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'",
+      "new": "TEST=None  # Draft only: wait for Root's corrected new-test final pin.",
+      "old_count": 1
+    },
+    {
+      "old": "assert WINDOW is not None and sha((packet/'native_evidence.py').read_bytes())==HELPER",
+      "new": "assert CANDIDATE_WINDOW is not None and TEST is not None\n    assert sha((packet/'native_evidence.py').read_bytes())==HELPER",
+      "old_count": 1
+    },
+    {
+      "old": "source_pins={'window_runner':WINDOW,'original_runner':ORIGINAL_RUNNER,",
+      "new": "source_pins={'gold_window_runner':GOLD_WINDOW,'candidate_window_runner':CANDIDATE_WINDOW,\n                     'original_runner':ORIGINAL_RUNNER,",
+      "old_count": 1
+    },
+    {
+      "old": "gold_guard=load(bound(bindings['gold_guard']));candidate_guard=load(bound(bindings['candidate_guard']))",
+      "new": "assert sha(bound(bindings['gold_receipt']))==GOLD_RECEIPT\n        assert bindings['gold_guard']['sha256']==GOLD_GUARD\n        gold_guard=load(bound(bindings['gold_guard']));candidate_guard=load(bound(bindings['candidate_guard']))",
+      "old_count": 1
+    },
+    {
+      "old": "assert receipt['runner_sha256']==WINDOW and receipt['original_receipt_sha256']==ORIGINAL",
+      "new": "assert receipt['runner_sha256']==(GOLD_WINDOW if phase=='gold' else CANDIDATE_WINDOW)\n            assert receipt['original_receipt_sha256']==ORIGINAL",
+      "old_count": 1
+    }
+  ]
+}

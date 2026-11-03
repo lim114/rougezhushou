@@ -1,0 +1,43 @@
+{
+  "title": "完成与住民条件下的步行和加工品方案比较",
+  "remaining_item": "探索地图与路线建议：路线状态规则和加工品成本比较",
+  "new_capability": "对目标同时生成声明图的纯拓扑、无已知中途阻碍及全中途明确条件路径，并比较全部独立加工品实例的直达、余次数、AP、具名收益和概念体条件；最低基础AP仅候选参考。",
+  "source_evidence": [
+    "固定加工品原始范围/次数/step参数复用",
+    "routes-049既有已核对原文：徒步每格点1AP、不可越过未完成节点、空地/密道例外、住民占领阻断、原地可重复进入1AP；页面hash b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381"
+  ],
+  "acceptance": [
+    "未完成/已占领中途阻断步行，加工品直达仍候选；明确完成/无阻碍链给两步成本",
+    "全部库存实例独立展示、0余次排除、AP不足与未知资格不同、最低0AP不等于实际最优",
+    "原地再入1AP、非法连线/布尔声明/重复实例拒绝；2项新测试和全部11项探索功能回归通过"
+  ],
+  "limitations": [
+    "完成/住民/AP等仅声明条件，没有新增识别和本局自动采样。",
+    "真实服务器资格、未知费用、住民移动、随机落点和最优收益未证。",
+    "仍未确认第六层/特殊区连接，不缩减待办。"
+  ],
+  "section": 193,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section220.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_220_walking_blockers_item_direct_and_base_cost_comparison",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_220_unknown_graph_inventory_instances_reentry_and_validation"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:43:05.304243+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-193/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

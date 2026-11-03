@@ -1,0 +1,30 @@
+{
+  "status": "RESOLVED_READ_ONLY_READER_PREPARATION",
+  "same_issue_three_attempts_rule_triggered": false,
+  "diagnostics": [
+    {
+      "issue": "Exploratory reader assumed the saved matrix plan was a mapping, but the actual document is a list",
+      "error": "AttributeError: 'list' object has no attribute 'items'",
+      "attempts": 1,
+      "resolution": "Read actual list records by named indices; no original plan modified",
+      "raw_large_exploratory_output_recreated": false
+    },
+    {
+      "issue": "The first source collector assumed the original16 source_index included normalized JSON data",
+      "error": "KeyError: 'rouge/data/operator-profiles.json'",
+      "attempts": 1,
+      "preserved_script": "preparation/collect_source091-attempt1.py",
+      "preserved_trace": "preparation/collect-attempt1.log",
+      "resolution": "Use the separate original16 curated_profile_sources table for catalog/profile data; relic mechanics is independently bound by original60 fixed index and named root87, with original16 binding explicitly null"
+    }
+  ],
+  "application_API_calls": 0,
+  "production_helper_calls": 0,
+  "formatter_calls": 0,
+  "tests": 0,
+  "Qt": 0,
+  "Wine": 0,
+  "tracked_or_private_state_mutations": 0,
+  "product_failures": 0,
+  "completed_reader_retry_was_source_only": true
+}

@@ -1,0 +1,403 @@
+{
+  "status": "PASS_SOURCE_ONLY_REAL_QCHECKBOX_PRODUCERS_12_FIELDS_PENDING_UI090",
+  "approved_actual085_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "actual085_runner_path": "/workspace/.compat/wine-ui-smoke-085.py",
+  "actual085_runner_sha256": "b6976652eb50e06909cca68490b0b9d3e11ea81fbc9a73ca87efcbb10354e306",
+  "preserved_actual085_full_body_is_base_for_parent_UI090": true,
+  "preserved_actual085_case_count": 4217,
+  "source_bindings": [
+    {
+      "source_path": "git:9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/app.py",
+      "archive_path": "rouge/app.py",
+      "bytes": 94976,
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "same_bytes_as_sealed_b5_source": true,
+      "reconstruction": "git show 9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/app.py"
+    },
+    {
+      "source_path": "git:9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/operator_options.py",
+      "archive_path": "rouge/operator_options.py",
+      "bytes": 5328,
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "same_bytes_as_sealed_b5_source": true,
+      "reconstruction": "git show 9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/operator_options.py"
+    },
+    {
+      "source_path": "git:9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/operator_engine.py",
+      "archive_path": "rouge/operator_engine.py",
+      "bytes": 155819,
+      "sha256": "071b60914f40a0281c7acc8e3648520b496a448339f8d9b8c983fde47955ada4",
+      "same_bytes_as_sealed_b5_source": true,
+      "reconstruction": "git show 9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/operator_engine.py"
+    },
+    {
+      "source_path": "git:9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/data/catalog.json",
+      "archive_path": "rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "same_bytes_as_sealed_b5_source": true,
+      "reconstruction": "git show 9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/data/catalog.json"
+    },
+    {
+      "source_path": "git:9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/reporting.py",
+      "archive_path": "rouge/reporting.py",
+      "bytes": 97666,
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "same_bytes_as_sealed_b5_source": true,
+      "reconstruction": "git show 9ef5a469673502754db3be320a8eece9a7fd18d4:rouge/reporting.py"
+    }
+  ],
+  "same_five_consumers_as_sealed_b5_source": true,
+  "field_count": 12,
+  "owner_count": 8,
+  "fields": [
+    {
+      "owner": "char_4228_closur",
+      "field": "reinforcement_blocks_target",
+      "label": "援军阻挡当前目标",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        1,
+        2,
+        3
+      ],
+      "hidden_omitted_skills": [],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "all skill and normal plans",
+      "qualification_boundary": "Original trait, all cultivation; not an E2 talent gate",
+      "unknown_boundary": "No reinforcement position, separate hits or native attachment inferred."
+    },
+    {
+      "owner": "char_437_mizuki",
+      "field": "enemy_below_half",
+      "label": "存在生命低于一半的敌人",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        1,
+        2,
+        3
+      ],
+      "hidden_omitted_skills": [],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "apply_self_talents before both plans",
+      "qualification_boundary": "Selected named 反移情 exists only E2; E0/E1 UI can still emit bool while missing talent contributes0",
+      "unknown_boundary": "Other Mizuki hidden/module attachments remain unknown."
+    },
+    {
+      "owner": "char_206_gnosis",
+      "field": "frozen_at_skill_end",
+      "label": "技能结束时目标仍冻结",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        3
+      ],
+      "hidden_omitted_skills": [
+        1,
+        2
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S3 non-normal terminal component and result reference",
+      "qualification_boundary": "S3 available E2; S1/S2 and normal have no terminal consumer",
+      "unknown_boundary": "Nominal end does not bind terminal, freeze removal or same-frame disappearance."
+    },
+    {
+      "owner": "char_4087_ines",
+      "field": "ines_first_deployment",
+      "label": "本场首次部署（只放影哨）",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        3
+      ],
+      "hidden_omitted_skills": [
+        1,
+        2
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S3 non-normal plan and fee_section note",
+      "qualification_boundary": "S3 available E2; S1/S2 and normal inactive",
+      "unknown_boundary": "No actual first-deployment history or independent shadow path collision clock inferred."
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "ranged_attack",
+      "label": "远程攻击（通常80%倍率）",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        1,
+        2,
+        3
+      ],
+      "hidden_omitted_skills": [],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "all skill and normal plans",
+      "qualification_boundary": "Selected module max_cnt>10 overrides skill ranged_scale only; normal remains .8/1 with actual cycle/continuous public gates",
+      "unknown_boundary": "Module alone proves neither whole API inactivity nor nonzero normal contribution. Note collision and hidden attachment remain unknown."
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "organ_mode",
+      "label": "风琴音色（未选=钢琴）",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        2
+      ],
+      "hidden_omitted_skills": [
+        1,
+        3
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S2 non-normal tone branch",
+      "qualification_boundary": "S2 available E1; S1/S3 and normal inactive",
+      "unknown_boundary": "No native tone-change history or note-flight clock inferred."
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "fever",
+      "label": "Fever期间",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        2
+      ],
+      "hidden_omitted_skills": [
+        1,
+        3
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S2 non-normal two-hit argument",
+      "qualification_boundary": "S2 available E1; S1/S3 and normal inactive",
+      "unknown_boundary": "S3 lethal survival description does not create this output consumer; no native Fever start/end inferred."
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "power_coating",
+      "label": "本次攻击仍在首轮50次强击瓶覆盖内",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        1,
+        2,
+        3
+      ],
+      "hidden_omitted_skills": [],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "all skill non-normal plans",
+      "qualification_boundary": "Selected 强击瓶专家 exists from E0; normal expression reads flag but numeric factor1",
+      "unknown_boundary": "Bool describes conditional first50 coverage, not an actual per-arrow counter or native coverage."
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "double_charge",
+      "label": "额外消耗一层充能施放刚连射",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        1
+      ],
+      "hidden_omitted_skills": [
+        2,
+        3
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S1 extra arrows, parameter row, initial/recharge cost and event-SP cost",
+      "qualification_boundary": "S1 all cultivation; S2/S3 and normal extra arrows inactive",
+      "unknown_boundary": "Full cast end and arrow collision remain unknown; cost consumers must not be omitted."
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "steal_success",
+      "label": "成功偷取攻速（增加5发弹药）",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        2
+      ],
+      "hidden_omitted_skills": [
+        1,
+        3
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S2 non-normal attack speed, interval and five extra ammunition",
+      "qualification_boundary": "S2 available E1; S1/S3 and normal inactive",
+      "unknown_boundary": "No actual successful ally theft, live shield decay or ammunition observation inferred."
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "delivery_coordinate",
+      "label": "投递坐标存在并命中目标",
+      "default_bool": true,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        3
+      ],
+      "hidden_omitted_skills": [
+        1,
+        2
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S3 non-normal bombing source",
+      "qualification_boundary": "S3 available E2; S1/S2 and normal inactive",
+      "unknown_boundary": "Owner target windows do not establish coordinate collision or placement timing."
+    },
+    {
+      "owner": "char_1035_wisdel",
+      "field": "overload",
+      "label": "全程采用过载四连发情景",
+      "default_bool": false,
+      "QCheckBox_producer": true,
+      "visible_and_serialized_skills": [
+        2
+      ],
+      "hidden_omitted_skills": [
+        1,
+        3
+      ],
+      "wrong_owner_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "serialization_result_type": "bool from isChecked; no text/None/integer checkbox state",
+      "actual_consumer_scope": "S2 non-normal four-hit source",
+      "qualification_boundary": "S2 available E1; S1/S3 and normal inactive",
+      "unknown_boundary": "Random targeting, afterimages and soul clocks remain unknown."
+    }
+  ],
+  "producer_construction_and_active_serialization_static_only": true,
+  "actual_current_Qt_runtime_executed": false,
+  "visibility_is_not_API_qualification": true,
+  "already_sealed_source_saved36_receipts_reused": [
+    {
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-source/actual-qt-producer-static-closure.json",
+      "bytes": 5904,
+      "sha256": "6689b06a5800f5e93d7915669681de190ca28c652ac86ced9478f81513d20a51",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-source/source-handoff.json",
+      "bytes": 2464,
+      "sha256": "babbe184f0c7d69f546d257c780f6e059aaf463576338e1f7530a69920749a5f",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-source/CONSUMER_BOUNDARIES.md",
+      "bytes": 6371,
+      "sha256": "ae07cda6e5651fd5951de9b9ae97dbf4c8e2f1a75e77d1467ef6b7a400f2f9ee",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/independent-source086/source-saved-review086.json",
+      "bytes": 3890,
+      "sha256": "04d31785abbdd866ed71f82e47e71dbdbd2afa6d7fe30e1764e47aeca0a4fab8",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/independent-source086/all-literal-field-inventory086.json",
+      "bytes": 3096,
+      "sha256": "23b7dc60a3e086493c5d2f00bdab742b10c8d2df8137313baea8661d3dde2a60",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/independent-source086/handoff-independent-source086.json",
+      "bytes": 3612,
+      "sha256": "15d30c945658046c672265c6d3cb928449d57097b97d0b6e61b64b71649258aa",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    },
+    {
+      "source_path": "/workspace/.continuation/independent-source086/boundary-subreview/receipt-boundary-final086.json",
+      "bytes": 2540,
+      "sha256": "4f02bc91507f7ba959354f8ba275d64332904f2e0fcaae2ad535f0277971cbb9",
+      "scope": "Already sealed source/saved evidence read, not a fresh raw/API verification"
+    }
+  ],
+  "historical36_scope": "Qualified E2, no module, frames, three values per field only; not fresh9ef output or UI090 proof",
+  "original240_skillrank_or12module_parts_audit_repeated": false,
+  "static_source_notes_path": "static-source-notes086.json",
+  "static_source_notes_sha256": "45a8e88bb9d26919cc56844f6836aeed05465fed858b41c798bf5d308bd8d51b",
+  "product86_draft_and_final_UI090_not_approved_by_this_receipt": true,
+  "new_case_design_or_Cartesian_matrix_created": false,
+  "calls": {
+    "application_API": 0,
+    "formatter": 0,
+    "production_helper": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0
+  },
+  "tracked_mutations": false,
+  "native_clocks_counts_probabilities_attachment_live_history_inferred": false,
+  "next_action": "Parent may continue source-only UI090 designs preserving full4217; wait final86-90 sources and root authorization before any API or runner execution."
+}

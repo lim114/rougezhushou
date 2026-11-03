@@ -1,0 +1,542 @@
+{
+  "kind": "future-region-source-inventory-not-feature",
+  "checked_at": "2026-10-16T09:28:48.136780+00:00",
+  "source": {
+    "path": ".cache/p3-287-event-research/fixed-game-topic.json",
+    "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "bytes": 17943244,
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+  },
+  "current_catalog_sha256": "7df1d94bb69650eb19fc811af661e54d44bf07d72b1c0793de511adc1b2e915d",
+  "complete_original_choices": {
+    "choice_ro6_normal3_1": {
+      "id": "choice_ro6_normal3_1",
+      "title": "尝试驱赶猎狗",
+      "description": "持有<@ro6.get>笼控器</>，获得<@ro6.get>30</>源石锭，并在下一区域生成“希望的沃土”",
+      "lockedCoverDesc": null,
+      "type": "TRADE",
+      "leftDecoType": "NONE",
+      "nextSceneId": "scene_ro6_normal3_1",
+      "icon": "weather_change",
+      "displayData": {
+        "type": "NORMAL",
+        "costHintType": "NONE",
+        "effectHintType": "NONE",
+        "funcIconId": "weather_change",
+        "itemId": "rogue_6_gold",
+        "difficultyUpgradeRelicGroupId": null,
+        "taskId": null,
+        "instId": null
+      },
+      "forceShowWhenOnlyLeave": false,
+      "isHiddenChoice": false,
+      "sortId": 0
+    },
+    "choice_ro6_normal3_2": {
+      "id": "choice_ro6_normal3_2",
+      "title": "将种子埋在此处",
+      "description": "种下<@ro6.lose>1枚</>种子，在下一区域生成“希望的沃土”",
+      "lockedCoverDesc": null,
+      "type": "TRADE",
+      "leftDecoType": "NONE",
+      "nextSceneId": "scene_ro6_normal3_2",
+      "icon": "weather_change",
+      "displayData": {
+        "type": "NORMAL",
+        "costHintType": "SEED_COST",
+        "effectHintType": "NONE",
+        "funcIconId": "weather_change",
+        "itemId": "rogue_6_next_weather_1",
+        "difficultyUpgradeRelicGroupId": null,
+        "taskId": null,
+        "instId": null
+      },
+      "forceShowWhenOnlyLeave": false,
+      "isHiddenChoice": false,
+      "sortId": 0
+    }
+  },
+  "community_choices": [
+    {
+      "event_id": "community_group_009",
+      "event_title": "呼吸的红苔",
+      "scene": {
+        "key": "community_group_009:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_normal3_enter"
+        ],
+        "description": "空气中弥漫着腥气，这里一片荒芜，唯独红色的苔藓引人注目，黑流自红苔中缓缓渗出，似乎要把所有来到此处的活物都溶解殆尽。你的到来让红苔更加活跃，黑流越积越多——而猎犬的吠声正自不远处传来。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_16",
+          "data-name": "呼吸的红苔",
+          "data-ename": "",
+          "data-efloor": "II,III,IV",
+          "data-index": "36",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [
+          "本事件仅在遭遇沉寂之屋事件后有概率出现。"
+        ],
+        "choices": [
+          {
+            "key": "community_group_009:scene:0:choice:0",
+            "title": "尝试驱赶猎狗",
+            "description": "持有零件笼控器，获得30源石锭，并在下一区域生成“希望的沃土”",
+            "destination_keys": [
+              "community_group_009:scene:1"
+            ],
+            "game_choice_ids": [],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "尝试驱赶猎狗",
+              "data-icon": "weather_change",
+              "data-dest": "1",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": null,
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_009:scene:0:choice:1",
+            "title": "将种子埋在此处",
+            "description": "种下1枚种子，在下一区域生成“希望的沃土”",
+            "destination_keys": [
+              "community_group_009:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal3_2"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "将种子埋在此处",
+              "data-icon": "weather_change",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_009:scene:0:choice:2",
+            "title": "快逃",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_009:scene:3"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal3_3"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "快逃",
+              "data-icon": "leave",
+              "data-dest": "3",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "choice": {
+        "key": "community_group_009:scene:0:choice:0",
+        "title": "尝试驱赶猎狗",
+        "description": "持有零件笼控器，获得30源石锭，并在下一区域生成“希望的沃土”",
+        "destination_keys": [
+          "community_group_009:scene:1"
+        ],
+        "game_choice_ids": [],
+        "source_type": "simple",
+        "conditional": null,
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "simple",
+          "data-title": "尝试驱赶猎狗",
+          "data-icon": "weather_change",
+          "data-dest": "1",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "display_option_reference",
+        "destination_status": "community_group_local_navigation",
+        "game_match_basis": null,
+        "server_option_availability_verified": false
+      }
+    },
+    {
+      "event_id": "community_group_009",
+      "event_title": "呼吸的红苔",
+      "scene": {
+        "key": "community_group_009:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_normal3_enter"
+        ],
+        "description": "空气中弥漫着腥气，这里一片荒芜，唯独红色的苔藓引人注目，黑流自红苔中缓缓渗出，似乎要把所有来到此处的活物都溶解殆尽。你的到来让红苔更加活跃，黑流越积越多——而猎犬的吠声正自不远处传来。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_16",
+          "data-name": "呼吸的红苔",
+          "data-ename": "",
+          "data-efloor": "II,III,IV",
+          "data-index": "36",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [
+          "本事件仅在遭遇沉寂之屋事件后有概率出现。"
+        ],
+        "choices": [
+          {
+            "key": "community_group_009:scene:0:choice:0",
+            "title": "尝试驱赶猎狗",
+            "description": "持有零件笼控器，获得30源石锭，并在下一区域生成“希望的沃土”",
+            "destination_keys": [
+              "community_group_009:scene:1"
+            ],
+            "game_choice_ids": [],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "尝试驱赶猎狗",
+              "data-icon": "weather_change",
+              "data-dest": "1",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": null,
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_009:scene:0:choice:1",
+            "title": "将种子埋在此处",
+            "description": "种下1枚种子，在下一区域生成“希望的沃土”",
+            "destination_keys": [
+              "community_group_009:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal3_2"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "将种子埋在此处",
+              "data-icon": "weather_change",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_009:scene:0:choice:2",
+            "title": "快逃",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_009:scene:3"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal3_3"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "快逃",
+              "data-icon": "leave",
+              "data-dest": "3",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "choice": {
+        "key": "community_group_009:scene:0:choice:1",
+        "title": "将种子埋在此处",
+        "description": "种下1枚种子，在下一区域生成“希望的沃土”",
+        "destination_keys": [
+          "community_group_009:scene:2"
+        ],
+        "game_choice_ids": [
+          "choice_ro6_normal3_2"
+        ],
+        "source_type": "simple",
+        "conditional": null,
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "simple",
+          "data-title": "将种子埋在此处",
+          "data-icon": "weather_change",
+          "data-dest": "2",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "display_option_reference",
+        "destination_status": "community_group_local_navigation",
+        "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+        "server_option_availability_verified": false
+      }
+    },
+    {
+      "event_id": "community_group_009",
+      "event_title": "呼吸的红苔",
+      "scene": {
+        "key": "community_group_009:scene:1",
+        "game_scene_ids": [
+          "scene_ro6_normal3_1"
+        ],
+        "description": "猎犬的吠声渐止。你驱逐了此地的猎犬，红苔不再渗出黑流。周围变得安静且可怕，你仿佛正在见证某种可行性的诞生与成长。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "使用笼控器",
+          "data-image": "Avg_pic_rogue_6_16",
+          "data-name": "呼吸的红苔",
+          "data-ename": "",
+          "data-index": "37",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_009:scene:1:choice:0",
+            "title": "",
+            "description": "下一区域会出现实托邦：希望的沃土。",
+            "destination_keys": [],
+            "game_choice_ids": [],
+            "source_type": "desc",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "desc",
+              "data-title": "",
+              "data-icon": "",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "explanatory_text",
+            "destination_status": "no_navigation",
+            "game_match_basis": null,
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "choice": {
+        "key": "community_group_009:scene:1:choice:0",
+        "title": "",
+        "description": "下一区域会出现实托邦：希望的沃土。",
+        "destination_keys": [],
+        "game_choice_ids": [],
+        "source_type": "desc",
+        "conditional": null,
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "desc",
+          "data-title": "",
+          "data-icon": "",
+          "data-dest": "",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "explanatory_text",
+        "destination_status": "no_navigation",
+        "game_match_basis": null,
+        "server_option_availability_verified": false
+      }
+    },
+    {
+      "event_id": "community_group_009",
+      "event_title": "呼吸的红苔",
+      "scene": {
+        "key": "community_group_009:scene:2",
+        "game_scene_ids": [
+          "scene_ro6_normal3_2"
+        ],
+        "description": "你种下了种子，没等你埋好，红苔便包裹吞噬了它们。你不知道这些种子会长出什么，或许是一种仍在襁褓中的新可能。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "埋下一粒种子",
+          "data-image": "Avg_pic_rogue_6_16",
+          "data-name": "呼吸的红苔",
+          "data-ename": "",
+          "data-index": "38",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_009:scene:2:choice:0",
+            "title": "",
+            "description": "下一区域会出现实托邦：希望的沃土。",
+            "destination_keys": [],
+            "game_choice_ids": [],
+            "source_type": "desc",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "desc",
+              "data-title": "",
+              "data-icon": "",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "explanatory_text",
+            "destination_status": "no_navigation",
+            "game_match_basis": null,
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "choice": {
+        "key": "community_group_009:scene:2:choice:0",
+        "title": "",
+        "description": "下一区域会出现实托邦：希望的沃土。",
+        "destination_keys": [],
+        "game_choice_ids": [],
+        "source_type": "desc",
+        "conditional": null,
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "desc",
+          "data-title": "",
+          "data-icon": "",
+          "data-dest": "",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "explanatory_text",
+        "destination_status": "no_navigation",
+        "game_match_basis": null,
+        "server_option_availability_verified": false
+      }
+    }
+  ],
+  "complete_named_region_records": [
+    {
+      "path": [
+        "modules",
+        "rogue_6",
+        "weather",
+        "mainWeatherData",
+        "rogue_6_weather_8_a"
+      ],
+      "complete_record": {
+        "id": "rogue_6_weather_8_a",
+        "iconId": "rogue_6_weather_8",
+        "iconBigId": "rogue_6_weather_8",
+        "isPositive": true,
+        "level": 1,
+        "name": "“希望的沃土”",
+        "levelName": "早期",
+        "type": "rogue_6_weather_8",
+        "functionDesc": "我方单位攻击+10%，生命+10%，战斗胜利后获得随机零件",
+        "desc": "没有混乱与流血，一切都茁壮成长，欣欣向荣，它本该如此。",
+        "sound": null
+      }
+    },
+    {
+      "path": [
+        "modules",
+        "rogue_6",
+        "weather",
+        "mainWeatherData",
+        "rogue_6_weather_8_b"
+      ],
+      "complete_record": {
+        "id": "rogue_6_weather_8_b",
+        "iconId": "rogue_6_weather_8",
+        "iconBigId": "rogue_6_weather_8",
+        "isPositive": true,
+        "level": 2,
+        "name": "“希望的沃土”",
+        "levelName": "中期",
+        "type": "rogue_6_weather_8",
+        "functionDesc": "我方单位攻击+15%，生命+20%，战斗胜利后获得随机零件",
+        "desc": "没有混乱与流血，一切都茁壮成长，欣欣向荣，它本该如此。",
+        "sound": null
+      }
+    },
+    {
+      "path": [
+        "modules",
+        "rogue_6",
+        "weather",
+        "mainWeatherData",
+        "rogue_6_weather_8_c"
+      ],
+      "complete_record": {
+        "id": "rogue_6_weather_8_c",
+        "iconId": "rogue_6_weather_8",
+        "iconBigId": "rogue_6_weather_8",
+        "isPositive": true,
+        "level": 3,
+        "name": "“希望的沃土”",
+        "levelName": "晚期",
+        "type": "rogue_6_weather_8",
+        "functionDesc": "我方单位攻击+20%，生命+30%，战斗胜利后获得随机零件",
+        "desc": "没有混乱与流血，一切都茁壮成长，欣欣向荣，它本该如此。",
+        "sound": null
+      }
+    }
+  ],
+  "production_private_Qt_tests_Git_game_chat_operations": false
+}

@@ -1,0 +1,333 @@
+{
+  "status": "passed_readonly_source_scope_review",
+  "fixed_product_commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+  "fixed_public_files": [
+    {
+      "path": "rouge/operator_engine.py",
+      "bytes": 155562,
+      "sha256": "166ec75dbf1afb45f3ad23ee28b43b8932a9a002c92d4a670cff3f108a5b3df7",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "0208381f4e54cece44a4b17f9187e5412502f104"
+    },
+    {
+      "path": "rouge/operator_options.py",
+      "bytes": 5328,
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "d99fdb0629a59b3273a41b0b984c32ae20feb529"
+    },
+    {
+      "path": "rouge/app.py",
+      "bytes": 94976,
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "e349a7bba46a93a177a07522bac53df8ccc897dd"
+    },
+    {
+      "path": "rouge/damage.py",
+      "bytes": 28530,
+      "sha256": "84ff864244aed22307086df79686d485edf56700c727191ed7c3eca8bcbb9cec",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "ceab46ba4ef083d00173206d900ebf4f7d5d4445"
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "a26223484c108c025fd1b3bc3a07943905698e4c"
+    },
+    {
+      "path": "rouge/enemy_environment.py",
+      "bytes": 8078,
+      "sha256": "49a8937d46718ca5ba35a4e41244441a49afb746a4b93f52dc840609163b8439",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "1ab998732fc243971ca56457eeba573ed8dead1d"
+    },
+    {
+      "path": "rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+      "git_blob": "fe6788a146129ea788a47e06b44beab59be07779"
+    }
+  ],
+  "engine_boolean_references": {
+    "enemy_is_boss": [
+      {
+        "line": 248,
+        "expression": "self.s.get('enemy_is_boss')",
+        "default": null
+      }
+    ],
+    "enemy_in_neural_break": [
+      {
+        "line": 257,
+        "expression": "self.s.get('enemy_in_neural_break')",
+        "default": null
+      },
+      {
+        "line": 277,
+        "expression": "self.s.get('enemy_in_neural_break')",
+        "default": null
+      },
+      {
+        "line": 918,
+        "expression": "self.s.get('enemy_in_neural_break')",
+        "default": null
+      },
+      {
+        "line": 996,
+        "expression": "self.s.get('enemy_in_neural_break')",
+        "default": null
+      },
+      {
+        "line": 1242,
+        "expression": "self.s.get('enemy_in_neural_break')",
+        "default": null
+      }
+    ],
+    "near_previous_deployment": [
+      {
+        "line": 219,
+        "expression": "self.s.get('near_previous_deployment')",
+        "default": null
+      }
+    ],
+    "double_charge": [
+      {
+        "line": 1028,
+        "expression": "self.s.get('double_charge',True)",
+        "default": true
+      },
+      {
+        "line": 1031,
+        "expression": "self.s.get('double_charge',True)",
+        "default": true
+      },
+      {
+        "line": 1310,
+        "expression": "self.s.get('double_charge',True)",
+        "default": true
+      },
+      {
+        "line": 1437,
+        "expression": "self.s.get('double_charge',True)",
+        "default": true
+      }
+    ]
+  },
+  "actual_neural_call_sites": [
+    {
+      "line": 950,
+      "expression": "self.neural(events,components,1+(bb.get('talent@ep_break_recover_speed',0) if not normal else 0))"
+    },
+    {
+      "line": 1237,
+      "expression": "self.neural(neural_events,components)"
+    },
+    {
+      "line": 1484,
+      "expression": "self.neural(events,bursts,recovery)"
+    }
+  ],
+  "ui_OPTIONS_data": {
+    "char_1042_phatm2": [
+      {
+        "key": "enemy_is_boss",
+        "label": "目标为领袖（损伤阈值2000）",
+        "default": false,
+        "maximum": 1,
+        "skills": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "key": "enemy_in_neural_break",
+        "label": "开始时已在神经损伤爆发期",
+        "default": false,
+        "maximum": 1,
+        "skills": [
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "char_4204_mantra": [
+      {
+        "key": "enemy_is_boss",
+        "label": "目标为领袖（损伤阈值2000）",
+        "default": false,
+        "maximum": 1,
+        "skills": [
+          1,
+          2
+        ]
+      },
+      {
+        "key": "enemy_in_neural_break",
+        "label": "开始时已在神经损伤爆发期",
+        "default": false,
+        "maximum": 1,
+        "skills": [
+          1,
+          2
+        ]
+      }
+    ],
+    "char_1048_orchd2": [
+      {
+        "key": "near_previous_deployment",
+        "label": "部署至上次位置附近（30秒加攻）",
+        "default": false,
+        "maximum": 1,
+        "skills": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "key": "double_charge",
+        "label": "额外消耗一层充能施放刚连射",
+        "default": true,
+        "maximum": 1,
+        "skills": [
+          1
+        ]
+      }
+    ]
+  },
+  "orchid_selected_talent_candidates": [
+    {
+      "talent_index": 1,
+      "candidate_index": 0,
+      "candidate": {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "翔虫机动",
+        "description": "再部署时间-15秒；部署至上次部署位置周围时，30秒内攻击力+10%并且可以部署在近战位",
+        "values": {
+          "atk_duration": 30.0,
+          "atk": 0.1,
+          "projectile": 0.0,
+          "ignore_build_type_target_range": 0.0,
+          "ignore_build_type_target": 1.0,
+          "ignore_build_type_target_dir": 0.0,
+          "not_add_respawn_cost_cnt": 0.0
+        }
+      }
+    },
+    {
+      "talent_index": 1,
+      "candidate_index": 1,
+      "candidate": {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "翔虫机动",
+        "description": "再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位",
+        "values": {
+          "atk_duration": 30.0,
+          "atk": 0.15,
+          "projectile": 0.0,
+          "ignore_build_type_target_range": 0.0,
+          "ignore_build_type_target": 1.0,
+          "ignore_build_type_target_dir": 0.0,
+          "not_add_respawn_cost_cnt": 1.0
+        }
+      }
+    }
+  ],
+  "consumer_scope": {
+    "enemy_is_boss": "Combat.neural threshold. Phatm2 all skills and normal plans; Mantra all skills includingS3 and normal postmodifier plans; shared cycle recomputation when present. Applies even to empty event lists because threshold/initial state are still read.",
+    "enemy_in_neural_break": "Combat.neural breaking_until plus optional reference bool; Phatm2 S1 binding-seed cutoff; Mantra S1 preexisting-break extra source and S2 extra source selection. Shared neural means Mantra S3 API consumption persists despite absentS3 UI checkbox.",
+    "near_previous_deployment": "Only Orchid, only inside already-selected named talent 翔虫机动 qualification; no such named candidate atE0. All3 skills can qualify once named talent selected. UI visibility alone does not imply E0 consumer.",
+    "double_charge": "Only Orchid skill1 active-arrow/reference branch, plus S1 initial/recharge and periodic/event-SP required cost. Inactive OrchidS2/S3 and other operators must remain ignored."
+  },
+  "prepare_and_Qt_trace": {
+    "public_entry": {
+      "path": "rouge/damage.py",
+      "line": 373,
+      "preparation_line": 375
+    },
+    "prepare_run": {
+      "path": "rouge/damage.py",
+      "line": 274
+    },
+    "resolve_enemy": {
+      "path": "rouge/run_modifiers.py",
+      "line": 53
+    },
+    "identity_overwrites_boss": {
+      "path": "rouge/enemy_environment.py",
+      "line": 110
+    },
+    "extended_engine_after_prepare": {
+      "path": "rouge/damage.py",
+      "line": 298
+    },
+    "Qt_bool_widget_creation": {
+      "path": "rouge/app.py",
+      "line": 665,
+      "isChecked_serializer_line": 1037
+    },
+    "Qt_visibility_owner_skill_gate": {
+      "path": "rouge/app.py",
+      "line": 968
+    },
+    "Qt_serializer_owner_skill_gate": {
+      "path": "rouge/app.py",
+      "line": 1035
+    },
+    "UI_fact": "bool defaults produce real QCheckBox instances; source serializer calls isChecked() only when owner/skill applies. Static trace, not executedQt."
+  },
+  "guard_recommendations": [
+    {
+      "field": "enemy_is_boss",
+      "path": "rouge/operator_engine.py",
+      "before_line": 248,
+      "placement": "Consumer-local guard in Combat.neural, checking effective post-prepare scenario. Preserve selected fixed-enemy identity overriding stale manual strings; do not prevalidate raw input in damage global preparation."
+    },
+    {
+      "field": "enemy_in_neural_break",
+      "path": "rouge/operator_engine.py",
+      "before_line": 257,
+      "placement": "Shared neural consumer guard covers actual API consumption on all neural plans. Keeping initial_neural_buildup validation before this point preserves its original precedence. If guarding before every truthiness read is required, reuse a narrow read helper at918/996/1242 as well; do not use OPTIONS to suppress MantraS3 validation."
+    },
+    {
+      "field": "near_previous_deployment",
+      "path": "rouge/operator_engine.py",
+      "before_line": 219,
+      "placement": "Inside existing named-selected-talent condition at213, immediately before near_previous_deployment read. Preserve E0 absent-talent ignored-field behavior, selected module identity logic and original redeploy reference."
+    },
+    {
+      "field": "double_charge",
+      "path": "rouge/operator_engine.py",
+      "before_line": 1028,
+      "placement": "Inside existing Orchid S1 branch at1025, before arrow truthiness/reference consumption. All public calculations first call full=self.plan() at1297, before subsequent S1 SP consumers at1310/1437. Preserve S2/S3 ignored-field behavior and defaultTrue."
+    }
+  ],
+  "type_boundary": "Reject textual conditions consistently with existing consumer-local string guards. Do not parse False/0/true/empty-string conventions, add a global bool validator, or silently tighten numeric/None/list domains beyond authorized text repair. Preserve true/false/missing/default contracts and unrelated inactive fields.",
+  "mechanism_research": "No original mechanics were re-researched; this is current source consumer and type/serialization scope only.",
+  "new_api_calls": 0,
+  "tests_executed": 0,
+  "gui_executed": false,
+  "wine_executed": false,
+  "tracked_edits": false,
+  "runtime_imports": false,
+  "preparation_diagnostics": [
+    {
+      "command": "rg consumer fields in app/run_environment/damage/engine",
+      "missing_guessed_file": "rouge/run_environment.py",
+      "correct_files": "Fixed git grep locates prepare_run in run_modifiers.py and override in enemy_environment.py.",
+      "command_exit_code": 2,
+      "public_calls_after_failure": 0,
+      "tracked_mutations_after_failure": 0
+    }
+  ]
+}

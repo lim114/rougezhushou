@@ -1,0 +1,155 @@
+--- a/rouge/timing.py
++++ b/rouge/timing.py
+@@ -244,7 +244,7 @@
+                 if limit is not None:count=min(count,limit)
+                 times=[ready+(i+1)*interval for i in range(count)]
+                 starts=[t-interval for t in times];steps=[interval]*len(times)
+-            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:
++            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):
+                 times=[];starts=[];steps=[]
+             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
+                 [cadence(t)-cadence(interval) for t in times]),
+@@ -252,7 +252,7 @@
+                 'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,
+                 'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
+                 'target_scope':self.target_scope}
+-            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:stream['resume_frame']=0
++            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0
+             if deployment_speed:
+                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
+                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -124,7 +124,8 @@
+         interval_seconds=interval,applied_effects=effects)
+     timeline=AttackTimeline(scenario)
+     empty_enemy=timeline.options.get('target_disappears_seconds')==0
+-    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_enemy and float(scenario.get('healing_targets',1))>0
++    empty_ammo_target=empty_enemy or timeline.options.get('target_windows')==[]
++    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_ammo_target and float(scenario.get('healing_targets',1))>0
+     def attack_events(duration,limit=None):
+         stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit,
+             target_scope='friendly' if healing or medical_fallback else 'enemy')
+@@ -203,7 +204,7 @@
+     if scenario.get('_ammo_refill_reference'):
+         status['ammo_refill_reference']=scenario['_ammo_refill_reference']
+     events=attack_events(scenario.get('window_seconds',3600),limit=shots)
+-    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_enemy:
++    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_ammo_target:
+         hits=shots*int(bb.get('attack@times',1))
+     else:hits=len(events['times_seconds'])*int(bb.get('attack@times',1))
+     if timeline.mode=='frames':
+@@ -223,12 +224,12 @@
+         if mechanist:status['timing']['notes'].append('机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。')
+     elif any(r['kind']=='deployment_attack_speed' for r in scenario.get('_relic_rules',[])) and 'window_seconds' not in scenario:
+         status['execution_seconds']=events['times_seconds'][-1] if len(events['times_seconds'])>=shots else None
+-    if empty_enemy and not medical_fallback:status['execution_seconds']=None
++    if empty_ammo_target and not medical_fallback:status['execution_seconds']=None
+     if medical_fallback:
+         status['healing_hits']=hits
+-    damage_hits=0 if empty_enemy else hits
++    damage_hits=0 if empty_ammo_target else hits
+     components=[{'name':'五连击' if mechanist else '弹药攻击','damage_type':'physical' if mechanist else 'true',
+-        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_enemy else events['times_seconds']}]
++        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_ammo_target else events['times_seconds']}]
+     return {'attack': attack, 'per_hit': damage, 'total_damage': damage * damage_hits, 'hits': damage_hits,'components':components,
+         'interval_seconds': interval, 'damage_type': 'physical' if mechanist else 'true', 'inapplicable_relics': inapplicable, **status}
+ 
+--- a/rouge/estimate.py
++++ b/rouge/estimate.py
+@@ -125,7 +125,8 @@
+                 hit*=damage_factor(scenario,'physical')
+                 damage=full['total_damage']+math.floor(duration/full['interval_seconds']+1e-9)*hit
+                 if (scenario.get('timing_mode','frames')=='frames' or
+-                        scenario.get('timing',{}).get('target_disappears_seconds')==0):
++                        scenario.get('timing',{}).get('target_disappears_seconds')==0 or
++                        scenario.get('timing',{}).get('target_windows')==[]):
+                     timeline=AttackTimeline(scenario,normal=True)
+                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
+                     events=stream.get('emitted_times_seconds',stream['times_seconds'])
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -318,7 +318,7 @@
+             emit(name,attack*scale,dtype,len(events)*times,defense,resistance,
+                 event_times=[t for t in events for _ in range(int(times))] if float(times).is_integer() else events)
+         def instant(dtype='physical',scale=1,times=1,name='施放伤害'):
+-            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or
++            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or timeline.options.get('target_windows')==[] or
+                     timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):
+                 times=0
+             emit(name,attack*scale,dtype,times)
+@@ -638,7 +638,7 @@
+                 frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')
+             elif self.n==2:
+                 mode='instant';duration=0
+-                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or (
++                available=timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[] and (window is None or window>0) and (timeline.mode!='frames' or (
+                     timeline.selectable(0) and not timeline.unavailable(0)))
+                 frost(attack*bb['atk_scale'],1 if available else 0,'零度爆发')
+                 if available:components[-1]['instant_event']=True
+--- a/rouge/app.py
++++ b/rouge/app.py
+@@ -616,7 +616,7 @@
+         self.timing_scenario=QPlainTextEdit()
+         self.timing_scenario.setMaximumHeight(85)
+         self.timing_scenario.setPlaceholderText('可留空。情景JSON示例：{"target_windows":[[0,5],[8,20]],"movement_windows":[[2,3]]}')
+-        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，常规连续攻击参考不按供靶/移动/中断区间逐帧调度；目标消失声明和友方潜在治疗仍按已有范围处理，未知时钟不补算。')
++        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，明确的空供靶列表（target_windows:[]）取消适用的敌方普通攻击与瞬时命中参考；独立单位仅消费各自的空供靶声明，友方潜在治疗另按受疗条件处理，独立或未定位来源仍保留各自条件。永久攻击仍沿用既有参考。非空供靶、移动和中断区间不在连续模式下逐帧调度；目标消失声明继续按原范围处理，未知时钟不补算。')
+         self.timing_preview_key=None;self.timing_previews={}
+         form.addRow('战斗时序情景（测试，可留空）',self.timing_scenario)
+         self.frame_timing.toggled.connect(lambda:self.calculate())
+--- a/tests/test_aglna_gravity_weight_107.py
++++ b/tests/test_aglna_gravity_weight_107.py
+@@ -193,11 +193,11 @@
+                     self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))
+                     self.assertEqual(talent(result)['times_seconds'], [])
+ 
+-    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):
+-        # Root's actual twelve-call diagnosis confirms that the legacy
+-        # continuous reference does not consume target_windows. The timing
+-        # family gap remains pending section109; gravity changes only per-hit
+-        # weight qualification here, without adding acquisition/game timing.
++    def test_continuous_empty_ranges_remove_own_hits_without_changing_gravity_per_hit(self):
++        # Section109 closes the ordinary continuous acquisition gap recorded
++        # by the original twelve-call diagnosis. Empty owner supply cancels
++        # hits; the already qualified gravity per-hit amount stays unchanged.
++        baselines = []
+         references = []
+         for relic_ids in ([], [GRAVITY]):
+             with self.subTest(mode='continuous', relic_ids=relic_ids):
+@@ -210,16 +210,18 @@
+                 empty = calculate_damage(empty_caller)
+                 self.assertEqual(empty_caller, empty_caller_before)
+                 self.assertGreater(talent(baseline)['hits'], 0)
+-                self.assertEqual(talent(empty), talent(baseline))
+-                # This exact flag records whether timing input was provided
+-                # (timing.py output); every other returned leaf is compared.
++                self.assertEqual((talent(empty)['hits'], talent(empty)['total']), (0, 0))
++                self.assertEqual(talent(empty)['times_seconds'], [])
++                self.assertEqual(talent(empty)['per_hit'], talent(baseline)['per_hit'])
++                self.assertEqual(empty['total_damage'], 0)
++                self.assertEqual(empty['estimate']['skill']['total_damage'], 0)
+                 self.assertIs(baseline['timing']['scenario_provided'], False)
+                 self.assertIs(empty['timing']['scenario_provided'], True)
+-                baseline_comparable = deepcopy(baseline)
+-                empty_comparable = deepcopy(empty)
+-                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']
+-                self.assertEqual(empty_comparable, baseline_comparable)
++                baselines.append(talent(baseline))
+                 references.append(talent(empty))
++        self.assertEqual(baselines[0]['hits'], baselines[1]['hits'])
++        self.assertEqual(baselines[0]['times_seconds'], baselines[1]['times_seconds'])
++        self.assertGreater(baselines[1]['per_hit'], baselines[0]['per_hit'])
+         self.assertEqual(references[0]['hits'], references[1]['hits'])
+         self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])
+ 
+--- a/scripts/verify_cloud.py
++++ b/scripts/verify_cloud.py
+@@ -8,6 +8,7 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ MODULES = (
++    "tests.test_empty_owner_acquisition_109",
+     "tests.test_zone_environment_input_108",
+     "tests.test_aglna_gravity_weight_107",
+     "tests.test_environment_input_106",

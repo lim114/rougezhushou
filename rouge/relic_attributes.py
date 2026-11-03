@@ -55,10 +55,13 @@ def prepare_attribute_runes(scenario, attributes):
              if is_attribute_rune(e) and not e.get('token_only')]
     scenario['effects'] = [e for e in scenario.get('effects', []) if not is_attribute_rune(e)]
     scenario['_attribute_runes'] = runes
+    cultivated = dict(attributes)
     original_attack = scenario['base_attack']
     # Explicit preview attack uses the same proven rune layer as cultivated ATK.
     preview = apply_attribute_runes({**attributes, 'attack': original_attack}, runes)
     scenario['base_attack'] = preview['attack']
     attributes = apply_attribute_runes(attributes, runes)
     scenario['_attribute_attack_speed'] = attributes['attack_speed']
+    from .panel_native_bridge import prepare as prepare_native_panels
+    prepare_native_panels(scenario, cultivated, attributes, runes)
     return scenario, attributes

@@ -1,0 +1,1096 @@
+{
+  "status": "FINAL_BOUNDED_NEGATIVE_NO_CONFIRMED_SP_PRODUCT_DEFECT",
+  "candidate_section": 88,
+  "numbered_section_completed": false,
+  "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "confirmed_product_bugs": 0,
+  "confirmed_actionable_leads": [],
+  "draft_or_patch_created": false,
+  "product_authorization_claimed": false,
+  "roadmap_exact_quote": {
+    "line": 11,
+    "priority": 1,
+    "topic": "藏品局外机制",
+    "pending_text": "技力回复倍率、负值及其它来源的完整核验",
+    "classification_limit": "This fixed roadmap row is priority1; do not call it a newly confirmed P2 product defect solely from a backlog item."
+  },
+  "fixed_source_bindings": [
+    {
+      "path": "PROJECT_PROGRESS.md",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "bytes": 8473,
+      "sha256": "e36cc53967b6369d9f4b3ed8870f9d0496830cd1248c35795e847309d0a264f1"
+    },
+    {
+      "path": "rouge/relics.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "bytes": 155819,
+      "sha256": "071b60914f40a0281c7acc8e3648520b496a448339f8d9b8c983fde47955ada4"
+    },
+    {
+      "path": "rouge/data/relic-mechanics.json",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47"
+    }
+  ],
+  "scope": "Existing public normalized mechanics active sp_recovery index only, narrow three named source bindings, SP consumers in requested source files, and immutable section60 note. Not a complete SP or roguelike semantic audit.",
+  "active_normalized_sp_recovery_rows": [
+    {
+      "group": "relics",
+      "id": "rogue_6_relic_legacy_2",
+      "name": "香草沙士汽水",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 0.2,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "modify_sp_recover[normal]",
+        "source_buff_key": "global_buff_stack",
+        "source_buff_index": 0
+      },
+      "pending": []
+    },
+    {
+      "group": "relics",
+      "id": "rogue_6_relic_legacy_3",
+      "name": "羽兽肝酱",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 0.35,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "modify_sp_recover[normal]",
+        "source_buff_key": "global_buff_stack",
+        "source_buff_index": 0
+      },
+      "pending": []
+    },
+    {
+      "group": "relics",
+      "id": "rogue_6_relic_legacy_4",
+      "name": "迷梦香精",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 0.5,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "group": "modify_sp_recover[normal]",
+        "source_buff_key": "global_buff_stack",
+        "source_buff_index": 0
+      },
+      "pending": []
+    },
+    {
+      "group": "relics",
+      "id": "rogue_6_relic_legacy_74",
+      "name": "医者-自医",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 0.3,
+        "profession": "medic",
+        "position": "",
+        "subprofession": "",
+        "group": "modify_sp_recover[medic]",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 0
+      },
+      "pending": []
+    },
+    {
+      "group": "relics",
+      "id": "rogue_6_relic_fight_15",
+      "name": "止痛片",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 2.0,
+        "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+        "position": "",
+        "subprofession": "",
+        "condition": "current_hp_ratio",
+        "hp_curve_min": 0.3,
+        "source_buff_key": "char_ability_new",
+        "source_buff_index": 0
+      },
+      "pending": []
+    },
+    {
+      "group": "char_buffs",
+      "id": "rogue_6_from_relic_15",
+      "name": "幸运饼干",
+      "effect_index": 0,
+      "effect": {
+        "kind": "sp_recovery",
+        "value": 0.8,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "skill_sp_type": "INCREASE_WITH_TIME",
+        "source_buff_key": "char_ability_new",
+        "source_buff_index": 0
+      },
+      "pending": []
+    }
+  ],
+  "active_normalized_negative_sp_recovery_rows": 0,
+  "narrow_existing_rule_objects": [
+    {
+      "id": "rogue_6_relic_legacy_2",
+      "record": {
+        "name": "香草沙士汽水",
+        "usage": "所有自然回复技能的技力恢复+0.2/秒",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "sp_recovery",
+            "value": 0.2,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "modify_sp_recover[normal]",
+            "source_buff_key": "global_buff_stack",
+            "source_buff_index": 0
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_stack",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "modify_sp_recover[normal]"
+              },
+              {
+                "key": "sp_recovery_per_sec",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_2",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    },
+    {
+      "id": "rogue_6_relic_legacy_74",
+      "record": {
+        "name": "医者-自医",
+        "usage": "所有【医疗】干员的技力恢复+0.3/秒",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "sp_recovery",
+            "value": 0.3,
+            "profession": "medic",
+            "position": "",
+            "subprofession": "",
+            "group": "modify_sp_recover[medic]",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 0
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "modify_sp_recover[medic]"
+              },
+              {
+                "key": "sp_recovery_per_sec",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_74",
+          "checkCharBoxTypes": [
+            "PROFESSION"
+          ],
+          "checkCharBoxParams": [
+            {
+              "valueProfessionMask": "MEDIC",
+              "valueStrs": null,
+              "valueInt": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "rogue_6_relic_fight_15",
+      "record": {
+        "name": "止痛片",
+        "usage": "干员生命值越低，技力恢复速度越快，30%生命值时达到最大恢复速度（+2/s）",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "conditional",
+        "effects": [
+          {
+            "kind": "sp_recovery",
+            "value": 2.0,
+            "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+            "position": "",
+            "subprofession": "",
+            "condition": "current_hp_ratio",
+            "hp_curve_min": 0.3,
+            "source_buff_key": "char_ability_new",
+            "source_buff_index": 0
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "char_ability_new",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "rogue_6_hp_ratio_to_attr_add[sp_recover]"
+              },
+              {
+                "key": "min_hp_ratio",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp_ratio",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "min_sp_recovery_per_sec",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_sp_recovery_per_sec",
+                "value": 0.0,
+                "valueStr": null
+              },
+              {
+                "key": "selector.profession",
+                "value": 0.0,
+                "valueStr": "WARRIOR|SNIPER|TANK|MEDIC|SUPPORT|CASTER|SPECIAL|PIONEER"
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_fight_15",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    }
+  ],
+  "original_source_binding": {
+    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "declared_source_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "declared_original_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "declared_source_hash_is_new_original_byte_verification": false,
+    "full_original_roguelike_table_read_or_rehashed": false,
+    "scope": "Current fixed public mechanics preserves raw_buffs and source_buff_key/index for selected existing rules; no reconstruction of original historical cache or source table."
+  },
+  "old_completed_source_context": [
+    {
+      "path": "/workspace/.continuation/p2-after-055-sp-audit/NOTE060.md",
+      "bytes": 7013,
+      "sha256": "cd92c581710cb3256800043e170b952d685630f1bfa38641015a2f5f2cb4ae6c",
+      "scope": "Sealed60 note: prior0.66 covers five named positive natural SP sources; Shu periodic averaging has already been repaired into unknown clock reference, not a new candidate."
+    },
+    {
+      "path": "/workspace/.continuation/p2-after-055-sp-audit/handoff-receipt060.json",
+      "bytes": 6030,
+      "sha256": "2ffb705c67ba9627c7ac39ea168e1662b63bb74063a7dfd13d651731ed2a8a87",
+      "scope": "Existing sealed60 source and test evidence only read; no matrix/API/test replay."
+    }
+  ],
+  "consumer_findings": [
+    "relics115-117 already gates the named FortuneCookie current natural-SP requirement; profession matching routes selected existing medic source.",
+    "relics218 hp curve factor only applies where explicitly specified; chosen existing Painkillers rule has nonnegative0..2 range under existing0..1 context. No new source multiplier inferred.",
+    "engine1307 adds actual natural attribute plus normalized positive effects;1310 selects natural SP path;1339 and1342 use separate attack/received SP paths,1528 reports rate only for natural SP.",
+    "engine110 signed-effect exception is only hp_pct/attack_speed; no currently active normalized negative SP rule was found to prove a source-backed error here. This does not prove no negative original/native SP source exists.",
+    "run_modifiers23-38 shown squad path recognizes only atk/max_hp/def multipliers; this is no evidence that unimplemented SP multiplier should be guessed or activated.",
+    "Shu periodic source is already stored with native clock unknown and complete recharge withheld; reintroducing interval averaging is not authorized."
+  ],
+  "source_excerpts": [
+    {
+      "path": "PROJECT_PROGRESS.md",
+      "sha256": "e36cc53967b6369d9f4b3ed8870f9d0496830cd1248c35795e847309d0a264f1",
+      "ranges": [
+        {
+          "start": 10,
+          "end": 12,
+          "lines": [
+            {
+              "line": 10,
+              "text": "| --- | --- | --- |"
+            },
+            {
+              "line": 11,
+              "text": "| 1 | 藏品局外机制 | 九头蛇区域成长的实际数值、丢失后保留数值及重复获取顺序进入本局计算；技力回复倍率、负值及其它来源的完整核验；当前游戏热更新及预计/实际面板的成对核对 |"
+            },
+            {
+              "line": 12,
+              "text": "| 1 | 藏品触发与叠加 | 核验新约能天使S2、机械师S2、望S3、予愿安洁莉娜S3等能力事件的实际产生、首次计数源绑定、结束帧及特殊耗弹适用性；补齐动态最大弹药的实际创建/删除时机与不安全补弹轮询窗口；接入慑空适用分支的短时加攻、实际伤害节点和投射事件时序 |"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/relics.py",
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "ranges": [
+        {
+          "start": 8,
+          "end": 10,
+          "lines": [
+            {
+              "line": 8,
+              "text": "BASE_KINDS={'attack_pct','hp_pct','defense_pct','resistance_flat','attack_speed','sp_recovery','damage_taken'}"
+            },
+            {
+              "line": 9,
+              "text": "SUPPORTED=BASE_KINDS|{'redeploy_delta','initial_sp','end_sp','caster_end_sp','sp_cost_factor','healing_factor',"
+            },
+            {
+              "line": 10,
+              "text": "    'enemy_def_delta','enemy_hp_factor','enemy_spawn_hp_branch','enemy_weight_delta','attack_sp','received_sp','event_sp','regeneration','regeneration_factor',"
+            }
+          ]
+        },
+        {
+          "start": 110,
+          "end": 120,
+          "lines": [
+            {
+              "line": 110,
+              "text": "            ammo_parameters=None"
+            },
+            {
+              "line": 111,
+              "text": "            own=matches(e,profile)"
+            },
+            {
+              "line": 112,
+              "text": "            token_ids=[] if is_bound else [tid for tid,t in profile.get('tokens',{}).items() if matches(e,t,token=True)]"
+            },
+            {
+              "line": 113,
+              "text": "            token=bool(token_ids)"
+            },
+            {
+              "line": 114,
+              "text": "            if not own and not token:continue"
+            },
+            {
+              "line": 115,
+              "text": "            if e.get('skill_sp_type'):"
+            },
+            {
+              "line": 116,
+              "text": "                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]"
+            },
+            {
+              "line": 117,
+              "text": "                if selected_skill['sp_type']!=e['skill_sp_type']:continue"
+            },
+            {
+              "line": 118,
+              "text": "            if e['kind'] in ('received_sp','event_sp'):"
+            },
+            {
+              "line": 119,
+              "text": "                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]"
+            },
+            {
+              "line": 120,
+              "text": "                if selected_skill['sp_type'] not in ('INCREASE_WITH_TIME','INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):continue"
+            }
+          ]
+        },
+        {
+          "start": 215,
+          "end": 239,
+          "lines": [
+            {
+              "line": 215,
+              "text": "            if factor is None:"
+            },
+            {
+              "line": 216,
+              "text": "                missing.append(e['condition']);continue"
+            },
+            {
+              "line": 217,
+              "text": "            if e['kind']=='deployment_hp_loss' and loss_unused is None:continue"
+            },
+            {
+              "line": 218,
+              "text": "            value=e['value']*factor if e.get('scale_by_condition') or e.get('hp_curve_min') or e['kind']=='caster_end_sp' else e['value']*factor if e.get('condition')=='emergency_hire' else e['value']"
+            },
+            {
+              "line": 219,
+              "text": "            if 'factor_offset' in e:value+=e['factor_offset']"
+            },
+            {
+              "line": 220,
+              "text": "            rule={**e,'value':value,'relic_id':rid,'_verified_rule':True}"
+            },
+            {
+              "line": 221,
+              "text": "            if e.get('native_count_scale')=='float32_before_fp':"
+            },
+            {
+              "line": 222,
+              "text": "                rule.update(native_rune_base=e['value'],native_rune_factor=factor)"
+            },
+            {
+              "line": 223,
+              "text": "            if ammo_parameters is not None:rule['ammo_parameters']=ammo_parameters"
+            },
+            {
+              "line": 224,
+              "text": "            if e['kind']=='deployment_hp_loss':rule.update(hp_ratio_before=factor,loss_unused=loss_unused)"
+            },
+            {
+              "line": 225,
+              "text": "            applied.append(rule)"
+            },
+            {
+              "line": 226,
+              "text": "            if rule['kind'] in BASE_KINDS:"
+            },
+            {
+              "line": 227,
+              "text": "                if own:effects.append(rule)"
+            },
+            {
+              "line": 228,
+              "text": "                if token:token_effects.append({**rule,'token_ids':token_ids})"
+            },
+            {
+              "line": 229,
+              "text": "            elif own:"
+            },
+            {
+              "line": 230,
+              "text": "                rules.append(rule)"
+            },
+            {
+              "line": 231,
+              "text": "                if token and rule['kind'] in ('regeneration_hp_ratio','regeneration','barrier_on_deploy_ratio','evasion_chance','shield_layers'):rules.append({**rule,'token_only':True,'token_ids':token_ids})"
+            },
+            {
+              "line": 232,
+              "text": "            elif token:rules.append({**rule,'token_only':True,'token_ids':token_ids})"
+            },
+            {
+              "line": 233,
+              "text": "        if (active or data.get('pending_scopes') and not reference and not pending) and not eligible:"
+            },
+            {
+              "line": 234,
+              "text": "            inapplicable.append(rid)"
+            },
+            {
+              "line": 235,
+              "text": "            # Known scoped rules are inapplicable; unknown scripts may have another recipient."
+            },
+            {
+              "line": 236,
+              "text": "        if pending:warnings.append(data['name']+'：未覆盖 '+ '、'.join(dict.fromkeys(pending))+'。')"
+            },
+            {
+              "line": 237,
+              "text": "        if missing:warnings.append(data['name']+'：尚未确认条件 '+ '、'.join(dict.fromkeys(missing))+'，未按0或满层套用。')"
+            },
+            {
+              "line": 238,
+              "text": "        records.append({'id':rid,'name':data['name'],'source':data['source'],'applied':applied,"
+            },
+            {
+              "line": 239,
+              "text": "            'missing_conditions':sorted(set(missing)),'pending':list(dict.fromkeys(pending)),"
+            }
+          ]
+        },
+        {
+          "start": 326,
+          "end": 334,
+          "lines": [
+            {
+              "line": 326,
+              "text": "def recharge_requirement(scenario,cost):"
+            },
+            {
+              "line": 327,
+              "text": "    return max(0,cost-sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind'] in ('end_sp','caster_end_sp')))"
+            },
+            {
+              "line": 328,
+              "text": ""
+            },
+            {
+              "line": 329,
+              "text": "def effective_skill(skill,scenario):"
+            },
+            {
+              "line": 330,
+              "text": "    rules=scenario.get('_relic_rules',[])"
+            },
+            {
+              "line": 331,
+              "text": "    factors=[r['value'] for r in rules if r['kind']=='sp_cost_factor']"
+            },
+            {
+              "line": 332,
+              "text": "    factor=factors[0] if len(factors)==1 else 1"
+            },
+            {
+              "line": 333,
+              "text": "    return {**skill,'sp_cost':skill['sp_cost']*factor,"
+            },
+            {
+              "line": 334,
+              "text": "        'initial_sp':skill['initial_sp']+sum(r['value'] for r in rules if r['kind']=='initial_sp')}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+      "ranges": [
+        {
+          "start": 4,
+          "end": 11,
+          "lines": [
+            {
+              "line": 4,
+              "text": "def prepare_run(scenario):"
+            },
+            {
+              "line": 5,
+              "text": "    scenario=dict(scenario);config=scenario.get('run_config')"
+            },
+            {
+              "line": 6,
+              "text": "    if config is None:config={}"
+            },
+            {
+              "line": 7,
+              "text": "    if not isinstance(config,dict):raise ValueError('本局配置需要对象。')"
+            },
+            {
+              "line": 8,
+              "text": "    for field,label in (('squad','分队'),('difficulty','保密等级')):"
+            },
+            {
+              "line": 9,
+              "text": "        if config.get(field) is not None and not isinstance(config[field],dict):"
+            },
+            {
+              "line": 10,
+              "text": "            raise ValueError('本局'+label+'配置需要对象或空值。')"
+            },
+            {
+              "line": 11,
+              "text": "    resolution={'source':config_data()['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}"
+            }
+          ]
+        },
+        {
+          "start": 23,
+          "end": 38,
+          "lines": [
+            {
+              "line": 23,
+              "text": "        rules=[]"
+            },
+            {
+              "line": 24,
+              "text": "        for buff in record['buffs']:"
+            },
+            {
+              "line": 25,
+              "text": "            if buff['key']!='char_attribute_mul':continue"
+            },
+            {
+              "line": 26,
+              "text": "            kinds={'atk':'attack_pct','max_hp':'hp_pct','def':'defense_pct'}"
+            },
+            {
+              "line": 27,
+              "text": "            for value in buff['blackboard']:"
+            },
+            {
+              "line": 28,
+              "text": "                if value['key'] in kinds:"
+            },
+            {
+              "line": 29,
+              "text": "                    rules.append({'kind':kinds[value['key']],'value':value['value'],"
+            },
+            {
+              "line": 30,
+              "text": "                        'target_scope':'all_units','origin':'run_squad','squad_id':record['id'],"
+            },
+            {
+              "line": 31,
+              "text": "                        'attribute_layer':'relic_rune','formula_item':'MULTIPLIER','source_buff_key':buff['key']})"
+            },
+            {
+              "line": 32,
+              "text": "        if rules and not squad.get('effect_verified'):"
+            },
+            {
+              "line": 33,
+              "text": "            resolution['pending'].append(record['name']+'效果阶段尚未确认，未套用分队属性加成。')"
+            },
+            {
+              "line": 34,
+              "text": "        else:"
+            },
+            {
+              "line": 35,
+              "text": "            scenario['effects']=list(scenario.get('effects',[]))+rules"
+            },
+            {
+              "line": 36,
+              "text": "            resolution['applied']=rules"
+            },
+            {
+              "line": 37,
+              "text": "        resolution['notes'].append(record['name']+'：'+('生命/攻击/防御加成与同类藏品符文合并，再计算天赋和技能；作用于我方单位。' if resolution['applied']"
+            },
+            {
+              "line": 38,
+              "text": "            else '本档案没有已确认并接入的直接生命/攻击/防御加成。'))"
+            }
+          ]
+        },
+        {
+          "start": 50,
+          "end": 54,
+          "lines": [
+            {
+              "line": 50,
+              "text": "        if not scenario.get('target_enemy'):"
+            },
+            {
+              "line": 51,
+              "text": "            resolution['pending'].append('已确认保密等级 '+str(value)+'；未选择关卡敌人，敌方难度/区域/关卡修正尚未自动计算，当前目标属性仍使用测试输入。')"
+            },
+            {
+              "line": 52,
+              "text": "    from .enemy_environment import resolve_enemy"
+            },
+            {
+              "line": 53,
+              "text": "    resolve_enemy(scenario,resolution)"
+            },
+            {
+              "line": 54,
+              "text": "    return scenario,resolution"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "sha256": "071b60914f40a0281c7acc8e3648520b496a448339f8d9b8c983fde47955ada4",
+      "ranges": [
+        {
+          "start": 107,
+          "end": 120,
+          "lines": [
+            {
+              "line": 107,
+              "text": "        for effect in self.effects:"
+            },
+            {
+              "line": 108,
+              "text": "            if effect['kind'] not in ('attack_pct','hp_pct','defense_pct','resistance_flat','attack_speed','sp_recovery','damage_taken'):"
+            },
+            {
+              "line": 109,
+              "text": "                raise ValueError('加成类型尚未支持。')"
+            },
+            {
+              "line": 110,
+              "text": "            self.value(abs(effect['value']) if effect.get('_verified_rule') and effect['kind'] in ('hp_pct','attack_speed') else effect['value'],'藏品加成')"
+            },
+            {
+              "line": 111,
+              "text": "        self.enemy_def=self.option('enemy_defense',0)"
+            },
+            {
+              "line": 112,
+              "text": "        self.enemy_res=self.option('enemy_resistance',0,maximum=100)"
+            },
+            {
+              "line": 113,
+              "text": "        for field in ('window_seconds','skill_duration_seconds'):"
+            },
+            {
+              "line": 114,
+              "text": "            if field in scenario:scenario[field]=self.option(field,maximum=3600)"
+            },
+            {
+              "line": 115,
+              "text": "        self.base=float(scenario['base_attack'])"
+            },
+            {
+              "line": 116,
+              "text": "        self.value(self.base,'基础攻击')"
+            },
+            {
+              "line": 117,
+              "text": "        self.atk_bonus=self.total('attack_pct');self.as_bonus=self.total('attack_speed')"
+            },
+            {
+              "line": 118,
+              "text": "        self.hp_bonus=self.total('hp_pct');self.def_bonus=self.total('defense_pct')"
+            },
+            {
+              "line": 119,
+              "text": "        self.res_bonus=self.total('resistance_flat')"
+            },
+            {
+              "line": 120,
+              "text": "        self.initial_bonus=0;self.sp_extra=0"
+            }
+          ]
+        },
+        {
+          "start": 187,
+          "end": 210,
+          "lines": [
+            {
+              "line": 187,
+              "text": "            if self.s.get('three_professions'):self.hp_bonus+=self.talent('天有四时','max_hp')"
+            },
+            {
+              "line": 188,
+              "text": "            if self.s.get('three_same_profession'):self.as_bonus+=self.talent('天有四时','attack_speed')"
+            },
+            {
+              "line": 189,
+              "text": "            if '天有四时' in self.tv and isinstance(self.s.get('four_sui'),str):"
+            },
+            {
+              "line": 190,
+              "text": "                raise ValueError('four_sui 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 191,
+              "text": "            if '天有四时' in self.tv:"
+            },
+            {
+              "line": 192,
+              "text": "                for field in ('three_professions','three_same_profession'):"
+            },
+            {
+              "line": 193,
+              "text": "                    if isinstance(self.s.get(field),str):"
+            },
+            {
+              "line": 194,
+              "text": "                        raise ValueError(field+' 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 195,
+              "text": "            if self.s.get('four_sui'):"
+            },
+            {
+              "line": 196,
+              "text": "                self.atk_bonus+=self.talent('天有四时','atk')"
+            },
+            {
+              "line": 197,
+              "text": "                if self.talent('天有四时','sp')>0:"
+            },
+            {
+              "line": 198,
+              "text": "                    # A discrete talent interval is not a natural SP rate."
+            },
+            {
+              "line": 199,
+              "text": "                    # The original selector does not establish its first pulse,"
+            },
+            {
+              "line": 200,
+              "text": "                    # owner clock, reset or credit during skill lockout."
+            },
+            {
+              "line": 201,
+              "text": "                    self.shu_periodic_sp_reference={"
+            },
+            {
+              "line": 202,
+              "text": "                        'interval_seconds_parameter':self.talent('天有四时','interval'),"
+            },
+            {
+              "line": 203,
+              "text": "                        'sp_per_pulse_parameter':self.talent('天有四时','sp'),"
+            },
+            {
+              "line": 204,
+              "text": "                        'attack_bonus_parameter':self.talent('天有四时','atk'),"
+            },
+            {
+              "line": 205,
+              "text": "                        'first_tick_seconds':None,'actual_tick_times_seconds':None,"
+            },
+            {
+              "line": 206,
+              "text": "                        'clock_origin':None,'reset_rule':None,'blocked_credit_rule':None,"
+            },
+            {
+              "line": 207,
+              "text": "                        'native_attachment_verified':False,'clock_verified':False,"
+            },
+            {
+              "line": 208,
+              "text": "                        'events_scheduled':False,"
+            },
+            {
+              "line": 209,
+              "text": "                        'source_commit':'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',"
+            },
+            {
+              "line": 210,
+              "text": "                        'source_selector':'character_table.char_2025_shu.talents[1].candidates[0]'}"
+            }
+          ]
+        },
+        {
+          "start": 1304,
+          "end": 1315,
+          "lines": [
+            {
+              "line": 1304,
+              "text": "        sp=self.skill"
+            },
+            {
+              "line": 1305,
+              "text": "        from .relics import recharge_requirement"
+            },
+            {
+              "line": 1306,
+              "text": "        recharge_cost=recharge_requirement(self.s,sp['sp_cost'])"
+            },
+            {
+              "line": 1307,
+              "text": "        rate=self.a['sp_recovery']+self.total('sp_recovery')+self.sp_extra"
+            },
+            {
+              "line": 1308,
+              "text": "        initial=sp['initial_sp']+self.initial_bonus"
+            },
+            {
+              "line": 1309,
+              "text": "        mixed_recovery=None"
+            },
+            {
+              "line": 1310,
+              "text": "        if sp['sp_type']=='INCREASE_WITH_TIME':"
+            },
+            {
+              "line": 1311,
+              "text": "            recharge=recharge_cost/rate if rate>0 else None"
+            },
+            {
+              "line": 1312,
+              "text": "            first=max(0,sp['sp_cost']-initial)/rate if rate>0 else None"
+            },
+            {
+              "line": 1313,
+              "text": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+            },
+            {
+              "line": 1314,
+              "text": "                recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None"
+            },
+            {
+              "line": 1315,
+              "text": "                first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None"
+            }
+          ]
+        },
+        {
+          "start": 1339,
+          "end": 1349,
+          "lines": [
+            {
+              "line": 1339,
+              "text": "        elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):"
+            },
+            {
+              "line": 1340,
+              "text": "            recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,wait_next_attack=full['mode']=='next_attack')"
+            },
+            {
+              "line": 1341,
+              "text": "            first=charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,wait_next_attack=full['mode']=='next_attack')"
+            },
+            {
+              "line": 1342,
+              "text": "        elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE':"
+            },
+            {
+              "line": 1343,
+              "text": "            incoming=self.option('incoming_attack_interval',0,maximum=3600)"
+            },
+            {
+              "line": 1344,
+              "text": "            recharge=math.ceil(recharge_cost/sp['sp_increment'])*incoming if incoming>0 else None"
+            },
+            {
+              "line": 1345,
+              "text": "            first=math.ceil(max(0,sp['sp_cost']-initial)/sp['sp_increment'])*incoming if incoming>0 else None"
+            },
+            {
+              "line": 1346,
+              "text": "            if has_periodic_sp(self.s):"
+            },
+            {
+              "line": 1347,
+              "text": "                recharge=periodic_charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,incoming_interval=incoming)"
+            },
+            {
+              "line": 1348,
+              "text": "                first=periodic_charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,incoming_interval=incoming)"
+            },
+            {
+              "line": 1349,
+              "text": "        else:recharge=first=None"
+            }
+          ]
+        },
+        {
+          "start": 1455,
+          "end": 1461,
+          "lines": [
+            {
+              "line": 1455,
+              "text": "        if self.shu_periodic_sp_reference is not None:"
+            },
+            {
+              "line": 1456,
+              "text": "            self.shu_periodic_sp_reference['independent_sp_clock_reference']={"
+            },
+            {
+              "line": 1457,
+              "text": "                'initial_seconds':first,'recharge_seconds':recharge,"
+            },
+            {
+              "line": 1458,
+              "text": "                'excludes_four_sui_periodic_credit':True}"
+            },
+            {
+              "line": 1459,
+              "text": "            first=0.0 if initial>=sp['sp_cost'] else None"
+            },
+            {
+              "line": 1460,
+              "text": "            recharge=None"
+            },
+            {
+              "line": 1461,
+              "text": "        cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None"
+            }
+          ]
+        },
+        {
+          "start": 1526,
+          "end": 1529,
+          "lines": [
+            {
+              "line": 1526,
+              "text": "            'skill_attack':full['attack'],'skill_attack_speed':full['attack_speed'],"
+            },
+            {
+              "line": 1527,
+              "text": "            'skill_attack_speed_reference':full['attack_speed_reference'],"
+            },
+            {
+              "line": 1528,
+              "text": "            'sp_recovery_per_second':rate if sp['sp_type']=='INCREASE_WITH_TIME' else None,'mode':mode,"
+            },
+            {
+              "line": 1529,
+              "text": "            'hit_counts':{name:sum(c['hits'] for c in full['components'] if c['name']==name)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "remaining_unknowns": [
+    "Any negative SP original selector and its actual consumer/value domain",
+    "Multiplicative SP composition layer, cap/clamp, stacking and native attachment",
+    "Other original SP sources not covered by this narrow existing normalized index",
+    "Current hotupdate/account/live game/source ordering and periodic clocks"
+  ],
+  "next_step": "Keep broader SP backlog open. Reopen only with an exact new original selector or verified source contract that conflicts with actual current consumer; then seek explicit product-stage authorization. No candidate section should be manufactured from this negative result.",
+  "new_API_calls": 0,
+  "new_product_helper_calls": 0,
+  "tests_run": 0,
+  "GUI_calls": 0,
+  "Wine_calls": 0,
+  "network_calls": 0,
+  "tracked_edits": 0,
+  "historical_cache_reconstructed": false,
+  "bool86_finite_or_module102_audit_repeated": false,
+  "preparation_diagnostics": [
+    {
+      "path": "rouge/relic_rules.py",
+      "failure": "read-only guessed file absent in fixed commit; actual rule source is relics.py and relic-mechanics.json",
+      "dependent_API_tests_or_mutations_started": false
+    }
+  ]
+}

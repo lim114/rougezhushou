@@ -1,0 +1,719 @@
+{
+  "kind": "SOURCE_ONLY_INVERSE_METADATA_TRANSPORTS",
+  "files": [
+    {
+      "basis": "full115-suite-adapters-source-v1/suite_common115.py",
+      "candidate": "section125/adapters/suite_common125.py",
+      "old_sha256": "04f35e7a1e41f82336bc04dc3d71a8268310761a9f5ee7bec51f9d5cbf998e78",
+      "new_sha256": "e54719b778d795ce52fbc9845999d8c77ae5b6cdcdb906cbacc38f569d3c28fa",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "    'suite_common115.py', 'wine_capability_probe115.py', 'wine_full115.py',\n",
+          "after": "    'suite_common125.py', 'wine_capability_probe125.py', 'wine_full125.py',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'wine_selected115.py', 'source-contract.json', 'README.md', 'manifest.json',\n",
+          "after": "    'wine_selected125.py', 'source-contract.json', 'README.md', 'manifest.json',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(guard.get('section') == 115 and type(guard.get('section')) is int,\n",
+          "after": "    require(guard.get('section') == 125 and type(guard.get('section')) is int,\n",
+          "occurrences": 1
+        },
+        {
+          "before": "            'An actual final115 Root guard is required; historical095 or pending guards are forbidden')\n",
+          "after": "            'An actual final125 Root guard is required; historical095 or pending guards are forbidden')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(source == expected, 'Actual maintained rouge/tests/scripts .py/.json set or bytes differ from Root115 guard')\n",
+          "after": "    require(source == expected, 'Actual maintained rouge/tests/scripts .py/.json set or bytes differ from Root125 guard')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "            'Exact sealed adapter Source differs from Root115 guard')\n",
+          "after": "            'Exact sealed adapter Source differs from Root125 guard')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    return {'format_version': 1, 'section': 115, 'checked_at': now(),\n",
+          "after": "    return {'format_version': 1, 'section': 125, 'checked_at': now(),\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_capability_probe115.py",
+      "candidate": "section125/adapters/wine_capability_probe125.py",
+      "old_sha256": "987e62d1c5c11121b28046143613f888093af618f48c6b635bcad013d2cb541b",
+      "new_sha256": "86c93512dd6d558d6ac9999045eb4c6b6a4c141a9c5971490d12ef08309def63",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import fresh_capability, require, workspace_evidence_path, write_json\n",
+          "after": "from suite_common125 import fresh_capability, require, workspace_evidence_path, write_json\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_full115.py",
+      "candidate": "section125/adapters/wine_full125.py",
+      "old_sha256": "28be084f22d83f8450718e0f8917c01257796a22713c73b92cb6e2ede7bf16ea",
+      "new_sha256": "63fd9e6a378602b17df955fd4a10fded19928466cc1a9fdcc743a4f1b72bb659",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "after": "from suite_common125 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_selected115.py",
+      "candidate": "section125/adapters/wine_selected125.py",
+      "old_sha256": "92caf18a273635ac22efbd8df05982ba86e369d85691c6390470e89c03ba963c",
+      "new_sha256": "8c7342338af5352195de7e33113c421d88d71ce9f5d1e2ef7065b8dec7083dc3",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "after": "from suite_common125 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-bounded-window-source-draft-v1/window.py",
+      "candidate": "section125/bounded-window/window.py",
+      "old_sha256": "9b1e8d59986f92b76c222b0af8cdd834d4eb23852aedccde8bae3d05f6b5a07e",
+      "new_sha256": "46d1842b88d5334129f4780048bf53f01bfcc2759b0c41c8ab6877b7a4969bbc",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "\"\"\"Inactive bounded full115 Window Source draft; Root final115 guard binding pending.\"\"\"",
+          "after": "\"\"\"Inactive bounded full125 Window Source draft; Root final125 guard binding pending.\"\"\"",
+          "occurrences": 1
+        },
+        {
+          "before": "# Draft deliberately refuses execution before Root final115 Source binding.",
+          "after": "# Draft deliberately refuses execution before Root final125 Source binding.",
+          "occurrences": 1
+        },
+        {
+          "before": "_SOURCE115_GUARD_SHA256 = None",
+          "after": "_SOURCE125_GUARD_SHA256 = None",
+          "occurrences": 1
+        },
+        {
+          "before": "_SOURCE115_MAINTAINED_COUNT = None",
+          "after": "_SOURCE125_MAINTAINED_COUNT = None",
+          "occurrences": 1
+        },
+        {
+          "before": "if _SOURCE115_GUARD_SHA256 is None or _SOURCE115_MAINTAINED_COUNT is None:",
+          "after": "if _SOURCE125_GUARD_SHA256 is None or _SOURCE125_MAINTAINED_COUNT is None:",
+          "occurrences": 1
+        },
+        {
+          "before": "Inactive full115 Source draft: actual final115 guard not bound",
+          "after": "Inactive full125 Source draft: actual final125 guard not bound",
+          "occurrences": 1
+        },
+        {
+          "before": "hexdigest() != _SOURCE115_GUARD_SHA256:",
+          "after": "hexdigest() != _SOURCE125_GUARD_SHA256:",
+          "occurrences": 1
+        },
+        {
+          "before": "Exact Root final115 public Source guard bytes required",
+          "after": "Exact Root final125 public Source guard bytes required",
+          "occurrences": 1
+        },
+        {
+          "before": "len(_expected100)!=_SOURCE115_MAINTAINED_COUNT:",
+          "after": "len(_expected100)!=_SOURCE125_MAINTAINED_COUNT:",
+          "occurrences": 1
+        },
+        {
+          "before": "Exact actual final115 maintained Source count is required",
+          "after": "Exact actual final125 maintained Source count is required",
+          "occurrences": 1
+        },
+        {
+          "before": "Final115 additional Source map must include CORE registration",
+          "after": "Final125 additional Source map must include CORE registration",
+          "occurrences": 1
+        },
+        {
+          "before": "Final115 maintained Source drift before project imports",
+          "after": "Final125 maintained Source drift before project imports",
+          "occurrences": 1
+        },
+        {
+          "before": "Final115 supplemental Source drift before project imports",
+          "after": "Final125 supplemental Source drift before project imports",
+          "occurrences": 1
+        },
+        {
+          "before": "Fresh full115 attempt1 deadline of1200 seconds reached",
+          "after": "Fresh full125 attempt1 deadline of1200 seconds reached",
+          "occurrences": 1
+        },
+        {
+          "before": "'scope': 'actual full115 attempt1 hard deadline', 'after_section': 115",
+          "after": "'scope': 'actual full125 attempt1 hard deadline', 'after_section': 125",
+          "occurrences": 1
+        },
+        {
+          "before": "'kind': 'FULL115_ATTEMPT1_APPENDED_CHECK_PROGRESS'",
+          "after": "'kind': 'FULL125_ATTEMPT1_APPENDED_CHECK_PROGRESS'",
+          "occurrences": 1
+        },
+        {
+          "before": "'after_section': 115, 'attempt': 1, 'passed': False",
+          "after": "'after_section': 125, 'attempt': 1, 'passed': False",
+          "occurrences": 1
+        },
+        {
+          "before": "'full115-progress.json.tmp'",
+          "after": "'full125-progress.json.tmp'",
+          "occurrences": 1
+        },
+        {
+          "before": "os.replace(temporary, OUT / 'full115-progress.json')",
+          "after": "os.replace(temporary, OUT / 'full125-progress.json')",
+          "occurrences": 1
+        },
+        {
+          "before": "'after_section':115,'current_maintained_source_count_expected':_SOURCE115_MAINTAINED_COUNT",
+          "after": "'after_section':125,'current_maintained_source_count_expected':_SOURCE125_MAINTAINED_COUNT",
+          "occurrences": 1
+        },
+        {
+          "before": "'specialist101_115_validation_in_this_runner':False",
+          "after": "'specialist101_125_validation_in_this_runner':False",
+          "occurrences": 1
+        },
+        {
+          "before": "'full115_attempt':1,'progress_checkpoint_file':'full115-progress.json'",
+          "after": "'full125_attempt':1,'progress_checkpoint_file':'full125-progress.json'",
+          "occurrences": 1
+        },
+        {
+          "before": "Inherited actual successful full105 progressv2 functional suite transported through Source110 to final115 Source. Separate96-115 specialist receipts required. Legacy projection-only/producer/no-alias limitations remain unchanged. No old095 complete invocation vector, native Windows, capture or chat certification.",
+          "after": "Inherited actual successful full105 progressv2 functional suite transported through Source110 to final125 Source. Separate96-125 specialist receipts required. Legacy projection-only/producer/no-alias limitations remain unchanged. No old095 complete invocation vector, native Windows, capture or chat certification.",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-bounded-window-source-draft-v1/supervisor115.py",
+      "candidate": "section125/bounded-window/supervisor125.py",
+      "old_sha256": "705e2be5804663754119d64caefa2b171e5879997e2cdbf882688c14128fe782",
+      "new_sha256": "5954521182a43e447feccedbec5bcc164412550d8da4108a53ba9483463679f9",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "\"\"\"Linux-only inactive full115 attempt1 Source launcher with an independent1200-second deadline.\n",
+          "after": "\"\"\"Linux-only inactive full125 attempt1 Source launcher with an independent1200-second deadline.\n",
+          "occurrences": 1
+        },
+        {
+          "before": "              'after_section': 115, 'full115_attempt': 1,\n",
+          "after": "              'after_section': 125, 'full125_attempt': 1,\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-113-bridge-source-v2/bridge115.py",
+      "candidate": "section125/bridge/bridge125.py",
+      "old_sha256": "e054ed7e7fa81ee2a3187f7710017940b63b07fc275d262bcc482bba60304c1a",
+      "new_sha256": "f4f5a49b38bea9ed1d6971e2bfa3404f98faead70d025f4b5d8ed34408992bf5",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "RESERVED_ROOT_OUTPUTS = frozenset(('window.py', 'bridge115.py', 'launcher115.py',\n",
+          "after": "RESERVED_ROOT_OUTPUTS = frozenset(('window.py', 'bridge125.py', 'launcher125.py',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'expected-map115.json', 'supervisor115.py', 'root_source_activation.json',\n",
+          "after": "    'expected-map125.json', 'supervisor125.py', 'root_source_activation.json',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'source_manifest.json', 'full115-bridge-closure.json', 'full115-113-bridge-ledger.json'))\n",
+          "after": "    'source_manifest.json', 'full125-bridge-closure.json', 'full125-113-bridge-ledger.json'))\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        record = {'kind': 'ACTUAL_FULL115_COMPARISON_ONLY_BRIDGE_LEDGER',\n",
+          "after": "        record = {'kind': 'ACTUAL_FULL125_COMPARISON_ONLY_BRIDGE_LEDGER',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        temporary = self.out / 'full115-113-bridge-ledger.json.tmp'\n",
+          "after": "        temporary = self.out / 'full125-113-bridge-ledger.json.tmp'\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        os.replace(temporary, self.out / 'full115-113-bridge-ledger.json')\n",
+          "after": "        os.replace(temporary, self.out / 'full125-113-bridge-ledger.json')\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-113-bridge-source-v2/build_bridge115.py",
+      "candidate": "section125/bridge/build_bridge125.py",
+      "old_sha256": "aca072384f6e2500a96e73b25a451beee9686d2d03f996064cee4dfbecbc1032",
+      "new_sha256": "1a75e2b742a95917bcf37a7bbde49383d05600d1f68d80bd350f4f47cf78ba0f",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from bridge115 import Bridge, INDICES, METRICS, digest, encoded, require, scalar, validate_leaf\n",
+          "after": "from bridge125 import Bridge, INDICES, METRICS, digest, encoded, require, scalar, validate_leaf\n",
+          "occurrences": 1
+        },
+        {
+          "before": "BOOTSTRAP = '''# BEGIN ROOT115 COMPARISON-ONLY BRIDGE BOOTSTRAP\n",
+          "after": "BOOTSTRAP = '''# BEGIN ROOT125 COMPARISON-ONLY BRIDGE BOOTSTRAP\n",
+          "occurrences": 1
+        },
+        {
+          "before": "from importlib.util import spec_from_file_location as _bridge_spec115, module_from_spec as _bridge_module115\n",
+          "after": "from importlib.util import spec_from_file_location as _bridge_spec125, module_from_spec as _bridge_module125\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_source115 = Path(__file__).with_name('bridge115.py')\n",
+          "after": "_bridge_source125 = Path(__file__).with_name('bridge125.py')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_map115 = Path(__file__).with_name('expected-map115.json')\n",
+          "after": "_bridge_map125 = Path(__file__).with_name('expected-map125.json')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_pins115 = _guard100['full115_113_bridge_sha256']\n",
+          "after": "_bridge_pins125 = _guard100['full125_113_bridge_sha256']\n",
+          "occurrences": 1
+        },
+        {
+          "before": "if set(_bridge_pins115) != {'bridge115.py', 'expected-map115.json'}:\n",
+          "after": "if set(_bridge_pins125) != {'bridge125.py', 'expected-map125.json'}:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "for _bridge_file115 in (_bridge_source115, _bridge_map115):\n",
+          "after": "for _bridge_file125 in (_bridge_source125, _bridge_map125):\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    if _bridge_file115.is_symlink() or hashlib.sha256(_bridge_file115.read_bytes()).hexdigest() != _bridge_pins115[_bridge_file115.name]:\n",
+          "after": "    if _bridge_file125.is_symlink() or hashlib.sha256(_bridge_file125.read_bytes()).hexdigest() != _bridge_pins125[_bridge_file125.name]:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_spec_object115 = _bridge_spec115('_root_comparison_bridge115', _bridge_source115)\n",
+          "after": "_bridge_spec_object125 = _bridge_spec125('_root_comparison_bridge125', _bridge_source125)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_module_object115 = _bridge_module115(_bridge_spec_object115)\n",
+          "after": "_bridge_module_object125 = _bridge_module125(_bridge_spec_object125)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_bridge_spec_object115.loader.exec_module(_bridge_module_object115)\n",
+          "after": "_bridge_spec_object125.loader.exec_module(_bridge_module_object125)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_comparison_bridge115 = _bridge_module_object115.Bridge(_bridge_map115, _bridge_pins115['expected-map115.json'], OUT)\n",
+          "after": "_comparison_bridge125 = _bridge_module_object125.Bridge(_bridge_map125, _bridge_pins125['expected-map125.json'], OUT)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "# END ROOT115 COMPARISON-ONLY BRIDGE BOOTSTRAP\n",
+          "after": "# END ROOT125 COMPARISON-ONLY BRIDGE BOOTSTRAP\n",
+          "occurrences": 1
+        },
+        {
+          "before": "# BEGIN ROOT115 EXPLICIT COMPARISON WRAPPER\n",
+          "after": "# BEGIN ROOT125 EXPLICIT COMPARISON WRAPPER\n",
+          "occurrences": 1
+        },
+        {
+          "before": "_original_projection115 = projection090\n",
+          "after": "_original_projection125 = projection090\n",
+          "occurrences": 1
+        },
+        {
+          "before": "projection090 = _comparison_bridge115.install(_original_projection115, native090,\n",
+          "after": "projection090 = _comparison_bridge125.install(_original_projection125, native090,\n",
+          "occurrences": 1
+        },
+        {
+          "before": "# END ROOT115 EXPLICIT COMPARISON WRAPPER\n",
+          "after": "# END ROOT125 EXPLICIT COMPARISON WRAPPER\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        edits.extend([('_SOURCE115_GUARD_SHA256 = None',\n",
+          "after": "        edits.extend([('_SOURCE125_GUARD_SHA256 = None',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                       '_SOURCE115_GUARD_SHA256 = ' + repr(guard_sha256)),\n",
+          "after": "                       '_SOURCE125_GUARD_SHA256 = ' + repr(guard_sha256)),\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                      ('_SOURCE115_MAINTAINED_COUNT = None',\n",
+          "after": "                      ('_SOURCE125_MAINTAINED_COUNT = None',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                       '_SOURCE115_MAINTAINED_COUNT = ' + str(source_count))])\n",
+          "after": "                       '_SOURCE125_MAINTAINED_COUNT = ' + str(source_count))])\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    compile(candidate, '<Source-only future115-window>', 'exec')\n",
+          "after": "    compile(candidate, '<Source-only future125-window>', 'exec')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(hashlib.sha256(raw).hexdigest() == BASIS_SHA256, 'Exact frozen metadata-only115 basis required')\n",
+          "after": "    require(hashlib.sha256(raw).hexdigest() == BASIS_SHA256, 'Exact frozen metadata-only125 basis required')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    for file in ('bridge115.py', 'launcher115.py.in', 'build_bridge115.py'):\n",
+          "after": "    for file in ('bridge125.py', 'launcher125.py.in', 'build_bridge125.py'):\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        print(json.dumps({'kind': 'SOURCE_ONLY_INACTIVE_BRIDGE115_AUTHOR_CHECK',\n",
+          "after": "        print(json.dumps({'kind': 'SOURCE_ONLY_INACTIVE_BRIDGE125_AUTHOR_CHECK',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(guard['section'] == 115 and type(guard['section']) is int, 'Actual final115 guard required')\n",
+          "after": "    require(guard['section'] == 125 and type(guard['section']) is int, 'Actual final125 guard required')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    source_pins = {'bridge115.py': hashlib.sha256((here/'bridge115.py').read_bytes()).hexdigest(),\n",
+          "after": "    source_pins = {'bridge125.py': hashlib.sha256((here/'bridge125.py').read_bytes()).hexdigest(),\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                   'expected-map115.json': hashlib.sha256(map_raw).hexdigest()}\n",
+          "after": "                   'expected-map125.json': hashlib.sha256(map_raw).hexdigest()}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(guard['full115_113_bridge_sha256'] == source_pins, 'Guard must qualify exact bridge/map Source')\n",
+          "after": "    require(guard['full125_113_bridge_sha256'] == source_pins, 'Guard must qualify exact bridge/map Source')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(mapping['future_actual115_guard_sha256'] is None, 'Use guard-to-map binding; avoid cyclic hashes')\n",
+          "after": "    require(mapping['future_actual125_guard_sha256'] is None, 'Use guard-to-map binding; avoid cyclic hashes')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    measured_proof = Bridge(map_path, source_pins['expected-map115.json'], out)  # Validates paths/bytes before output.\n",
+          "after": "    measured_proof = Bridge(map_path, source_pins['expected-map125.json'], out)  # Validates paths/bytes before output.\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    launcher = (here / 'launcher115.py.in').read_text()\n",
+          "after": "    launcher = (here / 'launcher125.py.in').read_text()\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                          ('SOURCE115_GUARD_SHA256 = None', 'SOURCE115_GUARD_SHA256 = ' + repr(guard_sha))]:\n",
+          "after": "                          ('SOURCE125_GUARD_SHA256 = None', 'SOURCE125_GUARD_SHA256 = ' + repr(guard_sha))]:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    compile(launcher, '<Root-activated115-launcher>', 'exec')\n",
+          "after": "    compile(launcher, '<Root-activated125-launcher>', 'exec')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    (out/'bridge115.py').write_bytes((here/'bridge115.py').read_bytes())\n",
+          "after": "    (out/'bridge125.py').write_bytes((here/'bridge125.py').read_bytes())\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    (out/'expected-map115.json').write_bytes(map_raw)\n",
+          "after": "    (out/'expected-map125.json').write_bytes(map_raw)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    (out/'launcher115.py').write_text(launcher, encoding='utf-8')\n",
+          "after": "    (out/'launcher125.py').write_text(launcher, encoding='utf-8')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    (out/'supervisor115.py').write_bytes((basis/'supervisor115.py').read_bytes())\n",
+          "after": "    (out/'supervisor125.py').write_bytes((basis/'supervisor125.py').read_bytes())\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    activation = {'kind': 'ROOT_ACTUAL_PROOF_BOUND_FULL115_SOURCE_ACTIVATION',\n",
+          "after": "    activation = {'kind': 'ROOT_ACTUAL_PROOF_BOUND_FULL125_SOURCE_ACTIVATION',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "                  for name in ('window.py','bridge115.py','expected-map115.json','launcher115.py','supervisor115.py')],\n",
+          "after": "                  for name in ('window.py','bridge125.py','expected-map125.json','launcher125.py','supervisor125.py')],\n",
+          "occurrences": 1
+        },
+        {
+          "before": "BASIS_SHA256 = '9b1e8d59986f92b76c222b0af8cdd834d4eb23852aedccde8bae3d05f6b5a07e'",
+          "after": "BASIS_SHA256 = '46d1842b88d5334129f4780048bf53f01bfcc2759b0c41c8ab6877b7a4969bbc'",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-113-bridge-source-v2/launcher115.py.in",
+      "candidate": "section125/bridge/launcher125.py.in",
+      "old_sha256": "3b23065af979f846120e841ea34512dcbf178f9219580f68e9908d22180cfaac",
+      "new_sha256": "10d6a0e57b7bc1fd0f607fa458987e8424e7abe55da5aad644c62136656b1131",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "SOURCE115_GUARD_SHA256 = None\n",
+          "after": "SOURCE125_GUARD_SHA256 = None\n",
+          "occurrences": 1
+        },
+        {
+          "before": "if WINDOW_SHA256 is None or SOURCE115_GUARD_SHA256 is None:\n",
+          "after": "if WINDOW_SHA256 is None or SOURCE125_GUARD_SHA256 is None:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    raise ValueError('Inactive full115 launcher: actual Source/evidence not bound')\n",
+          "after": "    raise ValueError('Inactive full125 launcher: actual Source/evidence not bound')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    raise AssertionError('Activated full115 window Source hash drift')\n",
+          "after": "    raise AssertionError('Activated full125 window Source hash drift')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "if hashlib.sha256(guard.read_bytes()).hexdigest() != SOURCE115_GUARD_SHA256:\n",
+          "after": "if hashlib.sha256(guard.read_bytes()).hexdigest() != SOURCE125_GUARD_SHA256:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    raise AssertionError('Root final115 guard hash drift')\n",
+          "after": "    raise AssertionError('Root final125 guard hash drift')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "if hashlib.sha256(guard_raw_after).hexdigest() != SOURCE115_GUARD_SHA256:\n",
+          "after": "if hashlib.sha256(guard_raw_after).hexdigest() != SOURCE125_GUARD_SHA256:\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    raise AssertionError('Root final115 guard bytes drift during actual window')\n",
+          "after": "    raise AssertionError('Root final125 guard bytes drift during actual window')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "for name, sha256 in guard_data['full115_113_bridge_sha256'].items():\n",
+          "after": "for name, sha256 in guard_data['full125_113_bridge_sha256'].items():\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    raise AssertionError('Actual full115 runner Source drift after window')\n",
+          "after": "    raise AssertionError('Actual full125 runner Source drift after window')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "ledger = json.loads((out / 'full115-113-bridge-ledger.json').read_bytes())\n",
+          "after": "ledger = json.loads((out / 'full125-113-bridge-ledger.json').read_bytes())\n",
+          "occurrences": 1
+        },
+        {
+          "before": "admission = json.loads(window.with_name('expected-map115.json').read_bytes())\n",
+          "after": "admission = json.loads(window.with_name('expected-map125.json').read_bytes())\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        or receipt['source100_guard_sha256'] != SOURCE115_GUARD_SHA256\n",
+          "after": "        or receipt['source100_guard_sha256'] != SOURCE125_GUARD_SHA256\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        or ledger['mapping_sha256'] != guard_data['full115_113_bridge_sha256']['expected-map115.json']\n",
+          "after": "        or ledger['mapping_sha256'] != guard_data['full125_113_bridge_sha256']['expected-map125.json']\n",
+          "occurrences": 1
+        },
+        {
+          "before": "closure = {'kind':'ROOT_ACTUAL_FULL115_WINDOW_BRIDGE_CLOSURE',\n",
+          "after": "closure = {'kind':'ROOT_ACTUAL_FULL125_WINDOW_BRIDGE_CLOSURE',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'ledger_sha256':hashlib.sha256((out/'full115-113-bridge-ledger.json').read_bytes()).hexdigest(),\n",
+          "after": "    'ledger_sha256':hashlib.sha256((out/'full125-113-bridge-ledger.json').read_bytes()).hexdigest(),\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'window_sha256':WINDOW_SHA256,'guard_sha256':SOURCE115_GUARD_SHA256,\n",
+          "after": "    'window_sha256':WINDOW_SHA256,'guard_sha256':SOURCE125_GUARD_SHA256,\n",
+          "occurrences": 1
+        },
+        {
+          "before": "(out / 'full115-bridge-closure.json').write_text(\n",
+          "after": "(out / 'full125-bridge-closure.json').write_text(\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-root-activated-source-v1/expected-map115.json",
+      "candidate": "section125/bridge/expected-map125.json",
+      "old_sha256": "a32b857a4b9241a55714c7027bb537f04fec0918e442d94e40dd098fc0ebdacf",
+      "new_sha256": "0df09727b4cf47757f5ac9cae0943c7df80e985da30c158e50ba010ead43928c",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "\"future_actual115_guard_sha256\":null",
+          "after": "\"future_actual125_guard_sha256\":null",
+          "occurrences": 1
+        },
+        {
+          "before": "\"old_window_source_sha256\":\"9b1e8d59986f92b76c222b0af8cdd834d4eb23852aedccde8bae3d05f6b5a07e\"",
+          "after": "\"old_window_source_sha256\":\"46d1842b88d5334129f4780048bf53f01bfcc2759b0c41c8ab6877b7a4969bbc\"",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-saved-audit-source-v1/audit_full115.py",
+      "candidate": "section125/saved-audit/audit_full125.py",
+      "old_sha256": "735cb45d905e801ad3040f9c05f9c36d0e00b03437788d58a6aad5699e01bc94",
+      "new_sha256": "b90a95e75c28d5a838dd3786391923b2fcb0bcc535d0aadec0b264c6a69671bb",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "\"\"\"Root executes this independent stdlib-only saved-output audit after full115.\"\"\"\n",
+          "after": "\"\"\"Root executes this independent stdlib-only saved-output audit after full125.\"\"\"\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    closure, closure_raw = plain_json(output / 'full115-bridge-closure.json', frozen)\n",
+          "after": "    closure, closure_raw = plain_json(output / 'full125-bridge-closure.json', frozen)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    ledger, ledger_raw = plain_json(output / 'full115-113-bridge-ledger.json', frozen)\n",
+          "after": "    ledger, ledger_raw = plain_json(output / 'full125-113-bridge-ledger.json', frozen)\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert supervisor['after_section'] == 115 and supervisor['global_wineserver_terminated'] is False\n",
+          "after": "    assert supervisor['after_section'] == 125 and supervisor['global_wineserver_terminated'] is False\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert type(guard['section']) is int and guard['section'] == receipt['after_section'] == 115\n",
+          "after": "    assert type(guard['section']) is int and guard['section'] == receipt['after_section'] == 125\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    for name, value in (('window.py', args.runner), ('launcher115.py', args.launcher), ('bridge115.py', args.bridge_source), ('supervisor115.py', args.supervisor_source)):\n",
+          "after": "    for name, value in (('window.py', args.runner), ('launcher125.py', args.launcher), ('bridge125.py', args.bridge_source), ('supervisor125.py', args.supervisor_source)):\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert supervisor['supervisor_sha256'] == sha(artifacts['supervisor115.py']) == SUPERVISOR_SHA\n",
+          "after": "    assert supervisor['supervisor_sha256'] == sha(artifacts['supervisor125.py']) == SUPERVISOR_SHA\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert sha(artifacts['bridge115.py']) == BRIDGE_SHA and sha(admission_raw) == ADMISSION_SHA113\n",
+          "after": "    assert sha(artifacts['bridge125.py']) == BRIDGE_SHA and sha(admission_raw) == ADMISSION_SHA113\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert guard['full115_113_bridge_sha256'] == {'bridge115.py': BRIDGE_SHA, 'expected-map115.json': ADMISSION_SHA113}\n",
+          "after": "    assert guard['full125_113_bridge_sha256'] == {'bridge125.py': BRIDGE_SHA, 'expected-map125.json': ADMISSION_SHA113}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    launcher = artifacts['launcher115.py'].decode()\n",
+          "after": "    launcher = artifacts['launcher125.py'].decode()\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    for name, value in (('WINDOW_SHA256', sha(artifacts['window.py'])), ('SOURCE115_GUARD_SHA256', sha(guard_raw))):\n",
+          "after": "    for name, value in (('WINDOW_SHA256', sha(artifacts['window.py'])), ('SOURCE125_GUARD_SHA256', sha(guard_raw))):\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert tuple(row['literal_index'] for row in admission['rows']) == INDICES and admission['future_actual115_guard_sha256'] is None\n",
+          "after": "    assert tuple(row['literal_index'] for row in admission['rows']) == INDICES and admission['future_actual125_guard_sha256'] is None\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert ledger['kind'] == 'ACTUAL_FULL115_COMPARISON_ONLY_BRIDGE_LEDGER' and ledger['mapping_sha256'] == ADMISSION_SHA113\n",
+          "after": "    assert ledger['kind'] == 'ACTUAL_FULL125_COMPARISON_ONLY_BRIDGE_LEDGER' and ledger['mapping_sha256'] == ADMISSION_SHA113\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    assert closure['kind'] == 'ROOT_ACTUAL_FULL115_WINDOW_BRIDGE_CLOSURE' and closure['passed'] is True and closure['workflow_complete'] is True\n",
+          "after": "    assert closure['kind'] == 'ROOT_ACTUAL_FULL125_WINDOW_BRIDGE_CLOSURE' and closure['passed'] is True and closure['workflow_complete'] is True\n",
+          "occurrences": 1
+        },
+        {
+          "before": "        ('launcher_sha256', sha(artifacts['launcher115.py'])), ('window_sha256', sha(artifacts['window.py'])), ('guard_sha256', sha(guard_raw))):\n",
+          "after": "        ('launcher_sha256', sha(artifacts['launcher125.py'])), ('window_sha256', sha(artifacts['window.py'])), ('guard_sha256', sha(guard_raw))):\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    audit = {'kind': 'ROOT_ACTUAL_FULL115_SAVED_OUTPUT_AUDIT', 'after_section': 115,\n",
+          "after": "    audit = {'kind': 'ROOT_ACTUAL_FULL125_SAVED_OUTPUT_AUDIT', 'after_section': 125,\n",
+          "occurrences": 1
+        },
+        {
+          "before": "ADMISSION_SHA113 = 'a32b857a4b9241a55714c7027bb537f04fec0918e442d94e40dd098fc0ebdacf'",
+          "after": "ADMISSION_SHA113 = '0df09727b4cf47757f5ac9cae0943c7df80e985da30c158e50ba010ead43928c'",
+          "occurrences": 1
+        },
+        {
+          "before": "BRIDGE_SHA = 'e054ed7e7fa81ee2a3187f7710017940b63b07fc275d262bcc482bba60304c1a'",
+          "after": "BRIDGE_SHA = 'f4f5a49b38bea9ed1d6971e2bfa3404f98faead70d025f4b5d8ed34408992bf5'",
+          "occurrences": 1
+        },
+        {
+          "before": "SUPERVISOR_SHA = '705e2be5804663754119d64caefa2b171e5879997e2cdbf882688c14128fe782'",
+          "after": "SUPERVISOR_SHA = '5954521182a43e447feccedbec5bcc164412550d8da4108a53ba9483463679f9'",
+          "occurrences": 1
+        },
+        {
+          "before": "LAUNCHER_TEMPLATE_SHA = '3b23065af979f846120e841ea34512dcbf178f9219580f68e9908d22180cfaac'",
+          "after": "LAUNCHER_TEMPLATE_SHA = '10d6a0e57b7bc1fd0f607fa458987e8424e7abe55da5aad644c62136656b1131'",
+          "occurrences": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "status": "PASS_FIVE_SOURCE_REPRODUCTIONS",
+  "base_commit": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "groups": 5,
+  "explicit_method_calls": {
+    "RunState_constructor": 5,
+    "seed_apply": 5,
+    "subject_apply": 5
+  },
+  "actual_RunState_file_function_entries": {
+    "__init__": 5,
+    "reset": 5,
+    "apply": 10,
+    "restore_origin_discovery_buffs": 10,
+    "apply_map": 10,
+    "held_relic_ids": 20,
+    "<genexpr>": 49,
+    "reconcile_relic_icons": 10,
+    "save": 10
+  },
+  "actual_RunState_file_function_entries_by_stage": [
+    {
+      "stage": "constructor",
+      "function": "__init__",
+      "count": 5
+    },
+    {
+      "stage": "constructor",
+      "function": "reset",
+      "count": 5
+    },
+    {
+      "stage": "seed",
+      "function": "apply",
+      "count": 5
+    },
+    {
+      "stage": "seed",
+      "function": "restore_origin_discovery_buffs",
+      "count": 5
+    },
+    {
+      "stage": "seed",
+      "function": "apply_map",
+      "count": 5
+    },
+    {
+      "stage": "seed",
+      "function": "held_relic_ids",
+      "count": 10
+    },
+    {
+      "stage": "seed",
+      "function": "<genexpr>",
+      "count": 27
+    },
+    {
+      "stage": "seed",
+      "function": "reconcile_relic_icons",
+      "count": 5
+    },
+    {
+      "stage": "seed",
+      "function": "save",
+      "count": 5
+    },
+    {
+      "stage": "subject",
+      "function": "apply",
+      "count": 5
+    },
+    {
+      "stage": "subject",
+      "function": "restore_origin_discovery_buffs",
+      "count": 5
+    },
+    {
+      "stage": "subject",
+      "function": "apply_map",
+      "count": 5
+    },
+    {
+      "stage": "subject",
+      "function": "held_relic_ids",
+      "count": 10
+    },
+    {
+      "stage": "subject",
+      "function": "<genexpr>",
+      "count": 22
+    },
+    {
+      "stage": "subject",
+      "function": "reconcile_relic_icons",
+      "count": 5
+    },
+    {
+      "stage": "subject",
+      "function": "save",
+      "count": 5
+    }
+  ],
+  "loaded_project_source_hashes_exact": [
+    {
+      "module": "rouge",
+      "path": "rouge/__init__.py",
+      "bytes": 37,
+      "sha256": "3f046774f9500f00b34d7ff71cd765410aeebcc4e7df7a665cc384d9c68e12c8"
+    },
+    {
+      "module": "rouge.anchors",
+      "path": "rouge/anchors.py",
+      "bytes": 1852,
+      "sha256": "6c5e05f431d7218dd5335af562b831f5a32ff79e69ba5ccc344252ba81a0cdad"
+    },
+    {
+      "module": "rouge.attribute_limits",
+      "path": "rouge/attribute_limits.py",
+      "bytes": 1046,
+      "sha256": "94e9ee16e4fe978a12d8e4c16f45ee3612d2ae0a48f9027dfe1d46b47ce5c29a"
+    },
+    {
+      "module": "rouge.catalog",
+      "path": "rouge/catalog.py",
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    {
+      "module": "rouge.operator_recognition",
+      "path": "rouge/operator_recognition.py",
+      "bytes": 20793,
+      "sha256": "1e79d32a69d6bbbf0e42ba8cdcb88c33a0ff3bc9932adbc6b0c19ef553705fb0"
+    },
+    {
+      "module": "rouge.recipient_state",
+      "path": "rouge/recipient_state.py",
+      "bytes": 4338,
+      "sha256": "8a183ba7b1cc39f2ccaba4e64e6f07c7268868ab26c6dd02c35afdd057e3be73"
+    },
+    {
+      "module": "rouge.relic_recognition",
+      "path": "rouge/relic_recognition.py",
+      "bytes": 18803,
+      "sha256": "8f2087341b1d99e1bd442775bef367b5f7a1352cfc27e617bff77bd42ceb1256"
+    },
+    {
+      "module": "rouge.relics",
+      "path": "rouge/relics.py",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "module": "rouge.run_config",
+      "path": "rouge/run_config.py",
+      "bytes": 5738,
+      "sha256": "e35262ce5fc74db31ea80704f5689bb05619fd9dc9798a334f8cac3455b4ac99"
+    },
+    {
+      "module": "rouge.run_state",
+      "path": "rouge/run_state.py",
+      "bytes": 42402,
+      "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac"
+    }
+  ],
+  "source_bug_confirmed": {
+    "False_with_empty_roster_departs": "mechanist",
+    "True_with_one_roster_departs": "char_151_myrtle"
+  },
+  "valid_int_controls": "int0 andint1 retain the old departure behavior; None retains membership.",
+  "natural_clock_scope": "Each constructor generated natural UUID/started_at. Existing055/063 captured_at started_at+1/+2 is retained as actualfloat. No crossgroup full-tree equality, clock freezing or normalization is claimed.",
+  "caller_native_and_disk_checks": "All10observed dicts unchanged; all5before/5after persisted JSON fullnative equals in-memory state.",
+  "damage_training_app_recognition_API_calls": 0,
+  "formatter_calls": 0,
+  "Qt": 0,
+  "Wine": 0,
+  "tests": 0,
+  "tracked_edits": 0,
+  "real_local_access": 0,
+  "P1_buff_or_departure_game_mechanism_validated": false,
+  "product_draft_created": false
+}

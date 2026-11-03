@@ -27,7 +27,8 @@ def context_value(effect,scenario):
     if not isinstance(context,dict):raise ValueError('藏品条件需要JSON对象。')
     if condition=='emergency_hire':
         kind=scenario.get('recruitment_kind')
-        return None if kind is None else int(kind=='emergency_hire')
+        if type(kind) is not str or kind not in ('non_emergency','emergency_hire'):return None
+        return int(kind=='emergency_hire')
     value=context.get(condition,scenario.get(condition) if condition=='current_hp_ratio' else None)
     if value is None:return None
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<0:
@@ -249,8 +250,24 @@ def prepare(scenario,profile):
     scenario['relic_ids']=[]
     scenario['_token_relic_effects']=token_effects
     candidates=rules+effects+token_effects
+    # The two compiled elemental instances are independent. A foreign manual
+    # effect does not establish how a further real buff joins their layer.
+    from .relic_damage_factors import verified_rule
+    elemental=[e for e in effects if verified_rule(e,'elemental')]
+    foreign=[e for e in scenario['effects'] if e.get('kind')=='damage_taken' and
+        e.get('damage_type')=='elemental' and e.get('value')!=0 and not verified_rule(e,'elemental')]
+    damage_composition_unresolved=bool(len({r['relic_id'] for r in elemental})>1 and foreign)
+    if damage_composition_unresolved:
+        effects=[e for e in effects if e not in elemental]
+        token_effects=[e for e in token_effects if not verified_rule(e,'elemental')]
+        candidates=rules+effects+token_effects
+        warnings.append('阿猛/冰中火的双来源元素承伤组合已核验，但新增手动承伤效果的实际来源层未知；未将双藏品混入该手动参数，完整伤害仍未知。')
+        for record in records:
+            if record['id'] in {r['relic_id'] for r in elemental}:
+                record['applied']=[r for r in record['applied'] if not verified_rule(r,'elemental')]
+                record['pending'].append('双藏品与未绑定手动承伤来源的组合层未知');record['status']='incomplete'
     unresolved_hp_sources=set()
-    for group in {r.get('group') for r in candidates if r.get('stacking')=='unverified'}:
+    for group in dict.fromkeys(r.get('group') for r in candidates if r.get('stacking')=='unverified'):
         grouped=[r for r in candidates if r.get('group')==group]
         if len({r['relic_id'] for r in grouped})>1:
             if any(r['kind']=='ammo_refill' for r in grouped):ammo_unresolved=True
@@ -318,6 +335,7 @@ def prepare(scenario,profile):
         'source_commit':mechanics()['commit'],'complete':not warnings,'enemy_effects':scenario['_relic_enemy_effects'],
         'token_effects':token_effects,'context':scenario.get('relic_context',{}),
         'context_source':scenario.get('relic_context_source','明确提供的计算情景'),'timing_unresolved':timing_unresolved}
+    if damage_composition_unresolved:resolution['damage_composition_unresolved']=True
     if ammo_unresolved:resolution['ammo_refill_unresolved']=True
     if uncertain:resolution['recipient_evidence_pending']=list(dict.fromkeys(uncertain))
     return scenario,resolution
@@ -395,18 +413,32 @@ def finish(result,resolution,attributes,scenario):
     if len(scalers)==1:result['estimate']['base_stats']['redeploy_seconds']*=1+scalers[0]['value']
     elif scalers:warnings.append('多个最终再部署缩放的叠加规则尚未核验，此组合未套用。')
     healing=[r for r in rules if r['kind']=='healing_factor']
-    if len(healing)==1:
-        factor=healing[0]['value']
-        if 'total_healing' in result:result['total_healing']*=factor
+    from .relic_healing_factors import healing_factor,regeneration_factor
+    combined_healing=healing_factor(healing)
+    if healing and combined_healing is not None:
+        factor=combined_healing
+        if result.get('total_healing') is not None:result['total_healing']*=factor
         skill=result['estimate']['skill']
         for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
             if skill.get(key) is not None:skill[key]*=factor
+        subtotals=result.get('known_healing_subtotals',{})
+        for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
+            if subtotals.get(key) is not None:subtotals[key]*=factor
         for c in result.get('components',[]):
             if c.get('damage_type')=='healing':
                 c['total']*=factor;c['per_hit']*=factor
                 if c.get('event_amounts') is not None:c['event_amounts']=[amount*factor for amount in c['event_amounts']]
-    regeneration={r['relic_id']:r['value'] for r in rules if r['kind']=='regeneration_factor'}
-    factor=next(iter(regeneration.values())) if len(regeneration)==1 else 1
+                for source in c.get('known_healing_sources',[]):
+                    source['total']*=factor;source['per_hit']*=factor
+                    if source.get('event_amounts') is not None:source['event_amounts']=[amount*factor for amount in source['event_amounts']]
+        amiya=result.get('amiya_phase_reference')
+        if amiya and amiya['kind']=='medical_opening':
+            amiya['opening_healing_reference']*=factor
+            amiya['window_reference']['opening_healing_reference']*=factor
+    factor=regeneration_factor([r for r in rules if r['kind']=='regeneration_factor'])
+    # Unproved combinations are filtered by prepare and retain their warnings.
+    # This fallback preserves the known subtotal if an external rule remains.
+    if factor is None:factor=1
     result['relic_regeneration_multiplier']=factor
     for c in result.get('components',[]):
         if c.get('damage_type')=='regeneration':c['total']*=factor;c['per_hit']*=factor
@@ -421,22 +453,29 @@ def finish(result,resolution,attributes,scenario):
     from .catalog import catalog
     profile=catalog()['operators'][scenario['operator']]
     result['relic_token_stats']=[]
-    from .summons import module_reference,token_attributes
+    from .summons import module_reference,token_attributes,token_cost_reference
     for tid,token in profile.get('tokens',{}).items():
         applied=[e for e in resolution['token_effects'] if tid in e.get('token_ids',[])]
         run_effects=[e for e in scenario.get('_attribute_runes',[])+scenario.get('effects',[])
                     if e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
         module=module_reference(profile,scenario,tid)
-        sources=(['模组'] if module else [])+(['藏品'] if applied else [])+(['分队'] if run_effects else [])
-        applied+=run_effects
+        cost_module=token_cost_reference(profile,scenario,tid)
         features=[r for r in rules if r.get('token_only') and tid in r.get('token_ids',[])]
-        if not applied and not features and not module:continue
+        sources=(['模组'] if module or cost_module else [])+(['藏品'] if applied or cost_module and features else [])+(['分队'] if run_effects else [])
+        applied+=run_effects
+        from .summons import manual_token_stat_effects
+        manual_effects=manual_token_stat_effects(scenario,tid)
+        if manual_effects:
+            applied+=manual_effects
+            sources.append('手动输入')
+        if not applied and not features and not module and not cost_module:continue
         from .relic_attributes import is_attribute_rune
         runes=[e for e in applied if is_attribute_rune(e)]
         def total(kind):return sum(e['value'] for e in applied+features if e['kind']==kind and not is_attribute_rune(e))
         stats=token_attributes(profile,scenario,tid,total('hp_pct'),rune_effects=runes)
         for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+total(kind)
         stats['attack_speed']=effective_attack_speed(stats['attack_speed']+total('attack_speed'))
+        stats['resistance']=min(100,stats['resistance']+sum(e['value'] for e in manual_effects if e['kind']=='resistance_flat'))
         stats['deployment_cost']=max(0,stats['deployment_cost']+total('deployment_cost_add'))
         stats['free_deployment_slot']=bool(total('token_deploy_slot_free'))
         if total('regeneration_hp_ratio') or total('regeneration'):
@@ -448,11 +487,17 @@ def finish(result,resolution,attributes,scenario):
         result['relic_token_stats'].append({'id':tid,'name':token['name'],'modifier_sources':sources or ['藏品'],**stats})
     result['relic_protection']=protection([r for r in rules if not r.get('token_only')],result['estimate']['base_stats']['hp'])
     result['estimate']['base_stats']['block_count']+=sum(r['value'] for r in rules if r['kind']=='block_add' and not r.get('token_only'))
-    result['estimate']['base_stats']['defense']+=sum(r['value'] for r in rules if r['kind']=='defense_flat' and not r.get('token_only'))
+    defense_flat_reference=sum(r['value'] for r in rules if r['kind']=='defense_flat' and not r.get('token_only'))
+    result['estimate']['base_stats']['defense']+=defense_flat_reference
+    from .panel_native_bridge import add_final_term
+    add_final_term(result['estimate'],'normal','defense','final_addition',defense_flat_reference)
     from .deployment import finish_deployment
     finish_deployment(result,resolution,attributes,profile)
     from .elemental_relics import finish_neural_reference
     finish_neural_reference(result)
+    from .relic_damage_factors import finish_unresolved_composition,note_verified_composition
+    note_verified_composition(result,scenario)
+    finish_unresolved_composition(result,resolution)
     if resolution.get('ammo_refill_unresolved') or any(r.get('ammo_polling_pending') or r.get('ammo_order_pending') for r in rules):
         skill=result['estimate']['skill']
         for key in ('total_damage','total_healing','phase_damage','phase_healing','duration_seconds',
@@ -488,6 +533,8 @@ def finish(result,resolution,attributes,scenario):
         start=scenario.get('_deployment_skill_start_seconds',0)
         skill_bonus=sum(r['value'] for r in finite_speed if start<r['duration'])
         reference=skill.get('skill_attack_speed_reference',skill['skill_attack_speed'])
+        add_final_term(result['estimate'],'normal','attack_speed','addition',active)
+        add_final_term(result['estimate'],'skill','attack_speed','addition',skill_bonus)
         stats['attack_speed_reference']=permanent+active
         stats['attack_speed']=effective_attack_speed(permanent+active)
         skill['skill_attack_speed_reference']=reference+skill_bonus

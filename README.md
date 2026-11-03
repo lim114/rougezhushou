@@ -1,6 +1,12 @@
+<!-- current-product-scope:start -->
+当前产品范围（2026-10-14）：探索地图只提供节点、候选事件及条件、历史状态和相邻连接信息，保留分类/展开收起、地图定位与作战预览跳转。不提供探索路线推荐、排序、方案比较或自动选路。下文0.49等路线能力为历史记录，代码与原验收保留为显式诊断；固定战斗地图中的敌人路径仍正常提供。
+<!-- current-product-scope:end -->
+
 # rougezhushou 云端开发副本
 
-当前源代码版本为 0.70.0。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。此副本独立于本机 rouge 项目，未包含私人配置、本局记忆和个人游戏截图。
+当前源代码版本为 0.70.0。本机 rouge 与 GitHub 的 codex/p2-development 已同步开发；私人配置、本局记忆和个人游戏截图不进入仓库。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。
+
+第141节：伤害测试页的“补充干员本局属性与单次技能对照”支持七名低星干员的稳定属性符文、已确认分队和个人强化，显示单次分项、无本局修正对照及差值。“更新本局条件”保留当前编辑内容；清单不全、条件不明或尚未接入的效果明确提示。费用、技力、普通战斗增益及原生时钟仍有缺口，详见 [本节回执](verification/sections/141.json)。
 
 ## 历史 README（下方旧版本号仅为历史记录）
 
@@ -250,3 +256,8 @@ node --test tests\desktop-backend.test.cjs
 
 0.9 藏品资料与验证：[RELIC_MECHANICS.md](RELIC_MECHANICS.md)、[RELIC_COVERAGE.md](RELIC_COVERAGE.md)、`RELIC_VERIFICATION.json`。`scripts/verify_relic_mechanics.py` 遍历 272 件与 32 个档案的公共计算入口，仅验证可执行性、状态与有限数值，不等同于实战准确率。
 
+## 离线动画来源校核
+
+维护者可在任意工作目录运行 `python scripts/verify_original_animation_provenance.py`（使用脚本的实际路径），或以 `--repository-root`、`--references`、`--evidence-dir` 指定迁移后的公开文件。该命令只读已归档资料，输出 JSON，不依赖旧绝对路径或 timing-048 cache，不解析或下载资源。
+
+范围固定为第87节古米 Back 的6个必要公开来源文件、真实历史923条数据与新增5条记录。成功退出0，缺失或校核失败退出1，超出支持快照退出2；后续新增来源不会自动获得认证。30Hz仅沿用现有表示政策，泛称 Skill 无技能编号；原生绑定、渲染几何、EOF和实际时钟继续未验证。

@@ -1,0 +1,25 @@
+{
+  "kind": "SOURCE_ONLY_SAVED108_QRECT69_INTEGER_CENTER_EXACT_TRANSPORT",
+  "Runtime_executed": false,
+  "before_bytes": 55093,
+  "before_sha256": "858848f9dab625441b3a47d103092b24bcd400fa99346532f3aaf7711d625251",
+  "after_bytes": 55189,
+  "after_sha256": "f46f0fea6456020c50830ed30ab420bebf53c2f89c0993316aeb944c638c1ef8",
+  "before": "                cx=x+(width-1)//2;cy=y+(height-1)//2\n",
+  "after": "                sx=2*x+width-1;sy=2*y+height-1\n                cx=sx//2 if sx>=0 else -((-sx)//2)\n                cy=sy//2 if sy>=0 else -((-sy)//2)\n",
+  "occurrences": 1,
+  "inverse_byte_exact": true,
+  "Window_runner_changed": false,
+  "actual_Window_attempt_added": false,
+  "official_Qt_tag": "v6.9.3",
+  "source_URL": "https://raw.githubusercontent.com/qt/qtbase/v6.9.3/src/corelib/tools/qrect.h",
+  "source_bytes": 29574,
+  "source_sha256": "0417e3398d546f9e7f3d9fb79b2f5353941eaead3d84362483030b7309019b4c",
+  "counterexample": {
+    "x": -1,
+    "width": 2,
+    "Qt_integer_center": 0,
+    "old_reader_floor_center": -1
+  },
+  "note": "Reviewer Source diagnosis only, no actual PNG coordinate failure or product failure claimed."
+}

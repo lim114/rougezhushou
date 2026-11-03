@@ -1,0 +1,77 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "笔记按真实新局清理阅读、同步外部保存，并恢复未变事件资料的加载",
+  "baseline_commit": "a7f437e534cffd13df7d4a9e55defb10f32f9a72",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_section_started": false,
+  "implemented_scope_passed": true,
+  "related_unique_tests": 132,
+  "related_ranges": [
+    {
+      "receipt": {
+        "path": "verification/maintenance/notes-reader-review-20261031/tests-current/results.json",
+        "sha256": "a61862e52097a346bb155b8e76f914739b1371b46f926dae83f9fa07ff39d9cc",
+        "bytes": 715
+      },
+      "count": 97,
+      "process": {
+        "path": "verification/maintenance/notes-reader-review-20261031/tests-current/process.json",
+        "sha256": "7a8e93d54edd7ce00c7c60659040b07c918034ce67a917f1610e98167dbfbb6c",
+        "bytes": 72
+      }
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/notes-reader-review-20261031/views/results.json",
+        "sha256": "4519e5c192e5bd95b19b15f30ddc2d81db6b6403362a4c4b37b4db2b45b9def3",
+        "bytes": 362
+      },
+      "count": 35,
+      "process": {
+        "path": "verification/maintenance/notes-reader-review-20261031/views/process.json",
+        "sha256": "e59997cc8bda7566283c700c0d0dfbb53bafd0b81e0e28939445ac9ba872e56a",
+        "bytes": 72
+      }
+    }
+  ],
+  "native_unique_checks": 54,
+  "native_receipt": {
+    "path": "verification/maintenance/notes-reader-review-20261031/native/window.json",
+    "sha256": "655794caf2b5e22dbe695aaca3efef1c5cabd8ddd8e25e7aeca7a115efcd0668",
+    "bytes": 167250
+  },
+  "source_review": {
+    "path": "verification/maintenance/notes-reader-review-20261031/source-review.json",
+    "sha256": "b4056ffe181863bfb2dca52bf9b258904f0896e5629b7826e0a0c2b57626d6ab",
+    "bytes": 10020
+  },
+  "comparison": {
+    "path": "verification/maintenance/notes-reader-review-20261031/before-after.json",
+    "sha256": "5a625813b9eebc9fc46ab9edc588e01bc9da6f3fddd4303e638579ecd157a6d0",
+    "bytes": 1983
+  },
+  "image_review": {
+    "path": "verification/maintenance/notes-reader-review-20261031/image-review.json",
+    "sha256": "0dc01ec9dd81f4f6accf887ac9a9e57561a0864f3dfa1673e43a2166966fe5d0",
+    "bytes": 4264
+  },
+  "runtime": {
+    "path": "verification/maintenance/notes-reader-review-20261031/live-window/desktop-review.json",
+    "sha256": "129f9738cca3678e64a88f5ad684828d6f4396c6523929c6e11b54b8b13473ea",
+    "bytes": 410
+  },
+  "first_failure": "Original 56-test run retained with 1 failure and 2 errors. Pre-existing source-code pins disabled unchanged event data, cascading into an empty note catalogue. Fixed with separate data-only runtime packages; old frozen artifacts retained.",
+  "runtime_builder": "Public scripts/build_event_runtime_manifests.py reproduces/checks exact CRLF snapshots, refuses to overwrite differing data. Initial LF writer mismatch rejected existing bytes without writes; fixed line endings then both commands succeeded.",
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "private_data_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "publication_binding": "enclosing maintenance commit, ordinary push and actual remote/blob check follows"
+}

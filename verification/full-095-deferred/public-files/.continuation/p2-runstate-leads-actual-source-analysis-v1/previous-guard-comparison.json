@@ -1,0 +1,8 @@
+{
+  "current_equals_archived_author089_draft": true,
+  "pre089_sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+  "draft089_sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9",
+  "current_sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9",
+  "complete_byte_diff_from_pre089_to_current": "--- research/p2-crew-count-boolean-input/author-packet/source089/frozen/rouge/run_state.py\n+++ rouge/run_state.py\n@@ -370,6 +370,7 @@\n             state['inventory_verified']=True\r\n             state['inventory_confirmed_at']=(state['relic_icon_memory'] or {}).get('captured_at') if relics.get('memory_replay') else captured_at\r\n         crew=observed.get('crew_count')\r\n+        if isinstance(crew,bool):crew=None\r\n         promoted_ids=set()\r\n         if crew is not None:\r\n             state['crew_count']=crew\r\n",
+  "bounded_counterevidence": "These pinned sources share load/inventory logic; sole crew bool->None current change does not repair the confirmed five startup shapes/relic bool boundary. No claim about every uninspected historical source."
+}

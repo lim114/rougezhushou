@@ -1,0 +1,16 @@
+{
+  "original_records": [
+    "verification/sections/470-spawn-reading/native01/window.json",
+    "verification/sections/470-spawn-reading/native02/window.json",
+    "verification/sections/470-spawn-reading/double-click-probe/observation.json",
+    "verification/sections/470-spawn-reading/selected02/results.json"
+  ],
+  "corrections": [
+    "Native narrow layout initially clipped the nested reader. Native size policy now lets the adaptive splitter fit, verified through full visible-region checks.",
+    "The Qt test double-click helper alone generated no activation or double-click signal. A retained signal probe establishes that a complete click-plus-double-click sequence emits exactly once and reuses the same map page; final native validation uses that real sequence. No extra production handler was added.",
+    "A synthetic branch fixture changed its kind without supplying branch index and phase. The fixture now provides the complete declared queue structure.",
+    "Object-name lookup initially loaded the battle twice. The new verified-input interface returns identical data while retaining object-packet and source-binding checks. Three local timing pairs are retained.",
+    "Historical default full-text assertions now open the original notes explicitly; identity, pictures, numbers, filtering, source corruption and reading preservation assertions remain."
+  ],
+  "all_original_records_retained": true
+}

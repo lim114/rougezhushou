@@ -1,0 +1,74 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "工具条外置、满屏托盘呼出与刷新稳定性修复",
+  "passed": true,
+  "passed_scope": "68 focused checks in separate Qt processes; final 10 UI checks on latest tray source; 51 native original-window checks; current idle test window bound outside real game client and responding.",
+  "completed_functional_section": 472,
+  "functional_section_incremented": false,
+  "gate0_passed": false,
+  "real_sessions_collected": 1,
+  "real_sessions_completed": 0,
+  "changes": [
+    "Toolbar stays fully outside bound game client; drag and game move/resize preserve that rule.",
+    "No exterior room hides toolbar in system tray; all seven tools remain accessible, manual hide can be reopened, smaller game window restores toolbar.",
+    "Hover/keyboard names use native QToolTip; button hit areas no longer expand, reflow or move.",
+    "Unchanged category/enemy spawn options preserve open popup, selection and model.",
+    "Repeated difficulty/zone read timestamps preserve enemy forecasts while storing latest provenance; actual condition changes recompute."
+  ],
+  "checks": {
+    "tests": 68,
+    "receipt": "verification/maintenance/player-urgent-20261103/checks-isolated/process.json",
+    "latest_UI_tests": 10,
+    "latest_UI_receipt": "verification/maintenance/player-urgent-20261103/checks-ui-delivery/process.json"
+  },
+  "native": {
+    "checks": 51,
+    "receipt": "verification/maintenance/player-urgent-20261103/native-delivery/window.json"
+  },
+  "component_benchmark": "verification/maintenance/player-urgent-20261103/enemy-context-benchmark.json",
+  "component_benchmark_median_ms": {
+    "baseline": 25.567500037141144,
+    "current": 0.019849976524710655
+  },
+  "whole_sampling_latency_improvement_claimed": false,
+  "remaining": [
+    "Capture FIFO age and sustained OCR cost.",
+    "Separate historical information preservation from current-page freshness before adopting any latest-first policy.",
+    "Shared readers remaining outside common host and large-pane placement/occlusion need runtime tracing.",
+    "Static overlay renewal, sparse nodes and resize recovery remain real-session acceptance gaps.",
+    "First recording only partially overlaps logger; finish exact alignment and obtain complete paired sessions."
+  ],
+  "original_failures": [
+    "Initial focused constructor test: four missing open_overview errors, corrected before actual user launch; original output retained in task history.",
+    "native-first/native-debug: live binding timer interfered with synthetic binding; isolate timers in verification, no production tray failure inferred.",
+    "followon-test-failure.json: native popup teardown ordering corrected in test fixture.",
+    "checks-final/process.json: one scroll-range assertion failed in combined Qt process; frozen-method baseline and current isolated case pass; six separately executed modules all pass.",
+    "native-current: tray menu order differed from toolbar; fixed order to match."
+  ],
+  "rejected_experiments": [
+    "Whole-page PageOCR swap: fair warm independent AB/BA comparison showed no stable end-to-end gain; production recognition source restored.",
+    "OpenCV 18-to-2 thread cap: no stable gain on same video crops; not adopted."
+  ],
+  "private_six_paths_unchanged": true,
+  "private_game_video_logs_screenshots_uploaded": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "full_suite_rerun": false,
+  "new_dependencies": false,
+  "reuse": [
+    {
+      "component": "QToolTip",
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QToolTip.html"
+    },
+    {
+      "component": "QSystemTrayIcon and QMenu",
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QSystemTrayIcon.html"
+    }
+  ],
+  "at_UTC": "2026-11-02T18:38:25.341098+00:00",
+  "index_checks": {
+    "tests": 29,
+    "receipt": "verification/maintenance/player-urgent-20261103/cloud-index-checks/process.json"
+  },
+  "first_idle_window_replaced_by": "verification/maintenance/player-urgent-20261103/live-delivery/window.json"
+}

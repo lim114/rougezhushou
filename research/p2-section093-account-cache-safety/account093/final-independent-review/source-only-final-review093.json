@@ -1,0 +1,371 @@
+{
+  "format_version": 1,
+  "status": "PASS_SOURCE_ONLY_ROOT_RUNTIME_PENDING",
+  "final_stopwrite": true,
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "section093_completed": false,
+  "reviewer": "root-appointed account093_ui_final_source_review",
+  "supporting_readonly_reviewer": "flat_harness_review (B1/B2/native/state/failure-prefix subset)",
+  "repository": {
+    "path": "/workspace/rougezhushou",
+    "branch": "codex/p2-development",
+    "HEAD": "f509d186e501bfcfd042e45b46e398ec756840ec"
+  },
+  "author_bindings": {
+    "manifest": {
+      "path": "/workspace/.continuation/ui-093-account-cache-final/public-artifacts-manifest-account-window093.json",
+      "bytes": 4467,
+      "sha256": "2e9b610e906016101ac6785791a7412e99b6574e46803038de2f9bb71f99d708"
+    },
+    "handoff": {
+      "path": "/workspace/.continuation/ui-093-account-cache-final/handoff-account-window093.json",
+      "bytes": 1862,
+      "sha256": "2adfabd0491872cbbab3d3a8193c04beec711b5c22c29e7f99333be114fcc0a9"
+    },
+    "runner": {
+      "path": "/workspace/.continuation/ui-093-account-cache-final/wine-account-window-093-final.py",
+      "bytes": 34898,
+      "sha256": "aab214ac2903d6023fb6e44f78593e06ebeda120bc9fcf2300b2ef2a88ef5053"
+    },
+    "plan": {
+      "path": "/workspace/.continuation/ui-093-account-cache-final/wine-account-window-093-plan.json",
+      "bytes": 73533,
+      "sha256": "6ff61e9d3bf12ee822efecf627b38bbbe9e4a8e608d93eff8b108191c150e5e3"
+    },
+    "guard": {
+      "path": "/workspace/.continuation/ui-093-account-cache-final/wine-account-window-093-source.json",
+      "bytes": 79084,
+      "sha256": "0fbfe28e2528ae9987f9f260bfed0068b1e16edf02274ea3349cd6d988aa2180"
+    },
+    "root_guard": {
+      "path": "/workspace/.continuation/root-source-093.json",
+      "bytes": 79084,
+      "sha256": "0fbfe28e2528ae9987f9f260bfed0068b1e16edf02274ea3349cd6d988aa2180"
+    },
+    "app": {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 95780,
+      "sha256": "3dd6810e3398471ddb6dbe9545824c7b92ba4d141fc23f889287a8044670a48f"
+    },
+    "helper": {
+      "path": "/workspace/rougezhushou/rouge/account_cache.py",
+      "bytes": 10398,
+      "sha256": "17250d93fa3932fc6233bc5b8dd8d1a17d76a283feee5fe694ffebe530ecb5d5"
+    },
+    "contract": {
+      "path": "/workspace/.continuation/p2-account-cache-design093-independent-v1/execution-contract.json",
+      "bytes": 11988,
+      "sha256": "23ed5246868452987183c901cb85574c5b5e5208f95a58f7933b721913338cde"
+    }
+  },
+  "verified_author_payloads": {
+    "count": 14,
+    "bytes": 342388,
+    "byte_or_hash_mismatches": [],
+    "runtime_dependency_names_unchanged": true,
+    "adjacent_runtime_dependency_files": 3,
+    "three_replacement_reverse_exact": true,
+    "plan_original_bytes_exact": true
+  },
+  "verified_current_source": {
+    "guard_count": 732,
+    "actual_maintained_count": 732,
+    "tracked_maintained_count": 730,
+    "new_maintained_paths": [
+      "rouge/account_cache.py",
+      "tests/test_account_cache_093.py"
+    ],
+    "missing_extra_or_hash_mismatch_paths": [],
+    "candidate_v2_exact": true
+  },
+  "static_plan_counts": {
+    "fresh_MainWindows": 31,
+    "planned_states": 132,
+    "manual_button_requests": 2,
+    "preAPI_JSON_error_states": 7,
+    "planned_success_PNGs": 3,
+    "profile_keys": 431,
+    "implemented_keys": 32,
+    "numeric_state_success_count": "unmeasured; computed only by root runtime",
+    "API_helper_formatter_calls": "unmeasured; measured only by root runtime",
+    "explicit_three_text_requests": "3 per actual numerical state, not preset"
+  },
+  "checks": [
+    {
+      "id": "artifact-and-final-binding",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "All 14 author payload paths/bytes/SHA256 verified; total342388B.",
+        "Exact reversal of three unique FINAL replacements recovers pending bytes; final plan bytes unchanged.",
+        "Root source guard bytes identical to adjacent final guard.",
+        "All current 732 maintained .py/.json files under rouge/tests/scripts match guard exactly.",
+        "Current app/helper bytes equal frozen v2 candidate."
+      ],
+      "source": [
+        "runner:1-18"
+      ]
+    },
+    {
+      "id": "true-window-and-catalog",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "Actual MainWindow class is imported without replacing it; real RunState type asserted.",
+        "One serial MainWindow per case, isolated TemporaryDirectory per case, close before next case.",
+        "Catalog JSON source yields431 profile keys/32 implemented keys; catalog.py:15-19 defines actual overlay.",
+        "Only module path globals and DesktopBackend temporary data-directory adapter are assigned; no account alias rebind, fake RunState, direct state assignment or preservation reset."
+      ],
+      "source": [
+        "runner:194-244",
+        "runner:364-368",
+        "app.py:77-148",
+        "catalog.py:15-19"
+      ]
+    },
+    {
+      "id": "load-full-map-and-permanent-write-protection",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "Missing path uses lstat to distinguish genuine absence from existing unreadable path.",
+        "Invalid JSON/root and every consumed bad record are screened before save/browse.",
+        "Per-id usable view recovers while global preserve_original is never cleared after initialization.",
+        "Protected save returns before parent mkdir/tmp write/replace; runtime assertions compare original raw bytes, no tmp and measured Path side effects.",
+        "Actual target Wine Python layout uses Lib/pathlib.py for all three measured methods."
+      ],
+      "source": [
+        "account_cache.py:129-170",
+        "account_cache.py:203-244",
+        "runner:122-128",
+        "runner:273-298"
+      ]
+    },
+    {
+      "id": "unknown-ids-inert-extras-and-consumed-leaves",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "Unknown catalog ids remain opaque; runner verifies unknown record native graph each state.",
+        "Known identity/mapping/timestamp/formatter metadata guards match consumed operations.",
+        "Trust bool retains catalog compatibility; module_id=None leaves ignored module_level opaque.",
+        "selected_skill preference is constrained by genuine unlocked choices without treating ignored preference as confirmed skill."
+      ],
+      "source": [
+        "account_cache.py:19-111",
+        "account_cache.py:172-187",
+        "runner:289-298",
+        "app.py:793-864",
+        "catalog.py:28-58",
+        "operator_summary.py:7-45"
+      ]
+    },
+    {
+      "id": "platform-time-boundary",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "Timestamp checks finite numeric except bool, then actual target-platform localtime/strftime.",
+        "Missing captured_at retains original zero default, not current-time replacement.",
+        "Finite1e300 rejection is a planned actual Wine check, not a result from this review."
+      ],
+      "source": [
+        "account_cache.py:23-32",
+        "account_cache.py:47-48",
+        "account_cache.py:207-218",
+        "app.py:851",
+        "plan:captured_at-conversion-failing"
+      ]
+    },
+    {
+      "id": "ordinary-producer-union-and-browse",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "Good records retain less-than timestamp rejection, equal-time acceptance, fields/ranks/source/time unions, string-key ranks, original changed/save decision and dropped old-only extras.",
+        "Repeated observed id respects manual browse; new identity follows once; local level override and restore use original UI paths.",
+        "Runner asserts producer unions, disk changes, older rejection, equal acceptance and source-only no-save."
+      ],
+      "source": [
+        "account_cache.py:114-126",
+        "account_cache.py:203-234",
+        "runner:299-305",
+        "plan:clean-producer-and-browse",
+        "app.py:874-896"
+      ]
+    },
+    {
+      "id": "real-run-state-precedence-and-history-preservation",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "Run case invokes actual MainWindow.apply_run_observation -> real RunState.apply and save; no state reset/overwrites.",
+        "Current member overlays safe account view using unchanged precedence and operative run metadata.",
+        "Runner snapshots complete real RunState including members/history and run file before/after every non-run step.",
+        "Run training toggles, local level/restore, account recovery and browse preserve genuine current-run memory/file."
+      ],
+      "source": [
+        "app.py:775-791",
+        "app.py:888-897",
+        "run_state.py:245-451",
+        "runner:221-224",
+        "runner:290-292",
+        "runner:323-327",
+        "runner:354"
+      ]
+    },
+    {
+      "id": "account-run-only-metadata-and-synthetic-sample",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "RUN_METADATA excluded from account views, original raw map preserved.",
+        "sample_received consumes same safe view and displays notice.",
+        "Synthetic sample input is np.zeros((8,8,3),dtype=uint8) with constructed public observation emitted to genuine Qt slot; no OCR/game sampling.",
+        "No auto sampling, target game, chat process or chat directory; forbidden product request counts asserted zero."
+      ],
+      "source": [
+        "account_cache.py:14-16",
+        "account_cache.py:183-187",
+        "app.py:448-494",
+        "runner:229-232",
+        "runner:247-250",
+        "runner:319-322",
+        "runner:365-372"
+      ]
+    },
+    {
+      "id": "natural-early-return-and-JSON-error-branches",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "Current implemented catalog has no legal elite state naturally lacking an unlocked skill.",
+        "Lancet-2 naturally supplies skillNone/no-skill at existing unimplemented branch; overview and Fang use original early returns.",
+        "Seven planned GUI JSON errors assert exact text and API delta0, with None result explicitly required.",
+        "No cleared skill widget/negative elite fixture, and no None result counted as numerical success."
+      ],
+      "source": [
+        "app.py:949-999",
+        "app.py:1006-1024",
+        "app.py:1133-1159",
+        "runner:328-340",
+        "plan:historical-partial-and-ignored-aliases",
+        "plan:clean-producer-and-browse"
+      ]
+    },
+    {
+      "id": "measured-API-helper-formatter-and-three-texts",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "Profiler counts actual Python call/return entries, phase/request, API dictionary/exception/non-dict outcomes and targeted caller before/after.",
+        "Startup entries and common controls captured separately; explicit button and formatter requests counted as they occur.",
+        "Each actual numerical state requests estimate/default/technical texts, toggles genuine technical view, and checks caller/result graphs unchanged.",
+        "Numeric/error/early-return counts derive from finished checks, not preset success numbers."
+      ],
+      "source": [
+        "runner:95-165",
+        "runner:233-244",
+        "runner:255-256",
+        "runner:341-354",
+        "runner:361-379",
+        "estimate.py:247",
+        "reporting.py:1031"
+      ]
+    },
+    {
+      "id": "B1-deep-opaque-native-evidence",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "flat_native/native_inverse/clone/snapshot use explicit stacks and no recursive native/deepcopy.",
+        "Plan B1 public chains are500 layers; fixed-loop check_chain verifies memory/view/raw disk chain sentinels.",
+        "Shallow product view/producer preserve nested opaque values without recursive copy.",
+        "Actual per-snapshot graph inverse equality remains a runtime assertion, never executed in this review."
+      ],
+      "source": [
+        "runner:23-70",
+        "runner:190-192",
+        "runner:266-268",
+        "runner:312-318",
+        "account_cache.py:114-126",
+        "account_cache.py:183-186"
+      ]
+    },
+    {
+      "id": "B2-post-union-activation-recovery",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "Masked locked old rank is lawful before elite activation; post-union revalidation detects newly unsafe old rank and rebuilds only valid incoming facts at200.",
+        "Old fields/ranks/old_extra/invalid mask are absent, supplied source/time facts retained, unknown trust/rank displayed, original file permanently protected.",
+        "Older199 is rejected against recovered200.",
+        "Same source post-merge guard also supports unmasked inert locked99 activation; existing Wine plan exercises masked stringbad only."
+      ],
+      "source": [
+        "account_cache.py:90-108",
+        "account_cache.py:211-231",
+        "runner:275-294",
+        "runner:306-311",
+        "plan:B2-masked-old-rank-incoming-only-recovery"
+      ]
+    },
+    {
+      "id": "complete-public-state-and-failure-prefix",
+      "decision": "PASS_SOURCE_ONLY_RUNTIME_PENDING",
+      "evidence": [
+        "Each state stores original raw hex and all existing public filesystem paths/bytes/hash, planned/caller/RunState/account/result native graph plus JSON projection.",
+        "Checkpoint before action and before assertions retains actual failed state and successful prefix; passed flag appended only after assertions/PNG capture.",
+        "Existing receipt/archive refusal prevents silent replay; errors retain failure traceback, failure UI and PNG when possible, final checkpoint and nonzero exit.",
+        "Three success PNGs are planned and hash recorded only after actual save; no image claimed viewed or verified by this source review."
+      ],
+      "source": [
+        "runner:73-93",
+        "runner:167-189",
+        "runner:219-225",
+        "runner:270-272",
+        "runner:355-363",
+        "runner:380-402"
+      ]
+    },
+    {
+      "id": "numerical-mechanism-and-protected-source-scope",
+      "decision": "PASS_SOURCE_ONLY",
+      "evidence": [
+        "AST baseline comparison finds only __init__, apply_operator_observation, current_operator_state, sample_received, update_operator changed and account_training_status added.",
+        "training_conditions/skill_rank_value/update_base_attack/update_skill_options/calculate/render_damage/show_observed_operator/apply_run_observation/reset_run AST equal HEAD.",
+        "Source guard changed files are app.py and verify_cloud.py; new helper/test only; RunState/math/catalog/recognizers/formatter APIs retain guarded hashes.",
+        "No source review execution, tracked writes, unknown mechanics assumptions or private reads."
+      ],
+      "source": [
+        "git:HEAD=f509d186e501bfcfd042e45b46e398ec756840ec",
+        "source_guard:changed_maintained/new_maintained"
+      ]
+    }
+  ],
+  "scope_limits": [
+    "No runner/codec/product/helper/formatter/tests/Qt/Wine executed; AST/source qualification only.",
+    "Target Wine localtime behavior, API outcomes, full per-state snapshots, actual window responsiveness and PNG appearance remain unverified.",
+    "Wine plan B2 independently covers masked locked bad rank only. Root clarified unmasked inert99/maskedbad variants are covered by its reported fresh Linux tests (39 new/64 related/1094 selected), not by an additional Wine fixture or this reviewer.",
+    "Native graph supports bytes but bytes JSON_projection is not serializable by current checkpoint; in-scope public plan and synthetic-image metadata are JSON types, so no bytes projection is used. A bytes workload would require a separately reviewed extension.",
+    "No legal implemented+skillNone current catalog state; source-supported Lancet-2 no-skill occurs in natural unimplemented branch.",
+    "No genuine Windows/game/desktop integration validation claimed."
+  ],
+  "target_stdlib_profile_binding": {
+    "path": "/workspace/.compat/python-windows/package/tools/Lib/pathlib.py",
+    "bytes": 52487,
+    "sha256": "cd1557dedcaa1be0459cd59760c5ebac83a3e412e0e1b5bc0b1a82a19563a090"
+  },
+  "project_calls": {
+    "imports": 0,
+    "API": 0,
+    "helper": 0,
+    "formatter": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "runner": 0,
+    "codec": 0,
+    "private_reads": 0,
+    "game_capture_requests": 0,
+    "chat_requests": 0,
+    "tracked_writes": 0
+  },
+  "attempt_accounting": {
+    "this_formal_source_review_attempt": 1,
+    "this_reviewer_runtime_attempts": 0,
+    "source_blockers": [],
+    "new_same_goal_failures": 0,
+    "same_goal_runtime_attempt_history": "Root-owned; not inferred from prior source/preparation receipts. Preserve root original failure records and successful prefixes."
+  },
+  "next": "Root alone may run the exact bound final runner once with the guard and plan adjacent under their original names; runtime remains pending and no source-only result is a runtime PASS."
+}

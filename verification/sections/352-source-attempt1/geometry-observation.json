@@ -1,0 +1,31 @@
+{
+  "original_failure": {
+    "type": "AssertionError",
+    "message": "actual_nonzero_reading_range",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_common_content_window_352.py\", line 102, in exercise\n    panel.tabs.setCurrentWidget(reader);gui.processEvents();cursor=reader.textCursor();cursor.setPosition(3);cursor.setPosition(15,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(cursor);scroll=reader.verticalScrollBar();require(scroll.maximum()>0,'actual_nonzero_reading_range');scroll.setValue(min(3,scroll.maximum()));prior=reading(reader);tab=panel.tabs.currentIndex()\n                                                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_common_content_window_352.py\", line 29, in require\n    if not value:raise AssertionError(name)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: actual_nonzero_reading_range\n"
+  },
+  "native_mainwindow_sizes": [
+    [
+      1220,
+      850
+    ],
+    [
+      1220,
+      850
+    ],
+    [
+      1220,
+      850
+    ],
+    [
+      1220,
+      850
+    ],
+    [
+      1220,
+      850
+    ]
+  ],
+  "scope": "The observed reader had zero scrollbar maximum; this is a missing nonzero-scroll test precondition, not a product refresh failure. Next check uses a real compact instance of the exact same common-page widget, separately identified from default MainWindow viewport.",
+  "original_failure_preserved": true
+}

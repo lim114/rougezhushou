@@ -1,0 +1,337 @@
+{
+  "kind": "SECTION109_GENERIC_INSTANT_LITERAL_SUPPLEMENT_SOURCE_ONLY",
+  "STOPWRITE": true,
+  "runtime_executed": false,
+  "product_pass": false,
+  "expected_runtime_values": null,
+  "case_count": 12,
+  "maximum_explicit_public_consumers": 36,
+  "maximum_native_records": 48,
+  "deadline_seconds": 120,
+  "required_whole_source_guard": "Root chooses actual whole guard, checks complete source map and CORE before and after. Candidate must use fresh updated guard, not original pins.",
+  "call_protocol": [
+    "rouge.damage.calculate_damage(scenario)",
+    "rouge.estimate.format_estimate(returned_result)",
+    "rouge.reporting.format_report(returned_result)"
+  ],
+  "caller_protocol": "Retain full actual arguments/return/error and whole-case before/after native; compare caller purity. If calculation errors, record formatter phases as blocked without fabricated results. Each case checkpoint/fsync; original and candidate fresh separate outputs.",
+  "scope": "Only generic instant() callers at operator_engine.py:523 (medical Amiya S2), :780 (Sbell2 S1). Gnosis S2 is separately covered by original focused30. Exact empty owner list may change own opening hit and its dependent known healing; independent conditional and unknown timing stay intact. Positive continuous range reference is not newly scheduled.",
+  "data_refs": [
+    {
+      "path": "rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "path": "rouge/data/operator-profiles.json",
+      "bytes": 1592209,
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957"
+    }
+  ],
+  "qualified_training": {
+    "char_1037_amiya3": "E2/L80/rank10/trust100/P1; module omitted",
+    "char_1046_sbell2": "E2/L90/rank10/trust100/P1; module omitted"
+  },
+  "cases": [
+    {
+      "id": "char_1037_amiya3-s2-continuous-baseline",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "healing_targets": 1
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1037_amiya3-s2-continuous-empty",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "healing_targets": 1,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1037_amiya3-s2-continuous-positive",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "healing_targets": 1,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              5
+            ],
+            [
+              8,
+              20
+            ]
+          ]
+        }
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1037_amiya3-s2-frames-baseline",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "healing_targets": 1
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1037_amiya3-s2-frames-empty",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "healing_targets": 1,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1037_amiya3-s2-frames-positive",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1037_amiya3",
+        "skill": 2,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "healing_targets": 1,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              5
+            ],
+            [
+              8,
+              20
+            ]
+          ]
+        }
+      },
+      "focus": "慈悲愿景开启伤害及伤害转治疗；自回复和后续技能相位未知保留"
+    },
+    {
+      "id": "char_1046_sbell2-s1-continuous-baseline",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "snow_entries": 2
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    },
+    {
+      "id": "char_1046_sbell2-s1-continuous-empty",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "snow_entries": 2,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    },
+    {
+      "id": "char_1046_sbell2-s1-continuous-positive",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "snow_entries": 2,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              5
+            ],
+            [
+              8,
+              20
+            ]
+          ]
+        }
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    },
+    {
+      "id": "char_1046_sbell2-s1-frames-baseline",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "snow_entries": 2
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    },
+    {
+      "id": "char_1046_sbell2-s1-frames-empty",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "snow_entries": 2,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    },
+    {
+      "id": "char_1046_sbell2-s1-frames-positive",
+      "group": "generic-instant-actual-caller",
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "snow_entries": 2,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              5
+            ],
+            [
+              8,
+              20
+            ]
+          ]
+        }
+      },
+      "focus": "施放伤害与独立积雪经过条件参考分离，不把未定位经过伤害归零"
+    }
+  ]
+}

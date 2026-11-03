@@ -1,0 +1,96 @@
+{
+  "kind": "291_PUBLIC_MINIMUM_HEIGHT_DIAGNOSTIC_ARCHIVE_NOT_NATIVE_PASS",
+  "archived_at_UTC": "2026-10-15T21:52:24.402720+00:00",
+  "native_prior_failure": {
+    "path": "verification/sections/291-window-attempt3/actual/window.json",
+    "sha256": "08e0a7f859567b2950deeb27140a150a53e6bb229ade971d86b07910feaa0736",
+    "bytes": 12568,
+    "qpa": "windows",
+    "requested": [
+      1050,
+      720
+    ],
+    "actual": [
+      1050,
+      764
+    ],
+    "failure": "actual_window_client_size_matches_requested_layout_size",
+    "style_and_font": "not measured in original native receipt",
+    "not_modified_or_replayed": true
+  },
+  "first_actual_offscreen": {
+    "result": "OFFSCREEN_TAB_MINIMUMS.json",
+    "actual": [
+      1050,
+      739
+    ],
+    "qpa": "offscreen",
+    "style": "fusion",
+    "font": {
+      "family": "Sans Serif",
+      "point_size": 9.0
+    },
+    "screen": {
+      "logical_dpi": 96.0,
+      "device_pixel_ratio": 1.0
+    },
+    "page_count": 16,
+    "capture_page_minimum_hint": [
+      624,
+      711
+    ],
+    "only_capture_page_removal_reaches_720": [
+      "采样测试"
+    ]
+  },
+  "scroll_candidate_actual_offscreen": {
+    "result": "OFFSCREEN_CAPTURE_SCROLL_CANDIDATE.json",
+    "in_memory_only": true,
+    "actual": [
+      1050,
+      720
+    ],
+    "window_minimum": [
+      962,
+      571
+    ],
+    "reading_size": [
+      746,
+      270
+    ],
+    "preview_minimum_height": 180,
+    "recorded_fields_same_objects": true,
+    "footer_visibility_check_scope": "nonempty visibleRegion only; not proof of whole-label containment",
+    "native_followup_required": true
+  },
+  "shared_original_source_SHA_comparison": {
+    "rouge/app.py": {
+      "native_attempt3": "3aec0d31082ceba9541ae854c5aa1cb17ef43a013546514e8f1b0302c754c491",
+      "offscreen": "3aec0d31082ceba9541ae854c5aa1cb17ef43a013546514e8f1b0302c754c491",
+      "equal": true
+    },
+    "rouge/map_view.py": {
+      "native_attempt3": "9b52302b694574b917363e08cc6e29e1e5b3b0ac4f3c583a21acfc5d52798b9d",
+      "offscreen": "9b52302b694574b917363e08cc6e29e1e5b3b0ac4f3c583a21acfc5d52798b9d",
+      "equal": true
+    },
+    "rouge/node_catalog_view.py": {
+      "native_attempt3": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+      "offscreen": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+      "equal": true
+    }
+  },
+  "distinguish_platforms": "Native764 and offscreen739 are separate actual observations. Offscreen usedFusion/Sans Serif9; exact25-pixel difference was not causally decomposed and is not claimed to prove native metrics.",
+  "minimal_proposal": "Wrap only existing sampling tab content in QScrollArea(setWidgetResizableTrue). Preserve all widget fields, preview180 and old signals; no global Ignored or clipping.",
+  "risks": [
+    "Small sampling windows need outer scrolling; inner text areas may consume the wheel, so preserve the external scrollbar.",
+    "Native720/client size, footer full containment and reading preservation must still be verified; offscreen is not a substitute."
+  ],
+  "actual_offscreen_processes": 2,
+  "actual_unittest_runs": 0,
+  "native_windows_started_by_agent": 0,
+  "game_chat_external_attempts": 0,
+  "private_state_read_copied_or_restored": false,
+  "live_product_or_docs_modified_by_archiver": false,
+  "initial_wrong_19_page_estimate_corrected": "Source and actual tabs.count are16; the prior unmeasured19 was retracted, not evidence."
+}

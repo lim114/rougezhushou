@@ -1,0 +1,83 @@
+{
+  "kind": "OFFICIAL_INTEL_ROUNDING_REFERENCE_280_FRESH_FILE_INSPECTION",
+  "url": "https://cdrdv2-public.intel.com/774492/325383-sdm-vol-2abcd.pdf",
+  "file_sha256": "bc4348020f5d5a27b0207c61e3c88d4e610eaf428658dc5d08a1cc84f98a719b",
+  "bytes": 11349721,
+  "page_count": 2522,
+  "pdf_metadata": {
+    "/Author": "Intel Corporation",
+    "/CreationDate": "D:20230323215127Z",
+    "/Creator": "FrameMaker 16",
+    "/ModDate": "D:20230324095107-07'00'",
+    "/Producer": "Acrobat Distiller 23.0 (Windows)",
+    "/Title": "Intel® 64 and IA-32 Architectures Software Developer’s Manual Volume 2 (2A, 2B, 2C, and 2D): Instruction Set Reference, A-Z"
+  },
+  "bookmarks": [
+    {
+      "title": "ADDSS—Add Scalar Single Precision Floating-Point Values",
+      "page_index": 151
+    },
+    {
+      "title": "CVTDQ2PS—Convert Packed Doubleword Integers to Packed Single Precision Floating-Point Values",
+      "page_index": 378
+    },
+    {
+      "title": "MULSS—Multiply Scalar Single Precision Floating-Point Values",
+      "page_index": 889
+    },
+    {
+      "title": "ROUNDSD—Round Scalar Double Precision Floating-Point Values",
+      "page_index": 1311
+    }
+  ],
+  "facts": [
+    {
+      "instruction": "ADDSS",
+      "page_index": 151,
+      "fact": "Original legacy scalar Single arithmetic instruction reference is present",
+      "exact_excerpts_archived": false
+    },
+    {
+      "instruction": "CVTDQ2PS",
+      "page_index": 378,
+      "fact": "Legacy signed32 to Single conversion uses MXCSR rounding when inexact",
+      "exact_excerpts_archived": false
+    },
+    {
+      "instruction": "MULSS",
+      "page_index": 889,
+      "fact": "Original legacy scalar Single arithmetic instruction reference is present",
+      "exact_excerpts_archived": false
+    },
+    {
+      "instruction": "ROUNDSD",
+      "page_index": 1311,
+      "fact": "Immediate bit2 selects MXCSR or explicit immediate RC; low2 bits encode mode; bit3 controls precision exception",
+      "exact_excerpts_archived": false
+    }
+  ],
+  "game_current_MXCSR_or_masks_proven": false,
+  "first_download_attempts": [
+    {
+      "tool_chunk": "b1f6e4",
+      "exit_code": 1,
+      "reason": "Python SSL local issuer unavailable; certificate verification was not disabled"
+    },
+    {
+      "tool_chunk": "f3af49",
+      "command_exit_code": 0,
+      "download_pass": false,
+      "reason": "Intel www URL Access Denied; no successful PDF archive"
+    }
+  ],
+  "actual_CDN_download": {
+    "tool_chunk": "7bbdb0",
+    "exit_code": 0
+  },
+  "complete_file_sha_check": {
+    "tool_chunk": "d67636",
+    "exit_code": 0
+  },
+  "same_or_different_RC_coupling_assumed": false,
+  "result_candidates_are_conditional_hardware_normal_results": true
+}

@@ -1,0 +1,66 @@
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -28,6 +28,7 @@
+ 
+ def _skill_damage_base(scenario: dict) -> dict:
+     scenario=dict(scenario)
++    companion_is_bool=isinstance(scenario.get('companion_attack'),bool)
+     profile=catalog()['operators'][scenario['operator']]
+     skill=scenario.get('skill')
+     rank=scenario.get('skill_rank',10)
+@@ -150,6 +151,7 @@
+         components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
+         stacks = int(scenario.get('deployment_stacks', 0))
+         if stacks:
++            if companion_is_bool:raise ValueError('companion_attack 不接受布尔值；请使用数值。')
+             recipient = float(scenario['companion_attack']) * bb['atk_scale']
+             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
+             components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
+@@ -274,9 +276,13 @@
+     from .relics import prepare
+     from .run_modifiers import prepare_run
+     scenario,run_resolution=prepare_run(scenario)
++    numeric_bool_fields=[field for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds')
++                         if isinstance(scenario.get(field),bool)]
+     scenario,resolution=prepare(scenario,profile)
+     from .relic_attributes import prepare_attribute_runes
+     scenario,attributes=prepare_attribute_runes(scenario,attributes)
++    if numeric_bool_fields:
++        raise ValueError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')
+     # Reuse the existing numeric-zero gates after validating the raw timing.
+     timing=scenario.get('timing',{})
+     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -144,8 +144,8 @@
+     def option(self,key,default=0,maximum=None,integer=False):
+         value=self.s.get(key,default)
+         # Healing-target validation uses the public capability gate; inactive fields stay ignored.
+-        if integer and key!='healing_targets' and isinstance(value,bool):
+-            raise ValueError(key+'需要范围内的有限非负整数。')
++        if key!='healing_targets' and isinstance(value,bool):
++            raise ValueError(key+'需要范围内的有限非负'+('整数。' if integer else '数。'))
+         return self.value(value,key,maximum,integer)
+ 
+     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
+--- a/rouge/estimate.py
++++ b/rouge/estimate.py
+@@ -16,7 +16,9 @@
+     effects=result['applied_effects']
+     def total(kind):return sum(e['value'] for e in effects if e['kind']==kind)
+     def nonnegative(field,default):
+-        value=float(scenario.get(field,default))
++        value=scenario.get(field,default)
++        if field not in ('healing_targets','deployment_elapsed_seconds') and isinstance(value,bool):raise ValueError(field+' 不接受布尔值；请使用数值。')
++        value=float(value)
+         if not math.isfinite(value) or value<0:raise ValueError(f'{field} 需要有限非负数。')
+         return value
+     elapsed=nonnegative('deployment_elapsed_seconds',0)
+@@ -45,6 +47,7 @@
+             talent_sp+=bb['sp'];redeploy_scale*=bb['respawn_time']
+             talent_notes.append('开放性开局：自身初始技力及下次再部署时间')
+         if operator=='silverash' and talent['name']=='雪境先驱':
++            if isinstance(scenario.get('deployment_elapsed_seconds'),bool):raise ValueError('deployment_elapsed_seconds 不接受布尔值；请使用数值。')
+             defense_flat+=bb['def']*(2 if elapsed>=bb['interval'] else 1)
+             talent_notes.append('雪境先驱：自身防御按在场时间计算；被动生命回复不混入技能治疗量')
+     stats={

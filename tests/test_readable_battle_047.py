@@ -19,9 +19,26 @@ class ReadableBattleTests(unittest.TestCase):
             'hidden_group_reference','spawn_rows','enemy_preview','value_text'),
             'rouge/enemy_skills.py':('skill_data','enemy_skill_reference','raw_text','blackboard_text','definition_text'),
             'rouge/spawn_reference.py':('finite_nonnegative','local_sequence','ordinal_offset','movement_reference')}
+        # This is the exact 0.47 historical pre/post boundary. Later approved
+        # extensions are independently protected by the maintained 16-function
+        # current_guard and three behavior successors; they are not pre047 code.
+        pre_sha={
+            'rouge/battle_preview.py':'b6af4035a95ecf875ce939b14fb04c4927bb27ff31c63f07f9ae03b26154a464',
+            'rouge/enemy_skills.py':'aab530166a4ba303605c198d96ef7da43e2de20a647d83973ecbf35c1ac99823',
+            'rouge/spawn_reference.py':'a3937257f84db8f6ffb45860b7b76ee818464a59360c62efc787f0058eb0f1db'}
+        post_sha={
+            'rouge/battle_preview.py':'002dd99ee9a420935c007f8c2e1f8970f199d7a58c029918cc3ee360660154c6',
+            'rouge/enemy_skills.py':'c9beb115bfcfbd240f859a5e47a1f5ce8ddff914b52491a1dbe8fcc4da398bde',
+            'rouge/spawn_reference.py':'2181af529db79a34e18428600c1156afb62335c72d3738179d81bae17667cedb'}
+        sealed=json.loads((ROOT/'FINAL_0.47_VERIFICATION.json').read_text(encoding='utf-8'))
         for file,names in groups.items():
-            old=ast.parse((ROOT/'.cache/batch-047-before'/file).read_text(encoding='utf-8'))
-            new=ast.parse((ROOT/file).read_text(encoding='utf-8'))
+            old_raw=(ROOT/'research/presentation-source-guard/047-original-pre'/file).read_bytes()
+            new_raw=(ROOT/'research/presentation-source-guard/047-public-post'/file).read_bytes()
+            self.assertEqual(hashlib.sha256(old_raw).hexdigest(),pre_sha[file],('historical pre047',file))
+            self.assertEqual(hashlib.sha256(new_raw).hexdigest(),post_sha[file],('exact public post047',file))
+            self.assertEqual(post_sha[file],sealed['source_sha256'][file],('sealed post047',file))
+            old=ast.parse(old_raw.decode('utf-8'))
+            new=ast.parse(new_raw.decode('utf-8'))
             for name in names:
                 before=next(n for n in old.body if isinstance(n,ast.FunctionDef) and n.name==name)
                 after=next(n for n in new.body if isinstance(n,ast.FunctionDef) and n.name==name)
@@ -107,12 +124,12 @@ class ReadableBattleTests(unittest.TestCase):
         text=spawn_text(spawn_rows(SID)[0],SID)
         headings=['【出场条目】','【出场条件】','【局部时间计划】','【调度参考】','【路线检查点】']
         self.assertEqual([text.index(h) for h in headings],sorted(text.index(h) for h in headings))
-        self.assertIn('本波开始前延迟',text);self.assertIn('同条目相邻生成间隔',text)
-        self.assertIn('原地等待：100秒（配置）',text)
+        self.assertIn('本波开始前等待',text);self.assertIn('本条计划相邻两次出场间隔',text)
+        self.assertIn('原地等待：100秒（资料设定）',text)
         for raw in ('preDelay','interval','count','WAIT_FOR_SECONDS','routeIndex','time=','https://'):
             self.assertNotIn(raw,text)
-        self.assertIn('绝对出场时刻：未知',text);self.assertIn('不直接相加为全局时间',text)
-        self.assertIn('名义偏移不是开局绝对时刻',text)
+        self.assertIn('绝对出场时刻：未知',text);self.assertIn('不能直接相加当作开战倒计时',text)
+        self.assertIn('出场时间差不是开战后的实际时刻',text)
 
     def test_spawn_technical_mode_keeps_all_raw_action_keys_and_values(self):
         r=spawn_rows(SID)[0];text=spawn_text(r,SID,technical=True)
@@ -125,7 +142,7 @@ class ReadableBattleTests(unittest.TestCase):
         r=next(x for x in spawn_rows(SID) if x['branch']);text=spawn_text(r,SID)
         self.assertIn('出生位置：未知/未映射',text)
         self.assertIn('条件分支 · 第',text)
-        self.assertIn('基础/额外路线选择信息',text)
+        self.assertIn('尚未确认使用哪条路径',text)
         self.assertNotIn(r['branch'],text);self.assertNotIn('useExtraRoute',text)
         raw=spawn_text(r,SID,technical=True)
         self.assertIn(r['branch'],raw);self.assertIn('useExtraRoute',raw)
@@ -133,7 +150,10 @@ class ReadableBattleTests(unittest.TestCase):
     def test_random_weight_remains_a_reference_and_is_not_normalized(self):
         r=next(x for x in spawn_rows(SID) if x['action'].get('randomSpawnGroupKey'))
         text=spawn_text(r,SID)
-        self.assertIn('原始权重',text);self.assertIn('非概率',text)
+        self.assertNotIn('原始权重',text)
+        self.assertIn('不保证出现',text);self.assertIn('不提供生成概率',text)
+        technical=spawn_text(r,SID,technical=True)
+        self.assertIn('原始权重',technical);self.assertIn('非概率',technical)
         self.assertIsNone(r['probability'])
         self.assertNotIn(r['action']['randomSpawnGroupKey'],text)
 

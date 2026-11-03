@@ -1,0 +1,102 @@
+{
+  "kind": "APPEND_ONLY_RETRY3_FAILURE_OBSERVATION_CORRECTION",
+  "at_utc": "2026-10-15T19:32:04.789504+00:00",
+  "sealed_original_archive": "verification/full-290/legacy-retry-attempt3-failed",
+  "sealed_original_manifest_sha256": "a303bbe52ed0ac55476eb1714d1d820f2e11ccbfb10f06c024699e53861b06e9",
+  "historical_observation": {
+    "path": "verification/full-290/legacy-retry-attempt3-failed/failure-observation.json",
+    "sha256": "8370bd2d658d933d64a778ac91416a4973e51e2da89767adc7995a049c0e3e99",
+    "original_record_retained_unchanged": true
+  },
+  "withdrawn_observations": {
+    "window_finalizer_line1267_in_stack": "Incorrect: line1267 is receipt initialization before the main try, not finally.",
+    "finalizer_crash_may_mask_prior_exception": "Unsupported for this log/source; withdrawn, not a diagnosed causal explanation."
+  },
+  "verified_source": {
+    "path": "verification/full-290/legacy-retry-attempt3-failed/executed-legacy-bundle/window.py",
+    "sha256": "ada33b2f07d42b43c930059bd08fe01f3b88f9865001221c289760929befb9db",
+    "platform_platform_call_count": 1,
+    "platform_platform_call_line": 1267,
+    "receipt_initialization_line": 1262,
+    "main_try_line": 1307,
+    "finally_keyword_line": 3506,
+    "finally_last_line": 3534,
+    "platform_call_in_main_finally": false,
+    "compound_Qt_startup_line": 1329,
+    "compound_Qt_startup_expression": "app=QApplication([]);window=module.MainWindow();window.show();app.processEvents()"
+  },
+  "verified_stderr": {
+    "path": "verification/full-290/legacy-retry-attempt3-failed/legacy/supervisor.json.stderr.log",
+    "sha256": "05a0347bfe2fadc897fc13427e41d687bcf7f08693dfd918cc0fb96aeaf6c543",
+    "bytes": 11065,
+    "fatal_blocks_in_recorded_order": [
+      {
+        "code": "0x8007000e",
+        "window_frame_lines": [
+          1267
+        ],
+        "contains_platform_wmi_frame": true
+      },
+      {
+        "code": "0x8007000e",
+        "window_frame_lines": [
+          1267
+        ],
+        "contains_platform_wmi_frame": true
+      },
+      {
+        "code": "0x8007000e",
+        "window_frame_lines": [
+          1267
+        ],
+        "contains_platform_wmi_frame": true
+      },
+      {
+        "code": "0x8007000e",
+        "window_frame_lines": [
+          1267
+        ],
+        "contains_platform_wmi_frame": true
+      },
+      {
+        "code": "0xc000070a",
+        "window_frame_lines": [
+          1329
+        ],
+        "contains_platform_wmi_frame": false
+      }
+    ]
+  },
+  "official_code_names": [
+    {
+      "code": "0x8007000E",
+      "name": "E_OUTOFMEMORY",
+      "source": "https://learn.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values",
+      "supported_meaning": "A necessary memory allocation failed; this code alone does not establish physical RAM exhaustion."
+    },
+    {
+      "code": "0xC000070A",
+      "name": "STATUS_THREADPOOL_HANDLE_EXCEPTION",
+      "source": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/596a1078-e883-4972-9bbc-49e60bebca55",
+      "supported_meaning": "The documented status relates to an exception while waiting on a thread-pool handle; it does not locate the failing native callee."
+    }
+  ],
+  "causality_limits": {
+    "WMI_as_final_root_cause_established": false,
+    "specific_QApplication_MainWindow_show_or_processEvents_callee_identified": false,
+    "original_try_exception_masked_by_finally_established": false,
+    "physical_RAM_exhaustion_proved": false,
+    "fresh_RAM_measurement_performed_by_this_correction": false,
+    "root_reported_later_memory_observation_reproduced_as_our_own_measurement": false,
+    "absence_of_another_functional_problem_proved": false
+  },
+  "unchanged_outcome": {
+    "actual_child_exit": 3221227274,
+    "actual_supervisor_exit": 1,
+    "complete_legacy_passed": false,
+    "typed_passed": false
+  },
+  "raw_or_old_manifest_rewritten": false,
+  "production_private_state_or_tests_modified": false,
+  "tests_GUI_or_new_attempt_started": false
+}

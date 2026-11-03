@@ -1,0 +1,51 @@
+{
+  "section": 129,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:23:15.568817+08:00",
+  "prior_commit": "a40eb5bb5ecf1c5c91e190f80a7f0241884e27f7",
+  "title": "账户资料联动的强化分队条件清单",
+  "remaining_project_item": "P2本局环境：强化分队账户条件",
+  "new_capability": "七种强化分队按当前科技资料档案联动手动状态，支持分队筛选、0–15等级门槛参数对照、精确跳转科技及复制完整清单。",
+  "acceptance": [
+    "七项条件精确复用原表",
+    "档案和手动状态实时联动",
+    "3/6/9参数不自动授权效果",
+    "特勤培养不借用其他账户",
+    "实际窗口筛选跳转复制",
+    "原计算账号本局不变"
+  ],
+  "limitations": [
+    "账户身份、实际解锁与激活仍未知",
+    "等级仅作原表参数对照，科技状态不自动加入分队计算"
+  ],
+  "sources": [
+    "rouge/squad_account_plan.py",
+    "rouge/squad_account_view.py",
+    "rouge/technology_view.py",
+    "rouge/data/technology-reference.json",
+    "tests/test_squad_account_plan_129.py"
+  ],
+  "evidence_reused": [
+    "research/p2-squad-unlock-reference/NOTE071.md",
+    "rouge/squad_unlock_reference.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 13,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-129/tests.txt",
+    "window_receipt": "verification/section-129/window.json"
+  },
+  "source_sha256": {
+    "rouge/squad_account_plan.py": "7e61beecbfc7d9a6215bd60246b4440d5c8400eec30cf90808b8097f42ce4b44",
+    "rouge/squad_account_view.py": "f5ef5de1ed1238b8031f808852c17d876d0e191b97611a8cf0e8120c2302b8d1",
+    "rouge/technology_view.py": "0ba029e7cd6b8c89bfc3c09d2c5fbcfc4d20c4b3b6b8bff05c9e980d02a86534",
+    "rouge/data/technology-reference.json": "30640cb8ca4d9c2bbedce971a7545cbdbed7b6aab177a880c9faaf4eddee0d30",
+    "tests/test_squad_account_plan_129.py": "696d124a100919c1bf65d8dad360340f678b6ba8548cfcd46f0975aa288dea97"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

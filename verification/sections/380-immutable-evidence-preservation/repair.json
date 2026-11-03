@@ -1,0 +1,81 @@
+{
+  "section": 380,
+  "kind": "PRECOMMIT_IMMUTABLE_EVIDENCE_STYLE_REFUSAL_PRESERVED",
+  "at_UTC": "2026-10-26T23:26:46.595589+00:00",
+  "original_actual_outer_phase_exit": 1,
+  "failure_stage": "Finalizer git diff --cached --check; before functional commit or push",
+  "actual_failed_diff_diagnostics": {
+    "verification/full-380/execution-attempt1/offline/actual/windows-offline.log": [
+      {
+        "line": 6662,
+        "reason": "trailing whitespace."
+      }
+    ],
+    "verification/full-380/postprocessing-schema-repair/prepared-candidate/exact-original-to-revision2.diff": [
+      {
+        "line": 5,
+        "reason": "trailing whitespace."
+      },
+      {
+        "line": 6,
+        "reason": "trailing whitespace."
+      },
+      {
+        "line": 109,
+        "reason": "trailing whitespace."
+      },
+      {
+        "line": 147,
+        "reason": "trailing whitespace."
+      },
+      {
+        "line": 148,
+        "reason": "trailing whitespace."
+      }
+    ]
+  },
+  "original_failed_output": {
+    "path": "verification/sections/380-index-validation-failed-attempt1/git-diff-check.txt",
+    "sha256": "911fec71e3fd53c52b0f03390aa764f621f76d8adbaac325b161f2ccae5d5d21",
+    "bytes": 894
+  },
+  "original_failed_finalizer": {
+    "path": "verification/sections/380-index-validation-failed-attempt1/execution-runner.py",
+    "sha256": "a42451aa8a1d79f6ef33f81255f972fa44b221e063317b53312ed01f296dabc4",
+    "bytes": 14866
+  },
+  "original_full_and_candidate_manifests": [
+    {
+      "path": "verification/full-380/execution-attempt1/archive-manifest.json",
+      "sha256": "12b26747c8cc7a13606ea2e3bdf54160023b017f0186dc3b0f3ea33b13a781c6",
+      "bytes": 455904
+    },
+    {
+      "path": "verification/full-380/postprocessing-schema-repair/prepared-candidate/PREPARED_FILES.json",
+      "sha256": "70b56565e5dabc86c85bc53638602436d7d90aedb97d4e28c2263672f11c8008",
+      "bytes": 1478
+    }
+  ],
+  "exact_excluded_immutable_files": [
+    {
+      "path": "verification/full-380/execution-attempt1/offline/actual/windows-offline.log",
+      "sha256": "9f07555cafd193aadaab5a2ddf8fba200837673a54992cc95682e0c6f3096561",
+      "bytes": 1334082
+    },
+    {
+      "path": "verification/full-380/postprocessing-schema-repair/prepared-candidate/exact-original-to-revision2.diff",
+      "sha256": "9bc5f1a8f36e5c71abe4641d329baedcef3b5048bc197f34c59cb3233571328e",
+      "bytes": 64816
+    },
+    {
+      "path": "verification/sections/380-index-validation-failed-attempt1/git-diff-check.txt",
+      "sha256": "911fec71e3fd53c52b0f03390aa764f621f76d8adbaac325b161f2ccae5d5d21",
+      "bytes": 894
+    }
+  ],
+  "all_other_finalizer_source_restores_byte_exact_by_inverse": true,
+  "all_source_and_nonlisted_evidence_diff_checks_preserved": true,
+  "immutable_log_diff_and_first_refusal_reformatted": false,
+  "full380_summary_or_test_results_changed": false,
+  "ordinary_commit_or_push_claimed": false
+}

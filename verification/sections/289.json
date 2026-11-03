@@ -1,0 +1,93 @@
+{
+  "section": 289,
+  "kind": "functional_section",
+  "title": "沉寂之屋的两项零件奖励、独立费用与原文依据",
+  "at_Beijing": "2026-10-16T00:55:04.539244+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "f126d0f5da5a5b7fa0048ff9fd5e6915a82b747c",
+  "remaining_item": "P3节点事件与掉落：既有具名奖励未进入对应选项展示",
+  "new_capability": "以BWiki349818的完整选项文字、固定原物品指针和PRTS427904原文为依据，将已存在的两条笼控器SCRAP记录分别接入清理藤蔓/交流选项，各自显示2目标生命值/8源石锭费用与零件名称。默认中文，依据在单独页；数量、实际领取、完整池、当前可选和原入口仍未知。",
+  "files": [
+    "rouge/event_named_reward_links.py",
+    "rouge/data/event-named-reward-links.json",
+    "rouge/node_catalog.py",
+    "rouge/player_node_information.py",
+    "rouge/node_catalog_view.py",
+    "scripts/build_event_named_reward_links_289.py",
+    "scripts/verify_event_rewards_window_289.py",
+    "scripts/verify_full_available.py",
+    "tests/test_event_named_reward_links_289.py",
+    "tests/test_event_named_reward_integration_289.py"
+  ],
+  "source_sha256": {
+    "rouge/event_named_reward_links.py": "e8527c12285141b0262993fb093496dc24809205bf22f8080015e80bd99ceb89",
+    "rouge/data/event-named-reward-links.json": "d2bb845010ecf144fe2a1a21dc56735f3e438bc4f1a7ada5648baa72faa3e331",
+    "rouge/node_catalog.py": "5fd1d9d839f2d26ee0d1a0c6e99935b0197017dcb491bf9525e5b1081de404c1",
+    "rouge/player_node_information.py": "92c4659da6141ca15b5f743eaf48e8301dd7031707e13b262a1fc3c97e5328ff",
+    "rouge/node_catalog_view.py": "26057fde3371fed81ad65a90eb1c9730bd03cec69d6562f26382c19c29db33a3",
+    "scripts/build_event_named_reward_links_289.py": "3fcd854c01257c642d40d0326b3d953044a02f05a2b6292657b8c4e42332af74",
+    "scripts/verify_event_rewards_window_289.py": "fa58d85e8719294547685ced7bdec4085b5b308e5a570c287f476cda5c21ad52",
+    "scripts/verify_full_available.py": "ebdca67be74a8702913c07004f31062240c4909a0f74e88c0988053be243eeb8",
+    "tests/test_event_named_reward_links_289.py": "6896e722fd8ffd5cbaef6206a4d53d6f79482ee340dee14312e9bfa420102630",
+    "tests/test_event_named_reward_integration_289.py": "2375f41bff7705f8a10f656cbac493de3ceff88fd10a567a280f064aaff88873"
+  },
+  "source_evidence": {
+    "packet": "research/p3-event-named-rewards-289",
+    "manifest_sha256": "c1b6ac0ae75261ec5cc56d75334c951145b192259124d0878b97390d254ec8ee",
+    "document_revision": "349818",
+    "community_revision": "427904",
+    "fixed_game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "full_game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "new_rewards_in_original_table": 0,
+    "existing_rewards_display_links_added": 2,
+    "original_catalog_game_choice_ids_changed": false,
+    "source_scene_links_newly_verified": 0,
+    "remaining_original_scenes": 25,
+    "remaining_original_choices": 57,
+    "quantity_inferred": false,
+    "inventory_or_resource_updates": false,
+    "all_other_event_query_results_equal_frozen_288": true,
+    "full_pools_or_current_server_eligibility_verified": false
+  },
+  "necessary_validation": {
+    "receipt": "verification/sections/289-necessary-first/process.json",
+    "methods_run": 191,
+    "methods_passed": 191,
+    "source_unchanged": true,
+    "first_root_run_passed": true,
+    "author22_is_subset_not_added": true,
+    "legacy_tests_changed": false,
+    "warm_source_tamper_safe_fallback": true,
+    "resource_unknown_insufficient_exact_excess_and_historical_context_tested": true
+  },
+  "native_windows_validation": {
+    "receipt": "verification/sections/289-window-first.json",
+    "unique_checks": 56,
+    "visible_stages": 2,
+    "two_actual_pages_with_nonzero_scroll_and_nonempty_selection": true,
+    "filters_selected_event_tabs_search_selection_and_reading_preserved": true,
+    "zero_budget_keeps_rewards_and_does_not_upgrade_eligibility": true,
+    "game_captures": 0,
+    "chat_sends": 0,
+    "private_state_loaded": false,
+    "original_project_window": "verification/sections/289-main-window.json",
+    "original_window_focus": "verification/sections/289-main-window-focus.json",
+    "normal_restart_private_paths_compared": 5,
+    "normal_restart_private_paths_changed": 0
+  },
+  "full_validation": {
+    "rerun": false,
+    "last_receipt_unchanged": "verification/full-285/summary.json",
+    "next_periodic_section": 290,
+    "scope_not_reduced": true
+  },
+  "limits": [
+    "此次接通既有奖励资料，不是发现新奖励，不减少25场景/57选项原入口缺口。",
+    "资料全文内容关联不证明原生入口脚本、按钮可选、实际支付/发放或当前服务器。",
+    "笼控器数量未序列化，不能补1；两个选项分别付费，不合并为入场费或累计奖励。",
+    "文档源变化或缺失时拒绝补充关联，原文与未知提示保留；不使用旧缓存掩盖源变化。",
+    "P3/P2/P1尚未完成；无连续数字终点，识别最后。"
+  ],
+  "next_section": 290,
+  "cloud_publication_binding": "enclosing_commit"
+}

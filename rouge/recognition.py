@@ -51,6 +51,7 @@ class ScreenReader:
         self.page_routing_enabled=page_routing_enabled
         self.page_ocr_enabled=page_ocr_enabled
         self._page_ocr=None
+        self._discovery_ocr=None
         self._page_router=None;self._page_route_age=0;self._page_route_retry_after=0
         self._page_verified_identity=None
         self._last_frame = self._last_rect = self._last_result = None
@@ -106,12 +107,13 @@ class ScreenReader:
             mark = now
         if self._engine is None:
             from rapidocr_onnxruntime import RapidOCR
-            self._engine = RapidOCR(intra_op_num_threads=2, inter_op_num_threads=2)
+            self._engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
-            self._frame_ocr=DynamicOCR(self._engine) if self.cache_enabled else self._engine
+            if self.cache_enabled and self.page_ocr_enabled:
+                from .page_ocr import PageOCR
+                self._discovery_ocr=PageOCR(self._engine,reuse_text_rows=True,max_entries=256)
+            self._frame_ocr=DynamicOCR(self._engine,discovery_engine=self._discovery_ocr) if self.cache_enabled else self._engine
         elapsed('initialization')
-        if image is None or image.size == 0:
-            raise ValueError('没有有效画面。')
         image,viewport=prepare_frame(image,client_rect)
         elapsed('viewport')
         routing={'strategy':'full_discovery','candidates':[],'visual_ms':0.,
@@ -165,11 +167,27 @@ class ScreenReader:
         if page_batches:
             raw,_=self._page_ocr.read(image,regions=regions)
             if isinstance(self._frame_ocr,DynamicOCR):
-                # Never seed the legacy dirty-domain reader with another
-                # strategy's retained text. A later unknown page starts fresh.
-                self._frame_ocr.image=None;self._frame_ocr.raw=[]
-                self._frame_ocr.regions=None;self._frame_ocr.age=0
-                self._frame_ocr.metrics=dict(self._page_ocr.metrics)
+                # PageOCR has current full-frame detection and exact original
+                # recognition batches. Preserve that complete baseline when
+                # its pixel/geometry identity still matches this analysis
+                # frame; interpreted page facts are never carried forward.
+                from .page_ocr import frame_signature
+                metrics=self._page_ocr.metrics
+                complete=all(metrics.get(key) is True for key in
+                    ('full_frame_input','full_detection','full_text_coverage','complete_current_texts'))
+                seed_image=image.copy() if complete else None
+                signature=frame_signature(seed_image)
+                geometry=metrics.get('raw_frame_size')==[image.shape[1],image.shape[0]]
+                matches=getattr(self._page_ocr,'complete_frame_matches',None)
+                exact=callable(matches) and matches(seed_image) is True
+                if complete and signature is not None and geometry and exact and metrics.get('frame_signature')==signature:
+                    self._frame_ocr.seed_full_frame(seed_image,raw)
+                else:
+                    self._frame_ocr.image=None;self._frame_ocr.raw=[]
+                    self._frame_ocr.regions=None;self._frame_ocr.age=0
+                self._frame_ocr.metrics=dict(metrics)
+            release=getattr(self._page_ocr,'release_frame_snapshot',None)
+            if callable(release):release()
         elif isinstance(self._frame_ocr,DynamicOCR):
             raw,_=self._frame_ocr(image,regions=regions,seed_from_full=True,
                 force_discovery=force_discovery,guard_outside=regions is not None)
@@ -214,21 +232,21 @@ class ScreenReader:
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
+        known_nodes=node_names();stages_by_name={}
+        for identity,entry in catalog()['stages'].items():stages_by_name.setdefault(entry['name'],[]).append((identity,entry))
         nodes = []
         for record in texts:
             # This font repeatedly reads 戾 as 房 on captured maps. Preserve
             # raw OCR and only normalize the exact known placeholder spelling.
             label_text = {'未知的凶房': '未知的凶戾', '未知的诡利': '未知的诡秘'}.get(record['text'], record['text'])
-            for name in node_names():
-                if label_text == name and record['confidence'] >= .7:
-                    nodes.append({'type': name, 'box': record['box'], 'confidence': record['confidence'],
-                                  'hidden': name.startswith('未知'), 'prediction': None})
-                    break
+            if label_text in known_nodes and record['confidence'] >= .7:
+                nodes.append({'type': label_text, 'box': record['box'], 'confidence': record['confidence'],
+                              'hidden': label_text.startswith('未知'), 'prediction': None})
         stage = None
         for record in texts:
             if record['confidence'] < .8:
                 continue
-            matches = [(sid, s) for sid,s in catalog()['stages'].items() if s['name'] == record['text']]
+            matches = stages_by_name.get(record['text'],[])
             if matches:
                 sid, s = matches[0]
                 stage = {'id': sid if len(matches) == 1 else None, **s, 'confidence': record['confidence'],
@@ -266,6 +284,11 @@ class ScreenReader:
         elapsed('operator')
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context)
         elapsed('run')
+        from .player_shop_hover import shop_snapshot
+        shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
+        if shop:
+            run=run or {'page':'shop','operators':[],'relics':{'ids':[],'icons':[],'count':None,'source':'unread'}}
+            run['shop']=shop;page='shop'
         if run and run['page']=='run_roster':page='run_roster'
         elif run and any(t['text']=='收起' and t['confidence']>=.9 for t in texts):page='run_relics'
         content=read_node_content(image,texts,page,stage,nodes)
@@ -283,7 +306,7 @@ class ScreenReader:
             found=[]
             for t in refined:
                 name={'未知的凶房':'未知的凶戾','未知的诡利':'未知的诡秘'}.get(t['text'],t['text'])
-                if name in node_names() and t['confidence']>=.7:
+                if name in known_nodes and t['confidence']>=.7:
                     n={'type':name,'box':t['box'],'confidence':t['confidence'],
                        'hidden':name.startswith('未知'),'prediction':None}
                     if stage and detail:

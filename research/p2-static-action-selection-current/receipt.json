@@ -1,0 +1,159 @@
+{
+  "title": "首批三名当前默认外观与静态动作选择绑定",
+  "asset_baseline_version": "26-09-13-15-28-10-30688348",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "original_animation_source_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "proof_scope": "Static source default-skin/mode/action selection and an explicitly selected relative original-animation segment. No running client callback, first strike, activation, collision or end phase is asserted.",
+  "closed_selection_scopes": {
+    "mechanist": {
+      "normal": {
+        "mode_indices": [
+          0
+        ],
+        "reference_ids": [
+          "char_4230_mcnist:Front:Attack_A",
+          "char_4230_mcnist:Front:Attack_Down",
+          "char_4230_mcnist:Back:Attack_A"
+        ]
+      },
+      "1": {
+        "mode_indices": [
+          1
+        ],
+        "reference_ids": [
+          "char_4230_mcnist:Front:Skill_1",
+          "char_4230_mcnist:Front:Skill_Down_1",
+          "char_4230_mcnist:Back:Skill_1"
+        ]
+      },
+      "2": {
+        "mode_indices": [
+          2,
+          3
+        ],
+        "reference_ids": [
+          "char_4230_mcnist:Front:Skill_2_Loop",
+          "char_4230_mcnist:Front:Skill_Down_2_Loop",
+          "char_4230_mcnist:Back:Skill_2_Loop"
+        ]
+      },
+      "3": {
+        "mode_indices": [
+          4
+        ],
+        "reference_ids": [
+          "char_4230_mcnist:Front:Skill_3_Loop",
+          "char_4230_mcnist:Back:Skill_3_Loop"
+        ]
+      }
+    },
+    "kaltsit": {
+      "2": {
+        "mode_indices": [
+          4
+        ],
+        "reference_ids": [
+          "char_1052_kalts2:Front:Skill_2_Attack",
+          "char_1052_kalts2:Front:Skill_Down_2_Attack",
+          "char_1052_kalts2:Back:Skill_2_Attack"
+        ]
+      },
+      "3": {
+        "mode_indices": [
+          1
+        ],
+        "reference_ids": [
+          "char_1052_kalts2:Front:Skill_3_Attack",
+          "char_1052_kalts2:Front:Skill_Down_3_Attack",
+          "char_1052_kalts2:Back:Skill_3_Attack"
+        ]
+      }
+    },
+    "silverash": {
+      "3": {
+        "mode_indices": [
+          1
+        ],
+        "reference_ids": [
+          "char_1045_svash2:Front:Skill_3_Combat",
+          "char_1045_svash2:Back:Skill_3_Combat"
+        ]
+      }
+    }
+  },
+  "static_pointer_chain": [
+    "Current Character._modes[] -> exact UnitMode._attack/_combat PPtrs -> direct animated body or configured AbilitySelectableGroup children.",
+    "Current ability GetAnimKey uses default/down/up keys; current UnitAnimator obtains mode hooker and applies its actual replace/exclusion entries.",
+    "Silverash S3 raw Attack is hooked to Skill_3_Combat; Kaltsit transporting mode2 excludes its skill3 body animation and is not bound by this group.",
+    "Current defaultskin.prefab root -> uniquely hash-bound CharacterAnimator -> explicit Front/Back SkeletonAnimation -> SkeletonDataAsset -> binary TextAsset. All6 script SHA256 match their same-orientation pinned048 sources.",
+    "Current Unit vslot103=PlayAnimation and animated body vslot109=GetAnimKey establish the actual source dispatch; configured animation data is selected through current SpineAnimator.GetAnimationData."
+  ],
+  "loop_consumer_proof": {
+    "metadata_field": "Torappu.Battle.SpineAnimator.AnimationData.loop",
+    "offset": "0x20",
+    "read_instruction": "0x18060f49f movzx r9d, byte ptr [rbx+0x20]",
+    "call_instruction": "0x18060f4a9 call Spine.AnimationState.SetAnimation",
+    "play_animation_parameters": [
+      "data",
+      "forceFromStart",
+      "speed"
+    ],
+    "loop_override_parameter": false,
+    "scope_limit": "This verifies the pinned static native path, not active XLua overrides or runtime state. Source names containing Loop do not imply actual loop=true.",
+    "default_skin_context": "All three current _useNewSpineFormat=0, _spineSkins=[]; captured mix settings target Idle/Attack/Attack_Begin transitions, rather than the chosen skill-body keys. Actual end transitions remain unbound."
+  },
+  "event_clock_evidence": [
+    "Exact Easy/Ranged MoveNext bindings are resolved by declaring type + metadata_method_index + token instead of ambiguous short nested names.",
+    "SpineAnimator._OnEvent handles the OnAttack/OnAttackFinished names; EasyToStart waits for entity events and fixed-time fallback. These facts alone do not establish the frame phase.",
+    "SpineAnimator._TickSpineManually accumulates fixed-point delta and branches on RemoteConfig.spineTickInAdditionalFrame plus BattleController.isAdditionalFrame; SkeletonAnimation.Update then updates/applies AnimationState.",
+    "Raw OnAttack floats and the048 normalization/strict-ceil difference are retained. Preview frames are solely the already disclosed relative animation reference, never a measured callback frame."
+  ],
+  "implementation": [
+    "19 source-matched choices for mechanical normal/S1/S2/S3, Kaltsit S2/S3, Silverash S3; unrelated Attack variants are excluded for these mapped scopes.",
+    "Source-loop=0 entries named Loop and Silverash's one OnAttack plus effect-only named events can now be selected as statically matched animation segments, while original raw conventional-selectability records remain intact.",
+    "Explicit S2 body reference is actually routed into its existing manual-duration ordinary-attack subtotal; default/no-reference estimates remain unchanged and shield/end clocks stay unknown.",
+    "Reports and stream descriptors distinguish static_selection_verified from runtime_binding_verified=false; actual_callback_frames, actual_activation_phase_seconds and actual_end_seconds remain null.",
+    "Changed skeleton identity/config cannot inherit the proof; returned rows and binding metadata are independently copied."
+  ],
+  "limits": [
+    "Not a full client event scheduler; no client phase/FP accumulation/remote-config/hotfix assumptions added.",
+    "Defaultskin and listed static modes only; current live skin, caller mode/branch eligibility, XLua, attack/collision snapshots and runtime activation/end remain unverified.",
+    "Kaltsit normal/S1 ThreePartOneshotAnimation and Silverash ordinary A/B/C sequence retain their prior unresolved selection/lifecycle scope.",
+    "Unmapped operators retain their existing explicit reference choices. Source proof does not change any no-reference numeric default.",
+    "S2 manual duration stays a user condition and does not locate shield breaks or exhaustion; capacity/reload and actual end remain independent unknowns.",
+    "Necessary actual Windows selection-window verification is for root after serial integration; this agent did not open a live UI, game or chat."
+  ],
+  "acceptance": {
+    "tests_run": 42,
+    "passed": 42,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "selectors": [
+      "tests.test_static_action_selection_current",
+      "tests.test_original_animation_048",
+      "tests.test_shield_break_reference",
+      "tests.test_shield_timeline_131"
+    ],
+    "native_methods": 38,
+    "native_unique_instructions": 3718,
+    "all_bytes_rechecked": true,
+    "source_skeletons_exact_match": 6,
+    "static_reference_choices": 19,
+    "actual_UI_verified": false,
+    "last_invocation_correction": {
+      "failure": "One additional check was inadvertently launched from root cwd, where new isolated test module was absent:30 existing cases passed and1 import error. No tracked source was modified.",
+      "corrected_isolated_run": {
+        "tests": 42,
+        "passed": 42,
+        "errors": 0,
+        "failures": 0
+      },
+      "root_full200_first_pass_not_changed": true
+    }
+  },
+  "prior_failures_preserved": "Current bundle binary TextAsset script strings initially failed UTF8 in the old reader; per-asset failures retained in prefab-pointer-bindings.json and re-read exactly using the unchanged length/string alignment schema. Existing full200 maintenance and its initial six198 failures are separate and untouched. Full UnicodeDecodeError repr contains the original binary object, so public receipt stores its exact SHA256/length/classification rather than republishing the embedded binary payload; full first-reader error remains in ignored evidence snapshots.",
+  "public_primary_followup": "https://us.esotericsoftware.com/spine-applying-animations",
+  "public_documentation_scope": "General update/apply/event API only. Current4.x docs are not treated as proof of the game's3.8 tick phase; actual bindings above come from the pinned current original files."
+}

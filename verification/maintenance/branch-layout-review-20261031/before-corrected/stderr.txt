@@ -1,0 +1,49 @@
+test_larger_font_uses_current_metrics_and_still_shows_complete_category (tests.test_branch_layout_review.BranchLayoutReviewTests.test_larger_font_uses_current_metrics_and_still_shows_complete_category) ... FAIL
+test_narrow_window_wraps_controls_instead_of_forcing_long_item_width (tests.test_branch_layout_review.BranchLayoutReviewTests.test_narrow_window_wraps_controls_instead_of_forcing_long_item_width) ... FAIL
+test_real_player_battle_reader_retains_reward_source_across_resizing (tests.test_branch_layout_review.BranchLayoutReviewTests.test_real_player_battle_reader_retains_reward_source_across_resizing) ... FAIL
+test_refresh_after_reflow_preserves_branch_and_accurate_target (tests.test_branch_layout_review.BranchLayoutReviewTests.test_refresh_after_reflow_preserves_branch_and_accurate_target) ... ok
+test_wide_category_text_is_fully_readable_next_to_target (tests.test_branch_layout_review.BranchLayoutReviewTests.test_wide_category_text_is_fully_readable_next_to_target) ... FAIL
+test_wide_narrow_wide_roundtrip_preserves_selection_and_does_not_emit (tests.test_branch_layout_review.BranchLayoutReviewTests.test_wide_narrow_wide_roundtrip_preserves_selection_and_does_not_emit) ... ok
+
+======================================================================
+FAIL: test_larger_font_uses_current_metrics_and_still_shows_complete_category (tests.test_branch_layout_review.BranchLayoutReviewTests.test_larger_font_uses_current_metrics_and_still_shows_complete_category)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 68, in test_larger_font_uses_current_metrics_and_still_shows_complete_category
+    self.readable_label(control)
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 33, in readable_label
+    self.assertGreaterEqual(box.width(), control.branch.fontMetrics().horizontalAdvance(control.branch.currentText()))
+AssertionError: 92 not greater than or equal to 240
+
+======================================================================
+FAIL: test_narrow_window_wraps_controls_instead_of_forcing_long_item_width (tests.test_branch_layout_review.BranchLayoutReviewTests.test_narrow_window_wraps_controls_instead_of_forcing_long_item_width)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 43, in test_narrow_window_wraps_controls_instead_of_forcing_long_item_width
+    self.assertLessEqual(parent.width(), 350)
+AssertionError: 1417 not less than or equal to 350
+
+======================================================================
+FAIL: test_real_player_battle_reader_retains_reward_source_across_resizing (tests.test_branch_layout_review.BranchLayoutReviewTests.test_real_player_battle_reader_retains_reward_source_across_resizing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 99, in test_real_player_battle_reader_retains_reward_source_across_resizing
+    self.readable_label(rewards.choices)
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 33, in readable_label
+    self.assertGreaterEqual(box.width(), control.branch.fontMetrics().horizontalAdvance(control.branch.currentText()))
+AssertionError: 88 not greater than or equal to 120
+
+======================================================================
+FAIL: test_wide_category_text_is_fully_readable_next_to_target (tests.test_branch_layout_review.BranchLayoutReviewTests.test_wide_category_text_is_fully_readable_next_to_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 37, in test_wide_category_text_is_fully_readable_next_to_target
+    self.readable_label(control)
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_branch_layout_review.py", line 33, in readable_label
+    self.assertGreaterEqual(box.width(), control.branch.fontMetrics().horizontalAdvance(control.branch.currentText()))
+AssertionError: 102 not greater than or equal to 120
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.301s
+
+FAILED (failures=4)

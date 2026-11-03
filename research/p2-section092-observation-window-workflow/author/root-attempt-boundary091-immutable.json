@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "recorded_at": "2026-10-08T07:04:34.783727+00:00",
+  "scope": "future92 source preparation; not a completed section",
+  "original_source33_manifest_sha256": "fa7955a7b6114e4eb47ce2e87afc3c4f1451d832f102c1298fdb29fe40b1add1",
+  "original_candidate49_manifest_sha256": "285a6ae53be573b6323f3144fd2a9ed26237162abe211faff7b0a5a1b772fece",
+  "original_packets_unchanged": true,
+  "sequence": {
+    "fixed_Git_transport": {
+      "attempts": 2,
+      "failures": 1,
+      "completed_on": 2
+    },
+    "excerpt_capture": {
+      "attempts": 2,
+      "failures": 1,
+      "completed_on": 2
+    },
+    "partner_complete_source_binding": {
+      "attempt1": "known handoff read then guessed nonexistent freeze filename failed",
+      "attempt2": "found real freeze but guessed files schema failed",
+      "attempt3": "actual keys/real freeze read succeeded; complete reporting leaf binding still not complete",
+      "later_operation": "leaf binding succeeded after the third incomplete attempt; should have deferred the complete binding task first"
+    }
+  },
+  "observed_total_preparation_failures": 4,
+  "three_attempt_rule_counted_by_complete_goal_not_exception_name": true,
+  "deferred": "guessed partner-metadata discovery/binding workflow; no further retries",
+  "restart_conditions": [
+    "A new actual root91 commit/tag exists",
+    "Known explicit frozen paths and schema are supplied; no filename or field guessing",
+    "Independent root transport from that actual Git object proves the candidate old leaves exactly; this is new fixed-baseline evidence, not a fourth retry of the old helper"
+  ],
+  "product_calls": 0,
+  "tracked_mutations_from_this_record": 0,
+  "root91_ui_work_unaffected": true,
+  "no_claim_three_attempt_rule_was_fully_followed_in_old_preparation": true
+}

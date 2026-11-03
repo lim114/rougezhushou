@@ -1,0 +1,26 @@
+--- current109/rouge/app.py
++++ projected/rouge/app.py
+@@ -961,6 +961,13 @@
+         self.run.reset()
+         self.refresh_operator_overview()
+         self.observation=None
++        self.capture_operator_picture.set_subject(None,None,'')
++        replace_text(self.operator_summary,'本局已重置，等待新的干员页面读取；账号档案仍保留。',preserve=False)
++        self.preview.clear();self.preview.setText('本局尚未采样')
++        replace_text(self.observed_text,'',preserve=False)
++        self.capture_status.setText('已开始新局，等待新的页面采样；账号档案已保留。')
++        self.update_sampling_status()
++        self.target_stage.setToolTip('本局节点详情尚未确认；可手动选择关卡进行局外预览。')
+         self.map_frame=None
+         self.map_frames.clear()
+         self.last_observed_operator=None;self.last_observed_stage=None
+--- current/scripts/verify_full_available.py
++++ projected/scripts/verify_full_available.py
+@@ -17,6 +17,7 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ NEW_MODULES = (
++    'tests.test_new_run_capture_view_112',
+     'tests.test_s1_neural_boundary',
+     'tests.test_neural_incoming_clock',
+     'tests.test_charge_reference',

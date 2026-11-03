@@ -1,0 +1,45 @@
+{
+  "format_version": 1,
+  "phase": "aggregate",
+  "passed_prefix_states": 16,
+  "initial_actual_run_passed": false,
+  "initial_actual_failure_preserved": {
+    "type": "KeyError",
+    "message": "'id'",
+    "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1152, in <module>\n    if row['kind'] in ('train','deep'):train(row)\n                                       ^^^^^^^^^^\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1137, in train\n    window.update_operator(preserve_level=False)\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 848, in update_operator\n    self.update_skill_options()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 996, in update_skill_options\n    if hasattr(self,'raw_damage'):self.calculate()\n                                  ^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1020, in calculate\n    text=format_operator_observation(state,self.training_conditions())\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\operator_summary.py\", line 8, in format_operator_observation\n    profile=operator_profiles()[operator['id']]\n                                ~~~~~~~~^^^^^^\nKeyError: 'id'\n",
+    "step": "unimplemented-Lancet-no-skills-hidden-false"
+  },
+  "initial_main_thread_API_entries": 60,
+  "initial_API_returned_dict": 60,
+  "initial_explicit_text_requests": 48,
+  "initial_lossless": {
+    "file": "wine-focused-mainwindow-091-records.json.gz",
+    "records": 17,
+    "bytes": 97723,
+    "sha256": "b818640c119c187d0baab2380422ebfef321151e88f86a6bb34cf0768c58793c",
+    "decoded_bytes": 1252383,
+    "decoded_sha256": "fe19005a7d5f50ab32b526bb2faaf733c747cacdf38ad8f2fd874e421d921e6d"
+  },
+  "all730_maintained_sources_exact": true,
+  "new_project_calls": 0,
+  "native_windows_certified": false,
+  "complete_focused_acceptance_across_initial_prefix_and_resume": true,
+  "states": 24,
+  "numeric_states": 21,
+  "early_None_states": 3,
+  "explicit_texts": 63,
+  "warm_native_input_and_result_exact_original_passed": true,
+  "resume_receipt": "wine-focused-mainwindow-091-resume8-v2.json",
+  "resume_lossless": {
+    "file": "wine-focused-mainwindow-091-resume8-v2-records.json.gz",
+    "records": 8,
+    "bytes": 43301,
+    "sha256": "c107ae96486b859409c2cc76ec8e0296e5ac3540ec737bf8e9cbda0bcde2e5b4",
+    "decoded_bytes": 650252,
+    "decoded_sha256": "0c8d2e1eb29d9c80d44aebeeb5acd3518d96603e3c3c8f0c94e613a9d48b6c85"
+  },
+  "resume_main_thread_API_outcomes": {
+    "returned_dict": 41
+  },
+  "scope": "Two real isolated windows: original16 PASS plus restored remaining8, no rerun of16. Counts are actual main-thread entries; talent traces are action-level. Initial full-run failure is retained."
+}

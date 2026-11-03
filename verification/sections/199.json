@@ -1,0 +1,56 @@
+{
+  "section": 199,
+  "title": "事件资格三态、特定选项条件与准确固定作战入口",
+  "remaining_item": "节点事件与掉落：资格/特殊出现条件和事件通向作战的具名入口；未知入口仍保留",
+  "new_capability": "按明确的层数、节点类别、入口方式、完整/不完整持有、金锭及encountered/visited/entered状态将38组资料分三态；逐场景13作战引用条目恢复14精确关卡页面与全部原stage/level别名，显式紧急条件单独筛选，泛下一层池保留范围未知。",
+  "source_evidence": [
+    "固定事件DOM revision427904/hash faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9，全38/190/233逐序号/标题核对",
+    "固定原topic commit a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/hash f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86：choices无stageID/battleInfo，只按DOM链接code+name匹配全原关卡ID",
+    "本次直接在线读事件一览核对红苔前置、笼控器/金锭门槛和关卡链接仍保留；未把在线观察当固定解析新版本"
+  ],
+  "acceptance": [
+    "红苔前置遭遇未知/否/是三态；自然安眠被明确排除，文档仅说明M07不擅自排除其他未知途径",
+    "G12持有、gold>50严格边界与沙盘αβ或visited窥视箱中排除；encountered不冒充visited，不完整持有表缺项不冒充0",
+    "思乡心切→陌生旅伴ro6_t_1准确局部链接；黑诞三页六原ID保持同level别名；紧急鸭托邦仅preview候选e_t_3，未证普通选择仍保留两种难度",
+    "洞中宝主层next-floor固定池列具名候选，特殊区下一层不猜；来源过期/跨事件选项/非法布尔数拒绝；8项必要测试通过"
+  ],
+  "limitations": [
+    "matched仅已列资料条件相符；actual_server_eligible/actual_stage_id始终未知，natural资格未恢复的事件保持未知区。",
+    "当前帧身份由原node_dossier独立保留，不因旧目录矛盾删掉已读内容；未归类45场景/63选项的入口不冒充闭合。",
+    "未改变界面/本局状态；root负责按类型展开、地图绑定与实际窗口接入。"
+  ],
+  "files": [
+    "EVENT_QUALIFICATION.md",
+    "research/p3-event-qualification/source-receipt.json",
+    "rouge/data/event-planning-reference.json",
+    "rouge/event_planning.py",
+    "scripts/build_event_planning_reference.py",
+    "scripts/event_planning_cli.py",
+    "tests/test_event_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/event-conditions/section224.patch",
+  "test_selectors": [
+    "tests.test_event_planning.EventPlanningTests.test_qualification_predecessor_three_state_and_unknown_server",
+    "tests.test_event_planning.EventPlanningTests.test_special_entry_and_scope_never_confirms_generation",
+    "tests.test_event_planning.EventPlanningTests.test_owned_item_and_gold_strict_boundary",
+    "tests.test_event_planning.EventPlanningTests.test_pair_or_visit_exclusion_distinguishes_encountered_and_visited",
+    "tests.test_event_planning.EventPlanningTests.test_exact_choice_page_links_and_source_coverage",
+    "tests.test_event_planning.EventPlanningTests.test_emergency_filter_keeps_unproved_ordinary_variants",
+    "tests.test_event_planning.EventPlanningTests.test_event_pursuit_aliases_and_generic_next_floor_pool",
+    "tests.test_event_planning.EventPlanningTests.test_context_is_preserved_and_invalid_declarations_rejected"
+  ],
+  "initial_failure": "One test incorrectly expected full matched after explicit special condition succeeded although the source has unknown story floors. Corrected the test to retain overall unknown and independently assert the special-condition match; no model gap was hidden.",
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T08:04:14.654768+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 8,
+    "passed": 8,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-199/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

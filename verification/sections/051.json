@@ -1,0 +1,32 @@
+{
+  "section": 51,
+  "completion_ref": "p2-section-051",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T20:52:34.544231+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_training_input_types tests.test_damage tests.test_timing tests.test_run_config_validation tests.test_amiya_input_qualification tests.test_token_manual_attributes -q",
+      "run": 94,
+      "passed": 94,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 716,
+      "passed": 715,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 6,
+  "failed_attempts": 0,
+  "source_receipt": "research/p2-training-input-types/source-receipt.json",
+  "independent_review": "research/p2-training-input-types/independent-review.md",
+  "public_calculation_pairs": 4596,
+  "public_attribute_pairs": 678,
+  "fresh_root_verification": true,
+  "native_windows": false
+}

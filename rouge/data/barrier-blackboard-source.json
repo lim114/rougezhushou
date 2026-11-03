@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "asset_base_version": "26-09-13-15-28-10-30688348",
+  "native_proof": "research/p2-mechanist-grant-267/native-proof.json",
+  "native_proof_sha256": "c2fca4cd5a9908c16285ee85f40fe2009deaa6dc173e83cd716f7d658e34615b",
+  "fp_one_raw": 4294967296,
+  "rounding_modes_are_independent_declarations": [
+    "nearest_even",
+    "toward_zero",
+    "toward_positive",
+    "toward_negative"
+  ],
+  "nearest_even_maximum_safe_positive_raw_for_roundtrip": 9223371761976868863,
+  "methods": [
+    {
+      "index": 65277,
+      "name": "Torappu.Battle.Buff$$get_hasShield",
+      "address": "0x18068ec40",
+      "instructions": 27,
+      "reachable_bytes_sha256": "53c1029c2c25a9c82cf3ed01881d8623f34bce8e25378ca8ee6a0dd9cc5e209e"
+    },
+    {
+      "index": 95871,
+      "name": "AssignAttributeAsDynamicVarToBB$$Execute",
+      "address": "0x181008200",
+      "instructions": 112,
+      "reachable_bytes_sha256": "074b0daab3979c1407b08a75a03d0691d071a00832593441f895b37b011944c5"
+    },
+    {
+      "index": 220471,
+      "name": "Torappu.FP$$op_Multiply",
+      "address": "0x1866fb870",
+      "instructions": 14,
+      "reachable_bytes_sha256": "8e10bb76790cc868d550acd7ba4e71ccc5889052276e68f32e97617b0bd03cf8"
+    },
+    {
+      "index": 30809,
+      "name": "Torappu.Blackboard$$Assign",
+      "address": "0x18231e6d0",
+      "instructions": 94,
+      "reachable_bytes_sha256": "41523f4fc3bb83a10cc99c37f6b66fd1e2586e0dd9f101fb37e07ae019c5ff7b"
+    },
+    {
+      "index": 30811,
+      "name": "Torappu.Blackboard$$Assign",
+      "address": "0x18231e0b0",
+      "instructions": 44,
+      "reachable_bytes_sha256": "9165dfb5907e55601e462bd23ab6e09d86c8510ebc54f2410eea3caa1d398bd1"
+    },
+    {
+      "index": 30833,
+      "name": "Torappu.Blackboard$$GetFpOrDefault",
+      "address": "0x18231f530",
+      "instructions": 73,
+      "reachable_bytes_sha256": "e98b26daaa946eb1191e77c7706b542cc63b3d75e6af583d8afc44edb71c7b58"
+    },
+    {
+      "index": 30847,
+      "name": "Torappu.Blackboard$$_TryGetNumber",
+      "address": "0x182320780",
+      "instructions": 90,
+      "reachable_bytes_sha256": "004c4204ccc0ceddaa034b5df900603bad6110ac39f907e889e154cc470c30b5"
+    },
+    {
+      "index": 64276,
+      "name": "Torappu.Battle.Attributes$$GetValue",
+      "address": "0x1806499a0",
+      "instructions": 57,
+      "reachable_bytes_sha256": "37e2f07e8d486e627caf7ad81199fce73d183d34b55082e56dc938465053508a"
+    },
+    {
+      "index": 220498,
+      "name": "Torappu.FP$$op_Implicit",
+      "address": "0x1866fdad0",
+      "instructions": 3,
+      "reachable_bytes_sha256": "1d7260c4d6aeb1c9df8c17c4aa3474bf1756eef4bca74b2e55edab9130be0947"
+    },
+    {
+      "index": 220505,
+      "name": "Torappu.FP$$AsFloat",
+      "address": "0x1866fae20",
+      "instructions": 19,
+      "reachable_bytes_sha256": "6d1cd80c2df98757fb916550fc43698f05b59aa914f12bb7c776292b26c30332"
+    }
+  ],
+  "facts": [
+    "AssignAttributeAsDynamicVarToBB reads BUFF_OWNER Attributes.GetValue(MAX_HP) at node execution",
+    "hp_ratio GetFpOrDefault reads stored float32; explicitly failed numeric lookup defaults to ONE",
+    "FP positive non-overflow multiply floors product /2^32",
+    "Assign(FP) converts int64 to float32 then multiplies by2^-32, assigns float32 BB",
+    "GetFpOrDefault converts float32 times2^32 and truncates toward zero",
+    "No cap/clamp observed in this chain",
+    "Buff.hasShield getter is separate instance flag, not dynamic amount"
+  ],
+  "actual_creation_or_current_hotfix_or_MXCSR_proven": false
+}

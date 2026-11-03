@@ -1,0 +1,63 @@
+test_atlas_reuses_original_grid_and_has_every_exact_reference_without_selecting_one (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_atlas_reuses_original_grid_and_has_every_exact_reference_without_selecting_one) ... ok
+test_branch_filters_and_two_way_selection_share_exact_identity_and_original_text (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_branch_filters_and_two_way_selection_share_exact_identity_and_original_text) ... FAIL
+test_missing_source_clears_atlas_and_restoration_does_not_reselect_old_enemy (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_missing_source_clears_atlas_and_restoration_does_not_reselect_old_enemy) ... ok
+test_rebuilding_grid_reuses_verified_icons_without_rereading_image_source (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_rebuilding_grid_reuses_verified_icons_without_rereading_image_source) ... ok
+test_same_name_distinct_reference_keys_are_not_merged (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_same_name_distinct_reference_keys_are_not_merged) ... ok
+test_same_source_refresh_preserves_branch_selection_and_collapsed_state (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_same_source_refresh_preserves_branch_selection_and_collapsed_state) ... ok
+test_search_empty_result_clears_previous_selection_without_guessing_an_enemy (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_search_empty_result_clears_previous_selection_without_guessing_an_enemy) ... ok
+test_shared_tile_uses_full_grid_width_and_selected_body_retains_reading_space (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_shared_tile_uses_full_grid_width_and_selected_body_retains_reading_space) ... ok
+test_changed_new_stage_or_core_attribute_cannot_borrow_legacy_numbers (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_changed_new_stage_or_core_attribute_cannot_borrow_legacy_numbers) ... ok
+test_current_unknown_tier_cannot_borrow_old_normal_classification (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_current_unknown_tier_cannot_borrow_old_normal_classification) ... ok
+test_difficulty_source_change_blocks_reuse_and_inputs_are_not_mutated (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_difficulty_source_change_blocks_reuse_and_inputs_are_not_mutated) ... ok
+test_historical_reader_does_not_import_current_run_conditions (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_historical_reader_does_not_import_current_run_conditions) ... ok
+test_internal_script_identifiers_stay_out_of_player_notes (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_internal_script_identifiers_stay_out_of_player_notes) ... ok
+test_large_numbers_are_plain_and_optional_gallery_is_closed_by_default (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_large_numbers_are_plain_and_optional_gallery_is_closed_by_default) ... ok
+test_low_grades_are_exclusive_and_zone_growth_changes_only_the_subtotal (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_low_grades_are_exclusive_and_zone_growth_changes_only_the_subtotal) ... ok
+test_qualified_four_attributes_use_existing_model_and_keep_full_total_unknown (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_qualified_four_attributes_use_existing_model_and_keep_full_total_unknown) ... ok
+test_source_loss_clears_subtotals_and_recovery_uses_current_conditions (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_source_loss_clears_subtotals_and_recovery_uses_current_conditions) ... ok
+test_table_numbers_change_without_resetting_branch_fold_or_selected_enemy (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_table_numbers_change_without_resetting_branch_fold_or_selected_enemy) ... ok
+test_unknown_grade_new_grade_and_missing_depth_retain_their_uncertainty (tests.test_current_enemy_forecast_review.CurrentEnemyForecastReviewTests.test_unknown_grade_new_grade_and_missing_depth_retain_their_uncertainty) ... ok
+
+======================================================================
+FAIL: test_branch_filters_and_two_way_selection_share_exact_identity_and_original_text (tests.test_enemy_atlas_review.EnemyAtlasReviewTests.test_branch_filters_and_two_way_selection_share_exact_identity_and_original_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_enemy_atlas_review.py", line 36, in test_branch_filters_and_two_way_selection_share_exact_identity_and_original_text
+    self.assertEqual(p.enemy_player.toPlainText(),model.enemy_text(next(e for e in p.result['enemies']if e['key']==key)))
+AssertionError: '颂水贤者 · 普通\n\n【预计面板】\n预计面板：待补齐当前版本修正。\n\n【行动与攻击方式】\n行动方式：地面行动\n[191 chars]一段距离' != '颂水贤者 · 普通\n\n【预计面板】\n生命值、攻击力、防御、法抗：未知。当前版本的关卡、保密等级和技能修正尚未完整迁移，[394 chars]局数值。'
+  颂水贤者 · 普通
+  
+  【预计面板】
+- 预计面板：待补齐当前版本修正。
++ 生命值、攻击力、防御、法抗：未知。当前版本的关卡、保密等级和技能修正尚未完整迁移，不以白值替代。
+  
+  【行动与攻击方式】
+  行动方式：地面行动
+  普通攻击途径：远程
+  图鉴攻击类型：法术伤害
+- 阻挡与特殊行动见下方机制。
++ 地面或飞行是资料中的行动方式，不能单凭它判断当前能否阻挡；变形、浮空及技能效果请结合下方机制。
+  
+  【漏敌与敌人数】
+  抵达终点的原设置：扣除1点目标生命。
+- 以下为基础配置；本局保护效果另计。
++ 这是抵达自身路径终点的配置，不代表被击倒时的效果；本局保护、特殊退场和其它修正后的实际扣点仍需核对。
+  
+  【控制效果的原始设置】
+  明确未设置这项免疫：晕眩、沉默、沉睡、冻结、浮空、恐惧、麻痹、诱导。
+- 阶段、技能与特殊免疫见下方机制。
++ 这里只说明固定配置；未设置免疫不等于当前一定能控制，阶段、技能及其它效果仍可能阻止控制。
+  
+  【介绍与机制】
+  攻击额外造成狂躁损伤
+  受到攻击时向后传送一段距离
++ 
++ 【适用提醒】
++ 这是关卡候选引用，不证明每次都会出现；同一名字不同引用等级保留为不同资料。
++ 图鉴说明不覆盖全部关卡脚本、当前阶段和本局数值。
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 11.833s
+
+FAILED (failures=1)

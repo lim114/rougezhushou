@@ -1,0 +1,822 @@
+{
+  "schema": "current_scout_342_v1",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "event": {
+    "id": "scout",
+    "title": "未涉足之树",
+    "entry_scene_id": "scene_ro6_scout_enter",
+    "scene_ids": [
+      "scene_ro6_scout_enter",
+      "scene_ro6_scout_2",
+      "scene_ro6_scout_3",
+      "scene_ro6_scout_1"
+    ],
+    "choice_ids": [
+      "choice_ro6_scout_1",
+      "choice_ro6_scout_3",
+      "choice_ro6_scout_4",
+      "choice_ro6_scout_2"
+    ]
+  },
+  "scenes": {
+    "scene_ro6_scout_enter": {
+      "id": "scene_ro6_scout_enter",
+      "choice_ids": [
+        "choice_ro6_scout_1",
+        "choice_ro6_scout_3",
+        "choice_ro6_scout_2"
+      ],
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 1,
+        "cell": 0,
+        "cell_text_sha256": "863fad7a4b605e0747e609d198c9864ef679f457922228296e5429fa3205ff84"
+      }
+    },
+    "scene_ro6_scout_2": {
+      "id": "scene_ro6_scout_2",
+      "choice_ids": [],
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 3,
+        "cell": 0,
+        "cell_text_sha256": "5f370588111be16d5401b7227170227fd9ca2dd4dc7188fc25cc3b099e59f821"
+      }
+    },
+    "scene_ro6_scout_3": {
+      "id": "scene_ro6_scout_3",
+      "choice_ids": [
+        "choice_ro6_scout_4"
+      ],
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 5,
+        "cell": 0,
+        "cell_text_sha256": "64a198e918249af49d1506bd3b4a1d2edb5efb65cd68de367b7c117cbe2b84cd"
+      }
+    },
+    "scene_ro6_scout_1": {
+      "id": "scene_ro6_scout_1",
+      "choice_ids": [],
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 8,
+        "cell": 0,
+        "cell_text_sha256": "87bf7bf9dbd5948d6fb8c719f88ddccd6eae1f4e738d78d7c50011adccaa3222"
+      }
+    }
+  },
+  "choices": {
+    "choice_ro6_scout_1": {
+      "id": "choice_ro6_scout_1",
+      "title": "尝试探索树的内部",
+      "description": "派一名同伴进入",
+      "scene_id": "scene_ro6_scout_enter",
+      "role": "inside",
+      "next_scene_id": "scene_ro6_scout_2",
+      "stage_ids": [],
+      "hope_reference": null,
+      "effect_phase_reference": "on_return",
+      "actual_received": null,
+      "actual_selectable": null,
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 2,
+        "cell": 2,
+        "cell_text_sha256": "acdbd965c48c7e8571b2e075d1320449ac78dd5fdfab8ded20ee3950ec8ec82f"
+      }
+    },
+    "choice_ro6_scout_3": {
+      "id": "choice_ro6_scout_3",
+      "title": "尝试探索树的源头",
+      "description": "派一名同伴探索",
+      "scene_id": "scene_ro6_scout_enter",
+      "role": "origin",
+      "next_scene_id": "scene_ro6_scout_3",
+      "stage_ids": [],
+      "hope_reference": null,
+      "effect_phase_reference": "on_return",
+      "actual_received": null,
+      "actual_selectable": null,
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 4,
+        "cell": 1,
+        "cell_text_sha256": "1637dbae507c4dc5978a9c9d077dacfc0d993e01a9572d6278562f082c06373b"
+      }
+    },
+    "choice_ro6_scout_4": {
+      "id": "choice_ro6_scout_4",
+      "title": "你们约好了会合的地点",
+      "description": "或许会有意想不到的发现",
+      "scene_id": "scene_ro6_scout_3",
+      "role": "confirm",
+      "next_scene_id": null,
+      "stage_ids": [],
+      "hope_reference": null,
+      "effect_phase_reference": "confirmation_only",
+      "actual_received": null,
+      "actual_selectable": null,
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 6,
+        "cell": 0,
+        "cell_text_sha256": "f56af2e4eeffc8dd43b5d6dca699d2926368536e7c068113ada572b032c08033"
+      }
+    },
+    "choice_ro6_scout_2": {
+      "id": "choice_ro6_scout_2",
+      "title": "休息",
+      "description": "获得<@ro6.get>2</>希望，在此处养精蓄锐",
+      "scene_id": "scene_ro6_scout_enter",
+      "role": "rest",
+      "next_scene_id": "scene_ro6_scout_1",
+      "stage_ids": [],
+      "hope_reference": 2,
+      "effect_phase_reference": "on_choice",
+      "actual_received": null,
+      "actual_selectable": null,
+      "source": {
+        "file": "research/p3-current-scout-342/documented-section.html",
+        "row": 7,
+        "cell": 1,
+        "cell_text_sha256": "1adcf65a5b5973e587444af09cbe3f91092ea8f6a28361da8164d70f0c622ce4"
+      }
+    }
+  },
+  "originals": {
+    "scenes": {
+      "scene_ro6_scout_enter": {
+        "id": "scene_ro6_scout_enter",
+        "title": "未涉足之树",
+        "description": "你从未见过生长到这个高度的树，一眼望不到树顶。它是何时开始生长于此处？如果抵达它的树冠，是否能离开这片树海？你围着树转了一圈，发现树皮表面有着奇特的人工纹路，暖光从树皮的缝隙中渗出来，勾勒出一扇门的形状。这里也许有出路，但仍需谨慎。",
+        "background": "pic_rogue_6_22",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_scout_2": {
+        "id": "scene_ro6_scout_2",
+        "title": "未涉足之树",
+        "description": "树干上出现了一个像门一样的缺口，看上去像是一座......电梯？你的同伴出发了，你好奇地在树下等待，希望得知电梯会到达哪里。",
+        "background": "pic_rogue_6_22",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_scout_3": {
+        "id": "scene_ro6_scout_3",
+        "title": "未涉足之树",
+        "description": "树干上的纹理看上去像是某种奇妙的电路图，它们似乎通向大树的核心处。你的同伴出发了，它沿着那些奇妙的纹路追踪，说不定能够找到这个电梯装置的设计者，弄明白那家伙的意图。",
+        "background": "pic_rogue_6_22",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_scout_1": {
+        "id": "scene_ro6_scout_1",
+        "title": "未涉足之树",
+        "description": "你决定先不去探察，至少这里温暖又安全，在休息一会儿后便离开了。",
+        "background": "pic_rogue_6_22",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      }
+    },
+    "choices": {
+      "choice_ro6_scout_1": {
+        "id": "choice_ro6_scout_1",
+        "title": "尝试探索树的内部",
+        "description": "派一名同伴进入",
+        "lockedCoverDesc": null,
+        "type": "EXPEDITION",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_scout_2",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "EXPEDITION",
+          "funcIconId": "adventure",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_scout_3": {
+        "id": "choice_ro6_scout_3",
+        "title": "尝试探索树的源头",
+        "description": "派一名同伴探索",
+        "lockedCoverDesc": null,
+        "type": "EXPEDITION",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_scout_3",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "EXPEDITION",
+          "funcIconId": "adventure",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_scout_4": {
+        "id": "choice_ro6_scout_4",
+        "title": "你们约好了会合的地点",
+        "description": "或许会有意想不到的发现",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": "rogue_6_hp",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_scout_2": {
+        "id": "choice_ro6_scout_2",
+        "title": "休息",
+        "description": "获得<@ro6.get>2</>希望，在此处养精蓄锐",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_scout_1",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "population",
+          "itemId": "rogue_6_population",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      }
+    },
+    "items": {
+      "rogue_6_relic_final_3": {
+        "id": "rogue_6_relic_final_3",
+        "name": "怦然信标",
+        "description": "一颗被时刻监测着的心脏，似乎正在夺走你的力量。调整至某个方向后，它微弱地跳动了起来。",
+        "usage": "所有敌人的生命+20%，我方单位的生命-40%，让探索开启不同的方向",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_relic_final_3",
+        "itemIconGroupId": null,
+        "type": "RELIC",
+        "subType": "NONE",
+        "rarity": "SUPER_RARE",
+        "sortId": 999,
+        "canSacrifice": false,
+        "tinyIconColor": null,
+        "unlockCondDesc": "完成游戏结局",
+        "shortUsage": null
+      }
+    },
+    "stages": {}
+  },
+  "current_game_const": {
+    "charSelectExpeditionConflictToast": "该干员已深入树海展开先行探索，不可编入队伍",
+    "expeditionSelectDescFormat": "干员{0}将会在本区域探索结束后归来，并带回一些物资。",
+    "expedEndingRelic": "rogue_6_relic_final_3",
+    "expedEndingRelicDesc": "干员{0}发现了【怦然信标】，信标似乎对某个方位反应十分强烈"
+  },
+  "documented_return_references": {
+    "choice_ro6_scout_1": {
+      "reference_id": "community_group_024:scene:0:choice:0:expedition-result",
+      "event_id": "community_group_024",
+      "scene_key": "community_group_024:scene:0",
+      "choice_key": "community_group_024:scene:0:choice:0",
+      "original_choice_id": "choice_ro6_scout_1",
+      "choice_title": "尝试探索树的内部",
+      "choice_description": "派一名同伴进入",
+      "is_actual_button_reference": true,
+      "reference_kind": "expedition_choice_result",
+      "effect_phase_reference": "on_return",
+      "dispatch_reference": {
+        "operator_count_reference": 1,
+        "temporarily_unavailable_for_squad": true,
+        "native_return_wordings": [
+          "干员{0}将会在本区域探索结束后归来，并带回一些物资。",
+          "干员{0}将会在进入新区域时归来，并带回一些物资。"
+        ],
+        "native_unavailable_wording": "该干员已深入树海展开先行探索，不可编入队伍",
+        "community_return_when": "下一层开始时",
+        "special_region_equivalence": null,
+        "actual_operator": null,
+        "actual_unavailable": null,
+        "actual_returned": null,
+        "actual_return_clock": null
+      },
+      "immediate_resource_references": [],
+      "return_resource_references": [],
+      "documented_return_item": null,
+      "promotion_reference": null,
+      "complete_return_rewards_known": false,
+      "beak_reference": {
+        "source_text": "在点亮【生命游戏】的“喙”节点后，干员归来时还可获得随机加工品。",
+        "applies_to_root_branch": null,
+        "current_technology_active": null,
+        "quantity_reference": null,
+        "complete_item_pool": null,
+        "notice": "资料另记“喙”使归来时额外获得随机加工品；与源头“仅获得”的关系尚未核验，不额外加算。"
+      },
+      "explanatory_choice_key": null,
+      "return_explanation": null,
+      "actual_dispatched_operator": null,
+      "actual_returned": null,
+      "actual_reward": null,
+      "actual_quantity": null,
+      "actual_advanced": null,
+      "actual_return_clock": null,
+      "actual_selectable": null
+    },
+    "choice_ro6_scout_3": {
+      "reference_id": "community_group_024:scene:0:choice:1:expedition-result",
+      "event_id": "community_group_024",
+      "scene_key": "community_group_024:scene:0",
+      "choice_key": "community_group_024:scene:0:choice:1",
+      "original_choice_id": "choice_ro6_scout_3",
+      "choice_title": "尝试探索树的源头",
+      "choice_description": "派一名同伴探索",
+      "is_actual_button_reference": true,
+      "reference_kind": "expedition_choice_result",
+      "effect_phase_reference": "on_return",
+      "dispatch_reference": {
+        "operator_count_reference": 1,
+        "temporarily_unavailable_for_squad": true,
+        "native_return_wordings": [
+          "干员{0}将会在本区域探索结束后归来，并带回一些物资。",
+          "干员{0}将会在进入新区域时归来，并带回一些物资。"
+        ],
+        "native_unavailable_wording": "该干员已深入树海展开先行探索，不可编入队伍",
+        "community_return_when": "下一层开始时",
+        "special_region_equivalence": null,
+        "actual_operator": null,
+        "actual_unavailable": null,
+        "actual_returned": null,
+        "actual_return_clock": null
+      },
+      "immediate_resource_references": [],
+      "return_resource_references": [
+        {
+          "resource": "hope",
+          "quantity_reference": 2
+        }
+      ],
+      "documented_return_item": {
+        "item_id": "rogue_6_relic_final_3",
+        "name": "怦然信标",
+        "quantity_reference": null,
+        "effect_phase_reference": "on_return",
+        "original_pointer_field": "gameConst.expedEndingRelic"
+      },
+      "promotion_reference": false,
+      "complete_return_rewards_known": false,
+      "beak_reference": {
+        "source_text": "在点亮【生命游戏】的“喙”节点后，干员归来时还可获得随机加工品。",
+        "applies_to_root_branch": null,
+        "current_technology_active": null,
+        "quantity_reference": null,
+        "complete_item_pool": null,
+        "notice": "资料另记“喙”使归来时额外获得随机加工品；与源头“仅获得”的关系尚未核验，不额外加算。"
+      },
+      "explanatory_choice_key": "community_group_024:scene:2:choice:1",
+      "return_explanation": "通过此方式送出的干员不会被进阶。回归时，仅获得2希望与收藏品 \nNo.227 怦然信标",
+      "actual_dispatched_operator": null,
+      "actual_returned": null,
+      "actual_reward": null,
+      "actual_quantity": null,
+      "actual_advanced": null,
+      "actual_return_clock": null,
+      "actual_selectable": null
+    },
+    "choice_ro6_scout_2": {
+      "reference_id": "community_group_024:scene:0:choice:2:expedition-result",
+      "event_id": "community_group_024",
+      "scene_key": "community_group_024:scene:0",
+      "choice_key": "community_group_024:scene:0:choice:2",
+      "original_choice_id": "choice_ro6_scout_2",
+      "choice_title": "休息",
+      "choice_description": "获得2希望，在此处养精蓄锐",
+      "is_actual_button_reference": true,
+      "reference_kind": "expedition_choice_result",
+      "effect_phase_reference": "on_choice",
+      "dispatch_reference": null,
+      "immediate_resource_references": [
+        {
+          "resource": "hope",
+          "quantity_reference": 2
+        }
+      ],
+      "return_resource_references": [],
+      "documented_return_item": null,
+      "promotion_reference": null,
+      "complete_return_rewards_known": false,
+      "beak_reference": null,
+      "explanatory_choice_key": null,
+      "return_explanation": null,
+      "actual_dispatched_operator": null,
+      "actual_returned": null,
+      "actual_reward": null,
+      "actual_quantity": null,
+      "actual_advanced": null,
+      "actual_return_clock": null,
+      "actual_selectable": null
+    }
+  },
+  "return_explanation": {
+    "reference_id": "community_group_024:scene:2:choice:1:return-explanation",
+    "event_id": "community_group_024",
+    "scene_key": "community_group_024:scene:2",
+    "choice_key": "community_group_024:scene:2:choice:1",
+    "description": "通过此方式送出的干员不会被进阶。回归时，仅获得2希望与收藏品 \nNo.227 怦然信标",
+    "presentation_role": "explanatory_text",
+    "game_choice_ids": [],
+    "is_actual_button": false,
+    "reference_kind": "expedition_return_explanation",
+    "effect_phase": "on_return",
+    "source_dispatch_choice_key": "community_group_024:scene:0:choice:1",
+    "return_resource_references": [
+      {
+        "resource": "hope",
+        "quantity_reference": 2
+      }
+    ],
+    "documented_return_item": {
+      "item_id": "rogue_6_relic_final_3",
+      "name": "怦然信标",
+      "quantity_reference": null,
+      "effect_phase_reference": "on_return",
+      "original_pointer_field": "gameConst.expedEndingRelic"
+    },
+    "actual_reward": null,
+    "actual_quantity": null,
+    "actual_selectable": null,
+    "actual_returned": null,
+    "actual_advanced": null
+  },
+  "icon_reference": {
+    "item_id": "rogue_6_relic_final_3",
+    "icon_id": "rogue_6_relic_final_3",
+    "file": "rouge/data/relic-icons/rogue_6_relic_final_3.png",
+    "sha256": "7d6ba9f10f8b19d4442b224c2f59e4a60bcc4da8e58689ebcf2239e5e9e7542e",
+    "bytes": 28785,
+    "source": {
+      "id": "rogue_6_relic_final_3",
+      "file": "relic-icons/rogue_6_relic_final_3.png",
+      "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/rogueitem/rogue_6_relic_final_3.png",
+      "git_blob_sha1": "dd45ebe3386d5556799ac62b603d0a8f141e3f09",
+      "sha256": "7d6ba9f10f8b19d4442b224c2f59e4a60bcc4da8e58689ebcf2239e5e9e7542e"
+    },
+    "repository": "fexli/ArknightsResource",
+    "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd"
+  },
+  "complete_document_table": true,
+  "complete_game_option_pool": false,
+  "actual_eligible": null,
+  "actual_returned": null,
+  "run_updated": false,
+  "source": {
+    "section": 342,
+    "revision": 352356,
+    "url": "https://wiki.biligame.com/arknights/沉沦者的黑流树海/调查记录",
+    "reused_actual_download": "research/p3-document-flows-321/source-receipt.json",
+    "original_download_sha256": "e64fc0aac0c092de0ca885f6c77555e0ef035d4c556a3e134a4291845659956e",
+    "original_download_bytes": 261190,
+    "selected_file": "research/p3-current-scout-342/documented-section.html",
+    "selected_sha256": "baf5026cd7ca463699e7f2bc00dc3d679b2dffda48b6c80496fa2ba4bc71ec97",
+    "selected_bytes": 2675,
+    "original_parse_text_character_span": [
+      8085,
+      9992
+    ],
+    "whole_heading_and_complete_table_retained": true,
+    "fresh_web_text_rechecked": true,
+    "fresh_HTML_download_claimed": false,
+    "current_server_validation_claimed": false
+  },
+  "catalogue_binding": {
+    "expected_legacy_event": {
+      "id": "community_group_024",
+      "title": "未涉足之树",
+      "node_types": [
+        "先行一步"
+      ],
+      "floors": null,
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_024:scene:0"
+      ],
+      "source_group_id": "community_group_024",
+      "scenes": [
+        {
+          "key": "community_group_024:scene:0",
+          "game_scene_ids": [
+            "scene_ro6_scout_enter"
+          ],
+          "description": "你从未见过生长到这个高度的树，一眼望不到树顶。它是何时开始生长于此处？如果抵达它的树冠，是否能离开这片树海？你围着树转了一圈，发现树皮表面有着奇特的人工纹路，暖光从树皮的缝隙中渗出来，勾勒出一扇门的形状。这里也许有出路，但仍需谨慎。",
+          "attributes": {
+            "class": "scene",
+            "data-etype": "先行一步",
+            "id": "先行一步",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_22",
+            "data-name": "未涉足之树",
+            "data-ename": "",
+            "data-index": "130",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_024:scene:0:choice:0",
+              "title": "尝试探索树的内部",
+              "description": "派一名同伴进入",
+              "destination_keys": [
+                "community_group_024:scene:1"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_scout_1"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "尝试探索树的内部",
+                "data-icon": "adventure",
+                "data-dest": "1",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_024:scene:0:choice:1",
+              "title": "尝试探索树的源头",
+              "description": "派一名同伴探索",
+              "destination_keys": [
+                "community_group_024:scene:2"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_scout_3"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "尝试探索树的源头",
+                "data-icon": "adventure",
+                "data-dest": "2",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_024:scene:0:choice:2",
+              "title": "休息",
+              "description": "获得2希望，在此处养精蓄锐",
+              "destination_keys": [
+                "community_group_024:scene:3"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_scout_2"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "休息",
+                "data-icon": "population",
+                "data-dest": "3",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_024:scene:1",
+          "game_scene_ids": [
+            "scene_ro6_scout_2"
+          ],
+          "description": "树干上出现了一个像门一样的缺口，看上去像是一座……电梯？你的同伴出发了，你好奇地在树下等待，希望得知电梯会到达哪里。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "探索内部",
+            "data-image": "Avg_pic_rogue_6_22",
+            "data-name": "未涉足之树",
+            "data-ename": "",
+            "data-index": "131",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        },
+        {
+          "key": "community_group_024:scene:2",
+          "game_scene_ids": [
+            "scene_ro6_scout_3"
+          ],
+          "description": "树干上的纹理看上去像是某种奇妙的电路图，它们似乎通向大树的核心处。你的同伴出发了，它沿着那些奇妙的纹路追踪，说不定能够找到这个电梯装置的设计者，弄明白那家伙的意图。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "探索源头",
+            "data-image": "Avg_pic_rogue_6_22",
+            "data-name": "未涉足之树",
+            "data-ename": "",
+            "data-index": "132",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_024:scene:2:choice:0",
+              "title": "你们约好了会合的地点",
+              "description": "或许会有意想不到的发现",
+              "destination_keys": [],
+              "game_choice_ids": [
+                "choice_ro6_scout_4"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "你们约好了会合的地点",
+                "data-icon": "leave",
+                "data-dest": "",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "no_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_024:scene:2:choice:1",
+              "title": "",
+              "description": "通过此方式送出的干员不会被进阶。回归时，仅获得2希望与收藏品 \nNo.227 怦然信标",
+              "destination_keys": [],
+              "game_choice_ids": [],
+              "source_type": "desc",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "desc",
+                "data-title": "",
+                "data-icon": "",
+                "data-dest": "",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "explanatory_text",
+              "destination_status": "no_navigation",
+              "game_match_basis": null,
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_024:scene:3",
+          "game_scene_ids": [
+            "scene_ro6_scout_1"
+          ],
+          "description": "你决定先不去探察，至少这里温暖又安全，在休息一会儿后便离开了。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "结束",
+            "data-image": "Avg_pic_rogue_6_22",
+            "data-name": "未涉足之树",
+            "data-ename": "",
+            "data-index": "133",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        }
+      ]
+    },
+    "expected_summary": {
+      "id": "community_group_024",
+      "title": "未涉足之树",
+      "node_types": [
+        "先行一步"
+      ],
+      "floors": null,
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_024:scene:0"
+      ]
+    },
+    "exact_scene_links": [
+      {
+        "legacy_scene_key": "community_group_024:scene:0",
+        "current_original_scene_id": "scene_ro6_scout_enter",
+        "legacy_complete_description": "你从未见过生长到这个高度的树，一眼望不到树顶。它是何时开始生长于此处？如果抵达它的树冠，是否能离开这片树海？你围着树转了一圈，发现树皮表面有着奇特的人工纹路，暖光从树皮的缝隙中渗出来，勾勒出一扇门的形状。这里也许有出路，但仍需谨慎。",
+        "current_complete_description": "你从未见过生长到这个高度的树，一眼望不到树顶。它是何时开始生长于此处？如果抵达它的树冠，是否能离开这片树海？你围着树转了一圈，发现树皮表面有着奇特的人工纹路，暖光从树皮的缝隙中渗出来，勾勒出一扇门的形状。这里也许有出路，但仍需谨慎。"
+      },
+      {
+        "legacy_scene_key": "community_group_024:scene:1",
+        "current_original_scene_id": "scene_ro6_scout_2",
+        "legacy_complete_description": "树干上出现了一个像门一样的缺口，看上去像是一座……电梯？你的同伴出发了，你好奇地在树下等待，希望得知电梯会到达哪里。",
+        "current_complete_description": "树干上出现了一个像门一样的缺口，看上去像是一座......电梯？你的同伴出发了，你好奇地在树下等待，希望得知电梯会到达哪里。"
+      },
+      {
+        "legacy_scene_key": "community_group_024:scene:2",
+        "current_original_scene_id": "scene_ro6_scout_3",
+        "legacy_complete_description": "树干上的纹理看上去像是某种奇妙的电路图，它们似乎通向大树的核心处。你的同伴出发了，它沿着那些奇妙的纹路追踪，说不定能够找到这个电梯装置的设计者，弄明白那家伙的意图。",
+        "current_complete_description": "树干上的纹理看上去像是某种奇妙的电路图，它们似乎通向大树的核心处。你的同伴出发了，它沿着那些奇妙的纹路追踪，说不定能够找到这个电梯装置的设计者，弄明白那家伙的意图。"
+      },
+      {
+        "legacy_scene_key": "community_group_024:scene:3",
+        "current_original_scene_id": "scene_ro6_scout_1",
+        "legacy_complete_description": "你决定先不去探察，至少这里温暖又安全，在休息一会儿后便离开了。",
+        "current_complete_description": "你决定先不去探察，至少这里温暖又安全，在休息一会儿后便离开了。"
+      }
+    ],
+    "current_event_id": "scout"
+  },
+  "complete_selected_record_comparison_to_baseline": {
+    "scenes": {
+      "scene_ro6_scout_enter": true,
+      "scene_ro6_scout_2": true,
+      "scene_ro6_scout_3": true,
+      "scene_ro6_scout_1": true
+    },
+    "choices": {
+      "choice_ro6_scout_1": true,
+      "choice_ro6_scout_3": true,
+      "choice_ro6_scout_4": true,
+      "choice_ro6_scout_2": true
+    },
+    "items": {
+      "rogue_6_relic_final_3": true
+    },
+    "stages": {}
+  },
+  "documented_conditions": {
+    "source": "research/p3-expedition-results-297/prts-main-433770.html",
+    "origin_prerequisite_quote": "完成游戏结局【强制重启】，解锁本结局的相关选项和收藏品。",
+    "origin_floor_and_dispatch_quote": "于第Ⅱ层到第IV层进入【先行一步】，选择【尝试探索树的源头】，并送出一名干员。",
+    "node_excluded_floors_quote": "※该节点不会在第I，V，VI层出现。",
+    "documented_regular_floors": [
+      2,
+      3,
+      4
+    ],
+    "origin_requires_first_ending_reference": true,
+    "actual_account_unlocked": null,
+    "complete_server_eligibility_known": false
+  }
+}

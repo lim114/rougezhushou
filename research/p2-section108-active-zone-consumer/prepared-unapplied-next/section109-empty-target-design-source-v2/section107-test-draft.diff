@@ -1,0 +1,54 @@
+--- a/tests/test_aglna_gravity_weight_107.py
++++ b/tests/test_aglna_gravity_weight_107.py
+@@ -193,11 +193,10 @@
+                     self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))
+                     self.assertEqual(talent(result)['times_seconds'], [])
+ 
+-    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):
+-        # Root's actual twelve-call diagnosis confirms that the legacy
+-        # continuous reference does not consume target_windows. The timing
+-        # family gap remains pending section109; gravity changes only per-hit
+-        # weight qualification here, without adding acquisition/game timing.
++    def test_continuous_empty_ranges_exclude_owner_hits_without_weight_hit_growth(self):
++        # Exact empty owner supply excludes enemy attacks. Positive continuous
++        # ranges retain the existing interval reference; gravity changes only
++        # per-hit weight qualification and cannot create acquisition events.
+         references = []
+         for relic_ids in ([], [GRAVITY]):
+             with self.subTest(mode='continuous', relic_ids=relic_ids):
+@@ -205,21 +204,25 @@
+                 caller_before = deepcopy(caller)
+                 baseline = calculate_damage(caller)
+                 self.assertEqual(caller, caller_before)
++                self.assertGreater(talent(baseline)['hits'], 0)
++                positive_caller = {**caller, 'timing': {'target_windows': [[0, 10]]}}
++                positive_caller_before = deepcopy(positive_caller)
++                positive = calculate_damage(positive_caller)
++                self.assertEqual(positive_caller, positive_caller_before)
++                self.assertIs(baseline['timing']['scenario_provided'], False)
++                self.assertIs(positive['timing']['scenario_provided'], True)
++                baseline_comparable = deepcopy(baseline)
++                positive_comparable = deepcopy(positive)
++                positive_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']
++                self.assertEqual(positive_comparable, baseline_comparable)
+                 empty_caller = {**caller, 'timing': {'target_windows': []}}
+                 empty_caller_before = deepcopy(empty_caller)
+                 empty = calculate_damage(empty_caller)
+                 self.assertEqual(empty_caller, empty_caller_before)
+-                self.assertGreater(talent(baseline)['hits'], 0)
+-                self.assertEqual(talent(empty), talent(baseline))
+-                # This exact flag records whether timing input was provided
+-                # (timing.py output); every other returned leaf is compared.
+-                self.assertIs(baseline['timing']['scenario_provided'], False)
++                self.assertEqual((talent(empty)['hits'], talent(empty)['total']), (0, 0))
++                self.assertEqual(talent(empty)['times_seconds'], [])
+                 self.assertIs(empty['timing']['scenario_provided'], True)
+-                baseline_comparable = deepcopy(baseline)
+-                empty_comparable = deepcopy(empty)
+-                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']
+-                self.assertEqual(empty_comparable, baseline_comparable)
+-                references.append(talent(empty))
++                references.append(talent(baseline))
+         self.assertEqual(references[0]['hits'], references[1]['hits'])
+         self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])
+ 

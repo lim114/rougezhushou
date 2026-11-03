@@ -1,0 +1,1253 @@
+{
+  "scope": "Pure source/control design for future UI085; no API/Qt/Wine",
+  "base080_sha256": "c58ff7ac462e7a9aa457e4b59471a162cbf5c6daf58192f6b5a852901fcdcc98",
+  "base_actual_checks": 3063,
+  "base_actual_skills": 87,
+  "root_original_public_sources": {
+    "rouge/app.py": {
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976
+    },
+    "rouge/operator_options.py": {
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "bytes": 5328
+    },
+    "rouge/data/catalog.json": {
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "bytes": 1624372
+    },
+    "rouge/data/relic-mechanics.json": {
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+      "bytes": 500847
+    }
+  },
+  "actual_UI_relic_list_order_for_selected_ids": [
+    "rogue_6_relic_legacy_5",
+    "rogue_6_relic_legacy_81",
+    "rogue_6_relic_legacy_82",
+    "rogue_6_relic_legacy_83"
+  ],
+  "actual_relics": {
+    "rogue_6_relic_legacy_5": {
+      "catalog": {
+        "name": "锈蚀刀片",
+        "usage": "所有敌方单位受到的物理伤害+15%",
+        "effects": [
+          {
+            "kind": "damage_taken",
+            "value": 0.1499999999999999,
+            "damage_type": "physical"
+          }
+        ],
+        "supported": true,
+        "rarity": "NORMAL"
+      },
+      "mechanics": {
+        "name": "锈蚀刀片",
+        "usage": "所有敌方单位受到的物理伤害+15%",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "damage_taken",
+            "value": 0.1499999999999999,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "damage_type": "physical",
+            "group": "enemy_damage_scale[phy]",
+            "source_buff_key": "global_buff_stack_base_one",
+            "source_buff_index": 0
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_stack_base_one",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "enemy_damage_scale[phy]"
+              },
+              {
+                "key": "damage_scale",
+                "value": 1.15,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_5",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    },
+    "rogue_6_relic_legacy_81": {
+      "catalog": {
+        "name": "活玫瑰",
+        "usage": "所有我方单位受到的治疗和生命回复效果+20%",
+        "effects": [],
+        "supported": false,
+        "rarity": "NORMAL"
+      },
+      "mechanics": {
+        "name": "活玫瑰",
+        "usage": "所有我方单位受到的治疗和生命回复效果+20%",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "healing_factor",
+            "value": 1.2,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "heal_scale",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 0
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.2,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 1
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.2,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 2
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "heal_scale"
+              },
+              {
+                "key": "heal_scale",
+                "value": 1.2,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec_by_max_hp_ratio[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_81",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    },
+    "rogue_6_relic_legacy_82": {
+      "catalog": {
+        "name": "苍白花冠",
+        "usage": "所有我方单位受到的治疗和生命回复效果+30%",
+        "effects": [],
+        "supported": false,
+        "rarity": "RARE"
+      },
+      "mechanics": {
+        "name": "苍白花冠",
+        "usage": "所有我方单位受到的治疗和生命回复效果+30%",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "healing_factor",
+            "value": 1.3,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "heal_scale",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 0
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.3,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 1
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.3,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 2
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "heal_scale"
+              },
+              {
+                "key": "heal_scale",
+                "value": 1.3,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec_by_max_hp_ratio[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_82",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    },
+    "rogue_6_relic_legacy_83": {
+      "catalog": {
+        "name": "涌动之餐",
+        "usage": "所有我方单位受到的治疗和生命回复效果+40%，且受到的元素损伤-30%",
+        "effects": [],
+        "supported": false,
+        "rarity": "SUPER_RARE"
+      },
+      "mechanics": {
+        "name": "涌动之餐",
+        "usage": "所有我方单位受到的治疗和生命回复效果+40%，且受到的元素损伤-30%",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "verification": "game_data_verified_runtime_pending",
+        "status": "numeric",
+        "effects": [
+          {
+            "kind": "healing_factor",
+            "value": 1.4,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "heal_scale",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 0
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.4,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 1
+          },
+          {
+            "kind": "regeneration_factor",
+            "value": 1.4,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "received_regeneration",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 2
+          },
+          {
+            "kind": "incoming_element_resistance",
+            "value": 0.3,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "element_resistance",
+            "stacking": "unverified",
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 3
+          }
+        ],
+        "pending": [],
+        "raw_buffs": [
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "heal_scale"
+              },
+              {
+                "key": "heal_scale",
+                "value": 1.4,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec",
+                "value": 0.4,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "hp_recovery_per_sec_by_max_hp_ratio[mul]"
+              },
+              {
+                "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                "value": 0.4,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "global_buff_normal",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "element_resistance"
+              },
+              {
+                "key": "ep_damage_resistance",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "bound_char_buffs": [],
+        "relic_params": {
+          "id": "rogue_6_relic_legacy_83",
+          "checkCharBoxTypes": [],
+          "checkCharBoxParams": []
+        }
+      }
+    }
+  },
+  "susuro": {
+    "id": "char_298_susuro",
+    "name": "苏苏洛",
+    "profession": "medic",
+    "position": "ranged",
+    "trust_attack": 60,
+    "subprofession_id": "physician",
+    "trait": null,
+    "tokens": {},
+    "modules": [
+      {
+        "id": "uniequip_002_susuro",
+        "name": "医不自治",
+        "type": "PHY-X",
+        "unlock_elite": 2,
+        "unlock_level": 40,
+        "levels": [
+          {
+            "level": 1,
+            "attributes": {
+              "max_hp": 50.0,
+              "attack_speed": 3.0
+            },
+            "parts": [
+              {
+                "resKey": "susuro_equip_1_1_p1",
+                "target": "TRAIT",
+                "isToken": false,
+                "validInGameTag": null,
+                "validInMapTag": null,
+                "addOrOverrideTalentDataBundle": {
+                  "candidates": null
+                },
+                "overrideTraitDataBundle": {
+                  "candidates": [
+                    {
+                      "additionalDescription": "治疗生命值低于50%的友方单位时治疗量提升<@ba.kw>15%</>",
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 0,
+                      "blackboard": [
+                        {
+                          "key": "heal_scale",
+                          "value": 1.15,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "hp_ratio",
+                          "value": 0.5,
+                          "valueStr": null
+                        }
+                      ],
+                      "overrideDescripton": null,
+                      "prefabKey": null,
+                      "rangeId": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "attributes": {
+              "max_hp": 80.0,
+              "attack_speed": 4.0
+            },
+            "parts": [
+              {
+                "resKey": "susuro_equip_1_2_p1",
+                "target": "TRAIT",
+                "isToken": false,
+                "validInGameTag": null,
+                "validInMapTag": null,
+                "addOrOverrideTalentDataBundle": {
+                  "candidates": null
+                },
+                "overrideTraitDataBundle": {
+                  "candidates": [
+                    {
+                      "additionalDescription": "治疗生命值低于50%的友方单位时治疗量提升<@ba.kw>15%</>",
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 0,
+                      "blackboard": [
+                        {
+                          "key": "heal_scale",
+                          "value": 1.15,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "hp_ratio",
+                          "value": 0.5,
+                          "valueStr": null
+                        }
+                      ],
+                      "overrideDescripton": null,
+                      "prefabKey": null,
+                      "rangeId": null
+                    }
+                  ]
+                }
+              },
+              {
+                "resKey": null,
+                "target": "TALENT_DATA_ONLY",
+                "isToken": false,
+                "validInGameTag": null,
+                "validInMapTag": null,
+                "addOrOverrideTalentDataBundle": {
+                  "candidates": [
+                    {
+                      "displayRangeId": false,
+                      "upgradeDescription": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升23%",
+                      "talentIndex": 0,
+                      "validModeIndices": null,
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 0,
+                      "prefabKey": "1",
+                      "name": "微创治疗",
+                      "description": null,
+                      "rangeId": null,
+                      "blackboard": [
+                        {
+                          "key": "cost",
+                          "value": 10.0,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "heal_scale",
+                          "value": 1.23,
+                          "valueStr": null
+                        }
+                      ],
+                      "tokenKey": null,
+                      "isHideTalent": false
+                    },
+                    {
+                      "displayRangeId": false,
+                      "upgradeDescription": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升26%<@ba.talpu>（+3%）</>",
+                      "talentIndex": 0,
+                      "validModeIndices": null,
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 4,
+                      "prefabKey": "1",
+                      "name": "微创治疗",
+                      "description": null,
+                      "rangeId": null,
+                      "blackboard": [
+                        {
+                          "key": "cost",
+                          "value": 10.0,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "heal_scale",
+                          "value": 1.26,
+                          "valueStr": null
+                        }
+                      ],
+                      "tokenKey": null,
+                      "isHideTalent": false
+                    }
+                  ]
+                },
+                "overrideTraitDataBundle": {
+                  "candidates": null
+                }
+              }
+            ]
+          },
+          {
+            "level": 3,
+            "attributes": {
+              "max_hp": 100.0,
+              "attack_speed": 5.0
+            },
+            "parts": [
+              {
+                "resKey": "susuro_equip_1_3_p1",
+                "target": "TRAIT",
+                "isToken": false,
+                "validInGameTag": null,
+                "validInMapTag": null,
+                "addOrOverrideTalentDataBundle": {
+                  "candidates": null
+                },
+                "overrideTraitDataBundle": {
+                  "candidates": [
+                    {
+                      "additionalDescription": "治疗生命值低于50%的友方单位时治疗量提升<@ba.kw>15%</>",
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 0,
+                      "blackboard": [
+                        {
+                          "key": "heal_scale",
+                          "value": 1.15,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "hp_ratio",
+                          "value": 0.5,
+                          "valueStr": null
+                        }
+                      ],
+                      "overrideDescripton": null,
+                      "prefabKey": null,
+                      "rangeId": null
+                    }
+                  ]
+                }
+              },
+              {
+                "resKey": null,
+                "target": "TALENT_DATA_ONLY",
+                "isToken": false,
+                "validInGameTag": null,
+                "validInMapTag": null,
+                "addOrOverrideTalentDataBundle": {
+                  "candidates": [
+                    {
+                      "displayRangeId": false,
+                      "upgradeDescription": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升25%",
+                      "talentIndex": 0,
+                      "validModeIndices": null,
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 0,
+                      "prefabKey": "1",
+                      "name": "微创治疗",
+                      "description": null,
+                      "rangeId": null,
+                      "blackboard": [
+                        {
+                          "key": "cost",
+                          "value": 10.0,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "heal_scale",
+                          "value": 1.25,
+                          "valueStr": null
+                        }
+                      ],
+                      "tokenKey": null,
+                      "isHideTalent": false
+                    },
+                    {
+                      "displayRangeId": false,
+                      "upgradeDescription": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升28%<@ba.talpu>（+3%）</>",
+                      "talentIndex": 0,
+                      "validModeIndices": null,
+                      "unlockCondition": {
+                        "phase": "PHASE_2",
+                        "level": 40
+                      },
+                      "requiredPotentialRank": 4,
+                      "prefabKey": "1",
+                      "name": "微创治疗",
+                      "description": null,
+                      "rangeId": null,
+                      "blackboard": [
+                        {
+                          "key": "cost",
+                          "value": 10.0,
+                          "valueStr": null
+                        },
+                        {
+                          "key": "heal_scale",
+                          "value": 1.28,
+                          "valueStr": null
+                        }
+                      ],
+                      "tokenKey": null,
+                      "isHideTalent": false
+                    }
+                  ]
+                },
+                "overrideTraitDataBundle": {
+                  "candidates": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "trust_stats": {
+      "hp": 0,
+      "attack": 60,
+      "defense": 0,
+      "resistance": 0.0,
+      "redeploy_seconds": 0,
+      "attack_speed": 0.0,
+      "block_count": 0,
+      "interval": 0.0,
+      "sp_recovery": 0.0,
+      "deployment_cost": 0
+    },
+    "potential_bonuses": [
+      [
+        {
+          "attributeType": "COST",
+          "formulaItem": "ADDITION",
+          "value": -1.0,
+          "loadFromBlackboard": false,
+          "fetchBaseValueFromSourceEntity": false
+        }
+      ],
+      [
+        {
+          "attributeType": "RESPAWN_TIME",
+          "formulaItem": "ADDITION",
+          "value": -4.0,
+          "loadFromBlackboard": false,
+          "fetchBaseValueFromSourceEntity": false
+        }
+      ],
+      [
+        {
+          "attributeType": "ATK",
+          "formulaItem": "ADDITION",
+          "value": 23.0,
+          "loadFromBlackboard": false,
+          "fetchBaseValueFromSourceEntity": false
+        }
+      ],
+      [],
+      [
+        {
+          "attributeType": "COST",
+          "formulaItem": "ADDITION",
+          "value": -1.0,
+          "loadFromBlackboard": false,
+          "fetchBaseValueFromSourceEntity": false
+        }
+      ]
+    ],
+    "talents": [
+      [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "微创治疗",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升10%",
+          "values": {
+            "cost": 10.0,
+            "heal_scale": 1.1
+          }
+        },
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 4,
+          "name": "微创治疗",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升13%<@ba.talpu>（+3%）</>",
+          "values": {
+            "cost": 10.0,
+            "heal_scale": 1.13
+          }
+        },
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "微创治疗",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升20%",
+          "values": {
+            "cost": 10.0,
+            "heal_scale": 1.2
+          }
+        },
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 4,
+          "name": "微创治疗",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升23%<@ba.talpu>（+3%）</>",
+          "values": {
+            "cost": 10.0,
+            "heal_scale": 1.23
+          }
+        }
+      ]
+    ],
+    "phases": [
+      {
+        "max_level": 45,
+        "frames": [
+          {
+            "level": 1,
+            "hp": 725,
+            "attack": 173,
+            "defense": 53,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 16
+          },
+          {
+            "level": 45,
+            "hp": 994,
+            "attack": 284,
+            "defense": 77,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 16
+          }
+        ]
+      },
+      {
+        "max_level": 60,
+        "frames": [
+          {
+            "level": 1,
+            "hp": 994,
+            "attack": 284,
+            "defense": 77,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 18
+          },
+          {
+            "level": 60,
+            "hp": 1170,
+            "attack": 395,
+            "defense": 97,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 18
+          }
+        ]
+      },
+      {
+        "max_level": 70,
+        "frames": [
+          {
+            "level": 1,
+            "hp": 1170,
+            "attack": 395,
+            "defense": 97,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 18
+          },
+          {
+            "level": 70,
+            "hp": 1345,
+            "attack": 488,
+            "defense": 122,
+            "resistance": 0.0,
+            "redeploy_seconds": 70,
+            "attack_speed": 100.0,
+            "block_count": 1,
+            "interval": 2.85,
+            "sp_recovery": 1.0,
+            "deployment_cost": 18
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "id": "skcom_heal_up[2]",
+        "unlock_elite": 0,
+        "levels": [
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 40,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.15
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 40,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.2
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 40,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.25
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 35,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.3
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 35,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.35
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 35,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.4
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 32,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.5
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 32,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.55
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 32,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.6
+            }
+          },
+          {
+            "name": "治疗强化·β型",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 30,
+            "initial_sp": 10,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.7
+            }
+          }
+        ]
+      },
+      {
+        "id": "skchr_susuro_2",
+        "unlock_elite": 1,
+        "levels": [
+          {
+            "name": "深度治疗",
+            "duration": 20.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 25,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.4,
+              "attack_speed": 40.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 21.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 25,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.45,
+              "attack_speed": 45.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 22.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 25,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.5,
+              "attack_speed": 50.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 25.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 22,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.55,
+              "attack_speed": 55.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 26.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 22,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.6,
+              "attack_speed": 60.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 27.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 22,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.65,
+              "attack_speed": 65.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 30.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 19,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.7,
+              "attack_speed": 70.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 30.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 18,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.8,
+              "attack_speed": 80.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 30.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 17,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 0.9,
+              "attack_speed": 90.0,
+              "skill_max_trigger_time": 2.0
+            }
+          },
+          {
+            "name": "深度治疗",
+            "duration": 30.0,
+            "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击速度<@ba.vup>+{attack_speed}</>\\n<@ba.rem>同一次作战中最多使用2次</>",
+            "duration_type": "NONE",
+            "sp_type": "INCREASE_WITH_TIME",
+            "sp_cost": 15,
+            "initial_sp": 0,
+            "sp_increment": 1.0,
+            "max_charges": 1,
+            "values": {
+              "atk": 1.0,
+              "attack_speed": 100.0,
+              "skill_max_trigger_time": 2.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "warnings_order_source81_final_patch": "e8a86dbd4658c098058adf40af3785edc5971f128cce598e5eceb4e078ae6e6e",
+  "pending_sections": [
+    82,
+    83,
+    84,
+    85
+  ],
+  "new_API_calls": 0,
+  "gui_executed": false,
+  "wine_executed": false
+}

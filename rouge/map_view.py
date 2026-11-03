@@ -9,18 +9,25 @@ from .exploration_routes import route_reference
 
 class MapView(QWidget):
     nodeSelected = Signal(str)
+    referenceNodeSelected = Signal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, include_historical_route_diagnostics=False):
         super().__init__(parent)
+        from .information_scope import require_query_scope
+        require_query_scope('exploration',None,include_historical_route_diagnostics)
+        self.include_historical_route_diagnostics=include_historical_route_diagnostics
         self.setMinimumSize(360, 260)
         self.setAccessibleName('探索地图位置预览')
         self.setMouseTracking(True)
         self.graph = None
         self.image = None
         self.selected = None
+        self._reference_selection = False
+        self.reference_binding = None
         self.historical = False
 
     def set_map(self, graph, image=None, *, historical=False):
+        was_reference = self._reference_selection
         old_key = (self.graph or {}).get('template_id'), (self.graph or {}).get('zone_id')
         new_key = (graph or {}).get('template_id'), (graph or {}).get('zone_id')
         self.graph = copy.deepcopy(graph)
@@ -28,14 +35,27 @@ class MapView(QWidget):
         self.historical = historical
         if old_key != new_key or not graph or self.selected not in {n['id'] for n in graph['nodes']}:
             self.selected = None
+            self._reference_selection = False
+            self.reference_binding = None
         self.update()
-        self.nodeSelected.emit(self.selected or '')
+        if was_reference or self._reference_selection:self.referenceNodeSelected.emit(self.selected or '')
+        else:self.nodeSelected.emit(self.selected or '')
 
-    def select_node(self, node_id):
+    def select_node(self, node_id, *, emit_selected=True, reference_binding=None):
         if self.graph and node_id in {n['id'] for n in self.graph['nodes']}:
             self.selected = node_id
+            self._reference_selection = not emit_selected
+            self.reference_binding = copy.deepcopy(reference_binding) if not emit_selected else None
             self.update()
-            self.nodeSelected.emit(node_id)
+            if emit_selected:self.nodeSelected.emit(node_id)
+            else:self.referenceNodeSelected.emit(node_id)
+
+    def clear_reference_selection(self):
+        """Expire only local reference-view intent; never bind a replacement node."""
+        self.reference_binding = None
+        self._reference_selection = False
+        self.selected = None
+        self.update()
 
     def _positions(self):
         canvas = QRectF(self.contentsRect())
@@ -59,6 +79,9 @@ class MapView(QWidget):
         return min(200, max(28, gap*.92))
 
     def route(self):
+        if not self.include_historical_route_diagnostics:
+            return {'status':'information_only','display_path':[],'corridor':None,'topology':None,
+                    'reason':'route_advice_disabled'}
         return route_reference(self.graph, self.selected, historical=self.historical)
 
     def paintEvent(self, event):
@@ -78,11 +101,12 @@ class MapView(QWidget):
         for a, b in self.graph.get('edges', []):
             if a in points and b in points:
                 painter.drawLine(points[a], points[b])
-        route = self.route()
-        painter.setPen(QPen(QColor('#6ee7df') if route['corridor'] else QColor('#ffcb75'), 3,
-                            Qt.PenStyle.SolidLine if route['corridor'] else Qt.PenStyle.DashLine))
-        for a,b in zip(route['display_path'],route['display_path'][1:]):
-            painter.drawLine(points[a],points[b])
+        if self.include_historical_route_diagnostics:
+            route = self.route()
+            painter.setPen(QPen(QColor('#6ee7df') if route['corridor'] else QColor('#ffcb75'), 3,
+                                Qt.PenStyle.SolidLine if route['corridor'] else Qt.PenStyle.DashLine))
+            for a,b in zip(route['display_path'],route['display_path'][1:]):
+                painter.drawLine(points[a],points[b])
         width = self._badge_width(points)
         font = self.font(); font.setPointSize(9); painter.setFont(font)
         for node in self.graph['nodes']:

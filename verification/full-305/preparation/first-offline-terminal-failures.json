@@ -1,0 +1,73 @@
+{
+  "section": 305,
+  "kind": "FIRST_ACTUAL_OFFLINE_COMPONENT_TERMINAL_FAILURE_EVIDENCE_NOT_FULL_RESULT",
+  "recorded_at": "2026-10-17T08:25:02.782082+00:00",
+  "raw_actual_receipt": {
+    "path": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-full305-e6aada2377db4d4f9f58019bfa25502d\\offline\\actual\\windows-offline.json",
+    "sha256": "1f38e0a1fa112ad11eddcf7c6f1d962e02aaf12651081e7a959f9e4b63f6d065",
+    "bytes": 223961
+  },
+  "raw_actual_log": {
+    "path": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-full305-e6aada2377db4d4f9f58019bfa25502d\\offline\\actual\\windows-offline.log",
+    "sha256": "88546bd1c7aa13f6d2dcd3c39af192a014b49e990760cdd2ed88f3a6a084096a",
+    "bytes": 1078114
+  },
+  "raw_process": {
+    "path": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-full305-e6aada2377db4d4f9f58019bfa25502d\\offline\\controller-process.json",
+    "sha256": "4f933eccb4e586f7f15a41e6b5b50155d55196fbe02eeea836566d5029df13b2",
+    "bytes": 1312
+  },
+  "raw_supervisor": {
+    "path": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-full305-e6aada2377db4d4f9f58019bfa25502d\\offline\\supervisor.json",
+    "sha256": "501ec7ad3d48796245412713652428a802760464ae7742ec47a1682d94fbebba",
+    "bytes": 1732
+  },
+  "actual_supervisor_exit": 1,
+  "actual_child_exit": 1,
+  "assigned_offline_job_empty": true,
+  "offline_source_drift": [],
+  "actual_maintained_selector_count": 469,
+  "source_file_count": 1329,
+  "tests_run": 5403,
+  "tests_passed": 5319,
+  "failures": 4,
+  "errors": 1,
+  "historical_or_declared_skips": 73,
+  "unavailable_records": 16,
+  "unavailable_parent_count": 6,
+  "failures_with_actual_final_trace": [
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_failed_readings_retained_without_relaxed_pixel_gate",
+      "reason": "AssertionError: FixedLandmarkReference(points=((1, 4, 237, 63), (2, 3, 195, 92), (2, 5, 277, 93), (3, 2, 152, 128), (3, 6, 320, 128), (4, 3, 190, 163), (4, 5, 279, 163), (5, 4, 233, 205)), rows=7, cols=10, width=512, height=286, agreement_tolerance_px=4, mapping_mode='direct_verified_centers', supports_segment_reference=False) is not None"
+    },
+    {
+      "test": "tests.test_choice_recruitment_integration_290.RecruitmentIntegration290Tests.test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes",
+      "reason": "Diff is 10693 characters long. Set self.maxDiff to None to see it. : ('community_group_024', 'community_group_024:scene:0', {'floor': 1, 'difficulty': 3, 'node_type': '作战', 'entry_mode': 'natural'})"
+    },
+    {
+      "test": "tests.test_batch185_mainwindow.Batch185WindowTests.test_map_position_bind_and_fixed_battle_navigation",
+      "reason": "AssertionError: '第2行、第3列' not found in '可查看已收录的节点、事件、奖励与作战资料；出现条件不完整的内容会标注待确认，不表示本局一定会遇到。'"
+    },
+    {
+      "test": "tests.test_peace_guardian_integration_291.PeaceGuardianPlanning291Tests.test_all_fixed_events_and_contexts_keep_status_checks_ids_and_non_target_fields",
+      "reason": "Diff is 10693 characters long. Set self.maxDiff to None to see it. : ('community_group_024', 'community_group_024:scene:0', {'floor': 1, 'difficulty': 3, 'node_type': '作战', 'entry_mode': 'natural'})"
+    },
+    {
+      "test": "tests.test_original_destinations.OriginalDestinationTests.test_independent_scene_choices_keep_unknown_special_conditions",
+      "reason": "StopIteration"
+    }
+  ],
+  "available_checks_passed": false,
+  "complete_repository_validation": false,
+  "full_controller_still_running_other_original_components": true,
+  "full_result_pending": true,
+  "repairs_prepared_cache_only_not_applied": true,
+  "full_archive_pending": true,
+  "candidate_locations": {
+    "map049": ".cache/p3-305-full-failure-triage/map049-first/",
+    "recruitment290_original_destinations_peace291": ".cache/p3-305-full-failure-triage/regression-triage/",
+    "map185": ".cache/p3-305-full-failure-triage/batch185/HANDOFF.json"
+  },
+  "root_final_archive_guard_prepared_not_executed": ".cache/guard_and_archive_full305_first.py",
+  "source_must_stay_frozen_until_all_first_components_terminal_and_archived": true
+}

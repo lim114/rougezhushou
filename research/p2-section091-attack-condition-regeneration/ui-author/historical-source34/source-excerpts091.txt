@@ -1,0 +1,593 @@
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:520-568 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+520:         self.operator_choices=BranchChoice(self.operator,operator_groups(profiles,catalog()['operators']),
+521:             overview_label='总览（已招募）',overview=self.recruited_operator_ids(),empty_label='本局尚无已确认招募干员',
+522:             branch_icons=profession_branch_icons())
+523:         self.operator_choices.select_value('kaltsit',emit=False)
+524:         self.operator.currentIndexChanged.connect(self.update_operator)
+525:         form.addRow('职业 / 干员',self.operator_choices)
+526:         self.operator_picture=SubjectPicture();form.addRow(self.operator_picture)
+527:         self.use_run_training=QCheckBox('使用已读取的本局培养；缺失项明确显示参考来源')
+528:         self.use_run_training.setChecked(True)
+529:         self.use_run_training.toggled.connect(lambda:self.update_operator())
+530:         form.addRow(self.use_run_training)
+531:         self.elite=QLabel('未确认')
+532:         self.level=QSpinBox()
+533:         self.level.setRange(1,90);self.level.setValue(90)
+534:         self.trust=QLabel('未确认')
+535:         self.potential=QLabel('未确认')
+536:         self.module=QLabel('未确认')
+537:         training=QHBoxLayout()
+538:         training.addWidget(self.level)
+539:         restore_level=QPushButton('使用读取等级')
+540:         restore_level.clicked.connect(lambda:self.update_operator())
+541:         training.addWidget(restore_level)
+542:         form.addRow('等级（可模拟调整）',training)
+543:         form.addRow('精英阶段（自动读取）',self.elite)
+544:         form.addRow('信赖（自动读取）',self.trust)
+545:         form.addRow('潜能（自动读取）',self.potential)
+546:         form.addRow('模组（自动读取）',self.module)
+547:         self.training_status=QLabel('进入干员详情页，由后台采样自动读取；未确认字段不冒充当前状态。')
+548:         self.training_status.setWordWrap(True)
+549:         form.addRow(self.training_status)
+550:         self.level.valueChanged.connect(self.level_changed)
+551:         self.skill = QComboBox()
+552:         self.skill.setIconSize(QSize(28,28))
+553:         self.skill.currentIndexChanged.connect(self.skill_changed)
+554:         form.addRow('技能',self.skill)
+555:         self.skill_picture=SubjectPicture(edge=48);form.addRow(self.skill_picture)
+556:         self.rank=QLabel('未确认')
+557:         form.addRow('技能等级（自动读取）',self.rank)
+558:         self.attack=QLabel('由培养档案计算')
+559:         # Kept as an internal compatibility value; the visible result includes effects.
+560:         self.attack.hide()
+561:         self.deployment_elapsed=number(0,3600,2)
+562:         form.addRow('预计在场时间（秒，影响银灰天赋）',self.deployment_elapsed)
+563:         self.healing_targets=QSpinBox()
+564:         self.healing_targets.setRange(0,100);self.healing_targets.setValue(1)
+565:         form.addRow('满额受疗目标数（当前技能）',self.healing_targets)
+566:         self.continuous_attacks=QCheckBox('持续进行普攻以回复技力')
+567:         self.continuous_attacks.setChecked(True)
+568:         form.addRow('攻击回复条件',self.continuous_attacks)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:778-857 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+778:     def training_conditions(self):
+779:         op=self.operator.currentData()
+780:         fields=self.current_operator_state().get('fields',{})
+781:         elite=fields.get('elite',len(operator_profiles()[op]['phases'])-1)
+782:         return {'elite':elite,'level':self.level.value(),'trust':fields.get('trust',100),
+783:                 'potential':fields.get('potential',1),'module_id':fields.get('module_id'),
+784:                 'module_level':fields.get('module_level',0)}
+785: 
+786:     def skill_rank_value(self):
+787:         known=self.current_operator_state().get('skill_ranks',{})
+788:         skill=self.skill.currentData()
+789:         return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))
+790: 
+791:     def update_operator(self,*,preserve_level=False):
+792:         if not hasattr(self,'attack'):
+793:             return
+794:         op = self.operator.currentData()
+795:         if op is None:
+796:             self.display_operator=None;self.skill_override=False;self.level_override=False
+797:             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)
+798:             self.skill.blockSignals(True);self.skill.clear();self.skill.blockSignals(False)
+799:             for widget in (self.elite,self.trust,self.potential,self.module):widget.setText('未选择干员')
+800:             self.training_status.setText('总览只显示本局已确认招募的干员；可选职业分支进行局外预览。')
+801:             self.update_skill_options()
+802:             return
+803:         self.level.setEnabled(True)
+804:         state=self.current_operator_state()
+805:         fields=state.get('fields',{})
+806:         profile=operator_profiles()[op]
+807:         self.operator_picture.set_subject('operator',op,profile['name']+' · '+PROFESSIONS[profile['profession']])
+808:         elite=fields.get('elite',len(profile['phases'])-1)
+809:         maximum=profile['phases'][elite]['max_level']
+810:         if self.display_operator!=op:self.skill_override=False
+811:         self.display_operator=op
+812:         self.level.blockSignals(True)
+813:         self.level.setMaximum(maximum)
+814:         if not preserve_level:self.level.setValue(fields.get('level',maximum))
+815:         self.level.blockSignals(False)
+816:         self.level_override=preserve_level
+817:         previous=self.skill.currentData()
+818:         self.skill.blockSignals(True)
+819:         self.skill.clear()
+820:         choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]
+821:         for skill in choices:
+822:             name = profile['skills'][skill-1]['levels'][-1]['name']
+823:             self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),f'S{skill} · {name}',skill)
+824:         preferred=fields.get('selected_skill',{'kaltsit':2,'silverash':3,'mechanist':1}.get(op,1))
+825:         if self.skill_override and previous in choices:preferred=previous
+826:         if preferred in choices:self.skill.setCurrentIndex(choices.index(preferred))
+827:         self.skill.blockSignals(False)
+828:         self.elite.setText(f'精英 {fields["elite"]}' if 'elite' in fields else f'未确认（档案预览：精英 {elite}）')
+829:         self.trust.setText(f'{fields.get("trust_display",fields.get("trust"))}%（读取）' if 'trust' in fields else '未确认（档案预览：满信赖加成）')
+830:         self.potential.setText(str(fields['potential']) if 'potential' in fields else '未确认（档案预览：潜能 1）')
+831:         if 'module_id' not in fields:self.module.setText('未确认（档案预览：未计模组）')
+832:         elif fields['module_id'] is None:self.module.setText('未装备模组' if profile['modules'] else '此数据档案无可装备模组')
+833:         else:
+834:             module=next((m for m in profile['modules'] if m['id']==fields['module_id']),None)
+835:             self.module.setText(f'{module["name"] if module else "未知模组"} · 阶段 {fields.get("module_level","未确认")}')
+836:         stamp=time.strftime('%H:%M:%S',time.localtime(state.get('captured_at',0))) if state else '尚未读取'
+837:         if state.get('scope')=='run':
+838:             confirmed=set(state['run_confirmed_fields'])
+839:             for key,widget in [('elite',self.elite),('trust',self.trust),('potential',self.potential),('module_id',self.module)]:
+840:                 if key in fields and key not in confirmed:widget.setText(widget.text()+'（账号档案参考，本局未确认）')
+841:             self.training_status.setText('使用本局已确认培养记录，最后读取：'+stamp+'；切页后保留。缺失项使用标注的账号参考/预览条件。')
+842:             if state.get('recruitment_kind')=='emergency_hire':
+843:                 self.training_status.setText(self.training_status.text()+' 来源：应急雇佣，仅一次作战。')
+844:         else:self.training_status.setText('档案最后读取：'+stamp+'；本局实际培养尚待核对。未确认字段使用明确标注的预览条件。')
+845:         self.update_base_attack()
+846:         self.update_skill_options()
+847:         if hasattr(self,'raw_damage'):self.calculate()
+848: 
+849:     def level_changed(self):
+850:         self.level_override=True
+851:         self.update_base_attack()
+852:         self.update_skill_options()
+853: 
+854:     def skill_changed(self):
+855:         self.skill_override=True
+856:         self.update_skill_options()
+857: 
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:925-940 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+925:         self.refresh_operator_overview()
+926:         self.observation=None
+927:         self.map_frame=None
+928:         self.map_frames.clear()
+929:         self.last_observed_operator=None;self.last_observed_stage=None
+930:         self.target_stage.setCurrentIndex(0)
+931:         self.target_enemy.setCurrentIndex(0)
+932:         self.sync_run_config()
+933:         self.relic_context_previews.clear()
+934:         self.relic_context.blockSignals(True);self.relic_context.clear();self.relic_context.blockSignals(False)
+935:         self.target_buff_previews.clear();self.target_preview_operator=None
+936:         self.target_buff_test.blockSignals(True);self.target_buff_test.setChecked(False);self.target_buff_test.blockSignals(False)
+937:         self.target_buff_list.blockSignals(True);self.target_buff_list.clear();self.target_buff_list.blockSignals(False)
+938:         self.run_summary.setText(self.run.summary())
+939:         self.sync_run_relics()
+940:         self.update_operator()
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:949-999 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+949:     def update_skill_options(self):
+950:         if not hasattr(self,'cooperative'):
+951:             return
+952:         op,skill = self.operator.currentData(), self.skill.currentData()
+953:         profile=operator_profiles().get(op) or {'skills':[]}
+954:         current=profile['skills'][skill-1]['levels'][self.skill_rank_value()-1] if skill else {}
+955:         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
+956:         from .reporting import has_healing
+957:         healer=op in catalog()['operators'] and has_healing(op,skill)
+958:         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
+959:                     (self.healing_targets,healer),
+960:                     (self.continuous_attacks,current.get('sp_type')=='INCREASE_WHEN_ATTACK'),
+961:                     (self.cooperative,op=='silverash' and skill==3),
+962:                     (self.fragile,op=='silverash' and skill==3),
+963:                     (self.charge_count,op=='mechanist' and skill==3),
+964:                     (self.shield_breaks,op=='mechanist' and skill==2),
+965:                     (self.shield_duration,op=='mechanist' and skill==2),
+966:                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
+967:         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)
+968:         for owner,key,skills,widget in self.model_option_widgets:
+969:             self.damage_form.setRowVisible(widget,owner==op and skill in skills)
+970:             if owner==op=='char_110_deepcl' and key=='summon_count':
+971:                 from .summons import token_concurrent_limit
+972:                 cap=token_concurrent_limit(profile,{'operator':op,**self.training_conditions()},'token_10001_deepcl_tentac')
+973:                 widget.blockSignals(True)
+974:                 widget.setMaximum(cap if cap is not None else 4)
+975:                 widget.blockSignals(False)
+976:                 widget.setToolTip(f'当前培养/模组的触手在场上限：{cap if cap is not None else "未核验"}；仅作局外数量假设，仍受关卡部署位和库存约束。')
+977:         self.healing_targets.blockSignals(True)
+978:         if op=='char_4202_haruka' and skill:
+979:             from .haruka_healing_reference import conditional_input_limit
+980:             limit=conditional_input_limit(profile,{'operator':op,**self.training_conditions(),
+981:                 'skill_rank':self.skill_rank_value()},current)
+982:             tooltip='按当前培养和原表特性/技能参数声明满额潜在受疗数；实际友方获取未核验。BLS-Y基础人数与当前S2增加人数的组合仅列条件参考，额外份额不计实际合计。'
+983:         else:
+984:             limit=100 if (op=='char_1037_amiya3' and skill==1) or (op=='kaltsit' and skill==2) else (
+985:                 2 if (op=='char_2025_shu' and skill==2) or (op=='kaltsit' and skill==3) else 1)
+986:             tooltip=''
+987:         self.healing_targets.setMaximum(limit)
+988:         self.healing_targets.setToolTip(tooltip)
+989:         self.healing_targets.blockSignals(False)
+990:         known=self.current_operator_state().get('skill_ranks',{})
+991:         if skill is None:
+992:             self.rank.setText('无可用技能')
+993:             if hasattr(self,'raw_damage'):self.calculate()
+994:             return
+995:         rank=self.skill_rank_value()
+996:         self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+
+997:                          ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))
+998:         if hasattr(self,'raw_damage'):self.calculate()
+999: 
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:1024-1039 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+1024:         ids = [self.relic_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.relic_list.count())
+1025:                if self.relic_list.item(i).checkState() == Qt.CheckState.Checked]
+1026:         scenario = {'operator':self.operator.currentData(),'skill':self.skill.currentData(),
+1027:             **self.training_conditions(),'deployment_elapsed_seconds':self.deployment_elapsed.value(),
+1028:             'healing_targets':self.healing_targets.value(),'continuous_attacks':self.continuous_attacks.isChecked(),
+1029:             'skill_rank':self.skill_rank_value(),
+1030:             'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value(),
+1031:             'cooperative':self.cooperative.isChecked(),'preexisting_fragile':self.fragile.isChecked(),
+1032:             'charge_count':self.charge_count.value(),'shield_break_count':self.shield_breaks.value(),
+1033:             'activation_count':self.activation_count.value(),'companion_attack':self.companion_attack.value(),
+1034:             'deployment_stacks':self.stacks.value(),'relic_ids':ids}
+1035:         for owner,key,skills,widget in self.model_option_widgets:
+1036:             if owner==op and self.skill.currentData() in skills:
+1037:                 scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()
+1038:         state=self.current_operator_state()
+1039:         scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/app.py:1090-1113 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2 ---
+1090:             profile=catalog()['operators'][op]
+1091:             needed=set()
+1092:             for rid in ids:
+1093:                 for effect in active_effects(mechanics()['relics'][rid],rid):
+1094:                     if effect.get('target_enemy_id') and target and target['enemy_id']!=effect['target_enemy_id']:continue
+1095:                     if matches(effect,profile) or any(matches(effect,t,token=True) for t in profile.get('tokens',{}).values()):
+1096:                         if effect.get('condition') and effect['condition']!='emergency_hire':needed.add(effect['condition'])
+1097:                         if effect.get('recipient_condition'):needed.add(effect['recipient_condition'])
+1098:                         if effect.get('loss_pending_condition'):needed.add(effect['loss_pending_condition'])
+1099:                         if effect.get('unit_condition') and profile.get('tokens'):needed.add('token_conditions')
+1100:                         if effect.get('enemy_level'):needed.add('enemy_level_type')
+1101:             self.damage_form.setRowVisible(self.relic_context,bool(needed))
+1102:             examples={'gold':25,'parts_count':3,'empty_slots':4,'current_hp_ratio':.65,'deployed_casters':2,'adjacent_allies':1,
+1103:                 'skill_cast_stacks':1,'altar_stacks':3,'chitin_recipient':1,'battle_start_shields':1,'blocked_enemies':1,
+1104:                 'probe_stacks':2,'fire_rod_stacks':3,'deployment_hp_ratio':.65,'deployment_loss_unused':1,'enemy_level_type':'ELITE',
+1105:                 'grudge_stacks':100,'deployed_seconds':80,'near_protection_point':1,'enemy_first_damage_unused':1,
+1106:                 'entered_zone_count':2,'active_other_aura_sources':1,'mercenary_recipient':1,'mercenary_stacks':1,
+1107:                 'token_conditions':{tid:{'blocked_enemies':1} for tid in profile.get('tokens',{})}}
+1108:             labels={'parts_count':'当前零件箱实有零件数量（不是容量或估价）；悲伤的红计数上限99',
+1109:                 'altar_stacks':'圆石祭坛实际层数（非战斗次数，最多10）','chitin_recipient':'当前干员是否获得几丁质刺刃（0/1）',
+1110:                 'battle_start_shields':'开战时的对局护盾值（不是屏障）','blocked_enemies':'本体实际阻挡敌人数（不是阻挡上限）',
+1111:                 'probe_stacks':'探测先锋实际层数（最多99）','token_conditions':'各召唤物独立阻挡条件（不继承本体）'}
+1112:             labels.update(empty_slots='零件箱空栏数（容量减已持有数量，不能以零件数代替）',
+1113:                 grudge_stacks='仇名录实际击杀叠层（独立乘算，最多999；不由战斗次数推断）',
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/operator_engine.py:13-28 SHA256=c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68 ---
+13: def selected_talents(profile, scenario):
+14:     elite=scenario.get('elite',2)
+15:     level=scenario.get('level') or profile['phases'][elite]['max_level']
+16:     potential=scenario.get('potential',1)-1
+17:     def eligible(candidate):
+18:         condition=candidate.get('unlockCondition')
+19:         phase=int(condition['phase'][-1]) if condition else candidate['phase']
+20:         minimum=condition['level'] if condition else candidate['level']
+21:         rank=candidate.get('requiredPotentialRank',candidate.get('potential_rank',0))
+22:         return phase<=elite and (phase<elite or minimum<=level) and rank<=potential
+23:     talents={}
+24:     for i,candidates in enumerate(profile['talents']):
+25:         candidates=[t for t in candidates if eligible(t)]
+26:         if candidates:talents[i]=candidates[-1]
+27:     module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')),None)
+28:     parts=[]
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/operator_engine.py:149-153 SHA256=c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68 ---
+149: 
+150:     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
+151:     def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)
+152:     def effects_for_token(self,token_id):
+153:         from .relic_attributes import is_attribute_rune
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/operator_engine.py:1297-1345 SHA256=c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68 ---
+1297:     def calculate(self):
+1298:         self.ranged_attack_condition_consumed=False
+1299:         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
+1300:             raise ValueError('深度治疗本场已使用两次，不能再次开启。')
+1301:         full=self.plan()
+1302:         shown=self.plan(window=self.s['window_seconds']) if 'window_seconds' in self.s else full
+1303:         if 'window_seconds' not in self.s and self.s.get('timing_mode','frames')=='frames' and full['duration']:
+1304:             shown=self.plan(window=full['duration'])
+1305:         sp=self.skill
+1306:         from .relics import recharge_requirement
+1307:         recharge_cost=recharge_requirement(self.s,sp['sp_cost'])
+1308:         rate=self.a['sp_recovery']+self.total('sp_recovery')+self.sp_extra
+1309:         initial=sp['initial_sp']+self.initial_bonus
+1310:         mixed_recovery=None
+1311:         if sp['sp_type']=='INCREASE_WITH_TIME':
+1312:             recharge=recharge_cost/rate if rate>0 else None
+1313:             first=max(0,sp['sp_cost']-initial)/rate if rate>0 else None
+1314:             if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):
+1315:                 recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None
+1316:                 first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None
+1317:             if self.s['operator']=='char_002_amiya' and self.s.get('continuous_attacks',True):
+1318:                 attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp')
+1319:                 def time_to_charge(required,stun=0):
+1320:                     if required<=0:return 0
+1321:                     if rate<=0 and attack_sp<=0:return None
+1322:                     time=stun;charge=rate*stun
+1323:                     while charge<required:
+1324:                         wait=(required-charge)/rate if rate>0 else math.inf
+1325:                         if wait<=self.normal_interval:return time+wait
+1326:                         time+=self.normal_interval;charge+=rate*self.normal_interval+attack_sp
+1327:                     return time
+1328:                 first=time_to_charge(max(0,sp['sp_cost']-initial))
+1329:                 recharge=(max(sp['values'].get('stun',0),recharge_cost/rate) if rate>0 else None) if (
+1330:                     self.s.get('timing_mode','frames')=='continuous' and
+1331:                     (self.s.get('timing',{}).get('target_disappears_seconds')==0 or
+1332:                      full.get('amiya_continuous_reference',{}).get('enemy_source_excluded'))) else time_to_charge(recharge_cost,sp['values'].get('stun',0))
+1333:                 if self.s.get('timing_mode','frames')=='frames':
+1334:                     first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+1335:                     mixed_recovery=(attack_sp,sp['values'].get('stun',0))
+1336:                 self.notes.append('术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。')
+1337:             elif self.s.get('continuous_attacks',True) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):
+1338:                 first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,0,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+1339:                 mixed_recovery=(0,0)
+1340:         elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
+1341:             recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,wait_next_attack=full['mode']=='next_attack')
+1342:             first=charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,wait_next_attack=full['mode']=='next_attack')
+1343:         elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE':
+1344:             incoming=self.option('incoming_attack_interval',0,maximum=3600)
+1345:             recharge=math.ceil(recharge_cost/sp['sp_increment'])*incoming if incoming>0 else None
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/operator_engine.py:1439-1476 SHA256=c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68 ---
+1439:         sp_events={}
+1440:         if has_event_sp(self.s) and mode not in ('deployment','passive'):
+1441:             cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)
+1442:             attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp') if self.s['operator']=='char_002_amiya' else 0
+1443:             sp_events['initial']=event_charge(self.s,sp,max(0,cost-initial),rate,self.normal_interval,
+1444:                 self.base_speed,attribute_speed=self.base_speed_reference,initial=True,attack_sp=attack_sp,wait_next_attack=mode=='next_attack')
+1445:             first=sp_events['initial']['seconds']
+1446:             if not nonrepeat and duration is not None:
+1447:                 resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+1448:                 sp_events['cycle']=event_charge(self.s,sp,cost,rate,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+1449:                     offset=duration,resume=resume,attack_sp=attack_sp,wait_next_attack=mode=='next_attack',
+1450:                     stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
+1451:                 recharge=sp_events['cycle']['seconds']
+1452:             else:recharge=None
+1453:         if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved or mizuki_s1_unresolved or ines_s1_unresolved:
+1454:             recharge=None
+1455:             first=0.0 if initial>=sp['sp_cost'] else None
+1456:         if self.shu_periodic_sp_reference is not None:
+1457:             self.shu_periodic_sp_reference['independent_sp_clock_reference']={
+1458:                 'initial_seconds':first,'recharge_seconds':recharge,
+1459:                 'excludes_four_sui_periodic_credit':True}
+1460:             first=0.0 if initial>=sp['sp_cost'] else None
+1461:             recharge=None
+1462:         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
+1463:         self.s['_timeline_offset_seconds']=duration or 0
+1464:         from .relic_events import DAMAGE
+1465:         self.s['_first_damage_consumed_in_skill']=any(c['total']>0 and c['damage_type'] in DAMAGE and
+1466:             c.get('source_unit','operator')=='operator' for c in full['components'])
+1467:         resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+1468:         self.s['timing']={**self.s.get('timing',{}),'_resume_frames':resume}
+1469:         if self.s['operator']=='char_002_amiya' and self.n==2 and self.s.get('timing_mode','frames')=='frames':
+1470:             self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]
+1471:         normal=self.plan(normal=True,window=recharge) if cycle is not None and not (
+1472:             sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None
+1473:         if self.s['operator']=='char_4182_oblvns':
+1474:             ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10
+1475:             self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None
+1476:         damage=full['damage']+(normal['damage'] if normal else 0)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/relics.py:18-23 SHA256=79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3 ---
+18:     profession='token' if token else profile['profession']
+19:     return (not effect.get('profession') or profession in effect['profession'].split('|')) and (
+20:         not effect.get('position') or effect['position']==profile.get('position')) and (
+21:         not effect.get('subprofession') or profile.get('subprofession_id') in effect['subprofession'].split('|'))
+22: 
+23: def context_value(effect,scenario):
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/relics.py:55-61 SHA256=79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3 ---
+55: def prepare(scenario,profile):
+56:     scenario=dict(scenario)
+57:     selected=list(dict.fromkeys(scenario.get('relic_ids',[])))
+58:     rules=[];records=[];warnings=[];effects=[];token_effects=[];inapplicable=[];timing_unresolved=False;ammo_unresolved=False;ammo_sources=set()
+59:     inputs=[(rid,mechanics()['relics'].get(rid),False) for rid in selected]
+60:     bound=scenario.get('char_buff_ids',[])
+61:     if not isinstance(bound,list) or not all(isinstance(b,str) for b in bound):
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/relics.py:93-123 SHA256=79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3 ---
+93:         binding=data.get('recipient_binding')
+94:         recipient_binding=None
+95:         if binding and not is_bound:
+96:             applicable=[bid for bid in binding['char_buff_ids'] if not mechanics()['char_buffs'][bid]['required_profession']
+97:                         or profile['profession'] in mechanics()['char_buffs'][bid]['required_profession'].split('|')]
+98:             confirmed=sorted(set(applicable)&set(bound))
+99:             recipient_state=('confirmed' if confirmed else 'absent' if not applicable or scenario.get('char_buffs_complete') is True or set(applicable)<=set(absent)
+100:                              else 'unknown')
+101:             recipient_binding={'state':recipient_state,'char_buff_ids':confirmed,'scope':'current_operator_only'}
+102:             if recipient_state=='unknown':missing.append('当前干员强化归属')
+103:         # Some unfinished mechanics exist only with another held relic and
+104:         # on the raw selector's recipients. Do not warn unrelated panels.
+105:         for scope in data.get('pending_scopes',[]):
+106:             if not set(scope.get('requires_relic_ids',[])).issubset(selected) or not matches(scope,profile):
+107:                 pending=[p for p in pending if p!=scope['message']]
+108:         eligible=False
+109:         for e in active:
+110:             ammo_parameters=None
+111:             own=matches(e,profile)
+112:             token_ids=[] if is_bound else [tid for tid,t in profile.get('tokens',{}).items() if matches(e,t,token=True)]
+113:             token=bool(token_ids)
+114:             if not own and not token:continue
+115:             if e.get('skill_sp_type'):
+116:                 selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
+117:                 if selected_skill['sp_type']!=e['skill_sp_type']:continue
+118:             if e['kind'] in ('received_sp','event_sp'):
+119:                 selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
+120:                 if selected_skill['sp_type'] not in ('INCREASE_WITH_TIME','INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):continue
+121:             if e.get('eligible_stage_ids'):
+122:                 target=scenario.get('target_enemy')
+123:                 if not target:
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/relics.py:286-308 SHA256=79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3 ---
+286:         warnings.append(message+'。')
+287:         for record in records:
+288:             if record['id']==rule['relic_id']:
+289:                 record['pending'].append(message);record['status']='incomplete'
+290:     hp_composition_pending=[]
+291:     if resident and (other_hp or unresolved_hp_sources or spawn_hp):
+292:         # The resident script's key differs from ordinary HP modifiers. That
+293:         # does not prove multiplication, addition, or which source wins.
+294:         hp_composition_pending=[r['relic_id'] for r in resident]
+295:         rules=[r for r in rules if r not in resident]
+296:         warnings.append('厄运火杆与其他敌方生命藏品的叠加脚本尚未核验；保留其他已接入参考，未额外乘0.6。')
+297:         for record in records:
+298:             if record['id'] in hp_composition_pending:
+299:                 record['applied']=[r for r in record['applied'] if r not in resident]
+300:                 record['pending'].append('居民HP与其他敌方生命藏品的组合待核验');record['status']='incomplete'
+301:     scenario['effects']=[{k:v for k,v in e.items() if k!='_verified_rule'} for e in scenario.get('effects',[]) if not e.get('_verified_rule')]+effects
+302:     scenario['_token_relic_effects']=token_effects
+303:     scenario['_relic_rules']=rules
+304:     final_attack=[r['value'] for r in rules if r['kind']=='final_attack_factor']
+305:     if len(final_attack)==1:
+306:         scenario['base_attack']*=final_attack[0]
+307:         scenario['_relic_final_attack_factor']=final_attack[0]
+308:     defense_rules=[r for r in rules if r['kind']=='enemy_def_delta']
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/damage.py:271-282 SHA256=6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6 ---
+271:             raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+272:     from .relics import prepare
+273:     from .run_modifiers import prepare_run
+274:     scenario,run_resolution=prepare_run(scenario)
+275:     scenario,resolution=prepare(scenario,profile)
+276:     from .relic_attributes import prepare_attribute_runes
+277:     scenario,attributes=prepare_attribute_runes(scenario,attributes)
+278:     # Reuse the existing numeric-zero gates after validating the raw timing.
+279:     timing=scenario.get('timing',{})
+280:     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
+281:         from .timing import finite
+282:         AttackTimeline(scenario)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/damage.py:292-304 SHA256=6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6 ---
+292:     from .run_modifiers import finish_run
+293:     scenario,attributes,resolution,run_resolution=prepared
+294:     scenario.pop('_wine_phase_frame',None)
+295:     if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase
+296:     if scenario['operator'] not in ('kaltsit','silverash','mechanist'):
+297:         from .operator_engine import Combat
+298:         combat=Combat(scenario,attributes)
+299:         result=combat.calculate()
+300:     else:
+301:         result=_skill_damage(scenario)
+302:         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+303:     from .charge_reference import finish_charge_reference
+304:     finish_charge_reference(scenario,result)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/estimate.py:90-102 SHA256=c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a ---
+90:         else:
+91:             notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
+92:     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
+93:         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
+94:         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
+95:     elif skill['sp_type']=='INCREASE_WHEN_ATTACK':
+96:         if scenario.get('continuous_attacks',True) or has_periodic_sp(scenario):
+97:             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
+98:             initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
+99:             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
+100:         else:notes.append('攻击回复缺少持续攻击条件，初动与回转未知。')
+101:     else:notes.append('缺少可用技力恢复条件，初动与回转未知。')
+102:     full_scenario={k:v for k,v in scenario.items() if k!='window_seconds'}
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/estimate.py:172-186 SHA256=c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a ---
+172:     sp_events={}
+173:     if has_event_sp(scenario):
+174:         sp_events['initial']=event_charge(scenario,skill,max(0,skill['sp_cost']-initial_sp),
+175:             sp_rate,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
+176:         initial=sp_events['initial']['seconds']
+177:         if duration is not None:
+178:             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+179:             sp_events['cycle']=event_charge(scenario,skill,skill['sp_cost'],sp_rate,normal_interval,
+180:                 stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration,resume=resume)
+181:             recharge=sp_events['cycle']['seconds']
+182:         else:recharge=None
+183:     cycle=(duration+recharge) if duration is not None and recharge is not None else None
+184:     placed_components=full.get('components',[])
+185:     if not placed_components and full.get('timing',{}).get('streams'):
+186:         times=full['timing']['streams'][0]['times_seconds']
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/estimate.py:198-207 SHA256=c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a ---
+198:     if cycle is not None and cycle>0:
+199:         resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+200:         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
+201:         normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
+202:             target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
+203:         if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):
+204:             normal_hits=0
+205:             normal.streams=[]
+206:         normal_damage=normal_healing=0
+207:         if operator=='kaltsit':normal_healing=normal_hits*stats['attack']*min(1,healing_targets)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/offline_scope.py:1-14 SHA256=060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9 ---
+1: """Product scope: stable offline estimates; combat-dependent relics are reference.
+2: 
+3: Pinned effects stay intact. This policy decides whether the public calculator
+4: uses them; exclusion is not a statement that the in-game effect is absent.
+5: """
+6: 
+7: REFERENCE_KINDS = {'received_sp', 'event_sp', 'deployment_hp_loss', 'first_damage_scale',
+8:     'barrier_on_deploy_ratio', 'evasion_chance', 'shield_layers', 'status_duration_delta',
+9:     'incoming_element_resistance'}
+10: COMBAT_CONDITIONS = {'current_hp_ratio', 'adjacent_allies', 'deployed_casters',
+11:     'skill_cast_stacks', 'deployed_seconds', 'near_protection_point', 'blocked_enemies',
+12:     'active_other_aura_sources', 'deployment_hp_ratio', 'deployment_loss_unused', 'enemy_first_damage_unused'}
+13: # Full-item scripts whose required triggers/state depend on actual combat.
+14: # Fixed cast/ammunition effects and confirmed persistent counters stay eligible.
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/offline_scope.py:34-47 SHA256=060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9 ---
+34: 
+35: 
+36: def partition(entry, identity):
+37:     relic_id = entry.get('relic_id', identity)
+38:     active, reference = [], []
+39:     for effect in entry['effects']:
+40:         (reference if reference_effect(effect, relic_id) else active).append(effect)
+41:     pending, reference_pending = [], []
+42:     for message in entry['pending']:
+43:         (reference_pending if relic_id in REFERENCE_RELIC_IDS or message in REFERENCE_PENDING else pending).append(message)
+44:     return active, reference, pending, reference_pending
+45: 
+46: 
+47: def active_effects(entry, identity):
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/amiya_continuous_reference.py:5-21 SHA256=df85b088d8f96b2c130ff8420acfe275b109b94102444cd7d102ae34833c9b24 ---
+5: def source_state(scenario):
+6:     if (scenario['operator'] != 'char_002_amiya' or scenario['skill'] != 1 or
+7:             scenario.get('timing_mode', 'frames') != 'continuous'):
+8:         return None
+9:     options = scenario.get('timing', {})
+10:     lifetime = options.get('target_disappears_seconds')
+11:     lifetime = float(lifetime) if lifetime is not None else None
+12:     # Keep the established numeric life0 path unchanged. Its scope is already
+13:     # excluded by the existing ordinary attack and natural-SP reference model.
+14:     if lifetime == 0 and options.get('target_disappears_seconds') == 0:
+15:         return None
+16:     if lifetime == 0 or options.get('target_windows') == []:
+17:         return 'empty'
+18:     if (lifetime is not None and lifetime > 0) or options.get('target_windows'):
+19:         return 'unbound'
+20:     return None
+21: 
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/amiya_continuous_reference.py:73-85 SHA256=df85b088d8f96b2c130ff8420acfe275b109b94102444cd7d102ae34833c9b24 ---
+73:         'per_hit_damage_reference': components[0]['per_hit'] if components else None,
+74:         'parameter_clock_reference': clock,
+75:         'cast_reference': reference, 'window_reference': observed,
+76:         'recharge_reference': normal.get('amiya_continuous_reference') if normal else None,
+77:         'natural_sp_rate_parameter': rate, 'required_sp_parameter': cost,
+78:         'natural_only_recharge_seconds_reference': cost / rate if rate > 0 else None,
+79:         'attack_sp_per_attack_parameter': attack_credit,
+80:         'attack_sp_enabled_in_reference': bool(scenario.get('continuous_attacks', True)),
+81:         'actual_acquisition_times_seconds': None, 'actual_impact_times_seconds': None,
+82:         'actual_recharge_seconds': None, 'actual_cycle_seconds': None,
+83:         'native_clock_binding_verified': False,
+84:         'initial_scope': 'existing independent pre-cast reference unchanged',
+85:         'source_commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/sp_events.py:85-96 SHA256=b278c18d14e152f8c53320f98074b2823fe407b7c6b59ed918f77728ea3a1d9a ---
+85:     sp_type = skill['sp_type']
+86:     if sp_type == 'INCREASE_WHEN_TAKEN_DAMAGE' and finite(
+87:             scenario.get('incoming_attack_interval', 0), '受击间隔', 3600) > 0:
+88:         raise ValueError('当前技力使用分类事件表，请将incoming_attack_interval留为0，避免重复计入同一攻击。')
+89:     rate = max(0, rate) if sp_type == 'INCREASE_WITH_TIME' else 0
+90:     native_attack = skill['sp_increment'] if sp_type == 'INCREASE_WHEN_ATTACK' else attack_sp
+91:     native_attack += sum(r['value'] for r in scenario.get('_relic_rules', []) if r['kind'] == 'attack_sp')
+92:     received = {kind: sum(r['value'] for r in scenario.get('_relic_rules', [])
+93:                          if r['kind'] in SP_RULE_KINDS and not r.get('token_only') and r['event_type'] == kind)
+94:                 for kind in EVENT_TYPES}
+95:     native_incoming = skill['sp_increment'] if sp_type == 'INCREASE_WHEN_TAKEN_DAMAGE' else 0
+96:     events = []
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/sp_events.py:128-139 SHA256=b278c18d14e152f8c53320f98074b2823fe407b7c6b59ed918f77728ea3a1d9a ---
+128:     config['_deployment_initial'] = initial
+129:     timeline = AttackTimeline({**scenario, 'timing': config}, normal=True, offset=origin)
+130:     stream = None
+131:     attacks = scenario.get('continuous_attacks', True)
+132:     if (native_attack > 0 and attacks) or wait_next_attack:
+133:         step = cadence(interval) / FPS if framed else interval
+134:         limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2
+135:         stream = timeline.attacks(max(0, 3600 - origin) if wait_next_attack else horizon, interval, speed, attribute_speed=attribute_speed, limit=limit)
+136:         if attacks and native_attack > 0:
+137:             times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream['times_seconds']]
+138:             events.extend((time + tick, native_attack, 'outgoing_attack', 0)
+139:                           for time in times if time >= blocked - 1e-9)
+--- 6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0:rouge/sp_events.py:171-181 SHA256=b278c18d14e152f8c53320f98074b2823fe407b7c6b59ed918f77728ea3a1d9a ---
+171:         ready = align(remaining) if remaining <= 3600 else None
+172:     if ready is not None and ready > max(0, 3600 - origin):
+173:         ready = None
+174:     if ready is not None and wait_next_attack:
+175:         # A next-attack skill requires another legal attack slot after SP credit.
+176:         starts = [f / FPS for f in stream['start_frames']] if framed else [
+177:             max(0, t - interval) for t in stream['times_seconds']]
+178:         ready = next((t for t in starts if t >= ready - 1e-9), None) if attacks else None
+179:     if ready is not None and not initial and framed:
+180:         ready = max(ready, math.ceil(finite(config.get('post_skill_lock_frames', 0), '技能结束硬直帧')) / FPS)
+181:     if ready is not None and ready > max(0, 3600 - origin):

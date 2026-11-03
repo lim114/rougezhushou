@@ -1,0 +1,78 @@
+{
+  "section": 247,
+  "title": "种子培育零件来源与下次探索黄色襁褓对照",
+  "remaining_item": "P3加工品来源与跨探索奖励资格条件",
+  "new_capability": "30零件+4明确黄色襁褓原ID+9同组待证变体独立比较；六羽蛇后续蓝色支援各自原choice指针、常规/通过区域数条件与当前培育分开，秘境行商入口联动原文资料",
+  "limitations": [
+    "黄色奖励发生于下次常规探索，不将蓝色支援立即加本局",
+    "完成区域数不是当前层或最高层；培育完成声明不证明实收",
+    "种子实际消耗件数、实际成功、当前变体、下一局状态及服务器池未知",
+    "13黄色组引用不冒充全部14legacy来源；原Windows/game未验收"
+  ],
+  "files": [
+    "research/p3-event-continuation/seed/README.md",
+    "research/p3-event-continuation/seed/cradle-source.wiki",
+    "research/p3-event-continuation/seed/first-tests.txt",
+    "research/p3-event-continuation/seed/seed-source-fragment.html",
+    "research/p3-event-continuation/seed/selected-seed-original.json",
+    "research/p3-event-continuation/seed/source-receipt.json",
+    "rouge/data/seed-cultivation-reference.json",
+    "rouge/node_catalog_view.py",
+    "rouge/seed_cultivation_planning.py",
+    "rouge/seed_cultivation_view.py",
+    "scripts/build_seed_cultivation_reference.py",
+    "scripts/verify_cloud.py",
+    "tests/test_seed_cultivation_planning.py",
+    "verification/section-247/tests.txt",
+    "verification/section-247/validation.json"
+  ],
+  "source_evidence": [
+    "固定434599培育室黄色/蓝色定义、原legacy完整14记录中明确黄色13组、原六force_add_choice直接绑定",
+    "14种子旗标零件与6文档类候选、2特殊来源待证/8不符完整分区"
+  ],
+  "acceptance": [
+    "30必要模型/实际Qt入口/原件资料联动检查通过",
+    "保持同名原ID及后续指针，宿主刷新保留独立模式/件数/通过区域声明"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:35:43.629619+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "e2a0552b23a76fd6e0bed67aecd0de3995fb5253",
+  "required_raw_sha256": {
+    "research/p3-event-continuation/seed/README.md": "fa515ac6bbef7cf13d7286377c6e2b1d4cc084c81de52a8da9ef5474892f2be3",
+    "research/p3-event-continuation/seed/cradle-source.wiki": "b421de4188ce57c17b068ef6e2a673a801dada6224956baa417d06a779ad56a6",
+    "research/p3-event-continuation/seed/first-tests.txt": "764105e98fae5ed3d1443aaae21fadb7e9809ad45d45330a8912c88d359ced02",
+    "research/p3-event-continuation/seed/seed-source-fragment.html": "a2039db849ab378dc25b3f186cc72e1180dfec46688808cb923c8cf5da613a03",
+    "research/p3-event-continuation/seed/selected-seed-original.json": "b4cb5867e7234b9fed01bd173a5a2462685ddbcc2b9a7156b60eeee241adeb99",
+    "research/p3-event-continuation/seed/source-receipt.json": "d43cbb88a295b97af83f112b95d1da029d9a19fc899b11ce32be7c27bab469ae",
+    "rouge/data/seed-cultivation-reference.json": "97b4813cd81c07900bf646a357c4cd98b7fe66881a6333da53db32878c2c21b9",
+    "rouge/node_catalog_view.py": "b552913339077f108dfb4de1de2b0f319246b8e3a7bc2fd31162d41708d326bf",
+    "rouge/seed_cultivation_planning.py": "f46916a5d150cb4848adf2f97cf470ccc97861e35cc26329cb4499729dc163cc",
+    "rouge/seed_cultivation_view.py": "ab7364e43f87c521c201df5264715528406c3063323c25b5504c755c9f3aca23",
+    "scripts/build_seed_cultivation_reference.py": "86d1925073064450a27ddbb64c6a07e2d997aa0396c66836e505099fc703e782",
+    "scripts/verify_cloud.py": "05ab02492316498cf3f54d9ba751c044a8eddd4c2bdc347f2437c90616b86e38",
+    "tests/test_seed_cultivation_planning.py": "6661ae212a980ad8d6049d42b84d336a2eff2f3f6132804de68faf03555774ce",
+    "verification/section-247/tests.txt": "dc9ef2f5f4d21cf4745917d8e6291c7844cf954e38ac121c136e95ac9a970f23",
+    "verification/section-247/validation.json": "cfbd8c1d4b3581bada76673fda4099dd3e1b16a051b603fa17b0a0cb59ccb1ea"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_seed_cultivation_planning",
+      "tests.test_node_catalog_view",
+      "tests.test_original_destinations"
+    ],
+    "tests_run": 30,
+    "passed": 30,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

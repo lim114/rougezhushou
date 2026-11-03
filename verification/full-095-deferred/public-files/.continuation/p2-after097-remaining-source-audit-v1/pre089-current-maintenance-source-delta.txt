@@ -1,0 +1,10 @@
+--- pre089-frozen
++++ current-maintenance095
+@@ -370,6 +370,7 @@
+             state['inventory_verified']=True
+             state['inventory_confirmed_at']=(state['relic_icon_memory'] or {}).get('captured_at') if relics.get('memory_replay') else captured_at
+         crew=observed.get('crew_count')
++        if isinstance(crew,bool):crew=None
+         promoted_ids=set()
+         if crew is not None:
+             state['crew_count']=crew

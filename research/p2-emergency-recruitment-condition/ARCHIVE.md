@@ -1,0 +1,3 @@
+第58节原始来源与完整公共前后返回、独立审阅及当前root集成验证分开归档。archivable-artifacts为44个明确公开final文件，SHA256当前逐项核验；其外部source绝对路径仅表示原研究位置，archive_relative为此目录对应文件。主矩阵125MiB与独立完整controls采用确定gzip无损保存，原解压SHA和字节在compressed-public-matrices.json及independent压缩证明内；原pretty JSON不复制。
+
+root57之后相关48运行47通过/1历史skip、精选792运行791通过/1历史skip；外部冻结55主6192+独立2304公开调用不冒称新HEAD full验收。只有query条件资格变化，只有两个已确认producer枚举可确定0/1，未知复用原None pending。旧ValueError建议仅历史方案，SECTION58_NOTE为最终scope。Wine/实际UI在60组末执行，原生Windows/game未验证。

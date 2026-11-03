@@ -1,5 +1,6 @@
 """Attribute and repeat-cycle estimates, with explicit conditions and unknowns."""
 import math
+from .condition_inputs import read_continuous_attacks
 from .catalog import catalog
 from .enemy_environment import damage_factor
 from .timing import AttackTimeline,charge_seconds,frame_time,FPS,finite,phase_totals,has_periodic_sp
@@ -15,7 +16,9 @@ def build_estimate(scenario,result,attributes,compute_skill):
     effects=result['applied_effects']
     def total(kind):return sum(e['value'] for e in effects if e['kind']==kind)
     def nonnegative(field,default):
-        value=float(scenario.get(field,default))
+        value=scenario.get(field,default)
+        if field not in ('healing_targets','deployment_elapsed_seconds') and isinstance(value,bool):raise ValueError(field+' 不接受布尔值；请使用数值。')
+        value=float(value)
         if not math.isfinite(value) or value<0:raise ValueError(f'{field} 需要有限非负数。')
         return value
     elapsed=nonnegative('deployment_elapsed_seconds',0)
@@ -44,6 +47,7 @@ def build_estimate(scenario,result,attributes,compute_skill):
             talent_sp+=bb['sp'];redeploy_scale*=bb['respawn_time']
             talent_notes.append('开放性开局：自身初始技力及下次再部署时间')
         if operator=='silverash' and talent['name']=='雪境先驱':
+            if isinstance(scenario.get('deployment_elapsed_seconds'),bool):raise ValueError('deployment_elapsed_seconds 不接受布尔值；请使用数值。')
             defense_flat+=bb['def']*(2 if elapsed>=bb['interval'] else 1)
             talent_notes.append('雪境先驱：自身防御按在场时间计算；被动生命回复不混入技能治疗量')
     stats={
@@ -84,12 +88,16 @@ def build_estimate(scenario,result,attributes,compute_skill):
     if unconfirmed:
         notes.insert(0,'尚未从画面确认：'+ '、'.join(unconfirmed)+'；当前使用清楚标出的数据档案预览条件，不代表本局真实面板。')
     if scenario.get('module_id'):
-        notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
+        module=next(m for m in profile['modules'] if m['id']==scenario['module_id'])
+        if elite>=module['unlock_elite'] and level>=module['unlock_level']:
+            notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
+        else:
+            notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
     elif skill['sp_type']=='INCREASE_WHEN_ATTACK':
-        if scenario.get('continuous_attacks',True) or has_periodic_sp(scenario):
+        if read_continuous_attacks(scenario) or has_periodic_sp(scenario):
             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
             initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
@@ -102,8 +110,7 @@ def build_estimate(scenario,result,attributes,compute_skill):
         full_scenario.update(activation_count=1,deployment_stacks=0)
         notes.append('御敌的锋锐单次技能仅计本体一次；受益干员部署触发在情景分项中另列。')
     if operator=='mechanist' and skill_index==3:
-        full_scenario['charge_count']=min(1,int(scenario.get('charge_count',0)))
-        notes.append('单次技能最多计一次结构性原理冲锋；是否命中由所选情景决定。')
+        full_scenario['charge_count']=0  # Collision time and full-cast count are unverified.
     full=compute_skill(full_scenario)
     damage=full['total_damage']
     healing=0
@@ -120,10 +127,19 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 hit*=1+sum(e['value'] for e in effects if e['kind']=='damage_taken' and e.get('damage_type')=='physical')
                 hit*=damage_factor(scenario,'physical')
                 damage=full['total_damage']+math.floor(duration/full['interval_seconds']+1e-9)*hit
-                if scenario.get('timing_mode','frames')=='frames':
-                    timeline=AttackTimeline(scenario,normal=True)
+                if (scenario.get('timing_mode','frames')=='frames' or
+                        scenario.get('timing',{}).get('target_disappears_seconds')==0 or
+                        scenario.get('timing',{}).get('target_windows')==[]):
+                    # Only an explicit, statically matched active-S2 body
+                    # segment drives this manual-duration ordinary subtotal.
+                    # Without that choice retain the preexisting normal preview;
+                    # neither path locates shield breaks or the real skill end.
+                    from .animation_reference import descriptor as animation_descriptor
+                    chosen=animation_descriptor(operator,skill_index,scenario.get('timing',{}))
+                    active_reference=bool(chosen and chosen.get('static_selection_verified'))
+                    timeline=AttackTimeline(scenario,normal=not active_reference)
                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
-                    events=stream['emitted_times_seconds']
+                    events=stream.get('emitted_times_seconds',stream['times_seconds'])
                     damage=full['total_damage']+len(events)*hit
                     full['components']=[{'name':'指定破屏爆炸','damage_type':'magic','total':full['total_damage']},
                         {'name':'协防术式期间普通攻击','damage_type':'physical','total':len(events)*hit,'times_seconds':events}]
@@ -134,25 +150,32 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 notes.append('协防术式依赖本体/结构性原理屏障破碎与弹药消耗，单次完整技能总伤和持续时间未知。可指定本次技能结束时间进行条件估算；情景爆炸伤害另列。')
         else:duration=full.get('execution_seconds',full.get('ammo_rounds',skill['values']['attack@trigger_time'])*full['interval_seconds'])
     if operator=='kaltsit' and skill_index==2:
-        healing=full['attack']*skill['values']['attack@heal_scale']*full['hits']*healing_targets
+        healing=full['attack']*skill['values']['attack@heal_scale']*full.get('healing_hits',full['hits'])*healing_targets
         notes.append('治疗量为满额潜在治疗，未扣过量治疗；医者丰碑的进入范围增益另行建模。')
     if operator=='kaltsit' and skill_index in (1,3):
         maximum=2 if skill_index==3 else 1
         healing=full['total_healing']*min(maximum,healing_targets)
         notes.append(f'{skill["name"]}每次治疗至多 {maximum} 个目标；治疗量未扣过量治疗。')
+    if skill['duration_type']=='AMMO' and not (operator=='mechanist' and skill_index==2) and duration is None:
+        # A finite target supply can leave ammunition unused. Its placed
+        # observation remains valid, but is not a complete cast total.
+        if damage:damage=None
+        if healing:healing=None
+        notes.append('供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。')
     window_healing=0
     if operator=='kaltsit':
         if skill_index==2:
-            window_healing=result['attack']*skill['values']['attack@heal_scale']*result['hits']*healing_targets
+            window_healing=result['attack']*skill['values']['attack@heal_scale']*result.get('healing_hits',result['hits'])*healing_targets
         else:window_healing=result['total_healing']*min(2 if skill_index==3 else 1,healing_targets)
     window_seconds=nonnegative('window_seconds',duration or 0)
-    if duration is not None:window_seconds=min(window_seconds,duration)
+    finite_ammo_window='window_seconds' in scenario and (operator,skill_index) in (('mechanist',1),('kaltsit',2))
+    if duration is not None and not finite_ammo_window:window_seconds=min(window_seconds,duration)
     if scenario.get('timing_mode','frames')=='frames':
         if initial is not None:initial=frame_time(initial)/FPS
         if duration is not None:duration=frame_time(duration)/FPS
         lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))
         if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')
-        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (scenario.get('continuous_attacks',True) or has_periodic_sp(scenario)):
+        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(scenario) or has_periodic_sp(scenario)):
             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))
         if recharge is not None:recharge=frame_time(recharge+lockout)/FPS
@@ -194,8 +217,9 @@ def build_estimate(scenario,result,attributes,compute_skill):
     if cycle is not None and cycle>0:
         resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
-        normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])['times_seconds'])
-        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):
+        normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
+            target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
+        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not read_continuous_attacks(scenario):
             normal_hits=0
             normal.streams=[]
         normal_damage=normal_healing=0
@@ -219,7 +243,15 @@ def build_estimate(scenario,result,attributes,compute_skill):
             cycle_damage=inside_damage+normal_damage;cycle_healing=inside_healing+normal_healing
         cycle_dps=cycle_damage/cycle;cycle_hps=cycle_healing/cycle
         result.setdefault('timing',normal.output())['recharge_streams']=normal.streams
-    return {'base_stats':stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
+    from .panel_native_bridge import normal_terms, first_three_skill_terms
+    native_normal=normal_terms(attributes,scenario['base_attack'],
+        hp_multiplier=hp_bonus+total('hp_pct'),attack_multiplier=total('attack_pct'),
+        defense_multiplier=defense_bonus+total('defense_pct'),defense_flat=defense_flat,
+        resistance_addition=total('resistance_flat'),
+        attack_speed_addition=sum(e['value'] for e in effects if e['kind']=='attack_speed'))
+    native_skill=first_three_skill_terms(scenario,attributes,effects)
+    return {'_panel_native_terms':{'normal':native_normal,'skill':native_skill},
+        'base_stats':stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
         'name':skill['name'],'initial_seconds':initial,'recharge_seconds':recharge,'cycle_seconds':cycle,
         'duration_seconds':duration,'total_damage':damage,'total_healing':healing,
         'phase_damage':phase_damage,'phase_healing':phase_healing,

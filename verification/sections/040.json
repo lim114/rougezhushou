@@ -1,0 +1,40 @@
+{
+  "section": 40,
+  "completion_ref": "p2-section-040",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T19:33:31.045760+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_empty_enemy_scope tests.test_timing tests.test_gummy_cooking_clock tests.test_haruka_event_reference tests.test_next_attack_healing_reference tests.test_charge_reference tests.test_damage tests.test_attack_speed_bounds_065 tests.test_ammo_counter_055 -q",
+      "run": 126,
+      "passed": 126,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 600,
+      "passed": 599,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 11,
+  "failed_attempts": 1,
+  "integration_launcher_error": "initial root command named three nonexistent test modules; corrected to actual *_clock/_065/_055 filenames, 126 checks passed; not a production or mechanism failure",
+  "public_empty_target_matrix": {
+    "cases": 174,
+    "actual_damage_zero": true,
+    "known_cast_phase_window_cycle_damage_zero": true
+  },
+  "source_receipt": "research/p2-empty-enemy-scope/source-receipt.json",
+  "native_windows": false,
+  "ui_integration_correction": {
+    "issue": "Actual MainWindow ignored timing JSON in continuous mode; existing calculator zero-life source guard was not reached",
+    "change": "Parse supplied timing JSON for both timing modes; animation selection remains frame-specific",
+    "full_validation_repeat_required": true,
+    "initial_ui_receipts": "wine-ui-040-initial.json and wine-ui-040.json",
+    "verification_driver_error": "Initial driver also failed to restore per-skill timing JSON after switching operator; corrected using actual preview state contract"
+  }
+}

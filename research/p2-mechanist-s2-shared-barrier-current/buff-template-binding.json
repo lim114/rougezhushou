@@ -1,0 +1,629 @@
+{
+  "source": "config/buff_template_holder.ab",
+  "source_sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+  "source_bytes": 2022247,
+  "manifest_version": "26-09-13-15-28-10-30688348",
+  "parse_stats": [
+    {
+      "file": "CAB-7983df61b3ae63c96fb4e076fc3d80af",
+      "objects": 2
+    }
+  ],
+  "templates": [
+    {
+      "templateKey": "mcnist_s_2_shield",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_attributeType": "MAX_HP",
+                  "_scaleVar": "hp_ratio",
+                  "$type": "Torappu.Battle.Action.Nodes+AssignAttributeAsDynamicVarToBB"
+                },
+                {
+                  "_blackboardKey": "cancel_all",
+                  "_value": 0.0,
+                  "_copyFromKey": null,
+                  "_assignString": false,
+                  "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                }
+              ]
+            }
+          },
+          {
+            "key": 10,
+            "value": {
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_filterDamageType": false,
+                  "_damageMask": "PHYSICAL_AND_MAGICAL",
+                  "_useDynamicVar": true,
+                  "_allowNegativeDynamicVar": false,
+                  "_useFixedValue": false,
+                  "_showDamageNumber": false,
+                  "_specifyBlockEffect": null,
+                  "_useSource": false,
+                  "_sourceType": "SOURCE",
+                  "_filterApplyWay": false,
+                  "_applyWayFilter": "NONE",
+                  "_showShieldUI": true,
+                  "$type": "Torappu.Battle.Action.Nodes+BlockDamage"
+                },
+                {
+                  "_conditionNode": {
+                    "_targetType": "BUFF_OWNER",
+                    "_anotherBuff": false,
+                    "_buffKey": null,
+                    "_blackboardKey": "cancel_all",
+                    "_blackboardKeyFromBb": null,
+                    "_valueToCompare": 0,
+                    "_anotherKeyToCompare": null,
+                    "_condType": "LE",
+                    "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                  },
+                  "_succeedNodes": [
+                    {
+                      "_targetType": "BUFF_OWNER",
+                      "_anotherBuff": false,
+                      "_buffKey": null,
+                      "_blackboardKey": "dynamic",
+                      "_blackboardKeyFromBb": null,
+                      "_valueToCompare": 0,
+                      "_anotherKeyToCompare": null,
+                      "_condType": "LE",
+                      "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                    },
+                    {
+                      "_conditionsNode": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_condType": "LE",
+                          "_shieldValue": 0.0,
+                          "_shieldKey": "invalid",
+                          "_enableFilterSource": true,
+                          "_filterSource": "BUFF_SOURCE",
+                          "_filterHostOrToken": false,
+                          "_passIfNoSource": true,
+                          "$type": "Torappu.Battle.Action.Nodes+FilterByShieldValue"
+                        }
+                      ],
+                      "_succeedNodes": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_condType": "LE",
+                          "_shieldValue": 0.0,
+                          "_shieldKey": "invalid",
+                          "_enableFilterSource": true,
+                          "_filterSource": "BUFF_OWNER",
+                          "_filterHostOrToken": false,
+                          "_passIfNoSource": true,
+                          "$type": "Torappu.Battle.Action.Nodes+FilterByShieldValue"
+                        },
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 1.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_reason": "BLOCKED",
+                          "$type": "Torappu.Battle.Action.Nodes+CancelModifier"
+                        }
+                      ],
+                      "_failNodes": null,
+                      "_isAnd": false,
+                      "$type": "Torappu.Battle.Action.Nodes+IfConditions"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_conditionNode": {
+                        "_targetType": "BUFF_SOURCE",
+                        "_buffKeys": [
+                          "mcnist_s_2"
+                        ],
+                        "isAND": true,
+                        "_loadFromBlackboard": false,
+                        "_checkBuffSource": false,
+                        "_buffSourceType": "BUFF_SOURCE",
+                        "_checkSourceHost": false,
+                        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff"
+                      },
+                      "_succeedNodes": [
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 1.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_useAbilitySourceSide": true,
+                          "_sourceType": "BUFF_SOURCE",
+                          "_targetType": "BUFF_OWNER",
+                          "_damageType": "MAGICAL",
+                          "_sourceApplyWay": "NONE",
+                          "_targetOptions": {
+                            "targetSide": "ENEMY",
+                            "targetMotion": "ALL",
+                            "targetCategory": "NONE,DEFAULT",
+                            "enableAdvancedOptions": true,
+                            "ignoreTargetFree": false,
+                            "ignoreAllyTargetFree": false,
+                            "ignoreHealFree": false,
+                            "ignoreMotionMode": false,
+                            "ignoreTargetSide": false,
+                            "excludeSomeAbnormalFlags": false,
+                            "containSomeAbnormalFlags": false,
+                            "excludeAbnormalFlag": "STUNNED",
+                            "containAbnormalFlag": "STUNNED",
+                            "purposeMask": "NONE",
+                            "professionMask": "NONE",
+                            "checkUnitType": false,
+                            "unitTypeMask": "NONE",
+                            "onlyIgnoreSomeOfTargetFreeCase": false,
+                            "abnormalFlag": "STUNNED",
+                            "abnormalCombo": "SLEEPING"
+                          },
+                          "_excludeTarget": false,
+                          "_rangeId": "",
+                          "_useRadius": true,
+                          "_radius": 0.0,
+                          "_useAbilitySelector": false,
+                          "_abilityName": null,
+                          "_damageScale": "atk_scale",
+                          "_buffs": [
+                            {
+                              "attributes": {
+                                "abnormalFlags": [],
+                                "abnormalImmunes": [],
+                                "abnormalAntis": [],
+                                "abnormalCombos": [],
+                                "abnormalComboImmunes": [],
+                                "attributeModifiers": []
+                              },
+                              "buffKey": "disarmed_combat",
+                              "loadFromDB": true,
+                              "isDurableBuff": false,
+                              "isDamageMissable": false,
+                              "isSilenceable": false,
+                              "isStunnable": false,
+                              "isFreezable": false,
+                              "isLevitatable": false,
+                              "isGroundBoundable": false,
+                              "statusResistable": "AUTOMATIC",
+                              "templateKey": "empty",
+                              "disableOverride": false,
+                              "overrideKey": null,
+                              "overrideType": "DEFAULT",
+                              "maxStackCnt": 1,
+                              "refreshRemainingTimeWhenStackMax": false,
+                              "clearAllStackCntWhenTimeUp": false,
+                              "maxValidStackCnt": -1,
+                              "independentCharacterSource": false,
+                              "overrideEffectKey": null,
+                              "overrideOnEventPriority": false,
+                              "onEventPriority": "DEFAULT",
+                              "audioSignal": null,
+                              "lifeTimeType": "LIMITED",
+                              "takeSnapshotWhenExtend": false,
+                              "durationKey": null,
+                              "remainingTimeKey": null,
+                              "lifeTime": 0.0,
+                              "triggerLifeType": "IMMEDIATELY",
+                              "triggerCnt": 0,
+                              "triggerInterval": -1.0,
+                              "waitFirstTriggerInterval": true,
+                              "firstTriggerInterval": -1.0,
+                              "priority": -1,
+                              "priorityBBKeys": [],
+                              "stripBlackboardParamsWithBuffKey": false,
+                              "blackboard": [],
+                              "enableInitDirectionFromSource": false
+                            }
+                          ],
+                          "_attackType": "NORMAL",
+                          "_createEffect": false,
+                          "_hitEffectKey": null,
+                          "_hitEffectUseSourceFaceTo": false,
+                          "_useDamageFromBB": false,
+                          "_damageKey": "value",
+                          "_isNoSourceDamage": false,
+                          "_checkTargetAlive": false,
+                          "_modifierKey": "",
+                          "_maxTargetCountKey": "",
+                          "_filterType": "ALL",
+                          "$type": "Torappu.Battle.Action.Nodes+AOEDamage"
+                        },
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 0.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_sourceType": "BUFF_OWNER",
+                          "_effectKey": "mcnist_skill_02_buff_01_end",
+                          "_useSourceFaceVactor": false,
+                          "_useSourceToTargetDirection": false,
+                          "_useConstDirection": false,
+                          "_constDirection": "UP",
+                          "_createEffectHoldBySource": false,
+                          "_createEffectConstDirectionHoldBySource": false,
+                          "_useAttackPlaybackSpeed": false,
+                          "_manualSetPlaybackSpeed": false,
+                          "_blackboardKey": "",
+                          "_playbackSpeed": 1.0,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateEffect"
+                        },
+                        {
+                          "_target": "BUFF_OWNER",
+                          "_audioSignal": "mcnist_s_2_shield",
+                          "$type": "Torappu.Battle.Action.Nodes+PlayAudio"
+                        }
+                      ],
+                      "_failNodes": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_sourceType": "BUFF_OWNER",
+                          "_effectKey": "mcnist_skill_02_buff_01_end_02",
+                          "_useSourceFaceVactor": false,
+                          "_useSourceToTargetDirection": false,
+                          "_useConstDirection": false,
+                          "_constDirection": "UP",
+                          "_createEffectHoldBySource": false,
+                          "_createEffectConstDirectionHoldBySource": false,
+                          "_useAttackPlaybackSpeed": false,
+                          "_manualSetPlaybackSpeed": false,
+                          "_blackboardKey": "",
+                          "_playbackSpeed": 1.0,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateEffect"
+                        }
+                      ],
+                      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_targetType": "BUFF_SOURCE",
+                      "_blackboardKey": "cnt",
+                      "$type": "Torappu.Battle.Action.Nodes+AssignAmmoSkillRemainingCountToBB"
+                    },
+                    {
+                      "_conditionNode": {
+                        "_targetType": "BUFF_OWNER",
+                        "_anotherBuff": false,
+                        "_buffKey": null,
+                        "_blackboardKey": "cnt",
+                        "_blackboardKeyFromBb": null,
+                        "_valueToCompare": 0,
+                        "_anotherKeyToCompare": null,
+                        "_condType": "GT",
+                        "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                      },
+                      "_succeedNodes": [
+                        {
+                          "_targetType": "BUFF_SOURCE",
+                          "_buffKeys": [
+                            "mcnist_s_2"
+                          ],
+                          "isAND": true,
+                          "_loadFromBlackboard": false,
+                          "_checkBuffSource": false,
+                          "_buffSourceType": "BUFF_SOURCE",
+                          "_checkSourceHost": false,
+                          "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff"
+                        },
+                        {
+                          "_targetType": "BUFF_SOURCE",
+                          "$type": "Torappu.Battle.Action.Nodes+CharSkillManualTriggerCountEvent"
+                        },
+                        {
+                          "_buff": {
+                            "attributes": {
+                              "abnormalFlags": [],
+                              "abnormalImmunes": [],
+                              "abnormalAntis": [],
+                              "abnormalCombos": [],
+                              "abnormalComboImmunes": [],
+                              "attributeModifiers": []
+                            },
+                            "buffKey": "mcnist_s_2_shield",
+                            "loadFromDB": false,
+                            "isDurableBuff": false,
+                            "isDamageMissable": false,
+                            "isSilenceable": false,
+                            "isStunnable": false,
+                            "isFreezable": false,
+                            "isLevitatable": false,
+                            "isGroundBoundable": false,
+                            "statusResistable": "AUTOMATIC",
+                            "templateKey": "mcnist_s_2_shield",
+                            "disableOverride": false,
+                            "overrideKey": null,
+                            "overrideType": "DEFAULT",
+                            "maxStackCnt": 1,
+                            "refreshRemainingTimeWhenStackMax": false,
+                            "clearAllStackCntWhenTimeUp": false,
+                            "maxValidStackCnt": -1,
+                            "independentCharacterSource": false,
+                            "overrideEffectKey": "mcnist_skill_02_buff_01",
+                            "overrideOnEventPriority": false,
+                            "onEventPriority": "DEFAULT",
+                            "audioSignal": null,
+                            "lifeTimeType": "INFINITY",
+                            "takeSnapshotWhenExtend": false,
+                            "durationKey": null,
+                            "remainingTimeKey": null,
+                            "lifeTime": 0.0,
+                            "triggerLifeType": "IMMEDIATELY",
+                            "triggerCnt": 0,
+                            "triggerInterval": -1.0,
+                            "waitFirstTriggerInterval": true,
+                            "firstTriggerInterval": -1.0,
+                            "priority": -1,
+                            "priorityBBKeys": [],
+                            "stripBlackboardParamsWithBuffKey": false,
+                            "blackboard": [],
+                            "enableInitDirectionFromSource": false
+                          },
+                          "_buffOwner": "BUFF_OWNER",
+                          "_useSpecialBuffSource": false,
+                          "_specialBuffSource": "BUFF_SOURCE",
+                          "_isDerivedBuff": false,
+                          "_finishDerivedBuffIfParentFinish": false,
+                          "_inherateSourceProjectileFromParentBuff": false,
+                          "_hookEffectKeyFromSourceProjectile": false,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+                        }
+                      ],
+                      "_failNodes": null,
+                      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_decCntIfStack": false,
+                      "_updateOverrideMap": true,
+                      "$type": "Torappu.Battle.Action.Nodes+FinishBuff"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_reason": "BLOCKED",
+                      "$type": "Torappu.Battle.Action.Nodes+CancelModifier"
+                    }
+                  ],
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_2_mode",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_conditionNode": {
+                    "_target": "TARGET",
+                    "_direction": "DOWN",
+                    "_useBB": false,
+                    "_bbKey": "direction",
+                    "$type": "Torappu.Battle.Action.Nodes+CheckCharacterDefaultDirection"
+                  },
+                  "_succeedNodes": [
+                    {
+                      "_modeIndex": 3,
+                      "_loadModeFromBlackboard": false,
+                      "_restoreDefault": false,
+                      "_restartFSM": true,
+                      "_targetType": "BUFF_OWNER",
+                      "$type": "Torappu.Battle.Action.Nodes+SwitchMode"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_modeIndex": 2,
+                      "_loadModeFromBlackboard": false,
+                      "_restoreDefault": false,
+                      "_restartFSM": true,
+                      "_targetType": "BUFF_OWNER",
+                      "$type": "Torappu.Battle.Action.Nodes+SwitchMode"
+                    }
+                  ],
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                },
+                {
+                  "_buffKey": "mcnist_s_2_shield",
+                  "_loadFromBlackboard": false,
+                  "_decCntIfStack": false,
+                  "_updateOverrideMap": true,
+                  "_targetType": "BUFF_OWNER",
+                  "_checkBuffSource": false,
+                  "_sourceType": "BUFF_SOURCE",
+                  "_alsoClearNullSource": false,
+                  "_finishHostBuff": false,
+                  "_excludeThisBuff": false,
+                  "_decCntKey": null,
+                  "_decCnt": 1,
+                  "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById"
+                },
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                },
+                {
+                  "_sourceType": "BUFF_OWNER",
+                  "_buffKey": "mcnist_s_2_shield",
+                  "_loadFromBlackboard": false,
+                  "_decCntIfStack": false,
+                  "_updateOverrideMap": true,
+                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenBuffsById"
+                },
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                },
+                {
+                  "_sourceType": "BUFF_OWNER",
+                  "_excludeTarget": false,
+                  "_targetType": "BUFF_SOURCE",
+                  "_buffData": {
+                    "attributes": {
+                      "abnormalFlags": null,
+                      "abnormalImmunes": null,
+                      "abnormalAntis": null,
+                      "abnormalCombos": null,
+                      "abnormalComboImmunes": null,
+                      "attributeModifiers": null
+                    },
+                    "buffKey": "mcnist_s_2_shield",
+                    "loadFromDB": false,
+                    "isDurableBuff": false,
+                    "isDamageMissable": false,
+                    "isSilenceable": false,
+                    "isStunnable": false,
+                    "isFreezable": false,
+                    "isLevitatable": false,
+                    "isGroundBoundable": false,
+                    "statusResistable": "AUTOMATIC",
+                    "templateKey": "mcnist_s_2_shield",
+                    "disableOverride": false,
+                    "overrideKey": null,
+                    "overrideType": "DEFAULT",
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": false,
+                    "clearAllStackCntWhenTimeUp": false,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": false,
+                    "overrideEffectKey": "mcnist_skill_02_buff_01",
+                    "overrideOnEventPriority": false,
+                    "onEventPriority": "DEFAULT",
+                    "audioSignal": null,
+                    "lifeTimeType": "INFINITY",
+                    "takeSnapshotWhenExtend": false,
+                    "durationKey": null,
+                    "remainingTimeKey": null,
+                    "lifeTime": 0.0,
+                    "triggerLifeType": "IMMEDIATELY",
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": true,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": false,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": false
+                  },
+                  "_isDerivedBuff": false,
+                  "_onlyToFirstTarget": false,
+                  "_excludeByBuffKey": false,
+                  "_excludeBuffKey": null,
+                  "_finishDerivedBuffIfParentFinish": false,
+                  "$type": "Torappu.Battle.Action.Nodes+CreateBuffToToken"
+                },
+                {
+                  "_buff": {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": []
+                    },
+                    "buffKey": "mcnist_s_2_shield",
+                    "loadFromDB": false,
+                    "isDurableBuff": false,
+                    "isDamageMissable": false,
+                    "isSilenceable": false,
+                    "isStunnable": false,
+                    "isFreezable": false,
+                    "isLevitatable": false,
+                    "isGroundBoundable": false,
+                    "statusResistable": "AUTOMATIC",
+                    "templateKey": "mcnist_s_2_shield",
+                    "disableOverride": false,
+                    "overrideKey": null,
+                    "overrideType": "DEFAULT",
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": false,
+                    "clearAllStackCntWhenTimeUp": false,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": false,
+                    "overrideEffectKey": "mcnist_skill_02_buff_01",
+                    "overrideOnEventPriority": false,
+                    "onEventPriority": "DEFAULT",
+                    "audioSignal": null,
+                    "lifeTimeType": "INFINITY",
+                    "takeSnapshotWhenExtend": false,
+                    "durationKey": null,
+                    "remainingTimeKey": null,
+                    "lifeTime": 0.0,
+                    "triggerLifeType": "IMMEDIATELY",
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": true,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": false,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": false
+                  },
+                  "_buffOwner": "BUFF_OWNER",
+                  "_useSpecialBuffSource": false,
+                  "_specialBuffSource": "BUFF_SOURCE",
+                  "_isDerivedBuff": false,
+                  "_finishDerivedBuffIfParentFinish": false,
+                  "_inherateSourceProjectileFromParentBuff": false,
+                  "_hookEffectKeyFromSourceProjectile": false,
+                  "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+                }
+              ]
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_modeIndex": 0,
+                  "_loadModeFromBlackboard": false,
+                  "_restoreDefault": false,
+                  "_restartFSM": true,
+                  "_targetType": "BUFF_OWNER",
+                  "$type": "Torappu.Battle.Action.Nodes+SwitchMode"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

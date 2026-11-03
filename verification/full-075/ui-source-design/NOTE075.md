@@ -1,0 +1,21 @@
+第75组窗口草案基于 root 已实测通过的070脚本，SHA `3bba0d28376165b84938906b45048f31b75d89cf6e1c4d1e5246d17f6272f9b3`。原841条检查、87技能、应急招募的中文来源与待确认语义保留；builder通过逆向重建严格比较旧脚本全文，仅允许新增代码、计数包装及本轮输出文件名变化。
+
+新增设计614项：71有106项，72有280项，73有72项，74有108项，75有48项。预期总1455项是静态设计数量，实际计数和GUI通过只能由root执行后生成的 `.compat/wine-ui-075.json` 证明。本作者不运行Wine/GUI，不访问游戏、聊天或私人state，不改tracked。
+
+71没有分队selector；在既有临时隔离MainWindow中注入标注的synthetic public config，操作真实按钮、读取summary和difficulty preset。七个强化、十五基础、effect_verified真假、gate前/达到3/6/9及当前mechanist E0/E1/E2均不推账户解锁或条件实际激活。明确确认的旧属性作用保留；finally恢复整run state、观察资料、run-training checkbox、只读summary及原无confirmed difficulty时的preset。
+
+72的elapsed控件是char_1038_whitw2 owner-specific QDoubleSpinBox，两位小数0–3600，边界前用-.01；不是银灰全局同名控件。暖机计数来自真实QSpinBox。培养/潜能是既有QLabel公开观察预览；E0仅S1、在场时间不会激活不存在的头狼，S1原+1被动保留。E1/E2原interval30/26/20/16保持旧owner攻击clock参考。组件按每次owner攻击分别生成，不能把整窗口假设成单组件；独立单元到达、索敌、同目标命中及光环时钟继续未知。
+
+73的模组阶段也是只读QLabel，不虚构模组selector或空中checkbox。E1level60、E2level39/40，三个MAR-X阶段和两技能/两mode/零与正窗口展示原110%条件参数；实际空中目标、附着、组合层仍未知，参数未乘入当前伤害。
+
+74只核两条原始本体召唤途径的E2level1资格资料和当前S3自身rank原文。E0/E1的合法魂灵数量及施放声明仍接受，真实两个QSpinBox提交整数；未选S3只列共通原文且省略动态数量。模组、窗口和声明数量不推实际来源、在场或施放clock，不宣称包含全部模组/藏品途径。
+
+75操作战斗预览现有stage/enemy选择框及技术资料checkbox，两变体各12个敌人引用、默认/technical共48项。ro6_e_3_6 FOUR_STAR的1.5是原始移速符文参数，旧base×stage小计保持，不乘入有效速度；native writer、层和合成结果未知。普通变体无新块。截图只由root实际执行生成，不用设计截图冒充窗口证据。
+
+环境重启期间挂起的外部write最终409 environment_offline失败；恢复后先核实际文件再写。API预备曾因系统python缺cv2及错误单组件假设失败，已保留preparation-failures.json，使用现有.venv并纠正设计断言后通过；没有生产修改。固定73 public123源文件对应458API通过；固定74 public125源对应566API通过；另83API-only调用保留51exacterrors和16wholeJSON文本别名pairs。文本/错误类型检查从不算真实Qt控件输入。
+
+最终source已按root clean commit225cb66dc89143a3cd3a884bd6c62f47ed9d36bc导出125public文件，并逐个严格比较git blob。最后614API调用全部返回并通过同份Qt设计合同，无source漂移；full gzip SHA f3ce13a69c742bc78e8b1633781f098f412fc84338419c8f7bc485ad2c91ab28。API文本测试三处相关guard源码在74/75逐字一致，83calls保留固定74范围，不声称复跑。最终runner SHA645ebd2e90ab3aef1fa5c9318300bd5e690c5f1dd6cfb67f94ed74f355ca4f03，pendingFalse、static readyTrue；独审在同hash收尾。旧pending候选与准备失败/interim证据保留，不计为实际GUI通过。
+
+root本次实际窗口回执 `/workspace/.compat/wine-ui-075.json` SHA cde597aa4e6582b7d50fed1240d40bde62d78fdbf0d849ac1efb6c84e5951d1f 已通过：1455实际检查=旧841+新614，87技能，37.258秒，complete_ui_validation=True、source_drift=[]。新各节计数与设计106/280/72/108/48一致。root已view主窗与移速技术资料截图；作者只读该回执元信息与hash，不称自行执行或view。独审提出tuple QVariant旧证据不充分，本次真实48项stage/enemy/technical结果闭合该平台假设；没有修改645或重跑。截图/实际receipt由root自己的full075归档负责，本目录只收独立明确归属的reference。
+
+独立fixed静审已FINAL PASS，receipt SHA17ecd19cff90a80e778a981c08c6ab963de4d328244008311321f3c20f5ee667，blockers=[]。独立重建旧841全文、核125gitblobs、重查614保存API合同与root本次48选取回执，无新API/GUI/Wine执行。独立初版extractor漏36个WisdelS2显式overload=False默认，在initial-extractor-assumption075.json保留并按真实owner默认修正；没有改sealed runner。所有证据按archivable-public-manifest.json明确路径/hash/bytes归档；native Windows仍未验证。

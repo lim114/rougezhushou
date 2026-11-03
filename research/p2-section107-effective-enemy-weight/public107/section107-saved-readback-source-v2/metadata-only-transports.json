@@ -1,0 +1,75 @@
+{
+  "kind": "SAVED107_V1_TO_V2_EXACT_SOURCE_COORDINATE_TRANSPORTS",
+  "Source_only": true,
+  "runtime_executed": false,
+  "before_sha256": "d2aa4c454cc0a477a91a83c1dca80235d6e84d1dee2a321821a74c20e112fcea",
+  "after_sha256": "46289f50c61b2e3602deb4ba2393c0357bac58cb01c5ca34ff71e81f5d005489",
+  "changes": [
+    {
+      "old_start_line": 3,
+      "new_start_line": 3,
+      "before": "Bindings become usable only after real final-runner Gold, Candidate, API replay,\n",
+      "after": "Bindings become usable only after actual legacy Gold, compatible Candidate, API replay,\n"
+    },
+    {
+      "old_start_line": 20,
+      "new_start_line": 20,
+      "before": "WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'\n",
+      "after": "GOLD_WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'\nCANDIDATE_WINDOW='9ab0acdc117ab545386261006e341aabc1763ee679dcf3be36eae3eb032e6207'\nGOLD_RECEIPT='f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634'\nGOLD_GUARD='0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442'\nGOLD_PRIMARY='9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa'\nOLD_TEST='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'\n"
+    },
+    {
+      "old_start_line": 28,
+      "new_start_line": 33,
+      "before": "TEST='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'\n",
+      "after": "TEST='2c5eab4be5f484ca3eaf45d19eeb1f1067661a36c42ea41297a5ad1ec22ecc51'\n"
+    },
+    {
+      "old_start_line": 61,
+      "new_start_line": 66,
+      "before": "",
+      "after": "\n\ndef runner_compatibility(gold_source,candidate_source,metadata):\n    \"\"\"Prove only declared metadata changed; never relabel actual old Gold.\"\"\"\n    assert len(gold_source)==39470 and sha(gold_source)==GOLD_WINDOW\n    assert len(candidate_source)==43210 and sha(candidate_source)==CANDIDATE_WINDOW\n    recovered=candidate_source\n    for tag,indent in (('01',''),('02','    '),('03','        '),('04','    ')):\n        begin=(indent+'# BEGIN107_META_'+tag+'\\n').encode()\n        end=(indent+'# END107_META_'+tag+'\\n').encode()\n        assert recovered.count(begin)==recovered.count(end)==1\n        first=recovered.index(begin);last=recovered.index(end,first)+len(end)\n        recovered=recovered[:first]+recovered[last:]\n    newer=(\"TEST_SHA='\"+TEST+\"'\\n\").encode()\n    older=(\"TEST_SHA='\"+OLD_TEST+\"'\\n\").encode()\n    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)\n    newer=b\"gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA\"\n    older=b\"gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA\"\n    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)\n    assert recovered==gold_source and sha(recovered)==GOLD_WINDOW\n    expected={'kind':'ROOT107_METADATA_ONLY_GOLD_ADMISSION_V1',\n              'Gold_runner_sha256':GOLD_WINDOW,'candidate_runner_sha256':CANDIDATE_WINDOW,\n              'legacy_Gold_receipt_sha256':GOLD_RECEIPT,\n              'legacy_Gold_source_guard_sha256':GOLD_GUARD,\n              'legacy_Gold_primary_sha256':GOLD_PRIMARY,\n              'functional_source_inverse_sha256':GOLD_WINDOW,'candidate_test_sha256':TEST,\n              'legacy_Gold_source_count':749,'candidate_source_count':750,\n              'legacy_Gold_contains_107_test':False,'Window_imports_107_test':False,\n              'old_and_new_runners_are_identical':False,'legacy_Gold_values_rewritten':False}\n    same(metadata,expected,'Actual distinct-runner admission metadata and exact Source inverse')\n    return expected\n"
+    },
+    {
+      "old_start_line": 185,
+      "new_start_line": 221,
+      "before": "    assert WINDOW is not None and sha((packet/'native_evidence.py').read_bytes())==HELPER\n",
+      "after": "    assert CANDIDATE_WINDOW is not None and TEST is not None\n    assert sha((packet/'native_evidence.py').read_bytes())==HELPER\n"
+    },
+    {
+      "old_start_line": 189,
+      "new_start_line": 226,
+      "before": "    assert bindings['kind']=='ROOT_ACTUAL107_SAVED_ARTIFACT_BINDINGS_V1'\n",
+      "after": "    assert bindings['kind']=='ROOT_ACTUAL107_SAVED_ARTIFACT_BINDINGS_V2'\n"
+    },
+    {
+      "old_start_line": 208,
+      "new_start_line": 245,
+      "before": "        source_pins={'window_runner':WINDOW,'original_runner':ORIGINAL_RUNNER,\n",
+      "after": "        source_pins={'gold_window_runner':GOLD_WINDOW,'candidate_window_runner':CANDIDATE_WINDOW,\n                     'original_runner':ORIGINAL_RUNNER,\n"
+    },
+    {
+      "old_start_line": 212,
+      "new_start_line": 250,
+      "before": "        for key,want in source_pins.items():assert sha(bound(bindings[key]))==want\n",
+      "after": "        source_raws={}\n        for key,want in source_pins.items():\n            source_raws[key]=bound(bindings[key]);assert sha(source_raws[key])==want\n"
+    },
+    {
+      "old_start_line": 218,
+      "new_start_line": 258,
+      "before": "",
+      "after": "        assert sha(bound(bindings['gold_receipt']))==GOLD_RECEIPT\n        assert bindings['gold_guard']['sha256']==GOLD_GUARD\n        assert bindings['gold_primary']['sha256']==GOLD_PRIMARY\n"
+    },
+    {
+      "old_start_line": 321,
+      "new_start_line": 364,
+      "before": "            assert receipt['runner_sha256']==WINDOW and receipt['original_receipt_sha256']==ORIGINAL\n",
+      "after": "            assert receipt['runner_sha256']==(GOLD_WINDOW if phase=='gold' else CANDIDATE_WINDOW)\n            assert receipt['original_receipt_sha256']==ORIGINAL\n"
+    },
+    {
+      "old_start_line": 332,
+      "new_start_line": 376,
+      "before": "            if phase=='candidate':assert receipt['actual_gold_receipt_sha256']==bindings['gold_receipt']['sha256']\n",
+      "after": "            if phase=='gold':assert 'Gold_runner_compatibility' not in receipt\n            else:\n                assert receipt['actual_gold_receipt_sha256']==GOLD_RECEIPT\n                report['Gold_runner_compatibility']=runner_compatibility(\n                    source_raws['gold_window_runner'],source_raws['candidate_window_runner'],\n                    receipt['Gold_runner_compatibility'])\n"
+    }
+  ]
+}

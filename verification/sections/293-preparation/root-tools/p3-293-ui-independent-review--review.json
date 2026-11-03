@@ -1,0 +1,237 @@
+{
+  "kind": "SECTION293_INDEPENDENT_UI_STATIC_REVIEW",
+  "scope": "Static source/schema review only. No App/Qt/product imports/tests/game/chat/private state operations; no production writes.",
+  "candidate_status": "not promoted; backend contract still being implemented",
+  "source_sha256": {
+    ".cache/p3-293-root-ui/UI_HANDOFF.json": {
+      "sha256": "cc2506bfdca9a2bdbcc7f931a6c2135b60b6167ffa6c36fc837589f8dc0ed338",
+      "bytes": 384
+    },
+    ".cache/p3-293-root-ui/rouge/resting_corner_view.py": {
+      "sha256": "8ca87b2c24e5b75213845e52e70ba2de8613374053d42208bc32db853cd07aab",
+      "bytes": 9649
+    },
+    ".cache/p3-293-root-ui/rouge/node_catalog_view.py": {
+      "sha256": "cc02e274a82211b8bb42780f243b383bd160e37d7e7dee34934ffb37d0b355e3",
+      "bytes": 70264
+    },
+    ".cache/p3-293-root-ui/node_catalog_view.py.diff": {
+      "sha256": "006c18f48501a03665021bb5e4afb43407b4d6fbd169711427a5dcce6e16acb9",
+      "bytes": 3691
+    },
+    ".cache/p3-resting-result-card-design/DESIGN.md": {
+      "sha256": "cc4915c9e766b3fdf6c1c3d6ef0937f65086ba25a428c7ed5b57bebde8432c9c",
+      "bytes": 10738
+    },
+    "rouge/data/node-catalog.json": {
+      "sha256": "7df1d94bb69650eb19fc811af661e54d44bf07d72b1c0793de511adc1b2e915d",
+      "bytes": 521326
+    },
+    "rouge/node_catalog_view.py": {
+      "sha256": "61c65384c2f9420cf43d134497406cdec0f65d85c507ae8da88403e639ac5791",
+      "bytes": 69108
+    },
+    "rouge/ui_state.py": {
+      "sha256": "daf2ce0f3692de2c8cd03e9de61440fa4deb5284c9a13d8dcd1d61e18b11dcf8",
+      "bytes": 1798
+    }
+  },
+  "findings": [
+    {
+      "id": "R293-UI-01",
+      "severity": "P2",
+      "status": "source/schema mismatch verified; current six null-note targets do not demonstrate visible loss",
+      "file": ".cache/p3-293-root-ui/rouge/resting_corner_view.py",
+      "line": 47,
+      "finding": "scene_text reads choice.conditional_texts, which is not a field in the complete community catalog choices. The actual field is conditional:String|null. A nonempty original conditional annotation would silently be omitted.",
+      "boundary": "All six currently opened target choices have conditional=null; do not claim this is an observed current rendered failure or invent a non-null current annotation.",
+      "minimum_repair": "Read choice.get(\"conditional\") once and append its nonempty plain text as 原注. Keep scene.edesc_texts. Do not rename/normalize backend community choices merely to accommodate this UI assumption."
+    },
+    {
+      "id": "R293-UI-02",
+      "severity": "P2-contract",
+      "status": "static behavior certain; desired reopen semantics requires explicit decision",
+      "file": ".cache/p3-293-root-ui/rouge/resting_corner_view.py",
+      "line": 94,
+      "finding": "For the same (event_id,scope_key), explicit None or a non-card choice_key leaves the previous selected card/branch/open scene. DESIGN says an opening whose 292 filter is not one of the four cards should default unselected, whereas periodic refresh must preserve selections. The current signature cannot distinguish an omitted refresh selection from explicit None on an open action.",
+      "minimum_repair": "Use an omitted-value sentinel or explicit adopt_selection flag. Periodic show_selected calls omit the selection and preserve reading; open_resting_results passes its exact current filter, including None/non-card, to adopt a matching full key or clear to -1. If reopen is intentionally defined to preserve existing reading, amend that design statement and assert this behavior explicitly instead; do not reset every periodic refresh."
+    }
+  ],
+  "positive_static_findings": [
+    "Source unknown/exception in either backend call leads to _invalidate; packet, both combos, all three text panes, scene identity and open button are cleared/disabled; no stale scene can open through the ordinary invalidation path.",
+    "Four-card selection and branch lookup use complete choice_key/branch_id, with scene key compared to the selected branch target; same-title and same-amount rows are not matched by display text.",
+    "Both combos explicitly set -1 absent an exact retained/full-key selection; neither first card nor first branch is silently selected.",
+    "Future button quantities are displayed per branch, with explicit future/actual-unknown notices. There is no sum, probability, actual grant or entry inference.",
+    "Same exact card/branch refresh preserves result/source text through replace_text(preserve=True), leaves an already opened matching scene untouched and does not switch tabs; branch/card changes clear old scene intentionally.",
+    "Parent integration adds only an event-specific source-reading button and a dialog reference. Its new handlers do not call set_node, bind_current_node, select_stage, map signals, run-state/inventory mutation or parent reading setters. Existing 292 filters are read only.",
+    "Scope changes invalidate the independent dialog and reset its own tab only. Source-only event-entry scope does not purport to be actual-run/node identity."
+  ],
+  "pending_actual_ui_validation": [
+    "At 1050x720, adding one visible vertical button must not increase the main minimumSizeHint/minimum height or clip existing controls. No explicit minimum-size call was added, but static inspection cannot prove layout fit.",
+    "Select each of the three same-title cards using full keys; manually open a target; establish nonzero scroll and text selection in all three panes; refresh unchanged scope and verify exact reading retained.",
+    "Change card/branch/scope and invalidate then restore sources; verify all three panes and open target are cleared, with explicit reselection required after restoration.",
+    "Confirm manual dialog navigation leaves parent event, map binding, 292 filter, tree selection and both parent reading positions unchanged.",
+    "After backend READY, verify exact returned scene_number/choices/edesc_texts and future button resource/category fields against the UI contract; current review does not certify an unfinished backend output."
+  ],
+  "catalog_choice_schema_evidence": [
+    {
+      "scene_key": "community_group_023:scene:2",
+      "choice_key": "community_group_023:scene:2:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [
+        "choice_ro6_surprise_2"
+      ],
+      "game_match_basis": "exact_normalized_title_description_and_destination_scene"
+    },
+    {
+      "scene_key": "community_group_023:scene:3",
+      "choice_key": "community_group_023:scene:3:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [
+        "choice_ro6_surprise_8"
+      ],
+      "game_match_basis": "exact_normalized_title_description_and_destination_scene"
+    },
+    {
+      "scene_key": "community_group_023:scene:4",
+      "choice_key": "community_group_023:scene:4:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [
+        "choice_ro6_surprise_3"
+      ],
+      "game_match_basis": "exact_normalized_title_description_and_destination_scene"
+    },
+    {
+      "scene_key": "community_group_023:scene:5",
+      "choice_key": "community_group_023:scene:5:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [
+        "choice_ro6_surprise_4"
+      ],
+      "game_match_basis": "exact_normalized_title_description_and_destination_scene"
+    },
+    {
+      "scene_key": "community_group_023:scene:7",
+      "choice_key": "community_group_023:scene:7:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [
+        "choice_ro6_surprise_7"
+      ],
+      "game_match_basis": "exact_normalized_title_description_and_destination_scene"
+    },
+    {
+      "scene_key": "community_group_023:scene:10",
+      "choice_key": "community_group_023:scene:10:choice:0",
+      "choice_fields": [
+        "key",
+        "title",
+        "description",
+        "destination_keys",
+        "game_choice_ids",
+        "source_type",
+        "conditional",
+        "nested",
+        "subchoices",
+        "attributes",
+        "presentation_role",
+        "destination_status",
+        "game_match_basis",
+        "server_option_availability_verified"
+      ],
+      "conditional": null,
+      "has_conditional_texts": false,
+      "game_choice_ids": [],
+      "game_match_basis": "destination_mismatch"
+    }
+  ],
+  "limitations": [
+    "No tests or native window were executed. UI_HANDOFF AST_only is the author declaration, not a claim of our runtime validation.",
+    "A command sent to the WindowsApps python shim returned no output; no application/test validation was performed by that command. All findings here use direct source and JSON reads.",
+    "No new web search was necessary: the issue is a local explicit field contract, not an unresolved game mechanism."
+  ]
+}

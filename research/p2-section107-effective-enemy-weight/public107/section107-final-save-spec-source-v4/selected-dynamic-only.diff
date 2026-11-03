@@ -1,0 +1,92 @@
+--- frozen6dd-v3-builder
++++ v4-dynamic-selected-builder
+@@ -112,7 +112,7 @@
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     required = ('runner','gold-runner','saved-source','saved-bindings','apply-exit',
+-                'test-repair-exit','source-guard','related-linux','related-linux-exit',
++                'test-repair-exit','source-guard','selected-log','selected-exit','related-linux','related-linux-exit',
+                 'related-wine','related-wine-exit','candidate-api-dir','candidate-api-exit')
+     for name in required:
+         parser.add_argument('--'+name,required=True)
+@@ -123,6 +123,8 @@
+     bindings_path = Path(args.saved_bindings).resolve()
+     apply_exit = Path(args.apply_exit).resolve()
+     repair_exit = Path(args.test_repair_exit).resolve()
++    selected_log = Path(args.selected_log).resolve()
++    selected_exit = Path(args.selected_exit).resolve()
+     guard_path = Path(args.source_guard).resolve()
+     candidate_API_dir = Path(args.candidate_api_dir).resolve()
+     candidate_API_exit = Path(args.candidate_api_exit).resolve()
+@@ -134,7 +136,7 @@
+     report_path = BASE/'section107-actual-report-v2.md'
+     assert not spec_path.exists() and not report_path.exists()
+     supplied_files = [runner_path,gold_runner_path,saved_source,bindings_path,apply_exit,
+-                      repair_exit,guard_path,candidate_API_exit]+list(related_paths.values())+list(related_exits.values())
++                      repair_exit,guard_path,candidate_API_exit,selected_log,selected_exit]+list(related_paths.values())+list(related_exits.values())
+     for path in supplied_files:
+         assert path.is_file() and not path.is_symlink() and path != ROOT and ROOT not in path.parents
+     assert candidate_API_dir.parent == BASE and candidate_API_dir.name.startswith('section107-candidate-weight-actual-')
+@@ -144,6 +146,8 @@
+         assert related_paths[environment].parent == BASE
+         assert related_paths[environment].name.startswith('resume107-related-'+environment+'-')
+         assert related_exits[environment] == related_paths[environment].with_suffix('.exit-code')
++    assert selected_log.parent == BASE and selected_log.name.startswith('resume107-selected-')
++    assert selected_log.suffix == '.log' and selected_exit == selected_log.with_suffix('.exit-code')
+     guard_raw = guard_path.read_bytes()
+     guard = json.loads(guard_raw)
+     assert guard['section'] == 107 and guard['source_count'] == len(guard['source_sha256']) == 750
+@@ -200,13 +204,13 @@
+     assert sum(isinstance(n,ast.FunctionDef) and n.name.startswith('test_') for n in ast.walk(ast.parse(test_raw))) == 12
+     assert sha(test_raw) == guard['test_source_sha256']
+ 
+-    names = ('resume107-selected-v1.exit-code','resume107-window-gold-v2.exit-code',
++    names = ('resume107-window-gold-v2.exit-code',
+              'resume107-window-candidate-v1.exit-code',
+              'section107-original-weight-actual-linux-v1.exit-code',
+              'root-resume107-saved-audit-v1.exit-code',
+              'root-section107-fixture-schema-diagnostic-v1.exit-code',
+              'root-section107-empty-diagnostic-v1.exit-code')
+-    exit_files = [BASE/name for name in names]+[apply_exit,repair_exit,candidate_API_exit]+list(related_exits.values())
++    exit_files = [BASE/name for name in names]+[apply_exit,repair_exit,candidate_API_exit,selected_exit]+list(related_exits.values())
+     for path in exit_files:
+         assert path.read_bytes() == b'0\n', str(path)
+     assert sha((BASE/'root-section107-related-v1.py').read_bytes()) == RELATED_SOURCE_SHA
+@@ -239,7 +243,7 @@
+     assert len(empty_diagnosis['rows']) == 12
+     assert empty_diagnosis['Source_750_CORE_unchanged'] is empty_diagnosis['new_test_failure_preserved'] is True
+     assert empty_diagnosis['product_modified'] is False
+-    lines = (BASE/'resume107-selected-v1.log').read_text().splitlines()
++    lines = selected_log.read_text().splitlines()
+     selected = json.loads(next(line for line in reversed(lines) if line.startswith('{"passed"')))
+     assert selected['passed'] is True and selected['failures'] == selected['errors'] == 0
+ 
+@@ -384,7 +388,7 @@
+ 
+ 原公开API观察仍是748 Source、14caller+2preview、74显式消费者/1原catalog getter/89native。候选750 Source的同组观察原件也保留89native、0消费者错误/blocked；两份都标observation-only/product_passFalse，是否修复由独立Saved原/候选74调用配对证明，不能把观察运行本身计产品PASS。
+ 
+-新增测试初次Linux相关实际222运行/219PASS/skip1/U1父项/1失败0错误/raw1，失败原件完整封存。Root随后实际12调用诊断确认连续参考并不消费空target_windows，而frames空范围及两类零边界保持0。仅该新增测试从11至12方法：10旧方法字节保留、1方法保所有合法零边界和四个原断言、1独立连续参考方法完整比较返回值（只在先断言False/True之后对齐既有timing.scenario_provided输入标记）。产品timing/计算/registry没有改动；修正独审及test-only applier、前后750 guard、失败与原诊断都存档。报告的最终相关成功来自fresh实际receipt，不将首次失败覆盖或计PASS。
++新增测试初次Linux相关实际222运行/219PASS/skip1/U1父项/1失败0错误/raw1，失败原件完整封存。Root随后实际12调用诊断确认连续参考并不消费空target_windows，而frames空范围及两类零边界保持0。仅该新增测试从11至12方法：10旧方法字节保留、1方法保所有合法零边界和四个原断言、1独立连续参考方法完整比较返回值（只在先断言False/True之后对齐既有timing.scenario_provided输入标记）。该测试修正没有改产品timing/计算/registry；它只保留旧连续参考，不解决连续空范围族，该未完成问题另列pending109。修正独审及test-only applier、前后750 guard、失败与原诊断都存档。报告的最终相关成功来自fresh实际receipt，不将首次失败覆盖或计PASS。
+ 
+ 只有engine原base option校验之后、既有天赋阈值之前，对局部weight加原relics.prepare已生成的signed weight_delta一次。原caller/场景baseweight、固定身份优先、原低重量与负参考、培养资格、其他干员输出、报告/preview producer均保持原合同。没有增加游戏下限、不同物品叠加法则、位移模型或新起飞/结束时钟。
+ 
+@@ -419,6 +423,8 @@
+         {'source':str(bindings_path),'destination':'actual-root-evidence/final-saved-bindings.json'},
+         {'source':str(apply_exit),'destination':'actual-root-evidence/actual-apply.exit-code'},
+         {'source':str(repair_exit),'destination':'actual-root-evidence/actual-testrepair.exit-code'},
++        {'source':str(selected_log),'destination':'actual-root-evidence/final-selected.log'},
++        {'source':str(selected_exit),'destination':'actual-root-evidence/final-selected.exit-code'},
+         {'source':str(guard_path),'destination':'actual-root-evidence/final-source-guard.json'},
+         {'source':str(candidate_API_dir),'destination':'actual107/final-candidate-API'},
+         {'source':str(candidate_API_exit),'destination':'actual-root-evidence/final-candidate-API.exit-code'},
+@@ -433,6 +439,10 @@
+         'preserved_failed_related_linux':summary(failed_related),
+         'preserved_failed_related_linux_primary':1,'test_contract_repair_actual_diagnosis_calls':12,
+         'test_repair_product_or_timing_changed':False,
++        'pending_continuous_empty_range_family109':True,
++        'actual_selected_log':pin(selected_log),'actual_selected_primary':pin(selected_exit),
++        'selected_receipt_has_its_own_fullSource_map':False,
++        'current750_test2c5_CORE_guard_verified_before_and_after_terminal_pipeline':True,
+         'actual_distinct_window_runner_compatibility':compatibility,
+         'selected_tests':selected,'Gold_attempts':attempts,'Gold_windows':len(gold['rows']),
+         'candidate_windows':len(candidate['rows']),'Gold_native':len(gold['records']),

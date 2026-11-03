@@ -1,0 +1,19 @@
+--- before-model
++++ digest-hoisted-model
+@@ -32,6 +32,7 @@
+                 for c,index in enumerate(row):
+                     if type(index)is not int or not 0<=index<len(tiles):return None
+                     cells.setdefault(index,[]).append([r,c])
++            stage_sha256=digest(stage);map_data_sha256=digest(level['mapData'])
+             for index,positions in cells.items():
+                 tile=tiles[index];info=terrain.terrain_info(tile)
+                 rows.append({'key':[sid,index],'stage_id':sid,'tile_index':index,'stage_name':stage['name'],
+@@ -40,7 +41,7 @@
+                     'floor':group['floor'],'play_kind':group['play_kind'],'tile_key':tile.get('tileKey'),
+                     'terrain_name':info['name'],'terrain_kind':info['kind'],'terrain':info,
+                     'tile':deepcopy(tile),'cells':positions,'level_key':level_key,
+-                    'stage_sha256':digest(stage),'map_data_sha256':digest(level['mapData'])})
++                    'stage_sha256':stage_sha256,'map_data_sha256':map_data_sha256})
+         return {'rows':rows,'source_identity':(current['identity'],classified['source_identity'],identity),
+                 'stage_count':len(stages),'actual_occurrence':None,'run_updated':False}
+     except(KeyError,TypeError,ValueError,OverflowError):return None

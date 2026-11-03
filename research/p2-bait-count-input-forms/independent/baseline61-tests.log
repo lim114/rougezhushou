@@ -1,0 +1,1243 @@
+.E.EEEEEEEEEEEEEEEEEEEEEEEEEEFEEFFFEEFFFEEFFFEEFFFEEFFFEEFFE
+======================================================================
+ERROR: test_empty_ordinary_range_keeps_declared_positive_bait_unplaced (__main__.IndependentBaitInputTests.test_empty_ordinary_range_keeps_declared_positive_bait_unplaced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 76, in test_empty_ordinary_range_keeps_declared_positive_bait_unplaced
+    result = calculate('1e0', mode=mode, timing={'target_windows': []})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_count_does_not_invent_timing_or_snapshot (__main__.IndependentBaitInputTests.test_positive_count_does_not_invent_timing_or_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 65, in test_positive_count_does_not_invent_timing_or_snapshot
+    result = calculate('1.0', mode=mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=1, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=1, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=1, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=1, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=7, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=7, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=7, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=7, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=10, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=10, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=10, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='frames', rank=10, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=1, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=1, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=1, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=1, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=7, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=7, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=7, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=7, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=10, raw='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=10, raw='1e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=10, raw='100.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '100.0'
+
+======================================================================
+ERROR: test_positive_forms_match_full_integer_result_including_report (__main__.IndependentBaitInputTests.test_positive_forms_match_full_integer_result_including_report) (mode='continuous', rank=10, raw='1e2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 41, in test_positive_forms_match_full_integer_result_including_report
+    result = calculate(raw, mode=mode, skill_rank=rank)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1e2'
+
+======================================================================
+ERROR: test_public_callers_and_cached_catalog_are_preserved (__main__.IndependentBaitInputTests.test_public_callers_and_cached_catalog_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 96, in test_public_callers_and_cached_catalog_are_preserved
+    calculate_damage(scenario)
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_windows': []}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_windows': []}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_disappears_seconds': 0}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_disappears_seconds': 0}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_windows': []}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_windows': []}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_disappears_seconds': 0}, raw='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0.0'
+
+======================================================================
+ERROR: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_disappears_seconds': 0}, raw='0e0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 28, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    result = calculate(raw, mode=mode, timing=timing)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '0e0'
+
+======================================================================
+ERROR: test_zero_observation_and_zero_enemy_lifetime_keep_known_zero (__main__.IndependentBaitInputTests.test_zero_observation_and_zero_enemy_lifetime_keep_known_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 84, in test_zero_observation_and_zero_enemy_lifetime_keep_known_zero
+    result = calculate('1.0', mode=mode, **extra)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 16, in calculate
+    return calculate_damage({'operator': OP, 'skill': skill, 'base_attack': 1000,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1924, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/baseline61/rouge/operator_engine.py", line 1870, in calculate
+    'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '1.0'
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[9121 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[7371 chars]]}]}}
+Diff is 23882 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[9121 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[7371 chars]]}]}}
+Diff is 23882 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[9121 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[7371 chars]]}]}}
+Diff is 23882 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_windows': []}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[8726 chars]]}]}} != {'att[25 chars]ge': 0.0, 'total_healing': 0, 'attack_speed': [6972 chars]]}]}}
+Diff is 20614 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_windows': []}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[8726 chars]]}]}} != {'att[25 chars]ge': 0.0, 'total_healing': 0, 'attack_speed': [6972 chars]]}]}}
+Diff is 20614 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_windows': []}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[8726 chars]]}]}} != {'att[25 chars]ge': 0.0, 'total_healing': 0, 'attack_speed': [6972 chars]]}]}}
+Diff is 20614 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_disappears_seconds': 0}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[3491 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4688 chars]]}]}} != {'att[3491 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[3506 chars]]}]}}
+Diff is 17492 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_disappears_seconds': 0}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[3491 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4688 chars]]}]}} != {'att[3491 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[3506 chars]]}]}}
+Diff is 17492 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='frames', timing={'target_disappears_seconds': 0}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[3491 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4688 chars]]}]}} != {'att[3491 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[3506 chars]]}]}}
+Diff is 17492 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7113 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5377 chars]]}]}}
+Diff is 17280 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7113 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5377 chars]]}]}}
+Diff is 17280 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7113 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5377 chars]]}]}}
+Diff is 17280 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_windows': []}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7112 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5376 chars]]}]}}
+Diff is 17279 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_windows': []}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7112 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5376 chars]]}]}}
+Diff is 17279 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_windows': []}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[25 chars]ge': None, 'total_healing': 0, 'attack_speed':[7112 chars]]}]}} != {'att[25 chars]ge': 14000.0, 'total_healing': 0, 'attack_spee[5376 chars]]}]}}
+Diff is 17279 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_disappears_seconds': 0}, raw='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[2334 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4038 chars]]}]}} != {'att[2334 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[2856 chars]]}]}}
+Diff is 13539 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_disappears_seconds': 0}, raw='-0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[2334 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4038 chars]]}]}} != {'att[2334 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[2856 chars]]}]}}
+Diff is 13539 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_zero_forms_match_complete_numeric_zero_result_and_report (__main__.IndependentBaitInputTests.test_zero_forms_match_complete_numeric_zero_result_and_report) (mode='continuous', timing={'target_disappears_seconds': 0}, raw=' 0 ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-bait65-independent/test_independent.py", line 29, in test_zero_forms_match_complete_numeric_zero_result_and_report
+    self.assertEqual(result, expected)
+AssertionError: {'att[2334 chars]'}, 'neural_bait_reference': {'skill': '本能的召唤'[4038 chars]]}]}} != {'att[2334 chars]'}, 'relic_regeneration_multiplier': 1, 'relic[2856 chars]]}]}}
+Diff is 13539 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.396s
+
+FAILED (failures=18, errors=40)

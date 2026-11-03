@@ -1,0 +1,7 @@
+独立只读准备已完成。原080runner固定SHA c58ff7ac462e7a9aa457e4b59471a162cbf5c6daf58192f6b5a852901fcdcc98，历史真实窗口3063项由root执行，本审查只读回执。
+
+81界面按catalog顺序勾选、隐藏搜索不改序；普通报告两个未知组合原名均匿名为同文，仍保留两行，技术资料才可按原名直接断言顺序。
+
+82真实low_cost_healing_target为bool复选框，casts_used为0–2整数且仅S2；casts2旧门槛拒绝，casts1不允许重复周期。苏苏洛PHY-X门槛是E2L40，培养只读预览不是新增selector，不能把API字符串/null冒充Qt输入。
+
+仅资料与AST/JSON/字节核验；未调用应用API、formatter、prepare、Qt、Wine、游戏。83–85待确定；任何未冻版本不运行预核。两次只读路径准备错误及两次静态异常文本断言准备错误完整保留，不作为产品失败或已测机制。

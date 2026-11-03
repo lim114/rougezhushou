@@ -1,0 +1,103 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "地图与藏品资源胶囊复用、页面联动及收藏品总数修正",
+  "baseline_commit": "db346f5aa3bee94ceb5b1f0abf9e792d7b4a7d98",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_section_started": false,
+  "implemented_fixes_passed": true,
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "source_review": {
+    "path": "verification/maintenance/resource-strip-review-20261031/review-source.json",
+    "sha256": "0d9ce5f8148e2ff5e91d603fae37051799d5247b41bbcf16fbdab6d72a0581a3",
+    "bytes": 2891
+  },
+  "implemented": [
+    "Shared width-driven light/dark resource pills with local inventory/parts/team links.",
+    "Overview excludes tactical tools from the relic-only denominator only after a full qualified count match.",
+    "A true verification flag without matching count no longer claims complete inventory.",
+    "Visible readers refresh from current state; hidden readers do no resource refresh; replaced temporary run clears stale values.",
+    "Difficulty/squad remain visible and historical floor resources remain separate."
+  ],
+  "related_tests": {
+    "passed": 54,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "receipt": {
+      "path": "verification/maintenance/resource-strip-review-20261031/tests/results.json",
+      "sha256": "2fc3028a0399866d031def9ae02699598edf98209709bc990a6a72ac7134496e",
+      "bytes": 572
+    }
+  },
+  "native_scopes": [
+    {
+      "scope": "native-final",
+      "checks": 35,
+      "receipt": {
+        "path": "verification/maintenance/resource-strip-review-20261031/native-final/window.json",
+        "sha256": "82f5a1e570bc375df1c4dc881ace4c6960a847f30c1d238a7e96ae0a7bbfe500",
+        "bytes": 165346
+      },
+      "overlapping_checks_not_added": true
+    },
+    {
+      "scope": "native-392",
+      "checks": 34,
+      "receipt": {
+        "path": "verification/maintenance/resource-strip-review-20261031/native-392/window.json",
+        "sha256": "6aa245deefb80e25a694aa796c9795f4e6eeb0b762d17f974369c0276aa30509",
+        "bytes": 165481
+      },
+      "overlapping_checks_not_added": true
+    },
+    {
+      "scope": "native-422",
+      "checks": 16,
+      "receipt": {
+        "path": "verification/maintenance/resource-strip-review-20261031/native-422/window.json",
+        "sha256": "1faff4b91e03eb427b5316b8959b6bf7fecbd501b5c65d27a247370fd5808abc",
+        "bytes": 164428
+      },
+      "overlapping_checks_not_added": true
+    }
+  ],
+  "native_counts_overlap_not_totalled": true,
+  "image_review": {
+    "path": "verification/maintenance/resource-strip-review-20261031/image-review.json",
+    "sha256": "3b2b08ab5a943ff77fefecec3ae730da65440519a3586c4fd940f90b56d9e931",
+    "bytes": 2238
+  },
+  "runtime": {
+    "path": "verification/maintenance/resource-strip-review-20261031/live-window/desktop-review.json",
+    "sha256": "db83a35986be41c3f469fd9a7b458d6fd78e7263a67ad3acfc241c59f64a6f95",
+    "bytes": 347
+  },
+  "maintained_selectors_count": 692,
+  "original_order_and_scope_preserved": true,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_sources": true,
+  "upstream_source": {
+    "path": "research/resource-strip-review-20261031/upstream-source.json",
+    "sha256": "538fd82f0e11d661ba3a86225c914734b8285a2f68c9fc7ea767be88c939c885",
+    "bytes": 643
+  },
+  "unsupported_resources": [
+    "目标生命",
+    "护盾",
+    "指挥等级",
+    "希望",
+    "行动力",
+    "总估价"
+  ],
+  "mechanism_changes": false,
+  "recognition_changes": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_data_included": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "publication_binding": "enclosing maintenance commit; actual remote checked after ordinary push"
+}

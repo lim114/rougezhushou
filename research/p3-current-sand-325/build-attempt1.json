@@ -1,0 +1,7 @@
+{
+  "actual_exit_code": 1,
+  "error": "Keep the actual selected revision352356 tables unchanged.",
+  "cause": "Windows write_text newline translation changed selected HTML bytes after digesting the string.",
+  "fix": "Write the exact encoded raw slice with write_bytes and compute both hashes/lengths from those bytes; original DOM uses decode of read_bytes, not universal-newline read_text.",
+  "mechanism_unchanged": true
+}

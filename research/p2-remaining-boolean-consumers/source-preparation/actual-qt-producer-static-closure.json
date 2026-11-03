@@ -1,0 +1,244 @@
+{
+  "base_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+  "options": [
+    {
+      "owner": "char_4228_closur",
+      "field": "reinforcement_blocks_target",
+      "label": "援军阻挡当前目标",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_437_mizuki",
+      "field": "enemy_below_half",
+      "label": "存在生命低于一半的敌人",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_206_gnosis",
+      "field": "frozen_at_skill_end",
+      "label": "技能结束时目标仍冻结",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_4087_ines",
+      "field": "ines_first_deployment",
+      "label": "本场首次部署（只放影哨）",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "ranged_attack",
+      "label": "远程攻击（通常80%倍率）",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "organ_mode",
+      "label": "风琴音色（未选=钢琴）",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "fever",
+      "label": "Fever期间",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "power_coating",
+      "label": "本次攻击仍在首轮50次强击瓶覆盖内",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "double_charge",
+      "label": "额外消耗一层充能施放刚连射",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "steal_success",
+      "label": "成功偷取攻速（增加5发弹药）",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "delivery_coordinate",
+      "label": "投递坐标存在并命中目标",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool"
+    },
+    {
+      "owner": "char_1035_wisdel",
+      "field": "overload",
+      "label": "全程采用过载四连发情景",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool"
+    }
+  ],
+  "construction_lines": [
+    {
+      "line": 661,
+      "text": "        self.model_option_widgets=[]"
+    },
+    {
+      "line": 662,
+      "text": "        for operator,entries in OPTIONS.items():"
+    },
+    {
+      "line": 663,
+      "text": "            for key,label,default,maximum,skills in entries:"
+    },
+    {
+      "line": 664,
+      "text": "                if key=='healing_targets':continue"
+    },
+    {
+      "line": 665,
+      "text": "                if isinstance(default,bool):"
+    },
+    {
+      "line": 666,
+      "text": "                    widget=QCheckBox(label);widget.setChecked(default)"
+    },
+    {
+      "line": 667,
+      "text": "                    widget.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 668,
+      "text": "                elif isinstance(default,int):"
+    },
+    {
+      "line": 669,
+      "text": "                    widget=QSpinBox();widget.setRange(0,maximum);widget.setValue(default)"
+    },
+    {
+      "line": 670,
+      "text": "                    if key=='amiya_hit_targets':widget.setMinimum(1)"
+    },
+    {
+      "line": 671,
+      "text": "                    widget.valueChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 672,
+      "text": "                else:"
+    },
+    {
+      "line": 673,
+      "text": "                    widget=number(default,maximum,2)"
+    },
+    {
+      "line": 674,
+      "text": "                    widget.valueChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 675,
+      "text": "                form.addRow(label,widget)"
+    },
+    {
+      "line": 676,
+      "text": "                form.setRowVisible(widget,False)"
+    },
+    {
+      "line": 677,
+      "text": "                self.model_option_widgets.append((operator,key,skills,widget))"
+    },
+    {
+      "line": 678,
+      "text": "        columns.addLayout(form,1)"
+    }
+  ],
+  "scenario_lines": [
+    {
+      "line": 1034,
+      "text": "            'deployment_stacks':self.stacks.value(),'relic_ids':ids}"
+    },
+    {
+      "line": 1035,
+      "text": "        for owner,key,skills,widget in self.model_option_widgets:"
+    },
+    {
+      "line": 1036,
+      "text": "            if owner==op and self.skill.currentData() in skills:"
+    },
+    {
+      "line": 1037,
+      "text": "                scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()"
+    },
+    {
+      "line": 1038,
+      "text": "        state=self.current_operator_state()"
+    }
+  ],
+  "runtime_gui_called": false,
+  "native_validation": false,
+  "conclusion": "bool defaults construct QCheckBox; same owner and selected skill serializes isChecked bool. Visibility is not API consumer qualification."
+}

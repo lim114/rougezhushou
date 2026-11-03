@@ -1,0 +1,159 @@
+{
+  "kind": "SECTION296_READING_ANCHOR_CORRECTION_INDEPENDENT_STATIC_REVIEW_NOT_QT_ACCEPTANCE",
+  "created_utc": "2026-10-16T07:30:48.258999+00:00",
+  "correction_file": "verification\\sections\\296-preparation\\reading-anchor-correction\\correction.json",
+  "correction_sha256": "6d9a190ac1fab071158d8948e9591f7de21d8848a2069a23d1aff84a557c6908",
+  "deferred_correction_file": "verification\\sections\\296-preparation\\deferred-anchor-correction\\correction.json",
+  "deferred_correction_sha256": "077a281e91ec6c24806b552aab3d8617c63649c3be48fa35b4b7951dd7e3b7d7",
+  "source_bindings": {
+    "rouge/node_catalog_view.py": {
+      "before_sha256": "51ec7259551593ae8e7477c5cda10fa53c65406d0e1f4bf804315bf93a118e42",
+      "intermediate_reading_anchor_sha256": "c3c3b78b93a4d6511653c2e862aff9f40e90f0b04906e935043d1912c443795c",
+      "after_sha256": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c"
+    },
+    "tests/test_battle_entry_integration_296.py": {
+      "before_sha256": "e9442e005aa1674653b24e723feedad8bc6a721faea7136218cf29d9d33eb234",
+      "intermediate_reading_anchor_sha256": null,
+      "after_sha256": "32c3367fba3a27db8360269ededb6603e01bdd9542fb563611fb533b87980f24"
+    },
+    "scripts/verify_battle_entry_references_window_296.py": {
+      "before_sha256": "dd831afbe2f0113a527549b6cd60c886e82799ad5a9cd1b7aa6fbe7e60dfe1d0",
+      "intermediate_reading_anchor_sha256": null,
+      "after_sha256": "507df358f4f4ff210da930a3a9360df699a1cf0c8d6cb4ca802d3334c5a55e10"
+    }
+  },
+  "changed_function_names": {
+    "rouge/node_catalog_view.py": [
+      "open_battle_event_reference"
+    ],
+    "tests/test_battle_entry_integration_296.py": [
+      "test_all_eleven_real_entry_buttons_open_exact_scene_choice_without_resetting_battle"
+    ],
+    "scripts/verify_battle_entry_references_window_296.py": [
+      "main",
+      "check_current_navigation"
+    ]
+  },
+  "all_other_node_panel_function_AST_unchanged_including_292_refresh": true,
+  "all_existing_unit_assertions_retained": true,
+  "all_existing_native_require_calls_retained": true,
+  "planned_native_exact_admitted_identities": [
+    {
+      "stage_id": "ro6_t_1",
+      "event_id": "community_group_012",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "强行驱赶"
+    },
+    {
+      "stage_id": "ro6_t_2",
+      "event_id": "community_group_013",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "为客户群体发声！"
+    },
+    {
+      "stage_id": "ro6_t_3",
+      "event_id": "community_group_014",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "区区打手！"
+    },
+    {
+      "stage_id": "ro6_t_4",
+      "event_id": "community_group_015",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "阻拦到底"
+    },
+    {
+      "stage_id": "ro6_t_5",
+      "event_id": "community_group_016",
+      "source_scene_index": 3,
+      "source_choice_index": 0,
+      "title": "到此为止了！"
+    },
+    {
+      "stage_id": "ro6_e_t_3",
+      "event_id": "community_group_014",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "区区打手！"
+    },
+    {
+      "stage_id": "ro6_e_t_3",
+      "event_id": "community_group_014",
+      "source_scene_index": 2,
+      "source_choice_index": 0,
+      "title": "区区商人！"
+    },
+    {
+      "stage_id": "ro6_e_t_4",
+      "event_id": "community_group_015",
+      "source_scene_index": 1,
+      "source_choice_index": 0,
+      "title": "阻拦到底"
+    },
+    {
+      "stage_id": "ro6_e_t_4",
+      "event_id": "community_group_015",
+      "source_scene_index": 2,
+      "source_choice_index": 0,
+      "title": "就挑衅，怎么了？"
+    },
+    {
+      "stage_id": "ro6_e_t_5",
+      "event_id": "community_group_016",
+      "source_scene_index": 3,
+      "source_choice_index": 0,
+      "title": "到此为止了！"
+    },
+    {
+      "stage_id": "ro6_e_t_5",
+      "event_id": "community_group_016",
+      "source_scene_index": 8,
+      "source_choice_index": 0,
+      "title": "我不要困在这里！"
+    }
+  ],
+  "planned_native_case_count": 11,
+  "planned_unique_choice_count": 8,
+  "position_contract": [
+    "Search starts with the exact scene heading in the actual QTextDocument; that cursor must be the whole matching block.",
+    "Choice search starts from the scene cursor and must match the complete choice-heading block.",
+    "The next exact scene heading bounds the selected choice; a spill into later scenes is rejected.",
+    "All search positions and compared selection boundaries come from Qt cursors; no Python character offset or len conversion is used.",
+    "Only explicit 296 manual navigation changes the player reading tab, selection and scroll; existing periodic filter functions are unchanged.",
+    "A reader-context zero-delay timer repeats ensureCursorVisible after the outer parent-tab layout. It does not re-apply an old cursor or old token; it uses the reader current cursor."
+  ],
+  "native_observation_contract": [
+    "For every one of the 11 unchanged literal source identities, test checks actual player tab, exact selected heading, scene bounds and viewport cursor rectangle after a real click.",
+    "Each successful click records body_reading_anchor including Qt selection bounds, scene/next-scene bounds, scroll and viewport geometry.",
+    "Final set equality plus exact count still prevents skipping or duplicating a literal admitted identity.",
+    "This catches the observed filters-correct/body-still-scene1 gap; a selected combo alone is no longer accepted."
+  ],
+  "limitations": [
+    "Static inspection does not establish the new necessary/native run passed; parent owns those actual results.",
+    "cursorRect proves the target cursor location is visible, not that all following effects or the entire scene fit in the viewport.",
+    "Current scope has 8 separate source choices with short single-line titles. It does not establish arbitrary future/custom title layout behavior.",
+    "Matching depends on the current player heading format; future renderer-format changes must keep this method and regression contract aligned."
+  ],
+  "prior_evidence_scope": "Root visual correction explicitly retains the prior narrow 75-check native and intermediate necessary receipts; neither is silently promoted to the new reading-anchor acceptance.",
+  "deferred_failure_scope": {
+    "original_failed_receipt": "verification/sections/296-necessary-reading-final/process.json",
+    "sha256": "5f97ab69eecd9bd450763fc1e63b4b8948bc641c53546f1f3a7f5c87e7abe768",
+    "description": "132 tests, one failure: selected choice cursor bottom367 outside viewport342 after outer-tab layout changed.",
+    "final_required_necessary_directory": "verification/sections/296-necessary-reading-retry2",
+    "not_rerun_or_promoted_by_this_review": true
+  },
+  "preserved_review_guard_mismatch": {
+    "directory": ".cache/p3-296-independent-review/first-reading-anchor-source-pin-mismatch",
+    "actual_exit": 1,
+    "cause": "Root legitimately advanced c3c3 to 945b during static review after the actual viewport test failed. Original review correctly stopped on the outdated pin; explicit deferred correction now binds that transition.",
+    "is_product_failure": false
+  },
+  "blocking_findings": [],
+  "inputs_unchanged_after_review": true,
+  "Qt_product_tests_or_native_executed": false,
+  "production_docs_game_chat_private_operations": false
+}

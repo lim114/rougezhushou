@@ -1,0 +1,73 @@
+{
+  "phase_tick": {
+    "raw_text": "会在玩家每次移动后，向连通路径移动1格",
+    "steps_per_declared_player_move": 1,
+    "order_against_entry_battle_collision": null
+  },
+  "named_destination_exclusions": [
+    {
+      "original_type": "BATTLE_SHOP",
+      "fixed_original_name": "诡意行商"
+    },
+    {
+      "original_type": "SCRAP_SHOP",
+      "fixed_original_name": "秘境行商"
+    },
+    {
+      "original_type": "EVACUATE",
+      "fixed_original_name": "险路小径"
+    },
+    {
+      "original_type": "FINAL",
+      "fixed_original_name": "险路尽头"
+    },
+    {
+      "original_type": "DOOR",
+      "fixed_original_name": "曲折密道"
+    },
+    {
+      "original_type": "STORY",
+      "fixed_original_name": "命运所指"
+    },
+    {
+      "original_type": "STORY_HIDDEN",
+      "fixed_original_name": "命运所指"
+    },
+    {
+      "original_type": "BATTLE_SAVAGE",
+      "fixed_original_name": "“居民”据点"
+    }
+  ],
+  "other_exclusions": [
+    {
+      "attribute": "repeatable_declared",
+      "value": true,
+      "source_text": "不会移动到可重复进入的节点"
+    },
+    {
+      "original_type": "EMPTY",
+      "attribute": "completed_declared",
+      "value": true,
+      "source_text": "由玩家完成节点产生的“林间空地”"
+    }
+  ],
+  "conditional_post_victory": {
+    "raw_text": "战胜【“居民”据点】可以获得奖励并直接驱逐区域内所有【流窜“居民”】。",
+    "required_exact_original_type": "BATTLE_SAVAGE",
+    "needs_independent_declaration": true,
+    "actual_eviction": null
+  },
+  "fallback_or_synchronization": {
+    "source_describes_fallback": false,
+    "source_describes_joint_collision_resolution": false,
+    "position_after_unresolved_fallback": null
+  },
+  "maximum_count": {
+    "upper_bound": 3,
+    "source": "居民段落生成达到3个/据点旁0–3个；不证明这次实际人数"
+  },
+  "source_no_automatic_type_rewrite": {
+    "raw_text": "不会因临时占领影响概念体的节点类型激活判定。",
+    "implementation": "No graph or original type change."
+  }
+}

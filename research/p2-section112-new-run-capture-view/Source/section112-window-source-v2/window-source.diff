@@ -1,0 +1,21 @@
+--- window112-v1.py
++++ window112-v2.py
+@@ -168,10 +168,16 @@
+             restarted=RunState(run_path);reaccount=AccountCache(account_path,window.account_cache.profiles,window.account_cache.implemented_ids)
+             assert not restarted.preserve_unreadable and restarted.save_issue is None
+             assert not reaccount.preserve_original and reaccount.load_issue is None and reaccount.save_issue is None
+-            assert_native_equal(restarted.state,live['run'],'actual new run direct reload')
++            expected_notice='已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'
++            assert_native_equal(restarted.state['notice'],expected_notice,'exact constructor recovery notice')
++            notice_transition={'key':'notice','live':live['run']['notice'],'restart':restarted.state['notice'],
++                'expected_restart_literal':expected_notice,'constructor_source_path':'rouge/run_state.py',
++                'constructor_source_sha256':expected['rouge/run_state.py']}
++            normalized_restart=freeze(restarted.state);normalized_restart['notice']=live['run']['notice']
++            assert_native_equal(normalized_restart,live['run'],'whole direct reload with qualified constructor notice transition')
+             assert_native_equal(reaccount.records,account_graph,'actual original account direct reload')
+             assert_native_equal(joint()['disks'],live['disks'],'close/direct reload all public disks')
+-            receipt['close_reload']=save('actual_close_direct_reload',live=live,restart_state=restarted.state,
++            receipt['close_reload']=save('actual_close_direct_reload',live=live,restart_state=restarted.state,notice_transition=notice_transition,
+                 restart_account=reaccount.records,disks_after=joint()['disks'])
+             window.deleteLater();application.processEvents();window=None
+         assert len(snapshots)==4 and len(pngs)==2 and not errors

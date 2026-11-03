@@ -1,0 +1,68 @@
+<includeonly>{{锚点|{{{名称}}}}}
+{| class="wikitable logo is7-scrap-card prts-table-dark" style="width:100%;max-width:800px;text-align:center;white-space:normal;background:#7F8082;--color-base:white;"
+|-
+! style="background:linear-gradient(#2f2f2f88, #2f2f2f88),{{#switch:{{{类型|}}}|加工品=radial-gradient(circle at 50% 50%, #bc2e2d, #d7d5c6 30%, #4376d9, #a5a3d7, #6a4da7 60% 70%, #0000) !important|自然物=radial-gradient(circle at 50% 50%, #414f59, #bf8fc3 30%, #4ddcb5 32% 45%, #8e658b 47% 62%, #0000) !important|概念体=radial-gradient(circle at 50% 50%, #414f59, #4b849c 27%, #ecddea 39% 45%, #2e7290 50% 63%, #0000) !important|#000}};"|<span class="mc-tooltips" style="cursor:help;"><span>[[文件:零件_类型_{{{类型|}}}.png|30px|link=]]<span class="nomobile"> {{{类型|}}}</span></span><span style="display:none" data-size="350" data-trigger="mouseenter focus">零件类型</span></span>
+! style="background:#{{#switch:{{{稀有度|0}}}|稀有|RARE|1=1f999c|超稀有|SUPER_RARE|2=7d0022|313131}};color:white;position:relative;" colspan=3 | {{{名称}}}{{#if:{{{角标|}}}|<div style="position: absolute; top: 0.2em; right: 0.5em;">{{{角标}}}</div>}}
+|-
+| rowspan={{#expr:2 + {{#if:{{{条件|}}}|1|0}} + {{#if:{{{获取|}}}|1|0}} + {{#if:{{{备注|}}}|1|0}} }} style="width:15%;height:100px;background:#464646;" | {{#widget:torappu|alt={{{名称}}}|src=roguelike_topic_itempic/{{{ID}}}.png|css=width:100px;height:100px;object-fit:contain;}}
+{{#ifeq:{{{价格模式|}}}|单行|{{#if:{{{售价|}}}|<nowiki/>
+! style="width:100px;height:16px;background:#686868;color:white" {{!}} 售价
+! colspan=2 style="height:16px;background:#676767;color:white" {{!}} 效果
+{{!}}-
+{{!}} style="width:100px;background:#7f8082" {{!}} {{数量|icon=集成战略 道具 源石锭.png|num={{{售价}}}}}
+{{!}} colspan=2 style="background:#7F8082;" {{!}} '''{{{效果}}}'''{{#if:{{{描述|}}}|<br>''{{{描述}}}''}}|<nowiki/>
+! colspan=3 style="height:16px;background:#676767;color:white" {{!}} 效果
+{{!}}-
+{{!}} colspan=3 style="background:#7F8082;" {{!}} '''{{{效果}}}'''{{#if:{{{描述|}}}|<br>''{{{描述}}}''}}}}|<nowiki/>
+{{!}} rowspan=2 style="background:#7f8082;width:100px;" {{!}} <span class="mc-tooltips" style="cursor:help;"><span>{{mdi|cart}} {{价格|源石锭|<span style{{=}}"font-size:1em;">{{{购买价|{{mdi|cancel|color=#ff8080|size=1em}}}}}</span>}}</span><span style="display:none" data-size="350" data-trigger="mouseenter focus">购入所需价格</span></span><br><span class="mc-tooltips" style="cursor:help;display:inline-block;margin-top:2px;"><span>{{mdi|hand-coin}} {{价格|{{{出售价格单位|源石锭}}}|<span style{{=}}"font-size:1em;">{{{出售价|{{mdi|cancel|color=#ff8080|size=1em}}}}}</span>}}</span><span style="display:none" data-size="350" data-trigger="mouseenter focus">基础估价</span></span>
+! colspan=2 style="height:16px;background:#676767;color:white" {{!}} 效果
+{{!}}-
+{{!}} colspan=2 style="background:#7F8082;" {{!}} '''{{{效果}}}'''{{#if:{{{描述|}}}|<br>''{{{描述}}}''}}}}
+{{#if:{{{条件|}}}|<nowiki/>
+{{!}}-
+! style="width:100px;color:orange;background:#313131;height:16px" {{!}} 解锁条件
+{{!}} colspan=2 style="background:#464646;" {{!}} {{{条件}}}|}}{{#if:{{{获取|}}}|<nowiki/>
+{{!}}-
+! style="width:100px;color:orange;background:#313131;height:16px" {{!}} 获取方式
+{{!}} colspan=2 style="background:#464646;" {{!}} {{{获取}}}|}}{{#if:{{{备注|}}}|<nowiki/>
+{{!}}-
+! style="width:100px;color:orange;background:#313131;height:16px" {{!}} 备注
+{{!}} colspan=2 style="background:#464646;" {{!}} {{{备注}}}|}}
+|}</includeonly><noinclude>
+用于[[沉沦者的黑流树海/引擎配件目录]]的引擎配件条目卡片。
+
+{{code|<nowiki>
+{{:沉沦者的黑流树海/零件
+|名称=报废轮子
+|ID=rogue_6_scrap_M_01
+|稀有度=0
+|价格模式=单行
+|售价=2
+|类型=加工品
+|效果=装载后能够移动至{{color|#41edd7|直线2格内}}{{popup/range|x-6|颜色=#41edd7}}任意节点（可移动1次）
+|描述=继续损坏下去，它就无法定义了。
+}}
+</nowiki>}}
+</noinclude><noinclude>{{#widget:style|style=
+/* theme:begin page-dark 主题适配：页内写死的浅色底 / 深色字的暗色值，由源码推导，见 prts-skin-migration/docs/主题适配盘点.md */
+html.skin-theme-clientpref-night .mw-parser-output table[style*="background:#7F8082;" i],
+html.skin-theme-clientpref-night .mw-parser-output [style$="background:#7f8082" i],
+html.skin-theme-clientpref-night .mw-parser-output [style*="background:#7f8082;" i],
+html.skin-theme-clientpref-night .mw-parser-output [style^="background:#7F8082;" i],
+html.skin-theme-clientpref-night .mw-parser-output [style^="background:#7f8082;" i] {
+  background: #57585a !important;
+}
+/* theme:end page-dark */
+
+/* theme-os:begin 自动偏好（跟随系统暗色）。由上方 night 规则机械生成，勿手改 */
+@media (prefers-color-scheme: dark) {
+  html.skin-theme-clientpref-os .mw-parser-output table[style*="background:#7F8082;" i],
+  html.skin-theme-clientpref-os .mw-parser-output [style$="background:#7f8082" i],
+  html.skin-theme-clientpref-os .mw-parser-output [style*="background:#7f8082;" i],
+  html.skin-theme-clientpref-os .mw-parser-output [style^="background:#7F8082;" i],
+  html.skin-theme-clientpref-os .mw-parser-output [style^="background:#7f8082;" i] {
+    background: #57585a !important;
+  }
+}
+/* theme-os:end */
+}}</noinclude>

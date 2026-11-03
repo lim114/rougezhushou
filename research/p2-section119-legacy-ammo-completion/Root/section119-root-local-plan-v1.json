@@ -1,0 +1,37 @@
+{
+  "section": 119,
+  "files": [
+    {
+      "path": "rouge/damage.py",
+      "blocks": [
+        {
+          "before": "status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if events['release_frames'] else None",
+          "after": "status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if len(events['release_frames'])>=shots else None"
+        }
+      ]
+    },
+    {
+      "path": "rouge/estimate.py",
+      "blocks": [
+        {
+          "before": "    window_healing=0\r\n",
+          "after": "    if skill['duration_type']=='AMMO' and not (operator=='mechanist' and skill_index==2) and duration is None:\r\n        # A finite target supply can leave ammunition unused. Its placed\r\n        # observation remains valid, but is not a complete cast total.\r\n        if damage:damage=None\r\n        if healing:healing=None\r\n        notes.append('\u4f9b\u9776\u60c5\u666f\u672a\u8017\u5c3d\u672c\u6b21\u5f39\u836f\uff1b\u5df2\u6392\u7a0b\u89c2\u5bdf\u8f93\u51fa\u4fdd\u7559\uff0c\u5b8c\u6574\u65bd\u653e\u6301\u7eed\u3001\u975e\u96f6\u603b\u91cf\u53ca\u5b8c\u6574\u5468\u671f\u4fdd\u6301\u672a\u77e5\u3002')\r\n    window_healing=0\r\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_legacy_ammo_completion.py",
+      "new_source": "/workspace/.continuation/p2-numeric-consistency-source-v2/candidate/tests/test_legacy_ammo_completion.py",
+      "new_source_sha256": "09a750c2c9d27facbfe7b9c136bee19ff78178daed2eef7a0b3840c7679633ba"
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "blocks": [
+        {
+          "before": "MODULES = (\n",
+          "after": "MODULES = (\n    \"tests.test_legacy_ammo_completion\",\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "section": 267,
+  "kind": "functional_section",
+  "title": "机械师S2生命创建快照、藏品小计与黑板单精度屏障链",
+  "at_Beijing": "2026-10-14T10:12:06.259252+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "278c666085948954b2f3b315137e681fc4231de3",
+  "remaining_item": "P2机械师S2创建初值计算与连续屏障精度；实际创建快照/实例/回调/舍入环境/热更新仍待核验",
+  "new_capability": "本体培养/模组/藏品已覆盖HP小计及独立结构MAX_HP快照、全十rank倍率/floor乘积/float32写入读回、四种声明舍入环境、失败/0/未知区别；并修266连续破屏边界，专属入口与中文输出",
+  "files": [
+    "rouge/barrier_blackboard.py",
+    "rouge/mechanist_shield_grants.py",
+    "rouge/data/barrier-blackboard-source.json",
+    "rouge/mechanist_barrier_ledger.py",
+    "rouge/app.py",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "tests/test_mechanist_shield_grants.py",
+    "tests/test_mechanist_barrier_ledger.py",
+    "tests/test_offline_tools_view.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_shield_grants_window_267.py",
+    "research/p2-mechanist-grant-267/README.md",
+    "research/p2-mechanist-grant-267/native-proof.json",
+    "verification/sections/267-window.json",
+    "verification/sections/267-main-window.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/barrier_blackboard.py": "39d8d22e937a6870fd485faa3d70da21a046b2988710ec08a8aec1f1dc456bd1",
+    "rouge/mechanist_shield_grants.py": "16ca39e300713fca1c5b1a42bac2bdb848336e89b42ccb7fe4fb97f8856a84bd",
+    "rouge/data/barrier-blackboard-source.json": "420d761a6364e5d840b5965aa751c0f76a39016d298cc17ae6b1989fdc35347e",
+    "rouge/mechanist_barrier_ledger.py": "3e6e0d06268c8b4ececddb419e90a56475f84a7c34c82418bd4493e6668c950c",
+    "rouge/app.py": "380b8484ca4321708e29bb6ebdb0e03056f8fd715fcb81f37d3a5a568adc1a74",
+    "rouge/calibration.py": "b7e612a2bc4451833face705d8c4735e3a04557500bf8fd5fcfaa7cd335c2f63",
+    "rouge/offline_tools_view.py": "a990da04eef3c0d69facf72bf20aba8452bebed17672a4c2c88ee0862d6d5acf",
+    "tests/test_mechanist_shield_grants.py": "dfccb98c9df52c28e7749dc4b2459e771afae43b6cdf3ed8d7f2c5533badcbbc",
+    "tests/test_mechanist_barrier_ledger.py": "21ab9ac8ebeec9973f55baef5edcb23b656cd04da8c802ba383f4b8300994a1a",
+    "tests/test_offline_tools_view.py": "e6add070bf0c0a18e62bcc254ada82c1f876c4551e36f9238148f39f6be20b0e",
+    "scripts/verify_full_available.py": "be54d3eefc060b8be2c557e3d79cd1c9fd84c1f4a1d329e869875b7241ff1ddb",
+    "scripts/verify_shield_grants_window_267.py": "0c68b07a56d59ee1f115c2b390e74cc5c383514b8e4696b592636bf02d25b6c1",
+    "research/p2-mechanist-grant-267/README.md": "d53c892522b7e2d74071ebed9d0e50320f216a64e469312c08c1b9a108370865",
+    "research/p2-mechanist-grant-267/native-proof.json": "c2fca4cd5a9908c16285ee85f40fe2009deaa6dc173e83cd716f7d658e34615b",
+    "verification/sections/267-window.json": "11cb7c449912beb7e37da0e894bb00930c268c7b53914ffa4876366fa56721e1",
+    "verification/sections/267-main-window.json": "ff602f7bebd0f404b3d933e6c46506060572899f8c026cab56c1c27cac4d8115"
+  },
+  "reused_source_sha256": {
+    "rouge/data/mechanist-barrier-native-source.json": "bd8d4b11552c43de9d5a321aaa85a06442105e13ba442b865f95fdaa01dca8db",
+    "research/p2-mechanist-incoming-266/native-proof.json": "bda42a2daba0ea695e26b3932b6db5435a4c7f691cda57d6f6490541965cdac9",
+    "research/p2-mechanist-s2-shared-barrier-current/buff-template-binding.json": "6f1de25c15e343592a6d2020c8dbbc33e32e1c211e3f42f3149ad0428244bac2",
+    "research/p2-mechanist-s2-shared-barrier-current/receipt.json": "ba49d95dc64c66864c24382c9c4613b24c0f962bd8e256b859a93dc2ab348e64",
+    "rouge/relic_attributes.py": "bc658e44c3924565ebd331b8a88df5db69131069b9fa94aeb0c101f155c3ebd1",
+    "rouge/data/relic-mechanics.json": "37008d3e15071d9729b9c4414e7bcd43134de99cb0d459aa1055b5f02e9386bf"
+  },
+  "validation": {
+    "tests_run": 47,
+    "new_test_methods": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "final_log": "verification/sections/267-reviewed-check.log",
+    "first_and_intermediate_logs": [
+      "verification/sections/267-first-check.log",
+      "verification/sections/267-final-check.log"
+    ],
+    "overlapping_46_checks_not_added_to_final47": true,
+    "read_only_review_defects_fixed": [
+      "unknown default-one use tri-state",
+      "callback-change unknown versus cancel_all unknown short-circuit distinction"
+    ],
+    "native_methods": 10,
+    "native_unique_instructions": 533,
+    "all_bytes_rechecked_against_installed_candidate_file": true,
+    "native_public_MainWindow": {
+      "qpa": "windows",
+      "visible": true,
+      "main_window_route_verified": true,
+      "mechanist_S2_button_visible": true,
+      "other_operator_button_hidden": true,
+      "query": [
+        "calibration",
+        "shield-grants"
+      ],
+      "snapshot_count": 2,
+      "shield_readback_raw": [
+        1606317768704,
+        1288919711744
+      ],
+      "max_hp_input_raw": [
+        16063177687040,
+        12889196855296
+      ],
+      "unknown_actual_initial_shield": true,
+      "refresh_preserved_editor_result_selection": true,
+      "loaded_source_sha256": {
+        "rouge/app.py": "380b8484ca4321708e29bb6ebdb0e03056f8fd715fcb81f37d3a5a568adc1a74",
+        "rouge/calibration.py": "b7e612a2bc4451833face705d8c4735e3a04557500bf8fd5fcfaa7cd335c2f63",
+        "rouge/offline_tools_view.py": "a990da04eef3c0d69facf72bf20aba8452bebed17672a4c2c88ee0862d6d5acf",
+        "rouge/mechanist_shield_grants.py": "16ca39e300713fca1c5b1a42bac2bdb848336e89b42ccb7fe4fb97f8856a84bd",
+        "rouge/barrier_blackboard.py": "39d8d22e937a6870fd485faa3d70da21a046b2988710ec08a8aec1f1dc456bd1",
+        "rouge/mechanist_barrier_ledger.py": "3e6e0d06268c8b4ececddb419e90a56475f84a7c34c82418bd4493e6668c950c",
+        "rouge/data/barrier-blackboard-source.json": "420d761a6364e5d840b5965aa751c0f76a39016d298cc17ae6b1989fdc35347e"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Actual Windows changed main-window entry and public shield initialization only; not full game/Windows validation",
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "native_original_startup": {
+      "section": 267,
+      "parent_pid": 20612,
+      "main_pid": [
+        2008
+      ],
+      "visible_window_handles": [
+        592890
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original Windows app startup plus independent source-bound public changed MainWindow fixture, not full/game/private integration",
+      "desktop_visually_inspected_with": "Windows-mcp"
+    }
+  },
+  "log_sha256": {
+    "verification/sections/267-first-check.log": "6d67c5112206ad98d7b396ae0c5f711b15536eb40464c128baa7dd129c9a787e",
+    "verification/sections/267-final-check.log": "bbd5d617db3b6963577bd0bdef5bedfd0b286b6d5514b9d21bb967adcdb486c7",
+    "verification/sections/267-reviewed-check.log": "60fe13f4154db5819d20b1c22be8e34a411d23859da2000edeb6f25a921013cd"
+  },
+  "section266_precision_correction": {
+    "old_source_commit": "2067912e290d93dd8468fa68ce4b49375da7568e",
+    "original_receipt_preserved": "verification/sections/266.json",
+    "counterexample": {
+      "initial_raw": 429496729600,
+      "first_incoming_raw": 42950,
+      "exact_subtraction_raw": 429496686650,
+      "BB_readback_raw": 429496696832,
+      "next_incoming_raw": 429496643701,
+      "old_remainder_raw": 42949,
+      "corrected_remainder_raw": 53131,
+      "corrected_depletion_reference": false,
+      "corrected_ammunition_consumption_reference": 0
+    },
+    "old_checks_not_claimed_to_cover_BB_precision": true
+  },
+  "limits": [
+    "Only source-bound numerical conditions; no game state/placement capture, game operation or chat sending.",
+    "Model HP is integer known-subtotal input, not actual creation MAX_HP or complete panel.",
+    "Structure uses independent snapshot; no host HP borrowing.",
+    "Rounding modes declared, current MXCSR/hotfix/instance attachment unknown.",
+    "No actual initialized shield, creation success, times or automatic replenishment instance.",
+    "Overflow unknown, no artificial cap; legacy ledger without rounding keeps BB dependencies unknown.",
+    "Full available scope remains due275 and final280, missing original/private evidence not PASS."
+  ],
+  "next_section": 268,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}

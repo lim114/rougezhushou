@@ -1,0 +1,26 @@
+unmapped_0x180005480 0x180005480
+0x180005480 mov qword ptr [rsp + 8], rbx
+0x180005485 mov qword ptr [rsp + 0x10], rsi
+0x18000548a push rdi
+0x18000548b sub rsp, 0x20
+0x18000548f cmp byte ptr [rip + 0x8cc735a], 0
+0x180005496 mov rdi, r8
+0x180005499 mov rbx, rdx
+0x18000549c movzx esi, cx
+0x18000549f jbe 0x1800054a9
+0x1800054a1 mov rcx, qword ptr [rdx]
+0x1800054a4 call 0x180446d00
+0x1800054a9 mov rax, qword ptr [rbx]
+0x1800054ac lea r8, [rsi + 0x14]
+0x1800054b0 add r8, r8
+0x1800054b3 mov rdx, rdi
+0x1800054b6 mov rcx, rbx
+0x1800054b9 mov r9, qword ptr [rax + r8*8]
+0x1800054bd mov r8, qword ptr [rax + r8*8 + 8]
+0x1800054c2 mov rbx, qword ptr [rsp + 0x30]
+0x1800054c7 mov rsi, qword ptr [rsp + 0x38]
+0x1800054cc add rsp, 0x20
+0x1800054d0 pop rdi
+0x1800054d1 jmp r9
+EDGES [{"from": "0x18000549f", "kind": "conditional", "to": "0x1800054a9"}, {"from": "0x18000549f", "kind": "fallthrough", "to": "0x1800054a1"}, {"from": "0x1800054d1", "kind": "indirect_jump", "target": "r9"}]
+LIMITS []

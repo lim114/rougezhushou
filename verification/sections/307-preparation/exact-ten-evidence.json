@@ -1,0 +1,4097 @@
+{
+  "schema": "note_evidence_307_v1",
+  "sources": {
+    "research/p3-future-region-effects-300/game-topic-complete.json": {
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json"
+    },
+    "research/p3-future-region-effects-300/prts-events-427904.html": {
+      "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+      "bytes": 183007,
+      "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=427904"
+    },
+    "research/p3-future-region-effects-300/prts-events-440271.html": {
+      "sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
+      "bytes": 183838,
+      "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=440271"
+    }
+  },
+  "rows": [
+    {
+      "event_id": "community_group_008",
+      "event_title": "黑诞",
+      "scene_key": "community_group_008:scene:0",
+      "choice_key": "community_group_008:scene:0:choice:1",
+      "choice_title": "和猎狗战斗到底",
+      "annotation_text": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "random_named_battle_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 8,
+          "scene_index": 0,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "和猎狗战斗到底",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊作战",
+          "desc2": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 8,
+          "scene_index": 0,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "和猎狗战斗到底",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊作战",
+          "desc2": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_008:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_normal2_enter"
+        ],
+        "description": "猎犬并非凭空出现——当淌着黑流的漩涡出现在半空中时，你突然明白了一切。低吼与犬吠在它们出现前已先至，猎犬们接二连三地从漩涡中奔出，充满敌意地冲向你。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_15",
+          "data-name": "黑诞",
+          "data-ename": "",
+          "data-efloor": "III,IV,V",
+          "data-index": "33",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_008:scene:0:choice:0",
+            "title": "掏出笼控器控制猎狗",
+            "description": "持有零件笼控器，获得收藏品猎印（猎犬proto的攻击力-50%；每拥有1层【探测先锋】，我方法术抗性+10）",
+            "destination_keys": [
+              "community_group_008:scene:1"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal2_1"
+            ],
+            "source_type": "collection2",
+            "conditional": "仅在持有笼控器时出现",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "collection2",
+              "data-title": "掏出笼控器控制猎狗",
+              "data-icon": "209",
+              "data-dest": "1",
+              "data-iconid": "rogue_6_relic_cargo_12",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "normalized_title_and_explicit_item_id_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_008:scene:0:choice:1",
+            "title": "和猎狗战斗到底",
+            "description": "遭遇一场艰难的特殊作战",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_normal2_2"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "和猎狗战斗到底",
+              "data-icon": "battle",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_008:scene:0:choice:2",
+            "title": "落荒而逃",
+            "description": "消耗3目标生命值（至少保留1目标生命值）",
+            "destination_keys": [
+              "community_group_008:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_normal2_3",
+              "choice_ro6_normal2_4",
+              "choice_ro6_normal2_5",
+              "choice_ro6_normal2_6"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "落荒而逃",
+              "data-icon": "leave",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_normal2_2": {
+          "id": "choice_ro6_normal2_2",
+          "title": "和猎狗战斗到底",
+          "description": "遭遇一场艰难的特殊作战",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_normal2_enter": {
+          "id": "scene_ro6_normal2_enter",
+          "title": "黑诞",
+          "description": "猎犬并非凭空出现——当淌着黑流的漩涡出现在半空中时，你突然明白了一切。低吼与犬吠在它们出现前已先至，猎犬们接二连三地从漩涡中奔出，充满敌意地冲向你。",
+          "background": "pic_rogue_6_15",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.event_planning",
+        "api": "event_battle_links",
+        "result": {
+          "event_id": "community_group_008",
+          "event_title": "黑诞",
+          "scene_key": "community_group_008:scene:0",
+          "choice_key": "community_group_008:scene:0:choice:1",
+          "choice_title": "和猎狗战斗到底",
+          "description": "遭遇一场艰难的特殊作战",
+          "conditional_text": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "和猎狗战斗到底",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "stage_page_links": [
+            {
+              "title": "ISW-NO “闹乐”",
+              "href": "https://prts.wiki/w/ISW-NO_%E2%80%9C%E9%97%B9%E4%B9%90%E2%80%9D",
+              "anchor_text": "ISW-NO “闹乐”",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_13",
+                  "name": "“闹乐”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_13"
+                },
+                {
+                  "stage_id": "ro6_c_5",
+                  "name": "“闹乐”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_c_5"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_t_13",
+                      "name": "“闹乐”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_t_13",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    },
+                    {
+                      "stage_id": "ro6_c_5",
+                      "name": "“闹乐”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_c_5",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": true,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": []
+            },
+            {
+              "title": "ISW-NO “纵怒”",
+              "href": "https://prts.wiki/w/ISW-NO_%E2%80%9C%E7%BA%B5%E6%80%92%E2%80%9D",
+              "anchor_text": "ISW-NO “纵怒”",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_14",
+                  "name": "“纵怒”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_14"
+                },
+                {
+                  "stage_id": "ro6_c_6",
+                  "name": "“纵怒”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_c_6"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_t_14",
+                      "name": "“纵怒”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_t_14",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    },
+                    {
+                      "stage_id": "ro6_c_6",
+                      "name": "“纵怒”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_c_6",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": true,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": []
+            },
+            {
+              "title": "ISW-NO “灭身”",
+              "href": "https://prts.wiki/w/ISW-NO_%E2%80%9C%E7%81%AD%E8%BA%AB%E2%80%9D",
+              "anchor_text": "ISW-NO “灭身”",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_15",
+                  "name": "“灭身”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_15"
+                },
+                {
+                  "stage_id": "ro6_c_7",
+                  "name": "“灭身”",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_c_7"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_t_15",
+                      "name": "“灭身”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_t_15",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    },
+                    {
+                      "stage_id": "ro6_c_7",
+                      "name": "“灭身”",
+                      "code": "ISW-NO",
+                      "difficulty": "NORMAL",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_c_7",
+                      "source_difficulty_matches": null,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": true,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": []
+            }
+          ],
+          "game_choice_ids": [
+            "choice_ro6_normal2_2"
+          ],
+          "battle_icon": true,
+          "community_choice_to_page_verified": true,
+          "actual_stage_instance_verified": false,
+          "choice_eligibility": {
+            "choice_key": "community_group_008:scene:0:choice:1",
+            "choice_title": "和猎狗战斗到底",
+            "presentation_role": "display_option_reference",
+            "status": "unknown",
+            "checks": [
+              {
+                "key": "documented_node_type",
+                "matches": null,
+                "source_text": "目录节点类型：不期而遇",
+                "kind": "catalog_scope"
+              },
+              {
+                "key": "documented_main_floor",
+                "matches": true,
+                "source_text": "目录主层范围：[3, 4, 5]",
+                "kind": "catalog_scope",
+                "special_region_not_filtered": false
+              },
+              {
+                "key": "entry_context",
+                "matches": null,
+                "source_text": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+                "kind": "unknown_server_generation"
+              }
+            ],
+            "parsed_special_requirements": [],
+            "conditional_text": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+            "unparsed_condition_text": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+            "game_choice_ids": [
+              "choice_ro6_normal2_2"
+            ],
+            "original_choice_records": [
+              {
+                "id": "choice_ro6_normal2_2",
+                "title": "和猎狗战斗到底",
+                "description": "遭遇一场艰难的特殊作战",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              }
+            ],
+            "actual_selectable": null,
+            "full_server_conditions_known": false,
+            "source_origin_scene_binding_verified": false,
+            "edition_warnings": []
+          },
+          "actual_stage_id": null,
+          "stage_identity_rule": "exact wiki code+name; every matching original ID retained",
+          "preview_stage_candidates": [
+            {
+              "stage_id": "ro6_t_13",
+              "name": "“闹乐”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_13",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            },
+            {
+              "stage_id": "ro6_c_5",
+              "name": "“闹乐”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_c_5",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            },
+            {
+              "stage_id": "ro6_t_14",
+              "name": "“纵怒”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_14",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            },
+            {
+              "stage_id": "ro6_c_6",
+              "name": "“纵怒”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_c_6",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            },
+            {
+              "stage_id": "ro6_t_15",
+              "name": "“灭身”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_15",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            },
+            {
+              "stage_id": "ro6_c_7",
+              "name": "“灭身”",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_c_7",
+              "source_difficulty_matches": null,
+              "actual_stage_instance": null
+            }
+          ],
+          "excluded_stage_candidates": [],
+          "generic_pool_requirement": null
+        }
+      },
+      "limits": [
+        "固定事件到战斗的既有阅读能力仍复用；不重复实现关卡映射或条件池。",
+        "附注说明选择后的战斗，而不是当前选项出现/可选的资格。",
+        "原choices不含stageId或完整脚本，不从nextSceneId推出作战实际入口。",
+        "三个具名追猎关卡仅列为资料候选，不断言等概率、已出现或实际选择。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_014",
+      "event_title": "鸭托邦",
+      "scene_key": "community_group_014:scene:2",
+      "choice_key": "community_group_014:scene:2:choice:0",
+      "choice_title": "区区商人！",
+      "annotation_text": "升级为紧急作战",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "battle_difficulty_result",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 14,
+          "scene_index": 2,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "区区商人！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 14,
+          "scene_index": 2,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "区区商人！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_014:scene:2",
+        "game_scene_ids": [
+          "scene_ro6_bat3_2"
+        ],
+        "description": "你手中的源石锭吸引了带头鸭子和鸭群的兴趣，现在你彻底打搅了正在成形的鸭托邦。没有指挥下属，带头鸭子用翅膀压低帽子，朝你飞速扑来！他精通的可不只是经商之道。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "故意挑事",
+          "data-image": "Avg_pic_rogue_6_3",
+          "data-name": "鸭托邦",
+          "data-ename": "",
+          "data-index": "74",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_014:scene:2:choice:0",
+            "title": "区区商人！",
+            "description": "遭遇一场艰难的特殊战斗",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_bat3_5"
+            ],
+            "source_type": "simple",
+            "conditional": "升级为紧急作战",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "区区商人！",
+              "data-icon": "battle",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_bat3_5": {
+          "id": "choice_ro6_bat3_5",
+          "title": "区区商人！",
+          "description": "遭遇一场艰难的特殊战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_bat3_2": {
+          "id": "scene_ro6_bat3_2",
+          "title": "鸭托邦",
+          "description": "你手中的源石锭吸引了带头鸭子和鸭群的兴趣，现在你彻底打搅了正在成形的鸭托邦。没有指挥下属，带头鸭子用翅膀压低帽子，朝你飞速扑来！他精通的可不只是经商之道。",
+          "background": "pic_rogue_6_3",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.event_planning",
+        "api": "event_battle_links",
+        "result": {
+          "event_id": "community_group_014",
+          "event_title": "鸭托邦",
+          "scene_key": "community_group_014:scene:2",
+          "choice_key": "community_group_014:scene:2:choice:0",
+          "choice_title": "区区商人！",
+          "description": "遭遇一场艰难的特殊战斗",
+          "conditional_text": "升级为紧急作战",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "区区商人！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "stage_page_links": [
+            {
+              "title": "ISW-NO 开业剪彩",
+              "href": "https://prts.wiki/w/ISW-NO_%E5%BC%80%E4%B8%9A%E5%89%AA%E5%BD%A9",
+              "anchor_text": "艰难的特殊战斗",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_3",
+                  "name": "开业剪彩",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_3"
+                },
+                {
+                  "stage_id": "ro6_e_t_3",
+                  "name": "开业剪彩",
+                  "code": "ISW-NO",
+                  "difficulty": "FOUR_STAR",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_e_t_3"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_e_t_3",
+                      "name": "开业剪彩",
+                      "code": "ISW-NO",
+                      "difficulty": "FOUR_STAR",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_e_t_3",
+                      "source_difficulty_matches": true,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": false,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": [
+                {
+                  "stage_id": "ro6_t_3",
+                  "name": "开业剪彩",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_3",
+                  "source_difficulty_matches": false,
+                  "actual_stage_instance": null
+                }
+              ]
+            }
+          ],
+          "game_choice_ids": [
+            "choice_ro6_bat3_5"
+          ],
+          "battle_icon": true,
+          "community_choice_to_page_verified": true,
+          "actual_stage_instance_verified": false,
+          "choice_eligibility": {
+            "choice_key": "community_group_014:scene:2:choice:0",
+            "choice_title": "区区商人！",
+            "presentation_role": "display_option_reference",
+            "status": "unknown",
+            "checks": [
+              {
+                "key": "documented_node_type",
+                "matches": null,
+                "source_text": "目录节点类型：不期而遇",
+                "kind": "catalog_scope"
+              },
+              {
+                "key": "documented_main_floor",
+                "matches": true,
+                "source_text": "目录主层范围：[3, 4]",
+                "kind": "catalog_scope",
+                "special_region_not_filtered": false
+              },
+              {
+                "key": "entry_context",
+                "matches": null,
+                "source_text": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+                "kind": "unknown_server_generation"
+              }
+            ],
+            "parsed_special_requirements": [],
+            "conditional_text": "升级为紧急作战",
+            "unparsed_condition_text": "升级为紧急作战",
+            "game_choice_ids": [
+              "choice_ro6_bat3_5"
+            ],
+            "original_choice_records": [
+              {
+                "id": "choice_ro6_bat3_5",
+                "title": "区区商人！",
+                "description": "遭遇一场艰难的特殊战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              }
+            ],
+            "actual_selectable": null,
+            "full_server_conditions_known": false,
+            "source_origin_scene_binding_verified": false,
+            "edition_warnings": []
+          },
+          "actual_stage_id": null,
+          "stage_identity_rule": "exact wiki code+name; every matching original ID retained",
+          "preview_stage_candidates": [
+            {
+              "stage_id": "ro6_e_t_3",
+              "name": "开业剪彩",
+              "code": "ISW-NO",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_e_t_3",
+              "source_difficulty_matches": true,
+              "actual_stage_instance": null
+            }
+          ],
+          "excluded_stage_candidates": [
+            {
+              "stage_id": "ro6_t_3",
+              "name": "开业剪彩",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_3",
+              "source_difficulty_matches": false,
+              "actual_stage_instance": null
+            }
+          ],
+          "generic_pool_requirement": null
+        }
+      },
+      "limits": [
+        "固定事件到战斗的既有阅读能力仍复用；不重复实现关卡映射或条件池。",
+        "附注说明选择后的战斗，而不是当前选项出现/可选的资格。",
+        "原choices不含stageId或完整脚本，不从nextSceneId推出作战实际入口。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_015",
+      "event_title": "传奇团伙",
+      "scene_key": "community_group_015:scene:2",
+      "choice_key": "community_group_015:scene:2:choice:0",
+      "choice_title": "就挑衅，怎么了？",
+      "annotation_text": "升级为紧急作战",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "battle_difficulty_result",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 15,
+          "scene_index": 2,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "就挑衅，怎么了？",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 15,
+          "scene_index": 2,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "就挑衅，怎么了？",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_015:scene:2",
+        "game_scene_ids": [
+          "scene_ro6_bat4_2"
+        ],
+        "description": "轮胎发出了古怪的漏气声，引得你哈哈大笑。再次抬起头时，你发现商队的所有成员都拿起了武器，气势汹汹地朝你走来。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "扎穿车胎",
+          "data-image": "Avg_pic_rogue_6_4",
+          "data-name": "传奇团伙",
+          "data-ename": "",
+          "data-index": "78",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_015:scene:2:choice:0",
+            "title": "就挑衅，怎么了？",
+            "description": "遭遇一场艰难的特殊战斗",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_bat4_5"
+            ],
+            "source_type": "simple",
+            "conditional": "升级为紧急作战",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "就挑衅，怎么了？",
+              "data-icon": "battle",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_bat4_5": {
+          "id": "choice_ro6_bat4_5",
+          "title": "就挑衅，怎么了？",
+          "description": "遭遇一场艰难的特殊战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_bat4_2": {
+          "id": "scene_ro6_bat4_2",
+          "title": "传奇团伙",
+          "description": "轮胎发出了古怪的漏气声，引得你哈哈大笑。再次抬起头时，你发现商队的所有成员都拿起了武器，气势汹汹地朝你走来。",
+          "background": "pic_rogue_6_4",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.event_planning",
+        "api": "event_battle_links",
+        "result": {
+          "event_id": "community_group_015",
+          "event_title": "传奇团伙",
+          "scene_key": "community_group_015:scene:2",
+          "choice_key": "community_group_015:scene:2:choice:0",
+          "choice_title": "就挑衅，怎么了？",
+          "description": "遭遇一场艰难的特殊战斗",
+          "conditional_text": "升级为紧急作战",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "就挑衅，怎么了？",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "stage_page_links": [
+            {
+              "title": "ISW-NO 合伙人会议",
+              "href": "https://prts.wiki/w/ISW-NO_%E5%90%88%E4%BC%99%E4%BA%BA%E4%BC%9A%E8%AE%AE",
+              "anchor_text": "艰难的特殊战斗",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_4",
+                  "name": "合伙人会议",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_4"
+                },
+                {
+                  "stage_id": "ro6_e_t_4",
+                  "name": "合伙人会议",
+                  "code": "ISW-NO",
+                  "difficulty": "FOUR_STAR",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_e_t_4"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_e_t_4",
+                      "name": "合伙人会议",
+                      "code": "ISW-NO",
+                      "difficulty": "FOUR_STAR",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_e_t_4",
+                      "source_difficulty_matches": true,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": false,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": [
+                {
+                  "stage_id": "ro6_t_4",
+                  "name": "合伙人会议",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_4",
+                  "source_difficulty_matches": false,
+                  "actual_stage_instance": null
+                }
+              ]
+            }
+          ],
+          "game_choice_ids": [
+            "choice_ro6_bat4_5"
+          ],
+          "battle_icon": true,
+          "community_choice_to_page_verified": true,
+          "actual_stage_instance_verified": false,
+          "choice_eligibility": {
+            "choice_key": "community_group_015:scene:2:choice:0",
+            "choice_title": "就挑衅，怎么了？",
+            "presentation_role": "display_option_reference",
+            "status": "excluded",
+            "checks": [
+              {
+                "key": "documented_node_type",
+                "matches": null,
+                "source_text": "目录节点类型：不期而遇",
+                "kind": "catalog_scope"
+              },
+              {
+                "key": "documented_main_floor",
+                "matches": false,
+                "source_text": "目录主层范围：[4, 5, 6]",
+                "kind": "catalog_scope",
+                "special_region_not_filtered": false
+              },
+              {
+                "key": "entry_context",
+                "matches": null,
+                "source_text": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+                "kind": "unknown_server_generation"
+              }
+            ],
+            "parsed_special_requirements": [],
+            "conditional_text": "升级为紧急作战",
+            "unparsed_condition_text": "升级为紧急作战",
+            "game_choice_ids": [
+              "choice_ro6_bat4_5"
+            ],
+            "original_choice_records": [
+              {
+                "id": "choice_ro6_bat4_5",
+                "title": "就挑衅，怎么了？",
+                "description": "遭遇一场艰难的特殊战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              }
+            ],
+            "actual_selectable": null,
+            "full_server_conditions_known": false,
+            "source_origin_scene_binding_verified": false,
+            "edition_warnings": []
+          },
+          "actual_stage_id": null,
+          "stage_identity_rule": "exact wiki code+name; every matching original ID retained",
+          "preview_stage_candidates": [
+            {
+              "stage_id": "ro6_e_t_4",
+              "name": "合伙人会议",
+              "code": "ISW-NO",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_e_t_4",
+              "source_difficulty_matches": true,
+              "actual_stage_instance": null
+            }
+          ],
+          "excluded_stage_candidates": [
+            {
+              "stage_id": "ro6_t_4",
+              "name": "合伙人会议",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_4",
+              "source_difficulty_matches": false,
+              "actual_stage_instance": null
+            }
+          ],
+          "generic_pool_requirement": null
+        }
+      },
+      "limits": [
+        "固定事件到战斗的既有阅读能力仍复用；不重复实现关卡映射或条件池。",
+        "附注说明选择后的战斗，而不是当前选项出现/可选的资格。",
+        "原choices不含stageId或完整脚本，不从nextSceneId推出作战实际入口。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_016",
+      "event_title": "湖中仙女",
+      "scene_key": "community_group_016:scene:8",
+      "choice_key": "community_group_016:scene:8:choice:0",
+      "choice_title": "我不要困在这里！",
+      "annotation_text": "升级为紧急作战",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "battle_difficulty_result",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 16,
+          "scene_index": 8,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "我不要困在这里！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 16,
+          "scene_index": 8,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "我不要困在这里！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的特殊战斗",
+          "desc2": "升级为紧急作战",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_016:scene:8",
+        "game_scene_ids": [
+          "scene_ro6_bat5_7"
+        ],
+        "description": "手表被丢进湖里，仙女的手伸进湖水，这次她捞出了一条腐烂的胳膊，破损的手表正牢牢箍在肿大的手腕上。你低头看向仙女在湖中的倒影——一只似蛇又像蝎的生物。周围的景色变幻了，蓝色的火焰将你们围了起来，仙女扭曲的声音萦绕在耳畔：“ ¿吗诚虔的你现展意愿你”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "我不要困在这里！",
+          "data-image": "Avg_pic_rogue_6_5",
+          "data-name": "湖中仙女",
+          "data-ename": "",
+          "data-index": "88",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_016:scene:8:choice:0",
+            "title": "我不要困在这里！",
+            "description": "遭遇一场艰难的特殊战斗",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_bat5_9"
+            ],
+            "source_type": "simple",
+            "conditional": "升级为紧急作战",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "我不要困在这里！",
+              "data-icon": "battle",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_bat5_9": {
+          "id": "choice_ro6_bat5_9",
+          "title": "我不要困在这里！",
+          "description": "遭遇一场艰难的特殊战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_bat5_7": {
+          "id": "scene_ro6_bat5_7",
+          "title": "湖中仙女",
+          "description": "手表被丢进湖里，仙女的手伸进湖水，这次她捞出了一条腐烂的胳膊，破损的手表正牢牢箍在肿大的手腕上。你低头看向仙女在湖中的倒影——一只似蛇又像蝎的生物。周围的景色变幻了，蓝色的火焰将你们围了起来，仙女扭曲的声音萦绕在耳畔：“ ¿吗诚虔的你现展意愿你”",
+          "background": "pic_rogue_6_5",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.event_planning",
+        "api": "event_battle_links",
+        "result": {
+          "event_id": "community_group_016",
+          "event_title": "湖中仙女",
+          "scene_key": "community_group_016:scene:8",
+          "choice_key": "community_group_016:scene:8:choice:0",
+          "choice_title": "我不要困在这里！",
+          "description": "遭遇一场艰难的特殊战斗",
+          "conditional_text": "升级为紧急作战",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "我不要困在这里！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "stage_page_links": [
+            {
+              "title": "ISW-NO 湖中魇",
+              "href": "https://prts.wiki/w/ISW-NO_%E6%B9%96%E4%B8%AD%E9%AD%87",
+              "anchor_text": "艰难的特殊战斗",
+              "stage_records": [
+                {
+                  "stage_id": "ro6_t_5",
+                  "name": "湖中魇",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_5"
+                },
+                {
+                  "stage_id": "ro6_e_t_5",
+                  "name": "湖中魇",
+                  "code": "ISW-NO",
+                  "difficulty": "FOUR_STAR",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_e_t_5"
+                }
+              ],
+              "fixed_level_groups": [
+                {
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+                  "stage_records": [
+                    {
+                      "stage_id": "ro6_e_t_5",
+                      "name": "湖中魇",
+                      "code": "ISW-NO",
+                      "difficulty": "FOUR_STAR",
+                      "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+                      "is_boss_parameter": 0,
+                      "source_selector": "$.details.rogue_6.stages.ro6_e_t_5",
+                      "source_difficulty_matches": true,
+                      "actual_stage_instance": null
+                    }
+                  ],
+                  "same_level_aliases": false,
+                  "actual_stage_id": null
+                }
+              ],
+              "excluded_by_explicit_difficulty": [
+                {
+                  "stage_id": "ro6_t_5",
+                  "name": "湖中魇",
+                  "code": "ISW-NO",
+                  "difficulty": "NORMAL",
+                  "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+                  "is_boss_parameter": 0,
+                  "source_selector": "$.details.rogue_6.stages.ro6_t_5",
+                  "source_difficulty_matches": false,
+                  "actual_stage_instance": null
+                }
+              ]
+            }
+          ],
+          "game_choice_ids": [
+            "choice_ro6_bat5_9"
+          ],
+          "battle_icon": true,
+          "community_choice_to_page_verified": true,
+          "actual_stage_instance_verified": false,
+          "choice_eligibility": {
+            "choice_key": "community_group_016:scene:8:choice:0",
+            "choice_title": "我不要困在这里！",
+            "presentation_role": "display_option_reference",
+            "status": "unknown",
+            "checks": [
+              {
+                "key": "documented_node_type",
+                "matches": null,
+                "source_text": "目录节点类型：不期而遇",
+                "kind": "catalog_scope"
+              },
+              {
+                "key": "documented_main_floor",
+                "matches": true,
+                "source_text": "目录主层范围：[3, 4, 5]",
+                "kind": "catalog_scope",
+                "special_region_not_filtered": false
+              },
+              {
+                "key": "entry_context",
+                "matches": null,
+                "source_text": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+                "kind": "unknown_server_generation"
+              }
+            ],
+            "parsed_special_requirements": [],
+            "conditional_text": "升级为紧急作战",
+            "unparsed_condition_text": "升级为紧急作战",
+            "game_choice_ids": [
+              "choice_ro6_bat5_9"
+            ],
+            "original_choice_records": [
+              {
+                "id": "choice_ro6_bat5_9",
+                "title": "我不要困在这里！",
+                "description": "遭遇一场艰难的特殊战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              }
+            ],
+            "actual_selectable": null,
+            "full_server_conditions_known": false,
+            "source_origin_scene_binding_verified": false,
+            "edition_warnings": []
+          },
+          "actual_stage_id": null,
+          "stage_identity_rule": "exact wiki code+name; every matching original ID retained",
+          "preview_stage_candidates": [
+            {
+              "stage_id": "ro6_e_t_5",
+              "name": "湖中魇",
+              "code": "ISW-NO",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_e_t_5",
+              "source_difficulty_matches": true,
+              "actual_stage_instance": null
+            }
+          ],
+          "excluded_stage_candidates": [
+            {
+              "stage_id": "ro6_t_5",
+              "name": "湖中魇",
+              "code": "ISW-NO",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5",
+              "is_boss_parameter": 0,
+              "source_selector": "$.details.rogue_6.stages.ro6_t_5",
+              "source_difficulty_matches": false,
+              "actual_stage_instance": null
+            }
+          ],
+          "generic_pool_requirement": null
+        }
+      },
+      "limits": [
+        "固定事件到战斗的既有阅读能力仍复用；不重复实现关卡映射或条件池。",
+        "附注说明选择后的战斗，而不是当前选项出现/可选的资格。",
+        "原choices不含stageId或完整脚本，不从nextSceneId推出作战实际入口。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_017",
+      "event_title": "洞中宝",
+      "scene_key": "community_group_017:scene:6",
+      "choice_key": "community_group_017:scene:6:choice:0",
+      "choice_title": "放开我！",
+      "annotation_text": "随机出现下一层的普通作战中的一个",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "next_floor_battle_pool_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 17,
+          "scene_index": 6,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "放开我！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的战斗",
+          "desc2": "随机出现下一层的普通作战中的一个",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 17,
+          "scene_index": 6,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "放开我！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "遭遇一场艰难的战斗",
+          "desc2": "随机出现下一层的普通作战中的一个",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_017:scene:6",
+        "game_scene_ids": [
+          "scene_ro6_bat6_5",
+          "scene_ro6_bat6_11",
+          "scene_ro6_bat6_16",
+          "scene_ro6_bat6_21",
+          "scene_ro6_bat6b_5",
+          "scene_ro6_bat6b_11",
+          "scene_ro6_bat6b_16",
+          "scene_ro6_bat6b_21"
+        ],
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "树洞咬人！",
+          "data-image": "Avg_pic_rogue_6_6",
+          "data-name": "洞中宝",
+          "data-ename": "",
+          "data-index": "97",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_017:scene:6:choice:0",
+            "title": "放开我！",
+            "description": "遭遇一场艰难的战斗",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_bat6_6",
+              "choice_ro6_bat6_12",
+              "choice_ro6_bat6_17",
+              "choice_ro6_bat6_22",
+              "choice_ro6_bat6b_6",
+              "choice_ro6_bat6b_12",
+              "choice_ro6_bat6b_17",
+              "choice_ro6_bat6b_22"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现下一层的普通作战中的一个",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "放开我！",
+              "data-icon": "battle",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_bat6_6": {
+          "id": "choice_ro6_bat6_6",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6_12": {
+          "id": "choice_ro6_bat6_12",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6_17": {
+          "id": "choice_ro6_bat6_17",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6_22": {
+          "id": "choice_ro6_bat6_22",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6b_6": {
+          "id": "choice_ro6_bat6b_6",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6b_12": {
+          "id": "choice_ro6_bat6b_12",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6b_17": {
+          "id": "choice_ro6_bat6b_17",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_bat6b_22": {
+          "id": "choice_ro6_bat6b_22",
+          "title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "lockedCoverDesc": null,
+          "type": "TRADE_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": "battle",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "battle",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_bat6_11": {
+          "id": "scene_ro6_bat6_11",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6_16": {
+          "id": "scene_ro6_bat6_16",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6_21": {
+          "id": "scene_ro6_bat6_21",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6_5": {
+          "id": "scene_ro6_bat6_5",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6b_11": {
+          "id": "scene_ro6_bat6b_11",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6b_16": {
+          "id": "scene_ro6_bat6b_16",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6b_21": {
+          "id": "scene_ro6_bat6b_21",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_bat6b_5": {
+          "id": "scene_ro6_bat6b_5",
+          "title": "洞中宝",
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "background": "pic_rogue_6_6",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.event_planning",
+        "api": "event_battle_links",
+        "result": {
+          "event_id": "community_group_017",
+          "event_title": "洞中宝",
+          "scene_key": "community_group_017:scene:6",
+          "choice_key": "community_group_017:scene:6:choice:0",
+          "choice_title": "放开我！",
+          "description": "遭遇一场艰难的战斗",
+          "conditional_text": "随机出现下一层的普通作战中的一个",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "放开我！",
+            "data-icon": "battle",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "stage_page_links": [],
+          "game_choice_ids": [
+            "choice_ro6_bat6_6",
+            "choice_ro6_bat6_12",
+            "choice_ro6_bat6_17",
+            "choice_ro6_bat6_22",
+            "choice_ro6_bat6b_6",
+            "choice_ro6_bat6b_12",
+            "choice_ro6_bat6b_17",
+            "choice_ro6_bat6b_22"
+          ],
+          "battle_icon": true,
+          "community_choice_to_page_verified": false,
+          "actual_stage_instance_verified": false,
+          "choice_eligibility": {
+            "choice_key": "community_group_017:scene:6:choice:0",
+            "choice_title": "放开我！",
+            "presentation_role": "display_option_reference",
+            "status": "unknown",
+            "checks": [
+              {
+                "key": "documented_node_type",
+                "matches": null,
+                "source_text": "目录节点类型：不期而遇",
+                "kind": "catalog_scope"
+              },
+              {
+                "key": "documented_main_floor",
+                "matches": true,
+                "source_text": "目录主层范围：[3, 4]",
+                "kind": "catalog_scope",
+                "special_region_not_filtered": false
+              },
+              {
+                "key": "entry_context",
+                "matches": null,
+                "source_text": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+                "kind": "unknown_server_generation"
+              }
+            ],
+            "parsed_special_requirements": [],
+            "conditional_text": "随机出现下一层的普通作战中的一个",
+            "unparsed_condition_text": "随机出现下一层的普通作战中的一个",
+            "game_choice_ids": [
+              "choice_ro6_bat6_6",
+              "choice_ro6_bat6_12",
+              "choice_ro6_bat6_17",
+              "choice_ro6_bat6_22",
+              "choice_ro6_bat6b_6",
+              "choice_ro6_bat6b_12",
+              "choice_ro6_bat6b_17",
+              "choice_ro6_bat6b_22"
+            ],
+            "original_choice_records": [
+              {
+                "id": "choice_ro6_bat6_6",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6_12",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6_17",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6_22",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6b_6",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6b_12",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6b_17",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              },
+              {
+                "id": "choice_ro6_bat6b_22",
+                "title": "放开我！",
+                "description": "遭遇一场艰难的战斗",
+                "lockedCoverDesc": null,
+                "type": "TRADE_PROB",
+                "nextSceneId": null,
+                "displayData": {
+                  "type": "NORMAL",
+                  "costHintType": "NONE",
+                  "effectHintType": "NONE",
+                  "funcIconId": "battle",
+                  "itemId": null,
+                  "difficultyUpgradeRelicGroupId": null,
+                  "taskId": null,
+                  "instId": null
+                },
+                "isHiddenChoice": false,
+                "forceShowWhenOnlyLeave": false
+              }
+            ],
+            "actual_selectable": null,
+            "full_server_conditions_known": false,
+            "source_origin_scene_binding_verified": false,
+            "edition_warnings": []
+          },
+          "actual_stage_id": null,
+          "stage_identity_rule": "exact wiki code+name; every matching original ID retained",
+          "preview_stage_candidates": [],
+          "excluded_stage_candidates": [],
+          "generic_pool_requirement": {
+            "source_text": "随机出现下一层的普通作战中的一个",
+            "next_main_floor_reference": 4,
+            "fixed_named_pool": [
+              {
+                "id": "ro6_n_4_1",
+                "title": "未来见闻",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E6%9C%AA%E6%9D%A5%E8%A7%81%E9%97%BB",
+                    "row_index_in_source_table": 6
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "有人在玻利瓦尔分享他在哥伦比亚科技展会上的见闻。一位记者听说后提笔写下：“在哥伦比亚，被剥夺了土地的人们只能生活在天上。”",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_2",
+                "title": "种植园惊魂",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E7%A7%8D%E6%A4%8D%E5%9B%AD%E6%83%8A%E9%AD%82",
+                    "row_index_in_source_table": 6
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "十个壮劳工，下地去干活；一个变黑影，还剩九个人。九个壮劳工，牵手去施肥；一个沉黑流，还剩八个人......",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_3",
+                "title": "选边站",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E9%80%89%E8%BE%B9%E7%AB%99",
+                    "row_index_in_source_table": 6
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "“居民”们正在投票表决一些事情，你并不理解它们的语言，也没打算干涉，但当你从旁边经过的时候，它们齐刷刷地看向了你。",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_4",
+                "title": "诞生礼",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E8%AF%9E%E7%94%9F%E7%A4%BC",
+                    "row_index_in_source_table": 6
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "“不得惊扰神圣的诞生礼！”司仪们厉声呵止住你，并尝试从黑流中抱起一个个“婴孩”。可你看得真切，那些躺在襁褓中的分明是一条条猎犬。",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_5",
+                "title": "暴力押运",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E6%9A%B4%E5%8A%9B%E6%8A%BC%E8%BF%90",
+                    "row_index_in_source_table": 7
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "大批的器材与设备正被运往黑流树海深处。你不该看见这些的，至少不该让那些押运人员知道你看见了。",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_6",
+                "title": "长刀寒夜",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E9%95%BF%E5%88%80%E5%AF%92%E5%A4%9C",
+                    "row_index_in_source_table": 7
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "在那场失败行动的前夜，辛嘉斯的叛军余部做足了准备，势要清算所有的碍事者，更迭这个愚蠢的王朝。\\n<@rolv.rem>场地中有能预警雪崩的<圣女像>，敌我进入其范围会增加雪崩预警值</>",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              },
+              {
+                "id": "ro6_n_4_7",
+                "title": "侵占家园",
+                "difficulty": "NORMAL",
+                "boss_parameter": 0,
+                "floor": 4,
+                "floor_label": "第Ⅳ层",
+                "floors": [
+                  4
+                ],
+                "documented_floors": [
+                  4
+                ],
+                "floor_reference_source": null,
+                "categories": [
+                  "normal"
+                ],
+                "natural_node_types": [
+                  "作战"
+                ],
+                "content_node_types": [
+                  "作战"
+                ],
+                "source_references": [
+                  {
+                    "section_heading": "ISW-NO一般作战 & 紧急作战",
+                    "source_membership": "normal_emergency_named_pool",
+                    "display_floor": 4,
+                    "pursuit_marker": false,
+                    "stage_link": "https://prts.wiki/w/ISW-NO_%E4%BE%B5%E5%8D%A0%E5%AE%B6%E5%9B%AD",
+                    "row_index_in_source_table": 7
+                  }
+                ],
+                "settlement_context_references": [],
+                "known_requirement_checks": {
+                  "excluded_main_floors": [],
+                  "minimum_difficulty": null,
+                  "known_floor_requirement_matches": null,
+                  "known_difficulty_requirement_matches": null,
+                  "condition_sources": [],
+                  "full_server_eligibility_verified": false
+                },
+                "context": "natural",
+                "natural_pool_reference": true,
+                "node_applicability": "来源具名池引用；服务器资格未知",
+                "description": "为什么似乎只有人类会在丛林中迷路？因为在学会如何认路之前，人类就会砍光丛林——反正这里也不是他们的家园。你说丛林中本来有居民？真的吗？\\n<@rolv.rem>场地中有能遮蔽视野的<树丛>和<盾与墙></>",
+                "actual_occurrence": null,
+                "server_eligibility": "未知",
+                "hidden_layer_reference": false,
+                "entry_context_reference": null
+              }
+            ],
+            "server_pool_complete": false,
+            "actual_choice": null,
+            "special_region_next_main_floor_rule_verified": false
+          }
+        }
+      },
+      "limits": [
+        "固定事件到战斗的既有阅读能力仍复用；不重复实现关卡映射或条件池。",
+        "附注说明选择后的战斗，而不是当前选项出现/可选的资格。",
+        "原choices不含stageId或完整脚本，不从nextSceneId推出作战实际入口。",
+        "下一层普通作战已有固定主层候选查询；不宣称完整服务器池、特殊区域推进规则或概率。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_023",
+      "event_title": "安眠一隅",
+      "scene_key": "community_group_023:scene:1",
+      "choice_key": "community_group_023:scene:1:choice:0",
+      "choice_title": "四处看看",
+      "annotation_text": "随机出现以下3种奖励中的1种",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "future_reward_branch_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 23,
+          "scene_index": 1,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "四处看看",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "小狗;2;;捕梦网;4;;松鼠;5"
+          },
+          "desc1": "也许会有其他发现",
+          "desc2": "随机出现以下3种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 23,
+          "scene_index": 1,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "四处看看",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "小狗;2;;捕梦网;4;;松鼠;5"
+          },
+          "desc1": "也许会有其他发现",
+          "desc2": "随机出现以下3种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_023:scene:1",
+        "game_scene_ids": [
+          "scene_ro6_surprise_1"
+        ],
+        "description": "一张被树木包围的柔软病床出现在眼前，床边的仪器屏幕如呼吸般闪烁着。阳光像细密的纺线自树冠的间隙中散落，温暖的风，甜美的果香，一切都是如此舒畅。轻快的吠声吸引了你，引领你来到此地的小狗兴奋地摇着尾巴，跳上床酣睡起来。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "这是……",
+          "data-image": "Avg_pic_rogue_6_34",
+          "data-name": "安眠一隅",
+          "data-ename": "",
+          "data-index": "119",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_023:scene:1:choice:0",
+            "title": "四处看看",
+            "description": "也许会有其他发现",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_surprise_5"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现以下3种奖励中的1种",
+            "nested": false,
+            "subchoices": [
+              {
+                "raw": "小狗;2",
+                "parts": [
+                  "小狗",
+                  "2"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:2"
+              },
+              {
+                "raw": "捕梦网;4",
+                "parts": [
+                  "捕梦网",
+                  "4"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:4"
+              },
+              {
+                "raw": "松鼠;5",
+                "parts": [
+                  "松鼠",
+                  "5"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:5"
+              }
+            ],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "四处看看",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": "小狗;2;;捕梦网;4;;松鼠;5"
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_surprise_5": {
+          "id": "choice_ro6_surprise_5",
+          "title": "四处看看",
+          "description": "也许会有其他发现",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_surprise_1": {
+          "id": "scene_ro6_surprise_1",
+          "title": "安眠一隅",
+          "description": "一张被树木包围的柔软病床出现在眼前，床边的仪器屏幕如呼吸般闪烁着。阳光像细密的纺线自树冠的间隙中散落，温暖的风，甜美的果香，一切都是如此舒畅。轻快的吠声吸引了你，引领你来到此地的小狗兴奋地摇着尾巴，跳上床酣睡起来。",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.resting_corner_results",
+        "api": "resting_result_cards",
+        "source_valid": true,
+        "card": {
+          "reference_id": "community_group_023:scene:1:choice:0",
+          "event_id": "community_group_023",
+          "scene_key": "community_group_023:scene:1",
+          "scene_number": 2,
+          "choice_key": "community_group_023:scene:1:choice:0",
+          "choice_title": "四处看看",
+          "source_annotation_text": "随机出现以下3种奖励中的1种",
+          "documented_count": 3,
+          "listed_branch_count": 3,
+          "count_matches": true,
+          "conflict_notice": "",
+          "branches": [
+            {
+              "branch_id": "community_group_023:scene:1:choice:0:sub:0",
+              "label": "小狗",
+              "target_scene_key": "community_group_023:scene:2",
+              "target_scene_number": 3,
+              "target_scene_description": "你摸了摸熟睡小狗的头，它似乎做了一个美梦。梦里它的同伴们一直在等它，它晃着尾巴回到同伴身边后，便迫不及待地讲起了自己的见闻——会吃活物的树、金色的溪流、静止的蝴蝶……它的同伴们安静地听着，随后纷纷起身用舌头舔舐它的头，它所感受到的温柔，与你抚摸它时一样。",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:2:choice:0",
+                  "title": "抚摸小狗的脑袋",
+                  "description": "获得20希望",
+                  "quantity_reference": 20,
+                  "resource": "hope",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_2"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_2"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            },
+            {
+              "branch_id": "community_group_023:scene:1:choice:0:sub:1",
+              "label": "捕梦网",
+              "target_scene_key": "community_group_023:scene:4",
+              "target_scene_number": 5,
+              "target_scene_description": "一张捕梦网垂了下来，羽毛抚过你的脸，你听到一个女性的声音响起，为你哼唱起一首童谣，你看不见她的面容，却感到安心。\n“睡吧。”她说，“愿你的疲惫散去，愿你的心灵得到净化。”",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:4:choice:0",
+                  "title": "闭眼感受",
+                  "description": "获得15护盾",
+                  "quantity_reference": 15,
+                  "resource": "shield",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_3"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_3"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            },
+            {
+              "branch_id": "community_group_023:scene:1:choice:0:sub:2",
+              "label": "松鼠",
+              "target_scene_key": "community_group_023:scene:5",
+              "target_scene_number": 6,
+              "target_scene_description": "“我想去看看外面的大地。”一只松鼠跳上你的肩膀，“比树上能看到的更远，比河流所至更远。我们不应停滞在此。”它的同伴一只接着一只跳上你的肩膀，你肩负起这些松鼠远大的志向，决心向着更远的地方走去。",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:5:choice:0",
+                  "title": "拾起松鼠落下的橡实",
+                  "description": "获得1件珍贵的加工品",
+                  "quantity_reference": 1,
+                  "resource": null,
+                  "category_text": "珍贵的加工品",
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_4"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_4"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            }
+          ],
+          "full_actual_pool_known": false,
+          "actual_selected_branch": null,
+          "actual_reward": null,
+          "actual_selectable": null,
+          "source_scene_link_verified": false,
+          "annotation_role": "future_results_reference"
+        }
+      },
+      "limits": [
+        "四条均已由293支持；不能当作新增完整奖励池。",
+        "两处原注数量与列举分支数不符，必须保留冲突，不能因分类已知就称奖励完整。",
+        "后续才有的奖励不是点击此选项时立即发放。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_023",
+      "event_title": "安眠一隅",
+      "scene_key": "community_group_023:scene:6",
+      "choice_key": "community_group_023:scene:6:choice:0",
+      "choice_title": "触碰图案",
+      "annotation_text": "随机出现以下2种奖励中的1种",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "future_reward_branch_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 23,
+          "scene_index": 6,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "果园;7;;竞速比赛;3"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 23,
+          "scene_index": 6,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "果园;7;;竞速比赛;3"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_023:scene:6",
+        "game_scene_ids": [
+          "scene_ro6_surprise_5",
+          "scene_ro6_surprise_9",
+          "scene_ro6_surprise_11"
+        ],
+        "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "似乎……",
+          "data-image": "Avg_pic_rogue_6_34",
+          "data-name": "安眠一隅",
+          "data-ename": "",
+          "data-index": "124",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_023:scene:6:choice:0",
+            "title": "触碰图案",
+            "description": "尝试进入其他地方",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_surprise_6",
+              "choice_ro6_surprise_9",
+              "choice_ro6_surprise_11"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现以下2种奖励中的1种",
+            "nested": false,
+            "subchoices": [
+              {
+                "raw": "果园;7",
+                "parts": [
+                  "果园",
+                  "7"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:7"
+              },
+              {
+                "raw": "竞速比赛;3",
+                "parts": [
+                  "竞速比赛",
+                  "3"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:3"
+              }
+            ],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "触碰图案",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": "果园;7;;竞速比赛;3"
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_surprise_6": {
+          "id": "choice_ro6_surprise_6",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_9": {
+          "id": "choice_ro6_surprise_9",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_11": {
+          "id": "choice_ro6_surprise_11",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_surprise_11": {
+          "id": "scene_ro6_surprise_11",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_5": {
+          "id": "scene_ro6_surprise_5",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_9": {
+          "id": "scene_ro6_surprise_9",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.resting_corner_results",
+        "api": "resting_result_cards",
+        "source_valid": true,
+        "card": {
+          "reference_id": "community_group_023:scene:6:choice:0",
+          "event_id": "community_group_023",
+          "scene_key": "community_group_023:scene:6",
+          "scene_number": 7,
+          "choice_key": "community_group_023:scene:6:choice:0",
+          "choice_title": "触碰图案",
+          "source_annotation_text": "随机出现以下2种奖励中的1种",
+          "documented_count": 2,
+          "listed_branch_count": 2,
+          "count_matches": true,
+          "conflict_notice": "",
+          "branches": [
+            {
+              "branch_id": "community_group_023:scene:6:choice:0:sub:0",
+              "label": "果园",
+              "target_scene_key": "community_group_023:scene:7",
+              "target_scene_number": 8,
+              "target_scene_description": "你来到一片果园，一颗番石榴落在你的脚边，你的同伴嘴里叼着另一颗，示意你快些捡起来吃掉。“我妈妈说，今年的番石榴很好吃。”你的同伴说，“你要不要一起来帮忙？果子就要摘不完了，全都是我们自己的，你想吃多少就吃多少。”",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:7:choice:0",
+                  "title": "帮忙采摘",
+                  "description": "获得15护盾",
+                  "quantity_reference": 15,
+                  "resource": "shield",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_7"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_7"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            },
+            {
+              "branch_id": "community_group_023:scene:6:choice:0:sub:1",
+              "label": "竞速比赛",
+              "target_scene_key": "community_group_023:scene:3",
+              "target_scene_number": 4,
+              "target_scene_description": "你围观了豹子们的竞速比赛，它们的终点没有猎物，它们只有对于狂奔的渴望。豹子们跑出了这片树海，甩开了身后的河流，甩开了被猎枪追逐的命运，一直没有回头。",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:3:choice:0",
+                  "title": "目送豹子们远去",
+                  "description": "获得1件珍贵的加工品",
+                  "quantity_reference": 1,
+                  "resource": null,
+                  "category_text": "珍贵的加工品",
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_8"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_8"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            }
+          ],
+          "full_actual_pool_known": false,
+          "actual_selected_branch": null,
+          "actual_reward": null,
+          "actual_selectable": null,
+          "source_scene_link_verified": false,
+          "annotation_role": "future_results_reference"
+        }
+      },
+      "limits": [
+        "四条均已由293支持；不能当作新增完整奖励池。",
+        "两处原注数量与列举分支数不符，必须保留冲突，不能因分类已知就称奖励完整。",
+        "后续才有的奖励不是点击此选项时立即发放。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_023",
+      "event_title": "安眠一隅",
+      "scene_key": "community_group_023:scene:9",
+      "choice_key": "community_group_023:scene:9:choice:1",
+      "choice_title": "触碰图案",
+      "annotation_text": "随机出现以下2种奖励中的1种",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "future_reward_branch_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 23,
+          "scene_index": 9,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "动物泥偶;10"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 23,
+          "scene_index": 9,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "动物泥偶;10"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_023:scene:9",
+        "game_scene_ids": [
+          "scene_ro6_surprise_5",
+          "scene_ro6_surprise_9",
+          "scene_ro6_surprise_11"
+        ],
+        "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "似乎……",
+          "data-image": "Avg_pic_rogue_6_34",
+          "data-name": "安眠一隅",
+          "data-ename": "",
+          "data-index": "127",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_023:scene:9:choice:0",
+            "title": "安静观察",
+            "description": "获得20希望",
+            "destination_keys": [
+              "community_group_023:scene:8"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_surprise_10"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "安静观察",
+              "data-icon": "population",
+              "data-dest": "8",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_023:scene:9:choice:1",
+            "title": "触碰图案",
+            "description": "尝试进入其他地方",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_surprise_6",
+              "choice_ro6_surprise_9",
+              "choice_ro6_surprise_11"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现以下2种奖励中的1种",
+            "nested": false,
+            "subchoices": [
+              {
+                "raw": "动物泥偶;10",
+                "parts": [
+                  "动物泥偶",
+                  "10"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:10"
+              }
+            ],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "触碰图案",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": "动物泥偶;10"
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_surprise_6": {
+          "id": "choice_ro6_surprise_6",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_9": {
+          "id": "choice_ro6_surprise_9",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_11": {
+          "id": "choice_ro6_surprise_11",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_surprise_11": {
+          "id": "scene_ro6_surprise_11",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_5": {
+          "id": "scene_ro6_surprise_5",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_9": {
+          "id": "scene_ro6_surprise_9",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.resting_corner_results",
+        "api": "resting_result_cards",
+        "source_valid": true,
+        "card": {
+          "reference_id": "community_group_023:scene:9:choice:1",
+          "event_id": "community_group_023",
+          "scene_key": "community_group_023:scene:9",
+          "scene_number": 10,
+          "choice_key": "community_group_023:scene:9:choice:1",
+          "choice_title": "触碰图案",
+          "source_annotation_text": "随机出现以下2种奖励中的1种",
+          "documented_count": 2,
+          "listed_branch_count": 1,
+          "count_matches": false,
+          "conflict_notice": "资料数量对不上：原注写2种，这里只列出1项。无法确认是漏项还是说明不准确；以下只列文档已经写出的后续。",
+          "branches": [
+            {
+              "branch_id": "community_group_023:scene:9:choice:1:sub:0",
+              "label": "动物泥偶",
+              "target_scene_key": "community_group_023:scene:10",
+              "target_scene_number": 11,
+              "target_scene_description": "你发现床上多了一组动物泥偶，它们正费力地抬起小狗的耳朵，和它说着悄悄话。你凑了过去，泥偶们立刻噤声。“嘘。”其中一只说，“训练很辛苦，它需要好好休息。”“它正在美梦中，梦里我们也会在。”另一只说，“这是我们相见的唯一方式。”",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:10:choice:0",
+                  "title": "进入神秘空间",
+                  "description": "获得99源石锭",
+                  "quantity_reference": 99,
+                  "resource": "gold",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [],
+                  "game_match_basis": "destination_mismatch",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": true
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            }
+          ],
+          "full_actual_pool_known": false,
+          "actual_selected_branch": null,
+          "actual_reward": null,
+          "actual_selectable": null,
+          "source_scene_link_verified": false,
+          "annotation_role": "future_results_reference"
+        }
+      },
+      "limits": [
+        "四条均已由293支持；不能当作新增完整奖励池。",
+        "两处原注数量与列举分支数不符，必须保留冲突，不能因分类已知就称奖励完整。",
+        "后续才有的奖励不是点击此选项时立即发放。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_023",
+      "event_title": "安眠一隅",
+      "scene_key": "community_group_023:scene:11",
+      "choice_key": "community_group_023:scene:11:choice:0",
+      "choice_title": "触碰图案",
+      "annotation_text": "随机出现以下2种奖励中的1种",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "future_reward_branch_reference",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 23,
+          "scene_index": 11,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "果园;7;;竞速比赛;3;;动物泥偶;10"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 23,
+          "scene_index": 11,
+          "choice_index": 0,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "触碰图案",
+            "data-icon": "unknown",
+            "data-dest": "",
+            "data-iconid": "",
+            "data-subchoose": "果园;7;;竞速比赛;3;;动物泥偶;10"
+          },
+          "desc1": "尝试进入其他地方",
+          "desc2": "随机出现以下2种奖励中的1种",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_023:scene:11",
+        "game_scene_ids": [
+          "scene_ro6_surprise_5",
+          "scene_ro6_surprise_9",
+          "scene_ro6_surprise_11"
+        ],
+        "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "似乎……",
+          "data-image": "Avg_pic_rogue_6_34",
+          "data-name": "安眠一隅",
+          "data-ename": "",
+          "data-index": "129",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_023:scene:11:choice:0",
+            "title": "触碰图案",
+            "description": "尝试进入其他地方",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_surprise_6",
+              "choice_ro6_surprise_9",
+              "choice_ro6_surprise_11"
+            ],
+            "source_type": "simple",
+            "conditional": "随机出现以下2种奖励中的1种",
+            "nested": false,
+            "subchoices": [
+              {
+                "raw": "果园;7",
+                "parts": [
+                  "果园",
+                  "7"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:7"
+              },
+              {
+                "raw": "竞速比赛;3",
+                "parts": [
+                  "竞速比赛",
+                  "3"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:3"
+              },
+              {
+                "raw": "动物泥偶;10",
+                "parts": [
+                  "动物泥偶",
+                  "10"
+                ],
+                "community_destination_scene_id": "community_group_023:scene:10"
+              }
+            ],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "触碰图案",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": "果园;7;;竞速比赛;3;;动物泥偶;10"
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_surprise_6": {
+          "id": "choice_ro6_surprise_6",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_9": {
+          "id": "choice_ro6_surprise_9",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        },
+        "choice_ro6_surprise_11": {
+          "id": "choice_ro6_surprise_11",
+          "title": "触碰图案",
+          "description": "尝试进入其他地方",
+          "lockedCoverDesc": null,
+          "type": "NEXT_PROB",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "unknown",
+            "itemId": null,
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_surprise_11": {
+          "id": "scene_ro6_surprise_11",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_5": {
+          "id": "scene_ro6_surprise_5",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_surprise_9": {
+          "id": "scene_ro6_surprise_9",
+          "title": "安眠一隅",
+          "description": "这里似乎曾是谁建立的疗愈室，但如今已经无人问津，或许有什么其他东西仍能使用。你在床周围的树干上又发现了同样的小猫图案——",
+          "background": "pic_rogue_6_34",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.resting_corner_results",
+        "api": "resting_result_cards",
+        "source_valid": true,
+        "card": {
+          "reference_id": "community_group_023:scene:11:choice:0",
+          "event_id": "community_group_023",
+          "scene_key": "community_group_023:scene:11",
+          "scene_number": 12,
+          "choice_key": "community_group_023:scene:11:choice:0",
+          "choice_title": "触碰图案",
+          "source_annotation_text": "随机出现以下2种奖励中的1种",
+          "documented_count": 2,
+          "listed_branch_count": 3,
+          "count_matches": false,
+          "conflict_notice": "资料数量对不上：原注写2种，这里只列出3项。无法确认是漏项还是说明不准确；以下只列文档已经写出的后续。",
+          "branches": [
+            {
+              "branch_id": "community_group_023:scene:11:choice:0:sub:0",
+              "label": "果园",
+              "target_scene_key": "community_group_023:scene:7",
+              "target_scene_number": 8,
+              "target_scene_description": "你来到一片果园，一颗番石榴落在你的脚边，你的同伴嘴里叼着另一颗，示意你快些捡起来吃掉。“我妈妈说，今年的番石榴很好吃。”你的同伴说，“你要不要一起来帮忙？果子就要摘不完了，全都是我们自己的，你想吃多少就吃多少。”",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:7:choice:0",
+                  "title": "帮忙采摘",
+                  "description": "获得15护盾",
+                  "quantity_reference": 15,
+                  "resource": "shield",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_7"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_7"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            },
+            {
+              "branch_id": "community_group_023:scene:11:choice:0:sub:1",
+              "label": "竞速比赛",
+              "target_scene_key": "community_group_023:scene:3",
+              "target_scene_number": 4,
+              "target_scene_description": "你围观了豹子们的竞速比赛，它们的终点没有猎物，它们只有对于狂奔的渴望。豹子们跑出了这片树海，甩开了身后的河流，甩开了被猎枪追逐的命运，一直没有回头。",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:3:choice:0",
+                  "title": "目送豹子们远去",
+                  "description": "获得1件珍贵的加工品",
+                  "quantity_reference": 1,
+                  "resource": null,
+                  "category_text": "珍贵的加工品",
+                  "item_pool": null,
+                  "game_choice_ids": [
+                    "choice_ro6_surprise_8"
+                  ],
+                  "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [
+                    "choice_ro6_surprise_8"
+                  ],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": false
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            },
+            {
+              "branch_id": "community_group_023:scene:11:choice:0:sub:2",
+              "label": "动物泥偶",
+              "target_scene_key": "community_group_023:scene:10",
+              "target_scene_number": 11,
+              "target_scene_description": "你发现床上多了一组动物泥偶，它们正费力地抬起小狗的耳朵，和它说着悄悄话。你凑了过去，泥偶们立刻噤声。“嘘。”其中一只说，“训练很辛苦，它需要好好休息。”“它正在美梦中，梦里我们也会在。”另一只说，“这是我们相见的唯一方式。”",
+              "future_buttons": [
+                {
+                  "choice_key": "community_group_023:scene:10:choice:0",
+                  "title": "进入神秘空间",
+                  "description": "获得99源石锭",
+                  "quantity_reference": 99,
+                  "resource": "gold",
+                  "category_text": null,
+                  "item_pool": null,
+                  "game_choice_ids": [],
+                  "game_match_basis": "destination_mismatch",
+                  "actual_granted": null,
+                  "source_kind": "future_button_text_reference",
+                  "original_content_reference_ids": [],
+                  "original_entry_relation_verified": false,
+                  "original_relation_mismatch": true
+                }
+              ],
+              "actual_transition": null,
+              "actual_reward": null
+            }
+          ],
+          "full_actual_pool_known": false,
+          "actual_selected_branch": null,
+          "actual_reward": null,
+          "actual_selectable": null,
+          "source_scene_link_verified": false,
+          "annotation_role": "future_results_reference"
+        }
+      },
+      "limits": [
+        "四条均已由293支持；不能当作新增完整奖励池。",
+        "两处原注数量与列举分支数不符，必须保留冲突，不能因分类已知就称奖励完整。",
+        "后续才有的奖励不是点击此选项时立即发放。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    },
+    {
+      "event_id": "community_group_031",
+      "event_title": "窥视箱中",
+      "scene_key": "community_group_031:scene:0",
+      "choice_key": "community_group_031:scene:0:choice:1",
+      "choice_title": "她在说什么疯话？",
+      "annotation_text": "可暂时离开并在之后再次进入该事件",
+      "proposed_role": "selection_result",
+      "proposed_subtype": "leave_and_revisit_result",
+      "classification_basis": "desc2是模板展示位置，不是语义条件字段；此条原文及desc1描述明确为点击后的结果/可执行后续。",
+      "document_records": [
+        {
+          "revision": "427904",
+          "group_index": 31,
+          "scene_index": 0,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "她在说什么疯话？",
+            "data-icon": "leave",
+            "data-dest": "1",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "多一事不如少一事",
+          "desc2": "可暂时离开并在之后再次进入该事件",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-427904.html"
+        },
+        {
+          "revision": "440271",
+          "group_index": 31,
+          "scene_index": 0,
+          "choice_index": 1,
+          "element_class": "choose",
+          "field_class": "desc2",
+          "attributes": {
+            "class": "choose",
+            "data-type": "simple",
+            "data-title": "她在说什么疯话？",
+            "data-icon": "leave",
+            "data-dest": "1",
+            "data-iconid": "",
+            "data-subchoose": ""
+          },
+          "desc1": "多一事不如少一事",
+          "desc2": "可暂时离开并在之后再次进入该事件",
+          "is_scene_edesc": false,
+          "source_file": "research/p3-future-region-effects-300/prts-events-440271.html"
+        }
+      ],
+      "catalog_scene": {
+        "key": "community_group_031:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_end2_enter"
+        ],
+        "description": "“我一直在等你。”一只……猫？你并不确定她究竟是什么。“不明白也没有关系。我向正在观察我们之人言说，尽管我不知道你是否拥有生命和意识。我邀请你见证必将发生之事。”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_37",
+          "data-name": "窥视箱中",
+          "data-ename": "",
+          "data-index": "161",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_031:scene:0:choice:0",
+            "title": "保护证据，查缴那些机器！",
+            "description": "找到传出声音的位置将遭遇险路恶敌",
+            "destination_keys": [
+              "community_group_031:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_end2_1",
+              "choice_ro6_end2_4"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "保护证据，查缴那些机器！",
+              "data-icon": "unknown",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_031:scene:0:choice:1",
+            "title": "她在说什么疯话？",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_031:scene:1"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_end2_2"
+            ],
+            "source_type": "simple",
+            "conditional": "可暂时离开并在之后再次进入该事件",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "她在说什么疯话？",
+              "data-icon": "leave",
+              "data-dest": "1",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      "original_choices": {
+        "choice_ro6_end2_2": {
+          "id": "choice_ro6_end2_2",
+          "title": "她在说什么疯话？",
+          "description": "多一事不如少一事",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": "scene_ro6_end2_1",
+          "icon": "leave",
+          "displayData": {
+            "type": "NORMAL",
+            "costHintType": "NONE",
+            "effectHintType": "NONE",
+            "funcIconId": "leave",
+            "itemId": "rogue_6_end_2_trigger_2",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": false,
+          "sortId": 0
+        }
+      },
+      "original_scenes": {
+        "scene_ro6_end2_1": {
+          "id": "scene_ro6_end2_1",
+          "title": "窥视箱中",
+          "description": "“你不是来找我的？好吧。”她转过身去，没有回头再对你说什么，环境中只剩下机器持续运作的轻微噪音。为了避免再生事端，你决定离开这个可疑的地方。",
+          "background": "pic_rogue_6_37",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        },
+        "scene_ro6_end2_enter": {
+          "id": "scene_ro6_end2_enter",
+          "title": "窥视箱中",
+          "description": "“我一直在等你。”一只......猫？你并不确定她究竟是什么。“不明白也没有关系。我向正在观察我们之人言说，尽管我不知道你是否拥有生命和意识。我邀请你见证必将发生之事。”",
+          "background": "pic_rogue_6_37",
+          "titleIcon": null,
+          "subTypeId": 0,
+          "useHiddenMusic": false
+        }
+      },
+      "existing_support": {
+        "module": "rouge.curiosity_node_rules",
+        "api": "choice_reference",
+        "source_valid": true,
+        "reference": {
+          "event_id": "community_group_031",
+          "scene_key": "community_group_031:scene:0",
+          "choice_key": "community_group_031:scene:0:choice:1",
+          "choice_title": "她在说什么疯话？",
+          "original_choice_ids": [
+            "choice_ro6_end2_2"
+          ],
+          "reference_id": "community_group_031:scene:0:choice:1",
+          "choice_description": "多一事不如少一事",
+          "condition_text": "可暂时离开并在之后再次进入该事件",
+          "documented_rules": [
+            {
+              "rule_id": "temporary_leave_completes_node",
+              "title": "暂离",
+              "text": "固定资料记载：暂离并完成该节点。",
+              "source_refs": [
+                {
+                  "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+                  "selector": "exact_five_choice_rows",
+                  "choice_key": "community_group_031:scene:0:choice:1"
+                },
+                {
+                  "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+                  "selector": "main_complete_ending_blocks.end2.text",
+                  "paragraph_index": 11,
+                  "text": "若选择【她在说什么疯话？】，则会暂离并完成该节点。该节点 可重复且会被标记，可在完成准备后再次访问。"
+                }
+              ]
+            },
+            {
+              "rule_id": "documented_revisit",
+              "title": "之后可再访",
+              "text": "固定资料记载：节点可重复且会被标记，之后可再次访问；实际状态仍未知。",
+              "source_refs": [
+                {
+                  "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+                  "selector": "exact_five_choice_rows",
+                  "choice_key": "community_group_031:scene:0:choice:1"
+                },
+                {
+                  "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+                  "selector": "main_complete_ending_blocks.end2.text",
+                  "paragraph_index": 11,
+                  "text": "若选择【她在说什么疯话？】，则会暂离并完成该节点。该节点 可重复且会被标记，可在完成准备后再次访问。"
+                }
+              ]
+            }
+          ],
+          "related_stage_reference": null,
+          "scene_number": 1,
+          "choice_number": 2,
+          "catalog_choice": {
+            "key": "community_group_031:scene:0:choice:1",
+            "title": "她在说什么疯话？",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_031:scene:1"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_end2_2"
+            ],
+            "source_type": "simple",
+            "conditional": "可暂时离开并在之后再次进入该事件",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "她在说什么疯话？",
+              "data-icon": "leave",
+              "data-dest": "1",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          "original_choices": {
+            "choice_ro6_end2_2": {
+              "id": "choice_ro6_end2_2",
+              "title": "她在说什么疯话？",
+              "description": "多一事不如少一事",
+              "lockedCoverDesc": null,
+              "type": "TRADE",
+              "leftDecoType": "NONE",
+              "nextSceneId": "scene_ro6_end2_1",
+              "icon": "leave",
+              "displayData": {
+                "type": "NORMAL",
+                "costHintType": "NONE",
+                "effectHintType": "NONE",
+                "funcIconId": "leave",
+                "itemId": "rogue_6_end_2_trigger_2",
+                "difficultyUpgradeRelicGroupId": null,
+                "taskId": null,
+                "instId": null
+              },
+              "forceShowWhenOnlyLeave": false,
+              "isHiddenChoice": false,
+              "sortId": 0
+            }
+          },
+          "original_choice_candidate_selection_unknown": false,
+          "actual_choice": null,
+          "actual_node_id": null,
+          "actual_marker": null,
+          "actual_transformation": null,
+          "actual_revisit": null,
+          "actual_consumed": null,
+          "actual_reward": null,
+          "actual_quantity": null,
+          "actual_eligible": null,
+          "inventory_updated": false,
+          "calculation_applied": false,
+          "run_state_updated": false
+        }
+      },
+      "limits": [
+        "304已支持暂离完成节点、可重复且标记、之后可再访；不是先验出现条件。",
+        "不从可再访推断本局已经离开、标记或再次进入。"
+      ],
+      "actual_selectable": null,
+      "current_server_verified": false,
+      "source_origin_scene_binding_verified": false,
+      "requires_new_numerical_mechanism": false
+    }
+  ],
+  "count": 10,
+  "conditional_field_count": 16,
+  "all_ten_from_choice_desc2_not_scene_edesc": true,
+  "all_ten_result_or_postchoice_navigation": true,
+  "fixed_document_versions_agree_on_these_notes": true,
+  "existing_modules_already_cover_mechanism_or_navigation": true,
+  "does_not_claim_current_server_or_source_entry_binding": true
+}

@@ -1,0 +1,91 @@
+{
+  "title": "首批三名默认外观与静态动作选择绑定",
+  "remaining_item": "技能时序与精度：首批三名真实动作/前后摇的原件选择绑定",
+  "new_capability": "当前模式PPtr与默认外观动画map共同筛选19个实际选择候选，排除已知不被技能选择的普通动作；允许原件非循环的Loop命名与银灰Combat段作明确动画内条件参考；机械师S2选定body段实际接入既有手动时间普通攻击小计。静态绑定与实际事件/相位保持独立。",
+  "source_evidence": {
+    "receipt": "research/p2-static-action-selection-current/receipt.json",
+    "asset_baseline": "26-09-13-15-28-10-30688348",
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "actual_loop_consumer": "AnimationData.loop offset0x20 -> 0x18060f49f读取r9d -> 0x18060f4a9调用Spine.AnimationState.SetAnimation；PlayAnimation只有data/forceFromStart/speed参数",
+    "physical_native_methods": 38,
+    "physical_unique_instructions": 3718,
+    "fresh_instruction_byte_checks": true,
+    "same_orientation_current_skeleton_hashes_match_048": 6,
+    "static_selection_chains": "Character._modes[index] -> UnitMode._attack/_combat or configured child -> GetAnimKey(default/down/up) -> mode hook -> CharacterAnimator defaultskin Front/Back PPtr -> SkeletonData/TextAsset actual SHA",
+    "exact_wait_iterators": "Easy/Ranged按declaring type + metadata method index定位，未使用重复嵌套短名。"
+  },
+  "acceptance": {
+    "tests_run": 42,
+    "passed": 42,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "cases": [
+      "7静态scope19choices模式/方向/外观hash",
+      "源loop消费者证明及Loop命名非循环选取",
+      "银灰Attack实际hook至Skill_3_Combat/额外effect事件保留",
+      "凯尔希正背12/13参考与向下variant不借另一面",
+      "未选择新动作时默认数值完全相同",
+      "错技能/错sourcehash/eventfloat/循环配置不能继承证明",
+      "选择及descriptor独立副本/显式override",
+      "机械师S2手动时间小计接入已选body段，爆炸/结束仍None",
+      "048全64源既有hash与帧归一化约束、movement/window半开口径仍通过"
+    ],
+    "actual_window_ui_check_required_after_root_integration": true,
+    "no_actual_game_or_chat_actions": true,
+    "git_apply_check": "All14files pass git apply --check --ignore-space-change. Existing root timing.py/estimate.py are CRLF and normalized text is identical to the unchanged author baseline; packet is LF as requested.",
+    "main_window_public_state": "Real MainWindow with temporary public state exposes exactly three mechanistS2 static candidates plus unselected default; explicit selection enters calculation scenario."
+  },
+  "limitations": [
+    "仅当前静态defaultskin与所列模式候选；当前实际外观/模式与down/up分支、定制mix、XLua及热更新仍未知",
+    "runtime_binding_verified始终False，实际callback/activation/end均None；不将048归一化/ceil帧等同客户端回调",
+    "不自动选择参考或改变无参考默认数字；参考仍为显式动画内条件投影",
+    "凯尔希normal/S1三段生命周期、银灰normal序列继续未绑定；机械师S2破屏/耗尽/结束与S3冲锋碰撞等继续未知",
+    "根源首次UTF8二进制TextAsset失败完整回执保留cache，发布证明以原失败SHA/长度/类型保留，未重复嵌入原骨架二进制",
+    "源冻结root UI/源码未改；root需串行后核验实际动作选择窗口",
+    "Root application requires --ignore-space-change for existing CRLF timing.py/estimate.py; no logical source conflict and no root line-ending normalization was performed by author."
+  ],
+  "files": [
+    "rouge/animation_reference.py",
+    "rouge/timing.py",
+    "rouge/estimate.py",
+    "rouge/reporting.py",
+    "rouge/data/native-static-action-bindings.json",
+    "tests/test_static_action_selection_current.py",
+    "tests/test_original_animation_048.py",
+    "research/p2-static-action-selection-current/exact-iterator-binding.json",
+    "research/p2-static-action-selection-current/mode-template-bindings.json",
+    "research/p2-static-action-selection-current/native-proof.json",
+    "research/p2-static-action-selection-current/prefab-pointer-bindings.json",
+    "research/p2-static-action-selection-current/receipt.json",
+    "research/p2-static-action-selection-current/selected-metadata.json",
+    "research/p2-static-action-selection-current/skill-mode-bindings.json",
+    "rouge/app.py",
+    "tests/test_static_action_window.py",
+    "verification/section-204/native-static-bytes.json",
+    "verification/section-204/window.json"
+  ],
+  "test_selectors": [
+    "tests.test_static_action_selection_current",
+    "tests.test_original_animation_048",
+    "tests.test_shield_break_reference",
+    "tests.test_shield_timeline_131",
+    "tests.test_static_action_window"
+  ],
+  "root_independent_native_check": "verification/section-204/native-static-bytes.json:38 methods/3718 physical instruction bytes; no DLL execution or gameplay claims",
+  "section": 204,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T09:56:49.520820+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 43,
+    "passed": 43,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-204/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

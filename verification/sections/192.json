@@ -1,0 +1,43 @@
+{
+  "title": "自然物多事件估价与损坏账本",
+  "remaining_item": "探索地图与路线建议：零件收益与状态规则",
+  "new_capability": "将作战、揭示、招募、移动、零件获得与自身获取的独立声明事件接入12自然物估价资料；已证增量、随机变化、完美/损坏候选和损坏后停止触发分别输出，并保留派生零件数量。",
+  "source_evidence": [
+    "$.modules.rogue_6.scrap.goodsScrapData12原物品估价与描述",
+    "对应items.usage：血蕈+2、雾滚草+1、回声玉米+3、霜晶树完美+4/非完美损坏、多生苔藓+1及获得3枯苔藓球、板藤+4、恋家果-2"
+  ],
+  "acceptance": [
+    "事件增量加总、明确初始值、未相关事件无加成；负算术结果不冒充售价/夹到0",
+    "随机价格无范围保持未知；霜晶树损坏后停止触发，完美未知保留两分支",
+    "多生苔藓派生3个不猜自身/派生自动连锁计数；非法事件与布尔次数拒绝；2项必要测试通过"
+  ],
+  "limitations": [
+    "实际当前估价、售卖修正、上下限与批量获得触发粒度未证。",
+    "种子培育、笼控器特殊事件及随机价格完整结果范围未知。",
+    "不修改实际持有或出售任何零件。"
+  ],
+  "section": 192,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section219.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_219_event_estimate_and_unknown_sale_bounds",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_219_random_destruction_and_acquisition_cascade"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:42:42.705269+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-192/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

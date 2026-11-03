@@ -1,0 +1,52 @@
+{
+  "section": 134,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:42:02.911375+08:00",
+  "prior_commit": "2099b4dc4343017b2f5c6747be68ce4beb0a4068",
+  "title": "固定关卡敌人与难度条件批量对照",
+  "remaining_project_item": "P2本局环境：敌人修正来源及适用条件",
+  "new_capability": "在固定关卡候选中选择多个敌人和多个保密等级，逐行比较生命攻击防御法抗及窗口输出，保留源阶方明确情景、原始引用、已计修正和未覆盖脚本；复制完整选择及来源。",
+  "acceptance": [
+    "敌人身份等级唯一匹配关卡",
+    "等级5生命和11领袖减伤沿现有来源",
+    "手动面板不覆盖固定身份",
+    "多个敌人等级组合",
+    "未知脚本逐行保留",
+    "不推算出场概率和击杀时间",
+    "原本局难度目标不变"
+  ],
+  "limitations": [
+    "候选不保证出场，敌人阶段及动态关卡脚本仍待核验",
+    "统一来源列不代表混合站位，未知模式不补齐原生减伤"
+  ],
+  "sources": [
+    "rouge/enemy_comparison.py",
+    "rouge/enemy_comparison_view.py",
+    "rouge/app.py",
+    "tests/test_enemy_comparison_134.py"
+  ],
+  "evidence_reused": [
+    "rouge/enemy_environment.py",
+    "rouge/data/enemy-difficulty-rules.json",
+    "tests/test_environment_input_106.py",
+    "tests/test_zone_environment_input_108.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 44,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-134/tests.txt",
+    "window_receipt": "verification/section-134/window.json"
+  },
+  "source_sha256": {
+    "rouge/enemy_comparison.py": "3aa5ae1e4867ccef2ba4b3af4b9dd21753cf3f2cdb0a3f3970240cfaccbbc997",
+    "rouge/enemy_comparison_view.py": "1e7dfeeef1fee47f00544356f4e6e9b992a3105b5153e6df316e7eed56673211",
+    "rouge/app.py": "c81b952b5877050e9f509d7ced8ca0cba5fd7306b11e07ba32a2d216f331cd71",
+    "tests/test_enemy_comparison_134.py": "8562d3e97dff1d8108fca175b7f8dc749bc602c04b3a355b031ff4ca1fc657b7"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

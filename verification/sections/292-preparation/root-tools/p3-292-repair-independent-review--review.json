@@ -1,0 +1,62 @@
+{
+  "kind": "INDEPENDENT_STATIC_292_FIRST_REAL_FAILURE_REPAIR_REVIEW_NOT_EXECUTION",
+  "real_first_attempt_retained": {
+    "tests": 79,
+    "failures": 3,
+    "errors": 3,
+    "exit": 1,
+    "process_sha256": "833b3ddce03b7b78d7a800adebf3e8a78a0c697f633de716b13f20e2d99f37d5"
+  },
+  "candidate_files": [
+    {
+      "path": ".cache\\p3-292-choice-preview-repair\\candidate\\rouge\\node_catalog_view.py",
+      "sha256": "61c65384c2f9420cf43d134497406cdec0f65d85c507ae8da88403e639ac5791",
+      "bytes": 69108
+    },
+    {
+      "path": ".cache\\p3-292-choice-preview-repair\\candidate\\tests\\test_event_preview_filters_292.py",
+      "sha256": "d66aa2d23cbf8357ff682757716c4229fe603660915a6f31d8d260db7a1a448d",
+      "bytes": 13747
+    }
+  ],
+  "diffs": {
+    "node_catalog_view.py.diff": "b4fab5f3b4456dfa817ff7cd43cf9056960556816ef42b86a14450c039733b0d",
+    "test_event_preview_filters_292.py.diff": "7b3e983b7b6d8b6bed628c1434a76f6d0b37b570656672d5e29259ec218de31f"
+  },
+  "production_change_scope": "Only _refresh_event_previews: explicit index0 for a new event key with nonempty stages; same-key restoration remains exact tuple or -1.",
+  "test_methods_before_after": 15,
+  "original_assertion_calls": 64,
+  "new_assertion_calls": 68,
+  "all64_original_assertion_ASTs_retained": true,
+  "test_fixture_methods_changed": [
+    "test_cave_known_pool_then_missing_context_clears_stage_without_selecting_another",
+    "test_preview_click_revalidates_latest_context_before_emitting",
+    "test_excluded_event_can_still_be_manually_read_as_fixed_battle_reference"
+  ],
+  "blocking_findings": [],
+  "context_review": {
+    "directory_floor_remains_unfiltered_None": true,
+    "declared_event_context_is_an_explicit_isolated_mock_not_actual_game_reading": true,
+    "duck_catalog_floors": [
+      3,
+      4
+    ],
+    "declared_floor1_cannot_match_duck_catalog_floor": true,
+    "excluded_predicate_not_bypassed_by_content": "_event_checks keeps documented_main_floor=False. content only sets the separate entry_context True; _status returns excluded when any False exists. Both original excluded assertions remain.",
+    "cave_catalog_floors": [
+      3,
+      4
+    ],
+    "cave_floor2_fixture_boundary": "This is an explicitly declared content/reference context that isolates pool handling; it is not evidence that the event can naturally occur on floor2, and does not test directory-floor filtering or live map binding.",
+    "runtime_context_and_declaration_not_mutated_assertions_retained": true
+  },
+  "risks_and_limits": [
+    "The three corrected fixtures now isolate the declared-context seam; their PASS will not alone prove the actual directory-control/map-binding path. Existing map-navigation tests and the planned native window must cover the real UI route.",
+    "This review checks static AST/data only. It does not convert the original79/3F/3E into PASS or claim the candidate has executed."
+  ],
+  "backend_and_mechanism_files_changed": false,
+  "live_source_changed_by_reviewer": false,
+  "tests_Qt_GUI_executed": false,
+  "private_game_chat_access": false,
+  "preparation_note": "Initial read-only check against the handoff old-live preconditions was refused because root had already promoted both candidate bytes during review. Cached original/candidate hashes remain exact; this report audits their fixed pair, not an old-live claim."
+}

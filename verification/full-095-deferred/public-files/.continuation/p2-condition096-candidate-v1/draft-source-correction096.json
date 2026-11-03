@@ -1,0 +1,27 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_DRAFT_UI_DECLARED_VALUE_REFRESH_GAP_CORRECTED_NO_RUNTIME_EXECUTION",
+  "before_app": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/history-before-condition-value-refresh/rouge/app.py",
+    "bytes": 98680,
+    "sha256": "a4feb37a697190f5935f8602c827d604776c7fdfdede6f84c9005af4455ffa5a"
+  },
+  "before_inverse": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/history-before-condition-value-refresh/exact-source-inverse096.json",
+    "bytes": 4207,
+    "sha256": "a7de0830e74dc64e93fd5aa9593b4f421d84bba273edb882aeaa43291b999ece"
+  },
+  "after_app": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/rouge/app.py",
+    "bytes": 99159,
+    "sha256": "0c388853b351e3869a01f32f42058fc8e0a0cb23fc67f25d6141bde13350423d"
+  },
+  "finding": "The first SOURCE draft updated explanations only from update_skill_options, while each condition value signal updated numeric results directly. Its declared-value text/tooltip could therefore become stale after changing one of the nine existing controls.",
+  "correction": "Append one presentation-only slot per each of the nine existing owner+field controls after constructing the explanation row. Preserve original signal connections and calculate byteexact. The new slot reads current operator/skill and updates explanations/tooltip only.",
+  "source_finding_attempts": 1,
+  "runtime_attempts": 0,
+  "numeric_API_calls_added": 0,
+  "existing_numeric_method_changes": 0,
+  "completed_section_increment": 0,
+  "root_gold735_unchanged": true
+}

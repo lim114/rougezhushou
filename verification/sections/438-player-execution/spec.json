@@ -1,0 +1,22 @@
+{
+  "title": "回到最近已读位置与地图阅读适配",
+  "change": "地图新增回到最近已读位置入口，跨历史楼层查阅后可返回准确模板和节点；历史位置仍标为历史，不冒充当前。没有准确位置时禁用，不随意选择节点。修正跨楼层搜索框的文字对比度，并扩大地图底部标签留白。",
+  "limits": "最近位置来自已有读取，不证明玩家仍位于那里，也不判断路线可达。第437节原图中搜索框对比度不足，本节修正后重新验证，原图保留。",
+  "criteria": [
+    "准确模板节点返回",
+    "历史与当前不混用",
+    "缺位置不补猜",
+    "查找文字清晰与底部留白"
+  ],
+  "source_files": [
+    "rouge/player_map.py",
+    "rouge/player_map_acceptance.py"
+  ],
+  "test": "tests.test_player_feature_438",
+  "native": "scripts/verify_player_feature_window_438.py",
+  "next": "继续第439节至440，440到期完整验收后发布并暂停。",
+  "unit_receipt": "verification/sections/438-player-checks/process.json",
+  "native_receipt": "verification/sections/438-player-window/window.json",
+  "native_process_receipt": "verification/sections/438-player-window-process/process.json",
+  "source_receipt": "verification/sections/438-reference.json"
+}

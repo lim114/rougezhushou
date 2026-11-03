@@ -1,0 +1,363 @@
+{
+  "status": "SOURCE_ONLY_INDEPENDENT_EXISTING_FIXTURE_API_AND_ORIGINAL_JSON_FACTS",
+  "created_at_UTC": "2026-10-09T12:02:44.472287+00:00",
+  "healthy_unique_fixed_weight0_to5": {
+    "0": {
+      "stage_id": "ro6_n_1_1",
+      "selector": "$.stages.ro6_n_1_1.possible_enemies[5]",
+      "enemy_id": "enemy_2133_shdopl",
+      "level": 0,
+      "name": "空值体",
+      "level_type": "NORMAL",
+      "reference_stats": {
+        "maxHp": 5000,
+        "atk": 320,
+        "def": 100,
+        "magicResistance": 20.0,
+        "baseAttackTime": 1.4,
+        "massLevel": 0
+      }
+    },
+    "1": {
+      "stage_id": "ro6_n_1_2",
+      "selector": "$.stages.ro6_n_1_2.possible_enemies[6]",
+      "enemy_id": "enemy_1093_ccsbr",
+      "level": 0,
+      "name": "提亚卡乌战士",
+      "level_type": "NORMAL",
+      "reference_stats": {
+        "maxHp": 2600,
+        "atk": 290,
+        "def": 60,
+        "magicResistance": 10.0,
+        "baseAttackTime": 1.8,
+        "massLevel": 1
+      }
+    },
+    "2": {
+      "stage_id": "ro6_n_1_1",
+      "selector": "$.stages.ro6_n_1_1.possible_enemies[3]",
+      "enemy_id": "enemy_2034_sythef",
+      "level": 0,
+      "name": "流泪小子",
+      "level_type": "ELITE",
+      "reference_stats": {
+        "maxHp": 8000,
+        "atk": 300,
+        "def": 150,
+        "magicResistance": 20.0,
+        "baseAttackTime": 2.0,
+        "massLevel": 2
+      }
+    },
+    "3": {
+      "stage_id": "ro6_n_1_1",
+      "selector": "$.stages.ro6_n_1_1.possible_enemies[0]",
+      "enemy_id": "enemy_2001_duckmi",
+      "level": 0,
+      "name": "鸭爵",
+      "level_type": "ELITE",
+      "reference_stats": {
+        "maxHp": 18000,
+        "atk": 100,
+        "def": 200,
+        "magicResistance": 30.0,
+        "baseAttackTime": 1.0,
+        "massLevel": 3
+      }
+    },
+    "4": {
+      "stage_id": "ro6_n_1_1",
+      "selector": "$.stages.ro6_n_1_1.possible_enemies[2]",
+      "enemy_id": "enemy_2002_bearmi",
+      "level": 0,
+      "name": "高普尼克",
+      "level_type": "ELITE",
+      "reference_stats": {
+        "maxHp": 30000,
+        "atk": 2000,
+        "def": 200,
+        "magicResistance": 50.0,
+        "baseAttackTime": 3.5,
+        "massLevel": 4
+      }
+    },
+    "5": {
+      "stage_id": "ro6_n_1_1",
+      "selector": "$.stages.ro6_n_1_1.possible_enemies[1]",
+      "enemy_id": "enemy_2085_skzjxd",
+      "level": 0,
+      "name": "圆仔",
+      "level_type": "ELITE",
+      "reference_stats": {
+        "maxHp": 50000,
+        "atk": 500,
+        "def": 0,
+        "magicResistance": 50.0,
+        "baseAttackTime": 1.0,
+        "massLevel": 5
+      }
+    }
+  },
+  "preview_source": {
+    "path": "/workspace/rougezhushou/rouge/data/previews.json",
+    "bytes": 2601977,
+    "sha256": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586"
+  },
+  "rejected_weight1_fixture": {
+    "stage_id": "ro6_n_1_1",
+    "enemy_id": "enemy_3001_upeopl",
+    "level": 0,
+    "name": "乌萨斯平民",
+    "weight": 1,
+    "magicResistance": null,
+    "reason": "resolve_enemy:34–36原要求四参考属性均数值有限非负；该unique目标不是健康可计算fixture。用ro6_n_1_2/敌人enemy_1093_ccsbr/level0完整档案。"
+  },
+  "original_public_input_contract": {
+    "calculate_damage": "rouge/damage.py:236–251要求有效skill1..3及skill_rank1..10；按技能unlock elite与elite<2 rank<=7限制。没有skill0普攻入口。",
+    "AG_skill_unlock_elite": [
+      0,
+      1,
+      2
+    ],
+    "AG_phase_max_levels": [
+      50,
+      80,
+      90
+    ],
+    "elite_level_potential": "rouge/catalog.py:28–37，elite strict integer有效phase，level strict integer1..phaseMax，None取phaseMax；trust有限0..100；potential strict integer1..6。正常E1用合法level/rank7，E2 level90/rank10。",
+    "talent_qualification": "operator_engine.selected_talents:14–27按phase/level/requiredPotentialRank(或potential_rank)<=potential−1筛选；不因科技、选择别的干员或当前target推断培养。",
+    "AG_original_first_talent_records": [
+      {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 0,
+        "values": {
+          "atk_scale_hi": 0.2,
+          "atk_scale_lo": 0.13,
+          "mass_level": 3.0
+        }
+      },
+      {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 2,
+        "values": {
+          "atk_scale_hi": 0.3,
+          "atk_scale_lo": 0.18,
+          "mass_level": 3.0
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "values": {
+          "atk_scale_hi": 0.35,
+          "atk_scale_lo": 0.25,
+          "mass_level": 3.0
+        }
+      },
+      {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 2,
+        "values": {
+          "atk_scale_hi": 0.45,
+          "atk_scale_lo": 0.3,
+          "mass_level": 3.0
+        }
+      }
+    ],
+    "timing": "rouge/timing.py:161–179只frames/continuous，timing必须dict；缺省frames。保持原window/目标生命周期和已知参数，不推实际起飞/结束clock。",
+    "normal": "原Combat.plan(normal=True,window=...)是实际method；Combat.calculate:1474–1475仅cycle已知等资格才调用normal。公开calculate_damage仍选1..3，不通过skill0或虚构normal场景字段冒充覆盖；若需明确normal覆盖须说明原实际method调用范围。",
+    "base_manual_weight": "resolve_enemy:17–24保AG手填0..100有限非bool整值；Combat.option:138–149保原非负/maximum/integer校验。已确认派生delta若为负，不能直接套手填资格或编造clamp。"
+  },
+  "original_actual_JSON_only_summary": {
+    "receipt": {
+      "path": "/workspace/.continuation/section107-original-weight-actual-linux-v1/observations.json",
+      "bytes": 290680,
+      "sha256": "0a38276dda0ee3e6640f203cc61397686b6e83c365656578b6896dc461563d00"
+    },
+    "retained_raw_exit": {
+      "path": "/workspace/.continuation/section107-original-weight-actual-linux-v1.exit-code",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "raw_exit_bytes": "0\\n",
+    "observation_only": true,
+    "product_pass": false,
+    "observation_complete": true,
+    "calculation_callers": 14,
+    "consumer_calls": 74,
+    "catalog_loader_calls": 1,
+    "native_refs": 89,
+    "errors": 0,
+    "blocked": 0,
+    "elapsed_seconds": 6.717854824004462,
+    "source_count": 748,
+    "Source_and_CORE_equal_before_after": true,
+    "calculations": [
+      {
+        "case": "fixed4-aglna-plain-manual0",
+        "prepared_weight": null,
+        "total_damage": 2590.0,
+        "fixed_reference_weight": 4,
+        "reported_environment_weight": 4,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed4-aglna-gravity-manual0",
+        "prepared_weight": null,
+        "total_damage": 2590.0,
+        "fixed_reference_weight": 4,
+        "reported_environment_weight": 2.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed4-aglna-gravity-manual100",
+        "prepared_weight": null,
+        "total_damage": 2590.0,
+        "fixed_reference_weight": 4,
+        "reported_environment_weight": 2.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed4-mechanist-plain",
+        "prepared_weight": null,
+        "total_damage": 0.0,
+        "fixed_reference_weight": 4,
+        "reported_environment_weight": 4,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed4-mechanist-gravity",
+        "prepared_weight": null,
+        "total_damage": 0.0,
+        "fixed_reference_weight": 4,
+        "reported_environment_weight": 2.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed5-aglna-plain-manual0",
+        "prepared_weight": null,
+        "total_damage": 2790.0,
+        "fixed_reference_weight": 5,
+        "reported_environment_weight": 5,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed5-aglna-gravity-manual0",
+        "prepared_weight": null,
+        "total_damage": 2790.0,
+        "fixed_reference_weight": 5,
+        "reported_environment_weight": 3.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed5-aglna-gravity-manual100",
+        "prepared_weight": null,
+        "total_damage": 2790.0,
+        "fixed_reference_weight": 5,
+        "reported_environment_weight": 3.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed5-mechanist-plain",
+        "prepared_weight": null,
+        "total_damage": 0.0,
+        "fixed_reference_weight": 5,
+        "reported_environment_weight": 5,
+        "caller_unchanged": true
+      },
+      {
+        "case": "fixed5-mechanist-gravity",
+        "prepared_weight": null,
+        "total_damage": 0.0,
+        "fixed_reference_weight": 5,
+        "reported_environment_weight": 3.0,
+        "caller_unchanged": true
+      },
+      {
+        "case": "manual4-plain",
+        "prepared_weight": null,
+        "total_damage": 2590.0,
+        "fixed_reference_weight": null,
+        "reported_environment_weight": null,
+        "caller_unchanged": true
+      },
+      {
+        "case": "manual4-gravity-no-target",
+        "prepared_weight": null,
+        "total_damage": 2590.0,
+        "fixed_reference_weight": null,
+        "reported_environment_weight": null,
+        "caller_unchanged": true
+      },
+      {
+        "case": "manual2-bear-compatible-control",
+        "prepared_weight": null,
+        "total_damage": 2714.0,
+        "fixed_reference_weight": null,
+        "reported_environment_weight": null,
+        "caller_unchanged": true
+      },
+      {
+        "case": "manual3-round-compatible-control",
+        "prepared_weight": null,
+        "total_damage": 2914.0,
+        "fixed_reference_weight": null,
+        "reported_environment_weight": null,
+        "caller_unchanged": true
+      }
+    ],
+    "meaning": "原fixed4/5有gravity仍返回heavy伤害2590/2790而report重量2/3；matching manual2/3实际2714/2914，各DEF不同但各自匹配对应fixed目标。该JSON事实是既有消费者不同步，不是游戏实测或候选PASS。mechanist原3秒两组均0，不能把这个0当充分非零数值健康控制。",
+    "native_records_decoded_or_helper_executed_by_reviewer": false
+  },
+  "source_refs": [
+    {
+      "path": "/workspace/rougezhushou/rouge/catalog.py",
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/damage.py",
+      "bytes": 31071,
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/operator_engine.py",
+      "bytes": 156626,
+      "sha256": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/timing.py",
+      "bytes": 27266,
+      "sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/enemy_environment.py",
+      "bytes": 8213,
+      "sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_aglna_manual_weight.py",
+      "bytes": 3838,
+      "sha256": "9d566a1e90d4995d0d6b418528a50d0d32119780f74f940e78d46d9945b1b372"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    }
+  ],
+  "runtime_and_scope_limits": [
+    "所有fixed引用仅JSON/Source合法性筛选，未运行新weight0..5 API。",
+    "原observations由Root执行；本审阅仅read/hash/JSON摘要，不decode89个native记录、不重跑API或codec。",
+    "106候选未apply且排除；本报告不共同写107候选。",
+    "保留未知负重量下限/失重、叠加、控制/位移、实时起飞/结束和当前游戏热更新，不能补造数值机制。"
+  ],
+  "project_API_helper_codec_tests_Qt_Wine_Git_executed": 0,
+  "tracked_writes": 0,
+  "candidate_writes": 0
+}

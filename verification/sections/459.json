@@ -1,0 +1,45 @@
+{
+  "section": 459,
+  "kind": "functional_section",
+  "title": "主资料窗自适应滚动阅读",
+  "new_capability": "主资料窗保持紧凑尺寸，长正文可以完整滚动阅读；标题栏随当前页面调整，返回后保留阅读位置。修正从藏品页切换后标题过高、首次笔记增高的问题。",
+  "passed": true,
+  "passed_scope": "Independent scrollable ToolPage bodies, visible-header-only sizing,9 primary-page requested sizes after event delivery, notebook empty/edit/read, reachable long-content last control; source/draft/navigation tests and actual embedded website map/play/pause retained.",
+  "limitations": "继续其余深层资料与公开档案整合、笔记排版和视频细节对齐；识别优先减少整页文字处理与本局信息解析的重复工作。",
+  "unit_tests_run": 66,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/459-viewport/necessary01/results.json",
+      "process": "verification/sections/459-viewport/necessary01/process.json",
+      "tests_run": 53
+    },
+    {
+      "result": "verification/sections/459-viewport/necessary-navigation/results.json",
+      "process": "verification/sections/459-viewport/necessary-navigation/process.json",
+      "tests_run": 13
+    }
+  ],
+  "native_windows_scopes": {
+    "native-final": {
+      "receipt": "verification/sections/459-viewport/native-final/window.json",
+      "unique_checks": 52
+    },
+    "native-web": {
+      "receipt": "verification/sections/459-viewport/native-web/window.json",
+      "unique_checks": 47
+    }
+  },
+  "recognition_profile": "verification/sections/459-viewport/ocr-profile-quiet/results.json",
+  "recognition_algorithm_changed": false,
+  "source_sha256": {
+    "rouge/player_reference_window.py": "dd0db957e7c78454c607531dc8a28202ab725484eea5a38ebaf8128db91eb789",
+    "tests/test_reference_viewport_459.py": "ac4c3facb17beb6538c696dbc377d01cecc34026c26afa7c950525c0f8621c3e"
+  },
+  "source_review": "verification/sections/459-viewport/source-review.json",
+  "actual_local_test_window": "verification/sections/459-viewport/live-window-final/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T18:52:15.144558+00:00"
+}

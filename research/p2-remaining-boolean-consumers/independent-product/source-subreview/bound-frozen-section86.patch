@@ -1,0 +1,209 @@
+diff --git a/rouge/damage.py b/rouge/damage.py
+index 39d2cf2..23dbd97 100644
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -294,8 +294,9 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
+     scenario.pop('_wine_phase_frame',None)
+     if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase
+     if scenario['operator'] not in ('kaltsit','silverash','mechanist'):
+-        from .operator_engine import calculate_extended
+-        result=calculate_extended(scenario,attributes)
++        from .operator_engine import Combat
++        combat=Combat(scenario,attributes)
++        result=combat.calculate()
+     else:
+         result=_skill_damage(scenario)
+         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+@@ -331,6 +332,28 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
+         talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
+         if any(t.get('name')=='翔虫机动' for t in talents):
+             raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')
++    # Keep legacy calculation/finisher/report errors before text-only conditions.
++    op=scenario['operator'];number=scenario['skill']
++    conditions={
++        'char_4228_closur':('reinforcement_blocks_target',),
++        'char_206_gnosis':('frozen_at_skill_end',) if number==3 else (),
++        'char_4087_ines':('ines_first_deployment',) if number==3 else (),
++        'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),
++        'char_1035_wisdel':('overload',) if number==2 else (),
++    }.get(op,())
++    if op=='char_4182_oblvns':
++        conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())
++        if number==2:conditions+=('organ_mode','fever')
++    if op in ('char_437_mizuki','char_1048_orchd2'):
++        field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')
++        if isinstance(scenario.get(field),str):
++            from .operator_engine import selected_talents
++            talents,_=selected_talents(catalog()['operators'][op],scenario)
++            if any(t.get('name')==talent for t in talents):conditions+=(field,)
++        if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)
++    for field in conditions:
++        if isinstance(scenario.get(field),str):
++            raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+     return result
+ 
+ def _evaluate_damage(prepared,wine_phase=None) -> dict:
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+index c1905ad..355a6e4 100644
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -1295,6 +1295,7 @@ class Combat:
+             'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'haruka_healing_reference':haruka_healing_reference,'chen_phase_reference':chen_phase_reference,'amiya_phase_reference':amiya_phase_reference,'timing':timeline.output()}
+ 
+     def calculate(self):
++        self.ranged_attack_condition_consumed=False
+         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
+             raise ValueError('深度治疗本场已使用两次，不能再次开启。')
+         full=self.plan()
+@@ -1469,6 +1470,9 @@ class Combat:
+             self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]
+         normal=self.plan(normal=True,window=recharge) if cycle is not None and not (
+             sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None
++        if self.s['operator']=='char_4182_oblvns':
++            ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10
++            self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None
+         damage=full['damage']+(normal['damage'] if normal else 0)
+         healing=full['healing']+(normal['healing'] if normal else 0)
+         from .timing import phase_totals
+diff --git a/tests/test_remaining_boolean_condition_text_input.py b/tests/test_remaining_boolean_condition_text_input.py
+new file mode 100644
+index 0000000..16bed19
+--- /dev/null
++++ b/tests/test_remaining_boolean_condition_text_input.py
+@@ -0,0 +1,136 @@
++import copy
++import unittest
++
++from rouge.catalog import catalog
++from rouge.damage import calculate_damage
++
++
++ACTIVE = (
++    ('char_4228_closur', 2, 'reinforcement_blocks_target'),
++    ('char_437_mizuki', 2, 'enemy_below_half'),
++    ('char_206_gnosis', 3, 'frozen_at_skill_end'),
++    ('char_4087_ines', 3, 'ines_first_deployment'),
++    ('char_4182_oblvns', 2, 'ranged_attack'),
++    ('char_4182_oblvns', 2, 'organ_mode'),
++    ('char_4182_oblvns', 2, 'fever'),
++    ('char_1048_orchd2', 1, 'power_coating'),
++    ('char_1048_orchd2', 1, 'double_charge'),
++    ('char_1041_angel2', 2, 'steal_success'),
++    ('char_1041_angel2', 3, 'delivery_coordinate'),
++    ('char_1035_wisdel', 2, 'overload'),
++)
++
++
++def typed(value):
++    if isinstance(value, dict):
++        return ('dict', tuple((typed(k), typed(v)) for k, v in value.items()))
++    if isinstance(value, (list, tuple)):
++        return (type(value).__name__, tuple(typed(v) for v in value))
++    return (type(value).__name__, value)
++
++
++def scenario(operator, skill, **extra):
++    return {'operator': operator, 'skill': skill, 'base_attack': 1020,
++            'potential': 5, 'timing_mode': 'continuous', 'window_seconds': 7, **extra}
++
++
++class RemainingBooleanConditionTextInputTests(unittest.TestCase):
++    def test_each_active_control_preserves_distinct_bools_and_rejects_text(self):
++        for operator, skill, field in ACTIVE:
++            with self.subTest(field=field):
++                false = calculate_damage(scenario(operator, skill, **{field: False}))
++                true = calculate_damage(scenario(operator, skill, **{field: True}))
++                self.assertNotEqual(typed(false), typed(true))
++                with self.assertRaisesRegex(ValueError, field + ' 不接受文本条件；请使用布尔值。'):
++                    calculate_damage(scenario(operator, skill, **{field: 'false'}))
++
++    def test_empty_and_numeric_text_are_rejected_without_parsing(self):
++        for operator, skill, field in ACTIVE:
++            for text in ('', '0'):
++                with self.subTest(field=field, text=text), self.assertRaisesRegex(ValueError, field):
++                    calculate_damage(scenario(operator, skill, **{field: text}))
++
++    def test_other_owners_keep_ignored_fields(self):
++        expected = typed(calculate_damage(scenario('mechanist', 1)))
++        for _, _, field in ACTIVE:
++            with self.subTest(field=field):
++                self.assertEqual(typed(calculate_damage(scenario('mechanist', 1, **{field: 'false'}))), expected)
++
++    def test_same_owner_inactive_skills_and_unselected_talent_remain_ignored(self):
++        inactive = (
++            ('char_206_gnosis', 1, 'frozen_at_skill_end', {}),
++            ('char_4087_ines', 2, 'ines_first_deployment', {}),
++            ('char_4182_oblvns', 1, 'organ_mode', {}),
++            ('char_4182_oblvns', 3, 'fever', {}),
++            ('char_1048_orchd2', 2, 'double_charge', {}),
++            ('char_1041_angel2', 1, 'steal_success', {}),
++            ('char_1041_angel2', 2, 'delivery_coordinate', {}),
++            ('char_1035_wisdel', 1, 'overload', {}),
++            ('char_437_mizuki', 1, 'enemy_below_half', {'elite': 0, 'skill_rank': 7}),
++            ('char_437_mizuki', 2, 'enemy_below_half', {'elite': 1, 'skill_rank': 7}),
++        )
++        for operator, skill, field, extra in inactive:
++            expected = calculate_damage(scenario(operator, skill, **extra))
++            actual = calculate_damage(scenario(operator, skill, **extra, **{field: 'false'}))
++            with self.subTest(field=field, skill=skill, elite=extra.get('elite', 2)):
++                self.assertEqual(typed(actual), typed(expected))
++
++    def test_ranged_module_override_uses_actual_normal_plan_eligibility(self):
++        common = {'elite': 2, 'level': 60, 'module_id': 'uniequip_002_oblvns',
++                  'module_level': 2, 'timing_mode': 'frames'}
++        for skill, continuous in ((1, False), (1, True), (2, True), (3, False)):
++            with self.subTest(skill=skill, continuous=continuous):
++                plain = calculate_damage(scenario('char_4182_oblvns', skill, **common,
++                                                  continuous_attacks=continuous, ranged_attack=False))
++                injected = calculate_damage(scenario('char_4182_oblvns', skill, **common,
++                                                     continuous_attacks=continuous, ranged_attack='false',
++                                                     _oblvns_ranged_attack_consumed=True))
++                self.assertEqual(typed(plain), typed(injected))
++        for skill in (3,):
++            with self.subTest(skill=skill), self.assertRaisesRegex(ValueError, 'ranged_attack'):
++                calculate_damage(scenario('char_4182_oblvns', skill, **common,
++                                          continuous_attacks=True, ranged_attack='false',
++                                          _oblvns_ranged_attack_consumed=False))
++        with self.assertRaisesRegex(ValueError, 'ranged_attack'):
++            calculate_damage(scenario('char_4182_oblvns', 2, **{**common, 'module_level': 1},
++                                      ranged_attack='false', continuous_attacks=False))
++
++    def test_existing_numeric_training_timing_and_prior_text_errors_win(self):
++        cases = (
++            (scenario('char_1048_orchd2', 3, power_coating='false', dragon_arrow_hits=False), 'dragon_arrow_hits'),
++            (scenario('char_1035_wisdel', 2, overload='false', ghost_count=False), 'ghost_count'),
++            (scenario('char_206_gnosis', 3, frozen_at_skill_end='false', cold_state=False), 'cold_state'),
++            (scenario('char_4087_ines', 3, ines_first_deployment='false', stolen_enemy_count=False), 'stolen_enemy_count'),
++            (scenario('char_4228_closur', 2, reinforcement_blocks_target='false', potential=True), '潜能'),
++            (scenario('char_4182_oblvns', 2, organ_mode='false', timing={'windup_frames': float('nan')}), 'windup_frames'),
++            (scenario('char_1048_orchd2', 1, double_charge='false', near_previous_deployment='false'), 'near_previous_deployment'),
++        )
++        for value, message in cases:
++            with self.subTest(message=message), self.assertRaisesRegex(ValueError, message):
++                calculate_damage(value)
++
++    def test_nonstring_truthiness_stays_supported(self):
++        for operator, skill, field in ACTIVE:
++            for value, boolean in ((0, False), (1, True), (None, False)):
++                with self.subTest(field=field, value=value):
++                    actual = calculate_damage(scenario(operator, skill, **{field: value}))
++                    expected = calculate_damage(scenario(operator, skill, **{field: boolean}))
++                    self.assertEqual(typed(actual), typed(expected))
++
++    def test_rejection_and_acceptance_leave_caller_and_catalog_unchanged(self):
++        old_catalog = typed(catalog())
++        for operator, skill, field, extra, rejects in (
++                ('char_437_mizuki', 2, 'enemy_below_half', {}, True),
++                ('char_437_mizuki', 1, 'enemy_below_half', {'elite': 0, 'skill_rank': 7}, False)):
++            value = scenario(operator, skill, **extra, **{field: 'false'},
++                             timing={'target_windows': [[0, 5]]},
++                             effects=[{'kind': 'attack_pct', 'value': .2}])
++            before = typed(copy.deepcopy(value))
++            if rejects:
++                with self.assertRaisesRegex(ValueError, field):calculate_damage(value)
++            else:calculate_damage(value)
++            self.assertEqual(typed(value), before)
++            self.assertEqual(typed(catalog()), old_catalog)
++
++
++if __name__ == '__main__':unittest.main()

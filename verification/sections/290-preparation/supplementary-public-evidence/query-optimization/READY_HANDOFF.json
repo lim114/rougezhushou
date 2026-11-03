@@ -1,0 +1,93 @@
+{
+  "status": "READY: only choice_resources maintenance applied after actual public equivalence.",
+  "live_source_sha256": "f7455c11558d828f4a79ca7a82db1660c143597b927d6d2aa9ef55274ff3ff01",
+  "baseline_sha256": "1f03aed7faa30c6af380e5d8c83e0c3f426f6b2b08973ea5af50e12a89093277",
+  "actual_matrix": {
+    "event_groups": 38,
+    "scene_count": 190,
+    "matrix_queries_per_module": 570,
+    "matrix_profiled_seconds": {
+      "before": 1.9172138002177235,
+      "after": 0.8985737001930829
+    },
+    "matrix_eligibility_calls": {
+      "before": 699,
+      "after": 324
+    },
+    "invalid_input_count": 27,
+    "failed_checks": 0
+  },
+  "actual_check_count": 2942,
+  "files": {
+    "before-event-planning.py": {
+      "sha256": "1f03aed7faa30c6af380e5d8c83e0c3f426f6b2b08973ea5af50e12a89093277",
+      "bytes": 36495
+    },
+    "candidate-event-planning.py": {
+      "sha256": "f7455c11558d828f4a79ca7a82db1660c143597b927d6d2aa9ef55274ff3ff01",
+      "bytes": 36838
+    },
+    "compare_public_queries.py": {
+      "sha256": "b536c48c0981f438644878666f7473b89335be2bf019b415b4085aa5f69910a4",
+      "bytes": 9328
+    },
+    "public-equivalence-and-profile.json": {
+      "sha256": "094c81f7a47fcb489b00833871049f22a7200bb86703e7efb09a3df10f92dcbd",
+      "bytes": 637131
+    },
+    "before-matrix-output.json.gz": {
+      "sha256": "106dc6d6ee8c4217c4c2a483c098496519dc41f04b6ece0c4937faa7222c324e",
+      "bytes": 103793
+    },
+    "after-matrix-output.json.gz": {
+      "sha256": "106dc6d6ee8c4217c4c2a483c098496519dc41f04b6ece0c4937faa7222c324e",
+      "bytes": 103793
+    },
+    "before-matrix.pstats": {
+      "sha256": "9d7b67e79aa71fdcab2abece59fdb36451de6d97f20f866024f8f17ee031ceb2",
+      "bytes": 30491
+    },
+    "after-matrix.pstats": {
+      "sha256": "7b996d6eb4d8b249e86e2534f6439d103fe44b3eca9a945a1eb61ffa3613ac1d",
+      "bytes": 21351
+    },
+    "before-profile.txt": {
+      "sha256": "ec520a58b6e896e7cd9357f472ad3af3e3b8f184fd462a450ab9342196227039",
+      "bytes": 4808
+    },
+    "after-profile.txt": {
+      "sha256": "d7286dbd8522a5395c4bd79865a88ebf323ce2e08fe46ed68f2253c085ec04a7",
+      "bytes": 4848
+    },
+    "first-real-bench/receipt.json": {
+      "sha256": "e6353468710b3d86c0c9dd90b0398b0344a2c8937a20dd665b9782c68eac93ca",
+      "bytes": 1021
+    },
+    "first-real-bench/stderr.txt": {
+      "sha256": "07d71ee2a5f7e9c0bf91d5250f6e645872425d893f49c8ecb8f95448877cf361",
+      "bytes": 318
+    },
+    "corrected-real-bench/receipt.json": {
+      "sha256": "688df2ba7ac98d7c67e46b1d2217a84a8d52b841b97aa7e5c495d61ff3d16b77",
+      "bytes": 919
+    },
+    "applied-maintenance.json": {
+      "sha256": "119bbe24258da9940422824ab187b063f2f580bb3bc906d4a784c07618d73f2c",
+      "bytes": 669
+    },
+    "apply_reviewed_candidate.py": {
+      "sha256": "964f345f552ad690cac4b31ce24c3c775f426012f073f859f2c84a6371f1da4f",
+      "bytes": 1941
+    }
+  },
+  "first_failure": "Reviewer script bracket SyntaxError before executing any model; exact source/stdout/stderr/receipt retained in first-real-bench. Product/candidate source unchanged by that correction.",
+  "scope_limits": [
+    "Single local profiled pass with alternating order; not a robust benchmark or timeout-cause proof.",
+    "Profiled function calls and fresh file checks are included; serialization and source clones are excluded from matrix timing.",
+    "No comparison to whole offline suite, OCR or end-to-end sampling speed."
+  ],
+  "does_not_explain_A1_timeout": true,
+  "does_not_claim_full_GUI_OCR_improvement": true,
+  "no_cross_query_cache_or_weakened_source_gate": true,
+  "section291_remains_cache_only": true
+}

@@ -1,0 +1,1 @@
+89来源复现已完成并冻结。固定0f27027；5个全新临时RunState，5constructor+5seed apply+5subject apply，实际apply entry10。False+空名单错误删除mechanist；True+一名名单错误删除另一名char_151_myrtle；None保留、int0/int1正常原离队行为。所有10caller typed不变，5before+5after落盘全native一致；UUID与自然started_at/captured浮点完整保留，不跨组归一比较。0训练/伤害/app/recognition/formatter/Qt/Wine/tests/tracked，绝不访问真实.local。未创建产品草案；等待root排除bool合同patch授权。

@@ -1,0 +1,44 @@
+{
+  "section": 332,
+  "preparation_failures": [
+    {
+      "action": "initial node_catalog_view scripted insertion",
+      "failure": "AssertionError: CRLF input did not match LF multiline needle",
+      "write_performed_before_failure": false,
+      "resolution": "Universal-newline read before insertion; existing mixed file normalized to CRLF; semantics unchanged outside added methods/calls."
+    },
+    {
+      "action": "source audit helper first invocation",
+      "failure": "ModuleNotFoundError verify_cloud: missing scripts import path for runpy",
+      "test_failure": false,
+      "resolution": "Add scripts to sys.path before loading actual maintained_selectors."
+    }
+  ],
+  "exploratory_checks": [
+    {
+      "argv": [
+        ".venv/Scripts/python.exe",
+        "-B",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "-v",
+        "tests.test_current_node_readers_332",
+        "tests.test_current_node_readers_view_332"
+      ],
+      "actual_exit": 0,
+      "methods_ran": 11,
+      "duration_seconds": 15.192,
+      "output_retained_in_chat_tool_chunks": [
+        "0c2c97",
+        "c39043"
+      ],
+      "source_guard_performed": false,
+      "replaced_for_acceptance_by_guarded41_check_receipt": "verification/sections/332-necessary-attempt1/process.json"
+    }
+  ],
+  "new_source_download": false,
+  "existing_eight_current_reader_packets_reused": true,
+  "mechanism_or_numeric_change": false
+}

@@ -1,0 +1,128 @@
+{
+  "kind": "cost-rounding-consensus-source-manifest-280",
+  "proof_sha256": "67455e993a068f538bda96bb45d6c5e6b33fb1357894c873bc73c39d691a5bc6",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "method_count": 9,
+  "unique_instruction_count": 546,
+  "byte_span_count": 759,
+  "support_files_sha256": {
+    "SOURCE_GATE.md": "6c8cd9c3d2249a0c69ebaa5912c00e61b574d837acccaf85d91d4fa193dda428",
+    "SCHEMA.md": "ec62e9de34b7b438163d3dbe298eeb031a12f2a1bcd62abd71a714ac60a26aca",
+    "README.md": "1b01b1f36495fae5c58b2f91d07e99a31ba7df526a3beefc17e68091608082b0",
+    "SOURCE_INSPECTION_CORRECTION.md": "fd247794a38a893a1a0ad50227b89243a7fc06a868fb7cfc46b740f7628ad194",
+    "intel-rounding-source-inspection-v2-280.json": "0fb3b34050ab51e70822a7c697b7b994d41e51367f7f598058d34d125233c617"
+  },
+  "rc_pair_scope": "all16_independent_RC_pairs_conservative_superset",
+  "scalar_normal_qualifier": "conditional ordinary hardware normal results without handler operand/result override",
+  "game_rc_or_exception_masks_known": false,
+  "actual_cost_sp_cycle_known": false,
+  "legacy_exact_api_modified": false,
+  "legacy_exact_core_sha256": "7cd8eee14c217c46419b5ac70bbcfe14f63e67a5687b7974d8718ae60618077a",
+  "public_kind_scope": [
+    "rune_add",
+    "rune_mul",
+    "relic_mul"
+  ],
+  "unmapped_round_helper_metadata_identity_known": false,
+  "official_cpu_sources": [
+    {
+      "kind": "OFFICIAL_INTEL_CPU_ARITHMETIC_SOURCE_NOT_GAME_MECHANISM",
+      "url": "https://cdrdv2-public.intel.com/843827/253665-sdm-vol-1-dec-24.pdf",
+      "sha256": "2df6ae80aad83945c4879ef702b863ccbacaf5467e5ea079f1d7261e69ebc315",
+      "bytes": 3200519,
+      "document": "253665-086US December2024",
+      "sections": [
+        "4.8.2 Single encoding",
+        "4.8.4 RC",
+        "10.2.3.3 FTZ",
+        "10.2.3.4 DAZ",
+        "AppendixD integer conversion"
+      ],
+      "game_current_MXCSR_proven": false
+    },
+    {
+      "kind": "OFFICIAL_INTEL_ROUNDING_REFERENCE_280_FRESH_FILE_INSPECTION",
+      "url": "https://cdrdv2-public.intel.com/774492/325383-sdm-vol-2abcd.pdf",
+      "file_sha256": "bc4348020f5d5a27b0207c61e3c88d4e610eaf428658dc5d08a1cc84f98a719b",
+      "bytes": 11349721,
+      "page_count": 2522,
+      "pdf_metadata": {
+        "/Author": "Intel Corporation",
+        "/CreationDate": "D:20230323215127Z",
+        "/Creator": "FrameMaker 16",
+        "/ModDate": "D:20230324095107-07'00'",
+        "/Producer": "Acrobat Distiller 23.0 (Windows)",
+        "/Title": "Intel® 64 and IA-32 Architectures Software Developer’s Manual Volume 2 (2A, 2B, 2C, and 2D): Instruction Set Reference, A-Z"
+      },
+      "bookmarks": [
+        {
+          "title": "ADDSS—Add Scalar Single Precision Floating-Point Values",
+          "page_index": 151
+        },
+        {
+          "title": "CVTDQ2PS—Convert Packed Doubleword Integers to Packed Single Precision Floating-Point Values",
+          "page_index": 378
+        },
+        {
+          "title": "MULSS—Multiply Scalar Single Precision Floating-Point Values",
+          "page_index": 889
+        },
+        {
+          "title": "ROUNDSD—Round Scalar Double Precision Floating-Point Values",
+          "page_index": 1311
+        }
+      ],
+      "facts": [
+        {
+          "instruction": "ADDSS",
+          "page_index": 151,
+          "fact": "Original legacy scalar Single arithmetic instruction reference is present",
+          "exact_excerpts_archived": false
+        },
+        {
+          "instruction": "CVTDQ2PS",
+          "page_index": 378,
+          "fact": "Legacy signed32 to Single conversion uses MXCSR rounding when inexact",
+          "exact_excerpts_archived": false
+        },
+        {
+          "instruction": "MULSS",
+          "page_index": 889,
+          "fact": "Original legacy scalar Single arithmetic instruction reference is present",
+          "exact_excerpts_archived": false
+        },
+        {
+          "instruction": "ROUNDSD",
+          "page_index": 1311,
+          "fact": "Immediate bit2 selects MXCSR or explicit immediate RC; low2 bits encode mode; bit3 controls precision exception",
+          "exact_excerpts_archived": false
+        }
+      ],
+      "game_current_MXCSR_or_masks_proven": false,
+      "first_download_attempts": [
+        {
+          "tool_chunk": "b1f6e4",
+          "exit_code": 1,
+          "reason": "Python SSL local issuer unavailable; certificate verification was not disabled"
+        },
+        {
+          "tool_chunk": "f3af49",
+          "command_exit_code": 0,
+          "download_pass": false,
+          "reason": "Intel www URL Access Denied; no successful PDF archive"
+        }
+      ],
+      "actual_CDN_download": {
+        "tool_chunk": "7bbdb0",
+        "exit_code": 0
+      },
+      "complete_file_sha_check": {
+        "tool_chunk": "d67636",
+        "exit_code": 0
+      },
+      "same_or_different_RC_coupling_assumed": false,
+      "result_candidates_are_conditional_hardware_normal_results": true
+    }
+  ]
+}

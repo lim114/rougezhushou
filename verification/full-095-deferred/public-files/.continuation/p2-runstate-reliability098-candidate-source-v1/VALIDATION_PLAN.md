@@ -1,0 +1,23 @@
+# 后续验证计划：当前没有运行准入
+
+Root在实际完成并保存/审阅095、096、097后，重新冻结完整维护Source、source/layout/data、Python/Wine/Qt环境和真正097 receipts。当前735 map只是过去095 lead引用，不能用于098候选准入；所有future gates/results仍NULL。新 registry expected-old来自封存097 Source候选。实际完成097若不精确匹配，本包停止transport，另开新冻结适配及独立Source审阅；不得修改本封存包。全部实际工具launch/session/completion、primary exit/日志/持续时间/调用数尚NULL。
+
+**冻结与独立审阅。** 独立确认wholeMF/codeMF原字节、production两处和registry一处minimal inverse、CRLF保持、其它RunState方法和AccountCache/规则/数学/事件/时钟/识别代码完全未变，以及新tests目录没有原文件冲突。完整维护guard before/after必须精确比较，不只检查本组三文件。新冻结runner采用标准exact-source loader和PYTHONDONTWRITEBYTECODE=1，配置/private paths先重定向，禁止原default缓存、chat/game/live sampling或自动清空。检查只有必要的普通数据resolver发生，真实调用log范围明确；无证据不得声称全项目零helper/API。
+
+**Linux baseline与candidate严格配对。** 用同一原始公开JSON fixtures和由真实baseline RunState生成的同一全raw persisted seed，在明确独立TemporaryDirectory中 `RunState(file=path)`；不要导入test模块当fixture codec，不把UUID/时间规范化或重新生成相似seed冒充一致输入。Baseline与candidate依同一case原raw启动，共享原seed自然id/start/confirmed时间和captured_at；各使用新的fresh interpreter/verifiedsource。记录full raw before/after/temp（不限SHA）、constructor/apply/summary/status/heldIDs、每个方法真实return或完整异常type/message/frames、caller完整native类型/顺序/id/ref/float.hex、state/history/alias图，以及实际profilecounts。不同capture的相同object_id不证明实时alias。
+
+五fault baseline既有构造/消费AttributeError如实保留；candidate必须在安装任何saved兄弟数据前进入unreadable保护，四消费者实际返回可用fallback，原raw完整相等，temp不存在，后续正常apply/save仍不覆盖原盘。不能只catch异常就写PASS。显式manual reset是单独可观察用户操作case，证明前面保护没有自动解除，并且另一个隔离run/accounts文件及原hist保持不变。实际saved有效重启、missingfile、原JSON/top guards、有效省略defaults/空记录/nullopaque/NaN或inf旧opaque时间和现有同局迁移另做互补配对。
+
+bool direct cases至少False/None/int0 empty、True/None/int1 one、missing empty，全部由同一完整seed原字节开始。Candidate bool需匹配None相应产品结果并保留caller的False/True原值和native graph；int0/int1有正常对应移除，不得被改成unknown。None/missing与已有正records/history/memory留存、duplicate physical slot的partial约束、新正tool/card、grade修正及新身份、stale/cross-run/原成员异常顺序、所有非bool旧输入和crew float/string按最终Source范围配对。已有未支持非bool类型的异常及部分状态必须保留type/message/frames，不能当成普遍产品成功。不自动修正旧saved bool、不发明库存合并或重获/重置规则。
+
+Baseline先运行相关已有回归并保存真实结果；新17 Source testmethods在candidate上实际发现和执行，实际case/subtest数由日志得到，Source计划不能代替计数。候选相关模块至少run_state_reliability、run_crew_count_boolean_input、inventory_tools、inventory_snapshot_051、inventory_catalog_053、empty_inventory、relic_grade_sync_032、origin_discovery_055、node_content、run_reuse_guards_032、run_config_validation及recipient/counter相关范围；以最终维护registry与实际结构核实名称/触及范围，完整verify_cloud亦需真实通过。此文件不执行任何命令；具体command argv固定到新reviewed runner/Source之后才可提交Root准入。
+
+**实际Wine窗口与saved结果。** 真正097完成后，重新固定并审阅临时状态MainWindow harness；当前 `scripts/verify_relic_ui_025.py` 的OfflineWindow与 `RUN_STATE/OPERATOR_STATE/SETTINGS`、DesktopBackend隔离布局只是已读Source参考，原helper本身不是098验收，不执行旧版本caption或粗略异常吞掉的脚本。新runner在实际Wine/Qt创建窗口；先隔离所有路径和禁用窗口扫描/采样/聊天，再construct，不碰default/user缓存或game target。真实记录QApplication/window创建、平台/binary/source refs、可见widget状态、异常与最终关闭、原图和日志，不以Linux模拟/只import/假window/final-summary替代实际窗口。
+
+Startup五fault和合法旧cache重启分别构建隔离窗口，记录真实run_summary文本、inventory状态和手动按钮可用性；在坏cache保护下正常公开apply_run_observation仍可生成本局可见数据但raw保持，explicit reset_run用户路径单独确认，另一个temp/accounts来源不受影响。库存相同raw seed cases经MainWindow.apply_run_observation真实调用，记录summary、sync_run_relics/config/operator overview与计算选择，caller/raw/native均完整保留。真正int0/int1、None/missing、bool unknown、旧完整memory和partial cases不可用UI猜测覆盖测试结果。
+
+每个选定public scenario固定具体operator/skill/敌人/条件，直接damage API与窗口计算严格配对，保留完整damage_result原数据、三个实际报告模式的完整原文本及其可见widgets/saved-output文件。当前app.Source `render_damage` 通过 `raw_damage` 与 `damage_technical` 选择JSON/technical/general模式；未来完成097的实际调用结构须先审阅后冻结，不能凭记忆猜控件/函数名称。比对规则/数学/时间和非bool行为与baseline一致，bool失效数值不会误授权移除，当前本局数据优先与unknown标签不被丢弃。
+
+Saved验收包含有效窗口操作后原JSON完整内容（unknownextras/types/order/数学字段/currentid/history）、真实close/restart后状态/可见消费者，protected cache完整raw不变且tmp缺失，manual reset后新文件只含该次用户新局状态并不覆盖其它隔离run/account状态。所有输出manifest SHA/size/whole bytes、实际原始stdout/stderr/exit和before/afterSource guard必须保存。进程0只说明该runner如实完成；Product_PASS必须由明确的paired行为、已有回归、实际窗口与saved检查共同闭合，不根据异常被收集、方法数或Source compile宣称。
+
+Native Windows、真实游戏/OCR与私人损坏cache发生率继续未验证；没有安排新的私人捕获或P1事件采样。任何未来准入失败/实现变化须独立新包并保留旧失败原证据。全部实际结果在当前包为NULL，completed_section_increment=0。

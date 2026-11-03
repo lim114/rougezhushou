@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "case_count": 12,
+  "maximum_API_calls": 24,
+  "cases": [
+    {
+      "label": "qualified_s2_default",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "window_seconds": 11
+      }
+    },
+    {
+      "label": "e1_s1_default_unknown",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "elite": 1,
+        "level": 60,
+        "skill_rank": 7,
+        "base_attack": 1234,
+        "window_seconds": 20
+      }
+    },
+    {
+      "label": "front_s2_both",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Front:Attack",
+          "normal_animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      }
+    },
+    {
+      "label": "front_s1_normal",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 13,
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Front:Attack"
+        }
+      }
+    },
+    {
+      "label": "other_kaltsit_original_front",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "kaltsit",
+        "skill": 3,
+        "base_attack": 901,
+        "window_seconds": 6,
+        "timing": {
+          "animation_reference": "char_1052_kalts2:Front:Skill_3_Attack"
+        }
+      }
+    },
+    {
+      "label": "other_shu_default",
+      "expect": "unchanged",
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 1,
+        "base_attack": 901,
+        "window_seconds": 13
+      }
+    },
+    {
+      "label": "back_s2_both_empty_enemy",
+      "expect": "new_back",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 11,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "normal_animation_reference": "char_196_sunbr:Back:Attack",
+          "target_windows": []
+        }
+      }
+    },
+    {
+      "label": "back_s2_manual_half_open",
+      "expect": "new_back",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 10.2,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      }
+    },
+    {
+      "label": "back_s1_both_unknown",
+      "expect": "new_back",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "elite": 1,
+        "level": 60,
+        "skill_rank": 7,
+        "base_attack": 1234,
+        "window_seconds": 13,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack",
+          "normal_animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      }
+    },
+    {
+      "label": "back_normal_continuous_zero_recipient",
+      "expect": "new_back",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "base_attack": 1000,
+        "window_seconds": 12,
+        "healing_targets": 0,
+        "timing_mode": "continuous",
+        "timing": {
+          "normal_animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      }
+    },
+    {
+      "label": "invalid_elite_before_recovered_reference",
+      "expect": "exact_error",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "elite": 4,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Attack"
+        }
+      }
+    },
+    {
+      "label": "invalid_potential_before_generic_reference",
+      "expect": "exact_error",
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "potential": 0,
+        "timing": {
+          "animation_reference": "char_196_sunbr:Back:Skill"
+        }
+      }
+    }
+  ]
+}

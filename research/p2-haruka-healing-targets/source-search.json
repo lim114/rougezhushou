@@ -1,0 +1,181 @@
+{
+  "generated_at_utc": "2026-10-07T20:31:39.080834+00:00",
+  "scope": "Completed read-only targeted source search for Haruka BLS-Y trait base2 plus S2 healing target addition; no new native proof claimed",
+  "repository_root": "/workspace/rougezhushou",
+  "tracked_files_modified": false,
+  "environment_draft_modified": false,
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "fixed_source_receipt": "/tmp/p2-audit/after-045/haruka/source-receipt.json",
+  "fixed_sources": [
+    {
+      "name": "character_table",
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "receipt_hash_matched": true
+    },
+    {
+      "name": "skill_table",
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "receipt_hash_matched": true
+    },
+    {
+      "name": "battle_equip_table",
+      "path": "/tmp/p2-audit/drone-traits/battle_equip_table.json",
+      "bytes": 5710707,
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "receipt_hash_matched": true
+    },
+    {
+      "name": "uniequip_table",
+      "path": "/tmp/p2-audit/drone-traits/uniequip_table.json",
+      "bytes": 3365012,
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "receipt_hash_matched": true
+    }
+  ],
+  "original_selectors_reviewed": [
+    "$.char_4202_haruka.trait.candidates[0]",
+    "$.char_4202_haruka.skills",
+    "$.equipDict.uniequip_002_haruka",
+    "$.uniequip_002_haruka.phases[0/1/2].parts",
+    "$.skchr_haruka_2.levels[0..9]"
+  ],
+  "local_searches": [
+    {
+      "cwd": "/workspace/rougezhushou",
+      "command": "rg -l 'haruka|max_target_heal|BLS-Y' .cache/research research -g '*.json' -g '*.md' -g '*.txt' -g '*.py'",
+      "keywords": [
+        "haruka",
+        "max_target_heal",
+        "BLS-Y"
+      ],
+      "matching_paths": [
+        "/workspace/rougezhushou/research/p2-healing-subtotal-scaling/source-and-reproduction.json",
+        "/workspace/rougezhushou/research/p2-independent-events/NOTE.md",
+        "/workspace/rougezhushou/research/p2-independent-events/source-receipt.json",
+        "/workspace/rougezhushou/research/p2-empty-enemy-scope/source-receipt.json"
+      ],
+      "result": "No matching Haruka or max_target_heal native CFG was located in .cache/research; research matches describe parameter references, event boundaries or public reproductions."
+    },
+    {
+      "cwd": "/workspace/rougezhushou",
+      "command": "rg -l 'max_target_heal|haruka|BLS-Y' /tmp/p2-audit -g '*.md' -g '*.txt' -g '*.py' -g '*source*json' -g '*receipt*json' -g '*proof*json' -g '*metadata*json'",
+      "keywords": [
+        "max_target_heal",
+        "haruka",
+        "BLS-Y"
+      ],
+      "relevant_matching_paths": [
+        "/tmp/p2-audit/sections-031-035/inspect_manual_sources.py",
+        "/tmp/p2-audit/sections-031-035/manual-source-reproductions.json",
+        "/tmp/p2-audit/sections-031-035/NOTE.md",
+        "/tmp/p2-audit/remaining-independent/source-and-reproduction.json",
+        "/tmp/p2-audit/remaining-independent/reproduce.py",
+        "/tmp/p2-audit/after-035/lifetime-source-receipt.json",
+        "/tmp/p2-audit/after-035/source_lifetime_receipt.py",
+        "/tmp/p2-audit/healing-subtotal/source-and-reproduction.json",
+        "/tmp/p2-audit/after-045/haruka/audit.py",
+        "/tmp/p2-audit/after-045/haruka/source-receipt.json",
+        "/tmp/p2-audit/after-045/haruka/NOTE.md"
+      ],
+      "result": "Matches are existing audit/reference artifacts or production snapshots; none supplies actual Haruka target-property composition or three-target acquisition proof."
+    },
+    {
+      "cwd": "/workspace/rougezhushou",
+      "command": "rg --files .cache/research | rg '(haruka|skill-merge|target|trait|blessing)'",
+      "keywords": [
+        "haruka",
+        "skill-merge",
+        "target",
+        "trait",
+        "blessing"
+      ],
+      "matching_paths": [
+        "/workspace/rougezhushou/.cache/research/sp-attributes-066/target-metadata.json",
+        "/workspace/rougezhushou/.cache/research/sp-attributes-066/read_target_metadata.py",
+        "/workspace/rougezhushou/.cache/research/phatm2-damage-070/skill-merge-cfg.txt",
+        "/workspace/rougezhushou/.cache/research/phatm2-damage-070/skill-merge-cfg.json"
+      ],
+      "result": "Only generic target metadata and adjacent elemental damage CFG leads; no Haruka prefab or target-count composition artifact."
+    },
+    {
+      "cwd": "/workspace/rougezhushou",
+      "command": "rg -n 'getMaxTarget|MaxTarget|maxTarget|max_target|Attack|Heal|healing|heal' .cache/research/sp-attributes-066 .cache/research/phatm2-damage-070 -g '*.md' -g '*metadata*json' -g '*cfg*txt' -g '*proof*json' | head -n 60",
+      "keywords": [
+        "getMaxTarget",
+        "MaxTarget",
+        "maxTarget",
+        "max_target",
+        "Attack",
+        "Heal",
+        "healing",
+        "heal"
+      ],
+      "result": "The inspected TargetOptions metadata has ignoreHealFree; adjacent phatm2 report/CFG describes elemental damage and its skill blackboard union. These do not establish Haruka target count."
+    }
+  ],
+  "local_documents_read": [
+    "/tmp/p2-audit/after-045/haruka/NOTE.md",
+    "/tmp/p2-audit/after-045/haruka/audit.py",
+    "/tmp/p2-audit/after-045/haruka/public-reproduction.json",
+    "/workspace/rougezhushou/research/p2-independent-events/NOTE.md",
+    "/workspace/rougezhushou/research/p2-independent-events/source-receipt.json",
+    "/workspace/rougezhushou/research/p2-healing-subtotal-scaling/NOTE.md",
+    "/workspace/rougezhushou/research/p2-empty-enemy-scope/source-receipt.json",
+    "/workspace/rougezhushou/.cache/research/sp-attributes-066/target-metadata.json",
+    "/workspace/rougezhushou/.cache/research/phatm2-damage-070/skill-merge-cfg.txt",
+    "/workspace/rougezhushou/.cache/research/phatm2-damage-070/REPORT.md",
+    "/tmp/p2-audit/remaining-independent/summons/NOTE.md",
+    "/tmp/p2-audit/remaining-independent/summons/github-arkdamage-repository-search-receipt.json",
+    "/tmp/p2-audit/remaining-independent/summons/github-arkdamage-repository-search.html"
+  ],
+  "public_get": {
+    "lead_provenance": "Existing cached GitHub repository search result, not a new broad web search",
+    "cached_search_url": "https://github.com/search?q=ArkDamage&type=repositories",
+    "cached_search_receipt": "/tmp/p2-audit/remaining-independent/summons/github-arkdamage-repository-search-receipt.json",
+    "url": "https://github.com/sunplayer08/ArkDamageCalculator",
+    "method": "GET",
+    "transport": "Python urllib.request.urlopen using inherited proxy and normal TLS verification",
+    "requests_already_completed": 2,
+    "first_response": {
+      "status": 200,
+      "bytes": 173324,
+      "sha256": "dabca76a6eb87dfc7be76a7988d8ea082484a091e60a45b9c5da9972ac3a75f7"
+    },
+    "second_response_inspection": {
+      "title": "sunplayer08/ArkDamageCalculator · GitHub",
+      "observed_heading": "This repository is empty.",
+      "blob_or_tree_links": [],
+      "response_body_saved_locally": false,
+      "precise_status_and_hash_not_printed_for_second_response": true
+    },
+    "result": "Known lead is an empty repository and provides no mechanism evidence.",
+    "no_retry_performed_when_writing_this_receipt": true
+  },
+  "facts": [
+    "Original Haruka trait attack@max_target_heal=1 and heal_scale=.75.",
+    "All three BLS-Y stages specify TRAIT_DATA_ONLY attack@max_target_heal=2 and heal_scale=.75, qualified at E2 level60, requiredPotentialRank=0.",
+    "Haruka S2 rank1-6 attack@max_target_heal_add=0 and descriptions omit target +1.",
+    "Haruka S2 rank7-10 attack@max_target_heal_add=1 and descriptions explicitly state healing target count +1.",
+    "The prior 768-case public reproduction uses rank7 or rank10 and does not cover rank1-6."
+  ],
+  "conclusion": {
+    "independent_actual_three_target_proof_found": false,
+    "parameter_combination_reference": "Qualified BLS-Y base2 plus S2 rank7-10 add1 gives conditional arithmetic reference3; S2 rank1-6 does not supply add1.",
+    "actual_target_property_composition": "unknown",
+    "actual_friendly_target_acquisition_or_event_times": "unknown",
+    "current_native_or_hotupdate_trait_attachment": "unknown",
+    "native_windows_verified": false,
+    "narrow_reference_recommendation": "Read addition from the selected rank blackboard, expose module base and skill addition separately, and keep extra recipient healing/derived damage conditional. Do not manufacture actual acquisition timestamps, total healing/HPS/cycle certainty, or actual cap3."
+  },
+  "search_boundaries": [
+    "No blind network sweep.",
+    "No new PRTS request.",
+    "No retry of the previously absent qingxuzha/ArkDamage repository.",
+    "No attempt to recover or simulate absent native DLL/game/Windows samples.",
+    "Generic target metadata and adjacent elemental damage CFG were not extrapolated to Haruka."
+  ]
+}

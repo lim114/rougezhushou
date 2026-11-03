@@ -1,0 +1,1 @@
+The first independent runner used timing.mode instead of the actual timing_mode input. That run is retained as invalid probe evidence and is not counted as continuous-mode coverage. The runner was corrected by inspecting AttackTimeline.__init__. No production code was changed.

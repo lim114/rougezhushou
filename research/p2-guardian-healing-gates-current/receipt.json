@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-12",
+  "scope": "Source-bound Gummy LT and Shu LE GUA-X fixed recipient ratio output-healing composition; no actual target timing or current hotfix",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "base_version": "26-09-13-15-28-10-30688348",
+  "native_methods": 46,
+  "unique_instruction_checks": 5532,
+  "metadata_binding_spans": 268,
+  "all_native_and_metadata_bytes_match": true,
+  "operators": [
+    "char_196_sunbr",
+    "char_2025_shu"
+  ],
+  "modules": [
+    "uniequip_002_sunbr",
+    "uniequip_002_shu"
+  ],
+  "stages": [
+    1,
+    2,
+    3
+  ],
+  "comparison_rule": {
+    "formula": "Gummy:target_ratio_raw < threshold_raw - EPS_raw; Shu:target_ratio_raw < threshold_raw + EPS_raw",
+    "fractional_places": 32,
+    "threshold_raw": 2147483648,
+    "epsilon_source": "FP.EN5 = One / (100000<<32), native rounded division",
+    "epsilon_raw": 42950,
+    "gummy_last_passing_raw": 2147440697,
+    "gummy_first_failing_raw": 2147440698,
+    "shu_last_passing_raw": 2147526597,
+    "shu_first_failing_raw": 2147526598
+  },
+  "healing_composition": "source ON_OUTPUT_MODIFIER current module then receiver ON_APPLYING_MODIFIER source-bound flowers; each ModifierScaleUp multiplies current modifier.value",
+  "natural_regeneration_affected": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "current_hotfix_equivalence_proven": false,
+  "preserved_correction": "Common description below50% is not a shared compiled condition: Gummy usesLT (minusEPS) while Shu usesLE (plusEPS); no borrowed Susuro rule.",
+  "remaining_unknown": [
+    "Actual recipient hp/maxHp and HP trajectory",
+    "Actual acquisition, coverage, life eligibility, healing clocks",
+    "Current XLua/hotfix equivalence",
+    "Arbitrary heal/regen/final-damage source combinations outside the listed binding"
+  ],
+  "common_native_source_reused": "research/p2-susuro-healing-composition-current/native-proof.json (40 previously closed compiled methods); all bytes freshly matched here",
+  "new_native_methods": 6,
+  "new_unique_instruction_checks": 337,
+  "current_prefab_binding": {
+    "gummy": {
+      "res_keys": [
+        "sunbr_equip_1_1_p1",
+        "sunbr_equip_1_2_p1",
+        "sunbr_equip_1_3_p1"
+      ],
+      "class": "PassiveBuffAbility",
+      "buff_key": "sunbr_e_trait",
+      "template": "set_heal_scale_by_hpratio",
+      "event8": "ON_OUTPUT_MODIFIER",
+      "gate": "IfElse: IsHeal -> FilterByTargetHpRatio MODIFIER_TARGET LT -> success ModifierScaleUp; null fail branch"
+    },
+    "shu": {
+      "res_keys": [
+        "shu_equip_1_1_p1",
+        "shu_equip_1_2_p1",
+        "shu_equip_1_3_p1"
+      ],
+      "class": "PassiveBuffAbility",
+      "buff_key": "shu_e_002_tr",
+      "template": "heal_scale_up[hpratio][LE]",
+      "event8": "ON_OUTPUT_MODIFIER",
+      "gate": "IsHeal -> FilterByTargetHpRatio MODIFIER_TARGET LE -> ModifierScaleUp"
+    }
+  },
+  "description_background_sources": [
+    {
+      "url": "https://prts.wiki/w/Gummy",
+      "verified_claim": "GUA-X healing15% with displayed below50% wording; no shared comparator inferred"
+    },
+    {
+      "url": "https://prts.wiki/w/黍",
+      "verified_claim": "GUA-X trait description and module family only; compiled comparison established from actual own prefab/template"
+    }
+  ],
+  "validations": {
+    "checks": 130,
+    "passed": 130,
+    "failed": 0,
+    "new_api": 13,
+    "new_mainwindow_class": 2,
+    "window_scope": "offscreen temporary public MainWindow fixtures; not original visible game/runtime UI"
+  },
+  "preparation_failures": [
+    {
+      "kind": "test fixture",
+      "detail": "Initial15-test run14pass1KeyError: nonexistent estimate.relics field; replaced with actual existing base_stats comparison, regeneration/timing assertions retained."
+    },
+    {
+      "kind": "runner selector",
+      "detail": "Firstrelated run95 passed+1 failed module import: test_condition_cultivation_096 absent; corrected actual test_condition_cultivation filename, related130 allpassed."
+    }
+  ],
+  "source_oracles": {
+    "fp_one": 4294967296,
+    "epsilon_raw": 42950,
+    "gummy_boundary_raw": 2147440698,
+    "shu_boundary_raw": 2147526598,
+    "equal0_5": {
+      "gummy": false,
+      "shu": true
+    },
+    "ratio0_499995_gummy": false,
+    "ratio0_49998_gummy": true,
+    "ratio0_500005_shu": true
+  },
+  "game_operated": false,
+  "chat_sent": false,
+  "private_state_read_or_written": false,
+  "shared_tracked_source_modified": false,
+  "artifact_sha256": {
+    "current-file-verification.json": "dadc272623a7f68dbf9649f8f001492227b3d14bd8bee7032bab2a6fa017bfb8",
+    "current-templates.json": "7c76ed075cb7f3397839f0c60f0c39ca1d3ce7c53676bf9bd5919627ed21a7f7",
+    "fixed-raw-sources.json": "8124351aa93cd2ee0f2d773ecd73c9e35427e8b11c5e424807ddaab6f2b81417",
+    "monoscript-sources.json": "3ead069a48d83ddc56c0fa72a5bddbd02da959e11eaa06718e942cbdcfe85499",
+    "native-proof.json": "3202e5bdc6524bad7aa50e41b67a45b9bbc12d12cf720d0aead1366f8bb76ad8",
+    "prefab-binding.json": "664ffa0a80a868d01be7d087673b60ab2e83fe4783d9a354aee96b211fdb9898",
+    "REPORT.md": "004a3a7665b0589e18364213f902f4be824def117a2f418e3668dfb5bd5a8625",
+    "selected-metadata.json": "ace4d9f9d47b6311526b1c1a4a3fe2d3ee09d759a1611459e2744b486f200df4",
+    "verify_native.py": "81774327935b063da9073e9d4d63931e0aba2d4e72b1ecdf63be29b9e4b1adbf"
+  }
+}

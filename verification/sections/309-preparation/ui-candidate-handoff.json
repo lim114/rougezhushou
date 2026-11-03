@@ -1,0 +1,121 @@
+{
+  "section": 309,
+  "kind": "CACHE_UI_INTEGRATION_AND_NATIVE_STATIC_CANDIDATE_NOT_EXECUTED",
+  "candidate_root": ".cache\\p3-309-view\\revision2\\candidate",
+  "promotion_files": {
+    "rouge/battle_view.py": {
+      "sha256": "08f79353318c323f0dd9f9c8659493381c4e3c34a554f932a4ad80df4bf4965e",
+      "bytes": 50834
+    },
+    "rouge/boss_phase_view.py": {
+      "sha256": "6de4a3295dd2c46e21f9d447a5a162d877c7d6aadbe28cadff151686c955dec6",
+      "bytes": 7727
+    },
+    "scripts/verify_boss_phase_window_309.py": {
+      "sha256": "df4fa2e680d9c2304bf6a73b00a769ee01a321220f62e31065524c56b639e2a0",
+      "bytes": 20170
+    },
+    "tests/test_boss_phase_integration_309.py": {
+      "sha256": "46767eb4d28688c72a8827a57c13941d4b3a93b406847a7fea962e231e97fae0",
+      "bytes": 5463
+    },
+    "tests/test_boss_phase_view_309.py": {
+      "sha256": "157fa4f680ab72e327e316a22fef4d96514d48f84befb7fdc1b4720c47fd2a60",
+      "bytes": 6914
+    }
+  },
+  "new_files": [
+    "rouge/boss_phase_view.py",
+    "scripts/verify_boss_phase_window_309.py",
+    "tests/test_boss_phase_integration_309.py",
+    "tests/test_boss_phase_view_309.py"
+  ],
+  "existing_production_change": {
+    "rouge/battle_view.py": {
+      "before": {
+        "sha256": "170227fe75cefdcd957377804b6492b25415b8533312c3dbf3df53c4b2f80b6c",
+        "bytes": 48767
+      },
+      "after": {
+        "sha256": "08f79353318c323f0dd9f9c8659493381c4e3c34a554f932a4ad80df4bf4965e",
+        "bytes": 50834
+      }
+    }
+  },
+  "api": {
+    "class": "BossPhaseReferencePanel",
+    "module": "rouge.boss_phase_view",
+    "set_reference": "set_reference(identity,result=None)",
+    "public_attributes": [
+      "identity",
+      "scope_key",
+      "result",
+      "phase",
+      "tabs",
+      "player",
+      "technical",
+      "boss_picture"
+    ],
+    "parent_attributes": [
+      "boss_phase_button",
+      "boss_phase_window"
+    ],
+    "parent_methods": [
+      "_refresh_boss_phase",
+      "open_boss_phase_reference"
+    ],
+    "exact_target": [
+      "ro6_b_6",
+      "enemy_2150_shchmr",
+      0
+    ],
+    "phase_options": "overview None, then every source-defined reference.phases[].id/name; no fixed phase count"
+  },
+  "native": {
+    "canonical": "scripts/verify_boss_phase_window_309.py",
+    "kind": "isolated_native_windows_boss_phase_reader",
+    "command": [
+      ".venv/Scripts/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "scripts/verify_boss_phase_window_309.py",
+      "--receipt",
+      "<new-actual-absolute-path/window.json>",
+      "--visible-ms",
+      "60000"
+    ],
+    "process_boundary": "The root must retain actual Popen/supervisor exit and assigned-Job state separately; QWidget closure is not process descendant closure.",
+    "source_guard": "selected sources including all runtime_files/full new pack, source current tables, portrait, builder and3new tests; not all transitive dependencies",
+    "source_negative": "complete manifest/runtime_files clone, patch only model.ROOT, warm valid then append byte to selected-original-records and restore original bytes",
+    "screenshots": "overview+up to3 source-defined representative phases+source loss; actual count only after execution"
+  },
+  "test_methods_prepared_not_executed": {
+    "test_boss_phase_integration_309.py": 6,
+    "test_boss_phase_view_309.py": 8
+  },
+  "old306_two_methods_AST_identical": true,
+  "only_old_methods_with_appended_seams": [
+    "__init__",
+    "_load_stage",
+    "render_rows",
+    "_render_enemy"
+  ],
+  "source_notes": "Backend protocol confirmed by model author; candidate code read statically. Backend final HANDOFF/pins and root actual promotion still pending.",
+  "source_inspection": {
+    "sha256": "64b220b54e99c61cf318048637962e23b09164293064350b56521b45fae20e63",
+    "bytes": 685
+  },
+  "integration_diff": {
+    "sha256": "9c50fc2aff85dfd4ce010611d398380cd1484b04da4c83d3c32e288b6d9c5916",
+    "bytes": 4980
+  },
+  "prior_candidate_preserved": "candidate",
+  "preparation_correction": {
+    "sha256": "e76a4f666abf132e078a88644375991257b19d5a4cd90b55f635abde219ac499",
+    "bytes": 642
+  },
+  "AST_parse_compile_completed": true,
+  "Qt_or_tests_or_native_executed": false,
+  "production_Git_or_private_modified": false
+}

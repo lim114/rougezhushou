@@ -1,0 +1,152 @@
+--- /workspace/.continuation/full095-saved-validator-pending-v3/saved.py
++++ /workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/saved.py
+@@ -23,10 +23,10 @@
+ EXPECTED_UI_PENDING_MF_SHA = '20e2bcbe81232d7fac8082575b16a98c7219035948942f0cd297c8bf3316ac60'
+ EXPECTED_ORIGINAL_UI_SHA = '9f7f2d192496f01a4e542cdbbfc1be9932381a6373eb3b46c8fefb2a965e62d9'
+ EXPECTED_CODE_MF_SHA = '216d5c31a9bc89dbc51f0b875db073a4fe8ea8b85fb5c9b624f5d9d6f56a461a'
+-NATIVE_DIRECTORY = COMPAT / 'full095-ui-native-v3'
++NATIVE_DIRECTORY = COMPAT / 'full095-ui-native-cache-retry-v1'
+ NATIVE_INDEX = NATIVE_DIRECTORY / 'wine-ui-full-native-index-095.json'
+-PNG_NAMES = ('wine-window-095.png', 'wine-movement-reference-095.png',
+-             'wine-sown-tile-control-095.png', 'wine-medical-trait-095.png')
++PNG_NAMES = ('wine-window-095-cache-retry-v1.png', 'wine-movement-reference-095-cache-retry-v1.png',
++             'wine-sown-tile-control-095-cache-retry-v1.png', 'wine-medical-trait-095-cache-retry-v1.png')
+ REPORT = None
+ REGISTRY = {}
+ MAPPING = None
+@@ -493,6 +493,99 @@
+     return document, result
+ 
+ 
++def recover_original_final095(spec, runner_data, final_files):
++    # Retry source first recovers exact reviewed cache source, then original FINAL.
++    # The original two-binding and 79-operation checks below remain authoritative.
++    retry = spec['ui_retry']
++    check(type(retry) is dict and retry['runner'] == spec['final_UI']['runner']
++          and retry['manifest'] == spec['final_UI']['manifest']
++          and retry['source_review'] == spec['final_UI']['formal_source_review'],
++          'Actual UI retry bundle must equal exact runner/manifest/formal inputs')
++    contract_ref = retry['source_contract']
++    contract_bytes = read_ref(contract_ref)
++    contract_name = Path(contract_ref['path']).name
++    check(contract_name == 'source-contract-cache-retry095.json'
++          and final_files[contract_name] == contract_bytes, 'Actual retry contract belongs to sealed manifest')
++    contract = json.loads(contract_bytes)
++    check(contract['source_gate_passed'] is True and contract['runtime_pass'] is False
++          and contract['execution_ready'] is False
++          and contract['runner'] == retry['runner']
++          and contract['source_guard'] == spec['actual_source_guard'],
++          'Retry Source contract binds exact runner/guard without claiming runtime')
++    check(read_ref(contract['binding']) == final_files['root-bound-input095.json']
++          and graph(literal(runner_data.decode('utf-8'), 'BINDING095'))
++          == graph(json.loads(final_files['root-bound-input095.json'])),
++          'Retry actual runner literal equals complete sealed original binding')
++    ui = retry['ui']
++    plan = contract['output_plan']
++    check(ui['runner'] == retry['runner'] and ui['receipt_path'] == plan['receipt']
++          and ui['console_log_path'] == plan['console_log']
++          and ui['required_saved_outputs'] == contract['required_saved_outputs']
++          and ui['optional_output_paths'] == contract['optional_output_paths']
++          and ui['fresh_evidence_directories'] == contract['fresh_evidence_directories']
++          and ui['execution_contract']['argv'] == contract['exact_argv']
++          and ui['execution_contract']['cwd'] == contract['cwd'],
++          'Retry projected UI contract binds exact runner, entry and complete output roles')
++    check(canonical(plan['receipt']) == canonical(spec['actual_UI_receipt']['path'])
++          and canonical(plan['native_directory']) == str(NATIVE_DIRECTORY)
++          and canonical(plan['native_index']) == str(NATIVE_INDEX)
++          and canonical(plan['legacy_state_archive']) == canonical(spec['actual_legacy_state_archive']['path'])
++          and type(plan['pngs']) is list and len(plan['pngs']) == len(PNG_NAMES)
++          and {canonical(name) for name in plan['pngs']} == {str(COMPAT / name) for name in PNG_NAMES}
++          and {canonical(row['path']) for row in spec['actual_PNGs']} == {canonical(name) for name in plan['pngs']}
++          and canonical(plan['console_log']) == canonical(spec['actual_UI_primary']['console_log']['path'])
++          and canonical(plan['exit_code_file']) == canonical(spec['actual_UI_primary']['exit_code_file']['path']),
++          'Actual retry outputs equal exact Source contract and literal native/PNG namespace')
++    check(contract['exact_argv'] == spec['actual_UI_primary']['argv'] and contract['cwd'] == str(REPO),
++          'Retry contract binds exact trusted root launch argv/cwd')
++    source_constants = {node.value for node in ast.walk(ast.parse(runner_data))
++                        if isinstance(node, ast.Constant) and type(node.value) is str}
++    check(all(Path(name).name in source_constants for name in
++              [plan['receipt'], plan['legacy_state_archive'], plan['native_directory'], *plan['pngs']]),
++          'Retry receipt/legacy/native/four PNG names are real source literals')
++    inverse_contract = contract['inverse_recovery']
++    check(inverse_contract['schema'] == 'full-ui095-cache-retry-exact-inverse-v1', 'Exact retry inverse schema')
++    ledger_ref = inverse_contract['ledger']
++    ledger_bytes = read_ref(ledger_ref)
++    ledger_name = Path(ledger_ref['path']).name
++    check(ledger_name == 'exact-inverse-cache-retry095.json' and final_files[ledger_name] == ledger_bytes,
++          'Actual retry inverse belongs to exact sealed source manifest')
++    inverse = json.loads(ledger_bytes)
++    stages = inverse['reverse_stages']
++    check(inverse['schema'] == inverse_contract['schema'] and type(stages) is list and len(stages) == 2,
++          'Exactly two Source-qualified UI retry inverse stages')
++    cache = contract['cache_candidate']; original = contract['original_final']
++    check(stages[0]['from'] == retry['runner'] and stages[0]['to'] == cache
++          and stages[1]['from'] == cache and stages[1]['to'] == original
++          and cache['sha256'] == '1a6ac7f0db3096de170a9e0d035148bfbad372cc58f704bb7ad39da6cb7cfb6d'
++          and cache['bytes'] == 1184561
++          and original['sha256'] == '83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee'
++          and original['bytes'] == 1184276,
++          'Exact retry to cache to archived original FINAL83c4 chain')
++    recovered = runner_data
++    for stage in stages:
++        check(recovered == read_ref(stage['from']), 'Inverse stage starts from exact physical source bytes')
++        operations = stage['operations']
++        check(type(operations) is list and operations, 'Nonempty exact stage reverse operations')
++        # Operations describe sequential forward replacements; each offset is
++        # verified against its actual intermediate source during exact reversal.
++        for operation in reversed(operations):
++            check(type(operation) is dict, 'Explicit retry inverse operation dictionary')
++            start = operation['pending_byte_start']; count = operation['pending_byte_count']
++            end = start + count if integer(start) and integer(count) else -1
++            check(integer(start) and integer(count) and end <= len(recovered)
++                  and is_sha(operation['pending_sha256'])
++                  and sha(recovered[start:end]) == operation['pending_sha256'],
++                  'Sequential retry inverse operation exact current raw bytes')
++            recovered = recovered[:start] + base64.b64decode(operation['before_base64'], validate=True) + recovered[end:]
++        check(recovered == read_ref(stage['to']), 'Each inverse stage restores every archived source byte')
++    check(recovered == read_ref(original), 'Entire original FINAL source recovered exactly before old two-binding inverse')
++    REPORT['UI_retry_source_contract'] = contract_ref
++    REPORT['UI_retry_source_inverse'] = ledger_ref
++    REPORT['UI_retry_two_stage_inverse_exact'] = True
++    return recovered.decode('utf-8')
++
++
+ def source_and_binding(spec):
+     pending_mf, pending_files = manifest_payloads(spec['pending_UI']['manifest'])
+     check(spec['pending_UI']['manifest']['sha256'] == EXPECTED_UI_PENDING_MF_SHA and pending_mf['STOPWRITE'] is True,
+@@ -512,19 +605,21 @@
+           and pointer(formal, p['runner_sha256']) == spec['final_UI']['runner']['sha256']
+           and pointer(formal, p['manifest_sha256']) == spec['final_UI']['manifest']['sha256']
+           and pointer(formal, p['guard_sha256']) == EXPECTED_GUARD_SHA, 'Actual FINAL five-value formal source gate before codec use')
++    inverse_source = recover_original_final095(spec, runner_data, final_files)
+     binding = literal(final_source, 'BINDING095')
++    check(graph(binding) == graph(literal(inverse_source, 'BINDING095')), 'Actual retry binding equals exact recovered original FINAL binding')
+     check(binding['status'] == 'ROOT_BOUND_ACTUAL095_AND_ACTUAL94_BASELINE', 'Actual bound UI source status')
+     bound_input = json.loads(final_files['root-bound-input095.json'])
+     check(graph(bound_input) == graph(binding), 'Actual FINAL runner literal differs from sealed root-bound input')
+     pending = pending_files['wine-full-ui-095-pending.py']
+     pending_binding = json.loads(pending_files['pending-binding095.json'])
+-    tree = ast.parse(final_source)
++    tree = ast.parse(inverse_source)
+     assignment = next(n for n in tree.body if isinstance(n, ast.Assign)
+                       and any(isinstance(t, ast.Name) and t.id == 'BINDING095' for t in n.targets))
+-    actual_assignment = ast.get_source_segment(final_source, assignment) + '\n'
++    actual_assignment = ast.get_source_segment(inverse_source, assignment) + '\n'
+     old_assignment = 'BINDING095 = ' + repr(pending_binding) + '\n'
+-    check(final_source.count(actual_assignment) == 1 and final_source.count('PENDING095 = False') == 1, 'Unique two FINAL bindings')
+-    reversed_final = final_source.replace(actual_assignment, old_assignment, 1).replace('PENDING095 = False', 'PENDING095 = True', 1).encode()
++    check(inverse_source.count(actual_assignment) == 1 and inverse_source.count('PENDING095 = False') == 1, 'Unique two FINAL bindings')
++    reversed_final = inverse_source.replace(actual_assignment, old_assignment, 1).replace('PENDING095 = False', 'PENDING095 = True', 1).encode()
+     check(reversed_final == pending, 'Actual FINAL inverse must restore every pending byte exactly')
+     inverse = json.loads(pending_files['exact-inverse-ledger095.json'])
+     recovered = pending
+@@ -1248,7 +1343,8 @@
+                 spec['final_UI']['runner'], spec['final_UI']['manifest'], spec['final_UI']['formal_source_review'],
+                 spec['pending_UI']['manifest'], spec['actual_UI_primary']['prelaunch'],
+                 spec['actual_UI_primary']['root_observation'], spec['actual_UI_primary']['exit_code_file'],
+-                spec['actual_UI_primary']['console_log'], *inputs, *spec['actual_PNGs'], *spec['baseline_prerequisite_refs']]
++                spec['actual_UI_primary']['console_log'], spec['ui_retry']['source_contract'],
++                *inputs, *spec['actual_PNGs'], *spec['baseline_prerequisite_refs']]
+     check(all(canonical(row['path']) != output_path for row in all_refs)
+           and not Path(output_path).is_relative_to(NATIVE_DIRECTORY)
+           and not REPO.is_relative_to(Path(output_path)), 'Fresh saved proof cannot alias/contain any explicit source or evidence input')

@@ -1,0 +1,25 @@
+# 固定战斗对应的事件选项资料
+
+范围仅为8个精确关卡：陌生旅伴、安保措施，开业剪彩/合伙人会议/湖中魇各自的普通及紧急原ID。它们对应思乡心切、划算买卖、鸭托邦、传奇团伙、湖中仙女的8个完整选项，共14条原始关系。3条明确写“升级为紧急作战”的关系不能作为对应普通关卡入口，因此返回11条可手动阅读的资料关系，另外保留3条排除说明。排除说明没有导航token。
+
+这不是本局可发生事件清单，不恢复原场景脚本，也不证明实际触发、资格、领取或服务器执行。事件资料所写的主层单独标为event_documented_main_floors；作战全部来源层数仍未知，15项全局缺口不减少。没有固定目标的“随机下一层普通作战”不能倒推为每个普通关卡的固定入口。相同名称/level文件的普通和紧急原ID不合并。
+
+## 固定证据
+
+source-manifest.json直接绑定3份当前静态JSON、未修改的event_planning.py/node_catalog.py、既有公开PRTS427904和440271两份完整HTML，以及本包小原件/提取结果和新参考JSON。完整HTML复用research/p3-choice-recruitment-290原路径，不重复归档旧研究树。battle-previews.json约9.9MB也只复用路径与全SHA，不复制到新包。
+
+original-records.json是固定游戏表a550f5e048bb94e7cdefc6eb97a4091f0c4c7add中8个完整stage对象及8个完整choice对象的小抽取；完整原游戏表SHA为f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86。抽取不把原choice的nextSceneId当成作战入口证明。
+
+event-doc-spans.json记录两版本完整DOM中的事件组、场景和选项序位、原属性、全文描述/条件、完整页面链接以及事件主层。文件名中的spans不声明原始字节offset；本次是完整文件hash加DOM序位提取。构建逐一核对同code/name的全部固定stage原ID、level_source完整URL/SHA/字节数、普通/紧急参数和原文“升级为紧急”条件，不使用ID后缀或文件名缺省值。
+
+build-receipt.json保留首次实际纯文件重建输出SHA，明确不是产品/Qt验收。source-manifest固定10个权威输入；它自身的SHA由模型常量固定。README、SCHEMA和派生build-receipt是说明/回执，不是运行时新增机制输入，正式必要与窗口producer可另将它们全部列入选定源守卫。
+
+## 模型边界
+
+每次公开查询都重新读取并hash全部manifest字节，只有全部一致才复用不可外改的解析快照，不缓存来源有效性。只对8个精确原生str关卡ID读取文件，其他输入直接None。调用原正向event_battle_links时不传当前库存、楼层或本局状态；结果与另行解析的固定数据交叉，且目标event完整缓存对象与planning完整缓存图也必须等于当前文件快照。暖调用中旧lru对象被污染会关闭反查，不能仅凭磁盘仍相同就放行。
+
+准入和排除均有完整来源身份生成的稳定reference_id，供界面保存短字符串。只有准入有完整token。手动打开时必须对当前stage重新调用resolve_stage_event_reference，递归检查所有key和具体类型、reference_id、stage/event/scene/choice、真实序位、level/page和来源身份；不能只用名称、choice_key或同level别名。没有context/data/evaluator/source覆盖接口，公开返回均为副本。
+
+缓存首轮25项作者检查之后发现一项真实缓存一致性反例：只污染旧目录choice.description，原反查仍放行，虽然返回说明取自正确文件。第二修订仅增加完整目标event和planning缓存对照；旧25方法AST全部保留，新增2项对未投影字段/原choice的污染验收，实际27项通过。原候选、实际反例和两次检查各自保留；27项不是与25项相加，也不等于正式产品或原生窗口验收。
+
+一次隔离公开副本测量：第二修订同关卡首次调用约674.824ms，随后4次暖调用18.057–19.282ms；每次仍hash全部输入。这是单进程作者测量，不代表真实应用/游戏速度、不构成性能承诺或优化验收。

@@ -1,0 +1,13 @@
+from pathlib import Path
+from importlib import import_module
+import sys,json
+R=Path.cwd();sys.path.insert(0,str(R))
+from PySide6.QtWidgets import QApplication
+from PySide6.QtTest import QTest
+from rouge import battle_enemy_readers as readers
+qt=QApplication([]);rows=[]
+for name,spec in readers._READERS.items():
+ model=import_module('rouge.'+spec.provider);sid=model.STAGES[0];ref=model.reference(sid);row=(ref.get('rows')or ref.get('entities'))[0];key=row['enemy_key']if name=='boss_documents'else row['key'];view=import_module('rouge.'+spec.provider.removesuffix('_reference')+'_view');d=getattr(view,spec.dialog)(sid,key);d.show();QTest.qWait(20);p=d.panel;choices=[(p.topic.itemText(i),p.topic.itemData(i))for i in range(p.topic.count())];index=p.topic.findData('blink')if name in('hanko','elbert')else p.topic.findData('faith')if name=='sun_boss'else1;p.topic.setCurrentIndex(index);qt.processEvents();cur=p.player.textCursor();rect=p.player.cursorRect(cur);rows.append({'reader':name,'choices':choices,'selected':p.topic.currentData(),'focused_block':cur.block().text(),'scroll':p.player.verticalScrollBar().value(),'visible_cursor':p.player.viewport().rect().intersects(rect),'full_text_length':len(p.player.toPlainText()),'raw_tab':p.tabs.tabText(1)})
+ if name=='hanko':assert d.grab().save(str(R/'verification/sections/449-mechanism-reading/probe-hanko.png'))
+ d.reject();d.deleteLater();qt.processEvents()
+(R/'verification/sections/449-mechanism-reading/navigation-probe.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n','utf8');print(json.dumps(rows,ensure_ascii=False))

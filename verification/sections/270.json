@@ -1,0 +1,233 @@
+{
+  "section": 270,
+  "kind": "functional_section",
+  "title": "只提供路线节点信息，撤下探索推荐与自动选路",
+  "at_Beijing": "2026-10-14T13:11:19.818670+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "168de802568fa185c1cfa6cfa4bbb35d94f683f9",
+  "user_requirement": "不需要提供路线建议，只进行路线节点信息提供",
+  "remaining_item": "P3探索地图连接/节点条件资料，按用户新范围移除路线规划目标；P2仍优先续接271",
+  "new_capability": [
+    "default MainWindow does not instantiate/register five route planning panels or update them from sampling",
+    "default exploration menu/backend/worker/CLI reject four planning/comparison/search queries before execution",
+    "map paints all template edges and node states without selecting or highlighting a route; reports all adjacent nodes",
+    "node classification, collapse, event conditions, same-run history, map correspondence and fixed battle links retained",
+    "both chat prompt builders carry node-information scope even with context disabled; no chat was sent",
+    "historical algorithms/catalog/complete selectors retained under explicit diagnostic opt-in; fixed enemy routes remain"
+  ],
+  "files": [
+    "rouge/information_scope.py",
+    "rouge/app.py",
+    "rouge/map_view.py",
+    "rouge/map_reporting.py",
+    "rouge/offline_tools_view.py",
+    "scripts/exploration_planning_cli.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_route_information_window_270.py",
+    "scripts/verify_historical_route_window_270.py",
+    "tests/test_route_information_scope.py",
+    "tests/test_exploration_tools_view.py",
+    "tests/test_route_search_view.py",
+    "tests/test_route_comparison_view.py",
+    "tests/test_node_arrival_planning.py",
+    "tests/test_base_settlement_planning.py",
+    "verification/sections/270-window-first.json",
+    "verification/sections/270-window.json",
+    "verification/sections/270-main-window.json",
+    "verification/sections/270-historical-window.json",
+    "verification/sections/270-review-findings.json",
+    "verification/sections/270-map-reporting-before.py"
+  ],
+  "required_raw_sha256": {
+    "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+    "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+    "rouge/map_view.py": "d52740b78a3825d9405bf29a331301833a6f21d3766ca1930c465d31127df2ce",
+    "rouge/map_reporting.py": "e43b9c1c8538f59eab6f1c8f0f415d1460b0f830f4f4cb4f025cc45fa6ccc578",
+    "rouge/offline_tools_view.py": "4a869267835a92201458de950699692a6c2c9d336fefad27779807ea373058b1",
+    "scripts/exploration_planning_cli.py": "6190460d74bbc55d7c1369db10c85d7339b3aa16324389f6360a8c6dae1c576d",
+    "scripts/verify_full_available.py": "3eb28fd2b6a6835650d370e459d98a0ebe91f8f525b37f19d3e44fceb6638221",
+    "scripts/verify_route_information_window_270.py": "08771f00476c056b684428303b94b68d14b45254274b4753584e6cfb8d64146f",
+    "scripts/verify_historical_route_window_270.py": "f0d6bd1546deb96af4ac2d0a126439b61791fd2451a0ca2765b900565a7cd6a9",
+    "tests/test_route_information_scope.py": "1b0f9044bdc8e39cebe5be6704a21a946bfd88a9e9cd6492bae97cd93acbdef0",
+    "tests/test_exploration_tools_view.py": "80c88b7761afc5f18800293cf9d7be9ef0c286432251bef0840ad2ffb338705c",
+    "tests/test_route_search_view.py": "b54168b8b4960396acfcad45e4a18de28bd7f154276b099adce95c7f24dfcb0c",
+    "tests/test_route_comparison_view.py": "536f99f049b6ab768e506dd873b3b5a704789c10cf674d3efb3db2094bca349a",
+    "tests/test_node_arrival_planning.py": "80d9539e300d4db8acb69c30a9376ccbd0ea540a5961256d1c55cd2429234d0f",
+    "tests/test_base_settlement_planning.py": "bbfa7af3e5f55b0aa565486b273e81e94f67ce5a4f0f42d49c9c229b445683a9",
+    "verification/sections/270-window-first.json": "4bf414e932bc05cdd43b6891846c3f1d3fb1628a74ab2f1f8e934611170c5bed",
+    "verification/sections/270-window.json": "e8ecd2b9247424686fe9900164dd2f6b38f014bd621d6dc12d2684ee7db30add",
+    "verification/sections/270-main-window.json": "954f3847844a87c8d72d5aeb303cda7f850500e47376681b15ae9451686bb58b",
+    "verification/sections/270-historical-window.json": "7145b51ab8dbe04f797888058073bbcc0184dca10aa9b821043a63aa97b32e4d",
+    "verification/sections/270-review-findings.json": "ea66206751a1a994fc99baea46a3e8219cf4640eeff29c51adb1e1278c32d1f8",
+    "verification/sections/270-map-reporting-before.py": "bdf5343d987e7bbdf1c62991258e20d7731a1aaa98efa59d0033a83697eb9f15"
+  },
+  "reused_source_sha256": {
+    "rouge/exploration_routes.py": "13dc17f223cf9a9cf2275063e7038e532fa804f35882d901532be2aa3ad8eeed",
+    "rouge/exploration_planning.py": "44dfcba203d983d54299b4bcf06a315a4616ce911b36750b29191793fc0c5c26",
+    "rouge/node_catalog_view.py": "b552913339077f108dfb4de1de2b0f319246b8e3a7bc2fd31162d41708d326bf",
+    "rouge/battle_preview.py": "a3565377ff992773e20ba1e2780add2b3cb0b9a842990f5b7e5ad9fcf7b1c347",
+    "rouge/battle_planning.py": "304cb9239b4c5547e1bd2faaa1e7c4848f3b4fa14c9162ddee7b72cc01421571",
+    "scripts/verify_exploration_routes_049.py": "25b8afda13c439f35841df820359a4bc2bfafe2b958dd69eb0ef85a4eecc0bf6",
+    "tests/test_exploration_routes_049.py": "4260520c19a35d0e59e42d1c3f9d03a4735bf9d95c31d11ac51c13e21c9580b1",
+    "tests/test_exploration_main_window.py": "837550bc34716a3323974b6f30acb362202907cdcc3e549f1556a4479dc18c5a",
+    "tests/test_batch185_mainwindow.py": "fb1f3c1ed04b0dc2cec5b50e48f39f1d8b634402e59f70b7a430e5a229860515",
+    "tests/test_offline_tools_view.py": "499a4e2dad4243fccaa470084e8584e37e7a59b49be2b0efccb068a9236bb43c"
+  },
+  "log_sha256": {
+    "verification/sections/270-first-check.log": "dc9556efc97cdbc42c6dfac7181c73cc21c463206d1b8eb0463a29422d76f413",
+    "verification/sections/270-related-check.log": "52c39fc49fc49525399fd29067dd0cbe3812d4b47dac9d5877956b45d9dde759",
+    "verification/sections/270-final-check.log": "c328136f2c18433b281babc25efe3fdb2295e9087868204f8beef0195b92fc91",
+    "verification/sections/270-historical-window.log": "a9454eb80a8f231090a5c535ea84b8361ba0952135e220c766cfefa93157a57c",
+    "verification/sections/270-historical-adapter-preparation.log": "b3627c7c4a915613f76d11f749dd7c74ccda1b21a5eddbe02cab3ce86f55447d",
+    "verification/sections/270-historical-current-check.log": "0679a845c0512d2cf08929756fbe9863dc529c568063138c478b0c6454838da7"
+  },
+  "validation": {
+    "related_checks": {
+      "count": 80,
+      "new_test_methods": 13,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "python -X utf8 -m unittest tests.test_route_information_scope tests.test_exploration_tools_view tests.test_route_search_view tests.test_route_comparison_view tests.test_node_arrival_planning tests.test_base_settlement_planning tests.test_exploration_main_window tests.test_batch185_mainwindow tests.test_offline_tools_view -v",
+      "log": "verification/sections/270-final-check.log",
+      "first12_and_intermediate79_are_not_additional_passes": true
+    },
+    "native_main_window": {
+      "passed": true,
+      "qpa": "windows",
+      "visible": true,
+      "current_product_route_planning_pages_absent": true,
+      "current_product_route_instances_absent": true,
+      "route_calculation_not_called_for_map_paint": true,
+      "no_automatically_selected_route_highlight": true,
+      "current_product_exploration_query_count": 9,
+      "historical_catalog_exploration_query_count": 13,
+      "all_four_removed_menu_and_backend_commands_rejected": true,
+      "node_type_branches_and_collapse_retained": true,
+      "history_event_fixed_battle_preview_and_exact_map_return": true,
+      "refresh_preserved_selected_node_and_historical_event": true,
+      "public_graph_unchanged": true,
+      "loaded_source_sha256": {
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/map_view.py": "d52740b78a3825d9405bf29a331301833a6f21d3766ca1930c465d31127df2ce",
+        "rouge/map_reporting.py": "e43b9c1c8538f59eab6f1c8f0f415d1460b0f830f4f4cb4f025cc45fa6ccc578",
+        "rouge/offline_tools_view.py": "4a869267835a92201458de950699692a6c2c9d336fefad27779807ea373058b1",
+        "rouge/exploration_planning.py": "44dfcba203d983d54299b4bcf06a315a4616ce911b36750b29191793fc0c5c26",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "scripts/exploration_planning_cli.py": "6190460d74bbc55d7c1369db10c85d7339b3aa16324389f6360a8c6dae1c576d",
+        "tests/test_route_information_scope.py": "1b0f9044bdc8e39cebe5be6704a21a946bfd88a9e9cd6492bae97cd93acbdef0",
+        "scripts/verify_route_information_window_270.py": "08771f00476c056b684428303b94b68d14b45254274b4753584e6cfb8d64146f"
+      },
+      "source_sha256_after": {
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/map_view.py": "d52740b78a3825d9405bf29a331301833a6f21d3766ca1930c465d31127df2ce",
+        "rouge/map_reporting.py": "e43b9c1c8538f59eab6f1c8f0f415d1460b0f830f4f4cb4f025cc45fa6ccc578",
+        "rouge/offline_tools_view.py": "4a869267835a92201458de950699692a6c2c9d336fefad27779807ea373058b1",
+        "rouge/exploration_planning.py": "44dfcba203d983d54299b4bcf06a315a4616ce911b36750b29191793fc0c5c26",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "scripts/exploration_planning_cli.py": "6190460d74bbc55d7c1369db10c85d7339b3aa16324389f6360a8c6dae1c576d",
+        "tests/test_route_information_scope.py": "1b0f9044bdc8e39cebe5be6704a21a946bfd88a9e9cd6492bae97cd93acbdef0",
+        "scripts/verify_route_information_window_270.py": "08771f00476c056b684428303b94b68d14b45254274b4753584e6cfb8d64146f"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "game_captures": 0,
+      "chat_sent": false,
+      "scope": "Actual changed MainWindow using public graph only; not original game/private/native-history validation",
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "native_original_startup": {
+      "section": 270,
+      "parent_pid": 11496,
+      "main_pid": [
+        6028
+      ],
+      "visible_window_handles": [
+        2427986
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "prior_owned_main_pid": 25932,
+      "prior_owned_main_exit_confirmed_before_launch": true,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original app restarted; source-bound public current MainWindow separately validated. Not full game/private/native-history integration.",
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "private_json_new_files": 0,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "current_explicit_historical_window": {
+      "section": 270,
+      "scope": "current source explicit historical diagnostics; complete0.49 scenario compatibility, not original0.49 binary",
+      "passed": true,
+      "spatial_clicks": 3,
+      "window_sizes": 3,
+      "fresh_route_reference": true,
+      "selection_and_cursor_preserved": true,
+      "technical_switch_preserved": true,
+      "missing_marker_no_stale_route": true,
+      "historical_and_restart_no_current_route": true,
+      "actual_corridor_and_topology_paint_verified": true,
+      "public_sample": "samples/native-client/exploration-map.png",
+      "synthetic_paint_graph": true,
+      "private_data_isolated": true,
+      "game_actions": 0,
+      "chat_requests": 0,
+      "screenshots": {
+        ".cache\\routes-270-historical\\current-route.png": "2cf9a6489331dc5010d6e0805c73d4d2075ad625541128d828849451ee2428f2"
+      },
+      "source_sha256": {
+        "rouge/exploration_routes.py": "13dc17f223cf9a9cf2275063e7038e532fa804f35882d901532be2aa3ad8eeed",
+        "rouge/map_reporting.py": "e43b9c1c8538f59eab6f1c8f0f415d1460b0f830f4f4cb4f025cc45fa6ccc578",
+        "rouge/map_view.py": "d52740b78a3825d9405bf29a331301833a6f21d3766ca1930c465d31127df2ce",
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "scripts/verify_historical_route_window_270.py": "f0d6bd1546deb96af4ac2d0a126439b61791fd2451a0ca2765b900565a7cd6a9",
+        "scripts/verify_exploration_routes_049.py": "25b8afda13c439f35841df820359a4bc2bfafe2b958dd69eb0ef85a4eecc0bf6",
+        "tests/test_exploration_routes_049.py": "4260520c19a35d0e59e42d1c3f9d03a4735bf9d95c31d11ac51c13e21c9580b1",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802"
+      }
+    },
+    "historical_scope_preserved": "all13 historical exploration queries, original presets/boundary assertions and selectors retained; existing0.49 script unchanged",
+    "review": "default scope gates reviewed; unknown type/candidate and historical wording defects fixed with before source/runtime reports archived",
+    "chat_payload_only": "pure helper inputs and policy, without invoking providers or desktop send"
+  },
+  "failure_and_preparation_records": {
+    "historical_direct_current_attempt": {
+      "log": "verification/sections/270-historical-window.log",
+      "reason": "old0.49 expected title on0.91 source; not original binary validation",
+      "first_variant_source_not_sealed": true,
+      "original_script_restored_unchanged": true
+    },
+    "adapter_preparation": {
+      "log": "verification/sections/270-historical-adapter-preparation.log",
+      "reason": "quoted shell preparation failed, so new adapter file was not yet present",
+      "shell_parser_full_output_not_archived": true
+    },
+    "agent_first_test_fixture": {
+      "reason": "child Python GBK stdout versus UTF8 decoder, fixed by explicit -X utf8",
+      "original_log_not_archived": true,
+      "not_counted_as_a_current_production_failure": true
+    },
+    "new_report_review": "verification/sections/270-review-findings.json"
+  },
+  "limits": [
+    "Changed current product scope, not complete P2 or complete event/map mechanics.",
+    "Template connections and declarations do not prove actual traversal, event eligibility, runtime state or complete coverage.",
+    "Explicit historical diagnostics are not the default product and current compatibility does not prove original0.49 binary.",
+    "Chat policy is verified as an offline payload only; no provider response or delivery was tested.",
+    "Private state/configuration preserved; no game operation or chat sends.",
+    "Modifier FP numerical feature moved to271; pure-file14-method/629-instruction and420-metadata-span cache is preparation only, not implemented or counted.",
+    "Full maintained available scope due275/final280; missing original Windows/private samples not PASS."
+  ],
+  "next_section": 271,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}

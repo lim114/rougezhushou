@@ -1,0 +1,11 @@
+--- immutable-first/candidate/scripts/verify_curiosity_node_rules_window_304_full305.py
++++ independent-attempt2/candidate/scripts/verify_curiosity_node_rules_window_304_full305.py
+@@ -97,7 +97,7 @@
+ 
+ 
+ def _fresh305_parent_pin():
+-    freeze=read(ROOT/'verification/full-305/source-freeze.json')
++    freeze=read(ROOT/'verification/full-305/source-freeze-attempt2.json')
+     if freeze.get('section')!=305 or freeze.get('root_declared')is not True:
+         raise ValueError('Actual305 declared source input required for this parent compatibility pin.')
+     expected=freeze['source_sha256']['rouge/node_catalog_view.py']

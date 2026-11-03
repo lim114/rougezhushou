@@ -1,0 +1,176 @@
+{
+  "discovery_head": "0d446fc3523fd09452c84f65c133d23f33b31696",
+  "discovery_freeze_sha256": "82c6ffc3f91baf2aa4a585fc8dc9dca49b0a7886675453bab390652dee93d6f0",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "files": {
+    "character_table": {
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "actual_cached_bytes_rehashed": true,
+      "new_download": false
+    },
+    "skill_table": {
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "actual_cached_bytes_rehashed": true,
+      "new_download": false
+    }
+  },
+  "checked_body_skill_ranks": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      3,
+      10
+    ]
+  ],
+  "controls": [
+    [
+      "ghost_count",
+      "在场魂灵之影数量",
+      0,
+      3,
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    [
+      "ghost_casts",
+      "窗口内命中当前目标的魂灵施放次数",
+      0,
+      1000,
+      [
+        1,
+        2,
+        3
+      ]
+    ]
+  ],
+  "count_semantics": "ghost_count is declared present unit count; ghost_casts is requested hits on this target in the observation window, not casts per ghost or a native schedule.",
+  "integer_application_ranges": "existing ghost_count 0..3 and ghost_casts 0..1000 validators are preserved; they do not supply event timestamps or assert arbitrary native trigger limits.",
+  "existing_query_gate": "ghost_count is validated in each Wisdel plan (including normal); only parsed count >0 queries ghost_casts.",
+  "unknowns": [
+    "actual ghost cast times",
+    "random SP regeneration clock",
+    "actual full cast and recharge attribution",
+    "native/current-hotfix attachment"
+  ],
+  "native_validation": false,
+  "root_edits": 0
+}

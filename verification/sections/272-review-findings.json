@@ -1,0 +1,1815 @@
+{
+  "kind": "archived_original_source_and_runtime_counterexamples",
+  "source_file_before": "verification/sections/272-review-before-module.py",
+  "source_sha256": "a85045b47ccc9f346637a1e2be90bb0e65ba7fa1654f260d0464212b4111b3fb",
+  "cases": [
+    {
+      "id": "second_attribute_absent",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "period_snapshot": {
+              "attributes_exist": false,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": false,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_period_read_or_division_domain"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": null,
+            "remaining_before_raw_reference": null,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": false,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": 536870912,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "second_reads_failed",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "period_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": false,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": false,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_period_read_or_division_domain"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": null,
+            "remaining_before_raw_reference": null,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": false,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": 536870912,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "first_reads_unknown",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": null,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "period_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": null,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": 536870912,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": null,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": null,
+            "remaining_before_raw_reference": null,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "unknown_hp_access_still_ready",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": -4294967296
+        },
+        "actions": [
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 0,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992
+            ],
+            "hp_access_returns_normally": [
+              null,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": -4294967296,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": -2147483648,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": -4294967296,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [
+                {
+                  "index": 0,
+                  "hp_read_raw_reference": 3865470566400,
+                  "setter_value_argument_raw_reference": 3869765533696,
+                  "remaining_after_next_raw_reference": -2147483648,
+                  "hp_access_normal_return_reference": null,
+                  "hp_setter_called_reference": null,
+                  "actual_hp_after": null
+                }
+              ],
+              "normal_return_reference": null,
+              "remaining_after_raw_reference": -2147483648,
+              "status": "unqualified_hp_access",
+              "unused_independent_hp_reads": 2,
+              "declared_complete_request_count": null
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_hp_access"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": -2147483648,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": -4294967296,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": -4294967296,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [
+                {
+                  "index": 0,
+                  "hp_read_raw_reference": 3865470566400,
+                  "setter_value_argument_raw_reference": 3869765533696,
+                  "remaining_after_next_raw_reference": -2147483648,
+                  "hp_access_normal_return_reference": null,
+                  "hp_setter_called_reference": null,
+                  "actual_hp_after": null
+                }
+              ],
+              "normal_return_reference": null,
+              "remaining_after_raw_reference": null,
+              "status": "unqualified_hp_access",
+              "unused_independent_hp_reads": 2,
+              "declared_complete_request_count": null,
+              "known_prefix_remaining_raw_reference": -2147483648
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_hp_access"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "unknown_attributes_definite_read_failure",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": null,
+              "reads_return_normally": false,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "period_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 4294967296000,
+              "ratio_raw": 0
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": null,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": 536870912,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": false,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unqualified_attribute_reads"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": 2147483648,
+        "final_remaining_raw_reference": 536870912,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "normal_zero_ratio_unknown_max",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": null,
+              "ratio_raw": 0
+            },
+            "period_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": null,
+              "ratio_raw": 0
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unknown_can_recover_gate"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": null,
+            "remaining_before_raw_reference": null,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": 1073741824,
+            "reset_keep_past_reference": {
+              "past_raw_reference": 1610612736,
+              "unclamped_remaining_raw_reference": -536870912,
+              "clamped_remaining_raw_reference": 0
+            },
+            "status": "reset_keep_past"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 1073741824,
+            "drain": {
+              "period_raw_reference": 1073741824,
+              "remaining_before_raw_reference": 0,
+              "delta_raw": 3221225472,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [
+                {
+                  "index": 0,
+                  "hp_read_raw_reference": 3865470566400,
+                  "setter_value_argument_raw_reference": 3869765533696,
+                  "remaining_after_next_raw_reference": -2147483648,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 1,
+                  "hp_read_raw_reference": 3869765533696,
+                  "setter_value_argument_raw_reference": 3874060500992,
+                  "remaining_after_next_raw_reference": -1073741824,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 2,
+                  "hp_read_raw_reference": 3874060500992,
+                  "setter_value_argument_raw_reference": 3878355468288,
+                  "remaining_after_next_raw_reference": 0,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 3,
+                  "hp_read_raw_reference": 3878355468288,
+                  "setter_value_argument_raw_reference": 3882650435584,
+                  "remaining_after_next_raw_reference": 1073741824,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                }
+              ],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 1073741824,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 4
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_request_count": 4,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 1073741824,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    },
+    {
+      "id": "normal_zero_max_unknown_ratio",
+      "input": {
+        "ordinary_native_path": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 2147483648,
+          "remaining_raw": 1073741824
+        },
+        "actions": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "delta_raw": 536870912,
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "dirty_attribute": 13,
+            "can_recover_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 0,
+              "ratio_raw": null
+            },
+            "period_snapshot": {
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "flat_raw": 17179869184,
+              "max_hp_raw": 0,
+              "ratio_raw": null
+            },
+            "hp_reads_raw": [],
+            "hp_access_returns_normally": []
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "delta_raw": 3221225472,
+            "hp_reads_raw": [
+              3865470566400,
+              3869765533696,
+              3874060500992,
+              3878355468288
+            ],
+            "hp_access_returns_normally": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        ]
+      },
+      "before": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": null,
+              "rate_raw_reference": null
+            },
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "unknown_can_recover_gate"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": false,
+            "normal_return_reference": null,
+            "period_before_raw_reference": null,
+            "remaining_before_raw_reference": null,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "drain": null,
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "not_called_after_unqualified_chain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      },
+      "after": {
+        "source_valid": true,
+        "source_file": "rouge/data/regeneration-clock-source.json",
+        "rows": [
+          {
+            "id": "先推进八分之一秒",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 1073741824,
+            "period_after_raw_reference": 2147483648,
+            "remaining_after_raw_reference": 536870912,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 1073741824,
+              "delta_raw": 536870912,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          },
+          {
+            "id": "独立两次读取后改为每秒四点",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 2147483648,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "drain": {
+              "period_raw_reference": 2147483648,
+              "remaining_before_raw_reference": 536870912,
+              "delta_raw": 0,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 536870912,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 0
+            },
+            "can_recover": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "period_rate": {
+              "normal_return_reference": true,
+              "ratio_part_raw_reference": 0,
+              "rate_raw_reference": 17179869184
+            },
+            "can_recover_hp_reference": true,
+            "new_period_raw_reference": 1073741824,
+            "reset_keep_past_reference": {
+              "past_raw_reference": 1610612736,
+              "unclamped_remaining_raw_reference": -536870912,
+              "clamped_remaining_raw_reference": 0
+            },
+            "status": "reset_keep_past"
+          },
+          {
+            "id": "独立四次HP读取",
+            "kind": "update",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 1073741824,
+            "drain": {
+              "period_raw_reference": 1073741824,
+              "remaining_before_raw_reference": 0,
+              "delta_raw": 3221225472,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "requests": [
+                {
+                  "index": 0,
+                  "hp_read_raw_reference": 3865470566400,
+                  "setter_value_argument_raw_reference": 3869765533696,
+                  "remaining_after_next_raw_reference": -2147483648,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 1,
+                  "hp_read_raw_reference": 3869765533696,
+                  "setter_value_argument_raw_reference": 3874060500992,
+                  "remaining_after_next_raw_reference": -1073741824,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 2,
+                  "hp_read_raw_reference": 3874060500992,
+                  "setter_value_argument_raw_reference": 3878355468288,
+                  "remaining_after_next_raw_reference": 0,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                },
+                {
+                  "index": 3,
+                  "hp_read_raw_reference": 3878355468288,
+                  "setter_value_argument_raw_reference": 3882650435584,
+                  "remaining_after_next_raw_reference": 1073741824,
+                  "hp_access_normal_return_reference": true,
+                  "hp_setter_called_reference": true,
+                  "actual_hp_after": null
+                }
+              ],
+              "normal_return_reference": true,
+              "remaining_after_raw_reference": 1073741824,
+              "status": "declared_timer_reference",
+              "unused_independent_hp_reads": 0,
+              "declared_complete_request_count": 4
+            },
+            "can_recover": null,
+            "period_rate": null,
+            "can_recover_hp_reference": null,
+            "new_period_raw_reference": null,
+            "reset_keep_past_reference": null,
+            "status": "declared_timer_reference"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_request_count": 4,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 1073741824,
+        "actual_attribute_values": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP timer/attribute/HP access declarations only; requests are not final HP settlement."
+      }
+    }
+  ],
+  "first_test_source_before": "verification/sections/272-child-test-before.py",
+  "first_test_source_sha256": "0c38b069857be5b26f813d663039eef2d71abee1088e7fae572d5cb536279a99",
+  "first_test_log": "verification/sections/272-child-first-check.log",
+  "first_test_log_sha256": "ee719e085ee3d4007c3ee9143bcfe14dc46cbc8a4f8aa2b0f25e6b608c8b4a43",
+  "first_test_result": "20 methods; three failed test methods: two real second-read exception qualification failures and one invalid-source patch fixture targeted public instead of private loader. Assertions retained.",
+  "source_sha256_after": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+  "after_same_input_assertions_passed": true,
+  "last_source_agent_review": "Final limited repair review failed to start because model capacity; not counted as passed. Initial independent source review and actual before probes retained; root same-input checks and dedicated tests provide replacement verification.",
+  "replacement_limited_readonly_review": "Dedicated test author subsequently checked the repairs read-only against source/control flow; no new overclaim found, no root source or window mutation."
+}

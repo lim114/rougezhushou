@@ -1,0 +1,288 @@
+{
+  "scope": "installed static baseline, cross-checked against pinned 2026-09-29 relic data; not a live-process hotfix claim",
+  "source_game_dll_sha256": "6edbc00b11e016c8935bbc45f158d5363f63d35038b0a69f8297612235e533ce",
+  "source_metadata_sha256": "ee7f1239e1cff67620a7964d651189dbb5c98e13699169096be2a907fd541118",
+  "base_version": "26-08-16-14-00-43_415873",
+  "therapy": {
+    "relics": [
+      {
+        "id": "rogue_6_relic_legacy_105",
+        "name": "疗养体验卡",
+        "creator": "global_buff_normal",
+        "blackboard": {
+          "key": "rogue_2_attr_up[limited]",
+          "selector.profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+          "duration": 10.0,
+          "attack_speed": 40.0,
+          "atk": 0.0,
+          "def": 0.0,
+          "block_cnt": 0.0
+        },
+        "duration_seconds": 10,
+        "attack_speed_addition": 40
+      },
+      {
+        "id": "rogue_6_relic_legacy_106",
+        "name": "疗养特供卡",
+        "creator": "global_buff_normal",
+        "blackboard": {
+          "key": "rogue_2_attr_up[limited]",
+          "selector.profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+          "duration": 10.0,
+          "attack_speed": 70.0,
+          "atk": 0.0,
+          "def": 0.0,
+          "block_cnt": 0.0
+        },
+        "duration_seconds": 10,
+        "attack_speed_addition": 70
+      }
+    ],
+    "actual_buff": {
+      "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": [
+          {
+            "attributeType": 1,
+            "formulaItem": 1,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          },
+          {
+            "attributeType": 2,
+            "formulaItem": 1,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          },
+          {
+            "attributeType": 5,
+            "formulaItem": 0,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          },
+          {
+            "attributeType": 7,
+            "formulaItem": 0,
+            "value": 0.0,
+            "loadFromBlackboard": 1,
+            "fetchBaseValueFromSourceEntity": 0
+          }
+        ]
+      },
+      "buffKey": "[g]rogue_2_attr_up[limited]",
+      "loadFromDB": 0,
+      "isDurableBuff": 0,
+      "isDamageMissable": 0,
+      "isSilenceable": 0,
+      "isStunnable": 0,
+      "isFreezable": 0,
+      "isLevitatable": 0,
+      "isGroundBoundable": 0,
+      "statusResistable": 2,
+      "templateKey": "empty",
+      "disableOverride": 1,
+      "overrideKey": "",
+      "overrideType": 0,
+      "maxStackCnt": 1,
+      "refreshRemainingTimeWhenStackMax": 0,
+      "clearAllStackCntWhenTimeUp": 0,
+      "maxValidStackCnt": -1,
+      "independentCharacterSource": 0,
+      "overrideEffectKey": "",
+      "overrideOnEventPriority": 0,
+      "onEventPriority": 0,
+      "audioSignal": "",
+      "lifeTimeType": 1,
+      "takeSnapshotWhenExtend": 0,
+      "durationKey": "duration",
+      "remainingTimeKey": "",
+      "lifeTime": 0.0,
+      "triggerLifeType": 0,
+      "triggerCnt": 0,
+      "triggerInterval": -1.0,
+      "waitFirstTriggerInterval": 1,
+      "firstTriggerInterval": -1.0,
+      "priority": -1,
+      "priorityBBKeys": [],
+      "stripBlackboardParamsWithBuffKey": 0,
+      "blackboard": [],
+      "enableInitDirectionFromSource": 0
+    },
+    "confirmed": [
+      "GBuffNormal creates a distinct GlobalBuffData and copies each relic blackboard",
+      "disableOverride returns String.Empty; NewBuff with empty override key enables directly and bypasses OverrideGroup",
+      "Buff.Reset loads duration from durationKey; LIMITED lifetime decrements per owner tick and marks finished at expiry",
+      "_LoadAttributesModifier reads each modifier value from blackboard when loadFromBlackboard is true, maps formula 0 to addition and 1 to multiplier",
+      "two independent finite buffs therefore coexist; AS +40 and +70 total +110 for the same 10-second deployment interval"
+    ],
+    "integration": "finite deployment-time attack-speed spans; all eight listed professions; no ON_BUFF_FINISH child path is used because actual template is empty",
+    "boundaries": [
+      "attack windup/animation behavior at the expiry frame belongs to attack scheduling and is not proven here"
+    ]
+  },
+  "wines": {
+    "relics": [
+      {
+        "id": "rogue_6_relic_legacy_95",
+        "name": "摩根队长佳酿",
+        "periodic": {
+          "key": "modify_sp[attack_or_damage]",
+          "sp": 1.0,
+          "interval": 3.0
+        },
+        "born": {
+          "key": "modify_sp[born]",
+          "sp": 2.0,
+          "selector.profession": "warrior|sniper|tank|medic|support|caster|special|pioneer"
+        }
+      },
+      {
+        "id": "rogue_6_relic_legacy_96",
+        "name": "生命之水",
+        "periodic": {
+          "key": "modify_sp[attack_or_damage]",
+          "sp": 1.0,
+          "interval": 2.5
+        },
+        "born": {
+          "key": "modify_sp[born]",
+          "sp": 3.0,
+          "selector.profession": "warrior|sniper|tank|medic|support|caster|special|pioneer"
+        }
+      },
+      {
+        "id": "rogue_6_relic_legacy_97",
+        "name": "皇家利口酒",
+        "periodic": {
+          "key": "modify_sp[attack_or_damage]",
+          "sp": 1.0,
+          "interval": 1.5
+        },
+        "born": {
+          "key": "modify_sp[born]",
+          "sp": 5.0,
+          "selector.profession": "warrior|sniper|tank|medic|support|caster|special|pioneer"
+        }
+      }
+    ],
+    "periodic_actual_buff": {
+      "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+      },
+      "buffKey": "character_modify_sp[attack_or_damage]",
+      "loadFromDB": 0,
+      "isDurableBuff": 0,
+      "isDamageMissable": 0,
+      "isSilenceable": 0,
+      "isStunnable": 0,
+      "isFreezable": 0,
+      "isLevitatable": 0,
+      "isGroundBoundable": 0,
+      "statusResistable": 2,
+      "templateKey": "modify_sp[attack_or_damage]",
+      "disableOverride": 1,
+      "overrideKey": "",
+      "overrideType": 0,
+      "maxStackCnt": 1,
+      "refreshRemainingTimeWhenStackMax": 0,
+      "clearAllStackCntWhenTimeUp": 0,
+      "maxValidStackCnt": -1,
+      "independentCharacterSource": 0,
+      "overrideEffectKey": "",
+      "overrideOnEventPriority": 0,
+      "onEventPriority": 0,
+      "audioSignal": "",
+      "lifeTimeType": 2,
+      "takeSnapshotWhenExtend": 0,
+      "durationKey": "",
+      "remainingTimeKey": "",
+      "lifeTime": 0.0,
+      "triggerLifeType": 2,
+      "triggerCnt": 0,
+      "triggerInterval": -1.0,
+      "waitFirstTriggerInterval": 1,
+      "firstTriggerInterval": -1.0,
+      "priority": -1,
+      "priorityBBKeys": [],
+      "stripBlackboardParamsWithBuffKey": 0,
+      "blackboard": [],
+      "enableInitDirectionFromSource": 0
+    },
+    "born_actual_buff": {
+      "attributes": {
+        "abnormalFlags": [],
+        "abnormalImmunes": [],
+        "abnormalAntis": [],
+        "abnormalCombos": [],
+        "abnormalComboImmunes": [],
+        "attributeModifiers": []
+      },
+      "buffKey": "character_modify_sp[born]",
+      "loadFromDB": 0,
+      "isDurableBuff": 0,
+      "isDamageMissable": 0,
+      "isSilenceable": 0,
+      "isStunnable": 0,
+      "isFreezable": 0,
+      "isLevitatable": 0,
+      "isGroundBoundable": 0,
+      "statusResistable": 2,
+      "templateKey": "modify_sp[born]",
+      "disableOverride": 1,
+      "overrideKey": "",
+      "overrideType": 0,
+      "maxStackCnt": 1,
+      "refreshRemainingTimeWhenStackMax": 0,
+      "clearAllStackCntWhenTimeUp": 0,
+      "maxValidStackCnt": -1,
+      "independentCharacterSource": 0,
+      "overrideEffectKey": "",
+      "overrideOnEventPriority": 0,
+      "onEventPriority": 0,
+      "audioSignal": "",
+      "lifeTimeType": 2,
+      "takeSnapshotWhenExtend": 0,
+      "durationKey": "",
+      "remainingTimeKey": "",
+      "lifeTime": 0.0,
+      "triggerLifeType": 2,
+      "triggerCnt": 0,
+      "triggerInterval": -1.0,
+      "waitFirstTriggerInterval": 1,
+      "firstTriggerInterval": -1.0,
+      "priority": -1,
+      "priorityBBKeys": [],
+      "stripBlackboardParamsWithBuffKey": 0,
+      "blackboard": [],
+      "enableInitDirectionFromSource": 0
+    },
+    "confirmed": [
+      "ordinary periodic wine buffs remain independent, with intervals 3/2.5/1.5 seconds and 1 SP each",
+      "born global_buff_stack merges same prefab key by adding existing numeric blackboard entries; 2+3+5=10 SP with all three",
+      "string selector/key values are not summed; new unrelated incoming keys are not appended by AddBlackboardStrictly",
+      "periodic parent reset waits one interval; overshoot is retained and at most one action trigger runs per owner tick",
+      "born deck buff is attached during Character.OnInit and executes ON_OWNER_BORN before ordinary global buffs attach during RegisterUnit"
+    ],
+    "integration": "three independent periodic event schedules plus one summed born-SP event; existing ModifySp type/lock gates still apply",
+    "boundaries": [
+      "same-frame skill-SP lock transitions require actual ability ordering; no arbitrary phase after every skill finish"
+    ]
+  },
+  "research_summary_sha256": "4a266d54a67bda8f329f00f985af7dd00cef0acee7699448cc9f51ff5911abff",
+  "research_summary": ".cache/research/p1-native-runtime-054/relic-integration-summary.json",
+  "hp_prefab_summary_sha256": "fcca58c9a776a024b3090dca86e5097bce23a9edf953869eed77348d2a5cf666",
+  "timer_book_native_proof": ".cache/research/p1-native-runtime-054/timer-book-sniper-summary.json",
+  "timer_book_native_proof_sha256": "ecbe843fcb23041214c3612abd4251a0fc9877240dd24fbcd3b2d26bbfe9be9c"
+}

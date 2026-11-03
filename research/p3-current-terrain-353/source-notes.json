@@ -1,0 +1,160 @@
+{
+  "schema": "current_terrain_353_source_notes_v1",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "recorded_at": "2026-10-23T15:16:08.941256+00:00",
+  "public_file_pins": {
+    "research/p3-current-battle-314/source-inputs.json": {
+      "bytes": 11110457,
+      "sha256": "5def486651d970226f0f7536d4cbc42b6012007950da9db613a20b27fecb8e33"
+    },
+    "research/p3-current-battle-314/source-selection.json": {
+      "bytes": 55653,
+      "sha256": "c1501184f0723d0b6af44c0d1147ac5afed9cbb71b68a84b874b4119d63b5791"
+    },
+    "research/p3-expansion-313/current-topic.json": {
+      "bytes": 1988739,
+      "sha256": "06a9c49b096d877003e8c129fb48eca3fc5d99c6de5fa35fbf3406adba49b490"
+    },
+    "research/p3-current-terrain-353/bwiki-terrain.html": {
+      "bytes": 146968,
+      "sha256": "506d0ad3965475da8c0f421a19815d9eb02bcf96a07a4f5131344c9b09e87452"
+    },
+    "research/p3-current-terrain-353/prts-basic-terrain.html": {
+      "bytes": 41697,
+      "sha256": "cb0d21db3e4e4d5447668991088edc65f2c47f1107fdca502889f1d47a7d0ebe"
+    },
+    "research/p3-current-terrain-353/prts-wall.html": {
+      "bytes": 30760,
+      "sha256": "de5b5aea4ca8ec91c848f79b5b876216a91b744ad0741b763adc322c06129967"
+    },
+    "research/p3-current-terrain-353/prts-parameter-search-extract.json": {
+      "bytes": 1518,
+      "sha256": "92e11f4b00b1de825278f28949adcccfa94e319759f10e9e41a2c43c9502f02b"
+    }
+  },
+  "origin_template_html_usable": false,
+  "template_search_excerpt_revision": null,
+  "current_tile_keys": [
+    "tile_forbidden",
+    "tile_road",
+    "tile_wall",
+    "tile_floor",
+    "tile_start",
+    "tile_end",
+    "tile_hole",
+    "tile_fence_bound",
+    "tile_telin",
+    "tile_telout",
+    "tile_volcano",
+    "tile_empty",
+    "tile_flystart",
+    "tile_grass",
+    "tile_ftstart",
+    "tile_infection",
+    "tile_bigforce",
+    "tile_healing",
+    "tile_pollution_roadf"
+  ],
+  "unresolved_exact_tile_keys": [
+    "tile_pollution_roadf"
+  ],
+  "names": {
+    "tile_forbidden": "禁入区",
+    "tile_road": "平地",
+    "tile_wall": "高台",
+    "tile_floor": "不可放置位",
+    "tile_start": "侵入点",
+    "tile_end": "保护目标",
+    "tile_hole": "地穴",
+    "tile_fence_bound": "围墙",
+    "tile_telin": "通道入口",
+    "tile_telout": "通道出口",
+    "tile_volcano": "热泵通道",
+    "tile_empty": "占位地块",
+    "tile_flystart": "空袭侵入点",
+    "tile_grass": "草丛",
+    "tile_ftstart": "假侵入点",
+    "tile_infection": "活性源石",
+    "tile_bigforce": "特种战术点",
+    "tile_healing": "医疗符文",
+    "tile_pollution_roadf": "特殊地形（名称未核实）"
+  },
+  "original_scope": {
+    "level_jsons": 113,
+    "tile_declarations": 10317,
+    "tile_keys": 19,
+    "retrieval": "Complete selected current levels retained under the 314 original-source manifest; no actual game state read."
+  },
+  "documentary_sources": [
+    {
+      "file": "research/p3-current-terrain-353/bwiki-terrain.html",
+      "url": "https://wiki.biligame.com/arknights/地形",
+      "status": 200,
+      "bytes": 146968,
+      "sha256": "506d0ad3965475da8c0f421a19815d9eb02bcf96a07a4f5131344c9b09e87452",
+      "revision": 352021,
+      "usable_documentary_source": true
+    },
+    {
+      "file": "research/p3-current-terrain-353/prts-basic-terrain.html",
+      "url": "https://m.prts.wiki/w/基本地形",
+      "status": 200,
+      "bytes": 41697,
+      "sha256": "cb0d21db3e4e4d5447668991088edc65f2c47f1107fdca502889f1d47a7d0ebe",
+      "revision": 428351,
+      "usable_documentary_source": true
+    },
+    {
+      "file": "research/p3-current-terrain-353/prts-wall.html",
+      "url": "https://m.prts.wiki/w/围墙",
+      "status": 200,
+      "bytes": 30760,
+      "sha256": "de5b5aea4ca8ec91c848f79b5b876216a91b744ad0741b763adc322c06129967",
+      "revision": 428434,
+      "usable_documentary_source": true
+    }
+  ],
+  "name_mapping": {
+    "basic": "BWIKI revision 352021 explicit tileKey rows; PRTS basic terrain revision 428351 independently describes names and static terrain labels.",
+    "fence_bound": "PRTS wall revision 428434 names it 围墙; BWIKI revision 352021 calls tile_fence_bound 围栏. Both retained; code uses 围墙 and states the difference.",
+    "ftstart": "BWIKI revision 352021 explicitly lists tile_ftstart as 侵入点（假）. The decoder calls it 假侵入点, does not apply its dynamic conversion.",
+    "pollution_roadf": "Targeted exact-key searches did not establish this precise suffix. It remains a named unknown category, never substituted with tile_pollution_road, tile_toxic or similarly named source-stone pollution."
+  },
+  "parameter_evidence": {
+    "medical": "BWIKI directly ties HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO to maximum-HP recovery per second. Captured PRTS search excerpt explicitly multiplies the numeric ratio by 100 for percent display. The 314 actual 灵魂归宿 original stores 0.03.",
+    "infection": "BWIKI directly ties damage to true damage per second, duration to seconds, atk to attack proportion and attack_speed to additive game attack-speed units. Captured PRTS search excerpt explicitly formats atk * 100 percent.",
+    "force": "BWIKI and captured PRTS template tie base_force_level to additional push/pull force levels; noninteger levels remain uninterpreted.",
+    "volcano": "BWIKI and captured PRTS template tie damage to each eruption true damage and cd_min/cd_max to interval bounds in seconds. The decoder never derives initial eruption or global time.",
+    "precision": "Display preserves supplied finite decimal values, without emulating a wiki template integer-format truncation or asserting engine damage rounding."
+  },
+  "actual_examples": {
+    "spirit_rest": [
+      "levels/obt/roguelike/ro6/level_rogue6_5-8.json",
+      "levels/obt/roguelike/ro6/dlc1/level_rogue6_5-8_dlc1.json"
+    ],
+    "volcano_distinct": [
+      "levels/obt/roguelike/ro6/dlc1/level_rogue6_3-5_dlc1.json",
+      "levels/obt/roguelike/ro6/level_rogue6_c-8.json",
+      "levels/obt/roguelike/ro6/level_rogue6_d-1.json"
+    ]
+  },
+  "query_record": {
+    "exact_unresolved": [
+      "\"tile_pollution_roadf\" \"地块\"",
+      "\"tile_pollution_roadf\" \"名称\""
+    ],
+    "verified_special": [
+      "\"tile_ftstart\" \"侵入点\"",
+      "\"tile_healing\" \"HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO *100\"",
+      "\"tile_infection\" \"(atk * 100)\""
+    ]
+  },
+  "implementation_boundaries": [
+    "Pure single-tile decoder; caller must bind original mapData.tiles declaration to the correct current stage and grid cell.",
+    "Names/effects are documentary reference, not current deployment qualification, trigger success, first tick, refresh, damage, immunity or final operator panel.",
+    "Only explicit finite real int/float values with no conflicting string representation; booleans, strings, missing, duplicate or ambiguous parameters stay unknown.",
+    "No borrowed stage defaults, cross-tile data, rune effects, callback execution, door pairing, inferred path, probability, map calibration, live game sampling or run-state write.",
+    "No numerical effect is applied to the calculator. Legend colors are UI choices, not color measurements.",
+    "Parameter search excerpt is cached search evidence with unknown origin revision, never represented as full downloaded source; origin challenge and TLS failures retained."
+  ]
+}

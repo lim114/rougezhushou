@@ -1,0 +1,32 @@
+{
+  "title": "游戏节点悬停速览、准确跳转与商店文字定位",
+  "change": "在经当前画面核对的地图位置悬停可读节点类型、事件和作战候选；点击卡片进入助手对应节点与准确条目，不操作游戏。离开、换图、新局、画面失效撤销旧提示。商店优先用商品名称和价格文字定位各自商品卡，缺行缺列不延伸相邻名称；鼠标遮住单个价格标签时，只有当前文字行列与同页尺寸均能核对才复用布局。游戏节点速览卡显式不抢焦点，固定和取消固定仍可用鼠标操作。手动笔记入口保持可用，设置可滚动以适应小屏。",
+  "limits": "节点候选仍受目录条件和版本范围限制；透明覆盖层尚缺完整实机/动画/跨屏覆盖。商店文字位置只在已核对的卡片布局范围内接纳，文字不足时保持未确认，已识别商店不强行使用图标猜测；价格文字当前用于定位，不代表已读取售价、购买或持有状态。5秒是停留触发时间，读取另需耗时。不因隔离检查或完整可用范围通过冒称完整视频效果及P3/P2/P1完成。 历史界面验收使用明确记录的空游戏列表夹具，不证明真实窗口枚举或游戏捕获；原始游戏已打开而失败的首轮及符号链接缺权限记录保留。 旧工具条悬停验收改为向自有控件投递Qt进入/离开事件，不称为真实系统鼠标移动；透明空隙仍保留实际Windows命中检查。",
+  "criteria": [
+    "只在已核对的节点位置触发，歧义不选择",
+    "卡片与地图/准确事件或作战保持同一身份",
+    "变更来源、区域、新局及隐藏及时撤销",
+    "鼠标穿透与只读约束保留，完整到期范围执行",
+    "商店以本帧名称和价格文字核对商品卡；缺行缺列不借邻居名称",
+    "单个价格文字遮挡只能按本帧多卡尺寸和行列锚点恢复，缺整行或整列仍未确认",
+    "游戏节点卡具备原生不激活标志，固定与取消固定仍可鼠标操作"
+  ],
+  "additional_tests": [
+    "tests.test_player_feature_424",
+    "tests.test_player_feature_417",
+    "tests.test_player_feature_420",
+    "tests.test_player_feature_418",
+    "tests.test_player_item_sources_394",
+    "tests.test_player_compendium_413",
+    "tests.test_player_toolbar_412",
+    "tests.test_player_compact_389",
+    "tests.test_player_feature_416"
+  ],
+  "next": "本批第425节完整收尾并核对普通发布后暂停；不启动426，等待用户恢复。",
+  "test": "tests.test_player_feature_425",
+  "native": "scripts/verify_player_feature_window_425.py",
+  "unit_receipt": "verification/sections/425-player-checks-attempt7/process.json",
+  "native_receipt": "verification/sections/425-player-window-attempt7/window.json",
+  "native_process_receipt": "verification/sections/425-player-window-process-attempt7/process.json",
+  "source_receipt": "verification/sections/425-reference.json"
+}

@@ -1,0 +1,329 @@
+{
+  "kind": "SECTION107_ORIGINAL_PROBE_SOURCE_CONTRACT",
+  "status": "SOURCE_PREPARED_RUNTIME_PENDING",
+  "author_Runtime_executed": false,
+  "product_pass": false,
+  "section_complete": false,
+  "tracked_files_written": false,
+  "source_compiled_code_objects_without_exec": [
+    "native_evidence.py",
+    "probe_weight107.py"
+  ],
+  "payload_pins": [
+    {
+      "path": "native_evidence.py",
+      "bytes": 6468,
+      "sha256": "f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a"
+    },
+    {
+      "path": "fixture-manifest.json",
+      "bytes": 32162,
+      "sha256": "4765d0b9e0e47244b53c3dcaa32af45307f1ce7c176d798be859a9299500fa81"
+    },
+    {
+      "path": "probe_weight107.py",
+      "bytes": 12901,
+      "sha256": "8fa11731de96d589f8b36ccddd9fd16f0a8c5b4551efa9974628a2d7bd282218"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4056,
+      "sha256": "ae4c11489d77dda63d526f8461d78138d1a07f50d3841585d55a8f2e5755d1a8"
+    }
+  ],
+  "helper_transport": {
+    "original": "/workspace/.continuation/section106-environment-original-probe-source-v1/native_evidence.py",
+    "byteexact": true,
+    "sha256": "f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a"
+  },
+  "Source_functions": {
+    "rouge/enemy_environment.py": [
+      {
+        "name": "resolve_enemy",
+        "line": 15,
+        "end_line": 113
+      }
+    ],
+    "rouge/relics.py": [
+      {
+        "name": "prepare",
+        "line": 55,
+        "end_line": 324
+      }
+    ],
+    "rouge/run_modifiers.py": [
+      {
+        "name": "prepare_run",
+        "line": 4,
+        "end_line": 54
+      },
+      {
+        "name": "finish_run",
+        "line": 56,
+        "end_line": 99
+      }
+    ],
+    "rouge/operator_engine.py": [
+      {
+        "name": "Combat",
+        "line": 75,
+        "end_line": 1960
+      }
+    ],
+    "rouge/damage.py": [
+      {
+        "name": "_prepare_damage",
+        "line": 236,
+        "end_line": 286
+      },
+      {
+        "name": "_evaluate_damage_once",
+        "line": 290,
+        "end_line": 359
+      },
+      {
+        "name": "calculate_damage",
+        "line": 411,
+        "end_line": 457
+      }
+    ],
+    "rouge/reporting.py": [
+      {
+        "name": "build_report",
+        "line": 251,
+        "end_line": 1035
+      },
+      {
+        "name": "format_report",
+        "line": 1038,
+        "end_line": 1129
+      }
+    ],
+    "rouge/estimate.py": [
+      {
+        "name": "format_estimate",
+        "line": 247,
+        "end_line": 282
+      }
+    ],
+    "rouge/battle_preview.py": [
+      {
+        "name": "enemy_preview",
+        "line": 83,
+        "end_line": 101
+      }
+    ]
+  },
+  "runtime_imports_for_Root_only": [
+    {
+      "line": 7,
+      "source": "import argparse"
+    },
+    {
+      "line": 8,
+      "source": "from datetime import datetime, timezone"
+    },
+    {
+      "line": 9,
+      "source": "import hashlib"
+    },
+    {
+      "line": 10,
+      "source": "import json"
+    },
+    {
+      "line": 11,
+      "source": "import os"
+    },
+    {
+      "line": 12,
+      "source": "from pathlib import Path"
+    },
+    {
+      "line": 13,
+      "source": "import sys"
+    },
+    {
+      "line": 14,
+      "source": "import threading"
+    },
+    {
+      "line": 15,
+      "source": "import time"
+    },
+    {
+      "line": 16,
+      "source": "import traceback"
+    },
+    {
+      "line": 79,
+      "source": "from native_evidence import source_map, freeze, assert_native_equal, write_record"
+    },
+    {
+      "line": 166,
+      "source": "from rouge.catalog import catalog"
+    },
+    {
+      "line": 167,
+      "source": "from rouge.run_modifiers import prepare_run"
+    },
+    {
+      "line": 168,
+      "source": "from rouge.relics import prepare as prepare_relics"
+    },
+    {
+      "line": 169,
+      "source": "from rouge.damage import calculate_damage"
+    },
+    {
+      "line": 170,
+      "source": "from rouge.estimate import format_estimate"
+    },
+    {
+      "line": 171,
+      "source": "from rouge.reporting import format_report"
+    },
+    {
+      "line": 172,
+      "source": "from rouge.battle_preview import enemy_preview"
+    }
+  ],
+  "static_fixture_checks": {
+    "case_count": 14,
+    "groups": 3,
+    "maximum_explicit_consumers": 74,
+    "separate_catalog_getter": 1,
+    "technical_reports": 2,
+    "standalone_no_relic_previews": 2,
+    "all_skill1_elite2_rank10": true,
+    "no_nonpublic_relic_identity": true
+  },
+  "related_issue": {
+    "name": "Selected fixed weight delta reaches final report after damage but not original weight-sensitive talent input",
+    "qualification": "Confirmed by Source structure only; Root original API actual observations pending",
+    "consumer_positions": [
+      {
+        "path": "rouge/enemy_environment.py",
+        "lines": [
+          26,
+          27,
+          104,
+          107
+        ],
+        "meaning": "Identity overrides manual declaration and exports reference weight"
+      },
+      {
+        "path": "rouge/relics.py",
+        "lines": [
+          126,
+          127,
+          128,
+          129,
+          130,
+          303,
+          310,
+          316
+        ],
+        "meaning": "Eligibility selected; rules/weight delta recorded but scenario enemy weight unchanged"
+      },
+      {
+        "path": "rouge/damage.py",
+        "lines": [
+          275,
+          276,
+          299,
+          300,
+          301,
+          311,
+          312,
+          323
+        ],
+        "meaning": "Combat executes before finish_run/report"
+      },
+      {
+        "path": "rouge/operator_engine.py",
+        "lines": [
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          894,
+          895,
+          896
+        ],
+        "meaning": "Actual talent reads direct scenario option rather than later report mass"
+      },
+      {
+        "path": "rouge/run_modifiers.py",
+        "lines": [
+          78,
+          79,
+          80,
+          81
+        ],
+        "meaning": "Weight delta applied to environment metadata by finisher"
+      },
+      {
+        "path": "rouge/reporting.py",
+        "lines": [
+          974,
+          975,
+          976,
+          977
+        ],
+        "meaning": "Changed report weight becomes visible"
+      }
+    ],
+    "safe_initial_probe_scope": "Two pinned nonnegative translations 4→2 and 5→3; exact existing selected identity/manual precedence and no-target boundary. No game clamp, floor, or displacement mechanism inferred."
+  },
+  "existing_test_boundaries": [
+    {
+      "path": "tests/test_aglna_manual_weight.py",
+      "lines": [
+        21,
+        45,
+        60
+      ],
+      "meaning": "Manual threshold, selected identity precedence, gravity without target already constrained by original assertions"
+    },
+    {
+      "path": "tests/test_relic_candidates_025.py",
+      "lines": [
+        143,
+        145,
+        146,
+        152,
+        159,
+        160
+      ],
+      "meaning": "Weight-independent mechanical damage stays equal; existing metadata zero→minus2 contract remains unmodified"
+    }
+  ],
+  "not_issues_claimed": [
+    "Standalone enemy_preview has an explicit no-relic contract; differing gravity-inclusive report is expected for that scope.",
+    "No new account technology numeric defect has adequate Source support; independent reference-only audit retained separately."
+  ],
+  "technology_audit_ref": {
+    "path": "/workspace/.continuation/section107-technology-consumer-independent-source-v1/report.json",
+    "bytes": 14883,
+    "sha256": "8637cd24b933b32d2fde2af19b528b0b1b12d00e0d782003d32cf7800e4ce07c"
+  },
+  "receipt_scope": {
+    "complete_inputs_results_errors_native": true,
+    "native_type_floatbits_order_aliases_bidirectional": true,
+    "caller_purity_checked_per_call_and_whole_case": true,
+    "full_Source_748_and_CORE_before_after": true,
+    "real_result_only_dependent_consumers": true,
+    "errors_are_not_product_PASS": true,
+    "Qt_OCR_game_capture_chat_private_execution": false,
+    "Root_actual_not_started_by_author": true
+  },
+  "guard_limitation": "Original-only pinned 748 Source. If 106 is applied first, fail the old pins; do not relabel observations of changed Source as original105.",
+  "root_actual_needed": [
+    "Run reviewed probe with fresh output and original Source guard, preserve raw status and observation artifacts.",
+    "Review full native preparation and calculation components, estimate, report, caller fields, and original preview limits.",
+    "Only after actual finding, prepare a local consumer fix preserving selected/manual/no-target boundaries and all unverified gameplay mechanisms."
+  ]
+}

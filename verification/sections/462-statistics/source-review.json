@@ -1,0 +1,55 @@
+{
+  "section": 462,
+  "changed_or_new_sources": {
+    "rouge/app.py": {
+      "sha256": "878eb5a08cb7f34238e5826032040ef232d747e517c59d1b98adf7c5cce52b48",
+      "bytes": 160930
+    },
+    "rouge/player_acceptance.py": {
+      "sha256": "606a54c6b17ee6d6e574331ea573caf4cee58f95d3fdf9e4db6334fce13dd484",
+      "bytes": 23769
+    },
+    "rouge/player_compact.py": {
+      "sha256": "7ddc02e776d75c4013b9a946e899d6e9e2056c65a356b8147d13a53704d30aaf",
+      "bytes": 29114
+    },
+    "rouge/player_game_hover.py": {
+      "sha256": "ac0251a791b4b90cd56e0c6182c8b30736c4fb23db731d0e33544f17a78a91f8",
+      "bytes": 9751
+    },
+    "rouge/player_hotkey_acceptance.py": {
+      "sha256": "2951fe106bb70bce68328aafa4658c2fd773cf199a4b9e4f4d04bda94f8d3e43",
+      "bytes": 4972
+    },
+    "rouge/player_item_hover.py": {
+      "sha256": "79a4e470d8e70235adc835858f1110b00763c7947d2747c963ae0fd776621be6",
+      "bytes": 6035
+    },
+    "rouge/player_map.py": {
+      "sha256": "0fd5754ce218737d62df114355f4e9f897afce442394ef3afad8bb1efc30e104",
+      "bytes": 40400
+    },
+    "rouge/public_archive_view.py": {
+      "sha256": "f1577000590c8df513731166b4fd7eae5ea148317f33afcef0307c4ef528c48d",
+      "bytes": 15125
+    },
+    "rouge/public_node_statistics_view.py": {
+      "sha256": "35284f2ee500fc607cd22c2c0f4214a7100478011c696300543ad70e85c5a94b",
+      "bytes": 6799
+    },
+    "tests/test_node_card_source_review.py": {
+      "sha256": "470ac34dd5ee6b3c8d4e64d9c42103557ac67c639877e57ef84ec9f411826c01",
+      "bytes": 9909
+    },
+    "tests/test_player_popover_refresh.py": {
+      "sha256": "38dc7bbca3204717094abf18f5a4c6e3680d5f67f10ebec94e2493e764c66086",
+      "bytes": 8227
+    },
+    "tests/test_statistics_reader_462.py": {
+      "sha256": "4b13ea6d0d9040496b67a7d5b130f44892abcf0031792a22a9939ce651a5393f",
+      "bytes": 9302
+    }
+  },
+  "review": "Existing validated NodeStatisticsSource remains the single map/card/table source; frequency math and source fetching unchanged. StatisticsDialog becomes retained StatisticsPanel in ToolPage. Actual compact-map selection is supplied explicitly; settings reopen preserves the manual query. Stable source/query avoids repeated rebuild, and source reorder preserves selected node type/column/reading. Manual query clears the old mapped caption. Identical updates clear loading status; failures preserve previous data. Unsupported map distances do not clamp. All Compact.present consumers now use ToolPage; obsolete generic owner-dialog route removed, including the remaining hover card consumer. Qt-documented deferred column geometry is followed by one coalesced next-loop row resize. Player-facing map and hover labels simplified; original detailed pool conditions stay expandable. Existing game identity/freshness, note unsaved guard, cache validation and send protection remain.",
+  "whole_program_review_complete": false
+}

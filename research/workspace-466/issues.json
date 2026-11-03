@@ -1,0 +1,15 @@
+{
+  "original_failed_records": [
+    "verification/sections/466-workspace/native02/window.json",
+    "verification/sections/466-workspace/selected-fit/results.json"
+  ],
+  "corrections": [
+    "Initial expanded replacement content was not collapsed and irrelevant provider rows occupied the client page; explicit collapse and mode-specific form rows corrected this.",
+    "Hidden workspace pages contributed their minimum height and moved chat input outside the viewport. A native size-policy probe identified the cause; only chat now adapts vertically while other pages keep their original scrolling.",
+    "Visual review caught provider controls overlapping after a mode change. The expanded mature fold now recomputes its height. The Qt unit check waits for the layout event cycle; its original33-test failure is retained.",
+    "The original Alt+Left shortcut belonged to the hidden main window. It now belongs to the moved workspace; actual native key input verified its previous-column action."
+  ],
+  "layout_probe": "verification/sections/466-workspace/layout-probe/layout.json",
+  "current_native": "verification/sections/466-workspace/native-accepted/window.json",
+  "all_original_records_retained": true
+}

@@ -1,0 +1,5330 @@
+{
+  "recorded_at_utc": "2026-10-07T21:11:35.139273+00:00",
+  "reviewed_path": "/workspace/.continuation/p2-after-051/shield-draft",
+  "reviewer_scope": "Independent read-only source/real public API boundary review; no implementation edits",
+  "verdict": "Final revised section53 scoped review passed with no blocking finding.",
+  "public_calls": 32,
+  "recorded_scenarios": 28,
+  "checks_all_passed": true,
+  "source_hashes_before": {
+    "rouge/damage.py": "4a92c200d33afa994031b47d8425b9d0eddabffc5cfe3d642857427d936c7f96",
+    "rouge/shield_break_reference.py": "8a1ccd09e4702c7c7848a904bf61cb66b4337752e0a6f79c74d3d6fdbd398194",
+    "rouge/reporting.py": "22a54fef6a7742bd714c157590005b5d5ed5c2fd4d7c4a2efc5a3f89d07afb1f",
+    "tests/test_shield_break_reference.py": "103c28a5c83c6350136f5e498d077a29a63a9b870188fcedac99071849fc75d6",
+    "section53.patch": "11fa36ae03e4b888e265cfc1abe4c13e2b37e0db295ea66b153b2f3da5b01a23"
+  },
+  "source_hashes_after": {
+    "rouge/damage.py": "4a92c200d33afa994031b47d8425b9d0eddabffc5cfe3d642857427d936c7f96",
+    "rouge/shield_break_reference.py": "8a1ccd09e4702c7c7848a904bf61cb66b4337752e0a6f79c74d3d6fdbd398194",
+    "rouge/reporting.py": "22a54fef6a7742bd714c157590005b5d5ed5c2fd4d7c4a2efc5a3f89d07afb1f",
+    "tests/test_shield_break_reference.py": "103c28a5c83c6350136f5e498d077a29a63a9b870188fcedac99071849fc75d6",
+    "section53.patch": "11fa36ae03e4b888e265cfc1abe4c13e2b37e0db295ea66b153b2f3da5b01a23"
+  },
+  "sources_reused_receipt_sha256": "b045ca1100c660cc88d06294b6d6d061011574fa973173b89e019ddc144c3a4e",
+  "findings": [
+    "Legacy→estimate→helper→relics.finish→report keeps full aggregate damage unknown for positive/unlocated breaks and preserves ordinary total40000/cycle81000 under manual20.",
+    "Explicit window aliases0.0/-0 and lifetime aliases0.0/-0 give actual zero with independent10000 conditional amount retained.",
+    "Absent window with inferred display0 and unknown duration remains unknown; source_possible.window true.",
+    "Empty owner range/interrupts do not exclude independent structure collision or fabricate its time.",
+    "Count0 retains original numeric/reference component shape; count30 is not capped by ammunition parameter8.",
+    "Public first-damage relics remain reference-only; components have no invented owner unit or hit times."
+  ],
+  "limits": [
+    "Section56 broad lifetime-string normalization not folded into this review; existing count0/other-skill string0 behavior remains old compatibility scope.",
+    "No native timing/stacking/ammunition mapping evidence inferred.",
+    "No Wine/GUI/native Windows verification."
+  ],
+  "rows": [
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames"
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "window_seconds": "0.0"
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 20.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": 40000.0,
+        "phase_damage": 40000.0,
+        "cycle_damage": 81000.0,
+        "window_damage": 40000.0,
+        "cycle_dps": 1157.142857142857,
+        "window_dps": 2000.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "window_seconds": "-0",
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": -0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": 40000.0,
+        "phase_damage": 40000.0,
+        "cycle_damage": 81000.0,
+        "window_damage": 0,
+        "cycle_dps": 1157.142857142857,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "timing": {
+          "target_disappears_seconds": "0.0"
+        },
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 0,
+        "total_healing": 0,
+        "phase_damage": 0,
+        "phase_healing": 0,
+        "cycle_dps": 0.0,
+        "cycle_hps": 0.0,
+        "cycle_damage": 0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 20.0,
+        "window_dps": 0.0
+      },
+      "subtotals": {
+        "total_damage": 0,
+        "phase_damage": 0,
+        "cycle_damage": 0,
+        "window_damage": 0,
+        "cycle_dps": 0.0,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "timing": {
+          "target_disappears_seconds": "-0"
+        },
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 0,
+        "total_healing": 0,
+        "phase_damage": 0,
+        "phase_healing": 0,
+        "cycle_dps": 0.0,
+        "cycle_hps": 0.0,
+        "cycle_damage": 0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 20.0,
+        "window_dps": 0.0
+      },
+      "subtotals": {
+        "total_damage": 0,
+        "phase_damage": 0,
+        "cycle_damage": 0,
+        "window_damage": 0,
+        "cycle_dps": 0.0,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "timing": {
+          "target_windows": []
+        },
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              60
+            ]
+          ]
+        },
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "mode": "frames",
+      "count": 0,
+      "total_damage": 0.0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 40000.0,
+        "total_healing": 0,
+        "phase_damage": 40000.0,
+        "phase_healing": 0,
+        "cycle_dps": 1157.142857142857,
+        "cycle_hps": 0.0,
+        "cycle_damage": 81000.0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 40000.0,
+        "window_seconds": 20.0
+      },
+      "reference": {
+        "hits_requested": 0,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 0.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": null
+    },
+    {
+      "mode": "frames",
+      "count": 30,
+      "total_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 20.0,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 30,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 150000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 30,
+          "per_hit": 5000.0,
+          "total": 150000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "skill_duration_seconds": 20,
+        "relic_ids": [
+          "rogue_6_relic_fight_1"
+        ],
+        "relic_context": {
+          "enemy_first_damage_unused": 1
+        }
+      },
+      "first_damage_public_status": "reference_only",
+      "result": {
+        "attack": 2500.0,
+        "per_hit": 5000.0,
+        "total_damage": null,
+        "hits": 2,
+        "damage_type": "magic",
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。",
+        "assumptions": [
+          "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+          "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+        ],
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.2,
+        "applied_effects": [],
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "mechanist",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 36,
+              "interval_seconds": 1.2,
+              "start_frames": [
+                0,
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540
+              ],
+              "release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2
+              ],
+              "emitted_impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "emitted_times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2
+              ],
+              "emitted_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "hit_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "interval_frames_by_attack": [
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "mechanist",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 36,
+              "interval_seconds": 1.2,
+              "start_frames": [
+                0,
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440
+              ],
+              "release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2,
+                20.4,
+                21.6,
+                22.8,
+                24.0,
+                25.2,
+                26.4,
+                27.6,
+                28.8,
+                30.0,
+                31.2,
+                32.4,
+                33.6,
+                34.8,
+                36.0,
+                37.2,
+                38.4,
+                39.6,
+                40.8,
+                42.0,
+                43.2,
+                44.4,
+                45.6,
+                46.8,
+                48.0,
+                49.2
+              ],
+              "emitted_impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "emitted_times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2,
+                20.4,
+                21.6,
+                22.8,
+                24.0,
+                25.2,
+                26.4,
+                27.6,
+                28.8,
+                30.0,
+                31.2,
+                32.4,
+                33.6,
+                34.8,
+                36.0,
+                37.2,
+                38.4,
+                39.6,
+                40.8,
+                42.0,
+                43.2,
+                44.4,
+                45.6,
+                46.8,
+                48.0,
+                49.2
+              ],
+              "emitted_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "hit_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "interval_frames_by_attack": [
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "phase_clock_unbound": true,
+          "resource_and_damage_shared_clock": false,
+          "unplaced_components": [
+            "协防术式破屏爆炸条件参考"
+          ],
+          "initial_seconds": 15.0,
+          "cycle_seconds": 70.0
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 3631,
+            "attack": 1000.0,
+            "defense": 765,
+            "resistance": 0.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 3.0
+          },
+          "skill": {
+            "name": "协防术式",
+            "initial_seconds": 15.0,
+            "recharge_seconds": 50.0,
+            "cycle_seconds": 70.0,
+            "duration_seconds": 20.0,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "sp_type": "INCREASE_WITH_TIME",
+            "initial_sp": 35.0,
+            "sp_cost": 50,
+            "sp_recovery_per_second": 1.0,
+            "skill_attack": 2500.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "healing_targets": 1,
+            "window_healing": 0,
+            "window_damage": null,
+            "window_seconds": 20.0,
+            "window_dps": null
+          },
+          "training": {
+            "elite": 2,
+            "level": 90,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+            "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+            "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+            "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+            "基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。",
+            "协防术式按指定时间结束（可手动停止），计入本体普攻和给定总破屏次数；不据此推断弹药耗尽时刻。",
+            "协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。",
+            "尚未统一排入时间轴的输出分项：协防术式破屏爆炸条件参考。",
+            "藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。"
+          ],
+          "scenario_scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。"
+        },
+        "known_damage_subtotals": {
+          "total_damage": 40000.0,
+          "phase_damage": 40000.0,
+          "cycle_damage": 81000.0,
+          "window_damage": 40000.0,
+          "cycle_dps": 1157.142857142857,
+          "window_dps": 2000.0
+        },
+        "components": [
+          {
+            "name": "协防术式破屏爆炸条件参考",
+            "damage_type": "magic",
+            "hits": 2,
+            "per_hit": 5000.0,
+            "total": 10000.0,
+            "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+            "actual_total": null
+          }
+        ],
+        "shield_break_reference": {
+          "hits_requested": 2,
+          "per_hit_damage_reference": 5000.0,
+          "declared_count_damage_reference": 10000.0,
+          "nominal_ammunition_parameter": 8.0,
+          "manual_duration_parameter_seconds": 20,
+          "source_possible": {
+            "cast": true,
+            "window": true
+          },
+          "actual_break_times_seconds": null,
+          "actual_collision_times_seconds": null,
+          "actual_end_seconds": null,
+          "actual_ammunition_consumption_times_seconds": null,
+          "owner_and_structure_count_mapping_verified": false,
+          "events_scheduled": false,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 23.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [
+            {
+              "id": "rogue_6_relic_fight_1",
+              "name": "红日冠冕",
+              "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+              "applied": [],
+              "missing_conditions": [],
+              "pending": [],
+              "reference_effects": [
+                {
+                  "kind": "first_damage_scale",
+                  "value": 2.0,
+                  "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+                  "position": "ranged",
+                  "subprofession": "",
+                  "condition": "enemy_first_damage_unused",
+                  "condition_type": "flag",
+                  "scale_by_condition": true,
+                  "factor_offset": 1,
+                  "source_buff_key": "global_buff_normal",
+                  "source_buff_index": 0
+                }
+              ],
+              "reference_pending": [],
+              "reference_usage": "高台干员对每个敌人首次造成的伤害提升至300%",
+              "status": "reference_only"
+            }
+          ],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {
+            "enemy_first_damage_unused": 1
+          },
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "token_duration_references": [
+          {
+            "scope": "duration_parameter_reference",
+            "operator_id": "char_4230_mcnist",
+            "token_id": "token_10069_mcnist_mcgraf",
+            "token_name": "结构性原理",
+            "unlocked": true,
+            "state": "finite",
+            "duration_seconds": 30.0,
+            "base_duration_seconds": 30.0,
+            "parameter_key": "skill@duration",
+            "parameter_value": 30.0,
+            "map_tag": "rogue_6",
+            "map_context": "current_product_theme",
+            "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+            "module_override": {
+              "module_id": "uniequip_002_mcnist",
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "applied": false,
+              "conditions": [
+                {
+                  "module_level": 2,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+                },
+                {
+                  "module_level": 3,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+                }
+              ],
+              "source_selector": null
+            },
+            "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sources": {
+              "character_table": {
+                "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+              },
+              "battle_equip_table": {
+                "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+              },
+              "uniequip_table": {
+                "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+              }
+            },
+            "deployment_completed_seconds": null,
+            "actual_exit_seconds": null,
+            "actual_alive_seconds": null,
+            "live_state_verified": false,
+            "damage_timing_applied": false
+          }
+        ],
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "mechanist",
+            "name": "机械师",
+            "profession": "tank"
+          },
+          "skill_number": 2,
+          "skill_rank": 10,
+          "mode": "ammo",
+          "sections": [
+            {
+              "id": "token_duration_token_10069_mcnist_mcgraf",
+              "title": "结构性原理 · 持续参数参考",
+              "metrics": [
+                {
+                  "key": "duration",
+                  "label": "部署后持续参数",
+                  "value": 30.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "显示部署后持续参数，实际在场时间尚未确认。",
+                "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+                "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+              ]
+            },
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 15.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 20.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 70.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 50.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.2,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 36,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.2,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.2,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_attack",
+                  "label": "技能期间攻击力",
+                  "value": 2500.0,
+                  "unit": ""
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "shield_break",
+              "title": "协防术式 · 破屏条件来源待核验",
+              "metrics": [
+                {
+                  "key": "count",
+                  "label": "声明本次总破屏次数",
+                  "value": 2,
+                  "unit": "次"
+                },
+                {
+                  "key": "per_hit",
+                  "label": "破屏单次法伤条件参考",
+                  "value": 5000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "declared",
+                  "label": "给定总次数条件伤害参考",
+                  "value": 10000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "ammo",
+                  "label": "原表弹药数量参数",
+                  "value": 8.0,
+                  "unit": "发"
+                },
+                {
+                  "key": "manual_duration",
+                  "label": "手动结束时间条件参数",
+                  "value": 20,
+                  "unit": "秒"
+                },
+                {
+                  "key": "break_times",
+                  "label": "实际破屏/爆炸时刻",
+                  "value": null,
+                  "unit": "秒"
+                },
+                {
+                  "key": "actual_end",
+                  "label": "实际结束时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。",
+                "本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 81000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 1157.142857142857,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。"
+              ]
+            },
+            {
+              "id": "protection",
+              "title": "屏障与防护",
+              "metrics": [
+                {
+                  "key": "body_barrier",
+                  "label": "本体每层屏障耐久",
+                  "value": 363.1,
+                  "unit": "伤害吸收量"
+                },
+                {
+                  "key": "barrier_ratio",
+                  "label": "屏障相对各自生命上限",
+                  "value": 10.0,
+                  "unit": "%"
+                }
+              ],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。"
+              ]
+            },
+            {
+              "id": "control",
+              "title": "控制与状态",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。"
+              ]
+            },
+            {
+              "id": "summons",
+              "title": "召唤与协同",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+              ]
+            },
+            {
+              "id": "ammo",
+              "title": "弹药机制",
+              "metrics": [
+                {
+                  "key": "ammo",
+                  "label": "完整技能弹药/触发数",
+                  "value": 8.0,
+                  "unit": "次"
+                }
+              ],
+              "notes": [
+                "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）"
+              ]
+            },
+            {
+              "id": "relic_evidence",
+              "title": "藏品核验",
+              "metrics": [],
+              "notes": [
+                "红日冠冕：战斗相关效果仅作资料"
+              ]
+            },
+            {
+              "id": "relic_combat_reference",
+              "title": "藏品效果资料",
+              "metrics": [],
+              "notes": [
+                "红日冠冕：高台干员对每个敌人首次造成的伤害提升至300%",
+                "涉及击倒、受击、实时生命/屏障或站位的部分只保留资料，不计入局外数值，也不要求战斗事件输入。",
+                "同件藏品的稳定加成如适用仍单独计算；资料中的战斗收益未包含在所显示的输出中。"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "frames",
+        "skill_duration_seconds": 20,
+        "relic_ids": [
+          "rogue_6_relic_fight_2"
+        ],
+        "relic_context": {
+          "enemy_first_damage_unused": 1
+        }
+      },
+      "first_damage_public_status": "reference_only",
+      "result": {
+        "attack": 2500.0,
+        "per_hit": 5000.0,
+        "total_damage": null,
+        "hits": 2,
+        "damage_type": "magic",
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。",
+        "assumptions": [
+          "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+          "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+        ],
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.2,
+        "applied_effects": [],
+        "timing": {
+          "mode": "frames",
+          "fps": 30,
+          "streams": [
+            {
+              "unit": "mechanist",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 36,
+              "interval_seconds": 1.2,
+              "start_frames": [
+                0,
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540
+              ],
+              "release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2
+              ],
+              "emitted_impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "emitted_times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2
+              ],
+              "emitted_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "hit_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576
+              ],
+              "interval_frames_by_attack": [
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [
+            {
+              "unit": "mechanist",
+              "target_scope": "enemy",
+              "known_animation": false,
+              "exact_binding": false,
+              "reference_binding": false,
+              "animation": null,
+              "windup_frames": null,
+              "recovery_frames": null,
+              "interval_frames": 36,
+              "interval_seconds": 1.2,
+              "start_frames": [
+                0,
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440
+              ],
+              "release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2,
+                20.4,
+                21.6,
+                22.8,
+                24.0,
+                25.2,
+                26.4,
+                27.6,
+                28.8,
+                30.0,
+                31.2,
+                32.4,
+                33.6,
+                34.8,
+                36.0,
+                37.2,
+                38.4,
+                39.6,
+                40.8,
+                42.0,
+                43.2,
+                44.4,
+                45.6,
+                46.8,
+                48.0,
+                49.2
+              ],
+              "emitted_impact_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "emitted_times_seconds": [
+                1.2,
+                2.4,
+                3.6,
+                4.8,
+                6.0,
+                7.2,
+                8.4,
+                9.6,
+                10.8,
+                12.0,
+                13.2,
+                14.4,
+                15.6,
+                16.8,
+                18.0,
+                19.2,
+                20.4,
+                21.6,
+                22.8,
+                24.0,
+                25.2,
+                26.4,
+                27.6,
+                28.8,
+                30.0,
+                31.2,
+                32.4,
+                33.6,
+                34.8,
+                36.0,
+                37.2,
+                38.4,
+                39.6,
+                40.8,
+                42.0,
+                43.2,
+                44.4,
+                45.6,
+                46.8,
+                48.0,
+                49.2
+              ],
+              "emitted_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "hit_release_frames": [
+                36,
+                72,
+                108,
+                144,
+                180,
+                216,
+                252,
+                288,
+                324,
+                360,
+                396,
+                432,
+                468,
+                504,
+                540,
+                576,
+                612,
+                648,
+                684,
+                720,
+                756,
+                792,
+                828,
+                864,
+                900,
+                936,
+                972,
+                1008,
+                1044,
+                1080,
+                1116,
+                1152,
+                1188,
+                1224,
+                1260,
+                1296,
+                1332,
+                1368,
+                1404,
+                1440,
+                1476
+              ],
+              "interval_frames_by_attack": [
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36,
+                36
+              ],
+              "temporary_attack_speed": false,
+              "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+              "resume_frame": 0,
+              "source": "未确认；保留延迟首击情景"
+            }
+          ],
+          "phase_clock_unbound": true,
+          "resource_and_damage_shared_clock": false,
+          "unplaced_components": [
+            "协防术式破屏爆炸条件参考"
+          ],
+          "initial_seconds": 15.0,
+          "cycle_seconds": 70.0
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 3631,
+            "attack": 1000.0,
+            "defense": 765,
+            "resistance": 0.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 3.0
+          },
+          "skill": {
+            "name": "协防术式",
+            "initial_seconds": 15.0,
+            "recharge_seconds": 50.0,
+            "cycle_seconds": 70.0,
+            "duration_seconds": 20.0,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "sp_type": "INCREASE_WITH_TIME",
+            "initial_sp": 35.0,
+            "sp_cost": 50,
+            "sp_recovery_per_second": 1.0,
+            "skill_attack": 2500.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "healing_targets": 1,
+            "window_healing": 0,
+            "window_damage": null,
+            "window_seconds": 20.0,
+            "window_dps": null
+          },
+          "training": {
+            "elite": 2,
+            "level": 90,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+            "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+            "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+            "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+            "基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。",
+            "协防术式按指定时间结束（可手动停止），计入本体普攻和给定总破屏次数；不据此推断弹药耗尽时刻。",
+            "协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。",
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+            "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+            "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+            "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+            "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+            "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+            "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。",
+            "尚未统一排入时间轴的输出分项：协防术式破屏爆炸条件参考。",
+            "藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。"
+          ],
+          "scenario_scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。"
+        },
+        "known_damage_subtotals": {
+          "total_damage": 40000.0,
+          "phase_damage": 40000.0,
+          "cycle_damage": 81000.0,
+          "window_damage": 40000.0,
+          "cycle_dps": 1157.142857142857,
+          "window_dps": 2000.0
+        },
+        "components": [
+          {
+            "name": "协防术式破屏爆炸条件参考",
+            "damage_type": "magic",
+            "hits": 2,
+            "per_hit": 5000.0,
+            "total": 10000.0,
+            "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+            "actual_total": null
+          }
+        ],
+        "shield_break_reference": {
+          "hits_requested": 2,
+          "per_hit_damage_reference": 5000.0,
+          "declared_count_damage_reference": 10000.0,
+          "nominal_ammunition_parameter": 8.0,
+          "manual_duration_parameter_seconds": 20,
+          "source_possible": {
+            "cast": true,
+            "window": true
+          },
+          "actual_break_times_seconds": null,
+          "actual_collision_times_seconds": null,
+          "actual_end_seconds": null,
+          "actual_ammunition_consumption_times_seconds": null,
+          "owner_and_structure_count_mapping_verified": false,
+          "events_scheduled": false,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 23.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [
+            {
+              "id": "rogue_6_relic_fight_2",
+              "name": "黑夜披肩",
+              "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+              "applied": [],
+              "missing_conditions": [],
+              "pending": [],
+              "reference_effects": [
+                {
+                  "kind": "first_damage_scale",
+                  "value": 2.0,
+                  "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+                  "position": "melee",
+                  "subprofession": "",
+                  "condition": "enemy_first_damage_unused",
+                  "condition_type": "flag",
+                  "scale_by_condition": true,
+                  "factor_offset": 1,
+                  "source_buff_key": "global_buff_normal",
+                  "source_buff_index": 0
+                }
+              ],
+              "reference_pending": [],
+              "reference_usage": "地面干员对每个敌人首次造成的伤害提升至300%",
+              "status": "reference_only"
+            }
+          ],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {
+            "enemy_first_damage_unused": 1
+          },
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "token_duration_references": [
+          {
+            "scope": "duration_parameter_reference",
+            "operator_id": "char_4230_mcnist",
+            "token_id": "token_10069_mcnist_mcgraf",
+            "token_name": "结构性原理",
+            "unlocked": true,
+            "state": "finite",
+            "duration_seconds": 30.0,
+            "base_duration_seconds": 30.0,
+            "parameter_key": "skill@duration",
+            "parameter_value": 30.0,
+            "map_tag": "rogue_6",
+            "map_context": "current_product_theme",
+            "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+            "module_override": {
+              "module_id": "uniequip_002_mcnist",
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "applied": false,
+              "conditions": [
+                {
+                  "module_level": 2,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+                },
+                {
+                  "module_level": 3,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+                }
+              ],
+              "source_selector": null
+            },
+            "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sources": {
+              "character_table": {
+                "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+              },
+              "battle_equip_table": {
+                "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+              },
+              "uniequip_table": {
+                "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+              }
+            },
+            "deployment_completed_seconds": null,
+            "actual_exit_seconds": null,
+            "actual_alive_seconds": null,
+            "live_state_verified": false,
+            "damage_timing_applied": false
+          }
+        ],
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "mechanist",
+            "name": "机械师",
+            "profession": "tank"
+          },
+          "skill_number": 2,
+          "skill_rank": 10,
+          "mode": "ammo",
+          "sections": [
+            {
+              "id": "token_duration_token_10069_mcnist_mcgraf",
+              "title": "结构性原理 · 持续参数参考",
+              "metrics": [
+                {
+                  "key": "duration",
+                  "label": "部署后持续参数",
+                  "value": 30.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "显示部署后持续参数，实际在场时间尚未确认。",
+                "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+                "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+              ]
+            },
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 15.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 20.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 70.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 50.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "execution",
+              "title": "战斗时序参考",
+              "metrics": [
+                {
+                  "key": "fps",
+                  "label": "模拟逻辑频率",
+                  "value": 30,
+                  "unit": "帧/秒"
+                },
+                {
+                  "key": "interval",
+                  "label": "当前攻击间隔",
+                  "value": 1.2,
+                  "unit": "秒"
+                },
+                {
+                  "key": "interval_frames",
+                  "label": "当前攻击间隔帧数",
+                  "value": 36,
+                  "unit": "帧"
+                },
+                {
+                  "key": "windup",
+                  "label": "参考前摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "recovery",
+                  "label": "参考后摇",
+                  "value": null,
+                  "unit": "帧"
+                },
+                {
+                  "key": "first_release",
+                  "label": "窗口首个出手",
+                  "value": 1.2,
+                  "unit": "秒"
+                },
+                {
+                  "key": "first_impact",
+                  "label": "窗口首个命中/治疗",
+                  "value": 1.2,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+                "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+                "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+              ]
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_attack",
+                  "label": "技能期间攻击力",
+                  "value": 2500.0,
+                  "unit": ""
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "shield_break",
+              "title": "协防术式 · 破屏条件来源待核验",
+              "metrics": [
+                {
+                  "key": "count",
+                  "label": "声明本次总破屏次数",
+                  "value": 2,
+                  "unit": "次"
+                },
+                {
+                  "key": "per_hit",
+                  "label": "破屏单次法伤条件参考",
+                  "value": 5000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "declared",
+                  "label": "给定总次数条件伤害参考",
+                  "value": 10000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "ammo",
+                  "label": "原表弹药数量参数",
+                  "value": 8.0,
+                  "unit": "发"
+                },
+                {
+                  "key": "manual_duration",
+                  "label": "手动结束时间条件参数",
+                  "value": 20,
+                  "unit": "秒"
+                },
+                {
+                  "key": "break_times",
+                  "label": "实际破屏/爆炸时刻",
+                  "value": null,
+                  "unit": "秒"
+                },
+                {
+                  "key": "actual_end",
+                  "label": "实际结束时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。",
+                "本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 81000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 1157.142857142857,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。"
+              ]
+            },
+            {
+              "id": "protection",
+              "title": "屏障与防护",
+              "metrics": [
+                {
+                  "key": "body_barrier",
+                  "label": "本体每层屏障耐久",
+                  "value": 363.1,
+                  "unit": "伤害吸收量"
+                },
+                {
+                  "key": "barrier_ratio",
+                  "label": "屏障相对各自生命上限",
+                  "value": 10.0,
+                  "unit": "%"
+                }
+              ],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。"
+              ]
+            },
+            {
+              "id": "control",
+              "title": "控制与状态",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。"
+              ]
+            },
+            {
+              "id": "summons",
+              "title": "召唤与协同",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+              ]
+            },
+            {
+              "id": "ammo",
+              "title": "弹药机制",
+              "metrics": [
+                {
+                  "key": "ammo",
+                  "label": "完整技能弹药/触发数",
+                  "value": 8.0,
+                  "unit": "次"
+                }
+              ],
+              "notes": [
+                "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）"
+              ]
+            },
+            {
+              "id": "relic_evidence",
+              "title": "藏品核验",
+              "metrics": [],
+              "notes": [
+                "黑夜披肩：战斗相关效果仅作资料"
+              ]
+            },
+            {
+              "id": "relic_combat_reference",
+              "title": "藏品效果资料",
+              "metrics": [],
+              "notes": [
+                "黑夜披肩：地面干员对每个敌人首次造成的伤害提升至300%",
+                "涉及击倒、受击、实时生命/屏障或站位的部分只保留资料，不计入局外数值，也不要求战斗事件输入。",
+                "同件藏品的稳定加成如适用仍单独计算；资料中的战斗收益未包含在所显示的输出中。"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous"
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "window_seconds": "0.0"
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 20.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": 40000.0,
+        "phase_damage": 40000.0,
+        "cycle_damage": 81000.0,
+        "window_damage": 40000.0,
+        "cycle_dps": 1157.142857142857,
+        "window_dps": 2000.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "window_seconds": "-0",
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": -0.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": 40000.0,
+        "phase_damage": 40000.0,
+        "cycle_damage": 81000.0,
+        "window_damage": 0,
+        "cycle_dps": 1157.142857142857,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": "0.0"
+        },
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 0,
+        "total_healing": 0,
+        "phase_damage": 0,
+        "phase_healing": 0,
+        "cycle_dps": 0.0,
+        "cycle_hps": 0.0,
+        "cycle_damage": 0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 20.0,
+        "window_dps": 0.0
+      },
+      "subtotals": {
+        "total_damage": 0,
+        "phase_damage": 0,
+        "cycle_damage": 0,
+        "window_damage": 0,
+        "cycle_dps": 0.0,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": "-0"
+        },
+        "skill_duration_seconds": 20
+      },
+      "actual_window_damage": 0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 0,
+        "total_healing": 0,
+        "phase_damage": 0,
+        "phase_healing": 0,
+        "cycle_dps": 0.0,
+        "cycle_hps": 0.0,
+        "cycle_damage": 0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 0,
+        "window_seconds": 20.0,
+        "window_dps": 0.0
+      },
+      "subtotals": {
+        "total_damage": 0,
+        "phase_damage": 0,
+        "cycle_damage": 0,
+        "window_damage": 0,
+        "cycle_dps": 0.0,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 5000.0,
+          "total": 0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified"
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_windows": []
+        },
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              60
+            ]
+          ]
+        },
+        "window_seconds": 1
+      },
+      "actual_window_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 1.0,
+        "window_dps": null
+      },
+      "subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": 0.0
+      },
+      "reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "mode": "continuous",
+      "count": 0,
+      "total_damage": 0.0,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": 40000.0,
+        "total_healing": 0,
+        "phase_damage": 40000.0,
+        "phase_healing": 0,
+        "cycle_dps": 1157.142857142857,
+        "cycle_hps": 0.0,
+        "cycle_damage": 81000.0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 40000.0,
+        "window_seconds": 20.0
+      },
+      "reference": {
+        "hits_requested": 0,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 0.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": false,
+          "window": false
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": null
+    },
+    {
+      "mode": "continuous",
+      "count": 30,
+      "total_damage": null,
+      "estimated_skill": {
+        "name": "协防术式",
+        "initial_seconds": 15.0,
+        "recharge_seconds": 50.0,
+        "cycle_seconds": 70.0,
+        "duration_seconds": 20.0,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": 0.0,
+        "cycle_damage": null,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WITH_TIME",
+        "initial_sp": 35.0,
+        "sp_cost": 50,
+        "sp_recovery_per_second": 1.0,
+        "skill_attack": 2500.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": null,
+        "window_seconds": 20.0,
+        "window_dps": null
+      },
+      "reference": {
+        "hits_requested": 30,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 150000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": 20,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 30,
+          "per_hit": 5000.0,
+          "total": 150000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "skill_duration_seconds": 20,
+        "relic_ids": [
+          "rogue_6_relic_fight_1"
+        ],
+        "relic_context": {
+          "enemy_first_damage_unused": 1
+        }
+      },
+      "first_damage_public_status": "reference_only",
+      "result": {
+        "attack": 2500.0,
+        "per_hit": 5000.0,
+        "total_damage": null,
+        "hits": 2,
+        "damage_type": "magic",
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。",
+        "assumptions": [
+          "时间按完整攻击间隔估计，未模拟首击、前后摇、帧取整及空转。",
+          "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。"
+        ],
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.2,
+        "applied_effects": [],
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [],
+          "phase_clock_unbound": true,
+          "resource_and_damage_shared_clock": false
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 3631,
+            "attack": 1000.0,
+            "defense": 765,
+            "resistance": 0.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 3.0
+          },
+          "skill": {
+            "name": "协防术式",
+            "initial_seconds": 15.0,
+            "recharge_seconds": 50.0,
+            "cycle_seconds": 70.0,
+            "duration_seconds": 20.0,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "sp_type": "INCREASE_WITH_TIME",
+            "initial_sp": 35.0,
+            "sp_cost": 50,
+            "sp_recovery_per_second": 1.0,
+            "skill_attack": 2500.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "healing_targets": 1,
+            "window_healing": 0,
+            "window_damage": null,
+            "window_seconds": 20.0,
+            "window_dps": null
+          },
+          "training": {
+            "elite": 2,
+            "level": 90,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+            "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+            "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+            "秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。",
+            "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+            "基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。",
+            "协防术式按指定时间结束（可手动停止），计入本体普攻和给定总破屏次数；不据此推断弹药耗尽时刻。",
+            "协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。",
+            "藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。"
+          ],
+          "scenario_scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。"
+        },
+        "known_damage_subtotals": {
+          "total_damage": 40000.0,
+          "phase_damage": 40000.0,
+          "cycle_damage": 81000.0,
+          "window_damage": 40000.0,
+          "cycle_dps": 1157.142857142857,
+          "window_dps": 2000.0
+        },
+        "components": [
+          {
+            "name": "协防术式破屏爆炸条件参考",
+            "damage_type": "magic",
+            "hits": 2,
+            "per_hit": 5000.0,
+            "total": 10000.0,
+            "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+            "actual_total": null
+          }
+        ],
+        "shield_break_reference": {
+          "hits_requested": 2,
+          "per_hit_damage_reference": 5000.0,
+          "declared_count_damage_reference": 10000.0,
+          "nominal_ammunition_parameter": 8.0,
+          "manual_duration_parameter_seconds": 20,
+          "source_possible": {
+            "cast": true,
+            "window": true
+          },
+          "actual_break_times_seconds": null,
+          "actual_collision_times_seconds": null,
+          "actual_end_seconds": null,
+          "actual_ammunition_consumption_times_seconds": null,
+          "owner_and_structure_count_mapping_verified": false,
+          "events_scheduled": false,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 23.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [
+            {
+              "id": "rogue_6_relic_fight_1",
+              "name": "红日冠冕",
+              "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+              "applied": [],
+              "missing_conditions": [],
+              "pending": [],
+              "reference_effects": [
+                {
+                  "kind": "first_damage_scale",
+                  "value": 2.0,
+                  "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+                  "position": "ranged",
+                  "subprofession": "",
+                  "condition": "enemy_first_damage_unused",
+                  "condition_type": "flag",
+                  "scale_by_condition": true,
+                  "factor_offset": 1,
+                  "source_buff_key": "global_buff_normal",
+                  "source_buff_index": 0
+                }
+              ],
+              "reference_pending": [],
+              "reference_usage": "高台干员对每个敌人首次造成的伤害提升至300%",
+              "status": "reference_only"
+            }
+          ],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {
+            "enemy_first_damage_unused": 1
+          },
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "token_duration_references": [
+          {
+            "scope": "duration_parameter_reference",
+            "operator_id": "char_4230_mcnist",
+            "token_id": "token_10069_mcnist_mcgraf",
+            "token_name": "结构性原理",
+            "unlocked": true,
+            "state": "finite",
+            "duration_seconds": 30.0,
+            "base_duration_seconds": 30.0,
+            "parameter_key": "skill@duration",
+            "parameter_value": 30.0,
+            "map_tag": "rogue_6",
+            "map_context": "current_product_theme",
+            "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+            "module_override": {
+              "module_id": "uniequip_002_mcnist",
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "applied": false,
+              "conditions": [
+                {
+                  "module_level": 2,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+                },
+                {
+                  "module_level": 3,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+                }
+              ],
+              "source_selector": null
+            },
+            "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sources": {
+              "character_table": {
+                "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+              },
+              "battle_equip_table": {
+                "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+              },
+              "uniequip_table": {
+                "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+              }
+            },
+            "deployment_completed_seconds": null,
+            "actual_exit_seconds": null,
+            "actual_alive_seconds": null,
+            "live_state_verified": false,
+            "damage_timing_applied": false
+          }
+        ],
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "mechanist",
+            "name": "机械师",
+            "profession": "tank"
+          },
+          "skill_number": 2,
+          "skill_rank": 10,
+          "mode": "ammo",
+          "sections": [
+            {
+              "id": "token_duration_token_10069_mcnist_mcgraf",
+              "title": "结构性原理 · 持续参数参考",
+              "metrics": [
+                {
+                  "key": "duration",
+                  "label": "部署后持续参数",
+                  "value": 30.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "显示部署后持续参数，实际在场时间尚未确认。",
+                "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+                "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+              ]
+            },
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 15.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 20.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 70.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 50.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_attack",
+                  "label": "技能期间攻击力",
+                  "value": 2500.0,
+                  "unit": ""
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "shield_break",
+              "title": "协防术式 · 破屏条件来源待核验",
+              "metrics": [
+                {
+                  "key": "count",
+                  "label": "声明本次总破屏次数",
+                  "value": 2,
+                  "unit": "次"
+                },
+                {
+                  "key": "per_hit",
+                  "label": "破屏单次法伤条件参考",
+                  "value": 5000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "declared",
+                  "label": "给定总次数条件伤害参考",
+                  "value": 10000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "ammo",
+                  "label": "原表弹药数量参数",
+                  "value": 8.0,
+                  "unit": "发"
+                },
+                {
+                  "key": "manual_duration",
+                  "label": "手动结束时间条件参数",
+                  "value": 20,
+                  "unit": "秒"
+                },
+                {
+                  "key": "break_times",
+                  "label": "实际破屏/爆炸时刻",
+                  "value": null,
+                  "unit": "秒"
+                },
+                {
+                  "key": "actual_end",
+                  "label": "实际结束时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。",
+                "本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 81000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 1157.142857142857,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。"
+              ]
+            },
+            {
+              "id": "protection",
+              "title": "屏障与防护",
+              "metrics": [
+                {
+                  "key": "body_barrier",
+                  "label": "本体每层屏障耐久",
+                  "value": 363.1,
+                  "unit": "伤害吸收量"
+                },
+                {
+                  "key": "barrier_ratio",
+                  "label": "屏障相对各自生命上限",
+                  "value": 10.0,
+                  "unit": "%"
+                }
+              ],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。"
+              ]
+            },
+            {
+              "id": "control",
+              "title": "控制与状态",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。"
+              ]
+            },
+            {
+              "id": "summons",
+              "title": "召唤与协同",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+              ]
+            },
+            {
+              "id": "ammo",
+              "title": "弹药机制",
+              "metrics": [
+                {
+                  "key": "ammo",
+                  "label": "完整技能弹药/触发数",
+                  "value": 8.0,
+                  "unit": "次"
+                }
+              ],
+              "notes": [
+                "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）"
+              ]
+            },
+            {
+              "id": "relic_evidence",
+              "title": "藏品核验",
+              "metrics": [],
+              "notes": [
+                "红日冠冕：战斗相关效果仅作资料"
+              ]
+            },
+            {
+              "id": "relic_combat_reference",
+              "title": "藏品效果资料",
+              "metrics": [],
+              "notes": [
+                "红日冠冕：高台干员对每个敌人首次造成的伤害提升至300%",
+                "涉及击倒、受击、实时生命/屏障或站位的部分只保留资料，不计入局外数值，也不要求战斗事件输入。",
+                "同件藏品的稳定加成如适用仍单独计算；资料中的战斗收益未包含在所显示的输出中。"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "timing_mode": "continuous",
+        "skill_duration_seconds": 20,
+        "relic_ids": [
+          "rogue_6_relic_fight_2"
+        ],
+        "relic_context": {
+          "enemy_first_damage_unused": 1
+        }
+      },
+      "first_damage_public_status": "reference_only",
+      "result": {
+        "attack": 2500.0,
+        "per_hit": 5000.0,
+        "total_damage": null,
+        "hits": 2,
+        "damage_type": "magic",
+        "inapplicable_relics": [],
+        "complete": false,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。",
+        "assumptions": [
+          "时间按完整攻击间隔估计，未模拟首击、前后摇、帧取整及空转。",
+          "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。"
+        ],
+        "attack_speed": 100.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 1.2,
+        "applied_effects": [],
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": [],
+          "phase_clock_unbound": true,
+          "resource_and_damage_shared_clock": false
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 3631,
+            "attack": 1000.0,
+            "defense": 765,
+            "resistance": 0.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 3.0
+          },
+          "skill": {
+            "name": "协防术式",
+            "initial_seconds": 15.0,
+            "recharge_seconds": 50.0,
+            "cycle_seconds": 70.0,
+            "duration_seconds": 20.0,
+            "total_damage": null,
+            "total_healing": 0,
+            "phase_damage": null,
+            "phase_healing": 0,
+            "cycle_dps": null,
+            "cycle_hps": 0.0,
+            "cycle_damage": null,
+            "cycle_healing": 0,
+            "sp_type": "INCREASE_WITH_TIME",
+            "initial_sp": 35.0,
+            "sp_cost": 50,
+            "sp_recovery_per_second": 1.0,
+            "skill_attack": 2500.0,
+            "skill_attack_speed": 100.0,
+            "skill_attack_speed_reference": 100.0,
+            "healing_targets": 1,
+            "window_healing": 0,
+            "window_damage": null,
+            "window_seconds": 20.0,
+            "window_dps": null
+          },
+          "training": {
+            "elite": 2,
+            "level": 90,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": false,
+          "warnings": [],
+          "notes": [
+            "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+            "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+            "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+            "秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。",
+            "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+            "基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。",
+            "协防术式按指定时间结束（可手动停止），计入本体普攻和给定总破屏次数；不据此推断弹药耗尽时刻。",
+            "协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。",
+            "藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。"
+          ],
+          "scenario_scope": "仅实际屏障破碎的法术爆炸，未计普通攻击。"
+        },
+        "known_damage_subtotals": {
+          "total_damage": 40000.0,
+          "phase_damage": 40000.0,
+          "cycle_damage": 81000.0,
+          "window_damage": 40000.0,
+          "cycle_dps": 1157.142857142857,
+          "window_dps": 2000.0
+        },
+        "components": [
+          {
+            "name": "协防术式破屏爆炸条件参考",
+            "damage_type": "magic",
+            "hits": 2,
+            "per_hit": 5000.0,
+            "total": 10000.0,
+            "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+            "actual_total": null
+          }
+        ],
+        "shield_break_reference": {
+          "hits_requested": 2,
+          "per_hit_damage_reference": 5000.0,
+          "declared_count_damage_reference": 10000.0,
+          "nominal_ammunition_parameter": 8.0,
+          "manual_duration_parameter_seconds": 20,
+          "source_possible": {
+            "cast": true,
+            "window": true
+          },
+          "actual_break_times_seconds": null,
+          "actual_collision_times_seconds": null,
+          "actual_end_seconds": null,
+          "actual_ammunition_consumption_times_seconds": null,
+          "owner_and_structure_count_mapping_verified": false,
+          "events_scheduled": false,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 23.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [
+            {
+              "id": "rogue_6_relic_fight_2",
+              "name": "黑夜披肩",
+              "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+              "applied": [],
+              "missing_conditions": [],
+              "pending": [],
+              "reference_effects": [
+                {
+                  "kind": "first_damage_scale",
+                  "value": 2.0,
+                  "profession": "warrior|sniper|tank|medic|support|caster|special|pioneer",
+                  "position": "melee",
+                  "subprofession": "",
+                  "condition": "enemy_first_damage_unused",
+                  "condition_type": "flag",
+                  "scale_by_condition": true,
+                  "factor_offset": 1,
+                  "source_buff_key": "global_buff_normal",
+                  "source_buff_index": 0
+                }
+              ],
+              "reference_pending": [],
+              "reference_usage": "地面干员对每个敌人首次造成的伤害提升至300%",
+              "status": "reference_only"
+            }
+          ],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {
+            "enemy_first_damage_unused": 1
+          },
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "token_duration_references": [
+          {
+            "scope": "duration_parameter_reference",
+            "operator_id": "char_4230_mcnist",
+            "token_id": "token_10069_mcnist_mcgraf",
+            "token_name": "结构性原理",
+            "unlocked": true,
+            "state": "finite",
+            "duration_seconds": 30.0,
+            "base_duration_seconds": 30.0,
+            "parameter_key": "skill@duration",
+            "parameter_value": 30.0,
+            "map_tag": "rogue_6",
+            "map_context": "current_product_theme",
+            "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+            "module_override": {
+              "module_id": "uniequip_002_mcnist",
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "applied": false,
+              "conditions": [
+                {
+                  "module_level": 2,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+                },
+                {
+                  "module_level": 3,
+                  "unlock_elite": 2,
+                  "unlock_level": 60,
+                  "required_potential_rank": 0,
+                  "map_tag": "rogue_6",
+                  "parameter_value": -1.0,
+                  "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+                }
+              ],
+              "source_selector": null
+            },
+            "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sources": {
+              "character_table": {
+                "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+              },
+              "battle_equip_table": {
+                "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+              },
+              "uniequip_table": {
+                "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+                "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+              }
+            },
+            "deployment_completed_seconds": null,
+            "actual_exit_seconds": null,
+            "actual_alive_seconds": null,
+            "live_state_verified": false,
+            "damage_timing_applied": false
+          }
+        ],
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "mechanist",
+            "name": "机械师",
+            "profession": "tank"
+          },
+          "skill_number": 2,
+          "skill_rank": 10,
+          "mode": "ammo",
+          "sections": [
+            {
+              "id": "token_duration_token_10069_mcnist_mcgraf",
+              "title": "结构性原理 · 持续参数参考",
+              "metrics": [
+                {
+                  "key": "duration",
+                  "label": "部署后持续参数",
+                  "value": 30.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "显示部署后持续参数，实际在场时间尚未确认。",
+                "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+                "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+              ]
+            },
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 15.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 20.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 70.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 50.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_attack",
+                  "label": "技能期间攻击力",
+                  "value": 2500.0,
+                  "unit": ""
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": null,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": null,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "shield_break",
+              "title": "协防术式 · 破屏条件来源待核验",
+              "metrics": [
+                {
+                  "key": "count",
+                  "label": "声明本次总破屏次数",
+                  "value": 2,
+                  "unit": "次"
+                },
+                {
+                  "key": "per_hit",
+                  "label": "破屏单次法伤条件参考",
+                  "value": 5000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "declared",
+                  "label": "给定总次数条件伤害参考",
+                  "value": 10000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "ammo",
+                  "label": "原表弹药数量参数",
+                  "value": 8.0,
+                  "unit": "发"
+                },
+                {
+                  "key": "manual_duration",
+                  "label": "手动结束时间条件参数",
+                  "value": 20,
+                  "unit": "秒"
+                },
+                {
+                  "key": "break_times",
+                  "label": "实际破屏/爆炸时刻",
+                  "value": null,
+                  "unit": "秒"
+                },
+                {
+                  "key": "actual_end",
+                  "label": "实际结束时刻",
+                  "value": null,
+                  "unit": "秒"
+                }
+              ],
+              "notes": [
+                "总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。",
+                "本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。"
+              ]
+            },
+            {
+              "id": "known_damage_subtotals",
+              "title": "已建模伤害小计",
+              "metrics": [
+                {
+                  "key": "cast",
+                  "label": "单次技能已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window",
+                  "label": "观察窗口已计伤害小计",
+                  "value": 40000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle",
+                  "label": "本轮周期已计伤害小计",
+                  "value": 81000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "已计部分本轮周期 DPS",
+                  "value": 1157.142857142857,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": [
+                "这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。"
+              ]
+            },
+            {
+              "id": "protection",
+              "title": "屏障与防护",
+              "metrics": [
+                {
+                  "key": "body_barrier",
+                  "label": "本体每层屏障耐久",
+                  "value": 363.1,
+                  "unit": "伤害吸收量"
+                },
+                {
+                  "key": "barrier_ratio",
+                  "label": "屏障相对各自生命上限",
+                  "value": 10.0,
+                  "unit": "%"
+                }
+              ],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。"
+              ]
+            },
+            {
+              "id": "control",
+              "title": "控制与状态",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。"
+              ]
+            },
+            {
+              "id": "summons",
+              "title": "召唤与协同",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+              ]
+            },
+            {
+              "id": "ammo",
+              "title": "弹药机制",
+              "metrics": [
+                {
+                  "key": "ammo",
+                  "label": "完整技能弹药/触发数",
+                  "value": 8.0,
+                  "unit": "次"
+                }
+              ],
+              "notes": [
+                "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+              ]
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+                "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）"
+              ]
+            },
+            {
+              "id": "relic_evidence",
+              "title": "藏品核验",
+              "metrics": [],
+              "notes": [
+                "黑夜披肩：战斗相关效果仅作资料"
+              ]
+            },
+            {
+              "id": "relic_combat_reference",
+              "title": "藏品效果资料",
+              "metrics": [],
+              "notes": [
+                "黑夜披肩：地面干员对每个敌人首次造成的伤害提升至300%",
+                "涉及击倒、受击、实时生命/屏障或站位的部分只保留资料，不计入局外数值，也不要求战斗事件输入。",
+                "同件藏品的稳定加成如适用仍单独计算；资料中的战斗收益未包含在所显示的输出中。"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "final_followup": "scope-count-final-review.json",
+  "final_hashes": {
+    "section53.patch": "1e0993a11b6ca572de3ab748570341381abde30a1f4652f6e04cd2a69f43c173",
+    "rouge/shield_break_reference.py": "ff4379c4cc81a922d9dd81910136280f479c883b83d2836d206d6ed704d79f62",
+    "tests/test_shield_break_reference.py": "b44a456ad3f2a1750d44e626630388ff68974c28b70ea60ebb25ae5318f01cd6"
+  },
+  "final_finding_attribution": [
+    "Root identified inherited actual-only scope wording; author now synchronizes result.scope/estimate.scenario_scope, report old phrase absent.",
+    "Root/independent count-types review identified raw count string1.0/1e0 compatibility regression; author now consumes existing validated float conversion with int(float(raw))."
+  ],
+  "final_public_calls_total": 52
+}

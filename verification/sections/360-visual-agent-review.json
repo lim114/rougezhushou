@@ -1,0 +1,113 @@
+{
+  "schema": "section360_final_actual_subagent_visual_review_v1",
+  "section": 360,
+  "attempt": 2,
+  "actor": "/root/p3_351_scope_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-23T19:03:31.795275+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/360-native-attempt2/process.json",
+    "sha256": "de48ccd94c85965fbd7e76f8ad81467a5563195b4db6ae0ad9c0b9311113e981",
+    "passed_observed_before_review": true
+  },
+  "method": "七个最终实际PNG分别调用tools.view_image并阅读可见像素；之后读取完整原图字节核对最终native回执中的SHA。不是仅核对哈希、文件名或验收断言。",
+  "images": [
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-common-entry.png",
+      "bytes": 86139,
+      "sha256": "0ce6be0e4dfae767e22f779dbc931664e905858102e65eaaa685292bb8b5bcb8",
+      "width": 1543,
+      "height": 1064,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "通用藏品页面实际显示“进阶券：适用职业、星级与取得方式”入口，与招募券入口并列，无独立版本栏目。资料基准与实际出现/领取的区别写明；尚未选条目的正文为空，没有把条目总数当本局数量。通用空图提示仍可见，未遮挡新入口。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-all18-directory.png",
+      "bytes": 172301,
+      "sha256": "0b8bddda540fde31a4989dc1e8ad6e0f83eba9b9d1b9c2fca1eb5c9d215d38c8",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "18份进阶券完整目录可见，职业、券种、星级为三个真实筛选分支。普通券与八职业新典训所附同名券分别列出；总览明确进阶、招募、直升区别，不把券的星级范围当可进阶名单，也不把留存规则自动套用。未出现354节或bee3等实现术语。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-new-training-original.png",
+      "bytes": 126307,
+      "sha256": "42acd7a5d208c5bb0581ab68d76bae8625a23979a9181df02116732383ae13d0",
+      "width": 1285,
+      "height": 960,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "准确跳到钝爪-新典训原件，保留立即进阶先锋、不消耗希望、技能后攻击成长及上限原文；对应进阶券入口清楚。页面明确资料查阅不表示当前持有、次数或已合入计算，没有替玩家确定领取者。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-profession-kind-star.png",
+      "bytes": 180646,
+      "sha256": "948f2ea6884200124a3f290faf9886c4be2e786e81e0e12bd3d3d73481250a47",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "先锋/新典训所附/6星筛选后只剩准确一项，正文仍列该券完整1至6星范围，避免把筛选当原券范围改变。钝爪对应发放记录数量1有明确来源限制，定向归属及实际培养仍未知；三个筛选不混成持有或资格结论。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-exact-rest-original.png",
+      "bytes": 120729,
+      "sha256": "416a5bad8980a32ac5c0f05d5c2567f205b818434c7a0f615ea3a63ee38303f0",
+      "width": 1348,
+      "height": 998,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "原事件金色凝滞准确选中“查看无人机”，清晰分出原对话、选项目录非当前菜单、原奖励及对应后续入口。高级物资配给券用途完整保留，不擅补领取张数，不把七条目录当同时出现的选项或执行领取。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-source-loss.png",
+      "bytes": 33462,
+      "sha256": "a5f2eed91733789fddd73987c3cab54a53c303afc38460698117bb1e19dfde6a",
+      "width": 973,
+      "height": 560,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "来源失效后列表、可见技术页和原取得入口均清空或禁用，搜索文字保留；明确旧券种、说明、来源入口已清除，没有残留旧券或已知资格。截图显示技术页为空，另一阅读页与子窗状态仍以原生回执为准。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/360-native-attempt2/actual/window-exact-reverse-entry.png",
+      "bytes": 209403,
+      "sha256": "92fe0e238ab250ce740f1736b13abb2514d8346e2ee76d5dd24dca1d001b8bfa",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "从准确收藏品反向进入后选中钝爪-新典训所附先锋券，保留全目录及三筛选总览。正文对应职业、完整星级、准确附属来源与原数量，底部可打开该新典训原文；没有自动宣称本局持有、领取、进阶或培养结果。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张最终图未发现阻断阅读、旧资料残留、无关资格控件、原券/附属券混同或自动领取/培养结论的可见问题。",
+  "limits": [
+    "此记录仅核对七张实际图的可见内容，不替代18券遍历、双阅读保持、准确来源恢复、子窗关闭及真实控件操作原生证据。",
+    "子代理实际查看不能改称根代理直接查看；如验收要求根代理亲自查看，仍需根代理完成。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

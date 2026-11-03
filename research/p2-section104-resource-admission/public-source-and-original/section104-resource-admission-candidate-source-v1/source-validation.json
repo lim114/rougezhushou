@@ -1,0 +1,73 @@
+{
+  "kind": "SOURCE_ONLY_SYNTAX_AND_BYTE_REVIEW",
+  "runtime_executed": false,
+  "project_imported": false,
+  "helper_or_codec_executed": false,
+  "tests_executed": false,
+  "Git_Qt_Wine_executed": false,
+  "tracked_files_written": false,
+  "base_and_hypothetical_candidate_compile_only": true,
+  "test_compile_only": true,
+  "inverse_exact": true,
+  "changed_class_methods": [
+    "RunState.apply"
+  ],
+  "test_methods": [
+    "test_missing_value_without_previous_fact_never_installs_unrestartable_record",
+    "test_missing_value_keeps_previous_null_or_positive_fact_and_original_time",
+    "test_malformed_records_preserve_old_fact_without_erasing_or_synthesizing_zero",
+    "test_malformed_resource_containers_mean_unread_field_and_keep_both_old_times",
+    "test_wellformed_peer_and_configuration_are_saved_while_bad_record_is_unread",
+    "test_zero_remains_confirmed_and_unread_or_missing_pages_keep_exact_zero_timestamp",
+    "test_complete_legacy_value_types_keep_existing_format_and_restart_contract",
+    "test_saved_boolean_resource_times_are_not_redefined_by_fresh_admission",
+    "test_unknown_keys_do_not_bypass_existing_counter_provenance",
+    "test_existing_held_counter_proof_survives_unread_record_with_original_time",
+    "test_missing_resource_preserves_existing_real_numeric_result_and_all_three_reports",
+    "test_complete_record_metadata_aliases_keep_original_memory_and_json_policy",
+    "test_unused_opaque_caller_aliases_and_cycles_are_not_washed_or_mutated",
+    "test_complete_resource_opaque_cycle_keeps_original_save_exception_and_old_bytes",
+    "test_actual_failed_io_keeps_memory_scope_and_does_not_clear_save_issue_on_bad_read"
+  ],
+  "test_method_count": 15,
+  "physical_new_tests": 1,
+  "evidence": [
+    {
+      "path": "rouge/run_state.py",
+      "bytes": 53721,
+      "sha256": "98b3b6ea4ad36b36d031064d900bc445c80e5ac50ae2c6eceb16861a68e3a3c7"
+    },
+    {
+      "path": "rouge/resource_recognition.py",
+      "bytes": 2682,
+      "sha256": "4fe78a6e5cdc9e0f6a1d5d8937224c4f5c9d7fa9da5a1dc0573f455f8ba2ae34"
+    },
+    {
+      "path": "rouge/run_recognition.py",
+      "bytes": 23560,
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150"
+    },
+    {
+      "path": "rouge/relic_counter_semantics.py",
+      "bytes": 4867,
+      "sha256": "60ceda0596102e893240ac149a751868cd5a9ef61fe4e1a20ed2ebb907fa0cbd"
+    },
+    {
+      "path": "tests/test_relics.py",
+      "bytes": 14607,
+      "sha256": "a8ae18a6a8b5e0c5f19e179722618edce3a5b297071490e8e9e2e6fea7994a6e"
+    },
+    {
+      "path": "tests/test_counter_semantics_054.py",
+      "bytes": 4631,
+      "sha256": "c477844562222da27fb4921357b85f07274792b17893d935ceb0d44bbbc11f65"
+    },
+    {
+      "path": "tests/test_cache_consumers_101.py",
+      "bytes": 16712,
+      "sha256": "cf8654a622f8c09d4ec41cbd1a857c9e1733c500c3fc9c93ecb495f9f36f18b8"
+    }
+  ],
+  "expectation_source": "tests/test_relics.py::RelicTests.test_gold_threshold_missing_condition_and_duplicate_relic establishes mechanist S3 / gold 25 / legacy_60 attack_speed 135; not a new game mechanism",
+  "native_evidence_test_source": "tests.test_cache_consumers_101.native actual existing Source, builtin tags/order/float.hex/within-graph aliases/cycles; no comparison helper executed by author"
+}

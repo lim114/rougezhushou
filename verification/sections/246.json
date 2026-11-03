@@ -1,0 +1,75 @@
+{
+  "section": 246,
+  "title": "居民路线分阶段候选与独立据点胜利驱逐复核",
+  "remaining_item": "P3居民移动与动态路线状态",
+  "new_capability": "按明示玩家移动前缀复核居民进入前/移动后/据点胜利后候选，独立胜利声明触发条件驱逐；主窗口居民路线页保留声明并严格绑定地图位置",
+  "limitations": [
+    "未知回退持续传播，居民选择顺序/碰撞与实际安全未知",
+    "抵达据点不等于获胜，胜利由调用方独立声明且仅对应明确险路据点",
+    "不写本局、不操作游戏、不将候选无交集当安全",
+    "原Windows/game未验收，245全量缺口如实保留"
+  ],
+  "files": [
+    "research/p3-route-continuation/residents/README.md",
+    "research/p3-route-continuation/residents/frozen-facts.json",
+    "research/p3-route-continuation/residents/sealed-files.json",
+    "research/p3-route-continuation/residents/source-excerpt.html",
+    "research/p3-route-continuation/residents/source-receipt.json",
+    "research/p3-route-continuation/residents/verification.json",
+    "rouge/app.py",
+    "rouge/route_resident_review.py",
+    "rouge/route_resident_review_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_route_resident_review.py",
+    "tests/test_route_resident_review_view.py",
+    "verification/section-246/tests.txt",
+    "verification/section-246/validation.json"
+  ],
+  "source_evidence": [
+    "PRTS固定433770居民连通一格移动、重复节点/据点/已完成空地排除及胜利驱逐原句，source SHA重读"
+  ],
+  "acceptance": [
+    "32新居民行为+实际离屏Qt与路线约束相关检查通过",
+    "混合已知/未知分支、停止尾链、独立胜利、编辑旧结果提示及epoch/区域/模板/节点坐标过期链接保留"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:33:58.390097+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "d030e78c1168ff48419dd368de70a4c28adeeb85",
+  "required_raw_sha256": {
+    "research/p3-route-continuation/residents/README.md": "8b06122cf6bc76de27d819326b0c63abd10e51a241de83b7c2df3e56e2514aa1",
+    "research/p3-route-continuation/residents/frozen-facts.json": "ddb97c353fb7ab975bc4848939c4e9c5c5b7efb6555862181f394a14512584a2",
+    "research/p3-route-continuation/residents/sealed-files.json": "5264af09f428c45d0fc1e1c1469405bc90d03f123abf42aa5bce1056d88331ff",
+    "research/p3-route-continuation/residents/source-excerpt.html": "bf00ab5acdde534107f3bff0c7962bc02e68c636891c03feae7dc6724821df95",
+    "research/p3-route-continuation/residents/source-receipt.json": "dbda77b9216f8d3c3a859904f494fcf12e4d796781904904d66ec04fcdce44fc",
+    "research/p3-route-continuation/residents/verification.json": "b3a6c5a7d2943de62759e3e3b0e18a4a5755a2c21df8333bacfaf3afd9ae8fc9",
+    "rouge/app.py": "1e9132fbc04a81300f0defbe4378fb4613fee8ec2cabee38b4c1911cc3374b79",
+    "rouge/route_resident_review.py": "467ebb1b07d9658ca5855110306006071110bbf0b93e6f676fb439b7d4e63b36",
+    "rouge/route_resident_review_view.py": "877f3c28c34b1555d5f37263780620383ba1c94e984428aedd94016cf374e577",
+    "scripts/verify_cloud.py": "bd76b060de516601668542402959f38c66c928eb7704359c42c4b2752ee3c312",
+    "tests/test_route_resident_review.py": "e838383a3c118d80ac7b3f06366e30d58d3689366905c9d329dc9f5aaecd326f",
+    "tests/test_route_resident_review_view.py": "fbd3278db3c85abb8ccd16d1031d793f280c9e48d0948ec1e1f0213bd9f6ec45",
+    "verification/section-246/tests.txt": "523bff39dc5a6b1a3d34ee1920e333515f06d484e0f2c4da457eb0facbd92263",
+    "verification/section-246/validation.json": "cf897073568763bc48bd093416060e5aed322b91315a949a7b3439d462a76cf8"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_route_resident_review",
+      "tests.test_route_resident_review_view",
+      "tests.test_route_constraints"
+    ],
+    "tests_run": 32,
+    "passed": 32,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

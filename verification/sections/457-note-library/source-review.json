@@ -1,0 +1,23 @@
+{
+  "section": 457,
+  "changed_or_new_sources": {
+    "rouge/player_compact.py": {
+      "sha256": "bebc8a9bdd69d042a9accb40736fc4813b543cec16f07202db8ba3d61fa400e2",
+      "bytes": 26905
+    },
+    "rouge/player_note_library.py": {
+      "sha256": "a7641d681b541fe48d14cacd94f89a172481adde1a2b156659c084e7683a425f",
+      "bytes": 8758
+    },
+    "tests/test_note_library_457.py": {
+      "sha256": "d9ffc47943b55eac0e51e0566fae339b92da065129fa481660e136c37c5c1452",
+      "bytes": 7481
+    },
+    "tests/test_notes_reader_review.py": {
+      "sha256": "62dbf8dae0fa62af06c62a3f76db68dfe736ac0b8511a4e6714460ce28544b08",
+      "bytes": 10151
+    }
+  },
+  "review": "The library is now a QWidget page, not a nested native dialog. Existing note storage/index and exact identities remain. Deferred first population plus prepare refresh scans the note folder once per opening; debounce remains. Retained QSplitter and preview preserve search/selection/scroll/column width. Source-verified catalogue labels distinguish duplicate stage names. Actions are non-default after reproducing Enter accidentally opening the editor. Header actions are also non-default. Redundant panel window title and resize removed; the host owns sizing. No new catches, source wrappers, packages or private-state restore.",
+  "whole_program_review_complete": false
+}

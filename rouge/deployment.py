@@ -39,7 +39,8 @@ def _fp_product(left,right):
 
 
 def native_deployment_cost(cultivation_cost,*,rune_additions=(),rune_multipliers=(),
-                           card_factors=(),runtime_deltas=(),redeploy_factor=1):
+                           card_factors=(),runtime_deltas=(),redeploy_factor=1,
+                           deck_base_deltas=()):
     """Pure native-baseline oracle; factors are explicit, not sampled combat state.
 
     The native rune writer converts FP to float then rounds ObscuredInt with
@@ -56,7 +57,15 @@ def native_deployment_cost(cultivation_cost,*,rune_additions=(),rune_multipliers
     value=_fp_product(base+addition,factor)
     rune_float=_single(_single(value)/_Q32)
     attribute_cost=max(0,round(rune_float))
-    raw_cost=_fp_product(attribute_cost*_Q32,_fp(redeploy_factor))//_Q32
+    # Source-bound deck talents alter the already rounded attribute snapshot
+    # before get_rawCost applies redeployment and first-card scaling.
+    deck_delta=0
+    for value in deck_base_deltas:
+        _single(value)
+        if not float(value).is_integer():raise ValueError('卡组基础费用加减需要整数。')
+        deck_delta+=int(value)
+    deck_cost=attribute_cost+deck_delta
+    raw_cost=_fp_product(deck_cost*_Q32,_fp(redeploy_factor))//_Q32
     scale=_Q32
     for value in card_factors:scale=_fp_product(scale,_fp(value))
     scaled_cost=_fp_product(raw_cost*_Q32,scale)//_Q32
@@ -66,6 +75,7 @@ def native_deployment_cost(cultivation_cost,*,rune_additions=(),rune_multipliers
         if not float(value).is_integer():raise ValueError('原生卡片费用加减需要整数。')
         delta+=int(value)
     return {'attributes_cost':attribute_cost,'unrounded_rune_reference':max(0,rune_float),
+        'deck_base_delta':deck_delta,'deck_base_cost':deck_cost,
         'raw_card_cost':raw_cost,'card_factor':scale/_Q32,
         'scaled_card_cost':scaled_cost,'runtime_delta':delta,
         'estimated_cost':min(99,max(0,scaled_cost+delta)),

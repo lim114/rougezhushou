@@ -1,0 +1,265 @@
+.FFFFFFFFFFFFFFFFFFFFFFFFFF.
+======================================================================
+FAIL: test_elite_zero_requested_stage_remains_visible_without_application (test_module_qualification_notes.ModuleQualificationNotesTests.test_elite_zero_requested_stage_remains_visible_without_application)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 58, in test_elite_zero_requested_stage_remains_visible_without_application
+    self.assert_locked_module_report(scenario(elite=0, level=50, skill_rank=1, module_level=3))
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=1, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=1, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=2, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=2, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=3, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=1, level=60, stage=3, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=1, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=1, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=2, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=2, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=3, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。']
+
+======================================================================
+FAIL: test_extended_uses_operator_specific_level_forty_boundary (test_module_qualification_notes.ModuleQualificationNotesTests.test_extended_uses_operator_specific_level_forty_boundary) (elite=2, level=39, stage=3, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 85, in test_extended_uses_operator_specific_level_forty_boundary
+    self.assert_locked_module_report(args)
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。', '连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。', '空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。']
+
+======================================================================
+FAIL: test_invalid_module_still_uses_existing_error_and_catalog_stays_unmodified (test_module_qualification_notes.ModuleQualificationNotesTests.test_invalid_module_still_uses_existing_error_and_catalog_stays_unmodified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 116, in test_invalid_module_still_uses_existing_error_and_catalog_stays_unmodified
+    self.assert_locked_module_report(scenario(level=59, module_level=3))
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=1, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=1, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=2, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=2, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=3, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=1, level=80, stage=3, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=1, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=1, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=2, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=2, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=3, mode='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。', '常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。', '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。', '机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。', '时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。', '动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。', '未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。', '攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。', '单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。', '当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。']
+
+======================================================================
+FAIL: test_legacy_alias_below_elite_or_level_reports_inactive_module (test_module_qualification_notes.ModuleQualificationNotesTests.test_legacy_alias_below_elite_or_level_reports_inactive_module) (elite=2, level=59, stage=3, mode='continuous')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 54, in test_legacy_alias_below_elite_or_level_reports_inactive_module
+    self.assert_locked_module_report(scenario(
+  File "/workspace/.continuation/p2-module-qualification-audit/draft/tests/test_module_qualification_notes.py", line 38, in assert_locked_module_report
+    self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
+AssertionError: '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。' not found in ['基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。', '回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。', '周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。', '秒数为连续供靶估计，未模拟首击、前后摇、帧取整、移动和空转。', '已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。', '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。', '攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。']
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.153s
+
+FAILED (failures=26)

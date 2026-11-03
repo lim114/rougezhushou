@@ -1,0 +1,523 @@
+{
+  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "raw_tables_fresh_hashes": [
+    {
+      "table": "character_table",
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "table": "skill_table",
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "table": "battle_equip_table",
+      "source_path": "/workspace/.continuation/p2-after-070-source-audit/originals/battle_equip_table.json",
+      "bytes": 5710707,
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "table": "uniequip_table",
+      "source_path": "/workspace/.continuation/p2-after-070-source-audit/originals/uniequip_table.json",
+      "bytes": 3365012,
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    }
+  ],
+  "three_named_talent_identities": [
+    {
+      "operator": "char_437_mizuki",
+      "name": "反移情",
+      "raw_candidates": [
+        {
+          "talent_index": 1,
+          "candidate_index": 0,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "反移情",
+            "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+10%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "hp_ratio",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.1,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 1,
+          "candidate_index": 1,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "反移情",
+            "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+12%<@ba.talpu>（+2%）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "hp_ratio",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.12,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        }
+      ]
+    },
+    {
+      "operator": "char_4182_oblvns",
+      "name": "颂乐音符",
+      "raw_candidates": [
+        {
+          "talent_index": 0,
+          "candidate_index": 0,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "颂乐音符",
+            "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失",
+            "rangeId": "2-3",
+            "blackboard": [
+              {
+                "key": "delay",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "def_penetrate_ratio",
+                "value": 0.0,
+                "valueStr": null
+              },
+              {
+                "key": "magic_resist_penetrate_ratio",
+                "value": 0.0,
+                "valueStr": null
+              },
+              {
+                "key": "attack@angle",
+                "value": 20.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_cnt",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 1,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "颂乐音符",
+            "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人2.5%的防御力和1.5%法术抗性（最多叠加至10层）",
+            "rangeId": "3-12",
+            "blackboard": [
+              {
+                "key": "delay",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "def_penetrate_ratio",
+                "value": 0.025,
+                "valueStr": null
+              },
+              {
+                "key": "magic_resist_penetrate_ratio",
+                "value": 0.015,
+                "valueStr": null
+              },
+              {
+                "key": "attack@angle",
+                "value": 20.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_cnt",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 2,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "颂乐音符",
+            "description": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人3%的防御力和2%法术抗性（最多叠加至10层）",
+            "rangeId": "3-12",
+            "blackboard": [
+              {
+                "key": "delay",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "def_penetrate_ratio",
+                "value": 0.03,
+                "valueStr": null
+              },
+              {
+                "key": "magic_resist_penetrate_ratio",
+                "value": 0.02,
+                "valueStr": null
+              },
+              {
+                "key": "attack@angle",
+                "value": 20.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_cnt",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        }
+      ]
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "name": "强击瓶专家",
+      "raw_candidates": [
+        {
+          "talent_index": 0,
+          "candidate_index": 0,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至105%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.05,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 1,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%<@ba.talpu>（+5%）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.1,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 2,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.1,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 3,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%<@ba.talpu>（+5%）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.15,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 4,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.15,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        },
+        {
+          "talent_index": 0,
+          "candidate_index": 5,
+          "candidate": {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "强击瓶专家",
+            "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至120%<@ba.talpu>（+5%）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "power_attack_count",
+                "value": 50.0,
+                "valueStr": null
+              },
+              {
+                "key": "power_attack_scale",
+                "value": 1.2,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        }
+      ]
+    }
+  ],
+  "oblvns_named_module_overrides": [
+    {
+      "stage": 2,
+      "target": "TALENT_DATA_ONLY",
+      "candidate": {
+        "displayRangeId": false,
+        "upgradeDescription": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人4%的防御力和2%法术抗性（最多可叠加12层）；技能期间远程攻击不再降低攻击力",
+        "talentIndex": 0,
+        "validModeIndices": null,
+        "unlockCondition": {
+          "phase": "PHASE_2",
+          "level": 60
+        },
+        "requiredPotentialRank": 0,
+        "prefabKey": "1",
+        "name": "颂乐音符",
+        "description": null,
+        "rangeId": "3-12",
+        "blackboard": [
+          {
+            "key": "def_penetrate_ratio",
+            "value": 0.04,
+            "valueStr": null
+          },
+          {
+            "key": "magic_resist_penetrate_ratio",
+            "value": 0.02,
+            "valueStr": null
+          },
+          {
+            "key": "attack@angle",
+            "value": 20.0,
+            "valueStr": null
+          },
+          {
+            "key": "delay",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_cnt",
+            "value": 12.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      }
+    },
+    {
+      "stage": 3,
+      "target": "TALENT_DATA_ONLY",
+      "candidate": {
+        "displayRangeId": false,
+        "upgradeDescription": "丰川祥子可以<$ba.permanentatk>持续攻击</>且攻击会演奏追踪敌人的音符，音符飘出攻击范围一段时间后消失。每存在一个音符，<$ba.mujica>Ave Mujica</>成员无视敌人5%的防御力和2.5%法术抗性（最多可叠加12层）；技能期间远程攻击不再降低攻击力",
+        "talentIndex": 0,
+        "validModeIndices": null,
+        "unlockCondition": {
+          "phase": "PHASE_2",
+          "level": 60
+        },
+        "requiredPotentialRank": 0,
+        "prefabKey": "1",
+        "name": "颂乐音符",
+        "description": null,
+        "rangeId": "3-12",
+        "blackboard": [
+          {
+            "key": "def_penetrate_ratio",
+            "value": 0.05,
+            "valueStr": null
+          },
+          {
+            "key": "magic_resist_penetrate_ratio",
+            "value": 0.025,
+            "valueStr": null
+          },
+          {
+            "key": "attack@angle",
+            "value": 20.0,
+            "valueStr": null
+          },
+          {
+            "key": "delay",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_cnt",
+            "value": 12.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      }
+    }
+  ],
+  "oblvns_module_gate": {
+    "elite": 2,
+    "level": 60
+  },
+  "orchid_s1_rank10_original_description": "发射4支攻击力<@ba.vup>{atk_scale_1:0%}</>的箭矢，若还有充能则额外消耗1层施展<@ba.vup>刚连射</>：发射5支攻击力<@ba.vup>{atk_scale_2:0%}</>的箭矢，每支箭矢有<@ba.vup>{stun_prob:0%}</>概率使目标<$ba.stun>晕眩</><@ba.vup>{stun}</>秒\\n<@ba.rem>可充能4次，充能至最大层数时自动释放一次</>",
+  "normal_scope": "Mizuki initialize-selected bonus and Closur/Oblvns trait can affect normal. Orchid power reads get but multiplier normal1. Normal plan in calculate1470 executes only with known cycle and relevant continuous attack condition. No claim that each module-qualified whole API input changes.",
+  "all240_skill_rank_reaudit": false,
+  "module_semantic_audit": false
+}

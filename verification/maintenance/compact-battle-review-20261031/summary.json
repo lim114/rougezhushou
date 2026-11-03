@@ -1,0 +1,140 @@
+{
+  "kind": "implementation_review_maintenance",
+  "title": "作战资料收拢为四栏、合并奖励入口并统一刷新",
+  "baseline_commit": "56bffce0917787a25846a76788f69704c5ac42ec",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "implemented_scope_passed": true,
+  "related_unique_tests": 60,
+  "skips": 0,
+  "test_receipt": {
+    "path": "verification/maintenance/compact-battle-review-20261031/tests-current/results.json",
+    "sha256": "ea94b009de66e29e736012271a3eedf0439dad5cf7eaa868d51da8f5989d4ad0",
+    "bytes": 671
+  },
+  "earlier_scope": [
+    {
+      "path": "verification/maintenance/compact-battle-review-20261031/tests/results.json",
+      "sha256": "ea94b009de66e29e736012271a3eedf0439dad5cf7eaa868d51da8f5989d4ad0",
+      "bytes": 671
+    },
+    {
+      "path": "verification/maintenance/compact-battle-review-20261031/integration-current/results.json",
+      "sha256": "abc06c07afa2e44d0437252ed3c4f42e0093c35a355a227d0500c1c692b6b662",
+      "bytes": 259
+    }
+  ],
+  "test_overlap_not_added": true,
+  "native_unique_checks": 52,
+  "native_receipt": {
+    "path": "verification/maintenance/compact-battle-review-20261031/native-current/window.json",
+    "sha256": "fb19032dce2fbef775e50a4f9fc675dcceef6b9a5a91c5654f8a729454254be5",
+    "bytes": 167121
+  },
+  "source_review": {
+    "path": "verification/maintenance/compact-battle-review-20261031/source-review.json",
+    "sha256": "d0104c27809f65afd44262b0838b9a2624c1befa9f691bfb8921041b72dbb92f",
+    "bytes": 8983
+  },
+  "image_review": {
+    "path": "verification/maintenance/compact-battle-review-20261031/image-review.json",
+    "sha256": "070a8f43adf9371508430f98e2915ce60132614294595a47bb1a15ad186405bd",
+    "bytes": 2903
+  },
+  "live_window": {
+    "path": "verification/maintenance/compact-battle-review-20261031/live-window/desktop-review.json",
+    "sha256": "7da34eb09a60f285f719d1687e9d062f78a4314a434df6d14fce761a37566294",
+    "bytes": 381
+  },
+  "scope": "Four top-level categories, two nested reward kinds, one parent refresh, explicit full scope and raw source, retained reading/exact jumps and independent child failures. No new numerical mechanic or complete environment correction.",
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "private_data_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "publication_binding": "enclosing maintenance commit; ordinary push and actual remote/blob equality required",
+  "additional_maintained_native_gates": [
+    {
+      "script": {
+        "path": "scripts/verify_current_battle_window_314.py",
+        "sha256": "e6b3320fd5c417af58d2ed56a23048a3db69ada574f6626ed0366c284e1a7db2",
+        "bytes": 17648
+      },
+      "receipt": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native-current/314/window.json",
+        "sha256": "804453b86a7d17ea8fec53aee0323f18882414a01bb8a4c408b9d6fe6f67cd5a",
+        "bytes": 234868
+      },
+      "unique_checks_within_this_gate": 24,
+      "not_summed_with_other_gates": true,
+      "raw_initial_failure": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native/314/window.json",
+        "sha256": "f566599ad5199a96fac096d7f8aff5b986fdc9f7d50e508222ddfca9d20bf7c2",
+        "bytes": 227405
+      }
+    },
+    {
+      "script": {
+        "path": "scripts/verify_current_rewards_window_315.py",
+        "sha256": "58d31b99385d80e81e337245e79df535ec96ae3d583cc13a549e6bd0d4a97cd9",
+        "bytes": 16398
+      },
+      "receipt": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native-current/315/window.json",
+        "sha256": "cd4ad3b3edfda9ce5b9d6df7dd40119f6a699929abd11579ab2e4187c9bf137c",
+        "bytes": 238950
+      },
+      "unique_checks_within_this_gate": 29,
+      "not_summed_with_other_gates": true,
+      "raw_initial_failure": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native/315/window.json",
+        "sha256": "dcb4d72fe1b55f36a4b22788a2e86cd815322a62b529391771a0b0eb212af95e",
+        "bytes": 232502
+      }
+    },
+    {
+      "script": {
+        "path": "scripts/verify_current_settlement_window_318.py",
+        "sha256": "6324673f8e7d19d52843d945ba807fd68db01e5ec6709c1cc3e6f27d88fd5084",
+        "bytes": 16545
+      },
+      "receipt": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native-current/318/window.json",
+        "sha256": "99b93e7467df95e49d3f025d54990c8476b1eb28cf9bdad4d08ea187da0ece2d",
+        "bytes": 245925
+      },
+      "unique_checks_within_this_gate": 30,
+      "not_summed_with_other_gates": true,
+      "raw_initial_failure": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native/318/window.json",
+        "sha256": "df0995ae1b78f0da3ab7e4fdaf8b9e4d01f422a03eb8153eb86bf8a536580dc1",
+        "bytes": 238414
+      }
+    },
+    {
+      "script": {
+        "path": "scripts/verify_current_settlement_modes_window_362.py",
+        "sha256": "4393451de47157ad7a05f5d92d2c76059ff54e699c567a06f976ad3a31ee62ce",
+        "bytes": 23421
+      },
+      "receipt": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native-current/362/window.json",
+        "sha256": "9684a4497b50827afb52a76f0ec2dc70083ad3e1cb3b9083751cf918e5c71672",
+        "bytes": 245490
+      },
+      "unique_checks_within_this_gate": 51,
+      "not_summed_with_other_gates": true,
+      "raw_initial_failure": {
+        "path": "verification/maintenance/compact-battle-review-20261031/maintained-native/362/window.json",
+        "sha256": "066f98f61787cb6bfb59240d90f3d408c22dea3539e49320d7a4a3c19a03e833",
+        "bytes": 233250
+      }
+    }
+  ],
+  "all_four_actual_exits_zero": true
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "SOURCE_ONLY_NOT_RUNTIME_PASS",
+  "legacy_rank_elite_path": "skill_rank_value evaluates training_conditions()[elite], whose default is len(operator_profiles()[op][phases])-1",
+  "candidate_rank_elite_path": "skill_rank_selection uses the same current_operator_state fields and same selected operator_profiles profile, default len(profile[phases])-1",
+  "normal_selected_op_skill_equivalence": "Both prefer effective state.fields.elite; missing elite defaults to same phase cap. Old eager default evaluation consumed only elite from training_conditions, not other fields. Existing str/int rank priority and E2->10 else7 default kept. New account branch is explicit and separately scoped.",
+  "use_run_training_False": "current_operator_state passes member=None to select_training_view in both sources; account view returned. Missing account elite uses same profile phase default, not hardcoded E2.",
+  "qualification": "Source equivalence for existing selected-op/skill UI consumption. New no-op/no-skill handling deliberately returns None and does not claim every artificially direct accessor call is unchanged. Root still must execute window comparisons.",
+  "baseline_app_sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8",
+  "candidate_app_sha256": "b078043af01c8265d79736640b532ad13e3f31c490259ff0de40f85b71a8868b",
+  "reviewed_core": {
+    "/workspace/.continuation/section115-window-source-v1/window115.py": {
+      "bytes": 23477,
+      "sha256": "3e62fdb3811c44a746b85872b493b53f5c373933fa9d09c327a6370082034304"
+    },
+    "/workspace/.continuation/section116-window-source-v1/window116.py": {
+      "bytes": 30501,
+      "sha256": "5ded6de30317c97e9be71f3f669acf37eed9507431b78d9df0f440dbb789f3f9"
+    },
+    "/workspace/.continuation/section116-window-source-v1/native_evidence.py": {
+      "bytes": 6468,
+      "sha256": "f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a"
+    }
+  },
+  "project_calls": 0,
+  "tracked_mutations": 0,
+  "source_hashes_preserve_raw_CRLF_bytes": true
+}

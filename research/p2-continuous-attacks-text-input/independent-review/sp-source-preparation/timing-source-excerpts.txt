@@ -1,0 +1,76 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/timing.py
+Full source sha256 1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8
+Full source bytes 27108
+
+Lines 41-81
+41: def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=False,resume=0,
+42:                             wait_next_attack=False,incoming_interval=None,attribute_speed=None):
+43:     """Merge discrete credits after blocking, using each verified owner timer."""
+44:     from .relics import recharge_requirement
+45:     if not initial:required=recharge_requirement(scenario,required)
+46:     if required<=0 and not wait_next_attack:return 0
+47:     wines=[r for r in scenario['_relic_rules'] if r['kind']=='periodic_sp']
+48:     horizon=min(108000,min(frame_time(w['interval'])*(math.ceil(required/w['value'])+1)+2 for w in wines))
+49:     config=dict(scenario.get('timing',{}))
+50:     if initial:
+51:         for key in ('target_windows','movement_windows','interrupt_windows'):
+52:             config.pop(key,None)
+53:             if 'initial_'+key in config:config[key]=config['initial_'+key]
+54:         config.pop('target_disappears_seconds',None);config.pop('post_skill_lock_frames',None)
+55:     elif offset:
+56:         config['post_skill_lock_frames']=max(0,finite(config.get('post_skill_lock_frames',0),'技能结束硬直帧')-
+57:                                            frame_time(config.get('sp_lockout_extra_seconds',0)))
+58:     config['_resume_frames']=resume
+59:     config['_deployment_initial']=initial
+60:     timeline=AttackTimeline({**scenario,'timing':config},normal=True,offset=offset)
+61:     # Next-attack skills still need an attack slot after SP readiness.
+62:     stream=timeline.attacks((min(108000-frame_time(offset),horizon) if not wait_next_attack else
+63:                             max(0,108000-frame_time(offset)))/FPS,interval,speed,attribute_speed=attribute_speed)
+64:     events=wine_events(scenario,horizon,offset,initial)
+65:     if incoming_interval is not None:
+66:         if incoming_interval>0:
+67:             step=frame_time(incoming_interval)
+68:             events.extend((f+1,increment) for f in range(step,horizon,step))
+69:     elif scenario.get('continuous_attacks',True):
+70:         increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
+71:         events.extend((f+1,increment) for f in stream['release_frames'])
+72:     charge=0;ready=0 if required<=0 else None
+73:     for frame,value in sorted(events):
+74:         if ready is not None:break
+75:         charge+=value
+76:         if charge>=required:ready=frame
+77:     if ready is None:return None
+78:     if wait_next_attack:
+79:         start=next((f for f in stream['start_frames'] if f>=ready),None)
+80:         return start/FPS if start is not None else None
+81:     return ready/FPS
+Lines 94-101
+94: def charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=False,resume=0,wait_next_attack=False,attribute_speed=None):
+95:     if has_periodic_sp(scenario):
+96:         return periodic_charge_seconds(scenario,required,increment,interval,speed,offset,initial,resume,wait_next_attack,attribute_speed=attribute_speed)
+97:     from .relics import recharge_requirement
+98:     if not initial:required=recharge_requirement(scenario,required)
+99:     increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
+100:     if required<=0 and not wait_next_attack:return 0
+101:     if increment<=0:return None
+Lines 160-179
+160: class AttackTimeline:
+161:     def __init__(self,scenario,normal=False,offset=0,target_scope='enemy'):
+162:         if target_scope not in ('enemy','friendly'):raise ValueError('目标来源需要为enemy或friendly。')
+163:         self.target_scope=target_scope
+164:         self.s=scenario;self.normal=normal;self.offset=frame_time(offset)
+165:         self.mode=scenario.get('timing_mode','frames')
+166:         if self.mode not in ('frames','continuous'):raise ValueError('时序模式需要为frames或continuous。')
+167:         self.options=scenario.get('timing',{})
+168:         if not isinstance(self.options,dict):raise ValueError('时序情景需要是对象。')
+169:         from .animation_reference import descriptor
+170:         for normal_reference in (False,True):
+171:             descriptor(scenario['operator'],scenario['skill'],self.options,normal=normal_reference)
+172:         for key in ('windup_frames','recovery_frames','start_delay_frames','post_skill_lock_frames'):
+173:             if key in self.options:finite(self.options[key],key)
+174:         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
+175:             if key in self.options:finite(self.options[key],key,3600)
+176:         self.streams=[];self.notes=[];self.target_scope_notes=[]
+177:         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
+178:         self.windows=self.ranges('target_windows')
+179:         self.blocked=sorted(self.ranges('movement_windows')+self.ranges('interrupt_windows'))

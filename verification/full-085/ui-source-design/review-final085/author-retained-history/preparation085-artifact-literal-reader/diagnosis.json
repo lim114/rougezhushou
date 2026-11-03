@@ -1,0 +1,8 @@
+{
+  "scope": "Static packaging diagnostic only; no API/formatter/Qt/Wine",
+  "error": "AssertionError: wine-window-080.png",
+  "cause": "Reader required every output-name literal occur once, but original080 also repeats four PNG names in receipt metadata. File destinations are OUT/path AST nodes, not every string occurrence.",
+  "correction": "Require exactly one OUT/path sink plus unchanged original/final literal cardinality for each of all seven suffix renames.",
+  "product_source_mutated": false,
+  "same_problem_attempts": 1
+}

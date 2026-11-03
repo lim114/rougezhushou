@@ -1,0 +1,28 @@
+test_emergency_source_changes_only_declared_variant (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_emergency_source_changes_only_declared_variant) ... FAIL
+test_invalid_cultivation_does_not_destroy_other_variants (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_invalid_cultivation_does_not_destroy_other_variants) ... ok
+test_potential_cost_changes_and_fang_combo_not_zero (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_potential_cost_changes_and_fang_combo_not_zero) ... FAIL
+test_talent_gate_hp_and_trust_are_recalculated (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_talent_gate_hp_and_trust_are_recalculated) ... ok
+test_ui_entry_and_pending_edit_cannot_use_stale_cultivation (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_ui_entry_and_pending_edit_cannot_use_stale_cultivation) ... ok
+test_unknown_recipient_stays_partial_and_schema_is_strict (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_unknown_recipient_stays_partial_and_schema_is_strict) ... ok
+
+======================================================================
+FAIL: test_emergency_source_changes_only_declared_variant (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_emergency_source_changes_only_declared_variant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_supplemental_cultivation_148.py", line 24, in test_emergency_source_changes_only_declared_variant
+    self.assertAlmostEqual(emergency['attributes']['attack']/ordinary['attributes']['attack'],1.4)
+AssertionError: 1.3703703703703705 != 1.4 within 7 places (0.02962962962962945 difference)
+
+======================================================================
+FAIL: test_potential_cost_changes_and_fang_combo_not_zero (tests.test_supplemental_cultivation_148.Cultivation148Tests.test_potential_cost_changes_and_fang_combo_not_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_supplemental_cultivation_148.py", line 35, in test_potential_cost_changes_and_fang_combo_not_zero
+    self.assertIsNone(row['value']);self.assertIsNone(row['delta'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 10.0 is not None
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.190s
+
+FAILED (failures=2)

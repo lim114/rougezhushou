@@ -1,0 +1,36 @@
+{
+  "scope": "Preparation failures preserved; neither is an application regression or an actual Qt run",
+  "gui_executed": false,
+  "wine_executed": false,
+  "failures": [
+    {
+      "order": 1,
+      "command": "python check_public_schema.py public-schema-73 73 interim-73",
+      "exit_code": 1,
+      "error": "ModuleNotFoundError: No module named cv2",
+      "cause": "System Python omitted the existing project virtual environment",
+      "correction": "Use /workspace/rougezhushou/.venv/bin/python; no dependency or tracked source change"
+    },
+    {
+      "order": 2,
+      "command": ".venv/bin/python check_public_schema.py public-schema-73 73 interim-73",
+      "exit_code": 1,
+      "error": "AssertionError at require_headwolf075: len(drones)==1",
+      "cause": "Initial design wrongly assumed a single drone component for an entire observation window",
+      "diagnosis": "First E0 S1 frames W10 public result contains8 independent owner releases, each with a drone component and the existing owner_attack_clock unknown-independent-clock reference",
+      "correction": "Assert presence and every component timing_reference; retain E0 complete canonical equality across elapsed values. No production source change."
+    }
+  ],
+  "completed_corrected_preflight": {
+    "public_calls": 458,
+    "through_section": 73,
+    "receipt": "public-schema-interim-73.json.gz",
+    "status": "passed"
+  },
+  "offline_write_failure": {
+    "cell_id": "114",
+    "error": "409 Conflict environment_offline / Environment is not connected",
+    "read_failed_before_patch": true,
+    "later_connected_actual_files_checked": true
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "version": "0.48.0",
+  "pixel_tolerance": 4,
+  "method": "Manual source-PNG metal-ground corners fitted by a homography; separate metal-square centers are holdouts, never fit inputs. No FOV assumptions.",
+  "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to the recorded metal-ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+  "calibrations": [
+    {
+      "id": "ro6_n_3_4",
+      "aliases": [
+        "ro6_e_3_4"
+      ],
+      "anchors": [
+        [
+          0.5,
+          2.5,
+          181,
+          61
+        ],
+        [
+          0.5,
+          9.5,
+          387,
+          61
+        ],
+        [
+          4.5,
+          6.5,
+          309,
+          159
+        ],
+        [
+          4.5,
+          7.5,
+          344,
+          159
+        ],
+        [
+          6.5,
+          6.5,
+          312,
+          219
+        ],
+        [
+          6.5,
+          7.5,
+          350,
+          219
+        ]
+      ],
+      "checks": [
+        [
+          1,
+          3,
+          195,
+          71,
+          "upper left metal tile center"
+        ],
+        [
+          1,
+          5,
+          256,
+          71,
+          "upper middle metal tile center"
+        ],
+        [
+          1,
+          8,
+          345,
+          71,
+          "upper right metal tile center"
+        ],
+        [
+          4,
+          7,
+          325,
+          145,
+          "middle metal tile center"
+        ],
+        [
+          5,
+          7,
+          329,
+          175,
+          "lower metal tile center"
+        ],
+        [
+          6,
+          7,
+          332,
+          203,
+          "bottom metal tile center"
+        ]
+      ],
+      "grid_correspondence": "Original map row 1 has seven LOWLAND tile_floor cells in columns 3..9, matching the seven visible upper metal squares. Three lower squares in column 7 match LOWLAND tile_floor rows 4..6. Six holdout centers use those cells; no portal object determines their row/column correspondence."
+    },
+    {
+      "id": "ro6_n_3_6",
+      "aliases": [
+        "ro6_e_3_6"
+      ],
+      "anchors": [
+        [
+          0.5,
+          0.5,
+          117,
+          55
+        ],
+        [
+          0.5,
+          2.5,
+          182,
+          55
+        ],
+        [
+          2.5,
+          0.5,
+          107,
+          103
+        ],
+        [
+          2.5,
+          2.5,
+          177,
+          103
+        ],
+        [
+          6.5,
+          7.5,
+          354,
+          231
+        ],
+        [
+          6.5,
+          9.5,
+          444,
+          231
+        ],
+        [
+          4.5,
+          7.5,
+          346,
+          160
+        ],
+        [
+          4.5,
+          9.5,
+          426,
+          160
+        ]
+      ],
+      "checks": [
+        [
+          1,
+          1,
+          131,
+          66,
+          "upper left metal tile center"
+        ],
+        [
+          1,
+          2,
+          164,
+          66,
+          "upper second metal tile center"
+        ],
+        [
+          2,
+          1,
+          125,
+          90,
+          "second-row left metal tile center"
+        ],
+        [
+          2,
+          2,
+          158,
+          90,
+          "second-row second metal tile center"
+        ],
+        [
+          5,
+          8,
+          369,
+          177,
+          "lower right first metal tile center"
+        ],
+        [
+          5,
+          9,
+          410,
+          177,
+          "lower right second metal tile center"
+        ],
+        [
+          6,
+          8,
+          376,
+          212,
+          "bottom first metal tile center"
+        ],
+        [
+          6,
+          9,
+          419,
+          212,
+          "bottom second metal tile center"
+        ]
+      ],
+      "grid_correspondence": "Original LOWLAND tile_floor pattern has a 2x2 rectangle at rows 1..2 columns 1..2 and another at rows 5..6 columns 8..9. The two separated four-square metal rectangles are visible in the unchanged PNG. Eight independent centers use this pattern without deriving their columns from portal objects."
+    }
+  ],
+  "rejected_probes": [
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_2_3-fit.json",
+      "sha256": "f8856ae9fcdf770eec0ac70379591704ac0a7589d2cfa865fcb2f2e188bf7920",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 5.843419032150879
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_2_3-six-anchor-fit.json",
+      "sha256": "8bc2540057e542847bbb9bac4f5ff46a42e984396a6113b39e634d8f167f85fa",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 6.429948729949054
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_2_4-fit.json",
+      "sha256": "43bc3ddc9f1b9fb8892a235709ae2a44b002271ab2a98966d37ca1517dfce6b5",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 8.003622532327686
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_2_4-six-anchor-fit.json",
+      "sha256": "69015d51b9dae64ee4697bce1d9042788f75ac04fdd8b541729ba7c1edf76f70",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 6.811465654000531
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_4-fit.json",
+      "sha256": "45650cd79e5ca7e64b9ec7be68a93999117e60e6997f5d94eafcbe156d4cc82c",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 8.668759465326927
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_4-portal-anchor-fit.json",
+      "sha256": "108638102307a9ec45d7725be7fdbec8e7cf28d4516e06d61720dc044580e429",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 8.315689749515418
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_4-six-ground-anchor-fit.json",
+      "sha256": "df7a36f5946d20144f753e1f862ffd2015ab99ba68466ebb60dd65ca73fcbd52",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 5.189228753553907
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_5-fit.json",
+      "sha256": "559557c0cb75b5ac506a01be70a2a56f9464b68537178ac8ae925e251bdb1ce0",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 13.238661476064971
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_6-fit.json",
+      "sha256": "d3fdcd3dddbf0b850fb0d0febc17f879a39352abbe257ac105ad9ac41a9c9e8d",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 9.028328598368974
+    },
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_t_1-fit.json",
+      "sha256": "19c059b8f3054a162651d78827e00cc5c3f4d1e3c0c7ab77c3bed44575b325ff",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 8.147330897177824
+    }
+  ],
+  "unverified_visual_object_probes": [
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_4-fit.json",
+      "indices": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "reason": "Portal-object visual-center readings are not independently established ground-grid points. Their original four observations and residuals, including 8.668759465326927px, remain archived; these are neither passing spawn-location checks nor landmarks silently retuned to fit."
+    }
+  ],
+  "notes": "For ro6_n_3_4 ground-only acceptance uses the unchanged first six holdout centers and original six metal-corner fit; unverified object probes remain in the full rejected receipt. For ro6_n_3_6 the initial six-corner fit fails, and eight-corner acceptance adds independently visible upper corners of the lower-right ground rectangle; all eight initial holdout centers are unchanged.",
+  "source_fit_records": [
+    {
+      "file": ".cache\\research\\map-projection-048\\ro6_n_3_6-eight-anchor-fit.json",
+      "sha256": "61489bb167c6141a82df5cd67ef9b9a690104f9f65fe79d9bdad945a0610d8d4",
+      "accepted_for_runtime": false,
+      "max_probe_error_px": 2.639156382210689
+    }
+  ]
+}

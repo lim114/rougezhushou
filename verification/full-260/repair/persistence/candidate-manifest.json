@@ -1,0 +1,65 @@
+{
+  "production_edited": false,
+  "maintenance_only": true,
+  "new_functional_section": false,
+  "native_windows_verified": false,
+  "files": [
+    {
+      "target": "rouge/persistence_install.py",
+      "candidate": "work/wine-persistence-audit/candidate/rouge/persistence_install.py",
+      "base_sha256": null,
+      "candidate_sha256": "128c32905d85d9e471cb8b8a2eb9bc8365ff94ce7535f6d9e09e3b034a49ee71"
+    },
+    {
+      "target": "rouge/account_cache.py",
+      "candidate": "work/wine-persistence-audit/candidate/rouge/account_cache.py",
+      "base_sha256": "29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e",
+      "candidate_sha256": "813cdcd49ef7797cbb432f65b735f80396222ba30ea1e68b37e32e318686f28d"
+    },
+    {
+      "target": "rouge/run_state.py",
+      "candidate": "work/wine-persistence-audit/candidate/rouge/run_state.py",
+      "base_sha256": "f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9",
+      "candidate_sha256": "4df8c60fe4c6acdfbd585727f2fc38c839e9e5cac2b33f4a30d052badbe5a31d"
+    },
+    {
+      "target": "tests/test_persistence_initial_install.py",
+      "candidate": "work/wine-persistence-audit/candidate/test_initial_install.py",
+      "base_sha256": null,
+      "candidate_sha256": "d77d38b53536c52be1cc3eb2e3d8f2aec44d8a5006effae4576849c7597eaa94"
+    }
+  ],
+  "base_branch": "codex/p2-development",
+  "candidate_behavior": {
+    "Linux": {
+      "tests": 76,
+      "passed": 76,
+      "skips": 0,
+      "exit_code": 0,
+      "receipt": "candidate-linux-final.json"
+    },
+    "Wine11.19": {
+      "tests": 76,
+      "passed": 76,
+      "skips": 0,
+      "exit_code": 0,
+      "receipt": "candidate-wine11-final-clean.json"
+    },
+    "font_original_case": {
+      "Linux": 1,
+      "Wine10": 1,
+      "Wine11.19": 1,
+      "skips": 0,
+      "exit_codes": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "remaining_native_windows_execution": true,
+  "runtime_source_patch_required": false,
+  "retained_C_runtime_patch_uncompiled_not_adopted": "runtime-source-review/wine-11.0-atomic-reparse-slot.patch",
+  "sealed": true,
+  "seal_time_utc": "2026-10-13"
+}

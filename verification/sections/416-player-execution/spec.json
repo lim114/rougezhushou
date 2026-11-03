@@ -1,0 +1,24 @@
+{
+  "title": "助手小窗绑定游戏窗口并跟随移动与隐藏",
+  "change": "工具条与已打开的玩家浮窗绑定经PID核对的游戏客户端范围，跟随窗口移动/缩放并限制在可用屏幕内；最小化、关闭或失去绑定时隐藏，恢复后无激活显示。支持暂停跟随，未找到游戏时保留独立设置入口。",
+  "limits": "本节交付窗口绑定与生命周期，不把内部目录悬停当作游戏内悬停。自有原生窗口验证几何、DPI换算与隐藏恢复，不冒充真实游戏采样或5秒藏品识别通过。",
+  "criteria": [
+    "只读校验窗口身份，不改变游戏焦点或输入",
+    "工具条与可见浮窗随绑定客户端移动",
+    "最小化和失效隐藏，恢复不打开其它内容",
+    "物理像素按显示器DPI换算且保持屏幕约束",
+    "关闭跟随不重置本局或私人设置"
+  ],
+  "additional_tests": [
+    "tests.test_player_compact_389",
+    "tests.test_player_toolbar_412",
+    "tests.test_player_feature_414"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_416",
+  "native": "scripts/verify_player_feature_window_416.py",
+  "unit_receipt": "verification/sections/416-player-checks/process.json",
+  "native_receipt": "verification/sections/416-player-window/window.json",
+  "native_process_receipt": "verification/sections/416-player-window-process/process.json",
+  "source_receipt": "verification/sections/416-reference.json"
+}

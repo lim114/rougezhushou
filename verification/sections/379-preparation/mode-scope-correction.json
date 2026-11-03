@@ -1,0 +1,197 @@
+{
+  "section": 379,
+  "kind": "CACHE_ONLY_MODE_SCOPE_CORRECTION_NOT_RUNTIME_VERIFICATION",
+  "actor": "/root/p3_371_battle_candidates",
+  "problem": "Only damage-source tracking is explicitly documented as a RA universal effect; the prior default overextended that mode label to all fleeing and disarm behaviour.",
+  "before_wording": "本页说明晶玲兽与晶珑兽的条件，不把生息演算专用的追踪、逃窜和缴械规则认作这场集成战略作战已生效。",
+  "after_wording": "完整文献中的追踪、逃窜和缴械分别保留；其中“受到伤害时追踪伤害来源”明确属于生息演算通用规则，不把它直接套用于本关。本关其余相关行为尚未逐项核验，本页不认定已经生效。",
+  "source": {
+    "path": "research/p3-current-guest-crystals-379/reference-data.json",
+    "pin": {
+      "bytes": 154571,
+      "sha256": "d9b1b0aaf17799ba581a39ba373d133f0bac54423b05871bd4c49730de3266f1"
+    },
+    "exact_excerpt": "※受到伤害时追踪伤害来源为生息演算模式的通用效果，并非敌人本身的能力",
+    "revisions": {
+      "flying": 442843,
+      "ground": 442844
+    }
+  },
+  "half_health_source_conflict": {
+    "flying": {
+      "handbook_lines": [
+        "生命值低于50％时同时攻击攻击范围内的所有单位。"
+      ],
+      "complete_card_lines": [
+        "生命值不高于50%时进入强化模式，否则回到初始模式"
+      ]
+    },
+    "ground": {
+      "handbook_lines": [
+        "攻击为二连击，生命值低于50％时攻击变为四连击"
+      ],
+      "complete_card_lines": [
+        "生命值不高于50%时进入强化模式"
+      ]
+    }
+  },
+  "half_health_display_correction": "Ground overview now separates initial/enhanced/Linglong combo facts from the unresolved strict versus inclusive 50 percent threshold; both actors are individually checked in existing necessary/native methods.",
+  "unchanged_source_pins": {
+    "research/p3-current-guest-crystals-379/crystal-fly-complete.html": {
+      "bytes": 109406,
+      "sha256": "82dce7bbe3b7c34f55d81bfd73b13319a73303f9c11fee97d66aa738c6529365"
+    },
+    "research/p3-current-guest-crystals-379/crystal-ground-complete.html": {
+      "bytes": 110629,
+      "sha256": "3fd49844994b831fdf096219cb886824608eed47e315e6d225cd79e0322abd7e"
+    },
+    "research/p3-current-guest-crystals-379/http-source-records.json": {
+      "bytes": 920,
+      "sha256": "979995aa53c4f4f7f993459f4db3c910d1e5fb2cd35c67899ff7f2b6dc9fc5d4"
+    },
+    "research/p3-current-guest-crystals-379/reference-data.json": {
+      "bytes": 154571,
+      "sha256": "d9b1b0aaf17799ba581a39ba373d133f0bac54423b05871bd4c49730de3266f1"
+    },
+    "research/p3-current-guest-crystals-379/runtime-manifest.json": {
+      "bytes": 1052,
+      "sha256": "015433e4fc028b4d29c7e32750d064b7a129b808371ecf06571541a4709f449d"
+    },
+    "research/p3-current-guest-crystals-379/source-notes.json": {
+      "bytes": 993,
+      "sha256": "ed7ab6a3c3563d960d2456bb76030809f0deba2c0afc5c727fa9abae8ac3c1a6"
+    }
+  },
+  "before_files": {
+    "rouge/current_guest_crystals.py": {
+      "bytes": 10080,
+      "sha256": "a661d47865fd7b36599a1ef6ed783aaf04de9664271b564cf8de78a3e26f2605"
+    },
+    "tests/test_current_guest_crystals_379.py": {
+      "bytes": 6500,
+      "sha256": "e107aaa5414b65a8de04629303bc325274adba8046dbccbded5ae44f5bade38d"
+    },
+    "scripts/verify_current_guest_crystals_window_379.py": {
+      "bytes": 24298,
+      "sha256": "f304f565b20faafc9a4b2a7e10eeb20660e86f953c7ca79f57d8f61b9346aa8d"
+    },
+    "HANDOFF.md": {
+      "bytes": 5779,
+      "sha256": "8bd8b8ec2ec368b1489c90cd8916d981054c1d7fd4c25759da832f0e1fa87208"
+    },
+    "PREPARED_FILES.json": {
+      "bytes": 3341,
+      "sha256": "5259eacc0fd6b6e30db32fb92701a012fdde5fb29077bc663a575b2faca50b19"
+    }
+  },
+  "changed_sources": {
+    "rouge/current_guest_crystals.py": {
+      "bytes": 11218,
+      "sha256": "f913142edaa35cace88bb50fa93f871e893f6a446a6f771b06da24ba4e71a8d0"
+    },
+    "tests/test_current_guest_crystals_379.py": {
+      "bytes": 8096,
+      "sha256": "fd684cd14e71817eb01c4e180e87f60eaa1d108934ecd4b88c8970a32bf1c2cd"
+    },
+    "scripts/verify_current_guest_crystals_window_379.py": {
+      "bytes": 25520,
+      "sha256": "0dd5d3d28c3b53a9da832651ffdf90dfca00aa95e78dc96f8b5e1b041ca703de"
+    }
+  },
+  "all_original_native_require_AST_preserved": true,
+  "original_require_calls": 58,
+  "candidate_require_calls": 61,
+  "unchanged_model_functions": [
+    "_same",
+    "packet",
+    "reference",
+    "target_available",
+    "entity",
+    "topics",
+    "selected_card",
+    "related_entities",
+    "resolve_related",
+    "map_target"
+  ],
+  "mechanism_or_numeric_model_changed": false,
+  "formal_tree_changed": false,
+  "tests_or_Qt_or_native_run": false,
+  "scope_limits": "No assertion that remaining RA-page behaviours are absent from IS; exact-stage applicability remains unverified. No current-server or actual-run claim.",
+  "followup_debuff_display_correction": {
+    "problem": "The generated phrase 每层防御力-100 could imply linear stacking although the complete original card gives a special stacking note.",
+    "before_wording": "文献记载普通攻击附加永久减防；原说明写每层防御力-100，并带有特殊叠加备注，本页不把它算入玩家当前防御。",
+    "after_wording": "文献记载普攻附加基础数值为防御力-100的永久减益。原文另注：“该减益可无限叠加，叠加时仅以第一层的数值为基础进行翻倍”。不能按每次固定再减100推算当前防御；本页不计算叠加后的实际防御。",
+    "source": {
+      "path": "research/p3-current-guest-crystals-379/reference-data.json",
+      "pin": {
+        "bytes": 154571,
+        "sha256": "d9b1b0aaf17799ba581a39ba373d133f0bac54423b05871bd4c49730de3266f1"
+      },
+      "actor": "ground",
+      "card_index": 1,
+      "revision": 442844,
+      "exact_special_stacking_warning": "该减益可无限叠加，叠加时仅以第一层的数值为基础进行翻倍"
+    },
+    "previous_files": {
+      "rouge/current_guest_crystals.py": {
+        "bytes": 10523,
+        "sha256": "d1ffed064f6592bacfcb325d6b66c2694fb0134e22a595c766bc3d6a4267d3a8"
+      },
+      "tests/test_current_guest_crystals_379.py": {
+        "bytes": 7302,
+        "sha256": "5328e817c7c0346fb1bf1736da96de7eac62c436359f224973ba2dfec82116a3"
+      },
+      "scripts/verify_current_guest_crystals_window_379.py": {
+        "bytes": 24807,
+        "sha256": "cc9bf2610d396acbb10c0a5f3b46d7835a15dd0af47b46272beecb7aff86ada5"
+      },
+      "HANDOFF.md": {
+        "bytes": 6405,
+        "sha256": "2aaf50d7a7f2e27f1b151363a0494291f1eb659b119428f1b7d4163d30115944"
+      },
+      "MODE_SCOPE_CORRECTION.json": {
+        "bytes": 5174,
+        "sha256": "4dd77383a0ff73d7071d75842d86e869e626818109fe20b22e135d26b3b077e4"
+      },
+      "PREPARED_FILES.json": {
+        "bytes": 3492,
+        "sha256": "8c720f8ed18936da5a9448ca9afd4196d6b9728ce502e8e8d0049378dfb31c8b"
+      }
+    },
+    "changed_sources": {
+      "rouge/current_guest_crystals.py": {
+        "bytes": 11218,
+        "sha256": "f913142edaa35cace88bb50fa93f871e893f6a446a6f771b06da24ba4e71a8d0"
+      },
+      "tests/test_current_guest_crystals_379.py": {
+        "bytes": 8096,
+        "sha256": "fd684cd14e71817eb01c4e180e87f60eaa1d108934ecd4b88c8970a32bf1c2cd"
+      },
+      "scripts/verify_current_guest_crystals_window_379.py": {
+        "bytes": 25520,
+        "sha256": "0dd5d3d28c3b53a9da832651ffdf90dfca00aa95e78dc96f8b5e1b041ca703de"
+      }
+    },
+    "unchanged_previous_model_functions": [
+      "_same",
+      "packet",
+      "reference",
+      "target_available",
+      "entity",
+      "topics",
+      "selected_card",
+      "related_entities",
+      "resolve_related",
+      "player_scope_notes",
+      "player_text",
+      "map_target"
+    ],
+    "all_previous_native_require_AST_preserved": true,
+    "previous_require_calls": 60,
+    "candidate_require_calls": 61,
+    "no_stacking_formula_or_actual_defence_added": true,
+    "technical_original_summary_preserved_with_correction_note": true,
+    "formal_changed": false,
+    "tests_or_Qt_or_native_run": false
+  }
+}

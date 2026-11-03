@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-12",
+  "scope": "Nine source-bound stable damage-scale records; parameter composition, not current live buff state",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "base_version": "26-09-13-15-28-10-30688348",
+  "native_methods": 28,
+  "unique_instruction_checks": 4099,
+  "metadata_binding_spans": 477,
+  "all_native_and_metadata_bytes_match": true,
+  "source_ids": [
+    "rogue_6_relic_legacy_5",
+    "rogue_6_relic_legacy_6",
+    "rogue_6_relic_legacy_7",
+    "rogue_6_relic_legacy_8",
+    "rogue_6_relic_legacy_9",
+    "rogue_6_relic_legacy_10",
+    "rogue_6_relic_legacy_11",
+    "rogue_6_relic_legacy_104",
+    "rogue_6_relic_fight_21"
+  ],
+  "base_one_merge": "same exact prefab key: old+new-1 via float32 addss then subss; one merged GlobalBuffData",
+  "independent_normal_elemental": "normal preprocessor appends independent copied boards; disableOverride=1 gives no cover key; event10 DamageScale multiplies current Modifier.value by own damage_scale",
+  "type_boundaries": "Only physical/magical/pure/element mask respectively; HEAL and buildup are outside these damage masks",
+  "parameter_oracles": {
+    "physical_pair": 1.4,
+    "magic_triple": 1.9,
+    "elemental_pair": 3.5
+  },
+  "numeric_precision": "Parameter arithmetic. Native float32 merge order, FP conversion/packet rounding and actual gameplay state are not claimed exact.",
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "current_hotfix_equivalence_proven": false,
+  "preserved_corrections": [
+    "Initial book+magic bug premise withdrawn: deployed_casters is combat reference-only; no input/numeric restoration.",
+    "Raw type usage in get_relicType is a class, not source key literal: actual dispatch proven with cctor StringLiteral and Register MethodSpec.",
+    "Initial extract JSON NaN float interpretation of integer RIP usage normalized to null while retaining bytes/uint32.",
+    "First focused unittest invocation from root selected old tests and missing new module; isolated draft rerun17 passed."
+  ],
+  "remaining_unknown": [
+    "Current XLua/hotfix equivalence and actual attachment/coverage/timing",
+    "Arbitrary foreign/manual/future-source combinations",
+    "Native acquisition order and exact float32/FP packet output"
+  ],
+  "artifact_sha256": {
+    "current-templates.json": "d2f2f49d282fe173f31858781347fec9f8a37155507c1a211be3b2c52b23af89",
+    "fixed-raw-sources.json": "6c56cfbf988995a5f46adb5898bffb13d8316b6d46ccda8ecd35a161a7bac3b7",
+    "native-proof.json": "4987e3ce81466a89bdd6cdfe627f8f3e85be28e10e93de5b98d82ea7a3a6ea1e",
+    "prefab-binding.json": "cbdc7ff6d8ad3c7128daeaf8abee1edb2aa1674a5c4c8d8b7a997a2ed791eb98",
+    "selected-metadata.json": "8e892fcfa4944edf51cfcc847cc3b8ff885cb12dbda609ee7ebe6adce73bd961",
+    "verify_native.py": "5e2ec18be9cfa38e01d233f542de1b28346069648f87282c6c65449898df4bbd"
+  },
+  "public_search": {
+    "queries": [
+      "site:prts.wiki 锈蚀刀片 物理 伤害",
+      "site:prts.wiki 阿猛 冰中火 元素伤害"
+    ],
+    "descriptive_context": [
+      "https://prts.wiki/w/锈蚀刀片",
+      "https://prts.wiki/w/阿猛",
+      "https://prts.wiki/w/沉沦者的黑流树海/拟造物质编目"
+    ],
+    "role": "Individual descriptions agree with selected raw parameters. Stacking closure uses current static original native/prefab/template evidence; secondary pages do not prove composition/calibration."
+  },
+  "validation": {
+    "focused_tests": 17,
+    "related_tests_run": 150,
+    "related_tests_passed": 149,
+    "historical_skips": 1,
+    "failures": 0,
+    "unchanged_default_skill_cases": 87,
+    "unchanged_default_result_entire_structure": true,
+    "generator_diff": "Exactly9 source records with composition metadata only; numerical parameters and all other records unchanged.",
+    "scope": "Isolated public calculation and source file comparison; no real Windows UI, game or ChatGPT delivery test"
+  }
+}

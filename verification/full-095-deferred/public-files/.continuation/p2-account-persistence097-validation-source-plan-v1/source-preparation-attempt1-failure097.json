@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "status": "RETAINED_SOURCE_METADATA_CONTROL_FAILURE_NOT_PROJECT_FAILURE",
+  "actual_tool_chunk": "2b57da",
+  "primary_exit_code": 1,
+  "reported_exception": "AssertionError: flat_native",
+  "stage": "Source pin checking historical whole functions; full historical file pin already matched",
+  "cause": "Author metadata control extracted full physical source lines including final newline, whereas declared prior096 whole-function pins use the AST source segment ending at the function's final token.",
+  "files_written_before_failure": ["account097-root-binding-template.json SOURCE bytes/hash fields", "source-pins097.json public SOURCE byte fields"],
+  "project_or_helper_or_codec_or_test_execution": 0,
+  "tracked_writes": 0,
+  "correction": "Compare complete AST source segment using ast.get_source_segment, preserving entire function text exactly according to existing provenance; historical whole file and all five function code stay unchanged. Fresh source metadata control required; this failed result cannot satisfy integrity.",
+  "runtime_pass": false,
+  "section097_completed": false,
+  "completed_section_increment": 0
+}

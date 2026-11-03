@@ -1,0 +1,15 @@
+{
+  "preparation_failures": [
+    {"attempt": 1, "entry": "python prepare_source.py", "exit_code": 1, "scope": "external static capture only", "saved_outputs_preserved": ["13 Git source snapshots", "saved-real-record389.json", "selected-source-evidence.json"], "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/future-deepcolor-s1-regeneration-note-source/prepare_source.py\", line 130, in <module>\n    raise RuntimeError('Source anchor not unique: ' + key)\nRuntimeError: Source anchor not unique: report_build_after_finish\n", "diagnosis": "damage.py has report rebuilds in several functions; a global string anchor is not unique", "correction": "separate complete_source.py scopes that one anchor to the AST of _evaluate_damage_once; original preparation code and first outputs stay preserved", "application_or_test_failure": false}
+  ],
+  "read_preparation_observations": [
+    "Optional guessed tests/test_summons.py and rouge/data/relics.json paths were absent; actual names were located via rg --files. No repeated API attempt.",
+    "An optional guessed rouge/formatters.py path was absent; formatting is in actual rouge/reporting.py.",
+    "An optional guessed tests/test_regeneration.py path was absent; actual related tests were found by rg --files.",
+    "Some broad source/file-list output was truncated; subsequent exact anchors and bounded JSON selectors replaced broad output. Truncation is not evidence or a failed product check.",
+    "One optional guessed research-directory file listing returned no files; no absence of public mechanism was inferred from it."
+  ],
+  "fresh_product_API_tests_helper_formatter_Qt_Wine_game_parser_download_calls": 0,
+  "retries_of_same_product_problem": 0,
+  "preparation_stop_policy": "If corrected preparation cannot finish by the third genuine attempt, stop and retain diagnosis; do not delete diagnostic artifacts."
+}

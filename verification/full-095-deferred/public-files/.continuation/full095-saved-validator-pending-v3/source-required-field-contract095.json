@@ -1,0 +1,290 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_DERIVED_REQUIRED_FIELDS_NOT_RUNTIME_OR_REPAIR",
+  "source_refs": {
+    "pending_UI": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/wine-full-ui-095-pending.py",
+      "bytes": 769607,
+      "sha256": "8b2bf2bad7b0fe0b9467fe8616847ce7f751ad6b9e5d400787ceb86eaad19bf8"
+    },
+    "fragment": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/full095-runtime-fragment.txt",
+      "bytes": 29430,
+      "sha256": "c4a519dda4037aa1ce1706b2a59efb1ba40d627e1b9e655e8f40bf73cae49821"
+    },
+    "app": {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 96725,
+      "sha256": "589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd"
+    },
+    "account_cache": {
+      "path": "/workspace/rougezhushou/rouge/account_cache.py",
+      "bytes": 10398,
+      "sha256": "17250d93fa3932fc6233bc5b8dd8d1a17d76a283feee5fe694ffebe530ecb5d5"
+    },
+    "run_state": {
+      "path": "/workspace/rougezhushou/rouge/run_state.py",
+      "bytes": 42446,
+      "sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9"
+    }
+  },
+  "actual_future_values_invented": false,
+  "ordinary_snapshot": {
+    "source_function": "snapshot",
+    "source_lines": [
+      1121,
+      1124
+    ],
+    "exact_keys": [
+      "native",
+      "JSON_projection",
+      "native_inverse_verified"
+    ],
+    "inverse_flag": "is True",
+    "projection": "Exact ordered encoded_json equality to full typed graph inverse; ordinary None remains ordinary, cannot switch raw schema."
+  },
+  "native_only_exception_snapshot": {
+    "source_function": "_native_only095/_trace_local095",
+    "exact_keys": [
+      "native",
+      "native_inverse_verified",
+      "JSON_projection_applicable"
+    ],
+    "flag": "is True",
+    "applicable": "is False",
+    "native_type": "tuple",
+    "source_path": "Only verified actual entry top-level exception_events[N].args; no nested path or other scanner入口豁免."
+  },
+  "raw_file_bytes_snapshot": {
+    "source_function": "byte_evidence",
+    "source_lines": [
+      1143,
+      1149
+    ],
+    "exact_keys": [
+      "schema",
+      "native",
+      "native_inverse_verified",
+      "JSON_safe_raw_bytes"
+    ],
+    "schema": "raw-file-bytes-evidence-v1",
+    "native_type": "None or bytes",
+    "true_source_current_UI_call_site": "_durable095 account_bytes only (pending fullUI line1353)",
+    "source_role_admission": "Raw schema alone is not proof; current UI durable account_bytes field must be source-qualified, all ordinary snapshot fields forbid it. Baseline raw roles must be read from actual baseline schema/source, not guessed.",
+    "projection_keys_order": [
+      "file_exists",
+      "raw_hex",
+      "byte_count",
+      "sha256"
+    ],
+    "projection_types": "file_exists exact bool; raw_hex/sha string or actual absence None; byte_count exact int or actual absence None; all values must be full native byte inverse derived and compare without bool/int/float coercion."
+  },
+  "entry_base": {
+    "source": "_profile095 fragment59/_origin095 fragment17-32",
+    "mandatory_fields": [
+      "sequence",
+      "entry",
+      "scope",
+      "phase",
+      "case",
+      "origin",
+      "outcome"
+    ],
+    "types": {
+      "sequence": "positive exact int",
+      "entry": "real source key string",
+      "scope": "nonempty str",
+      "phase": "nonempty str",
+      "case": "None or source case-id str",
+      "origin": "None or full source origin dict",
+      "outcome": "source-defined nonempty str"
+    },
+    "nonNone_origin_fields": [
+      "runner_line",
+      "function",
+      "source"
+    ],
+    "nonNone_origin_validation": "runner_line positive exact int within actual hash-bound FINAL source; source equals exact physical line; function nonempty str from source frame co_qualname, no class identity invented."
+  },
+  "caller_presence_rules": [
+    {
+      "entry": "rouge/damage.py:calculate_damage",
+      "keys_order": [
+        "scenario"
+      ],
+      "mandatory": true,
+      "unchanged_required": true
+    },
+    {
+      "entry": "rouge/damage.py:_prepare_damage",
+      "keys_order": [
+        "scenario"
+      ],
+      "mandatory": true,
+      "unchanged_required": true
+    },
+    {
+      "entry": "rouge/run_state.py:RunState.apply",
+      "keys_order": [
+        "observed",
+        "captured_at"
+      ],
+      "mandatory": true,
+      "unchanged_required": "actual bool equals native before/after equality; do not assume True"
+    },
+    {
+      "entry": "rouge/account_cache.py:AccountCache.observe",
+      "keys_order": [
+        "operator",
+        "captured_at"
+      ],
+      "mandatory": true,
+      "unchanged_required": "actual bool equals native before/after equality; do not assume True"
+    },
+    {
+      "entry": "rouge/account_cache.py:AccountCache.view",
+      "keys_order": [
+        "op"
+      ],
+      "mandatory": true,
+      "source_signature": "actual current guarded view(self,op), argument local exists",
+      "unchanged_required": "actual bool equals native before/after equality; do not assume True"
+    }
+  ],
+  "caller_common": "All five require complete ordinary caller_before/caller_after snapshots and caller_unchanged. Caller wrappers decode to dicts with actual source key/order. Other entries whose real _inputs095 returns None emit none of these fields; do not synthesize them or reclassify a missing required caller as legitimate no-input.",
+  "return_rules": [
+    {
+      "selector": "The two numerical API keys",
+      "mandatory": "ordinary returned snapshot; exact API native-derived outcome",
+      "outcome_rule": "raised_exception iff native return None and actual exception_events nonempty; otherwise returned_ + actual native type name",
+      "existing_constraints": "calculate_damage nonNone dict; _prepare_damage nonNone complete tuplelen4 firstdict; raw API result not equated to postprocessed UI result"
+    },
+    {
+      "selector": "exact rouge/app.py:MainWindow.calculate",
+      "mandatory": "ordinary returned_damage_result snapshot and visible_status exact str",
+      "UI_value_rule": "None or source-defined full {scenario,result} dict wrapper; outcome is no_numerical_result iff None else numerical_result_available. Current app.py assignments94/1020/1168/1171 confirm shape.",
+      "not_emitted": "Generic returned/returned_type fields are not emitted by this special branch."
+    },
+    {
+      "selector": "Every other targeted entry, native branch",
+      "mandatory": "ordinary returned snapshot whose native type is dict/list/tuple/bool/int/float/str or None",
+      "outcome_rule": "returned_none_with_exception_events iff None+events; else returned_ + actual native type name",
+      "note": "Do not incorrectly reuse numerical API raised_exception label."
+    },
+    {
+      "selector": "Every other targeted entry, type-only fallback branch",
+      "mandatory": "outcome returned_non_evidence_object and nonempty str returned_type; no returned snapshot",
+      "scope": "Actual class object is not recreated from JSON; this is source-qualified type-only evidence under trusted actual root launch, including any unsupported value type selected by exact source branch."
+    }
+  ],
+  "exception_events": "Absent iff none recorded; otherwise actual list of exact {type,message,args} with nonempty type str/message str and native-only tuple args. Current explicit root-path validation is preserved.",
+  "durable_capture": {
+    "source_function": "_durable095",
+    "source_lines": [
+      1352,
+      1353
+    ],
+    "exact_keys": [
+      "run",
+      "account",
+      "issues",
+      "preserve_original",
+      "alias_is_records",
+      "account_bytes",
+      "files"
+    ],
+    "required_values": "run/account/issues complete ordinary dict snapshots; preserve_original bool; alias_is_records is True; account_bytes legitimate source raw snapshot; files complete saved filesystem list. Deleting whole issues/account_bytes must fail.",
+    "physical_source_relation": "Current UI sets active AccountCache path from module.OPERATOR_STATE=folder/account.json. Its saved account_bytes should bind the same filesystem account.json bytes (or explicit absent file), without guessing that memory records must equal disk content when preserve_original/unsaved state differs.",
+    "manual_after_note": "Source stores before and after-automatic only; actual source live assertion _durable095(active,folder)==after_auto covers manual. Never require/invent separately saved third manual-after durable snapshot."
+  },
+  "filesystem_rows": {
+    "source_function": "filesystem",
+    "source_lines": [
+      1130,
+      1139
+    ],
+    "directory_keys": [
+      "path",
+      "kind"
+    ],
+    "file_base_keys": [
+      "path",
+      "kind",
+      "bytes",
+      "sha256",
+      "raw_hex"
+    ],
+    "file_branch": "exactly decoded ordinary snapshot on successful raw UTF8/JSON parse, or actual decode_error {type,message}; strict counts/digests and complete raw bytes retained."
+  },
+  "UI_capture": {
+    "source_function": "_capture095",
+    "source_lines": [
+      1332,
+      1350
+    ],
+    "base_fields": [
+      "damage_result",
+      "visible_status",
+      "UI",
+      "three_texts"
+    ],
+    "numeric_extra_field": "actual_explicit_formatter_entries source delta after actual three formatter calls",
+    "damage_result_role": "ordinary full snapshot None or complete scenario/result wrapper, never raw bytes schema",
+    "visible_status": "str",
+    "UI_exact_keys": [
+      "owner",
+      "skill",
+      "level",
+      "level_override",
+      "use_run_training",
+      "raw_damage",
+      "technical",
+      "training_status",
+      "current_operator_state"
+    ],
+    "current_operator_state": "ordinary full dict snapshot",
+    "field_type_sources": "Current app QSpinBox level; skill addItem userData integer; level_override bool, checkboxes bool; status text str; owner/skill may actual None on overview/empty selection. Read actual guarded app/Qt interface rather than invent future values.",
+    "numeric_three_texts": [
+      "applicable=True",
+      "strings exact estimate/default/technical str map"
+    ],
+    "None_three_texts": [
+      "applicable=False",
+      "reason=Existing error or natural early return",
+      "visible_status same capture str"
+    ],
+    "full_preservation": "Intermediate checkpoints and final full capture must retain required fields, not just native damage/display subsets. Existing whole baseline native aliases and precise text delta remain unchanged."
+  },
+  "new_state_rows": {
+    "source_function": "_new_subgroup095",
+    "base_fields": [
+      "id",
+      "planned",
+      "baseline_source",
+      "baseline_pointer",
+      "passed"
+    ],
+    "fresh_final_extra": [
+      "automatic",
+      "durable_after",
+      "all_actual_entries_including_probes",
+      "all_API_sequences"
+    ],
+    "nonfresh_before_extra": [
+      "durable_before"
+    ],
+    "nonfresh_auto_checkpoint_extra": [
+      "automatic",
+      "durable_after_automatic"
+    ],
+    "nonfresh_final_extra": [
+      "manual",
+      "full_native_JSON_three_texts_auto_manual_equal",
+      "all_actual_entries_including_probes",
+      "all_API_sequences"
+    ],
+    "numeric_callback_extra": "before_callback_damage_result ordinary snapshot",
+    "scope": "Source-derived presence/role table only. Exact final/intermediate IDs/order/source-plan/baseline link and all real native data remain mandatory. Do not create invented temporal identity or extra missing source snapshots."
+  },
+  "execution_boundary": "This table is standard-library source analysis only. Actual source-review/current FINAL/UI root launch/physical primary0/native files/four PNG views remain separate physical and root-observation gates. No helper/codec/project/API/Qt/Wine/test/network/Git run by reviewer."
+}

@@ -1,0 +1,592 @@
+{
+  "kind": "SOURCE_ONLY_PUBLIC_CALCULATE_DAMAGE_SCENARIOS_111",
+  "runtime_status": "not_executed",
+  "public_api": "rouge.damage.calculate_damage",
+  "cases_count": 18,
+  "cases": [
+    {
+      "id": "s1-unit-travel-absent",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0
+            }
+          }
+        },
+        "skill": 1
+      },
+      "observation_scope": "Default child travel control; omit the key, do not infer actual game projectile travel."
+    },
+    {
+      "id": "s1-unit-travel-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 0
+            }
+          }
+        },
+        "skill": 1
+      },
+      "observation_scope": "Explicit zero control against omitted travel."
+    },
+    {
+      "id": "s1-unit-travel-ten",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 1
+      },
+      "observation_scope": "Full-cast tail probe; every release and all three phase/window/cycle contracts remain visible."
+    },
+    {
+      "id": "s1-unit-travel-two-hundred",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 200
+            }
+          }
+        },
+        "skill": 1
+      },
+      "observation_scope": "Late emitted impacts beyond the finite skill/cycle reference; full cast attribution must not invent in-cycle hits."
+    },
+    {
+      "id": "s1-unit-travel-ten-window-five",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 1,
+        "window_seconds": 5
+      },
+      "observation_scope": "Finite five-second observation; public token component remains clipped to the observation window."
+    },
+    {
+      "id": "s1-unit-travel-ten-window-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 1,
+        "window_seconds": 0
+      },
+      "observation_scope": "Zero observation; original full cast is still computed separately."
+    },
+    {
+      "id": "s1-unit-travel-ten-disappears-twenty",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          },
+          "target_disappears_seconds": 20
+        },
+        "skill": 1
+      },
+      "observation_scope": "Target lifetime cancels impacts at or beyond the supplied disappearance time."
+    },
+    {
+      "id": "s1-unit-travel-ten-disappears-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          },
+          "target_disappears_seconds": 0
+        },
+        "skill": 1
+      },
+      "observation_scope": "No live enemy source; neither cast-tail nor normal reference manufactures token damage."
+    },
+    {
+      "id": "s1-continuous-unit-travel-ten",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "continuous",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 1
+      },
+      "observation_scope": "Continuous-mode control; current branch does not read projectile travel for its interval estimate."
+    },
+    {
+      "id": "s2-unit-travel-absent",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0
+            }
+          }
+        },
+        "skill": 2
+      },
+      "observation_scope": "Default child travel control; omit the key, do not infer actual game projectile travel."
+    },
+    {
+      "id": "s2-unit-travel-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 0
+            }
+          }
+        },
+        "skill": 2
+      },
+      "observation_scope": "Explicit zero control against omitted travel."
+    },
+    {
+      "id": "s2-unit-travel-ten",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 2
+      },
+      "observation_scope": "Full-cast tail probe; every release and all three phase/window/cycle contracts remain visible."
+    },
+    {
+      "id": "s2-unit-travel-two-hundred",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 200
+            }
+          }
+        },
+        "skill": 2
+      },
+      "observation_scope": "Late emitted impacts beyond the finite skill/cycle reference; full cast attribution must not invent in-cycle hits."
+    },
+    {
+      "id": "s2-unit-travel-ten-window-five",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 2,
+        "window_seconds": 5
+      },
+      "observation_scope": "Finite five-second observation; public token component remains clipped to the observation window."
+    },
+    {
+      "id": "s2-unit-travel-ten-window-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 2,
+        "window_seconds": 0
+      },
+      "observation_scope": "Zero observation; original full cast is still computed separately."
+    },
+    {
+      "id": "s2-unit-travel-ten-disappears-twenty",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          },
+          "target_disappears_seconds": 20
+        },
+        "skill": 2
+      },
+      "observation_scope": "Target lifetime cancels impacts at or beyond the supplied disappearance time."
+    },
+    {
+      "id": "s2-unit-travel-ten-disappears-zero",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          },
+          "target_disappears_seconds": 0
+        },
+        "skill": 2
+      },
+      "observation_scope": "No live enemy source; neither cast-tail nor normal reference manufactures token damage."
+    },
+    {
+      "id": "s2-continuous-unit-travel-ten",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "continuous",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "skill": 2
+      },
+      "observation_scope": "Continuous-mode control; current branch does not read projectile travel for its interval estimate."
+    }
+  ],
+  "expectations_are_source_contracts_not_actual_numeric_results": true,
+  "normal_interface_note": "There is no public normal=True scenario contract. Normal/recharge reference is observed only from original calculate_damage output timing.recharge_streams and cycle metrics."
+}

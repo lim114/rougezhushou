@@ -1,0 +1,61 @@
+{
+  "kind": "implementation_review_maintenance",
+  "title": "精简两处OCR精确缓存，修正云端识别优化优先级",
+  "baseline_commit": "be46c55462e3b7d2afeb644fcdefcff87ffdd178",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "implemented_scope_passed": true,
+  "different_tests": 89,
+  "new_cache_tests": 6,
+  "new_cloud_priority_test": 1,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "raw_actual_OCR_frame_cases": 4,
+  "paired_rounds": 12,
+  "old_new_original_full_output_equal": true,
+  "cache_component_medians_ms": {
+    "old_exact_ms": 0.14058033392454186,
+    "new_exact_ms": 0.07568266708403826,
+    "old_batch_ms": 0.25092466656739515,
+    "new_batch_ms": 0.12964466664319238
+  },
+  "whole_page_warm_median_ms": {
+    "old": 371.75250006839633,
+    "new": 386.4895000588149,
+    "paired_samples": 8,
+    "not_a_generalized_speedup_claim": true
+  },
+  "whole_page_speedup_claimed": false,
+  "physical_production_lines_net_added": -7,
+  "test_window_updated": true,
+  "private_six_paths_unchanged_during_startup": true,
+  "source_review": {
+    "path": "verification/maintenance/ocr-cache-review-20261031/source-review.json",
+    "sha256": "47322306e2c0a1c5ad09ca64cefa0b5047f6d50ce046aa2c42f99b4bc87086a0",
+    "bytes": 4308
+  },
+  "tests": {
+    "path": "verification/maintenance/ocr-cache-review-20261031/tests-current/results.json",
+    "sha256": "1643e2c2b678556ee6be0e06d7f290fc7e526defc4e3df5b87108fac827b9ec4",
+    "bytes": 428
+  },
+  "benchmark": {
+    "path": "verification/maintenance/ocr-cache-review-20261031/benchmark/results.json",
+    "sha256": "218f7e03d2375f89cfb76ba8de5e0a315edcd2a376ee42315b776b5f374e41f6",
+    "bytes": 9593
+  },
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "whole_program_complete": false,
+  "whole_existing_code_compliant": false,
+  "whole_video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "recognition_priority": "concurrent",
+  "game_operated": false,
+  "chat_sent": false,
+  "private_data_included": false,
+  "publication_binding": "enclosing maintenance commit; ordinary push and actual remote/blob verification required"
+}

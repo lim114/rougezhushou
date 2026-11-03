@@ -1,0 +1,26 @@
+{
+  "kind": "SOURCE_ONLY_NOT_APPLIED",
+  "target": "rouge/timing.py",
+  "baseline": {
+    "bytes": 28025,
+    "sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6"
+  },
+  "candidate": {
+    "bytes": 28342,
+    "sha256": "cac589f1f08871eda568c718904d9b40af3f34460a0220ca5eb14ad3916a8acf"
+  },
+  "blocks": [
+    {
+      "before": "    if increment<=0:return None\r\n",
+      "after": "    if increment<=0 and required>0:return None\r\n"
+    },
+    {
+      "before": "    count=math.ceil(required/increment)\r\n",
+      "after": "    count=math.ceil(required/increment) if required>0 else 0\r\n"
+    },
+    {
+      "before": "    if len(frames)<count:return None\r\n    if wait_next_attack and timeline.mode=='frames':\r\n",
+      "after": "    if len(frames)<count:return None\r\n    if wait_next_attack and count==0 and timeline.mode=='continuous':\r\n        # SP is already ready: the existing continuous stream begins at 0.\r\n        # It still needs a legal emitted attack; an empty stream is unknown.\r\n        return 0.0 if events['start_frames'] else None\r\n    if wait_next_attack and timeline.mode=='frames':\r\n"
+    }
+  ]
+}

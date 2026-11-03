@@ -1,0 +1,378 @@
+{
+  "captured_utc": "2026-10-07T21:19:11.716997+00:00",
+  "package_root": "/workspace/.continuation/p2-declared-count-types/baseline",
+  "observed_production_head": "182d5e5c7379cc389c535d9f00105ef94336ec3a",
+  "package_damage_sha256": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+  "new_tests_sha256": "4c73de67b2d496e6ffa2a18241e043a17c79520fb95b1e2440bf8cd52b0100fc",
+  "public_probe_calls": 24,
+  "records": [
+    {
+      "name": "active:shield_break_count:frames:True",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "shield_break_count": true
+      },
+      "accepted": true,
+      "result_sha256": "a40b6051ad567d5d14b5d85f305c94ad5fc5839dc9a4b63e2b635518ceb12912"
+    },
+    {
+      "name": "active:shield_break_count:continuous:False",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "shield_break_count": false
+      },
+      "accepted": true,
+      "result_sha256": "5f31258728d5907850e933a867430b73fad3d244b0f914f6218044808b315c62"
+    },
+    {
+      "name": "active:charge_count:frames:True",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "charge_count": true
+      },
+      "accepted": true,
+      "result_sha256": "a7596bdcd40c93e5f5954c353aa30d23642b079ea25f3789b4faa0d7014ecc94"
+    },
+    {
+      "name": "active:charge_count:continuous:False",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "charge_count": false
+      },
+      "accepted": true,
+      "result_sha256": "9b5e24afba523cac436d42c0965bb94d02238d42dea33945537de240a4dc90ca"
+    },
+    {
+      "name": "active:activation_count:frames:True",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "activation_count": true
+      },
+      "accepted": true,
+      "result_sha256": "b3aaece4e528ec53e47169b21c26b5ccef91ece6b3630d225f4e4f009f07da6d"
+    },
+    {
+      "name": "active:activation_count:continuous:False",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "activation_count": false
+      },
+      "accepted": true,
+      "result_sha256": "1fc5917f27d39a9599c1ce2c55938be2933e7459f7b574ba8aaf9855fdb19c62"
+    },
+    {
+      "name": "active:deployment_stacks:frames:True",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "frames",
+        "deployment_stacks": true
+      },
+      "accepted": true,
+      "result_sha256": "559b309dff999bb9daae0a23e15161890872e703d0a9a73c3c802ada4f0ae7be"
+    },
+    {
+      "name": "active:deployment_stacks:continuous:False",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "deployment_stacks": false
+      },
+      "accepted": true,
+      "result_sha256": "512f4998511f7722240e9df4503f184fe2915bf12d2542f54e62d163408deb77"
+    },
+    {
+      "name": "invalid_skill",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": false,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "请选择该干员的有效技能。"
+    },
+    {
+      "name": "invalid_rank",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": true,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "技能等级需要为1–10的整数。"
+    },
+    {
+      "name": "invalid_elite",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true,
+        "elite": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "精英阶段需要为 0、1 或 2。"
+    },
+    {
+      "name": "invalid_level",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true,
+        "level": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "等级或信赖超出范围（信赖按加成进度 0–100%）。"
+    },
+    {
+      "name": "invalid_potential",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true,
+        "potential": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "潜能需要为 1–6。"
+    },
+    {
+      "name": "locked_skill",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 7,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "elite": 0,
+        "shield_break_count": true
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "当前精英阶段尚未开放所选技能或专精。"
+    },
+    {
+      "name": "inactive_legacy",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "shield_break_count": true
+      },
+      "accepted": true,
+      "result_sha256": "65b87b56108257d3bd689192dcfb385759cd6ff137e9325254ac809ba18b3e19"
+    },
+    {
+      "name": "inactive_legacy_omitted",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10
+      },
+      "accepted": true,
+      "result_sha256": "65b87b56108257d3bd689192dcfb385759cd6ff137e9325254ac809ba18b3e19"
+    },
+    {
+      "name": "inactive_extended",
+      "scenario": {
+        "operator": "char_298_susuro",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "shield_break_count": true,
+        "charge_count": true,
+        "activation_count": true,
+        "deployment_stacks": true
+      },
+      "accepted": true,
+      "result_sha256": "24609901d67449b2cc6415a6a185fc20db96778ae96c3ca64139c4091612faf6"
+    },
+    {
+      "name": "inactive_extended_omitted",
+      "scenario": {
+        "operator": "char_298_susuro",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10
+      },
+      "accepted": true,
+      "result_sha256": "24609901d67449b2cc6415a6a185fc20db96778ae96c3ca64139c4091612faf6"
+    },
+    {
+      "name": "shield_numeric_string",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "shield_break_count": "1.0"
+      },
+      "accepted": true,
+      "result_sha256": "a40b6051ad567d5d14b5d85f305c94ad5fc5839dc9a4b63e2b635518ceb12912"
+    },
+    {
+      "name": "shield_integer",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "shield_break_count": 1
+      },
+      "accepted": true,
+      "result_sha256": "a40b6051ad567d5d14b5d85f305c94ad5fc5839dc9a4b63e2b635518ceb12912"
+    },
+    {
+      "name": "shield_integer_float",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "shield_break_count": 1.0
+      },
+      "accepted": true,
+      "result_sha256": "a40b6051ad567d5d14b5d85f305c94ad5fc5839dc9a4b63e2b635518ceb12912"
+    },
+    {
+      "name": "charge_existing_string_error",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": "1.0"
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "invalid literal for int() with base 10: '1.0'"
+    },
+    {
+      "name": "active_bool_plus_invalid_enemy",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true,
+        "enemy_defense": -1
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "enemy_defense 需要有限非负数；法抗范围为 0–100。"
+    },
+    {
+      "name": "inactive_bool_plus_invalid_enemy",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "companion_attack": 2000,
+        "window_seconds": 10,
+        "charge_count": true,
+        "enemy_defense": -1
+      },
+      "accepted": false,
+      "error_type": "ValueError",
+      "error": "enemy_defense 需要有限非负数；法抗范围为 0–100。"
+    }
+  ],
+  "independent_new_tests": {
+    "methods_run": 7,
+    "failures": 17,
+    "errors": 0,
+    "skipped": 0
+  },
+  "tracked_files_edited": false,
+  "native_validation_performed": false
+}

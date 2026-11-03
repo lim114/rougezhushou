@@ -1,0 +1,14 @@
+--- v1/test_new_run_capture_view_112.py
++++ v2/test_new_run_capture_view_112.py
+@@ -64,7 +64,10 @@
+         account={'id':'mechanist','scope':'account','fields':{'elite':2,'level':90,
+             'trust':100,'potential':1,'module_id':None,'module_level':0},
+             'skill_ranks':{'1':10,'2':10,'3':10}}
+-        self.assertTrue(self.window.apply_operator_observation(account,self.stamp()))
++        self.window.apply_operator_observation(account,self.stamp())
++        self.assertEqual(self.window.account_cache.records['mechanist']['fields'],account['fields'])
++        self.assertEqual(self.window.account_cache.records['mechanist']['skill_ranks'],account['skill_ranks'])
++        self.assertTrue((self.directory/'account.json').is_file())
+         identity='ro6_n_1_2';stage=module.catalog()['stages'][identity]
+         self.sample({'page':'node_detail','nodes':[],'captured_at':self.stamp(),
+             'stage':{'id':identity,'visible_variant_id':identity,'name':stage['name']}})

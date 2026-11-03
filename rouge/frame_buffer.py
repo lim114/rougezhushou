@@ -213,21 +213,21 @@ class FrameBuffer:
             self._trim()
             return seq
 
-    def take(self, force=False):
-        """Take oldest candidate; force bypasses settling, never skips the FIFO.
+    def take(self, force=False, *, prefer_latest=False):
+        """Take one candidate; current-first removes only that candidate, never the rest.
 
         With no pending candidate, force returns the latest observation. Normal
         polling does not repeatedly re-recognize an unchanged static page.
         """
         with self._lock:
             if self._pending:
-                frame = self._pending[0]
+                frame = self._pending[-1] if prefer_latest else self._pending[0]
                 # Once a different page follows, preserve the preceding page
                 # immediately, including pages visible for only one frame.
                 if (not force and len(self._pending) == 1 and
                         time.monotonic() < frame['ready_at']):
                     return None
-                self._pending.popleft()
+                self._pending.pop() if prefer_latest else self._pending.popleft()
                 self._counts['taken'] += 1
             elif force and self._latest is not None:
                 frame = self._latest
@@ -261,5 +261,6 @@ class FrameBuffer:
                         max_bytes=self.max_bytes, max_frames=self.max_frames,
                         generation=self._generation, seq=self._seq,
                         last_taken_seq=self._last_taken_seq,
+                        oldest_seq=(self._pending[0]['seq'] if self._pending else None),
                         oldest_at=(self._pending[0]['captured_at'] if self._pending else None),
                         latest_at=(self._latest['captured_at'] if self._latest else None))

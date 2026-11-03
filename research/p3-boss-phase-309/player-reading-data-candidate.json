@@ -1,0 +1,3459 @@
+{
+  "kind": "SOURCE_ONLY_PLAYER_DATA_PROPOSAL_NOT_RUNTIME_ACCEPTANCE",
+  "identity": {
+    "stage_id": "ro6_b_6",
+    "enemy_id": "enemy_2150_shchmr",
+    "level": 0
+  },
+  "title": "畸症 · 玻利瓦尔，症结之核：形态与转换资料",
+  "overview_notice": "这里按固定文献查看招式归属、转换条件和返回关系；不识别当前形态，也不改预计面板、伤害、地图或本局记录。",
+  "scope_notice": "第一、第二、第三是文献中的主要战斗形态；两种灾厄形态是中间过程，飞行是第三形态的子形态。不要将列表项数理解为血条数、击倒次数或通关保证。",
+  "phases": [
+    {
+      "phase_id": "first",
+      "name": "第一形态",
+      "kind": "main_combat_form",
+      "skill_ids": [],
+      "summary": "文献称为第一形态的主要战斗形态。普通攻击的资料另见共同能力。被击倒后的重生和转入灾厄形态，见转换流程；这里不识别本局入场状态。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    },
+    {
+      "phase_id": "calamity_1",
+      "name": "灾厄形态(一)",
+      "kind": "intermediate_calamity_form",
+      "skill_ids": [
+        "calamity_mouth"
+      ],
+      "summary": "第一次重生后进入的中间形态。文献列为无敌、孤立、自缚、不可阻挡，且不能攻击；在这里施放灾厄之口。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    },
+    {
+      "phase_id": "second",
+      "name": "第二形态",
+      "kind": "main_combat_form",
+      "skill_ids": [
+        "unextinguished_ground"
+      ],
+      "summary": "第一次灾厄阶段完成后的战斗形态。文献将未熄之地列在此形态；被击倒后经过重生转入灾厄形态(二)。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    },
+    {
+      "phase_id": "calamity_2",
+      "name": "灾厄形态(二)",
+      "kind": "intermediate_calamity_form",
+      "skill_ids": [
+        "calamity_mouth"
+      ],
+      "summary": "第二次重生后进入；第三形态也可以通过“再次释放”返回这里。两条进入途径不要混为再次重生。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    },
+    {
+      "phase_id": "third",
+      "name": "第三形态",
+      "kind": "main_combat_form",
+      "skill_ids": [
+        "unextinguished_ground",
+        "repeat_calamity",
+        "takeoff"
+      ],
+      "summary": "文献分别列出未熄之地、再次释放和起飞；可以返回灾厄形态(二)，也可以进入飞行子形态，不是一条必然按顺序执行的时间表。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    },
+    {
+      "phase_id": "flying",
+      "name": "飞行形态",
+      "kind": "third_form_flight_subform",
+      "skill_ids": [
+        "flying_ground",
+        "landing"
+      ],
+      "summary": "由第三形态起飞后进入，不进行普通攻击；文献列出飞行版未熄之地与降落，降落后回第三形态。不能仅因多列一项，就将其算作额外一条血或新的关卡引用。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "transition_id": "first_to_calamity1",
+      "from_phase_id": "first",
+      "to_phase_id": "calamity_1",
+      "condition": "第一形态被击倒",
+      "text": "文献：先进行3.6秒重生并回复100%生命，重生结束后进入灾厄形态(一)。属性强化的口径另见来源差异，不在此换算。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "calamity1_to_second",
+      "from_phase_id": "calamity_1",
+      "to_phase_id": "second",
+      "condition": "灾厄之口未被打断并完成后续过程",
+      "text": "文献：技能结束后获得1.63秒强制缴械；该效果结束后进入第二形态。主目标退场导致的技能中断与重新施放另见招式说明，不能把每次中断当成进入下一形态。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "second_to_calamity2",
+      "from_phase_id": "second",
+      "to_phase_id": "calamity_2",
+      "condition": "第二形态被击倒",
+      "text": "文献：先进行3.6秒重生并回复100%生命，重生结束后进入灾厄形态(二)。第二次强化字段与文献尚不能直接对算。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "calamity2_to_third",
+      "from_phase_id": "calamity_2",
+      "to_phase_id": "third",
+      "condition": "灾厄之口未被打断并完成后续过程",
+      "text": "文献：技能结束后获得1.63秒强制缴械；该效果结束后进入第三形态。这次转换不经过重生。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "third_to_calamity2",
+      "from_phase_id": "third",
+      "to_phase_id": "calamity_2",
+      "condition": "第三形态的“再次释放”技能结束",
+      "text": "文献：返回灾厄形态(二)，这次返回不经过重生；不是再次被击倒。实际就绪和发动时点仍未知。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "third_to_flying",
+      "from_phase_id": "third",
+      "to_phase_id": "flying",
+      "condition": "第三形态的“起飞”技能结束",
+      "text": "文献：获得近地悬浮并进入飞行形态，15秒内不能触发降落。这里不据冷却参数制作实际倒计时。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    },
+    {
+      "transition_id": "flying_to_third",
+      "from_phase_id": "flying",
+      "to_phase_id": "third",
+      "condition": "飞行形态的“降落”技能结束",
+      "text": "文献：解除近地悬浮并回到第三形态。",
+      "source_refs": [
+        {
+          "file": "boss-complete.html",
+          "revision": "435612",
+          "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+          "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+        }
+      ],
+      "actual_transition": null
+    }
+  ],
+  "skills": [
+    {
+      "skill_id": "calamity_mouth",
+      "name": "灾厄之口",
+      "documented_modes": [],
+      "effect_text": "技能触发时，选择全场范围内最大生命值最高的我方干员 > 自身为主目标，在主目标所在位置创建一个持续至技能结束的弹道，弹道周围8格内的所有我方单位（不受迷彩制约）视为“周围单位”\n自身在技能触发后第2秒及此后每0.5秒检测一次：\n①若主目标依然存活，则对以主目标为中心（存疑）周围8格内的所有我方单位造成攻击力40%的近战途径真实伤害，对全场范围内未被弹道记为“周围单位”的所有我方单位（不受迷彩制约）造成攻击力15%的无途径法术伤害；\n②若主目标已退场，打断此技能，以此方式打断会将此技能的持续时间改为本次打断后的剩余时间，同时消耗1层【延长灾厄】以额外增加11秒持续时间（离开灾厄形态时，重置此技能持续时间为默认值）\n※若技能未被打断，结束时获得1.63秒强制缴械，该强制缴械结束后自身由灾厄形态(一)进入第二形态（或由灾厄形态(二)进入第三形态）\n※技能持续20秒",
+      "source_selector": ".ak-card__body.skill_card[0]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "灾厄之口",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[灾厄形态(一)]",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[灾厄形态(二)]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "0"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "1"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "技能触发时，选择全场范围内最大生命值",
+              {
+                "tag": "b",
+                "attributes": {},
+                "children": [
+                  "最高"
+                ]
+              },
+              "的我方干员 > 自身为主目标，在主目标所在位置创建一个持续至技能结束的弹道，弹道周围8格",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "mdi mdi-border-outside",
+                      "style": "font-size:;text-shadow: 0 0 3px;color:var(--darkblue);"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none;",
+                      "data-size": "350",
+                      "data-trigger": "click mouseenter focus",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "svg",
+                        "attributes": {
+                          "xmlns": "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "viewbox": "0 0 78 78",
+                          "style": "vertical-align:top;width:78px;height:78px;width:!important;height:!important"
+                        },
+                        "children": [
+                          {
+                            "tag": "defs",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "1",
+                                  "fill": "#27a6f3",
+                                  "width": "22",
+                                  "height": "22"
+                                },
+                                "children": []
+                              },
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "2",
+                                  "fill": "none",
+                                  "stroke": "gray",
+                                  "stroke-width": "2",
+                                  "width": "20",
+                                  "height": "20"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#1",
+                              "x": "27",
+                              "y": "27"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "54"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "54"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "54"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "内的所有我方单位（不受",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%BF%B7%E5%BD%A9",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "迷彩"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：迷彩"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被对立阵营的部分能力和部分弹道选中；会因隐匿免疫而失效，但在因隐匿免疫而失效的情况下依旧能被检测到",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※由特殊逻辑实现，不属于“无法选择”效果",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※所有光环类能力、以及涉及中点判定/格子判定的效果均不受迷彩制约，但存在主动排除受迷彩影响单位的情况（此时站内会特别标注）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※迷彩与“阻挡时解除”没有直接关系，该机制通常由其他效果实现"
+                    ]
+                  }
+                ]
+              },
+              "制约）视为“周围单位”",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "自身在技能触发后第2秒及此后每0.5秒检测一次：",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "①若主目标依然存活，则对以主目标为中心（存疑）周围8格",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "mdi mdi-border-outside",
+                      "style": "font-size:;text-shadow: 0 0 3px;color:var(--darkblue);"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none;",
+                      "data-size": "350",
+                      "data-trigger": "click mouseenter focus",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "svg",
+                        "attributes": {
+                          "xmlns": "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "viewbox": "0 0 78 78",
+                          "style": "vertical-align:top;width:78px;height:78px;width:!important;height:!important"
+                        },
+                        "children": [
+                          {
+                            "tag": "defs",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "1",
+                                  "fill": "#27a6f3",
+                                  "width": "22",
+                                  "height": "22"
+                                },
+                                "children": []
+                              },
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "2",
+                                  "fill": "none",
+                                  "stroke": "gray",
+                                  "stroke-width": "2",
+                                  "width": "20",
+                                  "height": "20"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#1",
+                              "x": "27",
+                              "y": "27"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "54"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "54"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "54"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "内的所有我方单位造成攻击力40%的近战途径真实伤害，对全场范围内未被弹道记为“周围单位”的所有我方单位（不受",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%BF%B7%E5%BD%A9",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "迷彩"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：迷彩"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被对立阵营的部分能力和部分弹道选中；会因隐匿免疫而失效，但在因隐匿免疫而失效的情况下依旧能被检测到",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※由特殊逻辑实现，不属于“无法选择”效果",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※所有光环类能力、以及涉及中点判定/格子判定的效果均不受迷彩制约，但存在主动排除受迷彩影响单位的情况（此时站内会特别标注）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※迷彩与“阻挡时解除”没有直接关系，该机制通常由其他效果实现"
+                    ]
+                  }
+                ]
+              },
+              "制约）造成攻击力15%的无途径法术伤害；",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "②若主目标已退场，打断此技能，以此方式打断会将此技能的持续时间改为本次打断后的剩余时间，同时消耗1层【延长灾厄】以额外增加11秒持续时间（离开",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "灾厄形态"
+                ]
+              },
+              "时，重置此技能持续时间为默认值）",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "※若技能未被打断，结束时获得1.63秒",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E5%BC%BA%E5%88%B6%E7%BC%B4%E6%A2%B0",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "强制缴械"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：强制缴械"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法触发普通攻击，正在进行的普通攻击将被中断",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※效果与",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "缴械"
+                        ]
+                      },
+                      "相近，但不会因无敌失效",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※其他普通攻击行为（如猎手装弹、秘术师储存能量）同样无法进行"
+                    ]
+                  }
+                ]
+              },
+              "，该",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E5%BC%BA%E5%88%B6%E7%BC%B4%E6%A2%B0",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "强制缴械"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：强制缴械"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法触发普通攻击，正在进行的普通攻击将被中断",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※效果与",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "缴械"
+                        ]
+                      },
+                      "相近，但不会因无敌失效",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※其他普通攻击行为（如猎手装弹、秘术师储存能量）同样无法进行"
+                    ]
+                  }
+                ]
+              },
+              "结束后自身由",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "灾厄形态(一)"
+                ]
+              },
+              "进入",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "第二形态"
+                ]
+              },
+              "（或由",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "灾厄形态(二)"
+                ]
+              },
+              "进入",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "第三形态"
+                ]
+              },
+              "）",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "※技能持续20秒"
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": true,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    },
+    {
+      "skill_id": "unextinguished_ground",
+      "name": "未熄之地",
+      "documented_modes": [],
+      "effect_text": "仅半径20.0范围内存在我方单位时可触发：\n在目标所在位置释放一个持续25秒的燃烧区域弹道（优先选择未受【未熄之地dot】影响的目标），燃烧区域生成时对周围4格内的所有我方单位（无视迷彩）造成攻击力120%的无途径法术伤害，持续期间使相同范围内的所有我方单位（不受迷彩制约）获得【未熄之地dot】\n【未熄之地dot】：每秒检测一次，若受影响者的阻挡模式为地面阻挡，对其造成攻击力15%的无途径法术伤害（同名效果不叠加）\n※索敌不受阻挡影响",
+      "source_selector": ".ak-card__body.skill_card[1]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "未熄之地",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[第二形态]",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[第三形态]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "6"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "12"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "仅半径20.0范围内存在我方单位时可触发：",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "在目标所在位置释放一个持续25秒的燃烧区域弹道（优先选择未受【未熄之地dot】影响的目标），燃烧区域生成时对周围4格",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "mdi mdi-border-outside",
+                      "style": "font-size:;text-shadow: 0 0 3px;color:var(--darkblue);"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none;",
+                      "data-size": "350",
+                      "data-trigger": "click mouseenter focus",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "svg",
+                        "attributes": {
+                          "xmlns": "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "viewbox": "0 0 78 78",
+                          "style": "vertical-align:top;width:78px;height:78px;width:!important;height:!important"
+                        },
+                        "children": [
+                          {
+                            "tag": "defs",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "1",
+                                  "fill": "#27a6f3",
+                                  "width": "22",
+                                  "height": "22"
+                                },
+                                "children": []
+                              },
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "2",
+                                  "fill": "none",
+                                  "stroke": "gray",
+                                  "stroke-width": "2",
+                                  "width": "20",
+                                  "height": "20"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#1",
+                              "x": "27",
+                              "y": "27"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "54"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "内的所有我方单位（无视",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%BF%B7%E5%BD%A9",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "迷彩"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：迷彩"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被对立阵营的部分能力和部分弹道选中；会因隐匿免疫而失效，但在因隐匿免疫而失效的情况下依旧能被检测到",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※由特殊逻辑实现，不属于“无法选择”效果",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※所有光环类能力、以及涉及中点判定/格子判定的效果均不受迷彩制约，但存在主动排除受迷彩影响单位的情况（此时站内会特别标注）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※迷彩与“阻挡时解除”没有直接关系，该机制通常由其他效果实现"
+                    ]
+                  }
+                ]
+              },
+              "）造成攻击力120%的无途径法术伤害，持续期间使相同范围",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "mdi mdi-border-outside",
+                      "style": "font-size:;text-shadow: 0 0 3px;color:var(--darkblue);"
+                    },
+                    "children": []
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none;",
+                      "data-size": "350",
+                      "data-trigger": "click mouseenter focus",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "svg",
+                        "attributes": {
+                          "xmlns": "http://www.w3.org/2000/svg",
+                          "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                          "viewbox": "0 0 78 78",
+                          "style": "vertical-align:top;width:78px;height:78px;width:!important;height:!important"
+                        },
+                        "children": [
+                          {
+                            "tag": "defs",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "1",
+                                  "fill": "#27a6f3",
+                                  "width": "22",
+                                  "height": "22"
+                                },
+                                "children": []
+                              },
+                              {
+                                "tag": "rect",
+                                "attributes": {
+                                  "id": "2",
+                                  "fill": "none",
+                                  "stroke": "gray",
+                                  "stroke-width": "2",
+                                  "width": "20",
+                                  "height": "20"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "2"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "2",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#1",
+                              "x": "27",
+                              "y": "27"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "54",
+                              "y": "28"
+                            },
+                            "children": []
+                          },
+                          {
+                            "tag": "use",
+                            "attributes": {
+                              "xlink:href": "#2",
+                              "x": "28",
+                              "y": "54"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "内的所有我方单位（不受",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%BF%B7%E5%BD%A9",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "迷彩"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：迷彩"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被对立阵营的部分能力和部分弹道选中；会因隐匿免疫而失效，但在因隐匿免疫而失效的情况下依旧能被检测到",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※由特殊逻辑实现，不属于“无法选择”效果",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※所有光环类能力、以及涉及中点判定/格子判定的效果均不受迷彩制约，但存在主动排除受迷彩影响单位的情况（此时站内会特别标注）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※迷彩与“阻挡时解除”没有直接关系，该机制通常由其他效果实现"
+                    ]
+                  }
+                ]
+              },
+              "制约）获得【未熄之地dot】",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "【未熄之地dot】：每秒检测一次，若受影响者的阻挡模式为地面阻挡，对其造成攻击力15%的无途径法术伤害（同名效果不叠加）",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "※索敌不受阻挡影响"
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": false,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    },
+    {
+      "skill_id": "repeat_calamity",
+      "name": "再次释放",
+      "documented_modes": [],
+      "effect_text": "技能结束时回到灾厄形态(二)\n※技能期间持有无敌、孤立、自缚、不可阻挡",
+      "source_selector": ".ak-card__body.skill_card[2]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "再次释放",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[第三形态]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "60"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "60"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "技能结束时回到",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "灾厄形态(二)"
+                ]
+              },
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "※技能期间持有",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E6%97%A0%E6%95%8C",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "无敌"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：无敌"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被不同阵营选中（属于无法选择类效果）；受到的伤害与",
+                      {
+                        "tag": "a",
+                        "attributes": {
+                          "href": "/w/%E5%85%83%E7%B4%A0",
+                          "title": "元素"
+                        },
+                        "children": [
+                          "元素值"
+                        ]
+                      },
+                      "变为0；",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法触发任何单位未绑定",
+                      {
+                        "tag": "a",
+                        "attributes": {
+                          "href": "/w/%E9%80%89%E6%8B%A9%E5%99%A8",
+                          "title": "选择器"
+                        },
+                        "children": [
+                          "选择器"
+                        ]
+                      },
+                      "的能力",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※可影响沉睡单位的伤害在特定情况下可以无视无敌的免伤效果"
+                    ]
+                  }
+                ]
+              },
+              "、",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E5%AD%A4%E7%AB%8B",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "孤立"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：孤立"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法被同阵营选中"
+                    ]
+                  }
+                ]
+              },
+              "、",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%87%AA%E7%BC%9A",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "自缚"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：自缚"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法移动",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※效果与",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "束缚"
+                        ]
+                      },
+                      "相同，但不会被识别为",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "束缚"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "、",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "a",
+                    "attributes": {
+                      "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E4%B8%8D%E5%8F%AF%E9%98%BB%E6%8C%A1",
+                      "title": "异常效果"
+                    },
+                    "children": [
+                      "不可阻挡"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "异常效果：不可阻挡"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "无法阻挡/被阻挡，自动解除阻挡"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": false,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    },
+    {
+      "skill_id": "takeoff",
+      "name": "起飞",
+      "documented_modes": [],
+      "effect_text": "技能结束时获得近地悬浮并进入飞行形态，15秒内自身无法触发技能【降落】",
+      "source_selector": ".ak-card__body.skill_card[3]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "起飞",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[第三形态]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "5"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "15"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "技能结束时获得",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "term",
+                      "style": "text-decoration:underline ;white-space:nowrap;text-shadow: 0 0 1px;color:inherit;cursor:help;"
+                    },
+                    "children": [
+                      "近地悬浮"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "术语: 近地悬浮"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      {
+                        "tag": "del",
+                        "attributes": {
+                          "style": "color:darkgrey",
+                          "title": "此效果/逻辑可能在实际游戏中根本不存在"
+                        },
+                        "children": [
+                          "无法被阻挡或近战攻击"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此术语是对一系列类似机制的效果的统称，且与官方给出的解释无关",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此类效果开始时，单位强制解除阻挡，随后行动方式变为",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "飞行"
+                        ]
+                      },
+                      "（算作空中单位）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此类效果结束时，单位强制解除阻挡，随后行动方式变为",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "地面"
+                        ]
+                      },
+                      "（算作地面单位）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※无论飞行与否，单位只会采用地面寻路"
+                    ]
+                  }
+                ]
+              },
+              "并进入",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "飞行形态"
+                ]
+              },
+              "，15秒内自身无法触发技能【降落】"
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": false,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    },
+    {
+      "skill_id": "flying_ground",
+      "name": "未熄之地(飞行)",
+      "documented_modes": [],
+      "effect_text": "效果与技能【未熄之地】的效果完全相同",
+      "source_selector": ".ak-card__body.skill_card[4]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "未熄之地(飞行)",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[飞行形态]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "1"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "4"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "效果与技能【未熄之地】的效果完全相同"
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": false,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    },
+    {
+      "skill_id": "landing",
+      "name": "降落",
+      "documented_modes": [],
+      "effect_text": "技能结束时解除近地悬浮，回到第三形态",
+      "source_selector": ".ak-card__body.skill_card[5]",
+      "complete_DOM": {
+        "tag": "div",
+        "attributes": {
+          "class": "ak-card__body skill_card"
+        },
+        "children": [
+          "\n",
+          {
+            "tag": "div",
+            "attributes": {
+              "class": "ak-card__title"
+            },
+            "children": [
+              "降落",
+              {
+                "tag": "br",
+                "attributes": {},
+                "children": []
+              },
+              "[飞行形态]\n",
+              {
+                "tag": "div",
+                "attributes": {
+                  "class": "ak-countdown"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-play-circle",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "0"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-circle-slice-5 mdi-flip-h",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "1"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "skill_cost"
+                    },
+                    "children": [
+                      {
+                        "tag": "small",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "tag": "span",
+                            "attributes": {
+                              "class": "mdi mdi-lightning-bolt",
+                              "style": "font-size:;color:;"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "/"
+                        ]
+                      }
+                    ]
+                  },
+                  "\n"
+                ]
+              },
+              "\n"
+            ]
+          },
+          "\n",
+          {
+            "tag": "p",
+            "attributes": {
+              "class": "ak-fs-xs",
+              "style": "padding:0.3em 0;"
+            },
+            "children": [
+              "技能结束时解除",
+              {
+                "tag": "span",
+                "attributes": {
+                  "class": "mc-tooltips"
+                },
+                "children": [
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "class": "term",
+                      "style": "text-decoration:underline ;white-space:nowrap;text-shadow: 0 0 1px;color:inherit;cursor:help;"
+                    },
+                    "children": [
+                      "近地悬浮"
+                    ]
+                  },
+                  {
+                    "tag": "span",
+                    "attributes": {
+                      "style": "display:none",
+                      "data-size": "350",
+                      "data-interactive": "true",
+                      "data-append-to": "body"
+                    },
+                    "children": [
+                      {
+                        "tag": "strong",
+                        "attributes": {},
+                        "children": [
+                          "术语: 近地悬浮"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      {
+                        "tag": "del",
+                        "attributes": {
+                          "style": "color:darkgrey",
+                          "title": "此效果/逻辑可能在实际游戏中根本不存在"
+                        },
+                        "children": [
+                          "无法被阻挡或近战攻击"
+                        ]
+                      },
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此术语是对一系列类似机制的效果的统称，且与官方给出的解释无关",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此类效果开始时，单位强制解除阻挡，随后行动方式变为",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "飞行"
+                        ]
+                      },
+                      "（算作空中单位）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※此类效果结束时，单位强制解除阻挡，随后行动方式变为",
+                      {
+                        "tag": "b",
+                        "attributes": {},
+                        "children": [
+                          "地面"
+                        ]
+                      },
+                      "（算作地面单位）",
+                      {
+                        "tag": "br",
+                        "attributes": {},
+                        "children": []
+                      },
+                      "※无论飞行与否，单位只会采用地面寻路"
+                    ]
+                  }
+                ]
+              },
+              "，回到",
+              {
+                "tag": "span",
+                "attributes": {
+                  "style": "color:#FF4F0B;"
+                },
+                "children": [
+                  "第三形态"
+                ]
+              }
+            ]
+          },
+          "\n"
+        ]
+      },
+      "source_has_uncertain_clause": false,
+      "engine_skill_index_binding_verified": false,
+      "actual_cooldown_or_activation": null
+    }
+  ],
+  "common_documented_context": {
+    "source_selector": ".ak-card__body.skill_card[6]",
+    "text": "普通攻击造成近战途径物理伤害，不会攻击飞行单位\n每次普通攻击附加1层【荒原减防】：防御力-100（最多叠加999层，叠加时仅以第一层的数值为基础进行翻倍）\n\n每次进入灾厄形态时：\n①直接选中并强制击杀场上所有“危朽”和“崩解”\n②解除自身施加于待部署区的锁定和封印（若有），随后锁定（无法部署）并封印（无法点选）待部署区的所有单位90秒（会清空其再部署时间，重复施加时刷新锁定持续时间，但不改变封印的持续时间，下同）\n③直接选中当前场上所有角色类干员/召唤物，在自身离开灾厄形态前，这些单位退场时也会被锁定并封印90秒\n④获得2层【延长灾厄】（最多叠加99层，会被重生清除）\n⑤将自身从当前波次释放\n\n【击坠“神明”】削弱：进入灾厄形态(一)时的效果①不会生效\n【湮没“光明”】削弱：灾厄形态下造成的伤害降低至50%（于每次输出伤害时判定）\n【焚毁“文明”】削弱：进入灾厄形态时的效果②③不会生效\n\n第一形态、第二形态\n被击倒后进行持续3.6秒的重生，回复100%生命值，重生结束时由第一形态进入灾厄形态(一)（或由第二形态进入灾厄形态(二)）并获得最大生命值+50%，攻击力+20%的增益（不会被重生清除）\n\n灾厄形态(一)、灾厄形态(二)\n无敌、孤立、自缚、不可阻挡，无法攻击/被阻挡\n※本页面的“灾厄形态”为“灾厄形态(一)和灾厄形态(二)”的简述，而非单独的一个形态\n\n第三形态：无额外天赋或能力\n飞行形态：不进行普通攻击",
+    "complete_DOM": {
+      "tag": "div",
+      "attributes": {
+        "class": "ak-card__body skill_card"
+      },
+      "children": [
+        {
+          "tag": "p",
+          "attributes": {
+            "class": "ak-fs-xs",
+            "style": "padding:0.3em 0;"
+          },
+          "children": [
+            "普通攻击造成近战途径物理伤害，不会攻击飞行单位",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "每次普通攻击附加1层【荒原减防】：防御力-100（最多叠加999层，叠加时仅以第一层的数值为基础进行翻倍）",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "每次进入",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态"
+              ]
+            },
+            "时：",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "①直接选中并强制击杀场上所有",
+            {
+              "tag": "a",
+              "attributes": {
+                "href": "/w/%E2%80%9C%E5%8D%B1%E6%9C%BD%E2%80%9D",
+                "title": "“危朽”"
+              },
+              "children": [
+                "“危朽”"
+              ]
+            },
+            "和",
+            {
+              "tag": "a",
+              "attributes": {
+                "href": "/w/%E2%80%9C%E5%B4%A9%E8%A7%A3%E2%80%9D",
+                "title": "“崩解”"
+              },
+              "children": [
+                "“崩解”"
+              ]
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "②解除自身施加于待部署区的锁定和封印（若有），随后",
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                "锁定"
+              ]
+            },
+            "（无法部署）并",
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                "封印"
+              ]
+            },
+            "（无法点选）待部署区的所有单位90秒（会清空其再部署时间，重复施加时刷新锁定持续时间，但不改变封印的持续时间，下同）",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "③直接选中当前场上所有角色类干员/召唤物，在自身离开",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态"
+              ]
+            },
+            "前，这些单位退场时也会被锁定并封印90秒",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "④获得2层【延长灾厄】（最多叠加99层，会被重生清除",
+            {
+              "tag": "span",
+              "attributes": {
+                "class": "mc-tooltips"
+              },
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "class": "mdi mdi-help-circle-outline",
+                    "style": "font-size:;color:var(--darkblue);"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "display:none;",
+                    "data-size": "350",
+                    "data-trigger": "click mouseenter focus",
+                    "data-interactive": "true",
+                    "data-append-to": "body"
+                  },
+                  "children": [
+                    "可以轻松注意到，“从",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "灾厄形态(二)"
+                      ]
+                    },
+                    "进入",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "第三形态"
+                      ]
+                    },
+                    "”以及“从",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "第三形态"
+                      ]
+                    },
+                    "回到",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "灾厄形态(二)"
+                      ]
+                    },
+                    "”均不会经过重生。",
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "意味着从首次进入",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "灾厄形态(二)"
+                      ]
+                    },
+                    "开始，",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "灾厄形态(二)"
+                      ]
+                    },
+                    "下【灾厄之口】未消耗的【延长灾厄】可供后续再次进入",
+                    {
+                      "tag": "span",
+                      "attributes": {
+                        "style": "color:#FF4F0B;"
+                      },
+                      "children": [
+                        "灾厄形态(二)"
+                      ]
+                    },
+                    "使用。"
+                  ]
+                }
+              ]
+            },
+            "）",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "⑤将自身从当前波次释放",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "【",
+            {
+              "tag": "a",
+              "attributes": {
+                "href": "/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E6%8B%9F%E9%80%A0%E7%89%A9%E8%B4%A8%E7%BC%96%E7%9B%AE#%E5%87%BB%E5%9D%A0%E2%80%9C%E7%A5%9E%E6%98%8E%E2%80%9D",
+                "title": "沉沦者的黑流树海/拟造物质编目"
+              },
+              "children": [
+                "击坠“神明”"
+              ]
+            },
+            "】削弱：进入",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态(一)"
+              ]
+            },
+            "时的效果①不会生效",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "【",
+            {
+              "tag": "a",
+              "attributes": {
+                "href": "/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E6%8B%9F%E9%80%A0%E7%89%A9%E8%B4%A8%E7%BC%96%E7%9B%AE#%E6%B9%AE%E6%B2%A1%E2%80%9C%E5%85%89%E6%98%8E%E2%80%9D",
+                "title": "沉沦者的黑流树海/拟造物质编目"
+              },
+              "children": [
+                "湮没“光明”"
+              ]
+            },
+            "】削弱：",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态"
+              ]
+            },
+            "下造成的伤害降低至50%（于每次输出伤害时判定）",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "【",
+            {
+              "tag": "a",
+              "attributes": {
+                "href": "/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E6%8B%9F%E9%80%A0%E7%89%A9%E8%B4%A8%E7%BC%96%E7%9B%AE#%E7%84%9A%E6%AF%81%E2%80%9C%E6%96%87%E6%98%8E%E2%80%9D",
+                "title": "沉沦者的黑流树海/拟造物质编目"
+              },
+              "children": [
+                "焚毁“文明”"
+              ]
+            },
+            "】削弱：进入",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态"
+              ]
+            },
+            "时的效果②③不会生效",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "color:#FF4F0B;"
+                  },
+                  "children": [
+                    "第一形态"
+                  ]
+                }
+              ]
+            },
+            "、",
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "color:#FF4F0B;"
+                  },
+                  "children": [
+                    "第二形态"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "被击倒后进行持续3.6秒的重生，回复100%生命值，重生结束时由",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "第一形态"
+              ]
+            },
+            "进入",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态(一)"
+              ]
+            },
+            "（或由",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "第二形态"
+              ]
+            },
+            "进入",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态(二)"
+              ]
+            },
+            "）并获得最大生命值+50%，攻击力+20%的增益（不会被重生清除）",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "color:#FF4F0B;"
+                  },
+                  "children": [
+                    "灾厄形态(一)"
+                  ]
+                }
+              ]
+            },
+            "、",
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "color:#FF4F0B;"
+                  },
+                  "children": [
+                    "灾厄形态(二)"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "span",
+              "attributes": {
+                "class": "mc-tooltips"
+              },
+              "children": [
+                {
+                  "tag": "a",
+                  "attributes": {
+                    "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E6%97%A0%E6%95%8C",
+                    "title": "异常效果"
+                  },
+                  "children": [
+                    "无敌"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "display:none",
+                    "data-size": "350",
+                    "data-interactive": "true",
+                    "data-append-to": "body"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "attributes": {},
+                      "children": [
+                        "异常效果：无敌"
+                      ]
+                    },
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "无法被不同阵营选中（属于无法选择类效果）；受到的伤害与",
+                    {
+                      "tag": "a",
+                      "attributes": {
+                        "href": "/w/%E5%85%83%E7%B4%A0",
+                        "title": "元素"
+                      },
+                      "children": [
+                        "元素值"
+                      ]
+                    },
+                    "变为0；",
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "无法触发任何单位未绑定",
+                    {
+                      "tag": "a",
+                      "attributes": {
+                        "href": "/w/%E9%80%89%E6%8B%A9%E5%99%A8",
+                        "title": "选择器"
+                      },
+                      "children": [
+                        "选择器"
+                      ]
+                    },
+                    "的能力",
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "※可影响沉睡单位的伤害在特定情况下可以无视无敌的免伤效果"
+                  ]
+                }
+              ]
+            },
+            "、",
+            {
+              "tag": "span",
+              "attributes": {
+                "class": "mc-tooltips"
+              },
+              "children": [
+                {
+                  "tag": "a",
+                  "attributes": {
+                    "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E5%AD%A4%E7%AB%8B",
+                    "title": "异常效果"
+                  },
+                  "children": [
+                    "孤立"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "display:none",
+                    "data-size": "350",
+                    "data-interactive": "true",
+                    "data-append-to": "body"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "attributes": {},
+                      "children": [
+                        "异常效果：孤立"
+                      ]
+                    },
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "无法被同阵营选中"
+                  ]
+                }
+              ]
+            },
+            "、",
+            {
+              "tag": "span",
+              "attributes": {
+                "class": "mc-tooltips"
+              },
+              "children": [
+                {
+                  "tag": "a",
+                  "attributes": {
+                    "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E8%87%AA%E7%BC%9A",
+                    "title": "异常效果"
+                  },
+                  "children": [
+                    "自缚"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "display:none",
+                    "data-size": "350",
+                    "data-interactive": "true",
+                    "data-append-to": "body"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "attributes": {},
+                      "children": [
+                        "异常效果：自缚"
+                      ]
+                    },
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "无法移动",
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "※效果与",
+                    {
+                      "tag": "b",
+                      "attributes": {},
+                      "children": [
+                        "束缚"
+                      ]
+                    },
+                    "相同，但不会被识别为",
+                    {
+                      "tag": "b",
+                      "attributes": {},
+                      "children": [
+                        "束缚"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "、",
+            {
+              "tag": "span",
+              "attributes": {
+                "class": "mc-tooltips"
+              },
+              "children": [
+                {
+                  "tag": "a",
+                  "attributes": {
+                    "href": "/w/%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C#%E4%B8%8D%E5%8F%AF%E9%98%BB%E6%8C%A1",
+                    "title": "异常效果"
+                  },
+                  "children": [
+                    "不可阻挡"
+                  ]
+                },
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "display:none",
+                    "data-size": "350",
+                    "data-interactive": "true",
+                    "data-append-to": "body"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "attributes": {},
+                      "children": [
+                        "异常效果：不可阻挡"
+                      ]
+                    },
+                    {
+                      "tag": "br",
+                      "attributes": {},
+                      "children": []
+                    },
+                    "无法阻挡/被阻挡，自动解除阻挡"
+                  ]
+                }
+              ]
+            },
+            "，无法攻击/被阻挡",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            "※本页面的“",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态"
+              ]
+            },
+            "”为“",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态(一)"
+              ]
+            },
+            "和",
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                "灾厄形态(二)"
+              ]
+            },
+            "”的简述，而非单独的一个形态",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "span",
+              "attributes": {
+                "style": "color:#FF4F0B;"
+              },
+              "children": [
+                {
+                  "tag": "b",
+                  "attributes": {},
+                  "children": [
+                    "第三形态"
+                  ]
+                }
+              ]
+            },
+            "：无额外天赋或能力",
+            {
+              "tag": "br",
+              "attributes": {},
+              "children": []
+            },
+            {
+              "tag": "b",
+              "attributes": {},
+              "children": [
+                {
+                  "tag": "span",
+                  "attributes": {
+                    "style": "color:#FF4F0B;"
+                  },
+                  "children": [
+                    "飞行形态"
+                  ]
+                }
+              ]
+            },
+            "：不进行普通攻击"
+          ]
+        }
+      ]
+    },
+    "reading_notes": [
+      "锁定在此文献中指无法部署，封印指无法点选；这些是机制说明，不是助手执行的游戏操作。",
+      "文献明确说明第三形态与灾厄形态(二)之间不经过重生，因此未用完的延长灾厄可留到之后；不能把每次返回都当清空层数。",
+      "文献的三项结局削弱说明与既有302调谐仪式资料相关；复用原入口，不新判定持有、提交或实际生效。"
+    ]
+  },
+  "source_differences": [
+    {
+      "difference_id": "second_rebirth_value_basis",
+      "title": "重生加成尚不能直接对算",
+      "document_text": "文献将第一/第二形态重生时的增益写为最大生命值+50%、攻击力+20%，并写明不会被重生清除。",
+      "fixed_fields": {
+        "reborn_1.max_hp": 0.5,
+        "reborn_1.atk": 0.2,
+        "reborn_2.max_hp": 1.0,
+        "reborn_2.atk": 0.3
+      },
+      "reading_notice": "这些字段可能采用相对基准、累计或其它执行口径；尚未核对，不能认定两份来源互斥、任选一方改值，或换算阶段面板。"
+    },
+    {
+      "difference_id": "extension_clock_basis",
+      "title": "延长时长的计时口径未闭合",
+      "document_text": "灾厄之口详细说明记载主目标退场中断时消耗1层延长灾厄并额外增加11秒持续时间。",
+      "fixed_fields": {
+        "Fire.duration_extend": 10.0,
+        "Fire.cooldown": 1.0
+      },
+      "reading_notice": "原字段10与文献11不证明谁错，也不能擅自以10+1解释；实际计时、重启和表现口径仍未核验。"
+    },
+    {
+      "difference_id": "highest_hp_selection_wording",
+      "title": "目标选择的具体口径分开保留",
+      "document_text": "图鉴概述写生命值最高的干员，详细技能写最大生命值最高的我方干员，随后才是自身；范围中心还带“存疑”。",
+      "fixed_fields": null,
+      "reading_notice": "保留两处原文和存疑标记；不自动读取或选定本局目标，不对范围或索敌结果作确定预测。"
+    },
+    {
+      "difference_id": "raw_mode_index_binding",
+      "title": "同名技能记录没有恢复模式绑定",
+      "document_text": "文献以模式标签分列或合并招式，原定义则有两个Fire、两个Fireball记录。",
+      "fixed_fields": null,
+      "reading_notice": "不能仅按数组先后把同名原技能分别归入某个形态；文献归属与引擎实际附着是两项证据。"
+    }
+  ],
+  "source_docs": [
+    {
+      "requested_url": "https://m.prts.wiki/w/%E7%8E%BB%E5%88%A9%E7%93%A6%E5%B0%94%EF%BC%8C%E7%97%87%E7%BB%93%E4%B9%8B%E6%A0%B8",
+      "utc": "2026-10-18T06:41:53.156991+00:00",
+      "title": "玻利瓦尔，症结之核",
+      "status": 200,
+      "final_url": "https://m.prts.wiki/w/%E7%8E%BB%E5%88%A9%E7%93%A6%E5%B0%94%EF%BC%8C%E7%97%87%E7%BB%93%E4%B9%8B%E6%A0%B8",
+      "headers": {
+        "Server": "Tengine",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Vary": "Accept-Encoding",
+        "Strict-Transport-Security": "max-age=86400",
+        "Accept-Ch": "",
+        "Cache-Control": "s-maxage=18000, must-revalidate, max-age=0",
+        "Content-Language": "zh-Hans-CN",
+        "Date": "Sun, 18 Oct 2026 02:42:35 GMT",
+        "Last-Modified": "Sun, 18 Oct 2026 02:42:31 GMT",
+        "Mc-Cache": "HIT m.prts.wiki",
+        "Mc-Cache-Hits": "33",
+        "Mc-Cache-Id": "223568 28346381",
+        "Via": "0.0 Caddy, 1.1 varnish-57bd5ff95f-2jf99 (Varnish/7.5), cache30.l2cn1800[22,21,200-0,M], cache21.l2cn1800[55,0], cache15.cn7862[452,452,200-0,M], cache12.cn7862[455,0]",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "PHP/8.3.35",
+        "X-Request-Id": "f799dfc7b93617cafada9700",
+        "Age": "14358",
+        "Ali-Swift-Global-Savetime": "1792305713",
+        "X-Cache": "MISS TCP_MISS dirn:12:139164933",
+        "X-Swift-SaveTime": "Sun, 18 Oct 2026 06:41:53 GMT",
+        "X-Swift-CacheTime": "18000",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Timing-Allow-Origin": "*",
+        "EagleId": "6f7cd12017923057135116211e"
+      },
+      "bytes": 148805,
+      "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+      "revision": "435612",
+      "file": "boss-complete.html"
+    },
+    {
+      "requested_url": "https://m.prts.wiki/w/ISW-DF_%E7%95%B8%E7%97%87",
+      "utc": "2026-10-18T06:41:54.580047+00:00",
+      "title": "ISW-DF 畸症",
+      "status": 200,
+      "final_url": "https://m.prts.wiki/w/ISW-DF_%E7%95%B8%E7%97%87",
+      "headers": {
+        "Server": "Tengine",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Vary": "Accept-Encoding",
+        "Strict-Transport-Security": "max-age=86400",
+        "Accept-Ch": "",
+        "Cache-Control": "s-maxage=18000, must-revalidate, max-age=0",
+        "Content-Language": "zh-Hans-CN",
+        "Date": "Sun, 18 Oct 2026 05:01:05 GMT",
+        "Last-Modified": "Sun, 18 Oct 2026 05:01:04 GMT",
+        "Mc-Cache": "HIT m.prts.wiki",
+        "Mc-Cache-Hits": "12",
+        "Mc-Cache-Id": "22437524 11282168",
+        "Via": "0.0 Caddy, 1.1 varnish-57bd5ff95f-2jf99 (Varnish/7.5), ens-cache63.l2cn9026[34,34,200-0,M], ens-cache22.l2cn9026[36,0], cache7.cn7862[68,68,200-0,M], cache13.cn7862[71,0]",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "PHP/8.3.35",
+        "X-Request-Id": "28cac20195f3fefd287ef1c8",
+        "Age": "6048",
+        "Ali-Swift-Global-Savetime": "1792305714",
+        "X-Cache": "MISS TCP_MISS dirn:12:247268044",
+        "X-Swift-SaveTime": "Sun, 18 Oct 2026 06:41:54 GMT",
+        "X-Swift-CacheTime": "18000",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Timing-Allow-Origin": "*",
+        "EagleId": "6f7cd12117923057141586999e"
+      },
+      "bytes": 73326,
+      "sha256": "59c22b395f1de67453c1601a5ba0852a8b8e6568221954b5470c101bbb1aace8",
+      "revision": "420841",
+      "file": "stage-complete.html"
+    }
+  ],
+  "existing_description_already_covers": [
+    "三主要形态概述",
+    "击倒触发灾厄之口",
+    "第二形态火球与地面火焰",
+    "第三形态起飞与再次灾厄的概述"
+  ],
+  "new_player_capability": [
+    "按明确文献模式查看招式归属",
+    "查看完整转换条件和第三形态循环/飞行返回关系",
+    "分开阅读灾厄阶段共同影响及主目标退场的中断条件",
+    "同时查看文献与原字段未能直接对算的差异"
+  ],
+  "unknowns": [
+    "当前服务器与当前对局实际形态/转换/层数",
+    "原预制体模式及同名技能记录的实际附着/继承/执行",
+    "阶段HP/ATK的基准、叠加和完整修正顺序",
+    "真实首发、冷却推进、重启与转场时钟",
+    "范围中心和实际索敌对象",
+    "第三或飞行形态被击倒后的未明确终止流程；不据此承诺通关"
+  ],
+  "actual_phase": null,
+  "actual_transition": null,
+  "phase_stats": null,
+  "actual_damage": null,
+  "actual_elapsed_time": null,
+  "numerical_phase_model_added": false,
+  "game_runtime_verified": false,
+  "inventory_or_run_updated": false,
+  "modifiers_or_maps_changed": false
+}

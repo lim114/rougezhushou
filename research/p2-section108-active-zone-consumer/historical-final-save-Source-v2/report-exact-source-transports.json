@@ -1,0 +1,40 @@
+{
+  "kind": "SOURCE_ONLY_108_REPORT_TWO_FACTUAL_CORRECTIONS",
+  "Runtime_executed": false,
+  "original_packet_manifest": {
+    "path": "/workspace/.continuation/section108-final-save-spec-source-v1/SOURCE_MANIFEST.json",
+    "bytes": 2769,
+    "sha256": "0451afc2ad88acc17854ee6b294ee882f774abe5201d218ccf81647a0947142b"
+  },
+  "before_builder_bytes": 46320,
+  "before_builder_sha256": "94d13ad1f683599e28e2e848b298ead961dc1f7c19cecdc708e6463968cf9c63",
+  "after_builder_bytes": 46337,
+  "after_builder_sha256": "2b48a3116f33931f5164389331c6ddbee30043085450dddefb5436cdb773030f",
+  "replacements": [
+    {
+      "before": "原inactive模板保持readyFalse且仍含历史v1引用，实际freshbindings必须精确绑定真正执行的v2/f46 reader，不借模板的未来空项作为验证。",
+      "after": "历史v1模板保留；封存v2模板仍readyFalse、10个actual项为NULL，Root freshbindings精确绑定真正执行的v2/f46 reader，不借模板的未来空项作为验证。"
+    },
+    {
+      "before": "实际负坐标观察没有发生，c440窗口未改，没有额外Gold或产品修复计数。",
+      "after": "本次没有报告实际负坐标故障，c440窗口未改，没有额外Gold或产品修复计数。"
+    }
+  ],
+  "occurrences_each": 1,
+  "full_byte_inverse": true,
+  "full_AST_after_only_report_text_projection_equal": true,
+  "unchanged_bytes_files": [
+    "root-section108-save-v1.py",
+    "public-files-source-plan.json",
+    "save-exact-source-transport.json",
+    "save-local-source.diff",
+    "INACTIVE_FINAL_INPUTS_TEMPLATE.json"
+  ],
+  "source_of_correction": "Root independently full-read frozen v1 and actual sealed Savedv2 template; no Runtime failure or target change occurred.",
+  "real_Saved_v2_template": {
+    "path": "/workspace/.continuation/section108-saved-readback-source-v2/INACTIVE_BINDINGS_TEMPLATE.json",
+    "bytes": 2479,
+    "sha256": "4ad43e663860ae40b682668999dace7cbcfe9394f18e61cf3ffbd145b6ca9067"
+  },
+  "Root_success_spec_report_output_paths_unchanged": true
+}

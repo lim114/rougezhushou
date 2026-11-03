@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "status": "STATIC_SCOPE_AND_CALLER_GUARD_MAPPING_NOT_RUNTIME",
+  "same_target_attempt": 2,
+  "execution_contract_sha256": "23ed5246868452987183c901cb85574c5b5e5208f95a58f7933b721913338cde",
+  "helper_source_lines": {
+    "_integer": [
+      19,
+      20
+    ],
+    "_timestamp": [
+      23,
+      32
+    ],
+    "_record_issue": [
+      35,
+      111
+    ],
+    "_merged_record": [
+      114,
+      126
+    ],
+    "__init__": [
+      130,
+      158
+    ],
+    "_protect": [
+      160,
+      163
+    ],
+    "_screen_all": [
+      165,
+      170
+    ],
+    "view": [
+      172,
+      187
+    ],
+    "notice": [
+      189,
+      201
+    ],
+    "observe": [
+      203,
+      234
+    ],
+    "save": [
+      236,
+      244
+    ]
+  },
+  "constraint_ids": [
+    "load-and-preserve",
+    "all-records-before-first-save",
+    "identity-and-containers",
+    "timestamp",
+    "consumed-cultivation-leaves",
+    "ignored-aliases-and-defaults",
+    "formatter-consumed-metadata",
+    "account-run-separation",
+    "stable-visible-recovery",
+    "overlay-merge-and-issue-lifetime",
+    "disk-write-guard",
+    "no-numerical-or-mechanism-changes"
+  ],
+  "preserved_v1_guards_AST_exact": [
+    "record validation incl identity/mappings/metadata/actual timestamp/active leaves/inert aliases",
+    "load read/lstat missing distinction and initial full-map screen",
+    "sticky per-id quarantine and permanent global original protection",
+    "account notice separation",
+    "whole save guard before mkdir/tmp write/replace"
+  ],
+  "app_callers_unchanged_v1": [
+    "__init__ AccountCache before UI startup",
+    "current_operator_state shared safe view across startup/browse/base/rank/calculate and RunState merge",
+    "sample_received account summary uses view; genuine run summary original branch",
+    "account_training_status appends per-id/global notice on overview and regular paths",
+    "apply_operator_observation wraps helper accepted result and original show_observed_operator browsing"
+  ],
+  "v2_closure_guards": [
+    {
+      "finding": "B1",
+      "source_parts": [
+        "view",
+        "_merged_record"
+      ],
+      "guard": "No recursive copy; top-level view excludes RUN_METADATA and shallow copies only actual mapping containers; all opaque nested values remain raw/shallow. No arbitrary depth schema."
+    },
+    {
+      "finding": "B2",
+      "source_parts": [
+        "observe",
+        "_merged_record"
+      ],
+      "guard": "Validate incoming first; good-old captured_at rejection occurs before context union/fallback. Valid normal union keeps old merge/changed; unsafe union protects original and uses incoming-only original producer construction without inventing rank/fields/time."
+    }
+  ],
+  "test_draft_controls": [
+    {
+      "finding": "B1",
+      "method": "test_legal_depth500_ignored_arrays_load_view_observe_and_save_without_recursive_copy",
+      "scope": "Exact500 nested arrays across opaque extras/leaves/source/time maps; iterative checks; read/view/incoming input preservation and real ordinary save, producer old-extra drop."
+    },
+    {
+      "finding": "B2",
+      "method": "test_unusable_old_union_recovers_only_incoming_facts_and_preserves_original_order",
+      "scope": "Unmasked numeric99/masked bad locked rank variants; older99 rejected no protection, new200 incoming-only valid fields/time/ranks empty, permanent bytes/write protection, later rank7 recovery; valid rank10 exact normal union/save."
+    },
+    {
+      "scope": "36 old methods AST exact; only one extra nested-mutation independence test narrowed to top-level view/consumed container protection; all39 methods UNRUN."
+    }
+  ],
+  "root_runtime_required_unrun": [
+    "Fresh pure39 methods plus related regression and saved complete native good-case before/after output/alias/error/input controls.",
+    "Actual MainWindow/Wine temporary-public cache startup/all quarantine families/good browse/overview/no-skill/unimplemented/visible notices/recovery.",
+    "Fresh B1 opaque deep values and B2 context activation memory recovery/display-preview tests.",
+    "Sample account summary safe-view, genuine RunState summary/priority and state/file snapshots.",
+    "Corrupt original bytes/path stable before/after startup/browse/failed calculation/valid overlay; missing and clean normal saving.",
+    "Timing/relic JSON whitespace/empty/syntax/null/false/0/list/target ranges/needed and inactive contexts/recovery.",
+    "Root-owned external full095 fixture alias/id transport; sealed historical runners unchanged."
+  ],
+  "public_math_RunState_recognizers_profiles_formatter_API_rules_edited": false,
+  "runtime_PASS": 0,
+  "section093_completed": false
+}

@@ -1,0 +1,38 @@
+{
+  "kind": "skill-data-cost-source-manifest-278",
+  "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "method_count": 32,
+  "unique_instruction_count": 3145,
+  "byte_span_count": 4034,
+  "implemented_scope": "three Single cost changes, low32 signed scaling, replacement and independently qualified update call arguments",
+  "deferred_scope": "four-slot SpData/SkillData initialization remains future preparation; included original source records are not completion claims",
+  "single_eligibility": "exact Int32-to-Single and exact finite normal/zero operation, valid Int32 half-even range; no default MXCSR",
+  "unmapped_round_helper_address": "0x18059e290",
+  "round_helper_metadata_identity_proven": false,
+  "encoding_roundtrip_and_actual_cost_proven": false,
+  "actual_sp_or_clock_or_full_cycle_proven": false,
+  "integer_scale_rule": "signed reinterpretation of low32 imul; no clamp or Single percentage conversion",
+  "scale_update_onlycost": true,
+  "replacement_update_onlycost": "not independent modifySpType value",
+  "official_cpu_source": {
+    "kind": "OFFICIAL_INTEL_CPU_ARITHMETIC_SOURCE_NOT_GAME_MECHANISM",
+    "url": "https://cdrdv2-public.intel.com/843827/253665-sdm-vol-1-dec-24.pdf",
+    "sha256": "2df6ae80aad83945c4879ef702b863ccbacaf5467e5ea079f1d7261e69ebc315",
+    "bytes": 3200519,
+    "document": "253665-086US December2024",
+    "sections": [
+      "4.8.2 Single encoding",
+      "4.8.4 RC",
+      "10.2.3.3 FTZ",
+      "10.2.3.4 DAZ",
+      "AppendixD integer conversion"
+    ],
+    "game_current_MXCSR_proven": false
+  },
+  "independent_reviews": {
+    "cost_review_sha256": "dfa2ec614fae870eb0be471f616fd605ce12d25ea446d1a917086e68a99f09f7",
+    "init_review_readback_sha256": "03ec96651fb89e3e346404edb5b0b05e77227408dd5bf76b936efeb705fb87b1"
+  }
+}

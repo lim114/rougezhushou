@@ -1,0 +1,29 @@
+{
+  "initial_necessary_tests": {
+    "tests_run": 48,
+    "passed": 47,
+    "errors": 1,
+    "failures": 0,
+    "error_case": "AttackStateSequenceTests.test_inputs_candidates_and_results_do_not_share_mutable_history",
+    "original_error": "KeyError: 'sequence' on deterministic Kaltsit selection record",
+    "cause": "test incorrectly required a random-only field on a deterministic selector",
+    "fix": "assert fresh deterministic selection does not gain the mutable sequence key; numerical behavior unchanged"
+  },
+  "failed_case_only_recheck": {
+    "tests_run": 1,
+    "passed": 1,
+    "errors": 0,
+    "failures": 0
+  },
+  "final_change_specific_recheck": {
+    "tests_run": 13,
+    "passed": 13,
+    "errors": 0,
+    "failures": 0
+  },
+  "unique_necessary_cases_with_passed_receipt": 48,
+  "actual_public_Qt_panel_cases": 3,
+  "related_passing_cases_reused": 35,
+  "native_Windows_game_or_chat_checks": false,
+  "scope": "New numerical/API/source/real QWidget public offscreen behavior plus existing source-profile/wait compatibility; not full regression or live/native UI"
+}

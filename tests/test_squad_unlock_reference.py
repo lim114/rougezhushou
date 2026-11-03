@@ -1,0 +1,143 @@
+"""Strengthened-squad source references do not authorize account or battle effects."""
+from copy import deepcopy
+import unittest
+from rouge.catalog import catalog
+from rouge.damage import calculate_damage
+from rouge.estimate import format_estimate
+from rouge.run_config import config_data
+from rouge.squad_unlock_reference import squad_unlock_reference
+from rouge.technology import technology_nodes
+
+UPGRADES=('rogue_6_band_2','rogue_6_band_22','rogue_6_band_5','rogue_6_band_7',
+          'rogue_6_band_16','rogue_6_band_18','rogue_6_band_20')
+
+
+def scenario(squad='rogue_6_band_7',verified=True,**extra):
+    return {'operator':'mechanist','skill':1,'window_seconds':10,
+            'run_config':{'squad':{'id':squad,'effect_verified':verified}},**extra}
+
+
+class SquadUnlockReferenceTests(unittest.TestCase):
+    def test_all_seven_strengthened_conditions_have_exact_source_references_and_unknown_account_states(self):
+        for squad in UPGRADES:
+            record=config_data()['squads'][squad]
+            result=calculate_damage(scenario(squad))
+            ref=result['run_resolution']['squad_unlock_reference']
+            self.assertEqual(ref['unlock_condition_reference'],record['unlockCondDesc'])
+            self.assertEqual(ref['base_squad_id'],record['normalBandId'])
+            self.assertEqual(ref['variant_level_parameter'],1)
+            self.assertIsNone(ref['account_unlocked'])
+            self.assertIsNone(ref['actual_activation'])
+            self.assertTrue(ref['reference_only'])
+            self.assertEqual(ref['source']['condition_selector'],'$.details.rogue_6.items.'+squad+'.unlockCondDesc')
+            self.assertEqual(ref['source']['sha256'],config_data()['source_sha256'])
+            if squad=='rogue_6_band_22':
+                self.assertIsNone(ref['technology_node_reference'])
+            else:
+                node=ref['technology_node_reference']
+                self.assertEqual(ref['unlock_condition_reference'],'生命游戏中激活“'+node['name']+'”')
+                self.assertIn('“'+record['name']+'”效果提升',node['effect_text_reference'])
+
+    def test_normal_or_absent_squads_do_not_create_a_strengthened_reference(self):
+        for squad,record in config_data()['squads'].items():
+            if record['bandLevel']!=0:continue
+            self.assertIsNone(squad_unlock_reference(squad))
+            result=calculate_damage(scenario(squad))
+            self.assertNotIn('squad_unlock_reference',result['run_resolution'])
+            self.assertFalse(any(s['id']=='squad_unlock_reference' for s in result['report']['sections']))
+        self.assertIsNone(squad_unlock_reference('unknown'))
+        self.assertNotIn('squad_unlock_reference',calculate_damage({'operator':'mechanist','skill':1})['run_resolution'])
+
+    def test_unknown_account_reference_does_not_replace_confirmed_fifteen_percent_math(self):
+        plain=calculate_damage({'operator':'mechanist','skill':1})
+        unknown=calculate_damage(scenario(verified=False))
+        confirmed=calculate_damage(scenario())
+        self.assertEqual(unknown['estimate']['base_stats'],plain['estimate']['base_stats'])
+        self.assertEqual(unknown['run_resolution']['applied'],[])
+        self.assertTrue(unknown['run_resolution']['pending'])
+        self.assertEqual(confirmed['run_resolution']['squad']['effect_verified'],True)
+        self.assertEqual(len(confirmed['run_resolution']['applied']),3)
+        stats=confirmed['estimate']['base_stats']
+        self.assertEqual((stats['attack'],stats['hp'],stats['defense']),(659,4176,880))
+        self.assertEqual(unknown['run_resolution']['squad_unlock_reference'],confirmed['run_resolution']['squad_unlock_reference'])
+        self.assertEqual(confirmed['relic_resolution']['records'],[])
+
+    def test_raw_three_six_nine_gates_never_auto_switch_or_authorize_current_effect(self):
+        for squad,gate in (('rogue_6_band_2',3),('rogue_6_band_5',6),('rogue_6_band_7',9)):
+            for grade in (0,2,3,5,6,8,9,15):
+                for verified in (False,True):
+                    args=scenario(squad,verified)
+                    args['run_config']['difficulty']={'value':grade}
+                    result=calculate_damage(args)
+                    resolution=result['run_resolution']
+                    self.assertEqual(resolution['squad']['id'],squad)
+                    self.assertEqual(resolution['squad']['effect_verified'],verified)
+                    ref=resolution['squad_unlock_reference']
+                    self.assertEqual(ref['technology_node_reference']['gate_reference']['enable_grade_parameter'],gate)
+                    self.assertIsNone(ref['actual_activation'])
+                    self.assertIsNone(ref['account_unlocked'])
+                    self.assertEqual(bool(resolution['applied']),squad=='rogue_6_band_7' and verified)
+
+    def test_selected_operator_elite_does_not_prove_account_mechanist_unlock(self):
+        for elite,rank in ((0,1),(1,7),(2,10)):
+            for owner in ('mechanist','char_110_deepcl'):
+                result=calculate_damage(scenario('rogue_6_band_22',operator=owner,elite=elite,skill_rank=rank))
+                ref=result['run_resolution']['squad_unlock_reference']
+                self.assertEqual(ref['unlock_condition_reference'],'机械师提升至精英二阶段')
+                self.assertIsNone(ref['technology_node_reference'])
+                self.assertIsNone(ref['account_unlocked'])
+                self.assertIsNone(ref['actual_activation'])
+
+    def test_selected_reference_preserves_independent_shu_unknown_periodic_clock(self):
+        for skill in (1,2,3):
+            for mode in ('frames','continuous'):
+                result=calculate_damage(scenario(operator='char_2025_shu',skill=skill,timing_mode=mode,four_sui=True,
+                    level=60,potential=6,module_id='uniequip_002_shu',module_level=3))
+                self.assertIn('squad_unlock_reference',result['run_resolution'])
+                ref=result['shu_periodic_sp_reference']
+                self.assertEqual((ref['interval_seconds_parameter'],ref['sp_per_pulse_parameter']),(4,1))
+                for key in ('first_tick_seconds','actual_tick_times_seconds','clock_origin','reset_rule','blocked_credit_rule'):
+                    self.assertIsNone(ref[key],key)
+                for key in ('initial_seconds','recharge_seconds','cycle_seconds','cycle_damage','cycle_healing','cycle_dps','cycle_hps'):
+                    self.assertIsNone(result['estimate']['skill'][key],key)
+                self.assertEqual(result['estimate']['skill']['sp_recovery_per_second'],1)
+                self.assertFalse(ref['events_scheduled'])
+
+    def test_output_reference_mutation_does_not_change_static_cache_or_subsequent_requests(self):
+        cached=deepcopy(catalog());config=deepcopy(config_data());tech=technology_nodes()
+        args=scenario();before=deepcopy(args)
+        result=calculate_damage(args);expected=deepcopy(result)
+        result['run_resolution']['squad_unlock_reference']['technology_node_reference']['effect_text_reference'][0]='changed'
+        result['run_resolution']['squad_unlock_reference']['source']['sha256']='changed'
+        self.assertEqual(calculate_damage(args),expected)
+        self.assertEqual(args,before);self.assertEqual(catalog(),cached)
+        self.assertEqual(config_data(),config);self.assertEqual(technology_nodes(),tech)
+
+    def test_reference_keeps_prior_confirmation_mode_identity_and_training_errors(self):
+        for flag in ('false',None,1):
+            with self.assertRaisesRegex(ValueError,'确认标记需要布尔值'):
+                calculate_damage(scenario(verified=flag))
+        args=scenario();args['run_config']['difficulty']={'value':0,'modeDifficulty':'MONTH_TEAM'}
+        with self.assertRaisesRegex(ValueError,'仅支持NORMAL模式'):calculate_damage(args)
+        args=scenario();args['run_config']['squad']['name']='wrong'
+        with self.assertRaisesRegex(ValueError,'分队身份与固定档案不符'):calculate_damage(args)
+        with self.assertRaisesRegex(ValueError,'当前精英阶段尚未开放'):
+            calculate_damage(scenario(operator='char_2025_shu',skill=2,elite=0,skill_rank=1))
+
+    def test_report_shows_conditions_and_unknown_states_without_technical_ids_in_default_text(self):
+        for squad in UPGRADES:
+            result=calculate_damage(scenario(squad))
+            section=next(s for s in result['report']['sections'] if s['id']=='squad_unlock_reference')
+            self.assertEqual({m['key']:m['value'] for m in section['metrics']},{'account_unlock':None,'activation':None})
+            text=format_estimate(result)
+            self.assertIn('强化分队 · 条件资料',text)
+            self.assertIn(config_data()['squads'][squad]['unlockCondDesc'],text)
+            self.assertIn('账户解锁状态：未知',text)
+            self.assertIn('解锁条件实际激活：未知',text)
+            self.assertIn('当前明确确认的本局效果按原情景计算',text)
+            self.assertNotIn('rogue_6_band_',text)
+            self.assertNotIn('rogue_6_outbuff_',text)
+            self.assertNotIn('commonDevelopment',text)
+
+
+if __name__=='__main__':unittest.main()

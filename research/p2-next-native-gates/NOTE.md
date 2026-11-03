@@ -1,0 +1,13 @@
+# 第265节并行P2查证断点（没有改变数值或关闭待办）
+
+当前安装候选DLL 583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5、metadata d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f。复用263的纯文件92字节映射，未执行游戏DLL/读进程内存/私人状态。与运行中游戏、热更新等价性未知。
+
+新get_fieldMetas/.cctor文件观察反射读取并缓存元数据，未在该路径看见KeepLowerValue直接赋值。补映射当前mscorlib 13986指针/12014非空项，直接目标分别为Type.GetTypeFromHandle、Attribute.GetCustomAttribute、FieldInfo.IsPrivate；mscorlib首轮工具误保留旧模块字符串导致0候选，修正该工具输入后成功，不是机制失败。
+
+C#规范说明实例字段默认值及bool=false，但这不能独立证明这里的当前缓存实例没有被别处改写；仍保留未知和263逐字段条件组合。参考 https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/classes 。
+
+当前AbilityStandard.get/set_firstAttack普通分支分别读写实例+0x114，若相应静态XLua代理存在则进入代理；Behaviour读取亦有代理路径。CastToTarget(target,finishCb,firstAttack)、CastDirectly(finishCb,firstAttack)、CastToInputPosition(inputPos,finishCb,firstAttack)将调用方布尔参数传给setter。上层虚调用实际传值仍缺证，不能默认首次部署true或后续false。
+
+_IsFirstAttack(currentIndex,inputFirst)普通分支：_firstAttackIfAbilityChanged=false时返回inputFirst；true时，inputFirst或_selectAbilitySequentially成立则true，否则比较m_lastAbilityIndex与currentIndex。字段偏移0x13c/0x135/0x148已在当前metadata/native字段表核对。凯尔希已归档的S2选择组原prefab该两个配置均0，不可把普通/S1或其他选择组借来；实际调用者、实例状态和XLua仍未知。
+
+部分get/set及_IsFirstAttack静态CFG保留于本目录；其余较大原件/脚本与mscorlib映射在本机.cache/research/p2-native-current-263，云端若缺安装文件不得冒称能重新原生核验。恢复条件：取得同版调用者及明确实例/代理状态，或可独立核对的当前游戏实录。没有调整数值模型、默认门或关闭P2。

@@ -1,0 +1,105 @@
+{
+  "format_version": 1,
+  "version": 4,
+  "status": "SOURCE_ONLY_NARROW_V4_REAL_PRELAUNCH_CONTRACT_FIX",
+  "before_helper": {
+    "path": "/workspace/.continuation/focused095-saved-validator-pending-v3/verify_saved_focused095.py",
+    "bytes": 71185,
+    "sha256": "dd8220805fc4b8b290cbdbc536ad785856ab6f7dbd39581117b6e24e3582c3a9"
+  },
+  "after_helper": {
+    "path": "/workspace/.continuation/focused095-saved-validator-pending-v4/verify_saved_focused095.py",
+    "bytes": 71639,
+    "sha256": "aa7822a530afe30b3a4bbbc111133e5593e46e394d77e2b28c587aa9e97fb5d8"
+  },
+  "changed_functions": [
+    "verify"
+  ],
+  "unchanged_function_count": 28,
+  "unchanged_function_names": [
+    "require",
+    "sha",
+    "strict_object",
+    "load_json",
+    "local_path",
+    "pointer",
+    "exact",
+    "graph",
+    "decode",
+    "json_text",
+    "scan_snapshots",
+    "unpack_records",
+    "reduce_result",
+    "strip_text",
+    "durable_files",
+    "check_reference",
+    "counters",
+    "ledger",
+    "validate_live_alias",
+    "compare_api_rows",
+    "compare_capture",
+    "state_group",
+    "gate_file",
+    "check_runtime_receipt",
+    "validate_baseline",
+    "sources",
+    "pngs",
+    "main"
+  ],
+  "original_frozen_manifests": {
+    "v1": {
+      "path": "/workspace/.continuation/focused095-saved-validator-pending-v1/public-artifacts-manifest-saved-validator095.json",
+      "bytes": 1667,
+      "sha256": "f2d137e57b4883300b9b1642d439a1f9273871034e8e3b68aaca92a9778ff2ed"
+    },
+    "v2": {
+      "path": "/workspace/.continuation/focused095-saved-validator-pending-v2/public-artifacts-manifest-saved-validator095.json",
+      "bytes": 1947,
+      "sha256": "56b5e793652e99550a6722d17064e36d2f0242340cddece7662cf2c7cc6bbc92"
+    },
+    "v3": {
+      "path": "/workspace/.continuation/focused095-saved-validator-pending-v3/public-artifacts-manifest-saved-validator095.json",
+      "bytes": 3111,
+      "sha256": "357b4b9d060ef7d2db44ffbd521bfb4ea0214cd0d100f4d15355ccf3c7ab45a5"
+    }
+  },
+  "actual_root_prelaunch": {
+    "path": "/workspace/.continuation/root-window-095-attempt2-prelaunch.json",
+    "bytes": 3348,
+    "sha256": "41eca6d5c074d620e6f29651162811216a91944f4c1eb21243946f9b322e1e5d"
+  },
+  "actual_prelaunch_fields_checked": {
+    "runtime_attempt": 2,
+    "fresh_absent_output_directory": "/workspace/.compat/focused095-window-attempt2",
+    "declared_outputs": [
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-window-095.json",
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-window-095-records.json.gz",
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-095-normal-gate.png",
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-095-technical-raw.png",
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-095-normal-dedicated.png",
+      "/workspace/.compat/focused095-window-attempt2/wine-module-report-095-failure.png"
+    ],
+    "runtime_pass": false,
+    "primary_exit_code_captured": false,
+    "first_actual_Wine_primary1_preserved": true
+  },
+  "source_diff": "--- /workspace/.continuation/focused095-saved-validator-pending-v3/verify_saved_focused095.py\n+++ /workspace/.continuation/focused095-saved-validator-pending-v4/verify_saved_focused095.py\n@@ -939,9 +939,13 @@\n     launch = spec['root_launch']\n     prelaunch = inputs.json(spec['root_prelaunch'])\n     require(local_path(spec['root_prelaunch']['path']) ==\n-            Path('/workspace/.continuation/root-window-095-attempt2-prelaunch.json'),\n+            Path('/workspace/.continuation/root-window-095-attempt2-prelaunch.json') and\n+            spec['root_prelaunch']['sha256'] == '41eca6d5c074d620e6f29651162811216a91944f4c1eb21243946f9b322e1e5d',\n             'Exact new second-attempt root prelaunch fullref, not historical failed launch')\n     require(prelaunch['status'] == 'SOURCE_APPROVED_ACTUAL095_FOCUSED_PRELAUNCH_RUNTIME_UNRUN' and\n+            type(prelaunch['runtime_attempt']) is int and prelaunch['runtime_attempt'] == 2 and\n+            local_path(prelaunch['fresh_absent_output_directory']) == output_directory and\n+            prelaunch['first_actual_Wine_primary1_preserved'] is True and\n             prelaunch['source_gate_passed'] is True and prelaunch['runtime_pass'] is False and\n             prelaunch['primary_exit_code_captured'] is False and prelaunch['actual735_sources_exact'] is True and\n             prelaunch['all_six_new_outputs_prelaunch_absent'] is True and prelaunch['only_root_executes_Wine'] is True and\n@@ -950,11 +954,13 @@\n             'Actual prelaunch is source-approved but preserves runtime/captured-status false')\n     declared_outputs = prelaunch['declared_outputs']\n     require(type(declared_outputs) is list and len(declared_outputs) == 6 and\n-            all(type(name) is str and Path(name).name == name for name in declared_outputs) and\n-            set(declared_outputs) == {'wine-module-report-window-095.json',\n-                'wine-module-report-window-095-records.json.gz', 'wine-module-report-095-normal-gate.png',\n-                'wine-module-report-095-normal-dedicated.png', 'wine-module-report-095-technical-raw.png',\n-                'wine-module-report-095-failure.png'}, 'All six explicitly predeclared fresh outputs, including reserved failure PNG')\n+            all(type(name) is str for name in declared_outputs) and\n+            {local_path(name) for name in declared_outputs} == {\n+                output_directory / name for name in ('wine-module-report-window-095.json',\n+                    'wine-module-report-window-095-records.json.gz', 'wine-module-report-095-normal-gate.png',\n+                    'wine-module-report-095-normal-dedicated.png', 'wine-module-report-095-technical-raw.png',\n+                    'wine-module-report-095-failure.png')},\n+            'All six canonical full fresh output paths, including reserved failure PNG')\n     for key in ('runner', 'source_guard', 'plan', 'binding', 'final_source_manifest', 'formal_review',\n                 'formal_source_manifest', 'wrapper'):\n         inputs.read(prelaunch[key])\n",
+  "static_checks": {
+    "AST_parse_only_no_execution": true,
+    "same29_functions_only_verify_changed": true,
+    "other28_function_AST_exact_including_whole_wrapper_reduction_and_sources": true,
+    "all_v1_v2_v3_frozen_payloads_unchanged": true,
+    "actual_prelaunch3348B_SHA41eca_exact": true,
+    "actual_prelaunch_all8_source_refs_exact_physical_bytes": true,
+    "actual_prelaunch2argv_cwd_primary_path_bindings_exact": true,
+    "actual_prelaunch_exactint_attempt2_and_binding_fresh_directory_equal": true,
+    "actual_prelaunch6canonical_full_paths_exact_set": true,
+    "source_prelaunch_runtimeFalse_capturedFalse_and_first_primary1_preserved": true,
+    "actual_runtime_receipt_gzip_primary_PNGs_not_read_or_claimed": true,
+    "no_helper_codec_project_test_Qt_Wine_Git_network_execution": true
+  },
+  "source_gate_passed": false,
+  "runtime_pass": false,
+  "completed_section_increment": 0,
+  "helper_codec_project_test_Qt_Wine_Git_network_executions": 0
+}

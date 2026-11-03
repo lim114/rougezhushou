@@ -1,0 +1,13 @@
+# 085作者最终封存
+
+正式独立审查为 PASS_FINAL_FROZEN。已选翔虫机动的梓兰 near_previous_deployment 文本条件在每次核心报告完成后明确报错；实际 selected_talents 决定资格。E0、其他干员、所有非文本别名及原 double_charge 行为保留。
+
+作者197组保存记录只证明完整严格JSON值类型与三个报告文本：94文本拒绝、79完整相同、24原错误相同。它们没有编码前native类型树。正式审查未重算作者394次矩阵调用，另用12个不同输入执行24次 public calculate_damage，保存编码前native类型树并完整比较：4拒绝、5完整相同、3原错误相同。合法level43的E0S2与E1专精准确保留技能资格错误；第三例为late windup旧错误。原作者两个level90例仅证明等级错误优先，EVIDENCE_BOUNDARY.md解释这一边界。
+
+作者9新增+40相关测试通过；独立审查9新增测试通过，未重复40旧测试或作者1328次旧测试API调用。新增测试内部API调用未计数，因此不宣称作者或正式审查的全部API总数。独审测试外纯helper调用34次（source9、saved资格cache11、fresh来源选择14），不算calculate_damage调用。
+
+最终包逐件核验旧pending47与独立44件后原字节导入44件及其manifest。作者720baseline与719未改draft旧文件再次核hash；冻结源码、测试、矩阵和NOTE未改。纯执行副本仍按各自manifest明确排除，只存可审的原表选择、结果、脚本与回执。全部封存附件属于公开工程证据。
+
+root84的实际7044518运输补丁仅插入原批准的6行CRLF，441字节，放在既有83/84 guards后、return前；不得用b5整文件覆盖root。根需新增并注册精确test，再独立做当前源、相关66实际测试、精选和第85节全量Linux/Wine/MainWindow检查。作者没有root-current-source-085脚本或执行结论，root负责当前8 source/4原件/30rank/实helper/registry/去6line等于批准d02b全字节检查。
+
+guard位置证实既有每次核心准备、引擎、finisher、报告错误优先；不推断所有未知外层分支错误都有同样顺序。30秒原参数、位置覆盖、原生时钟、箭矢实际资源及叠加仍是已有范围与明确未知。作者与审查均未运行GUI、Wine、native Windows或真实游戏；本包不是第85节已集成或完整平台验证结论。

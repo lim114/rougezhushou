@@ -1,0 +1,87 @@
+{
+  "status": "SOURCE_ONLY_NOT_APPLIED_NOT_EXECUTED",
+  "section": 99,
+  "completed_increment": 0,
+  "runtime_pass": false,
+  "scope": "Run save IO continuity, qualified Unicode transport, separate load/save state and explicit manual-new-run boundary",
+  "expected_after098": {
+    "path": "/workspace/.continuation/resume098-run-cache-v1/candidate/rouge/run_state.py",
+    "bytes": 48937,
+    "sha256": "799b5ce95e679d5c4e1c6c620ca8fa40c44f56073877e0e228ddb69cea7f21da"
+  },
+  "baseline": {
+    "path": "/workspace/.continuation/section099-run-persistence-v1/baseline/rouge/run_state.py",
+    "bytes": 48937,
+    "sha256": "799b5ce95e679d5c4e1c6c620ca8fa40c44f56073877e0e228ddb69cea7f21da"
+  },
+  "candidate": {
+    "path": "/workspace/.continuation/section099-run-persistence-v1/candidate/rouge/run_state.py",
+    "bytes": 50576,
+    "sha256": "2ee957817f09cfbd5f790d00f9b08f2541380295f1dce07abab67224f4a8c899"
+  },
+  "tests": {
+    "path": "/workspace/.continuation/section099-run-persistence-v1/candidate/tests/test_run_persistence_099.py",
+    "bytes": 23327,
+    "sha256": "6383c70a4df0b1ed717aa85e9bfd00211a4fa3f5a79c6606b4bbf3930d150684"
+  },
+  "patch": {
+    "path": "/workspace/.continuation/section099-run-persistence-v1/run-persistence.patch",
+    "bytes": 4687,
+    "sha256": "a5315ce746243f635620e21b2407b58aa88c27f1da2f289198ce6a39b94414eb"
+  },
+  "assembly_source": {
+    "path": "/workspace/.continuation/section099-run-persistence-v1/build_candidate.py",
+    "bytes": 7614,
+    "sha256": "7358ba1c1261a20a500f262ccd9acbb18bea3ac94ffd73c2ac307d748f08de7d"
+  },
+  "app_transport": "No app replacement. Existing run_summary.setText(run.summary()) displays session persistence_notice after apply and reset, retaining actual 096/098 app increments.",
+  "registry_transport": "Root adds tests.test_run_persistence_099 to actually completed 098 scripts/verify_cloud.py registry, preserving all existing names/order.",
+  "manual_reset_policy": "Retain explicit new id/empty memory and clear load guard, but do not clear save_issue; no failed-session automatic retry or old-run rollback.",
+  "save_failure_policy": "OSError or native adjacent high/low refusal returns False, leaves accepted memory usable, never deletes/replays temporary evidence; other program/serialization errors propagate.",
+  "source_references": [
+    {
+      "path": "/workspace/rougezhushou/rouge/run_state.py",
+      "bytes": 42446,
+      "sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 99159,
+      "sha256": "0c388853b351e3869a01f32f42058fc8e0a0cb23fc67f25d6141bde13350423d"
+    },
+    {
+      "path": "/workspace/.continuation/section099-io-semantics-static-review-v1.md",
+      "bytes": 7429,
+      "sha256": "818133d7d546ee44c457eb45ef34ec00fee08d670b8df5e73461e5bc4cda5f41"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/public-documents/python-json-3.12.html",
+      "bytes": 107891,
+      "sha256": "1a5e4ba18342b32f5f174d129f9c226a21a9445a89384f13a3f33ec327c2b68f"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/public-documents/rfc8259.html",
+      "bytes": 244704,
+      "sha256": "8d22df005da5fbb48aad48f774d0277f9081b650e93dbb5502b1ad183846e215"
+    }
+  ],
+  "calls": {
+    "project_imports": 0,
+    "project_calls": 0,
+    "tests": 0,
+    "fixture_codecs": 0,
+    "Wine": 0,
+    "Qt": 0,
+    "Git": 0,
+    "private_reads": 0,
+    "tracked_writes": 0
+  },
+  "limitations": [
+    "No native Windows/game/chat verification.",
+    "No fsync/atomic durability or multiple-writer claim.",
+    "Fixed distinct normal run-state.json/run-state.tmp paths; aliases/.tmp target/dangling symlink/path encoding remain outside this section.",
+    "No universal arbitrary Python graph/value or non-CPython Unicode round-trip claim.",
+    "Existing serializer key/NaN/opaque input policy not expanded or normalized.",
+    "Source-only packet is not actual completed098 source, reproduction, full095 PASS, commit or publication."
+  ]
+}

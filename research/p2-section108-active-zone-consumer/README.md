@@ -1,0 +1,3 @@
+# 第108节本局区域consumer输入资格
+
+实际范围与局限见REPORT_ZH.md。两次真实Gold raw1、第三真实Gold、两份原Saved诊断、完整公开Source历史、Qt官方QRect公开证据及reader v1/v2均逐leaf列明。观察原件product_passFalse不冒称PASS；不归档私有目录或未结束输出。

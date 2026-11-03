@@ -1,0 +1,58 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "隐藏目录合并刷新，打开时使用最新状态",
+  "passed": true,
+  "passed_scope": "62focused cases with original failures and baseline reproduction retained;24 native Windows checks;isolated same-input handler timing;visible responding updated toolbar.",
+  "functional_section": 472,
+  "functional_section_incremented": false,
+  "gate0_passed": false,
+  "continuous_short_page_coverage_accepted": false,
+  "actual_live_game_latency_verified": false,
+  "checks": "verification/maintenance/hidden-view-sync-20261103/checks-summary.json",
+  "benchmark": "verification/maintenance/hidden-view-sync-20261103/benchmark/summary.json",
+  "native": "verification/maintenance/hidden-view-sync-20261103/native/window.json",
+  "live_window": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
+  "changes": [
+    "Hidden catalog receives complete current graph/context immediately, but app-driven rendering is coalesced until show.",
+    "Visible catalog and still-visible independent readers retain immediate refresh. Default explicit set_map_context behavior is unchanged.",
+    "Hidden inventory is not rebuilt on every sample; showEvent refreshes latest holdings and rechecks sources.",
+    "State reduction/persistence, sampling, current/history scheduling and OCR are unchanged."
+  ],
+  "external_reuse": {
+    "provider": "Existing Qt/PySide6 showEvent and isVisible API",
+    "installed_PySide6": "6.11.2",
+    "primary_source": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QWidget.html#PySide6.QtWidgets.QWidget.showEvent",
+    "new_dependency": false,
+    "third_party_project_forked": false
+  },
+  "source_sha256": {
+    "rouge/app.py": "51150349c9d138a3312a411376b1f60ea96e1181423323083675a9dd69605a2d",
+    "rouge/node_catalog_view.py": "fd14981a62e84c745b38e9d4072d43c103a8f3ba0634adab8a055395ae4753fa",
+    "rouge/player_inventory.py": "23818d52ec94311c84f80320e7ae60f3025ee32301beeaa523d02d5e3e805832",
+    "tests/test_sampling_view_refresh.py": "a369f7016b5d5e3324d6902ded46054acc2f3ae699bf0555ebdbb36617dccbf2",
+    "tests/test_inventory_layout_review.py": "79cebf0313c95d3fc5e3873a2da30abd6b09f15e363379dcf482d2f085cbeb20",
+    "scripts/benchmark_sampling_view_sync.py": "66a9530f93dcea3e6758ecbb40075f09b09f742829f7444fc71f16a9663e59d0",
+    "scripts/verify_sampling_view_sync.py": "f02adca8ab98bb2ff8a5dd5f5f9f978cdf35befc554aa44cefefb6cf26aa341d"
+  },
+  "runtime": {
+    "game_windows_found": 0,
+    "fresh_game_capture_verified": false,
+    "updated_owned_toolbar_visible": true,
+    "auto_sampling_enabled": true,
+    "same_run_retained": true,
+    "reader_auto_opened": false,
+    "private_settings_chat_unchanged": true
+  },
+  "remaining": [
+    "Full OCR/detection throughput and cache overflow; continuous short-page/video acceptance.",
+    "Other independent readers, dense layouts and cross-screen/DPI acceptance.",
+    "Original Gate0 video alignment/transitions/resize and overlay cases."
+  ],
+  "private_samples_uploaded": false,
+  "private_state_reset": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "full_suite_run": false,
+  "at_UTC": "2026-11-03T10:54:59.567733+00:00",
+  "archive_manifest": "verification/maintenance/hidden-view-sync-20261103/archive-manifest.json"
+}

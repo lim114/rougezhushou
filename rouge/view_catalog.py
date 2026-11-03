@@ -1,7 +1,9 @@
 """Local pictures and evidence-backed groups; never changes calculation inputs."""
 import json
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
+from .stage_context import context_data
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLabel
@@ -38,7 +40,35 @@ def _picture(filename,edge):
 
 def portrait_icon(kind,identity):
     record=portrait_record(kind,identity)
-    return QIcon(_picture(record['file'],32)) if record else QIcon()
+    path=DATA/record['file'] if record else None
+    # Let Qt decode at the displayed size, rather than eagerly scaling every
+    # portrait to 32px while building a hidden catalog.
+    return QIcon(str(path)) if path is not None and path.is_file() else QIcon()
+
+
+@lru_cache(maxsize=1)
+def relic_display_records():
+    """Display references are independent of recognition templates and identity."""
+    path=DATA/'relic-reference-equivalence.json'
+    families=json.loads(path.read_text('utf8'))['families']if path.is_file()else{}
+    records={rid:{'file':family['file']}for family in families.values()for rid in family['ids']}
+    supplement=DATA/'relic-display-icons.json'
+    if supplement.is_file():records.update(json.loads(supplement.read_text('utf8'))['icons'])
+    return records
+
+
+def relic_icon_note(identity):
+    return relic_display_records().get(identity,{}).get('note','')
+
+
+def relic_icon(identity):
+    """Exact relic/part files first; only declared references fill missing art."""
+    path=DATA/'relic-icons'/(identity+'.png')
+    if not path.is_file():path=DATA/'part-icons'/(identity+'.png')
+    if not path.is_file():
+        record=relic_display_records().get(identity)
+        if record:path=DATA/record['file']
+    return QIcon(str(path)) if path.is_file() else QIcon()
 
 
 @lru_cache(maxsize=1)
@@ -82,7 +112,7 @@ def add_groups(combo,groups,placeholder=None):
 
 
 def operator_groups(profiles,implemented):
-    counts={p['name']:sum(v['name']==p['name'] for v in profiles.values()) for p in profiles.values()}
+    counts=Counter(p['name']for p in profiles.values())
     groups=[]
     for profession,label in PROFESSIONS.items():
         entries=sorted(((key,p) for key,p in profiles.items() if p['profession']==profession),
@@ -97,9 +127,22 @@ def operator_groups(profiles,implemented):
 
 
 def stage_groups(stages):
+    from .stage_floor_reference import sixth_floor_reference
     metadata=view_catalog()['stages'];groups=[]
-    for group in STAGE_GROUPS:
-        entries=[(sid,s) for sid,s in stages.items() if metadata[sid]['group']==group]
+    metadata={sid:dict(record) for sid,record in metadata.items()}
+    for sid,stage in stages.items():
+        reference=sixth_floor_reference(sid,stage)
+        if reference:metadata[sid].update(group='floor_6',label=reference['label'],floor=6)
+    order=[(group,None) for group in STAGE_GROUPS if group!='unconfirmed']
+    order.insert(5,('floor_6',None))
+    context=context_data()['stages']
+    order.extend(('unconfirmed',kind) for kind in ('event','shop_challenge','duel',
+        'resident_stronghold','roaming_resident','special_challenge','other'))
+    for group,kind in order:
+        entries=[(sid,s) for sid,s in stages.items() if metadata[sid]['group']==group
+            and (kind is None or context.get(sid,{}).get('group')==kind
+                 or kind=='other' and context.get(sid,{}).get('group') not in
+                 ('event','shop_challenge','duel','resident_stronghold','roaming_resident','special_challenge'))]
         totals={}
         for _,s in entries:
             key=(s['name'],s['difficulty']);totals[key]=totals.get(key,0)+1
@@ -109,7 +152,12 @@ def stage_groups(stages):
             title=s['name']+' · '+('紧急' if s['difficulty']=='FOUR_STAR' else '普通')
             if totals[key]>1:title+=' · 同名资料'+str(seen[key])
             items.append((title,sid,QIcon()))
-        if entries:groups.append((metadata[entries[0][0]]['label'],items))
+        if entries:
+            label=metadata[entries[0][0]]['label']
+            if kind not in (None,'other'):
+                reference=context[entries[0][0]]
+                label=reference['label']+('（入口层条件有引用）' if reference['conditions'] else '（层数未知）')
+            groups.append((label,items))
     return groups
 
 

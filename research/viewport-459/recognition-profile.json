@@ -1,0 +1,39 @@
+{
+  "receipt": "../../verification/sections/459-viewport/ocr-profile-quiet/results.json",
+  "source_binding": "../../verification/sections/459-viewport/ocr-profile-quiet/source-before.json",
+  "video_sha256": "0b83e44f0816508ef095120961496337e6bd65d5f531ee350c078950dfb98bda",
+  "sampled_seconds": [
+    44,
+    44.05,
+    52,
+    52.05,
+    60,
+    95
+  ],
+  "reads": 12,
+  "same_pixel_fact_equalities": 6,
+  "full_read_ms": [
+    5880.782099906355,
+    3100.891799898818,
+    5063.675899989903,
+    4005.3383999038488
+  ],
+  "same_pixel_repeat_ms": [
+    1.9284000154584646,
+    2.0260000601410866,
+    1.7132998909801245,
+    1.8939999863505363,
+    2.104399958625436,
+    1.9550998695194721
+  ],
+  "finding": "Full OCR and run parsing dominate these four distinct video frames; map extraction is also material on the60s frame. Identical-frame reuse is already fast.",
+  "previous_measurement": "Earlier exploratory profile overlapped navigation test execution; quiet profile is used for the cost diagnosis.",
+  "scope": "Offline reference-video composite frames, not a client-crop accuracy set or a gameplay throughput measurement. No recognition algorithm change or before/after speedup claim.",
+  "next": "Inspect run parsing subcosts and avoid re-reading the same useful text while retaining field attribution and current-page source qualification.",
+  "versions": {
+    "PySide6": "6.11.2",
+    "rapidocr_onnxruntime": "1.4.4",
+    "onnxruntime": "1.30.0",
+    "opencv-python": "4.14.0.94"
+  }
+}

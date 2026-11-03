@@ -1,0 +1,20 @@
+{
+  "title": "游戏悬停资料的读取复用、收起与窄窗阅读",
+  "change": "同一商店按已核验名称和页面标记的原像素复用文字结果，变化时重新读取；收起助手时同步停止悬停并作废在途请求；来源卡长名称自动换行，窄窗仍可完整阅读。",
+  "limits": "复用仅限当前内存、相同尺寸且标记区域整字节一致，不反推真实库存或购买记录；其余页面和跨屏识别覆盖仍待验。",
+  "criteria": [
+    "未变名称及页面标记才复用，变化/过期/换尺寸重新读",
+    "收起期间不采样或弹旧卡，恢复重新等待",
+    "窄窗卡片正文换行且来源身份不变"
+  ],
+  "additional_tests": [
+    "tests.test_player_feature_417",
+    "tests.test_player_toolbar_412"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_418",
+  "native": "scripts/verify_player_feature_window_418.py",
+  "unit_receipt": "verification/sections/418-player-checks/process.json",
+  "native_receipt": "verification/sections/418-player-window/window.json",
+  "native_process_receipt": "verification/sections/418-player-window-process/process.json"
+}

@@ -1,0 +1,96 @@
+{
+  "scope": "Source-bound natural SP Precise batch ticks and independent request/rate declarations; not actual SP/timer/skill acceptance",
+  "source_artifacts_sha256": {
+    "research/p2-sp-recovery-clock-274/source-proof.json": "aac95f6a6c284868d25d73a89fc126f27ba827609dae327938d7b0f280bf7557",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+    "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+    "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b"
+  },
+  "primary_source_sha256": {
+    "dll": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f"
+  },
+  "facts": {
+    "controller_timer": {
+      "field": "m_spRecoverTimer",
+      "offset": 64,
+      "type": "Torappu.PrecisePeriodicTimer"
+    },
+    "precise_default_constructor_raw": {
+      "period": 0,
+      "remaining": 0
+    },
+    "on_tick_gate_order": [
+      "spType bit1",
+      "timer exists/valid",
+      "owner exists/spStopped first read",
+      "isFull with independent SP/maxSP reads"
+    ],
+    "update_multiple": "R=wrap(R-delta); if ready then count=wrap_int32(max(0,FloorToInt(FPdivide(UnaryNegation(R),P)))+1), else0",
+    "floor_to_int": "FP.Floor masks low32; FP.AsInt arithmetic-shifts32 then returns eax signed32; no float conversion",
+    "unary_min64": "returns FP.MaxValue raw9223372036854775806; other operands signed negation",
+    "count_nonpositive": "OnTick skips NextMultiple and RecoverMp; UpdateMultiple remaining write is retained",
+    "next_multiple": "independent ready gate; if true writes wrap(R+FPmul(P,Int32ToFP(count))) before SP access; OnTick does not check returned bool",
+    "recover_mp": "unless force, independently read spStopped again; false reads SP once and requests setter wrap(SP+deltaFP)",
+    "is_full": "ordinary path independently reads SP then maxSp int32; direct signed FP GreaterThanOrEqual, no EPS",
+    "rate": "ordinary Entity.get_spRecoveryPerSec reads GetValue14 and GetValue30 then FPmul; canRecoverSp uses MathUtil.GT(rate,0), strict rate>EPS",
+    "update_rate": "valid prior timer -> OnTick(0), independently canRecoverSp, then ResetButKeepPastTime(ONE/newRate) or MarkInvalid; invalid timer -> Reset(ONE/newRate,true) without canRecoverSp getter",
+    "rate_parameters": "UpdateSpRecoveryPerSec(newValue:FP,oldValue:FP); ordinary implementation uses newValue but does not use oldValue",
+    "reset_sp_timer": "PeriodicTimer.Reset(true): remaining resets to current period; not MarkInvalid"
+  },
+  "supported_division_subdomain": {
+    "context": "OnTick precise batch count after ready; independent typedFP and all normal operation eligibility",
+    "denominator": "P>42950",
+    "numerator": "A=source UnaryNegation(updated_remaining), including MIN64 special MaxValue",
+    "bound": "abs(A)*4294967296 <= P*9223372036854775806",
+    "result": "signed nearest half-up FP division over magnitude; extra quotient bit, plus1, shift1, then sign as original125 instructions",
+    "reason": "absolute rational raw result<=FP.MaxValue keeps the extra-bit quotient plus1 within uint64 and out of per-shift saturation; no zero divisor",
+    "outside_bound": "unknown until full overflow/saturation general-domain proof; do not call ONE-only reciprocal or Python float round"
+  },
+  "public_literal_reference": {
+    "batch4": {
+      "period_raw": 1073741824,
+      "remaining_raw": 536870912,
+      "delta_raw": 3758096384,
+      "updated_remaining_raw": -3221225472,
+      "division_raw": 12884901888,
+      "floor_int32": 3,
+      "count_int32": 4,
+      "after_next_remaining_raw": 1073741824,
+      "independent_recover_sp_raw": 38654705664,
+      "setter_argument_raw": 55834574848
+    },
+    "zero_remaining": {
+      "period_raw": 4294967296,
+      "remaining_raw": 0,
+      "delta_raw": 0,
+      "count_int32": 1,
+      "after_next_remaining_raw": 4294967296
+    },
+    "count_wrap": {
+      "period_raw": 4294967296,
+      "updated_remaining_raw": -9223372032559808512,
+      "division_raw": 9223372032559808512,
+      "floor_int32": 2147483647,
+      "count_int32": -2147483648,
+      "next_called": false,
+      "recover_called": false
+    }
+  },
+  "actual_state_unknown": [
+    "actual source/runtime/hotfix and constructor post-hook state",
+    "actual timer/controller/entity identity, flags and asynchronous stability between reads",
+    "actual period/rate/current SP/maxSP or14/30 inventory/dirty state",
+    "normal getters and setter acceptance/codec/final SP or subsequent reads",
+    "actual skill cast/full-charge/initial/cycle clocks and stop-flag transitions",
+    "general FP division outside the stated conservative no-overflow domain",
+    "recovery modifier acceptance and non-natural attack/damage callback clocks excluded"
+  ],
+  "method_count": 50,
+  "unique_instruction_count": 2252,
+  "source_span_count": 3518,
+  "file_only": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "hotfix_equivalence_proven": false
+}

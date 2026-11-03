@@ -1,0 +1,178 @@
+{
+  "kind": "INDEPENDENT278_DIRECT_GUARD_AND_TYPE_STORE_CLARIFICATION",
+  "file_only": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "source_sha256": "5db792455ef582dd3246273eb71e115ed53b53d2f14fa06ab8593c76f774a956",
+  "method_index": 84880,
+  "fresh_instructions_checked": 7,
+  "instructions": [
+    {
+      "address": "0x180cdefac",
+      "rva": "0xcdefac",
+      "physical_offset": "0xcde3ac",
+      "bytes": "4885ff",
+      "mnemonic": "test",
+      "operands": "rdi, rdi",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      }
+    },
+    {
+      "address": "0x180cdefaf",
+      "rva": "0xcdefaf",
+      "physical_offset": "0xcde3af",
+      "bytes": "0f84ca000000",
+      "mnemonic": "je",
+      "operands": "0x180cdf07f",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      },
+      "target": "0x180cdf07f",
+      "target_symbols": []
+    },
+    {
+      "address": "0x180cdefe2",
+      "rva": "0xcdefe2",
+      "physical_offset": "0xcde3e2",
+      "bytes": "8b4328",
+      "mnemonic": "mov",
+      "operands": "eax, dword ptr [rbx + 0x28]",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      }
+    },
+    {
+      "address": "0x180cdefe5",
+      "rva": "0xcdefe5",
+      "physical_offset": "0xcde3e5",
+      "bytes": "4032f6",
+      "mnemonic": "xor",
+      "operands": "sil, sil",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      }
+    },
+    {
+      "address": "0x180cdefe8",
+      "rva": "0xcdefe8",
+      "physical_offset": "0xcde3e8",
+      "bytes": "894110",
+      "mnemonic": "mov",
+      "operands": "dword ptr [rcx + 0x10], eax",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      }
+    },
+    {
+      "address": "0x180cdefeb",
+      "rva": "0xcdefeb",
+      "physical_offset": "0xcde3eb",
+      "bytes": "33d2",
+      "mnemonic": "xor",
+      "operands": "edx, edx",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      }
+    },
+    {
+      "address": "0x180cdeff0",
+      "rva": "0xcdeff0",
+      "physical_offset": "0xcde3f0",
+      "bytes": "e84b37c8ff",
+      "mnemonic": "call",
+      "operands": "0x180962740",
+      "pdata": {
+        "begin_rva": "0xcdef5e",
+        "end_rva": "0xcdf05c",
+        "unwind_rva": "0x7ff1738",
+        "version": 1,
+        "flags": 4,
+        "prologue_bytes": 10,
+        "codes": 4,
+        "chain_info": [
+          "0xcdef00",
+          "0xcdef5e",
+          "0x7fb9254"
+        ]
+      },
+      "target": "0x180962740",
+      "target_symbols": [
+        "Behaviour$$get_owner"
+      ]
+    }
+  ],
+  "facts": [
+    "The first_sp_data_check test instruction executes normally; its false existence result branches to failure afterward. Check normality is not pointer existence.",
+    "Type value is directly loaded then directly stored. Its numerical value does not select a later branch. With normal read and normal store explicitly qualified, an unknown integer value can retain a spType written prefix with value=null and independent later reads.",
+    "This type prefix proves neither actual actor SP nor cost nor cycle."
+  ],
+  "native_runtime_observed": false
+}

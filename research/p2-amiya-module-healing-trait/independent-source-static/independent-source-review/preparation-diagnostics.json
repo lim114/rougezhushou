@@ -1,0 +1,25 @@
+{
+  "product_api_calls": 0,
+  "tracked_changes_caused": false,
+  "errors": [
+    {
+      "tool_chunk_id": "61cdac",
+      "operation": "First broad text search",
+      "exit_code": 2,
+      "command": "cat AGENTS.md; git status --short; rg -n 'INC-X|char_1037_amiya3|0\\.5|0\\.6|heal.*ratio|ratio.*heal' rouge tests research/p2* docs 2>/dev/null",
+      "output_limit": "Search included minified research JSON and exceeded the response budget; full stdout was not retained by the tool response.",
+      "diagnosis": "The checkout has no docs directory. The broad search and path choice were preparation mistakes, not product or mechanism failures.",
+      "correction": "Used exact source paths, bounded excerpts and parsed original JSON selectors. No dependent product operation was launched."
+    },
+    {
+      "tool_chunk_id": "952c24",
+      "operation": "Initial patchDetailInfoList schema inspection",
+      "exit_code": 1,
+      "stdout": "infos {\"tmplIds\": [\"char_002_amiya\", \"char_1001_amiya2\", \"char_1037_amiya3\"], \"default\": \"char_002_amiya\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<stdin>\", line 6, in <module>\nAttributeError: 'str' object has no attribute 'get'\n",
+      "diagnosis": "Iterated the original dict as if it were a list of candidate dicts.",
+      "correction": "Inspected its actual dict schema and read patchDetailInfoList.char_1037_amiya3 directly; exact record is retained in original-selectors.json.",
+      "source_or_product_failure": false
+    }
+  ]
+}

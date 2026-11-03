@@ -1,0 +1,15 @@
+test_real_grid_click_selects_observed_center_and_scales_on_original (tests.test_current_map_position_view_319.CurrentMapPositionView319Tests.test_real_grid_click_selects_observed_center_and_scales_on_original) ... FAIL
+
+======================================================================
+FAIL: test_real_grid_click_selects_observed_center_and_scales_on_original (tests.test_current_map_position_view_319.CurrentMapPositionView319Tests.test_real_grid_click_selects_observed_center_and_scales_on_original)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_current_map_position_view_319.py", line 23, in test_real_grid_click_selects_observed_center_and_scales_on_original
+    p=self.panel();point=p.result['points'][0];center=p.grid.center(point['row'],point['col']);QTest.mouseClick(p.grid,Qt.MouseButton.LeftButton,pos=center.toPoint());self.qt.processEvents();self.assertEqual(p.selected,(point['row'],point['col']));self.assertIn('已标出',p.player.toPlainText());self.assertGreater(p.combo.currentIndex(),0);self.assertIn('第'+str(point['row']+1)+'行',p.combo.currentText())
+                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.260s
+
+FAILED (failures=1)

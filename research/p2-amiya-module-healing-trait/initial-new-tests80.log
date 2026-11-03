@@ -1,0 +1,49 @@
+test_accepted_healing_factor_keeps_known_sources_and_opening_reference_synchronized (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_accepted_healing_factor_keeps_known_sources_and_opening_reference_synchronized) ... FAIL
+test_all_three_stages_replace_the_same_ratio_at_exact_unlock (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_all_three_stages_replace_the_same_ratio_at_exact_unlock) ... ok
+test_inactive_cultivation_retains_half_ratio_and_absent_module_components (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_inactive_cultivation_retains_half_ratio_and_absent_module_components) ... ok
+test_invalid_module_and_level_zero_contracts_remain (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_invalid_module_and_level_zero_contracts_remain) ... ok
+test_mathematical_exclusions_and_finite_positive_unknowns_survive (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_mathematical_exclusions_and_finite_positive_unknowns_survive) ... ERROR
+test_recharge_normal_attacks_use_the_same_sixty_percent_trait (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_recharge_normal_attacks_use_the_same_sixty_percent_trait) ... ok
+test_resistance_and_damage_modifier_settle_before_linked_healing (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_resistance_and_damage_modifier_settle_before_linked_healing) ... ok
+test_s1_extra_skill_heal_is_separate_and_public_data_is_immutable (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_s1_extra_skill_heal_is_separate_and_public_data_is_immutable) ... ok
+test_s2_opening_reference_and_known_sources_use_ratio_without_closing_unknown (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_s2_opening_reference_and_known_sources_use_ratio_without_closing_unknown) ... ok
+
+======================================================================
+ERROR: test_mathematical_exclusions_and_finite_positive_unknowns_survive (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_mathematical_exclusions_and_finite_positive_unknowns_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-amiya-trait-scale-080/draft/tests/test_amiya_module_healing_trait.py", line 106, in test_mathematical_exclusions_and_finite_positive_unknowns_survive
+    self.assertEqual(r['known_healing_subtotals']['window_healing'],0)
+                     ~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'known_healing_subtotals'
+
+======================================================================
+FAIL: test_accepted_healing_factor_keeps_known_sources_and_opening_reference_synchronized (tests.test_amiya_module_healing_trait.AmiyaModuleHealingTraitTests.test_accepted_healing_factor_keeps_known_sources_and_opening_reference_synchronized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-amiya-trait-scale-080/draft/tests/test_amiya_module_healing_trait.py", line 98, in test_accepted_healing_factor_keeps_known_sources_and_opening_reference_synchronized
+    self.assertEqual(c['诚挚期许本体生命回复'],components(baseline)['诚挚期许本体生命回复'])
+AssertionError: {'nam[69 chars]it': 50.544000000000004, 'total': 1617.4080000[95 chars]None} != {'nam[69 chars]it': 42.120000000000005, 'total': 1347.8400000[95 chars]None}
+  {'actual_total': None,
+   'damage_type': 'regeneration',
+   'hits': 32.0,
+   'name': '诚挚期许本体生命回复',
+   'nominal_duration_reference_seconds': 32.0,
+-  'per_hit': 50.544000000000004,
+?             ^^ ^^^           ^
+
++  'per_hit': 42.120000000000005,
+?             ^^ ^^           ^^
+
+   'source_unit': 'operator',
+-  'total': 1617.4080000000001}
+?            ^^    -
+
++  'total': 1347.8400000000001}
+?            ^^  +
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.119s
+
+FAILED (failures=1, errors=1)

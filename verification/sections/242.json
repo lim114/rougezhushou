@@ -1,0 +1,103 @@
+{
+  "section": 242,
+  "title": "远北猎场侵占家园独立逐格中心参考扩展",
+  "remaining_item": "P3固定地图逐格中心的独立原图/地标校准缺口",
+  "new_capability": "两张固定原图11个独立读数一致的低地格中心进入点选/出生资料联动，4个普通紧急精确相同source绑定；直接参考总6图11关28格",
+  "limitations": [
+    "19申请格中8拒绝或未知，原读数和4px门未调整",
+    "近似名义中心相符不证明实际战斗或绝对像素精度",
+    "不外推未观察格，不提供逆算或路线连续映射",
+    "完整81ID/59图校准缺口不变；原Windows/game尚未验收",
+    "旧051迁移缓存缺失未伪造，完整相关范围不称全通过"
+  ],
+  "files": [
+    "research/p3-map-direct-continuation/README.md",
+    "research/p3-map-direct-continuation/author-readings-frozen.json",
+    "research/p3-map-direct-continuation/candidate.json",
+    "research/p3-map-direct-continuation/independent-reader-frozen.json",
+    "research/p3-map-direct-continuation/independent-reading-request.json",
+    "research/p3-map-direct-continuation/level_rogue6_2-4.json",
+    "research/p3-map-direct-continuation/level_rogue6_4-7.json",
+    "research/p3-map-direct-continuation/prior-landmark-references.json",
+    "research/p3-map-direct-continuation/prior-regular-projections.json",
+    "research/p3-map-direct-continuation/ro6_n_2_4-primary-grid.png",
+    "research/p3-map-direct-continuation/ro6_n_4_7-primary-grid.png",
+    "research/p3-map-direct-continuation/source-receipt.json",
+    "research/p3-map-direct-continuation/test-validation.json",
+    "research/p3-map-direct-continuation/verification.json",
+    "rouge/data/fixed-landmark-references.json",
+    "scripts/extend_map_direct_continuation.py",
+    "scripts/verify_cloud.py",
+    "tests/test_map_direct_continuation.py",
+    "verification/section-242/first-tests.txt",
+    "verification/section-242/first-validation.json",
+    "verification/section-242/tests.txt",
+    "verification/section-242/validation.json"
+  ],
+  "source_evidence": [
+    "原图image SHA、Git blob、尺寸和完整level/mapData精确身份核验；normal/emergency均独立检查",
+    "作者与根代理独立读数分别先冻结；原19格逐项距差，三处sqrt17超门拒绝、两遮挡null保留"
+  ],
+  "acceptance": [
+    "21项可用新source/API及既有参考检查通过；051原迁移缓存缺失的setUpClass明确不可用，不计通过。首次缺Pillow导入错误及日志保留，已补依赖。",
+    "4px严格边界、身份/比例/高地变化、分数格/逆算/未观察格均拒绝；不据旧fit调整读数"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:10:09.071157+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "30d5dc25bc5e0bf036aa1ba043aa09d635e2cb83",
+  "required_raw_sha256": {
+    "research/p3-map-direct-continuation/README.md": "78f21cf331151a9967e04a7de2689384f80a89f411b0bb87ac9c33b467793a55",
+    "research/p3-map-direct-continuation/author-readings-frozen.json": "dabff87f5e10c5db22b52fd60a84f446a62073075a145d9fafeb806156d4c0bd",
+    "research/p3-map-direct-continuation/candidate.json": "9ab3d53c16601a2772544741199452501aaad0cc4df6f440c997c3a4d1a32198",
+    "research/p3-map-direct-continuation/independent-reader-frozen.json": "7572319705f2b030368814286a5a408fd20f0ab8205d3aff526f625494ac9996",
+    "research/p3-map-direct-continuation/independent-reading-request.json": "e23c8f1fb5441ed0477f3ff63dc5719decd1ec2d731aea25bbc989d617167a1a",
+    "research/p3-map-direct-continuation/level_rogue6_2-4.json": "c9ac2c40ab2ba5390168b9b6ce716efa13a11ad4005247307b6edbb146784ee0",
+    "research/p3-map-direct-continuation/level_rogue6_4-7.json": "4ea155942db0eb11241a7231b711d28b1517b85449d3f80a29163a4e40793b37",
+    "research/p3-map-direct-continuation/prior-landmark-references.json": "53da878792655a49ebf159c1487c652166177bebb75abfb72ae61bef853a0f60",
+    "research/p3-map-direct-continuation/prior-regular-projections.json": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+    "research/p3-map-direct-continuation/ro6_n_2_4-primary-grid.png": "8732af36388dec986e85982cae62936df26916dfa74e03cdac73ac5cc34fb84e",
+    "research/p3-map-direct-continuation/ro6_n_4_7-primary-grid.png": "1e7618802d1abd68f008f3ae37d403dc46f3364a298a7bb5342cdf13909f8bd9",
+    "research/p3-map-direct-continuation/source-receipt.json": "43131d7a30585cab3ab3a827669f827325c5eb0cc5b3215e07cd385d4b87be3e",
+    "research/p3-map-direct-continuation/test-validation.json": "5fcd09832e4c2d7639021f51fcf018090350ed3f3906dbed0aa277444547c1bf",
+    "research/p3-map-direct-continuation/verification.json": "a4bf568c9cd28ee07d45ab3e190eda3cdad01a4421fcc3dc7934d19bad409a70",
+    "rouge/data/fixed-landmark-references.json": "9ab3d53c16601a2772544741199452501aaad0cc4df6f440c997c3a4d1a32198",
+    "scripts/extend_map_direct_continuation.py": "7f5eec2c9f31751aa762a7e7f2cdf3c205592137fb2bd1ce5a5d6aa358042cee",
+    "scripts/verify_cloud.py": "c46c70a486d73906a247a5225d6c09604aaf1e1a629ce1e814e36a6d626075cb",
+    "tests/test_map_direct_continuation.py": "32c977de8da502e11d4b5095ea30f33fc1e65703ebeda753fe02d3b9d8d8a127",
+    "verification/section-242/first-tests.txt": "69a84b1cdf719de9c0b0aff416f476a22362937a15d84dad036629b3ae5ae9e4",
+    "verification/section-242/first-validation.json": "9693d582d9ec3820e7f31793e0d6ca52e762ed0addda95603b58016eb6322e81",
+    "verification/section-242/tests.txt": "198c8f547bc56b205eee456e88906184ce2a4cf24e88212393125fd632855e7e",
+    "verification/section-242/validation.json": "74e2eca76888f02a912ab1d16eaf17910914f04400fd5df4f19abf5ef243e2af"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_map_direct_continuation",
+      "tests.test_map_projection_044",
+      "tests.test_map_projection_051"
+    ],
+    "classifier": "scripts.verify_full_available.AvailableResult; exact missing migrated cache/environment dependencies only",
+    "tests_run": 21,
+    "passed": 21,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "unavailable_records": 1,
+    "unavailable": [
+      {
+        "test": "setUpClass (tests.test_map_projection_051.FixedGroundCandidateTests)",
+        "kind": "unmigrated_cache",
+        "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-051/battle-map-projections-candidate.json'"
+      }
+    ],
+    "exit_code": 0,
+    "complete_related_validation": false,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}

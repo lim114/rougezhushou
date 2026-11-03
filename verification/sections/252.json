@@ -1,0 +1,82 @@
+{
+  "section": 252,
+  "title": "三生灵自动资格与显式科技目标费用预算",
+  "remaining_item": "P2长期科技账户声明资格与实际自动门缺口",
+  "new_capability": "57科技固定费用逐所选目标预算，三DIFFICULTY生灵门按任一前置/常规/3·6·9资格核对；明示接受/扣费/返还分账和与手工记录差异，长期科技入口捕获独立只读快照",
+  "limitations": [
+    "普通前置AND/OR未证，不计算整树最低或必需成本",
+    "自动门来源资格不等于实际buff附着/账户身份/真实激活",
+    "成功、扣费、返还独立声明，失败不推退款，不购买或写档案",
+    "未知费用状态保留范围，当前游戏与原Windows未验证"
+  ],
+  "files": [
+    "research/p2-continuation-technology-upgrade/REPORT.md",
+    "research/p2-continuation-technology-upgrade/final-qt-tests.log",
+    "research/p2-continuation-technology-upgrade/final-receipt.json",
+    "research/p2-continuation-technology-upgrade/necessary-tests.log",
+    "research/p2-continuation-technology-upgrade/offscreen-upgrade-plan.png",
+    "research/p2-continuation-technology-upgrade/source-receipt.json",
+    "research/p2-continuation-technology-upgrade/source-recheck.json",
+    "research/p2-continuation-technology-upgrade/verify_source_packet.py",
+    "rouge/data/p2-technology-upgrade-source.json",
+    "rouge/p2_technology_upgrade.py",
+    "rouge/p2_technology_upgrade_view.py",
+    "rouge/technology_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_p2_technology_upgrade.py",
+    "tests/test_p2_technology_upgrade_view.py",
+    "verification/section-252/tests.txt",
+    "verification/section-252/validation.json"
+  ],
+  "source_evidence": [
+    "原commonDevelopment57节点tokenCost/front/next完整源及PRTS433770三自动节点任一前置、常规模式与3/6/9资格",
+    "不将三自动OR推广到普通节点前置判定，三次无新证据缺口保留"
+  ],
+  "acceptance": [
+    "29必要新API/实际Qt入口与既有账户状态检查通过",
+    "只读capture快照与局外编辑不改账户，零费自动门/未知预算/扣退款独立分离；用户260后集中修复全量要求同步总体要求"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:44:35.852063+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "6f08716b030a2f13d70943d42a40ceef6d7fc2f9",
+  "required_raw_sha256": {
+    "research/p2-continuation-technology-upgrade/REPORT.md": "36f33d0253bc19f36d60e7dbbd0b453141b8e830bf8eda6146bff3d1381cc4a7",
+    "research/p2-continuation-technology-upgrade/final-qt-tests.log": "e2e4612726bcb21a6c7c22d09e79b64ee86ca82824adae4d8e596d74e09de4a4",
+    "research/p2-continuation-technology-upgrade/final-receipt.json": "1eaa5b1026c17265cdb43dd6bbcae21019c39b46de98e6c85c349da01f4e30c5",
+    "research/p2-continuation-technology-upgrade/necessary-tests.log": "54d4b9234a9ec751d6226c73f0cc4979cf9a470a62f8e4e934ddc461e684a284",
+    "research/p2-continuation-technology-upgrade/offscreen-upgrade-plan.png": "b01545b11d4eedb82f655aac276d75b8de5eb78a654e99015813ff47cf280717",
+    "research/p2-continuation-technology-upgrade/source-receipt.json": "470e574f8e095c0bb837ade9d7e3e40d4c522733a4c02303a17073a75ac824b7",
+    "research/p2-continuation-technology-upgrade/source-recheck.json": "ef14604c60b0b99298387fd13f5dd73dfc09d1e939d806148c667e8764130ddd",
+    "research/p2-continuation-technology-upgrade/verify_source_packet.py": "05a19e48bf61afe23ad536386cb3012057a01f411b401c480438ca734de26842",
+    "rouge/data/p2-technology-upgrade-source.json": "d6cd9ae30140aa2796087f0a468209d6d93c9b4a2603240998d80bc1cc4f0e27",
+    "rouge/p2_technology_upgrade.py": "743283591a4c71843d1609e4416cc59e50625947c362b079491b02bff3392db9",
+    "rouge/p2_technology_upgrade_view.py": "70a43f6cdc5fbc5c807a5b6ff787fa512dfb2c30b3c75022b6077732f0364f18",
+    "rouge/technology_view.py": "d841bacae663ba9c90ecf79538e79817f56857b1a7cd77816b77a2821d78ff66",
+    "scripts/verify_cloud.py": "65cd2787c7ae23841286f92b72a4a2bc3c9b7f116c4995937b0d2881eba35c40",
+    "tests/test_p2_technology_upgrade.py": "a354b438a5577cd89aca7089e07192a033a2c3fe20adf2f0b0415c0e261c6aad",
+    "tests/test_p2_technology_upgrade_view.py": "ec05440a87d534b3831713ae8fd28a945f1e6a55a5ea3245cf1c3a1192347ebf",
+    "verification/section-252/tests.txt": "f038c9d2df83d0416ef4eb9abba3e227a59f0c7cf0518002323aaf8a10a35d42",
+    "verification/section-252/validation.json": "161893dbb7ca49425f0e2614a7c1faa045cab81cc1845e0e8770ef207b823ac4"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_p2_technology_upgrade",
+      "tests.test_p2_technology_upgrade_view",
+      "tests.test_technology_state_128"
+    ],
+    "tests_run": 29,
+    "passed": 29,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

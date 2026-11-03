@@ -1,0 +1,96 @@
+--- frozen-v1
++++ fresh-v2
+@@ -54,28 +54,66 @@
+ OUT.mkdir(parents=True, exist_ok=False)
+ (OUT / 'source100-guard-input.json').write_bytes(_guard_bytes100)
+ _started100 = time.perf_counter()
+-_deadline100 = _started100 + 600
++_deadline100 = _started100 + 1200
+ _restorations100 = []
+ _count_enabled100 = False
+ 
+ def _deadline_check100():
+     if time.perf_counter() >= _deadline100:
+-        raise TimeoutError('Fresh full105 deadline of600 seconds reached')
++        raise TimeoutError('Fresh full105 attempt2 deadline of1200 seconds reached')
+ 
+ def _hard_timeout100():
+-    record = {'passed': False, 'scope': 'actual full105 hard deadline', 'after_section': 105,
+-              'deadline_seconds': 600, 'elapsed_seconds': time.perf_counter()-_started100,
++    record = {'passed': False, 'scope': 'actual full105 attempt2 hard deadline', 'after_section': 105,
++              'attempt': 2, 'deadline_seconds': 1200, 'elapsed_seconds': time.perf_counter()-_started100,
+               'guard_sha256': hashlib.sha256(_guard_bytes100).hexdigest(),
+               'full_function_vector_measured': False}
+     try:
+         (OUT / 'hard-timeout-100.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
+-        print(json.dumps({'passed': False, 'hard_deadline': 600}), flush=True)
++        print(json.dumps({'passed': False, 'attempt': 2, 'hard_deadline': 1200}), flush=True)
+     finally:
+         os._exit(124)
+ 
+-_timer100 = threading.Timer(600, _hard_timeout100)
++_timer100 = threading.Timer(1200, _hard_timeout100)
+ _timer100.daemon = True
+ _timer100.start()
++
++def _write_progress105(count, last_check):
++    # Only completed append count and public scalar labels; never dump checks,
++    # window, caller, state, function vectors or repeat a full Source hash scan.
++    record = {'kind': 'FULL105_ATTEMPT2_APPENDED_CHECK_PROGRESS',
++              'after_section': 105, 'attempt': 2, 'passed': False,
++              'workflow_complete': False, 'appended_checks': count,
++              'last_check': last_check,
++              'elapsed_seconds': round(time.perf_counter()-_started100, 3),
++              'checkpoint_every_appended_checks': 32,
++              'complete_function_vector_measured': False}
++    temporary = OUT / 'full105-progress.json.tmp'
++    with temporary.open('w', encoding='utf-8') as stream:
++        stream.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + '\n')
++        stream.flush()
++        os.fsync(stream.fileno())
++    os.replace(temporary, OUT / 'full105-progress.json')
++
++
++class _ProgressChecks105(list):
++    def __init__(self):
++        super().__init__()
++        _write_progress105(0, {})
++
++    def append(self, item):
++        # Real list.append first. Its original None return is preserved; an
++        # observer IO error propagates to the unchanged outer failure handler.
++        super().append(item)
++        count = len(self)
++        if count % 32 == 0:
++            labels = {}
++            if type(item) is dict:
++                for key in ('scope', 'section', 'operator', 'skill', 'pair_id'):
++                    value = item.get(key)
++                    if key in item and (value is None or type(value) in (str, int, bool)):
++                        labels[key] = value
++            _write_progress105(count, labels)
++
+ 
+ def _replace_binding100(owner, name, replacement):
+     original = getattr(owner, name)
+@@ -1140,7 +1178,7 @@
+ 
+ def source_hashes():
+     return maintained_source100()
+-checks=[];started=time.perf_counter();window=None;app=None;before=source_hashes()
++checks=_ProgressChecks105();started=time.perf_counter();window=None;app=None;before=source_hashes()
+ receipt={'scope':'Wine Windows binary compatibility; no native Windows or game integration',
+          'after_section':105,'current_maintained_source_count_expected':748,
+          'inherited_full100_runner_sha256':'e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3',
+@@ -1150,7 +1188,10 @@
+          'checks':checks,'passed':False,'complete_ui_validation':False,'plain_text_normalization':'QPlainTextEdit converts non-breaking spaces to ordinary spaces',
+          'source100_guard_sha256':hashlib.sha256(_guard_bytes100).hexdigest(),
+          'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+-         'deadline_seconds':600,'global_profile_or_trace_used':False,
++         'deadline_seconds':1200,'global_profile_or_trace_used':False,
++         'full105_attempt':2,'progress_checkpoint_file':'full105-progress.json',
++         'progress_every_appended_checks':32,'progress_is_partial_observation_only':True,
++         'full105_v1_source_sha256':'98e6cef848ffea73d36f330edb071e28cc884e676838a876a76995d28ea821a5',
+          'old095_complete_function_vector_measured':False,
+          'old090_frame_local_normal_observed':False,
+          'normal_plan_original_return_observed_instead':True,

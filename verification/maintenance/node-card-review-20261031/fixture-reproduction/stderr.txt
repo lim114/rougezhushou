@@ -1,0 +1,134 @@
+test_all_types_have_chinese_labels (tests.test_player_statistics_388.Statistics.test_all_types_have_chinese_labels) ... ok
+test_bad_counts_rejected (tests.test_player_statistics_388.Statistics.test_bad_counts_rejected) ... ok
+test_denominator_is_same_floor_distance (tests.test_player_statistics_388.Statistics.test_denominator_is_same_floor_distance) ... ok
+test_literal_does_not_execute (tests.test_player_statistics_388.Statistics.test_literal_does_not_execute) ... ok
+test_missing_samples_unknown (tests.test_player_statistics_388.Statistics.test_missing_samples_unknown) ... ok
+test_real_aggregate_reconciles (tests.test_player_statistics_388.Statistics.test_real_aggregate_reconciles) ... ok
+test_source_total_mismatch (tests.test_player_statistics_388.Statistics.test_source_total_mismatch) ... ok
+test_artwork_all_exact_bytes_and_no_missing_files (tests.test_player_map_interaction_392.MapReferenceTests.test_artwork_all_exact_bytes_and_no_missing_files) ... ok
+test_boolean_distance_is_not_integer_sample_after_cache_hit (tests.test_player_map_interaction_392.MapReferenceTests.test_boolean_distance_is_not_integer_sample_after_cache_hit) ... ok
+test_candidate_filter_does_not_renormalize_historical_counts (tests.test_player_map_interaction_392.MapReferenceTests.test_candidate_filter_does_not_renormalize_historical_counts) ... ok
+test_deduplicate_candidates_without_reordering (tests.test_player_map_interaction_392.MapReferenceTests.test_deduplicate_candidates_without_reordering) ... ok
+test_exact_event_mapping_has_real_images (tests.test_player_map_interaction_392.MapReferenceTests.test_exact_event_mapping_has_real_images) ... ok
+test_fixed_node_does_not_get_a_probability (tests.test_player_map_interaction_392.MapReferenceTests.test_fixed_node_does_not_get_a_probability) ... ok
+test_known_observation_has_no_redundant_rate (tests.test_player_map_interaction_392.MapReferenceTests.test_known_observation_has_no_redundant_rate) ... ok
+test_no_candidate_dossier_is_not_global_directory (tests.test_player_map_interaction_392.MapReferenceTests.test_no_candidate_dossier_is_not_global_directory) ... ok
+test_no_sample_is_unknown (tests.test_player_map_interaction_392.MapReferenceTests.test_no_sample_is_unknown) ... ok
+test_observation_overrides_template_and_prediction (tests.test_player_map_interaction_392.MapReferenceTests.test_observation_overrides_template_and_prediction) ... ok
+test_other_types_are_excluded_from_highlight (tests.test_player_map_interaction_392.MapReferenceTests.test_other_types_are_excluded_from_highlight) ... ok
+test_passed_type_is_history_not_new_candidate (tests.test_player_map_interaction_392.MapReferenceTests.test_passed_type_is_history_not_new_candidate) ... ok
+test_single_candidate_remains_candidate (tests.test_player_map_interaction_392.MapReferenceTests.test_single_candidate_remains_candidate) ... ok
+test_uncertain_without_candidates_stays_unconfirmed (tests.test_player_map_interaction_392.MapReferenceTests.test_uncertain_without_candidates_stays_unconfirmed) ... ok
+test_unknown_event_does_not_borrow_an_image (tests.test_player_map_interaction_392.MapReferenceTests.test_unknown_event_does_not_borrow_an_image) ... ok
+test_unknown_sixth_or_special_region_not_first_floor_fallback (tests.test_player_map_interaction_392.MapReferenceTests.test_unknown_sixth_or_special_region_not_first_floor_fallback) ... ok
+test_unrelated_fixed_battle_has_no_event_cards (tests.test_player_map_interaction_392.MapReferenceTests.test_unrelated_fixed_battle_has_no_event_cards) ... ok
+test_optional_map_search_is_collapsed_and_keeps_reading_when_reopened (tests.test_player_popover_refresh.MapDisclosureTests.test_optional_map_search_is_collapsed_and_keeps_reading_when_reopened) ... ok
+test_button_drag_keeps_native_toolbar_movement_without_parent_fallback (tests.test_player_popover_refresh.PopoverRefreshTests.test_button_drag_keeps_native_toolbar_movement_without_parent_fallback) ... ERROR
+test_closed_readers_do_no_work_during_repeated_run_updates (tests.test_player_popover_refresh.PopoverRefreshTests.test_closed_readers_do_no_work_during_repeated_run_updates) ... ERROR
+test_exchange_rechecks_its_source_while_inventory_is_hidden (tests.test_player_popover_refresh.PopoverRefreshTests.test_exchange_rechecks_its_source_while_inventory_is_hidden) ... ERROR
+test_generic_history_popup_does_not_refresh_its_parent (tests.test_player_popover_refresh.PopoverRefreshTests.test_generic_history_popup_does_not_refresh_its_parent) ... ERROR
+test_inventory_bundle_sleeps_and_restores_together (tests.test_player_popover_refresh.PopoverRefreshTests.test_inventory_bundle_sleeps_and_restores_together) ... ERROR
+test_reopening_visible_reader_refreshes_once_without_show_event (tests.test_player_popover_refresh.PopoverRefreshTests.test_reopening_visible_reader_refreshes_once_without_show_event) ... ERROR
+test_unsaved_reader_can_still_veto_navigation (tests.test_player_popover_refresh.PopoverRefreshTests.test_unsaved_reader_can_still_veto_navigation) ... ERROR
+test_visible_reader_updates_and_direct_restore_reads_latest (tests.test_player_popover_refresh.PopoverRefreshTests.test_visible_reader_updates_and_direct_restore_reads_latest) ... ERROR
+
+======================================================================
+ERROR: test_button_drag_keeps_native_toolbar_movement_without_parent_fallback (tests.test_player_popover_refresh.PopoverRefreshTests.test_button_drag_keeps_native_toolbar_movement_without_parent_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_closed_readers_do_no_work_during_repeated_run_updates (tests.test_player_popover_refresh.PopoverRefreshTests.test_closed_readers_do_no_work_during_repeated_run_updates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_exchange_rechecks_its_source_while_inventory_is_hidden (tests.test_player_popover_refresh.PopoverRefreshTests.test_exchange_rechecks_its_source_while_inventory_is_hidden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_generic_history_popup_does_not_refresh_its_parent (tests.test_player_popover_refresh.PopoverRefreshTests.test_generic_history_popup_does_not_refresh_its_parent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_inventory_bundle_sleeps_and_restores_together (tests.test_player_popover_refresh.PopoverRefreshTests.test_inventory_bundle_sleeps_and_restores_together)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_reopening_visible_reader_refreshes_once_without_show_event (tests.test_player_popover_refresh.PopoverRefreshTests.test_reopening_visible_reader_refreshes_once_without_show_event)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_unsaved_reader_can_still_veto_navigation (tests.test_player_popover_refresh.PopoverRefreshTests.test_unsaved_reader_can_still_veto_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+======================================================================
+ERROR: test_visible_reader_updates_and_direct_restore_reads_latest (tests.test_player_popover_refresh.PopoverRefreshTests.test_visible_reader_updates_and_direct_restore_reads_latest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 38, in setUp
+    self.bar = CompactAssistant(self.owner)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_compact.py", line 76, in __init__
+    self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PySide6.QtWidgets.QWidget' object has no attribute 'node_statistics_source'
+
+----------------------------------------------------------------------
+Ran 33 tests in 2.403s
+
+FAILED (errors=8)

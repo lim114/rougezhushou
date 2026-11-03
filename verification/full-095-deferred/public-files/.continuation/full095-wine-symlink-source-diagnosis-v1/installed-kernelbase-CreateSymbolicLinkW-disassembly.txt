@@ -1,0 +1,128 @@
+
+/workspace/.compat/wine/usr/lib/x86_64-linux-gnu/wine/x86_64-windows/kernelbase.dll:     file format pei-x86-64
+
+
+Disassembly of section .text:
+
+00000001740172c0 <CreateSymbolicLinkW>:
+   1740172c0:	55                   	push   %rbp
+   1740172c1:	57                   	push   %rdi
+   1740172c2:	56                   	push   %rsi
+   1740172c3:	53                   	push   %rbx
+   1740172c4:	48 83 ec 48          	sub    $0x48,%rsp
+   1740172c8:	48 89 ce             	mov    %rcx,%rsi
+   1740172cb:	48 89 d3             	mov    %rdx,%rbx
+   1740172ce:	44 89 c7             	mov    %r8d,%edi
+   1740172d1:	f6 05 38 2e 07 00 01 	testb  $0x1,0x72e38(%rip)        # 17408a110 <__wine_dbch_file>
+   1740172d8:	75 16                	jne    1740172f0 <CreateSymbolicLinkW+0x30>
+   1740172da:	b8 01 00 00 00       	mov    $0x1,%eax
+   1740172df:	48 83 c4 48          	add    $0x48,%rsp
+   1740172e3:	5b                   	pop    %rbx
+   1740172e4:	5e                   	pop    %rsi
+   1740172e5:	5f                   	pop    %rdi
+   1740172e6:	5d                   	pop    %rbp
+   1740172e7:	c3                   	ret
+   1740172e8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+   1740172ef:	00 
+   1740172f0:	48 8d 2d ed 84 07 00 	lea    0x784ed(%rip),%rbp        # 17408f7e4 <.rdata+0x84>
+   1740172f7:	48 85 d2             	test   %rdx,%rdx
+   1740172fa:	74 37                	je     174017333 <CreateSymbolicLinkW+0x73>
+   1740172fc:	48 89 d0             	mov    %rdx,%rax
+   1740172ff:	48 c1 e8 10          	shr    $0x10,%rax
+   174017303:	0f 84 b7 00 00 00    	je     1740173c0 <CreateSymbolicLinkW+0x100>
+   174017309:	48 c7 c2 ff ff ff ff 	mov    $0xffffffffffffffff,%rdx
+   174017310:	48 89 d9             	mov    %rbx,%rcx
+   174017313:	48 8d 2d d1 84 07 00 	lea    0x784d1(%rip),%rbp        # 17408f7eb <.rdata+0x8b>
+   17401731a:	e8 e1 da 01 00       	call   174034e00 <IsBadStringPtrW>
+   17401731f:	85 c0                	test   %eax,%eax
+   174017321:	75 10                	jne    174017333 <CreateSymbolicLinkW+0x73>
+   174017323:	ba ff ff ff ff       	mov    $0xffffffff,%edx
+   174017328:	48 89 d9             	mov    %rbx,%rcx
+   17401732b:	e8 10 12 07 00       	call   174088540 <wine_dbgstr_wn.part.0>
+   174017330:	48 89 c5             	mov    %rax,%rbp
+   174017333:	48 8d 05 aa 84 07 00 	lea    0x784aa(%rip),%rax        # 17408f7e4 <.rdata+0x84>
+   17401733a:	48 85 f6             	test   %rsi,%rsi
+   17401733d:	74 32                	je     174017371 <CreateSymbolicLinkW+0xb1>
+   17401733f:	48 89 f0             	mov    %rsi,%rax
+   174017342:	48 c1 e8 10          	shr    $0x10,%rax
+   174017346:	74 68                	je     1740173b0 <CreateSymbolicLinkW+0xf0>
+   174017348:	48 c7 c2 ff ff ff ff 	mov    $0xffffffffffffffff,%rdx
+   17401734f:	48 89 f1             	mov    %rsi,%rcx
+   174017352:	e8 a9 da 01 00       	call   174034e00 <IsBadStringPtrW>
+   174017357:	89 c2                	mov    %eax,%edx
+   174017359:	48 8d 05 8b 84 07 00 	lea    0x7848b(%rip),%rax        # 17408f7eb <.rdata+0x8b>
+   174017360:	85 d2                	test   %edx,%edx
+   174017362:	75 0d                	jne    174017371 <CreateSymbolicLinkW+0xb1>
+   174017364:	ba ff ff ff ff       	mov    $0xffffffff,%edx
+   174017369:	48 89 f1             	mov    %rsi,%rcx
+   17401736c:	e8 cf 11 07 00       	call   174088540 <wine_dbgstr_wn.part.0>
+   174017371:	89 7c 24 30          	mov    %edi,0x30(%rsp)
+   174017375:	4c 8d 0d 30 86 07 00 	lea    0x78630(%rip),%r9        # 17408f9ac <.rdata+0x24c>
+   17401737c:	4c 8d 05 ad 93 07 00 	lea    0x793ad(%rip),%r8        # 174090730 <__func__.48>
+   174017383:	31 c9                	xor    %ecx,%ecx
+   174017385:	48 89 6c 24 28       	mov    %rbp,0x28(%rsp)
+   17401738a:	48 8d 15 7f 2d 07 00 	lea    0x72d7f(%rip),%rdx        # 17408a110 <__wine_dbch_file>
+   174017391:	48 89 44 24 20       	mov    %rax,0x20(%rsp)
+   174017396:	e8 f5 df 06 00       	call   174085390 <wine_dbg_log.constprop.0>
+   17401739b:	b8 01 00 00 00       	mov    $0x1,%eax
+   1740173a0:	48 83 c4 48          	add    $0x48,%rsp
+   1740173a4:	5b                   	pop    %rbx
+   1740173a5:	5e                   	pop    %rsi
+   1740173a6:	5f                   	pop    %rdi
+   1740173a7:	5d                   	pop    %rbp
+   1740173a8:	c3                   	ret
+   1740173a9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+   1740173b0:	89 f2                	mov    %esi,%edx
+   1740173b2:	48 8d 0d 17 84 07 00 	lea    0x78417(%rip),%rcx        # 17408f7d0 <.rdata+0x70>
+   1740173b9:	e8 52 e6 06 00       	call   174085a10 <wine_dbg_sprintf.constprop.0>
+   1740173be:	eb b1                	jmp    174017371 <CreateSymbolicLinkW+0xb1>
+   1740173c0:	48 8d 0d 09 84 07 00 	lea    0x78409(%rip),%rcx        # 17408f7d0 <.rdata+0x70>
+   1740173c7:	e8 44 e6 06 00       	call   174085a10 <wine_dbg_sprintf.constprop.0>
+   1740173cc:	48 89 c5             	mov    %rax,%rbp
+   1740173cf:	e9 5f ff ff ff       	jmp    174017333 <CreateSymbolicLinkW+0x73>
+   1740173d4:	90                   	nop
+   1740173d5:	90                   	nop
+   1740173d6:	90                   	nop
+   1740173d7:	90                   	nop
+   1740173d8:	90                   	nop
+   1740173d9:	90                   	nop
+   1740173da:	90                   	nop
+   1740173db:	90                   	nop
+   1740173dc:	90                   	nop
+   1740173dd:	90                   	nop
+   1740173de:	90                   	nop
+   1740173df:	90                   	nop
+
+00000001740173e0 <.text$CreateThread>:
+   1740173e0:	cc                   	int3
+   1740173e1:	cc                   	int3
+   1740173e2:	cc                   	int3
+   1740173e3:	cc                   	int3
+   1740173e4:	cc                   	int3
+   1740173e5:	cc                   	int3
+   1740173e6:	cc                   	int3
+   1740173e7:	cc                   	int3
+   1740173e8:	cc                   	int3
+   1740173e9:	cc                   	int3
+   1740173ea:	cc                   	int3
+   1740173eb:	cc                   	int3
+   1740173ec:	cc                   	int3
+   1740173ed:	cc                   	int3
+   1740173ee:	cc                   	int3
+   1740173ef:	cc                   	int3
+   1740173f0:	cc                   	int3
+   1740173f1:	cc                   	int3
+   1740173f2:	cc                   	int3
+   1740173f3:	cc                   	int3
+   1740173f4:	cc                   	int3
+   1740173f5:	cc                   	int3
+   1740173f6:	cc                   	int3
+   1740173f7:	cc                   	int3
+   1740173f8:	cc                   	int3
+   1740173f9:	cc                   	int3
+   1740173fa:	cc                   	int3
+   1740173fb:	cc                   	int3
+   1740173fc:	cc                   	int3
+   1740173fd:	cc                   	int3
+   1740173fe:	cc                   	int3
+   1740173ff:	cc                   	int3

@@ -1,0 +1,226 @@
+{
+  "section": 290,
+  "kind": "functional_section",
+  "title": "临时中介所四种招募结果、出现条件区分与完整可用范围复验",
+  "at_Beijing": "2026-10-16T05:17:10.862271+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "b68229bb586ef3a11c520a4814be3c09c72ef088",
+  "remaining_item": "P3节点事件的具体招募结果与结果条件说明",
+  "new_capability": "临时中介所“可靠的中介值得信任”按完整原选项和独立全文列出先锋/近卫、重装/辅助、医疗/狙击、术师/特种四种替代招募结果；每种资料参考为2希望与1名5星及以下直升干员，直升已查证为初招即已进阶。仅精确这一条职业说明归入选择后结果，不更改出现资格、原目录或本局状态；四种结果不相加。",
+  "files": [
+    "rouge/choice_recruitment_results.py",
+    "rouge/data/choice-recruitment-results.json",
+    "rouge/event_planning.py",
+    "rouge/player_node_information.py",
+    "rouge/node_catalog_view.py",
+    "scripts/build_choice_recruitment_results_290.py",
+    "scripts/verify_recruitment_results_window_290.py",
+    "scripts/verify_full_available.py",
+    "tests/test_choice_recruitment_results_290.py",
+    "tests/test_choice_recruitment_integration_290.py",
+    "tests/test_enemy_sp_inheritance_reference.py",
+    "tests/test_player_node_information_286.py",
+    "tests/test_enemy_prefab_skill_gates.py",
+    "tests/test_enemy_skill_resources.py",
+    "tests/test_enemy_configuration_view.py",
+    "tests/test_original_entry_planning.py"
+  ],
+  "source_sha256": {
+    "rouge/choice_recruitment_results.py": "52af9b0c7448cf377ec9c3169a9a9c5c6d503657247eb22ec33ca9928fe3be62",
+    "rouge/data/choice-recruitment-results.json": "d79977a37b777d91d5d472e17edf618104fe54f33e5be9f66da2dc833bdea12f",
+    "rouge/event_planning.py": "f7455c11558d828f4a79ca7a82db1660c143597b927d6d2aa9ef55274ff3ff01",
+    "rouge/player_node_information.py": "0ea583555a8628967d139acc3f8841edb320e7eb93fda30b74c0754305146bb5",
+    "rouge/node_catalog_view.py": "eba58f968f8591f2622f85592317193fa416715ea8e502920c45a740ee97ebd4",
+    "scripts/build_choice_recruitment_results_290.py": "d93f5c7ac61dcd23733f79286fd4ca26c4ed55f86a30eebc7e87f41f269632a3",
+    "scripts/verify_recruitment_results_window_290.py": "f2e9586d9847c12dd4229db9a21f09eca81a46fceb0a419332d0d849c70aeb31",
+    "scripts/verify_full_available.py": "bb66e405fba57e880d5aa017d4fcd56dc61f697da85a82a67fbf9c8e43810a6a",
+    "tests/test_choice_recruitment_results_290.py": "f74a5f615f091fc3147acb5f7f12d3a4ff98b3f9c17b1b521f9060c4525dbd14",
+    "tests/test_choice_recruitment_integration_290.py": "c777ab5f0df723189f198423d298066b01287d94ca4d99190ebf01c185bf913b",
+    "tests/test_enemy_sp_inheritance_reference.py": "0eb99b4d079a945f6254f55a9a2cbadffc8d6d408aa24889dc9f0de8f13eedf4",
+    "tests/test_player_node_information_286.py": "89506c41396f948cac5aba992bb6e4330038f7eb634d7a7369fa61d1dabc30f5",
+    "tests/test_enemy_prefab_skill_gates.py": "05165aece8b9157170d8e7692f0428c43d76bdaf9808a6446c34b198724946e2",
+    "tests/test_enemy_skill_resources.py": "dd488fc87315622bab2e716feecad6362dd9bf4c4becc9f28e377ee89d5bf7ee",
+    "tests/test_enemy_configuration_view.py": "fb481b121f4c22d97657010c94d33c56f6e9b6d3f20fdf0d0525d81454ea8c1c",
+    "tests/test_original_entry_planning.py": "252a37d688f4ba11811d853e2f0f4ffb5a1bb7adeb7823895089cee4c941deaa"
+  },
+  "source_evidence": {
+    "packet": "research/p3-choice-recruitment-290",
+    "manifest_sha256": "7f217505013aa77d8b3f1693b802f1fbb2888197180a4b8e64365c0fe055be93",
+    "exact_choice": "community_group_018:scene:0:choice:1",
+    "original_profession_result_records": [
+      "choice_ro6_hire1_1",
+      "choice_ro6_hire1_4",
+      "choice_ro6_hire1_5",
+      "choice_ro6_hire1_6"
+    ],
+    "independent_document_revision": "349818",
+    "community_revisions": [
+      "427904",
+      "440271"
+    ],
+    "remaining_original_scenes": 25,
+    "remaining_original_choices": 57,
+    "original_catalog_and_run_state_changed": false,
+    "actual_recruitment_or_grants_certified": false,
+    "terminology_known": {
+      "直升": "初次招募时即处于已进阶状态"
+    }
+  },
+  "necessary_validation": {
+    "receipt": "verification/sections/290-necessary-repair/process.json",
+    "methods_run": 46,
+    "source_unchanged": true,
+    "display_migration_receipt": "verification/sections/290-preparation/supplementary-public-evidence/presentation-migration/attempt2/first-run.json",
+    "display_methods_run": 69,
+    "display_methods_passed": 69,
+    "fresh_final15_module": {
+      "public_receipt_relative": "verification/sections/290-necessary-final-A3/process.json",
+      "receipt_sha256": "4607e752fa13182176664e7d6c804ecb0af62db5d8212b40329b4d56b0dd070d",
+      "actual_process_exit": 0,
+      "actual_tests_run": 15,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7521525a27d9c7679a9b6781619fc7e48f956e17f49d38ae1c4cfad9379f6f2a",
+      "receipt_declared_source_coverage_count": 356,
+      "receipt_declared_sources_unchanged": true,
+      "full1221_scope_not_claimed_by_this_necessary_run": true,
+      "Qt_window_or_game_chat_integration_claimed": false,
+      "rerun_by_final_A3_preparation": false
+    },
+    "old15_not_added_to_fresh15": true,
+    "counts_kept_separate_not_summed": true,
+    "author25_subset_not_added": true
+  },
+  "native_windows_validation": {
+    "receipt": "verification/full-290/p3-supplementary-attempt2/p3_290/actual/p3-window.json",
+    "unique_checks": 70,
+    "original_project_window": "verification/sections/290-main-window.json",
+    "original_window_focus": "verification/sections/290-main-window-focus.json",
+    "normal_restart_private_paths_compared": 5,
+    "normal_restart_private_paths_changed": 0,
+    "game_or_chat_verified": false
+  },
+  "full_validation": {
+    "receipt": "verification/full-290/summary.json",
+    "sha256": "2c6e93534e443089bc0f8ffbbd686e3c37610ccf3c4aafd43fbf44d16188b823",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "actual_validation_attempt": 3,
+    "actual_legacy_execution_ordinal": 4,
+    "offline": {
+      "tests_run": 4823,
+      "tests_passed": 4744,
+      "historical_or_declared_skips": 73,
+      "failures": 0,
+      "errors": 0,
+      "unavailable_records": 16,
+      "unavailable_parent_count": 6,
+      "qt_shutdown": {
+        "application_present": true,
+        "active_pool_threads_before_wait": 0,
+        "application_destroyed": true,
+        "top_level_widgets_before_shutdown": 4991,
+        "valid_wrappers_after_shutdown": 0
+      },
+      "qt_shutdown_error": null
+    },
+    "component_freezes": {
+      "offline3": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "legacy4_and_original_typed": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "A2_current_and_P3": {
+        "path": "verification/full-290/source-freeze-repair.json",
+        "sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0"
+      }
+    },
+    "all_historical_source_maps_same_freeze": false,
+    "composite_proof": "verification/full-290/composite-admissibility.json",
+    "composite_proof_sha256": "1f1b4e7c233ca0a45cafdbe4ef6457112f5793985b343bacac80dbae3fd0e30d",
+    "exact_two_nonproduction_source_changes": {
+      "tests/test_enemy_sp_inheritance_reference.py": {
+        "old_sha256": "3523d3c99033412fd130994f9ab12e9e35faf663ed18eea35037a661cedda550",
+        "new_sha256": "0eb99b4d079a945f6254f55a9a2cbadffc8d6d408aa24889dc9f0de8f13eedf4"
+      },
+      "scripts/verify_full_available.py": {
+        "old_sha256": "857339d08274515133d0a26c46c5e3c74d9dff494449f1e3c6358fc1d8b8729d",
+        "new_sha256": "bb66e405fba57e880d5aa017d4fcd56dc61f697da85a82a67fbf9c8e43810a6a"
+      }
+    },
+    "legacy_typed_states": 52,
+    "p3_supplementary_windows": {
+      "286": {
+        "passed": true,
+        "actual_execution_attempt": 2,
+        "component_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+        "actual_child_and_supervisor_exit": 0,
+        "unique_check_labels": 82,
+        "actual_assertion_executions": 166,
+        "runtime_seconds": 35.171999999991385,
+        "receipt": "verification/full-290/p3-supplementary-attempt2/p3_286/actual/p3-window.json"
+      },
+      "287": {
+        "passed": true,
+        "actual_execution_attempt": 2,
+        "component_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+        "actual_child_and_supervisor_exit": 0,
+        "unique_check_labels": 32,
+        "actual_assertion_executions": 32,
+        "runtime_seconds": 18.23399999999674,
+        "receipt": "verification/full-290/p3-supplementary-attempt2/p3_287/actual/p3-window.json"
+      },
+      "288": {
+        "passed": true,
+        "actual_execution_attempt": 2,
+        "component_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+        "actual_child_and_supervisor_exit": 0,
+        "unique_check_labels": 116,
+        "actual_assertion_executions": 329,
+        "runtime_seconds": 31.671999999991385,
+        "receipt": "verification/full-290/p3-supplementary-attempt2/p3_288/actual/p3-window.json"
+      },
+      "289": {
+        "passed": true,
+        "actual_execution_attempt": 2,
+        "component_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+        "actual_child_and_supervisor_exit": 0,
+        "unique_check_labels": 56,
+        "actual_assertion_executions": 155,
+        "runtime_seconds": 31.39000000001397,
+        "receipt": "verification/full-290/p3-supplementary-attempt2/p3_289/actual/p3-window.json"
+      },
+      "290": {
+        "passed": true,
+        "actual_execution_attempt": 2,
+        "component_source_freeze_sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0",
+        "actual_child_and_supervisor_exit": 0,
+        "unique_check_labels": 70,
+        "actual_assertion_executions": 187,
+        "runtime_seconds": 31.54700000002049,
+        "receipt": "verification/full-290/p3-supplementary-attempt2/p3_290/actual/p3-window.json"
+      }
+    },
+    "next_periodic_section": 305,
+    "cadence_anchor": 125,
+    "interval": 15
+  },
+  "public_supporting_archive": "verification/sections/290-preparation/supplementary-public-evidence/INTEGRITY_CHECK.json",
+  "validation_maintenance": {
+    "same_functional_section": true,
+    "production_numerical_change_for_runtime_repair": false,
+    "details": "计时工具与非WMI报告元数据维护；保留862/552原流程、选择器及实际范围，不证明原崩溃根因。"
+  },
+  "limits": [
+    "当前实际职业组/选择、具体招募费用、具体培养数值、领取者与领取事实及原入口仍需各自依据。",
+    "25个原场景、57个原选项的原入口缺口不减少；来源全文一致不证明当前服务器或实际生成。",
+    "P3/P2/P1未完成，识别最后；不提供路线推荐或自动选路。",
+    "A1/A2离线超时、A2旧窗口内部1200超时、retry3原生崩溃与追加事实更正保留；新结果按finalA3与A2两处精确非生产差异组合，不倒填原失败。",
+    "实际符号链接1314、Linux/Wine/原Windows私样本及游戏聊天不计通过。"
+  ],
+  "next_section": 291,
+  "cloud_publication_binding": "enclosing_commit"
+}

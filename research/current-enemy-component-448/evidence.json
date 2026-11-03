@@ -1,0 +1,144 @@
+{
+  "mechanism_source": {
+    "url": "https://prts.wiki/index.php?title=沉沦者的黑流树海&oldid=444659",
+    "page_last_edited": "2026-10-31 22:37 as rendered",
+    "checked_date": "2026-11-01",
+    "scope": "Documented community mechanism,not current server execution or independent worked in-game calibration.",
+    "facts": {
+      "grade0": {
+        "hp": 0.6,
+        "atk": 0.7
+      },
+      "grade1": {
+        "hp": 0.8,
+        "atk": 0.8
+      },
+      "grade2": {
+        "hp": 0.85,
+        "atk": 0.85
+      },
+      "grade3": {
+        "hp": 0.9,
+        "atk": 0.9
+      },
+      "grade5plus_hp": 1.3,
+      "grade8plus_elite_boss_atk": 1.15,
+      "grade15_region_rate": 0.2,
+      "grade16_region_rate": 0.25,
+      "region_rule": "Attack and HP compound once per entered main region including1,excluding extra black-pool depth;stage/difficulty/relic factors compose multiplicatively."
+    }
+  },
+  "current_game_snapshot": {
+    "commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+    "source_packet": "research/p3-current-battle-314/runtime-manifest.json",
+    "level_sha256": "e7b93cf036ce6d0e4b8448ee2ae6463ebb5554393358a2f9a9d843c9612ce380"
+  },
+  "cases_kind": "Synthetic arithmetic examples from fixed public input values and documented rules;not examples observed in independent game footage.Grade15 main-depth1 is a controlled formula case,not a claim that this stage naturally spawns on floor1.Live test demonstration uses main-depth2.",
+  "cases": [
+    {
+      "stage": "ro6_n_2_6",
+      "reference": "0",
+      "grade": 15,
+      "main_depth": 1,
+      "raw_explicit": [
+        8000,
+        400,
+        200,
+        50
+      ],
+      "expected": [
+        12480,
+        480,
+        200,
+        50
+      ]
+    },
+    {
+      "stage": "ro6_n_2_6",
+      "reference": "1",
+      "grade": 15,
+      "main_depth": 1,
+      "raw_explicit": [
+        10000,
+        600,
+        500,
+        30
+      ],
+      "expected": [
+        15600,
+        828,
+        500,
+        30
+      ]
+    },
+    {
+      "stage": "ro6_e_2_6",
+      "reference": "0",
+      "grade": 15,
+      "main_depth": 1,
+      "raw_explicit": [
+        8000,
+        400,
+        200,
+        50
+      ],
+      "expected": [
+        18720,
+        528,
+        240,
+        50
+      ]
+    },
+    {
+      "stage": "ro6_e_2_6",
+      "reference": "1",
+      "grade": 15,
+      "main_depth": 1,
+      "raw_explicit": [
+        10000,
+        600,
+        500,
+        30
+      ],
+      "expected": [
+        23400,
+        910.8,
+        600,
+        30
+      ]
+    },
+    {
+      "stage": "ro6_n_2_6",
+      "reference": "0",
+      "grade": 16,
+      "main_depth": 2,
+      "raw_explicit": [
+        8000,
+        400,
+        200,
+        50
+      ],
+      "expected": [
+        16250,
+        625,
+        200,
+        50
+      ]
+    }
+  ],
+  "external_reuse_assessment": {
+    "tomimi_repo": "https://github.com/tanch-p/tomimi-dev",
+    "github_metadata_checked_this_batch": {
+      "pushed_at": "2026-10-31T15:03:19Z",
+      "license": null
+    },
+    "conclusion": "Explicit reuse permission not verified,not copied.Metadata null alone does not prove absence of all permission.Reuse existing documented modifier arithmetic with current source qualification,not a new upstream integration.",
+    "UI": "Existing adopted LGPL frame/Qt layout retained."
+  },
+  "not_proven": [
+    "Independent actual numerical/game panel pairing",
+    "Unverified scripts/phases/relics/optional SIX_STAR selection",
+    "Current server/client version equals fixed snapshot",
+    "Full video parity"
+  ]
+}

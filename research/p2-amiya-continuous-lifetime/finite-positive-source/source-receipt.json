@@ -1,0 +1,1944 @@
+{
+  "captured_at_utc": "2026-10-07T20:48:56.388397+00:00",
+  "reviewed_head": "5b5c61fd54c18bc5d7b6f35d22ef7eb23cdefdbc",
+  "workflow": "Read-only local audit; no tracked edits, network requests, private/game/desktop/chat actions. Artifacts only in adjacent continuation directory.",
+  "scope": "Caster Amiya S1 enemy-facing interval reference and post-skill mixed-SP under explicit finite-positive target lifetime or owner target-range constraints. Other skills/friendly/instant sources excluded.",
+  "reused_pinned_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "sources": {
+    ".cache/p2-s1-binding/character_table.json": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "exists": true,
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    ".cache/p2-s1-binding/skill_table.json": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "exists": true,
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    },
+    "rouge/data/original-animation-references.json": {
+      "path": "/workspace/rougezhushou/rouge/data/original-animation-references.json",
+      "exists": true,
+      "bytes": 1283952,
+      "sha256": "28d9be1dd6fe6f91dc5773b1c685ea78fb0bb403d25c4f26d933adcfcbad3f9e"
+    },
+    "rouge/data/timing-profiles.json": {
+      "path": "/workspace/rougezhushou/rouge/data/timing-profiles.json",
+      "exists": true,
+      "bytes": 19312,
+      "sha256": "f65ef84219e6b7dae18d6b5ee1dadce304a616978336ea1edf83a7b05b73e324"
+    }
+  },
+  "matches_previous_hashes": {
+    "character_table": true,
+    "skill_table": true
+  },
+  "selectors": {
+    "character_table.char_002_amiya.skills[0].skillId": "skcom_magic_rage[3]",
+    "character_table.char_002_amiya.phases[2].attributesKeyFrames[-1].data.baseAttackTime": 1.6,
+    "character_table.char_002_amiya.talents[0].candidates[1]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "情绪吸收",
+      "description": "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "amiya_t_1[atk].sp",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "amiya_t_1[kill].sp",
+          "value": 8.0,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    "skill_table.skcom_magic_rage[3].levels[9]": {
+      "name": "战术咏唱·γ型",
+      "rangeId": null,
+      "description": "攻击速度<@ba.vup>+{attack_speed}</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 30,
+        "initSp": 15,
+        "increment": 1.0
+      },
+      "prefabId": "skcom_attack_speed_up",
+      "duration": 30.0,
+      "blackboard": [
+        {
+          "key": "attack_speed",
+          "value": 90.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "timing-profiles.operators.char_002_amiya": {
+      "id": "char_002_amiya",
+      "normal": {
+        "animation": "Attack",
+        "windup_frames": 19,
+        "recovery_frames": 34,
+        "animation_frames": 53,
+        "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+      },
+      "skills": {},
+      "binding_status": "reference_only",
+      "missing": "客户端攻击模板、皮肤、技能重置/阻回绑定未经实测"
+    },
+    "original-animation-references.operators.char_002_amiya.Attack_records": [
+      {
+        "id": "char_002_amiya:Front:Attack",
+        "orientation": "Front",
+        "skin": "original",
+        "animation": "Attack",
+        "spine_version": "3.8.99",
+        "duration": {
+          "seconds": 1.7666666507720947,
+          "raw_frames_30hz": 52.99999952316284,
+          "strict_ceil_frames_30hz": 53,
+          "representation_normalized_frames_30hz": 53,
+          "ceil_frames_30hz": 53
+        },
+        "events": [
+          {
+            "name": "OnAttack",
+            "seconds": 0.6333333253860474,
+            "raw_frames_30hz": 18.99999976158142,
+            "strict_ceil_frames_30hz": 19,
+            "representation_normalized_frames_30hz": 19,
+            "ceil_frames_30hz": 19
+          }
+        ],
+        "selectable_as_conventional_reference": true,
+        "unverified_reasons": [],
+        "runtime_binding_verified": false,
+        "source": {
+          "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_002_amiya/char_002_amiya/Front/char_002_amiya.skel",
+          "sha256": "db049b479a3812517419c60d29751a6d7193c174fd128718bcaecc67fe064284",
+          "git_blob": "4212a744731114b624fa5c4e6447e868638f1d82",
+          "bytes": 179880
+        },
+        "preview": {
+          "windup_frames": 19,
+          "recovery_frames": 34,
+          "animation_frames": 53
+        }
+      },
+      {
+        "id": "char_002_amiya:Back:Attack",
+        "orientation": "Back",
+        "skin": "original",
+        "animation": "Attack",
+        "spine_version": "3.8.99",
+        "duration": {
+          "seconds": 1.7666666507720947,
+          "raw_frames_30hz": 52.99999952316284,
+          "strict_ceil_frames_30hz": 53,
+          "representation_normalized_frames_30hz": 53,
+          "ceil_frames_30hz": 53
+        },
+        "events": [
+          {
+            "name": "OnAttack",
+            "seconds": 0.6333333253860474,
+            "raw_frames_30hz": 18.99999976158142,
+            "strict_ceil_frames_30hz": 19,
+            "representation_normalized_frames_30hz": 19,
+            "ceil_frames_30hz": 19
+          }
+        ],
+        "selectable_as_conventional_reference": true,
+        "unverified_reasons": [],
+        "runtime_binding_verified": false,
+        "source": {
+          "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_002_amiya/char_002_amiya/Back/char_002_amiya.skel",
+          "sha256": "b77967d964f2d7a3f363dddeef2d1d1b92ed55f985ff6fc3e5305fd6b470b40c",
+          "git_blob": "0d7cbc0747c22159c0f56d292fa8c311529a83f4",
+          "bytes": 115804
+        },
+        "preview": {
+          "windup_frames": 19,
+          "recovery_frames": 34,
+          "animation_frames": 53
+        }
+      }
+    ]
+  },
+  "matches_previous_selector": {
+    "skill_table.skcom_magic_rage[3].levels[9]": true
+  },
+  "existing_receipts": {
+    "research/p2-empty-enemy-scope/NOTE.md": {
+      "manifest": {
+        "path": "/workspace/rougezhushou/research/p2-empty-enemy-scope/NOTE.md",
+        "exists": true,
+        "bytes": 12220,
+        "sha256": "8645fdea286251e11bfa1ec41798a802130265066c9aa8e2a85117e0f8a20ef0"
+      },
+      "relevant_lines": [
+        17,
+        28,
+        36,
+        42,
+        44
+      ],
+      "facts": "Only exact enemy-life-zero boundary closed. Finite-positive continuous lifetime/range retains old parameter reference; no actual acquisition/stop/phase evidence. Deployment initial deliberately separate."
+    },
+    "research/p2-empty-enemy-scope/source-receipt.json": {
+      "manifest": {
+        "path": "/workspace/rougezhushou/research/p2-empty-enemy-scope/source-receipt.json",
+        "exists": true,
+        "bytes": 231030,
+        "sha256": "85fa91752c6ae012ebfb79ba4c11f391683c1cfc34342290d0271b2401d8c65e"
+      },
+      "source_scope": "87 supported skill selectors plus6 original character selectors and existing source contracts",
+      "existing_timing_contract": "selectable_lifetime: leaving owner range does not destroy a locked projectile; disappearance at frame0 excludes [0,end) lifetime. continuous attacks currently use floor durations without consulting selectable_lifetime. Initial charge deliberately removes target_disappears because it is a skill-relative lifetime.",
+      "limits": "Source establishes role/parameters, current public behavior and mathematical empty lifetime. It does not establish absent scripts, current hot updates, projectile/independent unit collision times, friend acquisition clocks or native integration. Do not cancel friend healing or explicit independent SP callbacks via an enemy-lifetime guard; do not reuse this skill-relative lifetime to invalidate intentionally separate deployment initial conditions."
+    },
+    "research/p2-phase-guards/source-receipt.json": {
+      "manifest": {
+        "path": "/workspace/rougezhushou/research/p2-phase-guards/source-receipt.json",
+        "exists": true,
+        "bytes": 87786,
+        "sha256": "4d35e0234734b25d4db1f55bc096931a128d2101c84c0134e11ef869def77ed3"
+      },
+      "runtime_binding_verified": false,
+      "fresh_native_verification": false
+    },
+    "research/p2-mei-s1-reference/NOTE.md": {
+      "manifest": {
+        "path": "/workspace/rougezhushou/research/p2-mei-s1-reference/NOTE.md",
+        "exists": true,
+        "bytes": 3336,
+        "sha256": "0caa9df7d6a96919bb0623664c969336b8ff699b996373b7c253c5adfb65d578"
+      },
+      "relevant_lines": [
+        7
+      ],
+      "facts": "Prior ordinary animation reference was not a runtime attack-selector or actual skill-end proof."
+    },
+    "research/p2-amiya-phase-reference/NOTE.md": {
+      "manifest": {
+        "path": "/workspace/rougezhushou/research/p2-amiya-phase-reference/NOTE.md",
+        "exists": true,
+        "bytes": 7705,
+        "sha256": "9907b9fc5f21fe8f3a77496765c23e9ba33b529dac82f75fc249e22948aa548f"
+      },
+      "relevant_lines": [
+        20,
+        32
+      ],
+      "facts": "Separate S2 receipt establishes reference zero from finite life/short window cannot prove actual zero; no caster S1 native-clock proof."
+    }
+  },
+  "original_raw_availability": {
+    ".cache/research/timing/arkdps_data_collection/customdata/dps_anim.json": {
+      "path": "/workspace/rougezhushou/.cache/research/timing/arkdps_data_collection/customdata/dps_anim.json",
+      "exists": false
+    }
+  },
+  "source_supports": [
+    "Public caster identity char_002_amiya and S1 binding skcom_magic_rage[3].",
+    "E2 potential1 attack-enemy credit 2 SP and kill credit 8 SP as separate source parameters; no kills inferred.",
+    "S1 rank10 AS +90, nominal duration30, natural-recovery type, SP cost30/init15/increment1.0.",
+    "Base ordinary interval1.6 is a parameter, and original visual Attack reference has19-frame OnAttack /53-frame animation. Runtime binding remains false.",
+    "Exact zero target lifetime excludes this current enemy source mathematically, independently of phase; owner range exit differs from target disappearance in existing reference contract."
+  ],
+  "source_does_not_support": [
+    "Current native continuous first release/impact, cooldown/reset phase, current skin or hot-update selector.",
+    "Real attack acquisition/reacquisition or stop events at finite-positive target lifetime or owner target-window boundaries.",
+    "Applying min(window,lifetime) or dividing range length by interval as actual hits, actual post-skill mixed-SP or actual cycle.",
+    "Treating synthetic interval times_seconds as native event timestamps because the field exists.",
+    "Treating30/rate natural-only parameter as a proven actual recharge for a positive finite-lifetime source.",
+    "Applying this skill-relative post-cast disappearance/range constraint to the deliberately separate deployment initial clock."
+  ],
+  "targeted_local_searches": [
+    "Read existing empty-enemy and phase receipt contracts, then direct pinned original selectors above.",
+    "Search research notes for finite positive/有限正/continuous phase/clock; empty-enemy notes explicitly retain the gap.",
+    "Inspect original-animation references binding_status and all selected Amiya Attack records; runtime_binding_verified=false.",
+    "Search .cache/research REPORT/native-proof/native-fields for AttackAction/attack interval/first tick/continuous/lifetime; available operator-specific native evidence does not bind caster Amiya S1 continuous clocks."
+  ],
+  "fresh_native_verification": false,
+  "native_clock_proof_found": false,
+  "public_entrypoint": "rouge.damage.calculate_damage",
+  "public_cases": [
+    {
+      "name": "default",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {}
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 11000.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 11,
+            "per_hit": 1000.0,
+            "total": 11000.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              0.8421052631578947,
+              1.6842105263157894,
+              2.526315789473684,
+              3.3684210526315788,
+              4.2105263157894735,
+              5.052631578947368,
+              5.894736842105263,
+              6.7368421052631575,
+              7.578947368421052,
+              8.421052631578947,
+              9.263157894736842
+            ]
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": false,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 13.999999999999995,
+            "cycle_seconds": 43.99999999999999,
+            "duration_seconds": 30.0,
+            "total_damage": 35000.0,
+            "total_healing": 0,
+            "phase_damage": 35000.0,
+            "phase_healing": 0,
+            "cycle_dps": 977.2727272727275,
+            "cycle_hps": 0.0,
+            "cycle_damage": 43000.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 35
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 1100.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 43.99999999999999,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 13.999999999999995,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 35000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1166.6666666666667,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 11000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 1100.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 977.2727272727275,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "life01",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0.1
+        }
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 11000.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 11,
+            "per_hit": 1000.0,
+            "total": 11000.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              0.8421052631578947,
+              1.6842105263157894,
+              2.526315789473684,
+              3.3684210526315788,
+              4.2105263157894735,
+              5.052631578947368,
+              5.894736842105263,
+              6.7368421052631575,
+              7.578947368421052,
+              8.421052631578947,
+              9.263157894736842
+            ]
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": true,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 13.999999999999995,
+            "cycle_seconds": 43.99999999999999,
+            "duration_seconds": 30.0,
+            "total_damage": 35000.0,
+            "total_healing": 0,
+            "phase_damage": 35000.0,
+            "phase_healing": 0,
+            "cycle_dps": 977.2727272727275,
+            "cycle_hps": 0.0,
+            "cycle_damage": 43000.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 35
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 1100.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 43.99999999999999,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 13.999999999999995,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 35000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1166.6666666666667,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 11000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 1100.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 977.2727272727275,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "life1",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 1
+        }
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 11000.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 11,
+            "per_hit": 1000.0,
+            "total": 11000.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              0.8421052631578947,
+              1.6842105263157894,
+              2.526315789473684,
+              3.3684210526315788,
+              4.2105263157894735,
+              5.052631578947368,
+              5.894736842105263,
+              6.7368421052631575,
+              7.578947368421052,
+              8.421052631578947,
+              9.263157894736842
+            ]
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": true,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 13.999999999999995,
+            "cycle_seconds": 43.99999999999999,
+            "duration_seconds": 30.0,
+            "total_damage": 35000.0,
+            "total_healing": 0,
+            "phase_damage": 35000.0,
+            "phase_healing": 0,
+            "cycle_dps": 977.2727272727275,
+            "cycle_hps": 0.0,
+            "cycle_damage": 43000.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 35
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 1100.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 43.99999999999999,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 13.999999999999995,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 35000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1166.6666666666667,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 11000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 1100.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 977.2727272727275,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "range01",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 11000.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 11,
+            "per_hit": 1000.0,
+            "total": 11000.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              0.8421052631578947,
+              1.6842105263157894,
+              2.526315789473684,
+              3.3684210526315788,
+              4.2105263157894735,
+              5.052631578947368,
+              5.894736842105263,
+              6.7368421052631575,
+              7.578947368421052,
+              8.421052631578947,
+              9.263157894736842
+            ]
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": true,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 13.999999999999995,
+            "cycle_seconds": 43.99999999999999,
+            "duration_seconds": 30.0,
+            "total_damage": 35000.0,
+            "total_healing": 0,
+            "phase_damage": 35000.0,
+            "phase_healing": 0,
+            "cycle_dps": 977.2727272727275,
+            "cycle_hps": 0.0,
+            "cycle_damage": 43000.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 35
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 1100.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 43.99999999999999,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 13.999999999999995,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 35000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1166.6666666666667,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 11000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 1100.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 977.2727272727275,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "life0",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 0,
+            "per_hit": 1000.0,
+            "total": 0.0,
+            "source_unit": "operator",
+            "times_seconds": []
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": true,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 30.0,
+            "cycle_seconds": 60.0,
+            "duration_seconds": 30.0,
+            "total_damage": 0.0,
+            "total_healing": 0,
+            "phase_damage": 0,
+            "phase_healing": 0,
+            "cycle_dps": 0.0,
+            "cycle_hps": 0.0,
+            "cycle_damage": 0.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 0
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 0.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 60.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 30.0,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 0.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 0.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 0.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 0.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 0.0,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "rangeEmpty",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing_mode": "continuous",
+        "base_attack": 1000,
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "result": {
+        "attack": 1000.0,
+        "total_damage": 11000.0,
+        "total_healing": 0,
+        "attack_speed": 190.0,
+        "base_attack_speed": 100.0,
+        "attack_speed_reference": 190.0,
+        "base_attack_speed_reference": 100.0,
+        "interval_seconds": 0.8421052631578947,
+        "components": [
+          {
+            "name": "技能攻击",
+            "damage_type": "magic",
+            "hits": 11,
+            "per_hit": 1000.0,
+            "total": 11000.0,
+            "source_unit": "operator",
+            "times_seconds": [
+              0.8421052631578947,
+              1.6842105263157894,
+              2.526315789473684,
+              3.3684210526315788,
+              4.2105263157894735,
+              5.052631578947368,
+              5.894736842105263,
+              6.7368421052631575,
+              7.578947368421052,
+              8.421052631578947,
+              9.263157894736842
+            ]
+          }
+        ],
+        "applied_effects": [],
+        "inapplicable_relics": [],
+        "complete": true,
+        "warnings": [],
+        "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+        "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+        "timing": {
+          "mode": "continuous",
+          "fps": 30,
+          "streams": [],
+          "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+          "scenario_provided": true,
+          "target_scope_notes": [],
+          "complete": false,
+          "notes": [
+            "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+            "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+          ],
+          "recharge_streams": []
+        },
+        "estimate": {
+          "base_stats": {
+            "hp": 1680,
+            "attack": 1000.0,
+            "defense": 121,
+            "resistance": 20.0,
+            "redeploy_seconds": 70.0,
+            "attack_speed": 100.0,
+            "attack_speed_reference": 100.0,
+            "block_count": 1.0
+          },
+          "skill": {
+            "name": "战术咏唱·γ型",
+            "initial_seconds": 7.0,
+            "recharge_seconds": 13.999999999999995,
+            "cycle_seconds": 43.99999999999999,
+            "duration_seconds": 30.0,
+            "total_damage": 35000.0,
+            "total_healing": 0,
+            "phase_damage": 35000.0,
+            "phase_healing": 0,
+            "cycle_dps": 977.2727272727275,
+            "cycle_hps": 0.0,
+            "cycle_damage": 43000.0,
+            "cycle_healing": 0,
+            "skill_attack": 1000.0,
+            "skill_attack_speed": 190.0,
+            "skill_attack_speed_reference": 190.0,
+            "sp_recovery_per_second": 1.0,
+            "mode": "timed",
+            "hit_counts": {
+              "技能攻击": 35
+            },
+            "window_seconds": 10.0,
+            "window_healing": 0,
+            "window_dps": 1100.0,
+            "window_hps": 0.0
+          },
+          "training": {
+            "elite": 2,
+            "level": 80,
+            "trust": 100,
+            "potential": 1,
+            "module_id": null,
+            "module_level": 0
+          },
+          "complete": true,
+          "warnings": [],
+          "notes": [
+            "术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。",
+            "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+            "连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。"
+          ],
+          "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+        },
+        "relic_regeneration_multiplier": 1,
+        "relic_regeneration_rate": 0,
+        "relic_features": [],
+        "deployment_cost": 20.0,
+        "relic_token_stats": [],
+        "relic_protection": [],
+        "relic_resolution": {
+          "records": [],
+          "warnings": [],
+          "inapplicable": [],
+          "rules": [],
+          "calculation_scope": "offline_stable_effects",
+          "combat_effects_reference_only": true,
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "complete": true,
+          "enemy_effects": {
+            "defense_factor": 1,
+            "hp_factors": [],
+            "resident_hp_applied": false,
+            "hp_composition_pending": [],
+            "spawn_hp_rules": [],
+            "atk_factors": [],
+            "weight_delta": 0
+          },
+          "token_effects": [],
+          "context": {},
+          "context_source": "明确提供的计算情景",
+          "timing_unresolved": false
+        },
+        "run_resolution": {
+          "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "squad": null,
+          "difficulty": null,
+          "applied": [],
+          "pending": [],
+          "notes": []
+        },
+        "report": {
+          "schema_version": 2,
+          "operator": {
+            "id": "char_002_amiya",
+            "name": "阿米娅",
+            "profession": "caster"
+          },
+          "skill_number": 1,
+          "skill_rank": 10,
+          "mode": "timed",
+          "sections": [
+            {
+              "id": "timing",
+              "title": "技能时序",
+              "metrics": [
+                {
+                  "key": "initial",
+                  "label": "预计初动",
+                  "value": 7.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "duration",
+                  "label": "持续时间",
+                  "value": 30.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "cycle",
+                  "label": "预计回转",
+                  "value": 43.99999999999999,
+                  "unit": "秒"
+                },
+                {
+                  "key": "recharge",
+                  "label": "结束后充能",
+                  "value": 13.999999999999995,
+                  "unit": "秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "skill_stats",
+              "title": "技能属性变化",
+              "metrics": [
+                {
+                  "key": "skill_speed",
+                  "label": "技能期间攻速",
+                  "value": 190.0,
+                  "unit": "游戏数值单位"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "damage",
+              "title": "伤害输出",
+              "metrics": [
+                {
+                  "key": "per_cast",
+                  "label": "单次技能总伤",
+                  "value": 35000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "active_dps",
+                  "label": "技能阶段平均 DPS",
+                  "value": 1166.6666666666667,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "window_damage",
+                  "label": "观察窗口总伤",
+                  "value": 11000.0,
+                  "unit": ""
+                },
+                {
+                  "key": "window_seconds",
+                  "label": "伤害观察窗口",
+                  "value": 10.0,
+                  "unit": "秒"
+                },
+                {
+                  "key": "window_dps",
+                  "label": "窗口平均 DPS",
+                  "value": 1100.0,
+                  "unit": "伤害/秒"
+                },
+                {
+                  "key": "cycle_dps",
+                  "label": "本轮周期 DPS",
+                  "value": 977.2727272727275,
+                  "unit": "伤害/秒"
+                }
+              ],
+              "notes": []
+            },
+            {
+              "id": "talents",
+              "title": "当前已解锁天赋资料",
+              "metrics": [],
+              "notes": [
+                "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+                "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+              ]
+            },
+            {
+              "id": "mechanics",
+              "title": "技能机制（当前等级资料）",
+              "metrics": [],
+              "notes": [
+                "攻击速度+90"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "requested_baseline": "ab1a2f4",
+  "implementation_baseline_checks": {
+    "rouge/timing.py": {
+      "current_sha256": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+      "baseline_sha256": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+      "matches_requested_baseline": true
+    },
+    "rouge/operator_engine.py": {
+      "current_sha256": "f50792dc0d8359988dd9eeb2bf0f7dfa083aa9e1d8f5635530820d08280fa249",
+      "baseline_sha256": "f50792dc0d8359988dd9eeb2bf0f7dfa083aa9e1d8f5635530820d08280fa249",
+      "matches_requested_baseline": true
+    },
+    "rouge/uncertain_sources.py": {
+      "current_sha256": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+      "baseline_sha256": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+      "matches_requested_baseline": true
+    },
+    "rouge/estimate.py": {
+      "current_sha256": "2e715e8358a2b115f48efc267eb47c609e77b2bf9fd7c008ad326298458a41c9",
+      "baseline_sha256": "2e715e8358a2b115f48efc267eb47c609e77b2bf9fd7c008ad326298458a41c9",
+      "matches_requested_baseline": true
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "source_only": true,
+  "runtime_executed": false,
+  "native_records_read": false,
+  "source_pins": [
+    {
+      "path": "/workspace/rougezhushou/rouge/reporting.py",
+      "bytes": 120414,
+      "sha256": "868e2c3f18f0d5198bdf7e734d6c3619846e6122ebee528e9d300c2ab95b32fc"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/operator_engine.py",
+      "bytes": 157189,
+      "sha256": "fcfb33e162b33707523af4784331728fe603650404499ebf5570ac0a9eaae62b"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 104887,
+      "sha256": "f2f90495b71d25015397bbb772670c830886d5b1f65e8bcca7f132e2a7f4ebcb"
+    }
+  ],
+  "window_damage_contract": {
+    "Combat_skill_literal": "window_seconds, window_healing, window_dps, window_hps; no window_damage field",
+    "existing_reporting_fallback": "window_damage=skill.get('window_damage',result['total_damage'])",
+    "new_validation_scope": "For window damage only, retain all original result.total_damage independent math and all raw result/report saving."
+  },
+  "joint_alias_contract": {
+    "real_GUI_caller": "scenario['run_config']=self.run.state.get('config',{})",
+    "saved_auditor_fix_separately": "Expected formatter graph must reuse snapshot state_and_disks, then separately native-compare complete joint to initial."
+  }
+}

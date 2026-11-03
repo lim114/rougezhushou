@@ -1,0 +1,47 @@
+test_attribute_rate_keeps_flat_and_max_hp_ratio_contributions_independent (tests.test_regeneration_clock.RegenerationClockTests.test_attribute_rate_keeps_flat_and_max_hp_ratio_contributions_independent) ... ok
+test_catch_up_emits_multiple_requests_with_one_next_per_independent_read (tests.test_regeneration_clock.RegenerationClockTests.test_catch_up_emits_multiple_requests_with_one_next_per_independent_read) ... ERROR
+test_each_hp_read_is_independent_not_the_previous_setter_result (tests.test_regeneration_clock.RegenerationClockTests.test_each_hp_read_is_independent_not_the_previous_setter_result) ... ok
+test_explicit_second_attribute_failure_retains_false_normal_and_pre_reset_timer_state (tests.test_regeneration_clock.RegenerationClockTests.test_explicit_second_attribute_failure_retains_false_normal_and_pre_reset_timer_state) ... ok
+test_failed_or_unknown_hp_access_stops_chain_but_does_not_undo_next (tests.test_regeneration_clock.RegenerationClockTests.test_failed_or_unknown_hp_access_stops_chain_but_does_not_undo_next) ... ok
+test_first_attribute_failure_or_unknown_blocks_period_read_without_invented_timer (tests.test_regeneration_clock.RegenerationClockTests.test_first_attribute_failure_or_unknown_blocks_period_read_without_invented_timer) ... ok
+test_first_false_gate_does_not_read_second_snapshot_and_marks_timer_invalid (tests.test_regeneration_clock.RegenerationClockTests.test_first_false_gate_does_not_read_second_snapshot_and_marks_timer_invalid) ... ok
+test_front_gates_null_timer_and_unknown_validity_do_not_admit_updates (tests.test_regeneration_clock.RegenerationClockTests.test_front_gates_null_timer_and_unknown_validity_do_not_admit_updates) ... ok
+test_missing_hp_read_after_an_already_advanced_next_is_not_an_inferred_previous_plus_one (tests.test_regeneration_clock.RegenerationClockTests.test_missing_hp_read_after_an_already_advanced_next_is_not_an_inferred_previous_plus_one) ... FAIL
+test_negative_delta_delays_without_creating_recovery_and_wrap_still_advances_next_first (tests.test_regeneration_clock.RegenerationClockTests.test_negative_delta_delays_without_creating_recovery_and_wrap_still_advances_next_first) ... ok
+test_period_validity_and_remaining_ready_use_different_strict_epsilon_gates (tests.test_regeneration_clock.RegenerationClockTests.test_period_validity_and_remaining_ready_use_different_strict_epsilon_gates) ... ok
+test_public_gold_period_remaining_and_four_independent_setter_arguments (tests.test_regeneration_clock.RegenerationClockTests.test_public_gold_period_remaining_and_four_independent_setter_arguments) ... ok
+test_reciprocal_qualified_epsilon_domain_has_independent_literal_vectors (tests.test_regeneration_clock.RegenerationClockTests.test_reciprocal_qualified_epsilon_domain_has_independent_literal_vectors) ... ok
+test_requests_do_not_claim_real_clock_actual_hp_or_complete_effective_healing (tests.test_regeneration_clock.RegenerationClockTests.test_requests_do_not_claim_real_clock_actual_hp_or_complete_effective_healing) ... ok
+test_reset_keep_past_clamps_to_zero_then_next_update_can_drain_the_ready_timer (tests.test_regeneration_clock.RegenerationClockTests.test_reset_keep_past_clamps_to_zero_then_next_update_can_drain_the_ready_timer) ... ok
+test_reset_keep_past_subtracts_elapsed_amount_instead_of_scaling_ratio (tests.test_regeneration_clock.RegenerationClockTests.test_reset_keep_past_subtracts_elapsed_amount_instead_of_scaling_ratio) ... ok
+test_schema_rejects_cross_branch_fields_bad_identity_and_mismatched_independent_reads (tests.test_regeneration_clock.RegenerationClockTests.test_schema_rejects_cross_branch_fields_bad_identity_and_mismatched_independent_reads) ... ok
+test_second_zero_negative_and_tiny_rates_do_not_borrow_the_first_positive_rate (tests.test_regeneration_clock.RegenerationClockTests.test_second_zero_negative_and_tiny_rates_do_not_borrow_the_first_positive_rate) ... ok
+test_source_hashes_native_bytes_metadata_spans_and_returned_copy_are_bound (tests.test_regeneration_clock.RegenerationClockTests.test_source_hashes_native_bytes_metadata_spans_and_returned_copy_are_bound) ... ok
+test_two_attribute_snapshots_can_have_different_rates_and_dirty_13_19_are_exact (tests.test_regeneration_clock.RegenerationClockTests.test_two_attribute_snapshots_can_have_different_rates_and_dirty_13_19_are_exact) ... ok
+test_typed_unknown_fp_multiplicand_times_known_zero_can_close_rate (tests.test_regeneration_clock.RegenerationClockTests.test_typed_unknown_fp_multiplicand_times_known_zero_can_close_rate) ... ok
+test_unknown_attribute_existence_with_definite_read_failure_closes_normal_false (tests.test_regeneration_clock.RegenerationClockTests.test_unknown_attribute_existence_with_definite_read_failure_closes_normal_false) ... ok
+test_unknown_first_attribute_return_keeps_both_post_branch_timer_values_unknown (tests.test_regeneration_clock.RegenerationClockTests.test_unknown_first_attribute_return_keeps_both_post_branch_timer_values_unknown) ... ok
+test_unknown_hp_access_with_more_ready_ticks_keeps_next_prefix_but_not_final_remaining (tests.test_regeneration_clock.RegenerationClockTests.test_unknown_hp_access_with_more_ready_ticks_keeps_next_prefix_but_not_final_remaining) ... ok
+test_unqualified_future_reconfigure_cannot_keep_old_period_as_final_state (tests.test_regeneration_clock.RegenerationClockTests.test_unqualified_future_reconfigure_cannot_keep_old_period_as_final_state) ... ok
+
+======================================================================
+ERROR: test_catch_up_emits_multiple_requests_with_one_next_per_independent_read (tests.test_regeneration_clock.RegenerationClockTests.test_catch_up_emits_multiple_requests_with_one_next_per_independent_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_regeneration_clock.py", line 100, in test_catch_up_emits_multiple_requests_with_one_next_per_independent_read
+    self.assertEqual(drain['known_prefix_remaining_raw_reference'], Q)
+                     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'known_prefix_remaining_raw_reference'
+
+======================================================================
+FAIL: test_missing_hp_read_after_an_already_advanced_next_is_not_an_inferred_previous_plus_one (tests.test_regeneration_clock.RegenerationClockTests.test_missing_hp_read_after_an_already_advanced_next_is_not_an_inferred_previous_plus_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_regeneration_clock.py", line 217, in test_missing_hp_read_after_an_already_advanced_next_is_not_an_inferred_previous_plus_one
+    self.assertEqual(result['final_remaining_raw_reference'], Q)
+AssertionError: None != 4294967296
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.012s
+
+FAILED (failures=1, errors=1)

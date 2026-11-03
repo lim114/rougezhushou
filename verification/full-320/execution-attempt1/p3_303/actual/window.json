@@ -1,0 +1,82 @@
+{
+  "section": 303,
+  "kind": "isolated_native_windows_direct_ground_centers",
+  "passed": false,
+  "failure": {
+    "type": "ValueError",
+    "message": "Reviewed source bytes changed: rouge/data/fixed-landmark-references.json",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_direct_map_window_303.py\", line 143, in main\n    contract=source_contract();before=bound_files()\n             ^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_direct_map_window_303.py\", line 41, in source_contract\n    if sha(public_path(name))!=pin:raise ValueError('Reviewed source bytes changed: '+name)\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Reviewed source bytes changed: rouge/data/fixed-landmark-references.json\n"
+  },
+  "started_at": "2026-10-19T13:53:41.821220+00:00",
+  "finished_at": "2026-10-19T13:53:41.823213+00:00",
+  "process_id": 23688,
+  "qpa": null,
+  "qt_exit_code": null,
+  "verification_window_closed": false,
+  "checks": [],
+  "unique_checks": 0,
+  "successful_assertion_executions_including_repeated_guards": 0,
+  "stage_observations": [],
+  "expected_stage_ids": [
+    "ro6_b_6",
+    "ro6_n_2_3",
+    "ro6_e_2_3"
+  ],
+  "requested_logical_sizes": [
+    [
+      1280,
+      850
+    ],
+    [
+      1440,
+      900
+    ],
+    [
+      1520,
+      940
+    ]
+  ],
+  "screenshots": [],
+  "extra_screenshots": [],
+  "screenshot_count": 0,
+  "source_sha256_before": {},
+  "source_sha256_after": {},
+  "accepted_point_source": "research/p3-map-direct-ground-303/build-receipt.json",
+  "actual_accepted_source_points": null,
+  "prior_direct_points_preserved": null,
+  "source_requested_points": null,
+  "rejected_or_unknown_source_points": null,
+  "total_partial_scope_from_current_data": null,
+  "alias_point_readings_are_not_added_to_distinct_source_acceptance": true,
+  "regular_image_and_stage_scope_preserved": null,
+  "remaining_full_map_stage_and_image_gaps": null,
+  "source_guard_is_selected_not_all_transitive_dependencies": true,
+  "temporary_state_root": true,
+  "state_paths_replaced_before_constructor": [
+    "ROOT",
+    "SETTINGS",
+    "OPERATOR_STATE",
+    "RUN_STATE"
+  ],
+  "private_state_read_copied_or_restored": false,
+  "external_operation_attempts": {
+    "game_enumeration": 0,
+    "game_connect": 0,
+    "game_capture": 0,
+    "game_next_frame": 0,
+    "desktop_start": 0,
+    "desktop_request": 0,
+    "provider_chat": 0,
+    "credential_read": 0
+  },
+  "external_entrypoints_blocked_before_original_call": true,
+  "game_operated": false,
+  "game_captures": 0,
+  "chat_sent": false,
+  "chat_attempted": false,
+  "original_project_window_operated_or_restarted": false,
+  "owned_supervisor_exit_and_cleanup_required_separately": true,
+  "actual_process_termination_verified_by_this_script": false,
+  "launch_Popen_PID_must_be_recorded_separately_from_actual_fixture_PID": true,
+  "scope": "Three fixed-stage direct-reference UI flows and three sizes each; actual QTest ground cell and main fixed MOVE checkpoint display. Only accepted source centers; no full-plane, inverse, line interpolation, real enemy location, game operation or route recommendation."
+}

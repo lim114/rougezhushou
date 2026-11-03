@@ -1,0 +1,75 @@
+{
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "original_table": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+    "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+    "bytes": 11447929,
+    "sha256_matched": true
+  },
+  "selector": "skill_table.skchr_mcnist_3.levels[9]",
+  "skill": {
+    "name": "工程学十字星",
+    "rangeId": null,
+    "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击变为对十字范围内所有敌人造成攻击力<@ba.vup>{attack@atk_scale:0%}</>的法术伤害，可攻击结构性原理阻挡的目标\\n结构性原理向前方冲锋，碰到敌人或高台时对范围内所有敌人造成机械师攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害并停下，周围的敌人获得逐渐衰减的50%的<$ba.weaken>虚弱</>效果",
+    "skillType": "MANUAL",
+    "durationType": "NONE",
+    "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 35,
+      "initSp": 25,
+      "increment": 1.0
+    },
+    "prefabId": "skchr_mcnist_3",
+    "duration": 40.0,
+    "blackboard": [
+      {
+        "key": "atk",
+        "value": 2.8,
+        "valueStr": null
+      },
+      {
+        "key": "base_attack_time",
+        "value": 2.3,
+        "valueStr": null
+      },
+      {
+        "key": "attack@atk_scale",
+        "value": 2.6,
+        "valueStr": null
+      },
+      {
+        "key": "atk_scale",
+        "value": 3.0,
+        "valueStr": null
+      },
+      {
+        "key": "projectile_range",
+        "value": 1.5,
+        "valueStr": null
+      },
+      {
+        "key": "attack@projectile_range",
+        "value": 0.0,
+        "valueStr": "x-6"
+      }
+    ]
+  },
+  "reused_sources": {
+    "BATCH_0.37.md": "1aba6459fbe781efff53fc57dec9487964918360f98b8def02e0acd8da971c5a",
+    "rouge/data/skill-impact-delays.json": "196beb0784be7086fbfe046010f8f50c0aa8f0e25360011c7de3d8ad8992ae11"
+  },
+  "facts": [
+    "Charge triggers upon collision with enemy or raised tile and stops",
+    "0.8-second fixed delay applies only to own bombardment projectile",
+    "A declared hit count establishes conditional linear damage but not collision timestamps or full-cast assignment"
+  ],
+  "unknowns": [
+    "Charge collision time",
+    "Per-cast assignment of declared scenario count",
+    "Native charge snapshot and current hotfix equivalence"
+  ],
+  "fresh_native_binary_verification": false
+}

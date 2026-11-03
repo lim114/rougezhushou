@@ -1,0 +1,26 @@
+{
+  "format_version": 1,
+  "status": "REVIEW_METADATA_LOOKUPS_CORRECTED_NO_PRODUCT_OR_RUNTIME_ATTEMPT",
+  "diagnostics": [
+    {
+      "kind": "new_external_output_directory_not_yet_created",
+      "observation": "Initial rg --files included intended new review directory, which did not yet exist; no missing input inferred. Subsequent reads used only announced exact final paths."
+    },
+    {
+      "kind": "schema_key_read_error",
+      "observation": "One stdlib metadata read guessed workflow_groups after printing actual top keys; KeyError. Actual key planned_workflow_groups was then read, revealing8 groups/90 expandedrows/62 changes. No plan file modified or tests executed."
+    },
+    {
+      "kind": "source_filename_read_error",
+      "observation": "One rg read mistakenly included rouge/engine.py and rouge/training.py, which do not exist; actual files were discovered with rg --files and review continued on announced app/damage/estimate/catalog paths. No mechanism inferred from nonexistent files."
+    },
+    {
+      "kind": "ambiguous_AST_function_name_diagnostic",
+      "observation": "An exploratory name-keyed AST dictionary collapsed repeated nested work functions and falsely listed those as changed. This was rejected; ordered63 FunctionDef nodes compared structurally shows only make_damage_tab changed and62 othernodes exact, supported by full byte-exact insertion inverse."
+    }
+  ],
+  "same_product_goal_failed_runtime_attempts": 0,
+  "unresolved_metadata_errors": 0,
+  "tracked_writes": 0,
+  "project_codec_helper_tests_Qt_Wine_executed": 0
+}

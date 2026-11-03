@@ -1,0 +1,251 @@
+{
+  "section": 274,
+  "kind": "functional_section",
+  "title": "自然技力批量FP时钟、独立暂停与单次恢复请求",
+  "at_Beijing": "2026-10-14T19:25:17.765836+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "7218f36b1ecf4c0109da6e4d7c86281e9d1d576c",
+  "remaining_item": "P2自然技力时序/倍率的Precise批量参考；真实14/30属性、生命周期、回调与完整技能周期未完成",
+  "new_capability": [
+    "Natural OnTick enabled/timer/first stop/full ordered gates, no countdown when blocked, Precise UpdateMultiple with exact FP extra-bit division and signed32 Floor/inc",
+    "Source-safe general FP division subdomain, UnaryMIN-to-FP.MaxValue and batch count overflow; unsupported numerical domain stays unknown, not a fabricated exception",
+    "NextMultiple before independently rereading pause; one SP getter/setter argument for a positive batch, zero/negative explicit force requests and no inferred actual SP",
+    "Valid old timer drain0 then independent canRecover14*30 and passed newValue rate; MarkInvalid or keepPast reset; invalid old timer restarts directly without those reads",
+    "Typed conditional native bool branches keep only common qualified values; pointer failure before getter, unknown calls, known timer prefix versus final state and independent request-count uncertainty",
+    "Chinese isolated sp-clock query, exact raw references, no scenario overwrite and retained refresh selection/input/result/scroll"
+  ],
+  "files": [
+    "rouge/sp_recovery_clock.py",
+    "rouge/data/sp-recovery-clock-source.json",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_sp_recovery_window_274.py",
+    "tests/test_sp_recovery_clock.py",
+    "tests/test_offline_tools_view.py",
+    "tests/test_base_settlement_planning.py",
+    "research/p2-sp-recovery-clock-274/README.md",
+    "verification/sections/274-window.json",
+    "verification/sections/274-main-window.json",
+    "verification/sections/274-final-focused-test-source.py",
+    "verification/sections/274-first-focused-core-source.py",
+    "verification/sections/274-first-focused-test-source.py",
+    "verification/sections/274-ordinary-qualification-before.py",
+    "verification/sections/274-reviewed-focused-core-source.py",
+    "verification/sections/274-reviewed-focused-test-source.py",
+    "verification/sections/274-source-archive-before.py",
+    "verification/sections/274-sp-clock-review-before-core-274.py",
+    "verification/sections/274-bound-review-repairs.json",
+    "verification/sections/274-ordinary-qualification-review.json",
+    "verification/sections/274-sp-clock-review-274.json",
+    "verification/sections/274-sp-clock-review-after-274.json",
+    "verification/sections/274-sp-clock-review-after-first-check-274.json",
+    "verification/sections/274-sp-clock-review-first-probes-274.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/sp_recovery_clock.py": "ba8a086ad81784b5f94fbe16e16472b5d4d3768d24f2e8ccaa75a9868bb7cc5a",
+    "rouge/data/sp-recovery-clock-source.json": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+    "rouge/calibration.py": "0904ea4e18696e24cab28d8498906872cd557a9a0366bb05005d476b850eb785",
+    "rouge/offline_tools_view.py": "2e69dfdad262bbad1beaf7bfd513f6ff6e9b0a630c72675ad9237c8a931d0695",
+    "scripts/verify_full_available.py": "1d6df2ef5e4765dc1e85032001d35e26a899548176951667738c06cff6e76e5b",
+    "scripts/verify_sp_recovery_window_274.py": "303b050c12af4ca00e0020fd10fa7a9cab1c4f0b8b796a84755d6e654e465e54",
+    "tests/test_sp_recovery_clock.py": "342d2940bdf8ea121935892478422bbb7c0be70e0d4d7e96968d5e5f9a8a77d3",
+    "tests/test_offline_tools_view.py": "43e8460c4e06be449a2f95abb4c9a5d4df17fe0183b94210ecf638d219c72edf",
+    "tests/test_base_settlement_planning.py": "d002f2fe8ff594ea6adf9c89ad504fd6b523d2dd30b787668de62407e9cf28c3",
+    "research/p2-sp-recovery-clock-274/README.md": "25bdfce522f2bfd34847c6f28810bb0433605f7bd8a89ccf0fdf6cf05440aef8",
+    "verification/sections/274-window.json": "aa2db9f5aecc96f9cb01b632c83d54b9975598a5cb3e616858dfb1f33787916c",
+    "verification/sections/274-main-window.json": "249561fb5a6f7e13554f29f8ccc4019bd56dc732b8f35524a46826a8ea7c06f6",
+    "verification/sections/274-final-focused-test-source.py": "342d2940bdf8ea121935892478422bbb7c0be70e0d4d7e96968d5e5f9a8a77d3",
+    "verification/sections/274-first-focused-core-source.py": "431c9f20a85b67845ac1e272b3377a35fe7d7334f913206194f32067ce126b58",
+    "verification/sections/274-first-focused-test-source.py": "40867c64cd280a37d77cba0580a9a92f2cbb310fba207ee1a9f6d30ac61babcb",
+    "verification/sections/274-ordinary-qualification-before.py": "b1286713a0264606a21f3d00a05bb81c3aa9736f7635bfe24be23db9cc174f32",
+    "verification/sections/274-reviewed-focused-core-source.py": "ba8a086ad81784b5f94fbe16e16472b5d4d3768d24f2e8ccaa75a9868bb7cc5a",
+    "verification/sections/274-reviewed-focused-test-source.py": "9155bd81443d14cb8f814e419d7d68a267d82b0fb984cdfa7577e7003e82fb7b",
+    "verification/sections/274-source-archive-before.py": "15843b01bdef7903eea1b6a521fa4866024162aaf9335e5b5343115ce300bdb1",
+    "verification/sections/274-sp-clock-review-before-core-274.py": "431c9f20a85b67845ac1e272b3377a35fe7d7334f913206194f32067ce126b58",
+    "verification/sections/274-bound-review-repairs.json": "a061fdcdda7b5b7a3bc292c985aac0418cc41b06c0f1bb743532b1e2753954c0",
+    "verification/sections/274-ordinary-qualification-review.json": "8b2aa79c741c5f0d0a1adeed1f900ba2772a5fd768c8544ebd1a81a11264dd64",
+    "verification/sections/274-sp-clock-review-274.json": "1f94a1dffa2c918347520545608fdf7e63b904927048a9c53ba5b455d42db0ff",
+    "verification/sections/274-sp-clock-review-after-274.json": "6b84c3969fee26e9bd09dada0c986d3a4b0dd236a0ede8b9d4fcb10f6333fb3c",
+    "verification/sections/274-sp-clock-review-after-first-check-274.json": "9aaf93276fa764eabab7d1fcf809eb5c02a657204149a2025a6d12c050839059",
+    "verification/sections/274-sp-clock-review-first-probes-274.json": "552680fc24cca42f02d04270dcaaad22d0e001cf344598b60e061df89af9b2a7"
+  },
+  "reused_source_sha256": {
+    "research/p2-sp-recovery-clock-274/source-proof.json": "aac95f6a6c284868d25d73a89fc126f27ba827609dae327938d7b0f280bf7557",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+    "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+    "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+    "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+    "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+    "rouge/recovery_attributes.py": "b73ce313c874895849a57b83e45b6cfeb8a6c069d37bdc632c953660397ddd9c",
+    "rouge/data/recovery-attribute-source.json": "b4f230db97d41b8784f0fb9beab2b8a62a14560298e4878dcae9ccde257d2824",
+    "rouge/supplemental_healing.py": "5818fd1a82234d98abfcb75c0e8d18eb93a68f7638dfc966ddb1a1d1be327612",
+    "rouge/healing_budget.py": "d8e6fb7d89c9f0d13bfbffc1ee75cbae42d78907af48cae9e0ed7dadc3f24a02",
+    "tests/test_recovery_attributes.py": "5f58a852fadb6a06b378b1d7f92c867391d5d22d20e119366058ab59cc3dfc0d",
+    "tests/test_regeneration_clock.py": "bee296fe632c4226aa5496cfbd187b5918c4007cc4bc8e05b76f3b5377ca36db",
+    "tests/test_route_information_scope.py": "1b0f9044bdc8e39cebe5be6704a21a946bfd88a9e9cd6492bae97cd93acbdef0",
+    "tests/test_supplemental_healing_145.py": "1c85bcbde9e86a2414d7e00183b5a9be8c8facba4e202127203d70cfb6a34c79",
+    "tests/test_healing_budget_132.py": "0de1758b2f1f6e52b8bc98b4e5519e9922486d8b9e42b8c2312e2bd8b895148c"
+  },
+  "log_sha256": {
+    "verification/sections/274-final-check.log": "2520911ee27cdad9b9ec95d6b70fa9ff8ded7dde921f2deef18be9d7db735d37",
+    "verification/sections/274-final-focused.log": "7e9f997da1d72dc7b34c4baecbf0a053e109a7b8e4c9cb0958a85ec1715a63cf",
+    "verification/sections/274-first-focused.log": "c4e30ab20c02e9ad7edbeb65cbf02bdbde4aa3e8fdf0ca1aaaf11eed4db836b0",
+    "verification/sections/274-reviewed-focused.log": "de753e21313d393c1aca52f97b529d4dada035c5d820930be6931f835e20be78",
+    "verification/sections/274-source-archive-reproduced-failure.log": "d2893dd2508f012845bd877aac05b9b49029cc7880899859591ea1eaedcdab25"
+  },
+  "validation": {
+    "related_checks": {
+      "count": 157,
+      "new_test_methods": 38,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "python -X utf8 -m unittest tests.test_sp_recovery_clock tests.test_recovery_attributes tests.test_regeneration_clock tests.test_offline_tools_view tests.test_base_settlement_planning tests.test_route_information_scope tests.test_supplemental_healing_145 tests.test_healing_budget_132 -v",
+      "log": "verification/sections/274-final-check.log",
+      "focused38_is_not_an_additional_pass_count": true
+    },
+    "candidate_original_file": {
+      "methods": 50,
+      "unique_reachable_instructions": 2252,
+      "unique_instruction_bytes": 9731,
+      "raw_source_spans_rechecked": 3518,
+      "preparation_artifact_byte_guards": 13,
+      "game_dll_executed": false,
+      "process_memory_read": false,
+      "current_hotfix_equivalence_proven": false
+    },
+    "native_public_window": {
+      "passed": true,
+      "qpa": "windows",
+      "visible": true,
+      "main_window_public_query": [
+        "calibration",
+        "sp-clock"
+      ],
+      "calibration_and_battle_query_count": 29,
+      "current_product_exploration_query_count": 9,
+      "explicit_historical_exploration_query_count": 13,
+      "public_first_and_second_batch_counts": [
+        4,
+        1
+      ],
+      "independent_sp_read_raw_references": [
+        21474836480,
+        38654705664
+      ],
+      "setter_argument_raw_references": [
+        38654705664,
+        30064771072
+      ],
+      "second_pause_skipped_sp_access_after_next": true,
+      "force_negative_skipped_stop_read": true,
+      "declared_complete_setter_request_count": 2,
+      "final_period_and_remaining_raw_reference": 1073741824,
+      "actual_sp_recovery_cycle_clock_and_attributes_unknown": true,
+      "scenario_import_disabled_for_independent_sp_clock": true,
+      "refresh_preserved_editor_result_selection_and_scroll": true,
+      "loaded_source_sha256": {
+        "research/p2-sp-recovery-clock-274/source-proof.json": "aac95f6a6c284868d25d73a89fc126f27ba827609dae327938d7b0f280bf7557",
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/calibration.py": "0904ea4e18696e24cab28d8498906872cd557a9a0366bb05005d476b850eb785",
+        "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+        "rouge/data/sp-recovery-clock-source.json": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+        "rouge/offline_tools_view.py": "2e69dfdad262bbad1beaf7bfd513f6ff6e9b0a630c72675ad9237c8a931d0695",
+        "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+        "rouge/sp_recovery_clock.py": "ba8a086ad81784b5f94fbe16e16472b5d4d3768d24f2e8ccaa75a9868bb7cc5a",
+        "scripts/verify_sp_recovery_window_274.py": "303b050c12af4ca00e0020fd10fa7a9cab1c4f0b8b796a84755d6e654e465e54",
+        "tests/test_sp_recovery_clock.py": "342d2940bdf8ea121935892478422bbb7c0be70e0d4d7e96968d5e5f9a8a77d3"
+      },
+      "source_sha256_after": {
+        "research/p2-sp-recovery-clock-274/source-proof.json": "aac95f6a6c284868d25d73a89fc126f27ba827609dae327938d7b0f280bf7557",
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/calibration.py": "0904ea4e18696e24cab28d8498906872cd557a9a0366bb05005d476b850eb785",
+        "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+        "rouge/data/sp-recovery-clock-source.json": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+        "rouge/offline_tools_view.py": "2e69dfdad262bbad1beaf7bfd513f6ff6e9b0a630c72675ad9237c8a931d0695",
+        "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+        "rouge/sp_recovery_clock.py": "ba8a086ad81784b5f94fbe16e16472b5d4d3768d24f2e8ccaa75a9868bb7cc5a",
+        "scripts/verify_sp_recovery_window_274.py": "303b050c12af4ca00e0020fd10fa7a9cab1c4f0b8b796a84755d6e654e465e54",
+        "tests/test_sp_recovery_clock.py": "342d2940bdf8ea121935892478422bbb7c0be70e0d4d7e96968d5e5f9a8a77d3"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "game_captures": 0,
+      "chat_sent": false,
+      "scope": "Actual changed MainWindow/public natural-SP declarations only; not actual game/controller/cache/SP acceptance/private/native-history validation",
+      "desktop_visually_inspected_with": "Windows-mcp: actual274 title, isolated natural-SP query, Chinese batch count and timer tables visible"
+    },
+    "native_original_startup": {
+      "section": 274,
+      "parent_pid": 8268,
+      "main_pid": [
+        5116
+      ],
+      "visible_window_handles": [
+        1706514
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "prior_owned_main_pid": 24200,
+      "prior_owned_main_exit_confirmed_before_launch": true,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "private_json_new_files": 0,
+      "desktop_visually_inspected_with": "Windows-mcp: restarted original project window visible and responding"
+    },
+    "same_input_original_bound_probes": 8,
+    "additional_ordinary_path_probes": 3,
+    "limited_readonly_review_cases": 13,
+    "literal_public_gold": {
+      "batch_counts": [
+        4,
+        1
+      ],
+      "single_sp_setter_argument_raw": [
+        38654705664,
+        30064771072
+      ],
+      "final_period_raw_reference": 1073741824,
+      "final_remaining_raw_reference": 1073741824,
+      "setter_request_count": 2,
+      "actual_sp": null
+    },
+    "readonly_review": "Original8 replay and5 additional current source-bound cases passed limited independent review; the original mistaken unknown-force expectation was archived and corrected from both native branches."
+  },
+  "failure_and_preparation_records": {
+    "before_bound_probes": "verification/sections/274-sp-clock-review-first-probes-274.json",
+    "before_source_review": "verification/sections/274-sp-clock-review-274.json",
+    "root_same_input_repairs": "verification/sections/274-bound-review-repairs.json",
+    "first38": "Five source/control-flow precision/call-fact failures; original test/core and actual log preserved.",
+    "second38": "One test expected unknown return although both enabled branches returned normally and time update exactly cancelled by Next; original preserved and delta changed to retain distinct remaining states while checking common normal=true.",
+    "third38": "All38 methods passed; merged157 includes them once.",
+    "limited_review_first": "One review assertion expected an unknown getter despite proven stop=false in both force paths; original current-output receipt retained, source-corrected13-case review passes.",
+    "source_archive_preparation": "First archive script treated hex physical_offset as int and raised TypeError. Original source and a subsequent same-source failure replay log preserved; first console raw output was not saved and replay is not labeled original first log."
+  },
+  "limits": [
+    "Independent declared Precise natural-SP references, not actual SP/calculation input auto-reading, current timer creation or current hotfix.",
+    "Entity14/30 getters/cache, SP decoded/encoded state and setter acceptance/callbacks remain independent unknowns.",
+    "Only the general proven no-overflow division subdomain and native zero denominator; saturation/overflow results outside domain remain unknown.",
+    "Setter request argument is not stored/accepted SP, full recovery or a skill cycle; a normally returning conditional chain can have unknown request count.",
+    "Reset/UpdateSpData and additional source methods remain research, not an implemented actual lifecycle.",
+    "Private state preserved, no game/chat; P2 incomplete, full maintained available checks due275/final280, missing originals/private not PASS."
+  ],
+  "next_section": 275,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}

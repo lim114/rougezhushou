@@ -1,5 +1,6 @@
 """Deterministic, inspectable damage calculations; no model-generated numbers."""
 import math
+from .condition_inputs import validate_continuous_attacks
 from .attribute_limits import effective_attack_speed
 from .catalog import catalog
 from .timing import AttackTimeline
@@ -26,14 +27,13 @@ def _skill_damage(scenario: dict) -> dict:
 
 
 def _skill_damage_base(scenario: dict) -> dict:
+    """Internal skill consumer; _prepare_damage owns skill/rank validation.
+
+    build_estimate reuses that same selection for its full-window calculation.
+    """
     scenario=dict(scenario)
+    companion_is_bool=isinstance(scenario.get('companion_attack'),bool)
     profile=catalog()['operators'][scenario['operator']]
-    skill=scenario.get('skill')
-    rank=scenario.get('skill_rank',10)
-    if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
-        raise ValueError('请选择该干员的有效技能。')
-    if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
-        raise ValueError('技能等级需要为1–10的整数。')
     for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds','companion_attack'):
         if field not in scenario:continue
         value=float(scenario[field])
@@ -53,15 +53,8 @@ def _skill_damage_base(scenario: dict) -> dict:
     frost = scenario.get('operator') == 'silverash' and scenario.get('skill') == 2
     healing = scenario.get('operator') == 'kaltsit' and scenario.get('skill') in (1,3)
     utility=scenario.get('operator')=='silverash' and scenario.get('skill')==1
-    if not (mechanist or silver or bombard or shield or frost or healing or utility) and (scenario.get('operator') != 'kaltsit' or scenario.get('skill') != 2):
-        raise ValueError('This skill profile has not yet been implemented.')
     base_attack = float(scenario['base_attack'])
-    if not math.isfinite(base_attack) or base_attack < 0:
-        raise ValueError('Base attack must be finite and nonnegative.')
-    profile = catalog()['operators'][scenario['operator']]
     rank = int(scenario.get('skill_rank', 10))
-    if not 1 <= rank <= 10:
-        raise ValueError('技能等级需要在 1–10 之间（8/9/10 为专精一/二/三）。')
     skill_profile = profile['skills'][scenario['skill']-1]['levels'][rank-1]
     bb = skill_profile['values']
     attack_bonus = bb.get('atk', 0)
@@ -122,8 +115,12 @@ def _skill_damage_base(scenario: dict) -> dict:
         attack_speed_reference=speed_reference,base_attack_speed_reference=base_speed_reference,
         interval_seconds=interval,applied_effects=effects)
     timeline=AttackTimeline(scenario)
+    empty_enemy=timeline.options.get('target_disappears_seconds')==0
+    empty_ammo_target=empty_enemy or timeline.options.get('target_windows')==[]
+    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_ammo_target and float(scenario.get('healing_targets',1))>0
     def attack_events(duration,limit=None):
-        stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit)
+        stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit,
+            target_scope='friendly' if healing or medical_fallback else 'enemy')
         if timeline.mode=='frames' and 'window_seconds' not in scenario:
             stream['times_seconds']=stream['emitted_times_seconds']
         status['timing']=timeline.output()
@@ -142,15 +139,17 @@ def _skill_damage_base(scenario: dict) -> dict:
         raw = attack * bb['atk_scale']
         damage = max(raw - scenario.get('enemy_defense', 0), raw * .05) * taken('physical')
         own_count = int(scenario.get('activation_count', 1))
-        components = [{'name': '本体技能触发', 'hits': own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': damage * own_count}]
+        components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
         stacks = int(scenario.get('deployment_stacks', 0))
         if stacks:
+            if companion_is_bool:raise ValueError('companion_attack 不接受布尔值；请使用数值。')
             recipient = float(scenario['companion_attack']) * bb['atk_scale']
             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
-            components.append({'name': '受益干员部署触发', 'hits': stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': hit * stacks})
+            components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
         return {'attack': attack, 'total_damage': sum(c['total'] for c in components), 'components': components, 'inapplicable_relics': inapplicable, **status}
     if shield:
         count = int(scenario.get('shield_break_count', 0))
+        if empty_enemy:count=0
         raw = attack * bb['atk_scale']
         damage = max(raw * (1 - scenario.get('enemy_resistance', 0) / 100), raw * .05) * taken('magic')
         return {'attack': attack, 'per_hit': damage, 'total_damage': damage * count,
@@ -163,8 +162,12 @@ def _skill_damage_base(scenario: dict) -> dict:
         per_hit *= taken('magic')
         charge *= taken('physical')
         count = int(scenario.get('charge_count', 0))
+        if count and scenario.get('window_seconds') == 0:
+            raise ValueError('零长度观察窗口不能声明冲锋命中。')
         components = [{'name': '轰击', 'damage_type': 'magic', 'hits': hits, 'per_hit': per_hit, 'total': hits * per_hit,'times_seconds':events['times_seconds']},
                       {'name': '结构性原理冲锋', 'damage_type': 'physical', 'hits': count, 'per_hit': charge, 'total': count * charge}]
+        if empty_enemy:
+            components[1].update(hits=0,total=0)
         if any(r['kind']=='temporary_attack' for r in scenario.get('_relic_rules',[])):
             amounts=timed_damage(attack*bb['attack@atk_scale'],bb['attack@atk_scale'],'magic',events)
             components[0].update(event_amounts=amounts,total=sum(amounts),per_hit=sum(amounts)/len(amounts) if amounts else per_hit)
@@ -194,7 +197,7 @@ def _skill_damage_base(scenario: dict) -> dict:
     if scenario.get('_ammo_refill_reference'):
         status['ammo_refill_reference']=scenario['_ammo_refill_reference']
     events=attack_events(scenario.get('window_seconds',3600),limit=shots)
-    if timeline.mode=='continuous' and 'window_seconds' not in scenario:
+    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_ammo_target:
         hits=shots*int(bb.get('attack@times',1))
     else:hits=len(events['times_seconds'])*int(bb.get('attack@times',1))
     if timeline.mode=='frames':
@@ -205,18 +208,22 @@ def _skill_damage_base(scenario: dict) -> dict:
         pellet_count=int(bb.get('attack@times',1))
         impacts=[t+intrinsic+travel+i*spacing for t in events['release_frames'] for i in range(pellet_count)
             if ('window_seconds' not in scenario or t+intrinsic+travel+i*spacing<frame_time(scenario['window_seconds']))
-            and timeline.selectable_lifetime(t+intrinsic+travel+i*spacing)]
+            and (medical_fallback or timeline.selectable_lifetime(t+intrinsic+travel+i*spacing))]
         events['impact_frames']=impacts;events['times_seconds']=[t/30 for t in impacts]
         hits=len(impacts)
-        status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if events['release_frames'] else None
+        status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if len(events['release_frames'])>=shots else None
         if status['execution_seconds'] is not None:
             events['resume_frame']=max(0,events['start_frames'][-1]+events['interval_frames']-frame_time(status['execution_seconds']))
         if mechanist:status['timing']['notes'].append('机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。')
     elif any(r['kind']=='deployment_attack_speed' for r in scenario.get('_relic_rules',[])) and 'window_seconds' not in scenario:
         status['execution_seconds']=events['times_seconds'][-1] if len(events['times_seconds'])>=shots else None
+    if empty_ammo_target and not medical_fallback:status['execution_seconds']=None
+    if medical_fallback:
+        status['healing_hits']=hits
+    damage_hits=0 if empty_ammo_target else hits
     components=[{'name':'五连击' if mechanist else '弹药攻击','damage_type':'physical' if mechanist else 'true',
-        'hits':hits,'per_hit':damage,'total':damage*hits,'times_seconds':events['times_seconds']}]
-    return {'attack': attack, 'per_hit': damage, 'total_damage': damage * hits, 'hits': hits,'components':components,
+        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_ammo_target else events['times_seconds']}]
+    return {'attack': attack, 'per_hit': damage, 'total_damage': damage * damage_hits, 'hits': damage_hits,'components':components,
         'interval_seconds': interval, 'damage_type': 'physical' if mechanist else 'true', 'inapplicable_relics': inapplicable, **status}
 
 
@@ -236,15 +243,48 @@ def _prepare_damage(scenario: dict):
     elite=scenario.get('elite',2)
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
         raise ValueError('当前精英阶段尚未开放所选技能或专精。')
+    if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
+        raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
+    if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('cooperative'),str):
+        raise ValueError('cooperative不接受字符串，请提供明确的布尔条件。')
+    # Preserve raw count types before either engine converts them to numbers.
+    from .reporting import has_healing
+    active_counts=[]
+    if has_healing(scenario['operator'],skill):
+        active_counts.append(('healing_targets','治疗目标数需要为 0–100 的整数。'))
+    if scenario['operator']=='char_1037_amiya3' and skill==2:
+        active_counts.append(('amiya_hit_targets','amiya_hit_targets需要1到100之间的整数。'))
+    if scenario['operator']=='char_4087_ines':
+        active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
+    for field,error in active_counts:
+        if isinstance(scenario.get(field),bool):raise ValueError(error)
+    declared_counts={('mechanist',2):('shield_break_count',),
+                     ('mechanist',3):('charge_count',),
+                     ('silverash',2):('activation_count','deployment_stacks')}
+    for field in declared_counts.get((scenario['operator'],skill),()):
+        if isinstance(scenario.get(field),bool):
+            raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
+    numeric_bool_fields=[field for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds')
+                         if isinstance(scenario.get(field),bool)]
     scenario,resolution=prepare(scenario,profile)
     from .relic_attributes import prepare_attribute_runes
     scenario,attributes=prepare_attribute_runes(scenario,attributes)
+    if numeric_bool_fields:
+        raise ValueError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')
+    # Reuse the existing numeric-zero gates after validating the raw timing.
+    timing=scenario.get('timing',{})
+    if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
+        from .timing import finite
+        AttackTimeline(scenario)
+        if finite(timing['target_disappears_seconds'],'target_disappears_seconds',3600)==0:
+            scenario['timing']={**timing,'target_disappears_seconds':0}
     return scenario,attributes,resolution,run_resolution
 
 
+@validate_continuous_attacks
 def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     """Consume one isolated preparation; finishers may annotate its resolutions."""
     from .estimate import build_estimate
@@ -254,11 +294,16 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     scenario.pop('_wine_phase_frame',None)
     if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase
     if scenario['operator'] not in ('kaltsit','silverash','mechanist'):
-        from .operator_engine import calculate_extended
-        result=calculate_extended(scenario,attributes)
+        from .operator_engine import Combat
+        combat=Combat(scenario,attributes)
+        result=combat.calculate()
     else:
         result=_skill_damage(scenario)
         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+    from .charge_reference import finish_charge_reference
+    finish_charge_reference(scenario,result)
+    from .shield_break_reference import finish_shield_break_reference
+    finish_shield_break_reference(scenario,result)
     from .timing import annotate_result
     annotate_result(scenario,result)
     finish(result,resolution,attributes,scenario)
@@ -270,8 +315,53 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         result['total_healing']=result['estimate']['skill']['window_healing']
     from .attribute_limits import finalize_attack_speed_references
     finalize_attack_speed_references(result)
+    from .summons import finish_duration_references
+    finish_duration_references(scenario,result)
+    from .haruka_target_static_reference import finish as finish_haruka_targets
+    finish_haruka_targets(scenario,result)
+    from .mechanist_module_reference import finish as finish_mechanist_module_reference
+    finish_mechanist_module_reference(scenario,result)
+    from .mei_module_static_reference import finish as finish_mei_module_reference
+    finish_mei_module_reference(scenario,result)
+    from .panel_native_bridge import finish as finish_native_panels
+    finish_native_panels(scenario,result)
     from .reporting import build_report
     result['report']=build_report(scenario,result)
+    # Validate the processed neural scenario after preserving legacy errors.
+    if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):
+        for field in ('enemy_is_boss','enemy_in_neural_break'):
+            if isinstance(scenario.get(field),str):
+                raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
+        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
+    if (scenario['operator']=='char_1048_orchd2' and
+            isinstance(scenario.get('near_previous_deployment'),str)):
+        from .operator_engine import selected_talents
+        talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
+        if any(t.get('name')=='翔虫机动' for t in talents):
+            raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')
+    # Keep legacy calculation/finisher/report errors before text-only conditions.
+    op=scenario['operator'];number=scenario['skill']
+    conditions={
+        'char_4228_closur':('reinforcement_blocks_target',),
+        'char_206_gnosis':('frozen_at_skill_end',) if number==3 else (),
+        'char_4087_ines':('ines_first_deployment',) if number==3 else (),
+        'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),
+        'char_1035_wisdel':('overload',) if number==2 else (),
+    }.get(op,())
+    if op=='char_4182_oblvns':
+        conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())
+        if number==2:conditions+=('organ_mode','fever')
+    if op in ('char_437_mizuki','char_1048_orchd2'):
+        field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')
+        if isinstance(scenario.get(field),str):
+            from .operator_engine import selected_talents
+            talents,_=selected_talents(catalog()['operators'][op],scenario)
+            if any(t.get('name')==talent for t in talents):conditions+=(field,)
+        if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)
+    for field in conditions:
+        if isinstance(scenario.get(field),str):
+            raise ValueError(field+' 不接受文本条件；请使用布尔值。')
     return result
 
 def _evaluate_damage(prepared,wine_phase=None) -> dict:

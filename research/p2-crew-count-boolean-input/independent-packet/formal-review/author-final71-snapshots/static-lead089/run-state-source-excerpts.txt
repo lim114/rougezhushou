@@ -1,0 +1,74 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/run_state.py
+Full source SHA256 6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac
+Full source bytes 42402
+
+Lines 76-99
+76:     def restore_origin_discovery_buffs(self,observed=None,*,repaired_at=None):
+77:         """Repair only the recorded unknown-to-known origin discovery clear.
+78: 
+79:         This uses current-run history and the retained owned-popup receipt. A
+80:         real recruitment change, departure, fresh complete list or conflicting
+81:         receipt cannot restore anything. Historical events remain untouched.
+82:         """
+83:         history=self.state.get('history',[])
+84:         if not isinstance(history,list):return False
+85:         incoming={m['id']:m for m in (observed or {}).get('operators',[])}
+86:         crew=(observed or {}).get('crew_count')
+87:         full_crew=type(crew) is int and len(incoming)==crew
+88:         changed=False
+89:         from .relics import mechanics
+90:         buffs=mechanics()['char_buffs'];profiles=operator_profiles()
+91:         barriers={'recruitment_changed','classification_corrected','operator_no_longer_present',
+92:                   'char_buffs_origin_discovery_repaired','char_buff_absence_invalidated'}
+93:         for oid,member in self.state['operators'].items():
+94:             if (member.get('scope')!='run' or member.get('present') is not True
+95:                     or member.get('char_buff_ids')!=[] or member.get('char_buffs_complete') is not False
+96:                     or member.get('recruitment_kind') not in ('non_emergency','emergency_hire')):continue
+97:             update=incoming.get(oid,{})
+98:             if (full_crew and oid not in incoming
+99:                     or 'char_buff_ids' in update and update.get('char_buffs_complete') is True
+Lines 245-265
+245:     def apply(self,observed,captured_at):
+246:         if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
+247:         reused_run=observed.get('config_reuse',{}).get('run_id')
+248:         if reused_run and reused_run!=self.state['id']:return False
+249:         from .relics import mechanics
+250:         for member in observed.get('operators',[]):
+251:             if 'char_buffs_complete' in member:
+252:                 if type(member['char_buffs_complete']) is not bool:
+253:                     raise ValueError('个人强化列表完整性必须为布尔值。')
+254:                 if 'char_buff_ids' not in member:
+255:                     raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
+256:             if 'char_buff_ids' not in member:continue
+257:             ids=member['char_buff_ids'];profile=operator_profiles()[member['id']]
+258:             if member.get('scope')!='run' or not isinstance(ids,list) or not all(isinstance(b,str) for b in ids):
+259:                 raise ValueError('强化绑定必须来自本局干员记录，且包含有效ID列表。')
+260:             for bid in ids:
+261:                 buff=mechanics()['char_buffs'].get(bid)
+262:                 if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):
+263:                     raise ValueError('强化ID或领取干员职业不符。')
+264:         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
+265:         state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
+Lines 372-376
+372:         crew=observed.get('crew_count')
+373:         promoted_ids=set()
+374:         if crew is not None:
+375:             state['crew_count']=crew
+376:         for member in observed.get('operators',[]):
+Lines 435-450
+435:                                      changed_origin or returned,captured_at)
+436:         members=observed.get('operators',[])
+437:         if observed.get('selected_operator') in {m['id'] for m in members}:
+438:             state['selected_operator']=observed['selected_operator']
+439:         if crew is not None and len({m['id'] for m in members})==crew:
+440:             current={m['id'] for m in members}
+441:             for key,member in state['operators'].items():
+442:                 if key not in current and member.get('present',True):
+443:                     member['present']=False
+444:                     state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
+445:         from .recipient_state import invalidate_recipient_absence
+446:         invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held,promoted_ids,captured_at)
+447:         state['last_read']=captured_at
+448:         if state['notice'].startswith('等待'):state['notice']='同一局信息持续累积并保存；开始另一局时请手动清空本局读取。'
+449:         self.save()
+450:         return True

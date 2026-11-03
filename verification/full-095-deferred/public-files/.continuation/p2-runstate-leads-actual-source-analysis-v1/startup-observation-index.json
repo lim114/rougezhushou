@@ -1,0 +1,2282 @@
+{
+  "extraction_scope": "JSON metadata selects existing encoded nodes; no raw_hex decoding/native graph reconstruction or project code imported",
+  "cases": [
+    {
+      "id": "load_control",
+      "original_receipt_case_index": 0,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140323168449664,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140323168449536,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140323168449472,
+              "items": []
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "returned"
+      },
+      "consumers": [
+        {
+          "call": "summary",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "str",
+            "value": "保密等级未确认 · 分队未确认\n本局队伍：当前已识别 0 / 未确认 人\n成员尚未确认\n本局持有：已识别 0 / 未确认 件 · 变更待核对或尚未读全\n藏品：身份尚未确认\n战术道具：未读取到\n源石锭/零件数尚未确认\n已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。"
+          }
+        },
+        {
+          "call": "inventory_status",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "dict",
+            "node": 0,
+            "object_id": 140322580837376,
+            "items": [
+              [
+                {
+                  "type": "str",
+                  "value": "source"
+                },
+                {
+                  "type": "str",
+                  "value": "run_capture"
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "complete"
+                },
+                {
+                  "type": "bool",
+                  "value": false
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "recognized"
+                },
+                {
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "recognized_tools"
+                },
+                {
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "total_badge_count"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "expected_count"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "run_id"
+                },
+                {
+                  "type": "str",
+                  "value": "efc3e1d9-d537-44e8-903f-3089dd4eb58f"
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "confirmed_at"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "call": "held_relic_ids",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "list",
+            "node": 0,
+            "object_id": 140322574880512,
+            "items": []
+          }
+        },
+        {
+          "call": "held_tool_ids",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "list",
+            "node": 0,
+            "object_id": 140322574880512,
+            "items": []
+          }
+        }
+      ],
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140323585128064,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "efc3e1d9-d537-44e8-903f-3089dd4eb58f"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e18e0c7cp+30",
+              "repr": "1791511430.219512"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140323168307520,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140323168307712,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140323168596480,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140323168307328,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140323168306624,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140323168307008,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 7,
+              "object_id": 140323168306944,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140323168596608,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 38,
+        "sha256": "f8c8b037d52f93d09b5efd852eae914b85a5742717138d3ef640ee0e8f1778a0"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 38,
+        "sha256": "f8c8b037d52f93d09b5efd852eae914b85a5742717138d3ef640ee0e8f1778a0"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 38,
+        "sha256": "f8c8b037d52f93d09b5efd852eae914b85a5742717138d3ef640ee0e8f1778a0"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    },
+    {
+      "id": "load_maps_array",
+      "original_receipt_case_index": 1,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322575681728,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322575683008,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322575681408,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322575318208,
+              "items": []
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "raised",
+        "exception": {
+          "type": "builtins.AttributeError",
+          "message": "'list' object has no attribute 'items'",
+          "args_native": {
+            "type": "tuple",
+            "node": 0,
+            "object_id": 140323587574224,
+            "items": [
+              {
+                "type": "str",
+                "value": "'list' object has no attribute 'items'"
+              }
+            ]
+          },
+          "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 184, in main\n    run = RunState(file=path)  # Actual signature is file, never unsupported path=.\n          ^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 23, in __init__\n    self.restore_passed_node_types()\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 34, in restore_passed_node_types\n    for zid,graph in self.state['maps'].items():\n                     ^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'items'\n"
+        }
+      },
+      "consumers": {
+        "outcome": "not_called",
+        "reason": "Constructor raised; no product success inferred."
+      },
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322575682368,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "e01f7616-f6ac-4b6f-aedb-f73cf4464e65"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e19fb2e9p+30",
+              "repr": "1791511430.4952948"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322575685440,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322575685184,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322574877888,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140322575682432,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140322575684928,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140322575685376,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "list",
+              "node": 7,
+              "object_id": 140322574827008,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140322575318208,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "等待本局页面读取；同一局记忆仅在手动开始新局后清空。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a205b5d0a7d0a",
+        "bytes": 52,
+        "sha256": "0fc455b3af5d378f84a93b5670363a98e8ccd8f8c7c5cb92d1e308446a11ec81"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a205b5d0a7d0a",
+        "bytes": 52,
+        "sha256": "0fc455b3af5d378f84a93b5670363a98e8ccd8f8c7c5cb92d1e308446a11ec81"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a205b5d0a7d0a",
+        "bytes": 52,
+        "sha256": "0fc455b3af5d378f84a93b5670363a98e8ccd8f8c7c5cb92d1e308446a11ec81"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    },
+    {
+      "id": "load_maps_graph_null",
+      "original_receipt_case_index": 2,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322575685376,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322575684928,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322575682432,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 3,
+              "object_id": 140322575685184,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "public_zone"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "raised",
+        "exception": {
+          "type": "builtins.AttributeError",
+          "message": "'NoneType' object has no attribute 'get'",
+          "args_native": {
+            "type": "tuple",
+            "node": 0,
+            "object_id": 140323163697456,
+            "items": [
+              {
+                "type": "str",
+                "value": "'NoneType' object has no attribute 'get'"
+              }
+            ]
+          },
+          "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 184, in main\n    run = RunState(file=path)  # Actual signature is file, never unsupported path=.\n          ^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 23, in __init__\n    self.restore_passed_node_types()\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 36, in restore_passed_node_types\n    for node in graph.get('nodes',[]):\n                ^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+        }
+      },
+      "consumers": {
+        "outcome": "not_called",
+        "reason": "Constructor raised; no product success inferred."
+      },
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322576098048,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "96af6c71-f786-458c-8915-28a48f8c8a65"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e1a021d4p+30",
+              "repr": "1791511430.5020647"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322576097472,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322576097280,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322575317184,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140322576098112,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140322576097856,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140322576097792,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 7,
+              "object_id": 140322576097216,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "public_zone"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140322575317952,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "等待本局页面读取；同一局记忆仅在手动开始新局后清空。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a207b0a20202020227075626c69635f7a6f6e65223a206e756c6c0a20207d0a7d0a",
+        "bytes": 79,
+        "sha256": "d8cae8b9ab075ea3f0b2612d8f10a00e330c25b943102686e500b60226a9470e"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a207b0a20202020227075626c69635f7a6f6e65223a206e756c6c0a20207d0a7d0a",
+        "bytes": 79,
+        "sha256": "d8cae8b9ab075ea3f0b2612d8f10a00e330c25b943102686e500b60226a9470e"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a2020226d617073223a207b0a20202020227075626c69635f7a6f6e65223a206e756c6c0a20207d0a7d0a",
+        "bytes": 79,
+        "sha256": "d8cae8b9ab075ea3f0b2612d8f10a00e330c25b943102686e500b60226a9470e"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    },
+    {
+      "id": "load_history_null_item",
+      "original_receipt_case_index": 3,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322576097216,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322576097792,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322576097856,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322575317184,
+              "items": [
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "returned"
+      },
+      "consumers": [
+        {
+          "call": "summary",
+          "outcome": "raised",
+          "exception": {
+            "type": "builtins.AttributeError",
+            "message": "'NoneType' object has no attribute 'get'",
+            "args_native": {
+              "type": "tuple",
+              "node": 0,
+              "object_id": 140323163697456,
+              "items": [
+                {
+                  "type": "str",
+                  "value": "'NoneType' object has no attribute 'get'"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 102, in observe_call\n    return {'call': name, 'outcome': 'returned', 'returned_native': native(call())}\n                                                                           ^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 580, in summary\n    usable=self.calculation_resources()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 74, in calculation_resources\n    return reusable_resources(self.state)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/relic_counter_semantics.py\", line 80, in reusable_resources\n    rid=(event.get('id') if event.get('kind')=='relic_no_longer_held'\n                            ^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+          }
+        },
+        {
+          "call": "inventory_status",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "dict",
+            "node": 0,
+            "object_id": 140322574403584,
+            "items": [
+              [
+                {
+                  "type": "str",
+                  "value": "source"
+                },
+                {
+                  "type": "str",
+                  "value": "run_capture"
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "complete"
+                },
+                {
+                  "type": "bool",
+                  "value": false
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "recognized"
+                },
+                {
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "recognized_tools"
+                },
+                {
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "total_badge_count"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "expected_count"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "run_id"
+                },
+                {
+                  "type": "str",
+                  "value": "dbbcbc3a-073a-4c7d-be9e-4bd429ff0697"
+                }
+              ],
+              [
+                {
+                  "type": "str",
+                  "value": "confirmed_at"
+                },
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "call": "held_relic_ids",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "list",
+            "node": 0,
+            "object_id": 140322574413440,
+            "items": []
+          }
+        },
+        {
+          "call": "held_tool_ids",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "list",
+            "node": 0,
+            "object_id": 140322574413440,
+            "items": []
+          }
+        }
+      ],
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322575981696,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "dbbcbc3a-073a-4c7d-be9e-4bd429ff0697"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e1a04038p+30",
+              "repr": "1791511430.5039196"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322575981440,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322575978048,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322575981184,
+              "items": [
+                {
+                  "type": "NoneType",
+                  "value": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140322575981248,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140322575981824,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140322575981760,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 7,
+              "object_id": 140322575981632,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140322575317184,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a202022686973746f7279223a205b0a202020206e756c6c0a20205d0a7d0a",
+        "bytes": 67,
+        "sha256": "8b0049499fa332c73710182aebe580924880f7ef2ce79f64db7df4d2a11f1c10"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a202022686973746f7279223a205b0a202020206e756c6c0a20205d0a7d0a",
+        "bytes": 67,
+        "sha256": "8b0049499fa332c73710182aebe580924880f7ef2ce79f64db7df4d2a11f1c10"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b7d2c0a202022686973746f7279223a205b0a202020206e756c6c0a20205d0a7d0a",
+        "bytes": 67,
+        "sha256": "8b0049499fa332c73710182aebe580924880f7ef2ce79f64db7df4d2a11f1c10"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    },
+    {
+      "id": "load_member_null",
+      "original_receipt_case_index": 4,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322574415488,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322574414976,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "mechanist"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322574415040,
+              "items": []
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "raised",
+        "exception": {
+          "type": "builtins.AttributeError",
+          "message": "'NoneType' object has no attribute 'get'",
+          "args_native": {
+            "type": "tuple",
+            "node": 0,
+            "object_id": 140323587574224,
+            "items": [
+              {
+                "type": "str",
+                "value": "'NoneType' object has no attribute 'get'"
+              }
+            ]
+          },
+          "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 184, in main\n    run = RunState(file=path)  # Actual signature is file, never unsupported path=.\n          ^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 25, in __init__\n    if self.restore_origin_discovery_buffs():self.save()\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 94, in restore_origin_discovery_buffs\n    if (member.get('scope')!='run' or member.get('present') is not True\n        ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+        }
+      },
+      "consumers": {
+        "outcome": "not_called",
+        "reason": "Constructor raised; no product success inferred."
+      },
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322574202752,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "4354ab09-7e8c-4d9a-b1e3-5561993b7818"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e1a06a86p+30",
+              "repr": "1791511430.5065017"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322574202240,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "mechanist"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322574203584,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322574201728,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140322574202816,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140322574202560,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140322574202496,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 7,
+              "object_id": 140322574202432,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140322574201856,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b0a20202020226d656368616e697374223a206e756c6c0a20207d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 63,
+        "sha256": "d411eac37c2fd20e9cbeeb55d02505ec23e6a696226580142b16151a66056687"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b0a20202020226d656368616e697374223a206e756c6c0a20207d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 63,
+        "sha256": "d411eac37c2fd20e9cbeeb55d02505ec23e6a696226580142b16151a66056687"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b0a20202020226d656368616e697374223a206e756c6c0a20207d2c0a20202272656c696373223a207b7d0a7d0a",
+        "bytes": 63,
+        "sha256": "d411eac37c2fd20e9cbeeb55d02505ec23e6a696226580142b16151a66056687"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    },
+    {
+      "id": "load_relic_null",
+      "original_receipt_case_index": 5,
+      "observed_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322574202432,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322574202496,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322574202560,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "rogue_6_relic_cargo_1"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "constructor": {
+        "outcome": "returned"
+      },
+      "consumers": [
+        {
+          "call": "summary",
+          "outcome": "raised",
+          "exception": {
+            "type": "builtins.AttributeError",
+            "message": "'NoneType' object has no attribute 'get'",
+            "args_native": {
+              "type": "tuple",
+              "node": 0,
+              "object_id": 140323587574224,
+              "items": [
+                {
+                  "type": "str",
+                  "value": "'NoneType' object has no attribute 'get'"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 102, in observe_call\n    return {'call': name, 'outcome': 'returned', 'returned_native': native(call())}\n                                                                           ^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 565, in summary\n    status=self.inventory_status();state=self.state\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 521, in inventory_status\n    count=self.state['relic_count'];known=len(self.held_relic_ids())\n                                              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in held_relic_ids\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in <genexpr>\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n                                                                        ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+          }
+        },
+        {
+          "call": "inventory_status",
+          "outcome": "raised",
+          "exception": {
+            "type": "builtins.AttributeError",
+            "message": "'NoneType' object has no attribute 'get'",
+            "args_native": {
+              "type": "tuple",
+              "node": 0,
+              "object_id": 140323587574224,
+              "items": [
+                {
+                  "type": "str",
+                  "value": "'NoneType' object has no attribute 'get'"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 102, in observe_call\n    return {'call': name, 'outcome': 'returned', 'returned_native': native(call())}\n                                                                           ^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 521, in inventory_status\n    count=self.state['relic_count'];known=len(self.held_relic_ids())\n                                              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in held_relic_ids\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in <genexpr>\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n                                                                        ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+          }
+        },
+        {
+          "call": "held_relic_ids",
+          "outcome": "raised",
+          "exception": {
+            "type": "builtins.AttributeError",
+            "message": "'NoneType' object has no attribute 'get'",
+            "args_native": {
+              "type": "tuple",
+              "node": 0,
+              "object_id": 140323587574224,
+              "items": [
+                {
+                  "type": "str",
+                  "value": "'NoneType' object has no attribute 'get'"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-runstate-leads-root-probe-source-v1/probe_runstate_leads.py\", line 102, in observe_call\n    return {'call': name, 'outcome': 'returned', 'returned_native': native(call())}\n                                                                           ^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in held_relic_ids\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/rouge/run_state.py\", line 533, in <genexpr>\n    return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n                                                                        ^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'get'\n"
+          }
+        },
+        {
+          "call": "held_tool_ids",
+          "outcome": "returned",
+          "returned_native": {
+            "type": "list",
+            "node": 0,
+            "object_id": 140322576163584,
+            "items": []
+          }
+        }
+      ],
+      "preserve_unreadable_observed": false,
+      "state_after_constructor_original_encoded_node": {
+        "type": "dict",
+        "node": 0,
+        "object_id": 140322574268992,
+        "items": [
+          [
+            {
+              "type": "str",
+              "value": "id"
+            },
+            {
+              "type": "str",
+              "value": "2c1b2a90-370d-4b85-9ba5-00ecdf07dbf5"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "started_at"
+            },
+            {
+              "type": "float",
+              "hex": "0x1.ab212e1a08a97p+30",
+              "repr": "1791511430.5084589"
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_read"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "operators"
+            },
+            {
+              "type": "dict",
+              "node": 1,
+              "object_id": 140322574268352,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "crew_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "selected_operator"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relics"
+            },
+            {
+              "type": "dict",
+              "node": 2,
+              "object_id": 140322574268224,
+              "items": [
+                [
+                  {
+                    "type": "str",
+                    "value": "rogue_6_relic_cargo_1"
+                  },
+                  {
+                    "type": "NoneType",
+                    "value": null
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_count"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "bar_signature"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_verified"
+            },
+            {
+              "type": "bool",
+              "value": false
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "inventory_confirmed_at"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "relic_icon_memory"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "history"
+            },
+            {
+              "type": "list",
+              "node": 3,
+              "object_id": 140322574265408,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "resources"
+            },
+            {
+              "type": "dict",
+              "node": 4,
+              "object_id": 140322574269056,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "tactical_tools"
+            },
+            {
+              "type": "dict",
+              "node": 5,
+              "object_id": 140322574268736,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "config"
+            },
+            {
+              "type": "dict",
+              "node": 6,
+              "object_id": 140322574268672,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "maps"
+            },
+            {
+              "type": "dict",
+              "node": 7,
+              "object_id": 140322574268608,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "last_node_content"
+            },
+            {
+              "type": "NoneType",
+              "value": null
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "node_contents"
+            },
+            {
+              "type": "list",
+              "node": 8,
+              "object_id": 140322574203264,
+              "items": []
+            }
+          ],
+          [
+            {
+              "type": "str",
+              "value": "notice"
+            },
+            {
+              "type": "str",
+              "value": "已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。"
+            }
+          ]
+        ]
+      },
+      "fixture_original_raw": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b0a2020202022726f6775655f365f72656c69635f636172676f5f31223a206e756c6c0a20207d0a7d0a",
+        "bytes": 75,
+        "sha256": "1c59bb0eab408cc083776fda3560cd140292032fdf6abfc62e8b99de859cf3dc"
+      },
+      "raw_before": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b0a2020202022726f6775655f365f72656c69635f636172676f5f31223a206e756c6c0a20207d0a7d0a",
+        "bytes": 75,
+        "sha256": "1c59bb0eab408cc083776fda3560cd140292032fdf6abfc62e8b99de859cf3dc"
+      },
+      "raw_after": {
+        "exists": true,
+        "raw_hex": "7b0a2020226f70657261746f7273223a207b7d2c0a20202272656c696373223a207b0a2020202022726f6775655f365f72656c69635f636172676f5f31223a206e756c6c0a20207d0a7d0a",
+        "bytes": 75,
+        "sha256": "1c59bb0eab408cc083776fda3560cd140292032fdf6abfc62e8b99de859cf3dc"
+      },
+      "whole_original_before_after_equal_rechecked": true,
+      "temporary_before": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "temporary_after": {
+        "exists": false,
+        "raw_hex": null,
+        "bytes": null,
+        "sha256": null
+      },
+      "Product_PASS": null,
+      "protection_limit": "Raw retained in this no-save observation; actual preserve_unreadable was False, not a tested prevention gate"
+    }
+  ],
+  "all6_whole_original_raw_retained": true,
+  "all6_preserve_unreadable_false": true,
+  "private_saved_file_or_actual_window_incident_measured": false
+}

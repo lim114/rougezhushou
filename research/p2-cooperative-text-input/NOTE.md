@@ -1,0 +1,19 @@
+# 第69节：明确协同覆盖条件的文本输入错误
+
+final baseline为已提交64 `f4ca1c97278c5354f32940f56db2de60bbd21423` 的精确gitarchive，不含root当前修改。完整698个源/JSON文件末尾重查无漂移；source/patch/test/matrix已冻结。此前63只读审计1932calls和697源哈希保持在prior-readonly-audit，原始外部目录也保留；1932共有scenario的fresh64整份JSON/错误再比原63全部相同。历史audit patch_written:false不代表最终69政策。
+
+当前公开silverash是凛御银灰char_1045_svash2。重新核固定game commit a550f5e048bb94e7cdefc6eb97a4091f0c4c7add raw character/skill SHA，不借64脆弱selector证明协同。原char.skills[2]→skchr_svash2_3、PHASE_2/level1，并精确override token_10057_svash2_eagle3；token.skills[2]→sktok_svash2_3。token S3原描述要求技能期间首个干员部署时在其位置部署风雪之眼、与凛御银灰同时进行范围直线攻击，期间可再次部署改变位置。10个rank原记录及9个选天赋控制完整入source-receipt。命名天赋及隐藏cnt/weak[limit]不被当作新增协同数量、位置、快照或叠加依据。
+
+现有局外模型的银灰S3 branch以raw scenario.get(cooperative) truthiness复制现有component“协同丹增”，并用同compute_skill callback计算cast/window/cycle；report也沿exact owner/skill条件显示协同分项。Qt真实生产serializer isChecked给bool。默认base1000/10秒两mode False为16000，false/unknown/0非空文本整份等同True32000并生成协同分项。这是原条件被文本误确认的公开反例，不是新实际游戏伤害结论。
+
+本patch仅在_prepare_damage通过技能/培养/unlock资格后、unchanged64 preexisting_fragile strguard之后，拒绝银灰S3的cooperative raw str，错误原文为“cooperative不接受字符串，请提供明确的布尔条件。”所有文本包括空字符串及空白均拒绝，不把false解析为False，也不把unknown编为某个状态。64fragile双文本错误优先仍保留。其它owner及S1/S2继续忽略未适用字段；真正bool、numeric0/1/null及全部其它nontext保持原truthiness兼容性。没有扩到全局boolean helper或其它checkbox。声明的兼容性不等于官方API完整合法域。
+
+旧62test中active cooperative文本必须等同True的历史控制迁移为S1/S2 inactive输入等同省略；原62已归档source/receipt不修改。该旧test曾验证62未触碰另一字段，69修复该字段后继续把它当活动合同将保留误确认缺陷。64fragile真实bool/手动damage_taken控制和原协同公式仍由独立tests保护。
+
+在exact64及final69分别fresh1956次公开调用（3912calls）并保存全部before/after JSON/错误：仅102个qualified rawstr变为上述精确ValueError；1794份成功输出完整不变，60个早先错误类型/原文完整不变（36个E0/E1 S3资格错误以及24个64fragile/培养/skill priority组合）。全1854个非选中outcome不变。包含rank1/7/10、两mode、零/短/默认窗口、life0、空targets、既有脆弱和damage_taken乘法、酒类/限时攻速、86其它技能inactive、堕梦/破屏/四岁已有unknownclock边界。caller与共享catalog保持不变。
+
+8项新增公共tests、7项62迁移tests、7项64原tests及67项核心/资格/零life/summon旧tests共89项全部通过。新增test使用完整error原文和真实公开输出，无根据result metadata猜source资格。git apply --check在64冻结基线通过；除了目标2行guard和明确旧test迁移，所有既有源/JSON哈希保持。
+
+原cooperative公式、持续覆盖局外假设、数字、phase/scope、None及原native未知程度一概保持。token部署说明不提供真实coverage、首伤/同步release-hit时钟、attachment/ATK快照、event ownership、fragile first application/叠加/expiry或live hotfix等价性。本节不推断这些机制，也没有新native/Qt/Wine执行。独立review复用review_shu60，68优先完成后审69；实际UI及每5节全量由root安排。
+
+独立审查已通过：review_shu60完成70pairs/140freshcalls，12qualified字符串拒绝、48完整成功输出不变、10原错误不变；8new+14旧62/64共22方法全部通过。保存1956pairs独立严格复比102/1794/60一致，source双binding、10rank/9talent和64guard优先核验无blocker。全部独立REVIEW/handoff/probe/fulloutput按原字节copy至independent-review；最终patch SHA仍为 `03c0dcc0b446c074669311861254820f702b8b9d27661dd9d78ea92cf02a785f`。

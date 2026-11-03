@@ -1,0 +1,21 @@
+--- immutable-v1/window109.py
++++ v2/window109.py
+@@ -82,8 +82,8 @@
+         assert components['触手']['total']==0 and components['触手']['hits']==0
+         assert components['本体普攻']['total']>0 and result['total_damage']>0
+         return
+-    assert result['total_damage']==0
+-    if kind in ('zero','ammo','medical','manual'):assert skill['total_damage']==0
++    if kind in ('zero','ammo','medical','manual'):
++        assert result['total_damage']==0 and skill['total_damage']==0
+     if kind=='ammo':
+         assert result['hits']==0 and result['execution_seconds'] is None
+         assert skill['recharge_seconds'] is None
+@@ -100,6 +100,7 @@
+         name='慈悲愿景开启伤害' if kind=='opening-medical' else '施放伤害'
+         component=next(c for c in result['components'] if c['name']==name)
+         assert component['total']==0 and component['hits']==0
++        assert result['total_damage'] is None  # Later independent clocks remain unbound.
+ 
+ def main():
+     parser=argparse.ArgumentParser()

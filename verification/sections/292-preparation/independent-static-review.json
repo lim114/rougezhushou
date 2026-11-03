@@ -1,0 +1,43 @@
+{
+  "kind": "INDEPENDENT_STATIC_REVIEW_292_REVISION2_NOT_RUNTIME_ACCEPTANCE",
+  "candidate_source_sha256": "c7398a4ae762c49bd19495f8a0692a917ee5e40a14db250915ca313f03c1506b",
+  "candidate_test_sha256": "e7bf4ac736b6a2c2851ab872f4d248df88480b9d274a2c9862622d7891998326",
+  "candidate_diff_sha256": "0b2a959fce9d7b287ea672faaca57f61ea96a41663daf53f7751d9e3379b69c2",
+  "baseline_live_source_sha256": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+  "original_methods_changed": [
+    "__init__",
+    "show_selected",
+    "select_stage"
+  ],
+  "new_methods": [
+    "_refresh_event_previews",
+    "_event_preview_filter_changed"
+  ],
+  "other_NodeCatalogPanel_methods_AST_unchanged": true,
+  "new_tests_count_static_only": 13,
+  "old_test_files_in_promotion_allowlist": false,
+  "blocking_findings": [],
+  "reviewed_contracts": [
+    "New filtering only narrows full existing event_battle_links rows by exact scene_key and choice_key. No status/difficulty/alias rewriting is added.",
+    "No-battle or empty-scene selection keeps event_stage empty and battle button disabled; no fallback to event-wide battle rows.",
+    "Same event key restores full UserRole+1 origin tuple. Missing prior tuple becomes -1 even if the same stage_id exists for another choice; fresh different event preserves old initial-first-item compatibility.",
+    "select_stage revalidates current context by rebuilding and restoring exactly the selected tuple before emitting only its retained stage ID. Missing/failed source suppresses emission.",
+    "_event_preview_filter_changed touches only three preview comboboxes, visibility/button/status on error; neither reading document/tab/cursor/scroll nor map/run/dossier state is rewritten.",
+    "Non-event show_selected calls helper with event=None, then independently re-enables the direct-battle entry at its old caller guard; direct battle select_stage bypasses the event helper.",
+    "Only two intended production/test files are promoted; existing old test methods are not deleted, skipped or rewritten in this candidate.",
+    "Existing qualifications, ordinary dual variants, explicit emergency filtering, all six pursuit/event aliases, generic fourth tuple marker and unknown next-floor behavior are inherited unchanged."
+  ],
+  "nonblocking_validation_recommendations": [
+    "Include old direct battle entry/button check in necessary validation; the helper finally temporarily disables the shared button before show_selected restores it.",
+    "Include one filtered but excluded-qualification source reference control; source row status must remain descriptive and not hide the fixed preview.",
+    "Keep a source-failure click control and a later valid-source recovery requiring explicit stage selection; no stale entry should auto-fire."
+  ],
+  "limits": [
+    "Static review is not a Qt signal/runtime or actual native layout acceptance.",
+    "Exception handling in this new preview helper does not claim to make every pre-existing event text renderer immune to arbitrary global source errors."
+  ],
+  "live_source_changed_by_reviewer": false,
+  "Qt_or_tests_executed": false,
+  "game_chat_private_operations": false,
+  "functional_PASS_or_section_completion_claimed": false
+}

@@ -1,0 +1,182 @@
+{
+  "baseline_head": "d0ec6b618721863830518418aa95dc846f83e7c5",
+  "source_files": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "actual_bytes_rehashed_now": true,
+      "new_download": false,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "actual_bytes_rehashed_now": true,
+      "new_download": false,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    }
+  },
+  "validated_integer_input": {
+    "operator": "char_1042_phatm2",
+    "skill": 2,
+    "control": [
+      "bait_triggers",
+      "当前窗口诱饵触发次数",
+      0,
+      100,
+      [
+        2
+      ]
+    ],
+    "existing_validator": "Combat.option('bait_triggers',0,maximum=100,integer=True)",
+    "existing_parsing": "finite float followed by nonnegative integer/range validation",
+    "manual_maximum_not_native_trigger_cap": true
+  },
+  "all_ten_skill_blackboards_match_pinned_original": true,
+  "source_selectors": "final-pinned-bait-selectors.json",
+  "raw_count_reads_searched": [
+    {
+      "file": "rouge/damage.py",
+      "line": 14,
+      "field": "hits",
+      "source": "result.get('hits')"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 147,
+      "field": "activation_count",
+      "source": "scenario.get('activation_count', 1)"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 149,
+      "field": "deployment_stacks",
+      "source": "scenario.get('deployment_stacks', 0)"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 156,
+      "field": "shield_break_count",
+      "source": "scenario.get('shield_break_count', 0)"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 169,
+      "field": "charge_count",
+      "source": "scenario.get('charge_count', 0)"
+    },
+    {
+      "file": "rouge/estimate.py",
+      "line": 80,
+      "field": "expected_count",
+      "source": "inventory.get('expected_count')"
+    },
+    {
+      "file": "rouge/estimate.py",
+      "line": 141,
+      "field": "healing_hits",
+      "source": "full.get('healing_hits',full['hits'])"
+    },
+    {
+      "file": "rouge/estimate.py",
+      "line": 150,
+      "field": "healing_hits",
+      "source": "result.get('healing_hits',result['hits'])"
+    },
+    {
+      "file": "rouge/estimate.py",
+      "line": 280,
+      "field": "hits",
+      "source": "item.get('hits')"
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "line": 1804,
+      "field": "ghost_count",
+      "source": "self.s.get('ghost_count',0)"
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "line": 1804,
+      "field": "ghost_casts",
+      "source": "self.s.get('ghost_casts',0)"
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "line": 1807,
+      "field": "ghost_casts",
+      "source": "self.s.get('ghost_casts',0)"
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "line": 1866,
+      "field": "bait_triggers",
+      "source": "self.s.get('bait_triggers',0)"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 106,
+      "field": "closure_prior_casts",
+      "source": "scenario.get('closure_prior_casts',0)"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 196,
+      "field": "summon_count",
+      "source": "scenario.get('summon_count',1)"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 204,
+      "field": "summon_count",
+      "source": "scenario.get('summon_count',1)"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 634,
+      "field": "ghost_casts_requested",
+      "source": "wisdel.get('ghost_casts_requested')"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 775,
+      "field": "hit_counts",
+      "source": "result['estimate']['skill'].get('hit_counts',{})"
+    },
+    {
+      "file": "rouge/reporting.py",
+      "line": 861,
+      "field": "summon_count",
+      "source": "scenario.get('summon_count',1)"
+    }
+  ],
+  "narrow_defect": "S2 finisher ignores the validated numeric count, tests raw-string truthiness, then int(raw). String zero creates an unrequested pending bait source and masks damage; decimal aliases fail after successful integer validation.",
+  "scope_exclusions": [
+    "Deepcolor summon_count belongs to63",
+    "checkbox truthiness belongs to62/64",
+    "Wisdel raw ghost count/casts belongs to separate readonly candidate66",
+    "Closure prior casts has its own strict number-only validation, not a previously accepted numeric-string path",
+    "legacy damage count reads use normalized integer copies; skill_rank strings are rejected before the int read"
+  ],
+  "reused_existing_receipt": {
+    "tracked_path": "research/p2-incoming-clock/source-receipt.json",
+    "snapshot_head": "d0ec6b618721863830518418aa95dc846f83e7c5",
+    "sha256": "4135bc82cc0e3af283bc7d2874cf6dc17db520ce1e51dcbb0a4a32f83c8c3df9",
+    "historical_original_download_not_claimed_as_current": true
+  },
+  "unknowns_preserved": [
+    "deployment attack snapshot",
+    "first tick",
+    "refresh or overlap",
+    "actual bait event clock",
+    "actual full cast/cycle attribution",
+    "native/current-hotfix attachment"
+  ],
+  "no_new_numerical_game_model": true,
+  "no_new_event_schedule": true,
+  "production_edits": 0,
+  "private_state_read": false,
+  "native_validation": false
+}

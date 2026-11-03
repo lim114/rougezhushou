@@ -1,0 +1,83 @@
+{
+  "title": "ThreePart waiting and declared interruption/window budget",
+  "asset_baseline_version": "26-09-13-15-28-10-30688348",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "physical_methods": 37,
+  "unique_instructions": 3258,
+  "float_wait": {
+    "factory_method_index": 64127,
+    "factory_address": "0x180647f20",
+    "iterator_declaring_type": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0",
+    "iterator_method_index": 64149,
+    "iterator_address": "0x180661350",
+    "time_offset": "0x20",
+    "frame_count_offset": "0x24",
+    "frame_index_offset": "0x28",
+    "operation": "float32(time / deltaPlayTime), nearest integer with midpoint-to-even, max(1); sampled once on first MoveNext",
+    "round_helper_address": "0x18059e290",
+    "round_helper_managed_symbol": "unresolved; linked numerical CFG used directly",
+    "yield": "Torappu.Battle.Yields.sharedWaitForFixedUpdate, field offset0 -> UnityEngine.WaitForFixedUpdate"
+  },
+  "different_overload_boundary": "FP overload64132/64179 calls MathUtil.RoundToInt(FP); do not inherit float midpoint rules without its own FP proof",
+  "clear_condition": "ThreePart.OnCastFinish and OnEvent(ON_DETACHED=1) call _ClearCoroutine; actual event occurrence is unknown; movement/target gaps are not bound to this call",
+  "recovery_routes": "BattleController.StartBattleCoroutine selects Unity MonoBehaviour coroutine or deterministic CoroutineSimulator by current isDeterministic; simulator starts handler immediately, nested iterator stack resumes by SimulateTick; actual route/phase unknown",
+  "delta_boundary": "BattleController.get_deltaPlayTimeFP reads s_deltaPlayTimeFP+0x48; RestoreDeltaTimeScale/ReqChangeDeltaTimeFPInStepMode can write it; 30Hz only the existing offline preview grid",
+  "reused_three_part_selector_and_caller": "research/p2-three-part-static-current/native-proof.json; metadata_method_index94090",
+  "functional_scope": "calculate_damage selected ThreePart frame references consume existing start delay, interrupt/movement/target rows and horizon to report two gated per-segment budgets, consumed/remaining waiting, declared cancellation and restart candidates; no new event inputs",
+  "limitations": [
+    "firstAttack/FSM path and actual mode/skin/XLua remain unknown",
+    "movement or target gaps do not cancel waits or reopen firstAttack",
+    "only explicitly declared interrupt_windows cancel this reference chain as a model condition; actual native event occurrence unknown",
+    "input-period playback remains a fixed profile condition; actual midchain speed changes unknown",
+    "no actual callback, skill-end or absolute clock derived from wait counts",
+    "wait cancellation discards unexecuted budget; a restart candidate does not resume cancelled iterator or imply animation/event stop",
+    "a budget assumes a chain started at the existing preview anchor; generic attack-start rows/target acquisition do not prove that native origin"
+  ],
+  "public_primary_references": [
+    {
+      "url": "https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Mathf.RoundToInt.html",
+      "scope": "version-matched nearest-even API corroboration only; does not prove private float helper identity or client callback phase"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.math.round?view=netframework-4.8.1",
+      "scope": "midpoint-to-even operation documentation, not current game origin/route proof"
+    }
+  ],
+  "preparation_failure_preserved": {
+    "file": "author-cache/evidence/unity-core/initial-wrong-literal-candidate-diagnostics.json",
+    "cause": "author changed image selection but initially left CSharp name-byte literal in secondary UnityCore mapper; no candidate found; corrected both name forms,4141 methods/3809 pointers mapped; this supplementary map is not used as behavior proof",
+    "necessary_initial": "author-cache/evidence/initial-necessary92-missing-public-proof.txt"
+  },
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "acceptance": {
+    "unique_necessary_cases": 92,
+    "passed_at_least_once": 92,
+    "failures": 0,
+    "remaining_errors": 0,
+    "skips": 0,
+    "initial_aggregate": {
+      "tests_run": 92,
+      "passed": 91,
+      "errors": 1,
+      "cause": "missing copied public208 proof in isolation"
+    },
+    "failed_case_only_recheck": {
+      "tests_run": 1,
+      "passed": 1,
+      "fixture_only_fix": true
+    },
+    "final_change_specific_recheck": {
+      "tests_run": 18,
+      "passed": 18
+    },
+    "final_wording_recheck": {
+      "tests_run": 2,
+      "passed": 2
+    },
+    "actual_MainWindow_class_public_offscreen_cases": 4,
+    "visible_original_window_required_after_root_integration": true
+  }
+}

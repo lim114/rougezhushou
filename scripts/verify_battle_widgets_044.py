@@ -36,14 +36,14 @@ def verify_battle(window,app):
             assert not panel.occurrence_bar.isHidden()
             assert panel.occurrence.value()==panel.grid.selected_ordinal==1
             assert panel.occurrence.maximum()==seq['count']
-            assert '名义偏移不是开局绝对时刻' in panel.spawn_detail.toPlainText()
-            assert '队列后 +' in panel.spawn_list.currentItem().text()
+            assert '出场时间差不是开战后的实际时刻' in panel.spawn_detail.toPlainText()
+            assert '本段出场计划 +' in panel.spawn_list.currentItem().text()
             for ordinal in sorted({1,seq['count']}):
                 panel.occurrence.setValue(ordinal)
                 assert panel.grid.selected_ordinal==ordinal
                 expected=ordinal_offset(row,ordinal)
                 assert '+'+format(expected,'g')+'秒' in panel.occurrence_label.text()
-                anchor='所选阶段' if row['branch'] else '本片段'
+                anchor='本分支阶段' if row['branch'] else '本段'
                 assert anchor in panel.occurrence_label.text()
                 occurrence_selections+=1
             if row['branch']:

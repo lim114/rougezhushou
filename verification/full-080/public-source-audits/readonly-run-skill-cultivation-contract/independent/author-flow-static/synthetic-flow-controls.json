@@ -1,0 +1,226 @@
+[
+  {
+    "case": "run_unknown_rank_does_not_borrow_account_mastery",
+    "synthetic_account": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "synthetic_run_member": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {}
+    },
+    "use_run": true,
+    "current_operator_state": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {},
+      "run_confirmed_fields": [
+        "elite",
+        "level"
+      ]
+    },
+    "training_conditions": {
+      "elite": 0,
+      "level": 1,
+      "trust": 100,
+      "potential": 1,
+      "module_id": null,
+      "module_level": 0
+    },
+    "skill_rank_value": 7
+  },
+  {
+    "case": "run_known_rank_preserved_for_gate",
+    "synthetic_account": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "synthetic_run_member": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "use_run": true,
+    "current_operator_state": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {
+        "1": 10
+      },
+      "run_confirmed_fields": [
+        "elite",
+        "level"
+      ]
+    },
+    "training_conditions": {
+      "elite": 0,
+      "level": 1,
+      "trust": 100,
+      "potential": 1,
+      "module_id": null,
+      "module_level": 0
+    },
+    "skill_rank_value": 10
+  },
+  {
+    "case": "run_invalid_rank_excluded",
+    "synthetic_account": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "synthetic_run_member": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {
+        "1": 10
+      },
+      "invalid_skill_ranks": [
+        "1"
+      ]
+    },
+    "use_run": true,
+    "current_operator_state": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {},
+      "invalid_skill_ranks": [
+        "1"
+      ],
+      "run_confirmed_fields": [
+        "elite",
+        "level"
+      ]
+    },
+    "training_conditions": {
+      "elite": 0,
+      "level": 1,
+      "trust": 100,
+      "potential": 1,
+      "module_id": null,
+      "module_level": 0
+    },
+    "skill_rank_value": 7
+  },
+  {
+    "case": "absent_run_member_returns_account",
+    "synthetic_account": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "synthetic_run_member": {
+      "scope": "run",
+      "present": false,
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {}
+    },
+    "use_run": true,
+    "current_operator_state": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "training_conditions": {
+      "elite": 2,
+      "level": 90,
+      "trust": 100,
+      "potential": 1,
+      "module_id": null,
+      "module_level": 0
+    },
+    "skill_rank_value": 10
+  },
+  {
+    "case": "use_run_disabled_returns_account",
+    "synthetic_account": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "synthetic_run_member": {
+      "scope": "run",
+      "fields": {
+        "elite": 0,
+        "level": 1
+      },
+      "skill_ranks": {}
+    },
+    "use_run": false,
+    "current_operator_state": {
+      "scope": "account",
+      "fields": {
+        "elite": 2,
+        "level": 90
+      },
+      "skill_ranks": {
+        "1": 10
+      }
+    },
+    "training_conditions": {
+      "elite": 2,
+      "level": 90,
+      "trust": 100,
+      "potential": 1,
+      "module_id": null,
+      "module_level": 0
+    },
+    "skill_rank_value": 10
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "status": "PASS_STATIC_FIXED_RUN_BRIDGE",
+  "fixed_commit": "2dfd9fa2c9a62db0112bc0fb98cd23123dd3b48b",
+  "git_path": "rouge/run_modifiers.py",
+  "whole_git_blob_sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+  "whole_git_blob_bytes": 6678,
+  "git_blob": "a26223484c108c025fd1b3bc3a07943905698e4c",
+  "function": "prepare_run",
+  "line": 4,
+  "end_line": 54,
+  "source": "def prepare_run(scenario):\n    scenario=dict(scenario);config=scenario.get('run_config')\n    if config is None:config={}\n    if not isinstance(config,dict):raise ValueError('本局配置需要对象。')\n    for field,label in (('squad','分队'),('difficulty','保密等级')):\n        if config.get(field) is not None and not isinstance(config[field],dict):\n            raise ValueError('本局'+label+'配置需要对象或空值。')\n    resolution={'source':config_data()['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}\n    squad=config.get('squad')\n    if squad:\n        if 'effect_verified' in squad and type(squad['effect_verified']) is not bool:\n            raise ValueError('分队效果确认标记需要布尔值。')\n        if not isinstance(squad.get('id'),str):raise ValueError('本局分队身份与固定档案不符。')\n        record=config_data()['squads'].get(squad.get('id'))\n        if not record or squad.get('name',record['name'])!=record['name']:raise ValueError('本局分队身份与固定档案不符。')\n        resolution['squad']={**squad,'name':record['name']}\n        from .squad_unlock_reference import squad_unlock_reference\n        reference=squad_unlock_reference(record['id'])\n        if reference is not None:resolution['squad_unlock_reference']=reference\n        rules=[]\n        for buff in record['buffs']:\n            if buff['key']!='char_attribute_mul':continue\n            kinds={'atk':'attack_pct','max_hp':'hp_pct','def':'defense_pct'}\n            for value in buff['blackboard']:\n                if value['key'] in kinds:\n                    rules.append({'kind':kinds[value['key']],'value':value['value'],\n                        'target_scope':'all_units','origin':'run_squad','squad_id':record['id'],\n                        'attribute_layer':'relic_rune','formula_item':'MULTIPLIER','source_buff_key':buff['key']})\n        if rules and not squad.get('effect_verified'):\n            resolution['pending'].append(record['name']+'效果阶段尚未确认，未套用分队属性加成。')\n        else:\n            scenario['effects']=list(scenario.get('effects',[]))+rules\n            resolution['applied']=rules\n        resolution['notes'].append(record['name']+'：'+('生命/攻击/防御加成与同类藏品符文合并，再计算天赋和技能；作用于我方单位。' if resolution['applied']\n            else '本档案没有已确认并接入的直接生命/攻击/防御加成。'))\n        resolution['notes'].append('分队起始赠送物品与资源不自动加入当前持有清单，仍以本局实际读取为准。')\n    difficulty=config.get('difficulty')\n    if difficulty:\n        for field in ('modeDifficulty','mode'):\n            if field in difficulty and difficulty[field]!='NORMAL':\n                raise ValueError('当前保密等级数值计算仅支持NORMAL模式，其他模式不能套用常规难度修正。')\n        value=difficulty.get('value')\n        if isinstance(value,bool) or not isinstance(value,int) or str(value) not in config_data()['difficulties']:\n            raise ValueError('本局保密等级需要0–15的整数。')\n        record=config_data()['difficulties'][str(value)]\n        resolution['difficulty']={**difficulty,'mode':record['modeDifficulty'],'rule':record['ruleDesc'],'extra':record['addDesc']}\n        if not scenario.get('target_enemy'):\n            resolution['pending'].append('已确认保密等级 '+str(value)+'；未选择关卡敌人，敌方难度/区域/关卡修正尚未自动计算，当前目标属性仍使用测试输入。')\n    from .enemy_environment import resolve_enemy\n    resolve_enemy(scenario,resolution)\n    return scenario,resolution",
+  "prepare_damage_local_call_lines_relative_to_excerpt": {
+    "operator_attributes": 10,
+    "prepare_run": 40,
+    "prepare": 41,
+    "prepare_attribute_runes": 43
+  },
+  "bridge_evidence": "Public preparation calls prepare_run before relic/rune/engine evaluation; prepare_run calls resolve_enemy on copied scenario then returns that same scenario for later numeric guards.",
+  "condition_boundary": "resolve_enemy target identity branch and ignored manual-field policy remain those in archived fixed enemy_environment.py. No full runtime or fresh identity/numeric combinations executed.",
+  "new_API_project_helpers_tests_Qt_Wine_tracked": 0
+}

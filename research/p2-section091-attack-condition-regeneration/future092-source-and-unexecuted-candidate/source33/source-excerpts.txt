@@ -1,0 +1,755 @@
+[rouge/app.py:72-77; fixed actual2cbc]
+72:     control.setDecimals(decimals)
+73:     control.setValue(value)
+74:     return control
+75: 
+76: class MainWindow(QMainWindow):
+77:     def __init__(self):
+
+[rouge/app.py:593-615; fixed actual2cbc]
+593:         self.window_seconds = number(40,3600,2)
+594:         self.limit_window = QCheckBox('使用指定输出窗口（秒）')
+595:         form.addRow(self.limit_window,self.window_seconds)
+596:         self.frame_timing=QCheckBox('使用逐帧时序估算（未校准项会标注）')
+597:         self.frame_timing.setChecked(True)
+598:         form.addRow(self.frame_timing)
+599:         self.normal_animation_reference=QComboBox()
+600:         self.skill_animation_reference=QComboBox()
+601:         self.animation_preview_key=None;self.animation_previews={}
+602:         for title,widget in (('普攻阶段原版动作参考',self.normal_animation_reference),
+603:                              ('技能阶段原版动作参考',self.skill_animation_reference)):
+604:             form.addRow(title,widget)
+605:             widget.setToolTip('可选的局外时序参考；默认不选。原版正/背面动作不是已确认的技能绑定，循环、多事件或零帧动作不当作常规攻击模板。不会写入培养或本局记忆。')
+606:             widget.currentIndexChanged.connect(lambda:self.calculate())
+607:         self.timing_scenario=QPlainTextEdit()
+608:         self.timing_scenario.setMaximumHeight(85)
+609:         self.timing_scenario.setPlaceholderText('可留空。情景JSON示例：{"target_windows":[[0,5],[8,20]],"movement_windows":[[2,3]]}')
+610:         self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。')
+611:         self.timing_preview_key=None;self.timing_previews={}
+612:         form.addRow('战斗时序情景（测试，可留空）',self.timing_scenario)
+613:         self.frame_timing.toggled.connect(lambda:self.calculate())
+614:         self.timing_scenario.textChanged.connect(lambda:self.calculate())
+615:         self.relic_context=QPlainTextEdit()
+
+[rouge/app.py:663-676; fixed actual2cbc]
+663:             for key,label,default,maximum,skills in entries:
+664:                 if key=='healing_targets':continue
+665:                 if isinstance(default,bool):
+666:                     widget=QCheckBox(label);widget.setChecked(default)
+667:                     widget.toggled.connect(lambda:self.calculate())
+668:                 elif isinstance(default,int):
+669:                     widget=QSpinBox();widget.setRange(0,maximum);widget.setValue(default)
+670:                     if key=='amiya_hit_targets':widget.setMinimum(1)
+671:                     widget.valueChanged.connect(lambda:self.calculate())
+672:                 else:
+673:                     widget=number(default,maximum,2)
+674:                     widget.valueChanged.connect(lambda:self.calculate())
+675:                 form.addRow(label,widget)
+676:                 form.setRowVisible(widget,False)
+
+[rouge/app.py:1070-1089; fixed actual2cbc]
+1070:         if target:
+1071:             scenario['target_enemy']=dict(target)
+1072:             if target['enemy_id']=='enemy_2148_shorbb':scenario['target_enemy']['orb_mode']=self.orb_mode.currentData()
+1073:         if self.limit_window.isChecked():
+1074:             scenario['window_seconds'] = self.window_seconds.value()
+1075:         if self.operator.currentData()=='mechanist' and self.skill.currentData()==2 and self.shield_duration_known.isChecked():
+1076:             scenario['skill_duration_seconds']=self.shield_duration.value()
+1077:         try:
+1078:             key=(scenario['operator'],scenario['skill'])
+1079:             if key!=self.timing_preview_key:
+1080:                 if self.timing_preview_key is not None:
+1081:                     self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()
+1082:                     self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()
+1083:                 self.timing_scenario.blockSignals(True)
+1084:                 self.timing_scenario.setPlainText(self.timing_previews.get(key,''))
+1085:                 self.timing_scenario.blockSignals(False)
+1086:                 self.timing_preview_key=key
+1087:                 self.relic_context.blockSignals(True)
+1088:                 self.relic_context.setPlainText(self.relic_context_previews.get(key,''))
+1089:                 self.relic_context.blockSignals(False)
+
+[rouge/app.py:1138-1157; fixed actual2cbc]
+1138:             scenario['relic_context']=context
+1139:             scenario['relic_context_source']='本局最近确认的计数；测试条件仅用于预览'
+1140:             scenario['timing_mode']='frames' if self.frame_timing.isChecked() else 'continuous'
+1141:             if self.timing_scenario.toPlainText().strip():
+1142:                 try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())
+1143:                 except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None
+1144:                 if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')
+1145:             if self.frame_timing.isChecked():
+1146:                 for field,widget in (('normal_animation_reference',self.normal_animation_reference),
+1147:                                      ('animation_reference',self.skill_animation_reference)):
+1148:                     if widget.currentData() is not None:
+1149:                         scenario.setdefault('timing',{})[field]=widget.currentData()
+1150:             result = calculate_damage(scenario)
+1151:             apply_relic_history_notice(scenario,result)
+1152:             if self.target_buff_test.isChecked():
+1153:                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
+1154:             self.damage_result = {'scenario':scenario,'result':result}
+1155:             self.render_damage()
+1156:         except Exception as error:
+1157:             self.damage_result=None
+
+[rouge/app.py:1206-1219; fixed actual2cbc]
+1206:     def render_damage(self):
+1207:         if not self.damage_result:return
+1208:         if self.raw_damage.isChecked():
+1209:             self.show_damage_text(json.dumps(self.damage_result,ensure_ascii=False,indent=2))
+1210:         else:self.show_damage_text(format_report(self.damage_result['result'],technical=self.damage_technical.isChecked()))
+1211: 
+1212:     def show_damage_text(self,text):
+1213:         target=self.target_enemy.currentData() or {}
+1214:         key=(self.operator.currentData(),self.skill.currentData(),self.raw_damage.isChecked(),
+1215:              self.damage_technical.isChecked() if hasattr(self,'damage_technical') else False,
+1216:              self.target_stage.currentData(),target.get('enemy_id'),target.get('level'))
+1217:         replace_text(self.damage_text,text,preserve=self.damage_detail_key==key)
+1218:         self.damage_detail_key=key
+1219: 
+
+[rouge/damage.py:28-46; fixed actual2cbc]
+28: 
+29: def _skill_damage_base(scenario: dict) -> dict:
+30:     scenario=dict(scenario)
+31:     profile=catalog()['operators'][scenario['operator']]
+32:     skill=scenario.get('skill')
+33:     rank=scenario.get('skill_rank',10)
+34:     if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
+35:         raise ValueError('请选择该干员的有效技能。')
+36:     if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
+37:         raise ValueError('技能等级需要为1–10的整数。')
+38:     for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds','companion_attack'):
+39:         if field not in scenario:continue
+40:         value=float(scenario[field])
+41:         if not math.isfinite(value) or value<0 or (field=='enemy_resistance' and value>100):
+42:             raise ValueError(f'{field} 需要有限非负数；法抗范围为 0–100。')
+43:         scenario[field]=value
+44:     for field in ('skill_rank','activation_count','deployment_stacks','shield_break_count','charge_count'):
+45:         if field not in scenario:continue
+46:         value=float(scenario[field])
+
+[rouge/damage.py:236-287; fixed actual2cbc]
+236: def _prepare_damage(scenario: dict):
+237:     from .catalog import operator_attributes
+238:     scenario=dict(scenario)
+239:     profile=catalog()['operators'][scenario['operator']]
+240:     skill=scenario.get('skill');rank=scenario.get('skill_rank',10)
+241:     if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
+242:         raise ValueError('请选择该干员的有效技能。')
+243:     if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
+244:         raise ValueError('技能等级需要为1–10的整数。')
+245:     attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),
+246:                                    scenario.get('trust',100),scenario.get('potential',1),
+247:                                    scenario.get('module_id'),scenario.get('module_level',0))
+248:     scenario.setdefault('base_attack',attributes['attack'])
+249:     elite=scenario.get('elite',2)
+250:     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
+251:         raise ValueError('当前精英阶段尚未开放所选技能或专精。')
+252:     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
+253:         raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
+254:     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('cooperative'),str):
+255:         raise ValueError('cooperative不接受字符串，请提供明确的布尔条件。')
+256:     # Preserve raw count types before either engine converts them to numbers.
+257:     from .reporting import has_healing
+258:     active_counts=[]
+259:     if has_healing(scenario['operator'],skill):
+260:         active_counts.append(('healing_targets','治疗目标数需要为 0–100 的整数。'))
+261:     if scenario['operator']=='char_1037_amiya3' and skill==2:
+262:         active_counts.append(('amiya_hit_targets','amiya_hit_targets需要1到100之间的整数。'))
+263:     if scenario['operator']=='char_4087_ines':
+264:         active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
+265:     for field,error in active_counts:
+266:         if isinstance(scenario.get(field),bool):raise ValueError(error)
+267:     declared_counts={('mechanist',2):('shield_break_count',),
+268:                      ('mechanist',3):('charge_count',),
+269:                      ('silverash',2):('activation_count','deployment_stacks')}
+270:     for field in declared_counts.get((scenario['operator'],skill),()):
+271:         if isinstance(scenario.get(field),bool):
+272:             raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+273:     from .relics import prepare
+274:     from .run_modifiers import prepare_run
+275:     scenario,run_resolution=prepare_run(scenario)
+276:     scenario,resolution=prepare(scenario,profile)
+277:     from .relic_attributes import prepare_attribute_runes
+278:     scenario,attributes=prepare_attribute_runes(scenario,attributes)
+279:     # Reuse the existing numeric-zero gates after validating the raw timing.
+280:     timing=scenario.get('timing',{})
+281:     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
+282:         from .timing import finite
+283:         AttackTimeline(scenario)
+284:         if finite(timing['target_disappears_seconds'],'target_disappears_seconds',3600)==0:
+285:             scenario['timing']={**timing,'target_disappears_seconds':0}
+286:     return scenario,attributes,resolution,run_resolution
+287: 
+
+[rouge/damage.py:289-334; fixed actual2cbc]
+289: @validate_continuous_attacks
+290: def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
+291:     """Consume one isolated preparation; finishers may annotate its resolutions."""
+292:     from .estimate import build_estimate
+293:     from .relics import finish
+294:     from .run_modifiers import finish_run
+295:     scenario,attributes,resolution,run_resolution=prepared
+296:     scenario.pop('_wine_phase_frame',None)
+297:     if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase
+298:     if scenario['operator'] not in ('kaltsit','silverash','mechanist'):
+299:         from .operator_engine import Combat
+300:         combat=Combat(scenario,attributes)
+301:         result=combat.calculate()
+302:     else:
+303:         result=_skill_damage(scenario)
+304:         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+305:     from .charge_reference import finish_charge_reference
+306:     finish_charge_reference(scenario,result)
+307:     from .shield_break_reference import finish_shield_break_reference
+308:     finish_shield_break_reference(scenario,result)
+309:     from .timing import annotate_result
+310:     annotate_result(scenario,result)
+311:     finish(result,resolution,attributes,scenario)
+312:     finish_run(result,run_resolution)
+313:     if scenario['operator']=='kaltsit' and scenario['skill'] in (1,3):
+314:         # The internal helper supplies healing per recipient to build_estimate.
+315:         # Public totals use its capped recipient count and requested window,
+316:         # after the finishers have applied relic multipliers exactly once.
+317:         result['total_healing']=result['estimate']['skill']['window_healing']
+318:     from .attribute_limits import finalize_attack_speed_references
+319:     finalize_attack_speed_references(result)
+320:     from .summons import finish_duration_references
+321:     finish_duration_references(scenario,result)
+322:     from .reporting import build_report
+323:     result['report']=build_report(scenario,result)
+324:     # Validate the processed neural scenario after preserving legacy errors.
+325:     if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):
+326:         for field in ('enemy_is_boss','enemy_in_neural_break'):
+327:             if isinstance(scenario.get(field),str):
+328:                 raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+329:     if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
+330:         raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
+331:     if (scenario['operator']=='char_1048_orchd2' and
+332:             isinstance(scenario.get('near_previous_deployment'),str)):
+333:         from .operator_engine import selected_talents
+334:         talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
+
+[rouge/damage.py:343-388; fixed actual2cbc]
+343:         'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),
+344:         'char_1035_wisdel':('overload',) if number==2 else (),
+345:     }.get(op,())
+346:     if op=='char_4182_oblvns':
+347:         conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())
+348:         if number==2:conditions+=('organ_mode','fever')
+349:     if op in ('char_437_mizuki','char_1048_orchd2'):
+350:         field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')
+351:         if isinstance(scenario.get(field),str):
+352:             from .operator_engine import selected_talents
+353:             talents,_=selected_talents(catalog()['operators'][op],scenario)
+354:             if any(t.get('name')==talent for t in talents):conditions+=(field,)
+355:         if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)
+356:     for field in conditions:
+357:         if isinstance(scenario.get(field),str):
+358:             raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+359:     return result
+360: 
+361: def _evaluate_damage(prepared,wine_phase=None) -> dict:
+362:     """Resolve deployment readiness before placing finite buffs or wine pulses."""
+363:     from copy import deepcopy
+364:     from .reporting import build_report
+365:     rules=prepared[0].get('_relic_rules',[])
+366:     finite_speed=any(r['kind']=='deployment_attack_speed' for r in rules)
+367:     deployment_clock=finite_speed or any(r['kind']=='periodic_sp' and r.get('clock')=='deployment' for r in rules)
+368:     if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+369:     first_result=_evaluate_damage_once(deepcopy(prepared),wine_phase)
+370:     first=first_result['estimate']['skill']['initial_seconds']
+371:     if first is None:
+372:         result=first_result
+373:         if finite_speed:
+374:             skill=result['estimate']['skill']
+375:             for key in ('total_damage','total_healing','phase_damage','phase_healing','cycle_seconds','cycle_damage',
+376:                         'cycle_healing','cycle_dps','cycle_hps','window_damage','window_healing','window_dps','window_hps'):
+377:                 if key in skill:skill[key]=None
+378:             result['total_damage']=None;result['total_healing']=None
+379:             result['estimate']['notes'].append('初动条件未确认，无法定位技能与部署后10秒攻速加成的重叠；依赖该重叠的输出保持未知。')
+380:             result['report']=build_report(prepared[0],result)
+381:         return result
+382:     pristine=deepcopy(prepared)
+383:     pristine[0]['_deployment_skill_start_seconds']=first
+384:     result=_evaluate_damage_once(pristine,wine_phase)
+385:     result['deployment_clock_reference']={'first_skill_start_seconds':first,
+386:         'origin':'deployment','owner_tick_boundary_frames':1,'live_state_verified':False}
+387:     result['estimate']['notes'].append('限时藏品与酒类共享部署时钟；技能在预计初动时开启，充能期沿用原计时，不按每轮重新获得部署加成。部署挂载与首个owner逻辑帧存在至多一帧边界。')
+388:     result['report']=build_report(pristine[0],result)
+
+[rouge/damage.py:411-457; fixed actual2cbc]
+411: def calculate_damage(scenario: dict) -> dict:
+412:     from copy import deepcopy
+413:     prepared=_prepare_damage(scenario)
+414:     wines=[r for r in prepared[2]['rules'] if r['kind']=='periodic_sp']
+415:     if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+416:     from .timing import frame_time
+417:     from .reporting import build_report
+418:     # Each possible 30-Hz phase, including immediate and full-period first tick.
+419:     # Initial and post-block phases are independent marginal envelopes.
+420:     phases=frame_time(wines[0]['interval'])+1
+421:     keys=('initial_seconds','recharge_seconds','cycle_seconds','cycle_damage','cycle_healing','cycle_dps','cycle_hps')
+422:     skill_bounds={key:_PhaseBounds() for key in keys}
+423:     metric_bounds={}
+424:     for phase in range(phases):
+425:         # Copy together to preserve aliases between rules and resolution records.
+426:         # Never share a finisher's mutations with another phase or request.
+427:         result=_evaluate_damage(deepcopy(prepared),phase)
+428:         for key,bounds in skill_bounds.items():bounds.include(result['estimate']['skill'][key])
+429:         metrics={(b['id'],m['key']):m['value'] for b in result['report']['sections'] for m in b['metrics']}
+430:         for key,value in metrics.items():
+431:             if key not in metric_bounds:metric_bounds[key]=_PhaseBounds()
+432:             metric_bounds[key].include(value)
+433:     skill=result['estimate']['skill']
+434:     for key in keys:
+435:         bounds=skill_bounds[key]
+436:         if not bounds.known:
+437:             skill[key]=None
+438:             continue
+439:         lower,upper=bounds.lower,bounds.upper
+440:         skill[key+'_range']={'lower':lower,'upper':upper}
+441:         skill[key]=lower if abs(upper-lower)<1e-9 else None
+442:     result['estimate']['notes'].append('酒类相位范围：逐一枚举30Hz参考帧的下一次回复相位（立即至一个完整间隔），逐事件合并攻击/受击技力；不换算平均每秒技力。')
+443:     result['estimate']['notes'].append('范围假设：技能及额外阻回期间不接收、不积存酒类技力，阻回结束后的相位重新包络；初动和回转分别取范围，不表示同一条已测实战时间线。隐藏脚本、攻击模板与实战相位仍待校准。')
+444:     result['relic_resolution']['phase_estimate']={'mode':'frame_envelope','phases':phases,
+445:         'blocking':'discard_blocked_ticks','verified_phase':False,'verified_blocking_script':False}
+446:     result['timing']['initial_seconds']=skill['initial_seconds']
+447:     result['timing']['cycle_seconds']=skill['cycle_seconds']
+448:     result['report']=build_report(scenario,result)
+449:     # Metrics are ranged from complete event calculations, including non-monotone DPS.
+450:     for block in result['report']['sections']:
+451:         for row in block['metrics']:
+452:             bounds=metric_bounds.get((block['id'],row['key']))
+453:             if bounds and bounds.known and bounds.count==phases:
+454:                 lower,upper=bounds.lower,bounds.upper
+455:                 if abs(upper-lower)>1e-9:
+456:                     row['value']=None;row['range']={'lower':lower,'upper':upper}
+457:     return result
+
+[rouge/operator_engine.py:110-148; fixed actual2cbc]
+110:                 raise ValueError('加成类型尚未支持。')
+111:             self.value(abs(effect['value']) if effect.get('_verified_rule') and effect['kind'] in ('hp_pct','attack_speed') else effect['value'],'藏品加成')
+112:         self.enemy_def=self.option('enemy_defense',0)
+113:         self.enemy_res=self.option('enemy_resistance',0,maximum=100)
+114:         for field in ('window_seconds','skill_duration_seconds'):
+115:             if field in scenario:scenario[field]=self.option(field,maximum=3600)
+116:         self.base=float(scenario['base_attack'])
+117:         self.value(self.base,'基础攻击')
+118:         self.atk_bonus=self.total('attack_pct');self.as_bonus=self.total('attack_speed')
+119:         self.hp_bonus=self.total('hp_pct');self.def_bonus=self.total('defense_pct')
+120:         self.res_bonus=self.total('resistance_flat')
+121:         self.initial_bonus=0;self.sp_extra=0
+122:         self.shu_periodic_sp_reference=None
+123:         self.redeploy=attributes['redeploy_seconds']
+124:         self.atk_flat=0
+125:         self.apply_self_talents()
+126:         self.base_attack=self.base*(1+self.atk_bonus)+self.atk_flat
+127:         self.base_speed_reference=attributes['attack_speed']+self.as_bonus
+128:         self.base_speed=effective_attack_speed(self.base_speed_reference)
+129:         self.normal_interval=attributes['interval']*100/self.base_speed
+130:         self.stats={'hp':attributes['hp']*(1+self.hp_bonus),'attack':self.base_attack,
+131:             'defense':attributes['defense']*(1+self.def_bonus),
+132:             'resistance':min(100,attributes['resistance']+self.res_bonus),
+133:             'redeploy_seconds':self.redeploy,'attack_speed':self.base_speed,
+134:             'attack_speed_reference':self.base_speed_reference,
+135:             'block_count':attributes['block_count']}
+136: 
+137:     @staticmethod
+138:     def value(value,label,maximum=None,integer=False):
+139:         value=float(value)
+140:         if not math.isfinite(value) or value<0 or (maximum is not None and value>maximum) or (integer and not value.is_integer()):
+141:             raise ValueError(label+'需要范围内的有限非负'+('整数。' if integer else '数。'))
+142:         return value
+143: 
+144:     def option(self,key,default=0,maximum=None,integer=False):
+145:         value=self.s.get(key,default)
+146:         # Healing-target validation uses the public capability gate; inactive fields stay ignored.
+147:         if integer and key!='healing_targets' and isinstance(value,bool):
+148:             raise ValueError(key+'需要范围内的有限非负整数。')
+
+[rouge/operator_engine.py:285-300; fixed actual2cbc]
+285:     def plan(self,normal=False,window=None):
+286:         bb={} if normal else self.bb
+287:         attack=self.base*(1+self.atk_bonus+bb.get('atk',0))+self.atk_flat
+288:         speed_reference=self.base_speed_reference+bb.get('attack_speed',0)
+289:         speed=effective_attack_speed(speed_reference)
+290:         interval=(self.a['interval']+bb.get('base_attack_time',0))*100/speed
+291:         mode='timed';duration=max(0,self.skill['duration']) if not normal else window
+292:         if not normal and window is not None:duration=min(duration,window)
+293:         if not normal and self.s['operator']=='char_1029_yato2':
+294:             attack+=self.base*self.talent('鬼人强化状态','atk')
+295:         components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None;amiya_phase_reference=None;unbound_source_components=None;haruka_healing_reference=None
+296:         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
+297:         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
+298:             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
+299:             per_hit=raw if dtype in ('healing','regeneration','buildup') else self.hit(raw,dtype,defense,resistance,effects)
+300:             item={'name':name,'damage_type':dtype,'hits':count,'per_hit':per_hit,'total':per_hit*count}
+
+[rouge/operator_engine.py:1300-1307; fixed actual2cbc]
+1300:         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
+1301:             raise ValueError('深度治疗本场已使用两次，不能再次开启。')
+1302:         full=self.plan()
+1303:         shown=self.plan(window=self.s['window_seconds']) if 'window_seconds' in self.s else full
+1304:         if 'window_seconds' not in self.s and self.s.get('timing_mode','frames')=='frames' and full['duration']:
+1305:             shown=self.plan(window=full['duration'])
+1306:         sp=self.skill
+1307:         from .relics import recharge_requirement
+
+[rouge/operator_engine.py:1523-1545; fixed actual2cbc]
+1523:             'scope':'单个持续命中目标的明确技能情景；多段逐段结算防御。','timing':shown['timing']}
+1524:         result['timing']['recharge_streams']=normal['timing']['streams'] if normal else []
+1525:         result['estimate']={'base_stats':self.stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
+1526:             'name':sp['name'],'initial_seconds':first,'recharge_seconds':recharge,'cycle_seconds':cycle,
+1527:             'duration_seconds':duration,'total_damage':total_damage,'total_healing':total_healing,
+1528:             'phase_damage':phase_damage,'phase_healing':phase_healing,
+1529:             'cycle_dps':damage/cycle if cycle else None,'cycle_hps':healing/cycle if cycle else None,
+1530:             'cycle_damage':damage if cycle else None,'cycle_healing':healing if cycle else None,
+1531:             'skill_attack':full['attack'],'skill_attack_speed':full['attack_speed'],
+1532:             'skill_attack_speed_reference':full['attack_speed_reference'],
+1533:             'sp_recovery_per_second':rate if sp['sp_type']=='INCREASE_WITH_TIME' else None,'mode':mode,
+1534:             'hit_counts':{name:sum(c['hits'] for c in full['components'] if c['name']==name)
+1535:                 for name in sorted({c['name'] for c in full['components']})},
+1536:             'window_seconds':shown['duration'],
+1537:             'window_healing':shown['healing'],
+1538:             'window_dps':shown['damage']/shown['duration'] if shown['duration'] else None,
+1539:             'window_hps':shown['healing']/shown['duration'] if shown['duration'] else None},
+1540:             'training':{'elite':self.s.get('elite',2),'level':self.s.get('level') or self.p['phases'][self.s.get('elite',2)]['max_level'],
+1541:                 'trust':self.s.get('trust',100),'potential':self.s.get('potential',1),'module_id':self.s.get('module_id'),'module_level':self.s.get('module_level',0)},
+1542:             'complete':complete,
+1543:             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
+1544:             'scenario_scope':result['scope']}
+1545:         from .mei_module_reference import reference as mei_module_reference
+
+[rouge/estimate.py:17-20; fixed actual2cbc]
+17:     def total(kind):return sum(e['value'] for e in effects if e['kind']==kind)
+18:     def nonnegative(field,default):
+19:         value=float(scenario.get(field,default))
+20:         if not math.isfinite(value) or value<0:raise ValueError(f'{field} 需要有限非负数。')
+
+[rouge/estimate.py:101-107; fixed actual2cbc]
+101:         else:notes.append('攻击回复缺少持续攻击条件，初动与回转未知。')
+102:     else:notes.append('缺少可用技力恢复条件，初动与回转未知。')
+103:     full_scenario={k:v for k,v in scenario.items() if k!='window_seconds'}
+104:     if operator=='silverash' and skill_index==1:
+105:         notes.append('周旋的谋略提供费用/屏障，单次直接伤害与治疗为 0；屏障不作为治疗。')
+106:     if operator=='silverash' and skill_index==2:
+107:         full_scenario.update(activation_count=1,deployment_stacks=0)
+
+[rouge/estimate.py:153-165; fixed actual2cbc]
+153:     window_seconds=nonnegative('window_seconds',duration or 0)
+154:     if duration is not None:window_seconds=min(window_seconds,duration)
+155:     if scenario.get('timing_mode','frames')=='frames':
+156:         if initial is not None:initial=frame_time(initial)/FPS
+157:         if duration is not None:duration=frame_time(duration)/FPS
+158:         lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))
+159:         if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')
+160:         if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(scenario) or has_periodic_sp(scenario)):
+161:             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+162:             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))
+163:         if recharge is not None:recharge=frame_time(recharge+lockout)/FPS
+164:         if recharge is not None:recharge=max(recharge,math.ceil(finite(scenario.get('timing',{}).get('post_skill_lock_frames',0),'技能结束硬直帧'))/FPS)
+165:     from .sp_events import has_event_sp,charge as event_charge
+
+[rouge/estimate.py:229-247; fixed actual2cbc]
+229:         'name':skill['name'],'initial_seconds':initial,'recharge_seconds':recharge,'cycle_seconds':cycle,
+230:         'duration_seconds':duration,'total_damage':damage,'total_healing':healing,
+231:         'phase_damage':phase_damage,'phase_healing':phase_healing,
+232:         'cycle_dps':cycle_dps,'cycle_hps':cycle_hps,'cycle_damage':cycle_damage,'cycle_healing':cycle_healing,
+233:         'sp_type':skill['sp_type'],'initial_sp':initial_sp,'sp_cost':skill['sp_cost'],
+234:         'sp_recovery_per_second':sp_rate if skill['sp_type']=='INCREASE_WITH_TIME' else None,
+235:         'skill_attack':full['attack'],'skill_attack_speed':full['attack_speed'],
+236:         'skill_attack_speed_reference':full['attack_speed_reference'],'healing_targets':int(healing_targets),
+237:         'window_healing':window_healing,'window_damage':result['total_damage'] if 'window_seconds' in scenario else phase_damage,
+238:         'window_seconds':window_seconds},
+239:         'training':{'elite':elite,'level':level,'trust':scenario.get('trust',100),'potential':potential,
+240:                     'module_id':scenario.get('module_id'),'module_level':scenario.get('module_level',0)},
+241:         'complete':result['complete'] and not unconfirmed and not scenario.get('module_id') and
+242:                    (not inventory or inventory.get('complete',False)),
+243:         'warnings':result['warnings'],'notes':notes,
+244:         'scenario_scope':result['scope']}
+245: 
+246: 
+247: def format_estimate(result):
+
+[rouge/estimate.py:263-281; fixed actual2cbc]
+263:         f"单次技能总伤/总治疗量：{number(skill['total_damage'])} / {number(skill['total_healing'])}",
+264:         f"技能持续：{seconds(skill['duration_seconds'])}    技能结束后充能：{seconds(skill['recharge_seconds'])}",
+265:         f"技能期间攻击力：{number(skill['skill_attack'])}    技能期间攻速：{number(skill['skill_attack_speed'])}",
+266:         '',f"当前指定情景伤害：{number(result['total_damage'])}（指定窗口/触发次数可能不同于完整单次技能）",
+267:         '当前情景范围：'+estimate['scenario_scope'],
+268:         '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（见未确认条件与未覆盖项）'),
+269:         '', '计算条件与未覆盖项：', *['• '+note for note in estimate['notes']],
+270:         *['• '+warning for warning in estimate['warnings']]]
+271:     if 'mode' in skill:
+272:         modes={'infinite':'无限持续','passive':'常驻被动','switch':'切换模式','once':'整场限用一次',
+273:                'once_deploy':'结束后退场','deployment':'部署触发，无原地回转','triggered_ammo':'布子弹药，结束时间依赖实际触发',
+274:                'ammo':'攻击弹药','next_attack':'强化/替代下次攻击','instant':'瞬时触发','timed':'有限持续'}
+275:         lines.insert(9,'技能类型：'+modes.get(skill['mode'],skill['mode']))
+276:         if skill.get('window_seconds'):
+277:             lines.extend(['',f"情景窗口：{seconds(skill['window_seconds'])}    窗口平均 DPS/HPS：{number(skill['window_dps'])} / {number(skill['window_hps'])}"])
+278:     if result.get('components'):
+279:         lines.extend(['','输出分项（潜在损伤积累和生命回复不合并为直接伤害/治疗）：'])
+280:         for item in result['components']:
+281:             lines.append(f"• {item['name']}：{number(item.get('hits'))} 次 · {item.get('damage_type','')} · 总量 {number(item['total'])}")
+
+[rouge/timing.py:12-20; fixed actual2cbc]
+12: def finite(value,label,maximum=108000):
+13:     if isinstance(value,bool):raise ValueError(label+'不能是布尔值。')
+14:     try:value=float(value)
+15:     except (TypeError,ValueError):raise ValueError(label+'需要有限非负数。') from None
+16:     if not math.isfinite(value) or not 0<=value<=maximum:raise ValueError(label+'需要范围内有限非负数。')
+17:     return value
+18: 
+19: def frame_time(seconds):return math.ceil(finite(seconds,'时间',3600)*FPS-1e-9)
+20: def cadence(seconds):return max(1,math.floor(finite(seconds,'攻击间隔',3600)*FPS+.5+1e-9))
+
+[rouge/timing.py:103-117; fixed actual2cbc]
+103:     config=dict(scenario.get('timing',{}))
+104:     if initial:
+105:         for key in ('target_windows','movement_windows','interrupt_windows'):
+106:             config.pop(key,None)
+107:             if 'initial_'+key in config:config[key]=config['initial_'+key]
+108:         config.pop('target_disappears_seconds',None)
+109:         config.pop('post_skill_lock_frames',None)
+110:     elif offset:
+111:         config['post_skill_lock_frames']=max(0,finite(config.get('post_skill_lock_frames',0),'技能结束硬直帧')-frame_time(config.get('sp_lockout_extra_seconds',0)))
+112:     config['_resume_frames']=resume
+113:     config['_deployment_initial']=initial
+114:     timeline=AttackTimeline({**scenario,'timing':config},normal=True,offset=offset)
+115:     count=math.ceil(required/increment)
+116:     events=timeline.attacks(max(0,3600-offset),interval,speed,attribute_speed=attribute_speed,limit=count+int(wait_next_attack))
+117:     frames=events['release_frames']
+
+[rouge/timing.py:164-199; fixed actual2cbc]
+164:         self.target_scope=target_scope
+165:         self.s=scenario;self.normal=normal;self.offset=frame_time(offset)
+166:         self.mode=scenario.get('timing_mode','frames')
+167:         if self.mode not in ('frames','continuous'):raise ValueError('时序模式需要为frames或continuous。')
+168:         self.options=scenario.get('timing',{})
+169:         if not isinstance(self.options,dict):raise ValueError('时序情景需要是对象。')
+170:         from .animation_reference import descriptor
+171:         for normal_reference in (False,True):
+172:             descriptor(scenario['operator'],scenario['skill'],self.options,normal=normal_reference)
+173:         for key in ('windup_frames','recovery_frames','start_delay_frames','post_skill_lock_frames'):
+174:             if key in self.options:finite(self.options[key],key)
+175:         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
+176:             if key in self.options:finite(self.options[key],key,3600)
+177:         self.streams=[];self.notes=[];self.target_scope_notes=[]
+178:         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
+179:         self.windows=self.ranges('target_windows')
+180:         self.blocked=sorted(self.ranges('movement_windows')+self.ranges('interrupt_windows'))
+181: 
+182:     def ranges(self,key):
+183:         if key not in self.options:return []
+184:         value=self.options[key]
+185:         if not isinstance(value,list) or len(value)>100:raise ValueError(key+'需要最多100组秒数区间。')
+186:         found=[]
+187:         for pair in value:
+188:             if not isinstance(pair,(list,tuple)) or len(pair)!=2:raise ValueError(key+'每组需要开始和结束秒数。')
+189:             start,end=map(frame_time,pair)
+190:             if end<=start:raise ValueError(key+'结束时间必须晚于开始时间。')
+191:             found.append((start,end))
+192:         return sorted(found)
+193: 
+194:     def selectable(self,frame):
+195:         if self.target_scope=='friendly' and (self.options.get('target_disappears_seconds')==0 or
+196:                 self.options.get('target_windows')==[]):return self.selectable_lifetime(frame)
+197:         return self.selectable_lifetime(frame) and ('target_windows' not in self.options or any(a<=frame<b for a,b in self.windows))
+198: 
+199:     def unavailable(self,frame):return any(a<=frame<b for a,b in self.blocked)
+
+[rouge/timing.py:230-261; fixed actual2cbc]
+230:         duration=finite(seconds,'窗口秒数',3600)
+231:         ready=finite(start_delay,'起始延迟秒数',3600)
+232:         deployment_speed=[r for r in self.s.get('_relic_rules',[]) if r['kind']=='deployment_attack_speed']
+233:         if self.mode=='continuous':
+234:             if deployment_speed:
+235:                 times=[];starts=[];steps=[];now=ready
+236:                 while now<duration and (limit is None or len(times)<limit):
+237:                     age=(self.offset+self.deployment_offset)/FPS+now
+238:                     bonus=sum(r['value'] for r in deployment_speed if age<r['duration'])
+239:                     current=effective_attack_speed(attribute_speed+bonus);step=interval*speed/current
+240:                     if now+step>duration+1e-9:break
+241:                     starts.append(now);steps.append(step);now+=step;times.append(now)
+242:             else:
+243:                 count=max(0,math.floor((duration-ready)/interval+1e-9))
+244:                 if limit is not None:count=min(count,limit)
+245:                 times=[ready+(i+1)*interval for i in range(count)]
+246:                 starts=[t-interval for t in times];steps=[interval]*len(times)
+247:             if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:
+248:                 times=[];starts=[];steps=[]
+249:             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
+250:                 [cadence(t)-cadence(interval) for t in times]),
+251:                 'release_frames':[cadence(t) for t in times],'impact_frames':[cadence(t) for t in times],
+252:                 'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,
+253:                 'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
+254:                 'target_scope':self.target_scope}
+255:             if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:stream['resume_frame']=0
+256:             if deployment_speed:
+257:                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
+258:                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)
+259:                 self.streams.append(stream)
+260:             return stream
+261:         data,exact=self.descriptor(unit)
+
+[rouge/timing.py:299-324; fixed actual2cbc]
+299:         while now<end and (limit is None or len(releases)<limit):
+300:             attempts+=1
+301:             if attempts>250000:raise ValueError('时序事件过多。')
+302:             if (not permanent and not self.selectable(now)) or self.unavailable(now):now+=1;continue
+303:             if ramp or temporary or deployment_speed:
+304:                 earned=sum(t<=now for t in impacts) if ramp else 0
+305:                 bonus=sum(r['value'] for r in temporary if now-self.offset<frame_time(r['duration']))
+306:                 bonus+=sum(r['value'] for r in deployment_speed if now+self.deployment_offset<frame_time(r['duration']))
+307:                 current=effective_attack_speed(attribute_speed+bonus+(min(earned*ramp[0],ramp[1]) if ramp else 0))
+308:                 step=cadence(base_interval*speed/current)
+309:                 if known:
+310:                     scale=max(.1,min(1,step/anim)) if anim else 1
+311:                     windup=math.ceil(finite(raw_windup,'前摇帧')*scale-1e-9)
+312:                     recovery=max(0,math.ceil(anim*scale-1e-9)-windup)
+313:                     if 'windup_frames' in self.options:windup=math.ceil(finite(raw_windup,'情景前摇帧'))
+314:                     if 'recovery_frames' in self.options:recovery=math.ceil(finite(raw_recovery,'情景后摇帧'))
+315:                     step=max(step,windup+recovery)
+316:                 else:windup=step
+317:             release=now+windup
+318:             cut=next((a for a,b in self.blocked if now<a<=release),None)
+319:             if cut is not None:
+320:                 # Movement/disable interrupts windup; reacquire after it ends.
+321:                 now=next(b for a,b in self.blocked if a==cut);continue
+322:             if release>=end:break
+323:             starts.append(now);releases.append(release);steps.append(step)
+324:             impact=release+travel
+
+[rouge/timing.py:357-370; fixed actual2cbc]
+357:     def selectable_lifetime(self,frame):
+358:         # Leaving range alone does not destroy a previously locked projectile.
+359:         if self.target_scope=='friendly' and self.options.get('target_disappears_seconds')==0:return True
+360:         ends=self.options.get('target_disappears_seconds')
+361:         return ends is None or frame<frame_time(ends)
+362: 
+363:     def output(self):
+364:         return {'mode':self.mode,'fps':FPS,'streams':self.streams,
+365:             'window_convention':'[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消',
+366:             'scenario_provided':bool({k:v for k,v in self.options.items() if not k.startswith('_')}),
+367:             'target_scope_notes':list(self.target_scope_notes),
+368:             'complete':False,
+369:             'notes':['常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。',
+370:                 '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。',*self.notes]}
+
+[rouge/timing.py:387-395; fixed actual2cbc]
+387: 
+388: def annotate_result(scenario,result):
+389:     timing=result.setdefault('timing',AttackTimeline(scenario).output())
+390:     if timing['mode']=='continuous':
+391:         result['estimate']['notes'].extend(timing.get('target_scope_notes',[]))
+392:         return
+393:     timing['unplaced_components']=[c['name'] for c in result.get('components',[]) if c.get('hits') and 'times_seconds' not in c]
+394:     skill=result['estimate']['skill']
+395:     timing['resource_and_damage_shared_clock']=not timing.get('phase_clock_unbound',False)
+
+[rouge/reporting.py:381-400; fixed actual2cbc]
+381:     if changed:sections.append(section('skill_stats','技能属性变化',changed))
+382:     windowed=mode in ('infinite','switch','passive')
+383:     if has_damage(op,number):
+384:         rows=[]
+385:         if not windowed:
+386:             rows.append(metric('per_cast','单次技能总伤',skill['total_damage']))
+387:             if skill['duration_seconds'] and skill['total_damage'] is not None:
+388:                 rows.append(metric('active_dps','技能阶段平均 DPS',skill.get('phase_damage',skill['total_damage'])/skill['duration_seconds'],'伤害/秒'))
+389:         window_damage=skill.get('window_damage',result['total_damage'])
+390:         if windowed or 'window_seconds' in scenario or skill['total_damage']!=window_damage:
+391:             rows.append(metric('window_damage','情景伤害参考（含给定冲锋次数）' if result.get('charge_reference') else '观察窗口总伤',window_damage))
+392:             if skill.get('window_seconds'):
+393:                 rows.append(metric('window_seconds','伤害观察窗口',skill['window_seconds'],'秒'))
+394:                 rows.append(metric('window_dps','情景平均伤害参考' if result.get('charge_reference') else '窗口平均 DPS',
+395:                     window_damage/skill['window_seconds'] if window_damage is not None else None,'伤害/秒'))
+396:         if not nonrepeat:
+397:             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
+398:         sections.append(section('damage','伤害输出',rows))
+399:     drone=result.get('drone_trait_reference')
+400:     if drone:
+
+[rouge/reporting.py:763-775; fixed actual2cbc]
+763:     if has_healing(op,number):
+764:         rows=[];window_healing=skill['window_healing']
+765:         if not windowed:
+766:             rows.append(metric('per_cast','单次技能总治疗',skill['total_healing']))
+767:             if skill['duration_seconds'] and skill['total_healing'] is not None:
+768:                 rows.append(metric('active_hps','技能阶段平均 HPS',skill.get('phase_healing',skill['total_healing'])/skill['duration_seconds'],'治疗/秒'))
+769:         if windowed or 'window_seconds' in scenario or window_healing!=skill['total_healing']:
+770:             rows.append(metric('window_healing','观察窗口治疗',window_healing))
+771:             if skill.get('window_seconds'):
+772:                 rows.append(metric('window_hps','窗口平均 HPS',window_healing/skill['window_seconds'] if window_healing is not None else None,'治疗/秒'))
+773:         if not nonrepeat:rows.append(metric('hps','本轮周期 HPS',skill['cycle_hps'],'治疗/秒'))
+774:         sections.append(section('healing','治疗输出',rows,['满额潜在治疗，未扣过量治疗；生命回复和屏障单独列出。']))
+775:     fee=fee_section(scenario,bb,skill)
+
+[rouge/reporting.py:1092-1106; fixed actual2cbc]
+1092:         elif notes:lines.extend(['','【'+phrase(block['title'])+'】',*['• '+note for note in notes]])
+1093:     if explanations:
+1094:         lines.extend(['','【计算说明】'])
+1095:         for title,notes in explanations:lines.extend([title+'：',*['• '+note for note in notes]])
+1096:     notes=[]
+1097:     for note in estimate['notes']:
+1098:         if note.startswith('周期 DPS/HPS 包含'):note='周期平均指标包含技能与结束后充能阶段；各指标仅在相应能力存在时显示。'
+1099:         if not has_healing(report['operator']['id'],report['skill_number']):
+1100:             note=note.replace('单目标持续存活、供靶/满额受疗情景','单目标持续存活、供靶情景')
+1101:         notes.append(phrase(note))
+1102:     lines.extend(['','【待确认与适用范围】','情景范围：'+phrase(estimate['scenario_scope']),
+1103:         *['• '+note for note in dict.fromkeys(notes) if note],
+1104:         *['• '+phrase(warning) for warning in dict.fromkeys(estimate['warnings'])]])
+1105:     if not technical and sources:lines.append('资料引用已保留；勾选“显示技术资料”可查看完整来源。')
+1106:     if technical:
+
+[rouge/run_modifiers.py:4-10; fixed actual2cbc]
+4: def prepare_run(scenario):
+5:     scenario=dict(scenario);config=scenario.get('run_config')
+6:     if config is None:config={}
+7:     if not isinstance(config,dict):raise ValueError('本局配置需要对象。')
+8:     for field,label in (('squad','分队'),('difficulty','保密等级')):
+9:         if config.get(field) is not None and not isinstance(config[field],dict):
+10:             raise ValueError('本局'+label+'配置需要对象或空值。')
+
+[rouge/run_modifiers.py:79-95; fixed actual2cbc]
+79:         if weight_delta:
+80:             enemy['stats']['massLevel']+=weight_delta
+81:             enemy['steps'].append({'label':'已计算藏品重量修正','deltas':{'massLevel':weight_delta}})
+82:         spawn_rules=effects.get('spawn_hp_rules',[])
+83:         if len(spawn_rules)==1:
+84:             rule=spawn_rules[0];probability=rule['probability'];excluded=rule['excluded_hp_sources']
+85:             enemy['spawn_hp']={'relic_id':rule['relic_id'],
+86:                 'probabilities':{'untriggered':1-probability,'triggered':probability},
+87:                 'untriggered_max_hp':enemy['stats']['maxHp'],
+88:                 'triggered_max_hp':None if excluded else enemy['stats']['maxHp']*rule['value'],
+89:                 'single_item_triggered_max_hp':hp_without_relics*rule['value'],
+90:                 'excluded_hp_sources':excluded,'current_variant':None}
+91:             if rule.get('verified_final_hp_sources'):
+92:                 enemy['spawn_hp']['verified_final_hp_sources']=rule['verified_final_hp_sources']
+93:             resolution['notes'].append('猎犬咖啡列出出生时的生命分支；未观测本次抽签，不以概率加权生命代替当前敌人生命或击杀时间。')
+94:     result['run_resolution']=resolution
+95:     result['estimate']['notes'].extend(resolution['notes'])
+
+[rouge/relics.py:55-61; fixed actual2cbc]
+55: def prepare(scenario,profile):
+56:     scenario=dict(scenario)
+57:     selected=list(dict.fromkeys(scenario.get('relic_ids',[])))
+58:     rules=[];records=[];warnings=[];effects=[];token_effects=[];inapplicable=[];timing_unresolved=False;ammo_unresolved=False;ammo_sources=set()
+59:     inputs=[(rid,mechanics()['relics'].get(rid),False) for rid in selected]
+60:     bound=scenario.get('char_buff_ids',[])
+61:     if not isinstance(bound,list) or not all(isinstance(b,str) for b in bound):
+
+[rouge/relics.py:372-384; fixed actual2cbc]
+372:             if r['kind'] not in ('barrier_on_deploy_ratio','evasion_chance','shield_layers'):continue
+373:             value={'kind':r['kind'],'relic_id':r['relic_id'],'name':mechanics()['relics'][r['relic_id']]['name']}
+374:             if r['kind']=='barrier_on_deploy_ratio':value.update(value=None if hp is None else hp*r['value'],hp_reference=hp)
+375:             elif r['kind']=='shield_layers':
+376:                 prior=next((v for v in values if v['kind']=='shield_layers' and v['relic_id']==r['relic_id']),None)
+377:                 if prior is not None:prior['value']+=r['value'];continue
+378:                 value['value']=r['value']
+379:             else:value.update(value=r['value'],damage_type=r['damage_type'])
+380:             values.append(value)
+381:         return values
+382:     event_warnings=[w for w in result.get('warnings',[]) if w.startswith('首伤藏品：')]
+383:     warnings.extend(w for w in event_warnings if w not in warnings)
+384:     if event_warnings:

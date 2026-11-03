@@ -1,0 +1,459 @@
+{
+  "kind": "SOURCE_ONLY_INDEPENDENT_TIMING_REPORT_GAP_REVIEW",
+  "generated_at_utc": "2026-10-10T04:11:31.627211+00:00",
+  "root_runtime_executed": false,
+  "project_imports_or_tests_executed": false,
+  "tracked_files_changed": false,
+  "runtime_pass_claimed": false,
+  "source_pins": {
+    "rouge/reporting.py": {
+      "bytes": 104731,
+      "sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f"
+    },
+    "rouge/timing.py": {
+      "bytes": 28025,
+      "sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6"
+    },
+    "rouge/operator_engine.py": {
+      "bytes": 157189,
+      "sha256": "fcfb33e162b33707523af4784331728fe603650404499ebf5570ac0a9eaae62b"
+    },
+    "rouge/damage.py": {
+      "bytes": 31668,
+      "sha256": "70a7a8847849c9f2e01f956dc1df68a61ef34b8aec516e7f4ad64ae0c2ec7e86"
+    },
+    "rouge/estimate.py": {
+      "bytes": 22554,
+      "sha256": "92e165ebbcc97003cc07bb6559f2240e3b4e624af5af5177cd1940f77b4cc571"
+    },
+    "rouge/amiya_continuous_reference.py": {
+      "bytes": 7385,
+      "sha256": "d8638b7c62c04575714eebe5a3fe9da46151ef3808da5518fc765c5cc4d506e7"
+    },
+    "rouge/shield_break_reference.py": {
+      "bytes": 4336,
+      "sha256": "ff4379c4cc81a922d9dd81910136280f479c883b83d2836d206d6ed704d79f62"
+    },
+    "tests/test_token_full_cast_tail_111.py": {
+      "bytes": 10819,
+      "sha256": "cbd6726fc8f3e667d57cee2c21b35e7b4de3bba01848b813cfa855f3eec7b943"
+    },
+    "tests/test_impact_delay_037.py": {
+      "bytes": 7762,
+      "sha256": "b79eb30b7d501e821430f0cc3ca1bfe4267853021cd4bbac9b53cb8215bcdab6"
+    },
+    "tests/test_timing.py": {
+      "bytes": 8346,
+      "sha256": "28334f8fa23dd0a4dcd5c06153604e9f40b2e9276102423376e20d9c74e9c3ff"
+    },
+    "tests/test_friendly_scope_report.py": {
+      "bytes": 2594,
+      "sha256": "c27cb8dc12b0adf2fde5b4bc36dfd87773f3b1893441fb56fb5bec16f5e1fa96"
+    },
+    "tests/test_gnosis_s1_reference.py": {
+      "bytes": 3207,
+      "sha256": "23888378d7c24e43dc0c823d1623d5a3ef4dc551f6db41aee36e905d1918f568"
+    },
+    "tests/test_shield_break_reference.py": {
+      "bytes": 11303,
+      "sha256": "b44a456ad3f2a1750d44e626630388ff68974c28b70ea60ebb25ae5318f01cd6"
+    },
+    "tests/test_amiya_continuous_lifetime.py": {
+      "bytes": 14491,
+      "sha256": "2586d670fbf748334795ffc931f1eae997d80845d61a97a726e83b6427b2381d"
+    }
+  },
+  "conclusion": {
+    "gap_confirmed": true,
+    "adjunct_user_functionality_valid": true,
+    "recommended_scope": "Frame-mode only, additive per-recorded-stream report sections for current skill/observation branch and recharge-reference branch. Expose supplied intervals, target scope, animation-parameter qualification, event array counts and first/last relative frame/time references. Existing totals, event graphs, estimate flags, old sections, and all three formatters remain untouched.",
+    "source_claim_limit": "This is visibility of current existing reference data, not additional scheduling or verification of game mechanics."
+  },
+  "current_source": [
+    {
+      "file": "rouge/reporting.py",
+      "lines": [
+        356,
+        360
+      ],
+      "finding": "Only the aggregate initial/duration/cycle/recharge estimates appear in timing."
+    },
+    {
+      "file": "rouge/reporting.py",
+      "lines": [
+        421,
+        448
+      ],
+      "finding": "execution metrics choose next first streams element where unit equals current operator; only this skill/current-observation primary exposes interval/windup/recovery/first release/first impact/fixed delay."
+    },
+    {
+      "file": "rouge/reporting.py",
+      "lines": [
+        434,
+        444
+      ],
+      "finding": "Independent streams and recharge streams are traversed only to emit deduplicated original-animation-reference notes; their intervals and event arrays are absent from normal report metrics."
+    },
+    {
+      "file": "rouge/timing.py",
+      "lines": [
+        337,
+        360
+      ],
+      "finding": "Each frame stream has explicit unit, scope, qualification, current-window frame arrays, emitted frame arrays, relative seconds, per-attack intervals and optional exact known fixed-delay source."
+    },
+    {
+      "file": "rouge/timing.py",
+      "lines": [
+        165,
+        165,
+        300,
+        345
+      ],
+      "finding": "Stored frame values and event seconds subtract self.offset. Recharge-relative zero is its own phase origin; do not silently add duration or initial to manufacture a global time."
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "lines": [
+        1480,
+        1486,
+        1530,
+        1530
+      ],
+      "finding": "Reported timing uses shown/current-observation plan, with separate normal-plan recharge_streams. A short current branch is not the whole independent cast plan."
+    },
+    {
+      "file": "rouge/estimate.py",
+      "lines": [
+        201,
+        232
+      ],
+      "finding": "Alias paths similarly generate normal reference at offset=duration, then store relative normal streams as recharge_streams."
+    }
+  ],
+  "hazards": [
+    {
+      "id": "missing_versus_empty",
+      "rule": "Absent/None event arrays remain unknown or omitted; a supplied empty array can report zero supplied reference events but first/last time remain None. Do not use get(key,[]) for counts that would turn missing into confirmed zero."
+    },
+    {
+      "id": "relative_clocks",
+      "rule": "Skill/current-observation and recharge times are separate phase-relative coordinates. Do not stitch streams into an absolute deployment/first-cast timeline. Initial and skill duration can be unknown. Only explicit source-relative references are displayed."
+    },
+    {
+      "id": "unverified_animation",
+      "rule": "known_animation means available windup/reference parameters; reference_binding can mean a selected reference. Frame streams set exact_binding=False. None/absent flag is not False. Do not call any of these real client binding proof."
+    },
+    {
+      "id": "unbound_phases",
+      "rule": "phase_clock_unbound, parameter_clock_only, or resource_and_damage_shared_clock=False must produce qualification and must not be overridden by numerical stream references. Preserve every unknown amount/phase estimate."
+    },
+    {
+      "id": "per_stream_not_per_actual_unit",
+      "rule": "Deepcolor creates one representative token stream even for summon_count=0 and repeats component event times for summon_count>1 (operator_engine.py 348–352). The stream count is not actual deployment quantity or aggregate hits; do not multiply or describe it as all summons."
+    },
+    {
+      "id": "same_unit_multiple_streams",
+      "rule": "Shu S3 separate damage/healing (operator_engine.py 394–398), Mizuki separate regular and talent (608–614) can record same-unit streams. Preserve phase+index uniqueness and source order, no deduplication or aggregate sum."
+    },
+    {
+      "id": "duplicate_times",
+      "rule": "A repeated timestamp can be distinct supplied events; retain multiplicity and order. Component multi-hit counts can exceed release count. Do not set() arrays or infer hit counts/damage from stream lengths."
+    },
+    {
+      "id": "times_seconds_rebinding",
+      "rule": "damage.py 133–134 can intentionally replace times_seconds with emitted_times_seconds for alias full-cast attribution while impact_frames remains window-bounded. Never assert these arrays must share lengths; label/frame-array selection separately. Emitted array in a short shown branch describes its own emitted events, not all independent full-cast events."
+    },
+    {
+      "id": "dynamic_intervals",
+      "rule": "interval_seconds/interval_frames are final produced scalar interval, not a constant for every event when temporary_attack_speed or per-attack intervals differ. Expose existing interval_frames_by_attack min/max only under explicit reference label if needed; no future extrapolation."
+    },
+    {
+      "id": "unplaced_outputs",
+      "rule": "A stream may be acquisition/ordinary-action parameter reference even where component times were removed and actual_total=None (Gnosis S1, Mei S1, shield declaration). New visibility must not populate these component clocks. Preserve unplaced_components disclosure."
+    },
+    {
+      "id": "continuous_missing_streams",
+      "rule": "Ordinary continuous attacks often return a stream without adding it to self.streams; only deployment-speed continuous path appends (timing.py 249–267). Do not reconstruct from components or reported hits, and do not frame-round the continuous times. Recommended first scope excludes continuous."
+    },
+    {
+      "id": "lifetime_and_scope",
+      "rule": "An empty enemy range or zero enemy lifetime does not cancel independent friendly potential healing; keep target_scope and target_scope_notes. Range exit alone does not cancel a locked projectile; disappearance may remove emitted impacts without removing release references."
+    }
+  ],
+  "proposed_contract": {
+    "placement": "Append additive sections after the existing execution block, using helper that returns fresh rows/notes from existing records only. The existing execution section and field keys stay intact for backwards compatibility.",
+    "identity": "phase key plus source list index, e.g. stream_observation_0 / stream_recharge_0. Unit id/name and phase reference in visible title; no unit-only dictionary.",
+    "safe_metrics": [
+      "supplied interval_seconds/interval_frames (qualify scalar on varying cadence)",
+      "supplied windup_frames/recovery_frames (None stays unknown)",
+      "supplied release_frames length/first/last, frame and derived seconds with actual timing fps",
+      "supplied impact_frames length/first/last (current branch bounded reference)",
+      "supplied emitted_impact_frames length/first/last (this branch emitted reference, may include tail)",
+      "optional existing fixed_impact_delay_seconds per supported owner stream only"
+    ],
+    "avoid": [
+      "recompute damage, healing or totals",
+      "recreate missing arrays",
+      "summon quantity multiplication",
+      "global deployment clock",
+      "actual hit/cast or actual binding claims",
+      "deduplicate repeated streams/timestamps",
+      "predict refill/end/recharge from interval counts"
+    ],
+    "required_notes": [
+      "All event times are relative to this displayed reference phase; recharge starts at its own relative zero.",
+      "Stream records are scheduling/reference samples; counts do not equal deployed summon quantities, damage segments, or actual game hit counts.",
+      "Unplaced or phase-unbound outputs remain unknown and are not added to these streams.",
+      "Current displayed branch emitted events do not guarantee complete independent cast enumeration."
+    ],
+    "validation_supplement": "Root producer evidence must compare original and candidate full graphs and old three formatter sections after stripping only newly appended sections; retain source/alias/order/float bits and parser purity. Test note and count meaning using real producers below, plus formatter-only missing-array and duplicate-timestamp edge fixtures clearly labelled synthetic."
+  },
+  "producer_fixtures": [
+    {
+      "id": "mechanist_window_boundary_excluded",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "base_attack": 1000,
+        "window_seconds": 1,
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "purpose": "A release exists while the half-open observation has no impact. Summary must keep release and impact references separate.",
+      "existing_source_expected": {
+        "release_frames": [
+          6
+        ],
+        "impact_frames": [],
+        "fixed_impact_delay_seconds": 0.8
+      },
+      "basis": "tests/test_impact_delay_037.py:13–22"
+    },
+    {
+      "id": "mechanist_window_boundary_included_next_tick",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "base_attack": 1000,
+        "window_seconds": 1.0333333333333334,
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "purpose": "Paired boundary fixture must reveal the impact on frame 30 without modifying the old report or calculation.",
+      "existing_source_expected": {
+        "release_frames": [
+          6
+        ],
+        "impact_frames": [
+          30
+        ]
+      },
+      "basis": "tests/test_impact_delay_037.py:13–22"
+    },
+    {
+      "id": "mechanist_emitted_tail",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "base_attack": 1000,
+        "window_seconds": 40,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "start_delay_frames": 24
+        }
+      },
+      "purpose": "Current observed impacts and emitted impacts differ. Preserve each array; do not call emitted count total full-cast count in every short window.",
+      "existing_source_expected": {
+        "emitted_impact_frame_count": 12,
+        "impact_frame_count": 11,
+        "emitted_last_frame": 1203,
+        "hit_release_last_frame": 1074
+      },
+      "basis": "tests/test_impact_delay_037.py:101–111"
+    },
+    {
+      "id": "deepcolor_independent_and_recharge_tail",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "skill": 1,
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 1,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        }
+      },
+      "purpose": "Both owner and token need separately indexed skill and recharge summaries. Token bounded and emitted arrays differ, recharge starts at its own relative zero.",
+      "existing_source_expected": {
+        "token_emitted_count": 24,
+        "token_bounded_count": 16,
+        "count_scope": "one representative stream, not summon_count multiplied"
+      },
+      "basis": "tests/test_token_full_cast_tail_111.py:53–70,126–143"
+    },
+    {
+      "id": "deepcolor_zero_count_and_zero_observation",
+      "scenario": {
+        "operator": "char_110_deepcl",
+        "skill": 1,
+        "elite": 2,
+        "level": 70,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "summon_count": 0,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 1,
+          "recovery_frames": 0,
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "windup_frames": 1,
+              "recovery_frames": 0,
+              "projectile_travel_seconds": 10
+            }
+          }
+        },
+        "window_seconds": 0
+      },
+      "purpose": "Producer still creates representative token stream with summon_count=0. Empty arrays count as zero supplied events with no first/last event; this does not prove token presence or summon quantity. Existing independent full-cast and recharge semantics stay unchanged.",
+      "existing_source_expected": {
+        "current_observed_total_damage": 0,
+        "token_component_hits": 0,
+        "one_token_stream_recorded_even_with_count_zero": true
+      },
+      "basis": "operator_engine.py:336–352; tests/test_token_full_cast_tail_111.py:72–90,158–173"
+    },
+    {
+      "id": "shu_distinct_same_unit_streams",
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 3,
+        "window_seconds": 5,
+        "healing_targets": 1,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "purpose": "S3 independently records enemy attack and synchronous friendly healing streams. Keep two distinct phase+index sections; never coalesce by unit or sum release counts into attack count.",
+      "existing_source_expected": {
+        "current_streams_two_same_unit": true,
+        "target_scopes": [
+          "enemy",
+          "friendly"
+        ]
+      },
+      "basis": "operator_engine.py:393–398; timing.py:209–217"
+    },
+    {
+      "id": "susuro_friendly_zero_enemy_lifetime",
+      "scenario": {
+        "operator": "char_298_susuro",
+        "skill": 1,
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "purpose": "Friendly healing reference remains despite empty enemy lifetime. Preserve friendly target scope and warning that actual friendly acquisition clock is unverified.",
+      "existing_source_expected": {
+        "damage": 0,
+        "healing_positive": true,
+        "warning_contains": "真实友方获取时钟未核验"
+      },
+      "basis": "tests/test_friendly_scope_report.py:9–32"
+    },
+    {
+      "id": "gnosis_acquisition_not_two_hit_clock",
+      "scenario": {
+        "operator": "char_206_gnosis",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 5
+      },
+      "purpose": "A recorded regular/acquisition stream is only conditional reference. Do not turn it into actual S1 two-hit times or end/cycle clock. Display phase_clock_unbound and preserved unknown totals.",
+      "existing_source_expected": {
+        "actual_total_damage": null,
+        "actual_cycle_seconds": null,
+        "relative_two_hit_times_seconds": null
+      },
+      "basis": "tests/test_gnosis_s1_reference.py:27–45; operator_engine.py:632–640"
+    },
+    {
+      "id": "shield_manual_ordinary_reference_and_unplaced_breaks",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 2,
+        "base_attack": 1000,
+        "shield_break_count": 2,
+        "skill_duration_seconds": 20
+      },
+      "purpose": "Existing ordinary-attack clock does not locate the declared shield break/collision. Keep unbound/shared-clock warning and do not invent an explosion stream from a component count.",
+      "existing_source_expected": {
+        "actual_total_damage": null,
+        "actual_collision_times_seconds": null,
+        "resource_and_damage_shared_clock": false
+      },
+      "basis": "tests/test_shield_break_reference.py:41–70; shield_break_reference.py:48–65"
+    },
+    {
+      "id": "continuous_restricted_amiya_no_reconstructed_clock",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0.1
+        }
+      },
+      "purpose": "Negative producer scope: new frame-summary sections must be absent in continuous mode; old conditional parameter example must not become a native clock. Missing arrays remain missing, no frame rounding or replay.",
+      "existing_source_expected": {
+        "actual_total_damage": null,
+        "actual_recharge_seconds": null,
+        "actual_cycle_seconds": null,
+        "native_clock_binding_verified": false
+      },
+      "basis": "tests/test_amiya_continuous_lifetime.py:23–47; timing.py:232–267; tests/test_friendly_scope_report.py:23–28"
+    }
+  ],
+  "fixture_limit": "Fixture expected fields above are Source-derived expectations or copied existing maintained assertions, NOT fresh actual results. Root must execute and resolve any discrepancy before implementation approval or PASS.",
+  "not_done": [
+    "No project/API/tests/Qt/Wine/native helper/gzip/Git run",
+    "No tracked file mutation",
+    "No actual runtime validation",
+    "No game/client actual scheduling mechanism verified"
+  ]
+}

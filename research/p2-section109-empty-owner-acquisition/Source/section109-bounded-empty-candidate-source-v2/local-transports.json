@@ -1,0 +1,216 @@
+{
+  "kind": "SECTION109_BOUNDED_LOCAL_CANDIDATE_SOURCE_ONLY",
+  "STOPWRITE": true,
+  "author_runtime_executed": false,
+  "project_or_helper_imported": false,
+  "native_decoded": false,
+  "tracked_edits": false,
+  "candidate_product_pass": false,
+  "runtime_pending": true,
+  "independent_source_review_pending": true,
+  "apply_ready": false,
+  "section": 109,
+  "original_source_count": 751,
+  "expected_after_source_count_projection": 752,
+  "Root_guard": "/workspace/.continuation/resume109-original-source-v1.json",
+  "Root_guard_sha256": "fe4e11ac6a58cb7e9bc9a17c217ce8e7d0ad7e390770310ca2de30bcf6095ae2",
+  "existing_changed_files": [
+    {
+      "path": "rouge/timing.py",
+      "before_bytes": 27266,
+      "before_sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d",
+      "after_bytes": 27444,
+      "after_sha256": "0f1bcd33306daccb04b769fef188282a4f833f57ce6b241d00fbebd2bfc0ac93",
+      "blocks": [
+        {
+          "purpose": "ordinary continuous enemy source exclusion; permanent release/SP reference explicitly preserved",
+          "old": "if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:",
+          "new": "if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):",
+          "occurrences": 2
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/damage.py",
+      "before_bytes": 31071,
+      "before_sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09",
+      "after_bytes": 31182,
+      "after_sha256": "fec509c5d40d6e9be6f3d60efce41e2b22dcc5c814db0591fd65b657e8fe263d",
+      "blocks": [
+        {
+          "purpose": "separate owner acquisition from global target lifetime",
+          "old": "    empty_enemy=timeline.options.get('target_disappears_seconds')==0\r\n",
+          "new": "    empty_enemy=timeline.options.get('target_disappears_seconds')==0\r\n    empty_ammo_target=empty_enemy or timeline.options.get('target_windows')==[]\r\n",
+          "occurrences": 1
+        },
+        {
+          "purpose": "medical ammo recipient fallback only",
+          "old": "medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_enemy and",
+          "new": "medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_ammo_target and",
+          "occurrences": 1
+        },
+        {
+          "purpose": "no-window declared shots cannot overwrite owner-empty stream",
+          "old": "if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_enemy:",
+          "new": "if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_ammo_target:",
+          "occurrences": 1
+        },
+        {
+          "purpose": "full ammo end unknown without any own acquisition or friend",
+          "old": "if empty_enemy and not medical_fallback:status['execution_seconds']=None",
+          "new": "if empty_ammo_target and not medical_fallback:status['execution_seconds']=None",
+          "occurrences": 1
+        },
+        {
+          "purpose": "own hostile ammo count only",
+          "old": "damage_hits=0 if empty_enemy else hits",
+          "new": "damage_hits=0 if empty_ammo_target else hits",
+          "occurrences": 1
+        },
+        {
+          "purpose": "own hostile ammo event list only",
+          "old": "'times_seconds':[] if empty_enemy else events['times_seconds']",
+          "new": "'times_seconds':[] if empty_ammo_target else events['times_seconds']",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/estimate.py",
+      "before_bytes": 21980,
+      "before_sha256": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91",
+      "after_bytes": 22060,
+      "after_sha256": "d8b8c6412878eebdc8b65955dec03f273a96b0f33e8d7adcee3856c966247ca6",
+      "blocks": [
+        {
+          "purpose": "reuse existing ordinary timeline for exact empty target list",
+          "old": "                if (scenario.get('timing_mode','frames')=='frames' or\r\n                        scenario.get('timing',{}).get('target_disappears_seconds')==0):",
+          "new": "                if (scenario.get('timing_mode','frames')=='frames' or\r\n                        scenario.get('timing',{}).get('target_disappears_seconds')==0 or\r\n                        scenario.get('timing',{}).get('target_windows')==[]):",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "before_bytes": 156801,
+      "before_sha256": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04",
+      "after_bytes": 156894,
+      "after_sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3",
+      "blocks": [
+        {
+          "purpose": "generic body instant exact-empty exclusion only",
+          "old": "            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or\r\n                    timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):",
+          "new": "            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or timeline.options.get('target_windows')==[] or\r\n                    timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):",
+          "occurrences": 1
+        },
+        {
+          "purpose": "Gnosis independent instant acquisition gate",
+          "old": "                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or (",
+          "new": "                available=timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[] and (window is None or window>0) and (timeline.mode!='frames' or (",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/app.py",
+      "before_bytes": 99132,
+      "before_sha256": "f3577a3e1e40d19b4d302e2c8e5abe498fbec635497df40f81603f0dcd7dfebf",
+      "after_bytes": 99393,
+      "after_sha256": "69e9096e30bb2d7f70cd65ccf20de756001b97a5cea536b0db77adc12105a657",
+      "blocks": [
+        {
+          "old": "        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，常规连续攻击参考不按供靶/移动/中断区间逐帧调度；目标消失声明和友方潜在治疗仍按已有范围处理，未知时钟不补算。')\r\n",
+          "new": "        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，明确的空供靶列表（target_windows:[]）取消适用的敌方普通攻击与瞬时命中参考；独立单位仅消费各自的空供靶声明，友方潜在治疗另按受疗条件处理，独立或未定位来源仍保留各自条件。永久攻击仍沿用既有参考。非空供靶、移动和中断区间不在连续模式下逐帧调度；目标消失声明继续按原范围处理，未知时钟不补算。')\r\n",
+          "occurrences": 1,
+          "purpose": "Explain exact-empty continuous acquisition, independent/friendly/unknown/permanent limits without claiming a positive-range clock."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "tests/test_aglna_gravity_weight_107.py",
+      "before_bytes": 15991,
+      "before_sha256": "2c5eab4be5f484ca3eaf45d19eeb1f1067661a36c42ea41297a5ad1ec22ecc51",
+      "after_bytes": 16092,
+      "after_sha256": "bcf5bba7778c55636631d07fbdd4b4a5ac4b8b379cb8392333d895382662ac33",
+      "blocks": [
+        {
+          "old": "    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):\n        # Root's actual twelve-call diagnosis confirms that the legacy\n        # continuous reference does not consume target_windows. The timing\n        # family gap remains pending section109; gravity changes only per-hit\n        # weight qualification here, without adding acquisition/game timing.\n        references = []\n        for relic_ids in ([], [GRAVITY]):\n            with self.subTest(mode='continuous', relic_ids=relic_ids):\n                caller = request(TARGETS[4], timing_mode='continuous', relic_ids=relic_ids)\n                caller_before = deepcopy(caller)\n                baseline = calculate_damage(caller)\n                self.assertEqual(caller, caller_before)\n                empty_caller = {**caller, 'timing': {'target_windows': []}}\n                empty_caller_before = deepcopy(empty_caller)\n                empty = calculate_damage(empty_caller)\n                self.assertEqual(empty_caller, empty_caller_before)\n                self.assertGreater(talent(baseline)['hits'], 0)\n                self.assertEqual(talent(empty), talent(baseline))\n                # This exact flag records whether timing input was provided\n                # (timing.py output); every other returned leaf is compared.\n                self.assertIs(baseline['timing']['scenario_provided'], False)\n                self.assertIs(empty['timing']['scenario_provided'], True)\n                baseline_comparable = deepcopy(baseline)\n                empty_comparable = deepcopy(empty)\n                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']\n                self.assertEqual(empty_comparable, baseline_comparable)\n                references.append(talent(empty))\n        self.assertEqual(references[0]['hits'], references[1]['hits'])\n        self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])\n",
+          "new": "    def test_continuous_empty_ranges_remove_own_hits_without_changing_gravity_per_hit(self):\n        # Section109 closes the ordinary continuous acquisition gap recorded\n        # by the original twelve-call diagnosis. Empty owner supply cancels\n        # hits; the already qualified gravity per-hit amount stays unchanged.\n        baselines = []\n        references = []\n        for relic_ids in ([], [GRAVITY]):\n            with self.subTest(mode='continuous', relic_ids=relic_ids):\n                caller = request(TARGETS[4], timing_mode='continuous', relic_ids=relic_ids)\n                caller_before = deepcopy(caller)\n                baseline = calculate_damage(caller)\n                self.assertEqual(caller, caller_before)\n                empty_caller = {**caller, 'timing': {'target_windows': []}}\n                empty_caller_before = deepcopy(empty_caller)\n                empty = calculate_damage(empty_caller)\n                self.assertEqual(empty_caller, empty_caller_before)\n                self.assertGreater(talent(baseline)['hits'], 0)\n                self.assertEqual((talent(empty)['hits'], talent(empty)['total']), (0, 0))\n                self.assertEqual(talent(empty)['times_seconds'], [])\n                self.assertEqual(talent(empty)['per_hit'], talent(baseline)['per_hit'])\n                self.assertEqual(empty['total_damage'], 0)\n                self.assertEqual(empty['estimate']['skill']['total_damage'], 0)\n                self.assertIs(baseline['timing']['scenario_provided'], False)\n                self.assertIs(empty['timing']['scenario_provided'], True)\n                baselines.append(talent(baseline))\n                references.append(talent(empty))\n        self.assertEqual(baselines[0]['hits'], baselines[1]['hits'])\n        self.assertEqual(baselines[0]['times_seconds'], baselines[1]['times_seconds'])\n        self.assertGreater(baselines[1]['per_hit'], baselines[0]['per_hit'])\n        self.assertEqual(references[0]['hits'], references[1]['hits'])\n        self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])\n",
+          "occurrences": 1,
+          "purpose": "Replace only the explicitly pending109 legacy reference method after original observations; retain all other11 method AST/bytes and gravity qualification/no-hit-growth."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true,
+      "unchanged_other_method_count": 11,
+      "method_count_before": 12,
+      "method_count_after": 12
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before_bytes": 5511,
+      "before_sha256": "51514b9229fe9d7e7a816fecfbd55003ef1ba4f82e4a295d6a7edb41ecdfa665",
+      "after_bytes": 5557,
+      "after_sha256": "7b5afd4d7ddebb92300e6a029e404bcfab81de9b46e847c8556bfd855e82bf24",
+      "blocks": [
+        {
+          "old": "MODULES = (\n",
+          "new": "MODULES = (\n    \"tests.test_empty_owner_acquisition_109\",\n",
+          "occurrences": 1,
+          "purpose": "Prepend exactly one actual new module, preserving all old selector order and runner handling."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    }
+  ],
+  "new_files": [
+    {
+      "repo_path": "tests/test_empty_owner_acquisition_109.py",
+      "packet_path": "test_empty_owner_acquisition_109.py",
+      "bytes": 18129,
+      "sha256": "011bfbd246f8b58da331a63a4b9e493788882e864135a436e4755908004f1ed1",
+      "must_not_preexist": true,
+      "method_count": 22,
+      "assertion_call_count": 81,
+      "compiled_noexec": true
+    }
+  ],
+  "original_actual_observation_refs": [
+    {
+      "path": "/workspace/.continuation/section109-original-focused-actual-v1/observations.json",
+      "bytes": 317241,
+      "sha256": "fc8200ff48e365f6f72f6c48abfcefa60f685b43f6e3e1cbb0eaf4d201ca8c55",
+      "scope": "Root actual original observations only; no candidate PASS"
+    },
+    {
+      "path": "/workspace/.continuation/section109-original-permanent-actual-v1/observations.json",
+      "bytes": 391428,
+      "sha256": "9176d4b78b8309c9e4c0e9d90db4d255206275cd83c55f835218e2506ef6faf5",
+      "scope": "Root actual original observations only; no candidate PASS"
+    },
+    {
+      "path": "/workspace/.continuation/section109-original-instant-actual-v1/observations.json",
+      "bytes": 206910,
+      "sha256": "45426ad34cbc2a06a2b26ed20e47fa2cf4553259c481d730645a2dd4ea3e4026",
+      "scope": "Root actual original observations only; no candidate PASS"
+    }
+  ],
+  "excluded": "No release/SP/floatclock/permanent change. No positive continuous range scheduler, combat capture/game or private-state assumption. Full original/candidate permanent40 must remain native-equal.",
+  "source_only_history": {
+    "draft_v1_test_sha256": "7bb0ce06e11ab2d5973c8befbece274b1412aa8dc031695d787aec43bbea9567",
+    "draft_v1_test_never_run_by_author": true,
+    "correction": "Use Gnosis natural-SP control instead of Amiya attack-SP talent; wine initial preserves independent credits while absent ammo end/cycle stay unknown."
+  },
+  "candidate_source_ready_for_Root_review": true
+}

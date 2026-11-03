@@ -1,0 +1,24 @@
+{
+  "static_only": true,
+  "actual_workflows_not_run": true,
+  "legacy238_245_check_calls_preserved": 8,
+  "all_original_check_append_statements_preserved": true,
+  "new_section_expected_count": 15,
+  "scripts_compile": true,
+  "pre_execution_script_corrections": [
+    {
+      "section": 251,
+      "original_script_expectation": "default AP8 hope subtotal8",
+      "source": "tests/test_route_resource_ledger.py / public_resource_presets()[0]",
+      "correction": "AP8 source subtotal7; prior8 case separately declaredAP9",
+      "production_defect": false
+    },
+    {
+      "section": 256,
+      "original_script_input": "reuse same observation label for second append",
+      "source": "rouge/recipient_native_ratio.py unique labels and existing view test",
+      "correction": "independent explicit label before second append",
+      "production_defect": false
+    }
+  ]
+}

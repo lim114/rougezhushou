@@ -1,0 +1,27 @@
+{
+  "section": 125,
+  "topic": "时序预览超范围数值的明确错误处理",
+  "implemented_scope": "将超大JSON整数在秒数、帧数、区间、初动及独立单位中的转换溢出统一为带字段说明的输入错误；合法上限及原情景保留。",
+  "at_Beijing": "2026-10-11T13:26:22.928463+08:00",
+  "prior_commit": "e714ed1f59eaf28128eea7d7525d8d1433ebcfb2",
+  "validation": {
+    "mode": "necessary_change_specific",
+    "tests_run": 19,
+    "failures": 0,
+    "errors": 0,
+    "modules": [
+      "tests.test_timing_numeric_range_125",
+      "tests.test_timing"
+    ]
+  },
+  "sources": [
+    "TIMING_MODEL.md",
+    "rouge/timing.py"
+  ],
+  "limitations": [
+    "30Hz reference model; unverified game clocks remain unknown",
+    "Native Windows, game and chat integration not verified"
+  ],
+  "private_state_included": false,
+  "full_validation_due": true
+}

@@ -1,0 +1,82 @@
+{
+  "section": 238,
+  "title": "首批三名前后成对面板校准与藏品差值联接",
+  "remaining_item": "P2首批三人预计与独立观察面板的成对核对流程",
+  "new_capability": "两端独立条件、来源类别与面板匹配；共同字段观察差、模型差、残差和两端绝对偏差；藏品变化联接236组合诊断；真实主窗口专用前后校准页及显式条件导入，刷新不覆盖观察",
+  "limitations": [
+    "固定公式示例不冒充游戏面板",
+    "差值相符不证明绝对面板相符或藏品因果归属",
+    "当前热更新、实际游戏面板和原生时钟仍未验证",
+    "Wine窗口是兼容验收，非原Windows/game/chat"
+  ],
+  "files": [
+    "research/p2-paired-calibration/README.md",
+    "research/p2-paired-calibration/examples.json",
+    "research/p2-paired-calibration/reproduce.py",
+    "research/p2-paired-calibration/source_manifest.json",
+    "research/p2-paired-calibration/validation.json",
+    "rouge/app.py",
+    "rouge/paired_calibration.py",
+    "rouge/paired_calibration_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_paired_calibration.py",
+    "verification/section-238/tests.txt",
+    "verification/section-238/validation.json",
+    "verification/section-238/wine-paired-window.png",
+    "verification/section-238/wine-window.json"
+  ],
+  "source_evidence": [
+    "复用固定a550f5e培养与藏品属性来源、151/152面板层及236组合诊断，未改变数值机制",
+    "按总体要求核对维护索引与源码回执哈希；实际窗口3个字面量公式模板与显式条件传递。"
+  ],
+  "acceptance": [
+    "49项直接相关行为/Qt检查通过",
+    "真实Wine MainWindow新校准页可见、3个公开公式模板均通过、计算器条件刷新不覆盖独立观察；窗口截图已查看"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T12:54:13.571813+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "75115587aab37df9f5f45940a82fe85c682e8006",
+  "required_raw_sha256": {
+    "research/p2-paired-calibration/README.md": "ddba8516594e6c6687f534b3e2249e123c80692dd610fdce7c9fb6fbd4175b40",
+    "research/p2-paired-calibration/examples.json": "0449c19514dcaa2b8c8ca66ebd2e402f10b390b65db8fc8b73b4504ec540a4a5",
+    "research/p2-paired-calibration/reproduce.py": "3ab24b30e002551277141dacc6bd947ff1c34d5008d3497b16fff820c34a9229",
+    "research/p2-paired-calibration/source_manifest.json": "cdde5489fede2adee779c1ccca51ebff327738f07b11cc72bc401fba4375f0e0",
+    "research/p2-paired-calibration/validation.json": "930030cd2d140f3e9922f61505a0122bb7c5ab627c6c61fd7bbfccfe66e56c6c",
+    "rouge/app.py": "a96ec913866aac0b8309d3ecf79d772fc152a56a352c378ef140053eb36f8f71",
+    "rouge/paired_calibration.py": "9e4e4ba0ab92b596463c7a445d8fe3bb853b1270855bf2f872ddadc52891ed70",
+    "rouge/paired_calibration_view.py": "9fe0e2a05ea515887437920c9bed9a9ab0ce8276695970814df2e8546efd3bde",
+    "scripts/verify_cloud.py": "b0b0527fb00af6b043181cd90bc190377919c5f970c268df8734fab1ae7911b8",
+    "tests/test_paired_calibration.py": "dd270a7a7ec93daaf42bc463167362091d68f1c3906b2263502279a8ddcf5e13",
+    "verification/section-238/tests.txt": "b81a0356ef21182ee16353141d3b062b702948520a4464ada22db896502f254f",
+    "verification/section-238/validation.json": "c3cc0fe46d1073bf6ce89550a31fba65678afd5b7561da7efd7d7e5b71938736",
+    "verification/section-238/wine-paired-window.png": "6bb7067eaa5221d922aad00d15200bf9fa860b796f9bdcb49ed0a2aac1b171c3",
+    "verification/section-238/wine-window.json": "f13dc6382f93bfa38ad1c7829288534e57456b60fdb9292b9935f7c7b2e9bc44"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_paired_calibration",
+      "tests.test_calibration",
+      "tests.test_relic_panel_diagnostics"
+    ],
+    "tests_run": 49,
+    "passed": 49,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245,
+  "wine_compatibility_window": "verification/section-238/wine-window.json",
+  "wine_is_native_windows": false,
+  "archival_preparation": {
+    "first_check": "Git默认空白检查把原生Windows回执的CRLF识别为行尾空白；尚未commit或push",
+    "resolution": "使用Git正式cr-at-eol选项保留原始Windows回执字节，继续检查其它空白；未更改功能、验收或断言"
+  }
+}

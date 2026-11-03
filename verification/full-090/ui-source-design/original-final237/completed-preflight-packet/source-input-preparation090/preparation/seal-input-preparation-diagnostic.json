@@ -1,0 +1,14 @@
+{
+  "status": "PREPARATION_CHILD_MANIFEST_SCHEMA_ERROR_BEFORE_ANY_PRODUCT_CALL",
+  "issue": "Small child manifest rows are path/bytes/sha256, not v1 source_path/archive_path rows. Main v1 will include immutable child bytes under correct schema.",
+  "original_script": "seal_input_preparation090-attempt1.py",
+  "log": "seal-input-preparation-attempt1.log",
+  "actual_schema": [
+    "path",
+    "bytes",
+    "sha256"
+  ],
+  "resolution": "Read every immutable child relative path and hash/bytes using that exact schema; reuse the already created raw38 copy only if byte-exact.",
+  "same_issue_failed_attempts": 1,
+  "application_API_helpers_formatter_constructor_apply_Qt_Wine_tests_calls": 0
+}

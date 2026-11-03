@@ -1,0 +1,1285 @@
+{
+  "status": "READONLY_SOURCE_BOUNDARY_VERIFIED_NO_RUNTIME_PROBE",
+  "baseline_commit": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+  "later_root82_commit_observed": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+  "snapshot_files_git_blob_hashes": {
+    "rouge/damage.py": {
+      "sha256": "84ff864244aed22307086df79686d485edf56700c727191ed7c3eca8bcbb9cec",
+      "bytes": 28530
+    },
+    "rouge/operator_engine.py": {
+      "sha256": "166ec75dbf1afb45f3ad23ee28b43b8932a9a002c92d4a670cff3f108a5b3df7",
+      "bytes": 155562
+    },
+    "rouge/operator_options.py": {
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "bytes": 5328
+    },
+    "rouge/app.py": {
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976
+    },
+    "rouge/haruka_healing_reference.py": {
+      "sha256": "a0a01fda3f0223ab39c841b7cf2f3ce0f0a0bb178fa495c078e89caf70f23ef6",
+      "bytes": 3776
+    },
+    "rouge/data/catalog.json": {
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "bytes": 1624372
+    },
+    "PROJECT_PROGRESS.md": {
+      "sha256": "e36cc53967b6369d9f4b3ed8870f9d0496830cd1248c35795e847309d0a264f1",
+      "bytes": 8473
+    },
+    "tests/test_haruka_bubble_talent_qualification.py": {
+      "sha256": "687018d5c4a970627c7c298564450283c89dbaa56047a65a2ad9051c68278dd9",
+      "bytes": 8645
+    },
+    "tests/test_haruka_event_reference.py": {
+      "sha256": "742c0b93cadd104e2dfa5be01062bde2617a41bf93ccaf139f7e01a97ed7762e",
+      "bytes": 4860
+    },
+    "tests/test_haruka_healing_targets.py": {
+      "sha256": "5c9f8d731e6bfd4d2d0f455a4a65be6c3c17200d5039456b1ab5b04eaf95e753",
+      "bytes": 9831
+    }
+  },
+  "actual_original_sources": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929
+    }
+  },
+  "complete_raw_skill_binding": {
+    "skillId": "skchr_haruka_2",
+    "overridePrefabKey": null,
+    "overrideTokenKey": null,
+    "levelUpCostCond": [
+      {
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        },
+        "lvlUpTime": 28800,
+        "levelUpCost": [
+          {
+            "id": "3303",
+            "count": 8,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "31074",
+            "count": 4,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30033",
+            "count": 7,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        },
+        "lvlUpTime": 57600,
+        "levelUpCost": [
+          {
+            "id": "3303",
+            "count": 12,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "31014",
+            "count": 4,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "31024",
+            "count": 9,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        },
+        "lvlUpTime": 86400,
+        "levelUpCost": [
+          {
+            "id": "3303",
+            "count": 15,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30145",
+            "count": 6,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "31034",
+            "count": 1,
+            "type": "MATERIAL"
+          }
+        ]
+      }
+    ],
+    "unlockCond": {
+      "phase": "PHASE_1",
+      "level": 1
+    }
+  },
+  "complete_raw_S2_object": {
+    "skillId": "skchr_haruka_2",
+    "iconId": null,
+    "hidden": false,
+    "levels": [
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.1,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.2,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.4,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.6,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.8,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 20,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 23.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.25,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 19,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 24.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.3,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 18,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 25.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.35,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 17,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 26.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.4,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    ]
+  },
+  "all_ten_levels_catalog_parameters_exact": [
+    {
+      "rank": 1,
+      "duration_parameter": 21.0,
+      "attack_bonus_parameter": 0.15,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.15,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.0,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 2,
+      "duration_parameter": 21.0,
+      "attack_bonus_parameter": 0.15,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.15,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.1,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 3,
+      "duration_parameter": 21.0,
+      "attack_bonus_parameter": 0.15,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.15,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.2,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 4,
+      "duration_parameter": 22.0,
+      "attack_bonus_parameter": 0.2,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.4,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 5,
+      "duration_parameter": 22.0,
+      "attack_bonus_parameter": 0.2,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.6,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 6,
+      "duration_parameter": 22.0,
+      "attack_bonus_parameter": 0.2,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 1.8,
+          "valueStr": null
+        }
+      ],
+      "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 7,
+      "duration_parameter": 23.0,
+      "attack_bonus_parameter": 0.25,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.25,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 8,
+      "duration_parameter": 24.0,
+      "attack_bonus_parameter": 0.3,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.3,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 9,
+      "duration_parameter": 25.0,
+      "attack_bonus_parameter": 0.35,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.35,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    },
+    {
+      "rank": 10,
+      "duration_parameter": 26.0,
+      "attack_bonus_parameter": 0.4,
+      "first_attack_bonus_parameter": 0.0,
+      "complete_blackboard": [
+        {
+          "key": "atk",
+          "value": 0.4,
+          "valueStr": null
+        },
+        {
+          "key": "haruka_s_2[first].atk",
+          "value": 0.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target_heal_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_shield_add",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "ability_range_radius",
+          "value": 1.7,
+          "valueStr": null
+        },
+        {
+          "key": "max_target_extra",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_extra",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>"
+    }
+  ],
+  "raw_haruka_talents": [
+    {
+      "candidates": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得10%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "interval",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "damage_resistance",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "max_target_shield",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        },
+        {
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得20%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "interval",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "damage_resistance",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "max_target_shield",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        },
+        {
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "interval",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "damage_resistance",
+              "value": 0.3,
+              "valueStr": null
+            },
+            {
+              "key": "max_target_shield",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        }
+      ]
+    },
+    {
+      "candidates": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "2",
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "heal_scale",
+              "value": 0.25,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        },
+        {
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "prefabKey": "2",
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "heal_scale",
+              "value": 0.28,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        }
+      ]
+    }
+  ],
+  "actual_boolean_UI_option": [
+    "haruka_repeat",
+    "二技能第二次及以后开启",
+    false,
+    1,
+    [
+      2
+    ]
+  ],
+  "UI_path_static": "bool default -> QCheckBox -> isChecked; not executed",
+  "new_calculate_calls": 0,
+  "new_selected_helper_calls": 0,
+  "GUI_Wine_native_game_checks": false,
+  "tracked_mutations": false
+}

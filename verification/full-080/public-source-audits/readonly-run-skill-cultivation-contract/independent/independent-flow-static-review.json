@@ -1,0 +1,119 @@
+{
+  "status": "PASS_READONLY_STATIC_AND_SAVED_CONTRACT_REVIEW",
+  "baseline_commit": "a52a4bf9217aee3c11617135b7fc9cc6c38fd0f2",
+  "source_public_files": [
+    {
+      "source_path": "rouge/run_recognition.py",
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "bytes": 23560,
+      "matched_fixed_git_object_bytes": true,
+      "exact_spans_checked": 2
+    },
+    {
+      "source_path": "rouge/run_state.py",
+      "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+      "bytes": 42402,
+      "matched_fixed_git_object_bytes": true,
+      "exact_spans_checked": 2
+    },
+    {
+      "source_path": "rouge/app.py",
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976,
+      "matched_fixed_git_object_bytes": true,
+      "exact_spans_checked": 4
+    },
+    {
+      "source_path": "rouge/damage.py",
+      "sha256": "84ff864244aed22307086df79686d485edf56700c727191ed7c3eca8bcbb9cec",
+      "bytes": 28530,
+      "matched_fixed_git_object_bytes": true,
+      "exact_spans_checked": 1
+    }
+  ],
+  "ast_selected_method_names": [
+    "current_operator_state",
+    "training_conditions",
+    "skill_rank_value"
+  ],
+  "producer_AST_expressions_in_source": {
+    "choices_line": 820,
+    "initial_scenario_line": 1026
+  },
+  "saved_contract_outcomes": {
+    "records": 72,
+    "accepted": 42,
+    "original_qualification_errors": 30,
+    "per_run_elite": {
+      "0": {
+        "accepted": 6,
+        "original_qualification_error": 18
+      },
+      "1": {
+        "accepted": 12,
+        "original_qualification_error": 12
+      },
+      "2": {
+        "accepted": 24
+      }
+    },
+    "exact_inputs_to_existing_gate_checked": true,
+    "new_calculate_calls": 0,
+    "raw": {
+      "sha256": "729e5f248299805c47be0c5ac87253844c303d7879f55146b38e925947206b68",
+      "bytes": 1082020
+    },
+    "gzip": {
+      "sha256": "355df1eaefcd8d762c88bf99b3bf822a98a43738bcd0d4cec325e0ffd39d2aa8",
+      "bytes": 42813
+    },
+    "decompression": "Python gzip.decompress + complete JSON parse"
+  },
+  "synthetic_controls_known_run_unknown_invalid_absent_disabled_ranks": [
+    7,
+    10,
+    7,
+    10,
+    10
+  ],
+  "author_linux_import_failure_retained": {
+    "attempts": 1,
+    "accepted": false,
+    "exception": "ModuleNotFoundError",
+    "message": "No module named 'win32gui'",
+    "fallback": "exact frozen AST selected bodies; no fake native modules or actual Qt claim"
+  },
+  "validation_scope": "Author exact immutable AST method bodies/initial choices/scenario expressions plus synthetic controls and public API outcomes; neither actual Qt behavior nor native game mechanics. All selected skills carry equal synthetic rank, so this narrow probe is not a test of unequal per-skill account rank merging.",
+  "static_assertion_limit": "The source compares the original scenario after passing deepcopy to calculate_damage; it does not independently prove the copied input was unchanged. No stronger mutation claim is made.",
+  "account_rank_inheritance_or_run_cap_proven": false,
+  "gate_changed": false,
+  "new_gui_wine_or_import_attempts": 0,
+  "preserved_author_evidence_copies": {
+    "flow_probe.py": {
+      "sha256": "13f49e3f2969a7cd79dea863c7c7f0c0f3b82b35084ebef2b6d806f56d45ebf9",
+      "bytes": 7814
+    },
+    "flow-source-selectors.json": {
+      "sha256": "009023fe7f8d78e54c8faf81ae1ee9c37bb1752436ca0d1c72f3ef3f81e6a101",
+      "bytes": 14023
+    },
+    "synthetic-flow-probe-receipt.json": {
+      "sha256": "5a8c8df23d5df74175c4601aadf64c97749c837a220efc00094075d2451ac309",
+      "bytes": 1234
+    },
+    "synthetic-flow-public-whole-outcomes.json.gz": {
+      "sha256": "355df1eaefcd8d762c88bf99b3bf822a98a43738bcd0d4cec325e0ffd39d2aa8",
+      "bytes": 42813
+    },
+    "synthetic-flow-controls.json": {
+      "sha256": "726fef338079f7581064589bcab2cffd727b130b258c31267d14bfdf684eaa8f",
+      "bytes": 4200
+    },
+    "FLOW_NOTE.md": {
+      "sha256": "789808c30d71c41c51f2c84ccbdc3eff4e1c33d9b139c340aef010f78a1b34b8",
+      "bytes": 2096
+    }
+  },
+  "independent_harness_compile_typo_preserved": "flow-static-review-attempt1-syntax.log",
+  "prior_independent_sealed_evidence_unchanged": true
+}

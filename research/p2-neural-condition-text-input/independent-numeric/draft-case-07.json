@@ -1,0 +1,24 @@
+{
+  "case": "mantra-s3-boss-text-initial1500",
+  "scenario": {
+    "operator": "char_4204_mantra",
+    "skill": 3,
+    "skill_rank": 7,
+    "elite": 2,
+    "level": 1,
+    "potential": 6,
+    "base_attack": 997,
+    "timing_mode": "frames",
+    "window_seconds": 3.3,
+    "enemy_is_boss": "false",
+    "initial_neural_buildup": 1500
+  },
+  "expectation": "reject",
+  "field": "enemy_is_boss",
+  "error": {
+    "type": "ValueError",
+    "message": "enemy_is_boss 不接受文本条件；请使用布尔值。"
+  },
+  "actual_public_calls": 1,
+  "caller_input_preserved": true
+}

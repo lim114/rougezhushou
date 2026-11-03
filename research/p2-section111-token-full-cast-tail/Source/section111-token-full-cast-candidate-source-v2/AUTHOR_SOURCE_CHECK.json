@@ -1,0 +1,44 @@
+{
+  "kind": "SOURCE_ONLY_111_AUTHOR_COMPOSE_COMPILE_INVERSE",
+  "runtime_executed": false,
+  "old_anchor_count": 1,
+  "new_anchor_count": 1,
+  "inverse_byte_exact": true,
+  "before_ast_matches_reversed_after": true,
+  "compiled_source_without_execute": [
+    "original engine",
+    "composed engine",
+    "new test"
+  ],
+  "new_test_methods": [
+    "test_fixed_full_cast_keeps_tail_but_public_components_are_nominal_observation",
+    "test_short_and_zero_observation_do_not_cut_the_independent_full_cast",
+    "test_late_tail_is_not_promoted_into_phase_or_this_cycle",
+    "test_target_disappearance_cancels_impacts_including_potential_cast_tail",
+    "test_independent_unit_range_exit_does_not_destroy_its_locked_tail",
+    "test_normal_recharge_reference_still_uses_window_impacts_not_its_emitted_tail",
+    "test_continuous_and_zero_travel_keep_the_original_reference",
+    "test_count_module_and_manual_token_attributes_keep_the_same_cast_attribution"
+  ],
+  "assert_call_count": 51,
+  "test_expected_counts_are_source_arithmetic_not_actual_probe": [
+    "Tentacle base1.25seconds at100AS rounds38frames; windup1/recovery0 override explicitly sets release1+38i.",
+    "S1duration900frames has24 releases; travel300frames leaves16 window impacts; S2duration1650frames has44 releases and36 window impacts.",
+    "Lifetime20seconds rejects impacts>=600frames, leaving8; explicit unit range[28,30) acquires starts840/878 and releases841/879, with impacts1141/1179.",
+    "Normal uses its returned producer impact arrays; fixed plain E2L70 tentacle raw462 excludes S1 bonus, trust and token inheritance."
+  ],
+  "no_candidate_runtime_or_pass": true,
+  "v2_test_expectation_correction": {
+    "v1_test_sha256": "909e378100d1d343019cb6f5f9e65111824fa9b0025588a3a1d6e7a292d33ebd",
+    "v2_test_sha256": "cbd6726fc8f3e667d57cee2c21b35e7b4de3bba01848b813cfa855f3eec7b943",
+    "inverse_byte_exact": true,
+    "test_methods_same": 8,
+    "single_method_ast_changed": [
+      "test_normal_recharge_reference_still_uses_window_impacts_not_its_emitted_tail"
+    ],
+    "old_block": "                self.assertAlmostEqual(cast['cycle_damage'], cast['phase_damage'] + normal_damage)\n",
+    "new_block": "                # Every full-cast impact in this10s reference lands before the cycle ends.\n                self.assertTrue(all(t < cast['cycle_seconds'] for t in token_stream(result)['emitted_times_seconds']))\n                self.assertAlmostEqual(cast['cycle_damage'], cast['total_damage'] + normal_damage)\n",
+    "product_transport_identical": true,
+    "reason": "normal remains time-clipped; the complete10s-travel skill tail occurs within cycle, so cycle must include full total plus normal.200s-travel separate test still excludes beyond-cycle tail."
+  }
+}

@@ -1,0 +1,154 @@
+--- a/rouge/estimate.py
++++ b/rouge/estimate.py
+@@ -84,7 +84,11 @@
+     if unconfirmed:
+         notes.insert(0,'尚未从画面确认：'+ '、'.join(unconfirmed)+'；当前使用清楚标出的数据档案预览条件，不代表本局真实面板。')
+     if scenario.get('module_id'):
+-        notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
++        module=next(m for m in profile['modules'] if m['id']==scenario['module_id'])
++        if elite>=module['unlock_elite'] and level>=module['unlock_level']:
++            notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
++        else:
++            notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
+     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
+         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
+         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -1445,6 +1445,12 @@
+         if unconfirmed:self.notes.insert(0,'尚未从画面确认：'+'、'.join(unconfirmed)+'；当前为已标注的培养预览。')
+         if inventory and not inventory.get('complete'):
+             self.notes.insert(0,f'本局藏品读取未完整：已确认{inventory.get("recognized",0)}件；沿用本局已确认记录。')
++        if self.s.get('module_id'):
++            module=next(m for m in self.p['modules'] if m['id']==self.s['module_id'])
++            elite=self.s.get('elite',2)
++            level=self.s.get('level') or self.p['phases'][elite]['max_level']
++            if elite<module['unlock_elite'] or level<module['unlock_level']:
++                self.notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
+         if self.module_parts:
+             self.notes.append('已计模组基础属性与适用天赋数据覆盖；未建模的新增模组特性/隐藏战斗脚本不自动推断。')
+         self.notes.append('单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。')
+--- /dev/null
++++ b/tests/test_module_qualification_notes.py
+@@ -0,0 +1,121 @@
++import copy
++import unittest
++
++from rouge.catalog import catalog, operator_attributes
++from rouge.damage import calculate_damage
++from rouge.operator_engine import selected_talents
++from rouge.reporting import format_report
++
++
++LOCKED_NOTE = '所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。'
++LEGACY_APPLIED_NOTE = '当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。'
++EXTENDED_APPLIED_NOTE = '已计模组基础属性与适用天赋数据覆盖；未建模的新增模组特性/隐藏战斗脚本不自动推断。'
++
++
++def scenario(operator='mechanist', **extra):
++    return {'operator': operator, 'skill': 1, 'skill_rank': 7,
++            'elite': 2, 'level': 60, 'module_id': 'uniequip_002_mcnist',
++            'module_level': 1, **extra}
++
++
++def numeric_result(result):
++    return {k: result.get(k) for k in (
++        'attack', 'total_damage', 'total_healing', 'attack_speed',
++        'base_attack_speed', 'interval_seconds', 'components', 'timing')}, {
++        'base_stats': result['estimate']['base_stats'],
++        'skill': result['estimate']['skill']}
++
++
++class ModuleQualificationNotesTests(unittest.TestCase):
++    def assert_locked_module_report(self, args):
++        original = copy.deepcopy(args)
++        plain = {k: v for k, v in args.items() if k not in ('module_id', 'module_level')}
++        result, absent = calculate_damage(args), calculate_damage(plain)
++        self.assertEqual(args, original)
++        self.assertEqual(numeric_result(result), numeric_result(absent))
++        self.assertEqual(result['estimate']['training']['module_id'], args['module_id'])
++        self.assertEqual(result['estimate']['training']['module_level'], args['module_level'])
++        self.assertIn(LOCKED_NOTE, result['estimate']['notes'])
++        self.assertNotIn(LEGACY_APPLIED_NOTE, result['estimate']['notes'])
++        self.assertNotIn(EXTENDED_APPLIED_NOTE, result['estimate']['notes'])
++        self.assertIn(LOCKED_NOTE, format_report(result))
++        self.assertNotIn(LOCKED_NOTE, format_report(absent))
++        profile = catalog()['operators'][args['operator']]
++        self.assertEqual(selected_talents(profile, args), selected_talents(profile, plain))
++        self.assertEqual(operator_attributes(args['operator'], args['elite'], args['level'],
++                         module_id=args['module_id'], module_level=args['module_level']),
++                         operator_attributes(args['operator'], args['elite'], args['level']))
++
++    def test_legacy_alias_below_elite_or_level_reports_inactive_module(self):
++        for elite, level in ((1, 80), (2, 59)):
++            for stage in (1, 2, 3):
++                for mode in ('frames', 'continuous'):
++                    with self.subTest(elite=elite, level=level, stage=stage, mode=mode):
++                        self.assert_locked_module_report(scenario(
++                            elite=elite, level=level, module_level=stage, timing_mode=mode))
++
++    def test_elite_zero_requested_stage_remains_visible_without_application(self):
++        self.assert_locked_module_report(scenario(elite=0, level=50, skill_rank=1, module_level=3))
++
++    def test_legacy_at_unlock_boundary_preserves_applied_note_and_attributes(self):
++        for level in (60, 90):
++            for stage, attack_bonus, defense_bonus in ((1, 60, 40), (2, 80, 60), (3, 100, 80)):
++                for mode in ('frames', 'continuous'):
++                    with self.subTest(level=level, stage=stage, mode=mode):
++                        args = scenario(level=level, module_level=stage, timing_mode=mode)
++                        result = calculate_damage(args)
++                        plain = calculate_damage({k: v for k, v in args.items()
++                                                  if k not in ('module_id', 'module_level')})
++                        self.assertIn(LEGACY_APPLIED_NOTE, result['estimate']['notes'])
++                        self.assertNotIn(LOCKED_NOTE, result['estimate']['notes'])
++                        stats, base = result['estimate']['base_stats'], plain['estimate']['base_stats']
++                        self.assertEqual(stats['attack'] - base['attack'], attack_bonus)
++                        self.assertEqual(stats['defense'] - base['defense'], defense_bonus)
++                        self.assertEqual(result['estimate']['training']['module_level'], stage)
++
++    def test_extended_uses_operator_specific_level_forty_boundary(self):
++        for elite, level in ((1, 60), (2, 39), (2, 40)):
++            for stage in (1, 2, 3):
++                for mode in ('frames', 'continuous'):
++                    with self.subTest(elite=elite, level=level, stage=stage, mode=mode):
++                        args = scenario('char_298_susuro', elite=elite, level=level,
++                                        module_id='uniequip_002_susuro', module_level=stage,
++                                        timing_mode=mode)
++                        if level != 40:
++                            self.assert_locked_module_report(args)
++                        else:
++                            result = calculate_damage(args)
++                            self.assertIn(EXTENDED_APPLIED_NOTE, result['estimate']['notes'])
++                            self.assertNotIn(LOCKED_NOTE, result['estimate']['notes'])
++                            plain = calculate_damage({k: v for k, v in args.items()
++                                                      if k not in ('module_id', 'module_level')})
++                            self.assertGreater(result['estimate']['base_stats']['hp'],
++                                               plain['estimate']['base_stats']['hp'])
++
++    def test_default_level_and_absent_module_keep_existing_meaning(self):
++        for op, module in (('mechanist', 'uniequip_002_mcnist'),
++                           ('char_298_susuro', 'uniequip_002_susuro')):
++            args = scenario(op, module_id=module)
++            del args['level']
++            result = calculate_damage(args)
++            self.assertNotIn(LOCKED_NOTE, result['estimate']['notes'])
++            self.assertEqual(result['estimate']['training']['level'],
++                             catalog()['operators'][op]['phases'][2]['max_level'])
++            plain = calculate_damage({k: v for k, v in args.items()
++                                      if k not in ('module_id', 'module_level')})
++            self.assertNotIn(LOCKED_NOTE, plain['estimate']['notes'])
++            self.assertNotIn(LEGACY_APPLIED_NOTE, plain['estimate']['notes'])
++            self.assertNotIn(EXTENDED_APPLIED_NOTE, plain['estimate']['notes'])
++
++    def test_invalid_module_still_uses_existing_error_and_catalog_stays_unmodified(self):
++        original = copy.deepcopy(catalog())
++        for extra in ({'module_id': 'uniequip_002_susuro'}, {'module_level': 4}):
++            with self.subTest(extra=extra):
++                with self.assertRaisesRegex(ValueError, '模组身份或等级尚无可用规则。'):
++                    calculate_damage(scenario(**extra))
++        self.assert_locked_module_report(scenario(level=59, module_level=3))
++        self.assertEqual(catalog(), original)
++
++
++if __name__ == '__main__':
++    unittest.main()

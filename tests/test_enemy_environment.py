@@ -58,7 +58,12 @@ class EnemyEnvironmentTests(unittest.TestCase):
         self.assertEqual(eleven['run_resolution']['enemy']['level_type'],'BOSS')
         self.assertAlmostEqual(eleven['total_damage'],ten['total_damage']*.8)
         self.assertEqual(eleven['estimate']['skill']['cycle_seconds'],ten['estimate']['skill']['cycle_seconds'])
-        self.assertAlmostEqual(eleven['estimate']['skill']['cycle_damage'],ten['estimate']['skill']['cycle_damage']*.8)
+        self.assertIsNone(ten['estimate']['skill']['cycle_damage'])
+        self.assertIsNone(eleven['estimate']['skill']['cycle_damage'])
+        self.assertAlmostEqual(eleven['known_damage_subtotals']['cycle_damage'],
+                               ten['known_damage_subtotals']['cycle_damage']*.8)
+        self.assertAlmostEqual(eleven['charge_reference']['declared_count_damage'],
+                               ten['charge_reference']['declared_count_damage']*.8)
         for op,skill in [('kaltsit',1),('kaltsit',2),('char_298_susuro',2),('char_328_cammou',2)]:
             args={'operator':op,'skill':skill,'target_enemy':target,'run_config':{'difficulty':{'value':10}}}
             before=calculate_damage(args)

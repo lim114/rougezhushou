@@ -1,0 +1,32 @@
+--- draft-v1/test.py
++++ candidate-v2/test.py
+@@ -158,21 +158,24 @@
+                 self.assertIsNone(charge_seconds(scenario, 3, 1, 1, 100, initial=True))
+                 self.assertGreater(charge_seconds(scenario, 3, 1, 1, 100), 0)
+ 
+-    def test_discrete_wine_credits_survive_empty_initial_and_post_enemy_supply(self):
++    def test_discrete_wine_initial_credits_survive_without_claiming_empty_ammo_end(self):
+         for mode in MODES:
+             with self.subTest(mode=mode):
+                 result = evaluate(mode=mode, relic_ids=[WINE], timing={
+                     'target_windows': [], 'initial_target_windows': []})
+                 self.assertEqual(result['total_damage'], 0)
+-                for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds'):
+-                    self.assertGreater(result['estimate']['skill'][key], 0)
++                self.assertGreater(result['estimate']['skill']['initial_seconds'], 0)
++                self.assertIsNone(result['execution_seconds'])
++                self.assertIsNone(result['estimate']['skill']['duration_seconds'])
++                self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
+                 self.assertFalse(result['deployment_clock_reference']['live_state_verified'])
+ 
+     def test_natural_recovery_survives_ordinary_empty_enemy_acquisition(self):
+         for mode in MODES:
+             with self.subTest(mode=mode):
+-                baseline = evaluate('char_002_amiya', mode=mode)
+-                empty = evaluate('char_002_amiya', mode=mode, timing={
++                # Gnosis S2 uses natural SP, without Amiya's attack-SP talent.
++                baseline = evaluate('char_206_gnosis', 2, mode=mode)
++                empty = evaluate('char_206_gnosis', 2, mode=mode, timing={
+                     'target_windows': [], 'initial_target_windows': []})
+                 self.assertEqual(empty['total_damage'], 0)
+                 for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds'):

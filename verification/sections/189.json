@@ -1,0 +1,44 @@
+{
+  "title": "全区域目标与行动力耗尽预算",
+  "remaining_item": "探索地图与路线建议：第六层/特殊区状态和行动力规则",
+  "new_capability": "按26个原区域ID分别查询目标及耗尽提示，将徒步或加工品前置付款、已证移动AP增量及到零边界分开展示；主层追猎/秘境返回与首领胜利条件不同。",
+  "source_evidence": [
+    "$.details.rogue_6.zones 的26个唯一原件ID",
+    "$.modules.rogue_6.gridZone.zoneMissionBannerData 与 scrapSideBarStepZeroHintBannerData目标/耗尽原文",
+    "已有routes-049徒步每格点1AP原文证据复用；不重试已失败revision获取"
+  ],
+  "acceptance": [
+    "7主区域追猎提示与19秘境返回提示不混用；19同名秘境保留不同ID",
+    "第六层抵达首领不视为目标完成；AP缺失不判断可负担，AP不足不出负余额",
+    "遥控器付款到零/奖励到3分列，实际耗尽执行顺序仍未知；2项必要测试通过"
+  ],
+  "limitations": [
+    "仍未确认第六层或秘境连接拓扑。",
+    "付款/奖励/羽瞰点/出口相位与费用修正未证，实际最终AP/追猎触发未知。",
+    "目标完成与AP仅声明，不从旧本局猜取。"
+  ],
+  "section": 189,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section218.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_218_all_zones_ids_and_goal_exhaustion_distinct",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_218_unknown_budget_insufficient_and_refund_boundary"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:35:30.342489+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-189/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

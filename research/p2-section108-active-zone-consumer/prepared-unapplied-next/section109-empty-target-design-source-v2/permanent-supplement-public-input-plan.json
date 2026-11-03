@@ -1,0 +1,351 @@
+{
+  "kind": "ROOT_ORIGINAL_PERMANENT_SOURCE_CALLERS_ONLY",
+  "STOPWRITE": true,
+  "runtime_executed": false,
+  "product_pass": false,
+  "actual_source_count": null,
+  "actual_guard": null,
+  "source_refs": [
+    {
+      "path": "/workspace/rougezhushou/rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/relic-mechanics.json",
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_relics.py",
+      "bytes": 14607,
+      "sha256": "a8ae18a6a8b5e0c5f19e179722618edce3a5b297071490e8e9e2e6fea7994a6e"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/timing.py",
+      "bytes": 27266,
+      "sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/sp_events.py",
+      "bytes": 10207,
+      "sha256": "0a878cf0adf384c29db41cd0918354a6f4a0887d67ff51e634d52d371e63822f"
+    }
+  ],
+  "case_count": 12,
+  "maximum_explicit_consumer_calls": 36,
+  "maximum_native_records": 48,
+  "time_limit_seconds_proposed": 120,
+  "cases": [
+    {
+      "id": "permanent-frames-native-sp-baseline",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [],
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-frames-native-sp-owner-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [],
+        "timing": {
+          "target_windows": [],
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-frames-native-sp-initial-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [],
+        "timing": {
+          "initial_target_windows": [],
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-frames-attack-sp-baseline",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ],
+        "timing": {
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-frames-attack-sp-owner-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ],
+        "timing": {
+          "target_windows": [],
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-frames-attack-sp-initial-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ],
+        "timing": {
+          "initial_target_windows": [],
+          "windup_frames": 6,
+          "recovery_frames": 9
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-native-sp-baseline",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": []
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-native-sp-owner-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": [],
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-native-sp-initial-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": [],
+        "timing": {
+          "initial_target_windows": []
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-attack-sp-baseline",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ]
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-attack-sp-owner-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ],
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    },
+    {
+      "id": "permanent-continuous-attack-sp-initial-empty",
+      "scenario": {
+        "operator": "char_4182_oblvns",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ],
+        "timing": {
+          "initial_target_windows": []
+        }
+      },
+      "actual_result": null,
+      "product_pass": false,
+      "assertion_policy": "Observe only: original complete results and each explicit attack release/impact/initial/postcast resource reference; no guessed clock or zero whole-result expectation."
+    }
+  ],
+  "consumers": [
+    "original calculate_damage",
+    "original format_estimate",
+    "original format_report"
+  ],
+  "clock_requirement": "Native actual caller/result/error before/after and both complete texts. Missing/positive and global0 remain old references. This packet is only JSON input planning; Root must choose and guard a fresh actual original probe before execution. No sealed109 v1 fixture edit."
+}

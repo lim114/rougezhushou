@@ -1,0 +1,32 @@
+test_changed_unicode_topic_and_empty_document_finish_without_losing_text (tests.test_mechanism_reading_449.MechanismReadingTests.test_changed_unicode_topic_and_empty_document_finish_without_losing_text) ... ok
+test_plain_text_and_chinese_heading_format_do_not_parse_markup (tests.test_mechanism_reading_449.MechanismReadingTests.test_plain_text_and_chinese_heading_format_do_not_parse_markup) ... ok
+test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading (tests.test_mechanism_reading_449.MechanismReadingTests.test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading) ... ERROR
+test_sun_skill_card_keyboard_choice_reveals_exact_complete_card (tests.test_mechanism_reading_449.MechanismReadingTests.test_sun_skill_card_keyboard_choice_reveals_exact_complete_card) ... ok
+
+======================================================================
+ERROR: test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading (tests.test_mechanism_reading_449.MechanismReadingTests.test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_mechanism_reading_449.py", line 42, in test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading
+    view=import_module('rouge.'+spec.provider.removesuffix('_reference')+'_view');d=getattr(view,spec.dialog)(sid,key);self.addCleanup(d.deleteLater);d.show();QTest.qWait(20);p=d.panel
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_elbert_view.py", line 127, in __init__
+    self.panel=CurrentElbertPanel(stage_id,enemy_key,self);QVBoxLayout(self).addWidget(self.panel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_elbert_view.py", line 35, in __init__
+    self.refresh_reference()
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_elbert_view.py", line 71, in refresh_reference
+    self._entity_changed(preserve=keep);return True
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_elbert_view.py", line 92, in _entity_changed
+    self.status.clear();self._topic_changed()
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_elbert_view.py", line 100, in _topic_changed
+    'collision': '碰撞与爆炸', 'configuration': '默认文献如何变化'}.get(topic)
+                                                                        ^^^^^
+NameError: name 'topic' is not defined. Did you mean: 'self.topic'?
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.027s
+
+FAILED (errors=1)

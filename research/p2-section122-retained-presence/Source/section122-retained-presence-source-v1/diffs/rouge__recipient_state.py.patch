@@ -1,0 +1,34 @@
+--- a/rouge/recipient_state.py
++++ b/rouge/recipient_state.py
+@@ -5,6 +5,7 @@
+ 
+ from .catalog import operator_profiles
+ from .relics import mechanics
++from .record_flags import active_record,metadata_mask,RECIPIENT_KEYS
+ 
+ 
+ @lru_cache(maxsize=1)
+@@ -28,6 +29,8 @@
+ 
+ def merge_recipient_evidence(previous, observed, merged, new_recruitment, captured_at):
+     """A full popup replaces negatives; partial popups cannot renew absences."""
++    if metadata_mask(merged).intersection(RECIPIENT_KEYS) and 'char_buff_ids' not in observed:
++        return  # Retain raw popup evidence; identity-only reads cannot renew it.
+     absent = set() if new_recruitment or not previous else absent_buffs(previous)
+     pending = set() if new_recruitment else set(previous.get('char_buff_pending_ids', []))
+     positives = set(merged.get('char_buff_ids', []))
+@@ -53,11 +56,12 @@
+     A complete popup in this same observation is newer direct evidence.
+     """
+     observed = {m['id']: m for m in observations}
+-    held = {rid for rid, record in state['relics'].items() if record.get('held', True)}
++    held = {rid for rid, record in state['relics'].items() if active_record(record, 'held')}
+     rules = lifecycle_rules()
+     for oid, member in state['operators'].items():
+         current = observed.get(oid, {})
+-        if member.get('scope') != 'run' or not member.get('present', True):
++        if (member.get('scope') != 'run' or not active_record(member, 'present')
++                or metadata_mask(member).intersection(RECIPIENT_KEYS)):
+             continue
+         if 'char_buff_ids' in current and current.get('char_buffs_complete') is True:
+             continue

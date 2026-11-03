@@ -1,0 +1,278 @@
+{
+  "kind": "SOURCE_ONLY_SECTION120_PUBLIC_VALIDATION_PLAN",
+  "section": 120,
+  "runtime_executed": false,
+  "product_pass": false,
+  "workflow_complete": false,
+  "actual_HEAD": null,
+  "actual_guard": null,
+  "actual_Source_count": null,
+  "actual_calls_or_tests": null,
+  "public_API_baseline_candidate_cases": [
+    {
+      "id": "mechanist_empty_target",
+      "input": {
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "mechanist",
+        "skill": 3,
+        "timing": {
+          "target_windows": []
+        }
+      }
+    },
+    {
+      "id": "amiya_empty_target",
+      "input": {
+        "skill_rank": 7,
+        "elite": 1,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing": {
+          "target_windows": []
+        }
+      }
+    },
+    {
+      "id": "amiya_nonempty",
+      "input": {
+        "skill_rank": 7,
+        "elite": 1,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              5
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "deepcolor_token_independent",
+      "input": {
+        "skill_rank": 7,
+        "elite": 1,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "char_110_deepcl",
+        "skill": 1,
+        "summon_count": 1,
+        "timing": {
+          "target_windows": [],
+          "units": {
+            "token_10001_deepcl_tentac": {
+              "target_windows": [
+                [
+                  0,
+                  5
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "relic_parts_zero",
+      "input": {
+        "skill_rank": 7,
+        "elite": 1,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [
+          "rogue_6_relic_cargo_2"
+        ],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "mechanist",
+        "skill": 1,
+        "relic_context": {
+          "parts_count": 0
+        }
+      }
+    },
+    {
+      "id": "relic_parts_three",
+      "input": {
+        "skill_rank": 7,
+        "elite": 1,
+        "level": 1,
+        "potential": 1,
+        "trust": 0,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [
+          "rogue_6_relic_cargo_2"
+        ],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 5,
+        "operator": "mechanist",
+        "skill": 1,
+        "relic_context": {
+          "parts_count": 3
+        }
+      }
+    }
+  ],
+  "actual_UI_groups": [
+    {
+      "id": "valid_owner_pair",
+      "path": [
+        "mechanist:S1",
+        "amiya:S1",
+        "mechanist:S1"
+      ],
+      "requires": "two distinct exact editor strings each owner; ordinary numeric result and3 formatter texts preserved"
+    },
+    {
+      "id": "profile_only_with_skill",
+      "path": [
+        "mechanist:S1",
+        "char_120_hibisc:S1",
+        "mechanist:S1"
+      ],
+      "requires": "actual old stale-editor observation then candidate clear/disabled and old A both strings restored"
+    },
+    {
+      "id": "profile_only_without_skill",
+      "path": [
+        "mechanist:S1",
+        "char_285_medic2:no skill",
+        "mechanist:S1"
+      ],
+      "requires": "same Source-qualified profile-only branch, no hypothetical game event"
+    },
+    {
+      "id": "empty_overview",
+      "path": [
+        "mechanist:S1",
+        "empty overview",
+        "mechanist:S1"
+      ],
+      "requires": "actual BranchChoice selection and no recruited fixture; no direct preview-key edit"
+    },
+    {
+      "id": "no_current_skill",
+      "path": [
+        "amiya:S1",
+        "real QComboBox currentIndex -1",
+        "amiya:S1"
+      ],
+      "requires": "currentData None branch, not invented elite/skill lock"
+    },
+    {
+      "id": "skill_pair",
+      "path": [
+        "amiya:S1",
+        "amiya:S3",
+        "amiya:S1"
+      ],
+      "requires": "two per-skill raw strings and result/text pair"
+    },
+    {
+      "id": "bad_valid_owner_back",
+      "path": [
+        "mechanist:S1 bad timing text",
+        "amiya:S1 valid",
+        "mechanist:S1"
+      ],
+      "requires": "exact bad text and current editor error restored, resultNone no prior numeric fallback"
+    },
+    {
+      "id": "bad_relic_not_needed",
+      "path": [
+        "active cargo2 bad JSON",
+        "no applicable relic",
+        "active cargo2 again"
+      ],
+      "requires": "hidden not-consumed text ignored only while no needed condition, later error restored"
+    },
+    {
+      "id": "ambiguous_target_duplicate",
+      "timing": "{\"target_windows\":[],\"target_windows\":[[0,5]]}",
+      "requires": "new editor explicit error before API, reverse order separate baseline/candidate measured"
+    },
+    {
+      "id": "nested_unit_duplicate",
+      "timing": "{\"units\":{\"token_10001_deepcl_tentac\":{\"target_windows\":[],\"target_windows\":[[0,5]]}}}",
+      "requires": "nested same-object duplicate error, different unit same keys legal"
+    },
+    {
+      "id": "relic_duplicate",
+      "relic_context": "{\"parts_count\":0,\"parts_count\":3}",
+      "requires": "cargo2 applicable, exact error; error text not mistaken for measured negative mechanics"
+    },
+    {
+      "id": "nonfinite_literals",
+      "timing_values": [
+        "NaN",
+        "Infinity",
+        "-Infinity",
+        "1e309"
+      ],
+      "requires": "new GUI error labels and original actual behavior retained, future countsnotpredicted"
+    },
+    {
+      "id": "strings_and_ordinary_JSON",
+      "timing": "{\"target_windows\":[],\"unrelated\":\"NaN\"}",
+      "requires": "unknown/string preserved; no unknown-key rejection invented"
+    },
+    {
+      "id": "empty_omission",
+      "timing_values": [
+        "",
+        "   "
+      ],
+      "requires": "no scenario timing key created; original blank relic confirmed-resource use remains"
+    }
+  ],
+  "fixture_scope": "All temporary public account/run fixtures, no native/OCR/game/chat; actual Root prepares healthy current run/cultivation and directly verifies fullcalls/files/native. Plan inputs do not substitute the complete long UI caller."
+}

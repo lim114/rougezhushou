@@ -1,0 +1,48 @@
+--- a/scripts/verify_battle_entry_references_window_296.py
++++ b/scripts/verify_battle_entry_references_window_296_full305.py
+@@ -19,7 +19,9 @@
+ 
+ ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'rouge/app.py').is_file())
+ sys.path.insert(0, str(ROOT))
+-CANONICAL = 'scripts/verify_battle_entry_references_window_296.py'
++CANONICAL = 'scripts/verify_battle_entry_references_window_296_full305.py'
++ORIGINAL_CANONICAL = 'scripts/verify_battle_entry_references_window_296.py'
++CURRENT_EVENT_MANIFEST = 'research/p3-battle-entry-compatibility-299/source-manifest.json'
+ EVENT_MANIFEST = 'research/p3-battle-event-references-296/source-manifest.json'
+ CONFIG_MANIFEST = 'research/p3-stage-entry-configuration-296/manifest.json'
+ SIZE = (1050, 720)
+@@ -52,7 +54,7 @@
+ 
+ 
+ def bound_files():
+-    names = {CANONICAL, 'rouge/app.py', 'rouge/battle_view.py',
++    names = {CANONICAL, ORIGINAL_CANONICAL, CURRENT_EVENT_MANIFEST, 'rouge/app.py', 'rouge/battle_view.py',
+         'rouge/node_catalog_view.py', 'rouge/player_node_information.py',
+         'rouge/battle_entry_reference_view.py', 'rouge/battle_event_references.py',
+         'rouge/stage_entry_reference.py', 'rouge/battle_preview.py', 'rouge/ui_state.py',
+@@ -66,7 +68,7 @@
+         'tests/test_battle_entry_reference_view_296.py',
+         'tests/test_battle_entry_integration_296.py',
+         'research/p3-stage-context/community-main.html', EVENT_MANIFEST, CONFIG_MANIFEST}
+-    for manifest_name in (EVENT_MANIFEST, CONFIG_MANIFEST):
++    for manifest_name in (EVENT_MANIFEST, CONFIG_MANIFEST, CURRENT_EVENT_MANIFEST):
+         manifest = json.loads((ROOT / manifest_name).read_bytes())
+         names.update(manifest['files'])
+         if 'data_file' in manifest:
+@@ -424,6 +426,7 @@
+                     later(check_event_source_failure)
+ 
+                 def damage_source(model, manifest_name, image_name, kind):
++                    require(manifest_name == model.MANIFEST, kind + '_negative_targets_current_runtime_authority')
+                     manifest = json.loads((ROOT / manifest_name).read_bytes())
+                     names = set(manifest['files']) | {manifest_name}
+                     if 'data_file' in manifest:
+@@ -466,7 +469,7 @@
+                         'restored_manifest_sha256': hashlib.sha256(raw).hexdigest()})
+ 
+                 def check_event_source_failure():
+-                    damage_source(events, EVENT_MANIFEST, 'event-source-invalidated', 'event')
++                    damage_source(events, CURRENT_EVENT_MANIFEST, 'event-source-invalidated', 'event')
+                     later(check_configuration)
+ 
+                 def check_configuration():

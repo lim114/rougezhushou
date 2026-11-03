@@ -1,0 +1,18 @@
+{
+  "section": 425,
+  "installed_source_changed": false,
+  "original_public_path": "rouge/player_toolbar_acceptance.py",
+  "original_sha256": "bbe24e3c60ccf4a574e112c2ca82ba65193c275882f9c329259d0a4772b06d92",
+  "preserved_public_copy": "verification/full-425/repair-source-baseline-attempt1-toolbar/player_toolbar_acceptance.py.original",
+  "candidate_sha256": "7bfd7fe971e49fe35754d90664d120ce2ed9fe739413c081a80bbe58cd5c53c9",
+  "scope": "Relocate only the isolated own toolbar/background fixture to the screen center, keeping every existing assertion, gap mask, OS hit test and product source behavior unchanged.",
+  "evidence": [
+    "verification/sections/425-toolbar-native-diagnostic/geometry.json",
+    "verification/sections/425-toolbar-native-diagnostic-attempt2/geometry.json"
+  ],
+  "facts": "Two retained actual failures hit a non-own Windows.UI.Core.CoreWindow. Both own windows contained the query point; changing DPI context gave the same hit. Root then actually inspected a Windows-MCP desktop snapshot and saw a system notification occupying this bottom-right point. Private desktop image and notification contents are not published.",
+  "inference": "An unrelated system notification intercepted the bottom-right fixture. Moving only the owned fixture avoids that observed external interference; a new actual strict native pass is still required.",
+  "product_click_through_fixed_or_pass_claimed": false,
+  "root_actual_windows_mcp_snapshot_called": true,
+  "private_desktop_snapshot_published": false
+}

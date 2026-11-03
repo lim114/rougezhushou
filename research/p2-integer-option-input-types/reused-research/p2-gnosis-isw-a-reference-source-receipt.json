@@ -1,0 +1,114 @@
+{
+  "section": 48,
+  "baseline_head": "04a9a3fbe3680dd221fc5254fadc9aeb050eb1cf",
+  "branch": "codex/p2-development",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "sources": {
+    "character_table": {
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "local_file": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json"
+    },
+    "skill_table": {
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "local_file": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json"
+    },
+    "battle_equip_table": {
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "bytes": 5710707,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+      "local_file": "/tmp/p2-audit/drone-traits/battle_equip_table.json"
+    },
+    "uniequip_table": {
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "bytes": 3365012,
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+      "local_file": "/tmp/p2-audit/drone-traits/uniequip_table.json"
+    },
+    "gamedata_const": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/gamedata_const.json",
+      "sha256": "216985a6185c199ee703eac1fb8c35f51ca6d45141894df9c1fd9397b6c940ee",
+      "bytes": 57803,
+      "status": 200,
+      "local_file": "/tmp/p2-audit/after-050/qualification/gamedata_const.json"
+    }
+  },
+  "reuse_receipts": [
+    "/tmp/p2-audit/after-045/modules/source-receipt.json",
+    "/tmp/p2-audit/gnosis-048-source-audit.json",
+    "/tmp/p2-audit/gnosis-048-frozen-res-source-audit.json",
+    "/tmp/p2-audit/after-050/qualification/gamedata-const-receipt.json",
+    "research/p2-gnosis-clock/source-receipt.json"
+  ],
+  "new_source_selectors": [
+    "battle_equip_table.uniequip_004_gnosis.phases[0].parts[1].overrideTraitDataBundle.candidates[0]",
+    "battle_equip_table.uniequip_004_gnosis.phases[1].parts[1].overrideTraitDataBundle.candidates[0]",
+    "battle_equip_table.uniequip_004_gnosis.phases[2].parts[1].overrideTraitDataBundle.candidates[0]"
+  ],
+  "trait_description_selectors": [
+    "battle_equip_table.uniequip_004_gnosis.phases[0].parts[0].overrideTraitDataBundle.candidates[0].additionalDescription",
+    "battle_equip_table.uniequip_004_gnosis.phases[1].parts[0].overrideTraitDataBundle.candidates[0].additionalDescription",
+    "battle_equip_table.uniequip_004_gnosis.phases[2].parts[0].overrideTraitDataBundle.candidates[0].additionalDescription"
+  ],
+  "source_facts": {
+    "original_talent_prefab": "1",
+    "module_prefabs": [
+      "#",
+      "1",
+      "10_root",
+      "11_root"
+    ],
+    "distinct_blackboards_preserved": true,
+    "dot_attack_scale": 0.5,
+    "dot_interval_seconds": 0.5,
+    "generic_frozen_enemy_resistance_delta": -15,
+    "generic_frozen_selector": "gamedata_const.termDescriptionDict[\"ba.frozen\"].description",
+    "generic_frozen_description": "无法移动、攻击及使用技能（通过<$ba.cold>寒冷</>触发）；敌方被冻结时，法术抗性-15"
+  },
+  "unknowns": [
+    "native ability attachment/coexistence",
+    "roguelike runtime tag selection",
+    "fragile stack increment/reset/phase interactions",
+    "first tick/count/refresh/coverage",
+    "DOT attack snapshot",
+    "owner exit and post-skill DOT lifecycle"
+  ],
+  "existing_parameter_scope": "freeze -15 resistance retained from existing calculation and confirmed by generic frozen description; this does not prove ISW-A attachment or actual state timing",
+  "public_cases": 476,
+  "unchanged_controls": 116,
+  "positive_observation_unknown_damage": 144,
+  "zero_observation_or_enemy_lifetime": 216,
+  "restored_ice_identity_cases": 252,
+  "all_clock_fields_and_timing_streams_unchanged": true,
+  "original_152_restored_ice_identity_cases": 72,
+  "timing_metadata_change": "unplaced_components marks conditional body references; phase_clock_unbound=true and resource_and_damage_shared_clock=false preserve unknown combined damage/state/DOT binding",
+  "all_inputs_and_catalogs_unchanged": true,
+  "new_tests": 15,
+  "related_tests_including_new": 106,
+  "test_failures": 0,
+  "test_errors": 0,
+  "production_hashes_before": {
+    "rouge/operator_engine.py": "fd29b8ee8a5360af495485a6a8836c4cdaf0ecb4b0b80ab957f674c0b3d3d5c2",
+    "rouge/catalog.py": "5134cbc5f037a998d0af0f9d4b49a664e6d579699bc0b2efa37b4314c9fd76f4",
+    "rouge/reporting.py": "f64e08dba3de67e7cdc07692748ec47c2ea3a899a52ed4c10861da4fc2c46422",
+    "rouge/damage.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+  },
+  "production_hashes_after": {
+    "rouge/operator_engine.py": "fd29b8ee8a5360af495485a6a8836c4cdaf0ecb4b0b80ab957f674c0b3d3d5c2",
+    "rouge/catalog.py": "5134cbc5f037a998d0af0f9d4b49a664e6d579699bc0b2efa37b4314c9fd76f4",
+    "rouge/reporting.py": "f64e08dba3de67e7cdc07692748ec47c2ea3a899a52ed4c10861da4fc2c46422",
+    "rouge/damage.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+  },
+  "production_drift": false,
+  "repo_mutations": 0,
+  "private_state_read": false,
+  "game_actions": 0,
+  "messages_sent": 0,
+  "native_windows_verified": false,
+  "wine_verified_by_draft_agent": false
+}

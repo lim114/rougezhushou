@@ -1,0 +1,62 @@
+from pathlib import Path
+import unittest,json,gzip,copy
+from rouge.damage import calculate_damage
+from rouge.estimate import format_estimate
+from rouge.operator_engine import selected_talents
+from rouge.catalog import catalog
+OUT=Path(__file__).parent
+STRICT=lambda x:json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+def evaluate(**kw):
+ return calculate_damage({'operator':'char_1038_whitw2','skill':1,'skill_rank':7,'elite':0,'base_attack':1000,'window_seconds':1,**kw})
+class IndependentHeadwolfReview(unittest.TestCase):
+ def test_e0_whole_outcome_does_not_gain_a_locked_talent_with_age(self):
+  for potential in range(1,7):
+   for mode in ['frames','continuous']:
+    for rank in range(1,8):
+     original=evaluate(potential=potential,timing_mode=mode,skill_rank=rank,deployment_elapsed_seconds=0)
+     for age in [60,120,3600]:
+      with self.subTest(potential=potential,mode=mode,rank=rank,age=age):
+       self.assertEqual(STRICT(evaluate(potential=potential,timing_mode=mode,skill_rank=rank,deployment_elapsed_seconds=age)),STRICT(original))
+ def test_s1_described_passive_extra_unit_survives_e0_fix(self):
+  for mode in ['frames','continuous']:
+   for age in [0,60,3600]:
+    r=evaluate(timing_mode=mode,deployment_elapsed_seconds=age,window_seconds=2)
+    drones=[c for c in r['components'] if c['name']=='浮游单元']
+    self.assertTrue(drones)
+    self.assertTrue(all(c['hits']==2 for c in drones))
+    self.assertTrue(all('independent drone clock unverified' in c['timing_reference'] for c in drones))
+ def test_all_qualified_reference_results_and_reports_match_immutable_baseline(self):
+  pairs=json.loads(gzip.decompress((OUT/'final72-paired-outcomes.json.gz').read_bytes()))
+  qualified=[r for r in pairs if r['scenario']['elite']>0]
+  self.assertTrue(qualified)
+  for row in qualified:
+   self.assertEqual(STRICT(row['baseline_outcome']),STRICT(row['draft_outcome']))
+ def test_talent_cultivation_and_potential_boundaries_match_original_selectors(self):
+  p=catalog()['operators']['char_1038_whitw2']
+  for elite,potential,expected_interval in [(0,1,None),(0,6,None),(1,1,30),(1,5,30),(1,6,26),(2,1,20),(2,5,20),(2,6,16)]:
+   ts,_=selected_talents(p,{'elite':elite,'level':1,'potential':potential})
+   head=next((t for t in ts if t['name']=='头狼'),None)
+   self.assertEqual(head['values']['interval'] if head else None,expected_interval)
+ def test_other_drone_owner_keeps_age_invariance(self):
+  for mode in ['frames','continuous']:
+   a=evaluate(operator='char_328_cammou',skill=1,elite=2,skill_rank=10,timing_mode=mode,deployment_elapsed_seconds=0)
+   b=evaluate(operator='char_328_cammou',skill=1,elite=2,skill_rank=10,timing_mode=mode,deployment_elapsed_seconds=3600)
+   self.assertEqual(STRICT(a),STRICT(b))
+ def test_existing_skill_and_mastery_qualification_errors_are_preserved(self):
+  for extra in [{'skill':2},{'skill':3},{'skill_rank':8},{'skill_rank':10}]:
+   with self.assertRaisesRegex(ValueError,'当前精英阶段尚未开放所选技能或专精。'):evaluate(**extra,deployment_elapsed_seconds=3600)
+ def test_zero_window_and_lifetime_do_not_create_reference_hits(self):
+  for extra in [{'window_seconds':0},{'timing':{'target_disappears_seconds':0}},{'timing':{'target_windows':[]}}]:
+   for mode in ['frames','continuous']:
+    r=evaluate(**extra,timing_mode=mode,deployment_elapsed_seconds=3600)
+    # continuous target-range [] is not assumed to cancel its legacy reference.
+    if mode=='continuous' and extra=={'timing':{'target_windows':[]}}:continue
+    self.assertEqual(r['total_damage'],0)
+ def test_special_s3_retains_unbound_clocks_and_unknown_owner_empty_range(self):
+  r=evaluate(elite=2,skill=3,skill_rank=10,deployment_elapsed_seconds=3600,timing={'target_windows':[]})
+  ref=r['drone_lifecycle_reference']
+  for field in ['arrival_seconds','independent_attack_times_seconds','same_target_hit_counter','aura_first_tick_seconds','aura_tick_count']:
+   self.assertIsNone(ref[field])
+  self.assertFalse(ref['native_lifecycle_verified'])
+  self.assertTrue(ref['drone_source_possible']['window'])
+  self.assertIsNone(r['total_damage'])

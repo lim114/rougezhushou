@@ -1,0 +1,394 @@
+{
+  "qualification_count": 13,
+  "numeric_inputs": 10,
+  "boolean_inputs": 3,
+  "scope": "One coherent existing offline-input refresh group; no window/continuous or mathematical-model work",
+  "controls": [
+    {
+      "widget": "deployment_elapsed",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "deployment_elapsed_seconds",
+      "initialization": "number(0,3600,2)",
+      "existing_scope": "silverash E2 visibility; existing elapsed parameter consumers",
+      "creation_line": 561,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "healing_targets",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "healing_targets",
+      "initialization": "QSpinBox; initial 1; base range0..100; current skill cap",
+      "existing_scope": "has_healing + per-skill cap; hidden state retained",
+      "creation_line": 563,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "defense",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "enemy_defense",
+      "initialization": "number(0,100000,0)",
+      "existing_scope": "Manual target only; selected enemy hides/disables and existing resolver overrides",
+      "creation_line": 571,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "resistance",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "enemy_resistance",
+      "initialization": "number(0,100,1)",
+      "existing_scope": "Manual target only; selected enemy hides/disables and existing resolver overrides",
+      "creation_line": 593,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "cooperative",
+      "signal_for_future_review": "toggled",
+      "existing_user_input_field": "cooperative",
+      "initialization": "QCheckBox; defaultFalse",
+      "existing_scope": "silverash S3",
+      "creation_line": 636,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "fragile",
+      "signal_for_future_review": "toggled",
+      "existing_user_input_field": "preexisting_fragile",
+      "initialization": "QCheckBox; explicit initialTrue",
+      "existing_scope": "silverash S3",
+      "creation_line": 638,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "charge_count",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "charge_count",
+      "initialization": "QSpinBox0..100; default0",
+      "existing_scope": "mechanist S3; zero-window declared positive count remains existing error",
+      "creation_line": 641,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "shield_breaks",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "shield_break_count",
+      "initialization": "QSpinBox0..100; default0",
+      "existing_scope": "mechanist S2 conditional count",
+      "creation_line": 644,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "shield_duration_known",
+      "signal_for_future_review": "toggled",
+      "existing_user_input_field": "skill_duration_seconds inclusion gate",
+      "initialization": "QCheckBox; defaultFalse; existing toggled only setEnabled",
+      "existing_scope": "mechanist S2 only; false omits duration field",
+      "creation_line": 648,
+      "direct_connections_in_fixed_source": [
+        {
+          "line": 652,
+          "source": "self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)"
+        }
+      ],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "shield_duration",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "skill_duration_seconds",
+      "initialization": "number(30,3600,2); minimum.01; initial disabled",
+      "existing_scope": "mechanist S2 only AND gate checked",
+      "creation_line": 649,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "activation_count",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "activation_count",
+      "initialization": "QSpinBox0..100; initial1",
+      "existing_scope": "silverash S2 conditional own cast count",
+      "creation_line": 654,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "companion_attack",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "companion_attack",
+      "initialization": "number(1000,100000,0)",
+      "existing_scope": "silverash S2 recipient condition",
+      "creation_line": 658,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    },
+    {
+      "widget": "stacks",
+      "signal_for_future_review": "valueChanged",
+      "existing_user_input_field": "deployment_stacks",
+      "initialization": "QSpinBox0..2; default0",
+      "existing_scope": "silverash S2 deployment trigger condition",
+      "creation_line": 660,
+      "direct_connections_in_fixed_source": [],
+      "calculate_refresh_connection_present": false,
+      "qualification": "SOURCE_SUPPORTED_OMITTED_REFRESH_CALLBACK_NO_RUNTIME_REPRODUCTION",
+      "future_minimal_change": "Connect existing signal to current calculate after all default setters/complete widget construction; preserve bounds/visibility/gate/hidden values."
+    }
+  ],
+  "number_factory_lines": [
+    69,
+    75
+  ],
+  "number_factory_has_no_signal_connection": true,
+  "OPTIONS_skip_healing_targets": true,
+  "OPTIONS_widgets_are_independent_instances_not_existing_self_controls": true,
+  "existing_connects": [
+    {
+      "line": 115,
+      "source": "self.events.sample.connect(self.sample_received)"
+    },
+    {
+      "line": 116,
+      "source": "self.events.sample_error.connect(self.sample_failed)"
+    },
+    {
+      "line": 117,
+      "source": "self.events.error.connect(self.show_error)"
+    },
+    {
+      "line": 118,
+      "source": "self.events.chunk.connect(self.chat_chunk)"
+    },
+    {
+      "line": 119,
+      "source": "self.events.chat_done.connect(self.chat_finished)"
+    },
+    {
+      "line": 120,
+      "source": "self.events.desktop_state.connect(self.desktop_state_received)"
+    },
+    {
+      "line": 128,
+      "source": "self.battle_preview.stageSelected.connect(self.select_battle_stage)"
+    },
+    {
+      "line": 135,
+      "source": "self.timer.timeout.connect(lambda:self.sample_now(automatic=True))"
+    },
+    {
+      "line": 136,
+      "source": "self.auto.toggled.connect(self.toggle_auto)"
+    },
+    {
+      "line": 156,
+      "source": "refresh.clicked.connect(self.refresh_windows)"
+    },
+    {
+      "line": 159,
+      "source": "self.connect_button.clicked.connect(self.connect_game)"
+    },
+    {
+      "line": 162,
+      "source": "self.sample_button.clicked.connect(self.sample_now)"
+    },
+    {
+      "line": 168,
+      "source": "self.period.valueChanged.connect(lambda value: self.timer.setInterval(int(value*1000)))"
+    },
+    {
+      "line": 179,
+      "source": "self.recognition_mode.currentIndexChanged.connect(self.change_recognition_mode)"
+    },
+    {
+      "line": 203,
+      "source": "self.reset_run_button.clicked.connect(self.reset_run)"
+    },
+    {
+      "line": 230,
+      "source": "self.map_view.nodeSelected.connect(self.map_node_selected)"
+    },
+    {
+      "line": 233,
+      "source": "self.map_nodes.currentIndexChanged.connect(lambda: self.map_view.select_node(self.map_nodes.currentData()))"
+    },
+    {
+      "line": 242,
+      "source": "self.map_technical.toggled.connect(self.map_text.setVisible)"
+    },
+    {
+      "line": 243,
+      "source": "self.map_technical.toggled.connect(lambda:self.map_node_selected(self.map_view.selected))"
+    },
+    {
+      "line": 524,
+      "source": "self.operator.currentIndexChanged.connect(self.update_operator)"
+    },
+    {
+      "line": 529,
+      "source": "self.use_run_training.toggled.connect(lambda:self.update_operator())"
+    },
+    {
+      "line": 540,
+      "source": "restore_level.clicked.connect(lambda:self.update_operator())"
+    },
+    {
+      "line": 550,
+      "source": "self.level.valueChanged.connect(self.level_changed)"
+    },
+    {
+      "line": 553,
+      "source": "self.skill.currentIndexChanged.connect(self.skill_changed)"
+    },
+    {
+      "line": 569,
+      "source": "self.continuous_attacks.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 583,
+      "source": "self.target_stage.currentIndexChanged.connect(self.update_target_enemies)"
+    },
+    {
+      "line": 584,
+      "source": "self.target_enemy.currentIndexChanged.connect(self.update_enemy_context)"
+    },
+    {
+      "line": 591,
+      "source": "self.orb_mode.currentIndexChanged.connect(lambda:self.calculate() if hasattr(self,'raw_damage') else None)"
+    },
+    {
+      "line": 615,
+      "source": "self.frame_timing.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 616,
+      "source": "self.timing_scenario.textChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 624,
+      "source": "self.relic_context.textChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 634,
+      "source": "self.target_buff_test.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 635,
+      "source": "self.target_buff_list.itemChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 652,
+      "source": "self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)"
+    },
+    {
+      "line": 684,
+      "source": "self.auto_relics.toggled.connect(self.sync_run_relics)"
+    },
+    {
+      "line": 688,
+      "source": "self.relic_filter.textChanged.connect(self.filter_relics)"
+    },
+    {
+      "line": 704,
+      "source": "self.relic_list.itemChanged.connect(lambda:self.calculate() if not self.auto_relics.isChecked() else None)"
+    },
+    {
+      "line": 710,
+      "source": "calculate.clicked.connect(self.calculate)"
+    },
+    {
+      "line": 716,
+      "source": "self.raw_damage.toggled.connect(self.render_damage)"
+    },
+    {
+      "line": 719,
+      "source": "self.damage_technical.toggled.connect(self.render_damage)"
+    },
+    {
+      "line": 1234,
+      "source": "self.desktop_refresh.clicked.connect(lambda:self.desktop_request('refresh'))"
+    },
+    {
+      "line": 1237,
+      "source": "self.desktop_bind.clicked.connect(self.bind_desktop)"
+    },
+    {
+      "line": 1240,
+      "source": "self.desktop_read.clicked.connect(lambda:self.desktop_request('read'))"
+    },
+    {
+      "line": 1264,
+      "source": "save.clicked.connect(self.save_settings)"
+    },
+    {
+      "line": 1267,
+      "source": "clear.clicked.connect(self.clear_chat)"
+    },
+    {
+      "line": 1282,
+      "source": "self.send_button.clicked.connect(self.send_chat)"
+    },
+    {
+      "line": 1285,
+      "source": "cancel.clicked.connect(self.cancel_chat)"
+    },
+    {
+      "line": 1288,
+      "source": "self.mode.currentIndexChanged.connect(self.chat_mode_changed)"
+    },
+    {
+      "line": 325,
+      "source": "self.capture.connect(target)"
+    },
+    {
+      "line": 608,
+      "source": "widget.currentIndexChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 369,
+      "source": "self.capture.connect(targets[0])"
+    },
+    {
+      "line": 669,
+      "source": "widget.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 673,
+      "source": "widget.valueChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "line": 676,
+      "source": "widget.valueChanged.connect(lambda:self.calculate())"
+    }
+  ]
+}

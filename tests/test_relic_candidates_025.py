@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from rouge.catalog import stage_previews
 from rouge.damage import calculate_damage
+from rouge.enemy_panel import enemy_panel_reference
 from rouge.reporting import format_report
 
 
@@ -160,9 +161,11 @@ class RelicCandidates025Tests(unittest.TestCase):
         self.assertTrue(result['relic_resolution']['complete'])
 
     def test_gravity_retains_unknown_weight_instead_of_defaulting_to_zero(self):
-        preview = copy.deepcopy(stage_previews()['ro6_n_1_2'])
-        next(e for e in preview['possible_enemies'] if e['id'] == TARGET['enemy_id'])['reference_stats']['massLevel'] = None
-        with patch('rouge.enemy_environment.stage_previews', return_value={'ro6_n_1_2': preview}):
+        # Section203 moved the authoritative attributes to the exact-level builder.
+        # Inject a missing field at that source, rather than an obsolete preview copy.
+        panel = copy.deepcopy(enemy_panel_reference(TARGET['stage_id'], TARGET['enemy_id'], TARGET['level']))
+        panel['attributes']['massLevel'] = None
+        with patch('rouge.enemy_panel.enemy_panel_reference', return_value=panel):
             result = calculate_damage({'operator': 'mechanist', 'skill': 3,
                 'target_enemy': TARGET, 'relic_ids': [GRAVITY]})
         record = result['relic_resolution']['records'][0]

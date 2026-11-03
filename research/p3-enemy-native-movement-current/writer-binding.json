@@ -1,0 +1,88 @@
+{
+  "registration": {
+    "call": "0x180ce730f",
+    "arg": {
+      "instruction": "0x180ce72fe",
+      "data": {
+        "address": "0x1888dd2e8",
+        "bytes8": "192809c000000000",
+        "uint32": 3221825561,
+        "float32": -2.1430723667144775,
+        "uint64": 3221825561
+      },
+      "usage": {
+        "kind": 6,
+        "index": 300044,
+        "method_index": 85098,
+        "method": "Torappu.Battle.Runes.RuneManager$$_Register",
+        "method_args": [
+          "Torappu.Battle.Runes.Internal.EAttribuesMul"
+        ],
+        "method_spec_pos": 124870960
+      }
+    },
+    "key": {
+      "instruction": "0x180ce7308",
+      "data": {
+        "address": "0x18894da70",
+        "bytes8": "d5dc00a000000000",
+        "uint32": 2684411093,
+        "float32": -1.0915088914807326e-19,
+        "uint64": 2684411093
+      },
+      "usage": {
+        "kind": 5,
+        "index": 28266,
+        "literal": "enemy_attribute_mul"
+      }
+    }
+  },
+  "move_speed_range": {
+    "field": "moveSpeed",
+    "field_index": 23206,
+    "field_token": "0x4005aa7",
+    "range_row_index": 8754,
+    "physical_offset": 42921275,
+    "raw_hex": "013978000002000055c0014e540c0ccdcccc3d",
+    "fully_consumed": true,
+    "attributes": [
+      {
+        "type": "Torappu.AttributeMetaAttribute",
+        "constructor_index": 30777,
+        "arguments": [
+          {
+            "kind": 8,
+            "enum": "Torappu.AttributeType",
+            "value": 6
+          },
+          {
+            "kind": 12,
+            "enum": null,
+            "value": 0.10000000149011612
+          }
+        ]
+      }
+    ]
+  },
+  "enum_constant": 6,
+  "receiver_field": "Torappu.LevelData+EnemyData.attributes@0x28",
+  "reflective_field": "Torappu.AttributesData.moveSpeed@0x8c",
+  "case_insensitive_numeric_key_compare": {
+    "caller": "0x182320835",
+    "method_index": 238819,
+    "ignore_case_argument": true
+  },
+  "arithmetic_call_chain": [
+    "FP(float) input@0x180ce8bb1",
+    "FP(float) factor@0x180ce8bc1",
+    "multiplication delegate@0x180cf19e4",
+    "Clamp@0x180ce8c0c",
+    "FP.AsFloat writer@0x18231b0ae",
+    "ObscuredFloat writer branch@0x18231af74",
+    "LoadOptions moveMultiplier@0x1805da092->MOVE_MULTIPLIER@0x1805da0f0",
+    "Entity.get_moveSpeed AttributeType6@0x180707b3a then MOVE_MULTIPLIER multiply@0x180707bb4"
+  ],
+  "unwritten_selector_or_max_flag_zero_inferred": false,
+  "actual_execution_verified": false,
+  "no_upper_branch_source": "published-movement-source.json, independently published standard range; not native allocation proof"
+}

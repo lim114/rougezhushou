@@ -1,0 +1,15 @@
+# 086独立消费边界子审
+
+固定b5a40f的8份源码全部与git原字节一致；上游28件清单逐件核hash后，独立AST重算12字段17处直接get。AST记录body/orelse，避免将elif之前的负分支误当同时满足的正资格。未导入或运行任何产品代码。
+
+水月225/226的enemy_below_half虽然在owner分支读值，加成来自实际选中反移情。构造84/85先经selected_talents生成tv，talent151缺名取0；原index1/prefab2两候选均E2L1，不能将E0/E1纸面读值等同有效加成。模组要经过selected29的实际培养门槛，此审不推断AMB-Y附着。
+
+祥子857读取远程80%/100%；858仅有请求模组、not normal、实际所选颂乐音符max_cnt>10时把技能比例覆写1。原模块2/3同index0/prefab1 max_cnt12、E2L60与描述支持该已有范围。859的normal仍使用远程比例；1470的normal执行还有cycle及连续攻击条件，故只证明存在真实正常攻击consumer，不宣称所有合资格模组API输入都必然产生差异。
+
+梓兰double_charge四个get不是仅箭项：1031刚连射、1034条件参数、1313自然SP初动/回转双成本、1440事件SP成本。均S1；normal不发额外箭。power_coating1026先读取get但normal固定倍率1；原强击瓶专家E0起存在，全skill倍率仍使用实际选中值，不能把normal的读取称为有效加成。
+
+其余范围：Closur全skill/normal；Gnosis S3终结及终结资料；Ines S3部署及费用note；Oblvns organ/fever S2；Angel2 steal S2、coordinate S3；Wisdel overload S2，后三组都无normal条件效果。Gnosis零窗口等数值不能直接推成整个API字段失效，因为终结reference另读该条件。
+
+原准备、引擎数值/声明事件/SP、finishers及费用报告各有旧错误路径，附件逐行指明；这里只证明固定源码顺序，没有执行旧错误或提出新的guard方案。外层deployment/wine会重复核心评价，未知外层分支的全局错误先后不能由每次core源码外推。
+
+四原表完整字节重新核hash；只对三具名天赋、祥子单模组具名覆盖、梓兰S1rank10原文做窄原选择核对，没有重做240rank/102module语义审计。上游36探针及其历史结果完全没有重跑，此子审也不把它们当自己的执行证明。原生clock、附着、位置/目标覆盖、箭资源与live游戏均保留未知。

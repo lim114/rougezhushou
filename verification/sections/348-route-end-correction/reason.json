@@ -1,0 +1,40 @@
+{
+  "section": 348,
+  "necessary_attempt1_actual_exit": 1,
+  "tests_ran": 39,
+  "failures": 1,
+  "native_attempt1_passed": true,
+  "cause": "Test incorrectly assumed first main route endpoint in every map must be a visible protection target. Product correctly left two unmapped.",
+  "source_counterexamples": [
+    {
+      "stage": "ro6_b_5",
+      "action_key": "0",
+      "route_index": 0,
+      "original_endPosition": {
+        "row": 5,
+        "col": 6
+      },
+      "top_down_grid_cell": {
+        "row": 3,
+        "col": 6
+      },
+      "center": null
+    },
+    {
+      "stage": "ro6_b_5_b",
+      "action_key": "0",
+      "route_index": 0,
+      "original_endPosition": {
+        "row": 5,
+        "col": 6
+      },
+      "top_down_grid_cell": {
+        "row": 3,
+        "col": 6
+      },
+      "center": null
+    }
+  ],
+  "correction": "Validate all main-action position joins strictly against observed symbol cells; retain exact two first-route counterexamples as negative assertions. No product mapping or source coordinates changed.",
+  "final_source_validation_repeated_for_changed_test_dependency": true
+}

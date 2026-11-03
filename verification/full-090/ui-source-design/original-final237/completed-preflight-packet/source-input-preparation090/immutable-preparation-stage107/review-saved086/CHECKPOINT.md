@@ -1,0 +1,1 @@
+Saved-only44正式通过。44完整native/result/输入前后绑定，float按hex比较。22组：hidden8+MizuE1共9组whole同，active12+module1共13组whole异；moduleS3两flags各同次normal1/max12/markerTrue，windowcomponents与skillattack同。作者实测44API/31unique、132requests/176formatterentries、catalog内部API221；本复核0API/helper/formatter/Qt/Wine/tests。原静态7与历史35/snapshot38不改，真实UI090与87–90仍pending。

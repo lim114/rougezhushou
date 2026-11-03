@@ -1,0 +1,95 @@
+{
+  "number": 95,
+  "topic": "所选模组原件追溯、覆盖边界与完整状态隔离",
+  "summary": "第95节实现所选模组的原件资料追溯，覆盖固定资料中的34个模组、102个阶段、217个part和267个candidate，保留原始层级、顺序、字段名、null与黑板资料。只新增 report.selected_module_source_reference、末尾无数值指标的资料章节，以及技术报告中的原件JSON追溯尾段；未选择模组时不生成占位追溯。来源资料、新报告对象与调用方及原有结果保持隔离；旧伤害、DPS、治疗、时序、既有报告字段和段落继续按完整native及三种文本精确对照。账号/本局优先、等级和潜能条件沿用现有逻辑，原件条件展示不引入新的条件筛选或数值计算。 资料可追溯不代表所有原生机制已实现。尚未建模的技能、召唤物、本体与子单位联动及其他专用条件机制继续保留原有实现边界和未实现说明；token黑板等原件资料的展示不等于已接入对应数值机制。本节只补资料追溯与覆盖边界说明。 相关169项通过；Linux精选1107运行、1106通过、1历史跳过、0失败/错误。实际Wine第2轮2个独立窗口、41状态、39手动按钮、113计算API均返回字典、113 prepared及228显式文本请求通过，735源码零漂移；保存审核2974快照、70 live alias及80 baseline对照通过，原件、缓存与重建结果隔离。实际查看3张窗口PNG，完整段落与数字按保存记录核对。首次窗口失败1和验证脚本破坏既有共享引用的诊断保留；只修验证脚本整体图谱比较。旧duration回归只适配新增资料字段及末尾说明章，原52矩阵和12方法、原指标及完整比较保持；原精选失败日志保留。全量95仍待fresh运行，尚未commit或push。",
+  "next_action": "立即执行第95节后fresh全量可用Linux、Wine、项目窗口和保存证据验证，实际PASS后本组一次commit并正常推送origin codex/p2-development，再自动开展96—100条件资格与后续有来源功能；P2真正完成才转P3，未知原生consumer与时钟保留未知。",
+  "limitations": "Wine兼容验证不代表原生Windows、游戏采样或桌面聊天；3PNG确认窗口及资料标题可见，标题下完整内容不全部处于视口，内容由保存审核核实。缺失私人/历史材料不重建不计通过；full095源码准备未当全量运行。",
+  "changed_paths": [
+    "rouge/reporting.py",
+    "scripts/verify_cloud.py",
+    "tests/test_token_duration_reference.py",
+    "rouge/data/module-source-reference.json",
+    "rouge/module_source_reference.py",
+    "tests/test_selected_module_source_reference.py"
+  ],
+  "related_scope": "module source reference, report/state/native qualification and retained token-duration 12-method/52-state regression: 169 actual tests",
+  "root_source_script": "/workspace/.continuation/root-integrate-token-duration095.py",
+  "root_source_guard": "/workspace/.continuation/root-source-095-v2.json",
+  "root_related_log": "/workspace/.continuation/root-related-095-v2.log",
+  "root_selected_log": "/workspace/.continuation/root-selected-095-v2.log",
+  "commit_message": "Expose pinned selected-module provenance and calculation coverage",
+  "verification": {
+    "passed": true,
+    "workflow_complete": true,
+    "research_archive": "research/p2-section095-selected-module-source-report",
+    "source_receipt": "research/p2-section095-selected-module-source-report/root-source-095-v2.json",
+    "root_prior_commit": "f509d186e501bfcfd042e45b46e398ec756840ec",
+    "new_test_methods": 13,
+    "registry_change": true,
+    "maintained_source_files": 735,
+    "unchanged_maintained_source_files": 729,
+    "new_maintained_source_files": [
+      "rouge/data/module-source-reference.json",
+      "rouge/module_source_reference.py",
+      "tests/test_selected_module_source_reference.py"
+    ],
+    "changed_existing_maintained_source_files": [
+      "rouge/reporting.py",
+      "scripts/verify_cloud.py",
+      "tests/test_token_duration_reference.py"
+    ],
+    "actual_base_section": 94,
+    "actual_window_verified_by_root": true,
+    "actual_window_receipt": "research/p2-section095-selected-module-source-report/focused095/actual-attempt2-pass/wine-module-report-window-095.json",
+    "actual_window_typed_native_records": "research/p2-section095-selected-module-source-report/focused095/actual-attempt2-pass/wine-module-report-window-095-records.json.gz",
+    "actual_window_saved_record_review": "research/p2-section095-selected-module-source-report/root095/root-saved-focused095-review.json",
+    "actual_window_visual_review": "research/p2-section095-selected-module-source-report/root095/root-focused095-visual-review.json",
+    "actual_states": 41,
+    "actual_fresh_MainWindows": 2,
+    "actual_manual_buttons": 39,
+    "actual_saved_counts": {
+      "states": 41,
+      "fresh_MainWindows": 2,
+      "manual_buttons": 39,
+      "three_text_requests": 228,
+      "live_alias_checks": 70,
+      "baseline_comparisons": 80
+    },
+    "actual_saved_snapshots_verified": 2974,
+    "actual_API_outcomes": {
+      "returned_dict": 113,
+      "raised_exception": 0,
+      "returned_none_or_unobserved_unwind": 0
+    },
+    "actual_prepared_entries": 113,
+    "actual_three_text_requests": 228,
+    "actual_Wine_elapsed_seconds": 331.058,
+    "actual_Wine_primary_shell_exit_code": 0,
+    "actual_Wine_primary_shell_exit_code_captured": true,
+    "actual_saved_review_primary_exit_code": 0,
+    "actual_saved_review_primary_exit_code_captured": true,
+    "actual_PNGs_viewed": 3,
+    "source_after_checks_and_window_unchanged": true,
+    "tests_API_counts_not_instrumented": true,
+    "source_projection": {
+      "modules": 34,
+      "stages": 102,
+      "parts": 217,
+      "candidates": 267
+    },
+    "first_actual_Window_attempt": {
+      "primary_exit": 1,
+      "passed": false,
+      "preserved": true,
+      "issue": "Validation standalone-result clone destroyed old cross-root alias; whole graph comparison corrected in new attempt2 source."
+    },
+    "same_problem_actual_window_attempts": 2,
+    "native_windows_game_verified": false,
+    "complete_repository_validation": false,
+    "full095_available_runtime_pass": false,
+    "PROJECT_PROGRESS_remaining_only_unchanged_sha256": "85979acbfd41b7de256c3c75d855875d40d9881027f1cf569b0403c04106b58b",
+    "future_source_preparations_not_completed_sections": [
+      96
+    ]
+  }
+}

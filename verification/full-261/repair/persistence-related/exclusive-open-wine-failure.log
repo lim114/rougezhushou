@@ -1,0 +1,62 @@
+FFFF.............................................................................................................................
+======================================================================
+FAIL: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='run', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_persistence_temporary_no_clobber_261.py", line 82, in test_dangling_temporary_symlink_does_not_create_the_target
+    self.assertFalse(target.exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='run', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_persistence_temporary_no_clobber_261.py", line 81, in test_dangling_temporary_symlink_does_not_create_the_target
+    self.assert_saved_safely(model, path)
+  File "Z:\workspace\rougezhushou\tests\test_persistence_temporary_no_clobber_261.py", line 46, in assert_saved_safely
+    self.assertEqual(json.loads(path.read_text(encoding='utf-8')), expected)
+AssertionError: {'id'[409 chars]e, 'node_contents': [], 'notice': '等待本局页面读取；同一局记忆仅在手动开始新局后清空。'} != {'id'[409 chars]e, 'node_contents': [], 'notice': 'public new in-memory state'}
+  {'bar_signature': None,
+   'config': {},
+   'crew_count': None,
+   'history': [],
+   'id': '1688d657-c0de-4ed9-bb41-4a96316e20b2',
+   'inventory_confirmed_at': None,
+   'inventory_verified': False,
+   'last_node_content': None,
+   'last_read': None,
+   'maps': {},
+   'node_contents': [],
+-  'notice': '等待本局页面读取；同一局记忆仅在手动开始新局后清空。',
++  'notice': 'public new in-memory state',
+   'operators': {},
+   'relic_count': None,
+   'relic_icon_memory': None,
+   'relics': {},
+   'resources': {},
+   'selected_operator': None,
+   'started_at': 1791884163.8846416,
+   'tactical_tools': {}}
+
+======================================================================
+FAIL: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='cache', existing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_persistence_temporary_no_clobber_261.py", line 82, in test_dangling_temporary_symlink_does_not_create_the_target
+    self.assertFalse(target.exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_dangling_temporary_symlink_does_not_create_the_target (tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.test_dangling_temporary_symlink_does_not_create_the_target) (kind='cache', existing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_persistence_temporary_no_clobber_261.py", line 82, in test_dangling_temporary_symlink_does_not_create_the_target
+    self.assertFalse(target.exists())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 126 tests in 3.907s
+
+FAILED (failures=4)
+X connection to :99 broken (explicit kill or server shutdown).
+X connection to :99 broken (explicit kill or server shutdown).

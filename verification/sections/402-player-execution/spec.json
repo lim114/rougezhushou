@@ -1,0 +1,20 @@
+{
+  "title": "手动新局前归档、历史与当前记录分开查看",
+  "change": "只有玩家手动开始新局时，先在本机保留上一局完整已读记录；可手动载入历史独立查看，读取历史不会恢复或覆盖当前对局。",
+  "limits": "归档不是通关或结算；原持久化会话已失败或保留不可读原件时沿用既有不重试契约，不额外强行归档。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "归档失败时正常会话不先清空本局",
+    "同局不同归档版本不重复计局",
+    "历史丢失不借当前记录冒充",
+    "只在打开或主动刷新时读历史，原始特殊值保留"
+  ],
+  "test": "tests.test_player_history_store_402",
+  "native": "scripts/verify_player_history_window_402.py",
+  "next": "继续第403节：按层回顾节点及明确记录的旧类型。",
+  "additional_tests": [
+    "tests.test_player_replay_401"
+  ],
+  "unit_receipt": "verification/sections/402-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/402-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/402-player-window-process-attempt2/process.json"
+}

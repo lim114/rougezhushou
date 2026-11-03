@@ -1,0 +1,87 @@
+{
+  "production_OPTIONS_boolean_definitions": {
+    "char_4204_mantra": [
+      [
+        "enemy_is_boss",
+        "目标为领袖（损伤阈值2000）",
+        false,
+        1,
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        "enemy_in_neural_break",
+        "开始时已在神经损伤爆发期",
+        false,
+        1,
+        [
+          1,
+          2
+        ]
+      ]
+    ],
+    "char_1042_phatm2": [
+      [
+        "enemy_is_boss",
+        "目标为领袖（损伤阈值2000）",
+        false,
+        1,
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        "enemy_in_neural_break",
+        "开始时已在神经损伤爆发期",
+        false,
+        1,
+        [
+          1,
+          2,
+          3
+        ]
+      ]
+    ],
+    "char_1048_orchd2": [
+      [
+        "power_coating",
+        "本次攻击仍在首轮50次强击瓶覆盖内",
+        true,
+        1,
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        "near_previous_deployment",
+        "部署至上次位置附近（30秒加攻）",
+        false,
+        1,
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        "double_charge",
+        "额外消耗一层充能施放刚连射",
+        true,
+        1,
+        [
+          1
+        ]
+      ]
+    ]
+  },
+  "static_binding_only_no_Qt_execution": true,
+  "actual_app_builder_source": "app.py bool default -> QCheckBox -> setChecked -> toggled calculate",
+  "actual_serializer_source": "current owner/skill QCheckBox -> isChecked() in scenario",
+  "OPTIONS_is_UI_exposure_and_not_engine_consumer_scope": true
+}

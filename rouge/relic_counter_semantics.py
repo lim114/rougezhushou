@@ -4,6 +4,7 @@ from functools import lru_cache
 import math
 
 from .relics import mechanics
+from .record_flags import active_record
 
 # Each own-item layer is the same value consumed by its existing numerical
 # rule. These bindings do not identify a random recipient, count battles, or
@@ -15,7 +16,10 @@ COUNTER_BINDINGS = {
     'rogue_6_relic_fight_30': ('probe_stacks','layer_zone_end_battle',99),
     'rogue_6_relic_artifact_7': ('grudge_stacks','layer_after_battle_data',999),
 }
-RESOURCE_LABELS = {'gold':'源石锭','parts_count':'零件数',
+HUD_RESOURCE_LABELS = {'life':'目标生命','shield':'护盾','command':'指挥等级',
+    'hope':'希望','action':'行动力','valuation':'总估价'}
+RESOURCE_CAPACITY_LABELS = {'life':'上限','hope':'上限','parts_count':'容量'}
+RESOURCE_LABELS = {**HUD_RESOURCE_LABELS,'gold':'源石锭','parts_count':'零件数',
     'altar_stacks':'圆石祭坛层数','mercenary_stacks':'佣兵饰物层数',
     'fire_rod_stacks':'厄运火杆层数','probe_stacks':'探测先锋层数',
     'grudge_stacks':'仇名录层数'}
@@ -64,6 +68,7 @@ def valid_counter_resource(key,record):
     if not isinstance(record,dict) or record.get('source')!='held_card_counter':return False
     proof=record.get('counter_evidence')
     if not isinstance(proof,dict):return False
+    if not isinstance(proof.get('id'),str) or not isinstance(proof.get('source',''),str):return False
     return counter_resources([proof]).get(key)==record
 
 
@@ -75,11 +80,16 @@ def reusable_resources(state):
     unproved, so neither zero nor the previous count is a safe replacement.
     Deriving this view from existing history also protects pre-0.64 save files.
     """
-    losses={}
+    losses={};qualification_cutoffs={}
     for event in state.get('history',[]):
         rid=(event.get('id') if event.get('kind')=='relic_no_longer_held'
              else event.get('previous_id') if event.get('kind')=='relic_variant_corrected' else None)
         at=event.get('at')
+        if (event.get('kind')=='state_flag_reconfirmed' and event.get('record_kind')=='relic'
+                and event.get('field')=='held' and type(event.get('value')) is bool
+                and isinstance(event.get('id'),str) and type(at) in (int,float) and math.isfinite(at)):
+            identity=event['id']
+            qualification_cutoffs[identity]=max(qualification_cutoffs.get(identity,float('-inf')),at)
         if rid and type(at) in (int,float) and math.isfinite(at):
             losses[rid]=max(losses.get(rid,float('-inf')),at)
     result={}
@@ -93,7 +103,8 @@ def reusable_resources(state):
         if (type(at) not in (int,float) or not math.isfinite(at)
                 or at<state['started_at'] or at>(state.get('last_read') or at)
                 or rid not in state.get('relics',{})
-                or not state['relics'][rid].get('held',True)
-                or losses.get(rid,float('-inf'))>=at):continue
+                or not active_record(state['relics'][rid],'held')
+                or losses.get(rid,float('-inf'))>=at
+                or qualification_cutoffs.get(rid,float('-inf'))>at):continue
         result[key]=deepcopy(record)
     return result

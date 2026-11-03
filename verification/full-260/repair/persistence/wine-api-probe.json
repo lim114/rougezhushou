@@ -1,0 +1,191 @@
+{
+  "platform": "Windows-10-10.0.19043-SP0",
+  "wine_compatibility": true,
+  "native_Windows_verified": false,
+  "work_fixtures_only": true,
+  "python_creates": [
+    {
+      "name": "python-dangling-link.json",
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    },
+    {
+      "name": "python-damaged-link.json",
+      "result": {
+        "ok": true,
+        "value": null
+      }
+    }
+  ],
+  "rows": [
+    {
+      "name": "host-dangling-link.json",
+      "is_symlink": {
+        "ok": true,
+        "value": false
+      },
+      "exists": {
+        "ok": true,
+        "value": false
+      },
+      "lstat": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\host-dangling-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "readlink": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\host-dangling-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "read_bytes": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\host-dangling-link.json'",
+        "errno": 2,
+        "winerror": null
+      },
+      "parent_names": {
+        "ok": true,
+        "value": [
+          "host-damaged-link.json",
+          "host-damaged-target.json"
+        ]
+      },
+      "GetFileAttributesW": 4294967295,
+      "GetLastError": 2
+    },
+    {
+      "name": "host-damaged-link.json",
+      "is_symlink": {
+        "ok": true,
+        "value": false
+      },
+      "exists": {
+        "ok": true,
+        "value": true
+      },
+      "lstat": {
+        "ok": true,
+        "st_mode": 33206,
+        "file_attributes": 32,
+        "reparse_tag": 0
+      },
+      "readlink": {
+        "ok": false,
+        "error": "[WinError 4390] Windows Error 0x1126: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\host-damaged-link.json'",
+        "errno": 22,
+        "winerror": 4390
+      },
+      "read_bytes": {
+        "ok": true,
+        "value": "7b227075626c69635f6261645f6a736f6e223a"
+      },
+      "parent_names": {
+        "ok": true,
+        "value": [
+          "host-damaged-link.json",
+          "host-damaged-target.json"
+        ]
+      },
+      "GetFileAttributesW": 32,
+      "GetLastError": 0
+    },
+    {
+      "name": "python-dangling-link.json",
+      "is_symlink": {
+        "ok": true,
+        "value": false
+      },
+      "exists": {
+        "ok": true,
+        "value": false
+      },
+      "lstat": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-dangling-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "readlink": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-dangling-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "read_bytes": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-dangling-link.json'",
+        "errno": 2,
+        "winerror": null
+      },
+      "parent_names": {
+        "ok": true,
+        "value": [
+          "host-damaged-link.json",
+          "host-damaged-target.json"
+        ]
+      },
+      "GetFileAttributesW": 4294967295,
+      "GetLastError": 2
+    },
+    {
+      "name": "python-damaged-link.json",
+      "is_symlink": {
+        "ok": true,
+        "value": false
+      },
+      "exists": {
+        "ok": true,
+        "value": false
+      },
+      "lstat": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-damaged-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "readlink": {
+        "ok": false,
+        "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-damaged-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "read_bytes": {
+        "ok": false,
+        "error": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\python-damaged-link.json'",
+        "errno": 2,
+        "winerror": null
+      },
+      "parent_names": {
+        "ok": true,
+        "value": [
+          "host-damaged-link.json",
+          "host-damaged-target.json"
+        ]
+      },
+      "GetFileAttributesW": 4294967295,
+      "GetLastError": 2
+    }
+  ],
+  "direct_CreateSymbolicLinkW": {
+    "return_value": 1,
+    "last_error": 0,
+    "lstat_after": {
+      "ok": false,
+      "error": "[WinError 2] File not found: 'Z:\\\\workspace\\\\rougezhushou\\\\work\\\\wine-persistence-audit\\\\fixtures\\\\direct-api-link.json'",
+      "errno": 2,
+      "winerror": 2
+    },
+    "parent_names_after": {
+      "ok": true,
+      "value": [
+        "host-damaged-link.json",
+        "host-damaged-target.json"
+      ]
+    }
+  }
+}

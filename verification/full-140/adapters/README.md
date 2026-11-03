@@ -1,0 +1,1 @@
+Current section140 activation of full125 adapters. Same selector union, classifier AST and exact three independently probed Wine fixture admission IDs; only section metadata transported. Native Windows and absent evidence remain unverified.

@@ -1,0 +1,430 @@
+{
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "rechecked_utc": "2026-10-07T16:30:21.927279+00:00",
+  "sources": {
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "reused_existing_download": true
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "reused_existing_download": true
+    }
+  },
+  "selectors": {
+    "character_table.char_1038_whitw2.trait.candidates[0]": {
+      "unlockCondition": {
+        "phase": "PHASE_0",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "blackboard": [
+        {
+          "key": "init_atk_scale",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "delta_atk_scale",
+          "value": 0.15,
+          "valueStr": null
+        },
+        {
+          "key": "max_atk_scale",
+          "value": 1.1,
+          "valueStr": null
+        },
+        {
+          "key": "max_stack_cnt",
+          "value": 6.0,
+          "valueStr": null
+        }
+      ],
+      "overrideDescripton": "操作<@ba.kw>浮游单元</>造成<@ba.kw>法术伤害</>\\n单元攻击同一敌人伤害提升（最高造成干员110%攻击力的伤害）",
+      "prefabKey": null,
+      "rangeId": null
+    },
+    "character_table.char_1038_whitw2.talents[0].candidates[2]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "头狼",
+      "description": "每在场上停留20秒，浮游单元依次获得以下一个效果：伤害上限提高10%、造成伤害时使目标特殊能力失效2秒、数量+1",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "interval",
+          "value": 20.0,
+          "valueStr": null
+        },
+        {
+          "key": "scale",
+          "value": 1.1,
+          "valueStr": null
+        },
+        {
+          "key": "attack@silence_duration",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    "character_table.char_1038_whitw2.talents[0].candidates[3]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 5,
+      "prefabKey": "1",
+      "name": "头狼",
+      "description": "每在场上停留16<@ba.talpu>（-4）</>秒，浮游单元依次获得以下一个效果：伤害上限提高10%、造成伤害时使目标特殊能力失效2秒、数量+1",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "interval",
+          "value": 16.0,
+          "valueStr": null
+        },
+        {
+          "key": "scale",
+          "value": 1.1,
+          "valueStr": null
+        },
+        {
+          "key": "attack@silence_duration",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    "skill_table.skchr_whitw2_3.levels[9]": {
+      "name": "终幕·浩劫",
+      "rangeId": null,
+      "description": "浮游单元<@ba.vup>+{attack@cnt}</>，攻击力<@ba.vup>+{atk:0%}</>，释放<@ba.vup>特殊形态</>的浮游单元散开后在整个战场范围各自追逐较近的敌人，追上时使目标<$ba.fear>恐惧</><@ba.vup>{attack@fear}</>秒并锁定其攻击，浮游单元周围的敌人移动速度<@ba.vup>{attack@move_speed:0%}</>且每秒受到相当于攻击力<@ba.vup>{attack@magic_atk_scale:0%}</>的法术伤害（不叠加）；<@ba.rem>浮游单元在锁定目标倒下后重新索敌，直至技能结束后返回干员身边</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 54,
+        "initSp": 38,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_whitw2_3",
+      "duration": 40.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.8,
+          "valueStr": null
+        },
+        {
+          "key": "attack@cnt",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@times",
+          "value": 1.3,
+          "valueStr": null
+        },
+        {
+          "key": "attack@move_speed",
+          "value": -0.5,
+          "valueStr": null
+        },
+        {
+          "key": "attack@magic_atk_scale",
+          "value": 1.2,
+          "valueStr": null
+        },
+        {
+          "key": "attack@fear",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@projectile_move_speed",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@range_radius",
+          "value": 0.9,
+          "valueStr": null
+        },
+        {
+          "key": "attack@projectile_turn_speed",
+          "value": 5.0,
+          "valueStr": null
+        }
+      ]
+    }
+  },
+  "body_animation_records": [
+    {
+      "id": "char_1038_whitw2:Front:Attack",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Attack",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 1.2999999523162842,
+        "raw_frames_30hz": 38.999998569488525,
+        "strict_ceil_frames_30hz": 39,
+        "representation_normalized_frames_30hz": 39,
+        "ceil_frames_30hz": 39
+      },
+      "events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.4000000059604645,
+          "raw_frames_30hz": 12.000000178813934,
+          "strict_ceil_frames_30hz": 13,
+          "representation_normalized_frames_30hz": 12,
+          "ceil_frames_30hz": 12
+        }
+      ],
+      "selectable_as_conventional_reference": true,
+      "unverified_reasons": [],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1038_whitw2/char_1038_whitw2/Front/char_1038_whitw2.skel",
+        "sha256": "6c446a8858053bbd5e2b53d8b7d7adce8e7bf3d270a1132e2eea25ea079815b7",
+        "git_blob": "129d70acfa34d5ed7d2b50c5a5f26262ae14d1f2",
+        "bytes": 784211
+      },
+      "preview": {
+        "windup_frames": 12,
+        "recovery_frames": 27,
+        "animation_frames": 39
+      }
+    },
+    {
+      "id": "char_1038_whitw2:Front:Skill_3_Begin",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Skill_3_Begin",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 1.0,
+        "raw_frames_30hz": 30.0,
+        "strict_ceil_frames_30hz": 30,
+        "representation_normalized_frames_30hz": 30,
+        "ceil_frames_30hz": 30
+      },
+      "events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.46666666865348816,
+          "raw_frames_30hz": 14.000000059604645,
+          "strict_ceil_frames_30hz": 15,
+          "representation_normalized_frames_30hz": 14,
+          "ceil_frames_30hz": 14
+        }
+      ],
+      "selectable_as_conventional_reference": false,
+      "unverified_reasons": [
+        "transition animation requires separate lifecycle binding"
+      ],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1038_whitw2/char_1038_whitw2/Front/char_1038_whitw2.skel",
+        "sha256": "6c446a8858053bbd5e2b53d8b7d7adce8e7bf3d270a1132e2eea25ea079815b7",
+        "git_blob": "129d70acfa34d5ed7d2b50c5a5f26262ae14d1f2",
+        "bytes": 784211
+      }
+    },
+    {
+      "id": "char_1038_whitw2:Front:Skill_3_End",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Skill_3_End",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 0.1666666716337204,
+        "raw_frames_30hz": 5.000000149011612,
+        "strict_ceil_frames_30hz": 6,
+        "representation_normalized_frames_30hz": 5,
+        "ceil_frames_30hz": 5
+      },
+      "events": [],
+      "selectable_as_conventional_reference": false,
+      "unverified_reasons": [
+        "not exactly one OnAttack event",
+        "transition animation requires separate lifecycle binding",
+        "multiple or absent named events require separate binding"
+      ],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1038_whitw2/char_1038_whitw2/Front/char_1038_whitw2.skel",
+        "sha256": "6c446a8858053bbd5e2b53d8b7d7adce8e7bf3d270a1132e2eea25ea079815b7",
+        "git_blob": "129d70acfa34d5ed7d2b50c5a5f26262ae14d1f2",
+        "bytes": 784211
+      }
+    },
+    {
+      "id": "char_1038_whitw2:Front:Skill_3_Idle",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Skill_3_Idle",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 6.0,
+        "raw_frames_30hz": 180.0,
+        "strict_ceil_frames_30hz": 180,
+        "representation_normalized_frames_30hz": 180,
+        "ceil_frames_30hz": 180
+      },
+      "events": [],
+      "selectable_as_conventional_reference": false,
+      "unverified_reasons": [
+        "not exactly one OnAttack event",
+        "multiple or absent named events require separate binding"
+      ],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1038_whitw2/char_1038_whitw2/Front/char_1038_whitw2.skel",
+        "sha256": "6c446a8858053bbd5e2b53d8b7d7adce8e7bf3d270a1132e2eea25ea079815b7",
+        "git_blob": "129d70acfa34d5ed7d2b50c5a5f26262ae14d1f2",
+        "bytes": 784211
+      }
+    },
+    {
+      "id": "char_1038_whitw2:Front:Skill_3_Loop",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Skill_3_Loop",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 1.2333333492279053,
+        "raw_frames_30hz": 37.00000047683716,
+        "strict_ceil_frames_30hz": 38,
+        "representation_normalized_frames_30hz": 37,
+        "ceil_frames_30hz": 37
+      },
+      "events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.4000000059604645,
+          "raw_frames_30hz": 12.000000178813934,
+          "strict_ceil_frames_30hz": 13,
+          "representation_normalized_frames_30hz": 12,
+          "ceil_frames_30hz": 12
+        }
+      ],
+      "selectable_as_conventional_reference": false,
+      "unverified_reasons": [
+        "loop named animation requires separate lifecycle binding"
+      ],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1038_whitw2/char_1038_whitw2/Front/char_1038_whitw2.skel",
+        "sha256": "6c446a8858053bbd5e2b53d8b7d7adce8e7bf3d270a1132e2eea25ea079815b7",
+        "git_blob": "129d70acfa34d5ed7d2b50c5a5f26262ae14d1f2",
+        "bytes": 784211
+      }
+    }
+  ],
+  "original_animation_library": {
+    "source_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "artifact_sha256": "28d9be1dd6fe6f91dc5773b1c685ea78fb0bb403d25c4f26d933adcfcbad3f9e",
+    "new_source_binary_verification": false,
+    "runtime_binding_verified": false,
+    "scope": "operator-body original visual events, not autonomous drone arrival/attack/aura clock"
+  },
+  "mechanism_proven": [
+    "Headwolf progresses with operator on-field elapsed time,20s intervals at E2pot1 and16s at E2pot6; skill/recharge boundary does not reset deployment age",
+    "Base trait consecutive attacks of the same enemy raise drone damage, init0.2,step0.15,max1.1",
+    "S3 adds2 drones and operator80% attack for40s",
+    "Special drones spread, chase nearby enemies globally, fear upon catching and lock target; choose a new target after locked target dies until skill ends",
+    "Aura around drone affects nearby enemies at1.2 times operator attack each second, does not stack"
+  ],
+  "mechanism_unknown": [
+    "Meaning of unlabelled attack@times=1.3; no field/source binding establishes fixed arrival or disable duration",
+    "Drone launch/arrival/collision/target-selection event times",
+    "Autonomous drone attack clock and synchronization between drones and owner",
+    "Per-drone consecutive-hit counters, target-reset order, and continuity across return/skill phases",
+    "Aura first tick, exact tick boundary, drone-relative coverage and target lifetime",
+    "Runtime transition/loop binding, current native hotpatch script"
+  ],
+  "current_readonly_smoke": [
+    {
+      "scenario_timing": {
+        "target_disappears_seconds": 0
+      },
+      "body_total": 0.0,
+      "first_drone_component": null,
+      "aura_component": {
+        "name": "狼群光环（不叠加）",
+        "damage_type": "magic",
+        "hits": 40,
+        "per_hit": 2160.0,
+        "total": 86400.0,
+        "source_unit": "operator"
+      }
+    },
+    {
+      "scenario_timing": {
+        "target_windows": []
+      },
+      "body_total": 0.0,
+      "first_drone_component": null,
+      "aura_component": {
+        "name": "狼群光环（不叠加）",
+        "damage_type": "magic",
+        "hits": 40,
+        "per_hit": 2160.0,
+        "total": 86400.0,
+        "source_unit": "operator"
+      }
+    },
+    {
+      "scenario_timing": {},
+      "body_total": 55800.0,
+      "first_drone_component": {
+        "name": "浮游单元",
+        "damage_type": "magic",
+        "hits": 3.0,
+        "per_hit": 630.0,
+        "total": 1890.0,
+        "source_unit": "operator",
+        "times_seconds": [
+          1.7,
+          1.7,
+          1.7
+        ],
+        "timing_reference": "owner_attack_clock; independent drone clock unverified"
+      },
+      "aura_component": {
+        "name": "狼群光环（不叠加）",
+        "damage_type": "magic",
+        "hits": 40,
+        "per_hit": 2160.0,
+        "total": 86400.0,
+        "source_unit": "operator"
+      }
+    }
+  ],
+  "recommendations": {
+    "aura_scope": "Keep source per-pulse parameters as conditional reference. Do not report floor(duration) as actual global damage; unknown coverage/first tick masks affected totals. Zero target lifetime can be known zero; empty owner target range is NOT zero global drone coverage.",
+    "arrival_warmup_scope": "Do not interpret attack@times as arrival seconds. Preserve owner body clock reference; autonomous drone arrival/hit/warmup timelines and phase/cycle totals remain unknown. Do not advance drone consecutive-hit counter from suppressed owner attempts or invent replacement event times.",
+    "deployment_age_scope": "Add phase offset to explicitly declared deployment_elapsed_seconds; do not add private initial deployment clock again to a field labelled skill-start elapsed age."
+  },
+  "fresh_native_verification": false
+}

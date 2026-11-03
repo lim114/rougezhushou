@@ -30,3 +30,14 @@ are separate recognition crops from an authorized local game-window
 capture (`samples/native-client/run-emergency-mechanist.png`). Crop coordinates
 and source/image hashes are recorded in `rouge/data/emergency-icon-receipt.json`.
 It remains game artwork owned by its rights holders, not original project artwork.
+
+Additional display-only collectible/legacy pictures are recorded in
+`rouge/data/relic-display-icons.json`, from fexli/ArknightsResource commit
+`184aa662f210100150716d4f58cadc0b4e3642fc`, under `rogueitem/`.
+The 21 verified original references use 16 unique PNGs under
+`rouge/data/relic-display-icons/`; only exact whole-byte duplicates share a file.
+All stored PNGs retain exact upstream bytes. Four additional records are explicitly labelled group-picture references
+from pinned game `itemIconGroupId` declarations, not verified independent variant
+art. They do not extend recognition templates or prove possession/effect state.
+The upstream Hypergryph copyright/educational-use notice applies; these images
+are not relicensed under this project's code license.

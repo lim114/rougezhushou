@@ -1,0 +1,20 @@
+{
+  "title": "统计按保密等级和分队类型筛选",
+  "change": "个人统计可按已核对保密等级和分队类型组合筛选；未读信息独立成组，基础与强化阶段仅依固定资料的分队归属合并。",
+  "limits": "合并分队类型不表示效果相同；筛选结果不是分队强弱结论，游戏版本和个人选择偏差仍保留。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "等级0与未读分开",
+    "基础/强化只按明确分队归属合并",
+    "空组合不偷偷退回全部样本",
+    "重新读取保持选定筛选"
+  ],
+  "test": "tests.test_player_statistics_cohorts_407",
+  "native": "scripts/verify_player_statistics_cohorts_window_407.py",
+  "next": "继续第408节：个人统计展示卡与主动本机图片导出。",
+  "additional_tests": [
+    "tests.test_player_statistics_406"
+  ],
+  "unit_receipt": "verification/sections/407-player-checks/process.json",
+  "native_receipt": "verification/sections/407-player-window/window.json",
+  "native_process_receipt": "verification/sections/407-player-window-process/process.json"
+}

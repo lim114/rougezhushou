@@ -1,0 +1,33 @@
+{
+  "section": 53,
+  "completion_ref": "p2-section-053",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T21:19:54.250268+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_shield_break_reference tests.test_damage tests.test_timing tests.test_charge_reference tests.test_empty_enemy_scope -q",
+      "run": 89,
+      "passed": 89,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 750,
+      "passed": 749,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 15,
+  "failed_attempts": 2,
+  "failed_attempt_details": "Distinct resolved draft issues: absent legacy timing metadata and added finisher raw-int numeric-string incompatibility. Scope and zero-boundary review corrections also preserved; no unresolved three-attempt issue.",
+  "source_receipt": "research/p2-shield-break-reference/source-receipt.json",
+  "independent_review": "research/p2-shield-break-reference/independent-review.json",
+  "public_calculation_pairs": 794,
+  "independent_public_calls": 52,
+  "fresh_root_verification": true,
+  "native_windows": false
+}

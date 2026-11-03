@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "all_original_logs_scripts_or_patch_preserved": true,
+  "failures": [
+    {
+      "category": "source_excerpt_preparation",
+      "failed_attempts": 1,
+      "API_calls": 0,
+      "product_failure": false,
+      "reason": "Decoded CRLF source was matched with an LF multiline token.",
+      "resolution": "Normalize text only for static excerpt matching; original frozen bytes and hashes remain exact.",
+      "final": "passed"
+    },
+    {
+      "category": "test_runtime_preparation",
+      "failed_attempts": 1,
+      "API_calls": 0,
+      "product_failure": false,
+      "reason": "System Python lacked existing project cv2 dependency; test module import failed before any calculate_damage call.",
+      "resolution": "Use already-configured repository .venv/bin/python.",
+      "final": "9 tests passed"
+    },
+    {
+      "category": "root_source_preflight_context",
+      "failed_attempts": 1,
+      "API_calls": 0,
+      "product_failure": false,
+      "reason": "The execution-only frozen draft has no .git metadata.",
+      "resolution": "Explicit frozen-draft context emits current_commit null; actual root repository still strictly reads HEAD.",
+      "final": "721 files/2 raw sources/2 fixed targets passed"
+    },
+    {
+      "category": "source_patch_header_transport",
+      "failed_attempts": 2,
+      "API_calls": 0,
+      "product_failure": false,
+      "reason": "Absolute-path replacement omitted a/ and b/ in three header lines (four tokens), so git looked for damage.py.",
+      "resolution": "Exactly restore the four header prefixes; every hunk byte and all frozen product/test bytes remain unchanged.",
+      "final_attempt": 3,
+      "final": "git apply --check = 0; no fourth attempt"
+    }
+  ],
+  "same_unresolved_problem_three_failures": false,
+  "production_changes_for_preparation_errors": false,
+  "API_calls_for_preparation_errors": 0,
+  "source_only_transport_contract": true
+}

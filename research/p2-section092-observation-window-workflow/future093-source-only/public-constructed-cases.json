@@ -1,0 +1,274 @@
+{
+  "kind": "static prediction only; not runtime results or tests",
+  "cases": [
+    {
+      "name": "cache_root_null",
+      "public_constructed_cache": null,
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "json.loads succeeds; operator_observations.get is not available on this type.",
+      "intended_recovery_boundary": "Reject malformed account-cache root in memory; preserve original file and show account data unavailable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "cache_root_array",
+      "public_constructed_cache": [],
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "json.loads succeeds; operator_observations.get is not available on this type.",
+      "intended_recovery_boundary": "Reject malformed account-cache root in memory; preserve original file and show account data unavailable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "cache_root_boolean",
+      "public_constructed_cache": true,
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "json.loads succeeds; operator_observations.get is not available on this type.",
+      "intended_recovery_boundary": "Reject malformed account-cache root in memory; preserve original file and show account data unavailable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "cache_root_number",
+      "public_constructed_cache": 3,
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "json.loads succeeds; operator_observations.get is not available on this type.",
+      "intended_recovery_boundary": "Reject malformed account-cache root in memory; preserve original file and show account data unavailable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "cache_root_text",
+      "public_constructed_cache": "cache",
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "json.loads succeeds; operator_observations.get is not available on this type.",
+      "intended_recovery_boundary": "Reject malformed account-cache root in memory; preserve original file and show account data unavailable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "record_null",
+      "public_constructed_cache": {
+        "kaltsit": null
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "current_operator_state returns malformed account record; update_operator expects state.get.",
+      "intended_recovery_boundary": "Quarantine this record only; other valid account records remain usable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "record_array",
+      "public_constructed_cache": {
+        "kaltsit": []
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "current_operator_state returns malformed account record; update_operator expects state.get.",
+      "intended_recovery_boundary": "Quarantine this record only; other valid account records remain usable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "record_text",
+      "public_constructed_cache": {
+        "kaltsit": "record"
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "current_operator_state returns malformed account record; update_operator expects state.get.",
+      "intended_recovery_boundary": "Quarantine this record only; other valid account records remain usable.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "fields_null",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": null,
+          "skill_ranks": {}
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "fields_array",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": [],
+          "skill_ranks": {}
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "fields_text",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": "broken",
+          "skill_ranks": {}
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "skill_ranks_null",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "skill_ranks": null
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "skill_ranks_array",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "skill_ranks": []
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "skill_ranks_text",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "skill_ranks": "broken"
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "Present malformed container reaches .get/.items before numeric calculation try.",
+      "intended_recovery_boundary": "Present invalid container is damaged data; absent container keeps the existing empty-default behavior.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "missing_id",
+      "public_constructed_cache": {
+        "char_285_medic2": {
+          "fields": {},
+          "skill_ranks": {}
+        }
+      },
+      "user_route": "Select existing Lancet-2 profile branch after opening.",
+      "source_predicted_current_failure": "Unimplemented-profile early path calls format_operator_observation on cached record; missing id raises KeyError, mismatched id labels another operator.",
+      "intended_recovery_boundary": "Treat cached identity as unconfirmed; never infer an observed identity from JSON key. Existing explicit GUI preview identity remains labeled as preview.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "wrong_id",
+      "public_constructed_cache": {
+        "char_285_medic2": {
+          "id": "kaltsit",
+          "fields": {},
+          "skill_ranks": {}
+        }
+      },
+      "user_route": "Select existing Lancet-2 profile branch after opening.",
+      "source_predicted_current_failure": "Unimplemented-profile early path calls format_operator_observation on cached record; missing id raises KeyError, mismatched id labels another operator.",
+      "intended_recovery_boundary": "Treat cached identity as unconfirmed; never infer an observed identity from JSON key. Existing explicit GUI preview identity remains labeled as preview.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "captured_at_null",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "captured_at": null
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "time.localtime(None) itself accepts current time; later captured_at comparison with a number can raise TypeError in producer merge.",
+      "intended_recovery_boundary": "Missing timestamp keeps zero default; explicit invalid timestamp is not evidence of observation time.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "captured_at_text",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "captured_at": "bad"
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "time.localtime(text) rejects the string before calculate try.",
+      "intended_recovery_boundary": "Quarantine invalid timestamp; do not replace it with current time or claim freshly read facts.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "elite_text",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {
+            "elite": "2"
+          }
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "profile.phases[elite] rejects text before public operator_attributes validation.",
+      "intended_recovery_boundary": "Validate active account cultivation against existing catalog leaf types/gates; no string-to-number coercion.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "rank_text",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "skill_ranks": {
+            "2": "7"
+          }
+        }
+      },
+      "user_route": "Open application; default branch selects kaltsit; startup update_operator reads current_operator_state.",
+      "source_predicted_current_failure": "update_skill_options subtracts one from supplied skill rank before calculate try.",
+      "intended_recovery_boundary": "Malformed supplied skill-rank value is not a confirmed rank; valid omitted ranks retain current labeled-preview default.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "sources_array",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "sources": []
+        }
+      },
+      "user_route": "Open app, then receive an ordinary valid operator_profile observation for kaltsit.",
+      "source_predicted_current_failure": "apply_operator_observation dictionary-unpacks saved.sources; array is not a mapping.",
+      "intended_recovery_boundary": "Validate optional merge metadata containers while preserving missing defaults; subsequent observations may update memory but cannot overwrite the damaged original file.",
+      "product_runtime_checked": false
+    },
+    {
+      "name": "field_times_null",
+      "public_constructed_cache": {
+        "kaltsit": {
+          "id": "kaltsit",
+          "fields": {},
+          "field_times": null
+        }
+      },
+      "user_route": "Open app, then receive an ordinary valid operator_profile observation for kaltsit.",
+      "source_predicted_current_failure": "apply_operator_observation dictionary-unpacks saved.field_times; explicit null is not a mapping.",
+      "intended_recovery_boundary": "Treat present malformed metadata as damaged; no fabricated field timestamps.",
+      "product_runtime_checked": false
+    }
+  ],
+  "case_count": 22
+}

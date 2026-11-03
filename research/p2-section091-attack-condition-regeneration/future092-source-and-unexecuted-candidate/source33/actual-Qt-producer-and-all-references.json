@@ -1,0 +1,201 @@
+{
+  "status": "SOURCE_AST_ONLY_NO_QT_EXECUTION",
+  "git_ref": "2cbc45f03f99ed4f04b9c7e2612b58542f909168",
+  "number_source": "app.py72-77 QDoubleSpinBox with setRange(0,maximum), decimals, initial value",
+  "window_source": "app.py593 number(40,3600,2); app.py594 QCheckBox initially no explicit setChecked; app1073-1074 writes window only when checkbox.checked",
+  "window_limit_refs": [
+    {
+      "field": "window_seconds",
+      "line": 593,
+      "method": "make_damage_tab",
+      "statement": "self.window_seconds = number(40,3600,2)"
+    },
+    {
+      "field": "limit_window",
+      "line": 594,
+      "method": "make_damage_tab",
+      "statement": "self.limit_window = QCheckBox('使用指定输出窗口（秒）')"
+    },
+    {
+      "field": "limit_window",
+      "line": 595,
+      "method": "make_damage_tab",
+      "statement": "form.addRow(self.limit_window,self.window_seconds)"
+    },
+    {
+      "field": "window_seconds",
+      "line": 595,
+      "method": "make_damage_tab",
+      "statement": "form.addRow(self.limit_window,self.window_seconds)"
+    },
+    {
+      "field": "limit_window",
+      "line": 1073,
+      "method": "calculate",
+      "statement": "if self.limit_window.isChecked():\n            scenario['window_seconds'] = self.window_seconds.value()"
+    },
+    {
+      "field": "window_seconds",
+      "line": 1074,
+      "method": "calculate",
+      "statement": "scenario['window_seconds'] = self.window_seconds.value()"
+    }
+  ],
+  "timing_related_refs": [
+    {
+      "field": "window_seconds",
+      "line": 593,
+      "method": "make_damage_tab",
+      "statement": "self.window_seconds = number(40,3600,2)"
+    },
+    {
+      "field": "limit_window",
+      "line": 594,
+      "method": "make_damage_tab",
+      "statement": "self.limit_window = QCheckBox('使用指定输出窗口（秒）')"
+    },
+    {
+      "field": "limit_window",
+      "line": 595,
+      "method": "make_damage_tab",
+      "statement": "form.addRow(self.limit_window,self.window_seconds)"
+    },
+    {
+      "field": "window_seconds",
+      "line": 595,
+      "method": "make_damage_tab",
+      "statement": "form.addRow(self.limit_window,self.window_seconds)"
+    },
+    {
+      "field": "frame_timing",
+      "line": 596,
+      "method": "make_damage_tab",
+      "statement": "self.frame_timing=QCheckBox('使用逐帧时序估算（未校准项会标注）')"
+    },
+    {
+      "field": "frame_timing",
+      "line": 597,
+      "method": "make_damage_tab",
+      "statement": "self.frame_timing.setChecked(True)"
+    },
+    {
+      "field": "frame_timing",
+      "line": 598,
+      "method": "make_damage_tab",
+      "statement": "form.addRow(self.frame_timing)"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 607,
+      "method": "make_damage_tab",
+      "statement": "self.timing_scenario=QPlainTextEdit()"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 608,
+      "method": "make_damage_tab",
+      "statement": "self.timing_scenario.setMaximumHeight(85)"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 609,
+      "method": "make_damage_tab",
+      "statement": "self.timing_scenario.setPlaceholderText('可留空。情景JSON示例：{\"target_windows\":[[0,5],[8,20]],\"movement_windows\":[[2,3]]}')"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 610,
+      "method": "make_damage_tab",
+      "statement": "self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。')"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 612,
+      "method": "make_damage_tab",
+      "statement": "form.addRow('战斗时序情景（测试，可留空）',self.timing_scenario)"
+    },
+    {
+      "field": "frame_timing",
+      "line": 613,
+      "method": "make_damage_tab",
+      "statement": "self.frame_timing.toggled.connect(lambda:self.calculate())"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 614,
+      "method": "make_damage_tab",
+      "statement": "self.timing_scenario.textChanged.connect(lambda:self.calculate())"
+    },
+    {
+      "field": "limit_window",
+      "line": 1073,
+      "method": "calculate",
+      "statement": "if self.limit_window.isChecked():\n            scenario['window_seconds'] = self.window_seconds.value()"
+    },
+    {
+      "field": "window_seconds",
+      "line": 1074,
+      "method": "calculate",
+      "statement": "scenario['window_seconds'] = self.window_seconds.value()"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1081,
+      "method": "calculate",
+      "statement": "self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1083,
+      "method": "calculate",
+      "statement": "self.timing_scenario.blockSignals(True)"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1084,
+      "method": "calculate",
+      "statement": "self.timing_scenario.setPlainText(self.timing_previews.get(key,''))"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1085,
+      "method": "calculate",
+      "statement": "self.timing_scenario.blockSignals(False)"
+    },
+    {
+      "field": "frame_timing",
+      "line": 1140,
+      "method": "calculate",
+      "statement": "scenario['timing_mode']='frames' if self.frame_timing.isChecked() else 'continuous'"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1141,
+      "method": "calculate",
+      "statement": "if self.timing_scenario.toPlainText().strip():\n                try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())\n                except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None\n                if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')"
+    },
+    {
+      "field": "timing_scenario",
+      "line": 1142,
+      "method": "calculate",
+      "statement": "scenario['timing']=json.loads(self.timing_scenario.toPlainText())"
+    },
+    {
+      "field": "frame_timing",
+      "line": 1145,
+      "method": "calculate",
+      "statement": "if self.frame_timing.isChecked():\n                for field,widget in (('normal_animation_reference',self.normal_animation_reference),\n                                     ('animation_reference',self.skill_animation_reference)):\n                    if widget.currentData() is not None:\n                        scenario.setdefault('timing',{})[field]=widget.currentData()"
+    },
+    {
+      "field": "frame_timing",
+      "line": 1175,
+      "method": "sync_animation_references",
+      "statement": "self.damage_form.setRowVisible(widget,self.frame_timing.isChecked() and widget.count()>1)"
+    }
+  ],
+  "window_controls_no_declared_signal_connection_in_full_app_AST": true,
+  "contrasting_existing_signal_sources": "OPTIONS bool666-667 / numeric671,674; frame_timing613 and timing_scenario614",
+  "input_boundary": "Numeric window is declared bounded QDoubleSpinBox, not arbitrary JSON. Bool aliases/negative/NaN API examples are not claimed GUI window inputs. Timing text separately parses JSON object at1141-1144 before numerical API1150.",
+  "native_actual_value_type_or_signal_counts_measured": false,
+  "project_calls": 0
+}

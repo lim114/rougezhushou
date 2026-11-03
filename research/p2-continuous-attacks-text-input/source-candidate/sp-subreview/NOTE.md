@@ -1,0 +1,11 @@
+# 088 SP窄候选：阴性封存
+
+未发现已证实的SP产品缺陷，不创建或计作第88节产品小节。固定9ef5a46的PROJECT_PROGRESS第11行其实归priority1藏品局外机制；backlog原句不是缺陷证明。
+
+只读当前500847B公开normalized mechanics中的active sp_recovery索引，六条都是正数；再核香草沙士汽水、医者-自医、止痛片三件保存的raw_buffs绑定与对应现有consumer。幸运饼干自然SP类型gate已经在relics115–117接入。engine1307使用加算，1310/1339/1342分自然/攻击/受击SP，1528只为自然SP公开rate。没有由已有negative SP来源直接证明的错误。
+
+engine110不接受negative SP效果，现支持signed只hp_pct/attack_speed，但本次没有发现活跃normalized负SP原来源能使这一点成为确认bug。不能据此宣称原表不存在负SP。原始table的f586哈希仅是当前normalizedbook已有声明，并非本次fresh完整原表证明；没有大扫roguelike全表、补缓存或推断native倍率层。
+
+旧0.66五件正自然SP与第60节黍周期unknown是已完成范围，旧note/handoff只读绑定，没有重跑旧矩阵、helper或测试。周期首跳/阻回未知仍保持；不会重新平均成自然SP。分队路径目前仅把atk/max_hp/def接入也不足以授权新SP数值。
+
+后续需要一个精确新原selector或已验证source合同，与当前实际consumer直接冲突，才可形成产品候选；负值、倍率组合层、cap/clamp/叠加和native附着仍未闭合。0API/helper/tests/Qt/Wine/network/tracked改动，无草案或补丁，不重复86布尔/finite/102模组审计。

@@ -1,0 +1,158 @@
+{
+  "checked_at": "2026-10-07T15:58:12Z",
+  "host": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "wine": "10.0 Debian 10.0~repack-6 (64-bit only)",
+  "python": "Official Python3.12.10 x64 NuGet",
+  "runtime_packages": [
+    {
+      "name": "anyio",
+      "version": "4.15.1"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22"
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6"
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9"
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "name": "idna",
+      "version": "3.20"
+    },
+    {
+      "name": "numpy",
+      "version": "2.2.6"
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.30.0"
+    },
+    {
+      "name": "opencv-python",
+      "version": "4.14.0.94"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3"
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0"
+    },
+    {
+      "name": "pip",
+      "version": "25.0.1"
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2"
+    },
+    {
+      "name": "pyclipper",
+      "version": "1.4.0"
+    },
+    {
+      "name": "PySide6",
+      "version": "6.9.3"
+    },
+    {
+      "name": "PySide6_Addons",
+      "version": "6.9.3"
+    },
+    {
+      "name": "PySide6_Essentials",
+      "version": "6.9.3"
+    },
+    {
+      "name": "pywin32",
+      "version": "312"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3"
+    },
+    {
+      "name": "rapidocr-onnxruntime",
+      "version": "1.4.4"
+    },
+    {
+      "name": "shapely",
+      "version": "2.2.0"
+    },
+    {
+      "name": "shiboken6",
+      "version": "6.9.3"
+    },
+    {
+      "name": "six",
+      "version": "1.17.0"
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "windows-capture",
+      "version": "2.0.1"
+    }
+  ],
+  "native_ucrt": {
+    "source": "Microsoft.Windows.SDK.CPP 10.0.26100.4654 NuGet",
+    "archive_receipt": "windows-sdk/cpp-source.json",
+    "file": "c/Redist/10.0.26100.0/ucrt/DLLs/x64/ucrtbase.dll",
+    "sha256": "3239227d27667ba20d10a880751924e5719de0078f9fce232d149d383f7681f6",
+    "wine_override": "ucrtbase=n,b"
+  },
+  "dependency_imports": "wine-dependency-probe.json",
+  "ui_smoke": "wine-ui-smoke.json",
+  "screenshot": "wine-window.png",
+  "baseline_windows_python_regression": "wine-cloud-baseline.log",
+  "source_security": {
+    "debian": "All 8 archives SHA256 matched APT signed package index",
+    "wheels": "32 downloaded wheels SHA256 matched TLS official PyPI JSON metadata",
+    "nuget": "Official NuGet HTTPS downloads with TLS verification and recorded SHA256",
+    "proxy": "Inherited runtime proxy preserved; offline Windows pip installation"
+  },
+  "observed_compatibility_limits": [
+    "PySide6 6.11.2 failed because Wine lacks Windows system icuuc.dll; 6.9.3 within repository range works.",
+    "Wine built-in UCRT crealf is unimplemented; actual Microsoft SDK x64 UCRT resolves NumPy import.",
+    "Wine prefix is 64-bit only; initial missing syswow64 rundll32 warning does not validate 32-bit apps."
+  ],
+  "verification_limits": [
+    "Wine compatibility does not establish native Windows support.",
+    "No Arknights.exe present; no real game frames, Windows Graphics Capture session or performance tested.",
+    "No native desktop chat application or chat pipe tested; no chat requests sent.",
+    "No private settings, current run, or personal screenshots migrated."
+  ],
+  "repo_mutations": 0,
+  "final_checks": {
+    "available_full": "wine-available-full-001.json",
+    "cloud": "wine-cloud-final-002.json",
+    "ui": "wine-ui-smoke.json",
+    "ui_log": "wine-ui-final-002.log",
+    "pip_check": "windows-pip-check-final-002.log",
+    "source_drift": [],
+    "checked_at": "2026-10-07T16:05:43Z"
+  }
+}

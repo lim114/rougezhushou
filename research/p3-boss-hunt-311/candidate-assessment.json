@@ -1,0 +1,71 @@
+{
+  "kind": "SECTION311_CANDIDATE_SOURCE_RESEARCH_NOT_ACCEPTANCE",
+  "targets": [
+    [
+      "ro6_b_4",
+      "enemy_2145_cadejo",
+      0
+    ],
+    [
+      "ro6_b_4",
+      "enemy_2146_cadesd",
+      0
+    ],
+    [
+      "ro6_b_4",
+      "enemy_2137_shsdgo",
+      0
+    ]
+  ],
+  "existing_capabilities": [
+    "现有图鉴简述、固定预测面板及原skill/blackboard",
+    "299候选组/同包资料",
+    "306伪装、309畸症、310洛伦茨/源阶方，均非本组完整阅读"
+  ],
+  "new_capability": "三个精确普通版身份，按条件阅读卡德霍击倒与关卡生成、双方不同招式、痛楚离场影响与猎犬锁定，并显式阅读资料冲突。",
+  "runtime_design_advice": "轻量fresh小固定源+完整当前目标stage/三主体skill对象；完整数据库/原level只在构建时核实，runtime不每次读15MB。精确身份，非目标无新增I/O，source坏清旧恢复手动，deepcopy防污染。",
+  "acceptance_scope": [
+    "三精确tuple/非法bool或float level/非目标/追猎与两custom不借base",
+    "8技能+3能力全限定/tooltip/原header DOM保留",
+    "玩家显式20vs10、原文vs修正、存疑波次；无当前伤害/时钟/阶段模型",
+    "源坏暖副本失效/恢复手动、输入输出串改防护、父阅读保留",
+    "与306/309/310独立，原190资源/事件/地图/本局不变"
+  ],
+  "source_reuse": {
+    "primary_full_files": [
+      {
+        "file": "rouge/data/battle-previews.json",
+        "sha256": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+        "bytes": 9920110
+      },
+      {
+        "file": "rouge/data/enemy-skill-references.json",
+        "sha256": "f511067893d7226311128d3805d7e5887fd49c417a18dca0717dd50220ac9d9c",
+        "bytes": 251426
+      },
+      {
+        "file": ".cache/game-data/levels/enemydata/enemy_database.json",
+        "sha256": "f8dd03997d0e3eae65cc4b77bcb6b5ef198488504f738defc31cad5e13c3680c",
+        "bytes": 15022043
+      },
+      {
+        "file": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-4.json",
+        "sha256": "1161795429a9dd4f36b6fcf4e6cf5b6300e2bcce6f04a860e9f7b31e6619d292",
+        "bytes": 207445
+      },
+      {
+        "file": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-4-b.json",
+        "sha256": "fc2f7ae7371829259bd445a45704d79f30f84094f8eedbfa74b026fe075c51ea",
+        "bytes": 202372
+      }
+    ],
+    "existing_public_pursuit_level": {
+      "file": "research/p3-auxiliary-mechanisms/level_rogue6_b-4-b.json",
+      "sha256": "fc2f7ae7371829259bd445a45704d79f30f84094f8eedbfa74b026fe075c51ea",
+      "bytes": 202372
+    }
+  },
+  "source_archive_note": "未来公开包不能依赖.cache。五HTML保完整原bytes，原level/数据库按固定commit与SHA核实后精选whole records；已有公开原件优先引用，不复制15MB多份。",
+  "no_product_or_test_pass_claimed": true,
+  "production_Git_Qt_game_chat_private_operations": false
+}

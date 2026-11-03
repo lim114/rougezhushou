@@ -1,0 +1,64 @@
+{
+  "kind": "SECTION297_EXPEDITION_UI_CACHE_CANDIDATE_READY_NOT_PRODUCT_PASS",
+  "candidate_directory": ".cache/p3-297-expedition-ui",
+  "promotion_files": {
+    "rouge/expedition_results_view.py": {
+      "sha256": "72105f83b5629514a91d100cf58a7c0898962a30a1861fe77d79b62343de03a0"
+    },
+    "tests/test_expedition_results_view_297.py": {
+      "sha256": "e9e275d67f563bba3b1a8a67fa195ac30490f4891682b338879ed1142a52c720"
+    }
+  },
+  "backend_candidate": ".cache/p3-297-expedition-candidate/candidate",
+  "backend_core_sha256": "145faf5d9f4045e18c5b09e57073ea2304a78aa45e1ea1595bf142b7f247b8da",
+  "backend_data_sha256": "f83ca0ec16a24e634e48500186da6f6f7f3269092d51045d99779f1a9439d3ff",
+  "backend_manifest_sha256": "5227f6fc7171430dc820668daf636489c72673d62a5f1e9b82d26d0021cf323e",
+  "class": "ExpeditionResultsPanel",
+  "public_methods": ["set_reference(event_id, *, scope_key=None)", "refresh_reference()", "open_selected_item()"],
+  "controls": {
+    "choice": "QComboBox; three complete reference_id values; default index -1",
+    "open_item_button": "查看归来藏品说明; shown/enabled only for manually selected root branch",
+    "icon": "QLabel; hidden until successful manual item open; 104px SmoothTransformation",
+    "reading_tabs": ["派出与归来结果", "归来藏品说明", "资料与依据"],
+    "result_text": "QPlainTextEdit; 选择时/派出期间/归来时/尚未确认",
+    "item_text": "QPlainTextEdit; full item description/usage/unlock distinction only after manual open",
+    "source_text": "QPlainTextEdit; complete source identity and original text retained",
+    "public_state": ["packet", "event_id", "scope_key", "_details_identity", "_view_key"]
+  },
+  "window": {"modal": false, "initial_size": [900, 680]},
+  "state_contract": [
+    "Same event and full scope retain manual option/tab/selection/scroll and opened item; source revalidated each refresh",
+    "Scope changes reset selection and item; non-target events clear all pages",
+    "Unavailable event/choice/detail source clears all three pages, icon and selected reference",
+    "Recovery leaves current option unselected; no default first choice and no automatic item open",
+    "Complete event/scene/choice/reference/item identity must match before opening; forged key has no fallback",
+    "No current run updates, inventory/recruitment changes, dispatch actions, game operations or chat operations"
+  ],
+  "display_contract": [
+    "Rest gives 2 hope in 选择时; root branch gives 2 hope and beacon in 归来时, beacon count unknown",
+    "Native end-region/new-region wording and community next-floor wording distinguished in one sentence",
+    "Native placeholder strings and IDs retained on evidence page, not displayed as actual operator identity",
+    "Root not-advanced is documented; normal promotion remains unknown",
+    "Beak documented conditional effect not added to root result; current applicability/pool/count unknown",
+    "Rest does not display beak or promotion fields; branch results never summed",
+    "Item unlock text is not interpreted as full event choice eligibility"
+  ],
+  "tests": {
+    "prepared_methods": 16,
+    "default_import": "rouge.expedition_results_view; no cache fallback",
+    "actual_execution": false,
+    "necessary_command_after_promotion": ".venv\\Scripts\\python.exe -B -X utf8 -m unittest tests.test_expedition_results_view_297 -v"
+  },
+  "preparation_only": {
+    "receipt": ".cache/p3-297-expedition-ui/process.json",
+    "checker": ".cache/p3-297-expedition-ui/prepare_check.py",
+    "checker_exit": 0,
+    "syntax_compiled": true,
+    "qt_imported_or_started": false,
+    "tests_executed": false,
+    "source_before_after_unchanged": true,
+    "product_pass_claimed": false
+  },
+  "remaining_acceptance": ["Root promotion and actual necessary Qt checks", "Root native MainWindow integration/window checks", "Root actual visual/readability review"],
+  "root_owned_integration": "NodeCatalog expedition_button/expedition_window/open_expedition_results and player formatter; this candidate changes only two new files"
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "SECTION275_ACTUAL_NATIVE_WINDOWS_DANGLING_SYMLINK_CAPABILITY_PROBE",
+  "checked_at": "2026-10-14T19:38:19.753834+08:00",
+  "platform": "Windows",
+  "python": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.venv\\Scripts\\python.exe",
+  "probe_source_sha256": "3fe0dbaa0743720f6342bb3993c73874d18b367325d93a354f6a6e6a70f46636",
+  "owned_base": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275-preflight",
+  "owned_folder": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275-preflight\\symlink-capability-1d5f26fcccc44803a8e525e279800582",
+  "owned_link": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275-preflight\\symlink-capability-1d5f26fcccc44803a8e525e279800582\\run.tmp",
+  "public_target": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275-preflight\\symlink-capability-1d5f26fcccc44803a8e525e279800582\\public-275-never-create.txt",
+  "symlink_argument": "public-275-never-create.txt",
+  "actual_creation_attempted": true,
+  "creation_succeeded": false,
+  "private_state_read_or_written": false,
+  "game_operations": 0,
+  "chat_requests": 0,
+  "system_configuration_or_privileges_changed": false,
+  "cleanup_pending": false,
+  "exception": {
+    "type": "OSError",
+    "message": "[WinError 1314] 客户端没有所需的特权。: 'public-275-never-create.txt' -> 'C:\\\\Users\\\\李娜\\\\Desktop\\\\lcn\\\\rouge\\\\.cache\\\\full275-preflight\\\\symlink-capability-1d5f26fcccc44803a8e525e279800582\\\\run.tmp'",
+    "errno": 22,
+    "winerror": 1314,
+    "filename": "public-275-never-create.txt",
+    "filename2": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275-preflight\\symlink-capability-1d5f26fcccc44803a8e525e279800582\\run.tmp",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\full275_symlink_probe.py\", line 33, in <module>\n    LINK.symlink_to(TARGET.name)\n  File \"C:\\Users\\李娜\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 1386, in symlink_to\n    os.symlink(target, self, target_is_directory)\nOSError: [WinError 1314] 客户端没有所需的特权。: 'public-275-never-create.txt' -> 'C:\\\\Users\\\\李娜\\\\Desktop\\\\lcn\\\\rouge\\\\.cache\\\\full275-preflight\\\\symlink-capability-1d5f26fcccc44803a8e525e279800582\\\\run.tmp'\n"
+  },
+  "children_after_probe": [],
+  "cleanup": {
+    "final_absolute_paths_checked": true,
+    "target_created": false,
+    "leaf_directory_removed": true,
+    "finished_at": "2026-10-14T11:38:51.2358603+00:00",
+    "performed": true,
+    "existing_receipt_retained": true,
+    "recursive_delete": false,
+    "native_literal_path_operations": true
+  }
+}

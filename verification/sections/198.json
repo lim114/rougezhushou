@@ -1,0 +1,83 @@
+{
+  "candidate": "healing-composition",
+  "title": "活玫瑰、苍白花冠和涌动之餐的治疗/生命回复组合",
+  "remaining_item": "技能时序与精度/藏品触发与叠加：多来源治疗与回复倍率的已证局外组合",
+  "new_capability": "主计算与七低星本局计算支持三个固定来源的组合：直接受疗因素独立乘算，生命回复同乘区百分比相加；平值与最大生命比例回复分别同层处理，重复ID及两通道不重复计数。",
+  "source_evidence": [
+    "research/p2-flower-healing-composition-current/receipt.json",
+    "research/p2-flower-healing-composition-current/native-proof.json",
+    "research/p2-flower-healing-composition-current/prefab-binding.json",
+    "research/p2-flower-healing-composition-current/current-template.json",
+    "research/p2-flower-healing-composition-current/selected-metadata.json",
+    "research/p2-flower-healing-composition-current/fixed-raw-sources.json"
+  ],
+  "acceptance": [
+    "当前21方法3169 unique指令全物理字节回查，无CFG截断",
+    "当前9/13全球prefab2299对象和holder模板精确读取，GlobalBuff类型与当前17197MonoScript唯一hash绑定",
+    "直接治疗1.2*1.3*1.4=2.184，生命回复1+0.2+0.3+0.4=1.9；两来源分别1.56和1.5",
+    "两回复通道/重复ID/六种持有顺序/声明次数有效与过量预算",
+    "攻击干员不生成直接治疗，未知库存保持完整范围未确认，任意新来源不泛化",
+    "生成器与生产数据仅3项藏品/9effects组合标记改变，数值和其它原件不变",
+    "82相关检查：81通过、1历史skip、0失败；旧0.53首次5fail保留于receipt说明"
+  ],
+  "limitations": [
+    "当前XLua/hotfix、实际附着/受疗资格与首跳/刷新/生命周期仍未证",
+    "显示逻辑参数算术不是native FP bit-for-bit输出或实际游戏面板",
+    "无条件匹配的公开多源worked example，未冒称gameplay校准",
+    "涌动之餐元素抗性部分按产品范围仍只作资料",
+    "仅这3个源ID及已绑定buff位置，不自动套用未知治疗/回复倍率"
+  ],
+  "files": [
+    "rouge/relic_healing_factors.py",
+    "rouge/supplemental_healing.py",
+    "rouge/relics.py",
+    "rouge/supplemental_run.py",
+    "rouge/data/relic-mechanics.json",
+    "scripts/build_relic_mechanics.py",
+    "tests/test_supplemental_healing_145.py",
+    "tests/test_relic_mechanisms_053.py",
+    "tests/test_flower_healing_composition.py",
+    "research/p2-flower-healing-composition-current/current-template.json",
+    "research/p2-flower-healing-composition-current/fixed-raw-sources.json",
+    "research/p2-flower-healing-composition-current/native-proof.json",
+    "research/p2-flower-healing-composition-current/prefab-binding.json",
+    "research/p2-flower-healing-composition-current/receipt.json",
+    "research/p2-flower-healing-composition-current/selected-metadata.json",
+    "verification/batch-186-400/root-physical-check.json",
+    "verification/batch-186-400/preparation-errors.json",
+    "verification/batch-186-400/initial-integration-198.txt"
+  ],
+  "test_selectors": [
+    "tests.test_flower_healing_composition",
+    "tests.test_supplemental_healing_145",
+    "tests.test_relic_mechanisms_053",
+    "tests.test_relic_stack_052",
+    "tests.test_relics",
+    "tests.test_supplemental_budget_150",
+    "tests.test_supplemental_run_141"
+  ],
+  "validation": {
+    "tests_run": 82,
+    "passed": 81,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-198/tests.txt"
+  },
+  "base_sha256": {
+    "rouge/supplemental_healing.py": "8e730136debc85f43a6df6a03b8ab2ca26fb6d1707c76b95271e6d83fc22a2f3",
+    "rouge/relics.py": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+    "rouge/supplemental_run.py": "2993e84b1f148e0b07f800e9024d6efd4b03d2b1d4cef41a7af27e23e5622445",
+    "rouge/data/relic-mechanics.json": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+    "scripts/build_relic_mechanics.py": "77af02714f4be22296a702b540ad3374ab6b07ac8f1549d543aa8229f1555f1f",
+    "tests/test_supplemental_healing_145.py": "315344c5a1e23d84ef4b85867289549c62fa02ec4580678a36a1dd7a890e4404",
+    "tests/test_relic_mechanisms_053.py": "4ac3c0ef8c238b5c8d616fbc1f3dd557ee07983dda1390eb0daa39a6c38388c4"
+  },
+  "preparation_failures": "verification/batch-186-400/preparation-errors.json",
+  "section": 198,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:57:59.499383+08:00",
+  "branch": "codex/p2-development",
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

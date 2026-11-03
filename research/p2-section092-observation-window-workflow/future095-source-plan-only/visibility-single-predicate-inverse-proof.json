@@ -1,0 +1,105 @@
+{
+  "scope": "Unexecuted source-only preview of one necessary full095 assertion migration; not a full095 runner",
+  "old_runner_path": "verification/full-090/wine-ui-runner.py",
+  "old_runner_sha256": "9f7f2d192496f01a4e542cdbbfc1be9932381a6373eb3b46c8fefb2a965e62d9",
+  "old_runner_bytes": 729181,
+  "old_source_assertion_line": 3011,
+  "selected_rank_source_line": 3010,
+  "before": "assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')",
+  "after": "assert window.continuous_attacks.isVisible() is (sp090 in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))",
+  "single_occurrence": true,
+  "preview_sha256": "d35dc2f2ca8fb5395ece1641c925d35968e819e45c2d44c82c41788a91fe6288",
+  "preview_not_saved_or_executed": true,
+  "exact_full_runner_byte_inverse_after_only_predicate_reversal": true,
+  "selected_requested_rank_already_present_and_not_changed": true,
+  "current_verify_damage_ui_path": "scripts/verify_damage_ui.py",
+  "current_verify_damage_ui_sha256": "0b0dcbcade07f0ff11b2bdcba7c7598a696ff4ece3418bc296312ce97c2a2d54",
+  "current_verify_damage_ui_line39_uses_selected_rank_and_Attack_Natural": true,
+  "old_full090_section88_rows": [
+    {
+      "historical_pair_id": "088-native-checkbox-mechanist-S1",
+      "operator": "mechanist",
+      "skill": 1,
+      "rank": 10,
+      "checked": false,
+      "sp_type": "INCREASE_WHEN_ATTACK",
+      "legacy_expected_visible": true,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-native-checkbox-mechanist-S1",
+      "operator": "mechanist",
+      "skill": 1,
+      "rank": 10,
+      "checked": true,
+      "sp_type": "INCREASE_WHEN_ATTACK",
+      "legacy_expected_visible": true,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-amiya-E2-S1-bounded-reference",
+      "operator": "char_002_amiya",
+      "skill": 1,
+      "rank": 10,
+      "checked": false,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-amiya-E2-S1-bounded-reference",
+      "operator": "char_002_amiya",
+      "skill": 1,
+      "rank": 10,
+      "checked": true,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-chen3-S3-active-warrior67",
+      "operator": "char_1050_chen3",
+      "skill": 3,
+      "rank": 10,
+      "checked": false,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-chen3-S3-active-warrior67",
+      "operator": "char_1050_chen3",
+      "skill": 3,
+      "rank": 10,
+      "checked": true,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-amiya-E0-S1-empty-target-reference",
+      "operator": "char_002_amiya",
+      "skill": 1,
+      "rank": 7,
+      "checked": false,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    },
+    {
+      "historical_pair_id": "088-hidden-checkbox-amiya-E0-S1-empty-target-reference",
+      "operator": "char_002_amiya",
+      "skill": 1,
+      "rank": 7,
+      "checked": true,
+      "sp_type": "INCREASE_WITH_TIME",
+      "legacy_expected_visible": false,
+      "section91_expected_visible": true
+    }
+  ],
+  "changed_visibility_rows": 6,
+  "historical_ids_stay_as_provenance_not_current_hidden_UI_claims": true,
+  "all4283_or4217_unchanged_claim_supported": false,
+  "diff": "--- original-full090.py\n+++ visibility-only-full095-preview.py\n@@ -3008,7 +3008,7 @@\n                 else:\n                     from rouge.catalog import catalog as catalog090\n                     sp090=catalog090()['operators'][owner090]['skills'][skill090-1]['levels'][requested090['skill_rank']-1]['sp_type']\n-                    assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')\n+                    assert window.continuous_attacks.isVisible() is (sp090 in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))\n                     assert window.window_seconds.value()==12.75\n                     if 'timing' in requested090:\n                         assert json.loads(window.timing_scenario.toPlainText())==requested090['timing']\n",
+  "future_final_inverse_required": "Final95 guard/output/provenance/ledger and new groups must each have an explicit delta ledger; after reversing registered final deltas the retained original body must equal its exact original SHA. This preview does not prove those future changes."
+}

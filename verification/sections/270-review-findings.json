@@ -1,0 +1,118 @@
+{
+  "kind": "source_review_and_archived_before_fix_runtime_probe",
+  "source_sha256": "bdf5343d987e7bbdf1c62991258e20d7731a1aaa98efa59d0033a83697eb9f15",
+  "input": {
+    "status": "matched",
+    "zone_id": "zone_1",
+    "template_id": "public-node-information-270",
+    "grid": {
+      "rows": 3,
+      "cols": 4
+    },
+    "current_node": "a",
+    "source": {
+      "url": "https://example.invalid/public-node-information-fixture"
+    },
+    "edges": [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "a",
+        "c"
+      ],
+      [
+        "b",
+        "d"
+      ],
+      [
+        "c",
+        "d"
+      ]
+    ],
+    "nodes": [
+      {
+        "id": "a",
+        "row": 1,
+        "col": 0,
+        "distance": 0,
+        "center": [
+          0.2,
+          0.5
+        ],
+        "visible": true,
+        "observed_type": "不期而遇",
+        "content": {
+          "kind": "event",
+          "title": "思乡心切"
+        }
+      },
+      {
+        "id": "b",
+        "row": 0,
+        "col": 1,
+        "distance": 1,
+        "center": [
+          0.5,
+          0.25
+        ],
+        "visible": true,
+        "observed_type": "林间空地",
+        "remembered_type": "不期而遇",
+        "remembered_content": {
+          "kind": "event",
+          "title": "思乡心切"
+        },
+        "content_history": [
+          {
+            "kind": "event",
+            "title": "鸭托邦"
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "row": 2,
+        "col": 1,
+        "distance": 1,
+        "center": [
+          0.5,
+          0.75
+        ],
+        "visible": true,
+        "observed_type": "类型未确认",
+        "prediction": {
+          "candidates": [
+            "不期而遇"
+          ],
+          "evidence": "community_constraint",
+          "reason": "公开测试声明；不是游戏观测或概率"
+        }
+      },
+      {
+        "id": "d",
+        "row": 1,
+        "col": 3,
+        "distance": 2,
+        "center": [
+          0.8,
+          0.5
+        ],
+        "visible": true,
+        "observed_type": "作战",
+        "content": {
+          "kind": "battle",
+          "title": "遗忘时间",
+          "variant_id": "ro6_n_1_2"
+        }
+      }
+    ]
+  },
+  "prior_unknown_type_report": "所选位置：中排 · 第1列\n【模板相邻节点】\n上排 · 第2列 · 已通过：不期而遇（本帧林间空地）\n下排 · 第2列 · 已读：类型未确认\n模板连线仅作位置资料；实际通行状态未核验，不自动选路。",
+  "prior_history_report": "历史位置：中排 · 第1列\n【模板相邻节点】\n上排 · 第2列 · 已通过：不期而遇（本帧林间空地）\n下排 · 第2列 · 当时已读：类型未确认\n模板连线仅作位置资料；实际通行状态未核验，不自动选路。",
+  "mechanism_changed": false,
+  "current_unknown_type_report": "所选位置：中排 · 第1列\n【模板相邻节点】\n上排 · 第2列 · 已通过：不期而遇（本帧林间空地）\n下排 · 第2列 · 类型候选：不期而遇\n模板连线仅作位置资料；实际通行状态未核验，不自动选路。",
+  "current_history_report": "历史位置：中排 · 第1列\n【模板相邻节点】\n上排 · 第2列 · 已通过：不期而遇（当时林间空地）\n下排 · 第2列 · 类型候选：不期而遇\n模板连线仅作位置资料；实际通行状态未核验，不自动选路。",
+  "source_file_before": "verification/sections/270-map-reporting-before.py"
+}

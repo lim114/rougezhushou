@@ -21,6 +21,7 @@ class SamplingFlowTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
+        root_patch=patch.object(module,'ROOT',Path(self.tmp.name));root_patch.start();self.addCleanup(root_patch.stop)
         for name,file in [('SETTINGS','settings.json'),('RUN_STATE','run.json'),('OPERATOR_STATE','operators.json')]:
             p=patch.object(module,name,Path(self.tmp.name)/file);p.start();self.addCleanup(p.stop)
         for p in (patch.object(module,'list_game_windows',return_value=[]),
@@ -41,11 +42,11 @@ class SamplingFlowTests(unittest.TestCase):
                     'operator':{'id':'kaltsit','fields':{'level':level},'scope':'account'}}
         self.window.reader=Mock(read=read)
 
-    def offer(self,level):
+    def offer(self,level,at=None):
         image=np.full((120,180,3),level*2,dtype=np.uint8)
         image[::3,:,1]=200-level
         image[0,0,0]=level
-        return self.window.capture.buffer.offer(image,time.time())
+        return self.window.capture.buffer.offer(image,time.time()if at is None else at)
 
     def wait_for(self,predicate,timeout=5):
         end=time.monotonic()+timeout
@@ -62,7 +63,8 @@ class SamplingFlowTests(unittest.TestCase):
         self.offer(50);self.offer(80)
         self.release.set()
         self.wait_for(lambda:len(self.seen)==3 and not self.window.busy)
-        self.assertEqual(self.seen,[20,50,80])
+        self.assertEqual(self.seen,[20,80,50])
+        self.assertEqual(self.window.observation['operator']['fields']['level'],80)
         self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
         self.assertEqual(self.window.capture.stats()['pending'],0)
 

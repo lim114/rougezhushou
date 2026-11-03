@@ -1,0 +1,17 @@
+--- frozen-revision3-eleven
++++ revision4-complete-history-closure
+@@ -27,6 +27,14 @@
+  namespace=runpy.run_path(str(ROOT/CANONICAL))
+  names|={ROOT/name for name in namespace['bound_files']()}
+  names.add(ROOT/'scripts/build_spawn_candidates_299.py')
++ names|={p for p in(ROOT/'research/p3-battle-entry-compatibility-299').rglob('*')if p.is_file()}
++ for manifest_name in('research/p3-battle-entry-compatibility-299/source-manifest.json',
++  'research/p3-battle-event-references-296/source-manifest.json'):
++  manifest_path=ROOT/manifest_name;names.add(manifest_path)
++  names|={ROOT/name for name in json.loads(manifest_path.read_bytes())['files']}
++ names|={ROOT/name for name in('verification/sections/298-preparation/before/rouge/event_planning.py',
++  'verification/sections/298-preparation/before/rouge/node_catalog.py',
++  'verification/sections/299-preparation/before/rouge/battle_event_references.py')}
+  if not all(p.is_file()and not p.is_symlink()and p.resolve().is_relative_to(ROOT.resolve())for p in names):
+   raise ValueError('Regular public selected sources required.')
+  def hashes():return{p.relative_to(ROOT).as_posix():sha256(p.read_bytes()).hexdigest()for p in sorted(names)}

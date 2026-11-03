@@ -1,0 +1,77 @@
+{
+  "format_version": 1,
+  "status": "FROZEN_EXTERNAL_CANDIDATE_CODE_ROOT_VERIFICATION_PENDING",
+  "completed_section_increment": 0,
+  "actual94_maintained_sources": 732,
+  "candidate_maintained_sources_expected_from_explicit_three_additions": 735,
+  "new_maintained_files": [
+    "rouge/module_source_reference.py",
+    "rouge/data/module-source-reference.json",
+    "tests/test_selected_module_source_reference.py"
+  ],
+  "changed_maintained_files": [
+    "rouge/reporting.py",
+    "scripts/verify_cloud.py"
+  ],
+  "old_report_schema_version_preserved": 2,
+  "report_addition_key": "selected_module_source_reference",
+  "notes_only_section": {
+    "id": "selected_module_source",
+    "title": "所选模组 · 原件资料与覆盖边界",
+    "position": "append final old sections; metrics=[]"
+  },
+  "technical_tail": {
+    "delimiter": "\n【所选模组原件追溯】\n",
+    "payload": "json.dumps(reference, ensure_ascii=False, indent=2)",
+    "append": "lines.extend([empty_string, technical_source_trace(reference)]) then newline join",
+    "bypasses_phrase": true
+  },
+  "no_module": "No reference/section/tail/source-file load; full old native/text exact",
+  "raw_phase_key_order": [
+    "equipLevel",
+    "parts",
+    "attributeBlackboard",
+    "tokenAttributeBlackboard"
+  ],
+  "raw_metadata_keys_in_original_order": [
+    "uniEquipId",
+    "uniEquipName",
+    "typeName1",
+    "typeName2",
+    "unlockEvolvePhase",
+    "charId",
+    "tmplId",
+    "unlockLevel",
+    "type"
+  ],
+  "candidate_annotation_selectors": "battle_equip_table.<module_id>.phases[stage-1].parts[i].<bundle>.candidates[j]",
+  "new_test_methods": [
+    "test_every_module_stage_is_report_only_and_preserves_existing_full_native",
+    "test_absent_none_and_empty_module_never_load_source_or_add_placeholders",
+    "test_all_operator_specific_level_gates_and_preview_defaults_remain_separate",
+    "test_potential_annotations_do_not_filter_or_mutate_original_candidates",
+    "test_amiya_patch_ownership_preserves_shared_raw_char_id",
+    "test_token_blackboards_and_hidden_null_fields_are_untouched_original_data",
+    "test_readable_conditions_preserve_override_spelling_and_no_duplicate_metrics",
+    "test_existing_dedicated_coverage_is_exact_and_linked_by_strings",
+    "test_nested_mutations_cannot_reach_catalog_cache_caller_native_or_fresh_report",
+    "test_technical_trace_is_exact_json_and_bypasses_phrase_replacements",
+    "test_invalid_requests_preserve_original_error_class_args_and_order",
+    "test_shared_report_rebuilds_keep_deployment_and_window_numeric_results",
+    "test_existing_unverified_clock_test_fixture_keeps_phase_rebuild_reports_isolated"
+  ],
+  "author_new_tests": {
+    "first_rc": 1,
+    "first_failure": "test expected Gnosis tag on wrong original DISPLAY part; original failure preserved, product unchanged",
+    "corrected_12_method_suite_rc": 0,
+    "final_13_method_suite_rc": 0,
+    "primary_rc_captured": true,
+    "API_call_counts": "not instrumented in unittest suite; do not invent"
+  },
+  "unknown_clock_test": "explicit test-only copied mechanics fixture selects retained envelope branch; current pinned three wines remain deployment clocks; no new native clock fact",
+  "full_original_vs_candidate_matrix": "author separately preparing, UNRUN at code freeze",
+  "repo_writes_staging_Git_Qt_Wine_network": 0,
+  "root_fresh_related_selected_actual_window_full095": "UNRUN; required before actual section completion and batch commit/push",
+  "source_projection": "Pinned9field metadata projection+raw owner list+raw attribute/tokenBB only; all ordered parts deep-copied from exact current catalog into complete raw_phase; 34modules/102stages/217parts/267candidates/5tokenparts/6tokenBBstages",
+  "math_scope": "No numerical files changed; only newly added source reference adds no arithmetic; no false whole-module unapplied claim"
+}

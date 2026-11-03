@@ -1,0 +1,61 @@
+{
+  "section": 142,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T20:44:30.306153+08:00",
+  "prior_commit": "4d32fdbe9317ac80d94a791bbb71b24e4fea9ec9",
+  "branch": "codex/p2-development",
+  "title": "七名低星干员稳定普通属性与单次技能修正",
+  "remaining_project_item": "P2技能时序与精度：补充低星干员的本局修正",
+  "new_capability": "同行者、悲伤的红、仇名录明确持久层数与天赋/技能共享普通相加层；在已证符文写回后重算常态、单次伤害/治疗预算及同培养差值。报告分开来源与条件。",
+  "acceptance": [
+    "七干员HP/ATK/DEF普通加成",
+    "符文/分队先写回再相加天赋/技能",
+    "领取/招募身份隔离及未知条件",
+    "零件99及仇名录999上限",
+    "有效/过量治疗及无加成非法缺口",
+    "物理/法术及克洛丝未知组合",
+    "费用与非白名单普通属性未覆盖保留",
+    "战斗专属触发仅作参考",
+    "实际Windows入口与更新响应、私人状态保留"
+  ],
+  "source_evidence": "verification/section-142/source-evidence.json",
+  "mechanism_report": "research/p2-supplemental-run/battle-142.md",
+  "validation": {
+    "necessary_tests_run": 41,
+    "passed": 41,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "test_output": "verification/section-142/tests.txt",
+    "isolated_native_Qt_entry_cases": 7,
+    "native_Qt_conditions": "synthetic qualified raw provider in temporary state",
+    "native_Qt_receipt": "verification/section-142/native-qt.json",
+    "isolated_refresh_case": true,
+    "actual_project_window_tool": "Windows-mcp",
+    "actual_entry_visible": true,
+    "actual_refresh_responded": true,
+    "private_files_unchanged": 5
+  },
+  "initial_failed_attempt": "verification/section-142/initial-attempt.json",
+  "limitations": [
+    "费用/回费、技力、持续回复、其它局外属性及最终伤害修正尚未接入",
+    "原生获取、结束、回转和周期不生成；克洛丝二连射与天赋组合仍未知",
+    "精零高公共等级适用性、当前热更新及当前游戏成对面板未证",
+    "首次Windows全量12个旧断言缺口保留；本节不是全仓库验收"
+  ],
+  "source_sha256": {
+    "rouge/supplemental_skills.py": "7aac7e74d4ee15dc916d52e5f5515745930e9f6d38d4dad342838f7002750f08",
+    "rouge/supplemental_run.py": "45ffc9e684b85a270c50b99067a1886a816f411d58c9b596632047b4d26b6dba",
+    "tests/test_supplemental_battle_142.py": "bb20215a56d2be5c3d27024e5e58d864af38b9d5b0be160c1acaf62022d30a2d",
+    "tests/test_supplemental_battle_view_142.py": "26058004bada60161b84aea294c5f8a3f935f44db78a787d66c623ab9e66bcb7",
+    "scripts/verify_cloud.py": "ee98772a9b49e04ee5d52d8dbde4ca8110b7057822a6a294b5474638633f2a58",
+    "verification/section-142/source-evidence.json": "2ab7763164ee1c6d8ec29b128fadad4f18b60a62a621a1119a095222e63d55ca"
+  },
+  "private_state_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "native_game_panel_verified": false,
+  "complete_repository_validation": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 155
+}

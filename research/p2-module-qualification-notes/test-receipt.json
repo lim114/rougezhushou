@@ -1,0 +1,71 @@
+[
+  {
+    "label": "baseline-related",
+    "command": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/workspace/.continuation/p2-module-qualification-audit/baseline/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/workspace/.continuation/p2-module-qualification-audit/baseline",
+    "started_utc": "2026-10-07T21:03:41.161797+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "log": "/workspace/.continuation/p2-module-qualification-audit/baseline-related.log",
+    "log_sha256": "b44a1c40efb55cb4e6545578260ccb8aa50133d1f8fee9b28b6b94ef2cb205a7",
+    "summary": [
+      "Ran 97 tests in 0.299s",
+      "OK"
+    ]
+  },
+  {
+    "label": "baseline-new-regression",
+    "command": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/workspace/.continuation/p2-module-qualification-audit/draft/tests",
+      "-p",
+      "test_module_qualification_notes.py"
+    ],
+    "cwd": "/workspace/.continuation/p2-module-qualification-audit/baseline",
+    "started_utc": "2026-10-07T21:03:41.734727+00:00",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "log": "/workspace/.continuation/p2-module-qualification-audit/baseline-new-regression.log",
+    "log_sha256": "b46bca9a4283c178c07ecd4f9174410d45d8a04ccb1386891934aa7a883ac9e2",
+    "summary": [
+      "Ran 6 tests in 0.153s",
+      "FAILED (failures=26)"
+    ]
+  },
+  {
+    "label": "draft-related-and-new",
+    "command": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/workspace/.continuation/p2-module-qualification-audit/draft/tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "/workspace/.continuation/p2-module-qualification-audit/draft",
+    "started_utc": "2026-10-07T21:03:42.095617+00:00",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "log": "/workspace/.continuation/p2-module-qualification-audit/draft-related-and-new.log",
+    "log_sha256": "5eeca30bb78b286f76f59a07f7a72356b9e761add35a500f47c37e474449d379",
+    "summary": [
+      "Ran 103 tests in 0.338s",
+      "OK"
+    ]
+  }
+]

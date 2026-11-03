@@ -6,6 +6,7 @@ These inputs describe callbacks; they do not infer damage from an attack,
 shield loss, a probability, an enemy's attack interval, or an on-screen pose.
 """
 import math
+from .condition_inputs import read_continuous_attacks, observe_continuous_attacks
 from .timing import AttackTimeline, FPS, cadence, finite, frame_time
 
 EVENT_TYPES = {'attack': '受到攻击', 'damage': '受到伤害', 'elemental_loss': '受到元素损伤',
@@ -128,13 +129,13 @@ def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
     config['_deployment_initial'] = initial
     timeline = AttackTimeline({**scenario, 'timing': config}, normal=True, offset=origin)
     stream = None
-    attacks = scenario.get('continuous_attacks', True)
+    attacks = read_continuous_attacks(scenario, active=native_attack > 0)
     if (native_attack > 0 and attacks) or wait_next_attack:
         step = cadence(interval) / FPS if framed else interval
         limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2
         stream = timeline.attacks(max(0, 3600 - origin) if wait_next_attack else horizon, interval, speed, attribute_speed=attribute_speed, limit=limit)
         if attacks and native_attack > 0:
-            times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream['times_seconds']]
+            times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream.get('release_times_seconds', stream['times_seconds'])]
             events.extend((time + tick, native_attack, 'outgoing_attack', 0)
                           for time in times if time >= blocked - 1e-9)
     ready = blocked if required <= 0 else None
@@ -174,8 +175,8 @@ def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
     if ready is not None and wait_next_attack:
         # A next-attack skill requires another legal attack slot after SP credit.
         starts = [f / FPS for f in stream['start_frames']] if framed else [
-            max(0, t - interval) for t in stream['times_seconds']]
-        ready = next((t for t in starts if t >= ready - 1e-9), None) if attacks else None
+            max(0, t - interval) for t in stream.get('release_times_seconds', stream['times_seconds'])]
+        ready = next((t for t in starts if t >= ready - 1e-9), None) if observe_continuous_attacks(attacks) else None
     if ready is not None and not initial and framed:
         ready = max(ready, math.ceil(finite(config.get('post_skill_lock_frames', 0), '技能结束硬直帧')) / FPS)
     if ready is not None and ready > max(0, 3600 - origin):

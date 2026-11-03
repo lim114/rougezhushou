@@ -1,0 +1,1 @@
+114原观察合同补充：133个输入全部待Root实际。Source提出50个合法标量对照（并非已PASS），先要求其原API真实返回，再候选逐对比较已有完整类型/浮点位/三全文与caller保留；错误或ignored资格输入另观察，不能把原probe流程0说成133个产品成功。HP ratio的2.5/text2.5超原上限1，未列入合法50。CORE与全Source guard只接受Root 110–113后的实际参数，当前12pins仅源码依据，不代替全项目绑定。v3原scope_notes中承继的legacy helper泛称由该最终资格合同补清：在场时间bool仅已选银灰雪境先驱消费者新增拒绝；无实际使用的字段保旧。没有项目/API/helper/native/测试/Qt/Wine/Git执行。

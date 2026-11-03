@@ -1,0 +1,117 @@
+{
+  "kind": "section109 bounded Source design v2 ONLY; no permanent continuous change",
+  "STOPWRITE": true,
+  "runtime_pass": false,
+  "product_pass": false,
+  "apply_ready": false,
+  "original_focused_runtime_pending": true,
+  "expected_source_count": null,
+  "whole_guard": null,
+  "files": [
+    {
+      "path": "rouge/timing.py",
+      "before_bytes": 27266,
+      "before_sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d",
+      "draft_after_bytes": 27444,
+      "draft_after_sha256": "0f1bcd33306daccb04b769fef188282a4f833f57ce6b241d00fbebd2bfc0ac93",
+      "blocks": [
+        {
+          "purpose": "ordinary continuous enemy source exclusion; permanent release/SP reference explicitly preserved",
+          "old": "if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:",
+          "new": "if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):",
+          "occurrences": 2
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/damage.py",
+      "before_bytes": 31071,
+      "before_sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09",
+      "draft_after_bytes": 31182,
+      "draft_after_sha256": "fec509c5d40d6e9be6f3d60efce41e2b22dcc5c814db0591fd65b657e8fe263d",
+      "blocks": [
+        {
+          "purpose": "separate owner acquisition from global target lifetime",
+          "old": "    empty_enemy=timeline.options.get('target_disappears_seconds')==0\r\n",
+          "new": "    empty_enemy=timeline.options.get('target_disappears_seconds')==0\r\n    empty_ammo_target=empty_enemy or timeline.options.get('target_windows')==[]\r\n",
+          "occurrences": 1
+        },
+        {
+          "purpose": "medical ammo recipient fallback only",
+          "old": "medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_enemy and",
+          "new": "medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_ammo_target and",
+          "occurrences": 1
+        },
+        {
+          "purpose": "no-window declared shots cannot overwrite owner-empty stream",
+          "old": "if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_enemy:",
+          "new": "if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_ammo_target:",
+          "occurrences": 1
+        },
+        {
+          "purpose": "full ammo end unknown without any own acquisition or friend",
+          "old": "if empty_enemy and not medical_fallback:status['execution_seconds']=None",
+          "new": "if empty_ammo_target and not medical_fallback:status['execution_seconds']=None",
+          "occurrences": 1
+        },
+        {
+          "purpose": "own hostile ammo count only",
+          "old": "damage_hits=0 if empty_enemy else hits",
+          "new": "damage_hits=0 if empty_ammo_target else hits",
+          "occurrences": 1
+        },
+        {
+          "purpose": "own hostile ammo event list only",
+          "old": "'times_seconds':[] if empty_enemy else events['times_seconds']",
+          "new": "'times_seconds':[] if empty_ammo_target else events['times_seconds']",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/estimate.py",
+      "before_bytes": 21980,
+      "before_sha256": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91",
+      "draft_after_bytes": 22060,
+      "draft_after_sha256": "d8b8c6412878eebdc8b65955dec03f273a96b0f33e8d7adcee3856c966247ca6",
+      "blocks": [
+        {
+          "purpose": "reuse existing ordinary timeline for exact empty target list",
+          "old": "                if (scenario.get('timing_mode','frames')=='frames' or\r\n                        scenario.get('timing',{}).get('target_disappears_seconds')==0):",
+          "new": "                if (scenario.get('timing_mode','frames')=='frames' or\r\n                        scenario.get('timing',{}).get('target_disappears_seconds')==0 or\r\n                        scenario.get('timing',{}).get('target_windows')==[]):",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "before_bytes": 156801,
+      "before_sha256": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04",
+      "draft_after_bytes": 156894,
+      "draft_after_sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3",
+      "blocks": [
+        {
+          "purpose": "generic body instant exact-empty exclusion only",
+          "old": "            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or\r\n                    timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):",
+          "new": "            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or timeline.options.get('target_windows')==[] or\r\n                    timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):",
+          "occurrences": 1
+        },
+        {
+          "purpose": "Gnosis independent instant acquisition gate",
+          "old": "                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or (",
+          "new": "                available=timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[] and (window is None or window>0) and (timeline.mode!='frames' or (",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    }
+  ],
+  "excluded_permanent_reference": "char_4182_oblvns remains byte-equivalent continuous acquisition/release/SP reference under owner[]. Own note hit coverage is not proven here. Original traits and release test prohibit blanket event exclusion."
+}

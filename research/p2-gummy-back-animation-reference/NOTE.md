@@ -1,0 +1,19 @@
+# 第87节 · 古米 Back 动作资料恢复
+
+冻结稿仅修改 `original-animation-references.json`、迁移旧动画资料测试中的两项过时事实断言，并新增7项公开入口回归。生成器只读原有JSON与已封存的Back解析结果，没有新的解析/下载，没有把官方runtime或纹理占位loader接入产品。原923条记录的字面object字节、JSON值/类型及旧selection_derivation都保留；整体inverse删除新增内容并恢复counts/missing后可逐字节还原原数据文件。
+
+新增5条真实Back资料：Attack、Default、Idle、Skill、Start。两个保守metadata候选不等于两个UI选项：Skill保留原名、没有技能编号，现有choices不会把它提供给S1/S2；Attack只是明确选用的局外参考，normal和skill阶段仍沿用既有选择合同，不能称实际客户端普通攻击绑定。Back不存在Die或Skill_2_*，没有借Front补位。
+
+计数923→928动画、160→162保守候选、763→766未绑定/其它资料、missing1→0。source_skeletons原本是64份库存，保持64；有record的独立source从63→64。新增source_additions单独记录Back5的新来源与sourcepacket/extractionhash、runtime_binding_inferred=false，不重写旧923的历史派生来源。30Hz和epsilon1e-5只沿用现有表示误差归一化，不构造新的gameplay取整规则。
+
+7项新回归首次通过；5个相关模块38项运行、37通过、1项原始timing-048资源cache未迁入的真实历史skip。没有重建cache或下载64资源。作者共138个新的publicAPI入口调用：initial4、matrix67（另复用initial3）、newtests11（按显式callsite计）、related56（instrumented）。35组matrix为16完整strict decoded-JSON值/类型及3文本相同、9精确旧错误、10原先无Back参考而拒绝的输入成为有效显式参考。作者未保存编码前native树，不把tuple/list/native保持升级为已证；validation-scope-sidecar087.json明确这一边界。
+
+126仅是matrix42个accepted输出×3次显式文本请求，未instrument函数entry，也不是overallformattertotal；format_estimate内部委托不推算为实测168。相关测试的其它formatter调用不包含在126里。原成功日志字段均保留，未为修正措辞重跑API。
+
+新S1参考仍保留实际友方获取/阈值/结束未知、治疗及周期None；S2仍保留友方受疗时钟未核验和timing.complete=false。默认、旧Front参考和其它干员控制输出保持；手动覆盖独立标记且不改reference/default缓存。EOF、render/atlas、native动作/皮肤/碰撞/结束/回转/周期、旧parser身份与旧报错根因不宣称已证。
+
+作者基线9ef5a469；根端86基线0f27027e7e1f49c08f298706b599e310e299238b。三修改路径在root86仍精确匹配作者oldbytes，标准a/b patch apply-check通过。root86的新damage/engine与测试登记保留；source消费者animation_reference/timing/estimate/reporting和两个builder字节不变。登记提案只增加newMODULES一行，inverse精确还原root86脚本。root_current_source087.py已完成author-draft的0API预核，rootmode会核新source/test、root86消费者hash及登记inverse。
+
+一次plainGitdiffcheck因为旧JSON的CRLF被默认whitespace设置误报，加入cr-at-eol配置后通过，未改源/测试或重跑API。两次optional本地路径查询非零也单列，均不是产品或API失败。同问题失败最高1；没有达到3次失败后继续尝试。
+
+断点：作者产品source/test/patch冻结，正式独立审查另包保存source/saved及首次授权的12风险对（最多24API）与新7tests（11API）证据。根代理拿到explicit FINAL和最终v1清单后应用，完成其相关/精选检验和归档。先前source102件原包保持immutable，产品阶段解析、下载、Qt、Wine和根tracked改动均为0。

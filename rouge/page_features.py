@@ -39,12 +39,13 @@ def _scene_features(gray):
             kps, desc = orb.detectAndCompute(feature_image[y0:y1, x0:x1], None)
             if desc is None:
                 continue
-            for i, kp in enumerate(kps):
-                x, y = kp.pt[0]+x0, kp.pt[1]+y0
-                if left <= x < right and top <= y < bottom:
-                    points.append((x, y))
-                    descriptions.append(desc[i])
-    return np.asarray(points, np.float32), (np.asarray(descriptions, np.uint8) if descriptions else None)
+            # Keep Python's original double-precision offset/edge comparisons;
+            # convert the selected coordinates to float32 only at the end.
+            xy = cv2.KeyPoint_convert(kps).astype(np.float64) + (x0, y0)
+            keep = (xy[:, 0] >= left) & (xy[:, 0] < right) & (xy[:, 1] >= top) & (xy[:, 1] < bottom)
+            points.append(xy[keep]); descriptions.append(desc[keep])
+    selected = np.concatenate(points).astype(np.float32) if points else np.asarray([], np.float32)
+    return (selected, np.concatenate(descriptions)) if selected.size else (np.asarray([], np.float32), None)
 
 
 class PageFeatureRouter:

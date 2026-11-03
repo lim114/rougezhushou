@@ -1,0 +1,33 @@
+--- scripts/verify_full_available.py (current Source)
++++ scripts/verify_full_available.py (future102 Source only)
+@@ -17,9 +17,27 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ NEW_MODULES = (
+-    'tests.test_s1_neural_boundary', 'tests.test_neural_incoming_clock',
+-    'tests.test_charge_reference', 'tests.test_gnosis_attack_clock',
+-    'tests.test_gnosis_s1_reference', 'tests.test_gnosis_target_lifetime',
++    'tests.test_s1_neural_boundary',
++    'tests.test_neural_incoming_clock',
++    'tests.test_charge_reference',
++    'tests.test_gnosis_attack_clock',
++    'tests.test_gnosis_s1_reference',
++    'tests.test_gnosis_target_lifetime',
++    'tests.test_frame_buffer',
++    'tests.test_difficulty_relics',
++    'tests.test_inventory_tools',
++    'tests.test_node_rewards',
++    'tests.test_projection_screen_029',
++    'tests.test_relic_screening_024',
++    'tests.test_chat',
++    'tests.test_numeric_recognition_024.NumericRecognition024Tests.test_verified_zero_uses_only_recognizer_across_moved_resized_panels',
++    'tests.test_numeric_recognition_024.NumericRecognition024Tests.test_ten_or_empty_or_wrong_topology_cannot_shortcut_to_zero',
++    'tests.test_numeric_recognition_024.NumericRecognition024Tests.test_weak_recognizer_result_falls_back_without_relaxing_threshold',
++    'tests.test_node_content.NodeContentTests.test_legacy_clearing_record_recovers_only_confirmed_same_layout_history',
++    'tests.test_node_content.NodeContentTests.test_passed_clearing_keeps_original_type_and_consumes_generation_budget_after_restart',
++    'tests.test_node_content.NodeContentTests.test_fog_next_to_visible_vantage_point_reports_visibility_conflict',
++    'tests.test_node_content.NodeContentTests.test_immediately_revealed_nodes_are_not_fog_candidates_on_later_floors',
++    'tests.test_run_config.RunConfigTests.test_settings_survive_missing_pages_restart_and_only_manual_reset_clears_them',
+ )
+ 
+ 

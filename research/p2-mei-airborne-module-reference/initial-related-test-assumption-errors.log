@@ -1,0 +1,27 @@
+.......F......E..................
+======================================================================
+ERROR: test_mm_phase_reference (unittest.loader._FailedTest.test_mm_phase_reference)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mm_phase_reference
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.test_mm_phase_reference'
+
+
+======================================================================
+FAIL: test_trait_parameter_does_not_multiply_existing_skill_damage_or_attack (tests.test_mei_airborne_module_reference.MeiAirborneModuleReferenceTests.test_trait_parameter_does_not_multiply_existing_skill_damage_or_attack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-mei-airborne-module-reference-073/draft/tests/test_mei_airborne_module_reference.py", line 64, in test_trait_parameter_does_not_multiply_existing_skill_damage_or_attack
+    self.assertEqual(result['complete_definition'],
+AssertionError: 'complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。' != 'complete仅表示所选藏品规则支持；不代表完整战斗模拟。'
+- complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。
++ complete仅表示所选藏品规则支持；不代表完整战斗模拟。
+
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.316s
+
+FAILED (failures=1, errors=1)

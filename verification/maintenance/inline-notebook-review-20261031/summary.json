@@ -1,0 +1,109 @@
+{
+  "kind": "implementation_review_maintenance",
+  "title": "复用同一编辑器完成单窗笔记、上级通用笔记与准确入口联动",
+  "baseline_commit": "186544860f22c0b9e8845059dc7a49cc2cb67706",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "implemented_scope_passed": true,
+  "related_unique_tests": 115,
+  "test_scope": "Initial current 109 passed; original 97 unchanged scopes reused, all 12 original new cases and 6 further cases verified in final 18. Intermediate 13/16/17 results not added again.",
+  "current_focused_receipt": {
+    "path": "verification/maintenance/inline-notebook-review-20261031/tests-current-delivery/results.json",
+    "sha256": "a94fadc41cd9608000e4c8c9b588432c2f029cec408c3297a00f774a3ae9692f",
+    "bytes": 248
+  },
+  "related_existing_receipt": {
+    "path": "verification/maintenance/inline-notebook-review-20261031/tests-current/results.json",
+    "sha256": "12f9018e3fdd27eeeff19777a917a372c0fe1be387dbac07549d9f8810291151",
+    "bytes": 758
+  },
+  "native_ranges": [
+    {
+      "receipt": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-delivery/window.json",
+        "sha256": "00be0f99f41ac47d4d51d7c536ff561ef169b7ea0db5490595d4c36723998cf8",
+        "bytes": 168152
+      },
+      "process": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-delivery/process.json",
+        "sha256": "86532dcf855e970763a87858b1f94bf134927523dd3d7d01d5d9bdc7efdb03f3",
+        "bytes": 372
+      },
+      "unique_checks": 66
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-reference-delivery/window.json",
+        "sha256": "3027cd5a1e94147aa7a6827295b8f7750e65ae2f13ca4b70f607fd604f2151c7",
+        "bytes": 165880
+      },
+      "process": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-reference-delivery/process.json",
+        "sha256": "ce76eb884288ff32c8ae4e102d8e0ea65b6e5a9e19ccb93e0b4e63f75c8a7de3",
+        "bytes": 433
+      },
+      "unique_checks": 22
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-selector-delivery/window.json",
+        "sha256": "97abec95b4210d067c3b066651090f5b479f36516a5ab6ac5d5d7477588476a1",
+        "bytes": 165607
+      },
+      "process": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-selector-delivery/process.json",
+        "sha256": "9125e5ff1c38b4aa7bae8a16060c3cb4f482708bb4bec8b53424dade84740780",
+        "bytes": 432
+      },
+      "unique_checks": 19
+    },
+    {
+      "receipt": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-autosave-delivery/window.json",
+        "sha256": "800ff1b7b3246e90037a6999183eec9f06da8942831814ac686d3588f168a8e2",
+        "bytes": 165472
+      },
+      "process": {
+        "path": "verification/maintenance/inline-notebook-review-20261031/native-autosave-delivery/process.json",
+        "sha256": "773a3af9cde6689ea5753d3dfb10f8718a27428f0807e603cfadb0eb9825e1a6",
+        "bytes": 432
+      },
+      "unique_checks": 17
+    }
+  ],
+  "native_ranges_overlap_not_summed": true,
+  "source_review": {
+    "path": "verification/maintenance/inline-notebook-review-20261031/source-review.json",
+    "sha256": "bcec5a82b107cf8f92942ce2c1296d05130e6fb44fb5fc3481dab37bbed83ff1",
+    "bytes": 4339
+  },
+  "image_review": {
+    "path": "verification/maintenance/inline-notebook-review-20261031/image-review.json",
+    "sha256": "4b5042b3e34b28dedce2d9248c4a2fdd38cd3f3598adf77e9d78b7150a9254a4",
+    "bytes": 6362
+  },
+  "runtime": {
+    "path": "verification/maintenance/inline-notebook-review-20261031/live-window/desktop-review.json",
+    "sha256": "6e785fc5c4da58bc7f4103dccaf34495a11023a3389d185c98cc8c8ada5d6de9",
+    "bytes": 386
+  },
+  "initial_failures": "First 109 run retained: 2 actual editor-switch failures fixed by retaining intended edit mode, and 1 fixture error fixed by creating its temporary notes folder before simulating an external write.",
+  "visual_failure": "First native green was insufficient: root image review caught stale parent cards still visible after layout removal. Now hides immediately, and explicit pre-deferred-delete visibility and actual archived-note assertions passed.",
+  "stable_editor_refresh_measurement": {
+    "consecutive_unchanged_refreshes": 30,
+    "additional_note_reads": 0,
+    "external_changed_file_reads_for_preview_and_editor": 2,
+    "whole_program_speedup_claimed": false
+  },
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "private_data_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "publication_binding": "enclosing maintenance commit, ordinary push with actual remote and public-file blob verification"
+}

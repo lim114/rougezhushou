@@ -1,0 +1,26 @@
+--- READONLY-BASE-e5dec/wine-full-ui-095-cache-retry.py
++++ UNAPPLIED-HYPOTHETICAL/wine-full-ui-095-cache-retry.py
+@@ -1153,7 +1153,7 @@
+ _previous_profile095=None;_previous_trace095=None;_previous_excepthook095=None
+ _main_thread095=_threading095.get_ident();_old_delegate095=False
+ _phase095='runtime_project_imports';_scope095='legacy_prefix4217';_case095=None
+-_counts095={};_phase_entries095={};_code_keys095={};_pending095={};_caller_objects095={};_queue095=[];_state_queue095=[]
++_counts095={};_phase_entries095={};_code_keys095={};_code_identity_keys095={};_pending095={};_caller_objects095={};_queue095=[];_state_queue095=[]
+ _sequence095=0;_chunks095=[];_evidence_errors095=[];_qt_errors095=[];_api_sequence095=[]
+ _source_lines095=Path(__file__).read_text(encoding='utf-8').splitlines()
+ _runner_filename095=__file__.replace('\\','/').lower()
+@@ -1202,11 +1202,11 @@
+ def _profile095(frame,event,arg):
+     global _sequence095
+     if _threading095.get_ident()!=_main_thread095:return
+-    code=frame.f_code
+-    if code not in _code_keys095:
++    code=frame.f_code;identity=id(code);cached=_code_identity_keys095.get(identity)
++    if cached is None and code not in _code_keys095:
+         path=code.co_filename.replace('\\','/').lower()
+         _code_keys095[code]=('rouge/'+path.split('/rouge/',1)[1]+':'+code.co_qualname) if '/rouge/' in path else None
+-    key=_code_keys095[code]
++    key=_code_keys095[code] if cached is None else cached[1];_code_identity_keys095[identity]=cached if cached is not None else (code,key)
+     if event=='call' and key is not None:
+         phase,origin=_origin095(frame)
+         _counts095[key]=_counts095.get(key,0)+1

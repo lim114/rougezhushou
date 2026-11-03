@@ -1,0 +1,71 @@
+{
+  "title": "敌人招式黑板构建与目标计算资格统一",
+  "remaining_item": "敌人面板与机制/本局环境：固定技能与天赋黑板继承、精确等级参与目标计算的资格一致性",
+  "new_capability": "按已证原生控制流解析1029处精确等级引用的招式/天赋黑板配置，保留null/空/0与整记录/合并分支；固定战斗及局外工具显示中文分项，58处缺失等级原字段仅供技术查看且阻止目标伤害计算，失败不保留旧结果。",
+  "source_evidence": [
+    "203精确等级及等级→关卡覆盖顺序原件依据复用。",
+    "当前16相关方法、1415唯一指令、283 metadata/MethodSpec/类型/字段span实际原件逐项匹配；没有运行DLL或BinaryFormatter。",
+    "精确generic RemoveAll/Find/Add/DeepClone与predicate字面比较；天赋目标非空跳过分配，技能clone仅新黑板非空且旧匹配时执行。",
+    "DataPair只在实际helper路径规范化；整记录路径保留原黑板与两列；ESkillData六字段序列化支持范围已定点核验。"
+  ],
+  "acceptance": [
+    "70必要API/原固定资料/Qt与实际MainWindow临时状态检查通过，无跳过。",
+    "1087固定引用逐项检查：1029可解析、58缺精确等级不解析；可用5基础字段与旧来源投影无数值差异。",
+    "实际0.79窗口运行公开战士原始来源查询，显示0招式/1机制参数分项及完整实际机制未知；五项私人配置/本局记录保持。",
+    "未修改旧原字段、原继承未闭合标志、SP参考或主回转；无法取得精确等级时拒绝沿用手动防御或历史结果。"
+  ],
+  "limitations": [
+    "编译配置不证明当前服务器/热更新、实际附着、控制器、阶段、触发时刻或技能总量。",
+    "缺失精确等级的别名/默认构建路径仍未知；低等级与关卡覆盖投影不能替代。",
+    "序列化字段证明仅限精确六字段ESkillData；无任意对象克隆保证。",
+    "已证分项与完整实战继承分开，旧inheritance_resolved保持false。"
+  ],
+  "files": [
+    "rouge/enemy_configuration.py",
+    "rouge/data/enemy-configuration-construction.json",
+    "rouge/enemy_environment.py",
+    "rouge/enemy_skills.py",
+    "rouge/battle_planning.py",
+    "rouge/offline_tools_view.py",
+    "rouge/app.py",
+    "tests/test_enemy_configuration.py",
+    "tests/test_enemy_configuration_view.py",
+    "ENEMY_CONFIGURATION_REFERENCES.md",
+    "research/p3-enemy-configuration-current/independent-verification.json",
+    "research/p3-enemy-configuration-current/metadata-bindings.json",
+    "research/p3-enemy-configuration-current/native-proof.json",
+    "research/p3-enemy-configuration-current/receipt.json",
+    "research/p3-enemy-configuration-current/verify_native.py",
+    "verification/section-210/window.json",
+    "verification/section-210/native-file-check.json",
+    "verification/section-210/fixed-source-audit.json"
+  ],
+  "test_selectors": [
+    "tests.test_enemy_configuration",
+    "tests.test_enemy_configuration_view",
+    "tests.test_enemy_skills_042",
+    "tests.test_enemy_panel_reference",
+    "tests.test_enemy_sp_inheritance_reference",
+    "tests.test_enemy_comparison_134",
+    "tests.test_offline_tools_view.OfflineToolQueryTests"
+  ],
+  "preparation_errors_preserved": [
+    "新测试初次引用了未在本关绑定的enemy_1000_gopro；改成已证warrior固定ID后62例通过。",
+    "Qt测试初次误写既有控件名enemy/damage_output；校正为实际enemy_combo/damage_text，未删除断言，3例通过。",
+    "独立审查曾遗漏天赋旧board gate；parent用完整CFG指出后撤回错误规则并保留研究更正，错误未进入模型。"
+  ],
+  "section": 210,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T14:01:41.417697+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 70,
+    "passed": 70,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-210/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

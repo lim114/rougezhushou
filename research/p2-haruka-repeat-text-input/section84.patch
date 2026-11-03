@@ -1,0 +1,134 @@
+diff --git a/rouge/damage.py b/rouge/damage.py
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -318,6 +318,8 @@
+     finish_duration_references(scenario,result)
+     from .reporting import build_report
+     result['report']=build_report(scenario,result)
++    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
++        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
+     return result
+ 
+ def _evaluate_damage(prepared,wine_phase=None) -> dict:
+diff --git a/tests/test_haruka_repeat_text_input.py b/tests/test_haruka_repeat_text_input.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_haruka_repeat_text_input.py
+@@ -0,0 +1,117 @@
++"""Repeat declarations require nontext input after existing public validation."""
++from copy import deepcopy
++import unittest
++from rouge.catalog import catalog
++from rouge.damage import calculate_damage
++
++OP='char_4202_haruka'
++FIELD='haruka_repeat'
++ERROR=FIELD+' 不接受文本条件；请使用布尔值。'
++TEXTS=('', 'false', 'False', '0', 'true', '1', ' 未知 ', '\t')
++
++def scenario(skill=2,mode='frames',**extra):
++    return {'operator':OP,'skill':skill,'timing_mode':mode,'base_attack':1000,
++            'window_seconds':12,**extra}
++
++class HarukaRepeatTextInputTests(unittest.TestCase):
++    def reject(self,args):
++        before=deepcopy(args)
++        with self.assertRaises(ValueError) as raised:calculate_damage(args)
++        self.assertEqual(str(raised.exception),ERROR)
++        self.assertEqual(args,before)
++
++    def test_e1_s2_and_all_qualified_ranks_modes_reject_literals(self):
++        for rank in range(1,11):
++            elite=1 if rank<=7 else 2
++            for mode in ('frames','continuous'):
++                for text in ('','false','0',' 未知 '):
++                    self.reject(scenario(2,mode,elite=elite,level=1,skill_rank=rank,**{FIELD:text}))
++        for text in TEXTS:self.reject(scenario(**{FIELD:text}))
++
++    def test_nontext_aliases_preserve_complete_results_and_repeat_mode(self):
++        for mode in ('frames','continuous'):
++            args=scenario(2,mode,elite=1,level=1,skill_rank=7)
++            false=calculate_damage({**args,FIELD:False})
++            true=calculate_damage({**args,FIELD:True})
++            self.assertNotEqual(false['estimate']['skill']['mode'],true['estimate']['skill']['mode'])
++            self.assertEqual(true['estimate']['skill']['mode'],'infinite')
++            self.assertEqual(calculate_damage(args),false)
++            for value in (None,0,0.0,[],{}):self.assertEqual(calculate_damage({**args,FIELD:value}),false)
++            for value in (1,1.0,2,-1,[False],{'enabled':False}):
++                self.assertEqual(calculate_damage({**args,FIELD:value}),true)
++
++    def test_s1_s3_and_other_owner_field_is_inactive(self):
++        for operator,skill in ((OP,1),(OP,3),('char_298_susuro',2),
++                               ('char_2025_shu',3),('mechanist',1),('kaltsit',1)):
++            for mode in ('frames','continuous'):
++                args=scenario(skill,mode,operator=operator)
++                expected=calculate_damage(args)
++                for value in ('','false',True):
++                    self.assertEqual(calculate_damage({**args,FIELD:value}),expected)
++
++    def test_zero_scope_and_unplaced_bubbles_do_not_bypass_actual_s2_read(self):
++        contexts=({'window_seconds':0},{'base_attack':0},{'healing_targets':0},
++                  {'timing':{'target_disappears_seconds':0}}, {'timing':{'target_windows':[]}},
++                  {'bubble_bursts':2},
++                  {'module_id':'uniequip_002_haruka','module_level':3,'level':59,'healing_targets':3},
++                  {'module_id':'uniequip_002_haruka','module_level':3,'level':60,'healing_targets':3})
++        for context in contexts:
++            for mode in ('frames','continuous'):
++                self.reject(scenario(2,mode,**{**context,FIELD:'false'}))
++
++    def test_late_bubble_and_timing_errors_take_priority_over_text(self):
++        changes=({'bubble_bursts':True},{'bubble_bursts':-1},{'bubble_bursts':10001},
++                 {'bubble_bursts':0.5},{'bubble_bursts':'unknown'},
++                 {'timing_mode':'unknown'},{'timing':[]},{'timing':{'target_windows':[[2,1]]}},
++                 {'timing':{'windup_frames':-1}})
++        for change in changes:
++            errors=[]
++            for text in ('false',''):
++                args=scenario(**{**change,FIELD:text})
++                before=deepcopy(args)
++                with self.assertRaises((ValueError,TypeError)) as raised:calculate_damage(args)
++                errors.append((type(raised.exception),str(raised.exception)))
++                self.assertEqual(args,before)
++            self.assertEqual(errors[0],errors[1])
++            self.assertNotEqual(errors[0][1],ERROR)
++
++    def test_earlier_training_counts_and_other_owner_report_errors_keep_priority(self):
++        changes=({'elite':0,'skill_rank':1},{'elite':1,'skill_rank':10},{'skill':True},
++                 {'potential':7},{'healing_targets':True},{'healing_targets':-1},
++                 {'operator':'char_4228_closur','skill':1,'closure_prior_casts':True})
++        for change in changes:
++            errors=[]
++            for value in (False,'false'):
++                with self.assertRaises((ValueError,TypeError)) as raised:
++                    calculate_damage(scenario(**{**change,FIELD:value}))
++                errors.append((type(raised.exception),str(raised.exception)))
++            self.assertEqual(errors[0],errors[1])
++            self.assertNotEqual(errors[0][1],ERROR)
++
++    def test_deployment_wine_finishers_preserve_nontext_and_reject_text(self):
++        contexts=({'relic_ids':['rogue_6_relic_legacy_97']},
++                  {'relic_ids':['rogue_6_relic_legacy_105']},
++                  {'relic_ids':['rogue_6_relic_legacy_105','rogue_6_relic_legacy_97']},
++                  {'relic_ids':['rogue_6_relic_legacy_97'],
++                   'timing':{'initial_target_windows':[[2,1]]}})
++        for context in contexts:
++            for mode in ('frames','continuous'):
++                for value in (False,True):
++                    expected=calculate_damage(scenario(2,mode,**{**context,FIELD:value}))
++                    self.assertEqual(calculate_damage(scenario(2,mode,**{**context,FIELD:int(value)})),expected)
++                self.reject(scenario(2,mode,**{**context,FIELD:'false'}))
++
++    def test_caller_catalog_and_existing_bubble_unknowns_remain(self):
++        cached=deepcopy(catalog())
++        args=scenario(bubble_bursts=1,**{FIELD:True})
++        before=deepcopy(args)
++        result=calculate_damage(args)
++        self.assertIsNone(result['total_healing'])
++        expected=deepcopy(result)
++        result['estimate']['skill']['total_healing']=-1
++        self.assertEqual(calculate_damage(args),expected)
++        self.reject(scenario(**{FIELD:'false'}))
++        self.assertEqual(args,before)
++        self.assertEqual(catalog(),cached)
++
++if __name__=='__main__':unittest.main()

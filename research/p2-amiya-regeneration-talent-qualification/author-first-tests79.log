@@ -1,0 +1,18 @@
+.....F..............................
+======================================================================
+FAIL: test_older_skill_and_option_errors_are_not_bypassed (tests.test_amiya_regeneration_talent_qualification.AmiyaRegenerationTalentQualificationTests.test_older_skill_and_option_errors_are_not_bypassed)
+----------------------------------------------------------------------
+ValueError: amiya_hit_targets需要1到100之间的整数。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-amiya-regeneration-talent-qualification-079/draft/tests/test_amiya_regeneration_talent_qualification.py", line 97, in test_older_skill_and_option_errors_are_not_bypassed
+    with self.assertRaisesRegex(ValueError, '^amiya_hit_targets需要范围内的有限非负整数。$'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^amiya_hit_targets需要范围内的有限非负整数。$" does not match "amiya_hit_targets需要1到100之间的整数。"
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.227s
+
+FAILED (failures=1)

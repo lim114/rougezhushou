@@ -1,0 +1,1683 @@
+{
+  "kind": "FRESH_ORIGINAL_STATIC_PREVIEW_SIGNATURES_AND_FIELDS_NOT_CAPTURE_PROOF",
+  "reader_sha256": "6c135e71444f8cceaa1797ebf25abbbf98d541b81159bd8f57b2fcc51ace3ce5",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "methods": [
+    {
+      "index": 26608,
+      "owner": "Torappu.ResourceUrls",
+      "method": "GetStageMapPreviewPath",
+      "return_type": "System.String",
+      "flags": "0x96",
+      "parameters": []
+    },
+    {
+      "index": 34265,
+      "owner": "Torappu.StageDataUtil",
+      "method": "LoadStagePreviewMap",
+      "return_type": "UnityEngine.Sprite",
+      "flags": "0x96",
+      "parameters": [
+        {
+          "name": "stageId",
+          "type": "System.String"
+        },
+        {
+          "name": "assetLoader",
+          "type": "Torappu.UI.ILoadAsset"
+        }
+      ]
+    },
+    {
+      "index": 70020,
+      "owner": "Torappu.Battle.Map",
+      "method": "TryGetCameraView",
+      "return_type": "System.Boolean",
+      "flags": "0x86",
+      "parameters": [
+        {
+          "name": "pos",
+          "type": "UnityEngine.Vector3"
+        }
+      ]
+    },
+    {
+      "index": 70051,
+      "owner": "Torappu.Battle.Map",
+      "method": "MapToWorldPosition",
+      "return_type": "UnityEngine.Vector3",
+      "flags": "0x86",
+      "parameters": [
+        {
+          "name": "mapPosition",
+          "type": "UnityEngine.Vector2"
+        }
+      ]
+    },
+    {
+      "index": 70112,
+      "owner": "Torappu.Battle.MapGraphic",
+      "method": "GetCameraConfig",
+      "return_type": "Torappu.Battle.MapGraphic+CameraConfig",
+      "flags": "0x86",
+      "parameters": []
+    },
+    {
+      "index": 70115,
+      "owner": "Torappu.Battle.MapGraphic",
+      "method": "GetCameraView",
+      "return_type": "UnityEngine.Vector3",
+      "flags": "0x86",
+      "parameters": []
+    },
+    {
+      "index": 108878,
+      "owner": "Torappu.UI.CommonMapPreviewDlg",
+      "method": "OnInit",
+      "return_type": "System.Void",
+      "flags": "0xc4",
+      "parameters": []
+    },
+    {
+      "index": 108879,
+      "owner": "Torappu.UI.CommonMapPreviewDlg",
+      "method": "OnRender",
+      "return_type": "System.Void",
+      "flags": "0xc4",
+      "parameters": [
+        {
+          "name": "input",
+          "type": "Torappu.UI.CommonMapPreviewDlg+Input"
+        }
+      ]
+    },
+    {
+      "index": 153175,
+      "owner": "Torappu.UI.Roguelike.RoguelikeFocusView",
+      "method": "ShowMapPreview",
+      "return_type": "System.Void",
+      "flags": "0x86",
+      "parameters": []
+    },
+    {
+      "index": 153183,
+      "owner": "Torappu.UI.Roguelike.RoguelikeFocusView",
+      "method": "LoadPreviewMap",
+      "return_type": "System.Void",
+      "flags": "0x86",
+      "parameters": [
+        {
+          "name": "stageId",
+          "type": "System.String"
+        }
+      ]
+    },
+    {
+      "index": 158071,
+      "owner": "Torappu.UI.Roguelike.RL06.RL06FocusViewPlugin",
+      "method": "_LoadPreviewMap",
+      "return_type": "System.Void",
+      "flags": "0x81",
+      "parameters": [
+        {
+          "name": "stageId",
+          "type": "System.String"
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "type_index": 10632,
+      "name": "Torappu.Battle.Map",
+      "fields": [
+        {
+          "index": 78333,
+          "name": "_anchorTransform",
+          "type": "UnityEngine.Transform",
+          "native_offset": 24
+        },
+        {
+          "index": 78334,
+          "name": "_tilesContainer",
+          "type": "UnityEngine.Transform",
+          "native_offset": 32
+        },
+        {
+          "index": 78335,
+          "name": "_graphicContainer",
+          "type": "UnityEngine.Transform",
+          "native_offset": 40
+        },
+        {
+          "index": 78336,
+          "name": "_tiles",
+          "type": "Torappu.Battle.Map+Tiles2D",
+          "native_offset": 48
+        },
+        {
+          "index": 78337,
+          "name": "_blockedEdges",
+          "type": "Torappu.MapData+Edge[]",
+          "native_offset": 56
+        },
+        {
+          "index": 78338,
+          "name": "_deathArea",
+          "type": "Torappu.Battle.DeathArea",
+          "native_offset": 64
+        },
+        {
+          "index": 78339,
+          "name": "_graphic",
+          "type": "Torappu.Battle.MapGraphic",
+          "native_offset": 72
+        },
+        {
+          "index": 78340,
+          "name": "_tileMoveTime",
+          "type": "System.Single",
+          "native_offset": 80
+        },
+        {
+          "index": 78341,
+          "name": "_tileMoveEase",
+          "type": "DG.Tweening.Ease",
+          "native_offset": 84
+        },
+        {
+          "index": 78342,
+          "name": "m_data",
+          "type": "Torappu.MapData",
+          "native_offset": 88
+        },
+        {
+          "index": 78343,
+          "name": "m_widgets",
+          "type": "Torappu.Battle.MapWidget[]",
+          "native_offset": 96
+        },
+        {
+          "index": 78344,
+          "name": "m_passableMaps",
+          "type": "Il2CppKind20(6588183520)[]",
+          "native_offset": 104
+        },
+        {
+          "index": 78345,
+          "name": "m_routes",
+          "type": "Torappu.Battle.Route[]",
+          "native_offset": 112
+        },
+        {
+          "index": 78346,
+          "name": "m_extraRoutes",
+          "type": "Torappu.Battle.Route[]",
+          "native_offset": 120
+        },
+        {
+          "index": 78347,
+          "name": "m_runtimeRoutes",
+          "type": "Torappu.ListDict`2<System.UInt32,Torappu.Battle.Route>",
+          "native_offset": 128
+        },
+        {
+          "index": 78348,
+          "name": "m_runtimeTraceRoutes",
+          "type": "Torappu.ListDict`2<Torappu.GridPosition,Torappu.Battle.Route>",
+          "native_offset": 136
+        },
+        {
+          "index": 78349,
+          "name": "m_runtimeExtraRoutes",
+          "type": "Torappu.ListDict`2<Torappu.GridPosition,Torappu.Battle.Route>",
+          "native_offset": 144
+        },
+        {
+          "index": 78350,
+          "name": "m_hitResults",
+          "type": "UnityEngine.RaycastHit[]",
+          "native_offset": 152
+        },
+        {
+          "index": 78351,
+          "name": "m_updateableTiles",
+          "type": "System.Collections.Generic.List`1<Torappu.Battle.IUpdateable>",
+          "native_offset": 160
+        },
+        {
+          "index": 78352,
+          "name": "m_randomWrapper",
+          "type": "Torappu.Battle.IBattleRandom",
+          "native_offset": 168
+        },
+        {
+          "index": 78353,
+          "name": "m_pathFinding",
+          "type": "Torappu.Battle.IPathFinding",
+          "native_offset": 176
+        },
+        {
+          "index": 78354,
+          "name": "m_themeController",
+          "type": "Torappu.Battle.MapThemeController",
+          "native_offset": 184
+        },
+        {
+          "index": 78355,
+          "name": "m_mapControllers",
+          "type": "Torappu.ListDict`2<Torappu.Battle.MapTags,Torappu.Battle.MapController>",
+          "native_offset": 192
+        },
+        {
+          "index": 78356,
+          "name": "m_bindKeyToTilesDict",
+          "type": "Torappu.ListDict`2<System.String,System.Collections.Generic.List`1<Torappu.Battle.Tile>>",
+          "native_offset": 200
+        },
+        {
+          "index": 78357,
+          "name": "m_tileToBindingTilesDict",
+          "type": "Torappu.ListDict`2<Torappu.Battle.Tile,System.Collections.Generic.List`1<Torappu.Battle.Tile>>",
+          "native_offset": 208
+        },
+        {
+          "index": 78358,
+          "name": "m_subMapGraphics",
+          "type": "Torappu.ListDict`2<System.String,Torappu.Battle.MapGraphic>",
+          "native_offset": 216
+        },
+        {
+          "index": 78359,
+          "name": "m_buildableDirty",
+          "type": "System.Boolean",
+          "native_offset": 224
+        },
+        {
+          "index": 78360,
+          "name": "MAGICCIRCUIT_TAG",
+          "type": "System.String",
+          "native_offset": 0
+        },
+        {
+          "index": 78361,
+          "name": "m_mapLayerRects",
+          "type": "System.Collections.Generic.List`1<UnityEngine.Rect>",
+          "native_offset": 232
+        },
+        {
+          "index": 78362,
+          "name": "m_mapLayerCenters",
+          "type": "System.Collections.Generic.List`1<UnityEngine.Vector3>",
+          "native_offset": 240
+        },
+        {
+          "index": 78363,
+          "name": "m_sceneEffects",
+          "type": "Torappu.Rendering.BaseSceneEffect[]",
+          "native_offset": 248
+        },
+        {
+          "index": 78364,
+          "name": "m_endTiles",
+          "type": "System.Collections.Generic.List`1<Torappu.Battle.Tile>",
+          "native_offset": 256
+        },
+        {
+          "index": 78365,
+          "name": "BLOCKED_EDGE_PREFAB",
+          "type": "System.String",
+          "native_offset": 0
+        },
+        {
+          "index": 78366,
+          "name": "RAYCAST_THICKNESS_HALF",
+          "type": "System.Single",
+          "native_offset": 0
+        },
+        {
+          "index": 78367,
+          "name": "s_highlandPlane",
+          "type": "UnityEngine.Plane",
+          "native_offset": 8
+        },
+        {
+          "index": 78368,
+          "name": "s_lowlandPlane",
+          "type": "UnityEngine.Plane",
+          "native_offset": 24
+        },
+        {
+          "index": 78369,
+          "name": "m_batchingTileUpdate",
+          "type": "System.Boolean",
+          "native_offset": 264
+        },
+        {
+          "index": 78370,
+          "name": "m_batchDirtyMask",
+          "type": "Torappu.MotionMask",
+          "native_offset": 268
+        },
+        {
+          "index": 78371,
+          "name": "__Hotfix0_get_isMultiLayerMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 40
+        },
+        {
+          "index": 78372,
+          "name": "__Hotfix0_get_isMagicCircuitMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 48
+        },
+        {
+          "index": 78373,
+          "name": "__Hotfix0_get_tileMoveTime",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 56
+        },
+        {
+          "index": 78374,
+          "name": "__Hotfix0_get_tileMoveEase",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 64
+        },
+        {
+          "index": 78375,
+          "name": "__Hotfix0_get_tiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 72
+        },
+        {
+          "index": 78376,
+          "name": "__Hotfix0_get_endPosTiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 80
+        },
+        {
+          "index": 78377,
+          "name": "__Hotfix0_get_width",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 88
+        },
+        {
+          "index": 78378,
+          "name": "__Hotfix0_get_height",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 96
+        },
+        {
+          "index": 78379,
+          "name": "__Hotfix0_get_isValid",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 104
+        },
+        {
+          "index": 78380,
+          "name": "__Hotfix0_get_buildableDirty",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 112
+        },
+        {
+          "index": 78381,
+          "name": "__Hotfix0_get_cameraView",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 120
+        },
+        {
+          "index": 78382,
+          "name": "__Hotfix0_get_cameraWorldPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 128
+        },
+        {
+          "index": 78383,
+          "name": "__Hotfix0_get_cameraFocusPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 136
+        },
+        {
+          "index": 78384,
+          "name": "__Hotfix0_get_battleAreaStartCol",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 144
+        },
+        {
+          "index": 78385,
+          "name": "__Hotfix0_get_battleAreaEndCol",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 152
+        },
+        {
+          "index": 78386,
+          "name": "__Hotfix0_get_anchorTransform",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 160
+        },
+        {
+          "index": 78387,
+          "name": "__Hotfix0_get_tilesContainer",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 168
+        },
+        {
+          "index": 78388,
+          "name": "__Hotfix0_get_graphicContainer",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 176
+        },
+        {
+          "index": 78389,
+          "name": "__Hotfix0_get_Item",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 184
+        },
+        {
+          "index": 78390,
+          "name": "__Hotfix1_get_Item",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 192
+        },
+        {
+          "index": 78391,
+          "name": "__Hotfix0_get_graphic",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 200
+        },
+        {
+          "index": 78392,
+          "name": "__Hotfix0_get_themeController",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 208
+        },
+        {
+          "index": 78393,
+          "name": "__Hotfix0_get_nightMapController",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 216
+        },
+        {
+          "index": 78394,
+          "name": "__Hotfix0_get_magicCircuitController",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 224
+        },
+        {
+          "index": 78395,
+          "name": "__Hotfix0_get_random",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 232
+        },
+        {
+          "index": 78396,
+          "name": "__Hotfix0_get_mapTheme",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 240
+        },
+        {
+          "index": 78397,
+          "name": "__Hotfix0_get_data",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 248
+        },
+        {
+          "index": 78398,
+          "name": "__Hotfix0_get_subMapGraphics",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 256
+        },
+        {
+          "index": 78399,
+          "name": "__Hotfix0_Init",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 264
+        },
+        {
+          "index": 78400,
+          "name": "__Hotfix0_ResetSeed",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 272
+        },
+        {
+          "index": 78401,
+          "name": "__Hotfix0_ResetRandom",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 280
+        },
+        {
+          "index": 78402,
+          "name": "__Hotfix0_InitRouteAndPassableMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 288
+        },
+        {
+          "index": 78403,
+          "name": "__Hotfix0_SetBuildableDirty",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 296
+        },
+        {
+          "index": 78404,
+          "name": "__Hotfix0_ClearAllRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 304
+        },
+        {
+          "index": 78405,
+          "name": "__Hotfix0_ReplaceAllRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 312
+        },
+        {
+          "index": 78406,
+          "name": "__Hotfix0_UpdateAllRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 320
+        },
+        {
+          "index": 78407,
+          "name": "__Hotfix0_get_isBatchingTileUpdate",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 328
+        },
+        {
+          "index": 78408,
+          "name": "__Hotfix0_BeginBatchTileUpdate",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 336
+        },
+        {
+          "index": 78409,
+          "name": "__Hotfix0_EndBatchTileUpdate",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 344
+        },
+        {
+          "index": 78410,
+          "name": "__Hotfix0_AccumulateDirtyRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 352
+        },
+        {
+          "index": 78411,
+          "name": "__Hotfix0_UpdateRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 360
+        },
+        {
+          "index": 78412,
+          "name": "__Hotfix0_UpdateAllRoutesOffset",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 368
+        },
+        {
+          "index": 78413,
+          "name": "__Hotfix0__ProcessRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 376
+        },
+        {
+          "index": 78414,
+          "name": "__Hotfix1__ProcessRoutes",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 384
+        },
+        {
+          "index": 78415,
+          "name": "__Hotfix0_CheckAllRoutesReachable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 392
+        },
+        {
+          "index": 78416,
+          "name": "__Hotfix0_CheckReachable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 400
+        },
+        {
+          "index": 78417,
+          "name": "__Hotfix0_GetPassableMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 408
+        },
+        {
+          "index": 78418,
+          "name": "__Hotfix0_CheckPassable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 416
+        },
+        {
+          "index": 78419,
+          "name": "__Hotfix0_CheckUnpassable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 424
+        },
+        {
+          "index": 78420,
+          "name": "__Hotfix0_CheckObstacleLikeOrUnpassable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 432
+        },
+        {
+          "index": 78421,
+          "name": "__Hotfix0_UpdatePassableMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 440
+        },
+        {
+          "index": 78422,
+          "name": "__Hotfix0_TryGetInitialLOrR",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 448
+        },
+        {
+          "index": 78423,
+          "name": "__Hotfix0_ImportData",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 456
+        },
+        {
+          "index": 78424,
+          "name": "__Hotfix0_FilterTiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 464
+        },
+        {
+          "index": 78425,
+          "name": "__Hotfix1_FilterTiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 472
+        },
+        {
+          "index": 78426,
+          "name": "__Hotfix0_GetTileHeight",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 480
+        },
+        {
+          "index": 78427,
+          "name": "__Hotfix0_TryGetCameraView",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 488
+        },
+        {
+          "index": 78428,
+          "name": "__Hotfix0_CheckHasTag",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 496
+        },
+        {
+          "index": 78429,
+          "name": "__Hotfix0_GetMapLayerCount",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 504
+        },
+        {
+          "index": 78430,
+          "name": "__Hotfix0__InitMapLayers",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 512
+        },
+        {
+          "index": 78431,
+          "name": "__Hotfix0__InitSceneEffects",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 520
+        },
+        {
+          "index": 78432,
+          "name": "__Hotfix0_Comparison",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 528
+        },
+        {
+          "index": 78433,
+          "name": "__Hotfix0__ProcessSpineShaderReplace",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 536
+        },
+        {
+          "index": 78434,
+          "name": "__Hotfix0__InitControllerByTags",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 544
+        },
+        {
+          "index": 78435,
+          "name": "__Hotfix0__CreateController",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 552
+        },
+        {
+          "index": 78436,
+          "name": "__Hotfix0_GetFirstSceneEffect",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 560
+        },
+        {
+          "index": 78437,
+          "name": "__Hotfix0_GetLayerCenters",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 568
+        },
+        {
+          "index": 78438,
+          "name": "__Hotfix1_GetLayerCenters",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 576
+        },
+        {
+          "index": 78439,
+          "name": "__Hotfix0_GetPlayerSide",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 584
+        },
+        {
+          "index": 78440,
+          "name": "__Hotfix0_GetPlayerLayer",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 592
+        },
+        {
+          "index": 78441,
+          "name": "__Hotfix0_TryGetNextLayersTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 600
+        },
+        {
+          "index": 78442,
+          "name": "__Hotfix0_AddTileUpdateable",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 608
+        },
+        {
+          "index": 78443,
+          "name": "__Hotfix0_OnFixedUpdate",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 616
+        },
+        {
+          "index": 78444,
+          "name": "__Hotfix0_OnBattleFinish",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 624
+        },
+        {
+          "index": 78445,
+          "name": "__Hotfix0_Reset",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 632
+        },
+        {
+          "index": 78446,
+          "name": "__Hotfix0__InitTilesAndWidgets",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 640
+        },
+        {
+          "index": 78447,
+          "name": "__Hotfix0__InitRoutesAndPassableMaps",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 648
+        },
+        {
+          "index": 78448,
+          "name": "__Hotfix0__VerifyData",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 656
+        },
+        {
+          "index": 78449,
+          "name": "__Hotfix0_RefreshMeshThemeConfig",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 664
+        },
+        {
+          "index": 78450,
+          "name": "__Hotfix0_GenerateRuntimeRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 672
+        },
+        {
+          "index": 78451,
+          "name": "__Hotfix1_GenerateRuntimeRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 680
+        },
+        {
+          "index": 78452,
+          "name": "__Hotfix2_GenerateRuntimeRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 688
+        },
+        {
+          "index": 78453,
+          "name": "__Hotfix0_TryRemoveRuntimeRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 696
+        },
+        {
+          "index": 78454,
+          "name": "__Hotfix0_GenerateRuntimeTraceRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 704
+        },
+        {
+          "index": 78455,
+          "name": "__Hotfix0_GenerateRuntimeExtraRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 712
+        },
+        {
+          "index": 78456,
+          "name": "__Hotfix0_RemoveRuntimeExtraRoute",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 720
+        },
+        {
+          "index": 78457,
+          "name": "__Hotfix0_TryCalculatePathFindingDistance",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 728
+        },
+        {
+          "index": 78458,
+          "name": "__Hotfix0_MapToWorldPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 736
+        },
+        {
+          "index": 78459,
+          "name": "__Hotfix0_WorldToMapPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 744
+        },
+        {
+          "index": 78460,
+          "name": "__Hotfix0_MapToWorldPositionV3",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 752
+        },
+        {
+          "index": 78461,
+          "name": "__Hotfix0_GetTilesCenterWorldPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 760
+        },
+        {
+          "index": 78462,
+          "name": "__Hotfix0_TryGetWorldPositionByGridPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 768
+        },
+        {
+          "index": 78463,
+          "name": "__Hotfix0_WorldToGridPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 776
+        },
+        {
+          "index": 78464,
+          "name": "__Hotfix0_TryGetGridPosByWorldPosition",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 784
+        },
+        {
+          "index": 78465,
+          "name": "__Hotfix0_WorldToMapPositionV3",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 792
+        },
+        {
+          "index": 78466,
+          "name": "__Hotfix0_GetTileByScreenPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 800
+        },
+        {
+          "index": 78467,
+          "name": "__Hotfix0_GetMapPosByScreenPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 808
+        },
+        {
+          "index": 78468,
+          "name": "__Hotfix0_IsPosOutOfScreen",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 816
+        },
+        {
+          "index": 78469,
+          "name": "__Hotfix0_GetWorldPosByScreenPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 824
+        },
+        {
+          "index": 78470,
+          "name": "__Hotfix0_RegisterTileBind",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 832
+        },
+        {
+          "index": 78471,
+          "name": "__Hotfix0__ProcessTileBind",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 840
+        },
+        {
+          "index": 78472,
+          "name": "__Hotfix0_GetBindingTiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 848
+        },
+        {
+          "index": 78473,
+          "name": "__Hotfix0_CheckGridValid",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 856
+        },
+        {
+          "index": 78474,
+          "name": "__Hotfix0_CheckTileValid",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 864
+        },
+        {
+          "index": 78475,
+          "name": "__Hotfix1_CheckTileValid",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 872
+        },
+        {
+          "index": 78476,
+          "name": "__Hotfix0_IsStartOrEndPosTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 880
+        },
+        {
+          "index": 78477,
+          "name": "__Hotfix0_CheckWithinLayerRect",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 888
+        },
+        {
+          "index": 78478,
+          "name": "__Hotfix0_TryGetTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 896
+        },
+        {
+          "index": 78479,
+          "name": "__Hotfix0_TryGetTiles",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 904
+        },
+        {
+          "index": 78480,
+          "name": "__Hotfix0_TryGetTilesByKey",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 912
+        },
+        {
+          "index": 78481,
+          "name": "__Hotfix0_TryGetTilesByOrigin",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 920
+        },
+        {
+          "index": 78482,
+          "name": "__Hotfix0_TryGetCharacterByPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 928
+        },
+        {
+          "index": 78483,
+          "name": "__Hotfix0_GetTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 936
+        },
+        {
+          "index": 78484,
+          "name": "__Hotfix1_GetTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 944
+        },
+        {
+          "index": 78485,
+          "name": "__Hotfix0_TryGetTargetBehindTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 952
+        },
+        {
+          "index": 78486,
+          "name": "__Hotfix0_TryGetAroundTileByDirection",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 960
+        },
+        {
+          "index": 78487,
+          "name": "__Hotfix0_GetRouteOrNull",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 968
+        },
+        {
+          "index": 78488,
+          "name": "__Hotfix0_GetRouteIndex",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 976
+        },
+        {
+          "index": 78489,
+          "name": "__Hotfix0_GetExtraRouteIndex",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 984
+        },
+        {
+          "index": 78490,
+          "name": "__Hotfix0_GetGotoDirectionalPassableMask",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 992
+        },
+        {
+          "index": 78491,
+          "name": "__Hotfix0_GetMapController",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1000
+        },
+        {
+          "index": 78492,
+          "name": "__Hotfix0_GetDirectionToGoBackFromInvalidPos",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1008
+        },
+        {
+          "index": 78493,
+          "name": "__Hotfix0_GetNearestEndPointTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1016
+        },
+        {
+          "index": 78494,
+          "name": "__Hotfix0_GetAdjacentTilesEnemies",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1024
+        },
+        {
+          "index": 78495,
+          "name": "__Hotfix0_RegisterSubMapGraphics",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1032
+        },
+        {
+          "index": 78496,
+          "name": "__Hotfix0__UpdateAnchorToCenter",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1040
+        },
+        {
+          "index": 78497,
+          "name": "__Hotfix0__CreateTile",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1048
+        },
+        {
+          "index": 78498,
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 1056
+        }
+      ]
+    },
+    {
+      "type_index": 10639,
+      "name": "Torappu.Battle.MapGraphic",
+      "fields": [
+        {
+          "index": 78504,
+          "name": "KEY_CAMERA_FOCUS",
+          "type": "System.String",
+          "native_offset": 0
+        },
+        {
+          "index": 78505,
+          "name": "KEY_CAMERA_OFFSET",
+          "type": "System.String",
+          "native_offset": 0
+        },
+        {
+          "index": 78506,
+          "name": "_mapSettings",
+          "type": "Torappu.Battle.MapGraphic+MapSettings",
+          "native_offset": 24
+        },
+        {
+          "index": 78507,
+          "name": "_lightmapSettings",
+          "type": "Torappu.Battle.MapGraphic+LightmapSettings",
+          "native_offset": 32
+        },
+        {
+          "index": 78508,
+          "name": "_effectSettings",
+          "type": "Torappu.Battle.MapGraphic+EffectSettings",
+          "native_offset": 40
+        },
+        {
+          "index": 78509,
+          "name": "_graphics",
+          "type": "Torappu.Battle.TileGraphic[]",
+          "native_offset": 48
+        },
+        {
+          "index": 78510,
+          "name": "_background",
+          "type": "UnityEngine.Transform",
+          "native_offset": 56
+        },
+        {
+          "index": 78511,
+          "name": "m_isCameraConfigInited",
+          "type": "System.Boolean",
+          "native_offset": 64
+        },
+        {
+          "index": 78512,
+          "name": "m_cameraConfig",
+          "type": "Torappu.Battle.MapGraphic+CameraConfig",
+          "native_offset": 72
+        },
+        {
+          "index": 78513,
+          "name": "__Hotfix0_get_mapSettings",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 0
+        },
+        {
+          "index": 78514,
+          "name": "__Hotfix0_get_lightmapSettings",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 8
+        },
+        {
+          "index": 78515,
+          "name": "__Hotfix0_get_effectSettings",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 16
+        },
+        {
+          "index": 78516,
+          "name": "__Hotfix0_get_graphics",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 24
+        },
+        {
+          "index": 78517,
+          "name": "__Hotfix0_get_backgroundTransform",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 32
+        },
+        {
+          "index": 78518,
+          "name": "__Hotfix0_GetCameraConfig",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 40
+        },
+        {
+          "index": 78519,
+          "name": "__Hotfix0_AttachToMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 48
+        },
+        {
+          "index": 78520,
+          "name": "__Hotfix0_GetTileHeight",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 56
+        },
+        {
+          "index": 78521,
+          "name": "__Hotfix0_GetCameraView",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 64
+        },
+        {
+          "index": 78522,
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 72
+        }
+      ]
+    },
+    {
+      "type_index": 16457,
+      "name": "Torappu.UI.CommonMapPreviewDlg",
+      "fields": [
+        {
+          "index": 132705,
+          "name": "_blurBg",
+          "type": "Torappu.UI.UIRenderTextureImage",
+          "native_offset": 120
+        },
+        {
+          "index": 132706,
+          "name": "_imgMapPreview",
+          "type": "UnityEngine.UI.Image",
+          "native_offset": 128
+        },
+        {
+          "index": 132707,
+          "name": "_backTrans",
+          "type": "UnityEngine.RectTransform",
+          "native_offset": 136
+        },
+        {
+          "index": 132708,
+          "name": "__Hotfix0_OnInit",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 0
+        },
+        {
+          "index": 132709,
+          "name": "__Hotfix0_OnRender",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 8
+        },
+        {
+          "index": 132710,
+          "name": "__Hotfix0_GetBlurTarget",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 16
+        },
+        {
+          "index": 132711,
+          "name": "__Hotfix0__EventOnCloseDlg",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 24
+        },
+        {
+          "index": 132712,
+          "name": "__Hotfix0_EventOnClose",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 32
+        },
+        {
+          "index": 132713,
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 40
+        }
+      ]
+    },
+    {
+      "type_index": 25926,
+      "name": "Torappu.UI.Roguelike.RL06.RL06FocusViewPlugin",
+      "fields": [
+        {
+          "index": 214372,
+          "name": "SCRAP_MAX_NUM",
+          "type": "System.Int32",
+          "native_offset": 0
+        },
+        {
+          "index": 214373,
+          "name": "SCRAP_PANEL_GRAY_ALPHA",
+          "type": "System.Single",
+          "native_offset": 0
+        },
+        {
+          "index": 214374,
+          "name": "_focusViewData",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusViewConfigData",
+          "native_offset": 40
+        },
+        {
+          "index": 214375,
+          "name": "_colorGraphic",
+          "type": "Torappu.UI.UIColorGraphic",
+          "native_offset": 48
+        },
+        {
+          "index": 214376,
+          "name": "_panelBattleInfoNode",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 56
+        },
+        {
+          "index": 214377,
+          "name": "_nodeIcon",
+          "type": "UnityEngine.UI.Image",
+          "native_offset": 64
+        },
+        {
+          "index": 214378,
+          "name": "_textTitle",
+          "type": "UnityEngine.UI.Text",
+          "native_offset": 72
+        },
+        {
+          "index": 214379,
+          "name": "_textSubTitle",
+          "type": "UnityEngine.UI.Text",
+          "native_offset": 80
+        },
+        {
+          "index": 214380,
+          "name": "_panelDetailNode",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 88
+        },
+        {
+          "index": 214381,
+          "name": "_textDesc",
+          "type": "UnityEngine.UI.Text",
+          "native_offset": 96
+        },
+        {
+          "index": 214382,
+          "name": "_panelEliteDesc",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 104
+        },
+        {
+          "index": 214383,
+          "name": "_textEliteDesc",
+          "type": "UnityEngine.UI.Text",
+          "native_offset": 112
+        },
+        {
+          "index": 214384,
+          "name": "_bouyPreviewBtnGraphic",
+          "type": "Torappu.UI.UIColorGraphic",
+          "native_offset": 120
+        },
+        {
+          "index": 214385,
+          "name": "_imageMapPreview",
+          "type": "UnityEngine.UI.Image",
+          "native_offset": 128
+        },
+        {
+          "index": 214386,
+          "name": "_imageMapPreviewMini",
+          "type": "UnityEngine.UI.Image",
+          "native_offset": 136
+        },
+        {
+          "index": 214387,
+          "name": "_attachBotyPanel",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 144
+        },
+        {
+          "index": 214388,
+          "name": "_buoyContent",
+          "type": "Torappu.UI.SimpleLayoutContent",
+          "native_offset": 152
+        },
+        {
+          "index": 214389,
+          "name": "_scrapContent",
+          "type": "Torappu.UI.SimpleLayoutContent",
+          "native_offset": 160
+        },
+        {
+          "index": 214390,
+          "name": "_scrapPanel",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 168
+        },
+        {
+          "index": 214391,
+          "name": "_passivePanelGraphic",
+          "type": "Torappu.UI.UIColorGraphic",
+          "native_offset": 176
+        },
+        {
+          "index": 214392,
+          "name": "_scrapDecoObj",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 184
+        },
+        {
+          "index": 214393,
+          "name": "_scrapCountTipText",
+          "type": "UnityEngine.UI.Text",
+          "native_offset": 192
+        },
+        {
+          "index": 214394,
+          "name": "_scrapDetailView",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusScrapDetailView",
+          "native_offset": 200
+        },
+        {
+          "index": 214395,
+          "name": "_buoyDetailView",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusBuoyDetailView",
+          "native_offset": 208
+        },
+        {
+          "index": 214396,
+          "name": "_tipBackBtnObj",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 216
+        },
+        {
+          "index": 214397,
+          "name": "_weatherPanel",
+          "type": "UnityEngine.GameObject",
+          "native_offset": 224
+        },
+        {
+          "index": 214398,
+          "name": "_weatherItemRoot",
+          "type": "UnityEngine.RectTransform",
+          "native_offset": 232
+        },
+        {
+          "index": 214399,
+          "name": "_weatherItemAsset",
+          "type": "Torappu.UI.Roguelike.RL06.RL06WeatherVariationIconItem",
+          "native_offset": 240
+        },
+        {
+          "index": 214400,
+          "name": "_weatherBtnColorGraph",
+          "type": "Torappu.UI.UIColorGraphic",
+          "native_offset": 248
+        },
+        {
+          "index": 214401,
+          "name": "_weatherInfoView",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusWeatherInfoView",
+          "native_offset": 256
+        },
+        {
+          "index": 214402,
+          "name": "m_showScrapDetailPanel",
+          "type": "System.Boolean",
+          "native_offset": 264
+        },
+        {
+          "index": 214403,
+          "name": "m_showBuoyDetailPanel",
+          "type": "System.Boolean",
+          "native_offset": 265
+        },
+        {
+          "index": 214404,
+          "name": "m_showWeatherDetailPanel",
+          "type": "System.Boolean",
+          "native_offset": 266
+        },
+        {
+          "index": 214405,
+          "name": "m_cacheModel",
+          "type": "Torappu.UI.Roguelike.RoguelikeFocusViewModel",
+          "native_offset": 272
+        },
+        {
+          "index": 214406,
+          "name": "m_isInited",
+          "type": "System.Boolean",
+          "native_offset": 280
+        },
+        {
+          "index": 214407,
+          "name": "m_cachedGridZoneNodePlugin",
+          "type": "Torappu.UI.Roguelike.RL06.RL06DungeonGridZoneNodePlugin",
+          "native_offset": 288
+        },
+        {
+          "index": 214408,
+          "name": "m_buoyAdapter",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusViewPlugin+RL06BuoyAdapter",
+          "native_offset": 296
+        },
+        {
+          "index": 214409,
+          "name": "m_passiveScrapAdapter",
+          "type": "Torappu.UI.Roguelike.RL06.RL06FocusViewPlugin+RL06PassiveScraptAdapter",
+          "native_offset": 304
+        },
+        {
+          "index": 214410,
+          "name": "m_weatherItemView",
+          "type": "Torappu.UI.Roguelike.RL06.RL06WeatherVariationIconItem",
+          "native_offset": 312
+        },
+        {
+          "index": 214411,
+          "name": "__Hotfix0__InitIfNot",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 0
+        },
+        {
+          "index": 214412,
+          "name": "__Hotfix0__ShowBuoyIfNeed",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 8
+        },
+        {
+          "index": 214413,
+          "name": "__Hotfix0__ShowScrapIfNeed",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 16
+        },
+        {
+          "index": 214414,
+          "name": "__Hotfix0__ShowWeather",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 24
+        },
+        {
+          "index": 214415,
+          "name": "__Hotfix0_Render",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 32
+        },
+        {
+          "index": 214416,
+          "name": "__Hotfix0_OnClickShowScrapDetail",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 40
+        },
+        {
+          "index": 214417,
+          "name": "__Hotfix0_OnClickShowBuoyDetail",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 48
+        },
+        {
+          "index": 214418,
+          "name": "__Hotfix0_OnClickShowWeatherDetail",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 56
+        },
+        {
+          "index": 214419,
+          "name": "__Hotfix0_OnClickShowShopDetail",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 64
+        },
+        {
+          "index": 214420,
+          "name": "__Hotfix0__CollectRewardItems",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 72
+        },
+        {
+          "index": 214421,
+          "name": "__Hotfix0_OnClickDetailBack",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 80
+        },
+        {
+          "index": 214422,
+          "name": "__Hotfix0__RefreshPassiveGraphic",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 88
+        },
+        {
+          "index": 214423,
+          "name": "__Hotfix0__RenderMapNode",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 96
+        },
+        {
+          "index": 214424,
+          "name": "__Hotfix0__RenderFocusNode",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 104
+        },
+        {
+          "index": 214425,
+          "name": "__Hotfix0__RenderBattleNode",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 112
+        },
+        {
+          "index": 214426,
+          "name": "__Hotfix0__RenderNormalNode",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 120
+        },
+        {
+          "index": 214427,
+          "name": "__Hotfix0__UpdateNodeColor",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 128
+        },
+        {
+          "index": 214428,
+          "name": "__Hotfix0__UpdateNodeIcon",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 136
+        },
+        {
+          "index": 214429,
+          "name": "__Hotfix0__LoadPreviewMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 144
+        },
+        {
+          "index": 214430,
+          "name": "__Hotfix0__UnloadPreviewMap",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 152
+        },
+        {
+          "index": 214431,
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "native_offset": 160
+        }
+      ]
+    }
+  ],
+  "fresh_checked_method_instruction_rows": 1531,
+  "whole_dynamic_graph_or_current_runtime_instance_proven": false,
+  "game_or_process_or_Qt_or_fit_operations": false
+}

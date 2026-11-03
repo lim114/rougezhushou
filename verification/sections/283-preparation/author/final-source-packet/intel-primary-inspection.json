@@ -1,0 +1,74 @@
+{
+  "kind": "SECTION283_OFFICIAL_INTEL_FRESH_PRIMARY_FILE_INSPECTION",
+  "url": "https://cdrdv2-public.intel.com/774492/325383-sdm-vol-2abcd.pdf",
+  "pdf_sha256": "bc4348020f5d5a27b0207c61e3c88d4e610eaf428658dc5d08a1cc84f98a719b",
+  "pdf_bytes": 11349721,
+  "pdf_pages": 2522,
+  "facts": [
+    {
+      "instruction": "CVTSI2SS",
+      "bookmark": "CVTSI2SS—Convert Doubleword Integer to Scalar Single Precision Floating-Point Value",
+      "page_index": 405,
+      "inspected_pages": [
+        405,
+        406
+      ],
+      "extracted_page_sha256": [
+        "203bb0def71e5a666cd62137032d11aa5915a8513136e0ea95ad46e13063a894",
+        "b4fdd5916f155339d20944f33a3b2dfd924a9a23768d8f95204e795b96b1b44c"
+      ],
+      "fact": "Legacy REX.W signed64 integer-to-Single conversion selects the MXCSR rounding control when inexact; no actual current RC is established.",
+      "full_text_or_long_quotes_archived": false
+    },
+    {
+      "instruction": "CVTSS2SD",
+      "bookmark": "CVTSS2SD—Convert Scalar Single Precision Floating-Point Value to Scalar Double Precision Floating-Point Value",
+      "page_index": 407,
+      "inspected_pages": [
+        407,
+        408
+      ],
+      "extracted_page_sha256": [
+        "f8e4e45f3ab6c2fcb561482806b2dba5858cc06169414483abd24dc5ca659d23",
+        "0cf7dff448a5cfe3a697a80c22981ad52dfdde8cf8d9108646979aa7bcff5b23"
+      ],
+      "fact": "Legacy Single-to-Double conversion is represented in the instruction reference. Finite normal and zero Single values fit Double exactly; subnormal/DAZ environment is left outside this reference domain.",
+      "full_text_or_long_quotes_archived": false
+    },
+    {
+      "instruction": "CVTTSD2SI",
+      "bookmark": "CVTTSD2SI—Convert With Truncation Scalar Double Precision Floating-Point Value to Signed Integer",
+      "page_index": 420,
+      "inspected_pages": [
+        420,
+        421
+      ],
+      "extracted_page_sha256": [
+        "66a9eee712dcb9240d51949c16cc8987d48dba705c578ea6e8f2d1905c6c0b23",
+        "7045777dac084e766994aa2921c7d9fcf8fe1a90fc23dcc647c13f40875f84a1"
+      ],
+      "fact": "Legacy conversion truncates Double to the signed destination width; out-of-domain invalid behavior is not a normal usable Int32 encoder parameter. No exception-mask state is inferred.",
+      "full_text_or_long_quotes_archived": false
+    },
+    {
+      "instruction": "MULSS",
+      "bookmark": "MULSS—Multiply Scalar Single Precision Floating-Point Values",
+      "page_index": 889,
+      "inspected_pages": [
+        889,
+        890
+      ],
+      "extracted_page_sha256": [
+        "596fcba2d36b393d5ad5e271a149cc13fad9d53c7d72e08a75d9277ce90fa937",
+        "969cc78b18fac33fa37ff6b14eb7b0d1c13c967f460f95c4d83f116e09feeeb8"
+      ],
+      "fact": "Legacy scalar Single multiplication follows floating arithmetic rounding. Exact normal results need no rounding choice; the FP scaling argument is separately proved from original game bytes.",
+      "full_text_or_long_quotes_archived": false
+    }
+  ],
+  "actual_mxcsr_or_exception_masks_proven": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "web_open_large_pdf_failed": true,
+  "web_open_failure": "Tool refused PDF content length 11349721; verified pinned official file used instead."
+}

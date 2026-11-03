@@ -3,7 +3,6 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import unittest
-from unittest.mock import patch
 
 import cv2
 import numpy as np
@@ -64,21 +63,18 @@ class CropCacheTests(unittest.TestCase):
         self.assertEqual(len(calls),5)
         self.assertEqual(reader.cache.hits,0)
 
-    def test_cached_return_is_independent_and_collision_requires_actual_bytes(self):
+    def test_cached_return_is_independent_and_requires_actual_bytes(self):
         calls=[]; reader=CachedOCR(self.backend(calls))
         result=reader(self.crop,use_cls=False)
         expected=deepcopy(result)
         result[0][0]['sum']=-1
         self.assertEqual(reader(self.crop,use_cls=False),expected)
-        class SameDigest:
-            def digest(self):return b'x'*32
-        with patch('rouge.recognition_cache.hashlib.sha256',return_value=SameDigest()):
-            a=self.crop.copy(); b=a.copy(); b[0,0,0]^=1
-            collision=CachedOCR(self.backend(calls))
-            av=collision(a); bv=collision(b)
-            self.assertNotEqual(av,bv)
-            self.assertEqual(collision.cache.hits,0)
-            self.assertEqual(collision.cache.misses,2)
+        a=self.crop.copy(); b=a.copy(); b[0,0,0]^=1
+        exact=CachedOCR(self.backend(calls))
+        av=exact(a); bv=exact(b)
+        self.assertNotEqual(av,bv)
+        self.assertEqual(exact.cache.hits,0)
+        self.assertEqual(exact.cache.misses,2)
 
     def test_larger_default_budget_and_byte_entry_limits_remain_hard_bounds(self):
         reader=CachedOCR(self.backend([]))

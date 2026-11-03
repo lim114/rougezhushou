@@ -1,0 +1,682 @@
+{
+  "format_version": 1,
+  "status": "PASS_INDEPENDENT_SOURCE_REVIEW_ONLY_PROJECT_RUNTIME_PENDING",
+  "reviewed_at_utc": "2026-10-09T00:14:02.186065+00:00",
+  "reviewer": "/root/p2_after096_source_supported_gap_survey/metadata_consumer_crosscheck",
+  "reviewer_role": "Independent peer; did not author candidate, qualification or either stdlib probe.",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "reviewed_manifest_sha256": "266fc36736088e232ca63b206aa0f961b0a41c6fe74f7289482734b7a3054f2a",
+  "reviewed_code_manifest_sha256": "6e2e8f2de8ea234f31bfc10a4c1c1473bf1a76d66c1fc28634ec3dbfca5abbfa",
+  "guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
+  "candidate_manifest": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/public-artifacts-manifest.json",
+    "bytes": 3501,
+    "sha256": "266fc36736088e232ca63b206aa0f961b0a41c6fe74f7289482734b7a3054f2a"
+  },
+  "code_manifest": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/public-code-artifacts-manifest.json",
+    "bytes": 2356,
+    "sha256": "6e2e8f2de8ea234f31bfc10a4c1c1473bf1a76d66c1fc28634ec3dbfca5abbfa"
+  },
+  "source_guard": {
+    "path": "/workspace/.continuation/root-source-095-v2.json",
+    "bytes": 84227,
+    "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+  },
+  "reviewed_code_files": [
+    {
+      "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/rouge/account_cache.py",
+      "bytes": 11551,
+      "sha256": "29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e"
+    },
+    {
+      "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/tests/test_account_persistence.py",
+      "bytes": 16063,
+      "sha256": "f4194a4cdec9ec88a3fac1c21d1bb45546ee91ec7dc860d57cdd3799a646b08d"
+    },
+    {
+      "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/scripts/verify_cloud.py",
+      "bytes": 5106,
+      "sha256": "e2b36b041fd1ac0fd2fa54a09dda38aa6ed9fc815ca81d189a71b81f6b849ac3"
+    }
+  ],
+  "exact_inverse": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/exact-source-inverse.json",
+    "bytes": 9111,
+    "sha256": "6204805e1187cc53bed93a40066d5ec9392087c41a0544a143b93b6e04c02e8f"
+  },
+  "author_qualification": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/source-only-qualification.json",
+    "bytes": 9867,
+    "sha256": "ed46238a39274a09b7002b6b2dca7e702efa02ac8dc376acede33bd93207c47c"
+  },
+  "source_checks": [
+    {
+      "id": "01-exact-frozen-packet",
+      "source_passed": true,
+      "evidence": {
+        "physical_files": 12,
+        "payload_files": 10,
+        "candidate_manifest": {
+          "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/public-artifacts-manifest.json",
+          "bytes": 3501,
+          "sha256": "266fc36736088e232ca63b206aa0f961b0a41c6fe74f7289482734b7a3054f2a"
+        },
+        "symlinks": 0
+      }
+    },
+    {
+      "id": "02-current735-source-not-mutated",
+      "source_passed": true,
+      "evidence": {
+        "maintained_paths_checked": 735,
+        "source_drift": [],
+        "new_test_not_applied": true,
+        "Git_calls": 0,
+        "source_guard": {
+          "path": "/workspace/.continuation/root-source-095-v2.json",
+          "bytes": 84227,
+          "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+        }
+      }
+    },
+    {
+      "id": "03-exact-code-manifest-three-destinations",
+      "source_passed": true,
+      "evidence": {
+        "code_manifest": {
+          "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/public-code-artifacts-manifest.json",
+          "bytes": 2356,
+          "sha256": "6e2e8f2de8ea234f31bfc10a4c1c1473bf1a76d66c1fc28634ec3dbfca5abbfa"
+        },
+        "destinations": [
+          "rouge/account_cache.py",
+          "tests/test_account_persistence.py",
+          "scripts/verify_cloud.py"
+        ]
+      }
+    },
+    {
+      "id": "04-complete-whole-source-inverse",
+      "source_passed": true,
+      "evidence": {
+        "files": [
+          {
+            "destination": "rouge/account_cache.py",
+            "operations": 3,
+            "restored_bytes": 10398,
+            "restored_sha256": "17250d93fa3932fc6233bc5b8dd8d1a17d76a283feee5fe694ffebe530ecb5d5"
+          },
+          {
+            "destination": "scripts/verify_cloud.py",
+            "operations": 1,
+            "restored_bytes": 5068,
+            "restored_sha256": "1854092840e1ed94244179f2f86960301a59b8153eb8c174d3c2fccc1826c1a1"
+          }
+        ],
+        "inverse": {
+          "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/exact-source-inverse.json",
+          "bytes": 9111,
+          "sha256": "6204805e1187cc53bed93a40066d5ec9392087c41a0544a143b93b6e04c02e8f"
+        },
+        "extra_edits": 0
+      }
+    },
+    {
+      "id": "05-eight-functions-completely-exact",
+      "source_passed": true,
+      "evidence": {
+        "whole_functions_total": 11,
+        "unchanged": [
+          {
+            "name": "_integer",
+            "sha256": "3aabcfb87cbd91ac21b25620510426330d7aca8ba18b3d01cbb4d21666d0ad35"
+          },
+          {
+            "name": "_timestamp",
+            "sha256": "1b5f3be5128e8a0d5269ab89bd4e2765e0639b1d70f05967d662a03453ec762f"
+          },
+          {
+            "name": "_record_issue",
+            "sha256": "5b87dfb55adc98eed60a5fc015032fcde72e8946fe3adcf762eec0e1194ac578"
+          },
+          {
+            "name": "_merged_record",
+            "sha256": "9de93ea4764f3fdc43cf437ce35e8962ec802b91b4b074d2433ba0d172b93c0e"
+          },
+          {
+            "name": "AccountCache._protect",
+            "sha256": "3f863d265c5d74da4957945f8a77722ddc0ca2ec84804882ff033feff3f164af"
+          },
+          {
+            "name": "AccountCache._screen_all",
+            "sha256": "7cef0d25029c6a889c01e1af079ba2c5cc527249827c1476bd0b7ea02b8b607c"
+          },
+          {
+            "name": "AccountCache.view",
+            "sha256": "b8bdca7367e4b4e499bd91f820e485e67b44ada79e325b0cc6f7068aa38c83a8"
+          },
+          {
+            "name": "AccountCache.observe",
+            "sha256": "3a6e99313aa8c9adf2bed5b1f80083a814fd1774504cc5883d195918639a18ce"
+          }
+        ],
+        "changed_only": [
+          "AccountCache.__init__",
+          "AccountCache.notice",
+          "AccountCache.save"
+        ]
+      }
+    },
+    {
+      "id": "06-new-session-field-only-no-import-change",
+      "source_passed": true,
+      "evidence": {
+        "initializer": "save_issue=None",
+        "save_issue_assignments": 3,
+        "imports_and_docstring_exact": true,
+        "record_producer_exact": true
+      },
+      "candidate_lines": [
+        137
+      ]
+    },
+    {
+      "id": "07-old-screening-and-permanent-gate-first",
+      "source_passed": true,
+      "evidence": {
+        "first_two_statements_AST_exact": true,
+        "protect_returns_before_serialization": true
+      },
+      "candidate_lines": [
+        242,
+        243,
+        244
+      ]
+    },
+    {
+      "id": "08-original-local-serializer-no-global-roundtrip",
+      "source_passed": true,
+      "evidence": {
+        "JSON_calls_in_save": [
+          "json.dumps"
+        ],
+        "ensure_ascii": false,
+        "indent": 2,
+        "json_loads_in_save": 0,
+        "global_encoder_modifications": 0
+      },
+      "candidate_lines": [
+        245
+      ]
+    },
+    {
+      "id": "09-pair-predicate-and-refusal-before-IO",
+      "source_passed": true,
+      "evidence": {
+        "inclusive_ranges": [
+          "U+D800..U+DBFF",
+          "U+DC00..U+DFFF"
+        ],
+        "scan": "raw adjacent points in JSON-quoted text via zip(text,text[1:])",
+        "coverage": "all key/value/nested string positions; high-high-low and low-high-low still include high-low adjacency",
+        "no_false_boundary_pair": "quoted strings separated by ASCII punctuation; ordinary scalar/literal backslash-u/separated or low-high points do not match",
+        "action": "save_issue + _protect() + False before filesystem operations; accepted memory unchanged"
+      },
+      "candidate_lines": [
+        245,
+        248,
+        249,
+        250,
+        251,
+        252
+      ]
+    },
+    {
+      "id": "10-escape-only-serialized-text",
+      "source_passed": true,
+      "evidence": {
+        "encoding": "utf-8/backslashreplace then utf-8 decode",
+        "raw_input_or_record_rewrite": false,
+        "declared_stdlib_controls_only": "ordinary UTF8/literal escape unchanged; pair-folding refused, candidate runtime pending"
+      },
+      "candidate_lines": [
+        255
+      ]
+    },
+    {
+      "id": "11-narrow-IO-handler-order-and-no-cleanup",
+      "source_passed": true,
+      "evidence": {
+        "handler": "OSError only",
+        "IO_chain": [
+          "mkdir",
+          "with_suffix",
+          "write_text",
+          "replace"
+        ],
+        "encoding": "utf-8",
+        "newline": "keyword omitted as original",
+        "_protect_arguments": 0,
+        "delete_or_write_bytes": 0,
+        "non_IO_failures_not_swallowed": true
+      },
+      "candidate_lines": [
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264
+      ]
+    },
+    {
+      "id": "12-original-memory-return-time-merge-and-changed-rules",
+      "source_passed": true,
+      "evidence": {
+        "whole_observe_and_merge_exact": true,
+        "accepted_assignment_before_save": true,
+        "save_False_keeps_observe_True": true,
+        "valid_view_survives_protect_alone": true,
+        "timestamp_priority_and_changed_decision_exact": true
+      },
+      "candidate_lines": [
+        208,
+        233,
+        237,
+        238,
+        239
+      ]
+    },
+    {
+      "id": "13-old-notice-prefix-and-healthy-protection-text-exact",
+      "source_passed": true,
+      "evidence": {
+        "old_per_ID_issue_and_load_issue_prefix_AST_exact": true,
+        "without_save_issue_old_protected_text_exact": true,
+        "save_notice_append_does_not_shadow_bad_ID": "existing issue prefix retained",
+        "failure_wording_targets_final_account_file": "does not deny temporary write; does not claim an original file exists",
+        "load_issue_not_reused": true
+      },
+      "candidate_lines": [
+        190,
+        191,
+        192,
+        195,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205
+      ]
+    },
+    {
+      "id": "14-original-target-preservation-limited-to-real-app-path",
+      "source_passed": true,
+      "evidence": {
+        "app_source": {
+          "path": "/workspace/rougezhushou/rouge/app.py",
+          "sha256": "589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd",
+          "lines": [
+            39,
+            102,
+            115,
+            448,
+            472,
+            887,
+            888,
+            889
+          ]
+        },
+        "target": "/workspace/rougezhushou/.local/operator-state.json",
+        "distinct_temporary": "/workspace/rougezhushou/.local/operator-state.tmp",
+        "private_state_read": false,
+        "scope_limit": "Actual app .json route and declared .json fixtures only; no claim for arbitrary AccountCache paths, notably a target itself ending .tmp."
+      }
+    },
+    {
+      "id": "15-eighteen-unrun-AST-test-methods",
+      "source_passed": true,
+      "evidence": {
+        "methods": [
+          {
+            "name": "test_ordinary_unicode_json_keeps_original_platform_write_bytes",
+            "line": 72
+          },
+          {
+            "name": "test_ascii_loaded_lone_surrogate_key_and_value_preserve_decoded_points",
+            "line": 84
+          },
+          {
+            "name": "test_same_operator_unconsumed_mapping_leaves_survive_lossless_save",
+            "line": 98
+          },
+          {
+            "name": "test_native_incoming_lone_points_and_low_high_order_are_not_replaced",
+            "line": 110
+          },
+          {
+            "name": "test_ascii_escaped_pair_already_decodes_to_normal_emoji",
+            "line": 120
+          },
+          {
+            "name": "test_literal_backslash_u_stays_distinct_from_surrogate_and_emoji",
+            "line": 131
+          },
+          {
+            "name": "test_adjacent_native_pair_refuses_without_changing_accepted_memory",
+            "line": 140
+          },
+          {
+            "name": "test_lossy_refusal_preserves_existing_temporary_and_original_files",
+            "line": 162
+          },
+          {
+            "name": "test_lossy_refusal_of_missing_file_does_not_create_parent_or_claim_original",
+            "line": 172
+          },
+          {
+            "name": "test_each_oserror_write_stage_preserves_memory_and_target",
+            "line": 181
+          },
+          {
+            "name": "test_partial_temporary_write_failure_is_not_deleted_or_published",
+            "line": 197
+          },
+          {
+            "name": "test_replace_failure_keeps_complete_temporary_as_separate_evidence",
+            "line": 216
+          },
+          {
+            "name": "test_save_failure_of_absent_original_is_reported_without_invented_file",
+            "line": 225
+          },
+          {
+            "name": "test_failed_session_keeps_changed_unchanged_and_other_valid_reads_without_more_io",
+            "line": 233
+          },
+          {
+            "name": "test_save_notice_keeps_later_per_operator_invalidity_visible",
+            "line": 252
+          },
+          {
+            "name": "test_metadata_only_native_pair_follows_existing_no_save_decision",
+            "line": 265
+          },
+          {
+            "name": "test_non_io_errors_are_not_silently_converted_to_failed_save",
+            "line": 281
+          },
+          {
+            "name": "test_new_independent_session_reads_original_without_resetting_failed_object",
+            "line": 292
+          }
+        ],
+        "test_executions": 0,
+        "public_temporary_fixtures": true
+      }
+    },
+    {
+      "id": "16-ASCII-native-metadata-fixtures-reachable",
+      "source_passed": true,
+      "evidence": {
+        "ASCII_constructor": [
+          43,
+          49,
+          50
+        ],
+        "transport": "ensure_ascii=True then ASCII bytes",
+        "ASCII_escaped_pair": [
+          120,
+          121,
+          124,
+          126
+        ],
+        "expected_ASCII_pair": "already decoded U+1F642 scalar",
+        "native_pair": [
+          140,
+          141,
+          146,
+          147,
+          151
+        ],
+        "expected_native_pair": "two incoming points retained; observe True and no IO",
+        "metadata_only": [
+          265,
+          268,
+          269,
+          274
+        ],
+        "original_changed_reason": "level1/scope/ranks initially unchanged; level2 later triggers save while saved sources pair survives",
+        "lone_key_value_mapping_and_literal_controls": [
+          84,
+          98,
+          110,
+          131
+        ]
+      }
+    },
+    {
+      "id": "17-IO-sticky-notice-and-session-fixtures-reachable",
+      "source_passed": true,
+      "evidence": {
+        "IO_stages": [
+          "mkdir",
+          "write_text",
+          "replace"
+        ],
+        "injected_classes": [
+          "PermissionError",
+          "OSError",
+          "FileExistsError"
+        ],
+        "IO_lines": [
+          181,
+          182,
+          183,
+          184,
+          189
+        ],
+        "construction_outside_patch": true,
+        "not_real_permission_execution": true,
+        "partial_tmp": [
+          197,
+          203,
+          205,
+          206,
+          209
+        ],
+        "complete_tmp_replace_failure": [
+          216,
+          219,
+          222
+        ],
+        "failed_session_changed_unchanged_other_direct_save": [
+          233,
+          241,
+          242,
+          243,
+          244,
+          246
+        ],
+        "later_bad_ID_visible": [
+          252,
+          256,
+          257,
+          259,
+          260
+        ],
+        "non_IO_propagation": [
+          281,
+          282,
+          283,
+          286,
+          287,
+          289
+        ],
+        "fresh_session_old_object_sticky": [
+          292,
+          296,
+          299,
+          300,
+          302,
+          303
+        ],
+        "candidate_or_tests_executed": false
+      }
+    },
+    {
+      "id": "18-unique-registration-in-exact-future096-registry",
+      "source_passed": true,
+      "evidence": {
+        "future096_code_manifest": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/public-code-artifacts-manifest096.json",
+          "bytes": 2487,
+          "sha256": "255d95b7c7241ebc34bb85a01a543bac0f50f7d9b44ad9de7b178a4598c45c36"
+        },
+        "baseline_registry_sha256": "1854092840e1ed94244179f2f86960301a59b8153eb8c174d3c2fccc1826c1a1",
+        "SOURCE_module_count_before": 108,
+        "SOURCE_module_count_after": 109,
+        "both_AST_values_are_tuple": true,
+        "only_addition": "tests.test_account_persistence",
+        "existing_order_exact": true,
+        "current735_not_used_as_baseline": true
+      }
+    },
+    {
+      "id": "19-future-actual-prerequisites-null-no-completion",
+      "source_passed": true,
+      "evidence": {
+        "future_prerequisites": {
+          "actual_full095_validation_receipt": null,
+          "actual_post_full095_commit_push": null,
+          "actual_completed096_source_guard": null,
+          "actual_completed096_receipt": null
+        },
+        "project_runtime_pass": false,
+        "section097_completed": false,
+        "completed_increment": 0
+      }
+    },
+    {
+      "id": "20-read-only-attribution-of-root-and-author-stdlib-controls",
+      "source_passed": true,
+      "evidence": {
+        "root_probe": {
+          "files": [
+            {
+              "path": "/workspace/.continuation/root-json-surrogate-stdlib-probe096-next-v1.py",
+              "bytes": 2894,
+              "sha256": "5850a1ce6e217714cce8f0ae11dd6878174c67ac58cd85439c61e59d9e9c3bd6"
+            },
+            {
+              "path": "/workspace/.continuation/root-json-surrogate-stdlib-probe096-next-v1.log",
+              "bytes": 1018,
+              "sha256": "5c6869853d67e65523c8df5ecebda5f72f6bfb8907552b7b00f9f8708c1b6c02"
+            },
+            {
+              "path": "/workspace/.continuation/root-json-surrogate-stdlib-probe096-next-v1.exit-code",
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          ],
+          "root_reported_tool_chunk": "e876fd",
+          "physical_raw_exit": 0,
+          "limited_scope": "lone high surrogate and ordinary Chinese/emoji controls"
+        },
+        "author_probe": {
+          "files": [
+            {
+              "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.py",
+              "bytes": 2542,
+              "sha256": "8b22149094d2c320d2cba343c9a635d5aea1a4e6e98fb5b5cb673b00a34fb461"
+            },
+            {
+              "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.log",
+              "bytes": 8832,
+              "sha256": "7ad599d82504c8768eb125218ce5308e3cc140a7e7f1c23fa5adc7c336a21a6e"
+            },
+            {
+              "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.exit-code",
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          ],
+          "author_reported_tool_chunk": "a5f44e",
+          "physical_raw_exit": 0,
+          "declared_rows": 22,
+          "lossy_adjacent_pair_rows": 4,
+          "exact_rows": 18
+        },
+        "reviewer_probe_executions": 0,
+        "not_project_reproduction": true,
+        "survey": {
+          "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/source-survey-account-metadata.json",
+          "bytes": 22104,
+          "sha256": "b0cf0432d60940de92e170bf9bf4b9692b4cfdb694303c15d7b1ec9bf861e506"
+        }
+      }
+    }
+  ],
+  "source_checks_passed": 20,
+  "blocking_findings": [],
+  "future_prerequisites": {
+    "actual_full095_validation_receipt": null,
+    "actual_post_full095_commit_push": null,
+    "actual_completed096_source_guard": null,
+    "actual_completed096_receipt": null
+  },
+  "review_control_history": {
+    "initial_inline_metadata_control": {
+      "actual_tool_chunk": "633ffc",
+      "exit_code": 1,
+      "cause": "MODULES tuple incorrectly compared with list in reviewer control, not candidate failure",
+      "report_files_written": 0,
+      "project_executions": 0
+    },
+    "separate_schema_read": {
+      "actual_tool_chunk": "0a2a98",
+      "exit_code": 0,
+      "facts": "MODULES actual tuples108/109; root probe actual path new_serialization_lead/separate_root_actual_stdlib_evidence; formal directory absent"
+    },
+    "correction": "Reviewer comparison now tuple-to-tuple and actual metadata path; frozen candidate unchanged."
+  },
+  "counts": {
+    "candidate_physical_files": 12,
+    "candidate_payload_files": 10,
+    "maintained_source_paths_checked": 735,
+    "whole_functions_unchanged": 8,
+    "whole_functions_changed": 3,
+    "AST_test_methods": 18,
+    "candidate_imports": 0,
+    "candidate_calls": 0,
+    "test_executions": 0,
+    "project_imports": 0,
+    "project_API": 0,
+    "project_fixture_codec_calls": 0,
+    "reviewer_stdlib_probe_executions": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "Git": 0,
+    "network": 0,
+    "private_reads": 0,
+    "tracked_writes": 0
+  },
+  "limitations": [
+    "Only file/SHA/AST and JSON artifact-metadata operations; no frozen helper/project/candidate/test or fixture-codec execution.",
+    "Peer manually reviewed all18 test methods, caller and predicate; their assertions are SOURCE evidence, not executed test results.",
+    "Root/author stdlib observations belong to those executors and cover their declared public controls only; none is project reproduction.",
+    "Original-target preservation binds app.py:39 .local/operator-state.json and distinct .tmp plus declared .json controls, not arbitrary AccountCache paths.",
+    "Current735 physical hashes matched when read; no Git HEAD/index/branch/publication claim.",
+    "Actual full095 validation, commit/push and actual096 completion/expected-old binding remain integration prerequisites.",
+    "Runtime numeric/caller/full-native/three-text/durable compatibility, actual window, constructible IO failures and visual acceptance remain pending.",
+    "Serialization qualification moves before mkdir; successful IO order/newline and accepted memory unchanged. Unsupported non-IO serialization failures are not broadly caught."
+  ],
+  "section097_completed": false,
+  "completed_increment": 0
+}

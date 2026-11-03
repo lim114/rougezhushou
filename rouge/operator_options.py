@@ -1,11 +1,15 @@
 """Combat scenario controls; cultivation is never editable through these controls."""
 # key, label, default, upper bound, applicable skill numbers. bool default -> checkbox.
 OPTIONS={
+ 'mechanist':[('mechanist_module_static_reference','采用已封存模组单包条件参考（实际总量未知）',False,1,(1,2,3))],
+ 'char_133_mm':[('mei_module_static_reference','采用 MAR-X 静态空中条件参考（实际总量未知）',False,1,(1,2))],
  'char_110_deepcl':[('summon_count','测算触手数（局外假设）',1,7,(1,2))],
- 'char_196_sunbr':[],
+ 'char_196_sunbr':[('guardian_healing_target_hp_ratio','受疗者固定生命比例（古米LT；未知不假定）',None,1,(1,2))],
  'char_2025_shu':[('three_professions','三种不同职业在场',False,1,(1,2,3)),('three_same_profession','三名相同职业在场',False,1,(1,2,3)),
-    ('four_sui','编队中四名岁干员',False,1,(1,2,3)),('enemy_on_sown_tile','敌人在播种地块',False,1,(3,))],
- 'char_298_susuro':[('low_cost_healing_target','受疗干员初始费用不超过10',False,1,(1,2)),('casts_used','本场此前深度治疗次数',0,2,(2,))],
+    ('four_sui','编队中四名岁干员',False,1,(1,2,3)),('enemy_on_sown_tile','存在地面敌人处于播种地块',False,1,(3,)),
+    ('guardian_healing_target_hp_ratio','受疗者固定生命比例（黍LE；未知不假定）',None,1,(1,2,3))],
+ 'char_298_susuro':[('low_cost_healing_target','受疗干员初始费用不超过10',False,1,(1,2)),('casts_used','本场此前深度治疗次数',0,2,(2,)),
+    ('healing_target_hp_ratio','受疗者固定生命比例（0–1；未知不假定）',None,1,(1,2))],
  'char_4228_closur':[('reinforcement_blocks_target','援军阻挡当前目标',False,1,(1,2,3)),
     ('closure_prior_casts','部署后此前技能次数（情景预览）',0,1000,(1,))],
  'char_1050_chen3':[('enemy_current_hp','剑气经过时目标当前生命值',0,10000000,(3,)),('slash_kills','斩击击倒数（追加斩击）',0,100,(2,))],
@@ -18,7 +22,8 @@ OPTIONS={
  'char_206_gnosis':[('cold_state','全程状态：0无、1寒冷、2冻结',0,2,(1,2,3)),('frozen_at_skill_end','技能结束时目标仍冻结',True,1,(3,))],
  'char_4087_ines':[('stolen_enemy_count','存活且已偷取攻击的敌人数',1,100,(1,2,3)),('ines_first_deployment','本场首次部署（只放影哨）',False,1,(3,))],
  'char_1029_yato2':[('dash_hits','回旋对当前目标实际命中次数',1,100,(3,))],
- 'char_4202_haruka':[('bubble_bursts','窗口内浮泡破碎次数',0,10000,(1,2,3)),
+ 'char_4202_haruka':[('haruka_module_target_static_reference','采用已封存BLS-Y治疗人数组合（实际总量未知）',False,1,(1,2,3)),
+    ('bubble_bursts','窗口内浮泡破碎次数',0,10000,(1,2,3)),
     ('haruka_repeat','二技能第二次及以后开启',False,1,(2,)),('levitate_triggers','目标被浮空触发次数',0,1000,(3,))],
  'char_1046_sbell2':[('snow_entries','目标经过积雪触发次数',0,1000,(1,2,3)),('snow_coverage','窗口内积雪覆盖比例（0–1）',1.0,1,(2,))],
  'char_328_cammou':[('drone_warmup_hits','单元已有连续命中数',0,100,(1,2))],

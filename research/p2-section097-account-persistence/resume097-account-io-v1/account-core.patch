@@ -1,0 +1,52 @@
+--- a/rouge/account_cache.py
++++ b/rouge/account_cache.py
+@@ -134,6 +134,7 @@
+         self.records = {}
+         self.issues = {}
+         self.load_issue = None
++        self.save_issue = None
+         self.preserve_original = False
+         try:
+             decoded = json.loads(self.path.read_text(encoding='utf-8'))
+@@ -196,7 +197,11 @@
+             text += '本局已确认培养继续使用。' if run_confirmed else '未确认项使用标注的档案预览。'
+         else:
+             text = ''
+-        if self.preserve_original:
++        if self.save_issue:
++            text += ('\n' if text else '') + self.save_issue + '；'
++            text += '有效培养记录仍可在当前运行使用，新的读取未保存到账号档案。'
++            text += ' 本次不再自动写入或覆盖账号档案。'
++        elif self.preserve_original:
+             text += ' 原账号档案文件已保留，本次不会自动覆盖。'
+         return text.strip()
+ 
+@@ -237,8 +242,24 @@
+         self._screen_all()
+         if self.preserve_original:
+             return False
+-        self.path.parent.mkdir(exist_ok=True)
+-        temporary = self.path.with_suffix('.tmp')
+-        temporary.write_text(json.dumps(self.records, ensure_ascii=False, indent=2), encoding='utf-8')
+-        temporary.replace(self.path)
++        text = json.dumps(self.records, ensure_ascii=False, indent=2)
++        # JSON decoding folds adjacent literal high/low surrogate code units.
++        # Refuse that lossy write rather than change an accepted native string.
++        if any(0xd800 <= ord(a) <= 0xdbff and 0xdc00 <= ord(b) <= 0xdfff
++               for a, b in zip(text, text[1:])):
++            self.save_issue = '账号档案含暂时无法无损保存的文字，保存未完成'
++            self._protect()
++            return False
++        # Escape lone code units only after JSON quoting. Ordinary Unicode and
++        # the existing write_text newline policy stay unchanged.
++        text = text.encode('utf-8', errors='backslashreplace').decode('utf-8')
++        try:
++            self.path.parent.mkdir(exist_ok=True)
++            temporary = self.path.with_suffix('.tmp')
++            temporary.write_text(text, encoding='utf-8')
++            temporary.replace(self.path)
++        except OSError:
++            self.save_issue = '账号档案保存未完成'
++            self._protect()
++            return False
+         return True

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "source": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "bytes": 17943244,
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+  },
+  "field_root": "$.details.rogue_6",
+  "choiceScenes": {
+    "scene_ro6_normal1_enter": {
+      "id": "scene_ro6_normal1_enter",
+      "title": "沉寂之屋",
+      "description": "你发现了一处废弃的哥伦比亚考察站，猜想屋内或许能找到一些还能用的物资。但附近隐隐传来猎犬的吠叫，让你感到不安。你观察了一阵，发现它们没有靠近站点。房屋破败不堪，疯长的植物几乎将整座站点吞没，你小心地走近，发现门上趴着的人形藤蔓死死堵住了入口。",
+      "background": "pic_rogue_6_14",
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    }
+  },
+  "choices": {
+    "choice_ro6_normal1_1": {
+      "id": "choice_ro6_normal1_1",
+      "title": "清理门上的人形藤蔓",
+      "description": "消耗<@ro6.lose>2</>目标生命值，获得<@ro6.get>笼控器</>",
+      "lockedCoverDesc": null,
+      "type": "TRADE",
+      "leftDecoType": "NONE",
+      "nextSceneId": "scene_ro6_normal1_1",
+      "icon": "",
+      "displayData": {
+        "type": "ITEM",
+        "costHintType": "NONE",
+        "effectHintType": "ITEM",
+        "funcIconId": null,
+        "itemId": "rogue_6_scrap_G_12",
+        "difficultyUpgradeRelicGroupId": null,
+        "taskId": null,
+        "instId": null
+      },
+      "forceShowWhenOnlyLeave": false,
+      "isHiddenChoice": false,
+      "sortId": 0
+    },
+    "choice_ro6_normal1_2": {
+      "id": "choice_ro6_normal1_2",
+      "title": "试图和人形藤蔓交流",
+      "description": "消耗<@ro6.lose>8</>源石锭，获得<@ro6.get>笼控器</>",
+      "lockedCoverDesc": null,
+      "type": "TRADE",
+      "leftDecoType": "NONE",
+      "nextSceneId": "scene_ro6_normal1_2",
+      "icon": null,
+      "displayData": {
+        "type": "ITEM",
+        "costHintType": "NONE",
+        "effectHintType": "ITEM",
+        "funcIconId": null,
+        "itemId": "rogue_6_scrap_G_12",
+        "difficultyUpgradeRelicGroupId": null,
+        "taskId": null,
+        "instId": null
+      },
+      "forceShowWhenOnlyLeave": false,
+      "isHiddenChoice": false,
+      "sortId": 0
+    }
+  },
+  "items": {
+    "rogue_6_scrap_G_12": {
+      "id": "rogue_6_scrap_G_12",
+      "name": "笼控器",
+      "description": "短暂的安静，并不意味着真正的控制。",
+      "usage": "在不期而遇中存在特殊作用",
+      "obtainApproach": "在集成战略模式中获得",
+      "iconId": "rogue_6_scrap_G_12",
+      "itemIconGroupId": null,
+      "type": "SCRAP",
+      "subType": "NONE",
+      "rarity": "SUPER_RARE",
+      "sortId": 111,
+      "canSacrifice": true,
+      "tinyIconColor": null,
+      "unlockCondDesc": null,
+      "shortUsage": null
+    }
+  },
+  "scope": "Exact selected original objects after complete-file SHA verification; no source-scene choice edge or current execution inferred."
+}

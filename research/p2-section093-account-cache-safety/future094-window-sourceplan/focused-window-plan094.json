@@ -1,0 +1,1080 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_PROSPECTIVE94_FOCUSED_WORKFLOW_NO_RUNNER_NO_CANDIDATE_RUNTIME_UNRUN",
+  "source_packet": {
+    "source_path": "/workspace/.continuation/p2-offline-input-refresh-source094-v1/manifest094.json",
+    "bytes": 1880,
+    "sha256": "85bdf1afbddbcc1eb592adad40e3a285464ee95434f3cc526faa97ea21ea5481"
+  },
+  "source_packet_artifact_schema": "artifacts dictionary,7 payload files; every listed bytes/SHA checked without copying archive",
+  "historical_source_packet_base": "59961ec3d633ac91b01014fb06b357d45e5979f7",
+  "current93_app": {
+    "source_path": "/workspace/rougezhushou/rouge/app.py",
+    "bytes": 95780,
+    "sha256": "3dd6810e3398471ddb6dbe9545824c7b92ba4d141fc23f889287a8044670a48f"
+  },
+  "base_state": "Current93 working source only while sole93Wine still running; no completed93 Git/tag claim.",
+  "policy_update_from_root": "User now commits only after each-five-section full validation.94base requires root completed93 actual working-tree guard/hashes and archived runtime receipt; no per-section93Git prerequisite.",
+  "required_before_any94_runner_or_code_candidate": [
+    "Root completed93 actual working source guard/hashes and archived runtime receipt notification",
+    "Root94 candidate stage notification/source qualification"
+  ],
+  "required_before_actual94Wine": [
+    "Applied94 actual source guard and exact runner/plan/source binding",
+    "Root-appointed fresh source-only final review PASS",
+    "Root sole Wine execution, then view real planned PNGs"
+  ],
+  "group": "13 existing offline input callbacks together;10 numeric/3 boolean;11 direct parameters plus duration gate and gated duration; no new math/persistence/resource/capture behavior.",
+  "controls": [
+    {
+      "widget": "deployment_elapsed",
+      "signal": "valueChanged",
+      "scenario_field": "deployment_elapsed_seconds",
+      "creation_lines": [
+        563,
+        563
+      ],
+      "creation_text": "self.deployment_elapsed=number(0,3600,2)",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        3600,
+        0,
+        2
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "healing_targets",
+      "signal": "valueChanged",
+      "scenario_field": "healing_targets",
+      "creation_lines": [
+        565,
+        565
+      ],
+      "creation_text": "self.healing_targets=QSpinBox()",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100,
+        1,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "defense",
+      "signal": "valueChanged",
+      "scenario_field": "enemy_defense",
+      "creation_lines": [
+        573,
+        573
+      ],
+      "creation_text": "self.defense = number(0,100000,0)",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100000,
+        0,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "resistance",
+      "signal": "valueChanged",
+      "scenario_field": "enemy_resistance",
+      "creation_lines": [
+        595,
+        595
+      ],
+      "creation_text": "self.resistance = number(0,100,1)",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100,
+        0,
+        1
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "cooperative",
+      "signal": "toggled",
+      "scenario_field": "cooperative",
+      "creation_lines": [
+        642,
+        642
+      ],
+      "creation_text": "self.cooperative = QCheckBox('协同攻击持续覆盖同一目标')",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": null,
+      "boolean_default": false,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "fragile",
+      "signal": "toggled",
+      "scenario_field": "preexisting_fragile",
+      "creation_lines": [
+        644,
+        644
+      ],
+      "creation_text": "self.fragile = QCheckBox('全程计该技能脆弱（不勾选则全程未计）')",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": null,
+      "boolean_default": true,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "charge_count",
+      "signal": "valueChanged",
+      "scenario_field": "charge_count",
+      "creation_lines": [
+        647,
+        647
+      ],
+      "creation_text": "self.charge_count = QSpinBox()",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100,
+        0,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "shield_breaks",
+      "signal": "valueChanged",
+      "scenario_field": "shield_break_count",
+      "creation_lines": [
+        650,
+        650
+      ],
+      "creation_text": "self.shield_breaks = QSpinBox()",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100,
+        0,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "shield_duration_known",
+      "signal": "toggled",
+      "scenario_field": "skill_duration_seconds inclusion gate",
+      "creation_lines": [
+        654,
+        654
+      ],
+      "creation_text": "self.shield_duration_known=QCheckBox('指定本次技能结束时间（含手动停止）')",
+      "existing_direct_connections": [
+        {
+          "lines": [
+            658,
+            658
+          ],
+          "text": "self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)"
+        }
+      ],
+      "numeric_bounds_default_decimals": null,
+      "boolean_default": false,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "shield_duration",
+      "signal": "valueChanged",
+      "scenario_field": "skill_duration_seconds",
+      "creation_lines": [
+        655,
+        655
+      ],
+      "creation_text": "self.shield_duration=number(30,3600,2)",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0.01,
+        3600,
+        30,
+        2
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "activation_count",
+      "signal": "valueChanged",
+      "scenario_field": "activation_count",
+      "creation_lines": [
+        660,
+        660
+      ],
+      "creation_text": "self.activation_count = QSpinBox()",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100,
+        1,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "companion_attack",
+      "signal": "valueChanged",
+      "scenario_field": "companion_attack",
+      "creation_lines": [
+        664,
+        664
+      ],
+      "creation_text": "self.companion_attack = number(1000,100000,0)",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        100000,
+        1000,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    },
+    {
+      "widget": "stacks",
+      "signal": "valueChanged",
+      "scenario_field": "deployment_stacks",
+      "creation_lines": [
+        666,
+        666
+      ],
+      "creation_text": "self.stacks = QSpinBox()",
+      "existing_direct_connections": [],
+      "numeric_bounds_default_decimals": [
+        0,
+        2,
+        0,
+        0
+      ],
+      "boolean_default": null,
+      "automatic_refresh_omitted_in_current93_source": true
+    }
+  ],
+  "fixtures": {
+    "lawful_account_owners": {
+      "silverash": {
+        "id": "silverash",
+        "name": "凛御银灰",
+        "scope": "operator_profile",
+        "fields": {
+          "elite": 2,
+          "level": 90,
+          "trust": 100,
+          "potential": 1,
+          "module_id": null,
+          "module_level": 0
+        },
+        "skill_ranks": {
+          "1": 10,
+          "2": 10,
+          "3": 10
+        },
+        "sources": {
+          "level": "public-synthetic-focused094"
+        },
+        "captured_at": 100
+      },
+      "mechanist": {
+        "id": "mechanist",
+        "name": "机械师",
+        "scope": "operator_profile",
+        "fields": {
+          "elite": 2,
+          "level": 90,
+          "trust": 100,
+          "potential": 1,
+          "module_id": null,
+          "module_level": 0
+        },
+        "skill_ranks": {
+          "1": 10,
+          "2": 10,
+          "3": 10
+        },
+        "sources": {
+          "level": "public-synthetic-focused094"
+        },
+        "captured_at": 100
+      },
+      "kaltsit": {
+        "id": "kaltsit",
+        "name": "凯尔希·思衡托",
+        "scope": "operator_profile",
+        "fields": {
+          "elite": 2,
+          "level": 90,
+          "trust": 100,
+          "potential": 1,
+          "module_id": null,
+          "module_level": 0
+        },
+        "skill_ranks": {
+          "1": 10,
+          "2": 10,
+          "3": 10
+        },
+        "sources": {
+          "level": "public-synthetic-focused094"
+        },
+        "captured_at": 100
+      }
+    },
+    "real_run_baseline": "Actual RunState.apply creates real members/id/started_at/history/time/files during marked setup, then snapshot all state and bytes for strict unchanged checks.",
+    "selected_enemy": {
+      "stage_id": "ro6_n_1_1",
+      "enemy_id": "enemy_2133_shdopl",
+      "level": 0
+    },
+    "selected_enemy_reference": {
+      "id": "enemy_2133_shdopl",
+      "level": 0,
+      "name": "空值体",
+      "level_type": "NORMAL",
+      "description": "初始伪装成一个单位，受到伤害后现身",
+      "reference_stats": {
+        "maxHp": 5000,
+        "atk": 320,
+        "def": 100,
+        "magicResistance": 20.0,
+        "baseAttackTime": 1.4,
+        "massLevel": 0
+      }
+    },
+    "natural_unimplemented": "char_123_fang",
+    "natural_no_skill": "char_285_medic2"
+  },
+  "common_evidence_contract": {
+    "auto_before_manual": "For each genuinely changed affected widget, save emitted signal, actual calculate/API outcomes and full caller/result typed-native+JSON immediately after normal event processing and before any manual calculation. Require new calculate entry; successful numerical scopes require returned_dict entries, errors/early returns explicitly require their own outcome.",
+    "manual_comparison": "Then click the real existing compute button; measure its actual entries rather than infer. Archive full native caller before/after and automatic/manual result dictionaries plus all3 report strings. Compare complete typed native values and three strings; no selected-field-only projection, float/type normalization or missing unknown fields.",
+    "format_requests": "For each selected successful automatic/manual result explicitly request estimate/default/technical strings; count requests separately from actual internal formatter entries. None/errors have a labelled inapplicable report state, no fabricated formatter success.",
+    "counts": "Separate startup/common/setup/new-control automatic/manual/inspection/internal-helper/formatter entries; API returned_dict/raised_exception/unobserved distinct. Original handler multiplicity/clamps remain measured, no fixed one-API-per-edit promise.",
+    "state": "Every edit compares real RunState full native/JSON id/started_at/member metadata/field_times/skill_times/history/resources and all temporary existing files before/after. Account raw bytes/records unchanged during preview; isolate constructor/setup effects before baseline. No fixture reset, alias rebind or preservation-flag override.",
+    "visibility": "Read widget/form visibility and enabled properties plus values; original hidden values retained.11 parameters assembled without visibility/enabled gates; existing applicable OPTIONS may overwrite a shared key as before. Duration only mechanistS2+knownTrue. Programmatic hidden/disabled signals explicitly labelled as constructed compatibility stimuli.",
+    "clock": "Existing declared break/charge/reference/potential-healing uncertainty retained, including None totals and clocks; no placement/ammunition/collision/acquisition/native-clock certification.",
+    "recovery": "Existing errors clear damage_result; restoring inputs recovers automatically before manual. Preserve exact original exceptions and successful prefix if runtime fails; root applies same-issue three-attempt policy.",
+    "external": "Public temporary state only, real MainWindow class not formal main auto mode; auto capture off/targetNone, no game sample/connection, no chat/network/schedule/private reads. Measure external entry zeros during actual root run; preparation proves no runtime behavior."
+  },
+  "planned_workflow_groups": [
+    {
+      "id": "complete-construction-and-isolated-real-state",
+      "owner_context": "fresh primary MainWindow",
+      "steps": [
+        {
+          "kind": "startup",
+          "checks": [
+            "All original defaults/ranges/output widgets unchanged; no newly wired calculate before output controls exist.",
+            "Measure actual startup calculate/API/helper/formatter entries and exceptions; do not infer counts from operation numbers."
+          ]
+        },
+        {
+          "kind": "public_real_RunState_setup",
+          "account_fixture_owners": [
+            "silverash",
+            "mechanist",
+            "kaltsit"
+          ],
+          "run_members": "Use these real ids/fields/ranks through actual RunState.apply, scope=run, runtime timestamp>=real started_at; no fake class/state assignment/reset.",
+          "observed_shape": {
+            "operators": "three lawful source-qualified member dictionaries",
+            "selected_operator": "silverash",
+            "crew_count": null
+          },
+          "purpose": "Freeze a nonempty real member/history/time/id/file baseline before preview edits; this original setup side effect is separate from later read-only preview checks."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "common-controls",
+          "affected_input_callback_credit": false,
+          "frame_timing": false,
+          "limit_window": false,
+          "auto_relics": false,
+          "target_enemy": null,
+          "timing_text": "",
+          "relic_context_text": "",
+          "note": "Use existing Qt controls, preserve all signals and original handler calls; these previously completed controls are context, not new94 inputs."
+        }
+      ]
+    },
+    {
+      "id": "manual-and-source-bound-target-plus-S3-conditions",
+      "owner_context": {
+        "owner": "silverash",
+        "skill": 3
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "silverash",
+          "skill": 3
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            1000,
+            0,
+            100000
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "field": "enemy_defense"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "resistance",
+          "values_in_order": [
+            50,
+            100,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "field": "enemy_resistance"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "cooperative",
+          "values_in_order": [
+            true,
+            false
+          ],
+          "auto_then_manual": true,
+          "raw_type": "bool",
+          "field": "cooperative"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "fragile",
+          "values_in_order": [
+            false,
+            true
+          ],
+          "auto_then_manual": true,
+          "raw_type": "bool",
+          "field": "preexisting_fragile"
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "select-source-bound-stage-and-enemy",
+          "affected_input_callback_credit": false,
+          "stage_id": "ro6_n_1_1",
+          "target": {
+            "stage_id": "ro6_n_1_1",
+            "enemy_id": "enemy_2133_shdopl",
+            "level": 0
+          },
+          "UI_path": "target_stage_choices.select_value(stage_id), target_enemy_choices.select_value(exact target dictionary)",
+          "checks": "Manual widgets hidden/disabled; raw caller retains stored values; API preparation copy resolves identity statistics; full native caller stays unchanged."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            3333
+          ],
+          "auto_then_manual": true,
+          "stimulus": "Constructed programmatic setValue on disabled real widget; not a claim users can edit disabled UI.",
+          "checks": "Stored raw float3333 still passes through existing caller; resolved enemy result remains selected identity; auto/manual equality, no manual-value reset."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "resistance",
+          "values_in_order": [
+            44.4
+          ],
+          "auto_then_manual": true,
+          "stimulus": "Constructed programmatic disabled-control compatibility signal.",
+          "checks": "Stored raw44.4 and selected target semantics both retained."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "return-manual-target",
+          "affected_input_callback_credit": false,
+          "target_enemy": null,
+          "checks": "Original 3333/44.4 retained and now active; enabled/visible states recover."
+        }
+      ]
+    },
+    {
+      "id": "Silver-S2-elapsed-own-casts-and-recipient-deployment",
+      "owner_context": {
+        "owner": "silverash",
+        "skill": 2
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "silverash",
+          "skill": 2,
+          "checks": "S3 bools and all other hidden controls retain values; inspect source assembly, no uniform hidden-value suppression."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "deployment_elapsed",
+          "values_in_order": [
+            14.99,
+            15,
+            3600,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "field": "deployment_elapsed_seconds",
+          "oracle": {
+            "path": "result.estimate.base_stats.defense",
+            "existing_source": "estimate.py:47-48; actual catalog talent interval15/def60 at E2 potential1",
+            "check": "At14.99→15 base defense increases by existing eligible talent def60 with fixed cultivation/no relics. Do not require total_damage to change."
+          }
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "activation_count",
+          "values_in_order": [
+            0,
+            100,
+            1
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "activation_count",
+          "checks": "Full-cast estimate still explicitly uses own activation1; scenario own count is a distinct conditional component."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "stacks",
+          "values_in_order": [
+            1
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "deployment_stacks"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "companion_attack",
+          "values_in_order": [
+            0,
+            100000,
+            1000
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "field": "companion_attack",
+          "checks": "Run while stacks1 so existing recipient component consumes the attack; physical minimum remains existing rule."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "stacks",
+          "values_in_order": [
+            2,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "deployment_stacks",
+          "checks": "Maximum is2, never100. At0 stored companion attack remains; recipient component is absent by existing condition."
+        },
+        {
+          "kind": "planned_success_PNG",
+          "name": "wine-focused-inputs-silver-094.png",
+          "actual_view_required_by_root": true
+        }
+      ]
+    },
+    {
+      "id": "mechanist-S2-break-count-and-known-end-gate",
+      "owner_context": {
+        "owner": "mechanist",
+        "skill": 2
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "mechanist",
+          "skill": 2,
+          "checks": "Unconditional fields stay source-compatible; gate false initially omits skill_duration_seconds and disables duration widget."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_breaks",
+          "values_in_order": [
+            1,
+            100,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "shield_break_count",
+          "checks": "Preserve shield_break_reference requested count and unknown actual clocks. Returned dict may have total_damage=None for positive counts; never demand a positive numerical total."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration_known",
+          "values_in_order": [
+            true
+          ],
+          "auto_then_manual": true,
+          "raw_type": "bool",
+          "field": "skill_duration_seconds inclusion gate",
+          "checks": "Original toggled→setEnabled remains; active only for mechanist S2."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration",
+          "values_in_order": [
+            0.01,
+            3600,
+            30
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "field": "skill_duration_seconds",
+          "checks": "Keep original min.01/max3600. Input float is distinct from output duration/30Hz quantization; no inferred ammunition exhaustion."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration_known",
+          "values_in_order": [
+            false
+          ],
+          "auto_then_manual": true,
+          "checks": "Omit duration immediately, retain stored30, existing natural full-cast duration/damage remain unknown as applicable."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration",
+          "values_in_order": [
+            12.34
+          ],
+          "auto_then_manual": true,
+          "stimulus": "Constructed disabled widget setValue within lawful bounds, not a physical UI edit.",
+          "checks": "Callback still refreshes through original path; duration omitted, raw scenario/full native result match the same off-gate reference and manual recompute."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration_known",
+          "values_in_order": [
+            true
+          ],
+          "auto_then_manual": true,
+          "checks": "Previously retained12.34 is included immediately; widget enabled."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_breaks",
+          "values_in_order": [
+            1
+          ],
+          "auto_then_manual": true,
+          "checks": "Use a declared break reference for resistance boundary; still no scheduled real break events."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "resistance",
+          "values_in_order": [
+            50,
+            100,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "float",
+          "checks": "Existing magic floor remains; reference damage and unknown totals/clock distinction retained."
+        },
+        {
+          "kind": "planned_success_PNG",
+          "name": "wine-focused-inputs-shield-094.png",
+          "actual_view_required_by_root": true
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration_known",
+          "values_in_order": [
+            false
+          ],
+          "auto_then_manual": true,
+          "checks": "Restore unknown end gate; saved duration12.34 remains."
+        }
+      ]
+    },
+    {
+      "id": "mechanist-S3-declared-charge-and-existing-error-recovery",
+      "owner_context": {
+        "owner": "mechanist",
+        "skill": 3
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "mechanist",
+          "skill": 3,
+          "checks": "Duration field omitted even if old gate remains checked on a later revisit; hidden scalars retained."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "positive-observation-reference",
+          "affected_input_callback_credit": false,
+          "limit_window": true,
+          "window_seconds": 10,
+          "note": "Existing92 controls used only as error-context setup, not replay of old19states."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "charge_count",
+          "values_in_order": [
+            1,
+            100,
+            0
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "charge_count",
+          "checks": "Declared charge_reference hits_requested; collision times None/events_scheduled False/full_cast_count_verified False; complete skill totals stay None where source requires."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "existing-zero-window-context",
+          "affected_input_callback_credit": false,
+          "window_seconds": 0
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "charge_count",
+          "values_in_order": [
+            1
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "numerical_API_exception",
+            "type": "ValueError",
+            "message": "零长度观察窗口不能声明冲锋命中。",
+            "damage_result": null
+          },
+          "checks": "Automatic entry must occur and original API exception recorded before manual click; manual preserves same exception/status; three result formatters inapplicable."
+        },
+        {
+          "kind": "planned_error_PNG",
+          "name": "wine-focused-inputs-charge-error-094.png",
+          "actual_view_required_by_root": true
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "charge_count",
+          "values_in_order": [
+            0
+          ],
+          "auto_then_manual": true,
+          "checks": "Same affected input corrects existing error automatically; valid dictionary recovered, exact auto/manual full native+three texts."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "restore-context",
+          "affected_input_callback_credit": false,
+          "window_seconds": 10,
+          "limit_window": false
+        }
+      ]
+    },
+    {
+      "id": "healing-count-dynamic-cap-and-existing-clamp",
+      "owner_context": {
+        "owner": "kaltsit",
+        "skills": [
+          2,
+          3,
+          1
+        ]
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "kaltsit",
+          "skill": 2,
+          "expected_maximum": 100
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "healing_targets",
+          "values_in_order": [
+            0,
+            100,
+            1,
+            100
+          ],
+          "auto_then_manual": true,
+          "raw_type": "int",
+          "field": "healing_targets",
+          "checks": "Full potential healing source, not actual acquisition certification; no universal damage-total change claim."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "switch-to-S3-existing-clamp",
+          "affected_input_callback_credit": false,
+          "skill": 3,
+          "expected_maximum": 2,
+          "expected_value": 2,
+          "checks": "Original setMaximum blockSignals retained: record no healing_targets.valueChanged from clamp, while original skill update calculates current value. Do not prescribe aggregate API count."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "healing_targets",
+          "values_in_order": [
+            1,
+            0,
+            2
+          ],
+          "auto_then_manual": true,
+          "checks": "Current maximum2; preserve current friendly/potential clock unknown notes."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "switch-to-S1-existing-clamp",
+          "affected_input_callback_credit": false,
+          "skill": 1,
+          "expected_maximum": 1,
+          "expected_value": 1
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "healing_targets",
+          "values_in_order": [
+            0,
+            1
+          ],
+          "auto_then_manual": true,
+          "checks": "Current maximum1, ordinary legal negative-scope compatibility remains unchanged."
+        }
+      ]
+    },
+    {
+      "id": "already-existing-JSON-errors-through-new-input-callback",
+      "owner_context": {
+        "owner": "silverash",
+        "skill": 3
+      },
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "select-owner-and-skill",
+          "affected_input_callback_credit": false,
+          "owner": "silverash",
+          "skill": 3
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "existing-invalid-timing-text",
+          "affected_input_callback_credit": false,
+          "timing_text": "{"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            888
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "JSON_error_before_numerical_API",
+            "message": "战斗时序情景需要合法JSON对象。",
+            "damage_result": null
+          },
+          "checks": "Fresh automatic MainWindow.calculate entry after value change; zero numerical API entries. Same visible error alone is not evidence of callback."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "restore-timing-JSON",
+          "affected_input_callback_credit": false,
+          "timing_text": "{}"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            889
+          ],
+          "auto_then_manual": true,
+          "checks": "Automatic numerical recovery; full native result and three texts equal manual."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "needed-public-relic-context",
+          "affected_input_callback_credit": false,
+          "rid": "rogue_6_relic_cargo_2",
+          "checked": true,
+          "relic_context_text": "null",
+          "needed": "parts_count"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "fragile",
+          "values_in_order": [
+            false
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "JSON_error_before_numerical_API",
+            "message": "藏品测试条件需要JSON对象。",
+            "damage_result": null
+          },
+          "checks": "Affected bool callback enters same existing JSON gate; measure API0/error/None, do not force formatter calls."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "restore-needed-JSON",
+          "affected_input_callback_credit": false,
+          "relic_context_text": "{\"parts_count\":3}"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "cooperative",
+          "values_in_order": [
+            true
+          ],
+          "auto_then_manual": true,
+          "checks": "Affected bool auto updates legal context; same full native+three texts as explicit manual; original condition filtering stays unchanged."
+        }
+      ]
+    },
+    {
+      "id": "natural-overview-and-unimplemented-negative-scopes",
+      "owner_context": "second fresh MainWindow, empty real temporary RunState; no fake state or profile mutation",
+      "steps": [
+        {
+          "kind": "existing_context_setup",
+          "action": "fresh-independent-public-window",
+          "affected_input_callback_credit": false,
+          "account_fixture": "empty valid map",
+          "run_fixture": "genuinely absent public path"
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "natural-empty-overview",
+          "affected_input_callback_credit": false,
+          "UI_path": "operator_choices.select_branch('__overview__')"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            1
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "natural_early_return",
+            "numerical_API_entries": 0,
+            "damage_result": null,
+            "text_contains": "本局总览暂无已确认招募干员"
+          },
+          "checks": "Main calculate/helper entries measured; no assertion that all helpers are zero."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "select-natural-unimplemented-with-skill",
+          "affected_input_callback_credit": false,
+          "owner": "char_123_fang"
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "cooperative",
+          "values_in_order": [
+            true
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "natural_early_return",
+            "numerical_API_entries": 0,
+            "damage_result": null,
+            "text_contains": "技能伤害规则尚未实现"
+          }
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "select-natural-no-skill-profile",
+          "affected_input_callback_credit": false,
+          "owner": "char_285_medic2",
+          "checks": "Natural skillNone/rank无可用技能; calculate enters prior unimplemented branch. Do not invent implemented+skillNone fixture."
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "shield_duration_known",
+          "values_in_order": [
+            true
+          ],
+          "auto_then_manual": true,
+          "expected": {
+            "kind": "natural_early_return",
+            "numerical_API_entries": 0,
+            "damage_result": null,
+            "text_contains": "技能伤害规则尚未实现"
+          },
+          "checks": "Original setEnabled remains a control property; duration excluded since owner is not mechanist S2."
+        },
+        {
+          "kind": "existing_context_setup",
+          "action": "return-to-supported-public-preview",
+          "affected_input_callback_credit": false,
+          "owner": "silverash",
+          "skill": 3
+        },
+        {
+          "kind": "affected_control_edit",
+          "widget": "defense",
+          "values_in_order": [
+            2
+          ],
+          "auto_then_manual": true,
+          "checks": "Automatic valid dictionary/report recovers through same existing paths; no Qt recreation to recover within this second window."
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "qualified_affected_widgets": 13,
+    "numeric_widgets": 10,
+    "boolean_widgets": 3,
+    "workflow_groups": 8,
+    "affected_value_change_requests": 62,
+    "fresh_windows_planned": 2,
+    "success_PNGs_planned": 2,
+    "error_PNGs_planned": 1,
+    "runtime_passes": 0,
+    "sections_completed": 0
+  },
+  "excluded_replays": [
+    "old92 19-state window matrix",
+    "old93 31-window corruption matrix",
+    "full90/91 all-skill sweeps",
+    "author numerical/API/formatter probes"
+  ],
+  "scope_limits": [
+    "No legal current implemented owner naturally gives skillNone; Lancet-2 covers actual no-skill unimplemented shape.",
+    "Source planning does not demonstrate Qt signal emissions, numerical outputs or reports.",
+    "No new94 runner/code candidate exists in this packet."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "section": 308,
+  "actual_failed_receipt": "verification/sections/308-necessary-attempt1/process.json",
+  "actual_methods": 99,
+  "errors": 2,
+  "failures": 0,
+  "source_data_or_coordinates_changed": false,
+  "repairs": [
+    {
+      "test": "test_05",
+      "cause": "Valid public clone omitted its runtime regular projection file",
+      "correction": "Copy the real public runtime regular file explicitly; all authority mutations/negative guards retained"
+    },
+    {
+      "test": "test_16",
+      "cause": "Windows child CLI used default local encoding while parent utf8 tried to decode traceback containing Chinese project path; decoding reader failed, stderr None",
+      "correction": "Actually execute original CLI with explicit -B -X utf8; historical303 test14 receives same explicit flags; all process/assertion checks preserved"
+    }
+  ],
+  "before_test_originals": "verification/sections/308-preparation/before-necessary-attempt1/tests",
+  "source_guard_extension": "Necessary attempt2 additionally pins current runtime regular file, not just its original source snapshot"
+}

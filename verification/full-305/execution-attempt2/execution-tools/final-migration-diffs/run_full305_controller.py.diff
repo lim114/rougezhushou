@@ -1,0 +1,18 @@
+--- immutable-first/run_full305_controller.py
++++ independent-attempt2/run_full305_controller.py
+@@ -34,13 +34,13 @@
+     if not args.execute: raise RuntimeError('Root explicit --execute required. Preparation never starts a suite/window.')
+     native(); parent = args.expected_parent_commit
+     data, activation = bound(parent, args.freeze_sha256, args.activation_sha256)
+-    destination = Path(tempfile.gettempdir()).resolve() / ('rouge-full305-' + uuid.uuid4().hex)
++    destination = Path(tempfile.gettempdir()).resolve() / ('rouge-full305-attempt2-' + uuid.uuid4().hex)
+     if destination.exists() or destination.is_relative_to(ROOT): raise ValueError('Fresh owned external namespace required.')
+     once = BASE / 'full305-once.json'
+     write_new(once, {'section': 305, 'container': str(destination), 'root_freeze_sha256': args.freeze_sha256,
+                      'automatic_retry_allowed': False, 'explicit_root_execute': True})
+     destination.mkdir()
+-    authority = {'section': 305, 'kind': 'FULL305_ROOT_OWNED_SERIAL_FULL_EXECUTION', 'root': str(ROOT),
++    authority = {'section': 305, 'kind': 'FULL305_ROOT_OWNED_SERIAL_FULL_EXECUTION_ATTEMPT2', 'actual_validation_attempt': 2, 'controller_fixture_pid': __import__('os').getpid(), 'root': str(ROOT),
+                  'parent_commit': parent, 'root_freeze_sha256': args.freeze_sha256,
+                  'activation_sha256': args.activation_sha256, 'controller_sha256': sha(Path(__file__)),
+                  'created_at': now(), 'game_actions': 0, 'chat_requests': 0, 'private_state_copied': False}

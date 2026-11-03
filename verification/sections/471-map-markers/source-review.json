@@ -1,0 +1,35 @@
+{
+  "section": 471,
+  "changed_or_new_sources": {
+    "rouge/current_action_positions_view.py": {
+      "sha256": "c596752a834f44417021e5fa7bfd5a762641871ac4c521a69fdc09838ab845c1",
+      "bytes": 5960
+    },
+    "rouge/current_map_position_view.py": {
+      "sha256": "9a4587b7cdac10852cac9f9546ed5e30a7111f88280e01b268f9bcfdbb858518",
+      "bytes": 16662
+    },
+    "rouge/player_reference_window.py": {
+      "sha256": "300a45c79063b40be28ee9c80427d94c6ccc08b669776beadae73e347ca66592",
+      "bytes": 10102
+    },
+    "rouge/reference_copy.py": {
+      "sha256": "9b47660a088e583524e15ca6a094d11035371e925302b88e0198f86c7c8c1cc5",
+      "bytes": 24251
+    },
+    "tests/test_current_map_position_view_319.py": {
+      "sha256": "e9a938c66a2436fe07c373a4c0753e46981d7166e83608deaf26394addd4820d",
+      "bytes": 6191
+    },
+    "tests/test_map_markers_471.py": {
+      "sha256": "fb91a3fcc805cd5ddd81841ae9b47417a12b1cfbbcc476db7e4b62eeed6843d4",
+      "bytes": 5750
+    },
+    "tests/test_reference_window_451.py": {
+      "sha256": "deb446ec9ab61580ce964e6d86a52cfbdffce9dcde8672635c6ef1120b3165d7",
+      "bytes": 5546
+    }
+  },
+  "review": "CurrentOriginalCenters keeps its original image decode cache and source-pixel transform, accepting optional marker records assembled only from existing verified centers. Native painter paths hit actual marker circles; no inverse cell projection is added. One hit emits the exact combo key; multiple hits use a native nonblocking QMenu. Tooltip/menu/cursor state clears on source or marker changes and hide. Main and action map pages reuse the same marker view and existing combo selection paths. Per-source marker ordinals agree with their combo indices. Native splitter orientation adapts to width while retaining separate divider sizes. ReferenceWindow reuses screen-placement logic for normal visible resize, fixing the observed offscreen tall window. Exact copy mappings shorten default prose and original main-map prose is retained in technical details. No calibration coordinates, geometry, game arithmetic, retries, catches, data downloads at runtime or game/chat controls were added.",
+  "whole_program_review_complete": false
+}

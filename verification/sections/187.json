@@ -1,0 +1,47 @@
+{
+  "title": "加工品完整范围、次数与目的地候选规划",
+  "remaining_item": "探索地图与路线建议：行动力与加工品状态规则",
+  "new_capability": "在明确声明的固定图上筛选12种加工品的所有目的地，按原始范围、特定节点类型和声明剩余次数排除；随机和未知类别保留完整候选，同格再进入单列未知，并提供CLI入口。",
+  "source_evidence": [
+    "roguelike_topic_table固定commit a550f5e048bb94e7cdefc6eb97a4091f0c4c7add，完整hash f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "$.modules.rogue_6.scrap.moveScrapData / moveScrapRangeData 与 $.details.rogue_6.items直接提取；12加工品/7范围/30零件/26区域"
+  ],
+  "acceptance": [
+    "原件全集和范围参数核对；直线2格/邻接8格/全图/指定商店不同筛选结果",
+    "未知类别保留、随机不选终点、不生成概率、剩余0排除与越界次数拒绝",
+    "声明对象不被修改；重复节点/非法坐标/历史起点拒绝；3项必要测试通过"
+  ],
+  "limitations": [
+    "内部EVENTS/BATTLES成员表未公开；无类别声明时不擅自推断而保留候选。",
+    "不读取本局库存/AP，不操作游戏；服务器资格、实际进入、同格再进入保持未知。",
+    "尚无新第六层/特殊区拓扑证据，原43模板不变。"
+  ],
+  "section": 187,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "research/p3-exploration-planning/source-receipt.json",
+    "rouge/data/exploration-reference.json",
+    "rouge/exploration_planning.py",
+    "scripts/exploration_planning_cli.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section216.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_216_original_item_and_range_parameters",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_216_straight_diagonal_all_map_and_exact_shop",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_216_unknown_groups_random_and_expired_are_explicit"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:25:54.266092+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 3,
+    "passed": 3,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-187/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

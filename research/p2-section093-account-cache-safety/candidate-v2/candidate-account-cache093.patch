@@ -1,0 +1,120 @@
+--- a/rouge/app.py
++++ b/rouge/app.py
+@@ -13,6 +13,7 @@
+ from .capture import GameCapture, list_game_windows
+ from .catalog import catalog,operator_profiles,stage_previews
+ from .operator_summary import format_operator_observation
++from .account_cache import AccountCache
+ from .run_state import RunState
+ from .damage import calculate_damage
+ from .relics import mechanics,matches
+@@ -98,7 +99,8 @@
+         self.desktop_snapshot = None
+         self.desktop_request_busy = False
+         self.last_chat_mode = 0
+-        self.operator_observations={}
++        self.account_cache=AccountCache(OPERATOR_STATE,operator_profiles(),catalog()['operators'])
++        self.operator_observations=self.account_cache.records
+         self.run=RunState(RUN_STATE)
+         self.level_override=False
+         self.skill_override=False
+@@ -109,8 +111,6 @@
+         self.damage_detail_key=None
+         self.displayed_enemy_context=None
+         self.transcript_key=None
+-        try:self.operator_observations=json.loads(OPERATOR_STATE.read_text(encoding='utf-8'))
+-        except (OSError,ValueError):pass
+         self.desktop = DesktopBackend(ROOT/'.local/desktop-chat',self.events.desktop_state.emit)
+         self.events.sample.connect(self.sample_received)
+         self.events.sample_error.connect(self.sample_failed)
+@@ -470,12 +470,14 @@
+             run_applied=self.apply_run_observation(observation['run'],observation.get('captured_at',time.time()))
+         if observation.get('operator'):
+             self.apply_operator_observation(observation['operator'],observation.get('captured_at',time.time()))
+-            saved=self.operator_observations[observation['operator']['id']]
++            saved=self.account_cache.view(observation['operator']['id'])
+             profile=operator_profiles()[observation['operator']['id']]
+             self.capture_operator_picture.set_subject('operator',observation['operator']['id'],
+                 profile['name']+' · '+PROFESSIONS[profile['profession']])
+             note='本帧纯视觉只确认身份与已匹配潜能；其余项来自以前已确认记录。\n' if observation.get('performance',{}).get('backend')=='visual' else ''
+-            replace_text(self.operator_summary,note+format_operator_observation(saved))
++            account_notice=self.account_cache.notice(observation['operator']['id'])
++            summary=format_operator_observation(saved) if saved else '本帧干员档案尚未确认；未使用不可用的账号记录。'
++            replace_text(self.operator_summary,note+summary+('\n'+account_notice if account_notice else ''))
+         elif run_applied and (observation.get('run') or {}).get('selected_operator'):
+             selected=observation['run']['selected_operator']
+             profile=operator_profiles()[selected]
+@@ -772,7 +774,7 @@
+ 
+     def current_operator_state(self):
+         op=self.operator.currentData()
+-        account=self.operator_observations.get(op,{})
++        account=self.account_cache.view(op)
+         member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
+         if member and not member.get('present',True):member=None
+         if not member:return account
+@@ -781,6 +783,13 @@
+         return {**account,**member,'fields':{**account.get('fields',{}),**current},
+                 'skill_ranks':ranks,'run_confirmed_fields':list(current)}
+ 
++    def account_training_status(self,text):
++        op=self.operator.currentData()
++        member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
++        confirmed=bool(member and member.get('present',True) and member.get('scope')=='run')
++        notice=self.account_cache.notice(op,run_confirmed=confirmed)
++        self.training_status.setText(text+('\n'+notice if notice else ''))
++
+     def training_conditions(self):
+         op=self.operator.currentData()
+         fields=self.current_operator_state().get('fields',{})
+@@ -803,7 +812,7 @@
+             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)
+             self.skill.blockSignals(True);self.skill.clear();self.skill.blockSignals(False)
+             for widget in (self.elite,self.trust,self.potential,self.module):widget.setText('未选择干员')
+-            self.training_status.setText('总览只显示本局已确认招募的干员；可选职业分支进行局外预览。')
++            self.account_training_status('总览只显示本局已确认招募的干员；可选职业分支进行局外预览。')
+             self.update_skill_options()
+             return
+         self.level.setEnabled(True)
+@@ -844,10 +853,11 @@
+             confirmed=set(state['run_confirmed_fields'])
+             for key,widget in [('elite',self.elite),('trust',self.trust),('potential',self.potential),('module_id',self.module)]:
+                 if key in fields and key not in confirmed:widget.setText(widget.text()+'（账号档案参考，本局未确认）')
+-            self.training_status.setText('使用本局已确认培养记录，最后读取：'+stamp+'；切页后保留。缺失项使用标注的账号参考/预览条件。')
++            status='使用本局已确认培养记录，最后读取：'+stamp+'；切页后保留。缺失项使用标注的账号参考/预览条件。'
+             if state.get('recruitment_kind')=='emergency_hire':
+-                self.training_status.setText(self.training_status.text()+' 来源：应急雇佣，仅一次作战。')
+-        else:self.training_status.setText('档案最后读取：'+stamp+'；本局实际培养尚待核对。未确认字段使用明确标注的预览条件。')
++                status+=' 来源：应急雇佣，仅一次作战。'
++        else:status='档案最后读取：'+stamp+'；本局实际培养尚待核对。未确认字段使用明确标注的预览条件。'
++        self.account_training_status(status)
+         self.update_base_attack()
+         self.update_skill_options()
+         if hasattr(self,'raw_damage'):self.calculate()
+@@ -862,24 +872,8 @@
+         self.update_skill_options()
+ 
+     def apply_operator_observation(self,operator,captured_at):
+-        op=operator['id']
+-        saved=self.operator_observations.get(op,{})
+-        if captured_at<saved.get('captured_at',0):return
+-        fields={**saved.get('fields',{}),**operator['fields']}
+-        ranks={**{str(k):v for k,v in saved.get('skill_ranks',{}).items()},
+-               **{str(k):v for k,v in operator.get('skill_ranks',{}).items()}}
+-        changed=fields!=saved.get('fields') or ranks!=saved.get('skill_ranks') or saved.get('scope')!=operator.get('scope')
+-        self.operator_observations[op]={**operator,'fields':fields,'skill_ranks':ranks,'captured_at':captured_at,
+-            'sources':{**saved.get('sources',{}),**operator.get('sources',{})},
+-            'field_times':{**saved.get('field_times',{}),**{key:captured_at for key in operator['fields']}},
+-            'skill_times':{**saved.get('skill_times',{}),**{str(key):captured_at for key in operator.get('skill_ranks',{})}},
+-            'merged_from_pages':True}
+-        if changed:
+-            OPERATOR_STATE.parent.mkdir(exist_ok=True)
+-            temporary=OPERATOR_STATE.with_suffix('.tmp')
+-            temporary.write_text(json.dumps(self.operator_observations,ensure_ascii=False,indent=2),encoding='utf-8')
+-            temporary.replace(OPERATOR_STATE)
+-        self.show_observed_operator(op)
++        if self.account_cache.observe(operator,captured_at):
++            self.show_observed_operator(operator['id'])
+ 
+     def show_observed_operator(self,op):
+         """Follow a newly observed identity once; repeated frames keep manual browsing."""

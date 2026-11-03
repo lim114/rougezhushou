@@ -1,0 +1,58 @@
+{
+  "section": 118,
+  "files": [
+    {
+      "path": "rouge/app.py",
+      "blocks": [
+        {
+          "before": "        self.rank=QLabel('未确认')\r\n        form.addRow('技能等级（自动读取）',self.rank)\r\n",
+          "after": "        self.rank=QLabel('未确认')\r\n        form.addRow('技能等级（自动读取）',self.rank)\r\n        self.account_skill_reference_key=None\r\n        self.account_skill_reference=QCheckBox('选择账号已读技能等级作局外模拟参考（仅当前技能）')\r\n        self.account_skill_reference.toggled.connect(lambda:self.update_skill_options())\r\n        form.addRow(self.account_skill_reference)\r\n        self.skill_cultivation_row=None\r\n        self.skill_cultivation_explanation=QLabel('')\r\n        self.skill_cultivation_explanation.setWordWrap(True)\r\n        form.addRow('技能培养来源与资格',self.skill_cultivation_explanation)\r\n        form.setRowVisible(self.skill_cultivation_explanation,False)\r\n"
+        },
+        {
+          "before": "    def skill_rank_value(self):\r\n        known=self.current_operator_state().get('skill_ranks',{})\r\n        skill=self.skill.currentData()\r\n        return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))\r\n",
+          "after": "    def skill_rank_selection(self):\r\n        from .skill_cultivation import select_rank\r\n        op=self.operator.currentData()\r\n        profile=operator_profiles().get(op)\r\n        state=self.current_operator_state()\r\n        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)\r\n        return select_rank(profile,self.skill.currentData(),elite,state=state,\r\n            account=self.account_cache.view(op),\r\n            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()))\r\n\r\n    def skill_rank_value(self):\r\n        return self.skill_rank_selection()['rank']\r\n\r\n    def clear_skill_rank_reference(self):\r\n        self.account_skill_reference_key=None\r\n        if hasattr(self,'account_skill_reference'):\r\n            self.account_skill_reference.blockSignals(True)\r\n            self.account_skill_reference.setChecked(False)\r\n            self.account_skill_reference.blockSignals(False)\r\n\r\n    def update_skill_rank_source(self):\r\n        if not hasattr(self,'skill_cultivation_explanation'):return\r\n        from .skill_cultivation import explanation,format_explanation\r\n        op,skill=self.operator.currentData(),self.skill.currentData()\r\n        key=(op,skill)\r\n        if key!=self.account_skill_reference_key:\r\n            self.clear_skill_rank_reference()\r\n            self.account_skill_reference_key=key\r\n        selection=self.skill_rank_selection()\r\n        self.account_skill_reference.setEnabled(selection['account_usable'])\r\n        if not selection['account_usable'] and self.account_skill_reference.isChecked():\r\n            self.account_skill_reference.blockSignals(True)\r\n            self.account_skill_reference.setChecked(False)\r\n            self.account_skill_reference.blockSignals(False)\r\n            selection=self.skill_rank_selection()\r\n        self.account_skill_reference.setToolTip(selection['account_reason'] or\r\n            '明确选择该技能已读账号等级作局外模拟；不会标作本局读取，不改写账号或本局记录。')\r\n        profile=operator_profiles().get(op)\r\n        state=self.current_operator_state()\r\n        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)\r\n        row=explanation(op,profile,skill,elite,selection)\r\n        self.skill_cultivation_row=row\r\n        self.skill_cultivation_explanation.setText(format_explanation(row))\r\n        self.damage_form.setRowVisible(self.skill_cultivation_explanation,row is not None)\r\n"
+        },
+        {
+          "before": "        op,skill = self.operator.currentData(), self.skill.currentData()\r\n        profile=operator_profiles().get(op) or {'skills':[]}\r\n",
+          "after": "        op,skill = self.operator.currentData(), self.skill.currentData()\r\n        profile=operator_profiles().get(op) or {'skills':[]}\r\n        self.update_skill_rank_source()\r\n"
+        },
+        {
+          "before": "        rank=self.skill_rank_value()\r\n        self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+\r\n                         ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))\r\n",
+          "after": "        from .skill_cultivation import rank_label\r\n        self.rank.setText(rank_label(self.skill_rank_selection()))\r\n"
+        },
+        {
+          "before": "        known_ranks=state.get('skill_ranks',{})\r\n        if str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:\r\n            scenario['unconfirmed_training'].append('所选技能等级')\r\n",
+          "after": "        known_ranks=state.get('skill_ranks',{})\r\n        if self.skill_rank_selection()['manual_reference_applied']:\r\n            scenario['unconfirmed_training'].append('所选技能等级（已选账号参考，局外模拟）')\r\n        elif str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:\r\n            scenario['unconfirmed_training'].append('所选技能等级')\r\n"
+        },
+        {
+          "before": "        self.run.reset()\r\n        self.refresh_operator_overview()\r\n",
+          "after": "        self.run.reset()\r\n        self.clear_skill_rank_reference()\r\n        self.refresh_operator_overview()\r\n"
+        }
+      ]
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "blocks": [
+        {
+          "before": "MODULES = (\n",
+          "after": "MODULES = (\n    \"tests.test_skill_cultivation_118\",\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/skill_cultivation.py",
+      "new_source": "/workspace/.continuation/p2-cultivation116-source-v1/candidate/rouge/skill_cultivation.py",
+      "new_source_sha256": "6a7c49aa3cf0971cfe3cdf338cc3c2765a66071669ab6f10fa794a1ca1e9b2f3"
+    },
+    {
+      "path": "rouge/data/skill-cultivation-reference.json",
+      "new_source": "/workspace/.continuation/p2-cultivation116-source-v1/candidate/rouge/data/skill-cultivation-reference.json",
+      "new_source_sha256": "368524f0c5eab8f543e0973453e655c6e5d9a64e6e962f2b845154cd907207d7"
+    },
+    {
+      "path": "tests/test_skill_cultivation_118.py",
+      "new_source": "/workspace/.continuation/p2-cultivation116-source-v1/candidate/tests/test_skill_cultivation_118.py",
+      "new_source_sha256": "9833b9480d1298e4de2c91b39bf3aaa5799a5b5e7facfecae88c35d01de01f0a"
+    }
+  ]
+}

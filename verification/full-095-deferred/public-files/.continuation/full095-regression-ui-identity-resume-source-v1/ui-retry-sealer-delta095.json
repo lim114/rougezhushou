@@ -1,0 +1,61 @@
+{
+  "scope": "SOURCE_ONLY_NO_SEALER_EXECUTION",
+  "baseline_reference": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v3/seal_ui_retry095.py",
+    "bytes": 11951,
+    "sha256": "6bf18a9458d9723d4207f0e0abeea3e52a67ff229ac53dfe7744cfd3c127f732"
+  },
+  "candidate_reference": {
+    "path": "/workspace/.continuation/full095-regression-ui-identity-resume-source-v1/seal_ui_retry095.py",
+    "bytes": 12552,
+    "sha256": "540d00188b62da3ed56f211c4e497c1fc2ce74b6892524cc2b0fe5d655353faf"
+  },
+  "whole_inverse_exact": true,
+  "changes": [
+    {
+      "before": "from recovery_binding095 import NEW_OUTPUTS, NATIVE_DIRECTORIES, SELECTED_RETRY_OUTPUTS, validate_recovery_inputs",
+      "after": "from identity_binding095 import NEW_OUTPUTS, NATIVE_DIRECTORIES, SELECTED_RETRY_OUTPUTS, validate_recovery_inputs",
+      "count": 1
+    },
+    {
+      "before": "/workspace/.continuation/full095-regression-ui-cache-resume-final-v1",
+      "after": "/workspace/.continuation/full095-regression-ui-identity-resume-final-v1",
+      "count": 1
+    },
+    {
+      "before": "('binding_validation095.py', 'historical-classifications090.json', 'capability_binding095.py', 'recovery_binding095.py')",
+      "after": "('binding_validation095.py', 'historical-classifications090.json', 'capability_binding095.py', 'recovery_binding095.py', 'identity_binding095.py')",
+      "count": 1
+    },
+    {
+      "before": "digest((here / 'recovery_binding095.py').read_bytes())",
+      "after": "digest((here / 'identity_binding095.py').read_bytes())",
+      "count": 1
+    },
+    {
+      "before": "'root_spec_projection_from_ui_retry': True,",
+      "after": "'root_spec_projection_from_ui_retry': True, 'actual_ui_identity_retry': True,",
+      "count": 1
+    },
+    {
+      "before": "'prior_incomplete_ui': spec['prior_incomplete_ui'], 'project_calls': 0,",
+      "after": "'prior_incomplete_ui': spec['prior_incomplete_ui'],\n               'prior_ui_retry': spec['prior_ui_retry'],\n               'prior_incomplete_ui_cache': spec['prior_incomplete_ui_cache'], 'project_calls': 0,",
+      "count": 1
+    },
+    {
+      "before": "__ACTUAL_UI_RETRY_BINDING_SHA256_PENDING__",
+      "after": "__ACTUAL_UI_IDENTITY_RETRY_BINDING_SHA256_PENDING__",
+      "count": 1
+    },
+    {
+      "before": "'changed_execution_contracts_from_prior_recovery': ['wine_ui', 'saved_review', 'wine_selected'],",
+      "after": "'changed_execution_contracts_from_prior_recovery': ['wine_ui', 'saved_review', 'wine_selected'],\n               'changed_execution_contracts_from_prior_ui_retry': ['wine_ui', 'saved_review'],\n               'prior_ui_retry': spec['prior_ui_retry'],\n               'prior_incomplete_ui_cache': spec['prior_incomplete_ui_cache'],\n               'prior_ui_retry_started_at': bound_json(spec['prior_ui_retry']['context'])['ui_retry_started_at'],",
+      "count": 1
+    },
+    {
+      "before": "adds real ui_retry_started_at",
+      "after": "preserves real ui_retry_started_at and adds real ui_identity_retry_started_at",
+      "count": 1
+    }
+  ]
+}

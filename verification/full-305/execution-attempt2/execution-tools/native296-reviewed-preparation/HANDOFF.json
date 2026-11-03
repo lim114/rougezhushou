@@ -1,0 +1,78 @@
+{
+  "kind": "CACHE_ONLY_NATIVE296_ADAPTATION_FOR_LATER_FULL305_RERUN_NOT_ACCEPTANCE",
+  "conclusion": "296 fixture cloned/damaged historical296 manifest while backend299 requires current compatibility manifest; clone was invalid before the intended negative",
+  "original_preserved": "scripts/verify_battle_entry_references_window_296.py",
+  "candidate_relative": "scripts/verify_battle_entry_references_window_296_full305.py",
+  "candidate_cache": "C:\\Users\\李娜\\Desktop\\lcn\\rouge\\.cache\\p3-305-full-failure-triage\\native296\\candidate\\scripts\\verify_battle_entry_references_window_296_full305.py",
+  "candidate_pin": {
+    "sha256": "9f770e45c11a8179201c852e24b8f26c80f3ea4523cb8f480f4375d1d2abdec2",
+    "bytes": 43455
+  },
+  "diff": "candidate.diff",
+  "static_proof": "static-proof.json",
+  "actual_first_trace": "actual-first-trace.txt",
+  "actual_first_receipts": {
+    "actual/window.json": {
+      "sha256": "7b6e34423b1cfeee1994859e430e43bcc9b01b4e883705c718a301092a0174a4",
+      "bytes": 64515
+    },
+    "actual/full305-source-closure.json": {
+      "sha256": "c46c2f1424772f1d8baece142e5bf7fe31d2fc8d91c260fb2d718001d13d6afd",
+      "bytes": 1460
+    },
+    "controller-process.json": {
+      "sha256": "cd7edacaedcd33dfc0f23ccfc832aef2744969c87bf1f2aa98587e7b00d2f150",
+      "bytes": 1309
+    },
+    "supervisor.json": {
+      "sha256": "e4fbedff9a2365afd006e2c300d2883f8172abcda02dd9cd57913af32fbe7a7e",
+      "bytes": 1742
+    },
+    "step.json": {
+      "sha256": "ab19509bdd648a4a1f6858bbea853511c083a6a39e345557ad773ac652cd0eee",
+      "bytes": 2820
+    },
+    "process.exit": {
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    "process-exit-origin.json": {
+      "sha256": "1f320c43f8ee12597c6a39247902129ddd3d0c4826a3d35bc79035277e7b437c",
+      "bytes": 321
+    }
+  },
+  "selected_source_scope": {
+    "original": 64,
+    "adapted": 67,
+    "all_original64_retained": true,
+    "old296_package_and_manifests_retained": true,
+    "current299_manifest_and_entire_package_added": true
+  },
+  "new_scope_files": [
+    "research/p3-battle-entry-compatibility-299/README.md",
+    "research/p3-battle-entry-compatibility-299/source-manifest.json",
+    "scripts/verify_battle_entry_references_window_296_full305.py"
+  ],
+  "require_preservation": {
+    "original": 66,
+    "new": 67,
+    "original_AST_order_unchanged": true
+  },
+  "API_behavior_not_modified": true,
+  "no_valid_override_or_fake_source": true,
+  "execution_not_performed": [
+    "Qt",
+    "tests",
+    "canonical fixture",
+    "full runner",
+    "source_data"
+  ],
+  "root_next": "Keep current first full305 frozen until every component is terminal and archived. Promote only this new fixture with its original retained, include both old scope and new67 source closure in new freeze, then root performs second complete full305 verification. Do not count static proof as runtime PASS.",
+  "cache_preparation_history": {
+    "attempt1": "prepare-attempt1/observed-failure.json",
+    "actual_exit1_reason": "CRLF original did not match LF preparation anchor; no candidate/runtime execution occurred",
+    "attempt2": "prepare-attempt2/process.exit",
+    "actual_exit2": 0,
+    "repair": "Normalize text only during static editing, preserve original CRLF in candidate and original raw bytes separately"
+  }
+}

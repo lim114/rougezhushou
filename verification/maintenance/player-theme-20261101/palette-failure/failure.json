@@ -1,0 +1,8 @@
+{
+  "actual_observed_exit": 1,
+  "scope": "8 direct theme tests; 7 passed, 1 failed. Original output observed through exec, not separately redirected",
+  "error": "Light Text/Base contrast was 1.033589720135079 instead of above 4.5",
+  "cause": "Own exporter requested upstream partial for_stylesheet palette, which deliberately inherits unset roles from the host QPalette. The light theme therefore retained a dark Base role",
+  "repair": "Export the complete upstream palette with for_stylesheet=False; keep original assets and builder, do not lower the contrast requirement",
+  "not_a_complete_video_or_accessibility_audit": true
+}

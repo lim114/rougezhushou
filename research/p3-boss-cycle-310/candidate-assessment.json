@@ -1,0 +1,138 @@
+{
+  "kind": "FUTURE310_TOPIC_ONLY_NOT_STARTED_OR_COMPLETED",
+  "topic": "混沌源阶理论：洛伦茨与源阶方的交替激活和模块条件流程",
+  "existing_reader_source_pins": [
+    {
+      "file": "rouge/battle_preview.py",
+      "sha256": "34241004e4452be2b7cb10f2f02ae4042c816efe9adef65347c9430d9f30032e",
+      "bytes": 29869
+    },
+    {
+      "file": "rouge/enemy_skills.py",
+      "sha256": "30d291eb9dacfa7c2462958fc38ca8888d885aa180d6e4bbfefe418e190a34a5",
+      "bytes": 11539
+    },
+    {
+      "file": "rouge/auxiliary_enemy_mechanisms.py",
+      "sha256": "f33f6526a1efe632b9d16144d0bcd9891b8751f71b3ce2c6cd1b8df14abb803a",
+      "bytes": 4251
+    },
+    {
+      "file": "rouge/boss_phase_reference.py",
+      "sha256": "1ceab41b49e18a88b184b24d113fa74d471bed0a02667ea96b2bb49990e4fa2a",
+      "bytes": 11141
+    }
+  ],
+  "primary_full_tuple": [
+    "ro6_b_5",
+    "enemy_2147_shophm",
+    0
+  ],
+  "supporting_full_tuple": [
+    "ro6_b_5",
+    "enemy_2148_shorbb",
+    0
+  ],
+  "related_enemy_full_tuple": [
+    "ro6_b_5",
+    "enemy_2149_shorsm",
+    0
+  ],
+  "related_module": {
+    "characterKey": "trap_324_shmbmb",
+    "kind": "stage_predefined_trap_not_enemy_tuple",
+    "source": "complete_original_level.predefines.tokenInsts and branches.boss_trap",
+    "actual_spawned": null
+  },
+  "existing_player_capability": [
+    "双方图鉴概述与裸技能/黑板参数",
+    "既有299分支候选和位置资料",
+    "309仅畸症的单首领形态资料；其专属入口不覆盖本组",
+    "辅助单位4条机制不含本组"
+  ],
+  "new_player_capability": [
+    "按主体分别查看初始/预退场、初始/行动模式及招式归属",
+    "将击倒洛伦茨、源阶方激活、模块消失条件、激活中止及双方分别返回的流程完整串起",
+    "分开看源阶方首次半血后改变的文献说明与到终点扣命/污染/退场分支",
+    "解释模块是可治疗的关卡装置及其生存/归零分支，避免当成需击杀的敌人；不分析本局站位或做治疗/攻击计算"
+  ],
+  "documentary_flow": [
+    {
+      "step_id": "lorentz_knockdown",
+      "source_actor": "洛伦茨，扰动之谬",
+      "condition": "初始模式被击倒",
+      "documented_result": "重生开始时使源阶方强制触发激活；重生结束时洛伦茨进入预退场模式。",
+      "source": "洛伦茨441767能力卡"
+    },
+    {
+      "step_id": "cube_activate",
+      "source_actor": "源阶方",
+      "condition": "激活技能结束",
+      "documented_result": "进入行动模式，在关卡预设位置召唤源阶方模块；不据此认定本次模块数、组号或实际时刻。",
+      "source": "源阶方436997激活卡"
+    },
+    {
+      "step_id": "module_clear_gate",
+      "source_actor": "洛伦茨，扰动之谬",
+      "condition": "预退场模式下检测场上不存在源阶方模块",
+      "documented_result": "使源阶方强制触发激活中止，随后洛伦茨回初始模式；两者不是同一个完成回调。",
+      "source": "洛伦茨441767能力卡"
+    },
+    {
+      "step_id": "cube_deactivate",
+      "source_actor": "源阶方",
+      "condition": "激活中止技能结束",
+      "documented_result": "源阶方回初始模式；该模式文献记载无敌。",
+      "source": "源阶方436997激活中止卡/能力卡"
+    },
+    {
+      "step_id": "cube_first_half_hp",
+      "source_actor": "源阶方",
+      "condition": "生命值首次低于50%后（文献）",
+      "documented_result": "裂变冷却改为较短一档，源阶粒素改为另一批预设路径；不从当前血量重新推算，也不计算实际倒计时。",
+      "source": "源阶方436997失链裂变/召唤源阶粒素卡"
+    },
+    {
+      "step_id": "lorentz_endpoint",
+      "source_actor": "洛伦茨，扰动之谬",
+      "condition": "到达路径终点",
+      "documented_result": "扣目标生命、留下持续污染并令源阶方强制触发被摧毁。扣30不等同所有对局必败，不计算实际剩余生命。",
+      "source": "洛伦茨441767能力卡"
+    },
+    {
+      "step_id": "cube_exit",
+      "source_actor": "源阶方",
+      "condition": "被摧毁技能结束/自身退场",
+      "documented_result": "被摧毁结束时无原因退场；自身退场时直接强制击杀洛伦茨和场上模块并跳过重生。不能据此补造整个关卡结束脚本。",
+      "source": "源阶方436997被摧毁卡/能力卡"
+    }
+  ],
+  "documentary_mode_names": {
+    "洛伦茨，扰动之谬": [
+      "初始模式",
+      "预退场模式"
+    ],
+    "源阶方": [
+      "初始模式",
+      "行动模式"
+    ]
+  },
+  "important_source_handling": [
+    "洛伦茨当前完整441767将后者称预退场模式；旧搜索缓存有重生模式措辞，采用固定完整版本并保版本边界。",
+    "两主体按自己的技能完成/检查条件分别变换，不制造同步切换时刻。",
+    "未标模式的象限封锁/被摧毁不凭猜测硬绑某个模式；空模式列表也不证明没有能力。",
+    "模块的document类别/机关ID与原enemy元组分开，不替换为同名敌人或把初始源阶方当可伤害。",
+    "原关卡预设分组/位置只作为声明；实际选了哪组、何时激活/失效和完整控制器仍未知。"
+  ],
+  "unknowns": [
+    "当前服务器/当前实例模式、实际重生和技能调用",
+    "技能与模式的原预制体附着/实际回调",
+    "模块当前难度完整属性和实际存活、治疗、爆炸/结算",
+    "首次半血门的实际触发及状态留存",
+    "当前实际目标/路线/位置/全局时钟",
+    "完整阶段面板、伤害和倒计时"
+  ],
+  "no_new_numeric_phase_model": true,
+  "root_implementation_decision_required": true,
+  "production_Git_Qt_private_state_game_or_chat_used": false
+}

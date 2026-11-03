@@ -1,0 +1,49 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import runpy,json,sys
+R=Path(__file__).resolve().parents[1];sys.path[:0]=[str(R),str(R/'scripts')]
+f=runpy.run_path(str(R/'.cache/player_batch_pipeline.py'));read=f['read'];write=f['write'];pin=f['pin'];source=f['source'];block=f['block'];git=f['git']
+assert git('branch','--show-current').decode().strip()=='codex/p2-development'
+cp=read('DEVELOPMENT_CHECKPOINT.json');assert cp['completed_sections']==393
+unit=read('verification/sections/394-player-checks/process.json');native=read('verification/sections/394-player-window/window.json');reg=read('verification/sections/394-regression393-window/window.json');runtime=read('verification/sections/394-main-window/window.json')
+for name in('394-player-window-process','394-regression393-process'):assert read('verification/sections/'+name+'/process.json')['passed']
+assert all(v['passed']for v in(unit,native,reg,runtime))
+assert source()==unit['source_sha256_after']==native['source_sha256_after']==reg['source_sha256_after']==runtime['source_sha256_after']
+assert native['unique_checks']==33 and reg['unique_checks']==34
+assert not any(native['external_operation_attempts'].values())and not any(reg['external_operation_attempts'].values())
+assert runtime['private_five_paths_unchanged']and runtime['private_six_paths_including_shortcut_unchanged']and runtime['desktop_full_display_actually_reviewed']
+images=native['screenshots']+reg['screenshots'];assert len(images)==3
+for image in images:assert pin(image['file'])['sha256']==image['sha256']
+write('verification/sections/394-visual-agent-review.json',{'section':394,'reviewer':'root','actual_view_image_calls':3,'images':images,'blocking_visual_issues':[],'scope':'Final isolated inventory, historical frequency hover and shortcut regression PNGs individually viewed. Scope notice moved above scrolling data. Actual original project desktop also viewed via Windows MCP; private desktop image not published.','actual_game_accuracy_claimed':False})
+from scripts.verify_full_available import maintained_selectors
+selectors=maintained_selectors();assert selectors==read('verification/sections/393-source-audit.json')['current_selectors']+['tests.test_player_item_sources_394']
+write('verification/sections/394-source-audit.json',{'section':394,'passed':True,'current_selectors':selectors,'ordered_previous_preserved':True,'source_sha256':source(),'game_numeric_model_changed':False,'frequencies_reinterpreted_as_draw_weights':False})
+from rouge import expansion_reference,public_archive
+packet=expansion_reference.packet();assert packet is not None;data=public_archive.load();assert set(data['versions'])=={'base','dlc1'}
+write('verification/sections/394-reference-sources.json',{'section':394,'authorization':'verification/sections/388-data-scope.json','public_snapshot':pin('research/public-reference-391/snapshot.json'),'provenance':data['provenance'],'catalog_manifest':pin(expansion_reference.MANIFEST),'catalog_pinned_current_commit':expansion_reference.NEW_COMMIT,'public_versions':list(data['versions']),'current_DLC2_complete':False,'visited_community_reference':{'url':'https://prts.wiki/w/沉沦者的黑流树海/拟造物质编目','facts_used':'Catalog unlock/held distinctions and exchanging out versus rewards must be kept separate; page carries incompleteness and timeliness caveats. Latest webpage does not silently replace the pinned calculation/catalog snapshot.'},'lookup_implementation':'Exact version and item ID reverse membership; same names and same images never merge. All bundled memberships verified. Separate overlapping observations retain original denominators. Input collections are not reward pools.','numeric_mechanism_assumptions_added':False,'private_data_uploaded':False,'online_requests_during_window_validation':0,'network_source_update_claimed':False,'failed_originals':['verification/sections/394-desktop-pointer-first-failure/window.json'],'input_boundary':'Final native contract sends Qt mouse events only to owned viewport and emits the armed timer; no global cursor movement or hardware-hover claim. Initial desktop pointer moved away from target during delayed check; failed original retained.'})
+write('verification/sections/394-usage.json',{'remaining_percent':89,'used_percent':11,'window_duration_mins':10080,'secondary_window':None,'triggered':False,'strict_below_threshold':15,'source':'Actual get_usage_limits at start of turn; account identifiers not saved.'})
+title='藏品悬停查池、独立筛选与准确资料跳转'
+change='本局藏品整合稀有度、能否交出、收藏品/开局助力和资料范围筛选；悬停显示真实图标、固定阅读、当前物品全部已列池及来源条件，按准确物品与范围直接打开完整池。历史频率保留分母和来源，顶部说明不是抽取权重或本局领取概率，交换提供物与奖励池分开。未变刷新保留列表实例、选择、滚动和固定阅读；资料丢失、范围失效、筛选排除会清除旧内容；跳转前重新加载本机公开缓存。'
+limits='本体/内容拓展一为已有固定资料，当前DLC2完整目录、条件概率及真实抽取权重尚未核验；更细的游戏分类、完整交换前置与结果联动保留待办。窗口测试仅向助手自己的控件发送Qt事件，不移动全局鼠标、不操作游戏、不发送聊天、不上传个人数据。真实采样准确性、完整复盘/个人统计及其余P3/P2/P1仍未完成，识别最后。'
+receipt={'section':394,'kind':'functional_section','title':title,'new_capability':change,'limitations':limits,'necessary_validation':pin('verification/sections/394-player-checks/process.json'),'unit_tests_run':66,'native_windows_validation':{**pin('verification/sections/394-player-window/window.json'),'unique_checks':33,'process':pin('verification/sections/394-player-window-process/process.json')},'previous_player_contract_regression':{**pin('verification/sections/394-regression393-window/window.json'),'unique_checks':34,'process':pin('verification/sections/394-regression393-process/process.json')},'root_visual_review':pin('verification/sections/394-visual-agent-review.json'),'public_sources':pin('verification/sections/394-reference-sources.json'),'video_parity_document_sha256':pin('VIDEO_PARITY.md')['sha256'],'runtime_test_window':pin('verification/sections/394-main-window/window.json'),'source_sha256':source(),'full_suite_rerun':False,'last_full_receipt':'verification/full-380/summary.json','last_full_is_historical_for_current_changes':True,'P3_complete':False,'P2_complete':False,'P1_complete':False,'game_operated':False,'chat_sent':False,'private_state_included':False,'cloud_publication_binding':'enclosing_commit','recorded_at_UTC':datetime.now(timezone.utc).isoformat()}
+write('verification/sections/394.json',receipt)
+cp.update(completed_sections=394,latest_functional_section=394,next_section=395,batch_status='PLAYER_SECTION394_PUBLICATION_PENDING')
+cp['next_action']='继续按VIDEO_PARITY.md整合场景敌人快捷入口、队伍/零件、本地复盘与个人统计；更细藏品分类、完整交换联动及当前版本概率/资料缺口保留。第395节到期全量须完整保留既有范围，304/305脚本显式传当轮source-freeze；识别最后。'
+cp['sections'].append({'number':394,'completion_ref':'player-section-394','topic':title,'verification':'verification/sections/394.json'})
+cp['current_section_save']={'section':394,'verification':'verification/sections/394.json','scope':'current_functional_section','binding':'enclosing_commit'};cp['last_verified_cloud_save']['scope']='previous_functional_section'
+cp['policy'].update(current_usage_remaining_percent=89,current_usage_receipt='verification/sections/394-usage.json',usage_wrap_up_triggered=False)
+cp['current_batch'].update(status=cp['batch_status'],completed_sections=394,next_section=395,next_section_started=False,batch_closed=False,receipt='verification/sections/394.json')
+cp['current_section_validation']={'section':394,'receipt':'verification/sections/394.json','full_suite_rerun':False,'last_full_receipt':'verification/full-380/summary.json','last_full_receipt_is_historical_for_current_changes':True}
+cp['latest_section_environment']={'section':394,'native_windows_verified':True,'native_game_or_chat_verified':False,'current_section_full_rerun':False,'last_full_receipt':'verification/full-380/summary.json','last_full_receipt_is_historical_for_current_changes':True}
+cp['windows_native_validation']='当前394：66项必要检查、藏品33项和快捷键34项原生窗口唯一检查通过；三张最终原图逐张查看。实际本局藏品窗口与工具条可见响应，正常重启区间原五份私人路径及独立快捷键配置六路径保持。无游戏/聊天/个人数据上传；延迟全局指针失败原件保留，不冒充物理悬停或本局读取准确性通过。380全量是历史，下一395到期。'
+cp['functional_sections_since_latest_requirement'].append(394);cp['cloud_publication_closeout']={'section':394,'current_commit_kind':'functional section pending actual publication','next_section_started':False,'development_paused':False};write('DEVELOPMENT_CHECKPOINT.json',cp)
+body='## 当前第394节 + '+title+'\n\n'+change+'\n\n'+limits+'\n\n66项必要检查、藏品33项及快捷键34项原生窗口唯一检查实际通过，两组隔离窗口九类外部操作均零。最终三张原图逐张查看；频率限制置于滚动区上方，默认玩家可直接看到。本机原项目藏品窗口与工具条已打开并实际确认可见响应；原五份私人路径及快捷键独立配置共六路径正常重启区间保持，未发布内容或摘要。\n\n初次延迟悬停时桌面指针离开目标，失败原件保留；最终用助手自己控件的Qt鼠标消息及已触发计时器契约验证，不移动全局鼠标，不冒充实体鼠标等待验收。第380节全量仅历史，本节完整选择器前缀保留至641项；下一395须按当轮source-freeze完整验收，范围不缩减。\n\n<!-- player-publication-pending -->普通推送与远端核对待完成。'
+for name in('AGENTS.md','WORK_IN_PROGRESS.md','PROJECT_COMPLETED.md'):block(name,body)
+old=(R/'PROJECT_REQUIREMENTS.md').read_text('utf8').split('<!-- player-batch-current:start -->',1)[1].split('## 当前第393节',1)[0].strip()
+old=old.replace('藏品悬停联动、历史步骤/资源、库存筛选与统计卡等未完成项保留待办。','历史步骤/资源、完整统计卡、藏品更细分类与完整交换联动等未完成项保留待办。藏品悬停按准确物品和资料范围关联全部已列池；交换提供物不冒充奖励池，历史频率/抽取权重/本局获得概率必须分别说明，限制放在默认可见位置。')
+block('PROJECT_REQUIREMENTS.md',old+'\n\n'+body)
+p=R/'PROJECT_PROGRESS.md';text=p.read_text('utf8').replace('藏品悬停查池和库存多类筛选；','当前版本完整藏品池、真实权重/获得概率、更细游戏分类和交换结果联动；');p.write_text(text,encoding='utf8',newline='\n')
+runpy.run_path(str(R/'scripts/update_cloud_index.py'))['update'](R)
+valid=runpy.run_path(str(R/'scripts/update_cloud_index.py'))['validate_delivery'](R,read('DEVELOPMENT_CHECKPOINT.json'));write('verification/sections/394-index-validation.json',{'passed':True,'validation':valid,'scope':'Actual current section/checkpoint, requirements and previous publication proof before functional commit.'})
+p=R/'verification/sections/394-player-execution/close-source.py';p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(Path(__file__).read_bytes())
+print(json.dumps({'section':394,'unit':66,'native':33,'shortcut_regression':34,'ordered_selectors':len(selectors),'publication_pending':True}))

@@ -1,0 +1,31 @@
+{
+  "section": 463,
+  "changed_or_new_sources": {
+    "rouge/current_exchange_view.py": {
+      "sha256": "ab9cf1f5d700c8b742826135fbd092ead3be55c101683acfc0fa2810a54b0e5e",
+      "bytes": 8337
+    },
+    "rouge/current_ritual_view.py": {
+      "sha256": "2f2de5019e3685cc7de67b3400d859a165184eac4bf70ee45ea400c8118db0ef",
+      "bytes": 5224
+    },
+    "rouge/player_reference_links.py": {
+      "sha256": "dfdc6720aa72a0913656e4c841cfe85b86a8e538f71787fcff5977740437d159",
+      "bytes": 8812
+    },
+    "rouge/reference_copy.py": {
+      "sha256": "56fca203f885db8b37a3303ed526cae0639b5c58932041745ea948e8da274acb",
+      "bytes": 7781
+    },
+    "tests/test_current_exchange_view_323.py": {
+      "sha256": "0fc519770cdf5fa34afa5e2c9b73b7bd50be1ef5c779f07fe195b56032d24180",
+      "bytes": 6924
+    },
+    "tests/test_material_sources_463.py": {
+      "sha256": "e60cc094d80fca9cf7eb955a45b0f0da1c84e5be50ff9130c4b42be118763256",
+      "bytes": 7320
+    }
+  },
+  "review": "CurrentRitualPanel still validates the source once at its existing entry. Shared reference routing adds event, exact exchange target and existing fixed-stage navigation while retaining independent workspace dialogs. Retained page context binds ritual source identity, scene, choice and acquisition relation; existing host guards handle changed source/selection and reuse matching ancestors. Exchange reward and recipe are separate original records: direct reward landing retains the source choice, and an explicit header action reads the recipe from the current validated exchange packet. No guessed parent link or quantity is added. Presentation-only SHORT_LINES moves repeated qualification into existing details; original effect/amount fields remain unchanged. Count labels derive from the actual catalogue. Adopted FlowLayout wraps controls; ignored tab height prevents hidden pages forcing a586px body. No new try/catch, per-operation persistence, or dependency.",
+  "whole_program_review_complete": false
+}

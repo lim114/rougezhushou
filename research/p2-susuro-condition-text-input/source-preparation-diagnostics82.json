@@ -1,0 +1,39 @@
+{
+  "failures": [
+    {
+      "command": "python source-check82.py",
+      "exit_code": 1,
+      "category": "preparation interpreter selection",
+      "error": "ModuleNotFoundError: No module named cv2",
+      "cause": "system python lacks repository cv2 dependency; use existing repository .venv/bin/python",
+      "product_changed": false,
+      "calculate_calls": 0
+    },
+    {
+      "command": "readonly sed of prior run-tests81.py",
+      "exit_code": 2,
+      "category": "unrelated inspection path",
+      "error": "prior script filename absent",
+      "product_changed": false,
+      "calculate_calls": 0
+    },
+    {
+      "command": "readonly sed of prior run_tests81.py",
+      "exit_code": null,
+      "category": "unrelated inspection path",
+      "error": "alternate prior script filename also absent; no further retry",
+      "product_changed": false,
+      "calculate_calls": 0
+    },
+    {
+      "command": "git status --short from external evidence directory",
+      "exit_code": 128,
+      "category": "unrelated readonly cwd",
+      "error": "fatal: not a git repository",
+      "product_changed": false,
+      "calculate_calls": 0,
+      "explanation": "external directory intentionally not a Git checkout; root owns tracked edits"
+    }
+  ],
+  "existing_probe_metadata_correction": "Original summary incorrectly used result.get(talents), which is not a public field. Original receipt retained; full public12 unchanged, no repeated calls."
+}

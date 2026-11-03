@@ -1,0 +1,42 @@
+{
+  "title": "加工品资源收益与概念体条件规划",
+  "remaining_item": "探索地图与路线建议：加工品与节点触发收益",
+  "new_capability": "为目标移动逐项评估具名希望/源石锭/AP收益和6概念体节点/剩余激活条件，保留随机目的地与未证资格，不把资料收益写入实际库存或战斗计算。",
+  "source_evidence": [
+    "$.modules.rogue_6.scrap.moveScrapData中的移动后希望+2、源石锭+4、AP+3原文",
+    "$.modules.rogue_6.scrap.passiveScrapData与对应items.usage：6概念体触发/次数/数值直接核对"
+  ],
+  "acceptance": [
+    "商店加工品具名+4锭、遥控器+3AP和白模鱼3盾资料与原文一致",
+    "得偿所愿精确条件、未知类别保留、0次数不触发、不符目的地不发放、随机终点不当确定收益",
+    "声明输入保持不变；一次性概念体超次数与同格再入拒绝；2项必要测试通过"
+  ],
+  "limitations": [
+    "不确定实际库存、隐性类别、真实触发与收益上限。",
+    "攻速资料不接入战斗模型；随机收藏品具名池未知；重复概念体叠加未证。"
+  ],
+  "section": 188,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section217.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_217_move_grants_and_exact_passive_conditions",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_217_unknown_and_failed_conditions_do_not_become_grants"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:26:17.846774+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-188/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

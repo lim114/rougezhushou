@@ -1,0 +1,439 @@
+{
+  "scope": "True bound root source-control probe, controller failure precedes SP request",
+  "source_file_before": "verification/sections/275-pointer-before.py",
+  "source_sha256": "1c370a3a87781e26c070ded7af0911c105a54ef76c73ebc52052609df9904172",
+  "input": {
+    "body_reads": [
+      {
+        "id": "四点批量后限幅",
+        "mode": "public",
+        "ordinary_native_path": true,
+        "bound_virtual_dispatch": true,
+        "target_exists": true,
+        "force": false,
+        "value_source": "clock_request",
+        "value_raw": null,
+        "alive_read": {
+          "normal": true,
+          "value": true
+        },
+        "max_sp_read": {
+          "normal": true,
+          "value": 6
+        },
+        "encoding_returns_normally": true,
+        "copy_returns_normally": true
+      }
+    ],
+    "clock_bridge": {
+      "input": {
+        "controller_exists": false,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "ordinary_native_path": true,
+            "delta_raw": 3758096384,
+            "enabled": true,
+            "gate_stop": {
+              "exists": true,
+              "normal": true,
+              "value": false
+            },
+            "full_read": {
+              "normal": true,
+              "value": false
+            },
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          },
+          {
+            "id": "推进后独立暂停",
+            "kind": "tick",
+            "ordinary_native_path": true,
+            "delta_raw": 1073741824,
+            "enabled": true,
+            "gate_stop": {
+              "exists": true,
+              "normal": true,
+              "value": false
+            },
+            "full_read": {
+              "normal": true,
+              "value": false
+            },
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          },
+          {
+            "id": "强制独立负回复",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": -8589934592,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": true,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 38654705664
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "links": [
+        {
+          "body_id": "四点批量后限幅",
+          "action_id": "一次补发四点",
+          "phase": "tick",
+          "same_target": true,
+          "no_intervening_value_change": true
+        }
+      ]
+    }
+  },
+  "before": {
+    "source_valid": true,
+    "source_file": "rouge/data/sp-setter-source.json",
+    "rows": [
+      {
+        "clamped_value_raw_reference": null,
+        "alive_normal_reference": null,
+        "mode": "public",
+        "encoder_normal_reference": null,
+        "called_reference": null,
+        "upper_raw_reference": null,
+        "public_void_returns_normally_reference": null,
+        "max_sp_called_reference": null,
+        "id": "四点批量后限幅",
+        "actual_decoded_sp_after": null,
+        "input_value_raw_reference": null,
+        "max_sp_normal_reference": null,
+        "normal_return_reference": null,
+        "struct_copy_bytes_reference": null,
+        "internal_bool_return_reference": null,
+        "copy_called_reference": null,
+        "full_struct_copy_completed_reference": null,
+        "declared_reading_complete_reference": true,
+        "status": "conditional_clock_invocation",
+        "alive_called_reference": null,
+        "encoder_called_reference": null,
+        "actual_encoded_sp": null,
+        "encoder_value_argument_raw_reference": null,
+        "internal_called_reference": null,
+        "conditional_branches": [
+          {
+            "id": "四点批量后限幅",
+            "mode": "public",
+            "called_reference": false,
+            "input_value_raw_reference": null,
+            "internal_called_reference": false,
+            "normal_return_reference": null,
+            "public_void_returns_normally_reference": null,
+            "internal_bool_return_reference": null,
+            "alive_called_reference": false,
+            "alive_normal_reference": null,
+            "max_sp_called_reference": false,
+            "max_sp_normal_reference": null,
+            "upper_raw_reference": null,
+            "clamped_value_raw_reference": null,
+            "encoder_called_reference": false,
+            "encoder_value_argument_raw_reference": null,
+            "encoder_normal_reference": null,
+            "copy_called_reference": false,
+            "full_struct_copy_completed_reference": false,
+            "struct_copy_bytes_reference": 0,
+            "declared_reading_complete_reference": true,
+            "actual_decoded_sp_after": null,
+            "actual_encoded_sp": null,
+            "status": "not_called"
+          },
+          {
+            "id": "四点批量后限幅",
+            "mode": "public",
+            "called_reference": true,
+            "input_value_raw_reference": null,
+            "internal_called_reference": true,
+            "normal_return_reference": true,
+            "public_void_returns_normally_reference": true,
+            "internal_bool_return_reference": true,
+            "alive_called_reference": true,
+            "alive_normal_reference": true,
+            "max_sp_called_reference": true,
+            "max_sp_normal_reference": true,
+            "upper_raw_reference": 25769803776,
+            "clamped_value_raw_reference": null,
+            "encoder_called_reference": true,
+            "encoder_value_argument_raw_reference": null,
+            "encoder_normal_reference": true,
+            "copy_called_reference": true,
+            "full_struct_copy_completed_reference": true,
+            "struct_copy_bytes_reference": 40,
+            "declared_reading_complete_reference": true,
+            "actual_decoded_sp_after": null,
+            "actual_encoded_sp": null,
+            "status": "encoded_structure_copied"
+          }
+        ]
+      }
+    ],
+    "clock_links": [
+      {
+        "body_id": "四点批量后限幅",
+        "action_id": "一次补发四点",
+        "phase": "tick",
+        "qualified": true,
+        "parent_setter_called_reference": null,
+        "parent_value_argument_raw_reference": null,
+        "parent_setter_normal_reference": null,
+        "public_void_normal_reference": null,
+        "normal_return_consistent_reference": null,
+        "status": "qualified_declaration_link"
+      }
+    ],
+    "clock_reference": {
+      "source_valid": true,
+      "source_file": "rouge/data/sp-recovery-clock-source.json",
+      "rows": [
+        {
+          "id": "一次补发四点",
+          "kind": "tick",
+          "called_reference": true,
+          "normal_return_reference": false,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "unqualified_controller_or_native_path"
+        },
+        {
+          "id": "推进后独立暂停",
+          "kind": "tick",
+          "called_reference": false,
+          "normal_return_reference": null,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "not_called_after_unqualified_chain"
+        },
+        {
+          "id": "强制独立负回复",
+          "kind": "recover",
+          "called_reference": false,
+          "normal_return_reference": null,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "not_called_after_unqualified_chain"
+        }
+      ],
+      "normal_return_reference": false,
+      "declared_chain_complete": false,
+      "declared_complete_setter_request_count": null,
+      "final_period_raw_reference": 1073741824,
+      "final_remaining_raw_reference": 536870912,
+      "actual_sp_after": null,
+      "actual_complete_recovery": null,
+      "actual_skill_cycle": null,
+      "actual_clock": null,
+      "actual_attribute_values": null,
+      "events_scheduled": false,
+      "hotfix_equivalence_proven": false,
+      "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+    },
+    "known_full_struct_copies_count": 0,
+    "declared_readings_complete": true,
+    "declared_complete_struct_copy_count": null,
+    "actual_sp_after": null,
+    "actual_complete_recovery": null,
+    "actual_skill_cycle": null,
+    "actual_clock": null,
+    "actual_encoded_state": null,
+    "events_scheduled": false,
+    "hotfix_equivalence_proven": false,
+    "scope": "Independent SP setter source declarations only; void normal return, internal bool and complete local copy are distinct, not actual decoded SP."
+  },
+  "after": {
+    "source_valid": true,
+    "source_file": "rouge/data/sp-setter-source.json",
+    "rows": [
+      {
+        "id": "四点批量后限幅",
+        "mode": "public",
+        "called_reference": false,
+        "input_value_raw_reference": null,
+        "internal_called_reference": false,
+        "normal_return_reference": null,
+        "public_void_returns_normally_reference": null,
+        "internal_bool_return_reference": null,
+        "alive_called_reference": false,
+        "alive_normal_reference": null,
+        "max_sp_called_reference": false,
+        "max_sp_normal_reference": null,
+        "upper_raw_reference": null,
+        "clamped_value_raw_reference": null,
+        "encoder_called_reference": false,
+        "encoder_value_argument_raw_reference": null,
+        "encoder_normal_reference": null,
+        "copy_called_reference": false,
+        "full_struct_copy_completed_reference": false,
+        "struct_copy_bytes_reference": 0,
+        "declared_reading_complete_reference": true,
+        "actual_decoded_sp_after": null,
+        "actual_encoded_sp": null,
+        "status": "not_called"
+      }
+    ],
+    "clock_links": [
+      {
+        "body_id": "四点批量后限幅",
+        "action_id": "一次补发四点",
+        "phase": "tick",
+        "qualified": true,
+        "parent_setter_called_reference": false,
+        "parent_value_argument_raw_reference": null,
+        "parent_setter_normal_reference": null,
+        "public_void_normal_reference": null,
+        "normal_return_consistent_reference": null,
+        "status": "qualified_declaration_link"
+      }
+    ],
+    "clock_reference": {
+      "source_valid": true,
+      "source_file": "rouge/data/sp-recovery-clock-source.json",
+      "rows": [
+        {
+          "id": "一次补发四点",
+          "kind": "tick",
+          "called_reference": true,
+          "normal_return_reference": false,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "unqualified_controller_or_native_path"
+        },
+        {
+          "id": "推进后独立暂停",
+          "kind": "tick",
+          "called_reference": false,
+          "normal_return_reference": null,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "not_called_after_unqualified_chain"
+        },
+        {
+          "id": "强制独立负回复",
+          "kind": "recover",
+          "called_reference": false,
+          "normal_return_reference": null,
+          "period_before_raw_reference": 1073741824,
+          "remaining_before_raw_reference": 536870912,
+          "period_after_raw_reference": 1073741824,
+          "remaining_after_raw_reference": 536870912,
+          "tick": null,
+          "recovery": null,
+          "drain": null,
+          "can_recover": null,
+          "period_reset": null,
+          "status": "not_called_after_unqualified_chain"
+        }
+      ],
+      "normal_return_reference": false,
+      "declared_chain_complete": false,
+      "declared_complete_setter_request_count": null,
+      "final_period_raw_reference": 1073741824,
+      "final_remaining_raw_reference": 536870912,
+      "actual_sp_after": null,
+      "actual_complete_recovery": null,
+      "actual_skill_cycle": null,
+      "actual_clock": null,
+      "actual_attribute_values": null,
+      "events_scheduled": false,
+      "hotfix_equivalence_proven": false,
+      "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+    },
+    "known_full_struct_copies_count": 0,
+    "declared_readings_complete": true,
+    "declared_complete_struct_copy_count": 0,
+    "actual_sp_after": null,
+    "actual_complete_recovery": null,
+    "actual_skill_cycle": null,
+    "actual_clock": null,
+    "actual_encoded_state": null,
+    "events_scheduled": false,
+    "hotfix_equivalence_proven": false,
+    "scope": "Independent SP setter source declarations only; void normal return, internal bool and complete local copy are distinct, not actual decoded SP."
+  },
+  "source_sha256_after": "a16a18ab3515fa5817f947524a40379097e9e903436a8a34fa5dc4c05c90f6b9",
+  "same_input_repair_passed": true
+}

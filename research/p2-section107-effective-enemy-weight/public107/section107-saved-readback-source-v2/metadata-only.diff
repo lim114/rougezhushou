@@ -1,0 +1,135 @@
+--- sealed-Saved-v1/audit107.py
++++ compatible-Saved-v2/audit107.py
+@@ -1,6 +1,6 @@
+ """Root-only pure Saved107 audit; no project API/formatter/Qt execution.
+ 
+-Bindings become usable only after real final-runner Gold, Candidate, API replay,
++Bindings become usable only after actual legacy Gold, compatible Candidate, API replay,
+ raw exits and Root image inspection exist. Native decoding is Root-only runtime.
+ """
+ import argparse
+@@ -17,7 +17,12 @@
+ from native_evidence import assert_native_equal, read_record, source_map
+ 
+ HELPER='f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+-WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'
++GOLD_WINDOW='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'
++CANDIDATE_WINDOW='9ab0acdc117ab545386261006e341aabc1763ee679dcf3be36eae3eb032e6207'
++GOLD_RECEIPT='f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634'
++GOLD_GUARD='0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442'
++GOLD_PRIMARY='9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa'
++OLD_TEST='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'
+ ORIGINAL='0a38276dda0ee3e6640f203cc61397686b6e83c365656578b6896dc461563d00'
+ ORIGINAL_RUNNER='8fa11731de96d589f8b36ccddd9fd16f0a8c5b4551efa9974628a2d7bd282218'
+ ORIGINAL_MANIFEST='4765d0b9e0e47244b53c3dcaa32af45307f1ce7c176d798be859a9299500fa81'
+@@ -25,7 +30,7 @@
+ API_MANIFEST='7806e9e567b2ec0687ebdff1e8e9d7fc13f4250c55951863bf3ca84d8fb744c1'
+ TRANSPORT='6066dce8003d68a58ad71fc4210a9beb9495225b05b392f2d9ae57eeb9624522'
+ FACTS='c65213bc16625fed8f404e8cd1024d09c0b3e89d3c16443579a0b0f529f2090b'
+-TEST='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'
++TEST='2c5eab4be5f484ca3eaf45d19eeb1f1067661a36c42ea41297a5ad1ec22ecc51'
+ CORE='a75d9497ce34f68de787e3ba99704741f2c873c2c5fa9b5de01e6620b1f00f89'
+ OP='char_1015_aglna2'
+ TALENT='飘浮大地之上'
+@@ -58,6 +63,37 @@
+ def load(raw):
+     assert type(raw) is bytes
+     return json.loads(raw.decode('utf-8'))
++
++
++def runner_compatibility(gold_source,candidate_source,metadata):
++    """Prove only declared metadata changed; never relabel actual old Gold."""
++    assert len(gold_source)==39470 and sha(gold_source)==GOLD_WINDOW
++    assert len(candidate_source)==43210 and sha(candidate_source)==CANDIDATE_WINDOW
++    recovered=candidate_source
++    for tag,indent in (('01',''),('02','    '),('03','        '),('04','    ')):
++        begin=(indent+'# BEGIN107_META_'+tag+'\n').encode()
++        end=(indent+'# END107_META_'+tag+'\n').encode()
++        assert recovered.count(begin)==recovered.count(end)==1
++        first=recovered.index(begin);last=recovered.index(end,first)+len(end)
++        recovered=recovered[:first]+recovered[last:]
++    newer=("TEST_SHA='"+TEST+"'\n").encode()
++    older=("TEST_SHA='"+OLD_TEST+"'\n").encode()
++    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)
++    newer=b"gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA"
++    older=b"gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA"
++    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)
++    assert recovered==gold_source and sha(recovered)==GOLD_WINDOW
++    expected={'kind':'ROOT107_METADATA_ONLY_GOLD_ADMISSION_V1',
++              'Gold_runner_sha256':GOLD_WINDOW,'candidate_runner_sha256':CANDIDATE_WINDOW,
++              'legacy_Gold_receipt_sha256':GOLD_RECEIPT,
++              'legacy_Gold_source_guard_sha256':GOLD_GUARD,
++              'legacy_Gold_primary_sha256':GOLD_PRIMARY,
++              'functional_source_inverse_sha256':GOLD_WINDOW,'candidate_test_sha256':TEST,
++              'legacy_Gold_source_count':749,'candidate_source_count':750,
++              'legacy_Gold_contains_107_test':False,'Window_imports_107_test':False,
++              'old_and_new_runners_are_identical':False,'legacy_Gold_values_rewritten':False}
++    same(metadata,expected,'Actual distinct-runner admission metadata and exact Source inverse')
++    return expected
+ 
+ 
+ def remaining(value,excluded):
+@@ -182,11 +218,12 @@
+     packet=Path(__file__).resolve().parent
+     assert not out.exists() and out.parent.is_dir() and out!=root and root not in out.parents
+     assert packet!=root and root not in packet.parents
+-    assert WINDOW is not None and sha((packet/'native_evidence.py').read_bytes())==HELPER
++    assert CANDIDATE_WINDOW is not None and TEST is not None
++    assert sha((packet/'native_evidence.py').read_bytes())==HELPER
+     bpath=Path(args.bindings);assert not bpath.is_symlink()
+     braw=bpath.read_bytes();assert sha(braw)==args.bindings_sha256
+     bindings=load(braw)
+-    assert bindings['kind']=='ROOT_ACTUAL107_SAVED_ARTIFACT_BINDINGS_V1'
++    assert bindings['kind']=='ROOT_ACTUAL107_SAVED_ARTIFACT_BINDINGS_V2'
+     assert bindings['actual_runtime_ready'] is True
+     started=time.perf_counter();active={'dataset':'bindings','case':None,'record':None}
+     report={'kind':'ROOT_ACTUAL_107_PURE_SAVED_READBACK','passed':False,'workflow_complete':False,
+@@ -205,16 +242,22 @@
+             'restart_scope':'Complete actual persisted JSON versus direct RunState reload; no live-memory JSON alias claim.'}
+     current=None;additional=None
+     try:
+-        source_pins={'window_runner':WINDOW,'original_runner':ORIGINAL_RUNNER,
++        source_pins={'gold_window_runner':GOLD_WINDOW,'candidate_window_runner':CANDIDATE_WINDOW,
++                     'original_runner':ORIGINAL_RUNNER,
+                      'candidate_API_runner':API_RUNNER,'transport':TRANSPORT,'facts':FACTS,
+                      'original_manifest':ORIGINAL_MANIFEST,'candidate_API_manifest':API_MANIFEST}
+         assert sha(bound(bindings['audit_Source']))==sha(Path(__file__).read_bytes())
+-        for key,want in source_pins.items():assert sha(bound(bindings[key]))==want
++        source_raws={}
++        for key,want in source_pins.items():
++            source_raws[key]=bound(bindings[key]);assert sha(source_raws[key])==want
+         transport=load(bound(bindings['transport']));facts=load(bound(bindings['facts']))
+         original_manifest=load(bound(bindings['original_manifest']))
+         candidate_manifest=load(bound(bindings['candidate_API_manifest']))
+         for field in ('cases','previews','catalog_operator_bindings'):
+             same(candidate_manifest[field],original_manifest[field],'Both actual API probe public fixtures identical '+field)
++        assert sha(bound(bindings['gold_receipt']))==GOLD_RECEIPT
++        assert bindings['gold_guard']['sha256']==GOLD_GUARD
++        assert bindings['gold_primary']['sha256']==GOLD_PRIMARY
+         gold_guard=load(bound(bindings['gold_guard']));candidate_guard=load(bound(bindings['candidate_guard']))
+         old=gold_guard['source_sha256'];current=candidate_guard['source_sha256']
+         additional=candidate_guard['source_additional_sha256']
+@@ -318,7 +361,8 @@
+             receipt=load(bound(bindings[phase+'_receipt']))
+             assert receipt['kind']=='ROOT_ACTUAL_107_REAL_MAINWINDOW' and receipt['phase']==phase
+             assert receipt['passed'] is receipt['workflow_complete'] is True
+-            assert receipt['runner_sha256']==WINDOW and receipt['original_receipt_sha256']==ORIGINAL
++            assert receipt['runner_sha256']==(GOLD_WINDOW if phase=='gold' else CANDIDATE_WINDOW)
++            assert receipt['original_receipt_sha256']==ORIGINAL
+             assert receipt['original_raw_exit_sha256']==bindings['original_primary']['sha256']
+             assert receipt['source_before']==receipt['source_after']==(old if phase=='gold' else current)
+             assert receipt['source_guard_sha256']==bindings[phase+'_guard']['sha256']
+@@ -329,7 +373,12 @@
+             for flag in ('native_windows_verified','private_state_access','game_chat_sampling_executed','natural_OCR_producer_verified'):
+                 assert receipt[flag] is False
+             assert [r['id'] for r in receipt['rows']]==ids
+-            if phase=='candidate':assert receipt['actual_gold_receipt_sha256']==bindings['gold_receipt']['sha256']
++            if phase=='gold':assert 'Gold_runner_compatibility' not in receipt
++            else:
++                assert receipt['actual_gold_receipt_sha256']==GOLD_RECEIPT
++                report['Gold_runner_compatibility']=runner_compatibility(
++                    source_raws['gold_window_runner'],source_raws['candidate_window_runner'],
++                    receipt['Gold_runner_compatibility'])
+             directory=Path(bindings[phase+'_receipt']['path']).resolve().parent
+             assert directory!=root and root not in directory.parents
+             record_dir=directory/'records';assert not record_dir.is_symlink()

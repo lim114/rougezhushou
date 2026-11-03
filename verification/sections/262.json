@@ -1,0 +1,72 @@
+{
+  "section": 262,
+  "kind": "functional_section",
+  "title": "令S3基础/高级形态、技能状态与模组直接加值的分层面板对照",
+  "at_Beijing": "2026-10-14T06:51:41.130817+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "060250816eaf43904aa812a88e454b30a386bc48",
+  "remaining_item": "P2召唤物模组：令合成形态的数值参考缺口",
+  "new_capability": "四模式×四装备阶段独立面板对照，十技能等级/六培养端点，已证装备加值及文档同层叠加；专属控件仅令可见。",
+  "files": [
+    "rouge/ling_fusion_reference.py",
+    "rouge/data/ling-fusion-source.json",
+    "rouge/p2_supplemental_token_module_view.py",
+    "scripts/build_ling_fusion_source.py",
+    "scripts/verify_ling_fusion_window_262.py",
+    "scripts/verify_full_available.py",
+    "tests/test_ling_fusion_reference.py"
+  ],
+  "required_raw_sha256": {
+    "rouge/ling_fusion_reference.py": "a3f98f1f89223fbee61040c5ad0bbe5388add4a6fdeb14276fc3fa6b1cefd53f",
+    "rouge/data/ling-fusion-source.json": "f9d3c52526e4bf84432900935562fd91e6c5f4071c96626706967f3dab196046",
+    "rouge/p2_supplemental_token_module_view.py": "42c5ff26ff4aedd18145e2c38996faa179e533febcc193fae9fd3c033b87ddfb",
+    "scripts/build_ling_fusion_source.py": "e23a2fbfca4cbbe75f9367e26c8c6879c801873068080091728b777a03b31130",
+    "scripts/verify_ling_fusion_window_262.py": "91818451129d83caf36686db1c2def1682a0b98af18ac7d66d70fd176c4ce142",
+    "scripts/verify_full_available.py": "3a3c3c309e284a541c4af69b3c2f88812b58839e836b794804c8fa855a8b7988",
+    "tests/test_ling_fusion_reference.py": "31c9586125527e574725152bf4d02405ba511aea27906a9fedb699005cefdb8f"
+  },
+  "source_evidence": [
+    "rouge/data/ling-fusion-source.json",
+    "rouge/data/p2-supplemental-token-module-source.json"
+  ],
+  "validation": {
+    "command": ".venv/Scripts/python.exe -X utf8 -m unittest tests.test_ling_fusion_reference tests.test_p2_supplemental_token_modules tests.test_p2_supplemental_token_module_view -v",
+    "qpa": "offscreen",
+    "tests_run": 21,
+    "new_test_methods": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "source_table_hashes_verified": true,
+    "no_repeated_full_validation": true,
+    "native_dialog": {
+      "scope": "native_public_literal_dialog_only",
+      "pid": 26560,
+      "qpa": "windows",
+      "visible": true,
+      "rows": 16,
+      "hp": "7714",
+      "attack": "2472.4",
+      "private_state_read": false,
+      "game_operated": false,
+      "chat_sent": false,
+      "native_mainwindow_or_game_acceptance": false,
+      "desktop_visual_inspected": true,
+      "visual_scope": "Actual public-literal Ling dialog inspected with Windows-mcp; no game or main-window integration claim."
+    }
+  },
+  "acceptance": "必要21项通过；Windows原生公共条件对话框实际可见，16行及7714/2472.4已核对。",
+  "limitations": [
+    "Only documented formula reference, not native fusion, attachment or current-hotfix proof.",
+    "No relic/squad/other modifier composition or complete actual panel.",
+    "Independent token source endpoints; host cultivation only establishes declared skill/module gates.",
+    "No actual fusion eligibility, deployment order, position, mode switch, first-hit/end or periodic clocks.",
+    "Actual/current panels and full skill damage, HPS/DPS/cycle remain unknown.",
+    "Native changed dialog is not entire MainWindow/game/chat validation;261 historical full scope is not a new262 full run."
+  ],
+  "native_game_or_chat_verified": false,
+  "next_action": "263继续P2有来源的召唤物/计算缺口；275到期完整全量，最终280保存与验收。",
+  "next_full_validation_after": 275,
+  "passed": true
+}

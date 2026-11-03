@@ -1,0 +1,37 @@
+--- expected-old/rouge/run_state.py
++++ candidate/rouge/run_state.py
+@@ -17,6 +17,15 @@
+         try:
+             saved=json.loads(self.file.read_text(encoding='utf-8'))
+             if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):
++                raise ValueError('Invalid exploration record')
++            # Qualify only containers consumed by restart and visible state views.
++            if any(not isinstance(record,dict) for key in ('operators','relics') for record in saved[key].values()):
++                raise ValueError('Invalid exploration record')
++            if 'maps' in saved and (not isinstance(saved['maps'],dict)
++                    or any(not isinstance(graph,dict) for graph in saved['maps'].values())):
++                raise ValueError('Invalid exploration record')
++            if 'history' in saved and (not isinstance(saved['history'],list)
++                    or any(not isinstance(event,dict) for event in saved['history'])):
+                 raise ValueError('Invalid exploration record')
+             self.state.update(saved)
+             if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()
+@@ -263,6 +272,8 @@
+                     raise ValueError('强化ID或领取干员职业不符。')
+         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
+         state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
++        if isinstance(count,bool):
++            count=None;relics['count']=None
+         from .run_config import config_data,difficulty_value
+         for key,record in observed.get('config',{}).items():
+             # Reused records retain their original timestamp and never replace
+--- expected-future097-source/scripts/verify_cloud.py
++++ candidate/scripts/verify_cloud.py
+@@ -8,6 +8,7 @@
+ ROOT = Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(ROOT))
+ MODULES = (
++    "tests.test_run_state_reliability",
+     "tests.test_account_persistence",
+     "tests.test_condition_cultivation",
+     "tests.test_selected_module_source_reference",

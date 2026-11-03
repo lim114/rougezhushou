@@ -1,0 +1,34 @@
+--- original304
++++ current305
+@@ -20,7 +20,7 @@
+ 
+ ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'rouge/app.py').is_file())
+ sys.path.insert(0, str(ROOT))
+-CANONICAL = 'scripts/verify_curiosity_node_rules_window_304.py'
++CANONICAL = 'scripts/verify_curiosity_node_rules_window_304_full305.py'
+ PACKET = 'research/p3-curiosity-node-rules-304'
+ MANIFEST = PACKET + '/source-manifest.json'
+ DATA = 'rouge/data/curiosity-node-rules.json'
+@@ -96,11 +96,22 @@
+     return result
+ 
+ 
++def _fresh305_parent_pin():
++    freeze=read(ROOT/'verification/full-305/source-freeze.json')
++    if freeze.get('section')!=305 or freeze.get('root_declared')is not True:
++        raise ValueError('Actual305 declared source input required for this parent compatibility pin.')
++    expected=freeze['source_sha256']['rouge/node_catalog_view.py']
++    if sha(ROOT/'rouge/node_catalog_view.py')!=expected:
++        raise ValueError('Fresh305 parent source differs from its declared pin.')
++    return expected
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--receipt', required=True)
+     parser.add_argument('--visible-ms', type=int, default=90000)
+     args = parser.parse_args()
++    EXPECTED_SOURCE_PINS['rouge/node_catalog_view.py'] = _fresh305_parent_pin()
+     destination = Path(args.receipt).resolve()
+     if destination.exists():
+         raise FileExistsError('Preserve first actual receipt.')

@@ -1,0 +1,20 @@
+{
+  "section": 425,
+  "recorded_at_UTC": "2026-10-29T21:12:22.459540+00:00",
+  "status": "source_identified_focus_risk_not_live_game_reproduction",
+  "verified_facts": [
+    "The old game node card uses Tool and Frameless hints, without an explicit WindowDoesNotAcceptFocus hint.",
+    "The map payload rejects a frame when the game is no longer foreground.",
+    "The installed Qt6.11.2 native implementation maps WindowDoesNotAcceptFocus to WS_EX_NOACTIVATE.",
+    "Microsoft documents that this extended style prevents click activation of a top-level window."
+  ],
+  "primary_sources": [
+    "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/plugins/platforms/windows/qwindowswindow.cpp",
+    "https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles"
+  ],
+  "inference": "Allowing the game node card to activate can invalidate its own foreground-gated reading; explicitly prevent activation for this game hover card.",
+  "pending_change": "Set the no-focus hint only on the game node card, preserving the normal preview card; verify native style, pin mouse interaction and unchanged own foreground.",
+  "live_game_click_or_input_performed": false,
+  "production_patch_installed": false,
+  "native_new_checks_passed_claimed": false
+}

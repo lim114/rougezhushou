@@ -1,0 +1,73 @@
+{
+  "status": "SOURCE_BYTE_AST_ONLY_PASS_NOT_PRODUCT_RUNTIME_VERIFICATION",
+  "candidate_base_commit": "2cbc45f03f99ed4f04b9c7e2612b58542f909168",
+  "baseline": {
+    "path": "/workspace/.continuation/p2-continuous-attack-controls-091-ui-candidate/baseline/rouge/app.py",
+    "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+    "bytes": 94976,
+    "crlf": 1519
+  },
+  "candidate": {
+    "path": "/workspace/.continuation/p2-continuous-attack-controls-091-ui-candidate/candidate/rouge/app.py",
+    "sha256": "fa27d6eceaf88f8caf1bc4e994641c6d110884ee9fbf673ab7d46a355cc41143",
+    "bytes": 95400,
+    "crlf": 1522,
+    "lone_lf": 0
+  },
+  "patch": {
+    "path": "/workspace/.continuation/p2-continuous-attack-controls-091-ui-candidate/candidate-app091.patch",
+    "sha256": "76d9f041299ad54937b13c1d1911d78345bc84e317e24b71d3eb38b854e81c06",
+    "bytes": 2022
+  },
+  "exact_byte_inverse": true,
+  "exact_whole_ast_inverse": true,
+  "changed_MainWindow_methods": [
+    "make_damage_tab",
+    "update_skill_options"
+  ],
+  "unchanged_calculate_AST": true,
+  "unchanged_update_operator_AST": true,
+  "continuous_default_setter_count_old_new": [
+    1,
+    1
+  ],
+  "continuous_native_bool_serialization_count_old_new": [
+    1,
+    1
+  ],
+  "changes": [
+    {
+      "id": "ui-meaning-and-refresh",
+      "before_sha256": "7b0bd1a773511aeeaeb9084b50fe95f868ec558ec2cf0337aa81e280c8ca44fa",
+      "after_sha256": "3e7c9f59bd2ac8ecafe86bf4b7051a2d153365f92de943580b8d220b41d8ea1e",
+      "before": "        self.continuous_attacks.setChecked(True)\r\n        form.addRow('攻击回复条件',self.continuous_attacks)\r\n",
+      "after": "        self.continuous_attacks.setChecked(True)\r\n        self.continuous_attacks.setToolTip('声明估算时是否持续普攻；自然回复技能也可能通过适用的天赋或藏品使用此条件。显示此项不表示必有额外技力。未核验的技力来源仅作资料参考，未知回转保持未知。')\r\n        self.continuous_attacks.toggled.connect(lambda:self.calculate())\r\n        form.addRow('普攻回技力条件',self.continuous_attacks)\r\n"
+    },
+    {
+      "id": "implemented-owner-qualification",
+      "before_sha256": "e051d177fe92b14a4966c86ef7c7318158528514d3666b712326f2254bb11429",
+      "after_sha256": "6c1cac60a21fd297156cc34a65f20c9565771e5fca1eaef4499be962ef1899b6",
+      "before": "        healer=op in catalog()['operators'] and has_healing(op,skill)\r\n",
+      "after": "        implemented=op in catalog()['operators']\r\n        healer=implemented and has_healing(op,skill)\r\n"
+    },
+    {
+      "id": "attack-or-natural-row-visibility",
+      "before_sha256": "be990d697db229e35dc5ee6eb56837458237ace48f71581997e9f41e5a1aabcc",
+      "after_sha256": "590f9fcb3109cb019c10bf3bf607be814ec59f8a90d8b087b13ab38e5e1ef5e8",
+      "before": "                    (self.continuous_attacks,current.get('sp_type')=='INCREASE_WHEN_ATTACK'),\r\n",
+      "after": "                    (self.continuous_attacks,implemented and current.get('sp_type') in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')),\r\n"
+    }
+  ],
+  "signal_claim": "Connection text matches existing OPTIONS bool pattern; setter precedes new connection in source. No actual Qt emission, initialization, calculation-count, rendering, or exception behavior has been observed.",
+  "old_test_contract_migration": "scripts/verify_damage_ui.py:39 Attack-only predicate is migrated below to Attack/Natural at the actually selected rank. Existing implemented-owner iteration, all other assertions, and runner body remain byte-exact.",
+  "new_calls": {
+    "project_api": 0,
+    "helper": 0,
+    "formatter": 0,
+    "constructor": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "tests": 0
+  },
+  "formal_dependency": "Root full90 actual2cbc/tag is bound; independent formal review, root integration/checks and actual MainWindow acceptance remain pending"
+}

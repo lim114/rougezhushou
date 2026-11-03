@@ -1,0 +1,15 @@
+{
+  "original_failed_records": [
+    "verification/sections/467-calculator/related01/results.json",
+    "verification/sections/467-calculator/selected01/results.json",
+    "verification/sections/467-calculator/native01/window.json"
+  ],
+  "corrections": [
+    "Historical exact-report comparison now accounts only for the three deliberate phrase changes; its report structure and full numeric-state equality checks remain.",
+    "The first layout test had not selected the calculator page. It now opens the real page before checking visibility.",
+    "QCollapsible clips collapsed content to zero height instead of setting every descendant invisible. The corrected assertion checks the actual empty visible region, alongside the collapsed state.",
+    "The live app exposed a current grade outside the legacy calculator profile. An explicit archive preview now provides the declared no-squad/no-difficulty estimate while preserving run records. A public grade16 fixture checks refusal in run mode, explicit preview and restoration; current grade16 numeric support remains a separate P2 item.",
+    "The final test window uses clearly labelled archive preview; the earlier window receipt is retained as startup/UI evidence only."
+  ],
+  "all_original_records_retained": true
+}

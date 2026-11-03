@@ -1,0 +1,319 @@
+--- /dev/null
++++ b/rouge/persistence_install.py
+@@ -0,0 +1,67 @@
++"""Install a first record without replacing an entry hidden by metadata APIs."""
++import os
++
++
++def install_initial_record(temporary, destination):
++    """Publish complete bytes atomically, refusing any existing destination.
++
++    A load-time ENOENT is not authority to overwrite a later entry. Wine also
++    hides dangling host Unix links from lstat and directory enumeration. The
++    hard-link operation checks the destination directory entry atomically and
++    rejects both cases; unsupported hard links remain a reported save failure.
++    """
++    os.link(temporary, destination)
++    temporary.unlink()
++
++
++def archive_unreadable_record(source):
++    """Move the original entry to a unique same-directory name, without replacing.
++
++    Windows rename refuses existing destinations and moves the reparse object.
++    Linux renameat2 supplies the same no-replace contract for ordinary entries
++    and symbolic links. No unlink/copy fallback weakens that guarantee.
++    """
++    import ctypes
++    import errno
++    import sys
++    import uuid
++    from pathlib import Path
++
++    source = Path(source)
++    import stat
++    kind = source.lstat().st_mode
++    if not (stat.S_ISREG(kind) or stat.S_ISLNK(kind)):
++        raise OSError(errno.EINVAL, 'The original record is not a file or symbolic link')
++    archive = source.with_name(source.name + '.preserved-' + uuid.uuid4().hex)
++    if os.name == 'nt':
++        source.rename(archive)
++    elif sys.platform.startswith('linux'):
++        libc = ctypes.CDLL(None, use_errno=True)
++        try:
++            renameat2 = libc.renameat2
++        except AttributeError as error:
++            raise OSError(errno.ENOTSUP, 'Atomic no-replace archive is unavailable') from error
++        renameat2.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
++        renameat2.restype = ctypes.c_int
++        # AT_FDCWD=-100, RENAME_NOREPLACE=1; source and destination share parent.
++        if renameat2(-100, os.fsencode(source), -100, os.fsencode(archive), 1):
++            code = ctypes.get_errno()
++            raise OSError(code, os.strerror(code), str(source))
++    else:
++        raise OSError(errno.ENOTSUP, 'Atomic no-replace archive is unavailable')
++    return archive
++
++
++def preserved_original_paths(source):
++    """Find this file's retained originals for interrupted-reset notice only."""
++    from pathlib import Path
++    source = Path(source)
++    prefix = source.name + '.preserved-'
++    try:
++        entries = tuple(source.parent.iterdir())
++    except FileNotFoundError:
++        return ()
++    return tuple(sorted((entry for entry in entries
++        if entry.name.startswith(prefix)
++        and len(entry.name[len(prefix):]) == 32
++        and all(char in '0123456789abcdef' for char in entry.name[len(prefix):])), key=lambda entry: entry.name))
+--- a/rouge/account_cache.py
++++ b/rouge/account_cache.py
+@@ -136,6 +136,7 @@
+         self.load_issue = None
+         self.save_issue = None
+         self.preserve_original = False
++        self._initial_path_missing = False
+         try:
+             decoded = json.loads(self.path.read_text(encoding='utf-8'))
+         except FileNotFoundError:
+@@ -144,6 +145,7 @@
+             try:
+                 self.path.lstat()
+             except FileNotFoundError:
++                self._initial_path_missing = True
+                 return
+             except OSError:
+                 pass
+@@ -257,7 +259,12 @@
+             self.path.parent.mkdir(exist_ok=True)
+             temporary = self.path.with_suffix('.tmp')
+             temporary.write_text(text, encoding='utf-8')
+-            temporary.replace(self.path)
++            if self._initial_path_missing:
++                from .persistence_install import install_initial_record
++                install_initial_record(temporary, self.path)
++                self._initial_path_missing = False
++            else:
++                temporary.replace(self.path)
+         except OSError:
+             self.save_issue = '账号档案保存未完成'
+             self._protect()
+--- a/rouge/run_state.py
++++ b/rouge/run_state.py
+@@ -178,6 +178,9 @@
+         self.file=Path(file)
+         self.preserve_unreadable=False
+         self.save_issue=None
++        self._initial_path_missing=False
++        self.archived_original=None
++        self.preserved_originals=()
+         self.reset(save=False)
+         repair_needs_save=False
+         try:
+@@ -194,7 +197,17 @@
+             # A dangling link or unknown lstat is not a confirmed absent entry.
+             confirmed_absent=False
+             try:self.file.lstat()
+-            except FileNotFoundError:confirmed_absent=True
++            except FileNotFoundError:
++                confirmed_absent=True
++                self._initial_path_missing=True
++                try:
++                    from .persistence_install import preserved_original_paths
++                    self.preserved_originals=preserved_original_paths(self.file)
++                except OSError:
++                    confirmed_absent=False
++                if self.preserved_originals:
++                    self.preserve_unreadable=True
++                    self.state['notice']='本局路径缺失，发现原件归档；请手动开始新局后继续保存。'
+             except OSError:pass
+             if not confirmed_absent:
+                 self.preserve_unreadable=True
+@@ -232,6 +245,20 @@
+             'last_node_content':None,'node_contents':[],
+             'notice':'等待本局页面读取；同一局记忆仅在手动开始新局后清空。'}
+         if save:
++            if self.preserve_unreadable and not self.save_issue and not self._initial_path_missing:
++                try:
++                    from .persistence_install import archive_unreadable_record
++                    self.archived_original=archive_unreadable_record(self.file)
++                except OSError:
++                    self.save_issue='本局记录保存未完成（原记录归档未完成）'
++                    return
++                self._initial_path_missing=True
++                self.preserved_originals=(*self.preserved_originals,self.archived_original)
++                self.state['notice']='原不可读本局记录已归档到 '+self.archived_original.name+'；已开始新局。'
++            elif self.preserved_originals and not self.save_issue:
++                self.state['notice']='已开始新局；原件归档继续保留在同一目录。'
++            # An initially missing entry still requires no-clobber publication:
++            # Wine can hide a host link, and another process can create a file.
+             self.preserve_unreadable=False
+             self.save()
+ 
+@@ -253,7 +280,12 @@
+             self.file.parent.mkdir(exist_ok=True)
+             temporary=self.file.with_suffix('.tmp')
+             temporary.write_text(text,encoding='utf-8')
+-            temporary.replace(self.file)
++            if self._initial_path_missing:
++                from .persistence_install import install_initial_record
++                install_initial_record(temporary,self.file)
++                self._initial_path_missing=False
++            else:
++                temporary.replace(self.file)
+         except OSError:
+             self.save_issue='本局记录保存未完成'
+             return False
+--- /dev/null
++++ b/tests/test_persistence_initial_install.py
+@@ -0,0 +1,148 @@
++"""Public destination collisions and normal first-record usage."""
++import json
++from pathlib import Path
++import tempfile
++import unittest
++from unittest.mock import patch
++
++from rouge.account_cache import AccountCache
++from rouge.run_state import RunState
++
++
++class InitialInstallTests(unittest.TestCase):
++    def setUp(self):
++        folder=tempfile.TemporaryDirectory(prefix='public-initial-install-')
++        self.addCleanup(folder.cleanup)
++        self.folder=Path(folder.name)
++
++    def test_run_first_complete_save_then_existing_record_save(self):
++        path=self.folder/'run.json';run=RunState(path)
++        run.state['notice']='公开初次完整内容'
++        self.assertTrue(run.save())
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8')),run.state)
++        self.assertFalse(path.with_suffix('.tmp').exists())
++        run.state['notice']='后续内容'
++        self.assertTrue(run.save())
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8')),run.state)
++
++    def test_cache_first_complete_save_then_existing_record_save(self):
++        path=self.folder/'cache.json';cache=AccountCache(path,{})
++        self.assertTrue(cache.save());self.assertEqual(path.read_text(encoding='utf-8'),'{}')
++        self.assertFalse(path.with_suffix('.tmp').exists())
++        self.assertTrue(cache.save());self.assertFalse(cache.preserve_original)
++
++    def test_run_raced_new_destination_survives_and_failure_latches(self):
++        path=self.folder/'run.json';run=RunState(path)
++        original=b'{"public_created_after_load":true}';path.write_bytes(original)
++        self.assertFalse(run.save());self.assertEqual(path.read_bytes(),original)
++        self.assertIsNotNone(run.save_issue)
++        run.reset();self.assertFalse(run.save());self.assertEqual(path.read_bytes(),original)
++
++    def test_cache_raced_new_destination_survives_and_failure_latches(self):
++        path=self.folder/'cache.json';cache=AccountCache(path,{})
++        original=b'{"public_created_after_load":true}';path.write_bytes(original)
++        self.assertFalse(cache.save());self.assertEqual(path.read_bytes(),original)
++        self.assertTrue(cache.preserve_original);self.assertIsNotNone(cache.save_issue)
++        self.assertFalse(cache.save());self.assertEqual(path.read_bytes(),original)
++
++    def test_run_first_install_unavailable_does_not_replace_or_retry(self):
++        path=self.folder/'run.json';run=RunState(path)
++        with patch('rouge.persistence_install.os.link',side_effect=OSError('public unsupported hard links')):
++            with patch.object(Path,'replace',side_effect=AssertionError('must not fall back')):
++                self.assertFalse(run.save());run.reset();self.assertFalse(run.save())
++        self.assertFalse(path.exists());self.assertIsNotNone(run.save_issue)
++
++    def test_cache_first_install_unavailable_does_not_replace_or_retry(self):
++        path=self.folder/'cache.json';cache=AccountCache(path,{})
++        with patch('rouge.persistence_install.os.link',side_effect=OSError('public unsupported hard links')):
++            with patch.object(Path,'replace',side_effect=AssertionError('must not fall back')):
++                self.assertFalse(cache.save());self.assertFalse(cache.save())
++        self.assertFalse(path.exists());self.assertTrue(cache.preserve_original)
++
++    def test_explicit_new_run_does_not_replace_an_unloaded_new_destination(self):
++        path=self.folder/'run.json';run=RunState(path)
++        path.write_bytes(b'{"public_created_after_load":true}')
++        run.reset()
++        self.assertIsNotNone(run.save_issue);self.assertFalse(run.preserve_unreadable)
++        self.assertEqual(path.read_bytes(),b'{"public_created_after_load":true}')
++
++    def test_manual_reset_archives_damaged_original_before_creating_new_record(self):
++        path=self.folder/'run.json';original=b'{"public_damaged":'
++        path.write_bytes(original);run=RunState(path)
++        self.assertTrue(run.preserve_unreadable);run.reset()
++        self.assertEqual(run.archived_original.parent,path.parent)
++        self.assertEqual(run.archived_original.read_bytes(),original)
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8')),run.state)
++        self.assertIn(run.archived_original.name,run.state['notice'])
++
++    def test_manual_reset_retains_relative_link_text_and_target_resolution(self):
++        target=self.folder/'public-damaged-target.json';original=b'{"public_damaged":'
++        target.write_bytes(original);path=self.folder/'run.json'
++        path.symlink_to(target.name);link=path.readlink()
++        run=RunState(path);self.assertTrue(run.preserve_unreadable);run.reset()
++        self.assertIsNone(run.save_issue)
++        self.assertTrue(run.archived_original.is_symlink())
++        self.assertEqual(run.archived_original.readlink(),link)
++        self.assertEqual(run.archived_original.parent,path.parent)
++        self.assertEqual(run.archived_original.read_bytes(),original)
++        self.assertEqual(target.read_bytes(),original)
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8')),run.state)
++
++    def test_archive_destination_collision_preserves_both_records(self):
++        path=self.folder/'run.json';original=b'{"public_damaged":'
++        path.write_bytes(original);run=RunState(path)
++        archive=path.with_name(path.name+'.preserved-'+'0'*32)
++        other=b'PUBLIC EXISTING ARCHIVE';archive.write_bytes(other)
++        class PublicFixedUUID:hex='0'*32
++        with patch('uuid.uuid4',return_value=PublicFixedUUID()):run.reset()
++        self.assertEqual(path.read_bytes(),original);self.assertEqual(archive.read_bytes(),other)
++        self.assertIsNone(run.archived_original);self.assertIsNotNone(run.save_issue)
++        self.assertFalse(path.with_suffix('.tmp').exists())
++
++    def test_creation_racing_after_archive_is_preserved_and_archived_bytes_remain(self):
++        from rouge.persistence_install import archive_unreadable_record
++        path=self.folder/'run.json';original=b'{"public_damaged":'
++        path.write_bytes(original);run=RunState(path);other=b'PUBLIC RACING RECORD'
++        def raced(source):
++            result=archive_unreadable_record(source);source.write_bytes(other);return result
++        with patch('rouge.persistence_install.archive_unreadable_record',side_effect=raced):run.reset()
++        self.assertEqual(path.read_bytes(),other)
++        self.assertEqual(run.archived_original.read_bytes(),original)
++        self.assertIsNotNone(run.save_issue)
++
++    def test_failed_archive_keeps_original_and_prevents_retry_even_after_reset(self):
++        path=self.folder/'run.json';original=b'{"public_damaged":'
++        path.write_bytes(original);run=RunState(path)
++        with patch('rouge.persistence_install.archive_unreadable_record',side_effect=OSError('public failed archive')) as move:
++            run.reset();run.reset();self.assertEqual(move.call_count,1)
++        self.assertEqual(path.read_bytes(),original);self.assertIsNotNone(run.save_issue)
++        occupied=self.folder/'public-directory.json';occupied.mkdir()
++        child=occupied/'public-child';child.write_bytes(b'PUBLIC DIRECTORY CONTENTS')
++        directory_run=RunState(occupied);directory_run.reset()
++        self.assertTrue(occupied.is_dir());self.assertEqual(child.read_bytes(),b'PUBLIC DIRECTORY CONTENTS')
++        self.assertIsNone(directory_run.archived_original);self.assertIsNotNone(directory_run.save_issue)
++
++    def test_raced_dangling_link_after_missing_load_survives_first_save(self):
++        for kind in ('run','cache'):
++            with self.subTest(kind=kind):
++                path=self.folder/(kind+'-race.json');target=self.folder/(kind+'-missing.json')
++                instance=RunState(path) if kind=='run' else AccountCache(path,{})
++                path.symlink_to(target);self.assertTrue(path.is_symlink());link=path.readlink()
++                self.assertFalse(instance.save());self.assertTrue(path.is_symlink())
++                self.assertEqual(path.readlink(),link);self.assertFalse(target.exists())
++                self.assertIsNotNone(instance.save_issue)
++
++    def test_interrupted_reset_reopens_without_auto_save_and_requires_explicit_new_run(self):
++        path=self.folder/'run.json';original=b'{"public_damaged":'
++        path.write_bytes(original);run=RunState(path)
++        with patch.object(run,'save',side_effect=KeyboardInterrupt('public reset interruption')):
++            with self.assertRaises(KeyboardInterrupt):run.reset()
++        archive=run.archived_original
++        self.assertEqual(archive.read_bytes(),original);self.assertFalse(path.exists())
++        reopened=RunState(path)
++        self.assertTrue(reopened.preserve_unreadable);self.assertIn('原件归档',reopened.state['notice'])
++        self.assertEqual(reopened.preserved_originals,(archive,));self.assertFalse(reopened.save())
++        self.assertFalse(path.exists());reopened.reset()
++        self.assertIsNone(reopened.save_issue)
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8')),reopened.state)
++        self.assertEqual(archive.read_bytes(),original)

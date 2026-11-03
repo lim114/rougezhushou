@@ -1,0 +1,39 @@
+{
+  "section": 472,
+  "changed_or_new_sources": {
+    "rouge/battle_tool_readers.py": {
+      "sha256": "c54ebfbb75b85b1fe65fde5d8d026dac21d0b7c33e9a40787b01c8fa930c4b9c",
+      "bytes": 3922
+    },
+    "rouge/current_map_position.py": {
+      "sha256": "214781e1dc58d5db2cd896fa19115f0f91a312d73b44ee5ec01b9b85138bdfe9",
+      "bytes": 9589
+    },
+    "rouge/data/observed-map-symbols.json": {
+      "sha256": "ecc542bfa6fb4a2c548d2c403dc704fdbfbebabaee9988a9aa4f4c4ca8aac6e9",
+      "bytes": 22357
+    },
+    "rouge/observed_map_symbols.py": {
+      "sha256": "3743a427326d74548dd963045e284131092292141a13a6dcfc33c6774a439b98",
+      "bytes": 1056
+    },
+    "rouge/reference_copy.py": {
+      "sha256": "ea3011f845a157c299fcd454ac8df8978826c9bc70d1bbbe0cc6e231097c2059",
+      "bytes": 25283
+    },
+    "tests/test_current_map_position_319.py": {
+      "sha256": "088df8eda785756fb1d505528d3bb7ad9b2e7e4813d665604cf2f7073de323b2",
+      "bytes": 6941
+    },
+    "tests/test_current_map_position_view_319.py": {
+      "sha256": "85dae23018abbf62faa80b87c66df7d870fcb3c932e6302f380f9a6563e4213f",
+      "bytes": 6190
+    },
+    "tests/test_observed_map_symbols_472.py": {
+      "sha256": "eee83c1b9562f383d5574a8f3ad3ddc0f6ea2affada8ddbf4db0c5c3d3c56275",
+      "bytes": 5659
+    }
+  },
+  "review": "New optional source-pinned map-symbol data covers exactly eight declared first-floor configurations. Each binding includes full expected stage metadata, image identity, level key and canonical selected-geometry hash. Small loader checks deploy availability, pinned bytes and current stage metadata; owning current-map reader validates image/level/geometry once. Missing optional data retains a valid unmarked base map and changes source identity, clearing previous UI selection. Existing marker widget and action-position model consume new points unchanged. Stage isElite metadata now supplies normal/emergency captions. Exact prose replacements simplify visible-symbol overview while retaining original explanation in technical details. Previously unmarked fixture moves from n1_2 to still-unmarked n2_1, preserving all prior absence/source/pixel/invalid-cell assertions. No combat inputs, runtime CV calls, image acquisition, provider sends or new package installation.",
+  "whole_program_review_complete": false
+}

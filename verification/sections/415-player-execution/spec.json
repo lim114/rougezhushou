@@ -1,0 +1,23 @@
+{
+  "title": "藏品来源悬浮卡按池与节点分组展示",
+  "change": "按原片158秒将来源速览改为可点击的双列藏品池卡和节点卡，分别展示可核对的历史频率；详细条件与样本可展开，保留准确版本/池跳转、固定阅读及来源失效清理。",
+  "limits": "卡片表示公开资料中的所属关系，历史频率不等于当前生成权重或本局获得概率；不相加不同来源、不假定节点出现资格。",
+  "criteria": [
+    "池与节点按中文分区并可点选",
+    "重复节点的不同池保持独立",
+    "只显示可核对的历史比例与次数",
+    "缺统计显示未知且不借其它版本",
+    "固定阅读与精确跳转及清理保留"
+  ],
+  "additional_tests": [
+    "tests.test_player_item_sources_394",
+    "tests.test_player_feature_414"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_415",
+  "native": "scripts/verify_player_feature_window_415.py",
+  "unit_receipt": "verification/sections/415-player-checks/process.json",
+  "native_receipt": "verification/sections/415-player-window/window.json",
+  "native_process_receipt": "verification/sections/415-player-window-process/process.json",
+  "source_receipt": "verification/sections/415-reference.json"
+}

@@ -94,12 +94,12 @@ def has_damage(op,number):
 
 
 def has_healing(op,number):
-    return op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and number==2)
+    return op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and number==2) or (op=='char_1044_hsgma2' and number==2)
 
 
 def fee_section(scenario,bb,skill):
     op=scenario['operator'];number=scenario['skill']
-    immediate=gradual=0
+    immediate=gradual=0;unplaced_shadow=False
     if op=='char_151_myrtle':gradual=bb['value']
     elif op=='char_4228_closur':
         if number==1:
@@ -111,10 +111,12 @@ def fee_section(scenario,bb,skill):
         else:gradual=bb['cost_period']
     elif op=='char_4087_ines':
         counts=skill['hit_counts']
-        if number==1:immediate=bb['cost']
+        if number==1:immediate=bb['cost']*counts.get('淬影突袭物理攻击',0)
         elif number==2:gradual=bb['cost']*counts.get('暗夜无明递增攻速攻击',0)
         else:
-            immediate=bb['cost']*counts.get('收回影哨',0)
+            shadow_count=counts.get('收回影哨',0)
+            unplaced_shadow=shadow_count is None
+            immediate=0 if unplaced_shadow else bb['cost']*shadow_count
             gradual=bb['cost']*counts.get('技能攻击',0)
     elif op=='silverash' and number==1:immediate=bb['cost']
     elif op=='silverash' and number==3:
@@ -123,13 +125,17 @@ def fee_section(scenario,bb,skill):
     else:
         if not any(r['kind']=='skill_start_dp' for r in scenario.get('_relic_rules',[])):return None
     immediate+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='skill_start_dp')
-    total=immediate+gradual;duration=skill['duration_seconds'];cycle=skill['cycle_seconds']
+    known_total=immediate+gradual;total=None if unplaced_shadow else known_total
+    duration=skill['duration_seconds'];cycle=skill['cycle_seconds']
     rows=[metric('per_cast','单次技能回费',total,'费')]
-    if immediate:rows.append(metric('immediate','开启时立即回费',immediate,'费'))
+    if unplaced_shadow:
+        rows += [metric('known_subtotal','已排程本体/开启回费参考小计',known_total,'费'),
+                 metric('shadow_per_hit','影哨每个路径伤害事件回费参数',bb['cost'],'费')]
+    if immediate:rows.append(metric('immediate','下次攻击回费条件参考' if op=='char_4087_ines' and number==1 else '开启时立即回费',immediate,'费'))
     if gradual:rows.append(metric('gradual','持续回费合计',gradual,'费'))
-    if duration:rows.append(metric('active_rate','技能内平均回费',total/duration,'费/秒'))
+    if duration:rows.append(metric('active_rate','技能内平均回费',total/duration if total is not None else None,'费/秒'))
     if cycle:
-        rows.append(metric('cycle_rate','本轮周期平均回费',total/cycle,'费/秒'))
+        rows.append(metric('cycle_rate','本轮周期平均回费',total/cycle if total is not None else None,'费/秒'))
     elif skill.get('mode')!='deployment':
         rows.append(metric('cycle_rate','本轮周期平均回费',None,'费/秒'))
     notes=['主动技能产生的费用，未包含系统自然回费；不等于扣除部署费用后的净收益。','费用总量以完整技能为准，短观察窗口不替代它。']
@@ -139,6 +145,7 @@ def fee_section(scenario,bb,skill):
         rows.append(metric('mature_cycle_rate','成长完成后周期平均',bb['cost_add_max']/cycle if cycle else None,'费/秒'))
     if op=='char_4087_ines':
         notes.append('按当前单目标持续供靶的有效攻击/伤害事件估算；持续法术跳数不当作额外回费。其他敌人的影哨路径命中未默认加入。')
+        if unplaced_shadow:notes.append('影哨路径碰撞尚未定位；每个伤害事件回费只列参数，未确认开启时回费或完整技能回费。')
         if number==3 and scenario.get('ines_first_deployment'):
             notes.append('首次部署只放影哨后离场，此次没有伤害回费；免部署费是费用免除，不是产生费用。')
     return section('dp','费用收益',rows,notes)
@@ -182,7 +189,8 @@ def mechanism_sections(scenario,result,source,profile):
     summoned=[c for c in components if any(word in c['name'] for word in summon_words)]
     source_summons=[c for c in clauses+descriptions if any(word in c for word in summon_words)]
     if summoned or source_summons or op in ('char_328_cammou','char_1038_whitw2') or (op=='silverash' and number==3 and scenario.get('cooperative')):
-        rows=[metric('summon_damage','当前情景召唤/协同分项伤害',sum(c['total'] for c in summoned))] if summoned else []
+        rows=[metric('summon_damage','当前情景召唤/协同分项伤害',None if any(
+            'actual_total' in c and c['actual_total'] is None for c in summoned) else sum(c['total'] for c in summoned))] if summoned else []
         if op=='char_110_deepcl':
             from .summons import token_concurrent_limit
             rows[0:0]=[metric('summon_count','参与测算触手数（局外假设）',scenario.get('summon_count',1),'个'),
@@ -194,23 +202,36 @@ def mechanism_sections(scenario,result,source,profile):
             factor=result.get('relic_regeneration_multiplier',1)
             rows=[metric('per_token_rate','每只触手生命回复速度',bb['hp_recovery_per_sec']*factor,'生命/秒'),
                 metric('all_tokens_rate','所选触手合计回复速度',bb['hp_recovery_per_sec']*factor*scenario.get('summon_count',1),'生命/秒')]
+        elif any('nominal_duration_reference_seconds' in c for c in regeneration):
+            rows=[metric('nominal_regeneration','名义持续参数下生命回复条件参考',sum(c['total'] for c in regeneration),'生命'),
+                metric('window_regeneration','实际情景生命回复总量',
+                    None if any(c.get('actual_total',0) is None for c in regeneration) else sum(c['total'] for c in regeneration),'生命')]
         else:rows=[metric('window_regeneration','当前情景生命回复总量',sum(c['total'] for c in regeneration),'生命')]
-        blocks.append(section('regeneration','生命回复',rows,['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']))
+        notes=['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']
+        if op=='char_110_deepcl' and number==1:
+            notes.append('以上为所选触手持续在场且技能回复持续覆盖时的速度参考，包含本次采用的生命回复效果倍率；实际在场、回复首跳和结束尚未核验，实际回复总量未知。')
+        blocks.append(section('regeneration','生命回复',rows,notes))
     elementary=[c for c in components if c.get('damage_type') in ('elemental','buildup')]
     if elementary:
         buildup=op=='char_1042_phatm2' or (op=='char_4204_mantra' and number in (1,2))
         rows=[];notes=[]
         if buildup:
-            rows=[metric('potential_buildup','潜在损伤积累',sum(c['total'] for c in elementary if c['damage_type']=='buildup'),'损伤值'),
+            binding_unknown=any(result.get(key,{}).get('affected_damage_phases',{}).get('window',False)
+                for key in ('neural_s1_reference','neural_incoming_reference'))
+            rows=[metric('potential_buildup','潜在损伤积累',None if binding_unknown else sum(c['total'] for c in elementary if c['damage_type']=='buildup'),'损伤值'),
                 metric('bursts','当前情景损伤爆发次数',None if
                     any(result.get(key,{}).get('affected_damage_phases',{}).get('window') for key in
-                        ('neural_skill_reference','neural_bait_reference')) else
+                        ('neural_incoming_reference','neural_s1_reference','neural_skill_reference','neural_bait_reference')) else
                     sum(c['hits'] for c in elementary if c['name']=='神经损伤爆发'),'次')]
             notes.append('潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。')
         partial=bool(result.get('known_damage_subtotals'))
         rows.append(metric('elemental_damage','已建模元素伤害小计' if partial else '当前情景元素伤害',
             sum(c['total'] for c in elementary if c['damage_type']=='elemental')))
-        partial_note=('已计小计不含未排程的持续损伤及受其影响而未知的神经爆发；当前积累仅列直接来源。'
+        partial_note=('目标普通攻击次数没有事件时刻，未生成堕梦损伤事件或实际爆发序列；法伤小计独立保留。'
+                      if result.get('neural_incoming_reference') else
+                      '束缚倍率首次生效与刷新尚未核验；法伤小计不含未知的神经爆发，损伤基础参考没有套用束缚倍率。'
+                      if result.get('neural_s1_reference') else
+                      '已计小计不含未排程的持续损伤及受其影响而未知的神经爆发；当前积累仅列直接来源。'
                       if result.get('neural_skill_reference') else
                       '诱饵持续效果与受其影响的神经爆发未排程；当前积累与元素小计仅列已排程的本体来源。'
                       if result.get('neural_bait_reference') else
@@ -227,17 +248,357 @@ def mechanism_sections(scenario,result,source,profile):
     return blocks
 
 
+def current_output_breakdown_sections(result):
+    """Show existing observation fields without rebuilding totals or clocks."""
+    components=result.get('components')
+    legacy='components' not in result
+    if legacy:
+        components=[]
+        if 'hits' in result and 'per_hit' in result and 'total_damage' in result:
+            components.append({'name':'既有技能伤害字段',
+                'damage_type':result.get('damage_type','damage_reference'),
+                'hits':result['hits'],'per_hit':result['per_hit'],'total':result['total_damage']})
+        if 'hits' in result and 'per_heal' in result and 'total_healing' in result:
+            components.append({'name':'既有技能治疗字段','damage_type':'healing',
+                'hits':result['hits'],'per_hit':result['per_heal'],'total':result['total_healing']})
+    if not components:return []
+    categories={'damage':('伤害','伤害'), 'healing':('潜在治疗','治疗'),
+        'regeneration':('独立生命回复','生命'), 'buildup':('潜在损伤积累','损伤积累'),
+        'other':('其他输出字段','')}
+    labels={'physical':'物理伤害','magic':'法术伤害','true':'真实伤害',
+        'elemental':'元素伤害','weakness':'择优伤害（物理/法术）',
+        'damage_reference':'伤害（原结果未单列类型）',
+        'healing':'潜在治疗','regeneration':'独立生命回复','buildup':'潜在损伤积累'}
+    grouped={key:[] for key in categories}
+    group_notes={key:[] for key in categories}
+    for index,component in enumerate(components):
+        dtype=component.get('damage_type')
+        group=(dtype if dtype in ('healing','regeneration','buildup') else
+               'damage' if dtype in ('physical','magic','true','elemental','weakness','damage_reference') else 'other')
+        rows=grouped[group];notes=group_notes[group];unit=categories[group][1]
+        name=component.get('name') or '未命名分项'
+        prefix='component_'+str(index)+'_'
+        rows.append(metric(prefix+'type',name+' · 类型',labels.get(dtype,dtype if dtype is not None else None)))
+        count_label='期望次数/份额' if '期望' in name else '模型次数/份额'
+        rows.append(metric(prefix+'count',name+' · '+count_label,component.get('hits')))
+        amounts=component.get('event_amounts')
+        complete_amounts=(isinstance(amounts,list) and bool(amounts) and all(
+            isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value)
+            for value in amounts))
+        variable_amounts=complete_amounts and min(amounts)!=max(amounts)
+        per_label='单次量字段（事件量可变）' if variable_amounts else '单次量字段'
+        rows.append(metric(prefix+'per_hit',name+' · '+per_label,component.get('per_hit'),unit))
+        if variable_amounts:
+            rows.extend([metric(prefix+'event_mean',name+' · 已给逐事件量均值',sum(amounts)/len(amounts),unit),
+                metric(prefix+'event_min',name+' · 已给逐事件量下限',min(amounts),unit),
+                metric(prefix+'event_max',name+' · 已给逐事件量上限',max(amounts),unit)])
+            notes.append(name+'：均值和范围仅取自已有逐事件量；单次量字段照原值保留，不代表每次相同。')
+        elif isinstance(amounts,list) and any(value is None or not isinstance(value,(int,float))
+                or isinstance(value,bool) or not math.isfinite(value) for value in amounts):
+            notes.append(name+'：逐事件量含未知或不可用值，未生成均值和范围。')
+        pending='actual_total' in component and component['actual_total'] is None
+        rows.append(metric(prefix+'total',name+' · '+('条件总量参考' if pending else '分项模型总量'),
+            component.get('total'),unit))
+        if 'actual_total' in component:
+            rows.append(metric(prefix+'actual_total',name+' · 实际总量字段',component['actual_total'],unit))
+            if pending:notes.append(name+'：实际总量未知，条件总量不能补成已确认输出。')
+    blocks=[]
+    for key,(title,unit) in categories.items():
+        rows=grouped[key]
+        if not rows:continue
+        notes=['这里列当前情景返回的分项；有观察窗口时是该窗口字段，不是完整施放或本轮周期。',
+            '模型次数可表示命中、持续量或期望份额，不证明实际攻击次数；总量照原字段，不用单次量乘次数重算。',
+            '召唤、回复及元素专项表可能已汇总这些来源；本表只展开，不再相加。']
+        if legacy:notes.append('原结果未提供分项列表；这里只列已有技能字段，不生成事件、额外目标次数或类型。')
+        if key=='damage' and result.get('total_damage') is None:
+            notes.append('整体伤害仍未知；以下已有分项字段和条件参考不构成完整伤害总量。')
+        if key=='healing':
+            notes.append('潜在治疗不等于有效受疗；不反推受疗人数，也不包含独立生命回复。')
+            if result.get('total_healing') is None:notes.append('整体治疗仍未知；以下已有分项字段和条件参考不构成完整治疗总量。')
+        if key=='regeneration':notes.append('独立生命回复不并入伤害或直接治疗；是否实际生效继续按原情景和来源限制。')
+        if key=='buildup':notes.append('损伤积累不是敌人生命伤害，也不自动等于爆发次数或爆发伤害。')
+        blocks.append(section('output_breakdown_'+key,'当前情景输出分项 · '+title,rows,notes+group_notes[key]))
+    return blocks
+
+
+def chen_motion_reference_sections(scenario):
+    """Expose original motion facts, keeping them outside numeric scheduling."""
+    from .chen_motion_reference import chen_motion_reference
+    reference=chen_motion_reference(scenario)
+    if reference is None:return []
+    blocks=[]
+    for face in ('Front','Back'):
+        motions=[r for r in reference['motions'] if r['orientation']==face]
+        if not motions:continue
+        rows=[];notes=[
+            '这些是原版资源中的独立动作条目；排列便于查看，不代表实际执行顺序、循环次数或当前皮肤动作选择。',
+            '每个事件的偏移以该动作资源自身起点为0；不是技能开启后的实际命中或碰撞时刻。',
+            '原始秒数和浮点帧保留原值；30帧/秒归一化仅处理资源表示误差，不证明游戏帧取整或客户端相位。',
+            '参考只改变资料展示，不排程多事件伤害，不替换攻击模板，也不将动作长度相加作为技能持续时间。']
+        for index,motion in enumerate(motions):
+            prefix='motion_'+str(index);duration=motion['duration'];label=motion['label']
+            rows.extend([
+                metric(prefix+'_duration',label+' · 资源时长',repr(duration['seconds']),'秒（原值）'),
+                metric(prefix+'_raw_frames',label+' · 原始浮点帧',repr(duration['raw_frames_30hz']),'帧'),
+                metric(prefix+'_strict_ceil',label+' · 严格向上取整帧',duration['strict_ceil_frames_30hz'],'帧'),
+                metric(prefix+'_normalized',label+' · 归一化参考帧',duration['ceil_frames_30hz'],'帧'),
+                metric(prefix+'_events',label+' · 命名事件数量',len(motion['events']),'个')])
+            for event_index,event in enumerate(motion['events']):
+                event_prefix=prefix+'_event_'+str(event_index)
+                event_label=label+' · 第'+str(event_index+1)+'个命名事件'
+                rows.extend([
+                    metric(event_prefix+'_seconds',event_label+' · 原始偏移',repr(event['seconds']),'秒（动作内）'),
+                    metric(event_prefix+'_raw_frames',event_label+' · 原始浮点帧',repr(event['raw_frames_30hz']),'帧'),
+                    metric(event_prefix+'_strict_ceil',event_label+' · 严格向上取整帧',event['strict_ceil_frames_30hz'],'帧'),
+                    metric(event_prefix+'_normalized',event_label+' · 归一化参考偏移',event['ceil_frames_30hz'],'帧')])
+                notes.append(event_label+'名称：'+event['name']+'；原名不等于已核验的实际伤害绑定。')
+            notes.append(label+'资源动作原名：'+motion['animation']+'；来源：'+motion['source']['url']+
+                         '；资源SHA-256：'+motion['source']['sha256'])
+        rows.extend([metric('actual_damage','实际命中时刻',None,'秒'),
+                     metric('actual_end','实际技能结束时刻',None,'秒')])
+        if reference['skill']==2:
+            rows.extend([metric('slash_end','实际斩击结束时刻',None,'秒'),
+                         metric('strengthening_start','实际强化起点',None,'秒')])
+            notes.append('普攻动作仅列资源参照，未证明它用于斩击后强化；消失动作长度不等于斩击持续时间。')
+        elif reference['skill']==3:
+            rows.append(metric('wave_collision','实际剑气碰撞时刻',None,'秒'))
+            notes.append('循环动作的三个命名事件不补齐剑气碰撞、开启交接、实际循环次数或结束时刻。')
+        else:
+            notes.append('循环动作的两个命名事件仅列原始偏移，未绑定实际两段伤害或开启、结束交接。')
+        blocks.append(section('chen_motion_'+face.lower(),'陈 · 原版阶段资料 · '+
+                              {'Front':'正面','Back':'背面'}[face],rows,notes))
+    return blocks
+
+
+def reproducible_context_sections(scenario,result):
+    """Display declared conditions and already resolved targets, without validation."""
+    skill=result['estimate']['skill'];timing=scenario.get('timing',{})
+    timing=timing if isinstance(timing,dict) else {}
+    def scalar(value):
+        return value if type(value) in (int,float,str) else None
+    rows=[metric('timing_mode','计算时序口径',
+        '30帧/秒事件参考' if result.get('timing',{}).get('mode')=='frames' else '连续供靶参数参考'),
+        metric('window','本次采用的观察窗口',skill.get('window_seconds'),'秒')]
+    if 'window_seconds' in scenario:
+        raw=scalar(scenario['window_seconds'])
+        rows.append(metric('declared_window','声明的观察窗口',str(raw)+' 秒' if raw is not None else None))
+    enemy=result.get('run_resolution',{}).get('enemy')
+    if isinstance(enemy,dict):
+        stats=enemy.get('stats',{})
+        rows.extend([metric('target_source','目标属性来源','所选关卡敌人资料及已接入修正'),
+            metric('enemy_defense','目标防御参考',stats.get('def')),
+            metric('enemy_resistance','目标法抗参考',stats.get('magicResistance'))])
+    else:
+        rows.extend([metric('target_source','目标属性来源','手动情景输入参考'),
+            metric('enemy_defense','当前情景防御参考',scalar(scenario.get('enemy_defense',0))),
+            metric('enemy_resistance','当前情景法抗参考',scalar(scenario.get('enemy_resistance',0)))])
+    notes=['这里复述当前报告情景或已返回的目标资料；不改变输入、输出或时序，也不证明当前游戏面板。',
+        '手动情景字段可能已经过既有预处理；本表不额外声称保留了修正前原输入或完整实际消费记录。' ,
+        '目标生命参考不用于截断攻击；这些条件不提供实际击杀时间。']
+    if scenario.get('timing_mode','frames')=='continuous':
+        notes.append('连续模式保持既有参数参考；正供靶、移动和打断区间不在此转换为帧事件，也不据此推算空转。')
+    def shown(value):
+        if type(value) is int or type(value) is float and math.isfinite(value):
+            try:return str(value)
+            except (ValueError,OverflowError):return '未确认'
+        if type(value) is str:return value
+        return '未确认'
+    def condition_lines(options,prefix):
+        found=[]
+        for key,label in (('target_windows','敌方可获取区间'),
+                          ('movement_windows','移动区间'),('interrupt_windows','打断区间'),
+                          ('initial_target_windows','初动敌方可获取区间'),
+                          ('initial_movement_windows','初动移动区间'),
+                          ('initial_interrupt_windows','初动打断区间')):
+            if key not in options:continue
+            value=options[key]
+            if isinstance(value,list):
+                if not value:text='明确为空'
+                elif all(isinstance(pair,(list,tuple)) and len(pair)==2 for pair in value):
+                    text='；'.join('['+shown(pair[0])+', '+shown(pair[1])+') 秒' for pair in value)
+                else:text='未确认'
+            else:text='未确认'
+            found.append(prefix+label+'：'+text+'。')
+        for key,label,unit in (('target_disappears_seconds','当前目标生命周期终点','秒'),
+                ('projectile_travel_seconds','手动弹道延迟','秒'),
+                ('windup_frames','前摇预览','帧'),('recovery_frames','后摇预览','帧'),
+                ('start_delay_frames','起始延迟预览','帧'),
+                ('post_skill_lock_frames','技能结束硬直预览','帧'),
+                ('sp_lockout_extra_seconds','额外阻回预览','秒')):
+            if key in options:found.append(prefix+label+'：'+shown(options[key])+' '+unit+'。')
+        return found
+    notes.extend(condition_lines(timing,'本体声明 · '))
+    active_units={stream.get('unit') for key in ('streams','recharge_streams')
+                  for stream in result.get('timing',{}).get(key,[]) if isinstance(stream,dict)}
+    unit_scenarios=result.get('timing',{}).get('unit_scenarios',[])
+    active_units.update(record['unit'] for record in unit_scenarios)
+    units=timing.get('units',{})
+    if isinstance(units,dict):
+        tokens=catalog()['operators'][scenario['operator']].get('tokens',{})
+        for identity,options in units.items():
+            if identity not in active_units or not isinstance(options,dict):continue
+            name=tokens.get(identity,{}).get('name') or '独立单位'
+            if scenario.get('timing_mode','frames')=='continuous':
+                options={k:v for k,v in options.items() if k in ('target_windows','target_disappears_seconds')}
+            notes.extend(condition_lines(options,name+'声明 · '))
+    for record in unit_scenarios:
+        name=catalog()['operators'][scenario['operator']].get('tokens',{}).get(record['unit'],{}).get('name') or '独立单位'
+        source={'unit':'单位自身声明','owner':'继承本体声明','unspecified':'未声明，沿用既有无限生命周期参考'}[record['lifetime_source']]
+        scope={'enemy':'敌方','friendly':'友方'}[record['target_scope']]
+        note=name+'情景 · '+scope+'获取参考；目标生命周期来源：'+source+'。'
+        if note not in notes:notes.append(note)
+    if not any(key in timing for key in ('target_windows','target_disappears_seconds')):
+        notes.append('未声明敌方供靶或消失限制；沿用当前计算原有的连续供靶参考，不表示已观察到该条件。')
+    notes.append('敌方供靶不等于友方受疗资格；独立单位采用自己的已声明情景，未声明的获取/命中脚本继续未知。')
+    return [section('calculation_context','本次计算条件',rows,notes)]
+
+
+def event_clock_reference_sections(scenario,result):
+    """Keep each stored stream and its fields separate; no clock reconstruction."""
+    timing=result.get('timing',{})
+    if timing.get('mode')!='frames':return []
+    profile=catalog()['operators'][scenario['operator']]
+    tokens=catalog()['operators'][scenario['operator']].get('tokens',{})
+    blocks=[]
+    def sequence(stream,key):
+        value=stream.get(key)
+        if not isinstance(value,list) or not all(isinstance(item,(int,float)) and
+                not isinstance(item,bool) and math.isfinite(item) for item in value):return None
+        return value
+    for phase,key in (('当前情景','streams'),('本轮充能期','recharge_streams')):
+        for index,stream in enumerate(timing.get(key,[])):
+            identity=stream.get('unit')
+            name=(profile['name']+'本体' if identity==scenario['operator'] else
+                  tokens.get(identity,{}).get('name') or '独立单位')
+            scope={'enemy':'敌方获取参考','friendly':'友方获取参考'}.get(stream.get('target_scope'),'获取来源未确认')
+            rows=[metric('target_scope','获取来源',scope)]
+            for field,label,unit in (
+                    ('start_frames','攻击起始记录','帧'),('release_frames','出手记录','帧'),
+                    ('impact_frames','窗口内命中帧记录','帧'),
+                    ('times_seconds','输出时间参考记录','秒'),
+                    ('emitted_impact_frames','已释放的潜在命中帧记录','帧'),
+                    ('emitted_times_seconds','已释放的潜在命中时间记录','秒')):
+                values=sequence(stream,field)
+                rows.extend([metric(field+'_count',label+'数',len(values) if values is not None else None,'条'),
+                    metric(field+'_first',label+'首项',values[0] if values else None,unit),
+                    metric(field+'_last',label+'末项',values[-1] if values else None,unit)])
+            notes=['各条记录照既有序列保留；同单位的多条流和同帧多事件不合并、不去重，也不换算成实际攻击次数。',
+                '一条召唤物时序可供多只或零只单位的条件计算使用；记录数不证明真实在场数量或分项命中次数。',
+                '已释放的潜在命中记录可晚于观察窗口；不自动加入窗口、技能阶段或本轮周期输出。',
+                '输出时间与窗口内命中帧分别取自现有字段；部分完整施放路径的输出时间含尾段，不能据此改写窗口边界。',
+                '缺失记录保持未知，明确空序列保留零条；首末项未知不伪造零秒事件。',
+                '时刻为各自阶段的相对参考，不是游戏实测；本轮充能期不与当前情景合并成稳态时间线。']
+            if timing.get('phase_clock_unbound') or timing.get('parameter_clock_only') or timing.get('resource_and_damage_shared_clock') is False:
+                notes.append('当前技能阶段、获取/命中或资源时钟有未绑定部分；以下只展示已有局外/参数参考，实际时间和完整周期仍未知。')
+            if stream.get('known_animation') is False:
+                notes.append('前后摇资料未齐；保留原计算的延迟首击参考，不补成原生动画绑定。')
+            elif stream.get('known_animation') is not True:
+                notes.append('动作参数资格未确认；数值记录不证明动画资料齐全或原生绑定。')
+            blocks.append(section('event_clock_'+key+'_'+str(index),phase+' · '+name+' · 时序记录 '+str(index+1),rows,notes))
+    return blocks
+
+
+def output_domain_comparison_sections(scenario,result):
+    """Expose existing phase/domain totals; never subtract phases or add sources."""
+    op=scenario['operator'];number=scenario['skill'];skill=result['estimate']['skill'];blocks=[]
+    for kind,enabled,total,phase,window,cycle,average,unit in (
+            ('damage',has_damage(op,number),'total_damage','phase_damage','window_damage','cycle_damage','cycle_dps','伤害'),
+            ('healing',has_healing(op,number),'total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','治疗')):
+        if not enabled:continue
+        label='伤害' if kind=='damage' else '潜在治疗'
+        window_value=skill.get(window,result.get('total_damage') if kind=='damage' else None)
+        rows=[metric('window_seconds','观察窗口长度',skill.get('window_seconds'),'秒'),
+            metric('window_total','观察窗口'+label,window_value,unit),
+            metric('cast_total','完整本次施放'+label,skill.get(total),unit),
+            metric('duration_seconds','技能阶段长度',skill.get('duration_seconds'),'秒'),
+            metric('phase_total','技能阶段'+label,skill.get(phase),unit),
+            metric('recharge_seconds','本轮结束后充能长度',skill.get('recharge_seconds'),'秒'),
+            metric('cycle_seconds','本轮周期长度',skill.get('cycle_seconds'),'秒'),
+            metric('cycle_total','本轮周期'+label,skill.get(cycle),unit),
+            metric('cycle_average','本轮周期平均'+label,skill.get(average),unit+'/秒')]
+        subtotal=result.get('known_'+kind+'_subtotals')
+        if isinstance(subtotal,dict):
+            for key,suffix in ((window,'观察窗口'),(total,'完整施放'),(phase,'技能阶段'),(cycle,'本轮周期')):
+                if key in subtotal:rows.append(metric('known_'+key,suffix+'已计部分',subtotal[key],unit))
+        notes=['各项直接读取既有结果，未知仍未知；本表不重新结算、相加或由差值反推充能期输出。',
+            '完整施放按本次施放归属；技能阶段、观察窗口和本轮周期各有自己的截止边界。已释放尾段可使它们不同。',
+            '本轮周期使用当前技能与结束后充能的既有计算；跨多轮稳态、残留和未绑定事件没有因此得到确认。',
+            '已计部分只是受支持来源的小计，不能补成完整总量；独立生命回复、损伤积累和屏障仍采用各自口径。']
+        if kind=='healing':notes.append('潜在治疗不扣过量治疗，不等于实际有效受疗。')
+        blocks.append(section('output_domain_'+kind,label+'口径对照',rows,notes))
+    return blocks
+
+
 def build_report(scenario,result):
     op=scenario['operator'];number=scenario['skill'];p=catalog()['operators'][op]
+    if op=='char_110_deepcl' and type(scenario.get('summon_count')) is str:
+        # Combat.plan already validated this finite, nonnegative integer string.
+        scenario={**scenario,'summon_count':int(float(scenario['summon_count']))}
     source=p['skills'][number-1]['levels'][scenario.get('skill_rank',10)-1]
     bb=source['values'];estimate=result['estimate'];skill=estimate['skill']
     sections=[]
+    for reference in result.get('token_duration_references',[]):
+        state=reference['state']
+        notes=['当前培养尚未解锁结构性原理。' if state=='locked' else
+               '当前持续参数为无限；这不保证持续存活，仍可能死亡或撤退。' if state=='unlimited' else
+               '显示部署后持续参数，实际在场时间尚未确认。',
+               '无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。',
+               '实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。']
+        sections.append(section('token_duration_'+reference['token_id'],reference['token_name']+' · 持续参数参考',[
+            metric('duration','部署后持续参数',reference['duration_seconds'],'秒')],notes))
+    mei_module=result.get('mei_airborne_module_reference')
+    if mei_module:
+        mei_static=result.get('mei_module_static_reference')
+        module_notes=(mei_static['notes'] if mei_static else [
+             '仅列当前已解锁新手侦探礼包的原表条件参数；本次未确认目标是否为空中单位。',
+             '封存版本的原生特性附着路径和防御前组合层已核验；当前热更新、实际附着与空中条件未知，110%参数未计入当前伤害数值。',
+             '当前伤害与攻击时钟保留默认预览；显式选择静态条件参考后才采用所声明条件。'])
+        sections.append(section('mei_airborne_module','梅 MAR-X · 空中条件参数参考',[
+            metric('unlock_elite','模组解锁精英阶段',mei_module['unlock_elite']),
+            metric('unlock_level','模组解锁等级',mei_module['unlock_level']),
+            metric('module_level','当前模组等级',mei_module['module_level']),
+            metric('attack_scale','空中条件攻击倍率原参数',mei_module['attack_scale_parameter']*100,'%'),
+            metric('target_airborne','当前目标空中条件',mei_module['actual_target_is_airborne']),
+            metric('conditional_damage','该特性实际条件伤害',mei_module['actual_conditional_damage'])],
+            [readable_description(mei_module['trait_description'],{'atk_scale':mei_module['attack_scale_parameter']}),
+             *module_notes,
+             result['complete_definition']]))
+        if mei_static:
+            rows=[metric('motion_declaration','局外声明的当前 FLY_ONLY 条件',mei_static['target_motion_declaration'])]
+            for index,packet in enumerate(mei_static['packets']):
+                key='packet_'+str(index)+'_'
+                rows.extend([metric(key+'attack',packet['name']+' · 稳定攻击参考',packet['source_attack_reference']),
+                             metric(key+'skill_scale',packet['name']+' · 原包倍率',packet['skill_attack_scale'],'倍'),
+                             metric(key+'module_scale',packet['name']+' · 模组包倍率',packet['module_attack_scale'],'倍'),
+                             metric(key+'raw',packet['name']+' · 减防前条件量',packet['selected_raw_packet']),
+                             metric(key+'damage',packet['name']+' · 单包条件伤害',packet['per_hit_reference'])])
+                if packet['modeled_or_declared_count'] is not None:
+                    rows.extend([metric(key+'count',packet['name']+' · 既有预览次数',packet['modeled_or_declared_count'],'次'),
+                                 metric(key+'subtotal',packet['name']+' · 固定条件次数小计',packet['conditional_count_damage_reference'])])
+                if packet['motion_unknown_candidates']:
+                    rows.extend([metric(key+'not_fly',packet['name']+' · 条件不成立候选',packet['motion_unknown_candidates'][0]),
+                                 metric(key+'fly',packet['name']+' · 条件成立候选',packet['motion_unknown_candidates'][1])])
+            rows.extend([metric('static_subtotal','静态条件次数小计',mei_static['conditional_count_damage_reference']),
+                         metric('actual_total','完整实际技能伤害',None),metric('actual_motion','目标实际行动方式',None),
+                         metric('actual_hit','实际伤害发生时刻',None,'秒')])
+            sections.append(section('mei_module_static_reference','梅 MAR-X · 明确选择的静态单包条件',rows,mei_static['notes']))
     mode=skill.get('mode','ammo' if source['duration_type']=='AMMO' else 'instant' if source['duration']<=0 else 'timed')
     sections.append(section('timing','技能时序',[
         metric('initial','预计初动',skill['initial_seconds'],'秒'),
         metric('duration','持续时间',skill['duration_seconds'],'秒'),
         metric('cycle','预计回转',skill['cycle_seconds'],'秒'),
         metric('recharge','结束后充能',skill['recharge_seconds'],'秒')]))
+    shu_sp=result.get('shu_periodic_sp_reference')
+    if shu_sp:
+        sections.append(section('shu_periodic_sp','天有四时 · 周期技力待核验',[
+            metric('interval','周期间隔原参数',shu_sp['interval_seconds_parameter'],'秒'),
+            metric('sp','单次周期技力原参数',shu_sp['sp_per_pulse_parameter'],'技力'),
+            metric('natural_rate','已计自然技力回复速度',skill['sp_recovery_per_second'],'技力/秒'),
+            metric('first_tick','实际周期首跳',shu_sp['first_tick_seconds'],'秒')],
+            ['四岁编队条件由当前情景声明；原天赋培养门槛和攻击力加成保持。',
+             '4秒获得1点技力是周期原参数，不能当作每秒自然回复+0.25。',
+             '周期首跳、计时起点、重置和阻回期间归属尚未核验；未排周期事件，完整初动、充能与回转保持未知。',
+             '初始技力已足够时保留0秒就绪；敌方供靶或空观察窗口不取消这一独立友方技力来源。']))
     received=[r for r in result.get('relic_resolution',{}).get('rules',[]) if r['kind'] in ('received_sp','event_sp') and not r.get('token_only')]
     if received:
         from .sp_events import EVENT_TYPES
@@ -295,7 +656,7 @@ def build_report(scenario,result):
                 metric('interval_frames','当前攻击间隔帧数',primary['interval_frames'],'帧'),
                 metric('windup','参考前摇',primary['windup_frames'],'帧'),
                 metric('recovery','参考后摇',primary['recovery_frames'],'帧'),
-                metric('first_release','原版锚点首个出手' if multi else '窗口首个出手',primary['release_frames'][0]/30 if primary['release_frames'] else None,'秒'),
+                metric('first_release',('延迟首击情景出手' if primary.get('three_part_reference') and not primary['known_animation'] else '原版锚点首个出手' if multi else '窗口首个出手'),primary['release_frames'][0]/30 if primary['release_frames'] else None,'秒'),
                 metric('first_impact','原版锚点首个命中' if multi else '窗口首个命中/治疗',primary['impact_frames'][0]/30 if primary['impact_frames'] else None,'秒')])
             if 'fixed_impact_delay_seconds' in primary:
                 rows.append(metric('fixed_impact_delay','本体固定落地延迟',primary['fixed_impact_delay_seconds'],'秒'))
@@ -303,7 +664,11 @@ def build_report(scenario,result):
         for stream in [*timing.get('streams',[]),*timing.get('recharge_streams',[])]:
             original=stream.get('original_animation_reference')
             if original:
-                if stream.get('multi_melee_reference'):
+                if stream.get('three_part_reference'):
+                    note='明确选用三段主体候选：'+original['reference_label']+'；主体事件帧不等于首次出手；开始段门、缩放及调度恢复共同影响整条动作，实际回调/开始/结束未知。'
+                elif original.get('static_selection_verified'):
+                    note='明确选用静态绑定动作参考：'+original['reference_label']+'；默认外观及所列模式的动作选择已核验，帧数仅为动画内条件参考；当前外观、热更新、实际首击回调和结束相位未核验。'
+                elif stream.get('multi_melee_reference'):
                     note=('使用已核验的原版技能动作参考：' if stream['multi_melee_reference']['automatic_original_reference'] else
                           '明确选用原版动画参考：')+original['reference_label']+'；仅局外参考，当前皮肤、热更新与实际出手相位未核验。'
                 else:
@@ -313,7 +678,69 @@ def build_report(scenario,result):
         sections.append(section('execution','战斗时序参考',rows,[
             '前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。',
             '时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。',
-            '初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。',*reference_notes]))
+            ('技能相对窗口保留帧参考；独立技力算例不包含四岁周期来源，完整初动、结束后充能与回转未知。' if shu_sp else '初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。'),*reference_notes]))
+    seen_parts=set()
+    for stream in [*timing.get('streams',[]),*timing.get('recharge_streams',[])]:
+        parts=stream.get('three_part_reference')
+        if parts is None:continue
+        original=stream['original_animation_reference']
+        identity=(original['reference_id'],parts['cooldown_reference_seconds'])
+        if identity in seen_parts:continue
+        seen_parts.add(identity)
+        prefix='three_part_'+str(len(seen_parts))
+        rows=[metric(prefix+'_cooldown','输入攻击周期参考',parts['cooldown_reference_seconds'],'秒')]
+        for index,profile in enumerate(parts['conditional_profiles']):
+            condition='开始段门成立' if profile['first_attack_condition'] else '开始段门不成立'
+            rowkey=prefix+'_'+str(index)
+            rows.append(metric(rowkey+'_raw_total',condition+'：源段时长合计',profile['source_chain_seconds'],'秒'))
+            rows.append(metric(rowkey+'_speed',condition+'：播放速度参考',profile['playback_speed'],'倍'))
+            for part,label in (('begin','开始段'),('oneshot','主体段'),('end','结束段')):
+                rows.append(metric(rowkey+'_'+part,condition+'：缩放后'+label,profile['scaled_segment_seconds'][part],'秒'))
+            rows.append(metric(rowkey+'_chain',condition+'：缩放后动画合计',profile['animation_only_chain_seconds'],'秒'))
+            rows.append(metric(rowkey+'_event',condition+'：仅动画事件偏移',profile['animation_only_on_attack_offset_seconds'],'秒'))
+        rows.extend([metric(prefix+'_actual_callback','实际首次出手回调',None,'秒'),
+                     metric(prefix+'_actual_end','实际动作结束',None,'秒')])
+        notes=[original['reference_label'],
+            '两组数值分别以firstAttack门成立/不成立为条件，未选择实际门状态；主体帧不自动填入完整首次出手。',
+            '段时长取原件秒数与原生缩放公式；每段等待还受调度恢复相位影响，动画合计/事件偏移不能当作实际回调或结束时钟。',
+            'ThreePart配置结束段为空；能力另有结束动作键'+parts['ability_end_animation_key']+'，其实际播放/打断/结束时刻仍未知。']
+        if parts['selection']['method']=='Random':
+            notes.append('普通攻击A/B/C属于随机候选；未设概率、轮转顺序或平均时钟，明确所选候选不代表每击都会使用它。')
+        if original['overridden_by_preview']:notes.append('明确输入的前/后摇仅覆盖逐击情景预览，不改变上述原件段时长参考。')
+        if stream.get('temporary_attack_speed'):notes.append('此表按所列输入周期计算；期间变速的每次取样与实际中途重算时钟未核验。')
+        budget=parts.get('wait_budget')
+        if budget is not None:
+            wait_rows=[metric(prefix+'_grid','现有预览网格',budget['grid_fps'],'帧/秒'),
+                       metric(prefix+'_origin','模型参考起点',budget['reference_origin_frame'],'帧'),
+                       metric(prefix+'_horizon','声明计算窗口终点',budget['reference_horizon_frames'],'帧')]
+            for index,case in enumerate(budget['conditional_budgets']):
+                condition='开始段门成立' if case['first_attack_condition'] else '开始段门不成立'
+                key=prefix+'_wait_'+str(index)
+                for part,label in (('begin','开始段'),('oneshot','主体段'),('end','结束段')):
+                    segment=next(s for s in case['segments'] if s['segment']==part)
+                    wait_rows.append(metric(key+'_'+part,condition+'：'+label+'等待预算',segment['wait_ticks'],'次恢复'))
+                wait_rows.extend([metric(key+'_total',condition+'：分段等待合计',case['total_wait_ticks'],'次恢复'),
+                    metric(key+'_spent',condition+'：窗口内已消耗等待',case['spent_wait_ticks'],'次恢复'),
+                    metric(key+'_remaining',condition+'：窗口末未执行预算',case['remaining_wait_ticks'],'次恢复'),
+                    metric(key+'_discarded',condition+'：声明中断取消预算',case['discarded_wait_ticks_due_to_declared_interruption'],'次恢复'),
+                    metric(key+'_pending',condition+'：窗口末仍待等待',case['pending_wait_ticks_at_window_end'],'次恢复'),
+                    metric(key+'_complete',condition+'：窗口内等待完成',case['reference_completion_inside_window']),
+                    metric(key+'_cut',condition+'：声明中断位置',case['declared_interruption_frame'],'帧'),
+                    metric(key+'_resume',condition+'：声明中断后的重新开始候选',case['reference_resume_candidate_frame'],'帧')])
+            wait_rows.extend([metric(prefix+'_actual_delta','客户端实际步长',budget['actual_delta_play_time_seconds'],'秒'),
+                              metric(prefix+'_actual_resume','客户端实际恢复相位',budget['actual_resume_phase'])])
+            wait_notes=['以下以参考链在模型起点已开始为条件；实际取得目标/开始仍未知，不保证供靶空窗中会产生这条链。',
+                '已开始参考链的等待与通用逐击预览分列；移动声明可能改变逐击供靶，但不证明协程取消或原生状态重入。',
+                '等待采用当前源浮点重载的最近整数/中点取偶，调用时至少1次；每段分别求预算，未对合计秒数向上取整。',
+                '30Hz为本应用现有预览网格参数，客户端实际delta、调度支路和起点未知；等待完成不等于实际首击或技能结束。',
+                '只有已声明interrupt_windows在本模型中取消本次参考链；移动/目标空窗均不清除等待、不证明FSM重入，也不重开firstAttack门。',
+                '取消等待并不证明原动画或伤害事件已停止；实际回调与完整技能结束仍未知。',
+                '中断后的未执行预算已取消，不接着等待；重新开始候选只表示声明中断结束且移动区间允许新参考链，实际重启/目标获取/动作与门状态未知。',
+                '窗口边界遵守[开始帧,结束帧)：边界耗尽的等待不代表窗口内已发生回调；各段播放速度保持所列输入周期的条件。']
+            if budget['movement_windows']:wait_notes.append('所给移动窗口保留在结果中：其实际状态切换与ClearCoroutine触发缺少绑定，不自动取消已开始的等待。')
+            if budget['target_windows'] is not None:wait_notes.append('所给供靶空窗保留在结果中：短空窗可能仍停留AttackState，不能按空窗长短指定首门。')
+            sections.append(section('three_part_wait_'+str(len(seen_parts)),'三段等待与声明窗口预算',wait_rows,wait_notes))
+        sections.append(section('three_part_animation_'+str(len(seen_parts)),'三段动作条件参考',rows,notes))
     changed=[]
     base_speed=estimate['base_stats'].get('attack_speed_reference',estimate['base_stats']['attack_speed'])
     skill_speed=skill.get('skill_attack_speed_reference',skill['skill_attack_speed'])
@@ -333,14 +760,349 @@ def build_report(scenario,result):
                 rows.append(metric('active_dps','技能阶段平均 DPS',skill.get('phase_damage',skill['total_damage'])/skill['duration_seconds'],'伤害/秒'))
         window_damage=skill.get('window_damage',result['total_damage'])
         if windowed or 'window_seconds' in scenario or skill['total_damage']!=window_damage:
-            rows.append(metric('window_damage','观察窗口总伤',window_damage))
-            if skill.get('window_seconds'):
+            rows.append(metric('window_damage','情景伤害参考（含给定冲锋次数）' if result.get('charge_reference') else '观察窗口总伤',window_damage))
+            if skill.get('window_seconds') is not None:
                 rows.append(metric('window_seconds','伤害观察窗口',skill['window_seconds'],'秒'))
-                rows.append(metric('window_dps','窗口平均 DPS',
+            if skill.get('window_seconds'):
+                rows.append(metric('window_dps','情景平均伤害参考' if result.get('charge_reference') else '窗口平均 DPS',
                     window_damage/skill['window_seconds'] if window_damage is not None else None,'伤害/秒'))
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    drone=result.get('drone_trait_reference')
+    if drone:
+        params=drone['parameters']
+        sections.append(section('drone_trait','浮游单元 · 模组特性参数',[
+            metric('initial','初始攻击倍率参数',params['init_atk_scale']*100,'%'),
+            metric('increment','每层增长参数',params['delta_atk_scale']*100,'%'),
+            metric('maximum','基础倍率上限参数',params['max_atk_scale']*100,'%'),
+            metric('stacks','最大层数参数',params['max_stack_cnt'],'层')],
+            ['仅更新已有暖机参考的直接数据参数；实际独立单元时钟、重选目标重置与当前热更新仍未核验。']))
+    amiya_continuous=result.get('amiya_continuous_reference')
+    if amiya_continuous:
+        clock=amiya_continuous['parameter_clock_reference']
+        sections.append(section('amiya_continuous','术师阿米娅S1 · 受限连续时序参考',[
+            metric('per_hit','单次攻击伤害条件参考',amiya_continuous['per_hit_damage_reference']),
+            metric('window_reference','连续供靶窗口伤害参数参考',clock['window_damage']),
+            metric('cast_reference','连续供靶单次伤害参数参考',clock['total_damage']),
+            metric('recharge_reference','旧连续供靶充能参数参考',clock['recharge_seconds'],'秒'),
+            metric('natural_reference','无攻击回技力的自然充能参数参考',amiya_continuous['natural_only_recharge_seconds_reference'],'秒'),
+            metric('actual_recharge','实际结束后充能',None,'秒')],
+            ['间隔算例中的合成时刻不证明实际首击、供靶获取、命中或回技力；有限正约束下的伤害及实际回转未知。',
+             '空范围只排除当前敌人的数学来源；自然SP参数不证明没有其它游戏目标或来源。',
+             '施放后的生命周期/范围不重写原施放前初动约定；旧数值只保留条件参数，未作minlife或均匀比例裁剪。']))
+    terminal=result.get('gnosis_terminal_reference')
+    if terminal:
+        sections.append(section('gnosis_terminal','失温症 · 终结条件参考',[
+            metric('nominal_end','技能持续参数',terminal['nominal_skill_end_seconds'],'秒'),
+            metric('conditional_damage','冻结终结单次伤害条件参考',terminal['conditional_terminal_damage']),
+            metric('actual_end','实际结束当帧',None,'帧')],
+            ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
+             '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    haruka=result.get('haruka_healing_reference')
+    if haruka:
+        rows=[metric('trait_base','当前特性治疗人数参数',haruka['selected_trait_target_limit_parameter'],'名'),
+            metric('skill_add','当前技能增加人数参数',haruka['skill_target_add_parameter'],'名'),
+            metric('combined','人数相加条件参考',haruka['conditional_target_limit_reference'],'名'),
+            metric('modeled','当前预览建模人数范围',haruka['modeled_target_limit_reference'],'名'),
+            metric('declared','声明满额潜在受疗人数',haruka['declared_healing_targets'],'名'),
+            metric('actual_targets','实际同时受疗人数',None,'名')]
+        if haruka['additional_conditional_targets']:
+            external_window=result['external_event_reference']['window_reference']
+            for i,c in enumerate(external_window['conditional_components']):
+                if c['name'] not in ('护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）'):continue
+                rows.append(metric('additional_'+str(i),'观察窗口'+c['name']+'条件总量',c['total'],
+                    '治疗（最终受疗倍率前）' if c['damage_type']=='healing' else '伤害'))
+        selected=result.get('haruka_module_target_static_reference')
+        if selected:
+            body=selected['packets'][0]
+            rows += [metric('native_cap','明确选择的静态治疗人数上限',selected['selector_limit_reference'],'名'),
+                metric('body_per_hit','单名受疗治疗条件参考',body['per_recipient_heal_reference']),
+                metric('body_heal_count','出手预览受疗份数',body['modeled_recipient_heal_count'],'份'),
+                metric('body_conditional_total','观察窗口普通治疗条件小计',body['conditional_window_subtotal'])]
+            if len(selected['packets'])>1:
+                rows.append(metric('derived_conditional_total','邻接条件下治疗衍生伤害小计',selected['packets'][1]['conditional_window_subtotal']))
+            sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,selected['notes']))
+        else:sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,[
+            '普通治疗沿用既有动作参考和明确的特性人数参数；实际友方获取时刻、模组附着及当前客户端尚未核验。',
+            '特性人数与当前技能增加人数保留独立来源；人数相加只列条件参数，超出已建模范围的份额及其派生伤害不并入已计小计。']))
+    shield=result.get('shield_break_reference')
+    if shield:
+        rows=[metric('count','声明本次总破屏次数',shield['hits_requested'],'次'),
+            metric('per_hit','破屏单次法伤条件参考',shield['per_hit_damage_reference']),
+            metric('declared','给定总次数条件伤害参考',shield['declared_count_damage_reference']),
+            metric('ammo','原表弹药数量参数',shield['nominal_ammunition_parameter'],'发'),
+            metric('ammo_spent','给定破屏无补弹耗弹参考',shield['ammunition_budget_reference']['ammunition_consumed_reference'],'发'),
+            metric('ammo_left','给定破屏无补弹剩余参考',shield['ammunition_budget_reference']['ammunition_remaining_reference'],'发'),
+            metric('shield_refills','给定破屏再次屏障参考',shield['ammunition_budget_reference']['barrier_replenishments_reference'],'次'),
+            metric('manual_duration','手动结束时间条件参数',shield['manual_duration_parameter_seconds'],'秒'),
+            metric('break_times','实际破屏/爆炸时刻',None,'秒'),
+            metric('actual_end','实际结束时刻',None,'秒')]
+        sections.append(section('shield_break','协防术式 · 破屏条件来源待核验',rows,[
+            '总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。',
+            '本体与结构性原理共用补盾弹匣，初始屏障不耗弹；预算同时假定技能主buff仍生效、所属skill ability的isAffecting计数门成立，后者不能由主buff存在推导；余量为正时破屏先耗1发再获得屏障。限定无补弹与容量变化，耗尽不推定结束帧。',
+            '普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。']))
+    external=result.get('external_event_reference')
+    if external:
+        rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],
+                     '治疗' if c['damage_type']=='healing' else '伤害')
+              for i,c in enumerate(external['conditional_components'])]
+        rows += [metric('parameter_'+str(i),label,value,unit)
+                 for i,(label,value,unit) in enumerate(external['parameter_rows'])]
+        rows.append(metric('events','实际事件时刻',None,'秒'))
+        sections.append(section('external_events','独立条件来源 · 事件时钟待核验',rows,external['notes']))
+    unbound=result.get('unbound_cast_reference')
+    if unbound:
+        rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],
+                     '治疗' if c['damage_type']=='healing' else '伤害')
+              for i,c in enumerate(unbound['conditional_components'])]
+        rows += [metric('parameter_'+str(i),label,value,unit)
+                 for i,(label,value,unit) in enumerate(unbound['parameter_rows'])]
+        rows.append(metric('hits','实际命中时刻',None,'秒'))
+        sections.append(section('unbound_cast','多段技能 · 实际时钟待核验',rows,
+            unbound['notes']+['条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。',
+             '本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。']))
+    amiya_phase=result.get('amiya_phase_reference')
+    if amiya_phase:
+        isolated=amiya_phase['isolated_attack_phase_reference']
+        rows=[metric('duration','原表技能持续参数',amiya_phase['nominal_skill_duration_parameter_seconds'],'秒'),
+            metric('attack','后续攻击力条件参考',amiya_phase['strengthened_attack_reference']),
+            metric('hits','孤立攻击阶段次数参考',isolated['conditional_hits'],'次'),
+            metric('damage','孤立攻击阶段伤害参考',isolated['conditional_damage']),
+            metric('start','实际后续攻击阶段起点',None,'秒'),
+            metric('end','实际技能结束时刻',None,'秒')]
+        notes=['孤立阶段沿用既有攻击参数和情景；原表持续参数不证明开启或斩击结束后另有该段时长。',
+            '孤立攻击的相对时刻不代表技能开启后的实际命中时刻，完整输出和结束保持未知。']
+        if amiya_phase['kind']=='tactical_slashes':
+            rows.append(metric('slash_end','实际斩击结束时刻',None,'秒'))
+            title='影霄·绝影 · 斩击与后续参考'
+            notes.append('立即寻找目标不证明十次同帧命中；声明击倒只保留既有后续加攻条件参考，不推算击倒先后。')
+        else:
+            rows[0:0]=[metric('opening_damage','立即开启单击伤害条件参考',amiya_phase['opening_damage_reference']),
+                metric('opening_healing','开启伤害派生治疗条件参考',amiya_phase['opening_healing_reference'],'治疗')]
+            title='慈悲愿景 · 开启与后续参考'
+            notes.append('开启来源保留原描述立刻一次的既有参数算术，单击数额不代表实机命中证明；零观察窗口不计开启及派生治疗。')
+            notes.append('开启伤害、命中加攻和派生治疗的实际链顺序未知；完整直接治疗随后续伤害保持未知。')
+        sections.append(section('amiya_phase',title,rows,notes))
+    sections.extend(chen_motion_reference_sections(scenario))
+    chen_phase=result.get('chen_phase_reference')
+    if chen_phase and chen_phase['kind']=='post_slash_strengthening':
+        isolated=chen_phase['isolated_attack_phase_reference']
+        sections.append(section('chen_strengthening','绝影 · 孤立强化阶段参考',[
+            metric('duration','斩击后强化持续参数',chen_phase['strengthening_duration_parameter_seconds'],'秒'),
+            metric('attack','强化攻击力参考',chen_phase['strengthened_attack_reference']),
+            metric('hits','孤立强化阶段攻击次数参考',isolated['conditional_hits'],'次'),
+            metric('damage','孤立强化阶段伤害参考',isolated['conditional_damage']),
+            metric('slash_end','实际斩击结束时刻',None,'秒'),
+            metric('start','实际强化起点',None,'秒')],
+            ['孤立阶段沿用既有普通攻击参考；其相对时刻不代表技能开启后的绝对命中时刻。',
+             '6秒参数不包括未绑定的斩击阶段，不能证明完整技能结束、结束后充能或本轮周期。']))
+    if chen_phase and chen_phase['kind']=='swordwave':
+        wave=chen_phase['conditional_components'][0]
+        sections.append(section('chen_swordwave','天喟 · 剑气碰撞待核验',[
+            metric('hp','声明目标当前生命',chen_phase['declared_current_hp'],'生命'),
+            metric('ratio','当前生命伤害比例参数',chen_phase['hp_ratio_parameter']*100,'%'),
+            metric('minimum','攻击力保底倍率参数',chen_phase['minimum_attack_scale_parameter'],'倍'),
+            metric('damage','剑气单次伤害条件参考',wave['per_hit']),
+            metric('body_duration','本体技能持续参数',chen_phase['body_duration_parameter_seconds'],'秒'),
+            metric('collision','实际剑气碰撞时刻',None,'秒')],
+            ['剑气取声明当前生命比例与攻击力保底的较大值；实际碰撞时生命、路径和独立时钟尚未绑定。',
+             '已建模本体三连保留原有时钟小计；完整窗口、阶段和周期伤害不合入未排程剑气。',
+             '本体供靶或打断区间不证明剑气路径覆盖；零窗口或当前目标0秒生命周期没有对它的实际输出。']))
+    sbell=result.get('sbell_instant_reference')
+    if sbell:
+        sections.append(section('sbell_instant','铃音吹雪 · 立即来源与结束待核验',[
+            metric('per_hit','立即伤害单次条件参考',sbell['per_hit_damage_reference']),
+            metric('scale','立即伤害倍率参数',sbell['attack_scale_parameter'],'倍'),
+            metric('charges','可充能次数参数',sbell['charge_count_parameter'],'次'),
+            metric('end','实际技能结束时刻',None,'秒')],
+            ['原描述立即伤害保留既有参数来源；零观察窗口没有伤害，正观察窗口不被0秒结束参考覆盖。',
+             '原有结束/回转算术另存参数参考，实际结束、阻回和多充能链尚未绑定；经过伤害独立列条件来源。']))
+    snow=result.get('snow_field_reference')
+    if snow:
+        sections.append(section('snow_field','积雪场地 · 覆盖与首跳待核验',[
+            metric('per_tick','每次积雪跳伤条件参考',snow['per_tick_damage_reference']),
+            metric('interval','跳伤间隔参数',snow['tick_interval_parameter_seconds'],'秒'),
+            metric('coverage','声明积雪覆盖比例',snow['declared_coverage_fraction']*100,'%'),
+            metric('ticks','实际积雪跳伤时刻',None,'秒')],
+            ['目标条件：'+snow['target_condition_reference']+'。',
+             '本体攻击范围不代表积雪场地范围；覆盖比例不确定首跳或覆盖区间。无限技能没有固定完整总伤，技能后雪的生命周期未知。']))
+    next_heal=result.get('next_attack_healing_reference')
+    if next_heal:
+        sections.append(section('next_attack_healing','下次攻击治疗 · 获取与结束待核验',[
+            metric('per_heal','单名友方治疗条件参考',next_heal['per_heal_reference'],'生命'),
+            metric('recipients','单次治疗目标上限',next_heal['recipient_limit'],'名'),
+            metric('charges','可充能次数参数',next_heal['charge_count_parameter'],'次'),
+            metric('acquisition','实际友方治疗时刻',None,'秒')],
+            ['友方条件：'+next_heal['recipient_condition_reference']+'；符合条件的受疗人数采用情景输入。',
+             '敌方供靶区间不代表友方受疗资格；零窗口/零受疗目标不生成治疗。获取、阈值判断、结束和多充能链未核验。']))
+    liftoff=result.get('aglna_liftoff_reference')
+    if liftoff:
+        sections.append(section('aglna_liftoff','重力自定义 · 起飞阶段待核验',[
+            metric('chant','吟唱时长参数参考',liftoff['chant_duration_parameter_seconds'],'秒'),
+            metric('duration_parameter','原始技能持续参数',liftoff['nominal_skill_duration_parameter_seconds'],'秒'),
+            metric('conditional_damage','已有孤立攻击阶段条件伤害参考',liftoff['cast_attack_phase_reference']['conditional_damage']),
+            metric('takeoff','实际起飞时刻',None,'秒')],
+            ['观察窗口按给定长度保留，不因扣除后回加chant参数变长。',
+             '保留旧攻击阶段参数参考，不将孤立阶段事件当作实际开启后的命中时刻；起飞、循环和结束绑定未知。']))
+    manual_close=result.get('manual_close_reference')
+    if manual_close:
+        sections.append(section('manual_close','地狱变相 · 关闭尾段待核验',[
+            metric('declared_terminal','指定尾段时长参考',manual_close['declared_terminal_seconds'],'秒'),
+            metric('terminal_limit','原始尾段时长参数',manual_close['terminal_limit_parameter_seconds'],'秒'),
+            metric('four_hit','单次四连伤害条件参考',manual_close['four_hit_attack_damage_reference']),
+            metric('active_reference','未指定关闭时刻的原有技能来源参考',manual_close['active_body_damage_reference']),
+            metric('close_time','实际主动关闭时刻',None,'秒')],
+            ['尾段时长不等于关闭时刻，不从开启时刻重复排四连，也不扩长给定观察窗口。',
+             '关闭决定前后阶段有效攻击，转换绑定及实际时钟未知；两阶段参数不能当作完整总伤。']))
+    ines_dot=result.get('ines_dot_reference')
+    if ines_dot:
+        sections.append(section('ines_dot','淬影突袭 · 持续伤害待核验',[
+            metric('per_second','每秒伤害条件参考',ines_dot['per_second_damage_reference']),
+            metric('duration','持续时间参数',ines_dot['duration_parameter_seconds'],'秒'),
+            metric('first_tick','实际首跳',None,'秒'),
+            metric('ticks','实际跳数',None,'次')],
+            ['下次攻击命中是持续伤害必要来源；无有效出手参考时不生成持续伤害。',
+             '3秒和每秒伤害参数不证明首跳、刷新或边界，不生成3个假定跳伤；物理攻击参考小计保留。']))
+    mei=result.get('mei_s1_reference')
+    if mei:
+        clock=mei['parameter_clock_reference']
+        sections.append(section('mei_s1','麻痹弹 · 下次攻击与结束待核验',[
+            metric('per_hit','单次物理伤害条件参考',mei['per_hit_damage_reference']),
+            metric('sluggish','停顿持续参数',mei['sluggish_duration_parameter_seconds'],'秒'),
+            metric('parameter_initial','常规动作算例初动',clock['initial_seconds'],'秒'),
+            metric('parameter_cycle','常规动作算例回转',clock['cycle_seconds'],'秒'),
+            metric('actual_end','实际技能结束',None,'秒')],
+            ['观察窗口保持声明值；下次攻击可等待后续有效供靶，只保留一次出手参考。',
+             '常规动作与手动时序的充能结果仅作参数算例；实际S1动作绑定、结束/阻回与完整周期未知。']))
+    mizuki=result.get('mizuki_s1_reference')
+    if mizuki:
+        sections.append(section('mizuki_s1','唤醒 · 下次攻击与结束待核验',[
+            metric('physical','单次物理伤害条件参考',mizuki['physical_per_hit_reference']),
+            metric('arts','单次额外法术条件参考',mizuki['arts_per_hit_reference']),
+            metric('actual_end','实际技能结束',None,'秒')],
+            ['有效出手获取仅用已有常规参考；零窗口、无目标或全程打断不生成技能来源。',
+             '下次攻击不当作开启瞬间命中；当前动作绑定、结束/阻回与完整周期未核验。']))
+    mizuki_amb_y=result.get('mizuki_amb_y_reference')
+    if mizuki_amb_y:
+        sections.append(section('mizuki_amb_y','水月AMB-Y · 天赋与回复待核验',[
+            metric('first_talent','原版第一天赋单次法术条件参考',mizuki_amb_y['original_first_talent']['per_hit_damage_reference']),
+            metric('extra_recovery','模组实际额外回复',mizuki_amb_y['actual_extra_healing'])],
+            ['原版第一天赋参数保留条件参考；隐藏能力是否附着及与原天赋并存未核验，完整伤害未知。',
+             '每击杀回复描述只保留来源；实际额外回复与触发时钟未知，未排治疗事件。']))
+    gnosis_module=result.get('gnosis_isw_a_reference')
+    if gnosis_module:
+        sections.append(section('gnosis_isw_a','灵知ISW-A · 天赋与持续法术待核验',[
+            metric('dot_per_tick','每跳法术伤害条件参考',gnosis_module['per_tick_damage_reference']),
+            metric('dot_scale','每跳攻击倍率参数',gnosis_module['dot_parameters']['atk_scale']*100,'%'),
+            metric('dot_interval','持续法术间隔参数',gnosis_module['dot_parameters']['interval'],'秒'),
+            metric('dot_count','实际持续法术跳数',gnosis_module['actual_tick_count'],'次')],
+            [readable_description(gnosis_module['trait_description'],gnosis_module['dot_parameters']),
+             '原版坚冰保留条件参考；模组能力与原天赋的实际并存、隐藏附着及增长/重置顺序未核验。',
+             '自身在场及寒冷/冻结只列原描述条件；首跳、攻击快照、状态覆盖和技能后生命周期未知，未排持续法术事件。',
+             '初始未寒冷不证明后续不会寒冷；普通攻击附加1秒寒冷参数不证明持续法术时钟。']))
+    gnosis=result.get('gnosis_s1_reference')
+    if gnosis:
+        sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
+            metric('per_hit','每段伤害条件参考',gnosis['per_hit_damage_reference']),
+            metric('two_hits','两段合计条件参考',gnosis['two_hit_damage_reference']),
+            metric('gap','实际两段间隔',None,'秒')],
+            ['没有有效出手参考时不生成两段伤害；两段的实际技能绑定、间隔和结束相位未核验。',
+             '不把原版两事件默认当同刻命中，不从普通攻击结束推导完整周期。']))
+    drone_lifecycle=result.get('drone_lifecycle_reference')
+    if drone_lifecycle:
+        sections.append(section('drone_aura','狼群光环 · 覆盖与跳伤待核验',[
+            metric('per_tick','单次跳伤条件参考',drone_lifecycle['aura_per_tick_damage_reference']),
+            metric('interval','每秒伤害描述间隔',drone_lifecycle['aura_interval_description_seconds'],'秒'),
+            metric('first_tick','实际首跳',None,'秒'),
+            metric('tick_count','实际跳伤次数',None,'次')],
+            ['光环围绕全场追敌的浮游单元且不叠加；本体攻击范围没有目标不证明光环无覆盖。',
+             '单元位置、首跳与边界未知时不按技能时长生成满覆盖跳伤；零窗口或目标立即消失不产生来源。']))
+        if 'unbound_attack_times_parameter' in drone_lifecycle:
+            sections.append(section('drone_arrival','特殊浮游单元 · 独立攻击待核验',[
+                metric('initial','初始倍率单次伤害条件参考',drone_lifecycle['drone_initial_per_hit_reference']),
+                metric('unbound_parameter','attack@times原始参数（含义未绑定）',drone_lifecycle['unbound_attack_times_parameter']),
+                metric('arrival','实际到达时间',None,'秒'),
+                metric('hits','同目标实际命中计数',None,'次')],
+                ['S3单元全场追敌，不能用本体范围或被抑制的本体事件生成独立命中与暖机。',
+                 '到达、重选目标、暖机及技能结束返回后的连续性未核验；本体攻击参考小计保留。']))
+    summon_routes=result.get('wisdel_summon_qualification_reference')
+    if summon_routes:
+        talent=summon_routes['talent_route'];route=summon_routes['skill_route']
+        status=lambda path:'已达原表培养门槛' if path['cultivation_qualified'] else '未达原表培养门槛'
+        level_source=route['selected_level_source']
+        skill_text=(readable_description(level_source['description'],level_source['values']) if level_source else
+                    '…'.join(route['original_common_fragments']))
+        sections.append(section('wisdel_summon_qualification','魂灵之影 · 本体召唤途径培养资料',[
+            metric('talent_qualification',talent['name']+' · 精二1级门槛',status(talent)),
+            metric('s3_qualification','第三技能 · 精二1级门槛',status(route)),
+            metric('s3_selected','当前是否选中第三技能','是' if route['currently_selected'] else '否')],
+            ['第二天赋原文：'+readable_description(talent['description'],{}),
+             ('当前第三技能原文：' if level_source else '第三技能各级原文共通部分（省略数量）：')+skill_text,
+             '以上仅列固定原表第二天赋与第三技能两条本体途径的培养资格，不表示实际召唤、当前存在或已完成施放。',
+             '魂灵数量与施放次数仍是窗口来源声明，未确定其来源归属；本资料不涵盖模组或藏品可能附着的全部途径。',
+             '实际来源、存活和施放时钟仍待核验；未改变指定次数的条件参考。']))
+    wisdel=result.get('wisdel_secondary_reference')
+    if wisdel:
+        sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[
+            metric('probability','单次判定概率描述参数',wisdel['described_single_check_probability']*100,'%'),
+            metric('explosion','单次残影爆炸条件参考',wisdel['explosion_per_hit_reference']),
+            metric('expected_count','实际爆炸期望次数',None,'次'),
+            metric('secondary_clock','余震命中时间',None,'秒')]+([
+                metric('ghost_count','指定魂灵之影施放次数参考',wisdel['ghost_casts_requested'],'次'),
+                metric('ghost_per_cast','魂灵之影单次条件伤害',wisdel['ghost_per_cast_damage_reference']),
+                metric('ghost_declared_damage','指定次数条件伤害参考',wisdel['ghost_declared_count_damage_reference']),
+                metric('ghost_times','魂灵之影施放时刻',None,'秒')] if wisdel.get('ghost_casts_requested') else []),
+            ['没有有效出手参考时不生成技能来源；出手参考不证明余震或残影实际命中。',
+             '随机独立性、残影刷新/消耗顺序未核验，不套用多次独立判定公式；S1完整结束与周期未知。',
+             '指定魂灵施放次数只列窗口条件参考，不证明完整施放或周期归属，不在两个阶段重复计入。']))
+    module_reference=result.get('mechanist_module_reference')
+    if module_reference:
+        rows=[]
+        for index,packet in enumerate(module_reference['packets']):
+            key='packet_'+str(index)+'_'
+            rows.extend([metric(key+'attack',packet['name']+' · 稳定攻击参考',packet['source_attack_reference']),
+                         metric(key+'skill_scale',packet['name']+' · 原包倍率',packet['skill_attack_scale'],'倍'),
+                         metric(key+'module_scale',packet['name']+' · 模组包倍率',packet['module_attack_scale'],'倍'),
+                         metric(key+'raw',packet['name']+' · 减伤前条件量',packet['selected_raw_packet']),
+                         metric(key+'damage',packet['name']+' · 单包条件伤害',packet['per_hit_reference'])])
+            if packet['modeled_or_declared_count'] is not None:
+                rows.append(metric(key+'count',packet['name']+' · 既有预览/声明次数',packet['modeled_or_declared_count'],'次'))
+                rows.append(metric(key+'subtotal',packet['name']+' · 固定条件次数小计',packet['conditional_count_damage_reference']))
+            if packet['blocker_unknown_candidates']:
+                rows.extend([metric(key+'unblocked',packet['name']+' · 未满足阻挡条件的候选',packet['blocker_unknown_candidates'][0]),
+                             metric(key+'blocked',packet['name']+' · 满足阻挡条件的候选',packet['blocker_unknown_candidates'][1])])
+        rows.extend([metric('static_subtotal','静态条件次数小计',module_reference['conditional_count_damage_reference']),
+                     metric('static_window','既有预览窗口条件小计',module_reference['modeled_window_damage_reference']),
+                     metric('actual_total','完整实际技能伤害',None),metric('collision','实际冲锋碰撞时刻',None,'秒')])
+        sections.append(section('mechanist_module_reference','机械师模组 · 明确选择的静态单包条件',rows,module_reference['notes']))
+    charge=result.get('charge_reference')
+    if charge:
+        sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[
+            metric('hits','指定情景命中次数',charge['hits_requested'],'次'),
+            metric('per_hit','每次冲锋伤害参考',charge['per_hit_damage']),
+            metric('declared_damage','给定次数伤害参考',charge['declared_count_damage']),
+            metric('collision','冲锋碰撞时刻',None,'秒')],
+            ['次数参考不证明碰撞时间或完整施放次数；技能阶段和周期总伤未知。',
+             '本体0.8秒落地延迟不用于冲锋。']))
+    incoming=result.get('neural_incoming_reference')
+    if incoming:
+        sections.append(section('neural_incoming','堕梦 · 目标攻击时间待确认',[
+            metric('attacks','指定目标普通攻击次数',incoming['attacks_requested'],'次'),
+            metric('buildup','每次普通攻击损伤参数',incoming['buildup_per_attack'],'损伤值'),
+            metric('first_attack','目标首个普通攻击时刻',None,'秒')],
+            ['次数不确定攻击时刻，不按技能时长或观察窗口均匀分配。',
+             '缺少事件时刻时，损伤积累、爆发序列和受影响的完整总伤未知；保留已排程法伤小计。']))
+    binding=result.get('neural_s1_reference')
+    if binding:
+        sections.append(section('neural_s1','暗夜回声 · 束缚倍率待核验',[
+            metric('direct_ratio','附带损伤攻击力比例',binding['direct_buildup_ratio']*100,'%'),
+            metric('direct_raw','单段未计束缚倍率的损伤基础参考',binding['direct_buildup_raw'],'损伤值'),
+            metric('binding_multiplier','束缚期间神经损伤倍率参数',binding['binding_multiplier'],'倍'),
+            metric('binding_duration','束缚持续时间参数',binding['binding_duration_seconds'],'秒')],
+            ['倍率只作用于该次束缚期间；首次生效、黑板初始化与刷新顺序尚未核验。',
+             '参数和未计倍率的基础参考不等于当前目标实际积累；受影响的爆发次数与完整总伤未知。',
+             '已计法伤小计沿用原版两段动作参考，不包含未知的神经爆发。']))
     neural_skill=result.get('neural_skill_reference')
     if neural_skill:
         sections.append(section('neural_skill','空剧场 · 持续损伤待核验',[
@@ -381,15 +1143,31 @@ def build_report(scenario,result):
         sections.extend(river_reference_sections(lifecycle))
     subtotals=result.get('known_damage_subtotals')
     if subtotals:
+        generic_note='这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
+        river_note='这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
+        subtotal_notes=['这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
+            if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
+            if bait_reference else generic_note
+            if amiya_continuous or wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') or binding or incoming else
+            river_note if neural_reference else generic_note]
+        if binding:
+            subtotal_notes.append('暗夜回声的束缚倍率首次生效与刷新顺序尚未核验；小计不含受其影响的未知神经爆发。')
+        if incoming:
+            subtotal_notes.append('堕梦的目标普通攻击次数没有事件时刻；小计不含受其影响的未知神经爆发。')
+        if neural_reference and subtotal_notes[0]!=river_note:
+            subtotal_notes.append(river_note)
         sections.append(section('known_damage_subtotals','已建模伤害小计',[
             metric('cast','单次技能已计伤害小计',subtotals['total_damage']),
             metric('window','观察窗口已计伤害小计',subtotals['window_damage']),
             metric('cycle','本轮周期已计伤害小计',subtotals['cycle_damage']),
-            metric('cycle_dps','已计部分本轮周期 DPS',subtotals['cycle_dps'],'伤害/秒')],
-            ['这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
-             if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
-             if bait_reference else
-             '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
+            metric('cycle_dps','已计部分本轮周期 DPS',subtotals['cycle_dps'],'伤害/秒')],subtotal_notes))
+    healing_subtotals=result.get('known_healing_subtotals')
+    if healing_subtotals:
+        sections.append(section('known_healing_subtotals','已建模治疗小计',[
+            metric('cast','单次技能已计治疗小计',healing_subtotals['total_healing']),
+            metric('window','观察窗口已计治疗小计',healing_subtotals['window_healing']),
+            metric('cycle','本轮周期已计治疗小计',healing_subtotals['cycle_healing'])],
+            ['只含已保留的本体治疗参考，不含未定位的独立治疗来源，不能当作完整治疗。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']
         if not windowed:
@@ -398,8 +1176,10 @@ def build_report(scenario,result):
                 rows.append(metric('active_hps','技能阶段平均 HPS',skill.get('phase_healing',skill['total_healing'])/skill['duration_seconds'],'治疗/秒'))
         if windowed or 'window_seconds' in scenario or window_healing!=skill['total_healing']:
             rows.append(metric('window_healing','观察窗口治疗',window_healing))
+            if skill.get('window_seconds') is not None:
+                rows.append(metric('window_seconds','治疗观察窗口',skill['window_seconds'],'秒'))
             if skill.get('window_seconds'):
-                rows.append(metric('window_hps','窗口平均 HPS',window_healing/skill['window_seconds'],'治疗/秒'))
+                rows.append(metric('window_hps','窗口平均 HPS',window_healing/skill['window_seconds'] if window_healing is not None else None,'治疗/秒'))
         if not nonrepeat:rows.append(metric('hps','本轮周期 HPS',skill['cycle_hps'],'治疗/秒'))
         sections.append(section('healing','治疗输出',rows,['满额潜在治疗，未扣过量治疗；生命回复和屏障单独列出。']))
     fee=fee_section(scenario,bb,skill)
@@ -506,8 +1286,10 @@ def build_report(scenario,result):
         if protection:sections.append(protection)
         sources='及'.join(token.get('modifier_sources',['藏品']))
         module=token.get('module_reference')
+        cost_module=token.get('module_cost_reference')
         notes=['使用独立召唤物档案与适用的'+sources+'；不继承召唤师信赖或职业加成，'+
                ('已覆盖深海色SUM-Y的费用、持有/在场上限及生命叠加；未覆盖其他召唤物模组。' if module else
+                '已覆盖望TRP-X的棋子固定费用修正；额外部署数、特殊天赋与实际在场数量仍未核验。' if cost_module else
                 '未覆盖召唤物模组与特殊天赋修正。')]
         sections.append(section('relic_token_'+token['id'],token['name']+' · '+sources+'属性参考',[
             metric('hp','生命',token['hp']),metric('attack','攻击',token['attack']),
@@ -529,6 +1311,11 @@ def build_report(scenario,result):
                     metric('module_only_hp','仅模组的生命参考',module['module_only_hp']),
                     metric('other_sources_only_hp','不含模组的其他来源生命参考',module['other_sources_only_hp'])])
                 sections[-1]['notes'].append('模组与藏品/分队生命的叠加层尚未核验：复合生命及依赖该生命的回复未知；上述两个单项不可自行相加或相乘。已确认伤害与固定生命回复不受影响。')
+        if cost_module:
+            sections[-1]['metrics'].extend([
+                metric('module_stage','装备模组阶段',cost_module['module_level'],'级'),
+                metric('module_cost_add','模组棋子费用修正',cost_module['cost_add'],'费')])
+            sections[-1]['notes'].append('仅修正已解锁模组对应棋子的培养费用参考；不扩大棋子数量、不推断库存、地块或真实部署。')
         if 'regeneration_rate' in token:
             sections[-1]['metrics'].append(metric('regeneration_rate','藏品常态生命回复',token['regeneration_rate'],'生命/秒'))
     incoming=[r for r in features if r['kind']=='incoming_element_resistance']
@@ -625,18 +1412,92 @@ def build_report(scenario,result):
     if environment.get('squad') or environment.get('difficulty'):
         notes=list(environment.get('notes',[]))+list(environment.get('pending',[]))
         difficulty=environment.get('difficulty')
-        if difficulty:notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+difficulty.get('source','明确提供的计算情景'))
+        if difficulty:
+            source=difficulty.get('source','明确提供的计算情景')
+            if not isinstance(source,str):source='未确认（来源字段不是文本）'
+            notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+source)
         labels={'attack_pct':'分队攻击加成','hp_pct':'分队生命加成','defense_pct':'分队防御加成'}
         rows=[metric(r['kind'],labels[r['kind']],r['value']*100,'%') for r in environment.get('applied',[]) if r['kind'] in labels]
         sections.append(section('run_environment','本局配置与修正',rows,notes))
-    return {'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},
+    squad_reference=environment.get('squad_unlock_reference')
+    if squad_reference:
+        notes=['档案解锁条件：'+squad_reference['unlock_condition_reference']]
+        technology=squad_reference['technology_node_reference']
+        if technology:
+            notes.append('对应科技资料：'+technology['name'])
+            gate=technology['gate_reference']
+            if gate:notes.append('科技生效门槛资料：'+gate['enable_description_reference'])
+        notes.append('这里只列条件资料；账户解锁与条件实际激活未知，不据此切换分队版本或追加效果。当前明确确认的本局效果按原情景计算。')
+        sections.append(section('squad_unlock_reference','强化分队 · 条件资料',[
+            metric('account_unlock','账户解锁状态',None),
+            metric('activation','解锁条件实际激活',None)],notes))
+    susuro=result.get('susuro_module_healing_reference')
+    if susuro:
+        qualified=susuro['qualified']
+        sections.append(section('susuro_module_healing','苏苏洛模组 · 受疗者生命条件',[
+            metric('recipient_ratio','声明受疗者生命比例',susuro['recipient_hp_ratio'],''),
+            metric('qualified','基包条件判断','未知' if qualified is None else '符合' if qualified else '不符合'),
+            metric('healing_factor','直接治疗情景倍率',susuro['factor'],'倍'),
+            metric('regen_factor','自然生命回复额外倍率',1,'倍'),
+            metric('actual_hp_trajectory','实际受疗者血量变化','未知'),
+            metric('native_tolerance','原生比较容差',susuro['epsilon_ratio_reference'],'生命比例')],
+            ['此输入属于受疗者，与苏苏洛自身生命、缺失生命及敌人血量无关；未指定时不默认满血或低血。',
+             '基包LE按Q32.32原值与阈值加42950原始单位比较：恰好50%符合，容差内稍高于50%也可能符合；当前热更新未核验。',
+             '15%为治疗输出层增强，与低费受疗及三花受疗因子分别作用；不增强自然生命回复。固定比例情景不证明实际友方获取、覆盖、血量轨迹或治疗时刻。']))
+    guardian=result.get('guardian_module_healing_reference')
+    if guardian:
+        qualified=guardian['qualified']
+        boundary='比例原值 < 阈值原值 −42950' if guardian['comparison']=='LT' else '比例原值 < 阈值原值 +42950'
+        sections.append(section('guardian_module_healing',guardian['operator_name']+'模组 · 受疗者生命条件',[
+            metric('recipient_ratio','声明受疗者生命比例',guardian['recipient_hp_ratio'],''),
+            metric('comparison','当前基包条件门',guardian['comparison']),
+            metric('qualified','固定比例条件判断','未知' if qualified is None else '符合' if qualified else '不符合'),
+            metric('healing_factor','直接治疗情景倍率',guardian['factor'],'倍'),
+            metric('regen_factor','生命回复额外倍率',1,'倍'),
+            metric('actual_hp_trajectory','实际受疗者血量变化','未知')],
+            [boundary+'；古米LT与黍LE来自各自当前resKey和buff模板，不按相同文字统一比较。',
+             '受疗者比例独立于自身生命、敌人血量和缺失生命；未指定不默认满血或低血。',
+             '固定比例只改变已建模直接治疗分项，与已核验受疗因子独立作用。自然生命回复、播种地块回复、物理攻击和技力时钟不乘此倍率。',
+             '固定比例不证明实际生命变化、友方获取/资格、范围或技能结束和充能时钟；当前热更新未核验。']))
+    from .panel_native_bridge import report_section as native_panel_section
+    native_panel=native_panel_section(result)
+    if native_panel is not None:sections.append(native_panel)
+    sections.extend(current_output_breakdown_sections(result))
+    sections.extend(reproducible_context_sections(scenario,result))
+    sections.extend(event_clock_reference_sections(scenario,result))
+    sections.extend(output_domain_comparison_sections(scenario,result))
+    report={'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},
         'skill_number':number,'skill_rank':scenario.get('skill_rank',10),'mode':mode,'sections':sections}
+    from .module_source_reference import selected_module_reference, module_source_notes, REFERENCE_KEY, SECTION_ID
+    reference=selected_module_reference(p,scenario,result,sections)
+    if reference:
+        report[REFERENCE_KEY]=reference
+        sections.append(section(SECTION_ID,'所选模组 · 原件资料与覆盖边界',
+            notes=module_source_notes(reference,sections,readable_description)))
+    resolution=result.get('relic_resolution',{})
+    if resolution.get('complete') is False:
+        # Keep the calculator's supported partial values; qualify them at the
+        # shared report boundary rather than guessing missing effect layers.
+        report['relic_coverage']={
+            'status':'partial','complete_result':None,
+            'numeric_scope':'confirmed_effects_reference',
+            'warnings':list(dict.fromkeys(resolution['warnings']))}
+        sections.insert(0,section('relic_coverage','藏品计算范围',[
+            metric('complete_result','包含全部所选藏品的完整结果',None)],
+            ['以下属性、伤害、治疗与技能时间仅供参考：只计入本次已确认并支持的效果。',
+             '未计入的效果可能改变结果；参考值不是完整总量，也不保证是最低值。',
+             '本提示不表示每项数值都受影响；未逐项确认的影响范围不作推断。',
+             *report['relic_coverage']['warnings']]))
+        for block in sections:
+            if block['id'] in ('timing','skill_stats','damage','healing'):
+                block['title']+=' · 已计效果参考'
+    return report
 
 
 def format_report(result,*,technical=False):
     estimate=result['estimate'];report=result['report'];stats=estimate['base_stats'];training=estimate['training']
     def number(value):
-        if value is None:return '未知（需要条件或尚未建模）'
+        if value is None:return '未知'
         if isinstance(value,str):return value
         return f'{value:,.2f}'.rstrip('0').rstrip('.')
     sources=[]
@@ -652,6 +1513,8 @@ def format_report(result,*,technical=False):
         text=re.sub(r'\b(?:NORMAL|ELITE|BOSS|FOUR_STAR)\b',lambda m:{
             'NORMAL':'普通','ELITE':'精英','BOSS':'领袖','FOUR_STAR':'紧急'}[m.group()],text)
         if technical:return text
+        # Translate this verified condition only; unknown script keys stay opaque.
+        text=re.sub(r'(?<![\w:.\[\]@])emergency_hire(?![\w:.\[\]@])','应急招募来源',text)
         for url in re.findall(r'https?://[^\s；，。<>）]+',text):
             if url not in sources:sources.append(url)
         text=re.sub(r'\s*原生算术证明[:：]\s*[0-9a-f]{64}','',text)
@@ -677,16 +1540,20 @@ def format_report(result,*,technical=False):
         'once_deploy':'结束后退场','deployment':'部署触发，无原地回转','triggered_ammo':'布子弹药',
         'ammo':'攻击弹药','next_attack':'强化/替代下次攻击','instant':'瞬时触发','timed':'有限持续'}
     rank=report['skill_rank'];rank_text=f'{rank}级' if rank<=7 else f'7级 · 专精{rank-7}'
+    partial_relics=report.get('relic_coverage',{}).get('status')=='partial'
     lines=[report['operator']['name']+' · '+professions.get(report['operator']['profession'],'职业未确认'),
-        '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（见待确认与适用范围）'),
+        '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（部分条件待补充）'),
         '', '【培养信息】',f"精英 {training['elite']} · 等级 {training['level']} · 潜能 {training['potential']} · 信赖加成进度 {training['trust']}%",
-        '', '【预计属性】','含已支持的天赋和藏品；不是未修正基础值。',
+        '', '【预计属性】','已计入适用的天赋与藏品。',
         f"生命值：{number(stats['hp'])}    攻击力：{number(stats['attack'])}",
         f"防御：{number(stats['defense'])}    法抗：{number(stats['resistance'])}",
         f"再部署时间：{stats['redeploy_seconds']:.2f} 秒    阻挡数：{number(stats['block_count'])}",
         f"攻速：{number(stats.get('attack_speed_reference',stats['attack_speed']))}（游戏数值单位，基础 100）"+
         (f"；攻击间隔使用攻速 {number(stats['attack_speed'])}（10–600 范围，面板攻速保留实际值）" if stats.get('attack_speed_reference',stats['attack_speed'])!=stats['attack_speed'] else ''),
         '', '【当前技能】',f"{estimate['skill']['name']} · {rank_text} · {modes.get(report['mode'],'技能模式未确认')}"]
+    if partial_relics:
+        lines[lines.index('【预计属性】')]='【已计效果下的属性参考】'
+        lines.insert(2,'藏品尚未计全：完整结果未知。以下数值仅作已计效果参考，不是完整总量，也不保证是最低值。')
     enemy=result.get('run_resolution',{}).get('enemy',{})
     if enemy.get('enemy_id')=='enemy_2148_shorbb':
         lines.insert(1,'输出口径：固定行动模式与统一来源列的测试情景。' if enemy.get('type_factors') else
@@ -719,4 +1586,7 @@ def format_report(result,*,technical=False):
             '显示用语：每秒伤害＝DPS；每秒治疗＝HPS；普通/精英/领袖＝NORMAL/ELITE/BOSS；紧急关卡＝FOUR_STAR。',
             '档案字段：弹道延迟＝projectile_delay_time；连击间隔＝attack@interval。字段存在不代表完成实机校准。',
             '完整计算输入和原始指标可在“结构化计算数据（调试）”查看。'])
+    if technical and report.get('selected_module_source_reference'):
+        from .module_source_reference import technical_source_trace
+        lines.extend(['',technical_source_trace(report['selected_module_source_reference'])])
     return '\n'.join(lines)

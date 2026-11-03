@@ -1,0 +1,26 @@
+{
+  "external_dependencies": {
+    "Qt": {
+      "version": "6.11.2",
+      "official_docs": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QStackedWidget.html",
+      "used": "Actual addWidget/setCurrentWidget ownership and retained pages; navigation remains local implementation."
+    },
+    "frameless": {
+      "source": "https://github.com/zhiyiYo/PyQt-Frameless-Window/tree/fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "commit": "fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "version": "0.8.2",
+      "license": "LGPL-3.0",
+      "notice": "third_party/qframelesswindow/NOTICE.md",
+      "used": "Previously vendored FramelessDialog and StandardTitleBar, now one reference host. No new upstream patch or package installed."
+    }
+  },
+  "decision": "Continue actual pinned LGPL frame, MIT PyQtDarkTheme assets and Qt QStackedWidget/QSplitter. Application-specific saved-note identity/storage stays in the existing local store; a new full notebook application or web editor would duplicate that state and require migration. This change only adapts the existing panel to the already-adopted external frame/theme.",
+  "source_video": "Revisited local original76/83/145s: game overlay and node card are dark; separate map145s is light. Keep light notebook and dark stage readers. Single-main-window behavior follows the confirmed user decision.",
+  "unknown": "笔记对应资料仍需迁入共享主窗，继续其余深层入口、公开档案与工作区整合；备忘录首次高度和其余视频布局继续核对。",
+  "Qt_splitter": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QSplitter.html",
+  "theme": {
+    "upstream": "https://github.com/5yutan5/PyQtDarkTheme",
+    "reviewed_commit": "96eb7e368039ab446952573bafc17d54b7ef5123",
+    "generated_from_wheel_version": "2.1.0"
+  }
+}

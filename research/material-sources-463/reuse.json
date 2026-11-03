@@ -1,0 +1,25 @@
+{
+  "external_sources": [
+    {
+      "url": "https://doc.qt.io/qtforpython-6/examples/example_widgets_layouts_flowlayout.html",
+      "fixed_local_source": "rouge/flow_layout.py",
+      "source": {
+        "sha256": "7e332e8f759cac6eab3d0bfbced3806bb00bad7c89ae5826a3e2bd23b9db61b8",
+        "bytes": 3168
+      },
+      "license": "licenses/qt-flow-layout-BSD-3-Clause.txt",
+      "adaptation": "Existing Qt for Python6.11.2 mature BSD3 flow layout adopted for exchange filters; no new custom resizing layout."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QStackedWidget.html",
+      "adaptation": "Retained Qt pages and existing source-bound navigation, not duplicated dialogs."
+    },
+    {
+      "url": "https://github.com/zhiyiYo/PyQt-Frameless-Window/tree/fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "adaptation": "Previously adopted licensed native frame and external close remain unchanged."
+    }
+  ],
+  "decision": "Reuse mature Qt layout/window code and the established exact local readers. A separate browser/service cannot directly supply this source-bound ritual/exchange relationship and would duplicate existing local queries. No newly discovered video-project source is claimed.",
+  "new_dependency": false,
+  "existing_adoption_counted_as_new_external_project": false
+}

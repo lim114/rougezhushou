@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "url": "https://github.com/qt/qtbase/blob/v6.11.2/src/widgets/itemviews/qtableview.cpp",
+      "blob": "6e4dc5607a92550fe49770c6310e8b09fecd77ed",
+      "finding": "QTableView::columnResized starts a zero-duration column resize timer; geometry completes on the next event-loop turn. Use one single-shot QTimer for row reflow, coalescing column resize notifications."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QHeaderView.html",
+      "used": "ResizeToContents for short columns; Stretch for effect text."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QAbstractItemView.html",
+      "used": "ScrollPerPixel for variable-height wrapped rows."
+    }
+  ],
+  "decision": "Use mature Qt page/table behavior with the established shared public index, instead of adding another browser, fetching service or statistics implementation.",
+  "external_foundation": "Existing Qt/qframelesswindow/PyQtDarkTheme runtime; no new dependency.",
+  "public_index_sources": {
+    "rouge/node_statistics_source.py": {
+      "sha256": "dfff2dd55e2ff044c62c3bc19bcf9e54036d17043f5f47a0bcf5ec060165164f",
+      "bytes": 1205
+    },
+    "rouge/public_node_statistics.py": {
+      "sha256": "ab287fb1779e4cba4926b008177bb25f21d5bb1995f7c13d5f646c1cecec61bc",
+      "bytes": 7525
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "status": "PASS_REMAINING_RECEIVERS_MATCH_EXACT_FINAL_PUBLIC_PRODUCERS",
+  "root_commit": "2dfd9fa2c9a62db0112bc0fb98cd23123dd3b48b",
+  "source_hashes": {
+    "operator_engine.py": "071b60914f40a0281c7acc8e3648520b496a448339f8d9b8c983fde47955ada4",
+    "enemy_environment.py": "49a8937d46718ca5ba35a4e41244441a49afb746a4b93f52dc840609163b8439",
+    "haruka_healing_reference.py": "a0a01fda3f0223ab39c841b7cf2f3ce0f0a0bb178fa495c078e89caf70f23ef6",
+    "uncertain_sources.py": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+    "run_modifiers.py": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+  },
+  "receiver_paths": {
+    "neural_reference": "result.neural_relic_reference <- Combat.neural exact dict; River selected only",
+    "mantra_reference": "result.external_event_reference <- full.plan external_event_reference, kind mantra_events; actual_event_times None added at output",
+    "enemy_identity": "result.run_resolution.enemy <- resolve enemy={**target,...}; enemy_id/stage_id/level target keys; level_type copied from unique catalog record",
+    "haruka_reference": "result.haruka_healing_reference <- full/shown reference(profile,scenario,skill); actual friendly fields and native flags source dict",
+    "haruka_attack": "result.attack <- shown.attack; estimate.skill.skill_attack <- full.attack; estimate.base_stats.attack <- self.stats.attack",
+    "haruka_mode": "plan non-normal S2 reads repeat at any allowed E1/E2; timed default vs infinite; infinite has duration/cycle None",
+    "orchid_talent": "source-selected 翔虫机动 enters self.atk_bonus before stats/plan; raw input string guard changes no producer fields",
+    "orchid_redeploy": "result.orchid_redeploy_reference <- exact owner-specific dict; near bool affects only attack, no redeploy events",
+    "orchid_cast": "result.unbound_cast_reference <- full.plan orchid_arrows + preserve_unplaced_sources; collision flag False, actual hit/end None added at output",
+    "orchid_zero_scope": "preserve_unplaced_sources excludes only window0 or lifetime0; empty hostile windows alone do not establish arrow collision clock"
+  },
+  "producer_excerpts": {
+    "stats": {
+      "producer_file": "rouge/operator_engine.py",
+      "producer_target": "self.stats",
+      "line": 129,
+      "source_excerpt": "self.stats={'hp':attributes['hp']*(1+self.hp_bonus),'attack':self.base_attack,\n            'defense':attributes['defense']*(1+self.def_bonus),\n            'resistance':min(100,attributes['resistance']+self.res_bonus),\n            'redeploy_seconds':self.redeploy,'attack_speed':self.base_speed,\n            'attack_speed_reference':self.base_speed_reference,\n            'block_count':attributes['block_count']}",
+      "literal_dict_keys": [
+        "hp",
+        "attack",
+        "defense",
+        "resistance",
+        "redeploy_seconds",
+        "attack_speed",
+        "attack_speed_reference",
+        "block_count"
+      ]
+    },
+    "neural": {
+      "producer_file": "rouge/operator_engine.py",
+      "producer_target": "self.neural_relic_reference",
+      "line": 271,
+      "source_excerpt": "self.neural_relic_reference={\n                'relic_id':rule['relic_id'],'instant_raw_damage':6000*scale,\n                'instant_adjusted_damage':per,'instant_factor':scale,\n                'periodic_raw_damage':rule['periodic_raw_damage'],\n                'periodic_interval':rule['periodic_interval'],\n                'periodic_damage_scheduled':False,\n                'preexisting_break_assumed':bool(self.s.get('enemy_in_neural_break')),\n            }",
+      "literal_dict_keys": [
+        "relic_id",
+        "instant_raw_damage",
+        "instant_adjusted_damage",
+        "instant_factor",
+        "periodic_raw_damage",
+        "periodic_interval",
+        "periodic_damage_scheduled",
+        "preexisting_break_assumed"
+      ]
+    },
+    "redeploy": {
+      "producer_file": "rouge/operator_engine.py",
+      "producer_target": "result['orchid_redeploy_reference']",
+      "line": 1921,
+      "source_excerpt": "result['orchid_redeploy_reference']={\n                'scope':'cultivated attribute and same-identity talent parameter reference',\n                'operator_id':self.p['id'],'module_id':self.s.get('module_id'),\n                'module_level':self.s.get('module_level',0),'module_unlocked':applied,\n                'module_attribute_delta_seconds_parameter':module_delta,\n                'after_attribute_sources_seconds_reference':self.a['redeploy_seconds'],\n                'talent_delta_seconds_parameter':self.orchid_redeploy_delta,\n                'parameter_seconds':self.redeploy,\n                'original_talent_identity':{'talent_index':3,'prefab_key':'3'},\n                'actual_retreat_seconds':None,'actual_defeat_seconds':None,\n                'actual_next_deployment_seconds':None,'events_scheduled':False,\n                'native_attachment_verified':False,'live_state_verified':False,\n                'source_commit':'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',\n                'source_selectors':[\n                    'character_table.char_1048_orchd2.phases[*].attributesKeyFrames[*].data.respawnTime',\n                    'character_table.char_1048_orchd2.potentialRanks[1].buff.attributes.attributeModifiers',\n                    'character_table.char_1048_orchd2.talents[1].candidates',\n                    'character_table.char_1048_orchd2.talents[3].candidates',\n                    'uniequip_table.equipDict.uniequip_002_orchd2',\n                    'battle_equip_table.uniequip_002_orchd2.phases[*].attributeBlackboard',\n                    'battle_equip_table.uniequip_002_orchd2.phases[*].parts[*].addOrOverrideTalentDataBundle.candidates']}",
+      "literal_dict_keys": [
+        "scope",
+        "operator_id",
+        "module_id",
+        "module_level",
+        "module_unlocked",
+        "module_attribute_delta_seconds_parameter",
+        "after_attribute_sources_seconds_reference",
+        "talent_delta_seconds_parameter",
+        "parameter_seconds",
+        "original_talent_identity",
+        "actual_retreat_seconds",
+        "actual_defeat_seconds",
+        "actual_next_deployment_seconds",
+        "events_scheduled",
+        "native_attachment_verified",
+        "live_state_verified",
+        "source_commit",
+        "source_selectors"
+      ]
+    },
+    "unbound": {
+      "producer_file": "rouge/operator_engine.py",
+      "producer_target": "result['unbound_cast_reference']",
+      "line": 1602,
+      "source_excerpt": "result['unbound_cast_reference']={**full['unbound_cast_reference'],\n                'window_reference':shown['unbound_cast_reference'],\n                'actual_hit_times_seconds':None,'actual_end_seconds':None}",
+      "literal_dict_keys": [
+        "window_reference",
+        "actual_hit_times_seconds",
+        "actual_end_seconds"
+      ]
+    },
+    "external": {
+      "producer_file": "rouge/operator_engine.py",
+      "producer_target": "result['external_event_reference']",
+      "line": 1595,
+      "source_excerpt": "result['external_event_reference']={**full['external_event_reference'],\n                'window_reference':shown['external_event_reference'],'actual_event_times_seconds':None}",
+      "literal_dict_keys": [
+        "window_reference",
+        "actual_event_times_seconds"
+      ]
+    },
+    "enemy": {
+      "producer_file": "rouge/enemy_environment.py",
+      "producer_target": "enemy",
+      "line": 37,
+      "source_excerpt": "enemy={**target,'name':record['name'],'stage_name':stage['name'],'stage_difficulty':stage['difficulty'],\n        'level_type':record['level_type'],'reference_stats':dict(stats),'stats':stats,'steps':[],\n        'damage_factor':1,'pending':[],'source':config_data()['source_url']}",
+      "literal_dict_keys": [
+        "name",
+        "stage_name",
+        "stage_difficulty",
+        "level_type",
+        "reference_stats",
+        "stats",
+        "steps",
+        "damage_factor",
+        "pending",
+        "source"
+      ]
+    }
+  },
+  "estimate_skill_literal_fields": [
+    "cycle_damage",
+    "cycle_dps",
+    "cycle_healing",
+    "cycle_hps",
+    "cycle_seconds",
+    "duration_seconds",
+    "hit_counts",
+    "initial_seconds",
+    "mode",
+    "name",
+    "phase_damage",
+    "phase_healing",
+    "recharge_seconds",
+    "skill_attack",
+    "skill_attack_speed",
+    "skill_attack_speed_reference",
+    "sp_recovery_per_second",
+    "total_damage",
+    "total_healing",
+    "window_dps",
+    "window_healing",
+    "window_hps",
+    "window_seconds"
+  ],
+  "haruka_reference_literal_fields": [
+    "actual_acquisition_times_seconds",
+    "actual_target_count",
+    "actual_target_limit",
+    "conditional_target_limit_reference",
+    "healing_scale_parameter",
+    "live_state_verified",
+    "modeled_target_limit_reference",
+    "module_id",
+    "module_level",
+    "module_unlocked",
+    "native_attachment_verified",
+    "native_composition_verified",
+    "operator_id",
+    "original_trait_target_limit_parameter",
+    "reference_only",
+    "selected_trait_target_limit_parameter",
+    "skill_rank",
+    "skill_target_add_parameter",
+    "source_commit",
+    "source_selectors"
+  ],
+  "actual_saved581_counterexample_enemy_keys": [
+    "stage_id",
+    "enemy_id",
+    "level",
+    "name",
+    "stage_name",
+    "stage_difficulty",
+    "level_type",
+    "reference_stats",
+    "stats",
+    "steps",
+    "damage_factor",
+    "pending",
+    "source"
+  ],
+  "saved580_complete_records": 580,
+  "saved581_source_unchanged": true,
+  "API_calls": 0,
+  "formatter_calls": 0,
+  "qualification_helper_calls": 0,
+  "Qt_executed": false,
+  "Wine_executed": false,
+  "unrun_requests": 573
+}

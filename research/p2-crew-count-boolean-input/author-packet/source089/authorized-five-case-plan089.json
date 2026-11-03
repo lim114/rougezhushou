@@ -1,0 +1,76 @@
+{
+  "groups": [
+    {
+      "id": "empty-None",
+      "seed_ids": [
+        "mechanist"
+      ],
+      "seed_crew": 1,
+      "subject_ids": [],
+      "crew_count": null,
+      "expected_source_departures": []
+    },
+    {
+      "id": "empty-False",
+      "seed_ids": [
+        "mechanist"
+      ],
+      "seed_crew": 1,
+      "subject_ids": [],
+      "crew_count": false,
+      "expected_source_departures": [
+        "mechanist"
+      ]
+    },
+    {
+      "id": "empty-int0",
+      "seed_ids": [
+        "mechanist"
+      ],
+      "seed_crew": 1,
+      "subject_ids": [],
+      "crew_count": 0,
+      "expected_source_departures": [
+        "mechanist"
+      ]
+    },
+    {
+      "id": "one-True",
+      "seed_ids": [
+        "mechanist",
+        "char_151_myrtle"
+      ],
+      "seed_crew": 2,
+      "subject_ids": [
+        "mechanist"
+      ],
+      "crew_count": true,
+      "expected_source_departures": [
+        "char_151_myrtle"
+      ]
+    },
+    {
+      "id": "one-int1",
+      "seed_ids": [
+        "mechanist",
+        "char_151_myrtle"
+      ],
+      "seed_crew": 2,
+      "subject_ids": [
+        "mechanist"
+      ],
+      "crew_count": 1,
+      "expected_source_departures": [
+        "char_151_myrtle"
+      ]
+    }
+  ],
+  "clock": "Existing063/055 protocol uses each instance natural started_at+1 seed and+2 subject; preserve UUID/started_at and captured floats fully, no crossgroup full-tree equality.",
+  "fixed_member_fields": "scope run; empty fields and skill_ranks, no P1 personalbuff fixture.",
+  "actual_expected_method_counts": {
+    "constructors": 5,
+    "seed_apply": 5,
+    "subject_apply": 5
+  },
+  "tests": 0
+}

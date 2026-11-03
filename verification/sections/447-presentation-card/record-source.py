@@ -1,0 +1,100 @@
+from pathlib import Path
+from hashlib import sha256
+from datetime import datetime,timezone
+import ast,json,subprocess,difflib,runpy,sys,re
+R=Path.cwd();BASE='4a1fc71e585e8bfedc54d563b6f96828f858d8a0';B=R/'verification/sections/447-presentation-card';D=R/'research/presentation-card-20261101';sys.path[:0]=[str(R),str(R/'scripts')];title='深色横向统计卡、最近归档范围与自适应预览'
+def read(n):return json.loads((R/n).read_bytes())
+def pin(n):
+ p=R/n;raw=p.read_bytes();return {'receipt':p.relative_to(R).as_posix(),'sha256':sha256(raw).hexdigest(),'bytes':len(raw)}
+def write(n,v):(R/n).write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n','utf8')
+def save(n,text):
+ p=R/n
+ if not p.exists():p.write_text(text,'utf8');return
+ a=p.read_bytes().decode('utf8').splitlines(keepends=True);b=text.splitlines(keepends=True)
+ for x,y,k in difflib.SequenceMatcher(None,[s.rstrip('\r\n')for s in a],[s.rstrip('\r\n')for s in b],autojunk=False).get_matching_blocks():b[y:y+k]=a[x:x+k]
+ p.write_bytes(''.join(b).encode('utf8'))
+assert subprocess.check_output(['git','rev-parse','HEAD']).decode().strip()==BASE
+assert subprocess.check_output(['git','branch','--show-current']).decode().strip()=='codex/p2-development'
+for scope,count in [('related-release',56),('binding-regression',4)]:
+ t=read(B/scope/'results.json');assert t['passed']and t['tests_run']==count and not(t['failed']or t['errors']or t['skipped']or t['forbidden_external_calls']);assert read(B/scope/'process.json')['actual_observed_exit']==0
+ ids=re.findall(r'^test_\w+ \(([^)]+)\)',(B/scope/'stderr.txt').read_text('utf8'),re.M);assert len(ids)==len(set(ids))==count
+native_scopes={}
+for scope,count in [('native-release2',54),('legacy-release-406',19),('legacy-release-408',24),('legacy-release-416',22),('legacy-release-432',19)]:
+ n=read(B/scope/'window.json');assert n['passed']and n['unique_checks']==count and not n['source_drift']and not any(n['external_operation_attempts'].values());assert read(B/scope/'process.json')['actual_observed_exit']==0
+ for name,digest in n['source_sha256_after'].items():assert sha256((R/name).read_bytes()).hexdigest()==digest,(scope,name)
+ native_scopes[scope]={'receipt':(B/scope/'window.json').relative_to(R).as_posix(),'unique_checks':count}
+n=read(B/'native-release2/window.json');images=read(B/'native-release2/extra-images.json');assert len(images)==5
+for row in images+n['screenshots']:assert sha256((R/row['file']).read_bytes()).hexdigest()==row['sha256']
+assert n['screenshots'][0]['sha256']==next(row['sha256']for row in images if row['file'].endswith('/preview-final.png'))
+write(B/'native-release2/root-image-review.json',{'directly_viewed_current_images':images,'same_byte_reused_for_root_window_screenshot':n['screenshots'],'direct_count':5,'additional_byte_identical_count':1,'synthetic_public_state_only':True,'actual_widths':read(B/'native-release2/actual-sizes.json'),'requested400_is_actual546':True,'appearance_does_not_replace54_interaction_checks':True,'whole_video_complete':False})
+density=[]
+for factor in('0.75','1','1.25','2'):
+ assert read(B/'density-matrix'/(factor+'-process.json'))['actual_observed_exit']==0
+ row=read(B/'density-matrix'/(factor+'.json'));assert row['passed']and row['qpa']=='windows'and len(row['rows'])==4;density.append(row)
+assert read(B/'native-current/window.json')['source_sha256_after']['rouge/reference_image.py']==n['source_sha256_after']['rouge/reference_image.py']
+write(B/'density-matrix/summary.json',{'passed':True,'actual_native_processes':4,'actual_component_sizes_checked':16,'actual_ratios':sorted(set(x['actual_DPR']for row in density for x in row['rows'])),'source':pin('rouge/reference_image.py'),'component_unchanged_since_matrix':True,'real_monitor_transition_or_game_test':False,'original_edge_color_and_source_cache_checks_preserved':True,'logical_fit_rounding_tolerance':'0.5 physical pixel converted by actual DPR; not relaxed to permit clipping'})
+live=read(B/'live-window/window.json');status=read('.cache/card447-live-status.json');assert live['passed']and live['private_six_paths_unchanged']and status['elapsed_since_launch']>4 and all(status[k]for k in('toolbar_visible','history_visible','card_preview_has_image','viewer_visible'))
+for name,digest in live['source_sha256_after'].items():assert sha256((R/name).read_bytes()).hexdigest()==digest
+write(B/'live-window/desktop-review.json',{'Windows_mcp_title_region':[1592,659,2540,715],'actual_statistics_viewer_title_and_close_viewed':True,'actual_native_history_toolbar_card_viewer_visible_and_responding':True,'fresh_Qt_timer':True,'game_binding_active':status['game_binding_active'],'private_card_images_values_or_contents_archived':False,'actual_game_or_chat_accuracy_proven':False})
+before=read('.cache/presentation-card-before.json')['private'];changed=[name for name,digest in before.items()if(sha256((R/name).read_bytes()).hexdigest()if(R/name).is_file()else None)!=digest]
+write(B/'private-scope.json',{'whole_batch_private_six_unchanged':not changed,'changed_paths_if_any':changed,'change_origin_not_inferred':bool(changed),'startup_six_unchanged':True,'private_contents_or_hashes_published':False,'backup_restore_or_rollback':False})
+assert not changed
+sources=['rouge/player_statistics_card.py','rouge/player_game_binding.py','rouge/reference_image.py','rouge/player_acceptance.py','rouge/player_statistics_card_acceptance.py','scripts/verify_full_available.py','tests/test_presentation_card_447.py','tests/test_battle_reader_review.py']
+for name in sources:
+ old=D/('before-'+Path(name).name)
+ if old.exists():assert old.read_bytes()==subprocess.check_output(['git','show',BASE+':'+name])
+old_card=ast.parse((D/'before-player_statistics_card.py').read_text('utf8'));new_card=ast.parse((R/'rouge/player_statistics_card.py').read_text('utf8'))
+assert ast.dump(next(x for x in old_card.body if isinstance(x,ast.FunctionDef)and x.name=='card_lines'))==ast.dump(next(x for x in new_card.body if isinstance(x,ast.FunctionDef)and x.name=='card_lines'))
+old_acc=ast.parse((D/'before-player_statistics_card_acceptance.py').read_text('utf8'));new_acc=ast.parse((R/'rouge/player_statistics_card_acceptance.py').read_text('utf8'));assert ast.dump(old_acc.body[4])==ast.dump(new_acc.body[4])
+old_dispatch=(D/'before-player_acceptance.py').read_text('utf8');new_dispatch=(R/'rouge/player_acceptance.py').read_text('utf8');assert old_dispatch.split('    if section==446:',1)[1]==new_dispatch.split('    if section==446:',1)[1]
+acquisition=read('.cache/statistics-card-external-20261101-attempt2/acquisition.json');short=[{k:v for k,v in row.items()if k!='all_paths'}for row in acquisition];write(D/'acquisition.json',short)
+up=acquisition[0];assert up['commit']=='29a0e428c7df4a522cdcdb784784d514e2f86f04';pins={row['path']:row for row in up['reviewed_files_acquired']};assert pin(D/'upstream-rogue.html.jinja2')['sha256']==pins['nonebot_plugin_skland/resources/templates/rogue.html.jinja2']['sha256'];assert pin('licenses/skland-card-MIT.txt')['sha256']==pins['LICENSE']['sha256']
+write(D/'evidence.json',{'base_commit':BASE,'adopted_repository':'https://github.com/FrostN0v0/nonebot-plugin-skland','fixed_commit':up['commit'],'version':'0.7.3','license':'MIT','license_file':'licenses/skland-card-MIT.txt','actual_port':'rogue.html.jinja2 header and grouped-metric layout ported to native Qt; not the upstream template renderer, bot or authentication runtime','production_file':'rouge/player_statistics_card.py','read_before_adaptation':['README.md installation/render requirements','LICENSE','pyproject.toml','rogue.html.jinja2','rogue_macros.html.jinja2'],'dependencies_installed':False,'upstream_runtime_executed':False,'upstream_fonts_images_or_personal_examples_copied':False,'other_candidate':{'repository':acquisition[1]['repository'],'commit':acquisition[1]['commit'],'version':'0.2.2','license':'MIT','adopted':False,'reason':'Requires another raster rendering stack (Skia, BBCode, OpenCV, Windows runtime and Pillow bounds); current task can port the licensed layout into existing native Qt without a second engine. No measured speed comparison or verified dependency conflict claimed.'},'network':'First direct clone TLS failed; existing per-process proxy acquired both repositories with TLS verification retained. No global proxy or trust changed.','Qt_primary_documentation':['https://doc.qt.io/qt-6/highdpi.html','https://doc.qt.io/qt-6/qpixmap.html#deviceIndependentSize'],'Qt_scope':'Native interface and physical/logical pixel correction are local glue, not a newly adopted third-party project.','local_video_sha256':'0b83e44f0816508ef095120961496337e6bd65d5f531ee350c078950dfb98bda','actual_local_frames_reviewed_seconds':[249,257,270],'frame249_revisited_this_section':True,'continuous_full_playback_claimed':False,'video_observation':'Dark horizontal card, profile header, large average values, relic and part icon/combo rows. Only known current fields are rendered; avatar/name, score, utopia and combination coverage remain.','video_or_frames_distributed':False,'reference_video_program_source_obtained':False})
+write(B/'source-review.json',{'base_commit':BASE,'changed_or_new_sources':{name:pin(name)for name in sources},'application_source_files':540,'new_application_modules':0,'actual_external_adoption':'MIT upstream skland card header/grouped-metric layout port. No new engine or dependency; original video program source still unavailable.','unchanged_AST':['canonical card_lines result/denominator/limitation construction','original408 acceptance function','pre447 acceptance dispatch tail'],'source_behavior':'Selected cohort is deduplicated by existing record selection then limited by existing descending archive timestamp order. Main statistics/result/history and current run remain unchanged. One owned viewer, invalidation and existing manual export retained.','high_DPI':'Shared ReferenceImage renders from unchanged full source at actual density; physical image pixels and logical widget units kept distinct; ratio-change event refits. Existing map consumers covered only by listed component regression, not all real maps/monitors.','binding_fix':'Actual isolated viewer failed movement (0,0 instead of19,17). Add this owned statistics viewer to existing surfaces list; isolated movement, hide/restore and visibility toggle now verified. No OS game action.','defenses':'No new general retry, duplicate null validation, blanket catch or speculative mechanism. New methods correspond to actual controls/Qt callbacks. Existing private/export/send protections retained.','REA_scope':'Python source reviewed directly; no new REA invocation or entire-program completion claim.','mechanism_math_or_OCR_changed':False,'whole_program_or_video_complete':False})
+oldfile=R/'.cache/card447-selectors-before.py';oldfile.write_bytes(subprocess.check_output(['git','show',BASE+':scripts/verify_full_available.py']));old=runpy.run_path(str(oldfile))['maintained_selectors']();new=runpy.run_path(str(R/'scripts/verify_full_available.py'))['maintained_selectors']();assert len(old)==736 and len(new)==737 and new[:len(old)]==old
+write(B/'selector-prefix.json',{'previous_count':736,'current_count':737,'old_order_preserved':True,'appended':list(new[len(old):]),'registration_not_full_execution':True})
+write(B/'intermediate-disposition.json',{'all_prior_native_related_and_legacy_paths_retained':True,'current_acceptance':['related-release','binding-regression','native-release2','legacy-release-406','legacy-release-408','legacy-release-416','legacy-release-432','density-matrix'],'prior_pass_counts_not_accumulated':True,'actual_binding_failure':'native-release/window.json root exit1; missing owned viewer in binding surfaces, now fixed. binding-before/observed.json independently records0,0 movement; its incomplete synthetic snapshot caused an extra hover callback error, not real game evidence.','other_setup_errors':'The public-record helper initially missed scripts in sys.path and stopped before editing progress documents; corrected and rerun. One local probe used system Python without PySide6; corrected to project .venv. First multi-file patch context failed atomically, confirmed no product mutation, then exact patch applied.','pixel_fixture_failure':{'tool_chunks':['daf9e5','59885c','f6af44'],'actual_first_test_exit':1,'tests':17,'failed':1,'raw_output_available_as_tool_history_not_claimed_file':True,'cause':'Python override of QWidget DPR does not alter native QLabel internals; synthetic2 normalized to actual1.5. Replaced this invalid fixture with actual Windows process scale matrix; did not lower expected fidelity.'},'first_direct_clone_TLS':{'tool_chunk':'ebf1b2','actual_exit':1,'message':'schannel missing close_notify','raw_output_available_as_tool_history_not_claimed_file':True},'native_visual_findings':'Initial old840x540 export and excess height, small preview, unreadable inherited close symbol. Measured original560x360 with HFW306, then600logical width and HFW sizing produce900x459 at actual1.5. Close explicitly styled for dark viewer.','no_performance_improvement_claim':'No timed end-to-end rendering or recognition benchmark.','unavailable':'Actual game binding/multi-monitor transitions, complete outcomes/score/utopia/combinations and full video parity not accepted.'})
+# State no private content and source before copies are explicit public inputs.
+save(D/'README.md',f'''# 第447节 + {title}
+
+优先采用他人公开实现：已克隆并先读 FrostN0v0/nonebot-plugin-skland 的说明、安装/渲染依赖、许可和模板，固定 `29a0e428c7df4a522cdcdb784784d514e2f86f04`（0.7.3，MIT）。将 `rogue.html.jinja2` 的标题与分组指标布局移植到原生Qt；保留原模板和[许可](../../licenses/skland-card-MIT.txt)。没有接入其机器人、登录、网络或Playwright渲染后台，也没有复制字体、示例账号与头像。不是原视频程序源码。
+
+另一候选 MemeCrafters/pil-utils 已核对源码和MIT许可，固定提交见 acquisition.json。它引入另一套图像/文字渲染依赖，本轮没有安装或性能比较；不宣称实测更慢或依赖冲突。现有外部主题与Qt BSD布局保持；仅调用Qt接口不计新外部项目复用。
+
+卡片提供深色横向大数值、已选藏品图片/持有率、筛选后全部或最近20/50/100局归档和完整样本/未知说明。按本机归档时间，而非通关时间；不改主统计、胜负和当前局。原尺寸PNG仅由用户手动保存；窄窗自适应预览和放大阅读使用同一原图。共享图片组件正确区分物理像素与界面尺寸，响应缩放变化；放大窗加入原跟随/隐藏范围。
+
+本机必要检查56+独立4项通过，当前54项原生交互通过，旧406/408/416/432分别19/24/22/19项另验，4个真实Qt缩放进程核对16种实际组件尺寸；不累计中间回执。五份不同最终隔离原图逐张查看，根截图与其中一份整字节相同。400请求宽度实测546，不称400已达成；没有真实游戏或跨屏切换验收。测试窗已更新打开，私人六路径仅本地摘要对照保持，未上传内容。
+
+视频249/257/270秒的头像/昵称、组合图标、评分、实托邦及完整结算字段仍缺，全程序、全视频和P3/P2/P1未完成。所有历史失败与夹具错误分别保留，详见[本节回执](../../verification/sections/447.json)。
+''')
+entry=f'''<!-- player-section-447 -->
+## 第447节 + {title}
+
+实际移植外部MIT项目 nonebot-plugin-skland 固定提交的标题/分组指标布局，原生Qt显示深色横向大数字、准确藏品图标与持有率。卡片可选筛选后全部/最近20/50/100局归档；预览随窗口缩放，放大窗跟随/隐藏，手动保存保留完整尺寸。共享图像组件修正高DPI物理/逻辑尺寸，未知与完整限制保持；不改主统计或本局。
+
+最终56项相关加独立4项、54项当前原生交互通过，旧406/408/416/432分别19/24/22/19项另验；四个真实Qt缩放进程核对16种实际尺寸，五份不同最终隔离原图逐张查看。原跟随失败和夹具错误保留；400请求实际546，不冒称400适配。测试窗已更新打开，私人六路径保持。737有序选择器，下次完整455；头像/昵称、组合、评分/实托邦与结算数据、实机/跨屏及全部视频/P3/P2/P1未完成。回执verification/sections/447.json。
+
+'''
+for name in('WORK_IN_PROGRESS.md','PROJECT_COMPLETED.md'):save(name,entry+(R/name).read_text('utf8'))
+name='PROJECT_REQUIREMENTS.md';text=(R/name).read_text('utf8');assert '当前功能第446节'in text;text=text.replace('当前功能第446节','当前功能第447节',1)
+old='视频深色横向展示卡仍须按真实效果另验，不用示例数值补本机。';assert old in text
+text=text.replace(old,'展示卡按深色横向大数字与图标呈现；在当前筛选中按本机归档时间取全部或最近20/50/100局，仅改变卡片范围，不改变主统计，也不冒充通关时间。预览随可用空间及实际DPI调整，放大窗参与游戏跟随和隐藏，保存保留原尺寸；头像、昵称、组合、评分、实托邦和完整结算字段须有真实数据，不用视频示例补本机。',1);save(name,text)
+name='PROJECT_PROGRESS.md';text=(R/name).read_text('utf8');old='视频249/257/270秒深色横向大数字展示卡及收藏品/零件图标组合';assert old in text;text=text.replace(old,'视频249/257/270秒展示卡的头像/昵称、收藏品/零件图标组合及评分/实托邦/完整结算字段',1);save(name,text)
+name='VIDEO_PARITY.md';text=(R/name).read_text('utf8');old='本轮新看249/257/270秒，原片为深色横向大数字与图片组合卡；当前浅色纵向导出卡仍有明显差距，不称外观一致。';assert old in text;text=text.replace(old,'第447节已移植外部MIT肉鸽模板的标题/分组指标布局，提供深色横向大数字、已选藏品图片/持有率、筛选后全部或最近20/50/100局归档；窄窗缩放预览、放大跟随与原尺寸手动PNG保留样本/未知限制。按本机归档时间，不是通关时间。原片249/257/270秒的头像/昵称、组合图标及评分/实托邦/完整结算数据仍缺；不称全部外观一致，实机跨屏另验。',1);save(name,text)
+name='PROGRAM_REVIEW.md';text=(R/name).read_text('utf8');assert '当前总范围540份'in text;save(name,text+'\n[第447节统计卡](research/presentation-card-20261101/README.md)实际采用外部MIT模板的标题/分组布局并移植到Qt，加入卡片样本范围、图片缩放与放大跟随；共享固定图组件修正DPI单位。没有新增应用源码模块；540份范围不变。评分、实托邦、组合与账号外观字段、真实游戏/跨屏及其余全视频仍未完成，不冒称原视频源码或整套渲染器接入。\n')
+name='IMPLEMENTATION_STRATEGY.md';text=(R/name).read_text('utf8');save(name,text+'\n第447节已实际移植外部MIT肉鸽统计卡的标题/分组布局，详情见[来源和成本取舍](research/presentation-card-20261101/README.md)。卡片样本、深色横向数字、图标、缩放和放大跟随在所列范围交付；接下来仍需头像/昵称、组合和完整统计字段、其它资料窗与连续识别。优先外部成熟代码不等于强行引入不适用的机器人/账号后台，不宣称未测量的性能提升。\n')
+receipt={'section':447,'kind':'functional_section','title':title,'new_capability':'外部MIT布局移植的深色横向统计卡、筛选后最近归档范围、准确藏品图标、缩放预览/独立放大和原尺寸手动图片；放大跟随与高DPI修正。','limitations':'头像/昵称、组合、评分/实托邦/完整结算与真实游戏跨屏、其余视频/P3/P2/P1仍未完成。不是原视频源码，未接入上游完整渲染器。','necessary_validation':[pin(B/'related-release/process.json'),pin(B/'binding-regression/process.json')],'unit_tests_run':60,'unit_test_scopes':[56,4],'native_windows_scopes':native_scopes,'density_matrix':pin(B/'density-matrix/summary.json'),'actual_local_test_window':pin(B/'live-window/window.json'),'source_review':pin(B/'source-review.json'),'source_sha256':{name:sha256((R/name).read_bytes()).hexdigest()for name in sources},'external_evidence':pin(D/'evidence.json'),'full_suite_rerun':False,'old_full440_proves_current_source':False,'goal_active':True,'whole_program_or_video_complete':False,'at_UTC':datetime.now(timezone.utc).isoformat()};write('verification/sections/447.json',receipt)
+cp=read('DEVELOPMENT_CHECKPOINT.json');assert cp['completed_sections']==446 and cp['next_section']==447
+cp['completed_sections']=447;cp['next_section']=448;cp['sections'].append({'number':447,'completion_ref':'player-section-447','topic':title,'verification':'verification/sections/447.json'})
+cp['current_section_save']={'section':447,'verification':'verification/sections/447.json','scope':'current_functional_section','binding':'enclosing_commit'};cp['last_verified_cloud_save']['scope']='previous_functional_section';cp['historical_implementation_maintenance_before447']=cp.pop('current_maintenance_save')
+cp['current_section_validation']={'section':447,'receipt':'verification/sections/447.json','necessary_checks':60,'native_scopes':{k:v['unique_checks']for k,v in native_scopes.items()},'full_validation_rerun':False}
+cp['current_batch'].update(completed_sections=447,next_section=448,next_section_started=False,receipt='verification/sections/447.json',scope='Whole-program/video review active. Functional447 licensed upstream layout port, dark grouped card, archive subset, native scaling/enlarged binding accepted only in listed scope. Profile/combination/data fields and all remaining video work incomplete.448 not started.')
+cp['next_action']='继续其它资料窗与视频功能/交互/外观及连续识别回顾，优先他人成熟公开代码方案。展示卡仍缺头像/昵称、组合、评分/实托邦与完整结算数据；不补猜或冒充原视频源码。全程序/P3/P2/P1未完成，后续448，下次完整455。'
+if isinstance(cp.get('player_feature_sections'),list):cp['player_feature_sections'].append(447)
+assert cp['functional_sections_since_latest_requirement'][-1]==446;cp['functional_sections_since_latest_requirement'].append(447)
+save('DEVELOPMENT_CHECKPOINT.json',json.dumps(cp,ensure_ascii=False,indent=2)+'\n')
+idx=runpy.run_path(str(R/'scripts/update_cloud_index.py'));idx['update'](R);assert idx['validate_delivery'](R,cp)['current_section']==447
+write(B/'final-audit.json',{'passed':True,'functional_section':447,'necessary_distinct_tests':60,'native_checks':54,'ordered_selectors':737,'active_functional_list_includes447':True,'requirements':pin('PROJECT_REQUIREMENTS.md'),'index':pin('CLOUD_INDEX.json'),'section_receipt':pin('verification/sections/447.json'),'current_full_rerun':False,'goal_active':True,'whole_program_or_video_complete':False})
+(B/'record-source.py').write_bytes(Path(__file__).read_bytes());files={p.relative_to(R).as_posix():pin(p)for p in B.rglob('*')if p.is_file()and p.name!='archive-manifest.json'};files['verification/sections/447.json']=pin('verification/sections/447.json')
+write(B/'archive-manifest.json',{'kind':'exact_public_447_card_scope_no_private_cache_or_video','files':files})
+print(json.dumps({'passed':True,'section':447,'necessary_distinct_tests':60,'current_native_checks':54,'public_archive_files':len(files),'private_six_unchanged':not changed,'goal_complete':False}))

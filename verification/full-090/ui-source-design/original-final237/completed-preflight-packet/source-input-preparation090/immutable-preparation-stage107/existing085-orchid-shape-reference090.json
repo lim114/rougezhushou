@@ -1,0 +1,189 @@
+{
+  "scope": "Read-only actual085 preflight saved shape for Orchid; no new calls or fresh86 evidence",
+  "root085_source_commit": "2dfd9fa2c9a62db0112bc0fb98cd23123dd3b48b",
+  "source_file": "/workspace/.continuation/ui-085-draft/public-schema-final-085.json.gz",
+  "source_file_sha256": "7334c691de4c918898898bb2d0d3480fdd50fa268410343f92cb83645fd6674a",
+  "saved_case_section": 85,
+  "saved_case_input": {
+    "power_coating": true,
+    "near_previous_deployment": false,
+    "double_charge": true,
+    "operator": "char_1048_orchd2",
+    "skill": 1,
+    "elite": 0,
+    "level": 1,
+    "skill_rank": 1,
+    "potential": 1,
+    "trust": 100,
+    "module_id": null,
+    "module_level": 0,
+    "timing_mode": "frames",
+    "window_seconds": 10,
+    "healing_targets": 1,
+    "enemy_defense": 0,
+    "enemy_resistance": 0,
+    "preexisting_fragile": false,
+    "cooperative": false,
+    "relic_ids": []
+  },
+  "required_result_key_types": {
+    "attack": "float",
+    "total_damage": "NoneType",
+    "total_healing": "int",
+    "components": "list",
+    "estimate": "dict",
+    "report": "dict"
+  },
+  "estimate_skill_key_types": {
+    "name": "str",
+    "initial_seconds": "float",
+    "recharge_seconds": "NoneType",
+    "cycle_seconds": "NoneType",
+    "duration_seconds": "NoneType",
+    "total_damage": "NoneType",
+    "total_healing": "int",
+    "phase_damage": "NoneType",
+    "phase_healing": "NoneType",
+    "cycle_dps": "NoneType",
+    "cycle_hps": "NoneType",
+    "cycle_damage": "NoneType",
+    "cycle_healing": "NoneType",
+    "skill_attack": "float",
+    "skill_attack_speed": "float",
+    "skill_attack_speed_reference": "float",
+    "sp_recovery_per_second": "float",
+    "mode": "str",
+    "hit_counts": "dict",
+    "window_seconds": "float",
+    "window_healing": "int",
+    "window_dps": "NoneType",
+    "window_hps": "float",
+    "window_damage": "NoneType"
+  },
+  "actual_saved_unknown_references": {
+    "attack_speed_reference": 100.0,
+    "base_attack_speed_reference": 100.0,
+    "unbound_cast_reference": {
+      "kind": "orchid_arrows",
+      "parameter_rows": [
+        [
+          "首轮箭矢数量参数",
+          4,
+          "支"
+        ],
+        [
+          "追加箭矢数量情景",
+          5,
+          "支"
+        ],
+        [
+          "可充能次数参数",
+          1,
+          "次"
+        ]
+      ],
+      "notes": [
+        "四箭及可选五箭保留条件量；额外充能消费、发射/飞行、强击瓶逐箭覆盖和实际结束未绑定。"
+      ],
+      "conditional_components": [
+        {
+          "name": "刚射",
+          "damage_type": "physical",
+          "per_hit": 385.56000000000006,
+          "hits": 4,
+          "total": 1542.2400000000002
+        },
+        {
+          "name": "刚连射",
+          "damage_type": "physical",
+          "per_hit": 578.34,
+          "hits": 5,
+          "total": 2891.7000000000003
+        }
+      ],
+      "source_possible": true,
+      "observation_seconds": null,
+      "collision_clock_verified": false,
+      "window_reference": {
+        "kind": "orchid_arrows",
+        "parameter_rows": [
+          [
+            "首轮箭矢数量参数",
+            4,
+            "支"
+          ],
+          [
+            "追加箭矢数量情景",
+            5,
+            "支"
+          ],
+          [
+            "可充能次数参数",
+            1,
+            "次"
+          ]
+        ],
+        "notes": [
+          "四箭及可选五箭保留条件量；额外充能消费、发射/飞行、强击瓶逐箭覆盖和实际结束未绑定。"
+        ],
+        "conditional_components": [
+          {
+            "name": "刚射",
+            "damage_type": "physical",
+            "per_hit": 385.56000000000006,
+            "hits": 4,
+            "total": 1542.2400000000002
+          },
+          {
+            "name": "刚连射",
+            "damage_type": "physical",
+            "per_hit": 578.34,
+            "hits": 5,
+            "total": 2891.7000000000003
+          }
+        ],
+        "source_possible": true,
+        "observation_seconds": 10.0,
+        "collision_clock_verified": false
+      },
+      "actual_hit_times_seconds": null,
+      "actual_end_seconds": null
+    },
+    "orchid_redeploy_reference": {
+      "scope": "cultivated attribute and same-identity talent parameter reference",
+      "operator_id": "char_1048_orchd2",
+      "module_id": null,
+      "module_level": 0,
+      "module_unlocked": false,
+      "module_attribute_delta_seconds_parameter": 0,
+      "after_attribute_sources_seconds_reference": 70.0,
+      "talent_delta_seconds_parameter": 0,
+      "parameter_seconds": 70.0,
+      "original_talent_identity": {
+        "talent_index": 3,
+        "prefab_key": "3"
+      },
+      "actual_retreat_seconds": null,
+      "actual_defeat_seconds": null,
+      "actual_next_deployment_seconds": null,
+      "events_scheduled": false,
+      "native_attachment_verified": false,
+      "live_state_verified": false,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "source_selectors": [
+        "character_table.char_1048_orchd2.phases[*].attributesKeyFrames[*].data.respawnTime",
+        "character_table.char_1048_orchd2.potentialRanks[1].buff.attributes.attributeModifiers",
+        "character_table.char_1048_orchd2.talents[1].candidates",
+        "character_table.char_1048_orchd2.talents[3].candidates",
+        "uniequip_table.equipDict.uniequip_002_orchd2",
+        "battle_equip_table.uniequip_002_orchd2.phases[*].attributeBlackboard",
+        "battle_equip_table.uniequip_002_orchd2.phases[*].parts[*].addOrOverrideTalentDataBundle.candidates"
+      ]
+    }
+  },
+  "application_API_calls": 0,
+  "production_helper_calls": 0,
+  "formatter_calls": 0,
+  "Qt_calls": 0,
+  "Wine_calls": 0
+}

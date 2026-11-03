@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "event_id": "community_group_019",
+  "scene_key": "community_group_019:scene:1",
+  "choice_key": "community_group_019:scene:1:choice:0",
+  "expected_event": {
+    "id": "community_group_019",
+    "title": "和平守卫者",
+    "node_types": [
+      "不期而遇"
+    ],
+    "floors": [
+      4,
+      5
+    ],
+    "natural": null,
+    "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+    "entry": [
+      "community_group_019:scene:0"
+    ],
+    "source_group_id": "community_group_019",
+    "scenes": [
+      {
+        "key": "community_group_019:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_task1_enter"
+        ],
+        "description": "“重金悬赏，按头计费！你——别傻站在那儿了，快过来帮我们一起解决那些又倔又听不懂人话的‘居民’！”一只穿着军装的狗一把将你扯进了集合的队伍。士兵们全副武装，情绪高涨，高喊着“解放”“和平”一类的词语。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_20",
+          "data-name": "和平守卫者",
+          "data-ename": "",
+          "data-efloor": "IV,V",
+          "data-index": "105",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_019:scene:0:choice:0",
+            "title": "加入队伍，接取悬赏",
+            "description": "获得收藏品厄运火杆（与“居民”作战时，敌人生命-40%，且作战胜利后所有干员的攻击速度永久+10）",
+            "destination_keys": [
+              "community_group_019:scene:1"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_task1_1"
+            ],
+            "source_type": "collection2",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "collection2",
+              "data-title": "加入队伍，接取悬赏",
+              "data-icon": "208",
+              "data-dest": "1",
+              "data-iconid": "rogue_6_relic_cargo_11",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "normalized_title_and_explicit_item_id_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_019:scene:0:choice:1",
+            "title": "离开队伍",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_019:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_task1_2"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "离开队伍",
+              "data-icon": "leave",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      {
+        "key": "community_group_019:scene:1",
+        "game_scene_ids": [
+          "scene_ro6_task1_1"
+        ],
+        "description": "你领到了自己的武器，迅速掌握了它的使用方法。或许在施暴这件事上，你很有天赋。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "接取悬赏",
+          "data-image": "Avg_pic_rogue_6_20",
+          "data-name": "和平守卫者",
+          "data-ename": "",
+          "data-index": "106",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": [
+          {
+            "key": "community_group_019:scene:1:choice:0",
+            "title": "守卫和平！",
+            "description": "立即前往最近的“居民”据点",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_task1_3"
+            ],
+            "source_type": "simple",
+            "conditional": "若已完成当前层的【“居民”据点】作战则不会移动",
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "守卫和平！",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_019:scene:1:choice:1",
+            "title": "从长计议",
+            "description": "仅标记地图上最近的“居民”据点，暂不前往",
+            "destination_keys": [],
+            "game_choice_ids": [
+              "choice_ro6_task1_4"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "从长计议",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "no_navigation",
+            "game_match_basis": "exact_normalized_title_description",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      {
+        "key": "community_group_019:scene:2",
+        "game_scene_ids": [
+          "scene_ro6_task1_2"
+        ],
+        "description": "可惜，你没有被狂热的情绪感染，而且它们嘴里喊的口号太过单一，与它们为伍似乎不是什么好主意。",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "离开",
+          "data-image": "Avg_pic_rogue_6_20",
+          "data-name": "和平守卫者",
+          "data-ename": "",
+          "data-index": "107",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": []
+      }
+    ]
+  },
+  "expected_scene": {
+    "key": "community_group_019:scene:1",
+    "game_scene_ids": [
+      "scene_ro6_task1_1"
+    ],
+    "description": "你领到了自己的武器，迅速掌握了它的使用方法。或许在施暴这件事上，你很有天赋。",
+    "attributes": {
+      "class": "scene",
+      "data-nav": "接取悬赏",
+      "data-image": "Avg_pic_rogue_6_20",
+      "data-name": "和平守卫者",
+      "data-ename": "",
+      "data-index": "106",
+      "data-prtsinfo": ""
+    },
+    "edesc_texts": [],
+    "choices": [
+      {
+        "key": "community_group_019:scene:1:choice:0",
+        "title": "守卫和平！",
+        "description": "立即前往最近的“居民”据点",
+        "destination_keys": [],
+        "game_choice_ids": [
+          "choice_ro6_task1_3"
+        ],
+        "source_type": "simple",
+        "conditional": "若已完成当前层的【“居民”据点】作战则不会移动",
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "simple",
+          "data-title": "守卫和平！",
+          "data-icon": "unknown",
+          "data-dest": "",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "display_option_reference",
+        "destination_status": "no_navigation",
+        "game_match_basis": "exact_normalized_title_description",
+        "server_option_availability_verified": false
+      },
+      {
+        "key": "community_group_019:scene:1:choice:1",
+        "title": "从长计议",
+        "description": "仅标记地图上最近的“居民”据点，暂不前往",
+        "destination_keys": [],
+        "game_choice_ids": [
+          "choice_ro6_task1_4"
+        ],
+        "source_type": "simple",
+        "conditional": null,
+        "nested": false,
+        "subchoices": [],
+        "attributes": {
+          "class": "choose",
+          "data-type": "simple",
+          "data-title": "从长计议",
+          "data-icon": "unknown",
+          "data-dest": "",
+          "data-iconid": "",
+          "data-subchoose": ""
+        },
+        "presentation_role": "display_option_reference",
+        "destination_status": "no_navigation",
+        "game_match_basis": "exact_normalized_title_description",
+        "server_option_availability_verified": false
+      }
+    ]
+  },
+  "expected_choice": {
+    "key": "community_group_019:scene:1:choice:0",
+    "title": "守卫和平！",
+    "description": "立即前往最近的“居民”据点",
+    "destination_keys": [],
+    "game_choice_ids": [
+      "choice_ro6_task1_3"
+    ],
+    "source_type": "simple",
+    "conditional": "若已完成当前层的【“居民”据点】作战则不会移动",
+    "nested": false,
+    "subchoices": [],
+    "attributes": {
+      "class": "choose",
+      "data-type": "simple",
+      "data-title": "守卫和平！",
+      "data-icon": "unknown",
+      "data-dest": "",
+      "data-iconid": "",
+      "data-subchoose": ""
+    },
+    "presentation_role": "display_option_reference",
+    "destination_status": "no_navigation",
+    "game_match_basis": "exact_normalized_title_description",
+    "server_option_availability_verified": false
+  },
+  "base_action_reference": {
+    "action_kind": "move_to_nearest_resident_post",
+    "description": "立即前往最近的“居民”据点",
+    "nearest_selection_algorithm_known": false
+  },
+  "completion_exception_reference": {
+    "condition_text": "若已完成当前层的【“居民”据点】作战则不会移动",
+    "predicate": "current_floor_resident_post_battle_completed",
+    "condition_matches": null,
+    "documented_movement_if_condition_matches": false,
+    "one_way_implication": true,
+    "converse_verified": false,
+    "negation_implies_successful_movement_verified": false,
+    "documentation_revisions": [
+      "427904",
+      "440271"
+    ],
+    "evidence_scope": "same-family community documentation; no original server-script verification"
+  },
+  "related_option_reference": {
+    "choice_key": "community_group_019:scene:1:choice:1",
+    "original_choice_id": "choice_ro6_task1_4",
+    "action_kind": "mark_nearest_resident_post",
+    "description": "仅标记地图上最近的“居民”据点，暂不前往",
+    "original_record": {
+      "id": "choice_ro6_task1_4",
+      "title": "从长计议",
+      "description": "仅标记地图上最近的“居民”据点，暂不前往",
+      "lockedCoverDesc": null,
+      "type": "VISION",
+      "leftDecoType": "NONE",
+      "nextSceneId": null,
+      "icon": null,
+      "displayData": {
+        "type": "NORMAL",
+        "costHintType": "NONE",
+        "effectHintType": "NONE",
+        "funcIconId": "unknown",
+        "itemId": null,
+        "difficultyUpgradeRelicGroupId": null,
+        "taskId": null,
+        "instId": null
+      },
+      "forceShowWhenOnlyLeave": false,
+      "isHiddenChoice": false,
+      "sortId": 0
+    },
+    "move_exception_inherited": false
+  },
+  "original_record": {
+    "id": "choice_ro6_task1_3",
+    "title": "守卫和平！",
+    "description": "立即前往最近的“居民”据点",
+    "lockedCoverDesc": null,
+    "type": "MOVE",
+    "leftDecoType": "NONE",
+    "nextSceneId": null,
+    "icon": null,
+    "displayData": {
+      "type": "NORMAL",
+      "costHintType": "NONE",
+      "effectHintType": "NONE",
+      "funcIconId": "unknown",
+      "itemId": null,
+      "difficultyUpgradeRelicGroupId": null,
+      "taskId": null,
+      "instId": null
+    },
+    "forceShowWhenOnlyLeave": false,
+    "isHiddenChoice": false,
+    "sortId": 0
+  },
+  "source": {
+    "original_game": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    "bwiki": {
+      "url": "https://wiki.biligame.com/arknights/沉沦者的黑流树海/调查记录",
+      "revision": "349818",
+      "sha256": "26b7768bf3556cf73c24529659c2c92f4095059476f782130bf3fa768422b908",
+      "role": "two_base_results_only"
+    },
+    "prts_versions": {
+      "427904": {
+        "revision": "427904",
+        "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+        "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=427904",
+        "role": "same_community_family_documented_completion_exception"
+      },
+      "440271": {
+        "revision": "440271",
+        "sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
+        "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=440271",
+        "role": "same_community_family_documented_completion_exception"
+      }
+    }
+  },
+  "source_reference": {
+    "prts_dom_bindings": {
+      "427904": {
+        "scene_attributes": {
+          "class": "scene",
+          "data-nav": "接取悬赏",
+          "data-image": "Avg_pic_rogue_6_20",
+          "data-name": "和平守卫者",
+          "data-ename": "",
+          "data-index": "106",
+          "data-prtsinfo": ""
+        },
+        "scene_description": "你领到了自己的武器，迅速掌握了它的使用方法。或许在施暴这件事上，你很有天赋。",
+        "choices": [
+          {
+            "choice_key": "community_group_019:scene:1:choice:0",
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "守卫和平！",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "desc1": "立即前往最近的“居民”据点",
+            "desc2": "若已完成当前层的【“居民”据点】作战则不会移动"
+          },
+          {
+            "choice_key": "community_group_019:scene:1:choice:1",
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "从长计议",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "desc1": "仅标记地图上最近的“居民”据点，暂不前往",
+            "desc2": null
+          }
+        ],
+        "source_sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9"
+      },
+      "440271": {
+        "scene_attributes": {
+          "class": "scene",
+          "data-nav": "接取悬赏",
+          "data-image": "Avg_pic_rogue_6_20",
+          "data-name": "和平守卫者",
+          "data-ename": "",
+          "data-index": "106",
+          "data-prtsinfo": ""
+        },
+        "scene_description": "你领到了自己的武器，迅速掌握了它的使用方法。或许在施暴这件事上，你很有天赋。",
+        "choices": [
+          {
+            "choice_key": "community_group_019:scene:1:choice:0",
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "守卫和平！",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "desc1": "立即前往最近的“居民”据点",
+            "desc2": "若已完成当前层的【“居民”据点】作战则不会移动"
+          },
+          {
+            "choice_key": "community_group_019:scene:1:choice:1",
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "从长计议",
+              "data-icon": "unknown",
+              "data-dest": "",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "desc1": "仅标记地图上最近的“居民”据点，暂不前往",
+            "desc2": null
+          }
+        ],
+        "source_sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8"
+      }
+    },
+    "bwiki_base_result_bindings": [
+      {
+        "original_choice_id": "choice_ro6_task1_3",
+        "match": {
+          "row_index": 6,
+          "cell_index": 2,
+          "cell_text": "守卫和平！\n立即前往最近的“居民”据点"
+        }
+      },
+      {
+        "original_choice_id": "choice_ro6_task1_4",
+        "match": {
+          "row_index": 7,
+          "cell_index": 1,
+          "cell_text": "从长计议\n仅标记地图上最近的“居民”据点，暂不前往"
+        }
+      }
+    ],
+    "exception_in_bwiki": false,
+    "exception_in_original_choices": false,
+    "original_field_path": "$.details.rogue_6.choices.choice_ro6_task1_3",
+    "source_scene_inferred_from_destination": false
+  },
+  "source_scene_link_verified": false,
+  "complete_movement_result_known": false,
+  "actual_current_floor_completion": null,
+  "actual_target_node_id": null,
+  "actual_moved": null
+}

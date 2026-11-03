@@ -11,9 +11,10 @@ def calculate_damage(scenario):
 class DamageTests(unittest.TestCase):
     def test_wine_single_cast_burst_does_not_invent_unverified_recharge_cycle(self):
         result=calculate_damage({'operator':'char_1042_phatm2','skill':1,'base_attack':2000})
-        # Two3000 arts hits trigger one6000 burst in the original reference.
-        # Native end/SP/normal resume phases are not a proven complete cycle.
-        self.assertEqual(result['estimate']['skill']['total_damage'],12000)
+        # Two3000 arts hits are independent of the unresolved first buff
+        # attachment; no burst schedule or complete cycle is proven.
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],6000)
+        self.assertIsNone(result['estimate']['skill']['total_damage'])
         self.assertIsNone(result['estimate']['skill']['cycle_damage'])
 
     def test_deepcolor_global_relics_apply_to_token_without_inheriting_operator_stats(self):
@@ -37,9 +38,13 @@ class DamageTests(unittest.TestCase):
         result=calculate_damage(scenario)
         # Pot1: own Laterano ammo ATK +18%; S3 +30% =>1480.
         # 50*(1480*1.6-200) + 50*.25*(1480*1.5-200) + (1480*2.5-200).
-        self.assertEqual(result['total_damage'],137150)
+        self.assertIsNone(result['total_damage'])
+        def conditional_total(r):
+            return r['known_damage_subtotals']['window_damage']+r['external_event_reference']['conditional_components'][0]['total']
+        self.assertEqual(conditional_total(result),137150)
         faster=calculate_damage({**scenario,'effects':[{'kind':'attack_speed','value':100}]})
-        self.assertEqual(faster['total_damage'],result['total_damage'])
+        self.assertIsNone(faster['total_damage'])
+        self.assertEqual(conditional_total(faster),conditional_total(result))
         self.assertLess(faster['estimate']['skill']['duration_seconds'],result['estimate']['skill']['duration_seconds'])
 
     def test_infinite_skill_uses_window_output_without_inventing_cast_total_or_rotation(self):
@@ -65,24 +70,26 @@ class DamageTests(unittest.TestCase):
         # S2 resolves arts -> neural -> elemental, so hits three and four add 250 each.
         self.assertEqual(result['total_damage'],16100)
 
-    def test_neural_buildup_is_not_counted_as_hp_damage_and_boss_threshold_differs(self):
+    def test_s1_unresolved_buildup_is_not_counted_as_hp_damage_for_either_threshold(self):
         scenario={'operator':'char_1042_phatm2','skill':1,'base_attack':1000,'enemy_resistance':0}
         result=calculate_damage(scenario)
-        # Two 1500 arts hits; each adds 1000*.30*1.8=540 neural buildup.
-        # A 1000 threshold produces one 6000 elemental burst, not 1080 HP damage.
-        self.assertEqual(result['total_damage'],9000)
+        # Two1500 arts hits and two1000*.30 base neural references. The
+        # buff parameter1.8 alone does not prove either hit receives it.
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],3000)
+        self.assertIsNone(result['total_damage'])
         boss=calculate_damage({**scenario,'enemy_is_boss':True})
-        self.assertEqual(boss['total_damage'],3000)
+        self.assertEqual(boss['known_damage_subtotals']['total_damage'],3000)
+        self.assertIsNone(boss['total_damage'])
 
     def test_chen_weakness_chooses_type_before_type_specific_injury_bonus(self):
         scenario={'operator':'char_1050_chen3','skill':2,'base_attack':1000,
                   'enemy_defense':500,'enemy_resistance':50}
         result=calculate_damage(scenario)
         # Pot1 E2 +13% ATK; ten 480% hits: 5424 - 500 > 5424 * .5.
-        slashes=next(c for c in result['components'] if c['name']=='绝影斩击')
+        slashes=next(c for c in result['unbound_cast_reference']['conditional_components'] if c['name']=='绝影斩击')
         self.assertAlmostEqual(slashes['total'],49240)
         bonus=calculate_damage({**scenario,'effects':[{'kind':'damage_taken','damage_type':'magic','value':2}]})
-        self.assertEqual(slashes['total'],next(c for c in bonus['components'] if c['name']=='绝影斩击')['total'])
+        self.assertEqual(slashes['total'],next(c for c in bonus['unbound_cast_reference']['conditional_components'] if c['name']=='绝影斩击')['total'])
 
     def test_gummy_cooking_delay_and_healing_interval_are_included(self):
         result=calculate_damage({'operator':'char_196_sunbr','skill':2,'base_attack':1000})
@@ -95,9 +102,11 @@ class DamageTests(unittest.TestCase):
         result=calculate_damage(scenario)
         # Pot1 E2: +13% ATK, 16 slashes, 150% physical + 75% arts.
         # 16 * ((1130*1.5-100) + 1130*.75*.5) = 32300.
-        self.assertAlmostEqual(result['total_damage'],32300)
+        refs=result['unbound_cast_reference']['conditional_components']
+        self.assertAlmostEqual(sum(c['total'] for c in refs),32300)
+        self.assertIsNone(result['total_damage'])
         faster=calculate_damage({**scenario,'effects':[{'kind':'attack_speed','value':100}]})
-        self.assertEqual(result['total_damage'],faster['total_damage'])
+        self.assertEqual(refs,faster['unbound_cast_reference']['conditional_components'])
 
     def test_deepcolor_summon_uses_own_level_curve_without_operator_trust_attack(self):
         result=calculate_damage({'operator':'char_110_deepcl','skill':1,'base_attack':1000,
@@ -122,7 +131,7 @@ class DamageTests(unittest.TestCase):
             'enemy_defense':200,'effects':[{'kind':'attack_pct','value':.5}]})
         # E2 potential 1: +7% ATK/+7 ASPD; S1 M3 = 200% ATK.
         # (1000 * (1 + .07 + .5)) * 2 - 200 = 2940.
-        self.assertAlmostEqual(result['estimate']['skill']['total_damage'],2940)
+        self.assertAlmostEqual(result['mei_s1_reference']['parameter_clock_reference']['total_damage'],2940)
         self.assertEqual(result['estimate']['base_stats']['attack_speed'],107)
 
     def test_partial_run_inventory_is_not_reported_as_complete_or_empty(self):
@@ -139,13 +148,17 @@ class DamageTests(unittest.TestCase):
         self.assertEqual(result['estimate']['base_stats']['defense'],845)
 
     def test_shield_skill_can_estimate_a_cast_with_an_explicit_end_time(self):
-        skill=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
-            'shield_break_count':2,'skill_duration_seconds':20})['estimate']['skill']
-        # Two 5000 explosions and 16 ordinary 2500 hits during the skill;
-        # 41 ordinary 1000 hits during its 50-second recharge.
-        self.assertEqual(skill['total_damage'],50000)
+        result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
+            'shield_break_count':2,'skill_duration_seconds':20})
+        skill=result['estimate']['skill']
+        # Keep 16 ordinary 2500 hits and 41 ordinary recharge hits as subtotals;
+        # two 5000 shield explosions have no verified event/cast placement.
+        self.assertIsNone(skill['total_damage'])
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],40000)
+        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
         self.assertEqual(skill['cycle_seconds'],70)
-        self.assertEqual(skill['cycle_dps'],1300)
+        self.assertIsNone(skill['cycle_dps'])
+        self.assertEqual(result['known_damage_subtotals']['cycle_damage'],81000)
 
     def test_silverash_shield_skill_is_not_misreported_as_healing(self):
         skill=calculate_damage({'operator':'silverash','skill':1})['estimate']['skill']
@@ -218,7 +231,8 @@ class DamageTests(unittest.TestCase):
 
     def test_shield_break_count_is_not_enough_to_infer_a_full_cycle(self):
         result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,'shield_break_count':2})
-        self.assertEqual(result['total_damage'],10000)
+        self.assertIsNone(result['total_damage'])
+        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
         self.assertIsNone(result['estimate']['skill']['total_damage'])
         self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
         self.assertEqual(result['estimate']['skill']['initial_seconds'],15)
@@ -267,7 +281,8 @@ class DamageTests(unittest.TestCase):
         result = calculate_damage({'operator': 'mechanist', 'skill': 2, 'skill_rank': 10,
             'base_attack': 1000, 'enemy_resistance': 50, 'shield_break_count': 2})
         # 2500 ATK * 200% * 50% RES * two observed shield breaks.
-        self.assertAlmostEqual(result['total_damage'], 5000)
+        self.assertIsNone(result['total_damage'])
+        self.assertAlmostEqual(result['shield_break_reference']['declared_count_damage_reference'], 5000)
     def test_skill_rank_seven_uses_non_mastery_profile(self):
         result = calculate_damage({'operator': 'kaltsit', 'skill': 2, 'skill_rank': 7, 'base_attack': 1000})
         # Rank 7: ATK +125%; 350% true damage, ten shots => 78750.

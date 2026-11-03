@@ -1,0 +1,87 @@
+{
+  "section": 240,
+  "title": "望卡片棋子跟子弹道与费用技力分池声明账本",
+  "remaining_item": "P2望的额外实体、卡片库存与实际在场状态混淆及多步资源规划",
+  "new_capability": "五池独立连续账本；名义取得与实际入库分开，未知逐池传播，矛盾链需独立快照重启；望S1/S2专属可编辑窗口，并核对原技能等级及培养模组门",
+  "limitations": [
+    "跟子是弹道额外实体，不占角色部署空位，不能混作手动棋子",
+    "消耗与返还由用户独立声明，不生成实际部署、技能或退款时钟",
+    "合法模组下完整跟子池上限仍未知，S3未接入",
+    "公开静态声明的Qt验收不证明当前游戏库存或热更新"
+  ],
+  "files": [
+    "research/p2-continuation-wang-resource-ledger/REPORT.md",
+    "research/p2-continuation-wang-resource-ledger/final-combined-tests.log",
+    "research/p2-continuation-wang-resource-ledger/final-tests.log",
+    "research/p2-continuation-wang-resource-ledger/initial-tests.log",
+    "research/p2-continuation-wang-resource-ledger/offscreen-ledger.png",
+    "research/p2-continuation-wang-resource-ledger/qt-tests.log",
+    "research/p2-continuation-wang-resource-ledger/source-receipt.json",
+    "research/p2-continuation-wang-resource-ledger/source-recheck.json",
+    "research/p2-continuation-wang-resource-ledger/verify_source_packet.py",
+    "rouge/app.py",
+    "rouge/data/p2-wang-resource-source.json",
+    "rouge/p2_wang_resource_ledger.py",
+    "rouge/p2_wang_resource_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_p2_wang_resource_ledger.py",
+    "tests/test_p2_wang_resource_view.py",
+    "verification/section-240/tests.txt",
+    "verification/section-240/validation.json"
+  ],
+  "source_evidence": [
+    "固定a550f5e第一天赋6完整候选及S1/S2二十等级源记录；原spData逐项核验",
+    "PRTS435179明确跟子为弹道非占位；复用已证普通token卡片数量及装备门"
+  ],
+  "acceptance": [
+    "16项行为与Qt实际编辑/重算检查通过，来源记录重读通过",
+    "最初17个错误测试子断言的日志保留，纠正原表预期未改机制实现"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:03:34.890203+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "a6de0ce06cbc884bddd4e6a2fab81667c5a9fa4f",
+  "required_raw_sha256": {
+    "research/p2-continuation-wang-resource-ledger/REPORT.md": "7b8f2e52d9ff8539e31de2995df6db11cc2338d5dc6f23592984737fe2d73c35",
+    "research/p2-continuation-wang-resource-ledger/final-combined-tests.log": "cb6ce01435295f875c6104dc1976c0d271d75980aa600668c6beebdc632d5f1f",
+    "research/p2-continuation-wang-resource-ledger/final-tests.log": "ca707ae6d1d0018e91576de0ed8d1ae1d67fde77ebcbccb4f96a89cd4241bcd8",
+    "research/p2-continuation-wang-resource-ledger/initial-tests.log": "9e1cfb9b10853333e4fddd6680651d35078d1bd963da1d685fa0a39614a7d506",
+    "research/p2-continuation-wang-resource-ledger/offscreen-ledger.png": "4dce610fe47acfa35a2991988bcfa1432917d4f0124b027765b61e5728c09f1b",
+    "research/p2-continuation-wang-resource-ledger/qt-tests.log": "d5fdeb1d9d75ea1f867f44ee738f97c5df642d379a0ce054325fbc5c65136ac0",
+    "research/p2-continuation-wang-resource-ledger/source-receipt.json": "2c9d56f535bc9d461ed63b91490272c64fe2ce5cfbfccd1e17301d692fca971f",
+    "research/p2-continuation-wang-resource-ledger/source-recheck.json": "2189757fa7cadeb5f1fc07ef6b53bb9042e9667a47835023086cf9996e4dbfb0",
+    "research/p2-continuation-wang-resource-ledger/verify_source_packet.py": "be2d2f63e3ed2641afe39973d53e48611939fc7bc998a216aafdbfd48dab7a24",
+    "rouge/app.py": "e0fdd76e708a2e3f27f7789ff0291ab18ad6ee3f7e0d892a36cffef571c05ede",
+    "rouge/data/p2-wang-resource-source.json": "8f7001e24441e1d7613febd821314b6a27c2b261efa747a000e97a8493446c1f",
+    "rouge/p2_wang_resource_ledger.py": "1b6677a1ccc48674970d2b186f8d532bee4e5c83eff9d40d289183f2038d8377",
+    "rouge/p2_wang_resource_view.py": "9725f4392a9cffae0192a457146b0e130b8df65f1c57b7ea8b55261c436a7a2a",
+    "scripts/verify_cloud.py": "58974e6a114ba353d0bb0dae41d42fc1ab741a75000c124f4fd0e5613bcebdc8",
+    "tests/test_p2_wang_resource_ledger.py": "511fe04b85a5a39fe982097e7c6eae612f61102d11687178a607d9fe8342b58c",
+    "tests/test_p2_wang_resource_view.py": "f4dc4114971f2fa00bce1ca5db362ed944c5da8af89fac690f4ab1b28c423ca9",
+    "verification/section-240/tests.txt": "fa3f3332f086050b608fa5b59949eb2b94a40c35a49232a98424aaae849989c3",
+    "verification/section-240/validation.json": "b9e8b38db2a6df8a70d769a56b13960ad9e16d78b3aa2833b0b637e16dc6dcf5"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_p2_wang_resource_ledger",
+      "tests.test_p2_wang_resource_view"
+    ],
+    "tests_run": 16,
+    "passed": 16,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245,
+  "archival_preparation": {
+    "first_stage": "全局*.log忽略规则拒绝4个明确公开测试日志，尚未提交/推送",
+    "resolution": "只显式强制纳入本节4份公开测试日志；未改变数值、测试内容或既有忽略规则"
+  }
+}

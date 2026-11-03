@@ -1,0 +1,113 @@
+{
+  "status": "PASS_EXHAUSTIVE_ATTRIBUTE_AST_NO_OPERATOR_SKILL_OR_RUN_RESET",
+  "named_root_commit": "6191cc76ecf2a907493dd8347dcecb7b0d6bc4d0",
+  "app_sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+  "all_self_continuous_attribute_references": [
+    {
+      "line": 566,
+      "expression": "self.continuous_attacks=QCheckBox('持续进行普攻以回复技力')",
+      "function": "make_damage_tab",
+      "context": "Store"
+    },
+    {
+      "line": 567,
+      "expression": "self.continuous_attacks.setChecked",
+      "function": "make_damage_tab",
+      "context": "Load"
+    },
+    {
+      "line": 568,
+      "expression": "form.addRow('攻击回复条件',self.continuous_attacks)",
+      "function": "make_damage_tab",
+      "context": "Load"
+    },
+    {
+      "line": 960,
+      "expression": "(self.continuous_attacks,current.get('sp_type')=='INCREASE_WHEN_ATTACK')",
+      "function": "update_skill_options",
+      "context": "Load"
+    },
+    {
+      "line": 1028,
+      "expression": "self.continuous_attacks.isChecked",
+      "function": "calculate",
+      "context": "Load"
+    }
+  ],
+  "direct_widget_method_calls": [
+    {
+      "line": 567,
+      "method": "setChecked",
+      "expression": "self.continuous_attacks.setChecked(True)",
+      "function": "make_damage_tab"
+    },
+    {
+      "line": 1028,
+      "method": "isChecked",
+      "expression": "self.continuous_attacks.isChecked()",
+      "function": "calculate"
+    }
+  ],
+  "state_initialization": {
+    "line": 566,
+    "widget": "QCheckBox",
+    "checked_default": true,
+    "checked_line": 567
+  },
+  "visibility": {
+    "line": 960,
+    "expression": "current.get('sp_type')=='INCREASE_WHEN_ATTACK'",
+    "form_row_apply_line": 967
+  },
+  "serialization": {
+    "line": 1028,
+    "always_emitted": true,
+    "native_bool_producer": "self.continuous_attacks.isChecked()"
+  },
+  "transition_dataflow": [
+    {
+      "source": "operator.currentIndexChanged",
+      "line": 524,
+      "target": "update_operator",
+      "target_lines": [
+        791,
+        847
+      ]
+    },
+    {
+      "source": "skill.currentIndexChanged",
+      "line": 553,
+      "target": "skill_changed",
+      "target_lines": [
+        854,
+        856
+      ]
+    },
+    {
+      "source": "update_operator/skill_changed",
+      "target": "update_skill_options",
+      "target_lines": [
+        949,
+        998
+      ]
+    },
+    {
+      "source": "update_skill_options",
+      "target": "damage_form.setRowVisible",
+      "line": 967
+    },
+    {
+      "source": "update_skill_options",
+      "target": "calculate",
+      "line": 998
+    },
+    {
+      "source": "calculate",
+      "target": "calculate_damage public dispatcher",
+      "always_serializes_hidden_bool": true
+    }
+  ],
+  "not_a_Qt_execution": true,
+  "no_hidden_inactivity_assumption": true,
+  "new_project_calls": 0
+}

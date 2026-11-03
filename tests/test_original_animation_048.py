@@ -13,7 +13,7 @@ class OriginalAnimation048Tests(unittest.TestCase):
         data=references();self.assertEqual(data['counts']['source_skeletons'],64)
         sources={r['source']['url']:r['source'] for p in data['operators'].values() for r in p['records']}
         downloads=json.loads((ROOT/'.cache/research/timing-048/skeleton-downloads.json').read_text(encoding='utf-8'))
-        self.assertEqual(len(sources),63)
+        self.assertEqual(len(sources),64)
         for item in downloads:
             raw=(ROOT/'.cache/research/timing-048'/item['file']).read_bytes()
             self.assertEqual(hashlib.sha256(raw).hexdigest(),item['sha256'])
@@ -39,10 +39,14 @@ class OriginalAnimation048Tests(unittest.TestCase):
         selected=[r for r in choices('kaltsit',3) if r['animation']=='Skill_3_Attack']
         self.assertEqual({r['orientation']:r['preview']['windup_frames'] for r in selected},{'Front':12,'Back':13})
 
-    def test_sources_missing_on_one_side_are_not_filled_from_the_other_side(self):
+    def test_recovered_back_sources_are_not_filled_from_the_other_side(self):
         p=references()['operators']['char_196_sunbr']
-        self.assertEqual([s['orientation'] for s in p['missing_sources']],['Back'])
-        self.assertTrue(p['records']);self.assertTrue(all(r['orientation']=='Front' for r in p['records']))
+        self.assertEqual(p['missing_sources'],[])
+        back=[r for r in p['records'] if r['orientation']=='Back']
+        self.assertEqual([r['animation'] for r in back],['Attack','Default','Idle','Skill','Start'])
+        self.assertEqual(len([r for r in p['records'] if r['orientation']=='Front']),9)
+        self.assertTrue(all(r['source']['sha256']=='09526db9b53f6fa54ac51219ce31e6cd3903e618d9a47781f230bf68de3edfb2'
+                            for r in back))
 
     def test_representation_error_is_disclosed_without_hiding_real_fractional_frames(self):
         f=frames(.4+1e-8)
@@ -81,7 +85,7 @@ class OriginalAnimation048Tests(unittest.TestCase):
         self.assertNotIn('original_animation_reference',r['timing']['streams'][0])
 
     def test_reference_uses_existing_movement_and_half_open_window_clock(self):
-        ref=choices('mechanist',1,normal=True)[0]['id']
+        ref=choices('mechanist',2)[0]['id']
         timeline=AttackTimeline({'operator':'mechanist','skill':2,'timing':{
             'animation_reference':ref,'movement_windows':[[.2,.5]]}})
         stream=timeline.attacks(1,1.2)

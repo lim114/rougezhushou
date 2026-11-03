@@ -1,0 +1,21 @@
+{
+  "kind": "299-parent-integration-test-draft-ready-for-root-review",
+  "ready": true,
+  "promotion_allowlist": {
+    "tests/test_spawn_candidates_integration_299.py": {
+      "path": ".cache/p3-299-parent-integration-tests/candidate/tests/test_spawn_candidates_integration_299.py",
+      "sha256": "26ea3f42c3f7bbefea1a6f90f274ed0c0aff1797644c90572524f49a0366c2c0",
+      "bytes": 22609
+    }
+  },
+  "preparation": {
+    "path": ".cache/p3-299-parent-integration-tests/PREPARATION.json",
+    "sha256": "b8f8c052926e94a08857535a266ff7af9b5dceba8519b902119d429c96f3ec6b",
+    "bytes": 18093
+  },
+  "test_methods": 14,
+  "static_compile": true,
+  "runtime_or_native_acceptance": false,
+  "requires": "Root assembles reviewed backend, dialog and parent candidate, then runs actual selected tests; no product PASS from preparation.",
+  "known_parent_static_issue": "Current draft needs exact current manual selection guard; tests include the stale-intent recovery regression."
+}

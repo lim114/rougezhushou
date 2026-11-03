@@ -1,0 +1,2930 @@
+{
+  "passed": true,
+  "status": "SOURCE_CLOSED_NO_NEW_MECHANISM",
+  "baseline_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "source_files": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    },
+    "battle_equip_table": {
+      "path": "/workspace/.continuation/p2-after-070-source-audit/originals/battle_equip_table.json",
+      "bytes": 5710707,
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460"
+    },
+    "uniequip_table": {
+      "path": "/workspace/.continuation/p2-after-070-source-audit/originals/uniequip_table.json",
+      "bytes": 3365012,
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9"
+    }
+  },
+  "complete_raw_character": {
+    "name": "遥",
+    "description": "攻击造成<@ba.kw>法术伤害</>，技能开启后改为治疗友方单位（治疗量相当于75%攻击力）",
+    "sortIndex": 1148,
+    "spTargetType": "NONE",
+    "spTargetId": null,
+    "canUseGeneralPotentialItem": true,
+    "canUseActivityPotentialItem": false,
+    "potentialItemId": "p_char_4202_haruka",
+    "activityPotentialItemId": null,
+    "classicPotentialItemId": null,
+    "nationId": "higashi",
+    "groupId": null,
+    "teamId": null,
+    "mainPower": {
+      "nationId": "higashi",
+      "groupId": null,
+      "teamId": null
+    },
+    "subPower": null,
+    "displayNumber": "HK15",
+    "appellation": "Haruka",
+    "position": "RANGED",
+    "tagList": [
+      "支援",
+      "生存",
+      "治疗"
+    ],
+    "itemUsage": "来自东国的遥，希望在罗德岛上度过一段真正属于自己的时光。",
+    "itemDesc": "那个到遥远的地方自由生活的愿望，终于实现了吗？",
+    "itemObtainApproach": "招募寻访",
+    "isNotObtainable": false,
+    "isSpChar": false,
+    "maxPotentialLevel": 5,
+    "rarity": "TIER_6",
+    "profession": "SUPPORT",
+    "subProfessionId": "blessing",
+    "trait": {
+      "candidates": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "heal_scale",
+              "value": 0.75,
+              "valueStr": null
+            },
+            {
+              "key": "attack@max_target",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "attack@max_target_heal",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ],
+          "overrideDescripton": "攻击造成<@ba.kw>法术伤害</>，技能开启后改为治疗友方单位（治疗量相当于<@ba.kw>{heal_scale:0%}</>攻击力）",
+          "prefabKey": "-1",
+          "rangeId": null
+        }
+      ]
+    },
+    "phases": [
+      {
+        "characterPrefabKey": "char_4202_haruka",
+        "rangeId": "y-2",
+        "maxLevel": 50,
+        "attributesKeyFrames": [
+          {
+            "level": 1,
+            "data": {
+              "maxHp": 722,
+              "atk": 190,
+              "def": 71,
+              "magicResistance": 15.0,
+              "cost": 11,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          },
+          {
+            "level": 50,
+            "data": {
+              "maxHp": 1032,
+              "atk": 298,
+              "def": 106,
+              "magicResistance": 15.0,
+              "cost": 11,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          }
+        ],
+        "evolveCost": null
+      },
+      {
+        "characterPrefabKey": "char_4202_haruka",
+        "rangeId": "y-6",
+        "maxLevel": 80,
+        "attributesKeyFrames": [
+          {
+            "level": 1,
+            "data": {
+              "maxHp": 1032,
+              "atk": 298,
+              "def": 106,
+              "magicResistance": 20.0,
+              "cost": 13,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          },
+          {
+            "level": 80,
+            "data": {
+              "maxHp": 1415,
+              "atk": 398,
+              "def": 142,
+              "magicResistance": 20.0,
+              "cost": 13,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          }
+        ],
+        "evolveCost": [
+          {
+            "id": "3271",
+            "count": 5,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30052",
+            "count": 6,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30032",
+            "count": 5,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "characterPrefabKey": "char_4202_haruka",
+        "rangeId": "y-6",
+        "maxLevel": 90,
+        "attributesKeyFrames": [
+          {
+            "level": 1,
+            "data": {
+              "maxHp": 1415,
+              "atk": 398,
+              "def": 142,
+              "magicResistance": 25.0,
+              "cost": 13,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          },
+          {
+            "level": 90,
+            "data": {
+              "maxHp": 1887,
+              "atk": 480,
+              "def": 178,
+              "magicResistance": 25.0,
+              "cost": 13,
+              "blockCnt": 1,
+              "moveSpeed": 1.0,
+              "attackSpeed": 100.0,
+              "baseAttackTime": 1.6,
+              "respawnTime": 70,
+              "hpRecoveryPerSec": 0.0,
+              "spRecoveryPerSec": 1.0,
+              "maxDeployCount": 1,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false,
+              "teleportImmune": false,
+              "groundBoundImmune": false
+            }
+          }
+        ],
+        "evolveCost": [
+          {
+            "id": "3273",
+            "count": 4,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30115",
+            "count": 4,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30014",
+            "count": 9,
+            "type": "MATERIAL"
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "skillId": "skchr_haruka_1",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31044",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31023",
+                "count": 7,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31054",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30014",
+                "count": 10,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30155",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30104",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        }
+      },
+      {
+        "skillId": "skchr_haruka_2",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31074",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30033",
+                "count": 7,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31014",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31024",
+                "count": 9,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30145",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31034",
+                "count": 1,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_1",
+          "level": 1
+        }
+      },
+      {
+        "skillId": "skchr_haruka_3",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31094",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31063",
+                "count": 6,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30014",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30054",
+                "count": 8,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30165",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31064",
+                "count": 1,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        }
+      }
+    ],
+    "displayTokenDict": null,
+    "talents": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "浮光泡影",
+            "description": "每过一个攻击间隔，使范围内一名友方单位获得10%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "interval",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "damage_resistance",
+                "value": 0.1,
+                "valueStr": null
+              },
+              {
+                "key": "max_target_shield",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "浮光泡影",
+            "description": "每过一个攻击间隔，使范围内一名友方单位获得20%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "interval",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "damage_resistance",
+                "value": 0.2,
+                "valueStr": null
+              },
+              {
+                "key": "max_target_shield",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "浮光泡影",
+            "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "interval",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "damage_resistance",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "max_target_shield",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "扶摇花火",
+            "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "heal_scale",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "扶摇花火",
+            "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "heal_scale",
+                "value": 0.28,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "potentialRanks": [
+      {
+        "type": "BUFF",
+        "description": "部署费用-1",
+        "buff": {
+          "attributes": {
+            "abnormalFlags": null,
+            "abnormalImmunes": null,
+            "abnormalAntis": null,
+            "abnormalCombos": null,
+            "abnormalComboImmunes": null,
+            "attributeModifiers": [
+              {
+                "attributeType": "COST",
+                "formulaItem": "ADDITION",
+                "value": -1.0,
+                "loadFromBlackboard": false,
+                "fetchBaseValueFromSourceEntity": false
+              }
+            ]
+          }
+        },
+        "equivalentCost": null
+      },
+      {
+        "type": "BUFF",
+        "description": "再部署时间-6秒",
+        "buff": {
+          "attributes": {
+            "abnormalFlags": null,
+            "abnormalImmunes": null,
+            "abnormalAntis": null,
+            "abnormalCombos": null,
+            "abnormalComboImmunes": null,
+            "attributeModifiers": [
+              {
+                "attributeType": "RESPAWN_TIME",
+                "formulaItem": "ADDITION",
+                "value": -6.0,
+                "loadFromBlackboard": false,
+                "fetchBaseValueFromSourceEntity": false
+              }
+            ]
+          }
+        },
+        "equivalentCost": null
+      },
+      {
+        "type": "BUFF",
+        "description": "攻击力+25",
+        "buff": {
+          "attributes": {
+            "abnormalFlags": null,
+            "abnormalImmunes": null,
+            "abnormalAntis": null,
+            "abnormalCombos": null,
+            "abnormalComboImmunes": null,
+            "attributeModifiers": [
+              {
+                "attributeType": "ATK",
+                "formulaItem": "ADDITION",
+                "value": 25.0,
+                "loadFromBlackboard": false,
+                "fetchBaseValueFromSourceEntity": false
+              }
+            ]
+          }
+        },
+        "equivalentCost": null
+      },
+      {
+        "type": "CUSTOM",
+        "description": "第二天赋效果增强",
+        "buff": null,
+        "equivalentCost": null
+      },
+      {
+        "type": "BUFF",
+        "description": "部署费用-1",
+        "buff": {
+          "attributes": {
+            "abnormalFlags": null,
+            "abnormalImmunes": null,
+            "abnormalAntis": null,
+            "abnormalCombos": null,
+            "abnormalComboImmunes": null,
+            "attributeModifiers": [
+              {
+                "attributeType": "COST",
+                "formulaItem": "ADDITION",
+                "value": -1.0,
+                "loadFromBlackboard": false,
+                "fetchBaseValueFromSourceEntity": false
+              }
+            ]
+          }
+        },
+        "equivalentCost": null
+      }
+    ],
+    "favorKeyFrames": [
+      {
+        "level": 0,
+        "data": {
+          "maxHp": 0,
+          "atk": 0,
+          "def": 0,
+          "magicResistance": 0.0,
+          "cost": 0,
+          "blockCnt": 0,
+          "moveSpeed": 0.0,
+          "attackSpeed": 0.0,
+          "baseAttackTime": 0.0,
+          "respawnTime": 0,
+          "hpRecoveryPerSec": 0.0,
+          "spRecoveryPerSec": 0.0,
+          "maxDeployCount": 0,
+          "maxDeckStackCnt": 0,
+          "tauntLevel": 0,
+          "massLevel": 0,
+          "baseForceLevel": 0,
+          "stunImmune": false,
+          "silenceImmune": false,
+          "sleepImmune": false,
+          "frozenImmune": false,
+          "levitateImmune": false,
+          "disarmedCombatImmune": false,
+          "fearedImmune": false,
+          "palsyImmune": false,
+          "attractImmune": false,
+          "teleportImmune": false,
+          "groundBoundImmune": false
+        }
+      },
+      {
+        "level": 50,
+        "data": {
+          "maxHp": 350,
+          "atk": 55,
+          "def": 0,
+          "magicResistance": 0.0,
+          "cost": 0,
+          "blockCnt": 0,
+          "moveSpeed": 0.0,
+          "attackSpeed": 0.0,
+          "baseAttackTime": 0.0,
+          "respawnTime": 0,
+          "hpRecoveryPerSec": 0.0,
+          "spRecoveryPerSec": 0.0,
+          "maxDeployCount": 0,
+          "maxDeckStackCnt": 0,
+          "tauntLevel": 0,
+          "massLevel": 0,
+          "baseForceLevel": 0,
+          "stunImmune": false,
+          "silenceImmune": false,
+          "sleepImmune": false,
+          "frozenImmune": false,
+          "levitateImmune": false,
+          "disarmedCombatImmune": false,
+          "fearedImmune": false,
+          "palsyImmune": false,
+          "attractImmune": false,
+          "teleportImmune": false,
+          "groundBoundImmune": false
+        }
+      }
+    ],
+    "allSkillLvlup": [
+      {
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3301",
+            "count": 5,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3301",
+            "count": 5,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30011",
+            "count": 6,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30061",
+            "count": 4,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3302",
+            "count": 8,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30022",
+            "count": 5,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_1",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3302",
+            "count": 8,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30032",
+            "count": 4,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30042",
+            "count": 4,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_1",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3302",
+            "count": 8,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30043",
+            "count": 6,
+            "type": "MATERIAL"
+          }
+        ]
+      },
+      {
+        "unlockCond": {
+          "phase": "PHASE_1",
+          "level": 1
+        },
+        "lvlUpCost": [
+          {
+            "id": "3303",
+            "count": 8,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "30013",
+            "count": 5,
+            "type": "MATERIAL"
+          },
+          {
+            "id": "31013",
+            "count": 4,
+            "type": "MATERIAL"
+          }
+        ]
+      }
+    ]
+  },
+  "complete_raw_s2_skill": {
+    "skillId": "skchr_haruka_2",
+    "iconId": null,
+    "hidden": false,
+    "levels": [
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.1,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.2,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.4,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.6,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.8,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 20,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 23.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.25,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 19,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 24.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.3,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 18,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 25.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.35,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 17,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 26.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.4,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    ]
+  },
+  "s2_rank_bindings": [
+    {
+      "rank": 1,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.0,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 2,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.1,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 22,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 21.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.15,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.2,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 4,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.4,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 5,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.6,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 6,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 21,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 22.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.2,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 1.8,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 7,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 20,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 23.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.25,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 8,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 19,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 24.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.3,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 9,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 18,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 25.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.35,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    },
+    {
+      "rank": 10,
+      "complete_raw_level": {
+        "name": "幽隙栖萤",
+        "rangeId": null,
+        "description": "治疗目标数<@ba.vup>+{attack@max_target_heal_add}</>，浮光泡影的目标数<@ba.vup>+{max_target_shield_add}</>；友方单位受到遥的治疗效果时，对周围<@ba.vup>{max_target_extra}</>名敌人造成相当于治疗量<@ba.vup>{atk_scale_extra:0%}</>的法术伤害\\n<@ba.rem>第二次及以后使用时攻击力<@ba.vup>+{atk:0%}</>，且持续时间无限</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 17,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_haruka_2",
+        "duration": 26.0,
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.4,
+            "valueStr": null
+          },
+          {
+            "key": "haruka_s_2[first].atk",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@max_target_heal_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_shield_add",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "ability_range_radius",
+            "value": 1.7,
+            "valueStr": null
+          },
+          {
+            "key": "max_target_extra",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk_scale_extra",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      }
+    }
+  ],
+  "complete_raw_module": {
+    "phases": [
+      {
+        "equipLevel": 1,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "TRAIT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [
+                    {
+                      "key": "attack@max_target",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "attack@max_target_heal",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "heal_scale",
+                      "value": 0.75,
+                      "valueStr": null
+                    }
+                  ],
+                  "overrideDescripton": "攻击对<@ba.kw>2</>个目标造成法术伤害，技能开启后改为治疗<@ba.kw>2</>个友方单位（治疗量相当于75%攻击力）",
+                  "prefabKey": "-1",
+                  "rangeId": null
+                }
+              ]
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 130.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 30.0,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      },
+      {
+        "equipLevel": 2,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "TRAIT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [
+                    {
+                      "key": "attack@max_target",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "attack@max_target_heal",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "heal_scale",
+                      "value": 0.75,
+                      "valueStr": null
+                    }
+                  ],
+                  "overrideDescripton": "攻击对<@ba.kw>2</>个目标造成法术伤害，技能开启后改为治疗<@ba.kw>2</>个友方单位（治疗量相当于75%攻击力）",
+                  "prefabKey": "-1",
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": null,
+            "target": "TALENT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值，并有10%的概率回复1点技力",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "2",
+                  "name": "扶摇花火",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "heal_scale",
+                      "value": 0.25,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "prob",
+                      "value": 0.1,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "sp",
+                      "value": 1.0,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                },
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值，并有10%的概率回复1点技力",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 4,
+                  "prefabKey": "2",
+                  "name": "扶摇花火",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "heal_scale",
+                      "value": 0.28,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "prob",
+                      "value": 0.1,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "sp",
+                      "value": 1.0,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 175.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 40.0,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      },
+      {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "TRAIT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [
+                    {
+                      "key": "attack@max_target",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "attack@max_target_heal",
+                      "value": 2.0,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "heal_scale",
+                      "value": 0.75,
+                      "valueStr": null
+                    }
+                  ],
+                  "overrideDescripton": "攻击对<@ba.kw>2</>个目标造成法术伤害，技能开启后改为治疗<@ba.kw>2</>个友方单位（治疗量相当于75%攻击力）",
+                  "prefabKey": "-1",
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": null,
+            "target": "TALENT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值，并有20%的概率回复1点技力",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "2",
+                  "name": "扶摇花火",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "heal_scale",
+                      "value": 0.25,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "prob",
+                      "value": 0.2,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "sp",
+                      "value": 1.0,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                },
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值，并有20%的概率回复1点技力",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 4,
+                  "prefabKey": "2",
+                  "name": "扶摇花火",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "heal_scale",
+                      "value": 0.28,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "prob",
+                      "value": 0.2,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "sp",
+                      "value": 1.0,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 210.0,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 52.0,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    ]
+  },
+  "complete_raw_module_meta": {
+    "uniEquipId": "uniequip_002_haruka",
+    "uniEquipName": "迟来的纪念",
+    "uniEquipIcon": "uniequip_002_haruka",
+    "uniEquipDesc": "镜头一路抖着追进晨雾弥漫的窄巷，石板路上还残留着夜雨的潮气，羽生萌萌香裹着戏里的粗布羽织，一边小跑一边朝举着麦克风的导演摆摆手：“等我打完招呼再说哦——”\n巷口第一个群演是卖煤油灯的老工匠，他黑油油的手掌在围裙上抹了一把，递来一盏修好的灯，萌萌香笑着接过，又郑重地向他道谢；再往前，是刚被选来当群众演员的书店小伙，站在挂着斑驳招牌的门前，他耳根通红地说自己只有一句“是，武士大人”的台词，但萌萌香还是认真地和他排练了好多遍。镜头跟着她穿过拱廊：小店老板娘正熬着杂煮，才掀起锅盖，蒸汽就撞上了镜头，惊得老板娘连声道歉；粗点心店的店员安抚着总想探头上前的小孩们，萌萌香路过店门扮了个鬼脸，大家又都笑了起来。麦克风一次次蹭过屋檐，收进风铃叮咚的响声、店铺的吆喝……整条老街都被收入磁带，吱呀吱呀，慢慢转动。\n午后开拍前，萌萌香坐在布景车的后凳上，周围临时招来的车夫、小贩、学徒们围着看她给小女孩扎髻。镜头掠过她颈侧一缕被汗打湿的碎发，然后缓缓拉远，扫过褪色的町屋格子窗、青苔覆盖的石灯笼、如蛛网般横在木屋之间的电线——谁也想不到，几年后这一切会在一场突如其来的争斗中化为废墟。\n那天，所有人都只为了一部现在看来稍显稚嫩的影片忙得热火朝天，笑声、讨论声和咔哒咔哒的摄影机声，在锻冶町的每一条砖缝里敲打着节拍。\n当天，导演拍下的最后一个镜头，是萌萌香拿着众人为庆祝她杀青而准备的花束，站在河桥上，回身向镜头挥手。夕阳将她的帽檐染出一条金边。背景中，群演们正陆续散去，拖着各自的影子回家。没人急着拆掉那块铺在河面上的跳板，好像明天还会继续拍摄同一场戏。\n花絮的画面就定格在这一瞬。此刻的房间里，安静得只剩钟声的回响，羽生萌萌香在沙发里蜷成小小一团。电视屏幕上，刚出道的自己还站在桥上挥手，河水被落日染得像熬透的糖浆。她就这样看了很久，直到画面跳回蓝底的待机界面，才抬手用遥控器将它关掉。房间瞬间暗了下来，只剩窗外一线霓虹微微照亮她摆在窗边的小树，照亮那张有点陈旧的纪念照——像当年橘色夕阳落进木楼窗棂，温柔地拂过她坚定的心。",
+    "typeIcon": "bls-y",
+    "typeName1": "BLS",
+    "typeName2": "Y",
+    "equipShiningColor": "grey",
+    "showEvolvePhase": "PHASE_2",
+    "unlockEvolvePhase": "PHASE_2",
+    "charId": "char_4202_haruka",
+    "tmplId": null,
+    "showLevel": 1,
+    "unlockLevel": 60,
+    "missionList": [
+      "uniequip_002_haruka_1",
+      "uniequip_002_haruka_2"
+    ],
+    "unlockFavors": {
+      "1": 0,
+      "2": 2732,
+      "3": 10070
+    },
+    "itemCost": {
+      "1": [
+        {
+          "id": "mod_unlock_token",
+          "count": 4,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "30165",
+          "count": 2,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "4001",
+          "count": 80000,
+          "type": "GOLD"
+        }
+      ],
+      "2": [
+        {
+          "id": "mod_unlock_token",
+          "count": 4,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "mod_update_token_1",
+          "count": 60,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "30115",
+          "count": 3,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "4001",
+          "count": 100000,
+          "type": "GOLD"
+        }
+      ],
+      "3": [
+        {
+          "id": "mod_unlock_token",
+          "count": 4,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "mod_update_token_2",
+          "count": 20,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "30135",
+          "count": 4,
+          "type": "MATERIAL"
+        },
+        {
+          "id": "4001",
+          "count": 120000,
+          "type": "GOLD"
+        }
+      ]
+    },
+    "type": "ADVANCED",
+    "uniEquipGetTime": 1754107200,
+    "uniEquipShowEnd": 1756958400,
+    "charEquipOrder": 2,
+    "hasUnlockMission": true,
+    "isSpecialEquip": false,
+    "specialEquipDesc": null,
+    "specialEquipColor": null,
+    "charColor": "#c94239"
+  },
+  "actual_source_helper_selections": [
+    {
+      "scenario": {
+        "elite": 0,
+        "level": 1,
+        "potential": 1
+      },
+      "selected_talents": [
+        {
+          "phase": 0,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得10%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.1,
+            "max_target_shield": 1.0
+          }
+        }
+      ],
+      "module_parts": []
+    },
+    {
+      "scenario": {
+        "elite": 1,
+        "level": 1,
+        "potential": 1
+      },
+      "selected_talents": [
+        {
+          "phase": 1,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得20%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.2,
+            "max_target_shield": 1.0
+          }
+        }
+      ],
+      "module_parts": []
+    },
+    {
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "potential": 4
+      },
+      "selected_talents": [
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.3,
+            "max_target_shield": 1.0
+          }
+        },
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值",
+          "values": {
+            "heal_scale": 0.25
+          }
+        }
+      ],
+      "module_parts": []
+    },
+    {
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "potential": 5
+      },
+      "selected_talents": [
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.3,
+            "max_target_shield": 1.0
+          }
+        },
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 4,
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值",
+          "values": {
+            "heal_scale": 0.28
+          }
+        }
+      ],
+      "module_parts": []
+    },
+    {
+      "scenario": {
+        "elite": 2,
+        "level": 59,
+        "potential": 5,
+        "module_id": "uniequip_002_haruka",
+        "module_level": 3
+      },
+      "selected_talents": [
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.3,
+            "max_target_shield": 1.0
+          }
+        },
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 4,
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值",
+          "values": {
+            "heal_scale": 0.28
+          }
+        }
+      ],
+      "module_parts": []
+    },
+    {
+      "scenario": {
+        "elite": 2,
+        "level": 60,
+        "potential": 5,
+        "module_id": "uniequip_002_haruka",
+        "module_level": 3
+      },
+      "selected_talents": [
+        {
+          "phase": 2,
+          "level": 1,
+          "potential_rank": 0,
+          "name": "浮光泡影",
+          "description": "每过一个攻击间隔，使范围内一名友方单位获得30%<$ba.protect>庇护</>的浮泡，浮泡在受到敌方伤害的短暂延迟后破碎",
+          "values": {
+            "interval": 0.5,
+            "damage_resistance": 0.3,
+            "max_target_shield": 1.0
+          }
+        },
+        {
+          "name": "扶摇花火",
+          "description": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值，并有20%的概率回复1点技力",
+          "values": {
+            "heal_scale": 0.28,
+            "prob": 0.2,
+            "sp": 1.0
+          }
+        }
+      ],
+      "module_parts": [
+        {
+          "resKey": null,
+          "target": "TRAIT_DATA_ONLY",
+          "isToken": false,
+          "validInGameTag": null,
+          "validInMapTag": null,
+          "addOrOverrideTalentDataBundle": {
+            "candidates": null
+          },
+          "overrideTraitDataBundle": {
+            "candidates": [
+              {
+                "additionalDescription": null,
+                "unlockCondition": {
+                  "phase": "PHASE_2",
+                  "level": 60
+                },
+                "requiredPotentialRank": 0,
+                "blackboard": [
+                  {
+                    "key": "attack@max_target",
+                    "value": 2.0,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "attack@max_target_heal",
+                    "value": 2.0,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "heal_scale",
+                    "value": 0.75,
+                    "valueStr": null
+                  }
+                ],
+                "overrideDescripton": "攻击对<@ba.kw>2</>个目标造成法术伤害，技能开启后改为治疗<@ba.kw>2</>个友方单位（治疗量相当于75%攻击力）",
+                "prefabKey": "-1",
+                "rangeId": null
+              }
+            ]
+          }
+        },
+        {
+          "resKey": null,
+          "target": "TALENT_DATA_ONLY",
+          "isToken": false,
+          "validInGameTag": null,
+          "validInMapTag": null,
+          "addOrOverrideTalentDataBundle": {
+            "candidates": [
+              {
+                "displayRangeId": false,
+                "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力25%的生命值，并有20%的概率回复1点技力",
+                "talentIndex": 1,
+                "validModeIndices": null,
+                "unlockCondition": {
+                  "phase": "PHASE_2",
+                  "level": 60
+                },
+                "requiredPotentialRank": 0,
+                "prefabKey": "2",
+                "name": "扶摇花火",
+                "description": null,
+                "rangeId": null,
+                "blackboard": [
+                  {
+                    "key": "heal_scale",
+                    "value": 0.25,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "prob",
+                    "value": 0.2,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "sp",
+                    "value": 1.0,
+                    "valueStr": null
+                  }
+                ],
+                "tokenKey": null,
+                "isHideTalent": false
+              },
+              {
+                "displayRangeId": false,
+                "upgradeDescription": "浮泡破碎时，为所在的单位治疗相当于遥攻击力28%<@ba.talpu>（+3%）</>的生命值，并有20%的概率回复1点技力",
+                "talentIndex": 1,
+                "validModeIndices": null,
+                "unlockCondition": {
+                  "phase": "PHASE_2",
+                  "level": 60
+                },
+                "requiredPotentialRank": 4,
+                "prefabKey": "2",
+                "name": "扶摇花火",
+                "description": null,
+                "rangeId": null,
+                "blackboard": [
+                  {
+                    "key": "heal_scale",
+                    "value": 0.28,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "prob",
+                    "value": 0.2,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "sp",
+                    "value": 1.0,
+                    "valueStr": null
+                  }
+                ],
+                "tokenKey": null,
+                "isHideTalent": false
+              }
+            ]
+          },
+          "overrideTraitDataBundle": {
+            "candidates": null
+          }
+        }
+      ]
+    }
+  ],
+  "actual_consumer": "        elif op=='char_4202_haruka':\n            if normal:regular('magic')\n            else:\n                if self.n==2:\n                    repeat=self.s.get('haruka_repeat',False)\n                    attack=self.base*(1+self.atk_bonus+(bb['atk'] if repeat else 0))+self.atk_flat\n                    if repeat:mode='infinite';duration=window if window is not None else 30\n                from .haruka_healing_reference import reference\n                haruka_healing_reference=reference(self.p,self.s,self.skill)\n                scale=haruka_healing_reference['healing_scale_parameter']\n                targets=min(haruka_healing_reference['modeled_target_limit_reference'],healing_targets)\n                declared=min(haruka_healing_reference['conditional_target_limit_reference'],healing_targets)\n                extra_targets=max(0,declared-targets)\n                regular('healing',scale,targets,name='护佑者普通治疗')\n                body=components[-1]\n                if extra_targets:\n                    emit('护佑者额外目标治疗（组合待核验）',attack*scale,'healing',\n                        len(body['times_seconds'])//int(targets)*extra_targets)\n                bursts=self.option('bubble_bursts',0,maximum=10000,integer=True)\n                flower_bursts=bursts if '扶摇花火' in self.tv else 0.0\n                emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',flower_bursts)\n                if self.n==2:\n                    regular('magic',scale*bb['atk_scale_extra'],targets,name='治疗衍生伤害')\n                    if extra_targets:\n                        count=components[-1]['hits']/targets*extra_targets\n                        emit('额外目标治疗衍生伤害（组合待核验）',\n                            attack*scale*bb['atk_scale_extra'],'magic',count)\n                    emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',flower_bursts)\n                triggers=0\n                if self.n==3:\n                    triggers=self.option('levitate_triggers',0,maximum=1000,integer=True)\n                    emit('浮泡浮空持续伤害',attack*bb['atk_scale'],'magic',0)\n                manual=[c for c in components if c['name'] in ('扶摇花火','浮泡治疗衍生伤害','浮泡浮空持续伤害',\n                    '护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）')]\n                from .uncertain_sources import preserve_unplaced_sources\n                references=[]\n                for c in manual:\n                    alive=None if c['damage_type']=='healing' else timeline.options.get('target_disappears_seconds')\n                    r=preserve_unplaced_sources([c],window=window,target_lifetime=alive)\n                    references.extend(r['conditional_components'])\n                    if c['name'] in ('护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）'):\n                        # The existing body clock only supplies a relative\n                        # amount reference; it cannot prove acquisition for an\n                        # unverified extra recipient, including blocked owners.\n                        if window!=0 and duration>0 and alive!=0:c['actual_total']=None\n                    if c['name']=='浮泡浮空持续伤害':\n                        references[-1]['hits']=references[-1]['total']=None\n                        if triggers>0 and r['source_possible']:c['actual_total']=None\n                if timeline.options.get('target_disappears_seconds')==0:\n                    for c in components:\n                        if c['damage_type'] not in ('healing','regeneration','buildup'):\n                            c['hits']=0;c['total']=0\n                            if 'times_seconds' in c:c['times_seconds']=[]\n                rows=[('声明窗口内浮泡破碎次数',bursts,'次')]\n                haruka_healing_reference.update(declared_healing_targets=healing_targets,\n                    modeled_healing_targets=targets,conditional_healing_targets=declared,\n                    additional_conditional_targets=extra_targets,\n                    body_healing_reference_before_recipient_factor={\n                        key:body[key] for key in ('per_hit','hits','total')})\n                if self.n==3:\n                    dot=next(c for c in manual if c['name']=='浮泡浮空持续伤害')\n                    rows += [('声明浮空触发次数',triggers,'次'),('浮空持续参数',bb['levitate_duration'],'秒'),\n                             ('浮空每跳伤害条件参考',dot['per_hit'],'伤害'),('跳伤间隔参数',bb['interval'],'秒')]\n                external_event_reference={'kind':'haruka_bubbles','conditional_components':references,'parameter_rows':rows,\n                    'notes':['破裂次数只声明观察窗口内条件来源，未定位破裂/受疗及派生伤害时刻；不自动归完整施放、阶段或周期。',\n                             '敌方0秒生命周期不取消独立友方受疗；派生伤害需当前敌人邻接覆盖。浮空持续参数不证明首跳、刷新或实际跳数。']}\n                if bursts>0 and '扶摇花火' not in self.tv:\n                    external_event_reference['notes'].append('当前培养尚未解锁扶摇花火；浮泡破碎声明保留，但不产生该天赋治疗或二技能中依赖该治疗的派生伤害。')\n                self.notes.append('遥的治疗衍生伤害保留邻近目标的条件参考；浮泡破碎/浮空计数不生成实际时钟或每次固定四跳。')",
+  "active_gate": "actual char_4202_haruka + skill2 + nonnormal plan; S2 unlocked E1L1, independent of E2-only 扶摇花火",
+  "inactive_gates": [
+    "normal plan",
+    "S1",
+    "S3",
+    "other owners"
+  ],
+  "actual_ui": "False QCheckBox default, S2 only, isChecked boolean producer; no GUI executed",
+  "proposed_guard_location": "_evaluate_damage_once after all existing finishers and completed build_report, before return",
+  "priority_basis": "Existing cultivation, healing count, bubble_bursts, timing, initialsp, finish and report validation execute first; outer deployment/wine paths must be checked by actual public comparisons.",
+  "proposed_behavior": "Reject all raw str for qualified public HarukaS2 only; preserve every old nontext truthiness, inactive fields and exact old errors. Do not parse or define textual true/false.",
+  "existing_source_used": [
+    "research/p2-haruka-bubble-talent-qualification/NOTE.md",
+    "rouge/haruka_healing_reference.py",
+    "tests/test_haruka_bubble_talent_qualification.py",
+    "tests/test_haruka_healing_targets.py",
+    "tests/test_haruka_event_reference.py"
+  ],
+  "unknowns_retained": [
+    "BLS-Y native composition",
+    "extra recipient acquisition",
+    "unplaced bubble timing",
+    "neighbor coverage",
+    "actual repeat acquisition or clock",
+    "native attachment and live state"
+  ],
+  "new_calculate_damage_calls": 0,
+  "gui_executed": false,
+  "wine_executed": false,
+  "tracked_edits": false
+}

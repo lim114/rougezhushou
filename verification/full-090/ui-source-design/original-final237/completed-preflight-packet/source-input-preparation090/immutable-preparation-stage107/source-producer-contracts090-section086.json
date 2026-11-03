@@ -1,0 +1,565 @@
+{
+  "status": "CURRENT_REAL_ROOT086_PRODUCER_CONTRACTS_WITH_ACTUAL44_SAVED",
+  "root_commit": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "authorized_section": 86,
+  "source86_final": true,
+  "sections87_90_known": false,
+  "owners": 8,
+  "fields": 12,
+  "direct_literal_consumers": 17,
+  "shared_producer_source_ranges": {
+    "construction": "rouge/app.py:661-677",
+    "display": "rouge/app.py:968-969",
+    "serialization": "rouge/app.py:1035-1037",
+    "readonly_cultivation": "rouge/app.py:768-835",
+    "skill_and_module_gates": {
+      "path": "rouge/operator_engine.py",
+      "first_line": 13,
+      "last_line": 71
+    }
+  },
+  "options": [
+    {
+      "owner": "char_4228_closur",
+      "field": "reinforcement_blocks_target",
+      "label": "援军阻挡当前目标",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 396,
+          "source": "            if self.s.get('reinforcement_blocks_target'):attack*=1.5"
+        }
+      ],
+      "boundary": "Trait consumes the condition in all selected skills and normal plan; no reinforcement hit, position or attachment clock is inferred.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_437_mizuki",
+      "field": "enemy_below_half",
+      "label": "存在生命低于一半的敌人",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 225,
+          "source": "        if op=='char_437_mizuki' and self.s.get('enemy_below_half'):"
+        }
+      ],
+      "boundary": "Selected反移情 talent is E2-only; UI remains shown in E0/E1, while missing qualified talent leaves this attack source absent.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_206_gnosis",
+      "field": "frozen_at_skill_end",
+      "label": "技能结束时目标仍冻结",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1549,
+          "source": "        if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):"
+        },
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 644,
+          "source": "                if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):"
+        }
+      ],
+      "boundary": "S3 nominal terminal source only. terminal_clock_verified and freeze_removal_order_verified remain false; nominal duration does not prove actual end or disappearance order.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_4087_ines",
+      "field": "ines_first_deployment",
+      "label": "本场首次部署（只放影哨）",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 688,
+          "source": "                if self.s.get('ines_first_deployment',False):"
+        },
+        {
+          "path": "rouge/reporting.py",
+          "line": 149,
+          "source": "        if number==3 and scenario.get('ines_first_deployment'):"
+        }
+      ],
+      "boundary": "S3 first-deployment branch and deployment-cost notes consume it. Shadow path collision and ownership clocks remain unknown.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "ranged_attack",
+      "label": "远程攻击（通常80%倍率）",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 857,
+          "source": "            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1"
+        }
+      ],
+      "boundary": "Actual per-Combat signal reset at calculate entry; qualified skill override remains. S1 early-unbound and S2switch normalNone remain inactive under coverage; S3 consumption depends actual normal call under cycle/continuous gate. Saved coveredmoduleS3 same-call normal1/markerTrue for both flags, never infer from finalcycle.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "organ_mode",
+      "label": "风琴音色（未选=钢琴）",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 869,
+          "source": "                organ=self.s.get('organ_mode',False)"
+        }
+      ],
+      "boundary": "S2 switches source attack/attack speed and damage type. Normal and S1/S3 do not consume this switch; native note collisions remain unknown.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "fever",
+      "label": "Fever期间",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 874,
+          "source": "                regular('magic' if organ else 'physical',ranged_scale,2 if self.s.get('fever') else 1,"
+        }
+      ],
+      "boundary": "S2 doubles the described hits only. S3 native Fever leave-alive description is not this modeled consumer.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "power_coating",
+      "label": "本次攻击仍在首轮50次强击瓶覆盖内",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1026,
+          "source": "            bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1"
+        }
+      ],
+      "boundary": "Actual selected强击瓶专家 exists from E0. Skill plans consume its multiplier, normal scale stays1; no per-arrow bottle history is inferred.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "double_charge",
+      "label": "额外消耗一层充能施放刚连射",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        1
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1314,
+          "source": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+        },
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1441,
+          "source": "            cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)"
+        },
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1031,
+          "source": "                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)"
+        },
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1034,
+          "source": "                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),"
+        }
+      ],
+      "boundary": "S1 consumes extra arrows plus initial/recharge and event-SP cost. Conditional rows do not prove arrow time or complete cast end.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "steal_success",
+      "label": "成功偷取攻速（增加5发弹药）",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1062,
+          "source": "                if self.n==2 and self.s.get('steal_success',True):"
+        }
+      ],
+      "boundary": "S2 consumes source speed/ammo parameters. No actual ally steal recipient or native ammunition depletion is inferred.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "delivery_coordinate",
+      "label": "投递坐标存在并命中目标",
+      "default": true,
+      "maximum": 1,
+      "skills": [
+        3
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1080,
+          "source": "                if self.n==3 and self.s.get('delivery_coordinate',True):"
+        }
+      ],
+      "boundary": "S3 conditional external source; actual coordinate acquisition/collision remains unknown and source-derived None is preserved.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    },
+    {
+      "owner": "char_1035_wisdel",
+      "field": "overload",
+      "label": "全程采用过载四连发情景",
+      "default": false,
+      "maximum": 1,
+      "skills": [
+        2
+      ],
+      "producer_value_type": "bool",
+      "widget_class": "QCheckBox",
+      "actual_serialized_type": "bool",
+      "display_and_serialization_condition": "owner==selected operator and selected skill in declared skills",
+      "hidden_or_other_owner_key_omitted": true,
+      "skill_unlock_elite": {
+        "1": 0,
+        "2": 1,
+        "3": 2
+      },
+      "current_consumer_source": [
+        {
+          "path": "rouge/operator_engine.py",
+          "line": 1109,
+          "source": "            overload=not normal and self.n==2 and self.s.get('overload',False)"
+        }
+      ],
+      "boundary": "S2 consumes four-hit scale; actual hit times, random targeting, remnants and summons remain separate unresolved sources.",
+      "required_result_keys_checked_from_existing_saved_legal_pairs": [
+        "attack",
+        "total_damage",
+        "total_healing",
+        "components",
+        "estimate",
+        "report"
+      ],
+      "historical_qualified_bool_results_differ": true,
+      "old_source36_evidence_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+      "current_new_API_verification_pending": false,
+      "actual_new_UI_states_preflight_reference": "api-ui090-section086.json.gz"
+    }
+  ],
+  "application_API_calls": 0,
+  "production_helper_calls": 0,
+  "formatter_calls": 0,
+  "Qt_calls": 0,
+  "Wine_calls": 0,
+  "tests_run": 0,
+  "exact_function_source_spans": {
+    "selected_talents": {
+      "path": "rouge/operator_engine.py",
+      "first_line": 13,
+      "last_line": 71
+    },
+    "training_conditions": {
+      "path": "rouge/app.py",
+      "first_line": 778,
+      "last_line": 784
+    },
+    "update_operator": {
+      "path": "rouge/app.py",
+      "first_line": 791,
+      "last_line": 847
+    },
+    "update_skill_options": {
+      "path": "rouge/app.py",
+      "first_line": 949,
+      "last_line": 998
+    }
+  },
+  "prior_source_only_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4"
+}

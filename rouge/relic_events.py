@@ -61,6 +61,7 @@ def first_damage(components,scenario,*,normal=False):
     events=[]
     for index,c in enumerate(components):
         if c.get('damage_type') not in DAMAGE or c.get('source_unit','operator')!='operator':continue
+        if 'actual_total' in c and c['actual_total'] is None:return None
         times=c.get('times_seconds')
         if times is None:
             # A true instantaneous single event can be placed at skill activation;

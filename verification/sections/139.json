@@ -1,0 +1,42 @@
+{
+  "section": 139,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T17:44:22.809550+08:00",
+  "prior_commit": "4cf13efd041d82de2aad66d52e16b0077c1a5991",
+  "title": "逐敌人有效伤害与溢出预算",
+  "remaining_project_item": "P2技能特殊分项、有限目标生命的局外参考",
+  "new_capability": "新增逐目标伤害预算工具，按独立防御/抗性重算已有单次分项，按声明事件排序，分列潜在/有效/溢出伤害与剩余生命预算；不会将预算耗尽当实际击杀。",
+  "acceptance": [
+    "不同目标独立重算",
+    "过量和耗尽后事件保留",
+    "同刻声明顺序及零事件",
+    "拒绝治疗、未知分项和错误身份",
+    "实际主窗口入口与账户/本局隔离"
+  ],
+  "limitations": [
+    "生命预算不是原生击杀时钟；无敌/阶段/护盾/回血未自动模拟",
+    "单次参考可能含边际期望或不完整分项，不推算击杀概率"
+  ],
+  "sources": [
+    "rouge/damage_budget.py",
+    "rouge/app.py",
+    "tests/test_damage_budget_139.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 5,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 3,
+    "test_output": "verification/section-139/tests.txt",
+    "window_receipt": "verification/section-139/window.json"
+  },
+  "source_sha256": {
+    "rouge/damage_budget.py": "0c7ee60b0afd1e1903511cf99df3e3ff1b8dad2ef2ba1ec8ccc071a382ee3471",
+    "rouge/app.py": "67e43fb428b95e27a05c2baff05098c6b5faa58c5380e33aff67680327e5ff27",
+    "tests/test_damage_budget_139.py": "d404c3d74989a457164cfccee93f786405b7c84dc70278a1b160d9b3516e6c8d"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

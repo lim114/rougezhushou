@@ -1,0 +1,53 @@
+{
+  "status": "READONLY_DESIGN_SUPPORTED_FORMAL_FROZEN_PATCH_PENDING",
+  "baseline_commit": "9b7cfba08319d64175a7f51a94f339ce225bc76c",
+  "source_files_checked_against_git_blobs": {
+    "rouge/relics.py": {
+      "sha256": "5dcc2906d0066c323b8e23dccf3c306d4ebd01ed130e1e30081d749043623f8e",
+      "bytes": 40518
+    },
+    "rouge/reporting.py": {
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "bytes": 97666
+    },
+    "rouge/damage.py": {
+      "sha256": "84ff864244aed22307086df79686d485edf56700c727191ed7c3eca8bcbb9cec",
+      "bytes": 28530
+    },
+    "rouge/data/relic-mechanics.json": {
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+      "bytes": 500847
+    },
+    "tests/test_relic_mechanisms_053.py": {
+      "sha256": "4ac3c0ef8c238b5c8d616fbc1f3dd557ee07983dda1390eb0daa39a6c38388c4",
+      "bytes": 13518
+    },
+    "tests/test_relics.py": {
+      "sha256": "a8ae18a6a8b5e0c5f19e179722618edce3a5b297071490e8e9e2e6fea7994a6e",
+      "bytes": 14607
+    }
+  },
+  "proposal": "Only set-comprehension iterator -> dict.fromkeys(generator) for unverified groups.",
+  "deterministic_order": "First appearance among stacking=unverified candidates in fixed rules+effects+token_effects; no game-acquisition semantics.",
+  "same_membership_and_hashability": true,
+  "group_partition": "Each rule has one group; grouped filters fixed candidates, and unequal groups cannot have equal dictionaries. Removal result independent of group processing order.",
+  "commuting_side_effects": [
+    "ammo_unresolved flag OR",
+    "unresolved_hp_sources set update",
+    "rules/effects/token_effects filtering",
+    "record.applied group removal",
+    "record.status incomplete"
+  ],
+  "permitted_derived_order_changes": [
+    "relic_resolution.warnings",
+    "result.warnings",
+    "estimate.warnings",
+    "record.pending exact group diagnostics",
+    "format_report exact warning lines"
+  ],
+  "all_other_fields_original_words_values_unknowns_errors_unchanged_required": true,
+  "design_risk_corrected": "Author initial records unchanged statement excludes pending-list order; it must be explicitly allowed and proved.",
+  "existing_test_gap": "test_relic_mechanisms_053 only checks any(group in warning), not cross-process order.",
+  "calculation_tests_GUI_Wine_native_calls": 0,
+  "tracked_mutations": false
+}

@@ -1,0 +1,136 @@
+{
+  "kind": "limited-static-integration-review-not-test-or-native-acceptance",
+  "checked_at_utc": "2026-10-16T08:26:34.061380+00:00",
+  "sources_before": {
+    "verification/sections/297-preparation/before-node_catalog_view.py": {
+      "sha256": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c",
+      "bytes": 76265
+    },
+    "rouge/node_catalog_view.py": {
+      "sha256": "60e4f4fbd27761802b1ae9a27181633ead7995c8d66f36b8a94d0ce8c699c08a",
+      "bytes": 77971
+    },
+    "verification/sections/297-preparation/before-player_node_information.py": {
+      "sha256": "865174f9a322b4c6acabbfad691961a32469edc50c5131db02b6349afaaf9bf7",
+      "bytes": 29426
+    },
+    "rouge/player_node_information.py": {
+      "sha256": "074e870c2d4ac1ee9f88892d9c6ea1121a113a28dc2507334a3b80bb2a99b437",
+      "bytes": 32836
+    },
+    "rouge/expedition_results_view.py": {
+      "sha256": "72105f83b5629514a91d100cf58a7c0898962a30a1861fe77d79b62343de03a0",
+      "bytes": 13931
+    },
+    "tests/test_expedition_integration_297.py": {
+      "sha256": "8cbb09705ca33a1da13dc82054d006ea89012e62bada42ea097e686fb6c1f7a2",
+      "bytes": 8681
+    },
+    "tests/test_expedition_results_view_297.py": {
+      "sha256": "e9e275d67f563bba3b1a8a67fa195ac30490f4891682b338879ed1142a52c720",
+      "bytes": 14138
+    },
+    "verification/sections/297-preparation/historical295-presentation-scope/original-test.py": {
+      "sha256": "6ff4e7b67c1aaf2ef36715b735c542b2ac6788430cf4ee93d5254cdd5eafc7e9",
+      "bytes": 8987
+    },
+    "tests/test_documented_item_integration_295.py": {
+      "sha256": "4e946fd3579f37bc3f222f855f9c23811c1279c946a4345431161ed141fcc2f9",
+      "bytes": 9407
+    },
+    "verification/sections/297-preparation/before-output-hashes.json": {
+      "sha256": "b2f8a69361a7ca612fcbe4192d97ca0cdf90ab69330a4eefa84f78bd0f893a2a",
+      "bytes": 24219
+    }
+  },
+  "function_AST_comparison": {
+    "rouge/node_catalog_view.py": {
+      "changed_existing_functions": [
+        "NodeCatalogPanel.__init__",
+        "NodeCatalogPanel.show_selected"
+      ],
+      "removed_functions": [],
+      "new_functions": [
+        "NodeCatalogPanel.open_expedition_results"
+      ],
+      "unchanged_existing_functions": 45
+    },
+    "rouge/player_node_information.py": {
+      "changed_existing_functions": [
+        "_event_lines"
+      ],
+      "removed_functions": [],
+      "new_functions": [
+        "_expedition_choice_lines"
+      ],
+      "unchanged_existing_functions": 14
+    }
+  },
+  "historical295_assertion_AST": {
+    "original_total": 43,
+    "current_total": 43,
+    "all_original_assertion_multiset_preserved": true
+  },
+  "manual_review_conclusion": "No substantive blocking source/control-flow issue found within reviewed integration scope.",
+  "reviewed_boundaries": [
+    "Player compares complete catalog.event_details rows JSON to fresh expected_event.scenes before phase annotations.",
+    "Only exact source annotation tuple becomes return explanation; it is omitted from generic button/resource formatting.",
+    "Three real choices keep source original identity; root return2hope+beacon and rest immediate2hope are separate.",
+    "Ordinary promotion and special-region return-clock meaning remain unknown; beak never numerically applied.",
+    "Node button is exact target only, manual open; dialog default none and item never auto-opened.",
+    "Dialog refresh revalidates event/choice/item identity; invalid source clears readers/icon/selection; recovery unselected.",
+    "Same scope keeps reader/tab/selection; other event clears; old295/296 helpers stay structurally unchanged."
+  ],
+  "limits": [
+    "No Qt/native/test process was run by this review; actual Windows visual and timing validation belongs to root.",
+    "Technical legacy resource formatter remains unchanged, including generic nominal reference labels; actual default page adds the phase distinction.",
+    "Source-unavailable fallback preserves original text and generic references with explicit timing-unknown notice; it does not certify instant reward.",
+    "Dialog scope is a fixed event reading key, not an observed dispatch or per-run receipt; no actual state claim is made."
+  ],
+  "new_findings": [],
+  "production_writes": false,
+  "Qt_tests_GUI_game_chat_private_Git_mutation": false,
+  "sources_after": {
+    "verification/sections/297-preparation/before-node_catalog_view.py": {
+      "sha256": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c",
+      "bytes": 76265
+    },
+    "rouge/node_catalog_view.py": {
+      "sha256": "60e4f4fbd27761802b1ae9a27181633ead7995c8d66f36b8a94d0ce8c699c08a",
+      "bytes": 77971
+    },
+    "verification/sections/297-preparation/before-player_node_information.py": {
+      "sha256": "865174f9a322b4c6acabbfad691961a32469edc50c5131db02b6349afaaf9bf7",
+      "bytes": 29426
+    },
+    "rouge/player_node_information.py": {
+      "sha256": "074e870c2d4ac1ee9f88892d9c6ea1121a113a28dc2507334a3b80bb2a99b437",
+      "bytes": 32836
+    },
+    "rouge/expedition_results_view.py": {
+      "sha256": "72105f83b5629514a91d100cf58a7c0898962a30a1861fe77d79b62343de03a0",
+      "bytes": 13931
+    },
+    "tests/test_expedition_integration_297.py": {
+      "sha256": "8cbb09705ca33a1da13dc82054d006ea89012e62bada42ea097e686fb6c1f7a2",
+      "bytes": 8681
+    },
+    "tests/test_expedition_results_view_297.py": {
+      "sha256": "e9e275d67f563bba3b1a8a67fa195ac30490f4891682b338879ed1142a52c720",
+      "bytes": 14138
+    },
+    "verification/sections/297-preparation/historical295-presentation-scope/original-test.py": {
+      "sha256": "6ff4e7b67c1aaf2ef36715b735c542b2ac6788430cf4ee93d5254cdd5eafc7e9",
+      "bytes": 8987
+    },
+    "tests/test_documented_item_integration_295.py": {
+      "sha256": "4e946fd3579f37bc3f222f855f9c23811c1279c946a4345431161ed141fcc2f9",
+      "bytes": 9407
+    },
+    "verification/sections/297-preparation/before-output-hashes.json": {
+      "sha256": "b2f8a69361a7ca612fcbe4192d97ca0cdf90ab69330a4eefa84f78bd0f893a2a",
+      "bytes": 24219
+    }
+  },
+  "sources_unchanged_during_static_review": true
+}

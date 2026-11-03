@@ -1,0 +1,128 @@
+{
+  "kind": "SECTION285_READONLY_STATIC_BOUNDARY_FINDINGS_NOT_ACTUAL_EXECUTION",
+  "calibration_sha256": "e60a24f303ac3b8fb76429a36e83cf1f860ad1be1284d5db000d87e3bfed823e",
+  "view_sha256": "6cb8f099d6f77fc6a4578c38f71f620b08c4234ada44af18a325d76e28014d8a",
+  "findings": [
+    {
+      "id": "derived_row_animation_reference_owner_and_skill",
+      "minimal_input": {
+        "scenario": {
+          "operator": "char_1037_amiya3",
+          "skill": 2,
+          "timing": {
+            "animation_reference": "char_1037_amiya3:Front:Skill_2_Attack"
+          }
+        }
+      },
+      "public_original_record": {
+        "id": "char_1037_amiya3:Front:Skill_2_Attack",
+        "orientation": "Front",
+        "skin": "original",
+        "animation": "Skill_2_Attack",
+        "spine_version": "3.8.99",
+        "duration": {
+          "seconds": 1.600000023841858,
+          "raw_frames_30hz": 48.00000071525574,
+          "strict_ceil_frames_30hz": 49,
+          "representation_normalized_frames_30hz": 48,
+          "ceil_frames_30hz": 48
+        },
+        "events": [
+          {
+            "name": "OnAttack",
+            "seconds": 0.6333333253860474,
+            "raw_frames_30hz": 18.99999976158142,
+            "strict_ceil_frames_30hz": 19,
+            "representation_normalized_frames_30hz": 19,
+            "ceil_frames_30hz": 19
+          }
+        ],
+        "selectable_as_conventional_reference": true,
+        "unverified_reasons": [],
+        "runtime_binding_verified": false,
+        "source": {
+          "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1037_amiya3/char_1037_amiya3/Front/char_1037_amiya3.skel",
+          "sha256": "75ab06cad33c2ea236b914843c09ee7f4ee9181e46fb360fcde0cf6706e185e2",
+          "git_blob": "80ecf4b5f9e32c0dffcdb0feda36f92b77260fa2",
+          "bytes": 493240
+        },
+        "preview": {
+          "windup_frames": 19,
+          "recovery_frames": 29,
+          "animation_frames": 48
+        }
+      },
+      "source": "rouge/animation_reference.py choices/descriptor: current op+skill membership required; draft matrix changes skill1 while copying timing unchanged.",
+      "actual_candidate_executed_by_reviewer": false,
+      "status": "Source-derived counterexample awaiting actual reproduction by sole implementation worker."
+    },
+    {
+      "id": "cross_operator_recipient_binding",
+      "minimal_input": {
+        "scenario": {
+          "operator": "kaltsit",
+          "skill": 2,
+          "char_buff_ids": [
+            "rogue_6_from_relic_6"
+          ]
+        }
+      },
+      "public_original_bound_record": {
+        "name": "医者-新典训",
+        "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "relic_id": "rogue_6_relic_assign_6",
+        "required_profession": "medic",
+        "effects": [],
+        "pending": [
+          "char_ability_new:rogue_6_medic_heal_sp"
+        ],
+        "raw": {
+          "id": "rogue_6_from_relic_6",
+          "buffType": "FROM_RELIC",
+          "iconId": "rogue_6_relic_assign_6",
+          "relatedItemId": null,
+          "outerName": "医者-新典训",
+          "innerName": "医者-新典训",
+          "functionDesc": "立即进阶一个【医疗】干员（不消耗希望），并使其：治疗时使目标获得2技力",
+          "desc": "立即进阶一个【医疗】干员（不消耗希望），并使其：治疗时使目标获得2技力",
+          "buffs": [
+            {
+              "key": "char_ability_new",
+              "blackboard": [
+                {
+                  "key": "key",
+                  "value": 0.0,
+                  "valueStr": "rogue_6_medic_heal_sp"
+                },
+                {
+                  "key": "sp",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "source": "rouge/relics.py resolve bound profession guard/current_operator_only; draft first-three matrix copies bound/current recipient lists to other operators.",
+      "other_effect_example": {
+        "id": "rogue_6_from_relic_13",
+        "name": "零食盒",
+        "meaning": "No profession restriction means wrong cross-operator benefit rather than exception."
+      },
+      "actual_candidate_executed_by_reviewer": false,
+      "status": "Source-derived counterexample awaiting actual reproduction by sole implementation worker."
+    }
+  ],
+  "nonissues_checked": [
+    "_scenario remains first-three by default; only panel and skill_matrix opt into catalog support. compare_panel follows panel_layers.",
+    "damage._prepare_damage already rejects locked selected skills/mastery; matrix separately lists locked rows without calculating them.",
+    "Extended operators default to current owner only and explicit multi-owner extended input is rejected.",
+    "Module ID/level and base_attack already stripped on historical first-three cross-owner rows.",
+    "Actual/native/clock flags remain false/None; nonzero full totals are not certified."
+  ],
+  "new_native_fresh_spans": 0,
+  "game_or_chat_operation": false,
+  "private_state_used": false,
+  "production_or_author_cache_modified": false
+}

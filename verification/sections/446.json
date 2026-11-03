@@ -1,0 +1,48 @@
+{
+  "section": 446,
+  "kind": "functional_section",
+  "title": "重复热水壶件数、合并与图文卡片切换",
+  "new_capability": "完整已确认栏保留重复热水壶物理件数；只合并热水壶并保持来源与选择。四类物品支持图文效果卡/图标网格切换，窄窗页脚换行。",
+  "limitations": "真实游戏重复图标及多页连续读取、地图/笔记/历史及全视频和P3/P2/P1仍未完成。MaaFramework仍未接入生产；Qt排版API不是新外部项目复用。不改数值机制、不倒推资源。",
+  "necessary_validation": {
+    "receipt": "verification/sections/446-inventory-modes/related-current/process.json",
+    "sha256": "a82e76bab276d7c6086196ac0f524b5b5b7d92a8e3ddf2fce7d87d5a4a9e7e9a",
+    "bytes": 68
+  },
+  "unit_tests_run": 171,
+  "native_windows_scopes": {
+    "inventory_modes": {
+      "receipt": "verification/sections/446-inventory-modes/native-current/window.json",
+      "unique_checks": 32
+    }
+  },
+  "actual_local_test_window": {
+    "receipt": "verification/sections/446-inventory-modes/live-window/window.json",
+    "sha256": "2dcbdbea38c6cdfdacb1b8fb96f6d788b48e6c902689dbcfa741f7bcab768c5a",
+    "bytes": 200991
+  },
+  "source_review": {
+    "receipt": "verification/sections/446-inventory-modes/source-review.json",
+    "sha256": "4c88d966aba8e75d735f183406df64d9a7dcc2934b05751849006589be898610",
+    "bytes": 3237
+  },
+  "source_sha256": {
+    "rouge/relic_quantities.py": "663253eaa48a73b20d4546b37b3fda1f7bf99d8d8f89c8bd6824951b0cff8afc",
+    "rouge/run_state.py": "014f915cbaa49201fe9996bfe9a33ab17fa7dc339ec7ce9dd013536562dbc579",
+    "rouge/player_resource_facts.py": "bd211708e7662263216d8af3181636173165c4e778ef2c952ef164943eec083c",
+    "rouge/player_inventory.py": "b0a1a07cc51d4629b0971568486ce30ad8a0e2259c802a25f23a9e769f6d0bb4",
+    "rouge/player_catalog_grid.py": "c4e348a3b8017db6bc171f40ca3ce8a7a2e76e5bae720b918e3966eb95e8a69e",
+    "rouge/player_parts.py": "59e41bc03fd098a45b55d5887eeafeab0e38c3827b85a7e42a3479a078a5855a",
+    "rouge/player_tools.py": "9af05ba0916c069645973afaf702eca7a2a8302481aa5b206f53d6beaed67562",
+    "rouge/player_shop_memory.py": "47b421ed63f4e058f11d2f7ea95acfd82ec3dd7511caf8da914801fea5b0542e",
+    "rouge/player_acceptance.py": "db0911fd44c51545cefd53d030a274cd176c7e28850631fb566625ba75e740e2",
+    "rouge/player_item_acceptance.py": "334322839484f251559df990ccf0a83a9a186d813a61e65ec9dc769d05210f28",
+    "scripts/verify_full_available.py": "d832cc71a20e4b25221732e7d7eb004d3176cb071114bdcfe9e48ab127efb2a1",
+    "tests/test_inventory_modes_446.py": "a56a0b63314c235ee81c9e420e3aec6e04269418620aaea4eb3d0a516502b9f8"
+  },
+  "full_suite_rerun": false,
+  "old_full440_proves_current_source": false,
+  "goal_active": true,
+  "whole_program_or_video_complete": false,
+  "at_UTC": "2026-10-31T20:07:00.635455+00:00"
+}

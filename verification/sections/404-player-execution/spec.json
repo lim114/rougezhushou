@@ -1,0 +1,18 @@
+{
+  "title": "资源变化分项回顾与缺失断点",
+  "change": "独立资源页分别列出已读数量及相邻有效读取之间的变化；可按资源筛选，真实0值保留，首次读取和中间缺失时变化标未知。",
+  "limits": "两次读取之间可能有多次获得或消耗，不能把差值归因到相邻节点、掉落或结算收益。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "首次读取不作为从0获得",
+    "各资源的前值分别维护",
+    "无效中间值打断变化链",
+    "筛选、选择与滚动不随普通刷新重置"
+  ],
+  "test": "tests.test_player_resource_history_404",
+  "native": "scripts/verify_player_resource_history_window_404.py",
+  "next": "继续第405节：藏品、道具及队伍变化的已读证据回顾。",
+  "additional_tests": [],
+  "unit_receipt": "verification/sections/404-player-checks/process.json",
+  "native_receipt": "verification/sections/404-player-window/window.json",
+  "native_process_receipt": "verification/sections/404-player-window-process/process.json"
+}

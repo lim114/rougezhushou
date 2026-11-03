@@ -1,0 +1,30 @@
+test_changed_unicode_topic_and_empty_document_finish_without_losing_text (tests.test_mechanism_reading_449.MechanismReadingTests.test_changed_unicode_topic_and_empty_document_finish_without_losing_text) ... ok
+test_plain_text_and_chinese_heading_format_do_not_parse_markup (tests.test_mechanism_reading_449.MechanismReadingTests.test_plain_text_and_chinese_heading_format_do_not_parse_markup) ... ok
+test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading (tests.test_mechanism_reading_449.MechanismReadingTests.test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading) ... FAIL
+test_sun_skill_card_keyboard_choice_reveals_exact_complete_card (tests.test_mechanism_reading_449.MechanismReadingTests.test_sun_skill_card_keyboard_choice_reveals_exact_complete_card) ... ERROR
+
+======================================================================
+ERROR: test_sun_skill_card_keyboard_choice_reveals_exact_complete_card (tests.test_mechanism_reading_449.MechanismReadingTests.test_sun_skill_card_keyboard_choice_reveals_exact_complete_card)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_mechanism_reading_449.py", line 58, in test_sun_skill_card_keyboard_choice_reveals_exact_complete_card
+    ref=model.reference(model.STAGES[0]);key=ref['entities'][0]['key'];d=CurrentSunBossDialog(model.STAGES[0],key);self.addCleanup(d.deleteLater);d.show();QTest.qWait(20);p=d.panel
+                                             ~~~^^^^^^^^^^^^
+KeyError: 'entities'
+
+======================================================================
+FAIL: test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading (tests.test_mechanism_reading_449.MechanismReadingTests.test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_mechanism_reading_449.py", line 48, in test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading
+    self.assertEqual(p.reading_header.scope.toggleButton().text(),'+ 固定机制资料 · 非本局实况')
+AssertionError: '固定机制资料 · 非本局实况' != '+ 固定机制资料 · 非本局实况'
+- 固定机制资料 · 非本局实况
++ + 固定机制资料 · 非本局实况
+? ++
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.734s
+
+FAILED (failures=1, errors=1)

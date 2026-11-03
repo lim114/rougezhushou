@@ -1,0 +1,29 @@
+{
+  "section": 36,
+  "completion_ref": "p2-section-036",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T19:15:27.824260+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_mei_s1_reference tests.test_mizuki_s1_reference tests.test_timing tests.test_wine_timing tests.test_damage tests.test_relics -q",
+      "run": 108,
+      "passed": 107,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 551,
+      "passed": 550,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 16,
+  "failed_attempts": 2,
+  "draft_additional_unavailable": "one supplementary historical sandbox run lacked three public cache paths; not counted as success",
+  "source_receipt": "research/p2-mei-s1-reference/source-receipt.json",
+  "native_windows": false
+}

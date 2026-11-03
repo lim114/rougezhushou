@@ -1,0 +1,76 @@
+{
+  "format_version": 1,
+  "scope": "SOURCE_ONLY_NO_CONTEXT_OR_PROJECT_EXECUTION",
+  "baseline_context_reference": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-final-v1/full095_context_ui_retry.py",
+    "bytes": 35030,
+    "sha256": "1b6eece4916d837e151ce6f8706dbfc216019b7def11997936c3e3effe98e234"
+  },
+  "pending_context_reference": {
+    "path": "/workspace/.continuation/full095-regression-ui-identity-resume-source-v1/full095_context_ui_retry_pending.py",
+    "bytes": 36275,
+    "sha256": "0cddc35c272e73fb44fbede3564cf487064dda28fcaaf4066bc3889d01148066"
+  },
+  "changes": [
+    {
+      "before": "PENDING = False\n",
+      "after": "PENDING = True\n",
+      "count": 1
+    },
+    {
+      "before": "raise SystemExit('PENDING SOURCE-only full095 UI cache retry: actual prior recovery, new reviewed UI/saved source and paths are not bound.')",
+      "after": "raise SystemExit('PENDING SOURCE-only full095 UI identity retry: actual prior UI epoch, unknown outcomes and newly reviewed UI/saved source are not bound.')",
+      "count": 1
+    },
+    {
+      "before": "from recovery_binding095 import validate_recovery_inputs, validate_capability_receipt",
+      "after": "from identity_binding095 import validate_recovery_inputs, validate_capability_receipt",
+      "count": 1
+    },
+    {
+      "before": "BOUND_BINDING_SHA256 = 'b83ab67ca978d1b1b9e393c6d4e2cfb6c77e3bf9600af9d7ae87fe40975dbb84'",
+      "after": "BOUND_BINDING_SHA256 = '__ACTUAL_UI_IDENTITY_RETRY_BINDING_SHA256_PENDING__'",
+      "count": 1
+    },
+    {
+      "before": "path = OUT / 'wine-validation-095-context-ui-cache-retry-v1.json'",
+      "after": "path = OUT / 'wine-validation-095-context-ui-identity-retry-v1.json'",
+      "count": 1
+    },
+    {
+      "before": "            and binding.get('actual_ui_retry') is True,",
+      "after": "            and binding.get('actual_ui_retry') is True\n            and binding.get('actual_ui_identity_retry') is True,",
+      "count": 1
+    },
+    {
+      "before": "            require(began >= datetime.fromisoformat(context['ui_retry_started_at']),\n",
+      "after": "            require(began >= datetime.fromisoformat(context['ui_identity_retry_started_at']),\n",
+      "count": 1
+    },
+    {
+      "before": "if phase == 'resume':\n    require(len(sys.argv) == 2, 'Usage: final recovery context resume')\n    recovery_spec = binding['recovery_spec']\n    original_context = bound_json(recovery_spec['original']['context'])\n    prior_recovery_context = bound_json(recovery_spec['prior_recovery']['context'])\n    new_paths = recovery_spec['ui_retry_output_paths']\n    require(all(not Path(name).exists() for name in new_paths.values())\n            and all(not Path(name).exists() for name in actual['global_output_plan']['fresh_evidence_directories']),\n            'A new UI retry/control/final sink or native namespace already exists; preserve it and diagnose')\n    # started_at is the actual original epoch, never a claim of a backdated new run.\n    # Every preserved pass was already checked against its physical original proof.\n    ctx = deepcopy(prior_recovery_context)\n    ctx.update(status='ACTUAL_FULL095_STARTED_NOT_PASSED',\n               actual_original_epoch_recovery=True,\n               actual_ui_retry=True,\n               ui_retry_started_at=now(),\n               prior_recovery=recovery_spec['prior_recovery'],\n               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],\n               prior_selected_failed_execution=recovery_spec['prior_selected_failed_execution'],\n               preserved_recovery_passed_executions=recovery_spec['preserved_recovery_passed_executions'],\n               ui_retry_source=recovery_spec['ui_retry'],\n               recovery_started_at=prior_recovery_context['recovery_started_at'],\n               original_context=recovery_spec['original']['context'],\n               original_source_binding=recovery_spec['original']['binding'],\n               original_context_runner=recovery_spec['original']['runner'],\n               original_started_at_preserved_without_new_start=True,\n               preserved_passed_executions=recovery_spec['preserved_passed_executions'],\n               prior_failed_execution=recovery_spec['prior_failed_execution'],\n               binding=file_ref(Path(__file__).with_name('actual-full095-source-binding.json')),\n               final_context_runner=file_ref(Path(__file__)),\n               planned_fresh_sinks=new_paths,\n               planned_current_epoch_sinks=actual['global_output_plan']['paths'],\n               available_checks_passed=False,\n               recovery_context_calls_project=0,\n               original_successful_executions_replayed_by_context=0)\n    require(ctx['started_at'] == original_context['started_at']\n            and ctx['recovery_started_at'] == prior_recovery_context['recovery_started_at']\n            and datetime.fromisoformat(ctx['started_at']) <= datetime.fromisoformat(ctx['recovery_started_at'])\n            <= datetime.fromisoformat(ctx['ui_retry_started_at']),\n            'UI retry must retain both actual earlier epoch boundaries and add only its new real boundary')\n    with path.open('x', encoding='utf-8') as stream:\n        json.dump(ctx, stream, ensure_ascii=False, indent=2); stream.write('\\n')\n    print(json.dumps({'section': number, 'source_files': len(ctx['source_sha256']),\n                      'actual_base_HEAD': ctx['actual_base_HEAD'], 'status': ctx['status'],\n                      'actual_original_epoch_recovery': True, 'actual_ui_retry': True,\n                      'recovery_started_at': ctx['recovery_started_at'],\n                      'ui_retry_started_at': ctx['ui_retry_started_at'],\n                      'preserved_passed_executions': sorted(ctx['preserved_passed_executions']),\n                      'original_start_replayed': False}))\n",
+      "after": "if phase == 'resume':\n    require(len(sys.argv) == 2, 'Usage: final recovery context resume')\n    recovery_spec = binding['recovery_spec']\n    original_context = bound_json(recovery_spec['original']['context'])\n    prior_recovery_context = bound_json(recovery_spec['prior_recovery']['context'])\n    prior_ui_context = bound_json(recovery_spec['prior_ui_retry']['context'])\n    new_paths = recovery_spec['ui_retry_output_paths']\n    require(all(not Path(name).exists() for name in new_paths.values())\n            and all(not Path(name).exists() for name in actual['global_output_plan']['fresh_evidence_directories']),\n            'A new UI retry/control/final sink or native namespace already exists; preserve it and diagnose')\n    # started_at is the actual original epoch, never a claim of a backdated new run.\n    # Every preserved pass was already checked against its physical original proof.\n    ctx = deepcopy(prior_ui_context)\n    ctx.update(status='ACTUAL_FULL095_STARTED_NOT_PASSED',\n               actual_original_epoch_recovery=True,\n               actual_ui_retry=True,\n               ui_retry_started_at=prior_ui_context['ui_retry_started_at'],\n               actual_ui_identity_retry=True,\n               ui_identity_retry_started_at=now(),\n               prior_ui_retry=recovery_spec['prior_ui_retry'],\n               prior_incomplete_ui_cache=recovery_spec['prior_incomplete_ui_cache'],\n               prior_recovery=recovery_spec['prior_recovery'],\n               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],\n               prior_selected_failed_execution=recovery_spec['prior_selected_failed_execution'],\n               preserved_recovery_passed_executions=recovery_spec['preserved_recovery_passed_executions'],\n               ui_retry_source=recovery_spec['ui_retry'],\n               recovery_started_at=prior_recovery_context['recovery_started_at'],\n               original_context=recovery_spec['original']['context'],\n               original_source_binding=recovery_spec['original']['binding'],\n               original_context_runner=recovery_spec['original']['runner'],\n               original_started_at_preserved_without_new_start=True,\n               preserved_passed_executions=recovery_spec['preserved_passed_executions'],\n               prior_failed_execution=recovery_spec['prior_failed_execution'],\n               binding=file_ref(Path(__file__).with_name('actual-full095-source-binding.json')),\n               final_context_runner=file_ref(Path(__file__)),\n               planned_fresh_sinks=new_paths,\n               planned_current_epoch_sinks=actual['global_output_plan']['paths'],\n               available_checks_passed=False,\n               recovery_context_calls_project=0,\n               original_successful_executions_replayed_by_context=0)\n    require(ctx['started_at'] == original_context['started_at']\n            and ctx['recovery_started_at'] == prior_recovery_context['recovery_started_at']\n            and datetime.fromisoformat(ctx['started_at']) <= datetime.fromisoformat(ctx['recovery_started_at'])\n            <= datetime.fromisoformat(ctx['ui_retry_started_at'])\n            <= datetime.fromisoformat(ctx['ui_identity_retry_started_at']),\n            'UI retry must retain both actual earlier epoch boundaries and add only its new real boundary')\n    with path.open('x', encoding='utf-8') as stream:\n        json.dump(ctx, stream, ensure_ascii=False, indent=2); stream.write('\\n')\n    print(json.dumps({'section': number, 'source_files': len(ctx['source_sha256']),\n                      'actual_base_HEAD': ctx['actual_base_HEAD'], 'status': ctx['status'],\n                      'actual_original_epoch_recovery': True, 'actual_ui_retry': True,\n                      'recovery_started_at': ctx['recovery_started_at'],\n                      'ui_retry_started_at': ctx['ui_retry_started_at'],\n                      'actual_ui_identity_retry': True,\n                      'ui_identity_retry_started_at': ctx['ui_identity_retry_started_at'],\n                      'preserved_passed_executions': sorted(ctx['preserved_passed_executions']),\n                      'original_start_replayed': False}))\n",
+      "count": 1
+    },
+    {
+      "before": "            and ctx.get('actual_original_epoch_recovery') is True and ctx.get('actual_ui_retry') is True,",
+      "after": "            and ctx.get('actual_original_epoch_recovery') is True and ctx.get('actual_ui_retry') is True\n            and ctx.get('actual_ui_identity_retry') is True,",
+      "count": 1
+    },
+    {
+      "before": "            and ctx['ui_retry_source'] == recovery_spec['ui_retry']\n",
+      "after": "            and ctx['ui_retry_source'] == recovery_spec['ui_retry']\n            and ctx['prior_ui_retry'] == recovery_spec['prior_ui_retry']\n            and ctx['prior_incomplete_ui_cache'] == recovery_spec['prior_incomplete_ui_cache']\n            and ctx['ui_retry_started_at'] == bound_json(recovery_spec['prior_ui_retry']['context'])['ui_retry_started_at']\n",
+      "count": 1
+    },
+    {
+      "before": "            <= datetime.fromisoformat(ctx['ui_retry_started_at']) <= datetime.now(timezone.utc),\n",
+      "after": "            <= datetime.fromisoformat(ctx['ui_retry_started_at'])\n            <= datetime.fromisoformat(ctx['ui_identity_retry_started_at']) <= datetime.now(timezone.utc),\n",
+      "count": 1
+    },
+    {
+      "before": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,\n",
+      "after": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,\n               prior_ui_retry_started_at_preserved=True, prior_incomplete_ui_cache_preserved=True,\n               ui_identity_retry_contract_projection_verified=True,\n",
+      "count": 1
+    }
+  ]
+}

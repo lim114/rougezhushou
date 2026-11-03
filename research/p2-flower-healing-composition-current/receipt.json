@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-12",
+  "scope": "three fixed rogue6 received-healing/HP-recovery sources; parameter composition only",
+  "source_version": "26-09-13-15-28-10-30688348",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "current_hotfix_equivalence_proven": false,
+  "source_ids": [
+    "rogue_6_relic_legacy_81",
+    "rogue_6_relic_legacy_82",
+    "rogue_6_relic_legacy_83"
+  ],
+  "mechanism_facts": [
+    {
+      "fact": "Each selected relic has three global_buff_normal records; current GBuffNormal.Preprocess allocates an independent GlobalBuffData with a copied Blackboard and appends it. No stack preprocessor is used."
+    },
+    {
+      "fact": "BattleController._CreateAndInitGlobalBuffs creates each listed prefab and calls virtual slot12=GlobalBuff.OnInit. Modifier Blackboards are assigned per global object."
+    },
+    {
+      "fact": "All three actual receiving-healing/recovery prefabs have empty global key and child disableOverride=1. BuffData.GetOverrideKey returns String.Empty; BuffContainer.NewBuff enables the child directly rather than entering EnsureOverrideGroup. Thus equal child keys do not collapse these sources."
+    },
+    {
+      "fact": "Actual heal_scale template event6 (ON_APPLYING_MODIFIER) is IsHeal then ModifierScaleUp. Current ModifierScaleUp.Execute on healing reads heal_scale, then multiplies current modifier.value by its own Blackboard factor and writes it back; distinct enabled sources multiply successively."
+    },
+    {
+      "fact": "Flat HP recovery prefab uses attribute13; max-HP-ratio recovery uses attribute19; both are formulaItem1 (MULTIPLIER), loadFromBlackboard=1. Current Attributes._CalculateAttributeValue sums the MULTIPLIER terms before applying 1+sum, so20%+30%+40%=90%extra to both channels. Each source is counted once per channel, not twice."
+    }
+  ],
+  "parameter_oracles": [
+    {
+      "source_ids": [
+        "rogue_6_relic_legacy_81",
+        "rogue_6_relic_legacy_82",
+        "rogue_6_relic_legacy_83"
+      ],
+      "received_healing_factor": 2.184,
+      "flat_and_hp_ratio_recovery_factor": 1.9,
+      "basis": "1.2*1.3*1.4 versus1+0.2+0.3+0.4"
+    },
+    {
+      "source_ids": [
+        "rogue_6_relic_legacy_81",
+        "rogue_6_relic_legacy_82"
+      ],
+      "received_healing_factor": 1.56,
+      "flat_and_hp_ratio_recovery_factor": 1.5,
+      "basis": "1.2*1.3 versus1+0.2+0.3"
+    }
+  ],
+  "source_scope_limitations": [
+    "Source-bound to these three exact raw rogue6 records; no general rule for arbitrary future multipliers.",
+    "Displayed factors are parameter arithmetic, not native bit-for-bit FP output or actual receiving eligibility.",
+    "No actual buff attachment, first recovery tick, refresh/cover/lifetime or event count inferred.",
+    "Current XLua/hotfix remains unknown; static installed path only.",
+    "Elemental-resistance part of涌动之餐 remains reference-only under product scope."
+  ],
+  "public_search": {
+    "queries": [
+      "site.prts.wiki 活玫瑰 叠加",
+      "site.prts.wiki 苍白花冠 回复",
+      "site.prts.wiki 涌动之餐 治疗"
+    ],
+    "result": "No condition-matched public worked multi-source example established. The mechanism proof is current static original data/native methods, with independent literal arithmetic oracles; not gameplay calibration.",
+    "secondary_context": "https://m.prts.wiki/w/涌动之餐",
+    "secondary_context_use": "Current rogue6 40% versus older themes30% is consistent with the fixed raw rogue6 source; not used to infer stacking."
+  },
+  "validation": {
+    "native_methods": 21,
+    "unique_instructions": 3169,
+    "all_instruction_bytes_rechecked": true,
+    "tests_run": 82,
+    "tests_passed": 81,
+    "historical_skips": 1,
+    "failures": 0,
+    "generator_diff": "Exactly3 relics /9effect composition fields; numerical values and all other raw sources unchanged."
+  },
+  "preserved_first_failures": [
+    {
+      "source": "old0.53 tests",
+      "failures": 5,
+      "reason": "Expected formerly unknown three-source groups to stay incomplete; updated only these expectations after new original-source proof."
+    }
+  ],
+  "artifacts_sha256": {
+    "current-template.json": "227b6e8286f2900618c48ed858ae01a1bf324879300a4d9955ca3459d47112d1",
+    "fixed-raw-sources.json": "b164d73c14cd5eb957b0bc5839e3e207c12c84c431a8edb2d43c5f55d371d975",
+    "native-proof.json": "3d23393a931ac606a53eb1b5567ac022f2276a994fb8791d882089e008718804",
+    "prefab-binding.json": "8ca7675f5206dc456556bd0d5a5b1ef3ec0c39759afe4556638c254f7765e921",
+    "selected-metadata.json": "9048f27043dcfaeb36ddf350c1a793b808660a8ab86d84ba13b0c443132d2fc9"
+  }
+}

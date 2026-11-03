@@ -1,0 +1,101 @@
+{
+  "format_version": 1,
+  "status": "FROZEN_BEFORE_ANY_FRESH_VERIFIER_CALL",
+  "candidate_script": {
+    "source_path": "/workspace/.continuation/p2-animation-provenance-portability-090-independent-ui/candidate/scripts/verify_original_animation_provenance.py",
+    "bytes": 18256,
+    "sha256": "50f00b63e46b782449a705192706297a34e45d3e05732f4ecb7b1cd9402fcbc0"
+  },
+  "author_freeze": {
+    "source_path": "/workspace/.continuation/p2-animation-provenance-portability-090-draft/review-freeze090.json",
+    "bytes": 2237,
+    "sha256": "e0f5fd4f72a1fafbca959d06365e3eaab842713e3b76112bba56c65a4542b4a2"
+  },
+  "named_root619_inputs": {
+    "source_path": "/workspace/.continuation/p2-animation-provenance-portability-090-independent-ui/public-fixture-root619-reconstruction090.json",
+    "bytes": 5583,
+    "sha256": "8d7308341db0d7442aedb164eb2db732e94d1844a910aea478d25f9c9938365b"
+  },
+  "static_receipt": {
+    "source_path": "/workspace/.continuation/p2-animation-provenance-portability-090-independent-ui/independent-static-review090.json",
+    "bytes": 2107,
+    "sha256": "d18677953151e8c38e9eb9db9a5b10b9061b2177f383f0a5735cbb0abc7140f5"
+  },
+  "maximum_fresh_verifier_entries": 4,
+  "fresh_CLI_invocations_planned": 0,
+  "fresh_direct_verifier_entries_planned": 4,
+  "risk_count": 4,
+  "risks": [
+    {
+      "id": "R1-runtime-false-is-int-zero",
+      "record_id": "char_196_sunbr:Back:Attack",
+      "key": "runtime_binding_verified",
+      "old": {
+        "type": "bool",
+        "value": false
+      },
+      "new": {
+        "type": "int",
+        "value": 0
+      },
+      "expected_code": "binding_scope_mismatch",
+      "different_from_author": "Author tested bool True, not equality alias integer0"
+    },
+    {
+      "id": "R2-extraction-hash-addition-field",
+      "pointer": [
+        "source_additions",
+        0,
+        "extraction_sha256"
+      ],
+      "old": {
+        "type": "str",
+        "value": "2b3785b65d526bf74329f249b90bf2034c02eb79708e25ec12bdebe73709dd77"
+      },
+      "new": {
+        "type": "str",
+        "value": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_code": "addition_metadata_mismatch",
+      "different_from_author": "Only mutable references addition metadata changes; all actual extraction/packet leaves and manifest hash remain exact"
+    },
+    {
+      "id": "R3-single-addition-nondict",
+      "pointer": [
+        "source_additions",
+        0
+      ],
+      "old": {
+        "type": "dict",
+        "whole_sha256": "c630e0ba2f89310db4bad6ac9840c763e6af3aa1eb8477e147ecc0ead2be6cde"
+      },
+      "new": {
+        "type": "list",
+        "value": []
+      },
+      "expected_code": "addition_metadata_mismatch",
+      "different_from_author": "One malformed existing addition; not author additional unsupported scope"
+    },
+    {
+      "id": "R4-Front-eligibility-is-int-one",
+      "record_id": "char_196_sunbr:Front:Attack",
+      "key": "selectable_as_conventional_reference",
+      "old": {
+        "type": "bool",
+        "value": true
+      },
+      "new": {
+        "type": "int",
+        "value": 1
+      },
+      "expected_code": "invalid_data",
+      "different_from_author": "Front eligibility alias, leaving all Back derived fields untouched; not author preview bool mutation"
+    }
+  ],
+  "all_mutations_only_external_public_references_copies": true,
+  "manifest_and_six_original_leaves_remain_exact": true,
+  "no_source_manifest_or_leaf_hash_rebinding": true,
+  "author28_six_tests_or_source28_old_matrices_repeats": 0,
+  "application_API_helper_formatter_parser_network_Qt_Wine_calls_planned": 0,
+  "root89_tracked_apply_or_registry_rebase_not_performed": true
+}

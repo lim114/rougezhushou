@@ -1,0 +1,118 @@
+--- actual_successful105/window.py
++++ inactive110/window.py
+@@ -1,4 +1,4 @@
+-"""Fresh bounded actual full105 Wine Qt validation; Source prepared only."""
++"""Inactive bounded full110 Window Source draft; Root final109 guard binding pending."""
+ import argparse, functools, hashlib, json, os, sys, threading, time
+ from pathlib import Path
+ 
+@@ -11,14 +11,21 @@
+ OUT = Path(_args100.out).resolve()
+ if OUT == ROOT or OUT.is_relative_to(ROOT):
+     raise ValueError('The fresh evidence directory must be outside the repository')
++# Draft deliberately refuses execution before Root final109 Source binding.
++_SOURCE110_GUARD_SHA256 = None
++_SOURCE110_MAINTAINED_COUNT = None
++if _SOURCE110_GUARD_SHA256 is None or _SOURCE110_MAINTAINED_COUNT is None:
++    raise ValueError('Inactive full110 Source draft: actual completed109/final110 guard not bound')
+ _guard_bytes100 = Path(_args100.guard).read_bytes()
++if hashlib.sha256(_guard_bytes100).hexdigest() != _SOURCE110_GUARD_SHA256:
++    raise ValueError('Exact Root final109/final110 public Source guard bytes required')
+ _guard100 = json.loads(_guard_bytes100)
+ _expected100 = _guard100['source_sha256']
+ _additional100 = _guard100['source_additional_sha256']
+-if not isinstance(_expected100, dict) or len(_expected100)!=748:
+-    raise ValueError('A real completed104/final105 maintained Source map of748 files is required')
++if not isinstance(_expected100, dict) or len(_expected100)!=_SOURCE110_MAINTAINED_COUNT:
++    raise ValueError('Exact actual completed109/final110 maintained Source count is required')
+ if not isinstance(_additional100, dict) or 'CORE_0.70_VERIFICATION.json' not in _additional100:
+-    raise ValueError('Completed104/final105 additional Source map must include CORE registration')
++    raise ValueError('Completed109/final110 additional Source map must include CORE registration')
+ 
+ def maintained_source100():
+     result = {}
+@@ -48,9 +55,9 @@
+     return dict(sorted(result.items()))
+ 
+ if maintained_source100() != _expected100:
+-    raise AssertionError('Completed104/final105 maintained Source drift before project imports')
++    raise AssertionError('Completed109/final110 maintained Source drift before project imports')
+ if additional_source100() != _additional100:
+-    raise AssertionError('Completed104/final105 supplemental Source drift before project imports')
++    raise AssertionError('Completed109/final110 supplemental Source drift before project imports')
+ OUT.mkdir(parents=True, exist_ok=False)
+ (OUT / 'source100-guard-input.json').write_bytes(_guard_bytes100)
+ _started100 = time.perf_counter()
+@@ -60,16 +67,16 @@
+ 
+ def _deadline_check100():
+     if time.perf_counter() >= _deadline100:
+-        raise TimeoutError('Fresh full105 attempt2 deadline of1200 seconds reached')
++        raise TimeoutError('Fresh full110 attempt1 deadline of1200 seconds reached')
+ 
+ def _hard_timeout100():
+-    record = {'passed': False, 'scope': 'actual full105 attempt2 hard deadline', 'after_section': 105,
+-              'attempt': 2, 'deadline_seconds': 1200, 'elapsed_seconds': time.perf_counter()-_started100,
++    record = {'passed': False, 'scope': 'actual full110 attempt1 hard deadline', 'after_section': 110,
++              'attempt': 1, 'deadline_seconds': 1200, 'elapsed_seconds': time.perf_counter()-_started100,
+               'guard_sha256': hashlib.sha256(_guard_bytes100).hexdigest(),
+               'full_function_vector_measured': False}
+     try:
+         (OUT / 'hard-timeout-100.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
+-        print(json.dumps({'passed': False, 'attempt': 2, 'hard_deadline': 1200}), flush=True)
++        print(json.dumps({'passed': False, 'attempt': 1, 'hard_deadline': 1200}), flush=True)
+     finally:
+         os._exit(124)
+ 
+@@ -80,19 +87,19 @@
+ def _write_progress105(count, last_check):
+     # Only completed append count and public scalar labels; never dump checks,
+     # window, caller, state, function vectors or repeat a full Source hash scan.
+-    record = {'kind': 'FULL105_ATTEMPT2_APPENDED_CHECK_PROGRESS',
+-              'after_section': 105, 'attempt': 2, 'passed': False,
++    record = {'kind': 'FULL110_ATTEMPT1_APPENDED_CHECK_PROGRESS',
++              'after_section': 110, 'attempt': 1, 'passed': False,
+               'workflow_complete': False, 'appended_checks': count,
+               'last_check': last_check,
+               'elapsed_seconds': round(time.perf_counter()-_started100, 3),
+               'checkpoint_every_appended_checks': 32,
+               'complete_function_vector_measured': False}
+-    temporary = OUT / 'full105-progress.json.tmp'
++    temporary = OUT / 'full110-progress.json.tmp'
+     with temporary.open('w', encoding='utf-8') as stream:
+         stream.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + '\n')
+         stream.flush()
+         os.fsync(stream.fileno())
+-    os.replace(temporary, OUT / 'full105-progress.json')
++    os.replace(temporary, OUT / 'full110-progress.json')
+ 
+ 
+ class _ProgressChecks105(list):
+@@ -1180,23 +1187,23 @@
+     return maintained_source100()
+ checks=_ProgressChecks105();started=time.perf_counter();window=None;app=None;before=source_hashes()
+ receipt={'scope':'Wine Windows binary compatibility; no native Windows or game integration',
+-         'after_section':105,'current_maintained_source_count_expected':748,
++         'after_section':110,'current_maintained_source_count_expected':_SOURCE110_MAINTAINED_COUNT,
+          'inherited_full100_runner_sha256':'e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3',
+-         'legacy_output_names_preserved':True,'specialist101_104_validation_in_this_runner':False,
++         'legacy_output_names_preserved':True,'specialist101_109_validation_in_this_runner':False,
+          'native_windows_verified':False,'game_captures':0,'chat_requests':0,
+          'private_state_isolated':True,'platform':platform.platform(),'python':sys.version,
+          'checks':checks,'passed':False,'complete_ui_validation':False,'plain_text_normalization':'QPlainTextEdit converts non-breaking spaces to ordinary spaces',
+          'source100_guard_sha256':hashlib.sha256(_guard_bytes100).hexdigest(),
+          'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+          'deadline_seconds':1200,'global_profile_or_trace_used':False,
+-         'full105_attempt':2,'progress_checkpoint_file':'full105-progress.json',
++         'full110_attempt':1,'progress_checkpoint_file':'full110-progress.json',
+          'progress_every_appended_checks':32,'progress_is_partial_observation_only':True,
+          'full105_v1_source_sha256':'98e6cef848ffea73d36f330edb071e28cc884e676838a876a76995d28ea821a5',
+          'old095_complete_function_vector_measured':False,
+          'old090_frame_local_normal_observed':False,
+          'normal_plan_original_return_observed_instead':True,
+          'specialist96_100_validation_in_this_runner':False,
+-         'scope_note100':'Inherited healthy maintained full090/full100 functional suite transported to actual105 Source748. Separate96-104 specialist receipts required. Legacy comparison/producer limitations remain unchanged. No old095 complete invocation vector, native Windows, capture or chat certification.'}
++         'scope_note100':'Inherited actual successful full105 progressv2 functional suite transported to actual completed109/final110 Source. Separate96-109 specialist receipts required. Legacy projection-only/producer/no-alias limitations remain unchanged. No old095 complete invocation vector, native Windows, capture or chat certification.'}
+ try:
+     for name in ('PySide6.QtWidgets','numpy','cv2','win32gui','win32process','win32api','httpx','rapidocr_onnxruntime','windows_capture'):
+         importlib.import_module(name)

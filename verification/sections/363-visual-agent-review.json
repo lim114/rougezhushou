@@ -1,0 +1,114 @@
+{
+  "schema": "section363_final_actual_subagent_visual_review_v1",
+  "section": 363,
+  "attempt": 2,
+  "actor": "/root/p3_351_scope_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-23T19:38:57.611162+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/363-native-attempt2/process.json",
+    "sha256": "5e32b0ab1b34dba1456432c5aad389080a3318bfb6c90e719bdad3a1453d6db1",
+    "passed_observed_before_review": true
+  },
+  "method": "七个最终实际PNG分别调用tools.view_image并阅读可见像素；之后读取完整原图字节核对最终native回执SHA。不是仅核对哈希、文件名或验收断言。",
+  "images": [
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-ordinary-squad-entry.png",
+      "bytes": 101690,
+      "sha256": "5a1b7171a519284e0220583aed0e6f0c8059047f0d1c00b9d35cdfc535d63581",
+      "width": 1543,
+      "height": 1064,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "普通分队目录有真实“具名物品：分队与收藏品的取得来源”入口，原分队与强化档位分别列出；27项资料数明确不是新增分队数或本局物品量，没有新增单列版本栏目。未选择分队时正文空白，未自动认定当前生效分队。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-ten-source-directory.png",
+      "bytes": 111779,
+      "sha256": "e70479b203ab077a442dab0485813c72e11dbb15d62c095c17d6d251d786354e",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "十条非事件取得来源清楚列出八条分队物品和两条印记招募券，来源/有证时点为独立筛选。总览说明不同分队、档位、收藏品不可相加，完整获取池和实际发放未知，不把目录缺项当无法获得。地质调查的黑流树海笔记来源在列表中独立保留。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-trade-three-boundary.png",
+      "bytes": 188052,
+      "sha256": "455be4225aebc0579fdd97c183396599e7230b7ca0848076fb8573beca30d4ea",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "多边贸易强化档位2对应初始3个枯苦薜球，正文保留同分队“每进一次行商得1个”原文，并单独强调另一时点不在此加1。初始配置等级范围与账户解锁、档位实际生效分开，其他同名档位不自动继承。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-silver-mark-timing-unknown.png",
+      "bytes": 173337,
+      "sha256": "93196ef6591f5e355e92557ae12b0b16cd56c835387ae5225f3a312fc418e57b",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "博士银印准确对应1张6星随机直升临时招募券，完整用途与随机/已进阶含义可读。明确具体发放时点未核实，旧水月取得即给券备注不能迁到黑流树海；没有把效果名推成当前领取、任意自选或实际培养。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-exact-six-star-random-ticket.png",
+      "bytes": 198181,
+      "sha256": "9222ee4dedb8d559069c6246d0320421f8bee00d61b831c636fbddb32c7bed4b",
+      "width": 1348,
+      "height": 973,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "从银印来源进入的为准确6星随机直升临时券，职业/星级/完整用途及原券与留存券规则保持。初始3张与配置1/15不同、取出后不可再存和重新随机分开说明，不把配对47种当94种同时奖励；未自动认定实际持有或人选。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-exact-scrap-reverse.png",
+      "bytes": 188052,
+      "sha256": "455be4225aebc0579fdd97c183396599e7230b7ca0848076fb8573beca30d4ea",
+      "width": 1410,
+      "height": 1010,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "从准确零件反向进入后选中多边贸易枯苦薜球来源，保留强化档位2、初始3件和入店1件不相加的完整说明；两侧准确原文/物品按钮可用。该文件与初始边界图相同字节，本代理仍对两个原文件分别实际调用view_image审阅，不把相同外观当额外交互证明。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/363-native-attempt2/actual/window-source-loss.png",
+      "bytes": 31988,
+      "sha256": "12ae970d831e9939638b03cc4b761d6d067db3774dd624cb767913bc0c4d7afa",
+      "width": 973,
+      "height": 560,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "取得来源坏源后列表、可见技术正文及相关入口均清空，提示旧清单/原文/关联窗口已清除。没有旧发放数量或时点结论残留；截图只能证明可见页，另一阅读页与窗口实际关闭仍以原生回执为准。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张最终图未发现初始3与入店1相加、印记未经证实的即时发放、同名档位合并、反向错券或坏源残留的可见阻断。",
+  "limits": [
+    "地质初始文献补证不在这七张当前可见正文中，不声称本次看图单独验证该来源；应结合55项实际回执及完整文献。",
+    "此次只核对最终实际图外观，不替代两原券匹配拒绝、双阅读保持、准确逆向和清理的交互证据，也不证明95秒为性能基准或首轮失败原因。",
+    "子代理实际查看不能改称根代理直接查看；如要求根代理亲自查看仍需根代理完成。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

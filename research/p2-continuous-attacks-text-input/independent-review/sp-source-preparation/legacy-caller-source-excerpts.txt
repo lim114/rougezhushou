@@ -1,0 +1,52 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/estimate.py
+Full source sha256 c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a
+Full source bytes 21943
+
+Lines 92-101
+92:     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
+93:         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
+94:         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
+95:     elif skill['sp_type']=='INCREASE_WHEN_ATTACK':
+96:         if scenario.get('continuous_attacks',True) or has_periodic_sp(scenario):
+97:             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
+98:             initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
+99:             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
+100:         else:notes.append('攻击回复缺少持续攻击条件，初动与回转未知。')
+101:     else:notes.append('缺少可用技力恢复条件，初动与回转未知。')
+Lines 157-182
+157:         lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))
+158:         if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')
+159:         if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (scenario.get('continuous_attacks',True) or has_periodic_sp(scenario)):
+160:             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+161:             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))
+162:         if recharge is not None:recharge=frame_time(recharge+lockout)/FPS
+163:         if recharge is not None:recharge=max(recharge,math.ceil(finite(scenario.get('timing',{}).get('post_skill_lock_frames',0),'技能结束硬直帧'))/FPS)
+164:     from .sp_events import has_event_sp,charge as event_charge
+165:     if scenario.get('timing_mode','frames')=='continuous' and duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and any(
+166:             r['kind']=='deployment_attack_speed' or r['kind']=='periodic_sp' and r.get('clock')=='deployment'
+167:             for r in scenario.get('_relic_rules',[])):
+168:         lockout=finite(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0),'额外阻回秒数',3600)
+169:         recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,
+170:             stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout)
+171:         if recharge is not None:recharge+=lockout
+172:     sp_events={}
+173:     if has_event_sp(scenario):
+174:         sp_events['initial']=event_charge(scenario,skill,max(0,skill['sp_cost']-initial_sp),
+175:             sp_rate,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
+176:         initial=sp_events['initial']['seconds']
+177:         if duration is not None:
+178:             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+179:             sp_events['cycle']=event_charge(scenario,skill,skill['sp_cost'],sp_rate,normal_interval,
+180:                 stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration,resume=resume)
+181:             recharge=sp_events['cycle']['seconds']
+182:         else:recharge=None
+Lines 197-205
+197:     cycle_damage=cycle_healing=cycle_dps=cycle_hps=None
+198:     if cycle is not None and cycle>0:
+199:         resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+200:         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
+201:         normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
+202:             target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
+203:         if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):
+204:             normal_hits=0
+205:             normal.streams=[]

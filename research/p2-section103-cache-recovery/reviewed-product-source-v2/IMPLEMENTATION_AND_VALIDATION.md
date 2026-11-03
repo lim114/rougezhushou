@@ -1,0 +1,36 @@
+# 第103节：accepted-cache 的合法新观察恢复候选
+
+Source-only，不是已应用或已通过产品。作者仅stdlib读取、hash、AST比较、compile文本及仓库外写候选；项目/helper/codec/Qt/tests/Wine/Git/tracked writes均0。v1保留为恢复不闭合的旧Source草稿。当前preview绑定已应用101维护745，正式运输必须重新绑定实际完成102后的guard；不做全文件覆盖，也不修改101/102范围。
+
+## 原件与实证
+
+A 来源叶子：Root原743 Linux 682536/raw0/e21654，14case/0.882s。5个accepted坏缓存来源null/list/text/number及known origin change在fresh明确来源触发真实AttributeError，原disk/tmp/state同；8healthy/unused合法applyTrue/save，staleFalse无写。原JSON203103B SHA9100d4cf424e46951faa8b6312964a3409b25d65486d2344350ed37b95c876cd，作者02fca5只读核对。
+
+B squad：Root真实e839c3489fe3f0bff445db2ab5771ed1388c51b4逐Git blob重构完整公开743+CORE，proof80441B SHAc24b86863aa73ae0c47a85b38312ac848a6c9969138413804fdbd28f24b925be。当前101维护745未改，不能说当前仍743。Rootf4725a/raw0/7db821，17case/3.023s；cached list/dict ID accepted后confirmed_config TypeError。旧list ID/effect_verified=True遇合法fresh same-name badgeFalse，applyTrue但fresh/restart仍TypeError，实际证明旧保护门会阻断恢复；healthyTrue和trade20True→same-name19False保原强事实；freshTrue修复badlist。其它unknown/id/time/name/run_id短路控制保存原语义。原JSON287168B SHA9eaada838fa8d2d98f8314965cea865395f0978d27bd0fef18ba23b79a5c9472，作者e501dd只读核对。A/B/proof均已byteidentical复制evidence，不复制私人目录。
+
+两原probe的product_pass=False始终为观察流程，不用它们的primary0冒充修复验收。A原v1编号0违背native协议，Root未执行，保留Source失败记录；Root真实跑的是修正v2。B原固定743 probe没有放宽pin，当前维护repo不匹配旧hash的Source检查失败如实保留，实际用的是匹配的真实original100 public tree。
+
+## 四局部增量
+
+1. run_state.apply来源纠正只在fresh origin非None及旧证据是dict时读取旧source文字。严格保留旧金色marker的classification_corrected特殊行为；其它来源仍按已有known-change/return失效。没有新marker时原坏叶子照常保留，输入原件不被全局拒收或清洗。合法freshmarker按已有sources merge补齐再实际save/restart；不解释坏叶子为普通或应急。
+2. 同apply旧分队防降级门增加旧事实资格：旧ID必须str且命中固定档案，旧name须与该档案及freshname一致，旧effect_verified必须is True。之后继续原fresh `not record.get('effect_verified')`保护，不改incoming类型政策。healthyTrue及强化trade20→基础19仍保持旧record/旧timestamp；坏旧identity不能靠真flag挡住合法newbadgeFalse。未知flag/identity不被转换True；只在新的真实有效观察出现时替换记录。
+3. run_config.confirmed_config复用lookup前要求squad.id是str。原run_id/time/name门均保持；坏/未知缓存身份不复用，保原state/disk，以便正常新观察恢复。difficulty独立记录不丢弃，deepcopy剔除旧badge geometry的原行为不变。
+4. scripts.verify_cloud.py仅prepend新测试模块。新一份test_cache_recovery_103.py，34方法；其它模块名单原样保留。
+
+数值API、catalog/mechanics、run_modifiers、序列化/IO、98container及资源/101charbuff/102库存标记不改。显式坏配置在原numeric API仍ValueError，窗口原catch仍负责表述；这个修复不能称全部深层叶子已受保护。
+
+## 已有兼容性依据
+
+作者仔细只读23716f/951035：test_run_badges plain badge不降级真实trade效果；test_run_config缺页/重启及trade20True→19False；test_relic_grade_sync_032 ConfirmedSettingsReuse强分队/缺难度/旧badge无几何；test_run_reuse_guards_032ownership和viewport；test_run_config_validation明确非bool旗标数值拒绝、False/omitted未确认、坏ID值拒绝；run_modifiers.prepare_run同样严格bool+固定ID/name。旧boolTrue的强事实保护是真实生产/既有合同，不能把旧truthy坏flag冒充该合同。
+
+新增测试同时保留legacy坏flag在无新配置时的原type/value、copy/state/disk，只有合法freshFalse会替换，不把它升True。缺/None fresh确认在旧健康True时维持原保护。本文不宣称confirmed_config已全局资格化每种flag/level/time叶子；只限定identity消费者，并限定旧保护资格。未使用的坏opaque记录继续保留。
+
+## Source状态及待实际检验
+
+02b0c8/0只compile/AST。当前101preview run_state53187/91c8a463：apply两局部资格变化，23其它函数AST同；run_config5738/e35262ce：confirmed_config变化、4其它函数同；registry5258/6c167068仅新MODULES条目。四before都唯一，当前test25214B SHA40107e79366d141d4c2c9495094e86dc60000a1d3db2a9a5c369ecb5988e9844，transportJSON SHAc0988b5f7ef4a62b4a67e6cc49ed866901bdd0532e89438aa4c824f5133c0976。没有执行tests/helper，不作测试PASS；非作者独审另存正式结论。
+
+34方法涵盖实际JSON加载/原字节+tmp保护、fresh origin补齐与合法保存/restart、原first-discovery/known-change/legacygold/returned生命周期、unused/stale/rawopaque反例；squad类型/unknown/time/name/run ownership复用、copiedgeometry、不丢difficulty、freshFalse/True恢复、healthyTrue/trade强记录保护、missing页原timestamp、原numeric拒绝合同。badoldTrue→freshFalse新测试直接闭合本次原实证恢复缺口。
+
+Root待做：actual102guard重新精确运输并存AST/源映射；34新测试和相关origin-discovery/recipient-lifecycle/run-reuse/run-config/reliability/精选套件；真实窗口读公开隔离状态并通过actual apply_run_observation完成来源/分队补齐、保存/close/restart；保actual caller/native inputs/results/三文本、pure-view state/原disk/tmp不变和合法save新phase、4真实PNG，必要healthy Gold只同事实比较；完成断点/每节commit/push由Root实际执行。原Windows/game/chat/OCR自然恢复没有本包证明，Wine只称兼容。future102guard仍NULL，完成节增量0。
+
+资源direct缺value保持pending：原saved loader已有98保护，没有自然producer产缺值record证据，不纳本修复。不重复成功full100，也不扩大未经实证的字段schema或机制。

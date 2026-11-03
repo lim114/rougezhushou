@@ -1,0 +1,219 @@
+        #66-70: actual Qt values and actual visible results. API aliases/text are separate.
+        latest_start=len(checks);latest_section_counts={}
+        window.damage_technical.setChecked(False);window.timing_scenario.clear();relics([])
+        window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
+        window.limit_window.setChecked(True);window.healing_targets.setValue(1)
+        window.cooperative.setChecked(False);window.fragile.setChecked(False)
+        scopes070=[('positive',10,{}),('zero_window',0,{}),
+            ('zero_lifetime',10,{'target_disappears_seconds':0}),
+            ('empty_target_windows',10,{'target_windows':[]})]
+        def set_observation070(horizon,timing):
+            window.window_seconds.setValue(horizon)
+            window.timing_scenario.setPlainText(json.dumps(timing) if timing else '')
+        def require_real_int070(widget,args,key,value):
+            assert isinstance(widget,QSpinBox) and widget.isVisible() and widget.isEnabled()
+            assert type(widget.value()) is int and widget.value()==value
+            assert type(args[key]) is int and args[key]==value
+        def require_real_bool070(widget,args,key,value):
+            assert isinstance(widget,QCheckBox) and widget.isVisible() and widget.isEnabled()
+            assert type(widget.isChecked()) is bool and widget.isChecked() is value
+            assert args[key] is value
+
+        section_start=len(checks);wisdel='char_1035_wisdel'
+        train(wisdel,{'elite':2,'level':90,'potential':1,'trust':100,'module_id':None,'module_level':0})
+        reset_owner_options(wisdel)
+        ghosts_widget=option_widgets[(wisdel,'ghost_count')];casts_widget=option_widgets[(wisdel,'ghost_casts')]
+        assert ghosts_widget.minimum()==0 and ghosts_widget.maximum()==3
+        assert casts_widget.minimum()==0 and casts_widget.maximum()==1000
+        for number in (1,2,3):
+            window.skill.setCurrentIndex(window.skill.findData(number))
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for scope_name,horizon,timing in scopes070:
+                    set_observation070(horizon,timing)
+                    for ghosts,casts in ((0,0),(0,1),(1,0),(1,1),(3,2)):
+                        ghosts_widget.setValue(ghosts);casts_widget.setValue(casts)
+                        invalid=horizon==0 and ghosts>0 and casts>0
+                        if invalid:
+                            # A real, numeric combination the original UI can submit.
+                            supplemental_button.click();app.processEvents()
+                            assert window.damage_result is None
+                            assert window.damage_text.toPlainText()=='零长度观察窗口不能声明魂灵施放命中。'
+                            assert type(ghosts_widget.value()) is int and ghosts_widget.value()==ghosts
+                            assert type(casts_widget.value()) is int and casts_widget.value()==casts
+                        else:
+                            result=click_result();args=window.damage_result['scenario']
+                            require_real_int070(ghosts_widget,args,'ghost_count',ghosts)
+                            require_real_int070(casts_widget,args,'ghost_casts',casts)
+                            require_wisdel(result,args,window.damage_text.toPlainText(),scope_name)
+                        checks.append({'scope':'actual_wisdel_integer_presence_gate_and_declared_cast_reference',
+                            'section':66,'operator':wisdel,'skill':number,
+                            'mode':'frames' if use_frames else 'continuous','observation_scope':scope_name,
+                            'ghost_count':ghosts,'ghost_casts':casts,'submitted_types':'int/int',
+                            'expected_numeric_input_error_visible':invalid,
+                            'actual_shadow_clock_or_presence_verified':False,'passed':True})
+        ghosts_widget.setValue(0);casts_widget.setValue(0)
+        latest_section_counts[66]=len(checks)-section_start;assert latest_section_counts[66]==120
+        receipt['section66_input_scope']='Real ghost_count/casts QSpinBoxes submit integers. Zero ghosts ignores declared casts; positive casts remain conditional without placement/cast time or full-phase attribution. Twelve genuinely numeric zero-window combinations show the existing exact error and clear the prior result; these are expected error checks, not successful calculations or API text inputs.'
+
+        section_start=len(checks);phatm='char_1042_phatm2'
+        train(phatm,{'elite':2,'level':60,'potential':1,'trust':100,'module_id':None,'module_level':0})
+        reset_owner_options(phatm);incoming_widget=option_widgets[(phatm,'enemy_attack_count')]
+        resistance_widget=option_widgets[(phatm,'enemy_buildup_resistance')]
+        assert incoming_widget.minimum()==0 and incoming_widget.maximum()==10000
+        def incoming_case070(number,use_frames,scope_name,horizon,timing,count,qualified=True,immune=False):
+            set_observation070(horizon,timing);incoming_widget.setValue(count)
+            result=click_result();args=window.damage_result['scenario']
+            require_real_int070(incoming_widget,args,'enemy_attack_count',count)
+            require_incoming(result,args,window.damage_text.toPlainText(),scope_name,qualified,immune)
+            checks.append({'scope':'actual_enemy_attack_integer_metadata_and_unplaced_clock',
+                'section':67,'operator':phatm,'skill':number,
+                'mode':'frames' if use_frames else 'continuous','observation_scope':scope_name,
+                'enemy_attack_count':count,'submitted_type':'int','talent_qualified':qualified,
+                'buildup_immune':immune,'actual_attack_times':None,'events_scheduled':False,'passed':True})
+        for number in (1,2,3):
+            window.skill.setCurrentIndex(window.skill.findData(number));resistance_widget.setValue(0)
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for scope_name,horizon,timing in scopes070:
+                    for count in (0,1):incoming_case070(number,use_frames,scope_name,horizon,timing,count)
+                incoming_case070(number,use_frames,'positive',10,{},20)
+                resistance_widget.setValue(100)
+                for count in (0,1):incoming_case070(number,use_frames,'positive',10,{},count,immune=True)
+                resistance_widget.setValue(0)
+        train(phatm,{'elite':1,'level':80,'potential':1,'trust':100,'module_id':None,'module_level':0},ranks={'1':7,'2':7})
+        assert window.skill.findData(3)==-1
+        for number in (1,2):
+            window.skill.setCurrentIndex(window.skill.findData(number))
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for count in (0,1):incoming_case070(number,use_frames,'positive',10,{},count,qualified=False)
+        incoming_widget.setValue(0);latest_section_counts[67]=len(checks)-section_start
+        assert latest_section_counts[67]==74
+        receipt['section67_input_scope']='Real target-attack QSpinBox integers0/1/20 retain metadata70 per-attack parameter, but no attack timestamps or uniform schedule. Zero observation preserves cast pending/window0; lifetime0, immunity100 and E1 talent gates exclude this source. Empty target windows do not establish event timing and continuous subtotals are not forced to frame-mode zero.'
+
+        section_start=len(checks);shu='char_2025_shu'
+        different_widget=option_widgets[(shu,'three_professions')]
+        same_widget=option_widgets[(shu,'three_same_profession')];four_widget=option_widgets[(shu,'four_sui')]
+        assert different_widget.text()=='三种不同职业在场' and same_widget.text()=='三名相同职业在场'
+        for elite,level,rank,numbers,fours in ((2,90,10,(1,2,3),(False,True)),
+                (1,80,7,(1,2),(False,)),(0,50,4,(1,),(False,))):
+            train(shu,{'elite':elite,'level':level,'potential':1,'trust':100,'module_id':None,'module_level':0},
+                  ranks={'1':rank,'2':rank,'3':rank})
+            reset_owner_options(shu);set_observation070(10,{})
+            for number in numbers:
+                window.skill.setCurrentIndex(window.skill.findData(number))
+                for use_frames in (True,False):
+                    window.frame_timing.setChecked(use_frames)
+                    for four in fours:
+                        four_widget.setChecked(four);plain=None
+                        for different,same in ((False,False),(True,False),(False,True),(True,True)):
+                            different_widget.setChecked(different);same_widget.setChecked(same)
+                            result=click_result();args=window.damage_result['scenario']
+                            require_real_bool070(different_widget,args,'three_professions',different)
+                            require_real_bool070(same_widget,args,'three_same_profession',same)
+                            require_real_bool070(four_widget,args,'four_sui',four)
+                            if not different and not same:plain=deepcopy(result)
+                            require_professions(result,args,window.damage_text.toPlainText(),plain,elite==2)
+                            checks.append({'scope':'actual_shu_profession_checkbox_combinations_and_qualification',
+                                'section':68,'operator':shu,'elite':elite,'skill':number,'skill_rank':rank,
+                                'mode':args['timing_mode'],'three_professions':different,
+                                'three_same_profession':same,'four_sui':four,'submitted_types':'bool/bool/bool',
+                                'actual_squad_count_or_periodic_clock_verified':False,'passed':True})
+        reset_owner_options(shu);latest_section_counts[68]=len(checks)-section_start
+        assert latest_section_counts[68]==72
+        receipt['section68_input_scope']='Actual different/same-profession QCheckBox combinations are bool; E2 affects only selected Shu HP12% and attack speed12, E0/E1 results remain unchanged. Four-sui coexistence retains unknown periodic clocks. This declares conditions without reading actual squad counts or certifying a team-wide application.'
+
+        section_start=len(checks)
+        train('silverash',{'elite':2,'level':90,'potential':1,'trust':100,'module_id':None,'module_level':0},
+              ranks={'1':4,'2':4,'3':4})
+        window.skill.setCurrentIndex(window.skill.findData(3))
+        for use_frames in (True,False):
+            window.frame_timing.setChecked(use_frames)
+            for scope_name,horizon,timing in scopes070:
+                set_observation070(horizon,timing);controls={}
+                for cooperation in (False,True):
+                    window.cooperative.setChecked(cooperation)
+                    for fragile in (False,True):
+                        window.fragile.setChecked(fragile);result=click_result();args=window.damage_result['scenario']
+                        require_real_bool070(window.cooperative,args,'cooperative',cooperation)
+                        require_real_bool070(window.fragile,args,'preexisting_fragile',fragile)
+                        if not cooperation:controls[fragile]=deepcopy(result)
+                        require_cooperative(result,args,window.damage_text.toPlainText(),controls[fragile],scope_name)
+                        checks.append({'scope':'actual_cooperative_checkbox_explicit_coverage_condition',
+                            'section':69,'operator':'silverash','skill':3,'skill_rank':4,
+                            'mode':args['timing_mode'],'observation_scope':scope_name,
+                            'cooperative':cooperation,'preexisting_fragile':fragile,'submitted_types':'bool/bool',
+                            'actual_position_or_synchronized_hit_clock_verified':False,'passed':True})
+        train('silverash',{'elite':0,'level':50,'potential':1,'trust':100,'module_id':None,'module_level':0},ranks={'1':1})
+        assert window.skill.findData(3)==-1;window.skill.setCurrentIndex(window.skill.findData(1))
+        assert not window.cooperative.isVisible();window.fragile.setChecked(False);set_observation070(10,{})
+        for use_frames in (True,False):
+            window.frame_timing.setChecked(use_frames);plain=None
+            for cooperation in (False,True):
+                window.cooperative.setChecked(cooperation);result=click_result();args=window.damage_result['scenario']
+                assert args['cooperative'] is cooperation and type(window.cooperative.isChecked()) is bool
+                if not cooperation:plain=deepcopy(result)
+                else:assert strict_json(result)==strict_json(plain)
+                checks.append({'scope':'actual_cooperative_global_bool_inactive_skill',
+                    'section':69,'operator':'silverash','elite':0,'skill':1,
+                    'mode':args['timing_mode'],'cooperative':cooperation,'checkbox_hidden':True,'passed':True})
+        window.cooperative.setChecked(False);window.fragile.setChecked(False)
+        latest_section_counts[69]=len(checks)-section_start;assert latest_section_counts[69]==36
+        receipt['section69_input_scope']='Explicit cooperative/fragile QCheckBox bool states preserve existing physical component math and rank4 declaration across empty/positive observations. E0 S1 ignores the global cooperative flag and offers no S3. API text rejection, native placement, synchronized events and overlap identity remain separate.'
+
+        section_start=len(checks);tile_widget=option_widgets[(shu,'enemy_on_sown_tile')]
+        assert tile_widget.text()=='存在地面敌人处于播种地块'
+        for rank in (1,7,10):
+            train(shu,{'elite':2,'level':90,'potential':1,'trust':100,'module_id':None,'module_level':0},
+                  ranks={'1':rank,'2':rank,'3':rank})
+            reset_owner_options(shu);window.skill.setCurrentIndex(window.skill.findData(3))
+            bb=module.catalog()['operators'][shu]['skills'][2]['levels'][rank-1]['values']
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for four in (False,True):
+                    four_widget.setChecked(four)
+                    for scope_name,horizon,timing in scopes070[:3]:
+                        set_observation070(horizon,timing);plain=None
+                        for tile in (False,True):
+                            tile_widget.setChecked(tile);result=click_result();args=window.damage_result['scenario']
+                            require_real_bool070(tile_widget,args,'enemy_on_sown_tile',tile)
+                            require_real_bool070(four_widget,args,'four_sui',four)
+                            assert window.target_enemy.currentData() is None and 'target_enemy' not in args
+                            if not tile:plain=deepcopy(result)
+                            require_sown(result,args,window.damage_text.toPlainText(),plain,scope_name,bb)
+                            if rank==10 and use_frames and not four and scope_name=='positive' and tile:
+                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-070.png'))
+                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-070.png'
+                            checks.append({'scope':'actual_ground_enemy_presence_label_and_sown_checkbox',
+                                'section':70,'operator':shu,'skill':3,'skill_rank':rank,
+                                'mode':args['timing_mode'],'observation_scope':scope_name,
+                                'label':tile_widget.text(),'enemy_on_sown_tile':tile,'four_sui':four,
+                                'submitted_types':'bool/bool','current_target_selected':False,
+                                'e_atk_parameter':bb['e_atk'],'e_attack_speed_parameter':bb['e_attack_speed'],
+                                'actual_ground_presence_or_position_verified':False,'passed':True})
+        train(shu,{'elite':1,'level':80,'potential':1,'trust':100,'module_id':None,'module_level':0},ranks={'1':7,'2':7})
+        reset_owner_options(shu);assert window.skill.findData(3)==-1;set_observation070(10,{})
+        for number in (1,2):
+            window.skill.setCurrentIndex(window.skill.findData(number));assert not tile_widget.isVisible()
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames);plain=None
+                for tile in (False,True):
+                    tile_widget.setChecked(tile);result=click_result();args=window.damage_result['scenario']
+                    assert type(tile_widget.isChecked()) is bool and tile_widget.isChecked() is tile
+                    assert 'enemy_on_sown_tile' not in args
+                    if not tile:plain=deepcopy(result)
+                    else:assert strict_json(result)==strict_json(plain)
+                    checks.append({'scope':'actual_sown_checkbox_inactive_skill_key_not_submitted',
+                        'section':70,'operator':shu,'elite':1,'skill':number,'mode':args['timing_mode'],
+                        'hidden_checkbox_state':tile,'inactive_key_submitted':False,'passed':True})
+        reset_owner_options(shu);window.timing_scenario.clear();relics([])
+        latest_section_counts[70]=len(checks)-section_start;assert latest_section_counts[70]==80
+        receipt['section70_input_scope']='Actual checkbox label declares the existence of a ground enemy on a sown tile, not the selected target location. Genuine bool states retain original skill parameters/empty boundaries and four-sui unknown clock. No ground_type filter, position detection, actual coverage, trigger or teleport clock is inferred; S1/S2 omit this inactive key.'
+        latest_end=len(checks)
+        receipt['supplemental_sections_66_70']=[66,67,68,69,70]
+        receipt['supplemental_checks_by_section_66_70']=latest_section_counts
+        receipt['supplemental_checks_66_70']=latest_end-latest_start
+        assert sum(latest_section_counts.values())==latest_end-latest_start
+        receipt['section70_final_checks_pending']=False
+        assert receipt['section70_final_checks_pending'] is False

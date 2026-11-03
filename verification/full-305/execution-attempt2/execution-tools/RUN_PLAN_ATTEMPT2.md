@@ -1,0 +1,45 @@
+# Full305 second complete execution — cache preparation only
+
+This independent cache does not alter/execute first source/tools. First89c698 READY,32033bd freeze,098721 activation and actual failures remain original. The copied RUN_PLAN.md describes first lineage only; use this document for second execution. No second freeze/activation/GUI/full execution has been performed.
+
+Prerequisites: all25 first positions actually terminal/assignedJobs closed; strict first root-Popen archive wrapper succeeds; root independently assesses actual traces, promotes only proven repairs, performs necessary maintenance0/stable checks, and reviews this second READY. No old PASS substitutes second execution.
+
+This revision preserves the sealed96f44ad prior second-preparation READY and all194 files. Two public harness candidates require root promotion only after the first source/outputs are sealed: `candidate/scripts/verify_curiosity_node_rules_window_304_full305.py` solely switches the freeze read to `source-freeze-attempt2.json`; `candidate/scripts/verify_battle_entry_references_window_296_full305.py` keeps all original66 requires and old64 inputs while adding the current299 manifest authority and its README, and one identity require. The latter is a repair to the temporary negative-source clone, not a new product behavior or a substitute PASS. Actual selector API remains original430+39=469; no306/new scope.
+
+Before declaring second inputs, root also performs a separate actual repaired296 owned native regression. Preserve that raw window/process evidence; the declaration requires both actual0, WindowsQPA/Qt0, closed fixture, exact67 selected-name closure/current source equality, zero external operations and assignedJob cleanup. The process receipt records supervisor launchPID and fixturePID independently; no equality or historical ancestry is assumed. `section` may be296 or305 on that process producer, but the raw fixture remains its original296 schema.
+
+Root explicitly invokes (all commands unexecuted by preparer):
+
+```powershell
+.\.venv\Scripts\python.exe -B -X utf8 .cache/p3-full305-attempt2-prep-revision2/declare_freeze305.py --declare-final305-full-inputs --expected-parent-commit <actual-HEAD> --section305-native scripts/verify_relic_exchange_flow_window_305.py --necessary-receipt <actual-final305-process.json> --window-receipt <actual-final305-window.json> --window-process-receipt <actual-final305-owned-process.json> --maintenance-receipt <actual-maintenance-process.json> --first-archive-sha256 <actual-first-archive-SHA> --native296-receipt <actual-repaired296-window.json> --native296-process-receipt <actual-repaired296-owned-process.json>
+```
+
+Output: exclusive `verification/full-305/source-freeze-attempt2.json`. Actual complete source/selector/supplemental/local-public inputs and parent are dynamically collected. Requires actual immutable first archive plus `verification/full-305/first-archive-invocation/process.json` and actual source-stable maintenance0. Future secondPASS is not a prerequisite to declare its own inputs.
+
+```powershell
+.\.venv\Scripts\python.exe -B -X utf8 .cache/p3-full305-attempt2-prep-revision2/activate_full305.py --activate --expected-parent-commit <same-HEAD> --freeze-sha256 <actual-second-freeze-SHA>
+```
+
+Independent bound84/18 capsules and activation305.json; all original862/552/generators/observers/current assertions preserved. No window starts.
+
+Use the retained rootPopen wrapper, required by the strict archive:
+
+```powershell
+.\.venv\Scripts\python.exe -B -X utf8 .cache/p3-full305-attempt2-prep-revision2/run_owned_full305_root.py --execute --expected-parent-commit <same-HEAD> --freeze-sha256 <actual-second-freeze-SHA> --activation-sha256 <actual-second-activation-SHA>
+```
+
+Exclusive root-launch-attempt2 and fresh Temp `rouge-full305-attempt2-uuid`. Wrapper retains actual controllerPopen and writes original process.exit; read full305-once.json/original stdout for actual namespace. LaunchPID, wrapperPID and actual controller selfPID are recorded separately. No implicit retry/background automation/global process termination.
+
+Full serial range: complete469 offline → original52-state4283-record legacy → unchanged original complete typed readback if actuallegacy0 → original30/independent29 → all20 native286–305. Same deadlines: offline3600/3690; legacy internal3600/supervisor3690/outer3780; typed120/210; current/P3 1200/1290. Original30 genuine1314 remains failure/unavailable, never replaced with another link type or privilege change. No first Windows PASS reuse.
+
+After root wrapper actually exits and all assignedJobs are terminal/empty:
+
+```powershell
+.\.venv\Scripts\python.exe -B -X utf8 .cache/p3-full305-attempt2-prep-revision2/archive_full305.py --archive --container <actual-second-Temp> --attempt-name execution-attempt2 --expected-parent-commit <same-HEAD> --freeze-sha256 <actual-second-freeze-SHA> --activation-sha256 <actual-second-activation-SHA>
+```
+
+Archive body verifies actual retained rootPopen argv/source/exit and original exit bytes; current no-live for every separately recorded root identifier; final orchestration status and **exact25 ordered required/actual positions**; each executed retained supervisorPopen/assignedJob/stream/exit provenance; original first archive integrity. Cannot seal a partial list as complete. Genuine nonzero/timeouts remain failed raw observations. Typed can only be explicitly unexecuted after actuallegacy nonpass, never supporting availablePASS.
+
+Exclusive public `verification/full-305/execution-attempt2`. Root-Popen logs/exit, component raw records, exact tools/bundles, typed output and flat public PNG/JSON evidence only; no temporary states/negative clones/dependency directories. Standard maps exclude.cache/docs/private; explicit public-history local/public byte pairs remain dual guarded.
+
+Mature supervisor remains unchanged: actual assignedJob scope only, Popen-before-Assign startup race disclosed. Linux/Wine/private originalWindows/game/chat remain unavailable/unverified. Automated review leaves final publicPASS unset until actual root PNG review/seal. Root then closes305/docs/index/ordinarypush/remote verification; no306.

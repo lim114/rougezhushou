@@ -1,0 +1,149 @@
+        #71-75 genuine Qt controls and read-only public observation previews.
+        from PySide6.QtWidgets import QDoubleSpinBox
+        current_start=len(checks);current_section_counts={}
+        window.damage_technical.setChecked(False);relics([])
+        window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
+        window.limit_window.setChecked(True);window.healing_targets.setValue(1)
+        window.cooperative.setChecked(False);window.fragile.setChecked(False)
+        window.deployment_elapsed.setValue(0)
+        from rouge.run_config import config_data
+        config075=config_data();design075=cases075(config075['squads'])
+        state075=deepcopy(window.run.state);account075=deepcopy(window.operator_observations)
+        run_training075=window.use_run_training.isChecked()
+        difficulty075=window.difficulty.currentIndex();summary075=window.run_summary.text()
+        plain_e0_075={}
+        try:
+            window.run.state['operators']={};window.use_run_training.setChecked(False)
+            for case075 in design075:
+                section075=case075['section'];requested075=case075['input']
+                owner075=requested075['operator'];number075=requested075['skill']
+                fields075={k:requested075[k] for k in ('elite','level','potential','trust','module_id','module_level')}
+                # These are public synthetic observation records in the same
+                #temporary window, not recognition, account files or selectors.
+                window.run.state['config']=deepcopy(requested075.get('run_config',{}))
+                window.run_summary.setText(window.run.summary());window.sync_run_config()
+                train(owner075,fields075,ranks={str(n):requested075['skill_rank'] for n in (1,2,3)})
+                reset_owner_options(owner075)
+                index075=window.skill.findData(number075);assert index075>=0
+                window.skill.setCurrentIndex(index075)
+                assert window.elite.text()==f'精英 {fields075["elite"]}'
+                assert window.potential.text()==str(fields075['potential'])
+                if fields075['module_id']:assert f'阶段 {fields075["module_level"]}' in window.module.text()
+                if fields075['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
+                if fields075['elite']==1:assert window.skill.findData(3)==-1
+                window.frame_timing.setChecked(requested075['timing_mode']=='frames')
+                window.window_seconds.setValue(requested075['window_seconds']);window.timing_scenario.clear()
+                for key075 in ('deployment_elapsed_seconds','drone_warmup_hits','ghost_count','ghost_casts'):
+                    if key075 in requested075:
+                        widget075=option_widgets[(owner075,key075)]
+                        widget075.setValue(requested075[key075])
+                result075=click_result();args075=window.damage_result['scenario']
+                for key075 in ('operator','skill','elite','level','potential','trust','skill_rank',
+                        'module_id','module_level','timing_mode','window_seconds'):
+                    assert args075[key075]==requested075[key075],(section075,key075,args075[key075],requested075[key075])
+                actual075=window.damage_text.toPlainText()
+                if section075==71:
+                    assert canonical075(args075['run_config'])==canonical075(requested075['run_config'])
+                    record075=config075['squads'][args075['run_config']['squad']['id']]
+                    assert record075['name'] in window.run_summary.text()
+                    assert ('（强化）' if record075['bandLevel']==1 else '（基础）') in window.run_summary.text()
+                    grade075=requested075['run_config'].get('difficulty')
+                    assert window.difficulty.isEnabled() is (grade075 is None)
+                    if grade075:assert window.difficulty.currentData()==grade075['value']
+                    require_squad075(result075,args075,actual075,record075)
+                elif section075==72:
+                    elapsed075=option_widgets[(owner075,'deployment_elapsed_seconds')]
+                    assert isinstance(elapsed075,QDoubleSpinBox) and elapsed075.isVisible() and elapsed075.isEnabled()
+                    assert elapsed075.minimum()==0 and elapsed075.maximum()==3600 and elapsed075.decimals()==2
+                    assert type(elapsed075.value()) is float and type(args075['deployment_elapsed_seconds']) is float
+                    assert elapsed075.value()==args075['deployment_elapsed_seconds']==requested075['deployment_elapsed_seconds']
+                    require_real_int070(option_widgets[(owner075,'drone_warmup_hits')],args075,
+                                        'drone_warmup_hits',requested075['drone_warmup_hits'])
+                    baseline_key075=(args075['potential'],args075['timing_mode'],args075['drone_warmup_hits'])
+                    if args075['elite']==0 and args075['deployment_elapsed_seconds']==0:
+                        plain_e0_075[baseline_key075]=deepcopy(result075)
+                    require_headwolf075(result075,args075,actual075,
+                        plain_e0_075.get(baseline_key075) if args075['elite']==0 else None)
+                elif section075==73:
+                    require_mei075(result075,args075,actual075,args075['elite']==2 and args075['level']>=40,args075['module_level'])
+                    if args075['window_seconds']==0:assert result075['total_damage']==0
+                elif section075==74:
+                    for key075 in ('ghost_count','ghost_casts'):
+                        require_real_int070(option_widgets[(owner075,key075)],args075,key075,requested075[key075])
+                    require_wisdel_routes075(result075,args075,actual075)
+                    if args075['window_seconds']==0:assert result075['total_damage']==0
+                else:raise AssertionError(('Unsealed section',section075))
+                current_section_counts[section075]=current_section_counts.get(section075,0)+1
+                checks.append({'scope':'actual_qt_public_config_and_readonly_cultivation_contract' if section075==71 else
+                    'actual_qt_owner_controls_and_readonly_cultivation_reference',
+                    'section':section075,'operator':owner075,'skill':number075,'mode':args075['timing_mode'],
+                    'elite':args075['elite'],'level':args075['level'],'potential':args075['potential'],
+                    'module_level':args075['module_level'],'window_seconds':args075['window_seconds'],
+                    'input_design':requested075,'state_scope':'temporary public in-memory observation/config only',
+                    'actual_account_source_or_clock_verified':False,'passed':True})
+        finally:
+            window.run.state=state075;window.operator_observations=account075
+            window.use_run_training.setChecked(run_training075)
+            window.run_summary.setText(summary075);window.sync_run_config()
+            if not state075.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty075)
+            window.update_operator();relics([]);window.timing_scenario.clear()
+        assert current_section_counts=={71:106,72:280,73:72,74:108},current_section_counts
+
+        #75 The battle-preview combos/checkbox produce their real read-only text.
+        #This is selected public stage data, not actual movement or game capture.
+        from rouge.battle_preview import battle_data,enemy_preview,enemy_text
+        preview075=window.battle_preview;stage075=window.target_stage.currentData()
+        enemy075=window.target_enemy.currentData();page075=window.centralWidget().currentIndex()
+        technical075=preview075.technical.isChecked()
+        try:
+            window.centralWidget().setCurrentIndex(4);app.processEvents()
+            for case075 in preview_cases075(battle_data()['stages']):
+                sid075=case075['stage_id'];eid075=case075['enemy_id'];level075=case075['level']
+                # BranchChoice reveals the genuine stage/identity combo and emits
+                #its normal Qt selection signal; no private _render API is called.
+                assert preview075.stage_choices.select_value(sid075)
+                app.processEvents()
+                assert preview075.stage_combo.currentData()==sid075 and preview075.current_stage==sid075
+                assert preview075.stage_combo.isVisible() and preview075.stage_combo.isEnabled()
+                assert preview075.enemy_choices.select_value((eid075,level075))
+                app.processEvents()
+                assert tuple(preview075.enemy_combo.currentData())==(eid075,level075)
+                assert preview075.enemy_combo.isVisible() and preview075.enemy_combo.isEnabled()
+                preview075.technical.setChecked(case075['technical']);app.processEvents()
+                assert isinstance(preview075.technical,QCheckBox) and preview075.technical.isVisible()
+                assert preview075.technical.isChecked() is case075['technical']
+                entry075=enemy_preview(sid075,eid075,level075,preview075.context)
+                actual075=preview075.enemy_detail.toPlainText()
+                assert preview075.enemy_detail.isReadOnly() and preview075.enemy_detail.isVisible()
+                assert actual075==enemy_text(entry075,technical=case075['technical']).replace(chr(160),' ')
+                require_movement075(entry075,actual075,case075['technical'],battle_data()['stages'][sid075])
+                current_section_counts[75]=current_section_counts.get(75,0)+1
+                checks.append({'scope':'actual_stage_enemy_combo_and_technical_movement_source_reference',
+                    **case075,'old_base_times_stage_subtotal':entry075['movement_reference']['base_times_stage_speed'],
+                    'effective_movement_known':False,'rune_composition_known':False,'passed':True})
+                if sid075=='ro6_e_3_6' and eid075=='enemy_10107_mjcdog_2' and case075['technical']:
+                    from PySide6.QtGui import QTextCursor
+                    preview075.enemy_detail.moveCursor(QTextCursor.MoveOperation.Start)
+                    assert preview075.enemy_detail.find('关卡移速符文参数参考')
+                    preview075.enemy_detail.ensureCursorVisible();app.processEvents()
+                    assert window.grab().save(str(OUT/'wine-movement-reference-075.png'))
+                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-075.png'
+        finally:
+            preview075.technical.setChecked(technical075)
+            assert window.target_stage_choices.select_value(stage075)
+            if enemy075 is None:window.target_enemy.setCurrentIndex(0)
+            else:assert window.target_enemy_choices.select_value(enemy075)
+            window.centralWidget().setCurrentIndex(page075);app.processEvents()
+        assert current_section_counts[75]==48
+        current_end=len(checks)
+        receipt['supplemental_sections_71_75']=[71,72,73,74,75]
+        receipt['supplemental_checks_by_section_71_75']=current_section_counts
+        receipt['supplemental_checks_71_75']=current_end-current_start
+        assert sum(current_section_counts.values())==current_end-current_start
+        receipt['section71_input_scope']='No squad selector exists. Synthetic public run config plus real button/read-only summary/difficulty preset; grades and Mechanist cultivation never prove account unlock or actual activation. Entire state/observations/preset are restored.'
+        receipt['section72_input_scope']='Owner QDoubleSpinBox elapsed has two decimals; QSpinBox warmup emits int. Cultivation is read-only public observation preview. E0 age does not activate absent Headwolf; original E1/E2 owner-clock reference remains distinct from unknown independent drone arrival/targeting/aura.'
+        receipt['section73_input_scope']='Module stage/cultivation are existing QLabel public observation previews, not invented selectors. Exact110% airborne source parameter is unused; actual target, native attachment and composition remain unknown.'
+        receipt['section74_input_scope']='Existing ghost count/cast QSpinBoxes retain legal E0/E1 declarations despite both original native body routes requiring E2level1. Qualification does not prove source, presence, cast clock or all module/relic routes.'
+        receipt['section75_input_scope']='Actual battle-preview stage/enemy selectors and technical checkbox retain all12 enemy records in each normal/emergency stage. Exact emergency raw rune1.5 remains a source parameter; old base-times-stage subtotal is unchanged, effective speed and native writer/composition remain unknown. No capture, actual route or movement clock is certified.'
+        receipt['section75_final_checks_pending']=False
+        assert receipt['section75_final_checks_pending'] is False,'Final section75 source/independent review is not yet sealed'

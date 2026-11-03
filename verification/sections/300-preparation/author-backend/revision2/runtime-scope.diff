@@ -1,0 +1,294 @@
+--- revision1/research/p3-future-region-effects-300/README.md
++++ revision2/research/p3-future-region-effects-300/README.md
+@@ -6,4 +6,4 @@
+ 
+ 天气普通网页工具返回及页脚响应仅补充社区说明；固定434599完整HTML取得失败，不冒称已保存该固定HTML。社区说明及原force_limit=1.0均不证明执行/消费/配对规则，不用作硬门或数量。
+ 
+-`python scripts/build_future_region_effects_300.py`默认只读检查；`--write`才重建派生数据/清单。原完整表、HTML及工具响应的固定SHA写在构建程序，不能靠改动清单把被改原件当真。运行期逐次核对所有清单字节、完整目标事件对象与缓存完整性，公开结果为深拷贝。仅读公共资料，不访问网络、游戏、聊天、识别或本局私人状态。
++`python scripts/build_future_region_effects_300.py`默认只读检查；`--write`才重建数据、精选完整对象及清单。原完整表、HTML及工具响应的固定SHA写在构建程序，不能靠改动清单把被改原件当真。清单分别记录完整构建原件与运行时精选文件；构建会从完整原件重做提取核对，运行期不重新读取17.9MB原表或完整HTML，而是逐次核对精选完整对象、派生数据、目录和说明文件的字节、完整目标事件对象与缓存完整性。公开结果为深拷贝。完整构建原件变化由只读重建检查或整组来源验收发现，不能宣称每次查询已检查这些原件。仅读公共资料，不访问网络、游戏、聊天、识别或本局私人状态。
+--- revision1/research/p3-future-region-effects-300/SCHEMA.md
++++ revision2/research/p3-future-region-effects-300/SCHEMA.md
+@@ -8,6 +8,6 @@
+ 
+ Top and each choice explicitly contain actual_choice, actual_weather, actual_phase, actual_affected_nodes, actual_reward, actual_quantity all null. calculation_applied and run_state_updated false. Current server and actual effect not asserted. Supplemental documentation never determines eligibility or numerical effects.
+ 
+-Target source failure returns target true/status source_unavailable/source_valid false, empty choices/phases, documented_phase null, source/source_identity/source_reference/supplemental_documentation/event_title/scope_key null; old results must not survive. Fresh valid bytes may recover; no automatic choice selection. Every query verifies original source byte hashes, current complete typed target event and a private canonical snapshot hash. Returned copies cannot mutate stored data. Internal cache corruption fails closed; no full17.9MB parse or copy per warm query.
++Target source failure returns target true/status source_unavailable/source_valid false, empty choices/phases, documented_phase null, source/source_identity/source_reference/supplemental_documentation/event_title/scope_key null; old results must not survive. Fresh valid bytes may recover; no automatic choice selection. Every query verifies manifest and all runtime_files byte hashes, separately selected complete authority records, the current complete typed target event and a private canonical snapshot hash. Returned copies cannot mutate stored data. Internal cache corruption fails closed. Full build authority files stay pinned in files/build_authority_files and are verified by reconstruction, not per runtime query. No full17.9MB read, parse or copy per warm query.
+ 
+-`source_data()` returns a freshly verified independent full packet or None for diagnostics/rebuild checks. It is not the UI query and contains no actual state. Runtime does not read/parse primary table semantics each call: complete primary bytes are always freshly SHA checked and builder-derived complete objects are separately pinned. Default build is read-only, explicit --write rebuilds exactly two derived files from complete sources.
++`source_data()` returns a freshly runtime-verified independent packet or None. It is not a full original-file validation and contains no actual state. Runtime reads selected-authority-records.json (complete selected objects, full related DOM groups/table, expected event), derived data and required catalog/docs each call. Complete primary bytes are verified by the reconstructing builder; its selected-record output is independently pinned in manifest and compared to data. Default build is read-only; explicit --write rebuilds exactly data/selected-records/manifest from the complete fixed originals. The files map remains the full public build inventory for native/necessary source guards; runtime_files is the strict smaller per-query authority list.
+--- revision1/research/p3-future-region-effects-300/source-manifest.json
++++ revision2/research/p3-future-region-effects-300/source-manifest.json
+@@ -37,19 +37,77 @@
+       "bytes": 521326
+     },
+     "research/p3-future-region-effects-300/README.md": {
+-      "sha256": "c56892506d2aa6319e40853636e85be690b6fb3b60c6c4c35e232c2480afbbaf",
+-      "bytes": 1402
++      "sha256": "493074438ce7e4d6039453ae15ea9f862ac9fe1c734e757ff962837b6b23de64",
++      "bytes": 1747
+     },
+     "research/p3-future-region-effects-300/SCHEMA.md": {
+-      "sha256": "27ccea13deab5ad456e9bb555646d42f747e842e016f68fae547105b596a0d92",
+-      "bytes": 2873
++      "sha256": "1dce33c2e52f4f8d6c2eaa40a8c3736a775c47610c73bad3109469d35a2af4fe",
++      "bytes": 3390
+     },
+     "rouge/data/future-region-effects.json": {
+       "sha256": "ef6d699cb48318f9bab1895fa84d8bc78dcb64439a51a9da6b14f9c34ac7a367",
+       "bytes": 257092
++    },
++    "research/p3-future-region-effects-300/selected-authority-records.json": {
++      "sha256": "671d449a51ecd9e8b29449c52cf6632fa4f5dee01be01426c05682ce925fef0d",
++      "bytes": 240570
+     }
+   },
+   "runtime_reads_primary_table": false,
++  "runtime_files": {
++    "rouge/data/future-region-effects.json": {
++      "sha256": "ef6d699cb48318f9bab1895fa84d8bc78dcb64439a51a9da6b14f9c34ac7a367",
++      "bytes": 257092
++    },
++    "research/p3-future-region-effects-300/selected-authority-records.json": {
++      "sha256": "671d449a51ecd9e8b29449c52cf6632fa4f5dee01be01426c05682ce925fef0d",
++      "bytes": 240570
++    },
++    "rouge/data/node-catalog.json": {
++      "sha256": "7df1d94bb69650eb19fc811af661e54d44bf07d72b1c0793de511adc1b2e915d",
++      "bytes": 521326
++    },
++    "research/p3-future-region-effects-300/README.md": {
++      "sha256": "493074438ce7e4d6039453ae15ea9f862ac9fe1c734e757ff962837b6b23de64",
++      "bytes": 1747
++    },
++    "research/p3-future-region-effects-300/SCHEMA.md": {
++      "sha256": "1dce33c2e52f4f8d6c2eaa40a8c3736a775c47610c73bad3109469d35a2af4fe",
++      "bytes": 3390
++    }
++  },
++  "selected_authority_file": "research/p3-future-region-effects-300/selected-authority-records.json",
++  "build_authority_files": {
++    "research/p3-future-region-effects-300/game-topic-complete.json": {
++      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
++      "bytes": 17943244
++    },
++    "research/p3-future-region-effects-300/prts-main-433770.html": {
++      "sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
++      "bytes": 954799
++    },
++    "research/p3-future-region-effects-300/prts-events-427904.html": {
++      "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
++      "bytes": 183007
++    },
++    "research/p3-future-region-effects-300/prts-events-440271.html": {
++      "sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
++      "bytes": 183838
++    },
++    "research/p3-future-region-effects-300/bwiki-events-349818.html": {
++      "sha256": "26b7768bf3556cf73c24529659c2c92f4095059476f782130bf3fa768422b908",
++      "bytes": 270353
++    },
++    "research/p3-future-region-effects-300/weather-ordinary-tool-response.json": {
++      "sha256": "ce8b30ff6d394e7e5fcdf6eb75600eb71b93c60d7c5431ca9b389ed5ddaa42f1",
++      "bytes": 26449
++    },
++    "research/p3-future-region-effects-300/weather-footer-tool-response.json": {
++      "sha256": "198489e0cd04494f16ddcd558331935959cc921c224a9a2b4052e2f4586400cb",
++      "bytes": 25633
++    }
++  },
++  "runtime_verifies_complete_original_bytes": false,
+   "rebuilds_from_complete_primary_table": true,
+   "source": {
+     "game": {
+--- revision1/rouge/future_region_effects.py
++++ revision2/rouge/future_region_effects.py
+@@ -12,7 +12,8 @@
+ DATA = 'rouge/data/future-region-effects.json'
+ MANIFEST = 'research/p3-future-region-effects-300/source-manifest.json'
+ DATA_SHA256 = 'ef6d699cb48318f9bab1895fa84d8bc78dcb64439a51a9da6b14f9c34ac7a367'
+-MANIFEST_SHA256 = 'd8e33d0d4cb8190c6e851318b9c05f9750929dfd5cc714f5199711a3d1e06331'
++MANIFEST_SHA256 = '1bbc5d7eb9b872cc2ed4b0857b011c4ffbdd05b440372a9e060932531ab39894'
++SELECTED_AUTHORITY = 'research/p3-future-region-effects-300/selected-authority-records.json'
+ EVENT_ID = 'community_group_009'
+ ACTUAL_FIELDS = ('actual_choice', 'actual_weather', 'actual_phase', 'actual_affected_nodes', 'actual_reward', 'actual_quantity')
+ _parsed_packet = None
+@@ -75,14 +76,21 @@
+         if _sha(manifest_raw) != MANIFEST_SHA256: return None
+         manifest = json.loads(manifest_raw)
+         if (manifest['schema'] != 'future_region_effects_source_manifest_v1' or manifest['data_file'] != DATA
+-                or manifest['data_sha256'] != DATA_SHA256 or manifest['event_id'] != EVENT_ID): return None
+-        # Fresh byte verification is independent of the parsed snapshot cache.
++                or manifest['data_sha256'] != DATA_SHA256 or manifest['event_id'] != EVENT_ID
++                or manifest['selected_authority_file'] != SELECTED_AUTHORITY
++                or manifest['runtime_reads_primary_table'] is not False
++                or manifest['runtime_verifies_complete_original_bytes'] is not False): return None
++        # Selected complete records are freshly checked on each query. Complete
++        # 17.9MB originals remain pinned build inputs, not repeated runtime I/O.
+         selected_raw = {}
+-        for relative, pin in manifest['files'].items():
++        for relative, pin in manifest['runtime_files'].items():
++            if not _same_json(pin, manifest['files'][relative]): return None
+             value = _source_path(relative).read_bytes()
+             if type(pin['bytes']) is not int or len(value) != pin['bytes'] or _sha(value) != pin['sha256']: return None
+-            if relative in (DATA, 'rouge/data/node-catalog.json'): selected_raw[relative] = value
++            if relative in (DATA, SELECTED_AUTHORITY, 'rouge/data/node-catalog.json'): selected_raw[relative] = value
+         if _sha(selected_raw[DATA]) != DATA_SHA256: return None
++        authority = json.loads(selected_raw[SELECTED_AUTHORITY])
++        if authority['schema'] != 'future_region_selected_authority_v1' or authority['event_id'] != EVENT_ID: return None
+         current_catalog = json.loads(selected_raw['rouge/data/node-catalog.json'])
+         current = next(e for e in current_catalog['events'] if e['id'] == EVENT_ID)
+         key = (DATA_SHA256, MANIFEST_SHA256)
+@@ -93,6 +101,7 @@
+         elif _sha(_canonical(_parsed_packet[2])) != _parsed_packet[1]: return None
+         packet = _parsed_packet[2]
+         if not _valid_schema(packet, current): return None
++        if not all(_same_json(packet[k], authority[k]) for k in ('expected_event','source','source_reference')): return None
+         # A warm legacy catalog is a separate read; compare the complete object,
+         # including descriptions, attributes, absent original IDs and all scenes.
+         from . import node_catalog
+--- revision1/scripts/build_future_region_effects_300.py
++++ revision2/scripts/build_future_region_effects_300.py
+@@ -13,6 +13,7 @@
+ PACK = 'research/p3-future-region-effects-300'
+ DATA = 'rouge/data/future-region-effects.json'
+ MANIFEST = PACK + '/source-manifest.json'
++SELECTED_AUTHORITY = PACK + '/selected-authority-records.json'
+ EVENT = 'community_group_009'
+ COMMIT = 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add'
+ SOURCES = {
+@@ -195,6 +196,10 @@
+         'unknowns':['本局能否选择及是否已选择','下一区域实际采用的档位与受影响节点','随机零件的完整范围、数量及实际领取',
+             '普通模式0/1级的强制生成与档位、其它模式对应关系','当前服务器版本是否与固定资料一致'],
+         'current_server_verified':False, 'entry_restored':False, 'calculation_applied':False, 'run_state_updated':False}
++    authority_raw = encoded({'schema':'future_region_selected_authority_v1','event_id':EVENT,
++        'expected_event':event, 'source':source, 'source_reference':packet['source_reference'],
++        'build_authority_sha256':{PACK+'/'+name:digest for name,digest in SOURCES.items()},
++        'complete_source_reconstruction_required':True})
+     data_raw = encoded(packet)
+     files = {PACK+'/'+name: {'sha256':sha(value), 'bytes':len(value)} for name,value in raw.items()}
+     files['rouge/data/node-catalog.json'] = {'sha256':sha(catalog_raw),'bytes':len(catalog_raw)}
+@@ -202,18 +207,24 @@
+         value = (ROOT/PACK/name).read_bytes()
+         files[PACK+'/'+name] = {'sha256':sha(value),'bytes':len(value)}
+     files[DATA] = {'sha256':sha(data_raw),'bytes':len(data_raw)}
++    files[SELECTED_AUTHORITY] = {'sha256':sha(authority_raw),'bytes':len(authority_raw)}
++    runtime_files = {relative:files[relative] for relative in
++        (DATA,SELECTED_AUTHORITY,'rouge/data/node-catalog.json',PACK+'/README.md',PACK+'/SCHEMA.md')}
+     manifest = {'schema':'future_region_effects_source_manifest_v1','data_file':DATA,'data_sha256':sha(data_raw),
+         'event_id':EVENT, 'files':files, 'runtime_reads_primary_table':False,
++        'runtime_files':runtime_files,'selected_authority_file':SELECTED_AUTHORITY,
++        'build_authority_files':{PACK+'/'+name:files[PACK+'/'+name] for name in SOURCES},
++        'runtime_verifies_complete_original_bytes':False,
+         'rebuilds_from_complete_primary_table':True, 'source':source}
+-    return data_raw, encoded(manifest)
++    return data_raw, encoded(manifest), authority_raw
+ 
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--write', action='store_true', help='Explicitly rebuild the two public derived files.')
+     args = parser.parse_args()
+-    data, manifest = reconstruct()
+-    for relative, raw in ((DATA,data),(MANIFEST,manifest)):
++    data, manifest, authority = reconstruct()
++    for relative, raw in ((DATA,data),(MANIFEST,manifest),(SELECTED_AUTHORITY,authority)):
+         path = ROOT/relative
+         if args.write:
+             path.parent.mkdir(parents=True,exist_ok=True)
+@@ -222,7 +233,8 @@
+             raise ValueError('Rebuild differs: '+relative)
+     print(json.dumps({'kind':'SOURCE_BUILD_NOT_PRODUCT_ACCEPTANCE','write':args.write,
+         'complete_source_count':len(SOURCES),'choices':2,'phases':3,
+-        'data_sha256':sha(data),'manifest_sha256':sha(manifest),
++        'data_sha256':sha(data),'manifest_sha256':sha(manifest),'selected_authority_sha256':sha(authority),
++        'runtime_fresh_file_count':5,'runtime_fresh_bytes':sum(p['bytes'] for p in json.loads(manifest)['runtime_files'].values())+len(manifest),
+         'new_entry_or_actual_execution_claim':False},ensure_ascii=False,indent=2))
+ 
+ 
+--- revision1/tests/test_future_region_effects_300.py
++++ revision2/tests/test_future_region_effects_300.py
+@@ -206,14 +206,14 @@
+         with patch.object(node_catalog,'_event',return_value=poisoned):
+             self.assertFalse(self.query()['source_valid'])
+ 
+-    def test_every_bound_file_byte_mutation_is_rejected_after_valid_clone(self):
++    def test_every_runtime_bound_file_byte_mutation_is_rejected_after_valid_clone(self):
+         with tempfile.TemporaryDirectory(prefix='rouge-future300-') as temporary:
+             root=Path(temporary)
+             manifest=self.clone(root)
+             with patch.object(self.subject,'ROOT',root):
+                 self.subject._parsed_packet=None
+                 self.assertTrue(self.query()['source_valid'])
+-                for relative in [self.subject.MANIFEST,*manifest['files']]:
++                for relative in [self.subject.MANIFEST,*manifest['runtime_files']]:
+                     with self.subTest(file=relative):
+                         file=root/relative
+                         original=file.read_bytes()
+@@ -226,14 +226,14 @@
+                         file.write_bytes(original)
+                         self.assertTrue(self.query()['source_valid'])
+ 
+-    def test_every_bound_missing_file_is_rejected_and_restored_without_stale_result(self):
++    def test_every_runtime_bound_missing_file_is_rejected_and_restored_without_stale_result(self):
+         with tempfile.TemporaryDirectory(prefix='rouge-future300-') as temporary:
+             root=Path(temporary)
+             manifest=self.clone(root)
+             with patch.object(self.subject,'ROOT',root):
+                 self.subject._parsed_packet=None
+                 self.assertTrue(self.query()['source_valid'])
+-                for relative in [self.subject.MANIFEST,*manifest['files']]:
++                for relative in [self.subject.MANIFEST,*manifest['runtime_files']]:
+                     with self.subTest(file=relative):
+                         file=root/relative;original=file.read_bytes();file.unlink()
+                         result=self.query(mode='NORMAL',difficulty=12)
+@@ -267,7 +267,7 @@
+ 
+     def test_readonly_rebuilder_reproduces_data_and_manifest_without_writing(self):
+         root=self.subject.ROOT
+-        paths=[root/self.subject.DATA,root/self.subject.MANIFEST]
++        paths=[root/self.subject.DATA,root/self.subject.MANIFEST,root/self.subject.SELECTED_AUTHORITY]
+         before=[p.read_bytes() for p in paths]
+         result=subprocess.run([sys.executable,'-B','-X','utf8',str(root/'scripts/build_future_region_effects_300.py')],
+             cwd=root,capture_output=True,check=False)
+@@ -278,5 +278,40 @@
+         self.assertEqual(receipt['data_sha256'],self.subject.DATA_SHA256)
+         self.assertEqual(receipt['manifest_sha256'],self.subject.MANIFEST_SHA256)
+ 
++    def test_runtime_does_not_read_build_only_whole_table_or_HTML(self):
++        manifest=json.loads((self.subject.ROOT/self.subject.MANIFEST).read_bytes())
++        runtime=set(manifest['runtime_files'])
++        build=set(manifest['build_authority_files'])
++        self.assertEqual(len(runtime),5)
++        self.assertEqual(len(build),7)
++        self.assertTrue(runtime.isdisjoint(build))
++        observed=[]
++        original=self.subject._source_path
++        def tracked(relative):
++            observed.append(relative)
++            if relative in build: raise AssertionError('Runtime read a build-only original.')
++            return original(relative)
++        with patch.object(self.subject,'_source_path',side_effect=tracked):
++            self.assertTrue(self.query()['source_valid'])
++            self.assertTrue(self.query(mode='NORMAL',difficulty=12)['source_valid'])
++        self.assertEqual(set(observed),runtime|{self.subject.MANIFEST})
++
++    def test_build_original_mutation_is_detected_by_rebuild_not_claimed_by_runtime(self):
++        with tempfile.TemporaryDirectory(prefix='rouge-future300-') as temporary:
++            root=Path(temporary)
++            manifest=self.clone(root)
++            builder=root/'scripts/build_future_region_effects_300.py'
++            builder.parent.mkdir(parents=True,exist_ok=True)
++            shutil.copyfile(self.subject.ROOT/'scripts/build_future_region_effects_300.py',builder)
++            original=root/'research/p3-future-region-effects-300/game-topic-complete.json'
++            original.write_bytes(original.read_bytes()+b' ')
++            with patch.object(self.subject,'ROOT',root):
++                self.subject._parsed_packet=None
++                self.assertTrue(self.query()['source_valid'])
++            rebuilt=subprocess.run([sys.executable,'-B','-X','utf8',str(builder)],cwd=root,capture_output=True,check=False)
++            self.assertNotEqual(rebuilt.returncode,0)
++            self.assertIn('Fixed source mismatch',rebuilt.stderr.decode('utf8'))
++            self.assertFalse(manifest['runtime_verifies_complete_original_bytes'])
++
+ 
+ if __name__=='__main__': unittest.main(verbosity=2)

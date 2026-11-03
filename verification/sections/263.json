@@ -1,0 +1,90 @@
+{
+  "section": 263,
+  "kind": "functional_section",
+  "title": "六召唤物宿主培养等级、单精度类型写回与逐属性分支组合",
+  "at_Beijing": "2026-10-14T07:46:45.992251+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "8b911ea0f6190ed1d752d5fb5e19cfdc69a1a2a1",
+  "remaining_item": "P2召唤物培养/模组及技能精度：中间等级与属性取值参考缺口",
+  "new_capability": "无需独立端点选择，按明确宿主精英/等级展开六实体全部合法等级、直接装备分项和逐属性混合插值条件；令S3形态继续可用。",
+  "files": [
+    "rouge/token_level_reference.py",
+    "rouge/data/token-level-native-source.json",
+    "rouge/ling_fusion_reference.py",
+    "rouge/p2_supplemental_token_module_view.py",
+    "tests/test_token_level_reference.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_token_level_window_263.py"
+  ],
+  "required_raw_sha256": {
+    "rouge/token_level_reference.py": "9567d2a44dd5f31fcf941ed3f5eba91f42c461f13ac44497a8b0e0836506c68a",
+    "rouge/data/token-level-native-source.json": "a27fa0af1641c34c3a802a7e7a6436143b33ab1cb8368841cddbbf2d2dd76d61",
+    "rouge/ling_fusion_reference.py": "484cdde8472154953afe52a299b675666aed7ac8fd2f5056eb5e7f299594fe86",
+    "rouge/p2_supplemental_token_module_view.py": "65113c3ea3fae2c8e8eadf0d0f684ce16a736eac499ffa5a64861d2763cf7aa3",
+    "tests/test_token_level_reference.py": "eaf8dcf0602068b56a3ae43ff58dd2d4d11dc381b7a3bbb6a89f8f7fff11b91d",
+    "scripts/verify_full_available.py": "09199f2c847d854ef775af20353c62085903d57f0372a42921219adba109fcf3",
+    "scripts/verify_token_level_window_263.py": "ecb018201eb78d2921b2b39c4f98b1e1e7cf6e4d779d2eb249d64f612a9064b4"
+  },
+  "source_evidence": [
+    "rouge/data/token-level-native-source.json",
+    "research/p2-token-level-current/README.md"
+  ],
+  "acceptance": "31必要检查通过；文字更新5相关复验通过；Windows公共等级60窗口96/128行和7446/2385.6条件算式实际可见。",
+  "validation": {
+    "tests_run": 31,
+    "new_test_methods": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "cultivation_inputs": 440,
+    "token_scenarios": 1320,
+    "independent_integer_oracle_values": 3960,
+    "final_log": "verification/sections/263-final-check.log",
+    "first_failed_log": "verification/sections/263-first-check.log",
+    "first_failed_expectations": 2,
+    "expectation_corrections": "Locked skills keep unavailable panels; non-attack drone does not inherit another token attack-speed addition; full oracle loop retained.",
+    "text_changed_recheck": {
+      "tests": 5,
+      "overlap_not_counted_as_extra_unique_tests": true,
+      "exit_code": 0,
+      "log": "verification/sections/263-ui-final-check.log"
+    },
+    "native_dialog": {
+      "qpa": "windows",
+      "visible": true,
+      "token_rows": 96,
+      "form_rows": 128,
+      "captured_public_level": 60,
+      "numeric_hp_reference": 7446.0,
+      "numeric_attack_reference": 2385.6,
+      "endpoint_controls_hidden": true,
+      "actual_full_panel": null,
+      "scope": "native public-literal changed dialog, not game/native full suite",
+      "game_operated": false,
+      "chat_sent": false,
+      "private_state_read": false,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "native_unique_instruction_bytes_checked": 1006
+  },
+  "limitations": [
+    "Current installation candidate is not running-game identity or current hotfix equivalence.",
+    "Frozen a550f5 tables are separate from candidate native arithmetic; no current-server table equivalence claim.",
+    "Actual token cultivation, KeepLowerValue per field, attachment and current full panels are unknown.",
+    "Mixed flags are independent conditional output bounds, not proven actual combinations or probabilities.",
+    "No relic/squad/other modifiers, actual presence, collision/first-hit/end or complete damage/cycle.",
+    "Default IEEE nearest-even arithmetic is a declared numerical reference condition, not MXCSR observation.",
+    "Unknown custom92 metadata field16 is not used to infer game behavior; no whole generic mapping assertion.",
+    "Changed native public-literal dialog only; latest full261 is historical, next unchanged full scope275 and final280."
+  ],
+  "passed": true,
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 275,
+  "next_action": "264继续有证据P2机制/计算及当前候选版本适用核对；275完整全量，最终280验收，不把字段未知或修复归档冒称完成。",
+  "validation_log_sha256": {
+    "verification/sections/263-first-check.log": "7ca45be23a6251f526dd81db390211ee51a5e73c59266386b93b71bd536ac2d4",
+    "verification/sections/263-final-check.log": "1872c1dfd2f70b606f24e0b8aef79dbcb42ebc659cef946f059ae15f4b46db30",
+    "verification/sections/263-ui-final-check.log": "efd98d25d7bce256b59d4b2f636e5d099691089aed3369a5d0bfdfa7a8e7b297"
+  }
+}

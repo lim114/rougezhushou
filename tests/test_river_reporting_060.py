@@ -12,7 +12,7 @@ from rouge.river_effects import RELIC_ID, reference
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / '.cache/research/river-effects-060/integration-before.json'
+BASELINE = ROOT / 'research/river-reporting-original-060/integration-before.json'
 NEW_SECTIONS = {'river_dark', 'river_fire', 'river_sanity', 'river_water', 'river_limits'}
 OLD_PENDING = [
     '凋亡增强及爆条期间减攻的局外参考待接入',
@@ -30,6 +30,89 @@ def public_json(value):
     return json.loads(json.dumps(value, ensure_ascii=False))
 
 
+# Historical numeric leaf retirement is an exact selector set, not a broad
+# exclusion of timing/reports/unknown output. Original070 and the public S1
+# binding evidence withdraw these 49 old certainty claims; every other old
+# numeric leaf remains conserved. MISSING means an intentionally removed
+# old event/metric, distinct from an explicit unknown represented by None.
+MISSING = object()
+PHANTOM_RETIRED_NUMERIC = {
+    '$.total_damage': (1590., None),
+    '$.components[name=潜在神经损伤积累（不是生命伤害）].hits': (1, MISSING),
+    '$.components[name=潜在神经损伤积累（不是生命伤害）].per_hit': (572.4, MISSING),
+    '$.components[name=潜在神经损伤积累（不是生命伤害）].total': (572.4, MISSING),
+    '$.components[name=神经损伤爆发].hits': (0, MISSING),
+    '$.components[name=神经损伤爆发].per_hit': (12000., MISSING),
+    '$.components[name=神经损伤爆发].total': (0., MISSING),
+    '$.timing.recharge_streams[0].interval_frames': (48, MISSING),
+    '$.timing.recharge_streams[0].interval_seconds': (1.6, MISSING),
+    '$.timing.recharge_streams[0].start_frames[0]': (0, MISSING),
+    '$.timing.recharge_streams[0].release_frames[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].impact_frames[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].times_seconds[0]': (1.6, MISSING),
+    '$.timing.recharge_streams[0].emitted_impact_frames[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].emitted_times_seconds[0]': (1.6, MISSING),
+    '$.timing.recharge_streams[0].emitted_release_frames[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].hit_release_frames[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].interval_frames_by_attack[0]': (48, MISSING),
+    '$.timing.recharge_streams[0].resume_frame': (0, MISSING),
+    '$.timing.cycle_seconds': (4.800000000000001, None),
+    '$.estimate.skill.recharge_seconds': (3.2, None),
+    '$.estimate.skill.cycle_seconds': (4.800000000000001, None),
+    '$.estimate.skill.duration_seconds': (1.6, None),
+    '$.estimate.skill.total_damage': (1590., None),
+    '$.estimate.skill.phase_damage': (1590., None),
+    '$.estimate.skill.phase_healing': (0, None),
+    '$.estimate.skill.cycle_hps': (0., None),
+    '$.estimate.skill.cycle_healing': (0, None),
+    '$.estimate.skill.hit_counts.潜在神经损伤积累（不是生命伤害）': (1, MISSING),
+    '$.estimate.skill.hit_counts.神经损伤爆发': (0, MISSING),
+    '$.estimate.skill.window_seconds': (1.6, 1.),
+    '$.estimate.skill.window_dps': (993.75, None),
+    '$.neural_relic_reference.cycle_burst_times[0]': (3.2, MISSING),
+    '$.known_damage_subtotals.phase_damage': (1590., None),
+    '$.known_damage_subtotals.cycle_damage': (14120., None),
+    '$.known_damage_subtotals.cycle_dps': (2941.666666666666, None),
+    '$.known_damage_subtotals.window_dps': (993.75, 1590.),
+    '$.report.sections[id=timing].metrics[key=duration].value': (1.6, None),
+    '$.report.sections[id=timing].metrics[key=cycle].value': (4.800000000000001, None),
+    '$.report.sections[id=timing].metrics[key=recharge].value': (3.2, None),
+    '$.report.sections[id=damage].metrics[key=per_cast].value': (1590., None),
+    '$.report.sections[id=damage].metrics[key=active_dps].value': (993.75, MISSING),
+    '$.report.sections[id=damage].metrics[key=window_damage].value': (1590., None),
+    '$.report.sections[id=damage].metrics[key=window_seconds].value': (1.6, 1.),
+    '$.report.sections[id=damage].metrics[key=window_dps].value': (993.75, None),
+    '$.report.sections[id=known_damage_subtotals].metrics[key=cycle].value': (14120., None),
+    '$.report.sections[id=known_damage_subtotals].metrics[key=cycle_dps].value': (2941.666666666666, None),
+    '$.report.sections[id=elemental].metrics[key=potential_buildup].value': (572.4, None),
+    '$.report.sections[id=elemental].metrics[key=bursts].value': (0, None),
+}
+
+
+def identified_values(value, path='$'):
+    """Read original leaves by explicit public identity, never by display order.
+
+    Non-identity lists retain their exact indices. Container values are also
+    recorded so None, an empty collection and a removed key remain distinct.
+    """
+    values = {path: value}
+    if isinstance(value, dict):
+        for key, child in value.items():
+            values.update(identified_values(child, path + '.' + key))
+    elif isinstance(value, list):
+        identity = None
+        if value and all(isinstance(child, dict) for child in value):
+            for key in ('id', 'key', 'name'):
+                if (all(isinstance(child.get(key), str) for child in value)
+                        and len({child[key] for child in value}) == len(value)):
+                    identity = key
+                    break
+        for index, child in enumerate(value):
+            token = identity + '=' + child[identity] if identity else str(index)
+            values.update(identified_values(child, path + '[' + token + ']'))
+    return values
+
+
 class RiverReportingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -39,79 +122,149 @@ class RiverReportingTests(unittest.TestCase):
         cls.fixtures = json.loads(blob)['cases']
 
     def test_complete_preintegration_results_preserved_except_documented_presentation_and_s1_timing(self):
+        # The sealed pre060 schema is historical, not a prohibition on later
+        # source-qualified features. All ten original inputs still execute.
+        # Full current results are paired across the exact five presentation
+        # blocks; original numbers additionally retain their independent oracle.
+        expected_case_names = {
+            'mechanist_default', 'myrtle_default', 'mantra_default',
+            'mantra_other_relic', 'mechanist_river', 'myrtle_river',
+            'mantra_river', 'mantra_river_no_supply', 'phantom_river',
+            'mantra_river_and_other',
+        }
+        self.assertEqual(set(self.fixtures), expected_case_names)
+        conserved_non_phantom = 0
         for name, fixture in self.fixtures.items():
             with self.subTest(name=name):
-                current = public_json(calculate_damage(fixture['scenario']))
-                before = deepcopy(fixture['result'])
-                if RELIC_ID not in fixture['scenario'].get('relic_ids', []):
-                    self.assertEqual(current, before)
-                    continue
-                if 'neural_relic_reference' in current:
-                    current['neural_relic_reference'].pop('lifecycle_reference', None)
+                scenario = deepcopy(fixture['scenario'])
+                original_input = deepcopy(scenario)
+                with patch('rouge.river_effects.RiverInstance',
+                           side_effect=AssertionError('presentation entered combat simulation')):
+                    current = public_json(calculate_damage(scenario))
+                    with patch('rouge.reporting.river_reference_sections', return_value=[]) as suppressed:
+                        control = public_json(calculate_damage(deepcopy(original_input)))
+                self.assertEqual(scenario, original_input)
+                held = RELIC_ID in scenario.get('relic_ids', [])
+                self.assertEqual(suppressed.call_count, int(held))
+                additions = [block for block in current['report']['sections']
+                             if block['id'] in NEW_SECTIONS]
+                self.assertEqual({block['id'] for block in additions}, NEW_SECTIONS if held else set())
+                self.assertEqual(len(additions), 5 if held else 0)
+                self.assertFalse(any(block['id'] in NEW_SECTIONS
+                                     for block in control['report']['sections']))
+                without_five = deepcopy(current)
+                without_five['report']['sections'] = [block for block in without_five['report']['sections']
+                                                     if block['id'] not in NEW_SECTIONS]
+                # No numeric, clock, unknown-state, warning, source, or other
+                # report leaves are excluded from this whole-structure pair.
+                self.assertEqual(without_five, control)
+
+                # Preserve the original warning/pending presentation contract,
+                # rather than trusting the paired renderer to generate it.
                 old_warning = '河谷祭祈：未覆盖 ' + '、'.join(OLD_PENDING) + '。'
                 new_warning = '河谷祭祈：未覆盖 ' + '、'.join(NEW_PENDING) + '。'
-                for new_warnings, old_warnings in (
-                    (current['warnings'], before['warnings']),
-                    (current['estimate']['warnings'], before['estimate']['warnings']),
-                    (current['relic_resolution']['warnings'], before['relic_resolution']['warnings'])):
-                    self.assertEqual(len(new_warnings), len(old_warnings))
-                    for index, old in enumerate(old_warnings):
-                        if old == old_warning:
-                            self.assertEqual(new_warnings[index], new_warning)
-                            new_warnings[index] = old_warning
+                before = fixture['result']
+                for old_warnings, actual_warnings in (
+                    (before['warnings'], current['warnings']),
+                    (before['estimate']['warnings'], current['estimate']['warnings']),
+                    (before['relic_resolution']['warnings'], current['relic_resolution']['warnings']),
+                ):
+                    self.assertEqual(actual_warnings, [new_warning if text == old_warning else text
+                                                      for text in old_warnings])
+                self.assertEqual(len(current['relic_resolution']['records']),
+                                 len(before['relic_resolution']['records']))
+                for old_record, record in zip(before['relic_resolution']['records'],
+                                              current['relic_resolution']['records']):
+                    self.assertEqual(record['id'], old_record['id'])
+                    expected_pending = NEW_PENDING if record['id'] == RELIC_ID else old_record['pending']
+                    self.assertEqual(record['pending'], expected_pending)
+
+                before_values = identified_values(fixture['result'])
+                current_values = identified_values(current)
+                before_numbers = {path: value for path, value in before_values.items()
+                                  if isinstance(value, (int, float)) and not isinstance(value, bool)}
+                retired = PHANTOM_RETIRED_NUMERIC if name == 'phantom_river' else {}
+                differences = {path for path, value in before_numbers.items()
+                               if current_values.get(path, MISSING) != value}
+                self.assertEqual(differences, set(retired), name)
+                for path, value in before_numbers.items():
+                    if path in retired:
+                        old, required = retired[path]
+                        self.assertEqual(value, old, path)
+                        actual = current_values.get(path, MISSING)
+                        if required is MISSING:
+                            self.assertIs(actual, MISSING, path)
+                        elif required is None:
+                            self.assertIsNone(actual, path)
+                            self.assertIn(path, current_values, path)
                         else:
-                            self.assertEqual(new_warnings[index], old)
-                self.assertEqual(len(current['relic_resolution']['records']), len(before['relic_resolution']['records']))
-                for index, record in enumerate(current['relic_resolution']['records']):
-                    self.assertEqual(record['id'], before['relic_resolution']['records'][index]['id'])
-                    if record['id'] == RELIC_ID:
-                        self.assertEqual(record['pending'], NEW_PENDING)
-                        self.assertEqual(before['relic_resolution']['records'][index]['pending'], OLD_PENDING)
-                        record['pending'] = OLD_PENDING
-                blocks = current['report']['sections']
-                self.assertEqual({block['id'] for block in blocks} & NEW_SECTIONS, NEW_SECTIONS)
-                current['report']['sections'] = [block for block in blocks if block['id'] not in NEW_SECTIONS]
-                old_neural = next((block for block in before['report']['sections'] if block['id'] == 'river_neural'), None)
-                if old_neural:
-                    new_neural = next(block for block in current['report']['sections'] if block['id'] == 'river_neural')
-                    self.assertEqual(new_neural['notes'][0], old_neural['notes'][0])
-                    self.assertIn('实际首跳时刻和每跳麻痹条件尚未确认', new_neural['notes'][1])
-                    self.assertIn('四元素倍率、生命周期和条件逐跳规则', new_neural['notes'][2])
-                    new_neural['notes'] = old_neural['notes']
-                if name=='phantom_river':
-                    # 0.70 replaces the historical unplaced S1/0.01s events
-                    # and unproved cycle. Preserve the frozen original file;
-                    # exclude only these documented dependent timing fields.
-                    self.assertEqual(current['total_damage'],1590)
-                    self.assertEqual(current['components'][0]['times_seconds'],[.5,.9])
-                    self.assertEqual(current['estimate']['skill']['window_seconds'],1)
-                    self.assertEqual(current['estimate']['skill']['window_dps'],1590)
-                    self.assertNotIn('known_damage_subtotals',current)
-                    self.assertEqual(before['known_damage_subtotals']['window_damage'],1590)
-                    before.pop('known_damage_subtotals')
-                    current['components'][0].pop('times_seconds')
-                    for key in ('duration_seconds','recharge_seconds','cycle_seconds','phase_damage','phase_healing',
-                                'cycle_damage','cycle_healing','cycle_dps','cycle_hps'):
-                        self.assertIsNone(current['estimate']['skill'][key],key)
-                        current['estimate']['skill'].pop(key);before['estimate']['skill'].pop(key)
-                    for key in ('window_seconds','window_dps'):
-                        current['estimate']['skill'].pop(key);before['estimate']['skill'].pop(key)
-                    self.assertTrue(any('解除阻回尚未闭合' in n for n in current['estimate']['notes']))
-                    current['estimate'].pop('notes');before['estimate'].pop('notes')
-                    for key in ('streams','recharge_streams','notes','cycle_seconds','unplaced_components'):
-                        current['timing'].pop(key);before['timing'].pop(key)
-                    ref=current['neural_relic_reference']
-                    self.assertEqual(ref['cast_burst_times'],[])
-                    self.assertEqual(ref['window_burst_times'],[])
-                    self.assertEqual(ref['cycle_burst_times'],[])
-                    self.assertFalse(ref['periodic_damage_possible'])
-                    self.assertEqual(ref['affected_damage_phases'],{'cast':False,'window':False,'cycle':False})
-                    for key in ('cycle_burst_times','periodic_damage_possible','affected_damage_phases'):
-                        ref.pop(key);before['neural_relic_reference'].pop(key)
-                    changed={'timing','multi_melee','execution','damage','elemental','river_neural','known_damage_subtotals'}
-                    for result in (current,before):
-                        result['report']['sections']=[s for s in result['report']['sections'] if s['id'] not in changed]
-                self.assertEqual(current, before)
+                            self.assertIsInstance(actual, (int, float), path)
+                            self.assertIsNot(type(actual), bool, path)
+                            self.assertEqual(actual, required, path)
+                    else:
+                        self.assertIn(path, current_values, path)
+                        self.assertIsInstance(current_values[path], (int, float), path)
+                        self.assertIsNot(type(current_values[path]), bool, path)
+                        self.assertEqual(current_values[path], value, path)
+                if name != 'phantom_river':
+                    conserved_non_phantom += len(before_numbers)
+                    continue
+
+                # Independent original-table parameters: attack530, scale1.5,
+                # two arts hits, talent ratio.3; root1.8 applies conditionally.
+                # Source: research/p2-s1-binding/source-receipt.json and the
+                # original070 action proof. Known amounts do not prove clocks.
+                self.assertEqual(len(before_numbers), 114)
+                self.assertEqual(len(retired), 49)
+                self.assertEqual(len(before_numbers) - len(retired), 65)
+                self.assertFalse(current['complete'])
+                self.assertFalse(current['estimate']['complete'])
+                self.assertEqual(current['attack'], 530.)
+                arts = next(c for c in current['components'] if c['name'] == '暗夜回声')
+                self.assertEqual(arts['damage_type'], 'magic')
+                self.assertEqual(arts['hits'], 2)
+                self.assertEqual(arts['per_hit'], 530 * 1.5)
+                self.assertEqual(arts['total'], 530 * 1.5 * 2)
+                self.assertEqual(arts['times_seconds'], [.5, .9])
+                self.assertIsNone(current['total_damage'])
+                self.assertIsNone(current['estimate']['skill']['total_damage'])
+                self.assertIsNone(current['estimate']['skill']['window_damage'])
+                self.assertEqual(current['estimate']['skill']['window_seconds'], original_input['window_seconds'])
+                self.assertEqual(current['known_damage_subtotals'], {
+                    'total_damage': 1590., 'phase_damage': None, 'window_damage': 1590.,
+                    'cycle_damage': None, 'cycle_dps': None, 'window_dps': 1590.,
+                })
+                basic = next(c for c in current['components']
+                             if c['name'] == '未计束缚倍率的损伤基础参考（不是生命伤害）')
+                self.assertEqual(basic['damage_type'], 'buildup')
+                self.assertEqual(basic['per_hit'], 530 * .3 * 2)
+                self.assertEqual(basic['total'], 530 * .3 * 2)
+                self.assertFalse(basic['binding_multiplier_applied'])
+                self.assertIsNone(basic['actual_total'])
+                self.assertFalse(any(c['name'] in ('神经损伤爆发', '潜在神经损伤积累（不是生命伤害）')
+                                     for c in current['components']))
+                s1 = current['neural_s1_reference']
+                self.assertEqual(s1['direct_buildup_ratio'], .3)
+                self.assertEqual(s1['direct_buildup_raw'], 530 * .3)
+                self.assertEqual(s1['binding_multiplier'], 1.8)
+                self.assertEqual(s1['binding_duration_seconds'], 3.)
+                self.assertFalse(s1['first_attachment_verified'])
+                self.assertFalse(s1['refresh_order_verified'])
+                self.assertFalse(s1['binding_multiplier_applied'])
+                self.assertEqual(s1['qualified_hit_times'], {'cast': [.5, .9], 'window': [.5, .9]})
+                self.assertEqual(s1['affected_damage_phases'], {'cast': True, 'window': True, 'cycle': False})
+                river = current['neural_relic_reference']
+                self.assertFalse(river['periodic_damage_scheduled'])
+                self.assertTrue(river['periodic_damage_possible'])
+                self.assertIsNone(river['cast_burst_times'])
+                self.assertIsNone(river['window_burst_times'])
+                self.assertEqual(river['cycle_burst_times'], [])
+                self.assertEqual(river['burst_schedule_status'], 'unknown_due_to_s1_binding')
+                self.assertEqual(river['affected_damage_phases'], {'cast': True, 'window': True, 'cycle': False})
+                self.assertEqual(current['timing']['recharge_streams'], [])
+                self.assertTrue(any('解除阻回尚未闭合' in note for note in current['estimate']['notes']))
+        self.assertEqual(conserved_non_phantom, 2517)
+
 
     def test_held_river_shows_four_branches_on_non_neural_operators(self):
         for name in ('mechanist_river', 'myrtle_river'):
@@ -164,7 +317,13 @@ class RiverReportingTests(unittest.TestCase):
     def test_river_record_preserves_mechanics_except_four_pending_strings(self):
         path = Path('rouge/data/relic-mechanics.json')
         # Other relics may receive independently verified fixes in later batches.
-        before = json.loads((ROOT / '.cache/batch-060-before' / path).read_bytes())['relics'][RELIC_ID]
+        before_blob = (ROOT / 'research/river-reporting-original-060/relic-mechanics-before.json').read_bytes()
+        # This is the recovered original data, not a generated current fixture.
+        archive = json.loads((ROOT / 'verification/full-275/repair/legacy-contracts/original-inputs-restored.json').read_bytes())
+        expected = next(r['sha256'] for r in archive['exact_original_public_inputs']
+                        if r['archive'].endswith('/relic-mechanics-before.json'))
+        self.assertEqual(hashlib.sha256(before_blob).hexdigest(), expected)
+        before = json.loads(before_blob)['relics'][RELIC_ID]
         current = json.loads((ROOT / path).read_bytes())['relics'][RELIC_ID]
         self.assertEqual(before['pending'], OLD_PENDING)
         self.assertEqual(current['pending'], NEW_PENDING)

@@ -1,0 +1,133 @@
+{
+  "format_version": 1,
+  "scope": "SOURCE_ONLY_NO_SEALER_EXECUTION",
+  "baseline": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/seal_recovery095.py",
+    "bytes": 10933,
+    "sha256": "6c33286b57b184489c86ecf279b2ba9416bab6791a7c261e99dbf5f301ed7ef0"
+  },
+  "replacement": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v3/seal_ui_retry095.py",
+    "bytes": 11951,
+    "sha256": "6bf18a9458d9723d4207f0e0abeea3e52a67ff229ac53dfe7744cfd3c127f732"
+  },
+  "changes": [
+    {
+      "before": "\"\"\"Root-only SOURCE seal; preserve original full095 epoch and review two adapters.\"\"\"",
+      "after": "\"\"\"Root-only SOURCE seal; preserve both prior epoch boundaries and bind UI/saved retry.\"\"\""
+    },
+    {
+      "before": "from recovery_binding095 import REPLACED_OUTPUTS, validate_recovery_inputs",
+      "after": "from recovery_binding095 import NEW_OUTPUTS, NATIVE_DIRECTORIES, validate_recovery_inputs"
+    },
+    {
+      "before": "public-artifacts-manifest-recovery095.json",
+      "after": "public-artifacts-manifest-ui-retry095.json",
+      "occurrences": 1
+    },
+    {
+      "before": "handoff-recovery095.json",
+      "after": "handoff-ui-retry095.json",
+      "occurrences": 2
+    },
+    {
+      "before": "SOURCE_ONLY_PENDING_ACTUAL_ROOT_RECOVERY_BINDING",
+      "after": "SOURCE_ONLY_PENDING_ACTUAL_ROOT_UI_RETRY_BINDING",
+      "occurrences": 1
+    },
+    {
+      "before": "full095_context_recovery_pending.py",
+      "after": "full095_context_ui_retry_pending.py",
+      "occurrences": 1
+    },
+    {
+      "before": "recovery-context-inverse095.json",
+      "after": "ui-retry-context-inverse095.json",
+      "occurrences": 1
+    },
+    {
+      "before": "full095-regression-capability-resume-final-v1",
+      "after": "full095-regression-ui-cache-resume-final-v1",
+      "occurrences": 1
+    },
+    {
+      "before": "full095_context_recovery.py",
+      "after": "full095_context_ui_retry.py",
+      "occurrences": 3
+    },
+    {
+      "before": "__ACTUAL_RECOVERY_BINDING_SHA256_PENDING__",
+      "after": "__ACTUAL_UI_RETRY_BINDING_SHA256_PENDING__",
+      "occurrences": 1
+    },
+    {
+      "before": "original_data = bound_bytes(inverse['original_context_reference'])",
+      "after": "original_data = bound_bytes(inverse['baseline_context_reference'])"
+    },
+    {
+      "before": "require(digest(pending) == inverse['pending_context_sha256'], 'Pending recovery context source changed')",
+      "after": "require(file_ref(pending_path) == inverse['pending_context_reference'], 'Pending UI retry context source changed')"
+    },
+    {
+      "before": "support_names = ('binding_validation095.py', 'historical-classifications090.json', 'recovery_binding095.py')",
+      "after": "support_names = ('binding_validation095.py', 'historical-classifications090.json', 'capability_binding095.py', 'recovery_binding095.py')"
+    },
+    {
+      "before": "require(all(not Path(path).exists() for path in REPLACED_OUTPUTS.values())\n            and not Path(plan['paths']['context_final']).exists(),",
+      "after": "require(all(not Path(path).exists() for path in NEW_OUTPUTS.values())\n            and all(not Path(path).exists() for path in NATIVE_DIRECTORIES),"
+    },
+    {
+      "before": "'actual_original_epoch_recovery': True,\n               'root_spec':",
+      "after": "'actual_original_epoch_recovery': True, 'actual_ui_retry': True,\n               'root_spec_projection_from_ui_retry': True,\n               'root_spec':"
+    },
+    {
+      "before": "'format_version': 2, 'section': 95,\n               'status': 'SEALED_REAL95_SOURCE_NOT_RUNTIME_PASS'",
+      "after": "'format_version': 3, 'section': 95,\n               'status': 'SEALED_REAL95_SOURCE_NOT_RUNTIME_PASS'"
+    },
+    {
+      "before": "'original_classifier_unchanged': True, 'project_calls': 0,",
+      "after": "'original_classifier_unchanged': True,\n               'prior_recovery_binding': spec['prior_recovery']['binding'],\n               'prior_incomplete_ui': spec['prior_incomplete_ui'], 'project_calls': 0,"
+    },
+    {
+      "before": "'changed_execution_contracts': ['wine_full', 'wine_selected'],\n               'changed_output_paths': REPLACED_OUTPUTS,",
+      "after": "'changed_execution_contracts_from_prior_recovery': ['wine_ui', 'saved_review'],\n               'changed_output_paths_from_prior_recovery': NEW_OUTPUTS,\n               'prior_recovery': spec['prior_recovery'],\n               'prior_recovery_started_at': bound_json(spec['prior_recovery']['context'])['recovery_started_at'],\n               'preserved_recovery_passed_executions': spec['preserved_recovery_passed_executions'],\n               'prior_incomplete_ui': spec['prior_incomplete_ui'],"
+    },
+    {
+      "before": "'whole_original_context_inverse_exact': True,",
+      "after": "'whole_prior_recovery_context_inverse_exact': True,\n               'unchanged_capability_binding': file_ref(here / 'capability_binding095.py'),"
+    },
+    {
+      "before": "PASS_SOURCE_RECOVERY_SEAL_ONLY_RUNTIME_PENDING",
+      "after": "PASS_SOURCE_UI_RETRY_SEAL_ONLY_RUNTIME_PENDING",
+      "occurrences": 1
+    },
+    {
+      "before": "FINAL_RECOVERY_SOURCE_BOUND_RUNTIME_NOT_EXECUTED",
+      "after": "FINAL_UI_RETRY_SOURCE_BOUND_RUNTIME_NOT_EXECUTED",
+      "occurrences": 1
+    },
+    {
+      "before": "FINAL_STOPWRITE_RECOVERY_SOURCE_BOUND_RUNTIME_PENDING",
+      "after": "FINAL_STOPWRITE_UI_RETRY_SOURCE_BOUND_RUNTIME_PENDING",
+      "occurrences": 1
+    },
+    {
+      "before": "'actual full095_context_ui_retry.py resume with new real recovery_started_at',",
+      "after": "'actual full095_context_ui_retry.py resume preserves recovery_started_at and adds real ui_retry_started_at',"
+    },
+    {
+      "before": "'two fresh reviewed Wine adapter contracts; preserve unchanged already-passed original-epoch jobs',",
+      "after": "'six immutable actual primary-zero proofs retained without replay; execute only new UI/saved contracts',"
+    },
+    {
+      "before": "from recovery_binding095 import NEW_OUTPUTS, NATIVE_DIRECTORIES, validate_recovery_inputs",
+      "after": "from recovery_binding095 import NEW_OUTPUTS, NATIVE_DIRECTORIES, SELECTED_RETRY_OUTPUTS, validate_recovery_inputs"
+    },
+    {
+      "before": "'changed_execution_contracts_from_prior_recovery': ['wine_ui', 'saved_review'],\n               'changed_output_paths_from_prior_recovery': NEW_OUTPUTS,",
+      "after": "'changed_execution_contracts_from_prior_recovery': ['wine_ui', 'saved_review', 'wine_selected'],\n               'wine_selected_argv_runner_cwd_unchanged': True,\n               'changed_output_paths_from_prior_recovery': {**NEW_OUTPUTS, **SELECTED_RETRY_OUTPUTS},\n               'prior_selected_failed_execution': spec['prior_selected_failed_execution'],"
+    }
+  ],
+  "project_calls": 0,
+  "runtime_pass": false
+}

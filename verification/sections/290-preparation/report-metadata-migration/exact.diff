@@ -1,0 +1,11 @@
+--- original
++++ candidate
+@@ -312,7 +312,7 @@
+     unavailable_parents = result.unavailable_parents
+     receipt = {
+         'checked_at': datetime.now(timezone.utc).isoformat(),
+-        'platform': platform.system(), 'wine_compatibility': args.wine,
++        'platform': ('Windows' if sys.platform == 'win32' else platform.system()), 'wine_compatibility': args.wine,
+         'verbosity': args.verbosity,
+         'native_windows_integration_verified': False,
+         'available_checks_passed': result.wasSuccessful() and not drift and qt_shutdown_error is None,

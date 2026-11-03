@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_ONLY_COMPILED_NO_EXEC_RUNTIME_PENDING",
+  "captured_at_UTC": "2026-10-09T09:58:05.685849+00:00",
+  "source_refs": [
+    {
+      "path": "/workspace/.compat/run-wine-python.sh",
+      "bytes": 786,
+      "sha256": "65dd3806511e037290291ac592246abe80f346b1004b88c81e798612db4d79c8"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_node_content.py",
+      "bytes": 11741,
+      "sha256": "e85f5e4081802ac7e5112509e9143a53b4dcc979e3dc27893588ae488a3b45ae"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_numeric_recognition_024.py",
+      "bytes": 4322,
+      "sha256": "244bde8559d30854ebe02ec1ca0baecec89c87307f535e1d7420aec2114c7208"
+    },
+    {
+      "path": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "bytes": 19484784,
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+    },
+    {
+      "path": "/workspace/.compat/python-windows/package/tools/Lib/site-packages/windows_capture/__init__.py",
+      "bytes": 13294,
+      "sha256": "a9e3bf0f2e510aa4e9e1950b12e510a669600078ec4b5630f7ffbd23622fc5fa"
+    },
+    {
+      "path": "/workspace/.compat/python-windows/package/tools/Lib/site-packages/windows_capture/windows_capture.pyd",
+      "bytes": 534016,
+      "sha256": "9464e5a6a05e980418eeab6b3a774441b4c737ba6bd596ff0d1eead3e48bf7aa"
+    }
+  ],
+  "facts": [
+    {
+      "source": "tests/test_node_content.py:99-110",
+      "fact": "Original Qt test uses WINDIR or C:/Windows, loads Fonts/msyh.ttc, indexes families[0] without a skip; actual failure must remain failure."
+    },
+    {
+      "source": "tests/test_numeric_recognition_024.py:62-80",
+      "fact": "Both omitted numeric methods only read native-client image files through np.fromfile and original ScreenReader. They do not create a Qt font fixture themselves. Normal missing samples belong to original unmigrated-cache U classifier."
+    },
+    {
+      "source": "/workspace/.compat/run-wine-python.sh",
+      "fact": "Wrapper fixes WINEPREFIX=/workspace/.compat/wine-prefix. The corresponding Linux-side drive_c/windows/Fonts exists and was empty during this read-only snapshot. Runtime Wine WINDIR is unmeasured until Root executes probe."
+    },
+    {
+      "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "fact": "Genuine installed Noto font bytes are present under their true path/name; no alias/copy to msyh is proposed."
+    },
+    {
+      "source": "windows_capture/__init__.py:10-18",
+      "fact": "Python module top level imports native .pyd and defines classes. Native capture construction/start are in instance methods patched out by original capture_queue setUp, but native module init has no readable Source here."
+    }
+  ],
+  "Root_probe_use": "Run the compiled Source under real Linux Qt and Wine Qt in public temporary/offrepo output paths. Record original API font id/families/path/byteshash and original-font failure separately. Optionally add the genuine Noto path; under Wine use its actual Z:/usr/share/fonts/... mapping, without filename alias. Probe results are prerequisites only, not original test pass evidence.",
+  "portable_fixture_proposal_source_only": "After Root obtains original failure and actual font-family probe, a future reviewed fixture may select the original genuine msyh if usable, otherwise an explicitly present genuine NotoSansCJK-Regular.ttc path using QFontDatabase original API and its returned family. Keep all original title/description/scene ambiguity/page/run assertions unchanged. If neither real font is available, fail with a clear original fixture prerequisite error; do not skip or widen unavailable classifier. No font change is authored/applied here, and font differences still require actual original OCR assertions.",
+  "compile_code_object_noexec": true,
+  "project_imports": 0,
+  "tests": 0,
+  "helpers_executed": 0,
+  "Qt_executed": 0,
+  "Wine": 0,
+  "Git": 0,
+  "tracked_mutations": 0
+}

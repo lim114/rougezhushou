@@ -1,0 +1,71 @@
+{
+  "section": 257,
+  "title": "连续移动声明下的路线续接资源差异与有限重规划",
+  "remaining_item": "P3完成标志/动态路线与状态变化后的续接",
+  "new_capability": "原计划连续进度和独立新图当前位置/AP/库存核对，残余人工目标消解、原余路断线/缺实例定位、资源差异见证与有限替代路线；主窗口续接页及严格地图绑定",
+  "limitations": [
+    "图实例、区域/模板/节点坐标须明确匹配，缺失或换实例不搬旧目标",
+    "跨区域必须独立新goal及完整objectives，不由图类型猜结局条件",
+    "胜利/失败/移动独立声明，不自动扣返AP/库存/完成/驱逐；失败后继续资格未知则停止",
+    "替代有限搜索保留未知前沿与上限，不称实际最优或游戏动态已完成"
+  ],
+  "files": [
+    "research/p3-route-continuation/replanning/README.md",
+    "research/p3-route-continuation/replanning/sealed-files.json",
+    "research/p3-route-continuation/replanning/source-receipt.json",
+    "research/p3-route-continuation/replanning/verification.json",
+    "rouge/app.py",
+    "rouge/route_continuation.py",
+    "rouge/route_continuation_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_route_continuation.py",
+    "tests/test_route_continuation_view.py",
+    "verification/section-257/tests.txt",
+    "verification/section-257/validation.json"
+  ],
+  "source_evidence": [
+    "复用封存移动/AP/资格与PRTS433770占领/驱逐条件，所有after图/资源变化均由独立声明",
+    "新增map_instance_id与区域/模板共同身份锚定，epoch绑定只用于预览不写本局"
+  ],
+  "acceptance": [
+    "19必要行为和实际Qt完整续接流程检查全过",
+    "进度缺口/偏离/已完成前缀/原连接缺失/同名不同实例/独立失败门/未知库存与缓存只导入after，额外独立审查未完成如实记录"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T14:07:05.281112+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "7828ce8d331f532827132b583a69b0f68b33ac61",
+  "required_raw_sha256": {
+    "research/p3-route-continuation/replanning/README.md": "e9f0e722cb339d3a63b6549ba501bf569a77bda097b846006c74469fff59f170",
+    "research/p3-route-continuation/replanning/sealed-files.json": "e809e79963c0ff5be8b935f29adf1e99226a5fb823dabb54a4c15acb768dbd69",
+    "research/p3-route-continuation/replanning/source-receipt.json": "ee152a07449eaf8da5cc5d4d90960aa1d6d5b1ff4f782e31c64886492833131a",
+    "research/p3-route-continuation/replanning/verification.json": "a9b486634675ce4d0044be6ecfee1fceb837951095e1dfaaba1ab71d6ab1b00f",
+    "rouge/app.py": "73e28b0e743e94a834e761ffebaa28d6594dce64db153efa39e2f981f6fff10c",
+    "rouge/route_continuation.py": "6bc3de7e52ed94f96446950f91ea719197fb5874f494b6d9faf49e34bdf3bb66",
+    "rouge/route_continuation_view.py": "e0627ec1df77fa686117f90293465b1081b4d9497e6aa7a26b9367cad2e5d53c",
+    "scripts/verify_cloud.py": "efec661185085d7fce4bda5c48402395b4a016f2a85da429c0150237d6451f37",
+    "tests/test_route_continuation.py": "3e493d2484bd4541a0bfc3d5013d2534379a19fbe1ccfe07c639168198b79ba3",
+    "tests/test_route_continuation_view.py": "b85856f508d18475f32ae5293a74850e3c6f9341eec81e6b9076d3e54fc3fa3a",
+    "verification/section-257/tests.txt": "bdeee1cfc083bc145b90f98247f8f6f7ceeb3b7d1fd03bedc0644990bc5d45c5",
+    "verification/section-257/validation.json": "7fedd2881c99c8305c8a3acc8be8667f69b3bb696373934df2a5f29c8d2077ff"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_route_continuation",
+      "tests.test_route_continuation_view"
+    ],
+    "tests_run": 19,
+    "passed": 19,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

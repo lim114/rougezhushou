@@ -1,0 +1,32 @@
+....................................F.FF......................
+======================================================================
+FAIL: test_complete_claim_uses_quantities_and_members_not_a_flag_alone (tests.test_inventory_layout_review.InventoryLayoutReview.test_complete_claim_uses_quantities_and_members_not_a_flag_alone)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_inventory_layout_review.py", line 26, in test_complete_claim_uses_quantities_and_members_not_a_flag_alone
+    self.assertIn('未核对完整',p.summary.text());self.assertNotIn('本局收藏品已核对完整',p.status.text());self.assertEqual(run.state,before)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '未核对完整' not found in '显示298项 · 持有清单待核对'
+
+======================================================================
+FAIL: test_scope_is_accessible_without_losing_filter_or_reading (tests.test_inventory_layout_review.InventoryLayoutReview.test_scope_is_accessible_without_losing_filter_or_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_inventory_layout_review.py", line 17, in test_scope_is_accessible_without_losing_filter_or_reading
+    self.assertFalse(p.status.isVisible());self.assertIn('未核对完整',p.summary.text());p.scope.click();self.assertTrue(p.status.isVisible());self.assertIn('不是当前DLC完整目录或已生效证明',p.status.text())
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '未核对完整' not found in '显示105项 · 持有清单待核对'
+
+======================================================================
+FAIL: test_source_loss_remains_visible_and_recovery_does_not_reselect (tests.test_inventory_layout_review.InventoryLayoutReview.test_source_loss_remains_visible_and_recovery_does_not_reselect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_inventory_layout_review.py", line 22, in test_source_loss_remains_visible_and_recovery_does_not_reselect
+    self.assertFalse(p.status.isVisible());self.assertIn('资料暂不可用',p.summary.text());self.assertFalse(p.reader.isVisible());self.assertEqual(p.entries.count(),0)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '资料暂不可用' not found in '暂无收藏品资料'
+
+----------------------------------------------------------------------
+Ran 62 tests in 96.317s
+
+FAILED (failures=3)

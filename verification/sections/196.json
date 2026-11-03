@@ -1,0 +1,42 @@
+{
+  "title": "主区域与秘境进出库存/行动力转移条件",
+  "remaining_item": "探索地图与路线建议：特殊区域与零件状态转移规则",
+  "new_capability": "逐实例区分暂存加工品在主区域转移成功后损坏和秘境进出例外；将险路尽头/首领剩余AP转希望、险路小径携带AP以及具名加工品数量分列。",
+  "source_evidence": [
+    "原件重弹簧/小八界usage明确无法被携带至下一区域",
+    "routes-049保留完整PRTS原文：进出特殊层不损坏暂存加工品，包括特殊层获得；安全出口/AP转移与首领胜利条件"
+  ],
+  "acceptance": [
+    "主区域仅两种暂存品列条件损坏；秘境进入与返回均明确保留例外，其他品不新增过期假设",
+    "剩余7AP转希望不擅自填1:1；小径携带8AP不冒充新区域总AP；加工品仅1个完整池未知",
+    "输入库存不改变、目标成功未确认不冒充实际转移；2项必要测试通过"
+  ],
+  "limitations": [
+    "实际转移/库存与AP保持未知；主区域目标是否成功仅声明。",
+    "希望兑换比例、新区域基础AP与更完整加工品掉落池未核验。"
+  ],
+  "section": 196,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section222.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_222_temporary_main_region_loss_and_portal_exception",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_222_side_exit_carried_ap_and_unknown_goal_do_not_complete"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:50:05.055951+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-196/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

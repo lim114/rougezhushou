@@ -1,0 +1,76 @@
+{
+  "section": 453,
+  "kind": "functional_section",
+  "title": "事件关联作战逐级导航与来源联动清理",
+  "new_capability": "既有通用单一作战入口、不期而遇和湖泊事件的作战配置入口，以及调谐仪式关联作战在主资料窗逐级打开；多配置保持未选，由玩家选择固定配置。返回、前进及重复打开保留同源阅读；变更所选选项或来源失效时清理相关子资料，父节点失效和新局清理整条关联链。修正新页面重复刷新。",
+  "passed": true,
+  "passed_scope": "Named shared event->configuration->stage forward paths, dependent source cleanup and duplicate refresh; not all nested windows or video parity.",
+  "limitations": "事件材料来源、作战反查完整事件、敌人机制及其它深层入口仍未全部统一，笔记目录、公开档案和成熟网页仍待接入。451首次页面增高仍未通过；完整视频的按钮位置、尺寸、地图呈现与配色细节及游戏/跨屏联动尚未全部一致。本节减少的是页面重复刷新，未测得整体识别加速，也未修改OCR算法。",
+  "unit_tests_run": 49,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/453-linked-battles/linked-final/results.json",
+      "process": "verification/sections/453-linked-battles/linked-final/process.json",
+      "tests_run": 7
+    },
+    {
+      "result": "verification/sections/453-linked-battles/map-final/results.json",
+      "process": "verification/sections/453-linked-battles/map-final/process.json",
+      "tests_run": 5
+    },
+    {
+      "result": "verification/sections/453-linked-battles/configurations-final/results.json",
+      "process": "verification/sections/453-linked-battles/configurations-final/process.json",
+      "tests_run": 7
+    },
+    {
+      "result": "verification/sections/453-linked-battles/documented-final/results.json",
+      "process": "verification/sections/453-linked-battles/documented-final/process.json",
+      "tests_run": 7
+    },
+    {
+      "result": "verification/sections/453-linked-battles/encounter-final/results.json",
+      "process": "verification/sections/453-linked-battles/encounter-final/process.json",
+      "tests_run": 6
+    },
+    {
+      "result": "verification/sections/453-linked-battles/lake-selected-final/results.json",
+      "process": "verification/sections/453-linked-battles/lake-selected-final/process.json",
+      "tests_run": 6
+    },
+    {
+      "result": "verification/sections/453-linked-battles/reference-final/results.json",
+      "process": "verification/sections/453-linked-battles/reference-final/process.json",
+      "tests_run": 5
+    },
+    {
+      "result": "verification/sections/453-linked-battles/ritual-final/results.json",
+      "process": "verification/sections/453-linked-battles/ritual-final/process.json",
+      "tests_run": 6
+    }
+  ],
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/453-linked-battles/native-final/window.json",
+      "unique_checks": 53
+    }
+  },
+  "source_sha256": {
+    "rouge/player_reference_window.py": "bae2ec00e244da1627060f4e34577fd939ee8a4b0e34a814b9e7298ff3d03d5e",
+    "rouge/player_reference_links.py": "4725d967292bc24c35aa2050e7b4aa359c52d0d6d73f745e3f639285f8f77b33",
+    "rouge/player_compact.py": "4e5def1a8d9764b3161755f3570c18d1b9df6987cd92f0edacb4bb4d48e84011",
+    "rouge/documented_event_flow_view.py": "f2814f6448493bd5f59eb661ef4b09437e71d5d2e2b36dc38664c579fa664060",
+    "rouge/current_encounters_view.py": "43aeeb8052555bac063ec8f79312fdfccd7289a2553f8a69a1cb0603a7c9cf36",
+    "rouge/current_lake_view.py": "b2d9ad85a42e20a31f46fb2d4304cd2b15daa5b9a892212d058f42274aa4c304",
+    "rouge/current_event_battles_view.py": "4c70bab73e64910b6d30151f53f3753f76ffa403fedd2a511bd0e0b9ce7ed021",
+    "rouge/current_ritual_view.py": "40901a764e77e00334fd1273531ab0b997e82c69bfc701679ee3642c5ba8db83",
+    "tests/test_linked_battles_453.py": "52dbd0c1df8d6befb53e87f1d59773bcd078ca3539fadb0da4ac0a763bc77bba"
+  },
+  "source_review": "verification/sections/453-linked-battles/source-review.json",
+  "actual_local_test_window": "verification/sections/453-linked-battles/live-window-final/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T13:58:38.091851+00:00"
+}

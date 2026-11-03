@@ -69,7 +69,7 @@ class GradeSyncTests(unittest.TestCase):
         self.assertEqual(changed['difficulty_conflict']['expected_id'],BASE+'_c')
 
     def test_invalid_grade_and_cross_family_ambiguity_do_not_guess(self):
-        for value in (None,True,False,'10',10.0,-1,16):
+        for value in (None,True,False,'10',10.0,-1,17):
             self.assertFalse(resolve_difficulty_icons([icon()],{'value':value})[0]['confirmed'])
         mixed=icon();mixed['candidates'].append('rogue_6_relic_legacy_23')
         self.assertFalse(resolve_difficulty_icons([mixed],{'value':10})[0]['confirmed'])

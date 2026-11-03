@@ -1,32 +1,73 @@
-# Project working rules
+# 项目执行要求
 
-## Cloud continuation
+本文件只保留有效要求与常见误区。用户最新明确指示优先；历史断点、旧优先级及验收数字不作为当前指令。历史原文见 [历史档案](docs/history/README.md)。
 
-This independent project is named rougezhushou and starts from local version 0.70.0. Read CLOUD_HANDOFF.md before resuming. Linux checks use scripts/verify_cloud.py; Windows UI, game sampling and desktop chat verification require the original Windows machine. Report those unavailable checks explicitly, never simulate successful native validation. Private state and personal screenshots were not migrated. Keep them excluded. Preserve the local original project and its current run. Historical receipts describe their original machine and batch, not this cloud snapshot.
+## 最高优先要求
 
-## Current work order
+1. 先检查问题有没有错误前提、逻辑跳跃和信息缺失
+2. 不要迎合我，要独立判断，区分事实、预测的主观观点
+3. 涉及数字、人物和结论时尽量核实来源
+4. 不同意就直接指出并给出依据、风险和替代解释
+5. 主动提醒我忽略的变量、细节、成本和偏差
 
-User instruction on 2026-10-06: advance P2 first. Preserve the unfinished P1 checkpoint; do not resume P1 automatically from older handoff text. Recognition optimization remains after all other work.
+适用于需求、研究、实现、验收和汇报；计划、历史与技术偏好不得覆盖。区分已核实事实、推断和建议；公式自洽、测试条数、完成节数均不等于实际准确性。
 
-User instruction on 2026-10-05: recognition optimization comes after all other project work. Prioritize mechanics, calculation, state handling, map/event data, chat compatibility and delivery. Keep recognition coverage, layout adaptation, accuracy and performance improvements together at the end of PROJECT_PROGRESS.md. Existing recognition remains available; do not resume its optimization from an older handoff paragraph.
+## 代码实现约束（新增与已有代码均适用）
 
-## Evidence before mechanism changes
+1. 入口只校验一次，拒绝重复判空和滥用try/catch
+2. 单次逻辑不乱抽函数
+3. 低概率防御性代码，先征求开发者同意后再添加
 
-User requirement recorded on 2026-10-03: whenever a mechanism is unknown, look up evidence directly. Apply this rule on every later operation in this project.
+存量代码纳入逐模块回顾，同批修正已确认的冗余；不以规则已写入冒充全程序已整改。
 
-- Check existing research receipts first, then consult pinned original game data and relevant mechanism documentation. For a new or unresolved detail, perform a targeted source search before changing its numerical model.
-- Do not spend effort inventing activation order, tick phase, stacking rules, probabilities, hidden scripts or timing from adjacent mechanics. Parameters alone do not prove a missing script.
-- Record sources, the facts they establish, and the exact remaining unknown. If sufficient evidence is unavailable, retain an explicit unknown and continue independent work that has evidence. Do not convert an arbitrary assumption into the default calculation.
-- Reuse prior evidence when it answers the same question; do not repeatedly redesign guesses or repeat a completed search without a new lead. An implementation check against an established rule is still required.
-- Verify public behavior appropriate to the change and update PROJECT_PROGRESS.md, WORK_IN_PROGRESS.md and the batch receipt. Distinguish implemented scope, tested cases and remaining gaps.
-- PROJECT_PROGRESS.md lists only remaining work. Remove completed items in the same batch and record their scope/evidence in PROJECT_COMPLETED.md. Partially completed rows describe only the remaining gaps; never append completed-batch summaries or receipts to the todo list.
+## 续接入口与优先级
 
-## Product and state boundaries
+- 开工先核对 Git/远端及 `CLOUD_HANDOFF.md` 顶部索引，再读 `WORK_IN_PROGRESS.md`、`DEVELOPMENT_CHECKPOINT.json` 和对应回执；保护已有未提交改动。
+- 产品详细要求见 `PROJECT_REQUIREMENTS.md`；剩余事项只放 `PROJECT_PROGRESS.md`，完成范围放 `PROJECT_COMPLETED.md`。完成项及时销项，部分完成仅保留缺口。
+- 当前主线按[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)执行：Gate 0记录 → Gate 1修闭环 → Gate 2收入口 → Gate 3补功能与外观。黄金路径外新增功能先冻结；P3/P2/P1保留为需求分类，由实测决定后续顺序。OCR及识别同步纳入测量与优化。
+- 当前断点、进行中工作与下一完整验收见 `DEVELOPMENT_CHECKPOINT.json` 和 `WORK_IN_PROGRESS.md`；持续进行全程序回顾，维护不增加功能节数。
 
-- This is an offline calculation and advice application with background read-only sampling. Do not operate the game, analyse live placement, deploy operators or trigger skills.
-- Do not send chat messages during development/verification. Preserve private settings and chat bindings. Only the user's manual reset clears actual run memory; do not restore an older run over the current one.
-- Combat-only relic triggers remain reference information according to the current offline scope. Do not reintroduce removed event inputs or numerical effects.
-- Use temporary state directories for verification. Do not copy private runtime contents into public artifacts or backups.
-- Keep the simple test interface available; at the end of a code batch update and open the actual project test window, verifying visibility and response.
-- Automation 1-3 was deleted at the user's request. Do not recreate it.
-- Do not start overlapping edits or spawn agents unless explicitly authorized by the user or another applicable instruction.
+## 产品边界与玩家体验
+
+- 仅局外计算、资料查阅与后台只读采样；不操作游戏、不改焦点、不发按键、不分析实时站位、不部署或触发技能。战斗专属藏品触发只作资料参考，不恢复已移除的战斗事件输入或数值效果。
+- 探索提供节点、条件、历史、事件/掉落和作战预览；不推荐、排序、比较或自动选择路线。节点类型不等于事件身份，候选相符不等于实际生成、可选、领取、生效或结算。
+- 节点概率与联网统计只用有依据的公开数据离线计算，区分历史频率、权重和本局条件概率；不得向资料网站上传个人对局数据。按已获授权范围读取、缓存和分发。
+- 默认面向普通玩家：先给结果、条件和操作入口，使用中文名称与明确单位；精简界面及汇报中的重复免责、否定说明，缺项简写“暂无资料”或“待确认”，来源、适用范围与技术信息按需展开。保留影响结果的实际条件，版本/更新并入常用栏目。
+- 参考效果以项目中的视频原件及用户明确取舍为准，OBS动态展示已排除；不确定就回看，逐项核对功能、交互和外观，不以“视频风格”或功能存在代替一致性验收。保留 Python/Qt 与本机适配，避免无依据整套重写。
+- 自动刷新保留有效的选择、搜索、展开和阅读状态；换范围或来源失效时清除失效展示。同局已确认信息可复用，只由用户手动新局/重置清空记忆。
+- 聊天目标为普通 ChatGPT 会话，允许普通聊天额度；不得用 Codex 分析后端冒充。服务商 API 为备选；开发和验证不发送聊天。
+
+## 证据与机制
+
+- 未知机制或专有名词先查既有研究、固定版本游戏原始数据及机制文献；不足时定向查资料，不猜叠加顺序、时序、隐藏脚本或概率。记录来源、版本、适用条件和剩余未知；参数本身不能证明脚本。
+- For every later operation: verify sources first; retain an explicit unknown when evidence is insufficient.
+- 复用能回答同一问题的已有证据；新线索出现再继续研究。未核验机制影响完整结果时可列已证分项，完整总量标未知，不把术语定义当本局状态。
+- 同一问题三次尝试仍未解决，保留原证据、次数和重启条件，继续独立可做事项；不重复猜测或无新线索重试延期流程。
+
+## 公开源码优先复用与本机适配
+
+- 优先寻找并采用他人已成熟的公开代码方案，再做本机适配；内部组件复用不能代替外部方案优先。核实功能、成熟度、技术栈、许可及接入/维护/验证总成本；确无适合方案时记录原因再自研。记录来源链接与固定提交/版本，保留署名许可；视频、空仓库和资料包不是程序源码，未接入验证不得声称已复用。
+- 逆向或重构先核对当前产物与源码身份，证据明确的问题同批修正。按可达性和影响精简重复防御，不仅凭“概率低”删除私人状态、数据准确性或防重复发送的保护。
+
+## 游戏窗口绑定与识别误区
+
+- “悬停藏品5秒”指游戏画面中的藏品，不是助手目录；绑定窗口身份，按物理像素/DPI映射鼠标与新鲜画面，覆盖移动、缩放、遮挡与切换绑定。独立目录不能替代游戏悬停验收。
+- 窗口关闭、最小化、绑定失效、画面过期或不能唯一确认时不弹猜测信息；未知档位只列有证候选或不提示，不能冒称已持有。
+- 商店优先读当前商品名称和文字排列，价格文字仅辅助对应商品格；不能用固定坐标、最近标题或图标强猜。文字不足/同名歧义保持未确认；无文字图标场景才用有来源图像补充。只复用已核验且整字节未变的名称区域，变化后重核，不降低门槛。
+
+## 私人状态与工具
+
+- 私人运行配置、本局/账号记录、聊天绑定及游戏样本只留本机，不进入提交、公开回执或备份；不覆盖私人设置、不恢复旧局覆盖当前局。验证使用临时隔离状态，不复制私人内容。
+- Windows 桌面读取/操作优先 Windows-mcp，仍受上述授权边界约束。未获明确授权不启动子代理，不开展重叠修改；已删除的自动化1-3不得重建。
+
+## 实现、验收与发布
+
+- 使用现有本机工作副本及 `codex/p2-development`，开工核对分支和最新远端；不改 main、不强推、不擅自切分支。本机与 GitHub 同步交付。
+- 每节先明确剩余项目、新能力和验收标准，合并有意义的相关改动；只修漏洞、测试、研究或文档归档算维护，不凑功能节数。标题用“第N节 + 实际完成的改动”。
+- 仅运行当前改动所需的定向检查，复用源码未变的通过证据。所有原定全量检查与每15节周期机制已取消；用户明确要求前不得自行恢复、安排或执行全量检查。保留历史验收、原失败、真实退出及源码冻结记录，不改写旧证据；用户另行明确要求全量时仍须使用真实当轮来源与原完整范围。
+- 界面改动按需检查实际窗口；Windows代码批次结束更新并打开原项目测试窗口，核对可见与响应。完整验收保留完整窗口范围；纯文档维护不重启应用或重跑产品测试。
+- 公开图片、隔离窗口、Wine/Linux通过只证明其各自范围，不冒充 Windows实机游戏/聊天或本局准确性。缺权限、原环境或私样本单列不可用，不计通过；截图外观不替代交互证明。
+- 更新断点、在制记录、待办/完成记录、要求及云端索引，运行 `scripts/update_cloud_index.py` 并验证当前绑定；每节同提交普通推送后核对真实远端和公开文件字节。未验收、未提交、未推送不得称云端完成。
+- 公开归档按清单逐路径核对；不能只看 Git 默认未忽略列表。仅对已核对的公开清单成员定向加入，保留私人忽略规则；不得为通过检查改写冻结证据。
+- `AGENTS.md` 只存通用要求和必要入口；逐节成果、验收数字、提交号和旧暂停指令写入历史/进度文档，不再层层追加到本文件。
+- 可核验剩余额度严格低于15%时不再开新节，完整完成当前节的实现、必要验证、记录、索引、提交、普通推送及远端核对后收尾；15%整不触发，不推定不可用额度。

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 848, in update_operator
+    self.update_skill_options()
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 996, in update_skill_options
+    if hasattr(self,'raw_damage'):self.calculate()
+                                  ^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1020, in calculate
+    text=format_operator_observation(state,self.training_conditions())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\operator_summary.py", line 8, in format_operator_observation
+    profile=operator_profiles()[operator['id']]
+                                ~~~~~~~~^^^^^^
+KeyError: 'id'
+{"passed": false, "checks": 16, "explicit_buttons": 1, "actual_entries": {"RunState.__init__": 1, "MainWindow.calculate": 62, "calculate_damage": 60, "format_report_default": 108, "format_estimate": 16, "format_report_technical": 32}, "records": {"file": "wine-focused-mainwindow-091-records.json.gz", "records": 17, "bytes": 97723, "sha256": "b818640c119c187d0baab2380422ebfef321151e88f86a6bb34cf0768c58793c", "decoded_bytes": 1252383, "decoded_sha256": "fe19005a7d5f50ab32b526bb2faaf733c747cacdf38ad8f2fd874e421d921e6d"}, "failure": {"type": "KeyError", "message": "'id'", "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1152, in <module>\n    if row['kind'] in ('train','deep'):train(row)\n                                       ^^^^^^^^^^\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1137, in train\n    window.update_operator(preserve_level=False)\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 848, in update_operator\n    self.update_skill_options()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 996, in update_skill_options\n    if hasattr(self,'raw_damage'):self.calculate()\n                                  ^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1020, in calculate\n    text=format_operator_observation(state,self.training_conditions())\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\operator_summary.py\", line 8, in format_operator_observation\n    profile=operator_profiles()[operator['id']]\n                                ~~~~~~~~^^^^^^\nKeyError: 'id'\n", "step": "unimplemented-Lancet-no-skills-hidden-false"}}
+X connection to :99 broken (explicit kill or server shutdown).
+X connection to :99 broken (explicit kill or server shutdown).

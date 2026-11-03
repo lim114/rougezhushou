@@ -1,0 +1,33 @@
+{
+  "kind": "PUBLIC_SOURCE_LITERAL_CASES_SECTION277_PREPARATION_NOT_COMPLETION",
+  "oracle": "Independent literal integer boundaries and source control flow; no real game SP/payment/cast claim",
+  "source_proof_sha256": "f7c7908155ff9cb376fb7295d8bb71a84838e06d081af58ba4a2d51553ebdbbc",
+  "ge_literals": [
+    {"threshold": 5, "sp_raw": 21474793530, "rhs_raw": 21474793530, "expected": false, "reason": "strict inequality at exactly EPS"},
+    {"threshold": 5, "sp_raw": 21474793531, "rhs_raw": 21474793530, "expected": true, "reason": "one signed raw unit above boundary"},
+    {"threshold": 5, "sp_raw": 21474793529, "rhs_raw": 21474793530, "expected": false, "reason": "one signed raw unit below boundary"},
+    {"threshold": -2147483648, "sp_raw": 9223372036854732858, "rhs_raw": 9223372036854732858, "expected": false, "reason": "signed64 subtraction wraps; equality remains false"},
+    {"threshold": -2147483648, "sp_raw": 9223372036854732859, "rhs_raw": 9223372036854732858, "expected": true, "reason": "one above wrapped boundary"}
+  ],
+  "debit_argument_literals": [
+    {"delta": 20, "negated_int32": -20, "input_raw": -85899345920, "magnitude_raw": 85899345920, "delta_type": "MINUS", "delta_type_value": 2},
+    {"delta": -1, "negated_int32": 1, "input_raw": 4294967296, "magnitude_raw": 4294967296, "delta_type": "ADD", "delta_type_value": 1},
+    {"delta": -2147483648, "negated_int32": -2147483648, "input_raw": -9223372036854775808, "magnitude_raw": 9223372036854775806, "delta_type": "MINUS", "delta_type_value": 2},
+    {"delta": 2147483647, "negated_int32": -2147483647, "input_raw": -9223372032559808512, "magnitude_raw": 9223372032559808512, "delta_type": "MINUS", "delta_type_value": 2}
+  ],
+  "flow_boundaries": [
+    {"case": "minimum override is not debit cost", "first_min": 5, "second_min": 5, "sp_raw": 21474836480, "data_cost_declared_but_not_called": 20, "admission": true, "independent_reduce_delta": 20, "actual_paid_cost": null},
+    {"case": "second minimum may change after SP read", "first_min": 5, "second_min": 7, "sp_raw": 21474836480, "admission": false},
+    {"case": "first negative minimum and free=true", "sp_and_cost_called": false, "admission": true, "later_reduce_free_read_is_independent": true},
+    {"case": "unknown first minimum", "free_and_sp_and_cost_future_called": null, "complete_result": null},
+    {"case": "unknown free or virtualskip result", "newsp_and_apply_future_called": null, "complete_result": null},
+    {"case": "reduce delta0", "all_subsequent_reads_and_newsp_called": false, "reduce_result": true, "actual_paid_cost": null},
+    {"case": "second Apply owner null", "second_owner_read_called": true, "copy136_called": true, "apply_called": false, "normal_completion": false},
+    {"case": "NewSp normality unknown", "constructor_arguments_qualified": false, "second_owner_and_copy_and_apply_future_called": null},
+    {"case": "normal Apply returnsfalse", "reduce_normal": true, "reduce_result": false, "actual_owner_sp_after": null, "actual_paid_cost": null}
+  ],
+  "actual_owner_sp_after": null,
+  "actual_cost_paid": null,
+  "actual_cast_success": null,
+  "complete_cycle": null
+}

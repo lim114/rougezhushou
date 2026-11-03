@@ -1,0 +1,48 @@
+--- immutable-first/prepare_attempt2_sources.py
++++ independent-attempt2/prepare_attempt2_sources.py
+@@ -0,0 +1,45 @@
++"""Copy only exact first READY allowlist and adapt second cache controls."""
++from pathlib import Path
++from hashlib import sha256
++import ast,difflib,json
++
++BASE=Path(__file__).resolve().parent
++ROOT=BASE.parents[1]
++FIRST=ROOT/'.cache/p3-full305-prep'
++
++def sha(path):return sha256(path.read_bytes()).hexdigest()
++def write(path,raw):
++ path.parent.mkdir(parents=True,exist_ok=True)
++ with path.open('xb')as stream:stream.write(raw)
++def encoded(value):return(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf8')
++
++def main():
++ ready_path=FIRST/'CONTROLLER_READY_REV2.json'
++ if sha(ready_path)!='89c698e1dfd6adcf87350147ed26dd755f6a1c99668ceadeb554abecd0cad6e4':raise ValueError('Original first READY changed.')
++ ready=json.loads(ready_path.read_bytes());copied={}
++ for name,pin in ready['files'].items():
++  path=FIRST/name
++  if path.is_symlink()or sha(path)!=pin['sha256']or path.stat().st_size!=pin['bytes']:raise ValueError('First frozen tool drift: '+name)
++  write(BASE/name,path.read_bytes());copied[name]=pin
++ write(BASE/'FIRST_ATTEMPT_CONTROLLER_READY.json',ready_path.read_bytes())
++ edits={}
++ def edit(name,replacements):
++  path=BASE/name;before=path.read_text(encoding='utf8');after=before
++  for old,new in replacements:
++   if after.count(old)!=1:raise ValueError('Exact unique adaptation required: '+name+' '+old)
++   after=after.replace(old,new,1)
++  path.write_bytes(after.encode('utf8'))
++  write(BASE/'migration-diffs'/(name.replace('/','__')+'.diff'),''.join(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='immutable-first/'+name,tofile='second-cache/'+name)).encode('utf8'))
++  ast.parse(after);edits[name]={'before_sha256':sha256(before.encode('utf8')).hexdigest(),'after_sha256':sha(path)}
++ edit('full305_common.py',[("FREEZE = ROOT / 'verification/full-305/source-freeze.json'","FREEZE = ROOT / 'verification/full-305/source-freeze-attempt2.json'"),("READY_PATH = BASE / 'CONTROLLER_READY_REV2.json'","READY_PATH = BASE / 'CONTROLLER_READY_ATTEMPT2.json'")])
++ edit('run_full305_controller.py',[("('rouge-full305-' + uuid.uuid4().hex)","('rouge-full305-attempt2-' + uuid.uuid4().hex)"),("'kind': 'FULL305_ROOT_OWNED_SERIAL_FULL_EXECUTION', 'root': str(ROOT)","'kind': 'FULL305_ROOT_OWNED_SERIAL_FULL_EXECUTION_ATTEMPT2', 'actual_validation_attempt': 2, 'controller_fixture_pid': __import__('os').getpid(), 'root': str(ROOT)")])
++ edit('candidate/scripts/verify_curiosity_node_rules_window_304_full305.py',[("freeze=read(ROOT/'verification/full-305/source-freeze.json')","freeze=read(ROOT/'verification/full-305/source-freeze-attempt2.json')")])
++ prepared=json.loads((BASE/'prepared-inputs-final.json').read_bytes())
++ file=BASE/'candidate/scripts/verify_curiosity_node_rules_window_304_full305.py'
++ prepared['public_promote_candidates']['scripts/verify_curiosity_node_rules_window_304_full305.py']={'sha256':sha(file),'bytes':file.stat().st_size}
++ prepared['actual_validation_attempt']=2;prepared['first_attempt_ready_sha256']=sha(ready_path)
++ (BASE/'prepared-inputs-final.json').write_bytes(encoded(prepared))
++ write(BASE/'ATTEMPT2_COPY_AND_MIGRATION.json',encoded({'section':305,'kind':'SECOND_CACHE_PREPARATION_NOT_FROZEN_OR_EXECUTED','first_ready_sha256':sha(ready_path),'original_first_files_rechecked':copied,'changed_copies':edits,'all_original_first_source_bytes_left_unchanged':True,'actual_tests_Qt_freeze_or_activation_started':False}))
++ print(json.dumps({'copied_exact_first_files':len(copied),'changed_copies':edits,'first_frozen_tools_modified':False,'runtime_started':False},ensure_ascii=False))
++
++if __name__=='__main__':main()

@@ -1,0 +1,88 @@
+"""Complete-scope and actual-process archive gate, no executions or PID kills."""
+import ctypes,json
+from ctypes import wintypes
+from pathlib import Path
+from full305_common import BASE,ROOT,PYTHON,READY_PATH,sha
+
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+
+def load(path):
+    require(path.is_file()and not path.is_symlink(),'Original regular process evidence missing: '+str(path))
+    return json.loads(path.read_bytes())
+
+
+def not_live(pid):
+    require(type(pid)is int and pid>0,'Actual positive process identifier required.')
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    kernel.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD];kernel.OpenProcess.restype=wintypes.HANDLE
+    kernel.WaitForSingleObject.argtypes=[wintypes.HANDLE,wintypes.DWORD];kernel.WaitForSingleObject.restype=wintypes.DWORD
+    kernel.CloseHandle.argtypes=[wintypes.HANDLE];kernel.CloseHandle.restype=wintypes.BOOL
+    handle=kernel.OpenProcess(0x00100000,False,pid)
+    if not handle:
+        require(ctypes.get_last_error()==87,'Cannot independently establish current no-live observation for original PID: '+str(pid));return
+    try:require(kernel.WaitForSingleObject(handle,0)==0,'Original root process still live or identifier reused; refuse archive: '+str(pid))
+    finally:kernel.CloseHandle(handle)
+
+
+def root_controller_gate(path,parent,freeze_sha,activation_sha,container):
+    expected_path=BASE/'root-launch-attempt2/controller-process.json'
+    require(path.resolve()==expected_path.resolve(),'Canonical second original root process receipt required.')
+    process=load(path);require(process.get('status')=='completed'and type(process.get('actual_observed_exit'))is int
+        and process.get('owned_popen_retained')is True and process.get('exit_observed_directly_from_retained_popen')is True
+        and process.get('exit_inferred_from_output_json')is False,'Root controller is not actually observed terminal by retainedPopen.')
+    expected=[str(PYTHON),'-B','-X','utf8',str(BASE/'run_full305_controller.py'),'--execute','--expected-parent-commit',parent,
+        '--freeze-sha256',freeze_sha,'--activation-sha256',activation_sha]
+    require(process.get('argv')==expected and process.get('section')==305 and process.get('actual_validation_attempt')==2,'Wrong actual root argv/attempt.')
+    require(process.get('root_freeze_sha256')==freeze_sha and process.get('activation_sha256')==activation_sha
+        and process.get('preparation_ready_sha256')==sha(READY_PATH)and process.get('source_guard_exception_after')is None
+        and process.get('controller_source_sha256')==sha(BASE/'run_full305_controller.py')
+        and process.get('root_wrapper_source_sha256')==sha(BASE/'run_owned_full305_root.py'),'Actual root source authority differs.')
+    require(int(path.with_name('process.exit').read_text('ascii').strip())==process['actual_observed_exit'],'Original root process.exit mismatch.')
+    authority=load(container/'owned-execution.json')
+    observed={process['controller_pid'],process['root_wrapper_pid'],authority['controller_fixture_pid']}
+    for pid in observed:not_live(pid)
+    return {'actual_root_process_receipt_sha256':sha(path),'actual_root_controller_exit':process['actual_observed_exit'],
+        'recorded_controller_launch_pid':process['controller_pid'],'recorded_root_wrapper_pid':process['root_wrapper_pid'],
+        'recorded_controller_fixture_pid':authority['controller_fixture_pid'],'all_recorded_root_identifiers_currently_not_live':True,
+        'identifier_equality_or_historical_ancestry_required':False}
+
+
+def complete_components_gate(container,record,data,parent,freeze_sha,activation_sha):
+    expected=['offline','legacy','legacy_typed','current30','current29',*data['p3_scripts']]
+    require(len(expected)==25 and record.get('status')=='all_required_components_terminal','Full second orchestration is not terminal in every required position.')
+    require(record.get('required_components')==expected and [row.get('name')for row in record['steps']]==expected,'Incomplete, duplicate or reordered full25 component scope.')
+    shared=['--expected-parent-commit',parent,'--freeze-sha256',freeze_sha,'--activation-sha256',activation_sha]
+    for row in record['steps']:
+        name=row['name'];folder=container/name
+        if row['status'].startswith('not_run_'):
+            require(name=='legacy_typed'and row['status']=='not_run_legacy_not_passed'and row.get('passed')is False and not folder.exists(),
+                'Unexpected unexecuted full component; cannot silently shrink coverage.')
+            legacy=load(container/'legacy/supervisor.json')
+            require(legacy.get('child_primary_exit')!=0 or legacy.get('supervisor_exit')!=0 or legacy.get('timed_out')is True,'Typed cannot be skipped after actuallegacy0.')
+            require(record.get('automated_available_scope_passed')is False,'An unexecuted original typed scope cannot support availablePASS.')
+            continue
+        require(row.get('status')=='terminal'and row.get('terminal_supervisor_and_job_verified')is True,'Original component is not terminal: '+name)
+        process=load(folder/'controller-process.json');supervisor=load(folder/'supervisor.json')
+        child=([str(PYTHON),'-B','-X','utf8',str(BASE/'readback_child305.py'),'--legacy-container',str(container/'legacy'),*shared]
+            if name=='legacy_typed'else[str(PYTHON),'-B','-X','utf8',str(BASE/'component_child305.py'),'--mode',name,'--out',str(folder/'actual'),*shared])
+        require(process.get('status')=='completed'and type(process.get('actual_observed_popen_exit'))is int and process.get('owned_popen_retained')is True,
+            'Actual retained supervisorPopen terminal proof missing: '+name)
+        require(process.get('argv')==row.get('argv') and supervisor.get('argv')==child
+            and supervisor.get('supervisor_sha256')==sha(BASE/'supervisor305.py'),'Exact observed component argv/source mismatch: '+name)
+        require(supervisor.get('status')=='completed'and type(supervisor.get('child_primary_exit'))is int
+            and supervisor.get('supervisor_exit')==process['actual_observed_popen_exit']
+            and supervisor.get('owned_handle_retained')is True and supervisor.get('owned_job_assigned')is True
+            and supervisor.get('owned_job_no_live_execution_verified')is True,'Assigned job/actual exit unresolved: '+name)
+        require(int((folder/'process.exit').read_text('ascii').strip())==process['actual_observed_popen_exit'],'Original process.exit differs: '+name)
+        origin=load(folder/'process-exit-origin.json')
+        require(origin.get('kind')=='ACTUAL_RETAINED_POPEN_OBSERVED_SUPERVISOR_EXIT'and origin.get('derived_from_supervisor_json')is False
+            and origin.get('actual_observed_popen_exit')==process['actual_observed_popen_exit']and origin.get('process_exit_sha256')==sha(folder/'process.exit'),
+            'Original actual exit provenance differs: '+name)
+        for stream in('stdout','stderr'):
+            captured=supervisor[stream];path=folder/captured['file']
+            require(path.parent==folder and path.stat().st_size==captured['bytes']and sha(path)==captured['sha256'],'Original stream differs: '+name)
+    return {'complete25_ordered_component_positions':True,'every_executed_assignedJob_and_retainedPopen_terminal':True,
+        'all_components_passed_inferred_from_closed_status':False,'global_descendant_enumeration_claimed':False}

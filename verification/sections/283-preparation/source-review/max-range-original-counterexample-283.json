@@ -1,0 +1,80 @@
+{
+  "kind": "ACTUAL_OLD_CORE283_FP_MAX_RANGE_COUNTEREXAMPLE",
+  "core_sha256": "3e331ca187d419521fa220a6c8698e745d19f79a2a425d60bddbf14a81415853",
+  "numeric_sha256": "878347f7f5d69d09535f1bf0aec409068c68a3cdcf54812091c7deb96be838fc",
+  "script_sha256": "aafe8788356c7d34e5493a5d6f704a2b35111d2f79a4436df8a6d29be552b876",
+  "input": {
+    "fields": [
+      {
+        "id": "ordinary_attack_at_signed64_max",
+        "field": "attack",
+        "phase": "normal",
+        "model_value": null,
+        "basis_kind": "nominal_fp",
+        "basis_single_bits": null,
+        "basis_fp_raw": 9223372036854775807,
+        "addition_raw": 0,
+        "multiplier_delta_raw": 0,
+        "final_addition_raw": 0,
+        "final_scaler_raw": 4294967296
+      }
+    ]
+  },
+  "actual_output": {
+    "source_valid": true,
+    "fields": [
+      {
+        "id": "ordinary_attack_at_signed64_max",
+        "field": "attack",
+        "phase": "normal",
+        "model_value": null,
+        "basis": "nominal_model_snapshot",
+        "storage_type": "ObscuredInt",
+        "metadata_range": {
+          "lower_raw": 0,
+          "upper_raw": 9223372036854775807
+        },
+        "references": {
+          "input_fp_raw": 9223372036854775807,
+          "after_add_raw": 9223372036854775807,
+          "multiplier_raw": 4294967296,
+          "after_multiplier_raw": 9223372036854775807,
+          "after_final_add_raw": 9223372036854775807,
+          "after_final_scaler_raw": 9223372036854775807,
+          "clamped_raw": 9223372036854775807,
+          "getter_result_raw": 9223372036854775807,
+          "as_float": null,
+          "writer": null
+        },
+        "conditional_complete": true,
+        "actual_decoded_value": null,
+        "actual_getter_raw": null,
+        "complete_native_value": false,
+        "limitations": [
+          "输入是名义模型快照及已选数值分项，不是实际保护字段读取。",
+          "实际修饰器激活、完整库存、热更新、RC与正常执行资格未证。",
+          "写入参数不等于保护编码后的下一次解码值；后续层仅使用独立名义快照。",
+          "普通属性参考仅限默认范围下的条件重算，不断言缓存已脏或无运行时范围覆盖。"
+        ]
+      }
+    ],
+    "complete_native_panel": false,
+    "actual_panel": null,
+    "limitations": [
+      "输入是名义模型快照及已选数值分项，不是实际保护字段读取。",
+      "实际修饰器激活、完整库存、热更新、RC与正常执行资格未证。",
+      "写入参数不等于保护编码后的下一次解码值；后续层仅使用独立名义快照。",
+      "普通属性参考仅限默认范围下的条件重算，不断言缓存已脏或无运行时范围覆盖。"
+    ]
+  },
+  "expected_metadata_upper_raw": 9223372036854775806,
+  "expected_conditional_getter_raw": 9223372036854775806,
+  "actual_metadata_upper_raw": 9223372036854775807,
+  "actual_conditional_getter_raw": 9223372036854775807,
+  "counterexample_reproduced": true,
+  "evidence": "source-gates-283.json default FP.MaxValue bounds;273 default ranges;mechanist_explosion_math MAX_RAW is width maximum, not FP.MaxValue",
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "prototype_or_production_modified": false,
+  "scope": "One real public pure-function before repair counterexample. Not complete QA or final acceptance."
+}

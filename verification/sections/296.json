@@ -1,0 +1,487 @@
+{
+  "section": 296,
+  "kind": "functional_section",
+  "title": "固定战斗对应事件入口反查与无效验尸配置阅读",
+  "at_Beijing": "2026-10-16T15:36:01.863471+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "c772147f4ee4846464b32b88f51c88f874db3fcd",
+  "remaining_item": "P3固定战斗对应节点/事件入口及条件资料",
+  "new_capability": "从8个精确固定作战反查资料中对应的事件、完整场景和选项；11条资料入口手动打开，另列3条被明确紧急条件排除的普通版本，并将正文定位高亮到实际场景中的具体选项。无效验尸单列4条配置与光明之末文献说明，第3、4、5层普通作战和假层保持区别。默认不选择；保留战斗页阅读与地图选点，来源失效清除旧入口和内容，恢复后不自动重选。",
+  "files": [
+    "research/p3-battle-event-references-296/README.md",
+    "research/p3-battle-event-references-296/SCHEMA.md",
+    "research/p3-battle-event-references-296/build-receipt.json",
+    "research/p3-battle-event-references-296/event-doc-spans.json",
+    "research/p3-battle-event-references-296/original-records.json",
+    "research/p3-battle-event-references-296/source-manifest.json",
+    "research/p3-stage-entry-configuration-296/build-receipt.json",
+    "research/p3-stage-entry-configuration-296/community-marker-extraction.json",
+    "research/p3-stage-entry-configuration-296/community-marker-original.html",
+    "research/p3-stage-entry-configuration-296/manifest.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_bubble_04.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_1.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_10.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_2.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_relic_final_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_relic_final_5.json",
+    "research/p3-stage-entry-configuration-296/original-values/relicParams--rogue_6_relic_final_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/relicParams--rogue_6_relic_final_5.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_bubble_04.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_1.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_10.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_2.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_relic_final_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_relic_final_5.json",
+    "research/p3-stage-entry-configuration-296/original-values/stages--ro6_t_12.json",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_3.json",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_4.json",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_4_1.json",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_5.json",
+    "research/p3-stage-entry-configuration-296/topic-selected-index.json",
+    "research/p3-stage-entry-configuration-296/upstream-literal-audit.json",
+    "rouge/app.py",
+    "rouge/battle_entry_reference_view.py",
+    "rouge/battle_event_references.py",
+    "rouge/battle_view.py",
+    "rouge/data/battle-event-references.json",
+    "rouge/data/stage-entry-configuration-reference.json",
+    "rouge/node_catalog_view.py",
+    "rouge/player_node_information.py",
+    "rouge/stage_entry_reference.py",
+    "scripts/build_battle_event_references_296.py",
+    "scripts/build_stage_entry_configuration_296.py",
+    "scripts/verify_battle_entry_references_window_296.py",
+    "tests/test_battle_entry_integration_296.py",
+    "tests/test_battle_entry_reference_view_296.py",
+    "tests/test_battle_event_references_296.py",
+    "tests/test_stage_entry_configuration_296.py"
+  ],
+  "source_sha256": {
+    "research/p3-battle-event-references-296/README.md": "a23eabf62182b9b856f0ba6ecb84346f81b45f96182920dc26e0bb0de81acd42",
+    "research/p3-battle-event-references-296/SCHEMA.md": "1e90140364c99ab40faecbc16f7f868ff733233459546bb34d562399f7036806",
+    "research/p3-battle-event-references-296/build-receipt.json": "9bfffc9e7b786e0a81e8503c7ef7199e693fea8787aa062960049eeae3dd0cfc",
+    "research/p3-battle-event-references-296/event-doc-spans.json": "8ce140da7919a361bbd5b937401e9e48da78e46e09337c6d6ddabfd505112c42",
+    "research/p3-battle-event-references-296/original-records.json": "49f89a7b067a8e15bb9fe9dd5d071d3375ba4a0098c4edbc8eeb328fb938ca4e",
+    "research/p3-battle-event-references-296/source-manifest.json": "c6a7d1294e48b6fec896f736d56baa0c09f25f3365de471cc11c88d74705de21",
+    "research/p3-stage-entry-configuration-296/build-receipt.json": "70705c3ffeee4cbc08f4c7f1613a9b29e1c73d0afd529fcb4ee8761bfc4957d7",
+    "research/p3-stage-entry-configuration-296/community-marker-extraction.json": "7fb9460a0665fe7ead062955b9d57edcd1a40bea0556d2acad778da613f25b42",
+    "research/p3-stage-entry-configuration-296/community-marker-original.html": "ed5fefa2396fc98bf907058fb7db1783c908c95868d7f08eb299b3177a84141b",
+    "research/p3-stage-entry-configuration-296/manifest.json": "47b272989530c116163c59e683dca7cf77a6798f2eb1180b4d112ad350c01976",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_bubble_04.json": "dd641975b0adaf559a08eee969cbf0115b576977c01dbfde2f2180b1605e5b73",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_1.json": "6758a70a6706617e66eef1e2eb1e9a4c00c8a4380b1d0954e8d78f8e291137e4",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_10.json": "0b64a6d9461df79e40487ce6de968092d30c4bf34366103b64c7d32728d89e44",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_2.json": "f0341f42a5bd1f6d34d3337bfb2342e954cc907e3fe531709cf42422ac90e5a5",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_end_3_relic_trigger_3.json": "375dfec310dcb07296906b2012a141720c487087a10e91c9bd306d2ea6fd2a75",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_relic_final_3.json": "b3b381873f9a226fd12896f08976dc459ecb182f0e38a914cf963a8b52b7ea70",
+    "research/p3-stage-entry-configuration-296/original-values/items--rogue_6_relic_final_5.json": "2efb57a73226e090ce56de076c140b4ecdde66bb77729fe654eb4848feab5ec8",
+    "research/p3-stage-entry-configuration-296/original-values/relicParams--rogue_6_relic_final_3.json": "9979ad50c4adb921b6992490a66b862bd0c69efb7ff64d0dbe6de6a91514c6c5",
+    "research/p3-stage-entry-configuration-296/original-values/relicParams--rogue_6_relic_final_5.json": "bd30ab44441c0548d1e751fbae06a16bbac6fc31604d5462640bef7e45e96236",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_bubble_04.json": "03ed2b73ef121146fcf320f1cf6c77d35d9beafdfff4a64efcde47702509b9c8",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_1.json": "31f29624dd30584177bc972b706582334ef6e41998bc347a0fb3348b7564a40e",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_10.json": "7b7057fb753bd967b17f0ca477b39ebcec42434e93aae49cdc2a40373770c518",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_2.json": "9babc7f58fad19b452d2b9eda712131897e238dc8d581be20a2556dca735fb78",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_end_3_relic_trigger_3.json": "035c085df25971ec1543348bb9fcd662769ae8a6e3c243e4c0d7c38a3eda7c3a",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_relic_final_3.json": "a0254a549e1081263c576b9b7bdc7550abd973409e183de74362b34437bf1e13",
+    "research/p3-stage-entry-configuration-296/original-values/relics--rogue_6_relic_final_5.json": "eb75f0aea0098855f5932d81949c8d73fcb826b3c0a11bfb8ebf0f6c8b079929",
+    "research/p3-stage-entry-configuration-296/original-values/stages--ro6_t_12.json": "e508661f3f67fcfcbf7c71f521a82c186888bcc128c0c4c82442a1d956a28ecb",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_3.json": "cbedaa0c48305b7e8568b7859294c2c30ab5cc10a54676466b4ea6302ad332e1",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_4.json": "d8c0c6e363ae7e5fb857aa9c4b816c6ca5ab854c03af335386f22391ba897170",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_4_1.json": "a3571f0ab79d181201fc409aaf921aac1efd104fc149cd783a6644e4ce9e1d0b",
+    "research/p3-stage-entry-configuration-296/original-values/zones--zone_5.json": "d12344030b0dfbd018a792df4fe01379eec0feb5a5dfede243bbe3081ae4a29f",
+    "research/p3-stage-entry-configuration-296/topic-selected-index.json": "d3bd36499a09e3c9bc09700a1e608f0dbaba7a83fc4467e99e89dd902f3c9980",
+    "research/p3-stage-entry-configuration-296/upstream-literal-audit.json": "d5d4eff2c3975f8dc6e56822c52801637ac3be6fe019993ffbc004fff3e25a50",
+    "rouge/app.py": "2a5c3bd3e0c2c7e8964dfae54a63133574a304d4baa75d23d56fecdc7d829fb9",
+    "rouge/battle_entry_reference_view.py": "df80204ca80ca6f441bd3ec7db357e8f6ba2cb18bb8573ae17ade01d3c1292a4",
+    "rouge/battle_event_references.py": "ab6149db963dfed0d47083fc725c49d4df6c731e357d70f225f6473cdd540add",
+    "rouge/battle_view.py": "bba505811df6dcfa012e4500a79e876ff660792d18211fb998aee8ea8e0f3115",
+    "rouge/data/battle-event-references.json": "9381a854dfaef444f51e01e9508cf2a4fa61b4fa15507a5b261e5d8a7b847e4d",
+    "rouge/data/stage-entry-configuration-reference.json": "d30165125724bad4d520bd84506666f7c4eba151080a4b231bda8721d8761bcf",
+    "rouge/node_catalog_view.py": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c",
+    "rouge/player_node_information.py": "865174f9a322b4c6acabbfad691961a32469edc50c5131db02b6349afaaf9bf7",
+    "rouge/stage_entry_reference.py": "e25add624856297029be6f2e995cbe2215274fff10c3ee6c19da2640ab7314a4",
+    "scripts/build_battle_event_references_296.py": "05da68ae5c8f31f63fb8b417066e34ae65e43bd12c19c801c5e5fad8120fd6ab",
+    "scripts/build_stage_entry_configuration_296.py": "219e57c83af8e6b31630bb0abd1326511839a4bea4df3b93581bc8c604e6113d",
+    "scripts/verify_battle_entry_references_window_296.py": "507df358f4f4ff210da930a3a9360df699a1cf0c8d6cb4ca802d3334c5a55e10",
+    "tests/test_battle_entry_integration_296.py": "32c3367fba3a27db8360269ededb6603e01bdd9542fb563611fb533b87980f24",
+    "tests/test_battle_entry_reference_view_296.py": "191d70d1fbd07d9ede4cdfed5ae2b27fb9a9d7a35ad0e45e1bf3df6e2f351929",
+    "tests/test_battle_event_references_296.py": "64f591e47cfe5f17d6e352f8e47fd00be48ec8f7da4eed6b6e5ec118880367fd",
+    "tests/test_stage_entry_configuration_296.py": "ff7b64c8661fb3207c48a191594f624deb731e8552710b7a63fc32ae8c25471f"
+  },
+  "source_reference": {
+    "manifests": {
+      "research/p3-battle-event-references-296/source-manifest.json": {
+        "sha256": "c6a7d1294e48b6fec896f736d56baa0c09f25f3365de471cc11c88d74705de21",
+        "bound_members": 10
+      },
+      "research/p3-stage-entry-configuration-296/manifest.json": {
+        "sha256": "47b272989530c116163c59e683dca7cf77a6798f2eb1180b4d112ad350c01976",
+        "bound_members": 27
+      }
+    },
+    "reverse_counts": {
+      "raw_edges": 14,
+      "admitted_edges": 11,
+      "explicit_exclusions": 3,
+      "events": 5,
+      "choices": 8,
+      "stage_ids": 8
+    },
+    "autopsy_complete_original_objects": 21,
+    "autopsy_rows": 4,
+    "autopsy_main_floor_references": [
+      3,
+      4,
+      5,
+      null
+    ],
+    "current_eligibility_actual_entry_actual_reward_and_global_floor_pool_verified": false
+  },
+  "source_promotion": {
+    "receipt": "verification/sections/296-preparation/promotion.json",
+    "sha256": "6fea735e431a588ba0de99201f073ebde8a42a56bfdd3fc9de9b3d5cc691ebe2",
+    "actual_promoted_paths": 49,
+    "final_source_map_from_necessary": true,
+    "later_revisions_after_initial_promotion": {
+      "rouge/node_catalog_view.py": {
+        "original_promotion_sha256": "51ec7259551593ae8e7477c5cda10fa53c65406d0e1f4bf804315bf93a118e42",
+        "final_tested_sha256": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c"
+      },
+      "scripts/verify_battle_entry_references_window_296.py": {
+        "original_promotion_sha256": "dd831afbe2f0113a527549b6cd60c886e82799ad5a9cd1b7aa6fbe7e60dfe1d0",
+        "final_tested_sha256": "507df358f4f4ff210da930a3a9360df699a1cf0c8d6cb4ca802d3334c5a55e10"
+      },
+      "tests/test_battle_entry_integration_296.py": {
+        "original_promotion_sha256": "e9442e005aa1674653b24e723feedad8bc6a721faea7136218cf29d9d33eb234",
+        "final_tested_sha256": "32c3367fba3a27db8360269ededb6603e01bdd9542fb563611fb533b87980f24"
+      },
+      "tests/test_battle_entry_reference_view_296.py": {
+        "original_promotion_sha256": "8cff84555d701d470d0d2e0b4684a0627eed77082a659e744ce43118bc48673e",
+        "final_tested_sha256": "191d70d1fbd07d9ede4cdfed5ae2b27fb9a9d7a35ad0e45e1bf3df6e2f351929"
+      }
+    }
+  },
+  "preserved_cache_counterexample_and_correction": {
+    "backend-first": {
+      "process": "verification/sections/296-preparation/reverse/backend-first/process.json",
+      "process_sha256": "e3089c29f6c38597a88f67a33125a3fec4c795c310dd4ce29913b912f1ddb7ad",
+      "receipt": "verification/sections/296-preparation/reverse/backend-first/receipt.json",
+      "receipt_sha256": "576a0cd16004d408d3a7aad46565f3d7eeeb87d0aa8d20441c0d185bad65a0b7",
+      "actual_cache_methods": 25,
+      "not_added_to_final_necessary_count": true
+    },
+    "backend-revision2-first": {
+      "process": "verification/sections/296-preparation/reverse/backend-revision2-first/process.json",
+      "process_sha256": "9d4105641071a7978966f36eb097cead14481efa0318dfd7dfeb732c37b6a242",
+      "receipt": "verification/sections/296-preparation/reverse/backend-revision2-first/receipt.json",
+      "receipt_sha256": "c608b61380fb94bdcaead700130b0f73482053a551740ad6ff57e0d65b631b5b",
+      "actual_cache_methods": 27,
+      "not_added_to_final_necessary_count": true
+    },
+    "counterexample": {
+      "receipt": "verification/sections/296-preparation/reverse/cached-choice-original-counterexample/result.json",
+      "sha256": "b9d6612c9d28971ac452986338a2c1b6490afd54c7110d0aef6d12f9dc1bae7c"
+    },
+    "correction": {
+      "receipt": "verification/sections/296-preparation/reverse/revision2/correction.json",
+      "sha256": "b71c181cda194379dbef0a10b08cfa54058c8f12e94a2dddf446fe539db2be90"
+    },
+    "source_build": {
+      "receipt": "verification/sections/296-preparation/reverse/source-build-first/process.json",
+      "sha256": "84745bde15045d37cb932d2cf14b8e29f140e8331924de6316c16e617aefb3b8",
+      "not_product_validation": true
+    }
+  },
+  "preserved_first_necessary_failure_and_prompt_correction": {
+    "correction_receipt": "verification/sections/296-preparation/prompt-assertion-correction/correction.json",
+    "correction_sha256": "d265eff5d6b550fcf2e11eec8efb442e11b67253d6fae5303a05ed98c307ee97",
+    "original_test": "verification/sections/296-preparation/prompt-assertion-correction/original-test.py",
+    "original_test_sha256": "8cff84555d701d470d0d2e0b4684a0627eed77082a659e744ce43118bc48673e",
+    "final_test": "tests/test_battle_entry_reference_view_296.py",
+    "final_test_sha256": "191d70d1fbd07d9ede4cdfed5ae2b27fb9a9d7a35ad0e45e1bf3df6e2f351929",
+    "first_actual_receipt": "verification/sections/296-necessary-first/process.json",
+    "first_receipt_sha256": "f6db97065a90f38f99f2a612147e1c684741730c4f22d3818c563a8a73d6b482",
+    "first_actual_exit": 1,
+    "first_actual_methods": 132,
+    "first_actual_failures": 1,
+    "first_stderr": "verification/sections/296-necessary-first/stderr.txt",
+    "first_stderr_sha256": "9fa5328f014a527352529ee0a036cd9ebb3ab37883e2e7324b5056beb02b1ab2",
+    "first_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "whole_module_AST_only_the_declared_prompt_replacement": true,
+    "production_models_data_native_unchanged": true,
+    "initial_promotion_original_SHA_preserved": true,
+    "first_failure_not_added_to_final_pass_count": true
+  },
+  "intermediate_post_prompt_necessary_not_final_reading": {
+    "receipt": "verification/sections/296-necessary-final/process.json",
+    "sha256": "19d70aa935beb13afb29e3f959d6db8ff9b17052fc487a146e68870d975dfcca",
+    "actual_exit": 0,
+    "methods_run": 132,
+    "stderr": "verification/sections/296-necessary-final/stderr.txt",
+    "stderr_sha256": "d7812c6d4dcfcd01d292f552c9f8e4def8b9fd0e4c10de57316d936283a3d6e4",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope": "Post-prompt necessary before discovered reading-anchor gap; not final reading repair validation."
+  },
+  "preserved_reading_anchor_repair_and_narrow_native1": {
+    "correction_receipt": "verification/sections/296-preparation/reading-anchor-correction/correction.json",
+    "correction_sha256": "6d9a190ac1fab071158d8948e9591f7de21d8848a2069a23d1aff84a557c6908",
+    "exact_three_source_transition": {
+      "rouge/node_catalog_view.py": {
+        "before_sha256": "51ec7259551593ae8e7477c5cda10fa53c65406d0e1f4bf804315bf93a118e42",
+        "after_sha256": "c3c3b78b93a4d6511653c2e862aff9f40e90f0b04906e935043d1912c443795c",
+        "original_files": [
+          "verification/sections/296-preparation/reading-anchor-correction/before-node_catalog_view.py"
+        ]
+      },
+      "scripts/verify_battle_entry_references_window_296.py": {
+        "before_sha256": "dd831afbe2f0113a527549b6cd60c886e82799ad5a9cd1b7aa6fbe7e60dfe1d0",
+        "after_sha256": "507df358f4f4ff210da930a3a9360df699a1cf0c8d6cb4ca802d3334c5a55e10",
+        "original_files": [
+          "verification/sections/296-preparation/reading-anchor-correction/before-verify_battle_entry_references_window_296.py"
+        ]
+      },
+      "tests/test_battle_entry_integration_296.py": {
+        "before_sha256": "e9442e005aa1674653b24e723feedad8bc6a721faea7136218cf29d9d33eb234",
+        "after_sha256": "32c3367fba3a27db8360269ededb6603e01bdd9542fb563611fb533b87980f24",
+        "original_files": [
+          "verification/sections/296-preparation/reading-anchor-correction/before-test_battle_entry_integration_296.py"
+        ]
+      }
+    },
+    "prompt_test_191d_unchanged": true,
+    "models_data_source_packets_and_other_production_bytes_unchanged": true,
+    "historical_native_attempt1": {
+      "process": "verification/sections/296-window-attempt1/process.json",
+      "process_sha256": "39d779b598fad7c7fc0da44ae8d5da72c57b579bbad7ead5f538483f16b80f41",
+      "window": "verification/sections/296-window-attempt1/actual/window.json",
+      "window_sha256": "1268d4a694e77e03da513a954200f31fca66f6cd07fae770a0ec93b7ef285d7e",
+      "archive_manifest": "verification/sections/296-window-attempt1/archive-manifest.json",
+      "archive_manifest_sha256": "80ab65be9d7457fef0f750889a3cf5984d9fbd89179af5b17059da67eae5af53",
+      "actual_supervisor_exit": 0,
+      "actual_child_exit": 0,
+      "actual_narrow_scope_pass": true,
+      "final_reading_anchor_validation": false,
+      "original_unique_checks": 75,
+      "original_assertion_executions": 573,
+      "original_selected_sources": 64,
+      "original_png_count": 5,
+      "source_join": {
+        "necessary_source_files": 405,
+        "native_selected_source_files": 64,
+        "common_source_files": 63,
+        "common_source_bytes_equal": true,
+        "native_is_subset_of_necessary": false,
+        "additional_native_source_files": {
+          "research/p3-stage-context/community-main.html": {
+            "sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+            "actual_native_before_after_guarded": true,
+            "current_file_verified": true,
+            "parent_commit": "c772147f4ee4846464b32b88f51c88f874db3fcd",
+            "parent_blob_verified": true,
+            "not_in_necessary_producer_source_map": true
+          }
+        },
+        "joined_source_files": 406,
+        "arbitrary_missing_sources_permitted": false
+      }
+    },
+    "first_reading_necessary_receipt": "verification/sections/296-necessary-reading-final/process.json",
+    "final_native_requires_new_attempt2": true
+  },
+  "preserved_viewport_failure_before_deferred_repair": {
+    "receipt": "verification/sections/296-necessary-reading-final/process.json",
+    "sha256": "5f97ab69eecd9bd450763fc1e63b4b8948bc641c53546f1f3a7f5c87e7abe768",
+    "actual_exit": 1,
+    "methods_run": 132,
+    "actual_failures": 1,
+    "stderr": "verification/sections/296-necessary-reading-final/stderr.txt",
+    "stderr_sha256": "087f8c09f07da52cfaf78264fafe506f6606b0f1058e82edf7d1bdacfe1862d2",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "not_added_to_final_pass_count": true
+  },
+  "preserved_deferred_layout_repair": {
+    "correction_receipt": "verification/sections/296-preparation/deferred-anchor-correction/correction.json",
+    "correction_sha256": "077a281e91ec6c24806b552aab3d8617c63649c3be48fa35b4b7951dd7e3b7d7",
+    "before_source": "verification/sections/296-preparation/deferred-anchor-correction/before-node_catalog_view.py",
+    "before_source_sha256": "c3c3b78b93a4d6511653c2e862aff9f40e90f0b04906e935043d1912c443795c",
+    "final_source": "rouge/node_catalog_view.py",
+    "final_source_sha256": "945bff0687761effcb156b94c502ea6dbb05d133a7c8971ad75b278269833a5c",
+    "whole_module_AST_only_reader_context_zero_timer_added": true,
+    "tests_or_native_assertions_modified": false,
+    "models_data_qualification_and_other_sources_changed": false,
+    "final_necessary_receipt": "verification/sections/296-necessary-reading-retry2/process.json",
+    "prior_viewport_failure_not_added_to_final_pass_count": true
+  },
+  "only_existing_production_sources_changed": [
+    "rouge/app.py",
+    "rouge/battle_view.py",
+    "rouge/node_catalog_view.py",
+    "rouge/player_node_information.py"
+  ],
+  "existing_engine_or_typed_reward_qualification_or_run_state_changed": false,
+  "typed_named_grant_count_unchanged": 17,
+  "original_entry_gaps_unchanged": [
+    25,
+    57
+  ],
+  "remaining_global_stage_floor_gaps_unchanged": 15,
+  "partial_direct_reference_scope_unchanged": [
+    10,
+    18,
+    58
+  ],
+  "whole_map_gaps_unchanged": [
+    81,
+    59
+  ],
+  "necessary_validation": {
+    "receipt": "verification/sections/296-necessary-reading-retry2/process.json",
+    "sha256": "d2f151d92fd655fc7277b9b048121e1050018dda26c5bcbdfe08c8f21b8829b5",
+    "stderr": "verification/sections/296-necessary-reading-retry2/stderr.txt",
+    "stderr_sha256": "287589a3149ab8b0f42ce774fd023c80f1e724bf7e98273441610929aa6457dd",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "actual_exit": 0,
+    "methods_run": 132,
+    "seconds": 17.95,
+    "source_files": 405,
+    "source_unchanged": true,
+    "modules": [
+      "tests.test_stage_entry_configuration_296",
+      "tests.test_battle_event_references_296",
+      "tests.test_battle_entry_reference_view_296",
+      "tests.test_battle_entry_integration_296",
+      "tests.test_stage_context",
+      "tests.test_event_planning",
+      "tests.test_event_preview_filters_292",
+      "tests.test_player_node_information_286",
+      "tests.test_node_catalog_view",
+      "tests.test_documented_item_integration_295"
+    ],
+    "author_checks_are_subsets_not_added_again": true,
+    "existing_source_boundary": {
+      "previous_section": 295,
+      "previous_necessary_receipt": "verification/sections/295-necessary-first/process.json",
+      "previous_necessary_sha256": "aed772874281127f933e9062c275700061c07a179a417e4fc4237bd70fd0fd16",
+      "unchanged_existing_Python_static_JSON_files": 348,
+      "only_existing_production_sources_changed": [
+        "rouge/app.py",
+        "rouge/battle_view.py",
+        "rouge/node_catalog_view.py",
+        "rouge/player_node_information.py"
+      ],
+      "old_research_or_images_not_in_this_producer_are_not_required_or_inserted": true,
+      "PROJECT_PROGRESS_unchanged": true
+    }
+  },
+  "native_windows_validation": {
+    "receipt": "verification/sections/296-window-attempt2/actual/window.json",
+    "sha256": "d19ac5c260121ef31393e71bc81d09f4141c46df3cea57b37271e773f2cecf01",
+    "reviewed_native_source_sha256": "507df358f4f4ff210da930a3a9360df699a1cf0c8d6cb4ca802d3334c5a55e10",
+    "source_selected_files": 64,
+    "source_unchanged": true,
+    "source_join": {
+      "necessary_source_files": 405,
+      "native_selected_source_files": 64,
+      "common_source_files": 63,
+      "common_source_bytes_equal": true,
+      "native_is_subset_of_necessary": false,
+      "additional_native_source_files": {
+        "research/p3-stage-context/community-main.html": {
+          "sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+          "actual_native_before_after_guarded": true,
+          "current_file_verified": true,
+          "parent_commit": "c772147f4ee4846464b32b88f51c88f874db3fcd",
+          "parent_blob_verified": true,
+          "not_in_necessary_producer_source_map": true
+        }
+      },
+      "joined_source_files": 406,
+      "arbitrary_missing_sources_permitted": false
+    },
+    "unique_checks": 78,
+    "actual_assertion_executions": 606,
+    "actual_parent_client_size": [
+      1050,
+      720
+    ],
+    "actual_dialog_client_size": [
+      900,
+      680
+    ],
+    "screenshots": 5,
+    "actual_Qt_exit": 0,
+    "actual_windows_closed": true,
+    "owned_process": {
+      "receipt": "verification/sections/296-window-attempt2/process.json",
+      "sha256": "b58f5ba44a4190332652462283218c866c9c85a47b8801bb769a91548f578c5a",
+      "supervisor_receipt": "verification/sections/296-window-attempt2/supervisor.json",
+      "supervisor_sha256": "1ce28038fbf1d3a6e28db64f6942019db68bbc3bb9f332df0931078857decd3e",
+      "actual_supervisor_exit": 0,
+      "actual_primary_child_exit": 0,
+      "owned_job_no_live_execution_verified": true,
+      "supervisor_child_launch_pid": 15240,
+      "fixture_reported_pid": 28720,
+      "same_pid_required": false,
+      "historical_ancestry_or_fixture_job_membership_verified": false,
+      "cleanup": {
+        "active_after_primary_child_exit": 1,
+        "descendants_live_before_cleanup": true,
+        "termination_scope_recorded": null,
+        "all_descendants_natural_exit_claimed": false
+      }
+    },
+    "all_documented_admitted_entries_navigated": 11,
+    "all_actual_body_reading_anchors_checked": 11,
+    "explicit_exclusions_guarded": 3,
+    "images_visually_reviewed_by_helper": false,
+    "game_or_chat_verified": false,
+    "root_visual_review": {
+      "receipt": "verification/sections/296-preparation/root-visual-review.json",
+      "sha256": "8aa48d42bf7889908146c499962955ce97fa3ab7e6d21bb700affa3aff41d383",
+      "actual_root_reviewed_images": 5,
+      "helper_performed_visual_inspection": false
+    },
+    "original_project_window": {
+      "receipt": "verification/sections/296-main-window.json",
+      "sha256": "2adcb2c1c4b8a05797c5d972bef07e84ce39ca184d62ec2ddbda750ba318253c",
+      "focus_receipt": "verification/sections/296-main-window-focus.json",
+      "focus_sha256": "87e50fb196d3eff19f453f2186413f7612ff1ffdc551019dccd6fade5e025c79",
+      "section": 296,
+      "necessary_receipt_sha256": "d2f151d92fd655fc7277b9b048121e1050018dda26c5bcbdfe08c8f21b8829b5",
+      "native_receipt_sha256": "d19ac5c260121ef31393e71bc81d09f4141c46df3cea57b37271e773f2cecf01",
+      "native_selected_current_source_unchanged": true,
+      "started_after_final_necessary_and_native": true,
+      "focus_after_main_finished": true,
+      "private_hash_comparisons": 5,
+      "changed_private_paths": 0,
+      "visible_responsive_foreground": true,
+      "private_contents_read_by_helper": false
+    }
+  },
+  "full_validation": {
+    "receipt": "verification/full-290/summary.json",
+    "sha256": "2c6e93534e443089bc0f8ffbbd686e3c37610ccf3c4aafd43fbf44d16188b823",
+    "after_section": 290,
+    "full_suite_rerun": false,
+    "new296_source_full_validation_claimed": false,
+    "scope_not_reduced": true,
+    "next_periodic_section": 305,
+    "complete_repository_validation": false
+  },
+  "PROJECT_PROGRESS_unchanged_sha256": "111962b1622515c494ae81a06ac19b915db797211e926165a9947b80fade8a0b",
+  "limits": [
+    "事件主层仅说明该事件资料，不作为关卡全局层数；15项全局层数缺口和25/57原入口不减少。",
+    "无效验尸4条配置及21个完整原对象不证明FEATURE获取、附着、执行、实际资格、节点、进入或数量；假层不推主层或秘境。",
+    "来源解析缓存必须每次鲜检原字节，并核已有前向缓存；原25项、真实反例和修后27项分别保留，不与本次必要数相加。",
+    "固定资料入口手动阅读不等于游戏内按钮、当前服务器、实际选择、移动、作战或领取。",
+    "旧17条typed奖励、10/18/58部分地格参考、81/59整图缺口、资格引擎和私人本局状态不变。",
+    "本节只必要检查与真实隔离Windows新流程；沿用290全量原来源，下次305，不冒称296源码已全量。",
+    "P3/P2/P1仍未完成，识别最后；无数字终点，不推荐、排序或自动选路，不操作游戏、聊天或私人状态。"
+  ],
+  "next_section": 297,
+  "cloud_publication_binding": "enclosing_commit",
+  "cloud_published": false,
+  "P3_complete": false,
+  "P2_complete": false
+}

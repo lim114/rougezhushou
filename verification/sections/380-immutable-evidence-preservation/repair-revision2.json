@@ -1,0 +1,44 @@
+{
+  "section": 380,
+  "kind": "LIVE_DIFF_DIAGNOSTIC_STAGING_ORDER_REPAIR",
+  "at_UTC": "2026-10-26T23:28:22.377654+00:00",
+  "actual_second_finalizer_exit": 1,
+  "original_second_refusal": {
+    "path": "verification/sections/380-index-validation-failed-attempt2/git-diff-check.txt",
+    "sha256": "e166c2663f74ca541a92793a8dccb5ca49687fb2090147f4d450bc9071365942",
+    "bytes": 674
+  },
+  "original_second_finalizer": {
+    "path": "verification/sections/380-index-validation-failed-attempt2/execution-runner.py",
+    "sha256": "0a56dc7b752743a125e298a1783fd0e2c965c4c72dc9ba54ffba3fd9102ccf96",
+    "bytes": 16267
+  },
+  "cause": "Finalizer staged its previous failed live diff output before checking; that output contains original whitespace by definition.",
+  "repair": "After exact failed-output preservation and byte binding, empty only the live diagnostic before staging. Final real check output is then written and staged normally.",
+  "immutable_exceptions": [
+    {
+      "path": "verification/full-380/execution-attempt1/offline/actual/windows-offline.log",
+      "sha256": "9f07555cafd193aadaab5a2ddf8fba200837673a54992cc95682e0c6f3096561",
+      "bytes": 1334082
+    },
+    {
+      "path": "verification/full-380/postprocessing-schema-repair/prepared-candidate/exact-original-to-revision2.diff",
+      "sha256": "9bc5f1a8f36e5c71abe4641d329baedcef3b5048bc197f34c59cb3233571328e",
+      "bytes": 64816
+    },
+    {
+      "path": "verification/sections/380-index-validation-failed-attempt1/git-diff-check.txt",
+      "sha256": "911fec71e3fd53c52b0f03390aa764f621f76d8adbaac325b161f2ccae5d5d21",
+      "bytes": 894
+    },
+    {
+      "path": "verification/sections/380-index-validation-failed-attempt2/git-diff-check.txt",
+      "sha256": "e166c2663f74ca541a92793a8dccb5ca49687fb2090147f4d450bc9071365942",
+      "bytes": 674
+    }
+  ],
+  "entire_original_finalizer_restored_by_exact_three_inverse_replacements": true,
+  "archived_original_outputs_or_full380_summary_modified": false,
+  "source_whitespace_checks_disabled": false,
+  "next_action": "Run finalizer only; no tests or close380 rerun; no new section."
+}

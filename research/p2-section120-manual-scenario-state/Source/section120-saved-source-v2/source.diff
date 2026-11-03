@@ -1,0 +1,73 @@
+--- section120-saved-source-v1/audit_saved120.py
++++ section120-saved-source-v2/audit_saved120.py
+@@ -95,6 +95,8 @@
+         same(n['before']['args'],(v['input'],),'whole API typed caller tuple')
+         same(n['before']['kwargs'],{},'whole API kwargs')
+         same(n['result'],v['result'],'whole API numerical result ref')
++        same({'input':n['after']['args'][0],'result':n['result']},{'input':v['input'],'result':v['result']},
++            'API before-formatter/post-formatter whole input-result graph including cross-field aliases')
+         assert tuple(v['texts'])==('estimate','default','technical') and v['texts']['estimate']==v['texts']['default']
+         assert all(type(x) is str and x for x in v['texts'].values());api[row['id']]=v
+     snapshots={};snapshot_refs={};bad={**KNOWN_BAD,**(NEW_BAD if phase=='candidate' else {})}
+@@ -104,8 +106,21 @@
+         assert v['case']==identity and v['phase']=='explicit_actual_snapshot'
+         same(x['state_and_disks'],initial,'each snapshot original run/account/disk')
+         e=x['editors'];assert e['timing_blocked'] is False and e['relic_blocked'] is False
++        # Active case stays unchanged during later setters. Bind only the actual
++        # explicit calculate callback, bounded by adjacent saved UI steps.
++        steps=[(p,z) for p,z in values.items() if z['kind']=='actual_UI_step' and z['case']==identity and z['label']=='actual MainWindow.calculate']
++        assert len(steps)==1;step_path,step=steps[0];end=positions[step_path]
++        prior=[positions[p] for p,z in values.items() if z['kind']=='actual_UI_step' and positions[p]<end]
++        assert prior;start=max(prior)
++        assert start<end<positions[row['snapshot']['path']]
++        same(step['before']['editors'],e,'explicit calculate entry editor graph')
++        same(step['after']['editors'],e,'explicit calculate exit editor graph')
++        same(step['after']['damage_result'],x['damage_result'],'explicit calculate exit exact snapshot result')
++        interval=[(p,z) for p,z in values.items() if start<positions[p]<end]
++        interval_numeric=[(p,z) for p,z in interval if z['kind']=='actual_calculate_result']
+         if valid:
+             n=get(v['numeric'],'actual_calculate_result');assert n['case']==identity
++            assert [p for p,z in interval_numeric]==[v['numeric']['path']]
+             assert positions[v['numeric']['path']]<positions[row['snapshot']['path']]
+             same(x['caller'],n['before']['args'][0],'full GUI caller/numeric link')
+             same(x['damage_result']['scenario'],x['caller'],'full GUI scenario/caller')
+@@ -125,8 +140,8 @@
+             same(fmt[0][1]['texts'],x['texts'],'all complete formatter/snapshot text strings')
+         else:
+             assert x['damage_result'] is None and v['error_fragment']==bad[identity] and bad[identity] in x['displayed_error']
+-            assert not any(z['kind']=='actual_calculate_result' and z['case']==identity for z in values.values())
+-            assert not any(z['kind']=='actual_three_formatter_group' and z['case']==identity for z in values.values())
++            assert interval_numeric==[]
++            assert not any(z['kind']=='actual_three_formatter_group' and end<positions[p]<positions[row['snapshot']['path']] for p,z in values.items())
+         snapshots[identity]=x;snapshot_refs[identity]=row['snapshot']
+     return {'folder':folder,'receipt':r,'raw':raw,'values':values,'positions':positions,'get':get,'initial':initial,
+         'API':api,'snapshots':snapshots,'snapshot_refs':snapshot_refs,'numeric_count':len(numeric)}
+@@ -221,7 +236,13 @@
+         else:
+             invalid=[x for x in bundle['values'].values() if x['kind']=='actual_invalid_selection' and x['value']['operator']=='char_120_hibisc']
+             assert len(invalid)==1 and v['case']=='profile_only_with_skill-owner-before' and v['title'] is None
+-            same(v['editors'],invalid[0]['value'],'profile-only PNG full invalid editor graph')
++            prior=[(p,z) for p,z in bundle['values'].items() if z['kind']=='actual_UI_step' and bundle['positions'][p]<bundle['positions'][row['visual']['path']]]
++            assert prior;last=max(prior,key=lambda item:bundle['positions'][item[0]])[1]
++            same(v['editors'],last['after']['editors'],'profile-only PNG exact current post-UI-step full editor graph')
++            if r['phase']=='original':
++                assert v['editors']['timing_text']==POISON_TIMING and v['editors']['relic_text']==POISON_RELIC
++                assert v['editors']['key']==(A,1) and v['editors']['timing_enabled'] is True and v['editors']['relic_enabled'] is True
++            else:same(v['editors'],invalid[0]['value'],'candidate PNG actual disabled editor graph')
+             same(v['displayed_text'],invalid[0]['displayed'],'profile-only PNG actual complete stale/disabled display')
+             same(v['visible_report_blocks'],v['displayed_text'].split('\n')[:4],'profile-only PNG consecutive first four-or-less blocks')
+         x,y,w,h=v['report_viewport'];assert w>0 and h>0 and len(v['cursor_rects'])==2*len(v['visible_report_blocks'])
+@@ -239,9 +260,11 @@
+ 
+ def compare_legal(old,new):
+     for identity in API_IDS:
+-        for k in ('input','result','texts'):same(new['API'][identity][k],old['API'][identity][k],'old/new legal public API complete '+identity+' '+k)
++        keys=('input','result','texts')
++        same({k:new['API'][identity][k] for k in keys},{k:old['API'][identity][k] for k in keys},'old/new legal API joint complete graph '+identity)
+         a=old['snapshots']['legal-'+identity];b=new['snapshots']['legal-'+identity]
+-        for k in ('caller','damage_result','texts','displayed_damage'):same(b[k],a[k],'old/new legal GUI complete '+identity+' '+k)
++        keys=('caller','damage_result','texts','displayed_damage')
++        same({k:b[k] for k in keys},{k:a[k] for k in keys},'old/new legal GUI joint complete graph '+identity)
+     return {'public_API_cases':6,'real_GUI_cases':6,'all_three_complete_texts_equal':True,'full_typed_callers_results_equal':True}
+ 
+ def main():

@@ -1,0 +1,59 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_CANDIDATE_NO_PROJECT_EXECUTION",
+  "old_app": {
+    "bytes": 96725,
+    "sha256": "589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd"
+  },
+  "candidate_app": {
+    "bytes": 99159,
+    "sha256": "0c388853b351e3869a01f32f42058fc8e0a0cb23fc67f25d6141bde13350423d"
+  },
+  "app_operation_count": 3,
+  "app_operations": [
+    {
+      "category": "new_explanation_row_and_nine_presentation_only_signals_all_existing_signals_preserved",
+      "original_anchor_sha256": "8fb2d0a7aa73644bde756ad62afe098b31a8d13bbb19052375ceca8830fc3e66",
+      "candidate_byte_start": 41939,
+      "candidate_byte_count": 804,
+      "candidate_sha256": "cda8e6a4780508761345c62559d47174893a48714fb317c614b1805e8990653b",
+      "before_base64": "",
+      "added_utf8": "        self.condition_cultivation_rows=[]\r\n        self.condition_cultivation_explanation=QLabel('')\r\n        self.condition_cultivation_explanation.setWordWrap(True)\r\n        form.addRow('条件培养来源',self.condition_cultivation_explanation)\r\n        form.setRowVisible(self.condition_cultivation_explanation,False)\r\n        from .condition_cultivation import TARGET_OPERATORS,TARGET_FIELDS\r\n        for owner,key,skills,widget in self.model_option_widgets:\r\n            if owner not in TARGET_OPERATORS or key not in TARGET_FIELDS:continue\r\n            signal=widget.toggled if isinstance(widget,QCheckBox) else widget.valueChanged\r\n            signal.connect(lambda _value:self.update_condition_cultivation_explanations(\r\n                self.operator.currentData(),self.skill.currentData()))\r\n"
+    },
+    {
+      "category": "refresh_before_existing_calculate_no_existing_input_change",
+      "original_anchor_sha256": "24af1250aff69eedb0483513b06cbdd33543c1bbcbc13737eec2aae902df9771",
+      "candidate_byte_start": 61861,
+      "candidate_byte_count": 66,
+      "candidate_sha256": "8fd702072f4ea91c0be5a63426cceb8b4882fbaf8d495ee99c52d060c4627b7d",
+      "before_base64": "",
+      "added_utf8": "        self.update_condition_cultivation_explanations(op,skill)\r\n"
+    },
+    {
+      "category": "isolated_UI_presentation_method_no_calculate_or_state_write",
+      "original_anchor_sha256": "59fb19ea8aa18d5a68d91f92939ef9d3fabff37095bf575d1bedccec9229b4a1",
+      "candidate_byte_start": 63399,
+      "candidate_byte_count": 1564,
+      "candidate_sha256": "725636e7225ebc943310ff1f16a7fc839c1d2bc2b7e85d382fa841589267eac9",
+      "before_base64": "",
+      "added_utf8": "    def update_condition_cultivation_explanations(self,op,skill):\r\n        # Early construction callbacks may run before this presentation row exists.\r\n        if not hasattr(self,'condition_cultivation_explanation'):return\r\n        from .condition_cultivation import TARGET_OPERATORS,TARGET_FIELDS,explanations,format_explanation\r\n        self.condition_cultivation_rows=[]\r\n        self.condition_cultivation_explanation.setText('')\r\n        self.damage_form.setRowVisible(self.condition_cultivation_explanation,False)\r\n        if op not in TARGET_OPERATORS or not skill:return\r\n        profile=catalog()['operators'].get(op)\r\n        if profile is None:return\r\n        values={key:widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()\r\n                for owner,key,skills,widget in self.model_option_widgets\r\n                if owner==op and skill in skills and key in TARGET_FIELDS}\r\n        rows=explanations(profile,{'operator':op,'skill':skill,**self.training_conditions()},\r\n                          state=self.current_operator_state(),level_override=self.level_override,values=values)\r\n        self.condition_cultivation_rows=rows\r\n        text={row['field']:format_explanation(row) for row in rows}\r\n        self.condition_cultivation_explanation.setText('\\n\\n'.join(text.values()))\r\n        self.damage_form.setRowVisible(self.condition_cultivation_explanation,bool(rows))\r\n        for owner,key,skills,widget in self.model_option_widgets:\r\n            if owner==op and skill in skills and key in text:widget.setToolTip(text[key])\r\n\r\n"
+    }
+  ],
+  "app_wholebyte_inverse_exact": true,
+  "registry_operation": {
+    "candidate_byte_start": 248,
+    "candidate_byte_count": 40,
+    "candidate_sha256": "e2d2ffaf24ac10d0142ff661bd5dd31dbb64d5559c9004f4437e4a7ac88b368d",
+    "before_base64": ""
+  },
+  "old_registry": {
+    "bytes": 5028,
+    "sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223"
+  },
+  "candidate_registry": {
+    "bytes": 5068,
+    "sha256": "1854092840e1ed94244179f2f86960301a59b8153eb8c174d3c2fccc1826c1a1"
+  },
+  "registry_wholebyte_inverse_exact": true,
+  "project_functions_executed": 0
+}

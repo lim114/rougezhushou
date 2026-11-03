@@ -1,0 +1,11 @@
+# P2账户档案损坏输入工作流：来源准备与完整功能组设计
+
+固定产品为59961ec3d633ac91b01014fb06b357d45e5979f7。所有材料只读源码和公开构造，0项目API/helper/tests/Qt/Wine/网络/私人文件读取，0tracked修改。本包不是第93节完成，也不包含产品补丁。
+
+GUI时序与适用藏品JSON已有专属语法/type错误、空白略过、非适用藏品文本忽略和damage_result=None处理，不制造重复解析修复；本组用其作为保持兼容的完整流程控制。
+
+真正可推进的健壮性范围是账户缓存的合法JSON但损坏结构。init只捕获读取/JSON错误，顶层及record容器没有使用前检查；默认kaltsit和切换档案会进入current_operator_state/update_operator，早于calculate的try。正常app producer明确保留id，真实recognizer scope是operator_profile；缺id、错误容器与身份错配均为公开构造的损坏缓存，不是正常合法producer漏洞。
+
+完整组同时解决只读加载与逐record隔离、未知来源显示、浏览/重算恢复、后续有效采样的内存合并以及损坏原件不被自动覆盖。RunState、本局事件、识别算法和公共计算输入/alias/order均不改。缺字段的既有默认与显式错误类型必须区分，不能将选中的GUI预览身份自动包装成确认过的缓存身份。
+
+public-constructed-cases.json全部为静态预测而非执行结果。captured_at=null的特殊边界已明确：time.localtime(None)接受当前时间，风险在后续数值比较，不能编造为启动TypeError。reviewable-group-design.json给出完整有意义的验收合同和需独立审阅的设计选择。根代理决定正式作者、执行窗口和集成。

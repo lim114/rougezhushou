@@ -84,7 +84,12 @@ class ReadableMapTests(unittest.TestCase):
         self.assertIn('候选没有统计概率', text)
         self.assertIn('来源总上限未知', text)
         self.assertNotIn('50%', text)
-        self.assertIn('不是从当前位置出发', text)
+        self.assertIn('【模板相邻节点】', text)
+        self.assertIn('实际通行状态未核验，不自动选路', text)
+        self.assertNotIn('【路线参考】', text)
+        self.assertNotIn('不是从当前位置出发', text)
+        diagnostic = format_node(g, '2,3', include_historical_route_diagnostics=True)
+        self.assertIn('不是从当前位置出发', diagnostic)
 
     def test_confirmed_variant_uses_game_difficulty_name(self):
         g = graph()

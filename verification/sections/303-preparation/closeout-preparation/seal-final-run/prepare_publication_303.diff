@@ -1,0 +1,10 @@
+--- .cache/prepare_publication_303.py before
++++ .cache/prepare_publication_303.py current
+@@ -45,6 +45,7 @@
+ """+source[b:]
+   source=source.replace("'old_tracked_tests_changed':False","'old_tracked_tests_changed':True,'old_maintenance_paths':sorted(promotion['historical_test_maintenance'])")
+  elif name=='verify_publication':
++  source=replace(source,"index=text.index('## 功能第301节')","index=text.index('## 功能第302节')")
+   source=replace(source,"{'tests.test_ritual_weakening_303','tests.test_ritual_weakening_view_303','tests.test_ritual_weakening_integration_303'}<=set(necessary['modules'])",
+    "{'tests.test_direct_landmark_303','tests.test_direct_landmark_294','tests.test_map_projection_048'}<=set(necessary['modules']) and len(necessary['modules'])==5")
+   source=replace(source,"assert section['remaining_global_stage_floor_gaps_unchanged']==15 and section['unparsed_notes_unchanged']==10 and section['old_tracked_test_maintenance']is False",

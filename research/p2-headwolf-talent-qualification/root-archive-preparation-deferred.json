@@ -1,0 +1,33 @@
+{
+  "scope": "Root public archive preparation, no product or regression failure",
+  "generic_archive_helper_deferred": true,
+  "unsupported_schema_incidents": [
+    {
+      "section": 67,
+      "shape": "artifacts mapping",
+      "initial_failure": "AttributeError: str has no attribute get",
+      "previous_case_resolved": true
+    },
+    {
+      "section": 70,
+      "shape": "files list",
+      "initial_failure": "AttributeError: list has no attribute items",
+      "previous_case_resolved": true
+    },
+    {
+      "section": 72,
+      "shape": "explicit_public_artifacts list with numeric files count",
+      "initial_failure": "TypeError: Public manifest must contain files/artifacts mapping or list"
+    }
+  ],
+  "incidents": 3,
+  "next_action": "Do not retry/extend generic shape guessing; inspect exact next public manifest schema first and archive explicit paths/hashes",
+  "manual_archive_path_preparation_issue": {
+    "initial_error": "ValueError on external independently reviewed file relative_to author root",
+    "resolved": "Explicit author and independent roots mapped and hash-verified before writes",
+    "attempts": 1
+  },
+  "manual_exact_section72_entries": 73,
+  "all_original_hashes_and_stored_bytes_verified": true,
+  "restart_condition": "Only a formally normalized manifest contract with explicit versioned schema and a new concrete requirement"
+}

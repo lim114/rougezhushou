@@ -1,0 +1,242 @@
+--- section119-saved-source-v1/audit_saved119.py
++++ section119-saved-peer-v2-candidate/audit_saved119.py
+@@ -5,14 +5,18 @@
+ import math
+ import os
+ from pathlib import Path
++import re
+ import struct
+ import sys
+ import traceback
+ from native_evidence import read_record, assert_native_equal as same, freeze, source_map
+ 
+ HELPER_SHA='f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+-GUI_RUNNER_SHA='fb4fa4af9d8721814c0cd7d327068b15788acabd8a6006ee849777ba146a7564'
++GUI_RUNNER_SHA='ac66f11d297dd6531295c18e835c562d5d42738feb49fe4eb0a9e8b55db12527'
+ API_FIXTURE_SHA='5dada56bfde891803f5dc60031a1407433aab74e76a81a386134a7a0fb901542'
++API_FIXTURE_BYTES=8917
++API_RUNNER_SHA='b4e574e54d7798d06707ad7f80a2efe268209a5b8e22645f9d976ac86dd7e1d3'
++API_RUNNER_BYTES=6415
+ PHASES=('calculate_damage','format_estimate','format_report','format_report_technical')
+ LIFECYCLE=('initial_seconds','recharge_seconds','cycle_seconds','duration_seconds',
+     'total_damage','total_healing','phase_damage','phase_healing','cycle_damage',
+@@ -23,9 +27,21 @@
+ def load_json(path):
+     raw=Path(path).read_bytes();return json.loads(raw),raw
+ 
++def receipt_name(path):
++    """Digest bytes identify the file; basename accepts Windows/Linux receipt spelling."""
++    assert type(path) is str and path
++    return path.replace('\\','/').rsplit('/',1)[-1]
++
+ def near(actual,wanted,label):
+     assert type(actual) in (int,float) and math.isfinite(actual)
+     assert abs(actual-wanted)<=max(1e-8,abs(wanted)*1e-12),(label,actual,wanted)
++
++def visible_metric_label(label):
++    """Only the verified ordinary-report label translations used by these cases."""
++    assert type(label) is str
++    for raw,shown in (('DPS/HPS','每秒伤害 / 每秒治疗'),('DPS','每秒伤害'),('HPS','每秒治疗')):
++        label=label.replace(raw,shown)
++    return re.sub(r' (?=每秒伤害|每秒治疗)','',label).strip()
+ 
+ def expected(case,base):
+     """Independent literal profile/rank math; no production helper or saved oracle."""
+@@ -55,7 +71,7 @@
+     return {'window_damage':window_damage,'window_healing':window_healing,
+         'full_damage':full_damage,'full_healing':full_healing,'duration':duration,'partial':partial}
+ 
+-def numerical(case,base,result):
++def numerical(case,base,result,caller):
+     want=expected(case,base);s=result['estimate']['skill']
+     near(result['total_damage'],want['window_damage'],case['id']+' top windowdamage')
+     near(s['window_damage'],want['window_damage'],case['id']+' explicit windowdamage')
+@@ -69,15 +85,41 @@
+             assert s[field] is None,(case['id'],field,s[field])
+         if want['full_damage'] is None:assert s['phase_damage'] is None
+         if want['full_healing'] is None:assert s['phase_healing'] is None
++    if case['operator']=='kaltsit':
++        # Only the sealed no-bonus R7 fixtures, never arbitrary Kaltsit callers.
++        assert (caller['operator'],caller['skill'],caller['elite'],caller['level'],
++            caller['skill_rank'],caller['trust'],caller['potential'])==('kaltsit',2,2,1,7,0,1)
++        assert caller.get('module_id') is None and caller.get('module_level',0)==0
++        for key in ('relic_ids','char_buff_ids','char_buff_absent_ids','char_buff_pending_ids'):
++            same(caller.get(key,[]),[],'sealed Kaltsit no selected relic or buff '+key)
++        for key in ('run_config','relic_context'):
++            same(caller.get(key,{}),{},'sealed Kaltsit empty '+key)
++        assert not {'initial_sp_bonus','sp_recovery_bonus','_relic_rules','_relic_final_attack_factor'} & set(caller)
++        same(caller['timing'],case['timing'],'sealed Kaltsit timing without SP lock/event additions')
++        assert s['sp_type']=='INCREASE_WITH_TIME'
++        near(s['sp_cost'],35,'sealed Kaltsit R7 SP cost')
++        near(s['initial_sp'],20,'sealed Kaltsit R7 initial SP')
++        near(s['sp_recovery_per_second'],1,'sealed Kaltsit natural SP rate')
++        near(s['initial_seconds'],15,'sealed Kaltsit known initial time')
++        near(s['recharge_seconds'],35,'sealed Kaltsit known natural recharge even when cast incomplete')
+     return want
+ 
+-def load_api(folder,guard,phase,cases):
++def load_api(folder,guard,guard_raw,guard_path,phase,cases):
+     folder=Path(folder).resolve();o,raw=load_json(folder/'observations.json')
++    assert o['kind']=='ROOT_ACTUAL_PUBLIC_API_THREE_FORMATTER_OBSERVATION'
+     assert o['phase']==phase and o['observation_complete'] is True
+     assert o['observation_only'] is True and o['product_pass'] is False
+     assert o['consumer_error_count']==0 and o['source_and_CORE_unchanged'] is True and not o.get('fatal_error')
+     assert o['private_state_access'] is False and o['native_windows_game_chat_verified'] is False
+-    assert o['fixture']['sha256']==API_FIXTURE_SHA
++    for digest in (o['fixture'],o['runner']):
++        assert set(digest)=={'path','bytes','sha256'} and type(digest['path']) is str and digest['path']
++        assert type(digest['bytes']) is int and type(digest['sha256']) is str
++    assert (o['fixture']['bytes'],o['fixture']['sha256'])==(API_FIXTURE_BYTES,API_FIXTURE_SHA)
++    assert receipt_name(o['runner']['path'])=='root-public-probe-v2.py'
++    assert (o['runner']['bytes'],o['runner']['sha256'])==(API_RUNNER_BYTES,API_RUNNER_SHA)
++    assert receipt_name(o['guard']['path'])==Path(guard_path).name
++    same(o['guard'],{'path':o['guard']['path'],'bytes':len(guard_raw),
++        'sha256':sha(guard_raw)},'API exact actual guard receipt digest')
+     same(o['source_before'],guard['source_sha256'],'API Source before')
+     same(o['source_after'],guard['source_sha256'],'API Source after')
+     same(o['CORE_before'],guard['source_additional_sha256'],'API CORE before')
+@@ -85,13 +127,19 @@
+     assert (o['actual_completed_cases'],o['actual_public_calls'],o['actual_native_records'])==(len(cases),4*len(cases),5*len(cases))
+     calls={};whole={};values={}
+     for sequence,m in enumerate(o['records'],1):
++        assert set(m)=={'path','bytes','sha256','decoded_bytes','decoded_sha256','pickle_protocol','kind','case','phase'}
+         assert m['path']=='%06d.pickle.gz'%sequence and m['path'] not in values
++        index,slot=divmod(sequence-1,5);assert index<len(cases)
++        assert m['case']==cases[index]['id']
++        assert (m['kind'],m['phase'])==(('actual-public-consumer',PHASES[slot]) if slot<4 else ('whole-case-caller','caller'))
+         v=read_record(folder/'native',m);same(v['after'],v['before'],'every saved API caller purity')
+         values[m['path']]=v
+         if m['kind']=='actual-public-consumer':
++            assert set(v)=={'before','after','result','error'}
+             assert m['phase'] in PHASES and v['error'] is None and (m['case'],m['phase']) not in calls
+             calls[m['case'],m['phase']]=v
+         else:
++            assert set(v)=={'before','after'}
+             assert m['kind']=='whole-case-caller' and m['phase']=='caller' and m['case'] not in whole
+             whole[m['case']]=v
+     expected_names={c['id'] for c in cases}
+@@ -100,7 +148,11 @@
+     assert {p.name for p in (folder/'native').iterdir()}==set(values)|{'index.jsonl'}
+     ledger=[json.loads(line) for line in (folder/'native/index.jsonl').read_text().splitlines()]
+     same(ledger,o['records'],'API full ledger metadata')
+-    assert [r['id'] for r in o['rows']]==[c['id'] for c in cases]
++    expected_calls=[{'case':m['case'],'phase':m['phase'],'native':m,'error':None,'caller_unchanged':True}
++        for m in o['records'] if m['kind']=='actual-public-consumer']
++    same(o['calls'],expected_calls,'all API call metadata and complete native references in producer order')
++    same(o['rows'],[{'id':c['id'],'calculate_error':None,'formatters_blocked':False} for c in cases],
++        'all API row completion/error metadata')
+     for c in cases:
+         n=c['id'];numeric=calls[n,'calculate_damage']
+         same(numeric['before'],(c['scenario'],),'whole API fixture/native typed caller')
+@@ -143,9 +195,12 @@
+         identity=case['id'];scenario=case['scenario'];op=scenario['operator']
+         shape='friendly_complete_control' if identity=='kaltsit-empty-enemy-friendly-complete-control' else identity.split('-',1)[1]
+         hand={'id':identity,'operator':op,'shape':shape,'mode':'frames','seconds':scenario['window_seconds'],
+-            'healing_targets':scenario.get('healing_targets',1)}
++            'healing_targets':scenario.get('healing_targets',1),'timing':scenario['timing']}
+         result=new['calls'][identity,'calculate_damage']['result'];prior=old['calls'][identity,'calculate_damage']['result']
+-        want=numerical(hand,1000,result)
++        want=numerical(hand,1000,result,scenario)
++        if op=='kaltsit':
++            for field in ('initial_seconds','recharge_seconds','sp_type','sp_cost','initial_sp','sp_recovery_per_second'):
++                same(result['estimate']['skill'][field],prior['estimate']['skill'][field],identity+' unchanged known SP field '+field)
+         near(result['total_damage'],case['expected_window_damage'],'independently reviewed public hand fixture')
+         for field,key in [('total_healing','expected_total_healing'),('duration_seconds','expected_duration_seconds')]:
+             if key in case:near(result['estimate']['skill'][field],case[key],identity+' fixed hand control')
+@@ -221,6 +276,8 @@
+     snapshots={};ref_ids={}
+     for row,case in zip(r['rows'],cases):
+         identity=case['id'];saved=get(row['snapshot'],'actual_window_snapshot');value=saved['value']
++        assert (row['operator'],row['mode'],row['shape'],row['window_seconds'])==(
++            case['operator'],case['mode'],case['shape'],case['seconds'])
+         same(saved['case_definition'],case,'whole sealed GUI case definition')
+         numeric=get(row['numeric'],'actual_calculate_result')
+         assert saved['case']==numeric['case']==identity and bundle['positions'][row['numeric']['path']]<bundle['positions'][row['snapshot']['path']]
+@@ -238,16 +295,35 @@
+         assert caller['window_seconds']==case['seconds']
+         base=425 if case['operator']=='mechanist' else 408
+         near(result['estimate']['base_stats']['attack'],base,'independent pinned native profile baseattack')
+-        numerical(case,base,result)
++        want=numerical(case,base,result,caller)
++        producer_oracle={key:want[key] for key in ('window_damage','window_healing','duration','full_damage','full_healing')}
++        producer_oracle.update(incomplete=want['partial'],literal_base_attack=base)
++        same(saved['manual_oracle'],producer_oracle,'saved GUI manual expectation independently derived')
++        same(row['manual_oracle'],producer_oracle,'GUI row complete manual expectation metadata')
+         same(value['state_and_disks'],initial,'every GUI snapshot retains all loaded run/account/public file bytes')
+         assert tuple(value['texts'])==('estimate','default','technical')
+         assert all(type(t) is str and t for t in value['texts'].values())
+         assert value['texts']['estimate']==value['texts']['default']
+         assert value['displayed_damage']==value['texts']['default'].replace(chr(160),' ')
+-        group=[v for v in bundle['values'].values() if v['kind']=='actual_three_formatter_group' and v['case']==identity]
+-        assert len(group)==1;same(group[0]['texts'],value['texts'],'complete snapshot/formatter text link')
++        group=[(path,v) for path,v in bundle['values'].items() if v['kind']=='actual_three_formatter_group' and v['case']==identity]
++        assert len(group)==1;group_path,formatter=group[0]
++        assert bundle['positions'][row['numeric']['path']]<bundle['positions'][group_path]<bundle['positions'][row['snapshot']['path']]
++        same(formatter['before'],{'damage_result':value['damage_result'],'joint':value['state_and_disks']},
++            'entire formatter input graph and snapshot context, including cross-container aliases')
++        same(formatter['before']['joint'],initial,'formatter input complete initial public context')
++        same(formatter['texts'],value['texts'],'complete snapshot/formatter text link')
+         snapshots[identity]=value;ref_ids[row['snapshot']['path']]=identity
++    expected_pair_keys=[(op,mode) for op in ('mechanist','kaltsit') for mode in ('frames','continuous')]
++    assert [(p['operator'],p['mode']) for p in r['pairs']]==expected_pair_keys
++    seen_pair_refs=set()
+     for pair in r['pairs']:
++        complete_id=pair['operator']+'-'+pair['mode']+'-complete_control'
++        short_id=pair['operator']+'-'+pair['mode']+'-short_control'
++        complete_ref=pair['complete_snapshot']['path'];short_ref=pair['short_snapshot']['path']
++        assert ref_ids.get(complete_ref)==complete_id and ref_ids.get(short_ref)==short_id
++        assert complete_ref!=short_ref and (complete_ref,short_ref) not in seen_pair_refs
++        seen_pair_refs.add((complete_ref,short_ref))
++        assert bundle['positions'][complete_ref]<bundle['positions'][short_ref]
+         complete=get(pair['complete_snapshot'],'actual_window_snapshot')['value']
+         short=get(pair['short_snapshot'],'actual_window_snapshot')['value']
+         normalized=freeze(short['caller']);normalized['window_seconds']=complete['caller']['window_seconds']
+@@ -256,7 +332,7 @@
+         same({k:short['damage_result']['result']['estimate']['skill'][k] for k in LIFECYCLE},
+             {k:complete['damage_result']['result']['estimate']['skill'][k] for k in LIFECYCLE},'all twelve unchanged full lifecycle fields')
+         assert pair['all_lifecycle_fields_equal'] is True and pair['state_account_disks_preserved'] is True
+-    assert {(p['operator'],p['mode']) for p in r['pairs']}=={(op,mode) for op in ('mechanist','kaltsit') for mode in ('frames','continuous')}
++    assert len(seen_pair_refs)==4
+     pictures=[]
+     for row,case in zip(r['pngs'],[c for c in cases if c['png']]):
+         assert row['path']==case['id']+'.png' and Path(row['path']).name==row['path']
+@@ -270,7 +346,18 @@
+         block=next(b for b in value['damage_result']['result']['report']['sections'] if b['id']==('damage' if case['operator']=='mechanist' else 'healing'))
+         assert visual['section']==block['id'] and visual['title']=='【'+block['title']+'】'
+         assert visual['visible_blocks'][0]==visual['title']
+-        for m in block['metrics']:assert any(text.startswith(m['label']+'：') for text in visual['visible_blocks'])
++        lines=value['displayed_damage'].split('\n');title=visual['title']
++        assert lines.count(title)==1;start=lines.index(title)
++        end=next((i for i in range(start+1,len(lines)) if lines[i].startswith('【') and lines[i].endswith('】')),len(lines))
++        metric_positions=[]
++        for metric in block['metrics']:
++            prefix=visible_metric_label(metric['label'])+'：'
++            hits=[i for i in range(start+1,end) if lines[i].startswith(prefix)]
++            assert len(hits)==1;metric_positions.append(hits[0])
++        assert metric_positions==sorted(metric_positions) and len(set(metric_positions))==len(metric_positions)
++        same(visual['visible_blocks'],lines[start:metric_positions[-1]+1],
++            'PNG exact contiguous title-through-final-metric excerpt of full saved displayed text')
++        for m in block['metrics']:assert any(text.startswith(visible_metric_label(m['label'])+'：') for text in visual['visible_blocks'])
+         x,y,w,h=visual['viewport_rect'];assert w>0 and h>0
+         for a,b,c,d in visual['cursor_rects']:assert c>0 and d>0 and x<=a and y<=b and a+c<=x+w and b+d<=y+h
+         assert len(visual['cursor_rects'])==2*len(visual['visible_blocks'])
+@@ -280,6 +367,8 @@
+     same(close['restart_state'],initial['run'],'direct RunState full accepted loaded graph')
+     same(close['account_restart_records'],initial['account'],'direct AccountCache full accepted loaded graph')
+     same(close['disks_after'],initial['disks'],'real close/direct reload public disk bytes')
++    same(close['persisted_json'],json.loads(initial['disks']['run.json']),
++        'real close persisted JSON exactly derived from original public file bytes')
+     assert len([v for v in bundle['values'].values() if v['kind']=='actual_close_RunState_reload'])==1
+     return {'states':len(snapshots),'lifecycle_pairs':len(r['pairs']),'native_records_decoded':len(bundle['values']),
+         'actual_numeric_records':len(bundle['numeric']),'PNGs':pictures,
+@@ -306,8 +395,8 @@
+     try:
+         same(source_map(root),guard['source_sha256'],'current maintained candidate Source')
+         for name,want in guard['source_additional_sha256'].items():assert sha((root/name).read_bytes())==want
+-        old=load_api(args.original_api,original_guard,'original',api['cases'])
+-        new=load_api(args.candidate_api,guard,'candidate',api['cases'])
++        old=load_api(args.original_api,original_guard,original_raw,args.original_guard,'original',api['cases'])
++        new=load_api(args.candidate_api,guard,guard_raw,args.guard,'candidate',api['cases'])
+         result['API']=audit_api(old,new,api['cases'])
+         window=load_window(args.window,guard,guard_raw,gui['cases']);result['GUI']=audit_window(window,gui['cases'])
+         for path,raw in [(old['folder']/'observations.json',old['raw']),(new['folder']/'observations.json',new['raw']),

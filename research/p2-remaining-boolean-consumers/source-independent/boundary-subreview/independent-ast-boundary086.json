@@ -1,0 +1,1305 @@
+{
+  "fixed_commit": "b5a40f30683bfc0945decaabbd4db5914c28427f",
+  "fields": 12,
+  "direct_gets": 17,
+  "counts": {
+    "enemy_below_half": 1,
+    "reinforcement_blocks_target": 1,
+    "frozen_at_skill_end": 2,
+    "ines_first_deployment": 2,
+    "ranged_attack": 1,
+    "organ_mode": 1,
+    "fever": 1,
+    "power_coating": 1,
+    "double_charge": 4,
+    "steal_success": 1,
+    "delivery_coordinate": 1,
+    "overload": 1
+  },
+  "all_saved_direct_gets_recomputed_equal": true,
+  "consumers": [
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "enemy_below_half",
+      "line": 225,
+      "expression": "self.s.get('enemy_below_half')",
+      "enclosing_branches": [
+        {
+          "function": "apply_self_talents",
+          "line": 167
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "reinforcement_blocks_target",
+      "line": 396,
+      "expression": "self.s.get('reinforcement_blocks_target')",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "body",
+          "test": "op == 'char_4228_closur'"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 644,
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "body",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 626,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 628,
+          "arm": "orelse",
+          "test": "self.n == 1"
+        },
+        {
+          "line": 636,
+          "arm": "orelse",
+          "test": "self.n == 2"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ines_first_deployment",
+      "line": 688,
+      "expression": "self.s.get('ines_first_deployment', False)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "body",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 663,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 664,
+          "arm": "orelse",
+          "test": "self.n == 1"
+        },
+        {
+          "line": 672,
+          "arm": "orelse",
+          "test": "self.n == 2"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ranged_attack",
+      "line": 857,
+      "expression": "self.s.get('ranged_attack', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "body",
+          "test": "op == 'char_4182_oblvns'"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "organ_mode",
+      "line": 869,
+      "expression": "self.s.get('organ_mode', False)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "body",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 859,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 860,
+          "arm": "orelse",
+          "test": "self.n == 1"
+        },
+        {
+          "line": 867,
+          "arm": "body",
+          "test": "self.n == 2"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "fever",
+      "line": 874,
+      "expression": "self.s.get('fever')",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "body",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 859,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 860,
+          "arm": "orelse",
+          "test": "self.n == 1"
+        },
+        {
+          "line": 867,
+          "arm": "body",
+          "test": "self.n == 2"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "power_coating",
+      "line": 1026,
+      "expression": "self.s.get('power_coating', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "body",
+          "test": "op == 'char_1048_orchd2'"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1031,
+      "expression": "self.s.get('double_charge', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "body",
+          "test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "line": 1027,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 1028,
+          "arm": "body",
+          "test": "self.n == 1"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1034,
+      "expression": "self.s.get('double_charge', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "body",
+          "test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "line": 1027,
+          "arm": "orelse",
+          "test": "normal"
+        },
+        {
+          "line": 1028,
+          "arm": "body",
+          "test": "self.n == 1"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "steal_success",
+      "line": 1062,
+      "expression": "self.s.get('steal_success', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "orelse",
+          "test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "line": 1058,
+          "arm": "body",
+          "test": "op == 'char_1041_angel2'"
+        },
+        {
+          "line": 1059,
+          "arm": "orelse",
+          "test": "normal"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "delivery_coordinate",
+      "line": 1080,
+      "expression": "self.s.get('delivery_coordinate', True)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "orelse",
+          "test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "line": 1058,
+          "arm": "body",
+          "test": "op == 'char_1041_angel2'"
+        },
+        {
+          "line": 1059,
+          "arm": "orelse",
+          "test": "normal"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "overload",
+      "line": 1109,
+      "expression": "self.s.get('overload', False)",
+      "enclosing_branches": [
+        {
+          "function": "plan",
+          "line": 284
+        },
+        {
+          "line": 333,
+          "arm": "orelse",
+          "test": "op == 'char_110_deepcl'"
+        },
+        {
+          "line": 353,
+          "arm": "orelse",
+          "test": "op in ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')"
+        },
+        {
+          "line": 394,
+          "arm": "orelse",
+          "test": "op == 'char_4228_closur'"
+        },
+        {
+          "line": 399,
+          "arm": "orelse",
+          "test": "op == 'char_1050_chen3'"
+        },
+        {
+          "line": 453,
+          "arm": "orelse",
+          "test": "op in ('char_002_amiya', 'char_1001_amiya2', 'char_1037_amiya3')"
+        },
+        {
+          "line": 562,
+          "arm": "orelse",
+          "test": "op == 'char_1044_hsgma2'"
+        },
+        {
+          "line": 596,
+          "arm": "orelse",
+          "test": "op == 'char_437_mizuki'"
+        },
+        {
+          "line": 616,
+          "arm": "orelse",
+          "test": "op == 'char_206_gnosis'"
+        },
+        {
+          "line": 662,
+          "arm": "orelse",
+          "test": "op == 'char_4087_ines'"
+        },
+        {
+          "line": 704,
+          "arm": "orelse",
+          "test": "op == 'char_4202_haruka'"
+        },
+        {
+          "line": 773,
+          "arm": "orelse",
+          "test": "op == 'char_1046_sbell2'"
+        },
+        {
+          "line": 808,
+          "arm": "orelse",
+          "test": "op in ('char_328_cammou', 'char_1038_whitw2')"
+        },
+        {
+          "line": 853,
+          "arm": "orelse",
+          "test": "op == 'char_4182_oblvns'"
+        },
+        {
+          "line": 880,
+          "arm": "orelse",
+          "test": "op == 'char_1015_aglna2'"
+        },
+        {
+          "line": 908,
+          "arm": "orelse",
+          "test": "op == 'char_1042_phatm2'"
+        },
+        {
+          "line": 955,
+          "arm": "orelse",
+          "test": "op == 'char_4204_mantra'"
+        },
+        {
+          "line": 1005,
+          "arm": "orelse",
+          "test": "op == 'char_2027_wang'"
+        },
+        {
+          "line": 1025,
+          "arm": "orelse",
+          "test": "op == 'char_1048_orchd2'"
+        },
+        {
+          "line": 1058,
+          "arm": "orelse",
+          "test": "op == 'char_1041_angel2'"
+        },
+        {
+          "line": 1091,
+          "arm": "body",
+          "test": "op == 'char_1035_wisdel'"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1313,
+      "expression": "self.s.get('double_charge', True)",
+      "enclosing_branches": [
+        {
+          "function": "calculate",
+          "line": 1297
+        },
+        {
+          "line": 1310,
+          "arm": "body",
+          "test": "sp['sp_type'] == 'INCREASE_WITH_TIME'"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1440,
+      "expression": "self.s.get('double_charge', True)",
+      "enclosing_branches": [
+        {
+          "function": "calculate",
+          "line": 1297
+        },
+        {
+          "line": 1439,
+          "arm": "body",
+          "test": "has_event_sp(self.s) and mode not in ('deployment', 'passive')"
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 1545,
+      "expression": "self.s.get('frozen_at_skill_end', True)",
+      "enclosing_branches": [
+        {
+          "function": "calculate",
+          "line": 1297
+        }
+      ]
+    },
+    {
+      "path": "rouge/reporting.py",
+      "field": "ines_first_deployment",
+      "line": 149,
+      "expression": "scenario.get('ines_first_deployment')",
+      "enclosing_branches": [
+        {
+          "function": "fee_section",
+          "line": 100
+        },
+        {
+          "line": 146,
+          "arm": "body",
+          "test": "op == 'char_4087_ines'"
+        }
+      ]
+    }
+  ],
+  "options_static": [
+    {
+      "owner": "char_4228_closur",
+      "field": "reinforcement_blocks_target",
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "bool_default": false,
+      "actual_scope": "skill and normal trait; no E2 named-talent gate"
+    },
+    {
+      "owner": "char_437_mizuki",
+      "field": "enemy_below_half",
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "bool_default": false,
+      "actual_scope": "actual selected named 反移情; skill and normal initialization; E0/E1 add default zero"
+    },
+    {
+      "owner": "char_206_gnosis",
+      "field": "frozen_at_skill_end",
+      "skills": [
+        3
+      ],
+      "bool_default": true,
+      "actual_scope": "S3 skill terminal component and terminal reference; not normal"
+    },
+    {
+      "owner": "char_4087_ines",
+      "field": "ines_first_deployment",
+      "skills": [
+        3
+      ],
+      "bool_default": false,
+      "actual_scope": "S3 skill deployment branch and fee report note; not normal"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "ranged_attack",
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "bool_default": true,
+      "actual_scope": "all skill and normal plans; selected max_cnt>10 module overrides skill scale only"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "organ_mode",
+      "skills": [
+        2
+      ],
+      "bool_default": false,
+      "actual_scope": "S2 skill attack/speed/type branch; not normal"
+    },
+    {
+      "owner": "char_4182_oblvns",
+      "field": "fever",
+      "skills": [
+        2
+      ],
+      "bool_default": false,
+      "actual_scope": "S2 skill two-hit multiplier; not normal and not S3 Fever description"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "power_coating",
+      "skills": [
+        1,
+        2,
+        3
+      ],
+      "bool_default": true,
+      "actual_scope": "all skill selected 强击瓶专家 value; expression reads in normal but normal multiplier stays1"
+    },
+    {
+      "owner": "char_1048_orchd2",
+      "field": "double_charge",
+      "skills": [
+        1
+      ],
+      "bool_default": true,
+      "actual_scope": "S1 extra component/source parameter; natural SP initial/recharge; event SP cost; normal arrow plan inactive"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "steal_success",
+      "skills": [
+        2
+      ],
+      "bool_default": true,
+      "actual_scope": "S2 skill attack speed/interval/ammo-derived statistics; not normal"
+    },
+    {
+      "owner": "char_1041_angel2",
+      "field": "delivery_coordinate",
+      "skills": [
+        3
+      ],
+      "bool_default": true,
+      "actual_scope": "S3 skill independent conditional source; not normal"
+    },
+    {
+      "owner": "char_1035_wisdel",
+      "field": "overload",
+      "skills": [
+        2
+      ],
+      "bool_default": false,
+      "actual_scope": "S2 skill four-hit/scaled conditional sources; not normal"
+    }
+  ],
+  "AST_limits": "Positive/negative branch arm recorded, but manual source inspection determines actual numerical scope; AST alone is not execution."
+}

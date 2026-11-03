@@ -1,0 +1,61 @@
+{
+  "section": 185,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T00:02:37.302932+08:00",
+  "branch": "codex/p2-development",
+  "title": "主窗口可用的20项局外校准与固定关卡工具",
+  "remaining_item": "151–170的离线查询尚需CLI，用户不能从简单测试窗口直接查阅；只完成此次工具入口，不销项未核验原生机制。",
+  "new_capability": "独立OfflineToolsPanel提供两类20项中文查询；公共示例、JSON声明条件、显式导入当前干员/关卡；异步运行、输入失效、刷新不改选中/编辑/滚动；中文分项结果与折叠技术记录。",
+  "acceptance": [
+    "20项公共输入可从Qt控件按钮运行并得到中文结果；11项必要Qt/函数测试通过。",
+    "set_scenario/set_stage深拷贝缓存，不自动替换用户输入或结果；成对观察标识不随导入自动重写。",
+    "输入变化使旧结果失效；迟到异步结果不覆盖新条件；非法JSON、无效关卡与非首批干员不崩溃。",
+    "全技能非零完整总量保持未知；条件参考另列；局部时间窗明确各片段锚点且不声称全局时间。",
+    "root真实MainWindow三项集成测试通过；Windows-mcp确认实际项目窗口可见、事件切换和公共离线查询响应。回执verification/batch-151-185/native-window.json。"
+  ],
+  "source_evidence": [
+    "调用已有rouge.calibration十项151–160查询，不改数值规则或原native_verified=false边界。",
+    "调用已有rouge.battle_planning十项161–170查询；固定公开stage ro6_n_1_2作为示例，不读取本局记忆。",
+    "公开培养对照573/765等为固定培养表公式参考，不称公开游戏实测。"
+  ],
+  "limitations": [
+    "编辑条件采用JSON以保持简单测试界面；语法字段保留接口名，旁边有中文字段说明。",
+    "导入替换声明scenario或关卡键；额外受益人/观察/等级/路线字段须独立核对，不自动编造。",
+    "查询使用固定源码快照；结果不升级成当前客户端实机或隐藏机制证明。",
+    "真实Qt主窗口使用临时公开状态验证；实际用户测试窗口另由Windows-mcp确认。不验证真实游戏/聊天发送。"
+  ],
+  "files": [
+    "rouge/offline_tools_view.py",
+    "tests/test_offline_tools_view.py",
+    "rouge/app.py",
+    "scripts/verify_cloud.py",
+    "scripts/verify_full_available.py",
+    "tests/test_batch185_mainwindow.py",
+    "BATCH_151_185_REPORT.md",
+    "verification/batch-151-185/summary.json",
+    "verification/batch-151-185/native-window.json",
+    "verification/batch-151-185/preparation.json",
+    "verification/batch-151-185/battle-data-coverage.json"
+  ],
+  "test_selectors": [
+    "tests.test_offline_tools_view.OfflineToolQueryTests",
+    "tests.test_offline_tools_view.OfflineToolsPanelTests",
+    "tests.test_batch185_mainwindow"
+  ],
+  "candidate_receipt": ".cache/batch151-185/ui185/final-related.log",
+  "preparation_failures": [
+    "verification/batch-151-185/preparation.json"
+  ],
+  "validation": {
+    "tests_run": 14,
+    "passed": 14,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-185/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200,
+  "full_validation_receipt": "verification\\full-185\\native.json",
+  "full_validation_passed": false
+}

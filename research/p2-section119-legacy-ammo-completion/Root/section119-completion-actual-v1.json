@@ -1,0 +1,485 @@
+{
+  "kind": "ROOT_ACTUAL_SECTION119_FUNCTION_AND_VALIDATION_CLOSURE",
+  "section": 119,
+  "passed": true,
+  "workflow_complete": true,
+  "source_drift": [],
+  "maintained_source_files": 765,
+  "actual_prior_HEAD": "6bc5d3b73bc0e6cf148e8b6f4ac1ab72424420db",
+  "summary": "有限供靶未打完弹药时，机械师S1及凯尔希S2不再把已观察的部分施放误报为完整施放；窗口伤害/潜在治疗保留，未确认的非零完整总量、持续和周期保持未知。Linux/Wine各106项运行：105通过、1旧证据缺失未验证，0失败/错误；11组原件/候选API，22个真实窗口状态、4组完整生命周期对照、15个当前观察与独立完整施放时钟核验、332份窗口及110份API原生保存记录通过；Root已查看2张完整指标截图。凯尔希两个完整施放对照的当前观察仅有4/10发，因此仅两处已证明的观察元数据变化，其完整生命周期和三种全文严格保持。此前一次窗口截取标签错误和一次保存检验错误原样封存，未当作通过。",
+  "related_linux": {
+    "kind": "ROOT_ACTUAL_RELATED_AVAILABLE_REGRESSION",
+    "passed": true,
+    "workflow_complete": true,
+    "source_drift": [],
+    "guard_sha256": "370cdbcf05b46a659572fa818e1c0c4dcc7583fb1bc00eb6a16e9ab6ad79d492",
+    "source_count": 765,
+    "runner_sha256": "6d5b2753c079406302c0403efe1323a7e2d3563a31971e920343959a2e524fd3",
+    "modules": [
+      "tests.test_legacy_ammo_completion",
+      "tests.test_ammo_observation_window_113",
+      "tests.test_damage",
+      "tests.test_zero_lifetime_aliases",
+      "tests.test_ammo_events_067",
+      "tests.test_p1_ammo_cost_054",
+      "tests.test_report"
+    ],
+    "tests_run": 106,
+    "tests_passed": 105,
+    "failures": 0,
+    "errors": 0,
+    "declared_skips": 0,
+    "unavailable_records": 1,
+    "unavailable": [
+      {
+        "test": "tests.test_p1_ammo_cost_054.PartialLastAmmoPacket054Tests.test_cached_primary_skill_notes_prove_partial_packet_and_consumption_callback",
+        "kind": "unmigrated_cache",
+        "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-ammo-cost-054/angel-page.html'"
+      }
+    ],
+    "unavailable_not_counted_passed": true,
+    "native_windows_game_chat_verified": false
+  },
+  "related_wine": {
+    "kind": "ROOT_ACTUAL_RELATED_AVAILABLE_REGRESSION",
+    "passed": true,
+    "workflow_complete": true,
+    "source_drift": [],
+    "guard_sha256": "370cdbcf05b46a659572fa818e1c0c4dcc7583fb1bc00eb6a16e9ab6ad79d492",
+    "source_count": 765,
+    "runner_sha256": "6d5b2753c079406302c0403efe1323a7e2d3563a31971e920343959a2e524fd3",
+    "modules": [
+      "tests.test_legacy_ammo_completion",
+      "tests.test_ammo_observation_window_113",
+      "tests.test_damage",
+      "tests.test_zero_lifetime_aliases",
+      "tests.test_ammo_events_067",
+      "tests.test_p1_ammo_cost_054",
+      "tests.test_report"
+    ],
+    "tests_run": 106,
+    "tests_passed": 105,
+    "failures": 0,
+    "errors": 0,
+    "declared_skips": 0,
+    "unavailable_records": 1,
+    "unavailable": [
+      {
+        "test": "tests.test_p1_ammo_cost_054.PartialLastAmmoPacket054Tests.test_cached_primary_skill_notes_prove_partial_packet_and_consumption_callback",
+        "kind": "unmigrated_cache",
+        "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-ammo-cost-054\\\\angel-page.html'"
+      }
+    ],
+    "unavailable_not_counted_passed": true,
+    "native_windows_game_chat_verified": false
+  },
+  "saved_actual": {
+    "kind": "ROOT_ACTUAL_INDEPENDENT_SAVED_119_API_GUI_AUDIT",
+    "passed": true,
+    "workflow_complete": true,
+    "auditor_sha256": "4132721edf0d35211fcb603448713a0909150986595a18a9e883345ad71a58d7",
+    "native_helper_sha256": "f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a",
+    "source_guard_sha256": "370cdbcf05b46a659572fa818e1c0c4dcc7583fb1bc00eb6a16e9ab6ad79d492",
+    "original_guard_sha256": "a86c1c903a9230f6178a1d7cc547c302cd5eea5ed81f5c8d7c92b45cee460fe6",
+    "project_API_formatter_reexecution": false,
+    "PNG_pixels_visually_reviewed_by_this_auditor": false,
+    "native_Windows_verified": false,
+    "private_state_access": false,
+    "source_drift": [],
+    "API": {
+      "cases": 11,
+      "changed_partial_case_ids": [
+        "mechanist-limited_windows",
+        "mechanist-positive_lifetime",
+        "mechanist-interrupted_tail",
+        "kaltsit-limited_windows",
+        "kaltsit-positive_lifetime",
+        "kaltsit-interrupted_tail"
+      ],
+      "negative_case_ids": [
+        "mechanist-complete_control",
+        "mechanist-empty_control",
+        "kaltsit-complete_control",
+        "kaltsit-empty_control",
+        "kaltsit-empty-enemy-friendly-complete-control"
+      ],
+      "empty_zero_controls_exact_added_note_removed_only": true,
+      "fixed_eight_observed_resume_admissions": [
+        {
+          "case": "mechanist-limited_windows",
+          "old_execution_seconds": 3.3333333333333335,
+          "old_derived_end_frames": 100,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            75
+          ],
+          "interval_frames": 75,
+          "ammo_rounds": 3,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 50,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "mechanist-positive_lifetime",
+          "old_execution_seconds": 3.3333333333333335,
+          "old_derived_end_frames": 100,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            75
+          ],
+          "interval_frames": 75,
+          "ammo_rounds": 3,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 50,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "mechanist-interrupted_tail",
+          "old_execution_seconds": 3.3333333333333335,
+          "old_derived_end_frames": 100,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            75
+          ],
+          "interval_frames": 75,
+          "ammo_rounds": 3,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 50,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "kaltsit-limited_windows",
+          "old_execution_seconds": 2.9,
+          "old_derived_end_frames": 87,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            86
+          ],
+          "interval_frames": 86,
+          "ammo_rounds": 10,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 85,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "kaltsit-positive_lifetime",
+          "old_execution_seconds": 2.9,
+          "old_derived_end_frames": 87,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            86
+          ],
+          "interval_frames": 86,
+          "ammo_rounds": 10,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 85,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "kaltsit-interrupted_tail",
+          "old_execution_seconds": 2.9,
+          "old_derived_end_frames": 87,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            86
+          ],
+          "interval_frames": 86,
+          "ammo_rounds": 10,
+          "actual_observed_release_count": 2,
+          "original_resume_frame": 85,
+          "candidate_resume_frame": 0,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "kaltsit-complete_control",
+          "old_execution_seconds": 8.633333333333333,
+          "old_derived_end_frames": 259,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            86,
+            172,
+            258
+          ],
+          "interval_frames": 86,
+          "ammo_rounds": 10,
+          "actual_observed_release_count": 4,
+          "original_resume_frame": 85,
+          "candidate_resume_frame": 44,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        },
+        {
+          "case": "kaltsit-empty-enemy-friendly-complete-control",
+          "old_execution_seconds": 8.633333333333333,
+          "old_derived_end_frames": 259,
+          "observation_horizon_frames": 300,
+          "actual_start_release_frames": [
+            0,
+            86,
+            172,
+            258
+          ],
+          "interval_frames": 86,
+          "ammo_rounds": 10,
+          "actual_observed_release_count": 4,
+          "original_resume_frame": 85,
+          "candidate_resume_frame": 44,
+          "admitted_stream_leaf": "timing.streams[0].resume_frame",
+          "scope": "Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact."
+        }
+      ],
+      "two_full_observation_raw_leaf_admissions": [
+        {
+          "case": "kaltsit-complete_control",
+          "only_reconstructed_raw_result_leaves": [
+            "execution_seconds",
+            "timing.streams[0].resume_frame"
+          ],
+          "all_three_complete_formatter_strings_exact": true,
+          "whole_consumer_graph_except_two_proven_raw_leaves_exact": true,
+          "full_cast_lifecycle_remains_exact": true
+        },
+        {
+          "case": "kaltsit-empty-enemy-friendly-complete-control",
+          "only_reconstructed_raw_result_leaves": [
+            "execution_seconds",
+            "timing.streams[0].resume_frame"
+          ],
+          "all_three_complete_formatter_strings_exact": true,
+          "whole_consumer_graph_except_two_proven_raw_leaves_exact": true,
+          "full_cast_lifecycle_remains_exact": true
+        }
+      ],
+      "native_records_decoded": 110,
+      "scope": "Six partial lifecycles retain whole caller/components/base attributes; only their fixed positively proven resume leaf changes within observed streams. Mechanical complete control compares the entire consumer exactly. Two Kaltsit complete/friendly controls independently retain full-cast lifecycle and all three complete strings; only fixed raw observation execution_seconds and streams[0].resume_frame are reconstructed to the original proven values before whole consumer comparison, preserving every other field and alias. Two zero-empty controls allow only the exact single added estimate note and its rendered bullet removal. Raw whole identity and partial entire graph/text identity are not claimed."
+    },
+    "GUI": {
+      "states": 22,
+      "lifecycle_pairs": 4,
+      "native_records_decoded": 332,
+      "actual_numeric_records": 73,
+      "PNGs": [
+        {
+          "path": "mechanist-frames-limited_windows.png",
+          "sha256": "10cea322b87c29e5cd0408d6e02e2403a78c234d917cc46598d5b9c6327afc4f",
+          "width": 1284,
+          "height": 1002,
+          "section": "damage"
+        },
+        {
+          "path": "kaltsit-frames-limited_windows.png",
+          "sha256": "d22e2a1fa020689570f8953f59403aaf0fd11e6c59c884ef32939d2ed52c4ef5",
+          "width": 1284,
+          "height": 1002,
+          "section": "healing"
+        }
+      ],
+      "fixed_fifteen_frames_current_clock_and_full_cast_proofs": [
+        {
+          "case": "mechanist-frames-limited_windows",
+          "current_release_count": 2,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "mechanist-frames-positive_lifetime",
+          "current_release_count": 2,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "mechanist-frames-interrupted_tail",
+          "current_release_count": 2,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "mechanist-frames-complete_control",
+          "current_release_count": 3,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": true,
+          "current_execution_end_frame": 175,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 50,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 175
+        },
+        {
+          "case": "mechanist-frames-short_control",
+          "current_release_count": 1,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 60,
+          "current_resume_frame": 15,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 175
+        },
+        {
+          "case": "mechanist-frames-empty_control",
+          "current_release_count": 0,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "mechanist-frames-late_complete_control",
+          "current_release_count": 3,
+          "ammo_rounds": 3,
+          "current_ammunition_complete": true,
+          "current_execution_end_frame": 175,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 50,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 175
+        },
+        {
+          "case": "kaltsit-frames-limited_windows",
+          "current_release_count": 2,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "kaltsit-frames-positive_lifetime",
+          "current_release_count": 2,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "kaltsit-frames-interrupted_tail",
+          "current_release_count": 2,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "kaltsit-frames-complete_control",
+          "current_release_count": 4,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 44,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 775
+        },
+        {
+          "case": "kaltsit-frames-short_control",
+          "current_release_count": 1,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 60,
+          "current_resume_frame": 26,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 775
+        },
+        {
+          "case": "kaltsit-frames-empty_control",
+          "current_release_count": 0,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 0,
+          "independent_full_cast_known": false,
+          "independent_full_cast_end_frame": null
+        },
+        {
+          "case": "kaltsit-frames-late_complete_control",
+          "current_release_count": 4,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 44,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 775
+        },
+        {
+          "case": "kaltsit-frames-friendly_complete_control",
+          "current_release_count": 4,
+          "ammo_rounds": 10,
+          "current_ammunition_complete": false,
+          "current_execution_end_frame": null,
+          "observation_horizon_frame": 300,
+          "current_resume_frame": 44,
+          "independent_full_cast_known": true,
+          "independent_full_cast_end_frame": 775
+        }
+      ],
+      "scope": "22 complete typed caller/result/UI/report saved states, fifteen positively qualified frame-only current execution/resume checks linked to independent full-cast known/unknown state, four exact twelve-field lifecycle pairs, all numerical/UI/formatter joint purity, real close and two direct reloads. Continuous cases retain all previous checks without a frame-only raw execution field assertion. PNG bytes/metadata bounds checked; pixels require separate Root visual review."
+    },
+    "actual_receipt_pins": [
+      {
+        "path": "/workspace/.continuation/section119-original-api-actual-v1/observations.json",
+        "bytes": 216491,
+        "sha256": "d657fa627aeddd347a6f2ea770b0af950116a7ae80f7e34a7f58e0430083a1b8"
+      },
+      {
+        "path": "/workspace/.continuation/section119-candidate-api-actual-v1/observations.json",
+        "bytes": 216718,
+        "sha256": "c24647b4f3d889e255b3719dea7b1db711c8cf297e78ca0c0b07da01718e2af3"
+      },
+      {
+        "path": "/workspace/.continuation/section119-window-actual-v2/receipt.json",
+        "bytes": 351868,
+        "sha256": "b61453df2e53999369868d21456727fbe4d7de14aefa4a9896772f0cd14f5320"
+      }
+    ]
+  },
+  "old095_109_original_flows_still_deferred": true,
+  "native_windows_game_chat_verified": false,
+  "next_section": 120
+}

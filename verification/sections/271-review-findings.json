@@ -1,0 +1,730 @@
+{
+  "kind": "archived_original_source_and_runtime_counterexamples",
+  "source_sha256": "bf59dd8cee853b9bc2c525b63a26f508a090b1094a5b002cda3f7b755be220a0",
+  "source_file_before": "verification/sections/271-review-before-module.py",
+  "cases": [
+    {
+      "id": "unknown_enabled_default_one",
+      "input": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "acquisition_order": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "application_order": [
+          "healing:rogue_6_relic_legacy_81"
+        ],
+        "ordinary_native_path": true,
+        "no_intervening_changes": true,
+        "groups_start_empty": true,
+        "float_rounding": "nearest_even",
+        "packet": {
+          "input": {
+            "kind": "entry_fp",
+            "raw": 4294967296000
+          },
+          "modifier_exists": true,
+          "damage_type": "HEAL",
+          "target_type": "HP",
+          "delta_type": "ADD",
+          "value_immutable": false
+        },
+        "modules": [
+          {
+            "id": "healing:rogue_6_relic_legacy_81",
+            "enabled": null,
+            "blackboard_available": true,
+            "number_readable": false,
+            "factor_basis": "nominal_parameter",
+            "float32_bits": null
+          }
+        ]
+      },
+      "before": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_81",
+            "name": "活玫瑰",
+            "family": "healing",
+            "source_buff_type": "global_buff_normal",
+            "source_buff_index": 0,
+            "prefab_key": "heal_scale",
+            "template": "heal_scale",
+            "number_key": "heal_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "independent_normal"
+          }
+        ],
+        "module_definitions": {
+          "healing:rogue_6_relic_legacy_81": {
+            "family": "healing",
+            "type": "HEAL",
+            "number_key": "heal_scale",
+            "name": "活玫瑰",
+            "source_ids": [
+              "rogue_6_relic_legacy_81"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_81"
+            ],
+            "application_order": [
+              "healing:rogue_6_relic_legacy_81"
+            ],
+            "nominal_blackboard_bits": {
+              "healing:rogue_6_relic_legacy_81": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "healing:rogue_6_relic_legacy_81",
+                "name": "活玫瑰",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": false,
+                "is_damage_reference": false,
+                "type_pass_reference": true,
+                "early_stop_reference": false,
+                "body_active_reference": null,
+                "number_key": "heal_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": null,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": null,
+                "setter_called_reference": null,
+                "node_return_reference": null,
+                "normal_return_reference": true,
+                "status": "unknown_execution_or_blackboard"
+              }
+            ],
+            "normal_return_reference": true,
+            "last_stored_raw_reference": null,
+            "declared_chain_raw_reference": null
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [],
+        "all_declared_cases_numeric": false,
+        "single_declared_chain_raw_reference": null,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      },
+      "after": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_81",
+            "name": "活玫瑰",
+            "family": "healing",
+            "source_buff_type": "global_buff_normal",
+            "source_buff_index": 0,
+            "prefab_key": "heal_scale",
+            "template": "heal_scale",
+            "number_key": "heal_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "independent_normal"
+          }
+        ],
+        "module_definitions": {
+          "healing:rogue_6_relic_legacy_81": {
+            "family": "healing",
+            "type": "HEAL",
+            "number_key": "heal_scale",
+            "name": "活玫瑰",
+            "source_ids": [
+              "rogue_6_relic_legacy_81"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_81"
+            ],
+            "application_order": [
+              "healing:rogue_6_relic_legacy_81"
+            ],
+            "nominal_blackboard_bits": {
+              "healing:rogue_6_relic_legacy_81": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "healing:rogue_6_relic_legacy_81",
+                "name": "活玫瑰",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": false,
+                "is_damage_reference": false,
+                "type_pass_reference": true,
+                "early_stop_reference": false,
+                "body_active_reference": null,
+                "number_key": "heal_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": null,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": 4294967296000,
+                "setter_called_reference": null,
+                "node_return_reference": null,
+                "normal_return_reference": true,
+                "status": "unknown_execution_or_blackboard"
+              }
+            ],
+            "normal_return_reference": true,
+            "last_stored_raw_reference": 4294967296000,
+            "declared_chain_raw_reference": 4294967296000
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [
+          4294967296000
+        ],
+        "all_declared_cases_numeric": true,
+        "single_declared_chain_raw_reference": 4294967296000,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "未知启用/读取的分支只在数值或正常返回相同时闭合；取消与类型共享字段，不当作互不相关的未知。",
+          "NaN、超域、非整定点转换等可能触发SIMD异常；当前异常掩码未证，保留原存储值不代表转换正常或后续已执行。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      }
+    },
+    {
+      "id": "unqualified_float_conversion_immutable",
+      "input": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "acquisition_order": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "application_order": [
+          "healing:rogue_6_relic_legacy_81"
+        ],
+        "ordinary_native_path": true,
+        "no_intervening_changes": true,
+        "groups_start_empty": true,
+        "float_rounding": "nearest_even",
+        "packet": {
+          "input": {
+            "kind": "entry_fp",
+            "raw": 4294967296000
+          },
+          "modifier_exists": true,
+          "damage_type": "HEAL",
+          "target_type": "HP",
+          "delta_type": "ADD",
+          "value_immutable": true
+        },
+        "modules": [
+          {
+            "id": "healing:rogue_6_relic_legacy_81",
+            "enabled": true,
+            "blackboard_available": true,
+            "number_readable": true,
+            "factor_basis": "independent_number",
+            "float32_bits": 2143289344
+          }
+        ]
+      },
+      "before": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_81",
+            "name": "活玫瑰",
+            "family": "healing",
+            "source_buff_type": "global_buff_normal",
+            "source_buff_index": 0,
+            "prefab_key": "heal_scale",
+            "template": "heal_scale",
+            "number_key": "heal_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "independent_normal"
+          }
+        ],
+        "module_definitions": {
+          "healing:rogue_6_relic_legacy_81": {
+            "family": "healing",
+            "type": "HEAL",
+            "number_key": "heal_scale",
+            "name": "活玫瑰",
+            "source_ids": [
+              "rogue_6_relic_legacy_81"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_81"
+            ],
+            "application_order": [
+              "healing:rogue_6_relic_legacy_81"
+            ],
+            "nominal_blackboard_bits": {
+              "healing:rogue_6_relic_legacy_81": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "healing:rogue_6_relic_legacy_81",
+                "name": "活玫瑰",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": false,
+                "is_damage_reference": false,
+                "type_pass_reference": true,
+                "early_stop_reference": false,
+                "body_active_reference": true,
+                "number_key": "heal_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": false,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": 4294967296000,
+                "setter_called_reference": true,
+                "node_return_reference": true,
+                "normal_return_reference": true,
+                "status": "conditional_reference"
+              }
+            ],
+            "normal_return_reference": true,
+            "last_stored_raw_reference": 4294967296000,
+            "declared_chain_raw_reference": 4294967296000
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [
+          4294967296000
+        ],
+        "all_declared_cases_numeric": true,
+        "single_declared_chain_raw_reference": 4294967296000,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      },
+      "after": {
+        "family": "healing",
+        "relic_ids": [
+          "rogue_6_relic_legacy_81"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_81",
+            "name": "活玫瑰",
+            "family": "healing",
+            "source_buff_type": "global_buff_normal",
+            "source_buff_index": 0,
+            "prefab_key": "heal_scale",
+            "template": "heal_scale",
+            "number_key": "heal_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "independent_normal"
+          }
+        ],
+        "module_definitions": {
+          "healing:rogue_6_relic_legacy_81": {
+            "family": "healing",
+            "type": "HEAL",
+            "number_key": "heal_scale",
+            "name": "活玫瑰",
+            "source_ids": [
+              "rogue_6_relic_legacy_81"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_81"
+            ],
+            "application_order": [
+              "healing:rogue_6_relic_legacy_81"
+            ],
+            "nominal_blackboard_bits": {
+              "healing:rogue_6_relic_legacy_81": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "healing:rogue_6_relic_legacy_81",
+                "name": "活玫瑰",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": false,
+                "is_damage_reference": false,
+                "type_pass_reference": true,
+                "early_stop_reference": false,
+                "body_active_reference": true,
+                "number_key": "heal_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": false,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": 4294967296000,
+                "setter_called_reference": null,
+                "node_return_reference": null,
+                "normal_return_reference": null,
+                "status": "unqualified_float_conversion",
+                "factor_candidate_raws": []
+              }
+            ],
+            "normal_return_reference": null,
+            "last_stored_raw_reference": 4294967296000,
+            "declared_chain_raw_reference": null
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [],
+        "all_declared_cases_numeric": false,
+        "single_declared_chain_raw_reference": null,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "未知启用/读取的分支只在数值或正常返回相同时闭合；取消与类型共享字段，不当作互不相关的未知。",
+          "NaN、超域、非整定点转换等可能触发SIMD异常；当前异常掩码未证，保留原存储值不代表转换正常或后续已执行。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      }
+    },
+    {
+      "id": "correlated_cancel_and_type",
+      "input": {
+        "family": "magic",
+        "relic_ids": [
+          "rogue_6_relic_legacy_8"
+        ],
+        "acquisition_order": [
+          "rogue_6_relic_legacy_8"
+        ],
+        "application_order": [
+          "damage:magic"
+        ],
+        "ordinary_native_path": true,
+        "no_intervening_changes": true,
+        "groups_start_empty": true,
+        "float_rounding": "nearest_even",
+        "packet": {
+          "input": {
+            "kind": "entry_fp",
+            "raw": 4294967296000
+          },
+          "modifier_exists": true,
+          "damage_type": null,
+          "target_type": "HP",
+          "delta_type": "CANCELLED",
+          "value_immutable": false
+        },
+        "modules": [
+          {
+            "id": "damage:magic",
+            "enabled": true,
+            "blackboard_available": false,
+            "number_readable": true,
+            "factor_basis": "nominal_parameter",
+            "float32_bits": null
+          }
+        ]
+      },
+      "before": {
+        "family": "magic",
+        "relic_ids": [
+          "rogue_6_relic_legacy_8"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_8",
+            "name": "制式防暴用具",
+            "family": "magic",
+            "source_buff_type": "global_buff_stack_base_one",
+            "source_buff_index": 0,
+            "prefab_key": "enemy_damage_scale[mag]",
+            "template": "damage_scale[mag]",
+            "number_key": "damage_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "base_one_group"
+          }
+        ],
+        "module_definitions": {
+          "damage:magic": {
+            "family": "magic",
+            "type": "MAGICAL",
+            "number_key": "damage_scale",
+            "name": "制式防暴用具",
+            "source_ids": [
+              "rogue_6_relic_legacy_8"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_8"
+            ],
+            "application_order": [
+              "damage:magic"
+            ],
+            "nominal_blackboard_bits": {
+              "damage:magic": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "damage:magic",
+                "name": "制式防暴用具",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": true,
+                "is_damage_reference": null,
+                "type_pass_reference": null,
+                "early_stop_reference": null,
+                "body_active_reference": null,
+                "number_key": "damage_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": null,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": null,
+                "setter_called_reference": null,
+                "node_return_reference": null,
+                "normal_return_reference": null,
+                "status": "unknown_execution_or_blackboard"
+              }
+            ],
+            "normal_return_reference": null,
+            "last_stored_raw_reference": null,
+            "declared_chain_raw_reference": null
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [],
+        "all_declared_cases_numeric": false,
+        "single_declared_chain_raw_reference": null,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      },
+      "after": {
+        "family": "magic",
+        "relic_ids": [
+          "rogue_6_relic_legacy_8"
+        ],
+        "selected_sources": [
+          {
+            "relic_id": "rogue_6_relic_legacy_8",
+            "name": "制式防暴用具",
+            "family": "magic",
+            "source_buff_type": "global_buff_stack_base_one",
+            "source_buff_index": 0,
+            "prefab_key": "enemy_damage_scale[mag]",
+            "template": "damage_scale[mag]",
+            "number_key": "damage_scale",
+            "parameter": 1.2,
+            "parameter_float32_bits": 1067030938,
+            "composition": "base_one_group"
+          }
+        ],
+        "module_definitions": {
+          "damage:magic": {
+            "family": "magic",
+            "type": "MAGICAL",
+            "number_key": "damage_scale",
+            "name": "制式防暴用具",
+            "source_ids": [
+              "rogue_6_relic_legacy_8"
+            ]
+          }
+        },
+        "declared_entry_raw": 4294967296000,
+        "explosion_base_reference": null,
+        "cases": [
+          {
+            "preprocessing_order": [
+              "rogue_6_relic_legacy_8"
+            ],
+            "application_order": [
+              "damage:magic"
+            ],
+            "nominal_blackboard_bits": {
+              "damage:magic": 1067030938
+            },
+            "steps": [
+              {
+                "module_id": "damage:magic",
+                "name": "制式防暴用具",
+                "input_raw_reference": 4294967296000,
+                "cancelled_reference": true,
+                "is_damage_reference": null,
+                "type_pass_reference": null,
+                "early_stop_reference": null,
+                "body_active_reference": false,
+                "number_key": "damage_scale",
+                "nominal_float32_bits": 1067030938,
+                "factor_raw_reference": null,
+                "default_one_used_reference": null,
+                "attempted_raw_reference": null,
+                "stored_raw_reference": 4294967296000,
+                "setter_called_reference": false,
+                "node_return_reference": false,
+                "normal_return_reference": true,
+                "status": "skipped"
+              }
+            ],
+            "normal_return_reference": true,
+            "last_stored_raw_reference": 4294967296000,
+            "declared_chain_raw_reference": 4294967296000
+          }
+        ],
+        "declared_order_combination_count": 1,
+        "known_discrete_raw_references": [
+          4294967296000
+        ],
+        "all_declared_cases_numeric": true,
+        "single_declared_chain_raw_reference": 4294967296000,
+        "source_valid": true,
+        "source": "rouge/data/modifier-packet-source.json",
+        "source_sha256": "3a92394f4a5dddf51d9b926d5942e47213dc3c20d9fd8148ce178e9d494952d4",
+        "actual_modifier_value": null,
+        "actual_hp_loss": null,
+        "actual_healing": null,
+        "actual_complete_total": null,
+        "actual_order": null,
+        "order_counts_are_probabilities": false,
+        "actual_probability_by_order": null,
+        "events_scheduled": false,
+        "current_hotfix_equivalence_proven": false,
+        "notes": [
+          "同类base_one来源先逐次单精度old+new−1合并，再形成一个修饰模块；normal来源各自乘当前FP包，治疗生命回复通道不重复计入。",
+          "列举的是独立声明顺序组合，不证明实际可达、获取顺序与事件容器顺序的对应关系，也不赋概率或均值。",
+          "名义单精度参考须声明nearest_even；未知舍入/非空背景组不能默认补成名义参数。独立黑板数字与名义参数互斥。",
+          "取消为delta取消或Abs(FP值)<42950，负大值不先夹正。治疗取消直接停止；伤害早门仅在取消且isDamage时停止，再按实际伤害类型过滤。",
+          "不可改值标记只抑制setter写入；黑板读取和FP乘法仍先执行，缺失对象仍可能异常。尝试值与保留值分列。",
+          "未知启用/读取的分支只在数值或正常返回相同时闭合；取消与类型共享字段，不当作互不相关的未知。",
+          "NaN、超域、非整定点转换等可能触发SIMD异常；当前异常掩码未证，保留原存储值不代表转换正常或后续已执行。",
+          "明确数字读取失败才默认ONE，成功0/负值保持原值；缺对象、未确认读取及超出已核准数字转换域保持未知。",
+          "爆炸基础返回只有修饰器已创建且到本次入口值未变时才能接入；不能借构造时默认标记证明后续仍可改值。",
+          "数值只覆盖所选来源与声明无间插变化的普通原生链；实际库存、前后事件、命中、HP/EP/SP结算、完整总量和热更新未知。"
+        ]
+      }
+    }
+  ],
+  "source_sha256_after": "5cae70ab30843e9bd4674bfd937477075badf37d3720e285a874a487b53ad1ff",
+  "readonly_review_after": "Limited independent review of three fixes and local zero closure found no new substantive defect; no source edits or window operations by reviewer."
+}

@@ -1,0 +1,124 @@
+{
+  "kind": "INACTIVE_SOURCE_ONLY_FULL125_ADAPTERS",
+  "section": 125,
+  "runtime_executed": false,
+  "apply_or_execution_ready": false,
+  "product_pass": false,
+  "section_complete": false,
+  "basis_directory": "/workspace/.continuation/full115-suite-adapters-source-v1",
+  "basis_manifest_sha256": "f16d3f18120579ebb2fdbf112ab31e8b66b10d5ce7696aeb8b408d7ee50f34bd",
+  "only_metadata_transports": [
+    {
+      "basis": "full115-suite-adapters-source-v1/suite_common115.py",
+      "candidate": "section125/adapters/suite_common125.py",
+      "old_sha256": "04f35e7a1e41f82336bc04dc3d71a8268310761a9f5ee7bec51f9d5cbf998e78",
+      "new_sha256": "e54719b778d795ce52fbc9845999d8c77ae5b6cdcdb906cbacc38f569d3c28fa",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "    'suite_common115.py', 'wine_capability_probe115.py', 'wine_full115.py',\n",
+          "after": "    'suite_common125.py', 'wine_capability_probe125.py', 'wine_full125.py',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    'wine_selected115.py', 'source-contract.json', 'README.md', 'manifest.json',\n",
+          "after": "    'wine_selected125.py', 'source-contract.json', 'README.md', 'manifest.json',\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(guard.get('section') == 115 and type(guard.get('section')) is int,\n",
+          "after": "    require(guard.get('section') == 125 and type(guard.get('section')) is int,\n",
+          "occurrences": 1
+        },
+        {
+          "before": "            'An actual final115 Root guard is required; historical095 or pending guards are forbidden')\n",
+          "after": "            'An actual final125 Root guard is required; historical095 or pending guards are forbidden')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    require(source == expected, 'Actual maintained rouge/tests/scripts .py/.json set or bytes differ from Root115 guard')\n",
+          "after": "    require(source == expected, 'Actual maintained rouge/tests/scripts .py/.json set or bytes differ from Root125 guard')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "            'Exact sealed adapter Source differs from Root115 guard')\n",
+          "after": "            'Exact sealed adapter Source differs from Root125 guard')\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    return {'format_version': 1, 'section': 115, 'checked_at': now(),\n",
+          "after": "    return {'format_version': 1, 'section': 125, 'checked_at': now(),\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_capability_probe115.py",
+      "candidate": "section125/adapters/wine_capability_probe125.py",
+      "old_sha256": "987e62d1c5c11121b28046143613f888093af618f48c6b635bcad013d2cb541b",
+      "new_sha256": "86c93512dd6d558d6ac9999045eb4c6b6a4c141a9c5971490d12ef08309def63",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import fresh_capability, require, workspace_evidence_path, write_json\n",
+          "after": "from suite_common125 import fresh_capability, require, workspace_evidence_path, write_json\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_full115.py",
+      "candidate": "section125/adapters/wine_full125.py",
+      "old_sha256": "28be084f22d83f8450718e0f8917c01257796a22713c73b92cb6e2ede7bf16ea",
+      "new_sha256": "63fd9e6a378602b17df955fd4a10fded19928466cc1a9fdcc743a4f1b72bb659",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "after": "from suite_common125 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "basis": "full115-suite-adapters-source-v1/wine_selected115.py",
+      "candidate": "section125/adapters/wine_selected125.py",
+      "old_sha256": "92caf18a273635ac22efbd8df05982ba86e369d85691c6390470e89c03ba963c",
+      "new_sha256": "8c7342338af5352195de7e33113c421d88d71ce9f5d1e2ef7065b8dec7083dc3",
+      "inverse_byte_exact": true,
+      "local_transports": [
+        {
+          "before": "from suite_common115 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "after": "from suite_common125 import (admit_suite, bind_suite, common_receipt, drift_free,\n",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "common_changed_functions_metadata_only": [
+    "bind_suite",
+    "common_receipt"
+  ],
+  "capability_and_classifier_constants_unchanged": true,
+  "exact3_skip_ids_unchanged": true,
+  "classifier_AST_gate_unchanged": true,
+  "fresh_capability_per_run_unchanged": true,
+  "all_actual_test_counts_outcomes_and_selectors_unfilled": true,
+  "future_actual": {
+    "Root_guard_path": null,
+    "Root_guard_sha256": null,
+    "complete_maintained_Source_count": null,
+    "complete_Source_map": null,
+    "CORE_additional_map": null,
+    "selector_union": null,
+    "independent_capability_probe_path": null,
+    "independent_capability_probe_sha256": null,
+    "independent_capability_probe_primary_path": null,
+    "Linux_full_outcome": null,
+    "Wine_full_outcome": null,
+    "Wine_selected_outcome": null,
+    "Window_or_Saved_outcome": null
+  },
+  "functional_milestone_acceptance": "Root separate actual product checks for sections121–125; inherited suites remain additional regression",
+  "old095_and109_deferred_unchanged": true
+}

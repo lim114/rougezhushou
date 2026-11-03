@@ -1,0 +1,129 @@
+{
+  "section": 292,
+  "kind": "functional_section",
+  "title": "按流程场景和完整选项筛选事件固定作战资料",
+  "at_Beijing": "2026-10-16T06:44:37.100727+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "63ec130238dfff0a65b8b648518328834f815725",
+  "remaining_item": "P3事件具体场景/选项的作战资料阅读入口",
+  "new_capability": "在节点资料页按完整流程场景和具体选项手动筛选既有固定作战资料；同名选项、普通/紧急及同关不同来源保持独立。同事件刷新与预览返回保留筛选、完整关卡来源和阅读状态；无作战或过期候选拒绝沿用。仅改阅读入口，不新增作战机制、资格或奖励判定。",
+  "files": [
+    "rouge/node_catalog_view.py",
+    "tests/test_event_preview_filters_292.py",
+    "scripts/verify_event_preview_filters_window_292.py"
+  ],
+  "source_sha256": {
+    "rouge/node_catalog_view.py": "61c65384c2f9420cf43d134497406cdec0f65d85c507ae8da88403e639ac5791",
+    "tests/test_event_preview_filters_292.py": "d66aa2d23cbf8357ff682757716c4229fe603660915a6f31d8d260db7a1a448d",
+    "scripts/verify_event_preview_filters_window_292.py": "3bb939416576a228780550f0c2dc52e5a0816a1a03277a57bca30aa6abdd19d3"
+  },
+  "backend_mechanics_or_data_changed": false,
+  "original_remaining_scenes": 25,
+  "original_remaining_choices": 57,
+  "existing_unparsed_annotations_not_closed": 10,
+  "necessary_validation": {
+    "receipt": "verification/sections/292-necessary-repair/process.json",
+    "sha256": "72a2e11ac9508a7c3ccc957c773efa1ed203daa49ab18d8c50d6ab15c0880ec1",
+    "stderr": "verification/sections/292-necessary-repair/stderr.txt",
+    "stderr_sha256": "466351802098ef7e42cf5e4513399ed3e221e096a400478afb5e6478fb79fb94",
+    "actual_exit": 0,
+    "methods_run": 79,
+    "seconds": 7.524,
+    "source_unchanged": true,
+    "source_files": 356,
+    "modules": [
+      "tests.test_event_preview_filters_292",
+      "tests.test_node_catalog_view",
+      "tests.test_peace_guardian_integration_291",
+      "tests.test_resident_reference_signals_291",
+      "tests.test_choice_recruitment_integration_290",
+      "tests.test_original_entry_planning",
+      "tests.test_event_planning"
+    ],
+    "unchanged_non_UI_production_files": 346
+  },
+  "native_windows_validation": {
+    "receipt": "verification/sections/292-window-attempt1/actual/window.json",
+    "sha256": "4942f9c649bab23bb1c45f9978c4801ab84292e7cc942292cfa3c0182b9332d1",
+    "source_selected_files": 20,
+    "source_unchanged": true,
+    "unique_checks": 33,
+    "actual_assertion_executions": 109,
+    "actual_client_size": [
+      1050,
+      720
+    ],
+    "screenshots": 4,
+    "actual_Qt_exit": 0,
+    "actual_window_closed": true,
+    "images_visually_reviewed_by_helper": false,
+    "owned_process": {
+      "receipt": "verification/sections/292-window-attempt1/process.json",
+      "sha256": "6a296a3cdaff475e8f0e0148e5a67c5bbf9b6a3c9875d3877aeeaa20de368c34",
+      "supervisor_receipt": "verification/sections/292-window-attempt1/supervisor.json",
+      "supervisor_sha256": "f6ad10361a85b5b83a34e916b1082b1e792dc9c0c11735700039625b212cf6a2",
+      "actual_supervisor_exit": 0,
+      "actual_primary_child_exit": 0,
+      "owned_job_no_live_execution_verified": true,
+      "supervisor_child_launch_pid": 27136,
+      "fixture_reported_pid": 39452,
+      "same_pid_required": false,
+      "historical_ancestry_or_fixture_job_membership_verified": false,
+      "cleanup": {
+        "active_after_primary_child_exit": 1,
+        "descendants_live_before_cleanup": true,
+        "termination_scope_recorded": null,
+        "all_descendants_natural_exit_claimed": false
+      }
+    },
+    "game_or_chat_verified": false,
+    "original_project_window": {
+      "receipt": "verification/sections/292-main-window.json",
+      "sha256": "ebeb80c8d401c45406786f0f58a036720cb72bc97c6b23e37db909023583c2aa",
+      "focus_receipt": "verification/sections/292-main-window-focus.json",
+      "focus_sha256": "774aa93b985fc57c78a8e8745c1d84e351ea315d2d4a48577aaa298e0d760ed6",
+      "section": 292,
+      "necessary_receipt_sha256": "72a2e11ac9508a7c3ccc957c773efa1ed203daa49ab18d8c50d6ab15c0880ec1",
+      "native_receipt_sha256": "4942f9c649bab23bb1c45f9978c4801ab84292e7cc942292cfa3c0182b9332d1",
+      "native20_current_source_unchanged": true,
+      "started_after_final_necessary_and_native": true,
+      "focus_after_main_finished": true,
+      "private_hash_comparisons": 5,
+      "changed_private_paths": 0,
+      "visible_responsive_foreground": true,
+      "private_contents_read_by_helper": false
+    }
+  },
+  "first_failed_necessary_run": {
+    "receipt": "verification/sections/292-necessary-first/process.json",
+    "sha256": "833b3ddce03b7b78d7a800adebf3e8a78a0c697f633de716b13f20e2d99f37d5",
+    "stderr_sha256": "34129d6309ed0a45e009d660d8df0ae3b7361b1a655ef487942e3316cbf5b51a",
+    "actual_exit": 1,
+    "actual_tests_run": 79,
+    "failures": 3,
+    "errors": 3,
+    "failure_originals_preserved": true
+  },
+  "full_validation": {
+    "receipt": "verification/full-290/summary.json",
+    "sha256": "2c6e93534e443089bc0f8ffbbd686e3c37610ccf3c4aafd43fbf44d16188b823",
+    "after_section": 290,
+    "full_suite_rerun": false,
+    "new292_source_full_validation_claimed": false,
+    "scope_not_reduced": true,
+    "next_periodic_section": 305,
+    "complete_repository_validation": false
+  },
+  "limits": [
+    "原机制、数据与资格/费用引擎未改；10条未解析附注和25原场景/57原选项入口缺口不减少。",
+    "已选场景、选项和固定关卡仅为资料筛选，不证明本局出现、按钮可选、真实选择或战斗发生。",
+    "本节只必要检查与一尺寸新UI原生流程；290全量沿用其原来源，下次305，不称292新源全量通过。",
+    "首轮79项3失败3错误原件保留；修复后N按实际最终回执，不与首轮或缓存准备重复相加。",
+    "P3/P2/P1未完、识别最后；无路线推荐、排序或自动选路。符号链接1314/Linux-Wine/原私样本/游戏聊天不计通过。"
+  ],
+  "next_section": 293,
+  "cloud_publication_binding": "enclosing_commit",
+  "cloud_published": false,
+  "P3_complete": false,
+  "P2_complete": false
+}

@@ -1,0 +1,403 @@
+...............................................................................s...........s.ss..s.....sss.s...sssss...............s.ss..s.s.s......s....s.s.s.ss.......................ssssssssssssssssssssssssssssssssssssssssssss....................................................................................................................................................................................................................U..U.......................U..............................................U.....U......................................U........U.......................................UU.U.U...................UU.U..................U.........................U.................................................U................ssssssssssssssUUUUUUUU.............UUUUUU...............................UU....................UUUUUUUUUUUUU.UU..UUUUUUUUU..............................................UUUU......UU.....U.U.................................UUUUUUUUUUUUUUUU.U...............UUUUUUUUUUUUUUUUUUUUUUUUUUUU.............U..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................UUUUU....UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU.UUUUUUU.........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................U.......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................FFFF...FFFFFFFFFFF..F.FFFF.FFFFFFFFF.F....FFFFFFFF..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+FAIL: test_bad_old_true_identity_still_allows_fresh_true_repair_without_weaking_fact (tests.test_cache_recovery_103.CacheRecovery103Tests.test_bad_old_true_identity_still_allows_fresh_true_repair_without_weaking_fact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 397, in test_bad_old_true_identity_still_allows_fresh_true_repair_without_weaking_fact
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery) (identity=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 365, in test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery
+    self.apply(run,{'operators':[],'config':{'squad':squad_record(captured=MISSING)}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery) (identity={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 365, in test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery
+    self.apply(run,{'operators':[],'config':{'squad':squad_record(captured=MISSING)}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery) (identity='public-unknown-squad')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 365, in test_bad_old_verified_true_identity_cannot_block_valid_unverified_badge_recovery
+    self.apply(run,{'operators':[],'config':{'squad':squad_record(captured=MISSING)}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery) (source=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 130, in test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery) (source=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 130, in test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery) (source='public-opaque')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 130, in test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery (tests.test_cache_recovery_103.CacheRecovery103Tests.test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery) (source=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 130, in test_damaged_origin_leaf_does_not_block_first_discovery_or_new_marker_recovery
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_damaged_provenance_cannot_hide_a_real_known_recruitment_change (tests.test_cache_recovery_103.CacheRecovery103Tests.test_damaged_provenance_cannot_hide_a_real_known_recruitment_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 185, in test_damaged_provenance_cannot_hide_a_real_known_recruitment_change
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null (tests.test_cache_recovery_103.CacheRecovery103Tests.test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null) (flag_missing=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 437, in test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null (tests.test_cache_recovery_103.CacheRecovery103Tests.test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null) (flag_missing=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 437, in test_existing_true_fact_remains_when_fresh_confirmation_is_missing_or_null
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record (tests.test_cache_recovery_103.CacheRecovery103Tests.test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record) (identity=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 320, in test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record (tests.test_cache_recovery_103.CacheRecovery103Tests.test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record) (identity={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 320, in test_fresh_squad_replaces_bad_identity_then_restart_can_reuse_true_current_record
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_fresh_verified_squad_keeps_actual_verified_flag_and_new_owned_timestamp (tests.test_cache_recovery_103.CacheRecovery103Tests.test_fresh_verified_squad_keeps_actual_verified_flag_and_new_owned_timestamp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 329, in test_fresh_verified_squad_keeps_actual_verified_flag_and_new_owned_timestamp
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_healthy_known_recruitment_change_keeps_same_lifecycle_and_fresh_fields (tests.test_cache_recovery_103.CacheRecovery103Tests.test_healthy_known_recruitment_change_keeps_same_lifecycle_and_fresh_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 197, in test_healthy_known_recruitment_change_keeps_same_lifecycle_and_fresh_fields
+    member=self.apply(run,origin_observation('non_emergency',MARKER,fields={'level':21},ranks={'1':7}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_known_old_id_with_mismatched_name_is_not_a_stronger_valid_fact (tests.test_cache_recovery_103.CacheRecovery103Tests.test_known_old_id_with_mismatched_name_is_not_a_stronger_valid_fact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 408, in test_known_old_id_with_mismatched_name_is_not_a_stronger_valid_fact
+    self.apply(run,{'operators':[],'config':{'squad':fresh}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_marker_repair_survives_restart_and_another_missing_page (tests.test_cache_recovery_103.CacheRecovery103Tests.test_marker_repair_survives_restart_and_another_missing_page)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 218, in test_marker_repair_survives_restart_and_another_missing_page
+    self.apply(run,origin_observation('non_emergency',MARKER))
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior (tests.test_cache_recovery_103.CacheRecovery103Tests.test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior) (source=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 143, in test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior (tests.test_cache_recovery_103.CacheRecovery103Tests.test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior) (source=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 143, in test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior (tests.test_cache_recovery_103.CacheRecovery103Tests.test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior) (source=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 143, in test_missing_empty_and_valid_origin_proofs_keep_first_discovery_behavior
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_page_keeps_recovered_squad_identity_and_original_observation_time (tests.test_cache_recovery_103.CacheRecovery103Tests.test_missing_page_keeps_recovered_squad_identity_and_original_observation_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 338, in test_missing_page_keeps_recovered_squad_identity_and_original_observation_time
+    self.apply(run,{'operators':[],'config':{'squad':squad_record(captured=MISSING)}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_no_fresh_source_does_not_delete_raw_proof_or_other_opaque_records (tests.test_cache_recovery_103.CacheRecovery103Tests.test_no_fresh_source_does_not_delete_raw_proof_or_other_opaque_records)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 229, in test_no_fresh_source_does_not_delete_raw_proof_or_other_opaque_records
+    member=self.apply(run,origin_observation('non_emergency'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence (tests.test_cache_recovery_103.CacheRecovery103Tests.test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence) (source=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 152, in test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence
+    member=self.apply(run,origin_observation())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence (tests.test_cache_recovery_103.CacheRecovery103Tests.test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence) (source=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 152, in test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence
+    member=self.apply(run,origin_observation())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence (tests.test_cache_recovery_103.CacheRecovery103Tests.test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence) (source='public-opaque')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 152, in test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence
+    member=self.apply(run,origin_observation())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence (tests.test_cache_recovery_103.CacheRecovery103Tests.test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence) (source=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 152, in test_origin_absent_keeps_damaged_proof_unused_and_raw_until_explicit_new_evidence
+    member=self.apply(run,origin_observation())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_origin_none_keeps_damaged_proof_unused_without_confirming_unknown (tests.test_cache_recovery_103.CacheRecovery103Tests.test_origin_none_keeps_damaged_proof_unused_without_confirming_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 160, in test_origin_none_keeps_damaged_proof_unused_without_confirming_unknown
+    member=self.apply(run,origin_observation(None))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_proven_legacy_gold_correction_keeps_special_behavior_and_owned_buffs (tests.test_cache_recovery_103.CacheRecovery103Tests.test_proven_legacy_gold_correction_keeps_special_behavior_and_owned_buffs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 207, in test_proven_legacy_gold_correction_keeps_special_behavior_and_owned_buffs
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_returned_member_still_requires_new_training_and_buff_confirmation (tests.test_cache_recovery_103.CacheRecovery103Tests.test_returned_member_still_requires_new_training_and_buff_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 239, in test_returned_member_still_requires_new_training_and_buff_confirmation
+    member=self.apply(run,origin_observation('non_emergency',MARKER))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_reused_config_payload_keeps_newer_original_record_and_does_not_refresh_timestamp (tests.test_cache_recovery_103.CacheRecovery103Tests.test_reused_config_payload_keeps_newer_original_record_and_does_not_refresh_timestamp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 356, in test_reused_config_payload_keeps_newer_original_record_and_does_not_refresh_timestamp
+    self.apply(run,{'operators':[],'config':reused})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it (tests.test_cache_recovery_103.CacheRecovery103Tests.test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it) (flag='false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 421, in test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it
+    self.apply(run,{'operators':[]})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it (tests.test_cache_recovery_103.CacheRecovery103Tests.test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it) (flag=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 421, in test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it
+    self.apply(run,{'operators':[]})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it (tests.test_cache_recovery_103.CacheRecovery103Tests.test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it) (flag=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 421, in test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it
+    self.apply(run,{'operators':[]})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it (tests.test_cache_recovery_103.CacheRecovery103Tests.test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it) (flag=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 421, in test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it
+    self.apply(run,{'operators':[]})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it (tests.test_cache_recovery_103.CacheRecovery103Tests.test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it) (flag={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 421, in test_unusable_old_verification_flag_stays_raw_until_new_valid_badge_replaces_it
+    self.apply(run,{'operators':[]})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_valid_map_with_opaque_source_leaf_is_not_a_legacy_gold_proof (tests.test_cache_recovery_103.CacheRecovery103Tests.test_valid_map_with_opaque_source_leaf_is_not_a_legacy_gold_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 178, in test_valid_map_with_opaque_source_leaf_is_not_a_legacy_gold_proof
+    member=self.apply(run,origin_observation('non_emergency'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_valid_previous_verified_true_is_not_downgraded_by_same_name_badge (tests.test_cache_recovery_103.CacheRecovery103Tests.test_valid_previous_verified_true_is_not_downgraded_by_same_name_badge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 374, in test_valid_previous_verified_true_is_not_downgraded_by_same_name_badge
+    self.apply(run,{'operators':[],'config':{'squad':squad_record(captured=MISSING)}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_valid_strengthened_trade_is_not_replaced_by_same_name_basic_badge (tests.test_cache_recovery_103.CacheRecovery103Tests.test_valid_strengthened_trade_is_not_replaced_by_same_name_basic_badge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 385, in test_valid_strengthened_trade_is_not_replaced_by_same_name_basic_badge
+    self.apply(run,{'operators':[],'config':{'squad':basic}})
+  File "Z:\workspace\rougezhushou\tests\test_cache_recovery_103.py", line 90, in apply
+    self.assertFalse(run.file.with_suffix('.tmp').exists())
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3895 tests in 230.708s
+
+FAILED (failures=38, skipped=84)

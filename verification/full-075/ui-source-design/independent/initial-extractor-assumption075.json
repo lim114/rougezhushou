@@ -1,0 +1,7 @@
+{
+  "scope": "Independent review extractor only; no API/Qt/Wine execution",
+  "initial_result": "saved input strict equality assertion failed",
+  "diagnosis": "36 Wisdel S2 saved API inputs explicitly include overload=false while pure design cases leave the owner checkbox default implicit. The real owner checkbox and reset_owner_options default to false.",
+  "correction": "Add only the exact Wisdel S2 false default to independent expected input before comparing; all other keys remain strict.",
+  "production_or_frozen_author_changes": false
+}

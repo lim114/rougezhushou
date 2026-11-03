@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/.continuation/root-resume101-saved-audit-v1.py", line 25, in <module>
+    value=read_record(out/'native',row);assert row['path'] not in saved;saved[row['path']]=value
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/section101-candidate-window-source-v1/native_evidence.py", line 125, in read_record
+    compressed = path.read_bytes()
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/.continuation/resume101-window-candidate-v1/native/000001.pickle.gz'

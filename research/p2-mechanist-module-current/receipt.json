@@ -1,0 +1,113 @@
+{
+  "scope": "explicit current native module packet calculation with manual target blocker",
+  "stage_skill_indices": {
+    "1": [
+      0
+    ],
+    "2": [],
+    "3": []
+  },
+  "source_event": "ON_CALCULATE_DAMAGE=14",
+  "parameter_binding": "module hidden talent 11_root/atk_scale1.5 -> PassiveBuffAbility -> template mcnist_e_002_trait_atk",
+  "skill_index_binding": {
+    "converter_method_index": 77906,
+    "array_index_read": "0x180abd037..0x180abd044 reads skills[index] at array+0x20; index zero is first skill",
+    "copied_to_main_skill_index": "0x180abd6ef..0x180abd6f3 -> BattleCharacterData.mainSkillIndex+0x100",
+    "checked_before_assign": "Character._AssignTalents 0x180a348ed..0x180a34900 -> BasicTalent.CheckValidBySkillIndex",
+    "empty_list": "current helper0x1844acab0 returns true for null/empty; otherwise Contains(index) is required"
+  },
+  "physical_validation": {
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "methods": 57,
+    "unique_instructions": 9097,
+    "all_instruction_bytes_match": true,
+    "limits": []
+  },
+  "asset_validation": [
+    {
+      "source": "battle/prefabs/[uc]equips.ab",
+      "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+      "bytes": 730733,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "config/buff_template_holder.ab",
+      "sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+      "bytes": 2022247,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "battle/prefabs/[uc]projectiles.ab",
+      "sha256": "bfd637cca7e39e239534da33a580bc6a02d8f160a24708466028dee5e32d7b73",
+      "bytes": 1848878,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "charpack/char_4230_mcnist.ab",
+      "sha256": "16fd579398c3c1cf5b6c000bd01413d0af41dc493d64144dd763c15995954e1b",
+      "bytes": 29788,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "battle/prefabs/[uc]skills.ab",
+      "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+      "bytes": 1343313,
+      "matches_current_manifest": true
+    }
+  ],
+  "base_manifest_version": "26-09-13-15-28-10-30688348",
+  "monoscripts_physical_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+  "monoscripts_current_physical_hash_matches": true,
+  "create_projectile_parameter_binding": {
+    "method_index": 64709,
+    "flags": "0x86",
+    "static": false,
+    "registers": "instance rcx; key rdx; damage source r8; projectile start r9; target stack+0x20",
+    "owner_bombardment": "RangedAttack.CreateProjectile 0x180ec3153 get_owner -> r13 -> r8 at0x180ec329c",
+    "charge": "EmitProjectileToTileUseSelector 0x1810ac4c0 _sourceType -> stack+0x50 -> r8 at0x1810ac723; _spawnSourceType selects token ability/start, not damage owner"
+  },
+  "source_valid_required": true,
+  "source_owner": "mechanist",
+  "attack_multiplier_layer": "atkScale before defense, not panel or post-defense multiplier",
+  "supported_packets": [
+    "owner normal physical attack",
+    "owner skill1 physical segment",
+    "mechanist-sourced skill2 shield explosion",
+    "owner skill3 magic bombardment",
+    "mechanist-sourced skill3 charge physical packet"
+  ],
+  "current_hotfix_equivalence_verified": false,
+  "runtime_binding_verified": false,
+  "actual_blocker": null,
+  "actual_source_valid": null,
+  "actual_attack_sample_time": null,
+  "actual_collision_clock": null,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "public_targeted_search": "https://prts.wiki/w/机械师",
+  "public_search_role": "corroborates blocked-by-self/token description and charge projectile/respawn; does not override native stage1 skill gate or prove hotfix equivalence",
+  "remaining_unknown": [
+    "current hotfix equivalence",
+    "actual hidden-ability attachment and source validity",
+    "actual blocker at each packet",
+    "attack sample/collision phase",
+    "actual full cast/window/cycle damage",
+    "token自身伤害/召出结构/治疗等未推广"
+  ],
+  "preparation_failures": [
+    {
+      "operation": "build MonoScript properties hash lookup",
+      "error": "TypeError: unhashable type dict",
+      "cause": "PropertiesHash is a byte-key dictionary, corrected to its original 16-byte digest",
+      "resolved": true
+    },
+    {
+      "operation": "exploratory parameter print",
+      "error": "incorrect m[4] field was genericContainerIndex, not parameterStart",
+      "cause": "printed unusable parameter names; corrected to documented method m[3] and retained exact-parameters.json",
+      "resolved": true
+    }
+  ]
+}

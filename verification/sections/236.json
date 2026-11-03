@@ -1,0 +1,47 @@
+{
+  "title": "首批三人藏品组合与面板差值诊断",
+  "remaining_item": "P2首批三名面板偏差排查；真实成对校准/未证叠加及热更新仍未完成",
+  "new_capability": "按当前组合、移除单件、共同背景加单件、共同背景四种条件计算攻击/生命/防御等预测层差值和模型非相加残差；每条件有上下文及警告。最多12件子集，未选来源与已领取定向强化独立保留；未收录/零差不认定实机无效果。接入实际校准工具显式导入和刷新留存。",
+  "source_evidence": [
+    "固定培养a550f5e和原panel_layers/符文写回/天赋/技能校准回执复用；只对已有模型做条件差分，未新增叠加或丢弃机制。"
+  ],
+  "acceptance": [
+    "7新API+3真实临时Qt：三干员/培养分层、生命3180/2120及3975/2650、机械师攻击符文边际143和技能边际543.4、子集背景、强化保留、未知/非法/隔离。",
+    "原calibration/offline tools检查全部保留，新增查询按21个校准+固定战斗工作流遍历；必要41项通过无skip。"
+  ],
+  "limitations": [
+    "Counterfactual arithmetic is not an observed game panel, actual source effect or causal attribution.",
+    "Rounding and nonadditive residual describe existing model only, not unknown acquisition order or missing scripts.",
+    "Acquired targeted buffs retained independently; removing a relic declaration never simulates an actual discard/lifetime consequence.",
+    "Original0.91 visible window remains available; new diagnostic query validated temporaryQt and will be checked at grouped native/full closeout."
+  ],
+  "files": [
+    "rouge/relic_panel_diagnostics.py",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "tests/test_relic_panel_diagnostics.py",
+    "tests/test_relic_panel_diagnostics_view.py",
+    "tests/test_offline_tools_view.py",
+    "RELIC_PANEL_DIAGNOSTICS.md"
+  ],
+  "test_selectors": [
+    "tests.test_relic_panel_diagnostics",
+    "tests.test_relic_panel_diagnostics_view",
+    "tests.test_calibration",
+    "tests.test_offline_tools_view"
+  ],
+  "section": 236,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T06:10:45.210019+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 41,
+    "passed": 41,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-236/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}

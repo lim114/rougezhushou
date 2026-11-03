@@ -1,0 +1,854 @@
+{
+  "head": "5b5c61fd54c18bc5d7b6f35d22ef7eb23cdefdbc",
+  "source_sha256": {
+    "rouge/timing.py": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+    "rouge/operator_engine.py": "f50792dc0d8359988dd9eeb2bf0f7dfa083aa9e1d8f5635530820d08280fa249",
+    "rouge/uncertain_sources.py": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+    "rouge/reporting.py": "280a4b99a26c54d1f2ce8ed734205f426bebbf37ab8cd24226d24d38bed5db59"
+  },
+  "cases": [
+    {
+      "case": "baseline",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {}
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 11000.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 13.999999999999995,
+        "cycle_seconds": 43.99999999999999,
+        "total_damage": 35000.0,
+        "phase_damage": 35000.0,
+        "cycle_damage": 43000.0,
+        "cycle_dps": 977.2727272727275,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 1100.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 11,
+          "per_hit": 1000.0,
+          "total": 11000.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.8421052631578947,
+            1.6842105263157894,
+            2.526315789473684,
+            3.3684210526315788,
+            4.2105263157894735,
+            5.052631578947368,
+            5.894736842105263,
+            6.7368421052631575,
+            7.578947368421052,
+            8.421052631578947,
+            9.263157894736842
+          ]
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": false,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 43.99999999999999,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 13.999999999999995,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 35000.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 1166.6666666666667,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 11000.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 1100.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 977.2727272727275,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "positive_life_point1",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": 0.1
+        }
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 11000.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 13.999999999999995,
+        "cycle_seconds": 43.99999999999999,
+        "total_damage": 35000.0,
+        "phase_damage": 35000.0,
+        "cycle_damage": 43000.0,
+        "cycle_dps": 977.2727272727275,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 1100.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 11,
+          "per_hit": 1000.0,
+          "total": 11000.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.8421052631578947,
+            1.6842105263157894,
+            2.526315789473684,
+            3.3684210526315788,
+            4.2105263157894735,
+            5.052631578947368,
+            5.894736842105263,
+            6.7368421052631575,
+            7.578947368421052,
+            8.421052631578947,
+            9.263157894736842
+          ]
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": true,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 43.99999999999999,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 13.999999999999995,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 35000.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 1166.6666666666667,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 11000.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 1100.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 977.2727272727275,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "positive_life_1",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": 1
+        }
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 11000.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 13.999999999999995,
+        "cycle_seconds": 43.99999999999999,
+        "total_damage": 35000.0,
+        "phase_damage": 35000.0,
+        "cycle_damage": 43000.0,
+        "cycle_dps": 977.2727272727275,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 1100.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 11,
+          "per_hit": 1000.0,
+          "total": 11000.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.8421052631578947,
+            1.6842105263157894,
+            2.526315789473684,
+            3.3684210526315788,
+            4.2105263157894735,
+            5.052631578947368,
+            5.894736842105263,
+            6.7368421052631575,
+            7.578947368421052,
+            8.421052631578947,
+            9.263157894736842
+          ]
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": true,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 43.99999999999999,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 13.999999999999995,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 35000.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 1166.6666666666667,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 11000.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 1100.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 977.2727272727275,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "range_0_to_1",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_windows": [
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 11000.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 13.999999999999995,
+        "cycle_seconds": 43.99999999999999,
+        "total_damage": 35000.0,
+        "phase_damage": 35000.0,
+        "cycle_damage": 43000.0,
+        "cycle_dps": 977.2727272727275,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 1100.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 11,
+          "per_hit": 1000.0,
+          "total": 11000.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.8421052631578947,
+            1.6842105263157894,
+            2.526315789473684,
+            3.3684210526315788,
+            4.2105263157894735,
+            5.052631578947368,
+            5.894736842105263,
+            6.7368421052631575,
+            7.578947368421052,
+            8.421052631578947,
+            9.263157894736842
+          ]
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": true,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 43.99999999999999,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 13.999999999999995,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 35000.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 1166.6666666666667,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 11000.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 1100.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 977.2727272727275,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "zero_life_control",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 0.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 30.0,
+        "cycle_seconds": 60.0,
+        "total_damage": 0.0,
+        "phase_damage": 0,
+        "cycle_damage": 0.0,
+        "cycle_dps": 0.0,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 0.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 1000.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": true,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 60.0,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 30.0,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 0.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 0.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 0.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 0.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 0.0,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "empty_range_control",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "base_attack": 1000,
+        "enemy_resistance": 0,
+        "enemy_defense": 0,
+        "window_seconds": 10,
+        "timing_mode": "continuous",
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "complete": true,
+      "estimate_complete": true,
+      "window_damage": 11000.0,
+      "skill": {
+        "initial_seconds": 7.0,
+        "duration_seconds": 30.0,
+        "recharge_seconds": 13.999999999999995,
+        "cycle_seconds": 43.99999999999999,
+        "total_damage": 35000.0,
+        "phase_damage": 35000.0,
+        "cycle_damage": 43000.0,
+        "cycle_dps": 977.2727272727275,
+        "cycle_healing": 0,
+        "cycle_hps": 0.0,
+        "window_dps": 1100.0
+      },
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 11,
+          "per_hit": 1000.0,
+          "total": 11000.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.8421052631578947,
+            1.6842105263157894,
+            2.526315789473684,
+            3.3684210526315788,
+            4.2105263157894735,
+            5.052631578947368,
+            5.894736842105263,
+            6.7368421052631575,
+            7.578947368421052,
+            8.421052631578947,
+            9.263157894736842
+          ]
+        }
+      ],
+      "timing": {
+        "mode": "continuous",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": true,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "recharge_streams": []
+      },
+      "public_report": [
+        {
+          "id": "timing",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 7.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 30.0,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 43.99999999999999,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 13.999999999999995,
+              "unit": "秒"
+            }
+          ]
+        },
+        {
+          "id": "damage",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 35000.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 1166.6666666666667,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 11000.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 1100.0,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 977.2727272727275,
+              "unit": "伤害/秒"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "boundary_helper_probe": {
+    "boundary_seconds": 5,
+    "placed_damage": 10.0,
+    "unplaced_damage": 30
+  },
+  "requested_baseline": "ab1a2f4",
+  "source_identical_to_requested_baseline": {
+    "rouge/timing.py": true,
+    "rouge/operator_engine.py": true,
+    "rouge/uncertain_sources.py": true,
+    "rouge/reporting.py": true
+  }
+}

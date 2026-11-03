@@ -1,0 +1,9 @@
+{
+  "issue": "root source-check preparation assumed normalized talent groups included unnamed original candidates",
+  "initial_result": "AssertionError on len(group)==len(original[candidates]); no production or regression failure",
+  "diagnosis": "scripts/build_catalog.py:49 explicitly filters candidates if t[name]; actual silverash 8 groups are 2 named and 6 empty groups, original six hidden/unnamed one-candidate groups",
+  "correction": "compare every named candidate and retain empty normalized groups; assert exact description/unlock/potential/blackboard, no inferred attachment of unnamed native candidates",
+  "attempts": 1,
+  "resolved": true,
+  "native_attachment_unknown": true
+}

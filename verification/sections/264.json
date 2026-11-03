@@ -1,0 +1,83 @@
+{
+  "section": 264,
+  "kind": "functional_section",
+  "title": "首批三名干员的全部合法等级与面板偏差排查",
+  "at_Beijing": "2026-10-14T08:12:04.366424+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "b8bbed13a4436ca0807886bc56d490ecb54159f0",
+  "remaining_item": "P2首批三名预计/观察面板校准：等级读取偏差的有限排查能力",
+  "new_capability": "原条件验证后穷举同精英全部合法等级，给出共同/单字段相容范围、冲突/未知/不可测算记录；前后校准页直接打开独立结果。",
+  "files": [
+    "rouge/level_panel_diagnostics.py",
+    "rouge/level_panel_view.py",
+    "rouge/paired_calibration_view.py",
+    "tests/test_level_panel_diagnostics.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_level_panel_window_264.py",
+    "research/p2-panel-levels/README.md",
+    "verification/sections/264-window.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/level_panel_diagnostics.py": "e2ed0a1cbefd34d18b00492999fb8c66682439a1f8d4e310fc6e3de5ee42c771",
+    "rouge/level_panel_view.py": "b8df459aa0ac63a2af20c42d53f83ebf1087bbb663dbe61a9b45ff37604ab63b",
+    "rouge/paired_calibration_view.py": "cb77f1d55c79b0e9e33dba942c32c1b10735c04867ba69c2d3e1eccffb774cf2",
+    "tests/test_level_panel_diagnostics.py": "c1b30b068a74dad4bea98d6324a1a8d56e9f60c78e5de7cabeb882acfffeb088",
+    "scripts/verify_full_available.py": "e8865662b2659185099622eeabf9158aa132b19a62e6f69e8b6a4aa7f8d13de7",
+    "scripts/verify_level_panel_window_264.py": "797b1228244e881d68c1558d8c8aaa39b58b03030b8def62188e9a213bb3c547",
+    "research/p2-panel-levels/README.md": "b2ffa79db54bf0a5d0775f15d3f9d5e1a2865708e79a5e70854ee0cb897084d6",
+    "verification/sections/264-window.json": "95c315ddfcbfba043f788d305875dc4ef1314c3a9745cbda26ba261fba2d25cd"
+  },
+  "source_evidence": [
+    "research/p2-panel-levels/README.md",
+    "rouge/data/catalog.json"
+  ],
+  "reused_source_sha256": {
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+    "rouge/calibration.py": "8ed0a6bef1ac27edca1bf02a29a8e3af1031990304b2d45c86a51951ce2049a3",
+    "rouge/catalog.py": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+  },
+  "acceptance": "35相关检查通过；270精二等级及810独立Fraction整数分项；Windows公共观察90行、模型相容60级、原观察未改实际可见。",
+  "validation": {
+    "tests_run": 35,
+    "new_test_methods": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "independent_e2_levels": 270,
+    "independent_integer_oracle_values": 810,
+    "log": "verification/sections/264-first-check.log",
+    "native_dialog": {
+      "qpa": "windows",
+      "visible": true,
+      "rows": 90,
+      "compatible_levels": [
+        60
+      ],
+      "conclusion": "unique_model_candidate",
+      "actual_level": null,
+      "observation_unchanged": true,
+      "original_declared_level": 90,
+      "scope": "Windows public-literal paired workspace and independent diagnostic; not game calibration/full suite",
+      "game_operated": false,
+      "chat_sent": false,
+      "private_state_read": false,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    }
+  },
+  "validation_log_sha256": {
+    "verification/sections/264-first-check.log": "06820b476a457c26a6df723afbe4d9417427cc2cb7be5e94443ca0a8f868c75d"
+  },
+  "limitations": [
+    "No change to cultivation/attribute math or unknown native mechanisms; frozen model reference only.",
+    "Candidate contexts do not rebind original observations; no actual level or causal attribution.",
+    "Incomplete fields and unavailable candidates remain unresolved; no match is not whole-game impossibility.",
+    "Only first three, fixed elite/other conditions, supplied fields and caller tolerance; no precision inferred.",
+    "Current game/hotfix/full panels/action clocks unverified; no P2 closure.",
+    "Changed native public-literal workspace only; full261 historical, unchanged full scope275 and final280."
+  ],
+  "passed": true,
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 275,
+  "next_action": "265继续有证P2机制/计算，独立有证P3可推进；275及最终280完整可用范围验收。"
+}

@@ -1,0 +1,7 @@
+{
+  "actual_observed_exit": 1,
+  "cause": "Copied recorder assumed toolbar must remain visible through wrap-up. It was visible/responding at startup and actually reviewed, but game binding later became inactive and toolbar was hidden",
+  "source_review": "GameWindowBinding.apply deliberately hides owned surfaces after an inactive established binding",
+  "repair": "Retain startup proof and record latest visibility/binding separately; do not claim hidden toolbar is visible and do not operate game to force visibility",
+  "no_feature_test_or_source_qualification_weakened": true
+}

@@ -1,0 +1,19 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_ACTUAL_TRAILING_TEXT_PARSER_FIX",
+  "baseline": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v2/recovery_binding095.py",
+    "bytes": 27183,
+    "sha256": "f08d15f608d24edb2627e71e9ad61b3e3bf19982d54f318d190dcb109c1060eb"
+  },
+  "replacement": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v3/recovery_binding095.py",
+    "bytes": 27507,
+    "sha256": "a2c36dc353bc62bb0c96b61bf9fe47d1634ba7ea0b2b2a1d7d74af1f20a8f534"
+  },
+  "before": "    summary = json.loads(bound_bytes(entry['stdout_log']).decode('utf-8', errors='replace').splitlines()[-1])",
+  "after": "    summary = None\n    for line in reversed(bound_bytes(entry['stdout_log']).decode('utf-8', errors='replace').splitlines()):\n        try:\n            value = json.loads(line)\n        except json.JSONDecodeError:\n            continue\n        if isinstance(value, dict) and 'tests_run' in value:\n            summary = value\n            break\n    require(isinstance(summary, dict), 'Preserved selected1 actual receipt JSON is missing')",
+  "existing_failed_receipt_assertions_unchanged": true,
+  "helper_executions": 0,
+  "runtime_pass": false
+}

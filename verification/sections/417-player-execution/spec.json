@@ -1,0 +1,23 @@
+{
+  "title": "游戏画面五秒悬停触发藏品来源提示",
+  "change": "在绑定游戏客户区只读观察鼠标约5秒，商店优先读取商品名称并按当前文字位置推导商品格，与固定目录精确对应；名称不完整或有歧义时不强行识图。无名称的纯图标场景以多尺度图像作补充。异步重新取景核对后，无激活显示来源卡，且限制在游戏可见范围内。",
+  "limits": "约5秒为触发等待，首次文字读取仍需额外时间；当前实际商店文字样例、无图标场景及隔离窗口分别验证，不称全部页面或分辨率全覆盖。文字有歧义时拒绝补猜；同图未明变体保留未知。",
+  "criteria": [
+    "仅在绑定游戏客户区连续停留约5秒后触发",
+    "商店文字优先并按动态商品格对应；纯图标场景才以图像补充，不采用固定页面坐标",
+    "过期画面、错误PID/尺寸及歧义拒绝",
+    "异步请求在移动/遮挡/新局后不弹旧卡",
+    "提示无游戏输入、聊天发送、上传或持有写入"
+  ],
+  "additional_tests": [
+    "tests.test_player_feature_416",
+    "tests.test_player_item_sources_394"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_417",
+  "native": "scripts/verify_player_feature_window_417.py",
+  "unit_receipt": "verification/sections/417-player-checks-attempt12/process.json",
+  "native_receipt": "verification/sections/417-player-window-attempt12/window.json",
+  "native_process_receipt": "verification/sections/417-player-window-process-attempt12/process.json",
+  "source_receipt": "verification/sections/417-reference.json"
+}

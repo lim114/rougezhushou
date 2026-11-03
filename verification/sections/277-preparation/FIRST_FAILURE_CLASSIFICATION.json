@@ -1,0 +1,29 @@
+{
+  "kind": "INDEPENDENT277_FIRST_TEST_CONTRACT_FAILURE_CLASSIFICATION",
+  "first_actual_tool_execution": {
+    "actual_exit": 1,
+    "tests_run": 45,
+    "failures": 3,
+    "errors": 1,
+    "complete_raw_output_saved_as_file": false,
+    "raw_output_location": "The actual tool response in this agent turn; not reconstructed as an original file"
+  },
+  "exact_unchanged_replay": {
+    "directory": ".cache/section277-independent-tests/first-unchanged-replay",
+    "actual_exit": 1,
+    "test_source_sha256": "223ea76f2fd42564a6f8beb7d745cc6ba7c5128dd533cb92d8799c15f3e247be",
+    "core_source_sha256": "08c31e5c7d3b5ee58d4e64eb310e1618420157d9414fd6594ee883c08f02f502",
+    "complete_actual_replay_stderr_saved": true,
+    "is_first_original_raw_output": false
+  },
+  "cause": "Independent test assumed row.arithmetic_reference had all debit helper fields before the nested-key contract was fixed. Core correctly kept only the signed32 NEG/Int32ToFP prefix there and placed magnitude/enum/identity in qualified modifier_constructor_arguments.",
+  "formula_or_branch_failures_found": false,
+  "core_modified_for_test": false,
+  "repair": "Keep all literal numerical controls; compare NEG prefix and NewSp constructor fields at their separate documented boundaries. Move group magnitude assertion to constructor dictionary and add actual136-byte opaque copy, unknown NewSp path and unknown owner label controls.",
+  "final_tests_run": 48,
+  "final_actual_exit": 0,
+  "final_test_source_sha256": "51b62a097ad722bf73278cceaa322add4c7a4d579f905e8d0e292705448ce3a4",
+  "final_process_receipt": ".cache/section277-independent-tests/final-portable-48/process.json",
+  "production_tests_or_private_state_modified": false,
+  "game_or_chat_actions": 0
+}

@@ -1,0 +1,267 @@
+.........................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.....................This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+...................F..E.F..E...FFFF.FFF.FEE...........................................FFF.......F.FE..........................
+======================================================================
+ERROR: test_failed_session_keeps_accepting_current_run_without_automatic_retry (tests.test_run_persistence_099.RunPersistenceTests.test_failed_session_keeps_accepting_current_run_without_automatic_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 318, in test_failed_session_keeps_accepting_current_run_without_automatic_retry
+    pending_raw = run.file.with_suffix('.tmp').read_bytes()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/public-run-persistence-t85zgwom/public-1.tmp'
+
+======================================================================
+ERROR: test_manual_reset_after_save_failure_clears_memory_without_retry_or_rollback (tests.test_run_persistence_099.RunPersistenceTests.test_manual_reset_after_save_failure_clears_memory_without_retry_or_rollback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 342, in test_manual_reset_after_save_failure_clears_memory_without_retry_or_rollback
+    pending_raw = run.file.with_suffix('.tmp').read_bytes()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/public-run-persistence-3cxgbxnn/public-1.tmp'
+
+======================================================================
+ERROR: test_replace_failure_retains_complete_temp_distinct_from_final_target (tests.test_run_persistence_099.RunPersistenceTests.test_replace_failure_retains_complete_temp_distinct_from_final_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 270, in test_replace_failure_retains_complete_temp_distinct_from_final_target
+    self.assertEqual(json.loads(pending.read_text(encoding='utf-8')), run.state)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/public-run-persistence-wrtvbcw6/public-1.tmp'
+
+======================================================================
+ERROR: test_restart_repair_write_failure_is_not_misreported_as_load_corruption (tests.test_run_persistence_099.RunPersistenceTests.test_restart_repair_write_failure_is_not_misreported_as_load_corruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 453, in test_restart_repair_write_failure_is_not_misreported_as_load_corruption
+    self.assertEqual(json.loads(restarted.file.with_suffix('.tmp').read_text(encoding='utf-8')),
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/public-run-persistence-49tb4hs5/public-1.tmp'
+
+======================================================================
+ERROR: test_replace_failure_keeps_complete_temporary_as_separate_evidence (tests.test_account_persistence.AccountPersistenceTests.test_replace_failure_keeps_complete_temporary_as_separate_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 222, in test_replace_failure_keeps_complete_temporary_as_separate_evidence
+    self.assertEqual(json.loads(path.with_suffix('.tmp').read_text(encoding='utf-8')), cache.records)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp1a5ymq3i/public-1.tmp'
+
+======================================================================
+FAIL: test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart (tests.test_run_persistence_099.RunPersistenceTests.test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 291, in test_actual_open_failure_keeps_nonempty_temp_directory_and_healthy_old_restart
+    self.assertEqual(run.file.read_bytes(), original)
+AssertionError: b'{\n[104 chars]873244.546352,\n  "operators": {},\n  "crew_co[2225 chars]"\n}' != b'{\n[104 chars]873243.546352,\n  "operators": {},\n  "crew_co[1510 chars]"\n}'
+
+======================================================================
+FAIL: test_io_failure_during_first_manual_reset_keeps_new_run_in_memory (tests.test_run_persistence_099.RunPersistenceTests.test_io_failure_during_first_manual_reset_keeps_new_run_in_memory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 376, in test_io_failure_during_first_manual_reset_keeps_new_run_in_memory
+    self.assertEqual(run.file.read_bytes(), original)
+AssertionError: b'{\n  "id": "eb5425aa-8a4c-4fc6-a409-0549e20ab4ef",\n [769 chars]"\n}' != b'{\n  "id": "99204f0a-f5d8-42be-ab87-a4bd2cacf993",\n [1602 chars]"\n}'
+
+======================================================================
+FAIL: test_non_io_error_in_restart_repair_save_escapes_read_error_handler (tests.test_run_persistence_099.RunPersistenceTests.test_non_io_error_in_restart_repair_save_escapes_read_error_handler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 468, in test_non_io_error_in_restart_repair_save_escapes_read_error_handler
+    with self.assertRaisesRegex(ValueError, 'public program error'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_io_program_errors_are_not_mislabeled_or_swallowed (tests.test_run_persistence_099.RunPersistenceTests.test_non_io_program_errors_are_not_mislabeled_or_swallowed) (stage='write_text', error='RuntimeError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 207, in test_non_io_program_errors_are_not_mislabeled_or_swallowed
+    with self.assertRaises(type(error)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_non_io_program_errors_are_not_mislabeled_or_swallowed (tests.test_run_persistence_099.RunPersistenceTests.test_non_io_program_errors_are_not_mislabeled_or_swallowed) (stage='write_text', error='ValueError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 207, in test_non_io_program_errors_are_not_mislabeled_or_swallowed
+    with self.assertRaises(type(error)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_io_program_errors_are_not_mislabeled_or_swallowed (tests.test_run_persistence_099.RunPersistenceTests.test_non_io_program_errors_are_not_mislabeled_or_swallowed) (stage='write_text', error='UnicodeEncodeError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 207, in test_non_io_program_errors_are_not_mislabeled_or_swallowed
+    with self.assertRaises(type(error)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: UnicodeEncodeError not raised
+
+======================================================================
+FAIL: test_oserror_at_each_stage_keeps_target_memory_and_stop_order (tests.test_run_persistence_099.RunPersistenceTests.test_oserror_at_each_stage_keeps_target_memory_and_stop_order) (stage='write_text', error='PermissionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 234, in test_oserror_at_each_stage_keeps_target_memory_and_stop_order
+    failing.assert_called_once()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 928, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'write_text' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_oserror_at_each_stage_keeps_target_memory_and_stop_order (tests.test_run_persistence_099.RunPersistenceTests.test_oserror_at_each_stage_keeps_target_memory_and_stop_order) (stage='write_text', error='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 234, in test_oserror_at_each_stage_keeps_target_memory_and_stop_order
+    failing.assert_called_once()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 928, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'write_text' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_oserror_at_each_stage_keeps_target_memory_and_stop_order (tests.test_run_persistence_099.RunPersistenceTests.test_oserror_at_each_stage_keeps_target_memory_and_stop_order) (stage='write_text', error='FileExistsError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 234, in test_oserror_at_each_stage_keeps_target_memory_and_stop_order
+    failing.assert_called_once()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 928, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'write_text' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_partial_write_evidence_is_neither_deleted_nor_published (tests.test_run_persistence_099.RunPersistenceTests.test_partial_write_evidence_is_neither_deleted_nor_published)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_run_persistence_099.py", line 255, in test_partial_write_evidence_is_neither_deleted_nor_published
+    self.assertEqual(run.file.read_bytes(), original)
+AssertionError: b'{\n[105 chars]873244.6144397,\n  "operators": {},\n  "crew_c[2237 chars]"\n}' != b'{\n[105 chars]873243.6144397,\n  "operators": {},\n  "crew_c[1517 chars]"\n}'
+
+======================================================================
+FAIL: test_each_oserror_write_stage_preserves_memory_and_target (tests.test_account_persistence.AccountPersistenceTests.test_each_oserror_write_stage_preserves_memory_and_target) (stage='write_text', failure='PermissionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 191, in test_each_oserror_write_stage_preserves_memory_and_target
+    self.assertTrue(cache.preserve_original)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_each_oserror_write_stage_preserves_memory_and_target (tests.test_account_persistence.AccountPersistenceTests.test_each_oserror_write_stage_preserves_memory_and_target) (stage='write_text', failure='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 191, in test_each_oserror_write_stage_preserves_memory_and_target
+    self.assertTrue(cache.preserve_original)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_each_oserror_write_stage_preserves_memory_and_target (tests.test_account_persistence.AccountPersistenceTests.test_each_oserror_write_stage_preserves_memory_and_target) (stage='write_text', failure='FileExistsError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 191, in test_each_oserror_write_stage_preserves_memory_and_target
+    self.assertTrue(cache.preserve_original)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_non_io_errors_are_not_silently_converted_to_failed_save (tests.test_account_persistence.AccountPersistenceTests.test_non_io_errors_are_not_silently_converted_to_failed_save) (stage='write_text', failure='ValueError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 287, in test_non_io_errors_are_not_silently_converted_to_failed_save
+    with self.assertRaises(type(failure)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_partial_temporary_write_failure_is_not_deleted_or_published (tests.test_account_persistence.AccountPersistenceTests.test_partial_temporary_write_failure_is_not_deleted_or_published)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_account_persistence.py", line 211, in test_partial_temporary_write_failure_is_not_deleted_or_published
+    self.assertEqual(path.read_bytes(), original)
+AssertionError: b'{\n  "mechanist": {\n    "id": "mechanist"[256 chars]}\n}' != b'{"mechanist": {"id": "mechanist", "scope":[80 chars]00}}'
+
+----------------------------------------------------------------------
+Ran 171 tests in 2.703s
+
+FAILED (failures=15, errors=5)

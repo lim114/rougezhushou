@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "status": "FINAL_STATIC_CONTRACT_REVIEW_BLOCKED_B1_B2_STOPWRITE",
+  "overall": "CANDIDATE_V1_NOT_QUALIFIED_FOR_PRODUCT_INTEGRATION_UNTIL_B1_AND_B2_ARE_RESOLVED_AND_REVIEWED",
+  "constraints": [
+    {
+      "id": "load-and-preserve",
+      "status": "SOURCE_STATIC_PASS",
+      "source": "account_cache.py:124-142",
+      "finding": "Read-only, missing requires read and lstat FileNotFoundError; existing symlink/uncertain OSError preserves."
+    },
+    {
+      "id": "all-records-before-first-save",
+      "status": "SOURCE_STATIC_PASS",
+      "source": "account_cache.py:143-156,218-225",
+      "finding": "All known consumable ids are screened at load and before saves; unknown ids stay opaque and never feed view."
+    },
+    {
+      "id": "identity-and-containers",
+      "status": "SOURCE_STATIC_PASS_VALIDATION; B1_RETENTION_REGRESSION",
+      "source": "account_cache.py:36-47,158-169",
+      "finding": "Observed id and present mappings guarded; absent containers default. Retention of ignored values is broken by B1 recursive clone."
+    },
+    {
+      "id": "timestamp",
+      "status": "SOURCE_STATIC_PASS_NOT_PLATFORM_RUNTIME",
+      "source": "account_cache.py:24-33,48-49,189",
+      "finding": "Actual localtime/strftime used; missing remains implicit0, explicit nonfinite/bool/null rejects, no invented epoch range. Target Linux/Wine results unrun."
+    },
+    {
+      "id": "consumed-cultivation-leaves",
+      "status": "SOURCE_STATIC_PASS_CONSUMPTION_SAFETY; B2_RECOVERY_GAP",
+      "source": "account_cache.py:66-112",
+      "finding": "Exact GUI/catalog operative leaves and implemented mastery guards; locked/inert values retain old behavior. Context activation creates B2."
+    },
+    {
+      "id": "ignored-aliases-and-defaults",
+      "status": "SOURCE_STATIC_PASS_SHAPE_RULES; B1_COPY_GAP",
+      "source": "account_cache.py:36-112",
+      "finding": "account/operator_profile, missing containers/time, trust bool, falsy module identities and ignored module stages preserve values in ordinary cases; deep ignored content still hits B1."
+    },
+    {
+      "id": "formatter-consumed-metadata",
+      "status": "SOURCE_STATIC_PASS",
+      "source": "account_cache.py:52-64,91-109",
+      "finding": "set/iter/string-consumption safety guarded without global schema coercion; sample summary goes through view; public formatter unchanged."
+    },
+    {
+      "id": "account-run-separation",
+      "status": "SOURCE_STATIC_PASS_CONTENT_RULES",
+      "source": "account_cache.py:15-17,50-51,169;app.py:775-784,481-485",
+      "finding": "scope=run account quarantined; operative run metadata excluded only from view; raw retained and genuine RunState precedence/path remains original."
+    },
+    {
+      "id": "stable-visible-recovery",
+      "status": "BLOCKED_BY_B1;B2_RECOVERY_UNCLOSED",
+      "source": "app.py:473-480,775-791,810-863",
+      "finding": "Notice branches and safe-view entry wired correctly for ordinary values, but B1 can crash before try and B2 hides fresh supplied valid facts."
+    },
+    {
+      "id": "overlay-merge-and-issue-lifetime",
+      "status": "BLOCKED_BY_B1;B2_CONTRACT_CONFLICT",
+      "source": "account_cache.py:185-221",
+      "finding": "Ordinary good unions/order/changed semantics are preserved by source; recursive copying and merged-record quarantine cause the two findings."
+    },
+    {
+      "id": "disk-write-guard",
+      "status": "SOURCE_STATIC_PASS",
+      "source": "account_cache.py:146-156,223-231",
+      "finding": "Permanent flag has no automatic clear path; save returns before mkdir/tmp write/replace. Pure tests and actual disk verification remain unrun."
+    },
+    {
+      "id": "no-numerical-or-mechanism-changes",
+      "status": "SOURCE_STATIC_PASS",
+      "source": "app AST diff; candidate transport leaves; registry diff",
+      "finding": "No math/RunState/recognizer/formatter edits; calculate/training/skill/base/run methods unchanged. Registry has one genuine new pure boundary module."
+    }
+  ],
+  "findings": [
+    {
+      "id": "B1",
+      "severity": "BLOCKING_STATIC_REGRESSION",
+      "condition": "Otherwise usable legal-JSON cached record has an ignored extra nested to depth500; json.loads accepts it at recursionlimit1000 while stdlib deepcopy fails. The candidate unconditionally adds that deepcopy.",
+      "source": [
+        "account_cache.py:169",
+        "account_cache.py:207-214",
+        "app.py:473",
+        "app.py:777"
+      ],
+      "violated_requirements": [
+        "ignored unknown values retained without new schema",
+        "startup/browse safe view before calculate try",
+        "later valid producer overlay/recovery"
+      ],
+      "certainty": "Confirmed stdlib operation difference plus exact unguarded source path; candidate/project not executed.",
+      "minimal_fix": "Remove recursive copies of opaque extras/leaf values; preserve original shallow union and top-level filtered account view. No new depth rejection or global recursion limit change. Narrow/delete only the new draft assertion that arbitrary nested mutations of a returned view cannot touch raw, unless independently required."
+    },
+    {
+      "id": "B2",
+      "severity": "BLOCKING_RECOVERY_CONTRACT_UNCLOSED",
+      "condition": "Old usable mechanist record: id=mechanist, scope=operator_profile, fields={elite:0}, skill_ranks={3:99}, captured_at=100 (persisted key is string 3). New standalone-valid partial observation id/scope plus fields={elite:2}, skill_ranks={} at actual timestamp200. A masked locked string rank variant has the same transition.",
+      "trace": [
+        "Old locked rank is accepted at account_cache.py:98-109 and explicitly retained by draft tests408-414.",
+        "Incoming standalone record passes line191. Original union keeps old bad rank at202-215; merged active validation at216 fails.",
+        "_screen_all at218 records whole-id issue and permanent protection; save returns before writes; observe returns True at221.",
+        "view161-162 returns {}, so new elite2/time200 are unavailable and sample summary479 claims this frame unconfirmed."
+      ],
+      "safety_result": "Bad old rank cannot enter numerical calculation; whole-record isolation does provide that safety. The problem is loss of newly confirmed usable facts, not unsafe math.",
+      "contract_conflict": "The frozen overlay contract requires new supplied valid facts to become confirmed and an usable memory view to recover. Returning True with empty view does not close that obligation.",
+      "independent_subreview_position": "Subreview considered whole-record quarantine sufficient for consumed-leaf safety and did not call it a product blocker; it confirmed the trace and absent focused draft control. This disagreement is recorded.",
+      "root_clarification": "Root explicitly requires closure: if valid incoming plus old union becomes unusable in the new context, preserve the original disk and exclude unsafe old contributions, rebuilding an usable record solely from incoming legitimate facts and its actual supplied time. Missing ranks stay unknown and use existing labeled previews. Truly good unions remain exactly original.",
+      "minimal_fix": "Validate the proposed union. If an individually valid incoming record makes the union unusable, enable disk protection and build the memory record from that validated incoming observation only, without old invalid contributions or invented fields/ranks/time; preserve exact good-union and timestamp ordering behavior.",
+      "future_control": "Fresh focused old locked/inert bad rank -> valid partial elite unlock -> usable new fields/time, original byte preservation, missing rank labeled preview; include valid oldrank10 control whose union remains unchanged and a later observation recovery control."
+    }
+  ],
+  "external_fixture_transport": {
+    "classification": "EXTERNAL_PUBLIC_VERIFICATION_FIXTURE_TRANSPORT_NOT_PRODUCT_BLOCKER",
+    "product_alias": "candidate app102-103 binds operator_observations to account_cache.records after construction; internal production has no post-construction whole-map rebind. Known per-id writes retain alias.",
+    "historical_runner": "verification/full-090/wine-ui-runner.py",
+    "whole_mapping_rebind_lines": [
+      1714,
+      2484,
+      2717,
+      2902,
+      3143
+    ],
+    "missing_id_fixture_lines": [
+      1261,
+      1272,
+      3076,
+      3083,
+      3084
+    ],
+    "effect": "Whole-map assignment severs the alias and the helper reads old records. Missing fixture ids are isolated by the intentional strict cached-identity rule.",
+    "required_root_transport": "Prepare a fresh reviewable runner/fixture transport preserving one records storage and genuine id-bearing inputs, with source binding. Do not modify sealed historical runner, weaken id validation, clear protection automatically or claim old suite passed unchanged. Root owns exact full095 transport; no new public math/RunState API is required."
+  },
+  "test_draft_review": "37 distinct methods cover missing/unreadable/root/record/default/leaf/metadata/identity/merge/write-protection boundaries with real public catalog injection. They are all UNRUN and do not cover B1 deep ignored content or B2 activation transition. Pure tests cannot certify actual MainWindow/RunState priority or screenshots. Two public symlink controls may legitimately skip if the target platform cannot create symlinks; that is not PASS.",
+  "required_future_root_validation": [
+    "Review a newly frozen minimal fix and exact product hashes without modifying candidate v1 or original source/design packets.",
+    "Bind actual committed092 bytes, exact registry baseline and new candidate leaves before root transport.",
+    "Execute meaningful pure boundary checks including the two new findings, related regression, complete good-case native before/after and input immutability controls.",
+    "Execute actual temporary-public MainWindow/Wine startup/browse/calculate/recovery; source22/static37 cannot substitute. Include sample_received safe summary, genuine RunState precedence/snapshots and corrupt original byte/path protection.",
+    "Timing/relic JSON compatibility controls retain their existing validation; do not invent a parse fix or count the static packets as section093 completion.",
+    "Transport external GUI fixture mapping aliases/id-bearing observations explicitly, preserving sealed history and never simulating old successful counts."
+  ],
+  "attempt_policy": "This is first fresh static candidate-v1 review, not a project runtime retry. No old negative target was rerun, completed or cleared. Preserve old attempt records; the same unresolved target at three attempts must defer with evidence and restart conditions.",
+  "project_counts": {
+    "project_imports": 0,
+    "project_API": 0,
+    "project_helpers": 0,
+    "formatter": 0,
+    "project_tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "private_reads": 0,
+    "network": 0,
+    "tracked_writes": 0
+  },
+  "project_runtime_PASS": 0,
+  "source_22_predictions_UNRUN": true,
+  "test_37_methods_UNRUN": true,
+  "section093_completed": false
+}

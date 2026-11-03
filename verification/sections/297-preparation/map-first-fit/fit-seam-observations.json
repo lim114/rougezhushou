@@ -1,0 +1,994 @@
+{
+  "kind": "FROZEN_AUTHOR_GROUND_SEAM_OBSERVATIONS_BEFORE_FIT_OR_INDEPENDENT_HOLDOUT",
+  "created_utc": "2026-10-16T07:56:34.285965+00:00",
+  "author_role": "/root/full275_regression_triage",
+  "coordinate_rule": "row,col are zero-based displayed map cell-center coordinates; half-integer values denote their grid seams/corners. PNG pixels use original top-left origin 512x286. No route-row inversion.",
+  "source_method": "Directly viewed unmarked original PNGs, then nearest-neighbor source-only crops/rulers; read half-integer ground seams, not independent tile centers.",
+  "source_only_view_metadata": [
+    ".cache/p3-297-fit-seams/view-preparation.json",
+    ".cache/p3-297-fit-seams/crop-view-preparation.json"
+  ],
+  "stages": [
+    {
+      "stage_id": "ro6_c_2",
+      "name": "咩的朋友",
+      "image": {
+        "file": "battle-maps/ro6_c_2.png",
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_c_2.png",
+        "source_blob_sha1": "7769ea6665fe3f052789edcf5b02f9826b3a3246",
+        "sha256": "9607eac718fe4f95e39551079da61a2f2d7ca0aa97ae3189bb8d900472dea4c0",
+        "bytes": 346404,
+        "width": 512,
+        "height": 286
+      },
+      "level_source": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_c-2.json",
+        "sha256": "f5b7fb93103c06e9a956c0ab01f648416fb604f262d802efd99be5c3f5fc20d7",
+        "bytes": 75061
+      },
+      "level_local_file": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-2.json",
+      "grid_sha256": "c9b0f5a8f8725c051cb5e4c3b4c9bb94b8bf6566c502d1249218cf9c81bf88cb",
+      "rows": 8,
+      "columns": 11,
+      "fit_seams": [
+        {
+          "id": "ro6_c_2:fit-seam:1",
+          "row": 1.5,
+          "col": 0.5,
+          "observed_pixel": [
+            124,
+            82
+          ],
+          "cue": "左侧低地木路第2行的左上外边缘，与上一排地板前沿交会；取木面接缝，不取绿框内缘。",
+          "adjacent_source_tiles": [
+            {
+              "row": 1,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:2",
+          "row": 1.5,
+          "col": 9.5,
+          "observed_pixel": [
+            391,
+            82
+          ],
+          "cue": "右侧低地木路第2行右上外边缘，与上一排地板前沿交会；不取旁边藤蔓。",
+          "adjacent_source_tiles": [
+            {
+              "row": 1,
+              "col": 9,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 1,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 9,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:3",
+          "row": 2.5,
+          "col": 2.5,
+          "observed_pixel": [
+            183,
+            106
+          ],
+          "cue": "第3行第3列低地板左上外木缝，邻近左侧高台仅用于避开顶面；取道路交接的地面端点。",
+          "adjacent_source_tiles": [
+            {
+              "row": 2,
+              "col": 2,
+              "tile_key": "tile_wall",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 3,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 2,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 3,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:4",
+          "row": 2.5,
+          "col": 6.5,
+          "observed_pixel": null,
+          "cue": "蓝色终点立体框覆盖此处地面交缝，不能用框顶或发光边替代。",
+          "adjacent_source_tiles": [
+            {
+              "row": 2,
+              "col": 6,
+              "tile_key": "tile_wall",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 6,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 7,
+              "tile_key": "tile_end",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": false,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:5",
+          "row": 3.5,
+          "col": 0.5,
+          "observed_pixel": [
+            116,
+            132
+          ],
+          "cue": "左侧第4行木路左上外边缘，绿地板前沿之后的木面水平分缝。",
+          "adjacent_source_tiles": [
+            {
+              "row": 3,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:6",
+          "row": 3.5,
+          "col": 9.5,
+          "observed_pixel": [
+            402,
+            132
+          ],
+          "cue": "右侧第4行木路右上外边缘，避开石雕与藤蔓轮廓。",
+          "adjacent_source_tiles": [
+            {
+              "row": 3,
+              "col": 9,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 9,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 4,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:7",
+          "row": 4.5,
+          "col": 0.5,
+          "observed_pixel": [
+            110,
+            158
+          ],
+          "cue": "左侧第5行低地地板上沿与外侧木面边界交会，不取下垂枝叶。",
+          "adjacent_source_tiles": [
+            {
+              "row": 4,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:8",
+          "row": 4.5,
+          "col": 9.5,
+          "observed_pixel": [
+            409,
+            158
+          ],
+          "cue": "右侧第5行低地地板上沿与木面外边界交会，不取右侧石像。",
+          "adjacent_source_tiles": [
+            {
+              "row": 4,
+              "col": 9,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 4,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 5,
+              "col": 9,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 5,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:9",
+          "row": 5.5,
+          "col": 0.5,
+          "observed_pixel": [
+            102,
+            189
+          ],
+          "cue": "左侧第5/6行低地板之间木面分缝的外端；取上方木面，不取平台侧面。",
+          "adjacent_source_tiles": [
+            {
+              "row": 5,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:10",
+          "row": 5.5,
+          "col": 9.5,
+          "observed_pixel": [
+            417,
+            189
+          ],
+          "cue": "右侧第5/6行低地板之间木面分缝的外端，避开外侧装饰。",
+          "adjacent_source_tiles": [
+            {
+              "row": 5,
+              "col": 9,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 5,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 6,
+              "col": 9,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_2:fit-seam:11",
+          "row": 6.5,
+          "col": 0.5,
+          "observed_pixel": null,
+          "cue": "下方红色入口框与平台侧面重叠，地面原缝角点无法可靠分辨。",
+          "adjacent_source_tiles": [
+            {
+              "row": 6,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 7,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 7,
+              "col": 1,
+              "tile_key": "tile_start",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": false,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        }
+      ],
+      "usable_fit_seams": 9,
+      "unreadable_or_inapplicable_seams": 2
+    },
+    {
+      "stage_id": "ro6_c_4",
+      "name": "一视同仁",
+      "image": {
+        "file": "battle-maps/ro6_c_4.png",
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_c_4.png",
+        "source_blob_sha1": "e6776c53755e0c11418de88a134621a7c48f18c4",
+        "sha256": "3cd5b7bc62937f3ac5e8725ffd70dbb78cc860a3c863df1923548b42890a0477",
+        "bytes": 336481,
+        "width": 512,
+        "height": 286
+      },
+      "level_source": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_c-4.json",
+        "sha256": "c1a2bdc44766bb2ff949f2ea549a835f936c7010e8ca78bac279841dc33fd50b",
+        "bytes": 67152
+      },
+      "level_local_file": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-4.json",
+      "grid_sha256": "8cd616025ff1a0e96a394e24dbf7eaf248a1b55c353e4918cf2ff73382635b82",
+      "rows": 8,
+      "columns": 11,
+      "fit_seams": [
+        {
+          "id": "ro6_c_4:fit-seam:1",
+          "row": 1.5,
+          "col": 0.5,
+          "observed_pixel": [
+            116,
+            77
+          ],
+          "cue": "上方横向低地木路左上外角，位于第一块绿色低地板下缘；不取红色入口框。",
+          "adjacent_source_tiles": [
+            {
+              "row": 1,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 1,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:2",
+          "row": 1.5,
+          "col": 2.5,
+          "observed_pixel": [
+            181,
+            77
+          ],
+          "cue": "上方横向低地木路与第三列低地板左缘的交接木缝。",
+          "adjacent_source_tiles": [
+            {
+              "row": 1,
+              "col": 2,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 1,
+              "col": 3,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 2,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 3,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:3",
+          "row": 1.5,
+          "col": 7.5,
+          "observed_pixel": [
+            344,
+            77
+          ],
+          "cue": "上方横向木路中，第7列低地板右缘下方的地面木缝，不取右侧草堆。",
+          "adjacent_source_tiles": [
+            {
+              "row": 1,
+              "col": 7,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 1,
+              "col": 8,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 2,
+              "col": 8,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:4",
+          "row": 2.5,
+          "col": 0.5,
+          "observed_pixel": null,
+          "cue": "灰色装置外壳和阴影挡住木路下缘，不把装置上角或底座当地图地面缝。",
+          "adjacent_source_tiles": [
+            {
+              "row": 2,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 2,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": false,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:5",
+          "row": 3.5,
+          "col": 0.5,
+          "observed_pixel": [
+            105,
+            127
+          ],
+          "cue": "左侧纵向低地木路起段左上外边缘，处在灰色装置下方木面分界，非装置顶面。",
+          "adjacent_source_tiles": [
+            {
+              "row": 3,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 3,
+              "col": 1,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 4,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:6",
+          "row": 3.5,
+          "col": 7.5,
+          "observed_pixel": [
+            349,
+            127
+          ],
+          "cue": "第7列纵向低地木路起段右上木缝，避开灰色装置上表面。",
+          "adjacent_source_tiles": [
+            {
+              "row": 3,
+              "col": 7,
+              "tile_key": "tile_floor",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 3,
+              "col": 8,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 4,
+              "col": 8,
+              "tile_key": "tile_wall",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:7",
+          "row": 4.5,
+          "col": 0.5,
+          "observed_pixel": null,
+          "cue": "纵向木纹连续，不能从装饰木纹唯一判定第4/5行边界。",
+          "adjacent_source_tiles": [
+            {
+              "row": 4,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 4,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 5,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": false,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:8",
+          "row": 5.5,
+          "col": 0.5,
+          "observed_pixel": [
+            91,
+            191
+          ],
+          "cue": "左侧纵路与底部横向低地路上缘交会的地面外角。",
+          "adjacent_source_tiles": [
+            {
+              "row": 5,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 5,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 0,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 6,
+              "col": 1,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:9",
+          "row": 5.5,
+          "col": 7.5,
+          "observed_pixel": [
+            355,
+            191
+          ],
+          "cue": "第7列纵路右缘与底部横路上缘交会，取木面缝而非右侧高台板顶。",
+          "adjacent_source_tiles": [
+            {
+              "row": 5,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 5,
+              "col": 8,
+              "tile_key": "tile_wall",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 6,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 8,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:10",
+          "row": 6.5,
+          "col": 3.5,
+          "observed_pixel": [
+            199,
+            225
+          ],
+          "cue": "底部横向低地木路第3/4列分缝与木面前缘交会；取上沿，不取平台下侧厚度。",
+          "adjacent_source_tiles": [
+            {
+              "row": 6,
+              "col": 3,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 4,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 7,
+              "col": 3,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 7,
+              "col": 4,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:11",
+          "row": 6.5,
+          "col": 5.5,
+          "observed_pixel": [
+            278,
+            225
+          ],
+          "cue": "底部横向低地木路第5/6列分缝与木面前缘交会，取木面顶边。",
+          "adjacent_source_tiles": [
+            {
+              "row": 6,
+              "col": 5,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 6,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 7,
+              "col": 5,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 7,
+              "col": 6,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:12",
+          "row": 6.5,
+          "col": 7.5,
+          "observed_pixel": [
+            356,
+            225
+          ],
+          "cue": "底部横向低地木路第7/8列分缝与木面前缘交会，不取下面横梁。",
+          "adjacent_source_tiles": [
+            {
+              "row": 6,
+              "col": 7,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 8,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 7,
+              "col": 7,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 7,
+              "col": 8,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": true,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        },
+        {
+          "id": "ro6_c_4:fit-seam:13",
+          "row": 6.5,
+          "col": 9.5,
+          "observed_pixel": null,
+          "cue": "蓝色终点框覆盖右下交缝，无法排除立体框脚/屋顶偏移。",
+          "adjacent_source_tiles": [
+            {
+              "row": 6,
+              "col": 9,
+              "tile_key": "tile_road",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 6,
+              "col": 10,
+              "tile_key": "tile_end",
+              "height_type": "LOWLAND"
+            },
+            {
+              "row": 7,
+              "col": 9,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            },
+            {
+              "row": 7,
+              "col": 10,
+              "tile_key": "tile_forbidden",
+              "height_type": "HIGHLAND"
+            }
+          ],
+          "usable_author_observation": false,
+          "heldout": false,
+          "absolute_accuracy_known": false
+        }
+      ],
+      "usable_fit_seams": 10,
+      "unreadable_or_inapplicable_seams": 3
+    }
+  ],
+  "fit_executed": false,
+  "matrix_or_prediction_computed": false,
+  "independent_holdout_seen": false,
+  "other_reader_pixels_seen": false,
+  "new_accepted_calibrations": 0,
+  "no_absolute_accuracy_claim": "These are approximate visual source observations only. They do not certify a planar model, <=4-pixel absolute accuracy, elevated surfaces, entry footpoints or actual gameplay positions. Independent heldout failure must be preserved without moving/deleting these readings.",
+  "unreadable_records_preserved": true,
+  "Qt_tests_game_chat_private_operations": false
+}

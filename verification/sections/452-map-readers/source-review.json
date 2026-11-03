@@ -1,0 +1,34 @@
+{
+  "section": 452,
+  "changed_or_new_sources": {
+    "rouge/player_reference_window.py": {
+      "sha256": "181f4ca3ba160773430fb604fed2386fa5f04a76a5a34cb1573ae61317b923a5",
+      "bytes": 6936
+    },
+    "rouge/player_compact.py": {
+      "sha256": "283205f277ba645019c9afc029ee1044d8839d812c14b2b565fa93b38c41be5a",
+      "bytes": 25967
+    },
+    "rouge/player_map.py": {
+      "sha256": "f5d4c784f3040c8aa3e4f2a2cd1d35be0a291a4035a129a148e036a13bf5e5de",
+      "bytes": 40495
+    },
+    "rouge/player_map_reader.py": {
+      "sha256": "0bb704b045bc2c68a4478c12c292462d90f301b65c42c9f655c9ab33d5176bf7",
+      "bytes": 3240
+    },
+    "rouge/current_node_readers_view.py": {
+      "sha256": "040cd65bf02824c015262ace55bb3fc8c7f3b7517ed07bc2bfa7ef9f1ac44c72",
+      "bytes": 3461
+    },
+    "tests/test_map_reader_host_452.py": {
+      "sha256": "8e0881b08b1d99287bcf83dbc4e077ca6f2f5912a2db854f82163cb8cc6e4a45",
+      "bytes": 3923
+    }
+  },
+  "review": "Direct QWidget event/stage panels in existing host; existing provider constructors and exact source/result matching retained.20-way dialogue dispatch consolidated to fixed provider registry.Stand-alone routes unchanged.Transition hide retains map-bound page; source bridge rechecked as well as panel source.Hidden source cleanup no longer hides a different active page.Expired navigation entries removed; restored window requalifies sources before retained reading.",
+  "failed_probes": "native01 patched the wrong provider; native02 expected a nonexistent stage_id result key. Actual provider/resources and result schema were inspected and subsequent native checks corrected. These records are preserved, not counted as passed.",
+  "no_new_low_probability_defensive_scaffolding": true,
+  "no_game_input_chat_or_personal_upload": true,
+  "whole_program_review_complete": false
+}

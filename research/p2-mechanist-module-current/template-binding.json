@@ -1,0 +1,2043 @@
+{
+  "source": "config/buff_template_holder.ab",
+  "source_bytes": 2022247,
+  "source_sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+  "manifest_version": "26-09-13-15-28-10-30688348",
+  "parse_stats": [
+    {
+      "file": "CAB-7983df61b3ae63c96fb4e076fc3d80af",
+      "objects_read_exact": 2
+    }
+  ],
+  "templates": [
+    {
+      "templateKey": "mcnist_s_3_projectile_trigger",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_buff\":{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"LIMITED\",\"takeSnapshotWhenExtend\":false,\"durationKey\":\"invalid\",\"remainingTimeKey\":null,\"lifeTime\":2.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[{\"key\":\"respawn_stopped\",\"value\":1.0,\"valueStr\":\"\"}],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_buff": {
+                    "attributes": {
+                      "abnormalFlags": null,
+                      "abnormalImmunes": null,
+                      "abnormalAntis": null,
+                      "abnormalCombos": null,
+                      "abnormalComboImmunes": null,
+                      "attributeModifiers": null
+                    },
+                    "buffKey": "mcnist_s_3_projectile",
+                    "loadFromDB": false,
+                    "isDurableBuff": false,
+                    "isDamageMissable": false,
+                    "isSilenceable": false,
+                    "isStunnable": false,
+                    "isFreezable": false,
+                    "isLevitatable": false,
+                    "isGroundBoundable": false,
+                    "statusResistable": "AUTOMATIC",
+                    "templateKey": "mcnist_s_3_projectile",
+                    "disableOverride": false,
+                    "overrideKey": null,
+                    "overrideType": "DEFAULT",
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": false,
+                    "clearAllStackCntWhenTimeUp": false,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": false,
+                    "overrideEffectKey": null,
+                    "overrideOnEventPriority": false,
+                    "onEventPriority": "DEFAULT",
+                    "audioSignal": null,
+                    "lifeTimeType": "LIMITED",
+                    "takeSnapshotWhenExtend": false,
+                    "durationKey": "invalid",
+                    "remainingTimeKey": null,
+                    "lifeTime": 2.0,
+                    "triggerLifeType": "IMMEDIATELY",
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": true,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": false,
+                    "blackboard": [
+                      {
+                        "key": "respawn_stopped",
+                        "value": 1.0,
+                        "valueStr": ""
+                      }
+                    ],
+                    "enableInitDirectionFromSource": false
+                  },
+                  "_buffOwner": "BUFF_OWNER",
+                  "_useSpecialBuffSource": false,
+                  "_specialBuffSource": "BUFF_SOURCE",
+                  "_isDerivedBuff": false,
+                  "_finishDerivedBuffIfParentFinish": false,
+                  "_inherateSourceProjectileFromParentBuff": false,
+                  "_hookEffectKeyFromSourceProjectile": false,
+                  "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_e_002_trait_atk",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 14,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_targetType\":\"TARGET\",\"_checkBlockedBySource\":true,\"_checkBlockedBySourceToken\":false,\"_sourceType\":\"BUFF_OWNER\",\"_checkBlockedCount\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckBlocked\"},\"_succeedNodes\":[{\"_filterApplyWay\":false,\"_filterProjectileKey\":\"\",\"_applyWay\":\"NONE\",\"_defaultValue\":1.0,\"_filterNoneApplyWay\":false,\"_cancelIfAtkScaleZero\":false,\"_atkScaleKey\":\"atk_scale\",\"_overwriteAtkScale\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AtkScaleUp\"}],\"_failNodes\":[{\"_targetType\":\"TARGET\",\"_checkBlockedBySource\":false,\"_checkBlockedBySourceToken\":true,\"_sourceType\":\"BUFF_OWNER\",\"_checkBlockedCount\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckBlocked\"},{\"_filterApplyWay\":false,\"_filterProjectileKey\":\"\",\"_applyWay\":\"NONE\",\"_defaultValue\":1.0,\"_filterNoneApplyWay\":false,\"_cancelIfAtkScaleZero\":false,\"_atkScaleKey\":\"atk_scale\",\"_overwriteAtkScale\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AtkScaleUp\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_conditionNode": {
+                    "_targetType": "TARGET",
+                    "_checkBlockedBySource": true,
+                    "_checkBlockedBySourceToken": false,
+                    "_sourceType": "BUFF_OWNER",
+                    "_checkBlockedCount": false,
+                    "$type": "Torappu.Battle.Action.Nodes+CheckBlocked"
+                  },
+                  "_succeedNodes": [
+                    {
+                      "_filterApplyWay": false,
+                      "_filterProjectileKey": "",
+                      "_applyWay": "NONE",
+                      "_defaultValue": 1.0,
+                      "_filterNoneApplyWay": false,
+                      "_cancelIfAtkScaleZero": false,
+                      "_atkScaleKey": "atk_scale",
+                      "_overwriteAtkScale": false,
+                      "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_targetType": "TARGET",
+                      "_checkBlockedBySource": false,
+                      "_checkBlockedBySourceToken": true,
+                      "_sourceType": "BUFF_OWNER",
+                      "_checkBlockedCount": false,
+                      "$type": "Torappu.Battle.Action.Nodes+CheckBlocked"
+                    },
+                    {
+                      "_filterApplyWay": false,
+                      "_filterProjectileKey": "",
+                      "_applyWay": "NONE",
+                      "_defaultValue": 1.0,
+                      "_filterNoneApplyWay": false,
+                      "_cancelIfAtkScaleZero": false,
+                      "_atkScaleKey": "atk_scale",
+                      "_overwriteAtkScale": false,
+                      "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp"
+                    }
+                  ],
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_3_token",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_sourceType\":\"BUFF_OWNER\",\"_buffKey\":\"mcnist_s_3_affecting\",\"_loadFromBlackboard\":false,\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenBuffsById\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_sourceType": "BUFF_OWNER",
+                  "_buffKey": "mcnist_s_3_affecting",
+                  "_loadFromBlackboard": false,
+                  "_decCntIfStack": false,
+                  "_updateOverrideMap": true,
+                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenBuffsById"
+                }
+              ]
+            }
+          },
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"_excludeThisBuff\":false,\"_excludeInTriggerAll\":false,\"_buffKeys\":[\"mcnist_s_3_projectile_trigger\"],\"_forceTrigger\":false,\"_triggerAllBuffs\":false,\"$type\":\"Torappu.Battle.Action.Nodes+TriggerBuffsByKeys\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_excludeThisBuff": false,
+                  "_excludeInTriggerAll": false,
+                  "_buffKeys": [
+                    "mcnist_s_3_projectile_trigger"
+                  ],
+                  "_forceTrigger": false,
+                  "_triggerAllBuffs": false,
+                  "$type": "Torappu.Battle.Action.Nodes+TriggerBuffsByKeys"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_3_projectile_real",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_conditionsNode\":[{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"direction\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":0,\"_anotherKeyToCompare\":null,\"_condType\":\"EQUALS\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"}],\"_succeedNodes\":[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"faceLeft\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":1,\"_anotherKeyToCompare\":null,\"_condType\":\"GE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},\"_succeedNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token_up\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"_failNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token_up_right\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"_failNodes\":[{\"_conditionsNode\":[{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"direction\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":2,\"_anotherKeyToCompare\":null,\"_condType\":\"EQUALS\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"}],\"_succeedNodes\":[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"faceLeft\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":1,\"_anotherKeyToCompare\":null,\"_condType\":\"GE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},\"_succeedNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token_down\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"_failNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token_down_right\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"_failNodes\":[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"faceLeft\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":1,\"_anotherKeyToCompare\":null,\"_condType\":\"GE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},\"_succeedNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"_failNodes\":[{\"_overwriteActions\":true,\"_ev\":\"ON_HIT_TILE\",\"_actions\":[{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":false,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"},{\"_options\":{\"buildableType\":\"MELEE\",\"allowNoneBuildableType\":false,\"passableMask\":\"WALK_ONLY\",\"allowNonePassableMask\":false,\"checkBuildableOrPassable\":false,\"checkExtraBuildableCheckers\":false,\"advancedBuildableMask\":\"NONE,DEFAULT\",\"advancedBuildableMaskExcept\":false,\"allowAllAdvancedBuildableMask\":false,\"heightType\":\"LOWLAND\",\"checkHeightType\":false,\"checkTileMode\":false,\"modeIndex\":-1,\"checkTileMoveCost\":false,\"moveCostCompareType\":\"LT\",\"moveCostThreshold\":0,\"allowedTileBlackboardKey\":null,\"excludeTileBlackboardKey\":null,\"checkTileTypes\":false,\"exceptTileTypes\":false,\"tileTypesMask\":\"NONE,DEFAULT\",\"checkTileHidden\":false},\"$type\":\"Torappu.Battle.Action.Nodes+AssignMcgrafTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_sourceType\":\"SOURCE\",\"_targetType\":\"SOURCE\",\"_ignoreSourceType\":false,\"_ignoreTargetType\":false,\"_spawnTokenFromCards\":true,\"_readDataFromBlackboard\":false,\"_refreshTokenCardCooldown\":false,\"_useTokenKeyDirectly\":false,\"_forceSpawn\":false,\"_spawnTokenKey\":null,\"_respawnSameToken\":false,\"_returnIfSpawnFailed\":true,\"_tokenToSpawn\":{\"uniEquipIds\":null,\"showSpIllust\":false,\"masterInfos\":null,\"inst\":{\"characterKey\":null,\"level\":0,\"phase\":\"PHASE_0\",\"favorBattlePhase\":0,\"potentialRank\":0},\"skillIndex\":0,\"mainSkillLvl\":1,\"skinId\":null,\"tmplId\":null,\"overrideSkillBlackboard\":null,\"overrideTalents\":null},\"_specifierSideType\":false,\"_specifierRelativeSideType\":false,\"_spawnedTokenSideType\":\"NONE\",\"_specifierPlayerSideType\":false,\"_playerSide\":\"DEFAULT\",\"_checkBuildableType\":false,\"_doRuneProcess\":false,\"_tileEffect\":null,\"_createEffectOnTokenTile\":false,\"_tileFromBlackboard\":false,\"_tileFromBlackboardFixed\":true,\"_tileFromSnapshot\":false,\"_loadTileFromCharacterSharedData\":false,\"_locatedColBBKey\":\"\",\"_locatedRowBBKey\":\"\",\"_ignoreAdvancedBuildableMask\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_mode\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_mode\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":null,\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":null,\"enableInitDirectionFromSource\":false}],\"_useDirectionFromSharedData\":true,\"$type\":\"Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_targetType\":\"SOURCE\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}],\"_sourceType\":\"BUFF_OWNER\",\"_spawnSourceType\":\"BUFF_SOURCE\",\"_abilityName\":\"EmitProjectile\",\"_projectileKey\":\"projectile_chr_mcnist_s3_token_right\",\"_assignBlackboardToProjectile\":true,\"$type\":\"Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"_isAnd\":false,\"$type\":\"Torappu.Battle.Action.Nodes+IfConditions\"}],\"_isAnd\":false,\"$type\":\"Torappu.Battle.Action.Nodes+IfConditions\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_conditionsNode": [
+                    {
+                      "_targetType": "BUFF_OWNER",
+                      "_anotherBuff": false,
+                      "_buffKey": null,
+                      "_blackboardKey": "direction",
+                      "_blackboardKeyFromBb": null,
+                      "_valueToCompare": 0,
+                      "_anotherKeyToCompare": null,
+                      "_condType": "EQUALS",
+                      "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                    }
+                  ],
+                  "_succeedNodes": [
+                    {
+                      "_conditionNode": {
+                        "_targetType": "BUFF_OWNER",
+                        "_anotherBuff": false,
+                        "_buffKey": null,
+                        "_blackboardKey": "faceLeft",
+                        "_blackboardKeyFromBb": null,
+                        "_valueToCompare": 1,
+                        "_anotherKeyToCompare": null,
+                        "_condType": "GE",
+                        "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                      },
+                      "_succeedNodes": [
+                        {
+                          "_overwriteActions": true,
+                          "_ev": "ON_HIT_TILE",
+                          "_actions": [
+                            {
+                              "_targetType": "SOURCE",
+                              "_hiddenReason": "deck_default_hidden",
+                              "_force": false,
+                              "_isShow": true,
+                              "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                            },
+                            {
+                              "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                              "_sourceType": "SOURCE",
+                              "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                            },
+                            {
+                              "_options": {
+                                "buildableType": "MELEE",
+                                "allowNoneBuildableType": false,
+                                "passableMask": "WALK_ONLY",
+                                "allowNonePassableMask": false,
+                                "checkBuildableOrPassable": false,
+                                "checkExtraBuildableCheckers": false,
+                                "advancedBuildableMask": "NONE,DEFAULT",
+                                "advancedBuildableMaskExcept": false,
+                                "allowAllAdvancedBuildableMask": false,
+                                "heightType": "LOWLAND",
+                                "checkHeightType": false,
+                                "checkTileMode": false,
+                                "modeIndex": -1,
+                                "checkTileMoveCost": false,
+                                "moveCostCompareType": "LT",
+                                "moveCostThreshold": 0,
+                                "allowedTileBlackboardKey": null,
+                                "excludeTileBlackboardKey": null,
+                                "checkTileTypes": false,
+                                "exceptTileTypes": false,
+                                "tileTypesMask": "NONE,DEFAULT",
+                                "checkTileHidden": false
+                              },
+                              "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                            },
+                            {
+                              "_sourceType": "SOURCE",
+                              "_targetType": "SOURCE",
+                              "_ignoreSourceType": false,
+                              "_ignoreTargetType": false,
+                              "_spawnTokenFromCards": true,
+                              "_readDataFromBlackboard": false,
+                              "_refreshTokenCardCooldown": false,
+                              "_useTokenKeyDirectly": false,
+                              "_forceSpawn": false,
+                              "_spawnTokenKey": null,
+                              "_respawnSameToken": false,
+                              "_returnIfSpawnFailed": true,
+                              "_tokenToSpawn": {
+                                "uniEquipIds": null,
+                                "showSpIllust": false,
+                                "masterInfos": null,
+                                "inst": {
+                                  "characterKey": null,
+                                  "level": 0,
+                                  "phase": "PHASE_0",
+                                  "favorBattlePhase": 0,
+                                  "potentialRank": 0
+                                },
+                                "skillIndex": 0,
+                                "mainSkillLvl": 1,
+                                "skinId": null,
+                                "tmplId": null,
+                                "overrideSkillBlackboard": null,
+                                "overrideTalents": null
+                              },
+                              "_specifierSideType": false,
+                              "_specifierRelativeSideType": false,
+                              "_spawnedTokenSideType": "NONE",
+                              "_specifierPlayerSideType": false,
+                              "_playerSide": "DEFAULT",
+                              "_checkBuildableType": false,
+                              "_doRuneProcess": false,
+                              "_tileEffect": null,
+                              "_createEffectOnTokenTile": false,
+                              "_tileFromBlackboard": false,
+                              "_tileFromBlackboardFixed": true,
+                              "_tileFromSnapshot": false,
+                              "_loadTileFromCharacterSharedData": false,
+                              "_locatedColBBKey": "",
+                              "_locatedRowBBKey": "",
+                              "_ignoreAdvancedBuildableMask": false,
+                              "_buffs": [
+                                {
+                                  "attributes": {
+                                    "abnormalFlags": null,
+                                    "abnormalImmunes": null,
+                                    "abnormalAntis": null,
+                                    "abnormalCombos": null,
+                                    "abnormalComboImmunes": null,
+                                    "attributeModifiers": null
+                                  },
+                                  "buffKey": "mcnist_s_3_projectile_mode",
+                                  "loadFromDB": false,
+                                  "isDurableBuff": false,
+                                  "isDamageMissable": false,
+                                  "isSilenceable": false,
+                                  "isStunnable": false,
+                                  "isFreezable": false,
+                                  "isLevitatable": false,
+                                  "isGroundBoundable": false,
+                                  "statusResistable": "AUTOMATIC",
+                                  "templateKey": "mcnist_s_3_projectile_mode",
+                                  "disableOverride": false,
+                                  "overrideKey": null,
+                                  "overrideType": "DEFAULT",
+                                  "maxStackCnt": 1,
+                                  "refreshRemainingTimeWhenStackMax": false,
+                                  "clearAllStackCntWhenTimeUp": false,
+                                  "maxValidStackCnt": -1,
+                                  "independentCharacterSource": false,
+                                  "overrideEffectKey": null,
+                                  "overrideOnEventPriority": false,
+                                  "onEventPriority": "DEFAULT",
+                                  "audioSignal": null,
+                                  "lifeTimeType": "IMMEDIATELY",
+                                  "takeSnapshotWhenExtend": false,
+                                  "durationKey": null,
+                                  "remainingTimeKey": null,
+                                  "lifeTime": 0.0,
+                                  "triggerLifeType": "IMMEDIATELY",
+                                  "triggerCnt": 0,
+                                  "triggerInterval": -1.0,
+                                  "waitFirstTriggerInterval": true,
+                                  "firstTriggerInterval": -1.0,
+                                  "priority": -1,
+                                  "priorityBBKeys": null,
+                                  "stripBlackboardParamsWithBuffKey": false,
+                                  "blackboard": null,
+                                  "enableInitDirectionFromSource": false
+                                }
+                              ],
+                              "_useDirectionFromSharedData": true,
+                              "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                            },
+                            {
+                              "_targetType": "SOURCE",
+                              "_hiddenReason": "deck_default_hidden",
+                              "_force": true,
+                              "_isShow": true,
+                              "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                            },
+                            {
+                              "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                              "_sourceType": "SOURCE",
+                              "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                            }
+                          ],
+                          "_sourceType": "BUFF_OWNER",
+                          "_spawnSourceType": "BUFF_SOURCE",
+                          "_abilityName": "EmitProjectile",
+                          "_projectileKey": "projectile_chr_mcnist_s3_token_up",
+                          "_assignBlackboardToProjectile": true,
+                          "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                        }
+                      ],
+                      "_failNodes": [
+                        {
+                          "_overwriteActions": true,
+                          "_ev": "ON_HIT_TILE",
+                          "_actions": [
+                            {
+                              "_targetType": "SOURCE",
+                              "_hiddenReason": "deck_default_hidden",
+                              "_force": false,
+                              "_isShow": true,
+                              "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                            },
+                            {
+                              "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                              "_sourceType": "SOURCE",
+                              "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                            },
+                            {
+                              "_options": {
+                                "buildableType": "MELEE",
+                                "allowNoneBuildableType": false,
+                                "passableMask": "WALK_ONLY",
+                                "allowNonePassableMask": false,
+                                "checkBuildableOrPassable": false,
+                                "checkExtraBuildableCheckers": false,
+                                "advancedBuildableMask": "NONE,DEFAULT",
+                                "advancedBuildableMaskExcept": false,
+                                "allowAllAdvancedBuildableMask": false,
+                                "heightType": "LOWLAND",
+                                "checkHeightType": false,
+                                "checkTileMode": false,
+                                "modeIndex": -1,
+                                "checkTileMoveCost": false,
+                                "moveCostCompareType": "LT",
+                                "moveCostThreshold": 0,
+                                "allowedTileBlackboardKey": null,
+                                "excludeTileBlackboardKey": null,
+                                "checkTileTypes": false,
+                                "exceptTileTypes": false,
+                                "tileTypesMask": "NONE,DEFAULT",
+                                "checkTileHidden": false
+                              },
+                              "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                            },
+                            {
+                              "_sourceType": "SOURCE",
+                              "_targetType": "SOURCE",
+                              "_ignoreSourceType": false,
+                              "_ignoreTargetType": false,
+                              "_spawnTokenFromCards": true,
+                              "_readDataFromBlackboard": false,
+                              "_refreshTokenCardCooldown": false,
+                              "_useTokenKeyDirectly": false,
+                              "_forceSpawn": false,
+                              "_spawnTokenKey": null,
+                              "_respawnSameToken": false,
+                              "_returnIfSpawnFailed": true,
+                              "_tokenToSpawn": {
+                                "uniEquipIds": null,
+                                "showSpIllust": false,
+                                "masterInfos": null,
+                                "inst": {
+                                  "characterKey": null,
+                                  "level": 0,
+                                  "phase": "PHASE_0",
+                                  "favorBattlePhase": 0,
+                                  "potentialRank": 0
+                                },
+                                "skillIndex": 0,
+                                "mainSkillLvl": 1,
+                                "skinId": null,
+                                "tmplId": null,
+                                "overrideSkillBlackboard": null,
+                                "overrideTalents": null
+                              },
+                              "_specifierSideType": false,
+                              "_specifierRelativeSideType": false,
+                              "_spawnedTokenSideType": "NONE",
+                              "_specifierPlayerSideType": false,
+                              "_playerSide": "DEFAULT",
+                              "_checkBuildableType": false,
+                              "_doRuneProcess": false,
+                              "_tileEffect": null,
+                              "_createEffectOnTokenTile": false,
+                              "_tileFromBlackboard": false,
+                              "_tileFromBlackboardFixed": true,
+                              "_tileFromSnapshot": false,
+                              "_loadTileFromCharacterSharedData": false,
+                              "_locatedColBBKey": "",
+                              "_locatedRowBBKey": "",
+                              "_ignoreAdvancedBuildableMask": false,
+                              "_buffs": [
+                                {
+                                  "attributes": {
+                                    "abnormalFlags": null,
+                                    "abnormalImmunes": null,
+                                    "abnormalAntis": null,
+                                    "abnormalCombos": null,
+                                    "abnormalComboImmunes": null,
+                                    "attributeModifiers": null
+                                  },
+                                  "buffKey": "mcnist_s_3_projectile_mode",
+                                  "loadFromDB": false,
+                                  "isDurableBuff": false,
+                                  "isDamageMissable": false,
+                                  "isSilenceable": false,
+                                  "isStunnable": false,
+                                  "isFreezable": false,
+                                  "isLevitatable": false,
+                                  "isGroundBoundable": false,
+                                  "statusResistable": "AUTOMATIC",
+                                  "templateKey": "mcnist_s_3_projectile_mode",
+                                  "disableOverride": false,
+                                  "overrideKey": null,
+                                  "overrideType": "DEFAULT",
+                                  "maxStackCnt": 1,
+                                  "refreshRemainingTimeWhenStackMax": false,
+                                  "clearAllStackCntWhenTimeUp": false,
+                                  "maxValidStackCnt": -1,
+                                  "independentCharacterSource": false,
+                                  "overrideEffectKey": null,
+                                  "overrideOnEventPriority": false,
+                                  "onEventPriority": "DEFAULT",
+                                  "audioSignal": null,
+                                  "lifeTimeType": "IMMEDIATELY",
+                                  "takeSnapshotWhenExtend": false,
+                                  "durationKey": null,
+                                  "remainingTimeKey": null,
+                                  "lifeTime": 0.0,
+                                  "triggerLifeType": "IMMEDIATELY",
+                                  "triggerCnt": 0,
+                                  "triggerInterval": -1.0,
+                                  "waitFirstTriggerInterval": true,
+                                  "firstTriggerInterval": -1.0,
+                                  "priority": -1,
+                                  "priorityBBKeys": null,
+                                  "stripBlackboardParamsWithBuffKey": false,
+                                  "blackboard": null,
+                                  "enableInitDirectionFromSource": false
+                                }
+                              ],
+                              "_useDirectionFromSharedData": true,
+                              "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                            },
+                            {
+                              "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                            },
+                            {
+                              "_targetType": "SOURCE",
+                              "_hiddenReason": "deck_default_hidden",
+                              "_force": true,
+                              "_isShow": true,
+                              "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                            },
+                            {
+                              "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                              "_sourceType": "SOURCE",
+                              "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                            }
+                          ],
+                          "_sourceType": "BUFF_OWNER",
+                          "_spawnSourceType": "BUFF_SOURCE",
+                          "_abilityName": "EmitProjectile",
+                          "_projectileKey": "projectile_chr_mcnist_s3_token_up_right",
+                          "_assignBlackboardToProjectile": true,
+                          "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                        }
+                      ],
+                      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_conditionsNode": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_anotherBuff": false,
+                          "_buffKey": null,
+                          "_blackboardKey": "direction",
+                          "_blackboardKeyFromBb": null,
+                          "_valueToCompare": 2,
+                          "_anotherKeyToCompare": null,
+                          "_condType": "EQUALS",
+                          "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                        }
+                      ],
+                      "_succeedNodes": [
+                        {
+                          "_conditionNode": {
+                            "_targetType": "BUFF_OWNER",
+                            "_anotherBuff": false,
+                            "_buffKey": null,
+                            "_blackboardKey": "faceLeft",
+                            "_blackboardKeyFromBb": null,
+                            "_valueToCompare": 1,
+                            "_anotherKeyToCompare": null,
+                            "_condType": "GE",
+                            "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                          },
+                          "_succeedNodes": [
+                            {
+                              "_overwriteActions": true,
+                              "_ev": "ON_HIT_TILE",
+                              "_actions": [
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": false,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                },
+                                {
+                                  "_options": {
+                                    "buildableType": "MELEE",
+                                    "allowNoneBuildableType": false,
+                                    "passableMask": "WALK_ONLY",
+                                    "allowNonePassableMask": false,
+                                    "checkBuildableOrPassable": false,
+                                    "checkExtraBuildableCheckers": false,
+                                    "advancedBuildableMask": "NONE,DEFAULT",
+                                    "advancedBuildableMaskExcept": false,
+                                    "allowAllAdvancedBuildableMask": false,
+                                    "heightType": "LOWLAND",
+                                    "checkHeightType": false,
+                                    "checkTileMode": false,
+                                    "modeIndex": -1,
+                                    "checkTileMoveCost": false,
+                                    "moveCostCompareType": "LT",
+                                    "moveCostThreshold": 0,
+                                    "allowedTileBlackboardKey": null,
+                                    "excludeTileBlackboardKey": null,
+                                    "checkTileTypes": false,
+                                    "exceptTileTypes": false,
+                                    "tileTypesMask": "NONE,DEFAULT",
+                                    "checkTileHidden": false
+                                  },
+                                  "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_sourceType": "SOURCE",
+                                  "_targetType": "SOURCE",
+                                  "_ignoreSourceType": false,
+                                  "_ignoreTargetType": false,
+                                  "_spawnTokenFromCards": true,
+                                  "_readDataFromBlackboard": false,
+                                  "_refreshTokenCardCooldown": false,
+                                  "_useTokenKeyDirectly": false,
+                                  "_forceSpawn": false,
+                                  "_spawnTokenKey": null,
+                                  "_respawnSameToken": false,
+                                  "_returnIfSpawnFailed": true,
+                                  "_tokenToSpawn": {
+                                    "uniEquipIds": null,
+                                    "showSpIllust": false,
+                                    "masterInfos": null,
+                                    "inst": {
+                                      "characterKey": null,
+                                      "level": 0,
+                                      "phase": "PHASE_0",
+                                      "favorBattlePhase": 0,
+                                      "potentialRank": 0
+                                    },
+                                    "skillIndex": 0,
+                                    "mainSkillLvl": 1,
+                                    "skinId": null,
+                                    "tmplId": null,
+                                    "overrideSkillBlackboard": null,
+                                    "overrideTalents": null
+                                  },
+                                  "_specifierSideType": false,
+                                  "_specifierRelativeSideType": false,
+                                  "_spawnedTokenSideType": "NONE",
+                                  "_specifierPlayerSideType": false,
+                                  "_playerSide": "DEFAULT",
+                                  "_checkBuildableType": false,
+                                  "_doRuneProcess": false,
+                                  "_tileEffect": null,
+                                  "_createEffectOnTokenTile": false,
+                                  "_tileFromBlackboard": false,
+                                  "_tileFromBlackboardFixed": true,
+                                  "_tileFromSnapshot": false,
+                                  "_loadTileFromCharacterSharedData": false,
+                                  "_locatedColBBKey": "",
+                                  "_locatedRowBBKey": "",
+                                  "_ignoreAdvancedBuildableMask": false,
+                                  "_buffs": [
+                                    {
+                                      "attributes": {
+                                        "abnormalFlags": null,
+                                        "abnormalImmunes": null,
+                                        "abnormalAntis": null,
+                                        "abnormalCombos": null,
+                                        "abnormalComboImmunes": null,
+                                        "attributeModifiers": null
+                                      },
+                                      "buffKey": "mcnist_s_3_projectile_mode",
+                                      "loadFromDB": false,
+                                      "isDurableBuff": false,
+                                      "isDamageMissable": false,
+                                      "isSilenceable": false,
+                                      "isStunnable": false,
+                                      "isFreezable": false,
+                                      "isLevitatable": false,
+                                      "isGroundBoundable": false,
+                                      "statusResistable": "AUTOMATIC",
+                                      "templateKey": "mcnist_s_3_projectile_mode",
+                                      "disableOverride": false,
+                                      "overrideKey": null,
+                                      "overrideType": "DEFAULT",
+                                      "maxStackCnt": 1,
+                                      "refreshRemainingTimeWhenStackMax": false,
+                                      "clearAllStackCntWhenTimeUp": false,
+                                      "maxValidStackCnt": -1,
+                                      "independentCharacterSource": false,
+                                      "overrideEffectKey": null,
+                                      "overrideOnEventPriority": false,
+                                      "onEventPriority": "DEFAULT",
+                                      "audioSignal": null,
+                                      "lifeTimeType": "IMMEDIATELY",
+                                      "takeSnapshotWhenExtend": false,
+                                      "durationKey": null,
+                                      "remainingTimeKey": null,
+                                      "lifeTime": 0.0,
+                                      "triggerLifeType": "IMMEDIATELY",
+                                      "triggerCnt": 0,
+                                      "triggerInterval": -1.0,
+                                      "waitFirstTriggerInterval": true,
+                                      "firstTriggerInterval": -1.0,
+                                      "priority": -1,
+                                      "priorityBBKeys": null,
+                                      "stripBlackboardParamsWithBuffKey": false,
+                                      "blackboard": null,
+                                      "enableInitDirectionFromSource": false
+                                    }
+                                  ],
+                                  "_useDirectionFromSharedData": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                                },
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": true,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                }
+                              ],
+                              "_sourceType": "BUFF_OWNER",
+                              "_spawnSourceType": "BUFF_SOURCE",
+                              "_abilityName": "EmitProjectile",
+                              "_projectileKey": "projectile_chr_mcnist_s3_token_down",
+                              "_assignBlackboardToProjectile": true,
+                              "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                            }
+                          ],
+                          "_failNodes": [
+                            {
+                              "_overwriteActions": true,
+                              "_ev": "ON_HIT_TILE",
+                              "_actions": [
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": false,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                },
+                                {
+                                  "_options": {
+                                    "buildableType": "MELEE",
+                                    "allowNoneBuildableType": false,
+                                    "passableMask": "WALK_ONLY",
+                                    "allowNonePassableMask": false,
+                                    "checkBuildableOrPassable": false,
+                                    "checkExtraBuildableCheckers": false,
+                                    "advancedBuildableMask": "NONE,DEFAULT",
+                                    "advancedBuildableMaskExcept": false,
+                                    "allowAllAdvancedBuildableMask": false,
+                                    "heightType": "LOWLAND",
+                                    "checkHeightType": false,
+                                    "checkTileMode": false,
+                                    "modeIndex": -1,
+                                    "checkTileMoveCost": false,
+                                    "moveCostCompareType": "LT",
+                                    "moveCostThreshold": 0,
+                                    "allowedTileBlackboardKey": null,
+                                    "excludeTileBlackboardKey": null,
+                                    "checkTileTypes": false,
+                                    "exceptTileTypes": false,
+                                    "tileTypesMask": "NONE,DEFAULT",
+                                    "checkTileHidden": false
+                                  },
+                                  "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_sourceType": "SOURCE",
+                                  "_targetType": "SOURCE",
+                                  "_ignoreSourceType": false,
+                                  "_ignoreTargetType": false,
+                                  "_spawnTokenFromCards": true,
+                                  "_readDataFromBlackboard": false,
+                                  "_refreshTokenCardCooldown": false,
+                                  "_useTokenKeyDirectly": false,
+                                  "_forceSpawn": false,
+                                  "_spawnTokenKey": null,
+                                  "_respawnSameToken": false,
+                                  "_returnIfSpawnFailed": true,
+                                  "_tokenToSpawn": {
+                                    "uniEquipIds": null,
+                                    "showSpIllust": false,
+                                    "masterInfos": null,
+                                    "inst": {
+                                      "characterKey": null,
+                                      "level": 0,
+                                      "phase": "PHASE_0",
+                                      "favorBattlePhase": 0,
+                                      "potentialRank": 0
+                                    },
+                                    "skillIndex": 0,
+                                    "mainSkillLvl": 1,
+                                    "skinId": null,
+                                    "tmplId": null,
+                                    "overrideSkillBlackboard": null,
+                                    "overrideTalents": null
+                                  },
+                                  "_specifierSideType": false,
+                                  "_specifierRelativeSideType": false,
+                                  "_spawnedTokenSideType": "NONE",
+                                  "_specifierPlayerSideType": false,
+                                  "_playerSide": "DEFAULT",
+                                  "_checkBuildableType": false,
+                                  "_doRuneProcess": false,
+                                  "_tileEffect": null,
+                                  "_createEffectOnTokenTile": false,
+                                  "_tileFromBlackboard": false,
+                                  "_tileFromBlackboardFixed": true,
+                                  "_tileFromSnapshot": false,
+                                  "_loadTileFromCharacterSharedData": false,
+                                  "_locatedColBBKey": "",
+                                  "_locatedRowBBKey": "",
+                                  "_ignoreAdvancedBuildableMask": false,
+                                  "_buffs": [
+                                    {
+                                      "attributes": {
+                                        "abnormalFlags": null,
+                                        "abnormalImmunes": null,
+                                        "abnormalAntis": null,
+                                        "abnormalCombos": null,
+                                        "abnormalComboImmunes": null,
+                                        "attributeModifiers": null
+                                      },
+                                      "buffKey": "mcnist_s_3_projectile_mode",
+                                      "loadFromDB": false,
+                                      "isDurableBuff": false,
+                                      "isDamageMissable": false,
+                                      "isSilenceable": false,
+                                      "isStunnable": false,
+                                      "isFreezable": false,
+                                      "isLevitatable": false,
+                                      "isGroundBoundable": false,
+                                      "statusResistable": "AUTOMATIC",
+                                      "templateKey": "mcnist_s_3_projectile_mode",
+                                      "disableOverride": false,
+                                      "overrideKey": null,
+                                      "overrideType": "DEFAULT",
+                                      "maxStackCnt": 1,
+                                      "refreshRemainingTimeWhenStackMax": false,
+                                      "clearAllStackCntWhenTimeUp": false,
+                                      "maxValidStackCnt": -1,
+                                      "independentCharacterSource": false,
+                                      "overrideEffectKey": null,
+                                      "overrideOnEventPriority": false,
+                                      "onEventPriority": "DEFAULT",
+                                      "audioSignal": null,
+                                      "lifeTimeType": "IMMEDIATELY",
+                                      "takeSnapshotWhenExtend": false,
+                                      "durationKey": null,
+                                      "remainingTimeKey": null,
+                                      "lifeTime": 0.0,
+                                      "triggerLifeType": "IMMEDIATELY",
+                                      "triggerCnt": 0,
+                                      "triggerInterval": -1.0,
+                                      "waitFirstTriggerInterval": true,
+                                      "firstTriggerInterval": -1.0,
+                                      "priority": -1,
+                                      "priorityBBKeys": null,
+                                      "stripBlackboardParamsWithBuffKey": false,
+                                      "blackboard": null,
+                                      "enableInitDirectionFromSource": false
+                                    }
+                                  ],
+                                  "_useDirectionFromSharedData": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                                },
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": true,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                }
+                              ],
+                              "_sourceType": "BUFF_OWNER",
+                              "_spawnSourceType": "BUFF_SOURCE",
+                              "_abilityName": "EmitProjectile",
+                              "_projectileKey": "projectile_chr_mcnist_s3_token_down_right",
+                              "_assignBlackboardToProjectile": true,
+                              "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                            }
+                          ],
+                          "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                        }
+                      ],
+                      "_failNodes": [
+                        {
+                          "_conditionNode": {
+                            "_targetType": "BUFF_OWNER",
+                            "_anotherBuff": false,
+                            "_buffKey": null,
+                            "_blackboardKey": "faceLeft",
+                            "_blackboardKeyFromBb": null,
+                            "_valueToCompare": 1,
+                            "_anotherKeyToCompare": null,
+                            "_condType": "GE",
+                            "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                          },
+                          "_succeedNodes": [
+                            {
+                              "_overwriteActions": true,
+                              "_ev": "ON_HIT_TILE",
+                              "_actions": [
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": false,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                },
+                                {
+                                  "_options": {
+                                    "buildableType": "MELEE",
+                                    "allowNoneBuildableType": false,
+                                    "passableMask": "WALK_ONLY",
+                                    "allowNonePassableMask": false,
+                                    "checkBuildableOrPassable": false,
+                                    "checkExtraBuildableCheckers": false,
+                                    "advancedBuildableMask": "NONE,DEFAULT",
+                                    "advancedBuildableMaskExcept": false,
+                                    "allowAllAdvancedBuildableMask": false,
+                                    "heightType": "LOWLAND",
+                                    "checkHeightType": false,
+                                    "checkTileMode": false,
+                                    "modeIndex": -1,
+                                    "checkTileMoveCost": false,
+                                    "moveCostCompareType": "LT",
+                                    "moveCostThreshold": 0,
+                                    "allowedTileBlackboardKey": null,
+                                    "excludeTileBlackboardKey": null,
+                                    "checkTileTypes": false,
+                                    "exceptTileTypes": false,
+                                    "tileTypesMask": "NONE,DEFAULT",
+                                    "checkTileHidden": false
+                                  },
+                                  "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_sourceType": "SOURCE",
+                                  "_targetType": "SOURCE",
+                                  "_ignoreSourceType": false,
+                                  "_ignoreTargetType": false,
+                                  "_spawnTokenFromCards": true,
+                                  "_readDataFromBlackboard": false,
+                                  "_refreshTokenCardCooldown": false,
+                                  "_useTokenKeyDirectly": false,
+                                  "_forceSpawn": false,
+                                  "_spawnTokenKey": null,
+                                  "_respawnSameToken": false,
+                                  "_returnIfSpawnFailed": true,
+                                  "_tokenToSpawn": {
+                                    "uniEquipIds": null,
+                                    "showSpIllust": false,
+                                    "masterInfos": null,
+                                    "inst": {
+                                      "characterKey": null,
+                                      "level": 0,
+                                      "phase": "PHASE_0",
+                                      "favorBattlePhase": 0,
+                                      "potentialRank": 0
+                                    },
+                                    "skillIndex": 0,
+                                    "mainSkillLvl": 1,
+                                    "skinId": null,
+                                    "tmplId": null,
+                                    "overrideSkillBlackboard": null,
+                                    "overrideTalents": null
+                                  },
+                                  "_specifierSideType": false,
+                                  "_specifierRelativeSideType": false,
+                                  "_spawnedTokenSideType": "NONE",
+                                  "_specifierPlayerSideType": false,
+                                  "_playerSide": "DEFAULT",
+                                  "_checkBuildableType": false,
+                                  "_doRuneProcess": false,
+                                  "_tileEffect": null,
+                                  "_createEffectOnTokenTile": false,
+                                  "_tileFromBlackboard": false,
+                                  "_tileFromBlackboardFixed": true,
+                                  "_tileFromSnapshot": false,
+                                  "_loadTileFromCharacterSharedData": false,
+                                  "_locatedColBBKey": "",
+                                  "_locatedRowBBKey": "",
+                                  "_ignoreAdvancedBuildableMask": false,
+                                  "_buffs": [
+                                    {
+                                      "attributes": {
+                                        "abnormalFlags": null,
+                                        "abnormalImmunes": null,
+                                        "abnormalAntis": null,
+                                        "abnormalCombos": null,
+                                        "abnormalComboImmunes": null,
+                                        "attributeModifiers": null
+                                      },
+                                      "buffKey": "mcnist_s_3_projectile_mode",
+                                      "loadFromDB": false,
+                                      "isDurableBuff": false,
+                                      "isDamageMissable": false,
+                                      "isSilenceable": false,
+                                      "isStunnable": false,
+                                      "isFreezable": false,
+                                      "isLevitatable": false,
+                                      "isGroundBoundable": false,
+                                      "statusResistable": "AUTOMATIC",
+                                      "templateKey": "mcnist_s_3_projectile_mode",
+                                      "disableOverride": false,
+                                      "overrideKey": null,
+                                      "overrideType": "DEFAULT",
+                                      "maxStackCnt": 1,
+                                      "refreshRemainingTimeWhenStackMax": false,
+                                      "clearAllStackCntWhenTimeUp": false,
+                                      "maxValidStackCnt": -1,
+                                      "independentCharacterSource": false,
+                                      "overrideEffectKey": null,
+                                      "overrideOnEventPriority": false,
+                                      "onEventPriority": "DEFAULT",
+                                      "audioSignal": null,
+                                      "lifeTimeType": "IMMEDIATELY",
+                                      "takeSnapshotWhenExtend": false,
+                                      "durationKey": null,
+                                      "remainingTimeKey": null,
+                                      "lifeTime": 0.0,
+                                      "triggerLifeType": "IMMEDIATELY",
+                                      "triggerCnt": 0,
+                                      "triggerInterval": -1.0,
+                                      "waitFirstTriggerInterval": true,
+                                      "firstTriggerInterval": -1.0,
+                                      "priority": -1,
+                                      "priorityBBKeys": null,
+                                      "stripBlackboardParamsWithBuffKey": false,
+                                      "blackboard": null,
+                                      "enableInitDirectionFromSource": false
+                                    }
+                                  ],
+                                  "_useDirectionFromSharedData": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                                },
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": true,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                }
+                              ],
+                              "_sourceType": "BUFF_OWNER",
+                              "_spawnSourceType": "BUFF_SOURCE",
+                              "_abilityName": "EmitProjectile",
+                              "_projectileKey": "projectile_chr_mcnist_s3_token",
+                              "_assignBlackboardToProjectile": true,
+                              "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                            }
+                          ],
+                          "_failNodes": [
+                            {
+                              "_overwriteActions": true,
+                              "_ev": "ON_HIT_TILE",
+                              "_actions": [
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": false,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                },
+                                {
+                                  "_options": {
+                                    "buildableType": "MELEE",
+                                    "allowNoneBuildableType": false,
+                                    "passableMask": "WALK_ONLY",
+                                    "allowNonePassableMask": false,
+                                    "checkBuildableOrPassable": false,
+                                    "checkExtraBuildableCheckers": false,
+                                    "advancedBuildableMask": "NONE,DEFAULT",
+                                    "advancedBuildableMaskExcept": false,
+                                    "allowAllAdvancedBuildableMask": false,
+                                    "heightType": "LOWLAND",
+                                    "checkHeightType": false,
+                                    "checkTileMode": false,
+                                    "modeIndex": -1,
+                                    "checkTileMoveCost": false,
+                                    "moveCostCompareType": "LT",
+                                    "moveCostThreshold": 0,
+                                    "allowedTileBlackboardKey": null,
+                                    "excludeTileBlackboardKey": null,
+                                    "checkTileTypes": false,
+                                    "exceptTileTypes": false,
+                                    "tileTypesMask": "NONE,DEFAULT",
+                                    "checkTileHidden": false
+                                  },
+                                  "$type": "Torappu.Battle.Action.Nodes+AssignMcgrafTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                                },
+                                {
+                                  "_sourceType": "SOURCE",
+                                  "_targetType": "SOURCE",
+                                  "_ignoreSourceType": false,
+                                  "_ignoreTargetType": false,
+                                  "_spawnTokenFromCards": true,
+                                  "_readDataFromBlackboard": false,
+                                  "_refreshTokenCardCooldown": false,
+                                  "_useTokenKeyDirectly": false,
+                                  "_forceSpawn": false,
+                                  "_spawnTokenKey": null,
+                                  "_respawnSameToken": false,
+                                  "_returnIfSpawnFailed": true,
+                                  "_tokenToSpawn": {
+                                    "uniEquipIds": null,
+                                    "showSpIllust": false,
+                                    "masterInfos": null,
+                                    "inst": {
+                                      "characterKey": null,
+                                      "level": 0,
+                                      "phase": "PHASE_0",
+                                      "favorBattlePhase": 0,
+                                      "potentialRank": 0
+                                    },
+                                    "skillIndex": 0,
+                                    "mainSkillLvl": 1,
+                                    "skinId": null,
+                                    "tmplId": null,
+                                    "overrideSkillBlackboard": null,
+                                    "overrideTalents": null
+                                  },
+                                  "_specifierSideType": false,
+                                  "_specifierRelativeSideType": false,
+                                  "_spawnedTokenSideType": "NONE",
+                                  "_specifierPlayerSideType": false,
+                                  "_playerSide": "DEFAULT",
+                                  "_checkBuildableType": false,
+                                  "_doRuneProcess": false,
+                                  "_tileEffect": null,
+                                  "_createEffectOnTokenTile": false,
+                                  "_tileFromBlackboard": false,
+                                  "_tileFromBlackboardFixed": true,
+                                  "_tileFromSnapshot": false,
+                                  "_loadTileFromCharacterSharedData": false,
+                                  "_locatedColBBKey": "",
+                                  "_locatedRowBBKey": "",
+                                  "_ignoreAdvancedBuildableMask": false,
+                                  "_buffs": [
+                                    {
+                                      "attributes": {
+                                        "abnormalFlags": null,
+                                        "abnormalImmunes": null,
+                                        "abnormalAntis": null,
+                                        "abnormalCombos": null,
+                                        "abnormalComboImmunes": null,
+                                        "attributeModifiers": null
+                                      },
+                                      "buffKey": "mcnist_s_3_projectile_mode",
+                                      "loadFromDB": false,
+                                      "isDurableBuff": false,
+                                      "isDamageMissable": false,
+                                      "isSilenceable": false,
+                                      "isStunnable": false,
+                                      "isFreezable": false,
+                                      "isLevitatable": false,
+                                      "isGroundBoundable": false,
+                                      "statusResistable": "AUTOMATIC",
+                                      "templateKey": "mcnist_s_3_projectile_mode",
+                                      "disableOverride": false,
+                                      "overrideKey": null,
+                                      "overrideType": "DEFAULT",
+                                      "maxStackCnt": 1,
+                                      "refreshRemainingTimeWhenStackMax": false,
+                                      "clearAllStackCntWhenTimeUp": false,
+                                      "maxValidStackCnt": -1,
+                                      "independentCharacterSource": false,
+                                      "overrideEffectKey": null,
+                                      "overrideOnEventPriority": false,
+                                      "onEventPriority": "DEFAULT",
+                                      "audioSignal": null,
+                                      "lifeTimeType": "IMMEDIATELY",
+                                      "takeSnapshotWhenExtend": false,
+                                      "durationKey": null,
+                                      "remainingTimeKey": null,
+                                      "lifeTime": 0.0,
+                                      "triggerLifeType": "IMMEDIATELY",
+                                      "triggerCnt": 0,
+                                      "triggerInterval": -1.0,
+                                      "waitFirstTriggerInterval": true,
+                                      "firstTriggerInterval": -1.0,
+                                      "priority": -1,
+                                      "priorityBBKeys": null,
+                                      "stripBlackboardParamsWithBuffKey": false,
+                                      "blackboard": null,
+                                      "enableInitDirectionFromSource": false
+                                    }
+                                  ],
+                                  "_useDirectionFromSharedData": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+SpawnTokenOnTargetTile"
+                                },
+                                {
+                                  "$type": "Torappu.Battle.Action.Nodes+IfNot"
+                                },
+                                {
+                                  "_targetType": "SOURCE",
+                                  "_hiddenReason": "deck_default_hidden",
+                                  "_force": true,
+                                  "_isShow": true,
+                                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                                },
+                                {
+                                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                                  "_sourceType": "SOURCE",
+                                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                                }
+                              ],
+                              "_sourceType": "BUFF_OWNER",
+                              "_spawnSourceType": "BUFF_SOURCE",
+                              "_abilityName": "EmitProjectile",
+                              "_projectileKey": "projectile_chr_mcnist_s3_token_right",
+                              "_assignBlackboardToProjectile": true,
+                              "$type": "Torappu.Battle.Action.Nodes+EmitProjectileToTileUseSelector"
+                            }
+                          ],
+                          "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                        }
+                      ],
+                      "_isAnd": false,
+                      "$type": "Torappu.Battle.Action.Nodes+IfConditions"
+                    }
+                  ],
+                  "_isAnd": false,
+                  "$type": "Torappu.Battle.Action.Nodes+IfConditions"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_3_projectile_token",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":1,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"},{\"_targetType\":\"BUFF_OWNER\",\"_assignTargetTokenOrHost\":false,\"_colKey\":\"col\",\"_rowKey\":\"row\",\"_assignAsString\":false,\"_bbKey\":null,\"$type\":\"Torappu.Battle.Action.Nodes+AssignRootTileToBB\"},{\"_conditionsNode\":[{\"_target\":\"BUFF_OWNER\",\"_direction\":\"LEFT\",\"$type\":\"Torappu.Battle.Action.Nodes+CheckFaceLOrR\"}],\"_succeedNodes\":[{\"_blackboardKey\":\"faceLeft\",\"_value\":1.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"}],\"_failNodes\":[{\"_blackboardKey\":\"faceLeft\",\"_value\":0.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"}],\"_isAnd\":false,\"$type\":\"Torappu.Battle.Action.Nodes+IfConditions\"},{\"_sourceType\":\"BUFF_OWNER\",\"_buffData\":{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_real\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_real\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuffToHost\"},{\"_targetType\":\"BUFF_OWNER\",\"_killSource\":false,\"_noSource\":false,\"_withdrawIfRallyPoint\":false,\"_resultIfInRallyPointMode\":false,\"_skipReborn\":true,\"_noReason\":false,\"_markReachExit\":false,\"_switchState\":false,\"$type\":\"Torappu.Battle.Action.Nodes+InstantKill\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_modeIndex": 1,
+                  "_loadModeFromBlackboard": false,
+                  "_restoreDefault": false,
+                  "_restartFSM": true,
+                  "_targetType": "BUFF_OWNER",
+                  "$type": "Torappu.Battle.Action.Nodes+SwitchMode"
+                },
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_assignTargetTokenOrHost": false,
+                  "_colKey": "col",
+                  "_rowKey": "row",
+                  "_assignAsString": false,
+                  "_bbKey": null,
+                  "$type": "Torappu.Battle.Action.Nodes+AssignRootTileToBB"
+                },
+                {
+                  "_conditionsNode": [
+                    {
+                      "_target": "BUFF_OWNER",
+                      "_direction": "LEFT",
+                      "$type": "Torappu.Battle.Action.Nodes+CheckFaceLOrR"
+                    }
+                  ],
+                  "_succeedNodes": [
+                    {
+                      "_blackboardKey": "faceLeft",
+                      "_value": 1.0,
+                      "_copyFromKey": null,
+                      "_assignString": false,
+                      "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_blackboardKey": "faceLeft",
+                      "_value": 0.0,
+                      "_copyFromKey": null,
+                      "_assignString": false,
+                      "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                    }
+                  ],
+                  "_isAnd": false,
+                  "$type": "Torappu.Battle.Action.Nodes+IfConditions"
+                },
+                {
+                  "_sourceType": "BUFF_OWNER",
+                  "_buffData": {
+                    "attributes": {
+                      "abnormalFlags": null,
+                      "abnormalImmunes": null,
+                      "abnormalAntis": null,
+                      "abnormalCombos": null,
+                      "abnormalComboImmunes": null,
+                      "attributeModifiers": null
+                    },
+                    "buffKey": "mcnist_s_3_projectile_real",
+                    "loadFromDB": false,
+                    "isDurableBuff": false,
+                    "isDamageMissable": false,
+                    "isSilenceable": false,
+                    "isStunnable": false,
+                    "isFreezable": false,
+                    "isLevitatable": false,
+                    "isGroundBoundable": false,
+                    "statusResistable": "AUTOMATIC",
+                    "templateKey": "mcnist_s_3_projectile_real",
+                    "disableOverride": false,
+                    "overrideKey": null,
+                    "overrideType": "DEFAULT",
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": false,
+                    "clearAllStackCntWhenTimeUp": false,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": false,
+                    "overrideEffectKey": null,
+                    "overrideOnEventPriority": false,
+                    "onEventPriority": "DEFAULT",
+                    "audioSignal": null,
+                    "lifeTimeType": "IMMEDIATELY",
+                    "takeSnapshotWhenExtend": false,
+                    "durationKey": null,
+                    "remainingTimeKey": null,
+                    "lifeTime": 0.0,
+                    "triggerLifeType": "IMMEDIATELY",
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": true,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": false,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": false
+                  },
+                  "_isDerivedBuff": false,
+                  "_finishDerivedBuffIfParentFinish": false,
+                  "$type": "Torappu.Battle.Action.Nodes+CreateBuffToHost"
+                },
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_killSource": false,
+                  "_noSource": false,
+                  "_withdrawIfRallyPoint": false,
+                  "_resultIfInRallyPointMode": false,
+                  "_skipReborn": true,
+                  "_noReason": false,
+                  "_markReachExit": false,
+                  "_switchState": false,
+                  "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_3_projectile",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_hostType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+CharacterHasValidToken\"},\"_succeedNodes\":[{\"_lifeType\":\"UNTIL_NEXT_SPAWN\",\"_isRatio\":false,\"_enableMaxStackCount\":false,\"_filterIsInHand\":false,\"_useCardBuffKey\":true,\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"$type\":\"Torappu.Battle.Action.Nodes+CreateCardBuffToMyToken\"},{\"_targetType\":\"BUFF_OWNER\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":false,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"_targetType\":\"BUFF_OWNER\",\"_isReverse\":false,\"_blackboardKey\":\"direction\",\"_fromTokenOrHost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+AssignDirectionToBB\"},{\"_target\":\"BUFF_OWNER\",\"_isStringBB\":false,\"_blackboardKey\":\"direction\",\"_value\":0.0,\"_valueStr\":\"\",\"_isOverwrite\":true,\"_useValueKey\":true,\"_valueKey\":\"direction\",\"$type\":\"Torappu.Battle.Action.Nodes+AddCharacterSharedBlackboard\"},{\"_sourceType\":\"BUFF_OWNER\",\"_excludeTarget\":false,\"_targetType\":\"BUFF_SOURCE\",\"_buffData\":{\"attributes\":{\"abnormalFlags\":null,\"abnormalImmunes\":null,\"abnormalAntis\":null,\"abnormalCombos\":null,\"abnormalComboImmunes\":null,\"attributeModifiers\":null},\"buffKey\":\"mcnist_s_3_projectile_token\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_3_projectile_token\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_isDerivedBuff\":false,\"_onlyToFirstTarget\":false,\"_excludeByBuffKey\":false,\"_excludeBuffKey\":null,\"_finishDerivedBuffIfParentFinish\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuffToToken\"}],\"_failNodes\":[{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_conditionNode": {
+                    "_hostType": "BUFF_OWNER",
+                    "$type": "Torappu.Battle.Action.Nodes+CharacterHasValidToken"
+                  },
+                  "_succeedNodes": [
+                    {
+                      "_lifeType": "UNTIL_NEXT_SPAWN",
+                      "_isRatio": false,
+                      "_enableMaxStackCount": false,
+                      "_filterIsInHand": false,
+                      "_useCardBuffKey": true,
+                      "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                      "$type": "Torappu.Battle.Action.Nodes+CreateCardBuffToMyToken"
+                    },
+                    {
+                      "_targetType": "BUFF_OWNER",
+                      "_hiddenReason": "deck_default_hidden",
+                      "_force": true,
+                      "_isShow": false,
+                      "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                    },
+                    {
+                      "_targetType": "BUFF_OWNER",
+                      "_isReverse": false,
+                      "_blackboardKey": "direction",
+                      "_fromTokenOrHost": true,
+                      "$type": "Torappu.Battle.Action.Nodes+AssignDirectionToBB"
+                    },
+                    {
+                      "_target": "BUFF_OWNER",
+                      "_isStringBB": false,
+                      "_blackboardKey": "direction",
+                      "_value": 0.0,
+                      "_valueStr": "",
+                      "_isOverwrite": true,
+                      "_useValueKey": true,
+                      "_valueKey": "direction",
+                      "$type": "Torappu.Battle.Action.Nodes+AddCharacterSharedBlackboard"
+                    },
+                    {
+                      "_sourceType": "BUFF_OWNER",
+                      "_excludeTarget": false,
+                      "_targetType": "BUFF_SOURCE",
+                      "_buffData": {
+                        "attributes": {
+                          "abnormalFlags": null,
+                          "abnormalImmunes": null,
+                          "abnormalAntis": null,
+                          "abnormalCombos": null,
+                          "abnormalComboImmunes": null,
+                          "attributeModifiers": null
+                        },
+                        "buffKey": "mcnist_s_3_projectile_token",
+                        "loadFromDB": false,
+                        "isDurableBuff": false,
+                        "isDamageMissable": false,
+                        "isSilenceable": false,
+                        "isStunnable": false,
+                        "isFreezable": false,
+                        "isLevitatable": false,
+                        "isGroundBoundable": false,
+                        "statusResistable": "AUTOMATIC",
+                        "templateKey": "mcnist_s_3_projectile_token",
+                        "disableOverride": false,
+                        "overrideKey": null,
+                        "overrideType": "DEFAULT",
+                        "maxStackCnt": 1,
+                        "refreshRemainingTimeWhenStackMax": false,
+                        "clearAllStackCntWhenTimeUp": false,
+                        "maxValidStackCnt": -1,
+                        "independentCharacterSource": false,
+                        "overrideEffectKey": null,
+                        "overrideOnEventPriority": false,
+                        "onEventPriority": "DEFAULT",
+                        "audioSignal": null,
+                        "lifeTimeType": "IMMEDIATELY",
+                        "takeSnapshotWhenExtend": false,
+                        "durationKey": null,
+                        "remainingTimeKey": null,
+                        "lifeTime": 0.0,
+                        "triggerLifeType": "IMMEDIATELY",
+                        "triggerCnt": 0,
+                        "triggerInterval": -1.0,
+                        "waitFirstTriggerInterval": true,
+                        "firstTriggerInterval": -1.0,
+                        "priority": -1,
+                        "priorityBBKeys": [],
+                        "stripBlackboardParamsWithBuffKey": false,
+                        "blackboard": [],
+                        "enableInitDirectionFromSource": false
+                      },
+                      "_isDerivedBuff": false,
+                      "_onlyToFirstTarget": false,
+                      "_excludeByBuffKey": false,
+                      "_excludeBuffKey": null,
+                      "_finishDerivedBuffIfParentFinish": false,
+                      "$type": "Torappu.Battle.Action.Nodes+CreateBuffToToken"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_decCntIfStack": false,
+                      "_updateOverrideMap": true,
+                      "$type": "Torappu.Battle.Action.Nodes+FinishBuff"
+                    }
+                  ],
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                }
+              ]
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"_hiddenReason\":\"deck_default_hidden\",\"_force\":true,\"_isShow\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_cardBuffKey\":\"mcnist_s_3_projectile_hide\",\"_sourceType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_hiddenReason": "deck_default_hidden",
+                  "_force": true,
+                  "_isShow": true,
+                  "$type": "Torappu.Battle.Action.Nodes+HideCardByTokenOrHostUid"
+                },
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                },
+                {
+                  "_cardBuffKey": "mcnist_s_3_projectile_hide",
+                  "_sourceType": "BUFF_OWNER",
+                  "$type": "Torappu.Battle.Action.Nodes+FinishTokenCardBuffByKey"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "mcnist_s_2_shield",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"_attributeType\":\"MAX_HP\",\"_scaleVar\":\"hp_ratio\",\"$type\":\"Torappu.Battle.Action.Nodes+AssignAttributeAsDynamicVarToBB\"},{\"_blackboardKey\":\"cancel_all\",\"_value\":0.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_targetType": "BUFF_OWNER",
+                  "_attributeType": "MAX_HP",
+                  "_scaleVar": "hp_ratio",
+                  "$type": "Torappu.Battle.Action.Nodes+AssignAttributeAsDynamicVarToBB"
+                },
+                {
+                  "_blackboardKey": "cancel_all",
+                  "_value": 0.0,
+                  "_copyFromKey": null,
+                  "_assignString": false,
+                  "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                }
+              ]
+            }
+          },
+          {
+            "key": 10,
+            "value": {
+              "SerializedState": "[{\"_filterDamageType\":false,\"_damageMask\":\"PHYSICAL_AND_MAGICAL\",\"_useDynamicVar\":true,\"_allowNegativeDynamicVar\":false,\"_useFixedValue\":false,\"_showDamageNumber\":false,\"_specifyBlockEffect\":null,\"_useSource\":false,\"_sourceType\":\"SOURCE\",\"_filterApplyWay\":false,\"_applyWayFilter\":\"NONE\",\"_showShieldUI\":true,\"$type\":\"Torappu.Battle.Action.Nodes+BlockDamage\"},{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"cancel_all\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":0,\"_anotherKeyToCompare\":null,\"_condType\":\"LE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},\"_succeedNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"dynamic\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":0,\"_anotherKeyToCompare\":null,\"_condType\":\"LE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},{\"_conditionsNode\":[{\"_targetType\":\"BUFF_OWNER\",\"_condType\":\"LE\",\"_shieldValue\":0.0,\"_shieldKey\":\"invalid\",\"_enableFilterSource\":true,\"_filterSource\":\"BUFF_SOURCE\",\"_filterHostOrToken\":false,\"_passIfNoSource\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FilterByShieldValue\"}],\"_succeedNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_condType\":\"LE\",\"_shieldValue\":0.0,\"_shieldKey\":\"invalid\",\"_enableFilterSource\":true,\"_filterSource\":\"BUFF_OWNER\",\"_filterHostOrToken\":false,\"_passIfNoSource\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FilterByShieldValue\"},{\"_blackboardKey\":\"cancel_all\",\"_value\":1.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"},{\"_reason\":\"BLOCKED\",\"$type\":\"Torappu.Battle.Action.Nodes+CancelModifier\"}],\"_failNodes\":null,\"_isAnd\":false,\"$type\":\"Torappu.Battle.Action.Nodes+IfConditions\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_conditionNode\":{\"_targetType\":\"BUFF_SOURCE\",\"_buffKeys\":[\"mcnist_s_2\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":[{\"_blackboardKey\":\"cancel_all\",\"_value\":1.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"},{\"_useAbilitySourceSide\":true,\"_sourceType\":\"BUFF_SOURCE\",\"_targetType\":\"BUFF_OWNER\",\"_damageType\":\"MAGICAL\",\"_sourceApplyWay\":\"NONE\",\"_targetOptions\":{\"targetSide\":\"ENEMY\",\"targetMotion\":\"ALL\",\"targetCategory\":\"NONE,DEFAULT\",\"enableAdvancedOptions\":true,\"ignoreTargetFree\":false,\"ignoreAllyTargetFree\":false,\"ignoreHealFree\":false,\"ignoreMotionMode\":false,\"ignoreTargetSide\":false,\"excludeSomeAbnormalFlags\":false,\"containSomeAbnormalFlags\":false,\"excludeAbnormalFlag\":\"STUNNED\",\"containAbnormalFlag\":\"STUNNED\",\"purposeMask\":\"NONE\",\"professionMask\":\"NONE\",\"checkUnitType\":false,\"unitTypeMask\":\"NONE\",\"onlyIgnoreSomeOfTargetFreeCase\":false,\"abnormalFlag\":\"STUNNED\",\"abnormalCombo\":\"SLEEPING\"},\"_excludeTarget\":false,\"_rangeId\":\"\",\"_useRadius\":true,\"_radius\":0.0,\"_useAbilitySelector\":false,\"_abilityName\":null,\"_damageScale\":\"atk_scale\",\"_buffs\":[{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"disarmed_combat\",\"loadFromDB\":true,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"empty\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"LIMITED\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false}],\"_attackType\":\"NORMAL\",\"_createEffect\":false,\"_hitEffectKey\":null,\"_hitEffectUseSourceFaceTo\":false,\"_useDamageFromBB\":false,\"_damageKey\":\"value\",\"_isNoSourceDamage\":false,\"_checkTargetAlive\":false,\"_modifierKey\":\"\",\"_maxTargetCountKey\":\"\",\"_filterType\":\"ALL\",\"$type\":\"Torappu.Battle.Action.Nodes+AOEDamage\"},{\"_blackboardKey\":\"cancel_all\",\"_value\":0.0,\"_copyFromKey\":null,\"_assignString\":false,\"$type\":\"Torappu.Battle.Action.Nodes+AssignValueToBB\"},{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"BUFF_OWNER\",\"_effectKey\":\"mcnist_skill_02_buff_01_end\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_createEffectConstDirectionHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"},{\"_target\":\"BUFF_OWNER\",\"_audioSignal\":\"mcnist_s_2_shield\",\"$type\":\"Torappu.Battle.Action.Nodes+PlayAudio\"}],\"_failNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"BUFF_OWNER\",\"_effectKey\":\"mcnist_skill_02_buff_01_end_02\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_createEffectConstDirectionHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_targetType\":\"BUFF_SOURCE\",\"_blackboardKey\":\"cnt\",\"$type\":\"Torappu.Battle.Action.Nodes+AssignAmmoSkillRemainingCountToBB\"},{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_anotherBuff\":false,\"_buffKey\":null,\"_blackboardKey\":\"cnt\",\"_blackboardKeyFromBb\":null,\"_valueToCompare\":0,\"_anotherKeyToCompare\":null,\"_condType\":\"GT\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBlackboardValue\"},\"_succeedNodes\":[{\"_targetType\":\"BUFF_SOURCE\",\"_buffKeys\":[\"mcnist_s_2\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},{\"_targetType\":\"BUFF_SOURCE\",\"$type\":\"Torappu.Battle.Action.Nodes+CharSkillManualTriggerCountEvent\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"mcnist_s_2_shield\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"mcnist_s_2_shield\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"mcnist_skill_02_buff_01\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"INFINITY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"}],\"_failNodes\":null,\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}],\"_failNodes\":[{\"_reason\":\"BLOCKED\",\"$type\":\"Torappu.Battle.Action.Nodes+CancelModifier\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": [],
+              "DecodedState": [
+                {
+                  "_filterDamageType": false,
+                  "_damageMask": "PHYSICAL_AND_MAGICAL",
+                  "_useDynamicVar": true,
+                  "_allowNegativeDynamicVar": false,
+                  "_useFixedValue": false,
+                  "_showDamageNumber": false,
+                  "_specifyBlockEffect": null,
+                  "_useSource": false,
+                  "_sourceType": "SOURCE",
+                  "_filterApplyWay": false,
+                  "_applyWayFilter": "NONE",
+                  "_showShieldUI": true,
+                  "$type": "Torappu.Battle.Action.Nodes+BlockDamage"
+                },
+                {
+                  "_conditionNode": {
+                    "_targetType": "BUFF_OWNER",
+                    "_anotherBuff": false,
+                    "_buffKey": null,
+                    "_blackboardKey": "cancel_all",
+                    "_blackboardKeyFromBb": null,
+                    "_valueToCompare": 0,
+                    "_anotherKeyToCompare": null,
+                    "_condType": "LE",
+                    "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                  },
+                  "_succeedNodes": [
+                    {
+                      "_targetType": "BUFF_OWNER",
+                      "_anotherBuff": false,
+                      "_buffKey": null,
+                      "_blackboardKey": "dynamic",
+                      "_blackboardKeyFromBb": null,
+                      "_valueToCompare": 0,
+                      "_anotherKeyToCompare": null,
+                      "_condType": "LE",
+                      "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                    },
+                    {
+                      "_conditionsNode": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_condType": "LE",
+                          "_shieldValue": 0.0,
+                          "_shieldKey": "invalid",
+                          "_enableFilterSource": true,
+                          "_filterSource": "BUFF_SOURCE",
+                          "_filterHostOrToken": false,
+                          "_passIfNoSource": true,
+                          "$type": "Torappu.Battle.Action.Nodes+FilterByShieldValue"
+                        }
+                      ],
+                      "_succeedNodes": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_condType": "LE",
+                          "_shieldValue": 0.0,
+                          "_shieldKey": "invalid",
+                          "_enableFilterSource": true,
+                          "_filterSource": "BUFF_OWNER",
+                          "_filterHostOrToken": false,
+                          "_passIfNoSource": true,
+                          "$type": "Torappu.Battle.Action.Nodes+FilterByShieldValue"
+                        },
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 1.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_reason": "BLOCKED",
+                          "$type": "Torappu.Battle.Action.Nodes+CancelModifier"
+                        }
+                      ],
+                      "_failNodes": null,
+                      "_isAnd": false,
+                      "$type": "Torappu.Battle.Action.Nodes+IfConditions"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_conditionNode": {
+                        "_targetType": "BUFF_SOURCE",
+                        "_buffKeys": [
+                          "mcnist_s_2"
+                        ],
+                        "isAND": true,
+                        "_loadFromBlackboard": false,
+                        "_checkBuffSource": false,
+                        "_buffSourceType": "BUFF_SOURCE",
+                        "_checkSourceHost": false,
+                        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff"
+                      },
+                      "_succeedNodes": [
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 1.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_useAbilitySourceSide": true,
+                          "_sourceType": "BUFF_SOURCE",
+                          "_targetType": "BUFF_OWNER",
+                          "_damageType": "MAGICAL",
+                          "_sourceApplyWay": "NONE",
+                          "_targetOptions": {
+                            "targetSide": "ENEMY",
+                            "targetMotion": "ALL",
+                            "targetCategory": "NONE,DEFAULT",
+                            "enableAdvancedOptions": true,
+                            "ignoreTargetFree": false,
+                            "ignoreAllyTargetFree": false,
+                            "ignoreHealFree": false,
+                            "ignoreMotionMode": false,
+                            "ignoreTargetSide": false,
+                            "excludeSomeAbnormalFlags": false,
+                            "containSomeAbnormalFlags": false,
+                            "excludeAbnormalFlag": "STUNNED",
+                            "containAbnormalFlag": "STUNNED",
+                            "purposeMask": "NONE",
+                            "professionMask": "NONE",
+                            "checkUnitType": false,
+                            "unitTypeMask": "NONE",
+                            "onlyIgnoreSomeOfTargetFreeCase": false,
+                            "abnormalFlag": "STUNNED",
+                            "abnormalCombo": "SLEEPING"
+                          },
+                          "_excludeTarget": false,
+                          "_rangeId": "",
+                          "_useRadius": true,
+                          "_radius": 0.0,
+                          "_useAbilitySelector": false,
+                          "_abilityName": null,
+                          "_damageScale": "atk_scale",
+                          "_buffs": [
+                            {
+                              "attributes": {
+                                "abnormalFlags": [],
+                                "abnormalImmunes": [],
+                                "abnormalAntis": [],
+                                "abnormalCombos": [],
+                                "abnormalComboImmunes": [],
+                                "attributeModifiers": []
+                              },
+                              "buffKey": "disarmed_combat",
+                              "loadFromDB": true,
+                              "isDurableBuff": false,
+                              "isDamageMissable": false,
+                              "isSilenceable": false,
+                              "isStunnable": false,
+                              "isFreezable": false,
+                              "isLevitatable": false,
+                              "isGroundBoundable": false,
+                              "statusResistable": "AUTOMATIC",
+                              "templateKey": "empty",
+                              "disableOverride": false,
+                              "overrideKey": null,
+                              "overrideType": "DEFAULT",
+                              "maxStackCnt": 1,
+                              "refreshRemainingTimeWhenStackMax": false,
+                              "clearAllStackCntWhenTimeUp": false,
+                              "maxValidStackCnt": -1,
+                              "independentCharacterSource": false,
+                              "overrideEffectKey": null,
+                              "overrideOnEventPriority": false,
+                              "onEventPriority": "DEFAULT",
+                              "audioSignal": null,
+                              "lifeTimeType": "LIMITED",
+                              "takeSnapshotWhenExtend": false,
+                              "durationKey": null,
+                              "remainingTimeKey": null,
+                              "lifeTime": 0.0,
+                              "triggerLifeType": "IMMEDIATELY",
+                              "triggerCnt": 0,
+                              "triggerInterval": -1.0,
+                              "waitFirstTriggerInterval": true,
+                              "firstTriggerInterval": -1.0,
+                              "priority": -1,
+                              "priorityBBKeys": [],
+                              "stripBlackboardParamsWithBuffKey": false,
+                              "blackboard": [],
+                              "enableInitDirectionFromSource": false
+                            }
+                          ],
+                          "_attackType": "NORMAL",
+                          "_createEffect": false,
+                          "_hitEffectKey": null,
+                          "_hitEffectUseSourceFaceTo": false,
+                          "_useDamageFromBB": false,
+                          "_damageKey": "value",
+                          "_isNoSourceDamage": false,
+                          "_checkTargetAlive": false,
+                          "_modifierKey": "",
+                          "_maxTargetCountKey": "",
+                          "_filterType": "ALL",
+                          "$type": "Torappu.Battle.Action.Nodes+AOEDamage"
+                        },
+                        {
+                          "_blackboardKey": "cancel_all",
+                          "_value": 0.0,
+                          "_copyFromKey": null,
+                          "_assignString": false,
+                          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB"
+                        },
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_sourceType": "BUFF_OWNER",
+                          "_effectKey": "mcnist_skill_02_buff_01_end",
+                          "_useSourceFaceVactor": false,
+                          "_useSourceToTargetDirection": false,
+                          "_useConstDirection": false,
+                          "_constDirection": "UP",
+                          "_createEffectHoldBySource": false,
+                          "_createEffectConstDirectionHoldBySource": false,
+                          "_useAttackPlaybackSpeed": false,
+                          "_manualSetPlaybackSpeed": false,
+                          "_blackboardKey": "",
+                          "_playbackSpeed": 1.0,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateEffect"
+                        },
+                        {
+                          "_target": "BUFF_OWNER",
+                          "_audioSignal": "mcnist_s_2_shield",
+                          "$type": "Torappu.Battle.Action.Nodes+PlayAudio"
+                        }
+                      ],
+                      "_failNodes": [
+                        {
+                          "_targetType": "BUFF_OWNER",
+                          "_sourceType": "BUFF_OWNER",
+                          "_effectKey": "mcnist_skill_02_buff_01_end_02",
+                          "_useSourceFaceVactor": false,
+                          "_useSourceToTargetDirection": false,
+                          "_useConstDirection": false,
+                          "_constDirection": "UP",
+                          "_createEffectHoldBySource": false,
+                          "_createEffectConstDirectionHoldBySource": false,
+                          "_useAttackPlaybackSpeed": false,
+                          "_manualSetPlaybackSpeed": false,
+                          "_blackboardKey": "",
+                          "_playbackSpeed": 1.0,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateEffect"
+                        }
+                      ],
+                      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_targetType": "BUFF_SOURCE",
+                      "_blackboardKey": "cnt",
+                      "$type": "Torappu.Battle.Action.Nodes+AssignAmmoSkillRemainingCountToBB"
+                    },
+                    {
+                      "_conditionNode": {
+                        "_targetType": "BUFF_OWNER",
+                        "_anotherBuff": false,
+                        "_buffKey": null,
+                        "_blackboardKey": "cnt",
+                        "_blackboardKeyFromBb": null,
+                        "_valueToCompare": 0,
+                        "_anotherKeyToCompare": null,
+                        "_condType": "GT",
+                        "$type": "Torappu.Battle.Action.Nodes+FilterByBlackboardValue"
+                      },
+                      "_succeedNodes": [
+                        {
+                          "_targetType": "BUFF_SOURCE",
+                          "_buffKeys": [
+                            "mcnist_s_2"
+                          ],
+                          "isAND": true,
+                          "_loadFromBlackboard": false,
+                          "_checkBuffSource": false,
+                          "_buffSourceType": "BUFF_SOURCE",
+                          "_checkSourceHost": false,
+                          "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff"
+                        },
+                        {
+                          "_targetType": "BUFF_SOURCE",
+                          "$type": "Torappu.Battle.Action.Nodes+CharSkillManualTriggerCountEvent"
+                        },
+                        {
+                          "_buff": {
+                            "attributes": {
+                              "abnormalFlags": [],
+                              "abnormalImmunes": [],
+                              "abnormalAntis": [],
+                              "abnormalCombos": [],
+                              "abnormalComboImmunes": [],
+                              "attributeModifiers": []
+                            },
+                            "buffKey": "mcnist_s_2_shield",
+                            "loadFromDB": false,
+                            "isDurableBuff": false,
+                            "isDamageMissable": false,
+                            "isSilenceable": false,
+                            "isStunnable": false,
+                            "isFreezable": false,
+                            "isLevitatable": false,
+                            "isGroundBoundable": false,
+                            "statusResistable": "AUTOMATIC",
+                            "templateKey": "mcnist_s_2_shield",
+                            "disableOverride": false,
+                            "overrideKey": null,
+                            "overrideType": "DEFAULT",
+                            "maxStackCnt": 1,
+                            "refreshRemainingTimeWhenStackMax": false,
+                            "clearAllStackCntWhenTimeUp": false,
+                            "maxValidStackCnt": -1,
+                            "independentCharacterSource": false,
+                            "overrideEffectKey": "mcnist_skill_02_buff_01",
+                            "overrideOnEventPriority": false,
+                            "onEventPriority": "DEFAULT",
+                            "audioSignal": null,
+                            "lifeTimeType": "INFINITY",
+                            "takeSnapshotWhenExtend": false,
+                            "durationKey": null,
+                            "remainingTimeKey": null,
+                            "lifeTime": 0.0,
+                            "triggerLifeType": "IMMEDIATELY",
+                            "triggerCnt": 0,
+                            "triggerInterval": -1.0,
+                            "waitFirstTriggerInterval": true,
+                            "firstTriggerInterval": -1.0,
+                            "priority": -1,
+                            "priorityBBKeys": [],
+                            "stripBlackboardParamsWithBuffKey": false,
+                            "blackboard": [],
+                            "enableInitDirectionFromSource": false
+                          },
+                          "_buffOwner": "BUFF_OWNER",
+                          "_useSpecialBuffSource": false,
+                          "_specialBuffSource": "BUFF_SOURCE",
+                          "_isDerivedBuff": false,
+                          "_finishDerivedBuffIfParentFinish": false,
+                          "_inherateSourceProjectileFromParentBuff": false,
+                          "_hookEffectKeyFromSourceProjectile": false,
+                          "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+                        }
+                      ],
+                      "_failNodes": null,
+                      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                    },
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+                    },
+                    {
+                      "_decCntIfStack": false,
+                      "_updateOverrideMap": true,
+                      "$type": "Torappu.Battle.Action.Nodes+FinishBuff"
+                    }
+                  ],
+                  "_failNodes": [
+                    {
+                      "_reason": "BLOCKED",
+                      "$type": "Torappu.Battle.Action.Nodes+CancelModifier"
+                    }
+                  ],
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false
+}

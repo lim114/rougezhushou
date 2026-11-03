@@ -1,0 +1,12 @@
+# Root-only execution sequence
+
+All files are unexecuted cache candidates until root review/promotion. Native canonical path must be scripts/verify_event_node_requirements_window_298.py; view test canonical path tests/test_event_node_requirements_view_298.py. Compile/AST preparation is the only permitted action by this subagent.
+
+1. Root finishes source/model/test promotion and checks exact selected bytes. Confirm final8 module list or explicitly supply a different reviewed list before freeze; do not change it mid-run. Retain any actual original failure and revision evidence.
+2. Root may use run_section_298_necessary.py with --execute --expected-parent bb4927a2a2760d48882f3945b750053d7a5617fc --receipt-directory verification/sections/298-necessary-first. No --execute means it refuses before running tests. Every receipt directory is exclusive; final counts come from actual logs.
+3. After necessary terminal and stable source, root runs the canonical native harness once through the existing reviewed owned-job wrapper, passing --receipt absolute-temp/actual/window.json --visible-ms120000 (or another explicitly reviewed positive interval). Preserve raw process, supervisor/logs, window report and all PNGs under the actual attempt directory. A cache native script refuses execution as acceptance. Do not overlap tests/native with source edits or another window run.
+4. Root views all saved PNGs, writes verification/sections/298-preparation/root-visual-review.json in the established schema, and updates the original project window with canonical298 main/focus receipts binding final necessary/native SHA, current selected source map, later times and private5 hash equality. No game/chat or private-state restoration.
+5. Root previews close_section_298.py with explicit --necessary-receipt, --window-receipt, --window-process-receipt and --native-source-sha256; it never launches anything. Review actual gates and only then use the identical command with --apply. Reuse original full290 source and retain all unknowns.
+6. Root runs maintained cloud-index update, ordinary commit/push with source/requirements/acceptance/index together and actual remote verification. This cache cannot publish or mark cloud completion.
+
+The closeout source assembler is provenance only. Do not rerun assemble_closeout_template.py to overwrite later298-specific functions. If root changes a production/test source after actual validation, final receipts must be rebound by a real necessary/new native run as appropriate; initial promotion SHA is not final acceptance.

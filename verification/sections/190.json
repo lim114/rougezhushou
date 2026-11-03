@@ -1,0 +1,79 @@
+{
+  "candidate_id": 202,
+  "title": "完整固定敌人属性与漏怪等引用字段进入实际预览",
+  "remaining_item": "P3 敌人面板与机制：完整局外属性固定资料缺失字段",
+  "new_capability": "实际敌人预览技术资料与panel来源CLI覆盖32个固定属性及6个其他字段，含技力回复、嘲讽、命中率、元素爆发恢复、标签/生命扣除/计数/范围参数；普通面板仅保留已有环境预测，新增未核验完整值显示未知并标记已有来源，原值只在技术查询显示。",
+  "source_evidence": [
+    {
+      "receipt": ".cache/research/battle-039/data-receipt.json"
+    },
+    {
+      "receipt": ".cache/research/enemy-skills-042/data-receipt.json"
+    },
+    {
+      "source": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/enemydata/enemy_database.json",
+        "sha256": "f8dd03997d0e3eae65cc4b77bcb6b5ef198488504f738defc31cad5e13c3680c",
+        "bytes": 15022043
+      },
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "originals_checked": "105 pinned stage hashes and pinned enemy database hash match existing receipt",
+      "remote_check": "Pinned GitHub source page confirmed; web raw body refused as larger than4MiB. Existing local pinned file reused with SHA256 verification, no new model assumption."
+    }
+  ],
+  "acceptance": [
+    "17 necessary tests passed in isolated overlay; no private state reads/writes",
+    "All1087stage references reproduce prior11stats and11immunities exactly while covering all32original attribute fields",
+    "Explicit0,false,empty list survive; undefined fields remain unknown; stage binding/future-level/cache mutation boundaries passed",
+    "Actual enemy_preview + technical enemy_text contain added data and still retain unknown native clocks/effective skills; ordinary text excludes whiteHP/ATK/DEF values and keeps corrected existing predictions",
+    "Builder hashes105pinned stages and enemy database; output451367bytes"
+  ],
+  "limitations": [
+    "Current server/hotfix/native scalar and script revisions are not proved equivalent to the pinned data.",
+    "完整有效面板、实际命中/扣血、技能/阶段/藏品/动态关卡层仍未知；不合并skills/spData/talentBlackboard。",
+    "Actual Windows window not run by subagent; root must verify UI text if needed.",
+    "P2望数量原生链仍待新版标量链核验，未计成该功能节。"
+  ],
+  "files": [
+    "rouge/enemy_panel.py",
+    "rouge/data/enemy-panel-reference.json",
+    "rouge/battle_preview.py",
+    "scripts/build_enemy_panel_reference.py",
+    "scripts/battle_planning_cli.py",
+    "tests/test_enemy_panel_reference.py"
+  ],
+  "test_selectors": [
+    "tests.test_enemy_panel_reference",
+    "tests.test_battle_preview_039.BattlePreviewTests.test_context_correction_recomputes",
+    "tests.test_battle_preview_039.BattlePreviewTests.test_invalid_config_does_not_keep_previous_numbers",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_enemy_sections_follow_results_features_mechanisms_then_limits",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_enemy_predictions_use_environment_only_when_confirmed",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_unverified_enum_is_explicit_without_fake_translation",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_enemy_technical_mode_contains_original_ids_and_source_links",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_immunity_unknown_does_not_become_false_and_rows_are_readable"
+  ],
+  "candidate_files_sha256": {
+    "rouge/enemy_panel.py": "5d312a073c747d20aa4173d86f032809db27147d144d55586706fadfe296d8cb",
+    "rouge/data/enemy-panel-reference.json": "034884019cd8752d75c6c73d08092409e6aab393d757a15867dd2f9997379f97",
+    "rouge/battle_preview.py": "96124c8fc16cb42ab5620a8943a21ebe56f5a4338d99e9ff07917d9110655c6d",
+    "scripts/build_enemy_panel_reference.py": "4ffeca482e17e27774c50e29eb46605fa8493a9469953f9a9ad129943616bd37",
+    "scripts/battle_planning_cli.py": "cc5525145f2091c1848bd035e252870e3075e2bb8a722c90e8634f1c4797a9db",
+    "tests/test_enemy_panel_reference.py": "039efd87d4c4df3b00ccae2394a56249cea82a343db493ce7838d13170cb28fe"
+  },
+  "section": 190,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:36:43.431287+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 17,
+    "passed": 17,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-190/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

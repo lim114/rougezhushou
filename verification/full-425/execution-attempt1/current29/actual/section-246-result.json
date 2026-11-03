@@ -1,0 +1,1336 @@
+{
+  "scope": "finite_declared_route_resident_candidate_phase_review",
+  "start": "s",
+  "residents_snapshot_declaration": [
+    {
+      "id": "r1",
+      "node_id": "r"
+    }
+  ],
+  "resident_post_victories": {},
+  "routes": [
+    {
+      "id": "a-route",
+      "name": "经甲路径",
+      "declared_steps": [
+        {
+          "mode": "walking",
+          "target": "a"
+        },
+        {
+          "mode": "walking",
+          "target": "g"
+        }
+      ],
+      "phase_rows": [
+        {
+          "step": 1,
+          "node_id": "a",
+          "status": "conditional_declared_move_review",
+          "pre_entry_reference": {
+            "possible_occupied_union": [
+              "r"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "post_move_reference": {
+            "possible_occupied_union": [
+              "a"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": true,
+            "status": "source_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "resident_navigation_references": [
+            {
+              "resident_id": "r1",
+              "candidate_positions": [
+                "a"
+              ],
+              "navigation_candidates": [
+                {
+                  "from": "r",
+                  "to": "a",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "source_excluded_transitions": [
+                {
+                  "from": "r",
+                  "to": "p",
+                  "destination_condition_matches": false,
+                  "basis": "source_named_node_exclusion",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "unresolved_fallbacks": [],
+              "prior_position_unknown": false,
+              "future_position_unknown": false,
+              "actual_position": null
+            }
+          ],
+          "resident_post_victory_declared": false,
+          "after_declared_post_victory_reference": null,
+          "actual_collision_or_blockage": null,
+          "actual_safe": null
+        },
+        {
+          "step": 2,
+          "node_id": "g",
+          "status": "conditional_declared_move_review",
+          "pre_entry_reference": {
+            "possible_occupied_union": [
+              "a"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "post_move_reference": {
+            "possible_occupied_union": [
+              "r",
+              "s"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "resident_navigation_references": [
+            {
+              "resident_id": "r1",
+              "candidate_positions": [
+                "r",
+                "s"
+              ],
+              "navigation_candidates": [
+                {
+                  "from": "a",
+                  "to": "r",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                },
+                {
+                  "from": "a",
+                  "to": "s",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "source_excluded_transitions": [
+                {
+                  "from": "a",
+                  "to": "g",
+                  "destination_condition_matches": false,
+                  "basis": "source_named_node_exclusion",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "unresolved_fallbacks": [],
+              "prior_position_unknown": false,
+              "future_position_unknown": false,
+              "actual_position": null
+            }
+          ],
+          "resident_post_victory_declared": false,
+          "after_declared_post_victory_reference": null,
+          "actual_collision_or_blockage": null,
+          "actual_safe": null
+        }
+      ],
+      "candidate_overlap_steps": [
+        1
+      ],
+      "navigation_unknown_steps": [],
+      "movement_stop_step": null,
+      "conditional_post_eviction_steps": [],
+      "excluded_by_declared_risk_policy": true,
+      "actual_feasible": null,
+      "actual_safe": null,
+      "actual_failure_probability": null
+    },
+    {
+      "id": "b-route",
+      "name": "经乙路径",
+      "declared_steps": [
+        {
+          "mode": "walking",
+          "target": "b"
+        },
+        {
+          "mode": "walking",
+          "target": "g"
+        }
+      ],
+      "phase_rows": [
+        {
+          "step": 1,
+          "node_id": "b",
+          "status": "conditional_declared_move_review",
+          "pre_entry_reference": {
+            "possible_occupied_union": [
+              "r"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "post_move_reference": {
+            "possible_occupied_union": [
+              "a"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "resident_navigation_references": [
+            {
+              "resident_id": "r1",
+              "candidate_positions": [
+                "a"
+              ],
+              "navigation_candidates": [
+                {
+                  "from": "r",
+                  "to": "a",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "source_excluded_transitions": [
+                {
+                  "from": "r",
+                  "to": "p",
+                  "destination_condition_matches": false,
+                  "basis": "source_named_node_exclusion",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "unresolved_fallbacks": [],
+              "prior_position_unknown": false,
+              "future_position_unknown": false,
+              "actual_position": null
+            }
+          ],
+          "resident_post_victory_declared": false,
+          "after_declared_post_victory_reference": null,
+          "actual_collision_or_blockage": null,
+          "actual_safe": null
+        },
+        {
+          "step": 2,
+          "node_id": "g",
+          "status": "conditional_declared_move_review",
+          "pre_entry_reference": {
+            "possible_occupied_union": [
+              "a"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "post_move_reference": {
+            "possible_occupied_union": [
+              "r",
+              "s"
+            ],
+            "position_unknown_residents": [],
+            "target_candidate_overlap": false,
+            "status": "no_declared_candidate_overlap",
+            "actual_collision_or_blockage": null,
+            "actual_safe": null
+          },
+          "resident_navigation_references": [
+            {
+              "resident_id": "r1",
+              "candidate_positions": [
+                "r",
+                "s"
+              ],
+              "navigation_candidates": [
+                {
+                  "from": "a",
+                  "to": "r",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                },
+                {
+                  "from": "a",
+                  "to": "s",
+                  "destination_condition_matches": null,
+                  "basis": "no_named_exclusion; full_destination_eligibility_unknown",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "source_excluded_transitions": [
+                {
+                  "from": "a",
+                  "to": "g",
+                  "destination_condition_matches": false,
+                  "basis": "source_named_node_exclusion",
+                  "actual_selected": null,
+                  "probability": null
+                }
+              ],
+              "unresolved_fallbacks": [],
+              "prior_position_unknown": false,
+              "future_position_unknown": false,
+              "actual_position": null
+            }
+          ],
+          "resident_post_victory_declared": false,
+          "after_declared_post_victory_reference": null,
+          "actual_collision_or_blockage": null,
+          "actual_safe": null
+        }
+      ],
+      "candidate_overlap_steps": [],
+      "navigation_unknown_steps": [],
+      "movement_stop_step": null,
+      "conditional_post_eviction_steps": [],
+      "excluded_by_declared_risk_policy": false,
+      "actual_feasible": null,
+      "actual_safe": null,
+      "actual_failure_probability": null
+    }
+  ],
+  "movement_and_base_comparison": {
+    "scope": "finite_declared_route_component_comparison",
+    "start": "s",
+    "routes": [
+      {
+        "id": "a-route",
+        "name": "经甲路径",
+        "goal_node": "g",
+        "declared_steps": [
+          {
+            "mode": "walking",
+            "target": "a"
+          },
+          {
+            "mode": "walking",
+            "target": "g"
+          }
+        ],
+        "movement_reference": {
+          "scope": "offline_declared_conditions",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+            "upstream_license_status": "No license statement verified; small factual parameter and item-reference extraction only."
+          },
+          "actual_gameplay_verified": false,
+          "inventory_updated": false,
+          "limits": [
+            "固定公开原件，不等于当前服务器或账户状态。",
+            "节点类型、持有及次数仅为声明条件，未读取或改写本局。",
+            "同格再进入、未知类型资格和特殊转换可能影响适用性；候选不保证可进入。",
+            "账本只对声明方案扣减已证使用次数，不更新本局持有或清空记忆。",
+            "随机落点、未知次数/资格或明确AP不足会停止依赖链，后续步骤保留为未求值。",
+            "居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。",
+            "首次羽瞰点组件只在临时方案中标为已领，不更新本局；再次到达的AP规则未证。",
+            "付款到0或到达AP未知时停止可续行依赖链；尾链保留声明起点及独立条件参考，不断言实际必结束。"
+          ],
+          "start": "s",
+          "steps": [
+            {
+              "step": 1,
+              "start": "s",
+              "target": "a",
+              "status": "conditional_reference_step",
+              "option": {
+                "id": "walking",
+                "mode": "walking",
+                "path": [
+                  "s",
+                  "a"
+                ],
+                "steps": 1,
+                "base_ap_cost": 1,
+                "known_conditions_match": true,
+                "base_cost_affordable": true,
+                "remaining_uses_declared": null,
+                "actual_entry_eligible": null,
+                "movement_grants": [],
+                "passives": [],
+                "source": {
+                  "url": "https://prts.wiki/w/沉沦者的黑流树海",
+                  "sha256": "b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381",
+                  "checked_at": "2026-10-04",
+                  "receipt": ".cache/research/routes-049/evidence.json",
+                  "scope": "cached_complete_page; not a new current-server verification"
+                },
+                "node_arrival_reference": {
+                  "node_id": "a",
+                  "original_type_matches_light": false,
+                  "first_entry_declared": null,
+                  "reward_received_declared": null,
+                  "declaration_conflict": false,
+                  "first_component_condition_matches": false,
+                  "source_stated_arrival_ap": 1,
+                  "first_component_remaining_ap_reference": 0,
+                  "node_arrival_ap_reference": 0,
+                  "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                  "occupied_declared": null,
+                  "occupied_light_source_exception": false,
+                  "vision_boost_condition_matches": null,
+                  "difficulty_declared": null,
+                  "split_unlocked_declared": null,
+                  "spawn_surrounding_count_candidates": [
+                    4,
+                    12
+                  ],
+                  "arrival_surrounding_count_candidates": [
+                    12,
+                    24
+                  ],
+                  "range_geometry": null,
+                  "actual_revealed_nodes": null,
+                  "actual_ap_received": null,
+                  "source": {
+                    "community_file": "research/p3-stage-context/community-main.html",
+                    "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                    "community_revision": 433770,
+                    "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                    "community_license": "CC BY-NC-SA 4.0",
+                    "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                    "light_original_type": "LIGHT",
+                    "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                    "facts": [
+                      "到达羽瞰点获得1AP；占领仍可获得。",
+                      "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                      "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                    ],
+                    "unverified": [
+                      "Complete range geometry and actual revealed node identities.",
+                      "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                      "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                      "Other node effects, movement modifiers and complete server/state eligibility."
+                    ],
+                    "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                    "reuse": [
+                      ".cache/research/routes-049/evidence.json",
+                      "research/p3-exploration-planning/source-receipt.json"
+                    ],
+                    "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                    "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                    "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                    "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                    "original_node_record": {
+                      "name": "羽瞰点",
+                      "subName": "视野",
+                      "description": "所见并非所得，做好标记后别忘了计算行程。"
+                    },
+                    "targeted_unknown_review": {
+                      "queries": [
+                        "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                        "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                        "site:prts.wiki 分裂 羽瞰点 周围24格"
+                      ],
+                      "date": "2026-10-12",
+                      "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                      "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                    }
+                  }
+                },
+                "item_ap_grant_reference": 0,
+                "nominal_ap_after_payment_reference": 7,
+                "nominal_ap_after_combined_grants_reference": 7,
+                "payment_zero_boundary_reference": false,
+                "actual_ap_after_arrival": null
+              },
+              "base_ap_cost": 1,
+              "stated_ap_grant": 0,
+              "nominal_ap_after_payment": 7,
+              "nominal_ap_after_stated_grant": 7,
+              "stated_node_arrival_ap_grant": 0,
+              "node_arrival_reference": {
+                "node_id": "a",
+                "original_type_matches_light": false,
+                "first_entry_declared": null,
+                "reward_received_declared": null,
+                "declaration_conflict": false,
+                "first_component_condition_matches": false,
+                "source_stated_arrival_ap": 1,
+                "first_component_remaining_ap_reference": 0,
+                "node_arrival_ap_reference": 0,
+                "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                "occupied_declared": null,
+                "occupied_light_source_exception": false,
+                "vision_boost_condition_matches": null,
+                "difficulty_declared": null,
+                "split_unlocked_declared": null,
+                "spawn_surrounding_count_candidates": [
+                  4,
+                  12
+                ],
+                "arrival_surrounding_count_candidates": [
+                  12,
+                  24
+                ],
+                "range_geometry": null,
+                "actual_revealed_nodes": null,
+                "actual_ap_received": null,
+                "source": {
+                  "community_file": "research/p3-stage-context/community-main.html",
+                  "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                  "community_revision": 433770,
+                  "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                  "community_license": "CC BY-NC-SA 4.0",
+                  "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                  "light_original_type": "LIGHT",
+                  "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                  "facts": [
+                    "到达羽瞰点获得1AP；占领仍可获得。",
+                    "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                    "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                  ],
+                  "unverified": [
+                    "Complete range geometry and actual revealed node identities.",
+                    "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                    "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                    "Other node effects, movement modifiers and complete server/state eligibility."
+                  ],
+                  "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                  "reuse": [
+                    ".cache/research/routes-049/evidence.json",
+                    "research/p3-exploration-planning/source-receipt.json"
+                  ],
+                  "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                  "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                  "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                  "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                  "original_node_record": {
+                    "name": "羽瞰点",
+                    "subName": "视野",
+                    "description": "所见并非所得，做好标记后别忘了计算行程。"
+                  },
+                  "targeted_unknown_review": {
+                    "queries": [
+                      "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                      "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                      "site:prts.wiki 分裂 羽瞰点 周围24格"
+                    ],
+                    "date": "2026-10-12",
+                    "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                    "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                  }
+                }
+              },
+              "nominal_ap_after_known_grants_subtotal": 7,
+              "unknown_ap_components": [],
+              "payment_zero_boundary": false,
+              "passive_reference_states": [],
+              "actual_move_succeeded": null
+            },
+            {
+              "step": 2,
+              "start": "a",
+              "target": "g",
+              "status": "conditional_reference_step",
+              "option": {
+                "id": "walking",
+                "mode": "walking",
+                "path": [
+                  "a",
+                  "g"
+                ],
+                "steps": 1,
+                "base_ap_cost": 1,
+                "known_conditions_match": true,
+                "base_cost_affordable": true,
+                "remaining_uses_declared": null,
+                "actual_entry_eligible": null,
+                "movement_grants": [],
+                "passives": [],
+                "source": {
+                  "url": "https://prts.wiki/w/沉沦者的黑流树海",
+                  "sha256": "b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381",
+                  "checked_at": "2026-10-04",
+                  "receipt": ".cache/research/routes-049/evidence.json",
+                  "scope": "cached_complete_page; not a new current-server verification"
+                },
+                "node_arrival_reference": {
+                  "node_id": "g",
+                  "original_type_matches_light": false,
+                  "first_entry_declared": null,
+                  "reward_received_declared": null,
+                  "declaration_conflict": false,
+                  "first_component_condition_matches": false,
+                  "source_stated_arrival_ap": 1,
+                  "first_component_remaining_ap_reference": 0,
+                  "node_arrival_ap_reference": 0,
+                  "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                  "occupied_declared": null,
+                  "occupied_light_source_exception": false,
+                  "vision_boost_condition_matches": null,
+                  "difficulty_declared": null,
+                  "split_unlocked_declared": null,
+                  "spawn_surrounding_count_candidates": [
+                    4,
+                    12
+                  ],
+                  "arrival_surrounding_count_candidates": [
+                    12,
+                    24
+                  ],
+                  "range_geometry": null,
+                  "actual_revealed_nodes": null,
+                  "actual_ap_received": null,
+                  "source": {
+                    "community_file": "research/p3-stage-context/community-main.html",
+                    "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                    "community_revision": 433770,
+                    "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                    "community_license": "CC BY-NC-SA 4.0",
+                    "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                    "light_original_type": "LIGHT",
+                    "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                    "facts": [
+                      "到达羽瞰点获得1AP；占领仍可获得。",
+                      "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                      "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                    ],
+                    "unverified": [
+                      "Complete range geometry and actual revealed node identities.",
+                      "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                      "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                      "Other node effects, movement modifiers and complete server/state eligibility."
+                    ],
+                    "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                    "reuse": [
+                      ".cache/research/routes-049/evidence.json",
+                      "research/p3-exploration-planning/source-receipt.json"
+                    ],
+                    "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                    "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                    "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                    "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                    "original_node_record": {
+                      "name": "羽瞰点",
+                      "subName": "视野",
+                      "description": "所见并非所得，做好标记后别忘了计算行程。"
+                    },
+                    "targeted_unknown_review": {
+                      "queries": [
+                        "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                        "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                        "site:prts.wiki 分裂 羽瞰点 周围24格"
+                      ],
+                      "date": "2026-10-12",
+                      "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                      "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                    }
+                  }
+                },
+                "item_ap_grant_reference": 0,
+                "nominal_ap_after_payment_reference": 6,
+                "nominal_ap_after_combined_grants_reference": 6,
+                "payment_zero_boundary_reference": false,
+                "actual_ap_after_arrival": null
+              },
+              "base_ap_cost": 1,
+              "stated_ap_grant": 0,
+              "nominal_ap_after_payment": 6,
+              "nominal_ap_after_stated_grant": 6,
+              "stated_node_arrival_ap_grant": 0,
+              "node_arrival_reference": {
+                "node_id": "g",
+                "original_type_matches_light": false,
+                "first_entry_declared": null,
+                "reward_received_declared": null,
+                "declaration_conflict": false,
+                "first_component_condition_matches": false,
+                "source_stated_arrival_ap": 1,
+                "first_component_remaining_ap_reference": 0,
+                "node_arrival_ap_reference": 0,
+                "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                "occupied_declared": null,
+                "occupied_light_source_exception": false,
+                "vision_boost_condition_matches": null,
+                "difficulty_declared": null,
+                "split_unlocked_declared": null,
+                "spawn_surrounding_count_candidates": [
+                  4,
+                  12
+                ],
+                "arrival_surrounding_count_candidates": [
+                  12,
+                  24
+                ],
+                "range_geometry": null,
+                "actual_revealed_nodes": null,
+                "actual_ap_received": null,
+                "source": {
+                  "community_file": "research/p3-stage-context/community-main.html",
+                  "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                  "community_revision": 433770,
+                  "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                  "community_license": "CC BY-NC-SA 4.0",
+                  "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                  "light_original_type": "LIGHT",
+                  "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                  "facts": [
+                    "到达羽瞰点获得1AP；占领仍可获得。",
+                    "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                    "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                  ],
+                  "unverified": [
+                    "Complete range geometry and actual revealed node identities.",
+                    "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                    "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                    "Other node effects, movement modifiers and complete server/state eligibility."
+                  ],
+                  "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                  "reuse": [
+                    ".cache/research/routes-049/evidence.json",
+                    "research/p3-exploration-planning/source-receipt.json"
+                  ],
+                  "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                  "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                  "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                  "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                  "original_node_record": {
+                    "name": "羽瞰点",
+                    "subName": "视野",
+                    "description": "所见并非所得，做好标记后别忘了计算行程。"
+                  },
+                  "targeted_unknown_review": {
+                    "queries": [
+                      "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                      "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                      "site:prts.wiki 分裂 羽瞰点 周围24格"
+                    ],
+                    "date": "2026-10-12",
+                    "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                    "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                  }
+                }
+              },
+              "nominal_ap_after_known_grants_subtotal": 6,
+              "unknown_ap_components": [],
+              "payment_zero_boundary": false,
+              "passive_reference_states": [],
+              "actual_move_succeeded": null
+            }
+          ],
+          "known_base_ap_cost_sum": 2,
+          "known_stated_ap_grant_sum": 0,
+          "known_node_arrival_ap_grant_sum": 0,
+          "known_combined_ap_grant_sum": 0,
+          "node_arrival_reference_state_scope": "conditional_plan_only",
+          "node_arrival_reference_state": [],
+          "inventory_reference_state": [],
+          "passive_reference_state": [],
+          "nominal_position": "g",
+          "nominal_final_ap": 6,
+          "complete_declared_conditions": true,
+          "stopped_reason": null,
+          "actual_final_position": null,
+          "actual_final_inventory": null,
+          "actual_final_ap": null
+        },
+        "battle_reward_rows": [],
+        "known_base_subtotal": {
+          "experience": 0,
+          "gold": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        },
+        "unknown_or_failed_conditions": [],
+        "closed_declared_component_reference": true,
+        "conditional_base_total": {
+          "experience": 0,
+          "gold": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        },
+        "net_ap_consumption_reference": 2,
+        "base_cost_reference": 2,
+        "component_dominated_by": [],
+        "actual_feasible": null,
+        "actual_final_resources": null
+      },
+      {
+        "id": "b-route",
+        "name": "经乙路径",
+        "goal_node": "g",
+        "declared_steps": [
+          {
+            "mode": "walking",
+            "target": "b"
+          },
+          {
+            "mode": "walking",
+            "target": "g"
+          }
+        ],
+        "movement_reference": {
+          "scope": "offline_declared_conditions",
+          "source": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+            "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+            "upstream_license_status": "No license statement verified; small factual parameter and item-reference extraction only."
+          },
+          "actual_gameplay_verified": false,
+          "inventory_updated": false,
+          "limits": [
+            "固定公开原件，不等于当前服务器或账户状态。",
+            "节点类型、持有及次数仅为声明条件，未读取或改写本局。",
+            "同格再进入、未知类型资格和特殊转换可能影响适用性；候选不保证可进入。",
+            "账本只对声明方案扣减已证使用次数，不更新本局持有或清空记忆。",
+            "随机落点、未知次数/资格或明确AP不足会停止依赖链，后续步骤保留为未求值。",
+            "居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。",
+            "首次羽瞰点组件只在临时方案中标为已领，不更新本局；再次到达的AP规则未证。",
+            "付款到0或到达AP未知时停止可续行依赖链；尾链保留声明起点及独立条件参考，不断言实际必结束。"
+          ],
+          "start": "s",
+          "steps": [
+            {
+              "step": 1,
+              "start": "s",
+              "target": "b",
+              "status": "conditional_reference_step",
+              "option": {
+                "id": "walking",
+                "mode": "walking",
+                "path": [
+                  "s",
+                  "b"
+                ],
+                "steps": 1,
+                "base_ap_cost": 1,
+                "known_conditions_match": true,
+                "base_cost_affordable": true,
+                "remaining_uses_declared": null,
+                "actual_entry_eligible": null,
+                "movement_grants": [],
+                "passives": [],
+                "source": {
+                  "url": "https://prts.wiki/w/沉沦者的黑流树海",
+                  "sha256": "b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381",
+                  "checked_at": "2026-10-04",
+                  "receipt": ".cache/research/routes-049/evidence.json",
+                  "scope": "cached_complete_page; not a new current-server verification"
+                },
+                "node_arrival_reference": {
+                  "node_id": "b",
+                  "original_type_matches_light": false,
+                  "first_entry_declared": null,
+                  "reward_received_declared": null,
+                  "declaration_conflict": false,
+                  "first_component_condition_matches": false,
+                  "source_stated_arrival_ap": 1,
+                  "first_component_remaining_ap_reference": 0,
+                  "node_arrival_ap_reference": 0,
+                  "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                  "occupied_declared": null,
+                  "occupied_light_source_exception": false,
+                  "vision_boost_condition_matches": null,
+                  "difficulty_declared": null,
+                  "split_unlocked_declared": null,
+                  "spawn_surrounding_count_candidates": [
+                    4,
+                    12
+                  ],
+                  "arrival_surrounding_count_candidates": [
+                    12,
+                    24
+                  ],
+                  "range_geometry": null,
+                  "actual_revealed_nodes": null,
+                  "actual_ap_received": null,
+                  "source": {
+                    "community_file": "research/p3-stage-context/community-main.html",
+                    "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                    "community_revision": 433770,
+                    "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                    "community_license": "CC BY-NC-SA 4.0",
+                    "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                    "light_original_type": "LIGHT",
+                    "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                    "facts": [
+                      "到达羽瞰点获得1AP；占领仍可获得。",
+                      "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                      "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                    ],
+                    "unverified": [
+                      "Complete range geometry and actual revealed node identities.",
+                      "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                      "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                      "Other node effects, movement modifiers and complete server/state eligibility."
+                    ],
+                    "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                    "reuse": [
+                      ".cache/research/routes-049/evidence.json",
+                      "research/p3-exploration-planning/source-receipt.json"
+                    ],
+                    "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                    "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                    "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                    "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                    "original_node_record": {
+                      "name": "羽瞰点",
+                      "subName": "视野",
+                      "description": "所见并非所得，做好标记后别忘了计算行程。"
+                    },
+                    "targeted_unknown_review": {
+                      "queries": [
+                        "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                        "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                        "site:prts.wiki 分裂 羽瞰点 周围24格"
+                      ],
+                      "date": "2026-10-12",
+                      "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                      "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                    }
+                  }
+                },
+                "item_ap_grant_reference": 0,
+                "nominal_ap_after_payment_reference": 7,
+                "nominal_ap_after_combined_grants_reference": 7,
+                "payment_zero_boundary_reference": false,
+                "actual_ap_after_arrival": null
+              },
+              "base_ap_cost": 1,
+              "stated_ap_grant": 0,
+              "nominal_ap_after_payment": 7,
+              "nominal_ap_after_stated_grant": 7,
+              "stated_node_arrival_ap_grant": 0,
+              "node_arrival_reference": {
+                "node_id": "b",
+                "original_type_matches_light": false,
+                "first_entry_declared": null,
+                "reward_received_declared": null,
+                "declaration_conflict": false,
+                "first_component_condition_matches": false,
+                "source_stated_arrival_ap": 1,
+                "first_component_remaining_ap_reference": 0,
+                "node_arrival_ap_reference": 0,
+                "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                "occupied_declared": null,
+                "occupied_light_source_exception": false,
+                "vision_boost_condition_matches": null,
+                "difficulty_declared": null,
+                "split_unlocked_declared": null,
+                "spawn_surrounding_count_candidates": [
+                  4,
+                  12
+                ],
+                "arrival_surrounding_count_candidates": [
+                  12,
+                  24
+                ],
+                "range_geometry": null,
+                "actual_revealed_nodes": null,
+                "actual_ap_received": null,
+                "source": {
+                  "community_file": "research/p3-stage-context/community-main.html",
+                  "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                  "community_revision": 433770,
+                  "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                  "community_license": "CC BY-NC-SA 4.0",
+                  "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                  "light_original_type": "LIGHT",
+                  "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                  "facts": [
+                    "到达羽瞰点获得1AP；占领仍可获得。",
+                    "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                    "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                  ],
+                  "unverified": [
+                    "Complete range geometry and actual revealed node identities.",
+                    "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                    "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                    "Other node effects, movement modifiers and complete server/state eligibility."
+                  ],
+                  "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                  "reuse": [
+                    ".cache/research/routes-049/evidence.json",
+                    "research/p3-exploration-planning/source-receipt.json"
+                  ],
+                  "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                  "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                  "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                  "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                  "original_node_record": {
+                    "name": "羽瞰点",
+                    "subName": "视野",
+                    "description": "所见并非所得，做好标记后别忘了计算行程。"
+                  },
+                  "targeted_unknown_review": {
+                    "queries": [
+                      "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                      "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                      "site:prts.wiki 分裂 羽瞰点 周围24格"
+                    ],
+                    "date": "2026-10-12",
+                    "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                    "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                  }
+                }
+              },
+              "nominal_ap_after_known_grants_subtotal": 7,
+              "unknown_ap_components": [],
+              "payment_zero_boundary": false,
+              "passive_reference_states": [],
+              "actual_move_succeeded": null
+            },
+            {
+              "step": 2,
+              "start": "b",
+              "target": "g",
+              "status": "conditional_reference_step",
+              "option": {
+                "id": "walking",
+                "mode": "walking",
+                "path": [
+                  "b",
+                  "g"
+                ],
+                "steps": 1,
+                "base_ap_cost": 1,
+                "known_conditions_match": true,
+                "base_cost_affordable": true,
+                "remaining_uses_declared": null,
+                "actual_entry_eligible": null,
+                "movement_grants": [],
+                "passives": [],
+                "source": {
+                  "url": "https://prts.wiki/w/沉沦者的黑流树海",
+                  "sha256": "b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381",
+                  "checked_at": "2026-10-04",
+                  "receipt": ".cache/research/routes-049/evidence.json",
+                  "scope": "cached_complete_page; not a new current-server verification"
+                },
+                "node_arrival_reference": {
+                  "node_id": "g",
+                  "original_type_matches_light": false,
+                  "first_entry_declared": null,
+                  "reward_received_declared": null,
+                  "declaration_conflict": false,
+                  "first_component_condition_matches": false,
+                  "source_stated_arrival_ap": 1,
+                  "first_component_remaining_ap_reference": 0,
+                  "node_arrival_ap_reference": 0,
+                  "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                  "occupied_declared": null,
+                  "occupied_light_source_exception": false,
+                  "vision_boost_condition_matches": null,
+                  "difficulty_declared": null,
+                  "split_unlocked_declared": null,
+                  "spawn_surrounding_count_candidates": [
+                    4,
+                    12
+                  ],
+                  "arrival_surrounding_count_candidates": [
+                    12,
+                    24
+                  ],
+                  "range_geometry": null,
+                  "actual_revealed_nodes": null,
+                  "actual_ap_received": null,
+                  "source": {
+                    "community_file": "research/p3-stage-context/community-main.html",
+                    "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                    "community_revision": 433770,
+                    "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                    "community_license": "CC BY-NC-SA 4.0",
+                    "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                    "light_original_type": "LIGHT",
+                    "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                    "facts": [
+                      "到达羽瞰点获得1AP；占领仍可获得。",
+                      "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                      "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                    ],
+                    "unverified": [
+                      "Complete range geometry and actual revealed node identities.",
+                      "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                      "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                      "Other node effects, movement modifiers and complete server/state eligibility."
+                    ],
+                    "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                    "reuse": [
+                      ".cache/research/routes-049/evidence.json",
+                      "research/p3-exploration-planning/source-receipt.json"
+                    ],
+                    "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                    "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                    "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                    "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                    "original_node_record": {
+                      "name": "羽瞰点",
+                      "subName": "视野",
+                      "description": "所见并非所得，做好标记后别忘了计算行程。"
+                    },
+                    "targeted_unknown_review": {
+                      "queries": [
+                        "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                        "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                        "site:prts.wiki 分裂 羽瞰点 周围24格"
+                      ],
+                      "date": "2026-10-12",
+                      "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                      "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                    }
+                  }
+                },
+                "item_ap_grant_reference": 0,
+                "nominal_ap_after_payment_reference": 6,
+                "nominal_ap_after_combined_grants_reference": 6,
+                "payment_zero_boundary_reference": false,
+                "actual_ap_after_arrival": null
+              },
+              "base_ap_cost": 1,
+              "stated_ap_grant": 0,
+              "nominal_ap_after_payment": 6,
+              "nominal_ap_after_stated_grant": 6,
+              "stated_node_arrival_ap_grant": 0,
+              "node_arrival_reference": {
+                "node_id": "g",
+                "original_type_matches_light": false,
+                "first_entry_declared": null,
+                "reward_received_declared": null,
+                "declaration_conflict": false,
+                "first_component_condition_matches": false,
+                "source_stated_arrival_ap": 1,
+                "first_component_remaining_ap_reference": 0,
+                "node_arrival_ap_reference": 0,
+                "reason": "当前明确原类型不是羽瞰点；本项首次到达组件不适用。",
+                "occupied_declared": null,
+                "occupied_light_source_exception": false,
+                "vision_boost_condition_matches": null,
+                "difficulty_declared": null,
+                "split_unlocked_declared": null,
+                "spawn_surrounding_count_candidates": [
+                  4,
+                  12
+                ],
+                "arrival_surrounding_count_candidates": [
+                  12,
+                  24
+                ],
+                "range_geometry": null,
+                "actual_revealed_nodes": null,
+                "actual_ap_received": null,
+                "source": {
+                  "community_file": "research/p3-stage-context/community-main.html",
+                  "community_sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+                  "community_revision": 433770,
+                  "community_pinned_url": "https://prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7&oldid=433770",
+                  "community_license": "CC BY-NC-SA 4.0",
+                  "game_copyright": "Eagle/Hypergryph and affiliates retain game material rights.",
+                  "light_original_type": "LIGHT",
+                  "source_text": "NEW 视野 羽瞰点 所见并非所得，做好标记后别忘了计算行程。 出现时， 立即揭示 自身及周围4格 内的节点信息。前往该节点后，揭示范围扩大至周围12格 并获得1行动力。 ※点亮【生命游戏】的“分裂”节点后，<保密等级·3+>难度下，该节点出现时的揭示范围变为周围12格 ，前往该节点后扩大的揭示范围变为周围24格 。 ※若该节点被【流窜“居民”】占据，前往也仍能获得1行动力。 ",
+                  "facts": [
+                    "到达羽瞰点获得1AP；占领仍可获得。",
+                    "基本揭示参数：出现自身+周围4格，到达后周围12格。",
+                    "点亮分裂且难度>=3：出现周围12格，到达后周围24格。"
+                  ],
+                  "unverified": [
+                    "Complete range geometry and actual revealed node identities.",
+                    "Repeated receipt/visit behavior and whether a prior reward has actually been collected.",
+                    "Zero-AP exhaustion callback order versus item or LIGHT grants.",
+                    "Other node effects, movement modifiers and complete server/state eligibility."
+                  ],
+                  "conservative_admission": "Only explicit first-entry=True and previously-received=False admits the source first-arrival +1 into a conditional ledger. Explicit already-received suppresses this first component, not all possible repeated effects. Past LIGHT type or visited flag never fills either declaration.",
+                  "reuse": [
+                    ".cache/research/routes-049/evidence.json",
+                    "research/p3-exploration-planning/source-receipt.json"
+                  ],
+                  "dependency": "Public source body already delivered by candidate233; no new body download or current-server completeness claim.",
+                  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+                  "game_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+                  "game_table_file": ".cache\\game-data\\roguelike_topic_table.json",
+                  "original_node_type_field": "$.details.rogue_6.nodeTypeData.LIGHT",
+                  "original_node_record": {
+                    "name": "羽瞰点",
+                    "subName": "视野",
+                    "description": "所见并非所得，做好标记后别忘了计算行程。"
+                  },
+                  "targeted_unknown_review": {
+                    "queries": [
+                      "site:prts.wiki 羽瞰点 再次 领取 行动力",
+                      "site:prts.wiki 羽瞰点 行动力 耗尽 顺序",
+                      "site:prts.wiki 分裂 羽瞰点 周围24格"
+                    ],
+                    "date": "2026-10-12",
+                    "relevant_result": "https://m.prts.wiki/w/沉沦者的黑流树海",
+                    "finding": "Only the same public overview and unrelated results were recovered; no new precise repeat-grant or exhaustion-callback-order evidence. Existing exact body remains the source for +1 and count parameters; unknowns not replaced."
+                  }
+                }
+              },
+              "nominal_ap_after_known_grants_subtotal": 6,
+              "unknown_ap_components": [],
+              "payment_zero_boundary": false,
+              "passive_reference_states": [],
+              "actual_move_succeeded": null
+            }
+          ],
+          "known_base_ap_cost_sum": 2,
+          "known_stated_ap_grant_sum": 0,
+          "known_node_arrival_ap_grant_sum": 0,
+          "known_combined_ap_grant_sum": 0,
+          "node_arrival_reference_state_scope": "conditional_plan_only",
+          "node_arrival_reference_state": [],
+          "inventory_reference_state": [],
+          "passive_reference_state": [],
+          "nominal_position": "g",
+          "nominal_final_ap": 6,
+          "complete_declared_conditions": true,
+          "stopped_reason": null,
+          "actual_final_position": null,
+          "actual_final_inventory": null,
+          "actual_final_ap": null
+        },
+        "battle_reward_rows": [],
+        "known_base_subtotal": {
+          "experience": 0,
+          "gold": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        },
+        "unknown_or_failed_conditions": [],
+        "closed_declared_component_reference": true,
+        "conditional_base_total": {
+          "experience": 0,
+          "gold": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        },
+        "net_ap_consumption_reference": 2,
+        "base_cost_reference": 2,
+        "component_dominated_by": [],
+        "actual_feasible": null,
+        "actual_final_resources": null
+      }
+    ],
+    "pairwise_comparisons": [
+      {
+        "left": "a-route",
+        "right": "b-route",
+        "component_dominates": false,
+        "unresolved_reason": null,
+        "actual_better_route": null
+      },
+      {
+        "left": "b-route",
+        "right": "a-route",
+        "component_dominates": false,
+        "unresolved_reason": null,
+        "actual_better_route": null
+      }
+    ],
+    "comparison_axes": [
+      "net_declared_ap_consumption",
+      "base_battle_experience",
+      "base_battle_gold_interval"
+    ],
+    "component_nondominated_candidates": [
+      "a-route",
+      "b-route"
+    ],
+    "actual_best_route": null,
+    "actual_gameplay_verified": false,
+    "inventory_updated": false,
+    "probability": null,
+    "source": {
+      "movement": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+        "upstream_license_status": "No license statement verified; small factual parameter and item-reference extraction only."
+      },
+      "base_rewards": {
+        "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+        "revision": "433770",
+        "sha256": "8df90d811ef9516f46bb877a15c8701d83bd7d36ff744a42d9b27cfede8551e4",
+        "file": "research/p3-base-settlement/current-main.html",
+        "license": "CC BY-NC-SA4.0",
+        "scope": "base experience/gold table; not actual server settlement"
+      }
+    },
+    "limits": [
+      "仅比较有限声明方案；未枚举全部图路线，也未证明服务器资格、成功或真实可续行。",
+      "费用、返还及临时次数沿用已证账本；未知、付款到零或阻断后不累计尾链战斗奖励。",
+      "同节点再次作战能否重复领取未证，第二次奖励不作为已知小计。",
+      "分项支配只比较同声明终点的净行动力、基础战斗经验和源石锭范围；不是完整收益或最优推荐。",
+      "事件、掉落、加工品其他资源、失败风险、结局前置、住民动态、当前热更新和完整奖励池仍未计入。",
+      "公开数值及明确胜利声明只构成局外条件参考，不写本局资源、持有或完成标记。"
+    ]
+  },
+  "risk_policy": "avoid_candidate_overlap",
+  "policy_retained_route_ids": [
+    "b-route"
+  ],
+  "policy_excluded_route_ids": [
+    "a-route"
+  ],
+  "source": {
+    "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+    "revision": "433770",
+    "sha256": "8df90d811ef9516f46bb877a15c8701d83bd7d36ff744a42d9b27cfede8551e4",
+    "file": "research/p3-base-settlement/current-main.html",
+    "scope": "文档流窜居民段落；不证明当前服务器脚本与移动顺序"
+  },
+  "actual_gameplay_verified": false,
+  "inventory_updated": false,
+  "actual_best_route": null,
+  "actual_failure_probability": null,
+  "joint_collision_resolution_verified": false,
+  "move_entry_battle_order_verified": false,
+  "limits": [
+    "居民起始位置和0名居民均为显式快照声明；不是从未读页面推断，没有当前服务器验证。",
+    "逐次玩家声明移动后按显式连线展开一格候选；来源排除节点保留，所有其余资格仍未知。",
+    "进入前与移动后阶段分别显示；玩家进入、居民移动、碰撞、战斗与回退的实际顺序未知。",
+    "某候选分支无未排除相邻节点时，回退及后续位置保持未知，不让空候选集合冒充安全。",
+    "移动链已阻断或AP/资格未知后不展开居民尾链；该步之后不能从未评估结果判断无风险。",
+    "据点获胜驱逐只用独立步骤声明和明确BATTLE_SAVAGE原类型；不从经过节点推断获胜或改变本局。",
+    "候选并集不证明多个居民能同时占领；候选无交集不证明安全，排除仅为显式保守规划偏好。",
+    "未据此改写费用、基础奖励、节点完成、居民据点或库存；完整收益、实际失败率与最优路线未知。"
+  ]
+}

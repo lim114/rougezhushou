@@ -1,0 +1,51 @@
+{
+  "section": 451,
+  "kind": "functional_section",
+  "title": "主要资料共用浮窗与返回前进导航",
+  "new_capability": "地图、藏品与零件、场景笔记、对局记录、队伍、最近节点资料、概况和设置在同一个原生资料窗切换；返回/前进保留已测搜索、类型筛选、页签和阅读状态。真实未保存笔记可阻止离开、关闭和Esc；收起恢复继续使用原页面。",
+  "passed": true,
+  "passed_scope": "Named main-page host, navigation, read state and draft/hide guard only; not whole video or all sizing.",
+  "limitations": "完整作战/敌人/事件详情、笔记目录、公开档案及完整工作区仍有独立窗口，尚未全部迁入；成熟网页尚未接入。首次打开部分页面仍会在下一轮界面更新后增高，笔记900×360变为约900×662的反例未通过，原因未明；不声称所有页面尺寸或全视频外观一致。导航按钮位置、密度、完整跨屏/游戏绑定仍需继续对照。未修改识别算法，不能宣称本轮识别提速或准确率提升。",
+  "unit_tests_run": 49,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/451-reference-window/unit-final2/results.json",
+      "process": "verification/sections/451-reference-window/unit-final2/process.json",
+      "tests_run": 5
+    },
+    {
+      "result": "verification/sections/451-reference-window/frame-current/results.json",
+      "process": "verification/sections/451-reference-window/frame-current/process.json",
+      "tests_run": 14
+    },
+    {
+      "result": "verification/sections/451-reference-window/binding-current/results.json",
+      "process": "verification/sections/451-reference-window/binding-current/process.json",
+      "tests_run": 22
+    },
+    {
+      "result": "verification/sections/451-reference-window/notebook-current/results.json",
+      "process": "verification/sections/451-reference-window/notebook-current/process.json",
+      "tests_run": 8
+    }
+  ],
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/451-reference-window/native-delivery/window.json",
+      "unique_checks": 63
+    }
+  },
+  "source_sha256": {
+    "rouge/player_reference_window.py": "cbefc2612f9ce7e3206a5c97839612f3cde9dcca6b05c429afc0d48f3462fb1c",
+    "rouge/player_compact.py": "55d0b9651ba9d6794e315a7d6aa377d5743d4af71fbbc61e46f2085125ef4014",
+    "tests/test_reference_window_451.py": "b861f5da8ef3a052a4fa9feedc910b758842d4d22bb6feaf551664d9f47e133d"
+  },
+  "source_review": "verification/sections/451-reference-window/source-review.json",
+  "actual_local_test_window": "verification/sections/451-reference-window/live-window/window.json",
+  "unpassed_scope": "verification/sections/451-reference-window/unresolved-size.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T12:44:02.436192+00:00"
+}

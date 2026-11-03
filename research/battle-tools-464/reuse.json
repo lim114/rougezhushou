@@ -1,0 +1,29 @@
+{
+  "external_sources": [
+    {
+      "url": "https://github.com/pyapp-kit/superqt/tree/a81c9c707351ce587bbc7a14cd6ad407375a43cf",
+      "fixed_local_source": "rouge/collapsible_section.py",
+      "source": {
+        "sha256": "a45aadfb0479107d7e9528fc4f8960f74eecfc7e0d004e74f89d6eb835304650",
+        "bytes": 8490
+      },
+      "license": "licenses/superqt-BSD-3-Clause.txt",
+      "adaptation": "Previously adopted mature BSD3 collapse widget reused for optional unassigned spawn records; binding imports remain local."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QStackedWidget.html",
+      "adaptation": "Retained native page stack and source-bound shared navigation."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtGui/QScreen.html#PySide6.QtGui.QScreen.availableGeometry",
+      "adaptation": "Clamp the resized native page to available screen geometry using Qt logical coordinates."
+    },
+    {
+      "url": "https://github.com/zhiyiYo/PyQt-Frameless-Window/tree/fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "adaptation": "Existing licensed Windows frame remains unchanged."
+    }
+  ],
+  "decision": "Reuse mature native Qt/previously adopted public window and collapse code. A second browser or UI framework would duplicate the already validated local tool models and cannot supply their exact source-bound callbacks. Table-driven routing adapts the four existing families without reconstructing data.",
+  "new_dependency": false,
+  "previous_adoption_counted_as_new_external_project": false
+}

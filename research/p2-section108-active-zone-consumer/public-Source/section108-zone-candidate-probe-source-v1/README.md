@@ -1,0 +1,7 @@
+Source-only candidate108 publicAPI replay. Author never executed runner/helper/codec/targetAPI/tests/Qt/Wine/Git, and never wrote tracked files.
+
+Root after actual108 apply and independent Source review: python probe_zone108.py --root /workspace/rougezhushou --guard ACTUAL108_SOURCE751_GUARD --out FRESH_CANDIDATE108_OUTPUT. Guard path/hash is an actual Root input; no future receipt/hash/primary fabricated. Candidate accepts only actual751 section108, not original749/750.
+
+Exact original47 cases and8 previews, all public functions/argument fixtures/callers/actualcall/error capture/formatter flow/native tagging/deadline/purity Source are preserved. Only Source transport metadata changes: candidate phase/kind/count admission andmanifest hash/budget label; fixture17 targetpins change only enemy_environment d55→046, retaining other16. f040 native helper byte exact. WholeSource751+CORE before/after enforced. Historic actual749 guard remains solely recorded provenance inside the inherited manifest, never current eligibility.
+
+Originalactualv2 Source7502c5 observation had178 explicit calls/225native/22errors/10blocked; candidate actual quantities and expected native differences remain unmeasured here. Both observation receipts are product_passFalse regardless raw0; Root true Saved comparisons and realWindow/related validation establish final behavior. Active invalid shapes may still error asValueError, preview may be pendingNone; no fabricated numerical success/gamephase/OCR/main-depth/cache schema claim.

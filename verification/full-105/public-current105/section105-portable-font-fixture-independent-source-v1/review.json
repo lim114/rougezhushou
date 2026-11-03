@@ -1,0 +1,119 @@
+{
+  "status": "SOURCE_ONLY_INDEPENDENT_REVIEW_NO_BLOCKER_IN_EXACT_LOCAL_FIXTURE_SCOPE",
+  "captured_at_UTC": "2026-10-09T10:11:16.844887+00:00",
+  "packet": "/workspace/.continuation/section105-portable-font-fixture-source-v1",
+  "packet_manifest": {
+    "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/manifest-source-only.json",
+    "bytes": 865,
+    "sha256": "6167e6e3fbb9a608ac646397fea591b8917edd6dfc80d3da9a819ec3bb8ad50b"
+  },
+  "payloads_verified": [
+    {
+      "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/README.md",
+      "bytes": 643,
+      "sha256": "64a5b28b87d9ee8ed10df9d109f3dc4808c59a812bd6c8de85b7040f64bed54d"
+    },
+    {
+      "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/font-setup-local-fragment.py",
+      "bytes": 1301,
+      "sha256": "a7de7dd56aac0fe00d8fa95dd68ce60c6fb38e2d98b57f6c36be06b2bc4cce96"
+    },
+    {
+      "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/local-transport.json",
+      "bytes": 3771,
+      "sha256": "7a78448839416bff03fca7baf5f2bc086518f795ede7bc0a6afc2777a911d6c9"
+    },
+    {
+      "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/node-content-font-local.patch",
+      "bytes": 2043,
+      "sha256": "183fea61f3857c16bf69e02e67be462f6d15693ba2e9b907464b23d4e5a90fe1"
+    },
+    {
+      "path": "/workspace/.continuation/section105-portable-font-fixture-source-v1/source-contract.json",
+      "bytes": 4640,
+      "sha256": "740dc853bbba63e7d6c026b8efd0385593441f1b3edc21cb31b05c512a1ca5cd"
+    }
+  ],
+  "source_refs_verified": [
+    {
+      "path": "/workspace/rougezhushou/tests/test_node_content.py",
+      "bytes": 11741,
+      "sha256": "e85f5e4081802ac7e5112509e9143a53b4dcc979e3dc27893588ae488a3b45ae"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-font-actual-wine-v1.json",
+      "bytes": 1307,
+      "sha256": "bb1c30e1d16032cef53e3611eb9cc2aa5f346c4193e5ed4770a3c0ca8e1f92ad"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-node-font-actual-wine-v1.log",
+      "bytes": 991,
+      "sha256": "22d981664eecd0e394afd23f41de34014eda61f40ae4220169d24c5ec7f03a0c"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-node-font-actual-wine-v1.exit-code",
+      "bytes": 2,
+      "sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a"
+    },
+    {
+      "path": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "bytes": 19484784,
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+    },
+    {
+      "path": "/workspace/.continuation/section105-font-file-provenance-source-v1/report.json",
+      "bytes": 3636,
+      "sha256": "4d410d6431261680ceae73271c7eab4c6777605dfd15280a6df8919db8b109b8"
+    }
+  ],
+  "additional_original_probe_exit": {
+    "path": "/workspace/.continuation/section105-original-font-actual-wine-v1.exit-code",
+    "bytes": 2,
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+  },
+  "composed_source": {
+    "bytes": 12838,
+    "sha256": "8978ddc563ede13bfa7290aac1d20ac463265195a46b04dc051a31dd4c629fbc",
+    "never_written_or_executed": true
+  },
+  "checks": {
+    "exactly_two_unique_local_replacements_and_reverse_original_bytes": true,
+    "patch_exact_stdlib_unified_diff": true,
+    "all_41_original_assertion_AST_calls_identical_in_order": true,
+    "target_7_original_assertion_AST_calls_identical_in_order": true,
+    "all_other_methods_AST_identical": true,
+    "entire_module_AST_identical_after_removing_only_added_font_gate_and_reverting_QFont_argument": true,
+    "fragment_exact_setup_AST": true,
+    "original_WINDIR_default_path_and_QFontDatabase_APIs_preserved": true,
+    "original_nonempty_families_first_family_priority_before_fallback_env_read": true,
+    "fallback_only_explicit_env_real_file_and_actual_Noto_Sans_CJK_SC_family": true,
+    "all_three_missing_unconfigured_or_unsuitable_conditions_raise_RuntimeError": true,
+    "font_gate_finishes_before_QImage_QPainter_or_ScreenReader_construction": true,
+    "drawing_text_size_geometry_color_and_OCR_original_assertions_preserved": true,
+    "no_skip_U_classifier_or_production_source_change": true,
+    "two_source_code_objects_compiled_without_execution": true
+  },
+  "original_actual_evidence": {
+    "original_font_usable": false,
+    "original_font_id": -1,
+    "original_families": [],
+    "actual_Noto_probe_family": "Noto Sans CJK SC",
+    "font_probe_raw_exit_bytes": "1\\n",
+    "original_test_raw_exit_bytes": "9\\n",
+    "original_test_tests_run": 1,
+    "original_test_errors": 1,
+    "original_test_failure": "line110 families[0] IndexError, before line116 ScreenReader.read",
+    "raw9_not_normalized_to_unittest_failure1": true,
+    "all_original_receipts_preserved_untouched": true
+  },
+  "runtime_limits": [
+    "Source review and prior font API probe do not establish original OCR title/scene or RunState assertion PASS; Root must actually run original assertions after guarded local apply.",
+    "Original font priority is Source proved only here; native original font is currently absent. Qt initialization/import failures can precede fixture handling.",
+    "Fallback uses real public Noto SC without file aliases or original-font impersonation. Explicit path availability and returned actual family remain Qt runtime conditions.",
+    "Source coverage must be regenerated from actual changed test hash and contemporaneous103/104/cloud/registry guards before full105; keep unrelated edits."
+  ],
+  "project_tests_helpers_Qt_Wine_Git_executed": 0,
+  "target_modules_imported": 0,
+  "tracked_writes": 0,
+  "blockers": []
+}

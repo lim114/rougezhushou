@@ -1,0 +1,555 @@
+{
+  "scope": "controlled_multi_record_common_residual_hypothesis",
+  "experiment_id": "mechanist_panel_held_out_conflict",
+  "operator": "机械师",
+  "channel": {
+    "kind": "panel",
+    "panel": "培养与模组",
+    "field": "attack"
+  },
+  "channel_label": "攻击力",
+  "hypothesis": "common_additive_residual",
+  "evidence_kind": "formula_reference",
+  "evidence_version": "固定原件公式声明演示v1",
+  "version_is_caller_declaration": true,
+  "control_scenario": {
+    "operator": "mechanist",
+    "skill": 1,
+    "level": 60,
+    "relic_ids": [],
+    "skill_rank": 10,
+    "elite": 2,
+    "trust": 100,
+    "potential": 1,
+    "module_id": null,
+    "module_level": 0,
+    "timing_mode": "frames"
+  },
+  "varying_fields": [
+    "level"
+  ],
+  "records": [
+    {
+      "id": "level60",
+      "role": "training",
+      "evidence_version": "固定原件公式声明演示v1",
+      "state": "evaluable",
+      "blocking_reasons": [],
+      "source": "固定原件精二60/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+      "context_token": "428941fb34a57d5deb28999b92c98f4487fef6a8cf79303711990d486f3cc892",
+      "changed_controls": [],
+      "observed_interval": {
+        "lower": 548,
+        "upper": 548,
+        "lower_exact": "548",
+        "upper_exact": "548",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "model_reference": 543,
+      "residual_interval": {
+        "lower": 5,
+        "upper": 5,
+        "lower_exact": "5",
+        "upper_exact": "5",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "same_context_repeat_ids": [],
+      "native_verified": false,
+      "actual_cause_of_difference": null,
+      "declared_scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "level": 60,
+        "relic_ids": [],
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "timing_mode": "frames"
+      },
+      "model_source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "files": {
+          "character_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "bytes": 14975251
+          },
+          "skill_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+            "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+            "bytes": 11447929
+          },
+          "uniequip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "bytes": 3365012
+          },
+          "battle_equip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "bytes": 5710707
+          },
+          "roguelike_topic_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+            "bytes": 17943244
+          }
+        }
+      },
+      "comparison_detail": {
+        "operator": "机械师",
+        "context_token": "428941fb34a57d5deb28999b92c98f4487fef6a8cf79303711990d486f3cc892",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二60/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+        "tolerance": 0,
+        "rows": [
+          {
+            "field": "attack",
+            "label": "攻击力",
+            "predicted": 543,
+            "observed": 548,
+            "difference": 5,
+            "relative_difference": 0.009208103130755065,
+            "matches_declared_tolerance": false,
+            "other_stage_matches": []
+          }
+        ],
+        "all_compared_values_match": false,
+        "uncompared_fields": [
+          "hp",
+          "defense",
+          "resistance",
+          "redeploy_seconds",
+          "attack_speed",
+          "block_count",
+          "interval",
+          "sp_recovery",
+          "deployment_cost"
+        ],
+        "native_verified": false,
+        "notes": [
+          "局外声明条件下的计算对照；不证明当前客户端面板或原生时钟。",
+          "来源类型由调用方声明；工具不把网页计算或用户填写值升级为实机证据。",
+          "其它层命中仅是排查线索，不证明差异原因；部分字段相符不等于完整面板已通过。"
+        ]
+      },
+      "declared_observation": {
+        "context_token": "428941fb34a57d5deb28999b92c98f4487fef6a8cf79303711990d486f3cc892",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二60/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+        "values": {
+          "attack": [
+            548,
+            548
+          ]
+        }
+      }
+    },
+    {
+      "id": "level75",
+      "role": "training",
+      "evidence_version": "固定原件公式声明演示v1",
+      "state": "evaluable",
+      "blocking_reasons": [],
+      "source": "固定原件精二75/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+      "context_token": "120713dc9470e8fbfbf831d521ba11e8afd010d84a527bc3160fbfcad277ac6f",
+      "changed_controls": [
+        {
+          "field": "level",
+          "control_present": true,
+          "record_present": true,
+          "control": 60,
+          "record": 75,
+          "allowed_to_vary": true
+        }
+      ],
+      "observed_interval": {
+        "lower": 563,
+        "upper": 563,
+        "lower_exact": "563",
+        "upper_exact": "563",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "model_reference": 558,
+      "residual_interval": {
+        "lower": 5,
+        "upper": 5,
+        "lower_exact": "5",
+        "upper_exact": "5",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "same_context_repeat_ids": [],
+      "native_verified": false,
+      "actual_cause_of_difference": null,
+      "declared_scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "level": 75,
+        "relic_ids": [],
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "timing_mode": "frames"
+      },
+      "model_source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "files": {
+          "character_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "bytes": 14975251
+          },
+          "skill_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+            "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+            "bytes": 11447929
+          },
+          "uniequip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "bytes": 3365012
+          },
+          "battle_equip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "bytes": 5710707
+          },
+          "roguelike_topic_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+            "bytes": 17943244
+          }
+        }
+      },
+      "comparison_detail": {
+        "operator": "机械师",
+        "context_token": "120713dc9470e8fbfbf831d521ba11e8afd010d84a527bc3160fbfcad277ac6f",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二75/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+        "tolerance": 0,
+        "rows": [
+          {
+            "field": "attack",
+            "label": "攻击力",
+            "predicted": 558,
+            "observed": 563,
+            "difference": 5,
+            "relative_difference": 0.008960573476702509,
+            "matches_declared_tolerance": false,
+            "other_stage_matches": []
+          }
+        ],
+        "all_compared_values_match": false,
+        "uncompared_fields": [
+          "hp",
+          "defense",
+          "resistance",
+          "redeploy_seconds",
+          "attack_speed",
+          "block_count",
+          "interval",
+          "sp_recovery",
+          "deployment_cost"
+        ],
+        "native_verified": false,
+        "notes": [
+          "局外声明条件下的计算对照；不证明当前客户端面板或原生时钟。",
+          "来源类型由调用方声明；工具不把网页计算或用户填写值升级为实机证据。",
+          "其它层命中仅是排查线索，不证明差异原因；部分字段相符不等于完整面板已通过。"
+        ]
+      },
+      "declared_observation": {
+        "context_token": "120713dc9470e8fbfbf831d521ba11e8afd010d84a527bc3160fbfcad277ac6f",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二75/满信赖/潜能1培养攻击字面量；另明确声明+5的假设测试算式，非游戏面板。",
+        "values": {
+          "attack": [
+            563,
+            563
+          ]
+        }
+      }
+    },
+    {
+      "id": "level90",
+      "role": "held_out",
+      "evidence_version": "固定原件公式声明演示v1",
+      "state": "evaluable",
+      "blocking_reasons": [],
+      "source": "固定原件精二90/满信赖/潜能1培养攻击字面量；另明确声明+7的假设测试算式，非游戏面板。",
+      "context_token": "1b8b4257381742da76dd6bda1d620a2691a429d18cdfd580546e263dd1556622",
+      "changed_controls": [
+        {
+          "field": "level",
+          "control_present": true,
+          "record_present": true,
+          "control": 60,
+          "record": 90,
+          "allowed_to_vary": true
+        }
+      ],
+      "observed_interval": {
+        "lower": 580,
+        "upper": 580,
+        "lower_exact": "580",
+        "upper_exact": "580",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "model_reference": 573,
+      "residual_interval": {
+        "lower": 7,
+        "upper": 7,
+        "lower_exact": "7",
+        "upper_exact": "7",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "same_context_repeat_ids": [],
+      "native_verified": false,
+      "actual_cause_of_difference": null,
+      "declared_scenario": {
+        "operator": "mechanist",
+        "skill": 1,
+        "level": 90,
+        "relic_ids": [],
+        "skill_rank": 10,
+        "elite": 2,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "timing_mode": "frames"
+      },
+      "model_source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "files": {
+          "character_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "bytes": 14975251
+          },
+          "skill_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+            "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+            "bytes": 11447929
+          },
+          "uniequip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "bytes": 3365012
+          },
+          "battle_equip_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "bytes": 5710707
+          },
+          "roguelike_topic_table": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+            "bytes": 17943244
+          }
+        }
+      },
+      "comparison_detail": {
+        "operator": "机械师",
+        "context_token": "1b8b4257381742da76dd6bda1d620a2691a429d18cdfd580546e263dd1556622",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二90/满信赖/潜能1培养攻击字面量；另明确声明+7的假设测试算式，非游戏面板。",
+        "tolerance": 0,
+        "rows": [
+          {
+            "field": "attack",
+            "label": "攻击力",
+            "predicted": 573,
+            "observed": 580,
+            "difference": 7,
+            "relative_difference": 0.012216404886561954,
+            "matches_declared_tolerance": false,
+            "other_stage_matches": []
+          }
+        ],
+        "all_compared_values_match": false,
+        "uncompared_fields": [
+          "hp",
+          "defense",
+          "resistance",
+          "redeploy_seconds",
+          "attack_speed",
+          "block_count",
+          "interval",
+          "sp_recovery",
+          "deployment_cost"
+        ],
+        "native_verified": false,
+        "notes": [
+          "局外声明条件下的计算对照；不证明当前客户端面板或原生时钟。",
+          "来源类型由调用方声明；工具不把网页计算或用户填写值升级为实机证据。",
+          "其它层命中仅是排查线索，不证明差异原因；部分字段相符不等于完整面板已通过。"
+        ]
+      },
+      "declared_observation": {
+        "context_token": "1b8b4257381742da76dd6bda1d620a2691a429d18cdfd580546e263dd1556622",
+        "panel": "培养与模组",
+        "evidence_kind": "formula_reference",
+        "source": "固定原件精二90/满信赖/潜能1培养攻击字面量；另明确声明+7的假设测试算式，非游戏面板。",
+        "values": {
+          "attack": [
+            580,
+            580
+          ]
+        }
+      }
+    }
+  ],
+  "training_state": "compatible",
+  "training_record_ids": [
+    "level60",
+    "level75"
+  ],
+  "blocked_training_record_ids": [],
+  "training_hypothesis_range": {
+    "lower": 5,
+    "upper": 5,
+    "lower_exact": "5",
+    "upper_exact": "5",
+    "lower_inclusive": true,
+    "upper_inclusive": true
+  },
+  "training_contradiction_witness": null,
+  "held_out_checks": [
+    {
+      "record_id": "level90",
+      "state": "no_overlap",
+      "allowed_training_residual_range": {
+        "lower": 5,
+        "upper": 5,
+        "lower_exact": "5",
+        "upper_exact": "5",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "held_out_residual_range": {
+        "lower": 7,
+        "upper": 7,
+        "lower_exact": "7",
+        "upper_exact": "7",
+        "lower_inclusive": true,
+        "upper_inclusive": true
+      },
+      "remaining_hypothesis_range": null,
+      "contradiction_witness": {
+        "record_ids": [
+          "level90",
+          "level60"
+        ],
+        "lower_witness_residual": {
+          "lower": 7,
+          "upper": 7,
+          "lower_exact": "7",
+          "upper_exact": "7",
+          "lower_inclusive": true,
+          "upper_inclusive": true
+        },
+        "upper_witness_residual": {
+          "lower": 5,
+          "upper": 5,
+          "lower_exact": "5",
+          "upper_exact": "5",
+          "lower_inclusive": true,
+          "upper_inclusive": true
+        },
+        "reason": "declared_residual_ranges_have_no_common_value"
+      },
+      "native_verified": false
+    }
+  ],
+  "held_out_record_count": 1,
+  "held_out_evidence_missing": false,
+  "overall_state": "contradicted",
+  "blocked_record_ids": [],
+  "overall_hypothesis_range": null,
+  "overall_contradiction_witness": {
+    "record_ids": [
+      "level90",
+      "level60"
+    ],
+    "lower_witness_residual": {
+      "lower": 7,
+      "upper": 7,
+      "lower_exact": "7",
+      "upper_exact": "7",
+      "lower_inclusive": true,
+      "upper_inclusive": true
+    },
+    "upper_witness_residual": {
+      "lower": 5,
+      "upper": 5,
+      "lower_exact": "5",
+      "upper_exact": "5",
+      "lower_inclusive": true,
+      "upper_inclusive": true
+    },
+    "reason": "declared_residual_ranges_have_no_common_value"
+  },
+  "source": {
+    "repository": "Kengxxiao/ArknightsGameData",
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "files": {
+      "character_table": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+        "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+        "bytes": 14975251
+      },
+      "skill_table": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+        "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+        "bytes": 11447929
+      },
+      "uniequip_table": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+        "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+        "bytes": 3365012
+      },
+      "battle_equip_table": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+        "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+        "bytes": 5710707
+      },
+      "roguelike_topic_table": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+        "bytes": 17943244
+      }
+    }
+  },
+  "native_verified": false,
+  "engine_correction": null,
+  "actual_cause_of_difference": null,
+  "notes": [
+    "共同b只是调用方声明的加性残差假设，不推断藏品、技能、隐藏机制或偏差原因，不修正引擎。",
+    "训练记录共同交集与留出复核分开；只称声明范围相容，可能重叠不是实机认证。",
+    "任何训练记录被阻断都阻断整组假设，不丢弃不相符或未知记录后宣称通过。",
+    "每条记录独立保留条件、来源、版本声明和界限；同条件重复列出，但不假定统计独立。",
+    "来源版本与控制变量由调用方明确声明；这些标识不证明客户端版本或当前热更新。",
+    "单通道共同b与跨记录差值相容不能证明完整面板、原生时钟或完整技能总量。"
+  ]
+}

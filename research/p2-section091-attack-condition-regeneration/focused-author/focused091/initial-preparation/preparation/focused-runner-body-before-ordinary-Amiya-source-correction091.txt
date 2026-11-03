@@ -1,0 +1,324 @@
+"""Focused actual MainWindow acceptance; root alone executes after actual-source freeze."""
+import copy,gzip,hashlib,json,sys,tempfile,time,traceback
+from pathlib import Path
+ROOT=Path(r'Z:\workspace\rougezhushou')
+OUT=Path(r'Z:\workspace\.compat')
+SOURCE_HASHES=SOURCE_LITERAL
+PLAN=PLAN_LITERAL
+for rel,expected in SOURCE_HASHES.items():
+    assert hashlib.sha256((ROOT/rel).read_bytes()).hexdigest()==expected,('source drift before Qt',rel)
+RECEIPT=OUT/'wine-focused-mainwindow-091.json'
+CHECKPOINT=OUT/'wine-focused-mainwindow-091-records.json.gz'
+assert not RECEIPT.exists() and not CHECKPOINT.exists(),'Existing actual91 outputs must be preserved; do not rerun this frozen acceptance over them'
+sys.path.insert(0,str(ROOT))
+entry_counts={};library_entries={};toggle_events=[];API_events=[];pending_API={}
+states=[];checks=[];current_step='startup';explicit_buttons=0;explicit_text_requests=0
+window=None;app=None;started=time.perf_counter()
+receipt={'format_version':1,'passed':False,'complete_focused_window_acceptance':False,
+    'native_windows_verified':False,'game_captures':0,'chat_requests':0,'private_state_isolated':True,
+    'planned_states':24,'old_full90_or4217_replayed':False,'source_sha256':SOURCE_HASHES,
+    'records_archive':CHECKPOINT.name,'checks':checks}
+
+def native(value):
+    kind=type(value).__name__
+    if value is None or type(value) in (bool,int,str):return {'type':kind,'value':value}
+    if type(value) is float:return {'type':'float','hex':value.hex()}
+    if type(value) in (list,tuple):return {'type':kind,'items':[native(v) for v in value]}
+    if type(value) is dict:return {'type':'dict','items':[[native(k),native(v)] for k,v in value.items()]}
+    raise TypeError(('unsupported native value',kind))
+
+def delta(before,after):return {key:after.get(key,0)-before.get(key,0) for key in sorted(set(before)|set(after))}
+
+def profile(frame,event,value):
+    path=frame.f_code.co_filename.replace('\\','/').lower();name=frame.f_code.co_name
+    if event=='call' and '/rouge/' in path:
+        relative='rouge/'+path.split('/rouge/',1)[1]
+        qualified=relative+':'+name;library_entries[qualified]=library_entries.get(qualified,0)+1
+        key=None
+        if path.endswith('/rouge/app.py') and name=='calculate':key='MainWindow.calculate'
+        elif path.endswith('/rouge/damage.py') and name=='calculate_damage':key='calculate_damage'
+        elif path.endswith('/rouge/estimate.py') and name=='format_estimate':key='format_estimate'
+        elif path.endswith('/rouge/reporting.py') and name=='format_report':key='format_report_technical' if frame.f_locals['technical'] else 'format_report_default'
+        elif path.endswith('/rouge/run_state.py') and name in ('__init__','apply','load'):key='RunState.'+name
+        if key:entry_counts[key]=entry_counts.get(key,0)+1
+        if key=='calculate_damage':
+            record={'sequence':len(API_events)+1,'step':current_step,
+                'input':copy.deepcopy(frame.f_locals['scenario']),
+                'input_native_before':native(frame.f_locals['scenario']),'outcome':'pending'}
+            API_events.append(record);pending_API[id(frame)]=record
+    elif event=='return' and id(frame) in pending_API:
+        record=pending_API.pop(id(frame));record['input_native_after']=native(frame.f_locals['scenario'])
+        record['caller_native_unchanged']=record['input_native_after']==record['input_native_before']
+        record['outcome']='returned_dict' if type(value) is dict else 'returned_None_or_exception_unwind'
+    return profile
+
+def checkpoint():
+    payload={'format_version':1,'states':states,'checks':checks,'toggle_events':toggle_events,
+        'API_events':API_events,'actual_python_entries':entry_counts,'actual_library_python_entries':library_entries,
+        'explicit_buttons':explicit_buttons,'explicit_three_text_requests':explicit_text_requests,
+        'passed':receipt['passed'],'current_step':current_step}
+    decoded=json.dumps(payload,ensure_ascii=False,allow_nan=False).encode('utf-8')
+    compressed=gzip.compress(decoded,mtime=0);CHECKPOINT.write_bytes(compressed)
+    receipt['lossless_records']={'file':CHECKPOINT.name,'records':len(states),'bytes':len(compressed),
+        'sha256':hashlib.sha256(compressed).hexdigest(),'decoded_bytes':len(decoded),
+        'decoded_sha256':hashlib.sha256(decoded).hexdigest()}
+
+try:
+    from PySide6.QtCore import Qt
+    from PySide6.QtWidgets import QApplication,QPushButton,QCheckBox
+    from PySide6.QtGui import QTextCursor
+    import rouge.app as module
+    from rouge.reporting import format_report
+    from rouge.estimate import format_estimate
+    from rouge.operator_options import OPTIONS
+    from rouge.capture import list_game_windows
+    with tempfile.TemporaryDirectory() as folder:
+        isolated=Path(folder)
+        module.RUN_STATE=isolated/'run.json';module.OPERATOR_STATE=isolated/'operators.json';module.SETTINGS=isolated/'settings.json'
+        original_backend=module.DesktopBackend
+        module.DesktopBackend=lambda _path,callback:original_backend(isolated/'chat',callback)
+        previous_profile=sys.getprofile();sys.setprofile(profile)
+        app=QApplication([]);window=module.MainWindow();window.show();app.processEvents()
+        assert window.isVisible()
+        checkbox=window.continuous_attacks;checkbox_identity=id(checkbox)
+        assert checkbox.isChecked() is True
+        receipt['initial_default_true']=True
+        receipt['startup_actual_entries']=dict(entry_counts)
+        assert not window.auto.isChecked() and window.capture.target is None
+        assert not window.desktop.process and not window.desktop_request_busy
+        assert not list_game_windows()
+        def observed_toggle(value):toggle_events.append({'step':current_step,'value':value,'native':native(value)})
+        checkbox.toggled.connect(observed_toggle)
+        window.centralWidget().setCurrentIndex(1);app.processEvents()
+        button=next(b for b in window.findChildren(QPushButton) if b.text()=='计算属性与技能预估')
+        assert button.isVisible() and button.isEnabled()
+        widgets={(owner,key):widget for owner,key,_skills,widget in window.model_option_widgets}
+        window.use_run_training.setChecked(False);window.auto_relics.setChecked(False)
+        window.run.state={**window.run.state,'operators':{},'config':{}}
+        window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
+        window.cooperative.setChecked(False);window.fragile.setChecked(False)
+        window.deployment_elapsed.setValue(0);window.healing_targets.setValue(1)
+        window.limit_window.setChecked(True);window.window_seconds.setValue(30)
+        window.frame_timing.setChecked(False);window.timing_scenario.clear();window.relic_context.clear()
+        window.target_buff_test.setChecked(False);window.raw_damage.setChecked(False);window.damage_technical.setChecked(False)
+        receipt['initial_and_common_setup_actual_entries']=dict(entry_counts)
+        phase_before=dict(entry_counts)
+
+        def reset_options(owner):
+            for key,_label,default,_maximum,_skills in OPTIONS.get(owner,[]):
+                widget=widgets[(owner,key)]
+                widget.setChecked(default) if isinstance(widget,QCheckBox) else widget.setValue(default)
+
+        def select_relics(ids):
+            emitted=[]
+            for i in range(window.relic_list.count()):
+                item=window.relic_list.item(i);identity=item.data(Qt.ItemDataRole.UserRole)
+                desired=Qt.CheckState.Checked if identity in ids else Qt.CheckState.Unchecked
+                if item.checkState()!=desired:
+                    item.setCheckState(desired);emitted.append(identity)
+            app.processEvents()
+            assert [window.relic_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(window.relic_list.count())
+                if window.relic_list.item(i).checkState()==Qt.CheckState.Checked]==ids
+            return emitted
+
+        def train(row):
+            owner=row['owner'];window.use_run_training.setChecked(False)
+            reset_options(owner)
+            window.operator_observations[owner]={'fields':copy.deepcopy(row['training']),
+                'skill_ranks':{} if row['skill_rank'] is None else {str(row['skill']):row['skill_rank']}}
+            window.skill_override=False;window.level_override=False;window.display_operator=None
+            assert window.select_operator(owner)
+            window.update_operator(preserve_level=False)
+            assert window.operator.currentData()==owner
+            if row['skill'] is not None:
+                assert window.skill.findData(row['skill'])>=0
+                window.skill.setCurrentIndex(window.skill.findData(row['skill']))
+            else:assert window.skill.currentData() is None
+            select_relics(row.get('relic_ids',[]))
+
+        results={}
+        for row in PLAN['rows']:
+            current_step=row['id'];before=dict(entry_counts);toggles_before=len(toggle_events)
+            existing_checked=checkbox.isChecked()
+            record={'id':row['id'],'planned':copy.deepcopy(row),'passed':False,
+                'checkbox_native_before':native(existing_checked),'entries_before':before}
+            states.append(record);checkpoint()
+            if row['kind'] in ('train','deep'):train(row)
+            elif row['kind']=='toggle':
+                assert existing_checked is not row['checked']
+                checkbox.setChecked(row['checked']);app.processEvents()
+                assert len(toggle_events)-toggles_before==1
+                assert entry_counts.get('MainWindow.calculate',0)>before.get('MainWindow.calculate',0)
+            elif row['kind']=='relic_change':select_relics(row['relic_ids'])
+            elif row['kind']=='run_training':
+                owner=row['owner'];member={'id':owner,'scope':'run','fields':copy.deepcopy(row['training']),
+                    'skill_ranks':{str(row['skill']):row['skill_rank']},'present':True,'invalid_fields':[],
+                    'invalid_skill_ranks':[],'sources':{}}
+                window.run.state['operators']={owner:member}
+                window.skill_override=False;window.level_override=False;window.display_operator=None
+                window.use_run_training.setChecked(True)
+                assert window.select_operator(owner);window.update_operator(preserve_level=False)
+                window.skill.setCurrentIndex(window.skill.findData(row['skill']))
+                select_relics([])
+            elif row['kind']=='overview':
+                window.run.state['operators']={}
+                window.refresh_operator_overview()
+                assert window.operator_choices.select_branch('__overview__')
+                window.update_operator(preserve_level=False)
+            else:raise AssertionError(('unknown focused action',row['kind']))
+            if row['kind']=='deep':
+                window.window_seconds.setValue(row['window_seconds'])
+                count=widgets[('char_110_deepcl','summon_count')]
+                count.setValue(2);assert type(count.value()) is int and count.value()==2
+            if row.get('explicit_click'):
+                before_button=dict(entry_counts);button.click();app.processEvents();explicit_buttons+=1
+                assert delta(before_button,entry_counts).get('calculate_damage',0)==1
+            app.processEvents()
+            label=window.damage_form.labelForField(checkbox)
+            assert label is not None and label.text()==PLAN['row_label']
+            assert checkbox.toolTip()==PLAN['checkbox_tooltip']
+            assert id(checkbox)==checkbox_identity
+            assert checkbox.isChecked() is row['checked']
+            assert checkbox.isVisible() is row['expected_row_visible']
+            assert label.isVisible() is row['expected_row_visible']
+            assert window.operator.currentData()==row['owner']
+            assert window.skill.currentData()==row['skill']
+            record['actual_control']={'owner':window.operator.currentData(),'skill':window.skill.currentData(),
+                'checkbox_native':native(checkbox.isChecked()),'widget_visible':checkbox.isVisible(),
+                'label_visible':label.isVisible(),'label':label.text(),'tooltip':checkbox.toolTip(),
+                'toggle_emissions':copy.deepcopy(toggle_events[toggles_before:])}
+            if row.get('numerical_result_expected',True):
+                assert window.damage_result,window.damage_text.toPlainText()
+                raw=window.damage_result['scenario'];result=window.damage_result['result']
+                record['scenario']=copy.deepcopy(raw);record['scenario_native_before']=native(raw)
+                record['result']=copy.deepcopy(result);record['result_native_before']=native(result)
+                record['visible_text_before_report_checks']=window.damage_text.toPlainText()
+                checkpoint()
+                assert type(raw['continuous_attacks']) is bool and raw['continuous_attacks'] is row['checked']
+                assert raw['operator']==row['owner'] and raw['skill']==row['skill']
+                assert raw['skill_rank']==row['skill_rank']
+                assert {k:raw[k] for k in row['training']}==row['training']
+                assert raw['timing_mode']=='continuous' and 'base_attack' not in raw
+                assert raw['relic_ids']==row.get('relic_ids',[])
+                assert raw['window_seconds']==row.get('window_seconds',30)
+                assert window.normal_animation_reference.currentData() is None
+                assert window.skill_animation_reference.currentData() is None
+                reports={'estimate':format_estimate(result),'default':format_report(result),
+                    'technical':format_report(result,technical=True)}
+                explicit_text_requests+=3;record['reports']=reports;checkpoint()
+                assert reports['estimate']==reports['default']
+                assert window.damage_text.toPlainText()==reports['default'].replace(chr(160),' ')
+                window.damage_technical.setChecked(True);app.processEvents()
+                assert window.damage_text.toPlainText()==reports['technical'].replace(chr(160),' ')
+                window.damage_technical.setChecked(False);app.processEvents()
+                assert window.damage_text.toPlainText()==reports['default'].replace(chr(160),' ')
+                assert native(raw)==record['scenario_native_before'] and native(result)==record['result_native_before']
+                results[row['id']]=result
+                if row['owner']=='mechanist':
+                    skill=result['estimate']['skill']
+                    for key in ('initial_seconds','recharge_seconds','cycle_seconds'):
+                        assert (skill[key] is not None) is row['checked']
+                if row['owner']=='char_002_amiya':
+                    ref=result['amiya_continuous_reference']
+                    assert ref['attack_sp_enabled_in_reference'] is row['checked']
+                    assert ref['attack_sp_per_attack_parameter']==(2 if row['training']['elite']==2 else 0)
+                    assert ref['native_clock_binding_verified'] is False
+                    for key in ('actual_acquisition_times_seconds','actual_impact_times_seconds','actual_recharge_seconds','actual_cycle_seconds'):
+                        assert ref[key] is None
+                    for key in ('recharge_seconds','cycle_seconds'):assert result['estimate']['skill'][key] is None
+                    if row['training']['elite']<2:
+                        assert [window.skill.itemData(i) for i in range(window.skill.count())]==([1] if row['training']['elite']==0 else [1,2])
+                if row['id']=='amiya-E2-toggle-true':
+                    assert result['estimate']['skill']['initial_seconds']<results['amiya-E2-retains-false']['estimate']['skill']['initial_seconds']
+                if row['id']=='amiya-E2-toggle-false':
+                    assert result['estimate']['skill']['initial_seconds']==results['amiya-E2-retains-false']['estimate']['skill']['initial_seconds']
+                if row['owner']=='char_1050_chen3':
+                    rules=result['relic_resolution']['rules']
+                    assert any(r['kind']=='attack_sp' and r['relic_id']=='rogue_6_relic_legacy_67' for r in rules) is bool(row['relic_ids'])
+                    if row['id']=='chen3-67-toggle-true':assert result['estimate']['skill']['initial_seconds']<results['chen3-67-false']['estimate']['skill']['initial_seconds']
+                if row['owner']=='silverash':assert not any(r['kind']=='attack_sp' for r in result['relic_resolution']['rules'])
+                if row['owner']=='char_196_sunbr':
+                    resolution=result['relic_resolution']
+                    records=[r for r in resolution['records'] if r['id']=='rogue_6_relic_legacy_118']
+                    assert len(records)==1 and records[0]['status']=='reference_only'
+                    assert records[0]['applied']==[] and len(records[0]['reference_effects'])==2
+                    assert not any(r['kind'] in ('received_sp','event_sp') for r in resolution['rules'])
+                    assert 'sp_events' not in result['estimate']
+                if row['kind']=='deep':
+                    assert raw['summon_count']==2 and type(raw['summon_count']) is int
+                    sections=[s for s in result['report']['sections'] if s['id']=='regeneration']
+                    relevant=[note for note in result['estimate']['notes'] if '按基础每只' in note]
+                    if row['skill']==1:
+                        assert len(sections)==1
+                        metrics={m['key']:m['value'] for m in sections[0]['metrics']}
+                        assert metrics['per_token_rate']==row['expected_regeneration_per_token_rate']
+                        assert metrics['all_tokens_rate']==row['expected_regeneration_selected_rate']
+                        assert len(relevant)==2
+                        assert any('名义技能持续参数 30 秒' in n and '回复参考 4200（未计生命回复效果倍率）' in n for n in relevant)
+                        reference=70*2*min(30,row['window_seconds'])
+                        assert any(f'观察窗口中 {min(30,row["window_seconds"]):g} 秒的名义技能覆盖假设' in n and f'回复参考 {reference:g}（未计生命回复效果倍率）' in n for n in relevant)
+                        assert all('实际回复总量未知' in n and '生命回复不计直接治疗' in n for n in relevant)
+                        assert any('包含本次采用的生命回复效果倍率' in n and '实际回复总量未知' in n for n in sections[0]['notes'])
+                        for text in reports.values():
+                            assert '未计生命回复效果倍率' in text and '实际回复总量未知' in text
+                        assert result['relic_regeneration_multiplier']==(1.2 if row['relic_ids'] else 1)
+                    else:assert sections==[] and relevant==[]
+            else:
+                assert window.damage_result is None
+                assert delta(before,entry_counts).get('calculate_damage',0)==0
+                assert row['early_status_fragment'] in window.damage_text.toPlainText()
+                record['result']=None;record['actual_visible_early_status']=window.damage_text.toPlainText()
+                record['three_texts']='not applicable: no numerical result'
+            if row.get('screenshot'):
+                if row['kind']=='deep':
+                    window.damage_text.moveCursor(QTextCursor.MoveOperation.Start)
+                    assert window.damage_text.find('名义技能持续参数 30 秒')
+                    window.damage_text.ensureCursorVisible()
+                app.processEvents();path=OUT/row['screenshot'];assert window.grab().save(str(path))
+                record['actual_screenshot']=path.name
+            record['actual_entries']=delta(before,entry_counts)
+            record['passed']=True
+            checks.append({'id':row['id'],'passed':True,'numerical_result':row.get('numerical_result_expected',True)})
+            checkpoint()
+        assert len(states)==len(checks)==24
+        assert explicit_buttons==5 and explicit_text_requests==63
+        assert all(r['caller_native_unchanged'] for r in API_events)
+        receipt['focused_actual_entries']=delta(phase_before,entry_counts)
+        receipt['explicit_button_requests']=explicit_buttons
+        receipt['actual_automatic_numerical_entries']=receipt['focused_actual_entries']['calculate_damage']-explicit_buttons
+        receipt['explicit_three_text_requests']=explicit_text_requests
+        assert not window.auto.isChecked() and window.capture.target is None
+        assert not window.desktop.process and not isolated.joinpath('chat').exists()
+        window.close();app.processEvents();window=None
+        sys.setprofile(previous_profile)
+    receipt['passed']=True;receipt['complete_focused_window_acceptance']=True
+except BaseException as error:
+    receipt['failure']={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc(),'step':current_step}
+    if window is not None:
+        receipt['failure_current_state']={'owner':window.operator.currentData(),'skill':window.skill.currentData(),
+            'continuous_native':native(window.continuous_attacks.isChecked()),'visible_text':window.damage_text.toPlainText(),
+            'damage_result':copy.deepcopy(window.damage_result),'damage_result_native':native(window.damage_result)}
+        try:
+            path=OUT/'wine-focused-mainwindow-failure-091.png'
+            if window.grab().save(str(path)):receipt['failure_screenshot']=path.name
+        except Exception as screenshot_error:receipt['failure_screenshot_error']=str(screenshot_error)
+finally:
+    sys.setprofile(None)
+    if window is not None:
+        window.close()
+        if app is not None:app.processEvents()
+    after={rel:hashlib.sha256((ROOT/rel).read_bytes()).hexdigest() for rel in SOURCE_HASHES}
+    receipt['source_sha256_after']=after
+    receipt['source_drift']=[rel for rel in SOURCE_HASHES if after[rel]!=SOURCE_HASHES[rel]]
+    if receipt['source_drift']:receipt['passed']=False;receipt['complete_focused_window_acceptance']=False
+    receipt['actual_main_thread_python_function_entries']=entry_counts
+    receipt['actual_rouge_python_entries']=library_entries
+    receipt['actual_toggled_emissions']=toggle_events
+    receipt['explicit_button_requests']=explicit_buttons
+    receipt['explicit_three_text_requests']=explicit_text_requests
+    receipt['elapsed_seconds']=round(time.perf_counter()-started,3)
+    checkpoint()
+    RECEIPT.write_text(json.dumps(receipt,ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
+    print(json.dumps({'passed':receipt['passed'],'checks':len(checks),'explicit_buttons':explicit_buttons,
+        'actual_entries':entry_counts,'records':receipt['lossless_records'],'failure':receipt.get('failure')}))
+    sys.exit(0 if receipt['passed'] else 1)

@@ -1,0 +1,80 @@
+{
+  "captured_at_utc": "2026-10-07T21:14:23.899640+00:00",
+  "baseline_head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+  "scope": "external snapshot / public API / portable Linux only",
+  "checks": [
+    {
+      "command": "/workspace/rougezhushou/.venv/bin/python -m unittest tests.test_shield_break_reference tests.test_damage tests.test_timing tests.test_charge_reference tests.test_empty_enemy_scope",
+      "cwd": "/workspace/.continuation/p2-after-051/shield-draft",
+      "tests_run": 89,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "latest_related_test_result": "89 tests, 0 failures/errors/skips after inherited scope and validated count-conversion corrections"
+    },
+    {
+      "command": "/workspace/rougezhushou/.venv/bin/python scripts/verify_cloud.py",
+      "cwd": "/workspace/.continuation/p2-after-051/shield-draft",
+      "tests_run": 731,
+      "passed": 730,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "exit_code": 0,
+      "actual_runner_summary": {
+        "passed": true,
+        "platform": "Linux",
+        "tests_run": 731,
+        "skipped": 1,
+        "failures": 0,
+        "errors": 0,
+        "scope": "portable calculation regression; no Windows UI/capture or private state"
+      },
+      "actual_log": "research/p2-shield-break-reference/selected-regression.log"
+    },
+    {
+      "command": "/workspace/rougezhushou/.venv/bin/python research/p2-shield-break-reference/public_audit.py",
+      "cwd": "/workspace/.continuation/p2-after-051/shield-draft",
+      "paired_scenarios": 794,
+      "public_calls": 1588,
+      "exit_code": 0
+    }
+  ],
+  "new_test_count": 15,
+  "comparison": {
+    "public_entry": "rouge.damage.calculate_damage",
+    "case_count": 794,
+    "categories": {
+      "zero_declaration_values_preserved": 166,
+      "explicit_empty_or_enemy_zero_actual_zero": 312,
+      "positive_unplaced_actual_unknown": 316
+    },
+    "manual_duration_ordinary_subtotals_retained": 308,
+    "per_hit_reference_preserved": true,
+    "sp_and_manual_duration_parameters_preserved": true,
+    "existing_attack_streams_preserved": true,
+    "numeric_string_zero_cases": 12,
+    "public_reference_only_first_damage_cases": 8,
+    "legacy_decimal_scientific_count_cases": 54,
+    "zero_declaration_components_preserved": true,
+    "inherited_report_scope_no_actual_shield_claim": true,
+    "input_and_cached_catalog_preserved": true,
+    "native_event_times_verified": false,
+    "tracked_edits": false
+  },
+  "previous_failure": {
+    "kind": "incomplete external snapshot research fixture",
+    "command": "scripts/verify_cloud.py",
+    "tests_run": 728,
+    "errors": 1,
+    "missing_file": "research/p2-yato-deployment-reference/source-receipt.json",
+    "resolution": "Copied the unchanged existing public source receipt from the real repo into the external snapshot, then reran successfully. No production calculation failure was concealed."
+  },
+  "production_tracked_edits_by_this_agent": false,
+  "wine_executed": false,
+  "actual_ui_executed": false,
+  "native_event_proof": false,
+  "latest_change": "Scope corrected; helper reuses previously validated float-to-int declared-count conversion. No damage/SP/end numerical model changes.",
+  "independent_compatibility_finding": "independent-count-compatibility-finding.json"
+}

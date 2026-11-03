@@ -1,0 +1,169 @@
+{
+  "scope": "positive bounded native FP division-stage HP ratio and separately declared post-clamp threshold references",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "native_base_version": "26-09-13-15-28-10-30688348",
+  "source_files": [
+    {
+      "path": "research/p2-guardian-healing-gates-current/native-proof.json",
+      "sha256": "3202e5bdc6524bad7aa50e41b67a45b9bbc12d12cf720d0aead1366f8bb76ad8",
+      "bytes": 3420986
+    },
+    {
+      "path": "research/p2-guardian-healing-gates-current/selected-metadata.json",
+      "sha256": "ace4d9f9d47b6311526b1c1a4a3fe2d3ee09d759a1611459e2744b486f200df4",
+      "bytes": 83048
+    },
+    {
+      "path": "research/p2-guardian-healing-gates-current/receipt.json",
+      "sha256": "881da437d1851c565cf08aa679ce86b15b1232d9706368e0916a21482bca2ea7",
+      "bytes": 5514
+    },
+    {
+      "path": "research/p2-guardian-healing-gates-current/fixed-raw-sources.json",
+      "sha256": "8124351aa93cd2ee0f2d773ecd73c9e35427e8b11c5e424807ddaab6f2b81417",
+      "bytes": 55980
+    },
+    {
+      "path": "research/p2-susuro-healing-composition-current/native-proof.json",
+      "sha256": "058717a76d9d9856990386675226837287fc37d41d3ef652d667e63f99f99abf",
+      "bytes": 3212682
+    },
+    {
+      "path": "research/p2-susuro-healing-composition-current/receipt.json",
+      "sha256": "e46a1c6ee75d68815b4a54ef786128a850baa5bfa9712274f3bf0aa992dedf20",
+      "bytes": 4614
+    }
+  ],
+  "native_division_method": {
+    "index": 220475,
+    "address": "0x1866fd730",
+    "saved_complete_instructions": 125,
+    "domain": "0<=numeratorRaw<=positive denominatorRaw<=signed64Max",
+    "positive_midpoint_rounds_up": true,
+    "algorithm": "reduce divisor low nibbles, shift numerator by leading-zero capacity, accumulate 33-bit quotient, final (quotient+1)>>1"
+  },
+  "all125_saved_instruction_records_and3_integer_conversion_records_equal_derived_package": true,
+  "numeric_anchors": [
+    {
+      "method_index": 220475,
+      "address": "0x1866fd783",
+      "mnemonic": "mov",
+      "operands": "ebp, 0x21"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd79d",
+      "mnemonic": "shr",
+      "operands": "r14, 4"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd7a1",
+      "mnemonic": "sub",
+      "operands": "ebp, 4"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd825",
+      "mnemonic": "shl",
+      "operands": "rsi, cl"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd82d",
+      "mnemonic": "div",
+      "operands": "r14"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd833",
+      "mnemonic": "shl",
+      "operands": "rdx, cl"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd836",
+      "mnemonic": "add",
+      "operands": "r15, rdx"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd850",
+      "mnemonic": "div",
+      "operands": "r14"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd853",
+      "mnemonic": "dec",
+      "operands": "ebp"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd858",
+      "mnemonic": "add",
+      "operands": "rsi, rsi"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd861",
+      "mnemonic": "lea",
+      "operands": "rax, [r15 + 1]"
+    },
+    {
+      "method_index": 220475,
+      "address": "0x1866fd865",
+      "mnemonic": "shr",
+      "operands": "rax, 1"
+    },
+    {
+      "method_index": 66438,
+      "address": "0x180704ccc",
+      "mnemonic": "call",
+      "operands": "0x1866fd730"
+    },
+    {
+      "method_index": 66438,
+      "address": "0x180704cf8",
+      "mnemonic": "jmp",
+      "operands": "0x1866e3f00"
+    }
+  ],
+  "original_native_binary_fresh_check": "unavailable; preserved same-version original physical checks and complete CFG reused",
+  "Clamp01_gap": {
+    "address": "0x1866e3f00",
+    "callee_identity": "Torappu.MathUtil.Clamp01",
+    "saved_body_present": false,
+    "attempt_count": 3,
+    "attempts": [
+      {
+        "number": 1,
+        "action": "inspect complete guardian/susuro source methods and get_hpRatio caller",
+        "finding": "HP/maxHP division method complete; Clamp01 is only a named external tailcall"
+      },
+      {
+        "number": 2,
+        "action": "search all retained research/work same-version native-proof and metadata files by exact address and method name",
+        "finding": "no complete matching Clamp01 method body saved"
+      },
+      {
+        "number": 3,
+        "action": "targeted public searches Torappu.MathUtil Clamp01 and Arknights Clamp01 FP",
+        "finding": "empty search results; no original body or same-version source found"
+      }
+    ],
+    "restart_conditions": [
+      "Same-version original Clamp01 method body plus native/hotfix applicability evidence",
+      "Explicit independently sourced post-clamp raw-ratio declaration can already be compared without assuming Clamp01 identity"
+    ]
+  },
+  "artifact_policy": "source packet SHA256 required; missing/changed file gives unknown quotients/gates",
+  "actual_HP_or_ratio_observation_verified": false,
+  "actual_recipient_qualification_verified": false,
+  "current_hotfix_equivalence_proven": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "production_files_written": false
+}

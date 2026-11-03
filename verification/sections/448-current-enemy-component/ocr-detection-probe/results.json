@@ -1,0 +1,191 @@
+{
+  "rows": [
+    {
+      "case": "life6of6",
+      "expected": "6/6",
+      "only_rec": false,
+      "input_size_wh": [
+        60,
+        22
+      ],
+      "rapid_all": [],
+      "maa_all": [
+        {
+          "text": "1",
+          "score": 0.147358,
+          "box_xywh": [
+            10,
+            10,
+            18,
+            5
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "life6of6",
+      "expected": "6/6",
+      "only_rec": true,
+      "input_size_wh": [
+        60,
+        22
+      ],
+      "rapid_all": [
+        {
+          "text": "6/6",
+          "score": 0.9000822106997172
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "6/6",
+          "score": 0.93525,
+          "box_xywh": [
+            0,
+            0,
+            60,
+            22
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": true,
+      "maa_exact_high_confidence": true
+    },
+    {
+      "case": "resource0",
+      "expected": "0",
+      "only_rec": false,
+      "input_size_wh": [
+        68,
+        39
+      ],
+      "rapid_all": [
+        {
+          "text": "O",
+          "score": 0.5732153654098511
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "0",
+          "score": 0.217369,
+          "box_xywh": [
+            0,
+            0,
+            68,
+            39
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "resource0",
+      "expected": "0",
+      "only_rec": true,
+      "input_size_wh": [
+        68,
+        39
+      ],
+      "rapid_all": [
+        {
+          "text": "0",
+          "score": 0.21743713319301605
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "0",
+          "score": 0.217369,
+          "box_xywh": [
+            0,
+            0,
+            68,
+            39
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "crew3",
+      "expected": "3",
+      "only_rec": false,
+      "input_size_wh": [
+        65,
+        52
+      ],
+      "rapid_all": [
+        {
+          "text": "3",
+          "score": 0.9995772242546082
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "3",
+          "score": 0.999383,
+          "box_xywh": [
+            14,
+            12,
+            28,
+            31
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": true,
+      "maa_exact_high_confidence": true
+    },
+    {
+      "case": "crew3",
+      "expected": "3",
+      "only_rec": true,
+      "input_size_wh": [
+        65,
+        52
+      ],
+      "rapid_all": [
+        {
+          "text": "3 ",
+          "score": 0.8167235255241394
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "3 ",
+          "score": 0.817016,
+          "box_xywh": [
+            0,
+            0,
+            65,
+            52
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    }
+  ],
+  "labels_sha256": "cd8a16450385553e19205fadb23a59b046f033955f9366241a056d1d31dafcf4",
+  "installed_model_pins": [
+    {
+      "source": "ch_PP-OCRv4_det_infer.onnx",
+      "sha256": "d2a7720d45a54257208b1e13e36a8479894cb74155a5efe29462512d42f49da9",
+      "bytes": 4745517
+    },
+    {
+      "source": "ch_PP-OCRv4_rec_infer.onnx",
+      "sha256": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+      "bytes": 10857958
+    }
+  ],
+  "dictionary_characters": 6623,
+  "native_public_only": true,
+  "production_changed": false,
+  "real_controller_or_actions": [],
+  "scope": "Diagnostic detector+recognizer versus recognition-only on manually verified single-field public crops.Outcome-selected,not field localization or continuous/page accuracy,no timing claim.No expected/replace hint sent to either OCR provider."
+}

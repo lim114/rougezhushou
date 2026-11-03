@@ -1,0 +1,30 @@
+{
+  "section": 425,
+  "kind": "verification_backend_prerequisite_repair",
+  "original_failed_scope": "verification/full-425/execution-attempt3/offline/actual/windows-offline.json",
+  "original_source_manifest": "verification/full-425/repair-source-baseline-attempt3/manifest.json",
+  "facts": [
+    "The actual full3 offline child forces QT_QPA_PLATFORM=offscreen.",
+    "The installed BindingApi requires exactly one Qt screen whose name equals the actual Win32 monitor Device.",
+    "The Qt6.11.2 offscreen default is a synthetic unnamed800x800 screen; it is not a real Windows window backend.",
+    "The exact original native identity assertion body is retained and explicitly executed in the genuine native416 acceptance with no skip or fake geometry.",
+    "The manual notebook is intentionally available without recognised scene context since425; the historical389 selector remains but now expects that capability."
+  ],
+  "primary_source": {
+    "url": "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/plugins/platforms/offscreen/qoffscreenintegration.cpp",
+    "range": "QOffscreenIntegration::defaultConfiguration, lines108-125, inspected via web on2026-10-30",
+    "locally_installed_Qt_version": "6.11.2"
+  },
+  "not_claimed": [
+    "offscreen tests prove Windows window integration",
+    "a backend skip is a test PASS",
+    "current live-game interaction has been validated"
+  ],
+  "product_logic_changed": false,
+  "all_previous_failures_preserved": true,
+  "future_required_validation": [
+    "Necessary425+389+416 checks on current source",
+    "Genuine native416 executes the exact original assertion body",
+    "Complete original ordered full scope under one new source freeze"
+  ]
+}

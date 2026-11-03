@@ -1,0 +1,45 @@
+{
+  "scope": "Source-bound public SP setter and qualified internal alive/cap/encode/full-copy references only; not decoded actual SP or skill lifecycle",
+  "source_artifacts_sha256": {
+    "research/p2-sp-setter-275/source-proof.json": "a5899e400b38b6a336f0a13f5b923c9508687ae791954d7d71a94cfdb8106e52",
+    "rouge/sp_recovery_clock.py": "c19124aaaddf04774ae54c193c4bd0cd49199ad1a90eba3883d1d29b4226084f",
+    "rouge/data/sp-recovery-clock-source.json": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19"
+  },
+  "primary_source_sha256": {
+    "dll": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f"
+  },
+  "method_count": 55,
+  "unique_instruction_count": 2599,
+  "unique_instruction_bytes": 11190,
+  "source_span_count": 3971,
+  "facts": {
+    "entity_public_setter": "Entity.set_sp(value) always forwards force=false through virtual slot113, return type Void; internal bool does not define public normal-return failure",
+    "entity_character_slot113": "Both pinned Entity and Character tables select Entity.SetSpInternal66628; actual object dispatch/hotfix still requires independent qualification",
+    "alive_dispatch": "virtual slot40: Entity66349 or Character75822; must not label it canModifySp or SP_RECOVER_STOPPED",
+    "internal_force_order": "alive getter called first, even force=true; only after normal alive read tests alive||force",
+    "internal_gate_false": "alive=false && force=false returns Boolean false without reading maxSp, encoding or writing SP",
+    "internal_gate_true": "independent maxSp Int32 getter -> Int32ToFP -> clamp_raw(value,0,maxSp*Q) -> FP-to-ObscuredFP encoding -> 40-byte field copy -> Boolean true",
+    "native_clamp_order": "max(min(value,upper),lower); no EPS, including reversed0/negative maxSp bound",
+    "write_span": "m_sp is at Entity+0x50; stores16 bytes at+0x50,16 at+0x60,8 at+0x70 after encoding returns normally",
+    "recover_force_is_not_setter_force": "_RecoverMp.force bypasses its own SP_RECOVER_STOPPED read only; its final Entity.set_sp still uses internal force=false",
+    "alive_is_not_hp_alone": "Entity checks StateMachine.isRunning before HP>EPS; Character also checks isDummy and virtual slot156. These runtime predicates/hotfix/access normals are independent, not inferred from operator white stats.",
+    "initializer_reset_prefix": "SpController.Reset copies owner first, then data spType and20-byte protected spCost payload; reads/copies increments before canRecover qualification, then a second independent rate for Periodic.Reset(newP,true) or MarkInvalid",
+    "data_update_prefix": "UpdateSpData copies20-byte protected spCost first; onlyUpdateSpCost=true then returns without type/increments/timer touches. False updates spType/increments then first canRecover rate and second reciprocal rate; ResetButKeepPastTime or MarkInvalid.",
+    "init_sp_not_written_here": "SpController.Reset and UpdateSpData do not write initial SP; no initSp/current SP/cast clock inferred",
+    "protected_cost_not_decoded": "20-byte cost struct copy is proven; its decoded numeric value after copy is not inferred without codec/state qualification"
+  },
+  "remaining_unknown": [
+    "actual Entity/Character subtype and live virtual target or XLua/current-server equivalence",
+    "actual alive predicates, maxSp, source Normal eligibility and field-write success",
+    "encoding/anti-cheat state and subsequent decoded value; real SP settlement and callbacks remain unknown",
+    "initial SP assignment, maxSp formation, concrete SpData/controller instances and actual reset/cast clocks",
+    "protected cost decoding and partial/exceptional array-copy effects are not derived from payload-copy opcodes",
+    "non-Entity/Character virtual overrides and other initialization paths are outside this source selection"
+  ],
+  "file_only": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "hotfix_equivalence_proven": false
+}

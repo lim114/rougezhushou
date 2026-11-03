@@ -1,0 +1,31 @@
+# Section108 Window v3 independent Source review
+
+No Source blocker remains in this exact one-line target-order correction. V3 may enter Root's actual Gold attempt2. This is Source-only review, not a new Gold/Candidate/Saved result. Failed attempt1 and the sealed v2 Source/report remain unchanged history.
+
+## Frozen version and independent checks
+
+Runner41223 bytes SHA `83e8dd9dcbb2627ca9d6ad19db47881d70e4fd19d3a6d11c47ce3c532099cbc4`; SOURCE_MANIFEST3081 bytes `72fc6e0bc7dc31ff2e5c1994ae610982f6082e9ab65fd3e548e2c604f78b1dcd`; README13389 bytes `5fe7eebdd045f84970b218b7f6cbae2e3859622b4214d79a5107649fdb4f4d87`. Native helper6468/f040 and all original public facts/product transports/API evidence remain their previous exact pins.
+
+Own stdlib checkebb586/0 read and matched all14 manifest payload byte counts/SHA, parsed and compiled both Python payloads in memory, verified unique target-line replacement forward/inverse, all87 Assert AST nodes/order and complete module AST equality after restoring only the TARGET assignment value. No code object, project, runner, helper, codec, API, test, Qt, Wine or Git was executed. Tracked writes0; only off-repository Source reports/check JSON were written. NONAUTHOR_SOURCE_CHECK SHA `268fc458c75cd074080c82ce18cd2e1a94b5a6596787f90de126e0095f4222b8` records these checks. Whole byte inverse recovers sealed v2 f5896066 exactly, including every fixture, loop, pure/callee/formatter graph gate, error handler, watchdog, legal save/reload and PNG control. The reviewer did not substitute the author's static result for its own checks.
+
+## Actual failure and precise correction
+
+Root actually ran v2 once on Source750, raw1. Its receipt173977 bytes SHA `cd06286e583dab141451d1191a9760349120aebff2513fb773c2d2654744524a` and raw1 SHA `4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865` are included without modification. Plain JSON confirms passedFalse/workflow_completeFalse, zero rows/windows,17 actual native records, no Qt errors and unchanged Source maps. The recorded24.04185 seconds and failure are Root's actual runtime evidence; this reviewer did not repeat or decode the run.
+
+The former Source review did not verify the actual native dictionary insertion order returned through the Qt target control. It assumed the hand-written TARGET order was adequate for strict graph equality. Root's real failure exposed that incorrect verification expectation. This is a test-boundary Source error, not a wrong target value, enemy calculation or product bug. The former report is preserved and does not convert the failed execution into PASS.
+
+V3 changes TARGET only from stage_id/enemy_id/level insertion order to enemy_id/level/stage_id. All three values and scalar types stay the same. Native equality/helper behavior and every assertion remain strict. The literal maps precisely to the one observed real callee input; no general Qt sorting behavior is inferred.
+
+The later Root-only saved-boundary diagnostic is supplied as a separate appended evidence link, outside the already frozen14-payload main manifest. `ROOT-ACTUAL-target-boundary-diagnostic.json`1674 bytes SHA `0734c419447ab30afa8c40cba297b34cb675fc647397aa6d8290f04f773d43a8`; link1226 bytes SHA `8003f3da74935180b8cde49ea6f80c0cce3533e4d7a459ff25db1ad72bc6b657`. Plain JSON checks confirm its actual target keys enemy_id/level/stage_id, old expected keys stage_id/enemy_id/level, identical values/types, original exact-order AssertionError, corrected exact-native match and Source_CORE_unchangedTrue. Root decoded genuine record17 with helperf040 and reproved both comparisons; this Source reviewer only read/hash-compared that JSON. The appended evidence is not a hidden code/manifest change, new UI run or independently executed helper result by this reviewer.
+
+## Preserved admission, matrix and visibility scope
+
+The detailed f589 Source review remains the unchanged functional assessment, subject to the explicitly corrected missed target-order boundary above: `.continuation/section108-window-source-v2/INDEPENDENT_SOURCE_REVIEW.md`,13544 bytes SHA `a62df7711e6c86dfaecc9e092d0f49c4c1e62037102500cc19439a20e6ea2f33`. It includes every actual API/GUI isolation and snapshot/reload consumer gate; Source byte inverse proves none were removed.
+
+There are still two healthy constructors and43 snapshot rows: one accepted legacy cache,40 deliberate public in-memory configs, two actual legal main4_1→portal observations. Ten changed failures remain old AttributeError/TypeError versus explicit ValueError/previewunknown;33 other points require full actual same-input Gold/native results/three texts/preview/raw callers/state/disk graphs. Unsafe matrix shapes remain memory-only and never saved or claimed OCR/cache admission. Candidate-only real panel rendering is separately described, not borrowed old panel success or stale display. Source qualification uses the actual separate previews and battle-previews paths and fixed public names/scalars.
+
+The450 budget, known4_1→derived4 and portal→retained4 semantics, state/disk/formatter/caller joint captures, sentinel handling, read-only actual loaded graph oracle and fresh actual persisted-JSON oracle, four real PNG document-anchor/viewport or QLabel controls remain identical. No helper order whitelist, skipped assertions, reduced matrix, extra gameplay mechanism, global trace or Source scan in a hot loop is introduced.
+
+Root must collect a new actual v3/83e8 successful750 Gold and same-runner751 Candidate, proper raw exits, tests, complete native readback and four actually viewed images. Neither f589 raw1 nor Source review qualifies as Gold. Saved108 currently under author preparation must bind83e8 explicitly and preserve the failed historical pins rather than accept f589 or rewrite its receipt identity. Actual Window record counts/callee counts and successful receipt hashes remain future bindings, not guessed constants.
+
+Individual three-formatter pre/post, cross-freeze live aliases, JSON memory aliases, malformed saved-cache acceptance, natural OCR/game/chat/private state, second MainWindow, native Windows, hidden portal variant and unsupported gameplay clocks/mechanisms remain unverified. New actual bounded attempt2 is Root's sole runtime operation.

@@ -1,0 +1,33 @@
+"""Pure checks of immutable first attempt; no old PASS becomes second evidence."""
+import json
+from full305_common import BASE, ROOT, public, sha
+
+FIRST_FREEZE_SHA='32033bd8a5ebc2920843e00ac2584a2b01bd9659ffcd46352fb69b780ecc1463'
+FIRST_ACTIVATION_SHA='098721d4a0b1b0daeafb6ff73e6f485e371bcc3a01f693dd291c50897de09959'
+
+
+def first_closed_archive(expected_sha):
+    name='verification/full-305/execution-attempt1/archive-manifest.json'
+    path=public(name)
+    if sha(path)!=expected_sha:raise ValueError('Root actual sealed first archive SHA required.')
+    record=json.loads(path.read_bytes());folder=path.parent
+    if record.get('section')!=305 or record.get('source_freeze_sha256')!=FIRST_FREEZE_SHA or record.get('activation_sha256')!=FIRST_ACTIVATION_SHA:
+        raise ValueError('Wrong actual first attempt archive authority.')
+    for relative,expected in record['files'].items():
+        source=public((folder/relative).relative_to(ROOT).as_posix())
+        if sha(source)!=expected['sha256']or source.stat().st_size!=expected['bytes']:
+            raise ValueError('Captured first attempt byte drift: '+relative)
+    first=json.loads((folder/'source-freeze.json').read_bytes());control=json.loads((folder/'orchestration.json').read_bytes())
+    expected=['offline','legacy','legacy_typed','current30','current29',*first['p3_scripts']]
+    if (len(expected)!=25 or control.get('status')!='all_required_components_terminal'
+            or control.get('required_components')!=expected or [r['name']for r in control['steps']]!=expected):
+        raise ValueError('First archive must contain complete ordered25 accounted-for positions.')
+    invoke='verification/full-305/first-archive-invocation/process.json';producer=public(invoke);value=json.loads(producer.read_bytes())
+    if (value.get('section')!=305 or value.get('actual_exit')!=0
+            or value.get('all_25_original_component_positions_accounted_for')is not True
+            or value.get('archive_manifest_sha256')!=expected_sha or value.get('source_freeze_sha256')!=FIRST_FREEZE_SHA
+            or type(value.get('original_controller_actual_exit'))is not int):
+        raise ValueError('Root complete/closed first archive invocation evidence required.')
+    return {'archive':{'path':name,'sha256':expected_sha},'closed_archive_invocation':{'path':invoke,'sha256':sha(producer)},
+        'first_root_source_freeze_sha256':FIRST_FREEZE_SHA,'first_activation_sha256':FIRST_ACTIVATION_SHA,
+        'first_failed_attempt_not_rewritten_or_reused_as_second_PASS':True}

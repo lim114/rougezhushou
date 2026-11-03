@@ -1,0 +1,3 @@
+第59节只改小计notes，实际未知来源存在才归因；持有River但无actual neural_relic_reference仍保留独立资料，不把屏障/其它未知归River。原v1完整草稿与root反例、初始schema提取错误日志、只读审计和独立签核都分别保留。
+
+>2 MB完整矩阵/公共返回采用确定gzip无损压缩，manifest记录解压和存储SHA与大小，可gzip -dk恢复。作者55冻结的512pairs/1024calls及独立40pairs/80calls不冒称root58后fresh或Wine。root79相关全过、799精选798通过/1历史skip，reporting原字节与最终draft匹配。独立旧v1收据在superseded目录仅历史，不批准最终v2。

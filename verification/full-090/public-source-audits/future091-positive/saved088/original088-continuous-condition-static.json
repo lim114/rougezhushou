@@ -1,0 +1,1668 @@
+{
+  "status": "STATIC_CONFIRMED_TEXT_TRUTHINESS_GAP_PENDING_AUTHORIZED16_PUBLIC_PROBES",
+  "captured_git_HEAD": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "git_worktree_boundary": "Current approved86 source bytes may precede its commit; current file hashes are the operative source binding.",
+  "field": "continuous_attacks",
+  "actual_literal_get_count": 12,
+  "get_counts": {
+    "rouge/amiya_continuous_reference.py": 1,
+    "rouge/estimate.py": 3,
+    "rouge/operator_engine.py": 6,
+    "rouge/sp_events.py": 1,
+    "rouge/timing.py": 1
+  },
+  "get_reads": [
+    {
+      "path": "rouge/amiya_continuous_reference.py",
+      "line": 80,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        "attach_result"
+      ]
+    },
+    {
+      "path": "rouge/estimate.py",
+      "line": 96,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "scenario.get('continuous_attacks', True) or has_periodic_sp(scenario)",
+          "edge": "test",
+          "line": 96
+        },
+        {
+          "if": "skill['sp_type'] == 'INCREASE_WHEN_ATTACK'",
+          "edge": "body",
+          "line": 95
+        },
+        {
+          "if": "skill['sp_type'] == 'INCREASE_WITH_TIME' and sp_rate > 0",
+          "edge": "orelse",
+          "line": 92
+        },
+        "build_estimate"
+      ]
+    },
+    {
+      "path": "rouge/estimate.py",
+      "line": 159,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "duration is not None and skill['sp_type'] == 'INCREASE_WHEN_ATTACK' and (scenario.get('continuous_attacks', True) or has_periodic_sp(scenario))",
+          "edge": "test",
+          "line": 159
+        },
+        {
+          "if": "scenario.get('timing_mode', 'frames') == 'frames'",
+          "edge": "body",
+          "line": 154
+        },
+        "build_estimate"
+      ]
+    },
+    {
+      "path": "rouge/estimate.py",
+      "line": 203,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "skill['sp_type'] == 'INCREASE_WHEN_ATTACK' and (not scenario.get('continuous_attacks', True))",
+          "edge": "test",
+          "line": 203
+        },
+        {
+          "if": "cycle is not None and cycle > 0",
+          "edge": "body",
+          "line": 198
+        },
+        "build_estimate"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1317,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "self.s['operator'] == 'char_002_amiya' and self.s.get('continuous_attacks', True)",
+          "edge": "test",
+          "line": 1317
+        },
+        {
+          "if": "sp['sp_type'] == 'INCREASE_WITH_TIME'",
+          "edge": "body",
+          "line": 1311
+        },
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1337,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "self.s.get('continuous_attacks', True) and any((r['kind'] == 'attack_sp' for r in self.s.get('_relic_rules', [])))",
+          "edge": "test",
+          "line": 1337
+        },
+        {
+          "if": "self.s['operator'] == 'char_002_amiya' and self.s.get('continuous_attacks', True)",
+          "edge": "orelse",
+          "line": 1317
+        },
+        {
+          "if": "sp['sp_type'] == 'INCREASE_WITH_TIME'",
+          "edge": "body",
+          "line": 1311
+        },
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1340,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "sp['sp_type'] == 'INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks', True) or has_periodic_sp(self.s))",
+          "edge": "test",
+          "line": 1340
+        },
+        {
+          "if": "sp['sp_type'] == 'INCREASE_WITH_TIME'",
+          "edge": "orelse",
+          "line": 1311
+        },
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1414,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "duration is not None and sp['sp_type'] == 'INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks', True) or has_periodic_sp(self.s))",
+          "edge": "test",
+          "line": 1414
+        },
+        {
+          "if": "self.s.get('timing_mode', 'frames') == 'frames'",
+          "edge": "body",
+          "line": 1406
+        },
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1431,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "sp['sp_type'] == 'INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks', True) or has_periodic_sp(self.s))",
+          "edge": "test",
+          "line": 1431
+        },
+        {
+          "if": "mixed_recovery is not None",
+          "edge": "orelse",
+          "line": 1428
+        },
+        {
+          "if": "self.s.get('timing_mode', 'frames') == 'continuous' and duration is not None and any((r['kind'] == 'deployment_attack_speed' or (r['kind'] == 'periodic_sp' and r.get('clock') == 'deployment') for r in self.s.get('_relic_rules', [])))",
+          "edge": "body",
+          "line": 1424
+        },
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "line": 1472,
+      "expression": "self.s.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        "calculate",
+        "Combat"
+      ]
+    },
+    {
+      "path": "rouge/sp_events.py",
+      "line": 131,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        "charge"
+      ]
+    },
+    {
+      "path": "rouge/timing.py",
+      "line": 69,
+      "expression": "scenario.get('continuous_attacks', True)",
+      "ancestry_nearest_first": [
+        {
+          "if": "scenario.get('continuous_attacks', True)",
+          "edge": "test",
+          "line": 69
+        },
+        {
+          "if": "incoming_interval is not None",
+          "edge": "orelse",
+          "line": 65
+        },
+        "periodic_charge_seconds"
+      ]
+    }
+  ],
+  "initial_13_get_estimate_corrected_by_exhaustive_AST": true,
+  "schema_training_timing_guard": "No source literal str guard or conversion for this field; public scenario remains unchanged into condition reads.",
+  "builtin_truthiness_not_project_calls": {
+    "False": false,
+    "True": true,
+    "'false'": true,
+    "''": false
+  },
+  "producer": "QCheckBox defaultTrue and isChecked bool; hidden only by current sp_type==INCREASE_WHEN_ATTACK, which is not API qualification.",
+  "consumer_boundaries": [
+    "Legacy estimate: Attack-SP recharge/initial, frame recharge and actual normal count. Natural-only legacy without event/attack rules is an inactive control.",
+    "Extended: natural Amiya condition/reference, natural+attack_sp rules, Attack-SP branches and actual normal gate. Source get alone is insufficient to demand all-owner/all-skill rejection.",
+    "Periodic charge: incoming_interval branch takes precedence; outgoing credits only in the elif continuous branch.",
+    "Event charge: field affects outgoing credits only with native_attack>0, not merely presence of event-SP rules; wait_next_attack can request a stream independently.",
+    "Amiya continuous reference: bool(field) persists enabled-condition metadata even while actual clock remains unknown.",
+    "Current final cycle can be masked after reads; UI visibility and final cycle do not prove inactivity."
+  ],
+  "source_index": [
+    {
+      "source_path": "/workspace/rougezhushou/rouge/__init__.py",
+      "sha256": "3f046774f9500f00b34d7ff71cd765410aeebcc4e7df7a665cc384d9c68e12c8",
+      "bytes": 37
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/amiya_continuous_reference.py",
+      "sha256": "df85b088d8f96b2c130ff8420acfe275b109b94102444cd7d102ae34833c9b24",
+      "bytes": 7338
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/ammo_counter.py",
+      "sha256": "10789de3605ae9aefefe2be06886cf74c5084faff6d59e15afe96b580b91a3a4",
+      "bytes": 8030
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/ammo_reference.py",
+      "sha256": "d6bad7b385300dbdc69fb909691cc627e88b27efd71bfb6ad068dfa12b1f2772",
+      "bytes": 2966
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/anchors.py",
+      "sha256": "6c5e05f431d7218dd5335af562b831f5a32ff79e69ba5ccc344252ba81a0cdad",
+      "bytes": 1852
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/animation_reference.py",
+      "sha256": "3e0c98edfec28e13db3263fc0240e872ed6aaaac53f02729f0e4d17e139b2f1f",
+      "bytes": 2354
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/app.py",
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/attribute_limits.py",
+      "sha256": "94e9ee16e4fe978a12d8e4c16f45ee3612d2ae0a48f9027dfe1d46b47ce5c29a",
+      "bytes": 1046
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/battle_preview.py",
+      "sha256": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb",
+      "bytes": 15499
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/battle_view.py",
+      "sha256": "4b0ed251af237b701a5a18205cf4b140f8ab92c4cf3c5f37daf76893c7337834",
+      "bytes": 25582
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/branch_choice.py",
+      "sha256": "5ba161c1be84222001d17511cd4de2048641fe3141ffadb26cb6fa08096cd3a3",
+      "bytes": 4510
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/bridge/__init__.py",
+      "sha256": "0071601dded3186c2e819116057b0f3635f0676b5bb9c7e151f8002a06d22a01",
+      "bytes": 47
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/capture.py",
+      "sha256": "d30eca793fd030ea5489a69212bbd9bef2bc4c875b9010113f875291beec008a",
+      "bytes": 7368
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/catalog.py",
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+      "bytes": 3404
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/charge_reference.py",
+      "sha256": "908273c0c2ef88897778bb568838f4fa8053d96d93674aeb17390e88dc692a05",
+      "bytes": 2032
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/chat.py",
+      "sha256": "ed1e7859e8121ff8583852d4aee7e293dc33724fc3119b42bc5145e9c81c840b",
+      "bytes": 3370
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/counter_badges.py",
+      "sha256": "88d1dce51a13cbf0ba50516de18b59d9c8eb61ee8402c9c582a074ee5460ddac",
+      "bytes": 8023
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/credentials.py",
+      "sha256": "1e7feb0701b36ef252e3f2daad3c843deb20467b3791f9eb2c446ba34dc5aa07",
+      "bytes": 766
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/damage.py",
+      "sha256": "6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6",
+      "bytes": 30982
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/deployment.py",
+      "sha256": "222440c9253f8cc120c877816858496b74296306390d04e601312532eefab659",
+      "bytes": 11688
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/desktop_backend.py",
+      "sha256": "faf0c399bec6d1d0a9a9927bc48896a2c061a559f3fcb63a55ba2d5bad3defb9",
+      "bytes": 4456
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/digit_counters.py",
+      "sha256": "9419bdf18577297b73af599b3b54a2de682cad1950320cdeb70c79dc612ac90d",
+      "bytes": 5906
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/drone_traits.py",
+      "sha256": "cef5934829db54c17ef74f5ec872d8b13deebc2922460ec251c1fa2372f245f8",
+      "bytes": 3137
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/dynamic_ocr.py",
+      "sha256": "0b2fbb9046540f3676ceb165efde007688099309cd649f223b858cef03ba28cc",
+      "bytes": 8413
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/elemental_relics.py",
+      "sha256": "f451450d9a8fc4e203e14cadce44f8cf8d7cec8f2935968501ab0c0775f418ed",
+      "bytes": 7719
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/elite_recognition.py",
+      "sha256": "f11d43410ba7fcc47f4c3c0e1eb1b59966350b520e5d7b388ef340aa09c90172",
+      "bytes": 1837
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/enemy_environment.py",
+      "sha256": "49a8937d46718ca5ba35a4e41244441a49afb746a4b93f52dc840609163b8439",
+      "bytes": 8078
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/enemy_skills.py",
+      "sha256": "c9beb115bfcfbd240f859a5e47a1f5ce8ddff914b52491a1dbe8fcc4da398bde",
+      "bytes": 7444
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/estimate.py",
+      "sha256": "c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a",
+      "bytes": 21943
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/exploration_routes.py",
+      "sha256": "13dc17f223cf9a9cf2275063e7038e532fa804f35882d901532be2aa3ad8eeed",
+      "bytes": 4082
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/frame_buffer.py",
+      "sha256": "25faa0919885af3313290aff8760033cc57f2d0cfa9f00c39a930b47dd8afd4a",
+      "bytes": 12525
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/gnosis_module_reference.py",
+      "sha256": "b45d7a79563d832cc6e21ac33924e5399a3a564aae7e0196088555972b6cd40d",
+      "bytes": 6888
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/haruka_healing_reference.py",
+      "sha256": "a0a01fda3f0223ab39c841b7cf2f3ce0f0a0bb178fa495c078e89caf70f23ef6",
+      "bytes": 3776
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/held_cards.py",
+      "sha256": "6cad75006dfa05cb6464cbaa12eb240d65d38f74968c406065d4b9bf42c106bb",
+      "bytes": 8487
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/held_footer.py",
+      "sha256": "babe9deb8c93ff5e309c8b0b9d3e716639f94f81f6e255f454bd4515429bcc5b",
+      "bytes": 5661
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/local_counters.py",
+      "sha256": "5052b49dd613c7e7b3ab03054faf99873045f40d97c5b3de90c07bb83a2ef0c7",
+      "bytes": 10586
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/map_projection.py",
+      "sha256": "dab583504bf12801dc04c14b643f7fd4d41f00da4d5276a5f43e1af53df97479",
+      "bytes": 3253
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/map_recognition.py",
+      "sha256": "05f03c77867be3d9bec62057847de13461003d3e3af9240bfe3a05f25d6dcfeb",
+      "bytes": 16561
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/map_reporting.py",
+      "sha256": "9a872c75fdb18d47048b901d81d6c0621ab0375026baddc61b117e973131ed8e",
+      "bytes": 15765
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/map_view.py",
+      "sha256": "3b254a193f736e57543c58e031c89aa70fb93635c5fea91369acd0b239cd3882",
+      "bytes": 8106
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/mei_module_reference.py",
+      "sha256": "79a193ad840400af2e8eb1b5a8e9ff87f573d4b946918f28962659c6479bf511",
+      "bytes": 3061
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/multi_melee.py",
+      "sha256": "d01a98bb8a8f15567e09c0c5c6224ce55f4baf703f3497eef9d09911e16b56d2",
+      "bytes": 6615
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/node_events.py",
+      "sha256": "fa075a9856467ef1640752070348178d2df25dd3e0c1af7cf0b58db77b871df8",
+      "bytes": 7687
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/node_rewards.py",
+      "sha256": "541914e09d9c2ced1791d7ae97ae67475e6e38148a768274ad75387e963dc425",
+      "bytes": 5725
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/offline_scope.py",
+      "sha256": "060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9",
+      "bytes": 3045
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/operator_engine.py",
+      "sha256": "c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68",
+      "bytes": 156130
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/operator_name_recheck.py",
+      "sha256": "24e9fc6405d65d8876c47985291bccd0ee1632999173173f10600b2398177bac",
+      "bytes": 3532
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/operator_options.py",
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "bytes": 5328
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/operator_recognition.py",
+      "sha256": "1e79d32a69d6bbbf0e42ba8cdcb88c33a0ff3bc9932adbc6b0c19ef553705fb0",
+      "bytes": 20793
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/operator_summary.py",
+      "sha256": "d1a6c6c70265835bbe804e15bca1e17ee2d7705f543490e965fe794f8b5a29cf",
+      "bytes": 3541
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/page_features.py",
+      "sha256": "ab4cda4da8272ed35ad72269ad829ffb6ccb1ae711d82f24f6e6f530ca838c6e",
+      "bytes": 13123
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/page_ocr.py",
+      "sha256": "56ff0129e6c1f6848b4bb94b92545577d545525433d76c49ab2e2e951785e87e",
+      "bytes": 8584
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/recipient_recognition.py",
+      "sha256": "6d8610bd68b9662e0ddc250e47fb1e64ce5e37b531a893b0584a837634daa8a5",
+      "bytes": 23677
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/recipient_state.py",
+      "sha256": "8a183ba7b1cc39f2ccaba4e64e6f07c7268868ab26c6dd02c35afdd057e3be73",
+      "bytes": 4338
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/recognition.py",
+      "sha256": "7f96fe7bf2f93cd6f954136d3d9b2e6cd58741f672ac1989303422ef9a9cb53b",
+      "bytes": 22259
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/recognition_cache.py",
+      "sha256": "4a63a19e76e66d1eed2a0c09b80be264655bd2d3a6e05a155afc0b22f473ec03",
+      "bytes": 1996
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/recruitment_recognition.py",
+      "sha256": "b445e4307c91388d6ecf0a742db2b73707e2d5c58e6d80d2095e3537744ff47c",
+      "bytes": 3028
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/relic_attributes.py",
+      "sha256": "bc658e44c3924565ebd331b8a88df5db69131069b9fa94aeb0c101f155c3ebd1",
+      "bytes": 3444
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/relic_counter_semantics.py",
+      "sha256": "7ab327e3ebaa4a561f5d40abfa5e179dda4e3101fa3316ff5607b11cb9aa0473",
+      "bytes": 4765
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/relic_events.py",
+      "sha256": "3de884858352f3357ef10541eadee39e8a6423d003e335f1ed4830a548dcd644",
+      "bytes": 5176
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/relic_recognition.py",
+      "sha256": "8f2087341b1d99e1bd442775bef367b5f7a1352cfc27e617bff77bd42ceb1256",
+      "bytes": 18803
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/relics.py",
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "bytes": 40531
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/reporting.py",
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "bytes": 97666
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/resource_recognition.py",
+      "sha256": "4fe78a6e5cdc9e0f6a1d5d8937224c4f5c9d7fa9da5a1dc0573f455f8ba2ae34",
+      "bytes": 2682
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/river_effects.py",
+      "sha256": "054acea609cd3554fff80684df5559c69e842efc485e9f7ab2c197095acff43a",
+      "bytes": 8743
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/run_badges.py",
+      "sha256": "2524fe3db16276c6872fcb57102b9006a324b05024cd40b894c215f9a5538abd",
+      "bytes": 5923
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/run_config.py",
+      "sha256": "e35262ce5fc74db31ea80704f5689bb05619fd9dc9798a334f8cac3455b4ac99",
+      "bytes": 5738
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/run_modifiers.py",
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+      "bytes": 6678
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/run_recognition.py",
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "bytes": 23560
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/run_state.py",
+      "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+      "bytes": 42402
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/shield_break_reference.py",
+      "sha256": "ff4379c4cc81a922d9dd81910136280f479c883b83d2836d206d6ed704d79f62",
+      "bytes": 4336
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/sp_events.py",
+      "sha256": "b278c18d14e152f8c53320f98074b2823fe407b7c6b59ed918f77728ea3a1d9a",
+      "bytes": 10077
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/spawn_reference.py",
+      "sha256": "8cc132abaeac2beda7964a5830012b43b49e99158c4b528d80ed00a42cc59cb4",
+      "bytes": 6123
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/squad_unlock_reference.py",
+      "sha256": "5ff9929aa0e01c60d3da75d26c5531384b01aab7c0123d17c6ee7c2b21429b73",
+      "bytes": 1977
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/summons.py",
+      "sha256": "b4ee04fa18638c7a8c09dc5ecd54e83951620e841db0fdb6c607bf3099236451",
+      "bytes": 10761
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/technology.py",
+      "sha256": "9cb329ce496543a9bc7a05bb77c69ea0d83e393a4be0edcb8307cb8faf909b86",
+      "bytes": 2503
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/technology_view.py",
+      "sha256": "a3ad48dfbd962427e5e19e5561aeecfca7a490fb852d1b3eeb8a0e5828acb577",
+      "bytes": 1819
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/timing.py",
+      "sha256": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+      "bytes": 27108
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/ui_state.py",
+      "sha256": "daf2ce0f3692de2c8cd03e9de61440fa4deb5284c9a13d8dcd1d61e18b11dcf8",
+      "bytes": 1798
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/uncertain_sources.py",
+      "sha256": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+      "bytes": 4881
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/view_catalog.py",
+      "sha256": "7cf26fad63317e4ae82d45c3595122000225c7d9c8f59aa8c15c86a7cd889a9d",
+      "bytes": 7128
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/viewport.py",
+      "sha256": "8fae7433d737c5d3db92b74da1f09773b9f8eca11fe799ce359a4d9c6d48f222",
+      "bytes": 2481
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/visual_recognition.py",
+      "sha256": "14dc12ce491f606b16109cedf6270aadb3b8b53f185124b3b1f04174d99e4de1",
+      "bytes": 10583
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/wisdel_summon_qualification.py",
+      "sha256": "1a259dcddb75c3add1cd0b085be152c7574c248ed94ae94aaaef49f81ac1c821",
+      "bytes": 1794
+    }
+  ],
+  "targeted_source_excerpts": {
+    "rouge/amiya_continuous_reference.py": [
+      {
+        "line": 77,
+        "text": "        'natural_sp_rate_parameter': rate, 'required_sp_parameter': cost,"
+      },
+      {
+        "line": 78,
+        "text": "        'natural_only_recharge_seconds_reference': cost / rate if rate > 0 else None,"
+      },
+      {
+        "line": 79,
+        "text": "        'attack_sp_per_attack_parameter': attack_credit,"
+      },
+      {
+        "line": 80,
+        "text": "        'attack_sp_enabled_in_reference': bool(scenario.get('continuous_attacks', True)),"
+      },
+      {
+        "line": 81,
+        "text": "        'actual_acquisition_times_seconds': None, 'actual_impact_times_seconds': None,"
+      },
+      {
+        "line": 82,
+        "text": "        'actual_recharge_seconds': None, 'actual_cycle_seconds': None,"
+      },
+      {
+        "line": 83,
+        "text": "        'native_clock_binding_verified': False,"
+      }
+    ],
+    "rouge/app.py": [
+      {
+        "line": 1025,
+        "text": "               if self.relic_list.item(i).checkState() == Qt.CheckState.Checked]"
+      },
+      {
+        "line": 1026,
+        "text": "        scenario = {'operator':self.operator.currentData(),'skill':self.skill.currentData(),"
+      },
+      {
+        "line": 1027,
+        "text": "            **self.training_conditions(),'deployment_elapsed_seconds':self.deployment_elapsed.value(),"
+      },
+      {
+        "line": 1028,
+        "text": "            'healing_targets':self.healing_targets.value(),'continuous_attacks':self.continuous_attacks.isChecked(),"
+      },
+      {
+        "line": 1029,
+        "text": "            'skill_rank':self.skill_rank_value(),"
+      },
+      {
+        "line": 1030,
+        "text": "            'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value(),"
+      },
+      {
+        "line": 1031,
+        "text": "            'cooperative':self.cooperative.isChecked(),'preexisting_fragile':self.fragile.isChecked(),"
+      }
+    ],
+    "rouge/estimate.py": [
+      {
+        "line": 93,
+        "text": "        recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate"
+      },
+      {
+        "line": 94,
+        "text": "        initial=max(0,skill['sp_cost']-initial_sp)/sp_rate"
+      },
+      {
+        "line": 95,
+        "text": "    elif skill['sp_type']=='INCREASE_WHEN_ATTACK':"
+      },
+      {
+        "line": 96,
+        "text": "        if scenario.get('continuous_attacks',True) or has_periodic_sp(scenario):"
+      },
+      {
+        "line": 97,
+        "text": "            recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])"
+      },
+      {
+        "line": 98,
+        "text": "            initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)"
+      },
+      {
+        "line": 99,
+        "text": "            notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')"
+      },
+      {
+        "line": 156,
+        "text": "        if duration is not None:duration=frame_time(duration)/FPS"
+      },
+      {
+        "line": 157,
+        "text": "        lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))"
+      },
+      {
+        "line": 158,
+        "text": "        if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')"
+      },
+      {
+        "line": 159,
+        "text": "        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (scenario.get('continuous_attacks',True) or has_periodic_sp(scenario)):"
+      },
+      {
+        "line": 160,
+        "text": "            resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)"
+      },
+      {
+        "line": 161,
+        "text": "            recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))"
+      },
+      {
+        "line": 162,
+        "text": "        if recharge is not None:recharge=frame_time(recharge+lockout)/FPS"
+      },
+      {
+        "line": 200,
+        "text": "        normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)"
+      },
+      {
+        "line": 201,
+        "text": "        normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],"
+      },
+      {
+        "line": 202,
+        "text": "            target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])"
+      },
+      {
+        "line": 203,
+        "text": "        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):"
+      },
+      {
+        "line": 204,
+        "text": "            normal_hits=0"
+      },
+      {
+        "line": 205,
+        "text": "            normal.streams=[]"
+      },
+      {
+        "line": 206,
+        "text": "        normal_damage=normal_healing=0"
+      }
+    ],
+    "rouge/operator_engine.py": [
+      {
+        "line": 1314,
+        "text": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+      },
+      {
+        "line": 1315,
+        "text": "                recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None"
+      },
+      {
+        "line": 1316,
+        "text": "                first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None"
+      },
+      {
+        "line": 1317,
+        "text": "            if self.s['operator']=='char_002_amiya' and self.s.get('continuous_attacks',True):"
+      },
+      {
+        "line": 1318,
+        "text": "                attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp')"
+      },
+      {
+        "line": 1319,
+        "text": "                def time_to_charge(required,stun=0):"
+      },
+      {
+        "line": 1320,
+        "text": "                    if required<=0:return 0"
+      },
+      {
+        "line": 1334,
+        "text": "                    first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)"
+      },
+      {
+        "line": 1335,
+        "text": "                    mixed_recovery=(attack_sp,sp['values'].get('stun',0))"
+      },
+      {
+        "line": 1336,
+        "text": "                self.notes.append('术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。')"
+      },
+      {
+        "line": 1337,
+        "text": "            elif self.s.get('continuous_attacks',True) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):"
+      },
+      {
+        "line": 1338,
+        "text": "                first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,0,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)"
+      },
+      {
+        "line": 1339,
+        "text": "                mixed_recovery=(0,0)"
+      },
+      {
+        "line": 1340,
+        "text": "        elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):"
+      },
+      {
+        "line": 1341,
+        "text": "            recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,wait_next_attack=full['mode']=='next_attack')"
+      },
+      {
+        "line": 1342,
+        "text": "            first=charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,wait_next_attack=full['mode']=='next_attack')"
+      },
+      {
+        "line": 1343,
+        "text": "        elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE':"
+      },
+      {
+        "line": 1411,
+        "text": "                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)"
+      },
+      {
+        "line": 1412,
+        "text": "                recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,"
+      },
+      {
+        "line": 1413,
+        "text": "                    offset=duration,stun=mixed_recovery[1],resume=resume,blocked_seconds=lockout)"
+      },
+      {
+        "line": 1414,
+        "text": "            if duration is not None and sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):"
+      },
+      {
+        "line": 1415,
+        "text": "                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)"
+      },
+      {
+        "line": 1416,
+        "text": "                recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,"
+      },
+      {
+        "line": 1417,
+        "text": "                    offset=duration+lockout,resume=max(0,resume-frame_time(lockout)),wait_next_attack=full['mode']=='next_attack')"
+      },
+      {
+        "line": 1428,
+        "text": "            if mixed_recovery is not None:"
+      },
+      {
+        "line": 1429,
+        "text": "                recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,"
+      },
+      {
+        "line": 1430,
+        "text": "                    self.base_speed,attribute_speed=self.base_speed_reference,offset=duration,stun=mixed_recovery[1],blocked_seconds=lockout)"
+      },
+      {
+        "line": 1431,
+        "text": "            elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):"
+      },
+      {
+        "line": 1432,
+        "text": "                recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,"
+      },
+      {
+        "line": 1433,
+        "text": "                    offset=duration+lockout,wait_next_attack=full['mode']=='next_attack')"
+      },
+      {
+        "line": 1434,
+        "text": "                if recharge is not None:recharge+=lockout"
+      },
+      {
+        "line": 1469,
+        "text": "        if self.s['operator']=='char_002_amiya' and self.n==2 and self.s.get('timing_mode','frames')=='frames':"
+      },
+      {
+        "line": 1470,
+        "text": "            self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]"
+      },
+      {
+        "line": 1471,
+        "text": "        normal=self.plan(normal=True,window=recharge) if cycle is not None and not ("
+      },
+      {
+        "line": 1472,
+        "text": "            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None"
+      },
+      {
+        "line": 1473,
+        "text": "        if self.s['operator']=='char_4182_oblvns':"
+      },
+      {
+        "line": 1474,
+        "text": "            ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10"
+      },
+      {
+        "line": 1475,
+        "text": "            self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None"
+      }
+    ],
+    "rouge/sp_events.py": [
+      {
+        "line": 128,
+        "text": "    config['_deployment_initial'] = initial"
+      },
+      {
+        "line": 129,
+        "text": "    timeline = AttackTimeline({**scenario, 'timing': config}, normal=True, offset=origin)"
+      },
+      {
+        "line": 130,
+        "text": "    stream = None"
+      },
+      {
+        "line": 131,
+        "text": "    attacks = scenario.get('continuous_attacks', True)"
+      },
+      {
+        "line": 132,
+        "text": "    if (native_attack > 0 and attacks) or wait_next_attack:"
+      },
+      {
+        "line": 133,
+        "text": "        step = cadence(interval) / FPS if framed else interval"
+      },
+      {
+        "line": 134,
+        "text": "        limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2"
+      }
+    ],
+    "rouge/timing.py": [
+      {
+        "line": 66,
+        "text": "        if incoming_interval>0:"
+      },
+      {
+        "line": 67,
+        "text": "            step=frame_time(incoming_interval)"
+      },
+      {
+        "line": 68,
+        "text": "            events.extend((f+1,increment) for f in range(step,horizon,step))"
+      },
+      {
+        "line": 69,
+        "text": "    elif scenario.get('continuous_attacks',True):"
+      },
+      {
+        "line": 70,
+        "text": "        increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')"
+      },
+      {
+        "line": 71,
+        "text": "        events.extend((f+1,increment) for f in stream['release_frames'])"
+      },
+      {
+        "line": 72,
+        "text": "    charge=0;ready=0 if required<=0 else None"
+      }
+    ]
+  },
+  "selected_original_records": [
+    {
+      "public_operator": "mechanist",
+      "actual_character_id": "char_4230_mcnist",
+      "skill_number": 1,
+      "rank": 10,
+      "raw_character_skill_entry": {
+        "skillId": "skchr_mcnist_1",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31074",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30013",
+                "count": 8,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31014",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31034",
+                "count": 7,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30155",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31104",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        }
+      },
+      "raw_skill_level": {
+        "name": "聚类分析",
+        "rangeId": null,
+        "description": "攻击间隔<@ba.vdown>增大</>，攻击变为<@ba.vup>五连击</>的群体攻击，每次造成攻击力<@ba.vup>{attack@atk_scale:0%}</>的范围物理伤害\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "skillType": "AUTO",
+        "durationType": "AMMO",
+        "spData": {
+          "spType": "INCREASE_WHEN_ATTACK",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 7,
+          "initSp": 0,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_mcnist_1",
+        "duration": -1.0,
+        "blackboard": [
+          {
+            "key": "attack@atk_scale",
+            "value": 1.55,
+            "valueStr": null
+          },
+          {
+            "key": "attack@trigger_time",
+            "value": 3.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@times",
+            "value": 5.0,
+            "valueStr": null
+          },
+          {
+            "key": "base_attack_time",
+            "value": 1.3,
+            "valueStr": null
+          },
+          {
+            "key": "attack@projectile_delay_time",
+            "value": 1.3,
+            "valueStr": null
+          },
+          {
+            "key": "attack@projectile_range",
+            "value": 1.1,
+            "valueStr": null
+          },
+          {
+            "key": "attack@interval",
+            "value": 0.2,
+            "valueStr": null
+          }
+        ]
+      },
+      "curated_skill_level": {
+        "name": "聚类分析",
+        "duration": -1.0,
+        "description": "攻击间隔<@ba.vdown>增大</>，攻击变为<@ba.vup>五连击</>的群体攻击，每次造成攻击力<@ba.vup>{attack@atk_scale:0%}</>的范围物理伤害\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "duration_type": "AMMO",
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "sp_cost": 7,
+        "initial_sp": 0,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "attack@atk_scale": 1.55,
+          "attack@trigger_time": 3.0,
+          "attack@times": 5.0,
+          "base_attack_time": 1.3,
+          "attack@projectile_delay_time": 1.3,
+          "attack@projectile_range": 1.1,
+          "attack@interval": 0.2
+        }
+      },
+      "native_clock_binding_claimed": false
+    },
+    {
+      "public_operator": "char_4182_oblvns",
+      "actual_character_id": "char_4182_oblvns",
+      "skill_number": 3,
+      "rank": 10,
+      "raw_character_skill_entry": {
+        "skillId": "skchr_oblvns_3",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31064",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30023",
+                "count": 9,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31084",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31074",
+                "count": 8,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30155",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31014",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        }
+      },
+      "raw_skill_level": {
+        "name": "残月的余响",
+        "rangeId": "3-21",
+        "description": "攻击范围扩大，攻击同时使用<@ba.vup>钢琴</>和<@ba.vup>风琴</>音色演奏，各自演奏<@ba.vup>2</>个造成相当于攻击力<@ba.vup>{attack@atk_scale:0%}</>物理和法术伤害的音符，且分别追踪法术抗性和防御力最高的敌人。\\n<@ba.rem><$ba.fever>Fever</>期间<$ba.mujica>Ave Mujica</>成员受到致命伤害时不撤退，<$ba.fever>Fever</>结束后退场</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WHEN_ATTACK",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 42,
+          "initSp": 34,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_oblvns_3",
+        "duration": 25.0,
+        "blackboard": [
+          {
+            "key": "attack@attack_speed",
+            "value": 0.0,
+            "valueStr": null
+          },
+          {
+            "key": "attack@atk_scale",
+            "value": 2.2,
+            "valueStr": null
+          }
+        ]
+      },
+      "curated_skill_level": {
+        "name": "残月的余响",
+        "duration": 25.0,
+        "description": "攻击范围扩大，攻击同时使用<@ba.vup>钢琴</>和<@ba.vup>风琴</>音色演奏，各自演奏<@ba.vup>2</>个造成相当于攻击力<@ba.vup>{attack@atk_scale:0%}</>物理和法术伤害的音符，且分别追踪法术抗性和防御力最高的敌人。\\n<@ba.rem><$ba.fever>Fever</>期间<$ba.mujica>Ave Mujica</>成员受到致命伤害时不撤退，<$ba.fever>Fever</>结束后退场</>",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "sp_cost": 42,
+        "initial_sp": 34,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "attack@attack_speed": 0.0,
+          "attack@atk_scale": 2.2
+        }
+      },
+      "native_clock_binding_claimed": false
+    },
+    {
+      "public_operator": "char_002_amiya",
+      "actual_character_id": "char_002_amiya",
+      "skill_number": 1,
+      "rank": 10,
+      "raw_character_skill_entry": {
+        "skillId": "skcom_magic_rage[3]",
+        "overridePrefabKey": null,
+        "overrideTokenKey": null,
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 5,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30074",
+                "count": 3,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30053",
+                "count": 5,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30094",
+                "count": 3,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30074",
+                "count": 6,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 10,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30135",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30014",
+                "count": 5,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_0",
+          "level": 1
+        }
+      },
+      "raw_skill_level": {
+        "name": "战术咏唱·γ型",
+        "rangeId": null,
+        "description": "攻击速度<@ba.vup>+{attack_speed}</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 30,
+          "initSp": 15,
+          "increment": 1.0
+        },
+        "prefabId": "skcom_attack_speed_up",
+        "duration": 30.0,
+        "blackboard": [
+          {
+            "key": "attack_speed",
+            "value": 90.0,
+            "valueStr": null
+          }
+        ]
+      },
+      "curated_skill_level": {
+        "name": "战术咏唱·γ型",
+        "duration": 30.0,
+        "description": "攻击速度<@ba.vup>+{attack_speed}</>",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WITH_TIME",
+        "sp_cost": 30,
+        "initial_sp": 15,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "attack_speed": 90.0
+        }
+      },
+      "native_clock_binding_claimed": false
+    },
+    {
+      "public_operator": "silverash",
+      "actual_character_id": "char_1045_svash2",
+      "skill_number": 3,
+      "rank": 10,
+      "raw_character_skill_entry": {
+        "skillId": "skchr_svash2_3",
+        "overridePrefabKey": null,
+        "overrideTokenKey": "token_10057_svash2_eagle3",
+        "levelUpCostCond": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 28800,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 8,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30054",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30063",
+                "count": 4,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 57600,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 12,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31064",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31054",
+                "count": 9,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "lvlUpTime": 86400,
+            "levelUpCost": [
+              {
+                "id": "3303",
+                "count": 15,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30145",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31094",
+                "count": 1,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "unlockCond": {
+          "phase": "PHASE_2",
+          "level": 1
+        }
+      },
+      "raw_skill_level": {
+        "name": "变革已至",
+        "rangeId": "3-1",
+        "description": "攻击范围<@ba.vup>扩大</>并使敌人<$ba.invisible>隐匿</>失效，攻击对直线范围造成攻击力<@ba.vup>{bird_atk_scale:0%}</>的物理伤害和<@ba.vup>{damage_scale_display:0%}</>的<$ba.fragile>脆弱</>；立即获得<@ba.vup>{svash2_s_3[start_cost].cost}</>点后持续获得<@ba.vup>24</>点部署费用\\n<@ba.rem>首次开启时交换待部署区中费用最高（优先选择近卫/术师/狙击干员）与最低干员的基础部署费用</>\\n<@ba.rem>技能期间“风雪之眼”变为可部署</>",
+        "skillType": "MANUAL",
+        "durationType": "NONE",
+        "spData": {
+          "spType": "INCREASE_WITH_TIME",
+          "levelUpCost": null,
+          "maxChargeTime": 1,
+          "spCost": 55,
+          "initSp": 46,
+          "increment": 1.0
+        },
+        "prefabId": "skchr_svash2_3",
+        "duration": 48.0,
+        "blackboard": [
+          {
+            "key": "svash2_s_3[start_cost].cost",
+            "value": 9.0,
+            "valueStr": null
+          },
+          {
+            "key": "svash2_s_3[cost].cost",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "svash2_s_3[cost].interval",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "change_cnt",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "bird_atk_scale",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "damage_scale",
+            "value": 1.3,
+            "valueStr": null
+          },
+          {
+            "key": "cnt",
+            "value": 1.0,
+            "valueStr": null
+          },
+          {
+            "key": "weak[limit]",
+            "value": 2.0,
+            "valueStr": null
+          },
+          {
+            "key": "range_id",
+            "value": 0.0,
+            "valueStr": "3-1"
+          },
+          {
+            "key": "damage_scale_display",
+            "value": 0.3,
+            "valueStr": null
+          },
+          {
+            "key": "cost_reduce_max",
+            "value": 0.0,
+            "valueStr": null
+          }
+        ]
+      },
+      "curated_skill_level": {
+        "name": "变革已至",
+        "duration": 48.0,
+        "description": "攻击范围<@ba.vup>扩大</>并使敌人<$ba.invisible>隐匿</>失效，攻击对直线范围造成攻击力<@ba.vup>{bird_atk_scale:0%}</>的物理伤害和<@ba.vup>{damage_scale_display:0%}</>的<$ba.fragile>脆弱</>；立即获得<@ba.vup>{svash2_s_3[start_cost].cost}</>点后持续获得<@ba.vup>24</>点部署费用\\n<@ba.rem>首次开启时交换待部署区中费用最高（优先选择近卫/术师/狙击干员）与最低干员的基础部署费用</>\\n<@ba.rem>技能期间“风雪之眼”变为可部署</>",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WITH_TIME",
+        "sp_cost": 55,
+        "initial_sp": 46,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "svash2_s_3[start_cost].cost": 9.0,
+          "svash2_s_3[cost].cost": 1.0,
+          "svash2_s_3[cost].interval": 2.0,
+          "change_cnt": 1.0,
+          "bird_atk_scale": 2.0,
+          "damage_scale": 1.3,
+          "cnt": 1.0,
+          "weak[limit]": 2.0,
+          "range_id": 0.0,
+          "damage_scale_display": 0.3,
+          "cost_reduce_max": 0.0
+        }
+      },
+      "native_clock_binding_claimed": false
+    }
+  ],
+  "fixed_original_sources": [
+    {
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251
+    },
+    {
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929
+    }
+  ],
+  "curated_profile_sources": [
+    {
+      "source_path": "/workspace/rougezhushou/rouge/data/catalog.json",
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "bytes": 1624372
+    },
+    {
+      "source_path": "/workspace/rougezhushou/rouge/data/operator-profiles.json",
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957",
+      "bytes": 1592209
+    }
+  ],
+  "old_error_order": "Existing preparation/training/timing/engine/report and83–86 text errors stay before any proposed late guard. Actual public confirmation pending; no universal outer error-order claim.",
+  "minimum_product_scope_pending_runtime_confirmation": "One shared text condition contract at actual consumers after existing errors, preserving legal bool/nonstring aliases and genuinely inactive fields; no new SP formula, timer or mechanics.",
+  "project_API_helper_tests_Qt_Wine": 0,
+  "tracked_edits": 0
+}

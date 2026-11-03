@@ -1,0 +1,23 @@
+{
+  "section": 320,
+  "kind": "TIMING_EVIDENCE_SCOPE_CORRECTION_NOT_A_PRODUCT_FIX",
+  "fact_source": {
+    "file": "scripts/verify_boss_hunt_window_311.py",
+    "sha256": "937e16f28d825646c9a89fc0097cb046b3ae1bd361f128ba836c6c2b05415d45",
+    "lines_169_180": "choose() sends Home, one real QTest Down per preceding row, Return and processEvents; every intermediate selection may legitimately update the preview."
+  },
+  "profile": {
+    "file": "verification/full-320/rechecks-source-freeze2-1/p3_311/actual/timing-profile-public-functions.json",
+    "sha256": "ec387df8c8b94eb7e9caf5ac9012c0c037113685dd4aada81fbb370e75b6c305",
+    "overhead_present": true,
+    "select_identity_calls": 5,
+    "choose_calls": 23,
+    "stage_changed_calls": 225,
+    "render_rows_calls": 270
+  },
+  "verified_fact": "The fixture traverses intermediate choices with real keyboard events; callback counts do not prove duplicate updates for a single selection.",
+  "inference_not_proved": "Repeated rendering within one ordinary player selection or a production UI latency defect is not established by this trace.",
+  "normal_single_selection_latency_unknown": true,
+  "test_sequence_timeout_scope": "The full120-second311 run timed out. A300-second explicitly profiled run completed every original31 check labels and full workflow. The original timeout remains failed and is not a passed120-second budget.",
+  "derived_scope_review_performance_issue_field_refers_to_test_sequence_timeout_not_confirmed_production_bug": true
+}

@@ -1,0 +1,832 @@
+[
+  {
+    "scope": "native_division_stage_and_independent_post_ratio_reference",
+    "operator": "char_196_sunbr",
+    "operator_name": "古米",
+    "declaration": {
+      "operator": "char_196_sunbr",
+      "cultivation": {
+        "elite": 2,
+        "level": 40,
+        "potential": 1,
+        "module_id": "uniequip_002_sunbr",
+        "module_level": 1
+      },
+      "observations": [
+        {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "原值分商位于严格门中点",
+          "hp": 4294881395,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "独立明示后置原值",
+          "hp": 4294881395,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147440697,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        }
+      ]
+    },
+    "cultivation": {
+      "declaration": {
+        "elite": 2,
+        "level": 40,
+        "potential": 1,
+        "module_id": "uniequip_002_sunbr",
+        "module_level": 1
+      },
+      "module_unlock_reference": true,
+      "matching_source_trait_selected": true,
+      "selected_trait": {
+        "operator_id": "char_196_sunbr",
+        "operator_name": "古米",
+        "module_id": "uniequip_002_sunbr",
+        "module_level": 1,
+        "res_key": "sunbr_equip_1_1_p1",
+        "heal_scale": 1.15,
+        "hp_ratio_threshold": 0.5,
+        "comparison": "LT",
+        "template": "set_heal_scale_by_hpratio"
+      },
+      "actual_module_attachment_verified": false
+    },
+    "source_available": true,
+    "comparison": "LT",
+    "fp_one_raw": 4294967296,
+    "epsilon_raw": 42950,
+    "comparison_boundary_raw": 2147440698,
+    "rows": [
+      {
+        "ordinal": 1,
+        "label": "整数HP低于门参考",
+        "original_declaration": {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 214739774865408,
+        "max_hp_raw_reference": 429496729600000,
+        "native_division": {
+          "quotient_33_fractional_raw": 4294795497,
+          "ratio_raw": 2147397749,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 100000,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 16,
+              "left_shift": 1,
+              "scaled_remainder": 429479549730816,
+              "quotient_digit": 4294795497,
+              "quotient_contribution": 4294795497,
+              "quotient_accumulator": 4294795497,
+              "division_remainder": 30816
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147397749,
+        "ratio_stage_fraction": 0.4999800000805408,
+        "exact_rational_truncated_ratio_raw": 2147397748,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147440698,
+        "division_stage_gate_reference": true,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 49998,
+        "first_hp_value_outside_division_stage_gate": 49999,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": null
+      },
+      {
+        "ordinal": 2,
+        "label": "原值分商位于严格门中点",
+        "original_declaration": {
+          "label": "原值分商位于严格门中点",
+          "hp": 4294881395,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4294881395,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4294881395,
+          "ratio_raw": 2147440698,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 32,
+              "left_shift": 1,
+              "scaled_remainder": 8589762790,
+              "quotient_digit": 4294881395,
+              "quotient_contribution": 4294881395,
+              "quotient_accumulator": 4294881395,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147440698,
+        "ratio_stage_fraction": 0.49998999992385507,
+        "exact_rational_truncated_ratio_raw": 2147440697,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147440698,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 4294881394,
+        "first_hp_value_outside_division_stage_gate": 4294881395,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "整数HP低于门参考",
+          "after_label": "原值分商位于严格门中点",
+          "division_stage_raw_difference": 42949,
+          "division_stage_gate_changed": true,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      },
+      {
+        "ordinal": 3,
+        "label": "独立明示后置原值",
+        "original_declaration": {
+          "label": "独立明示后置原值",
+          "hp": 4294881395,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147440697,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4294881395,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4294881395,
+          "ratio_raw": 2147440698,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 32,
+              "left_shift": 1,
+              "scaled_remainder": 8589762790,
+              "quotient_digit": 4294881395,
+              "quotient_contribution": 4294881395,
+              "quotient_accumulator": 4294881395,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147440698,
+        "ratio_stage_fraction": 0.49998999992385507,
+        "exact_rational_truncated_ratio_raw": 2147440697,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147440698,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": 2147440697,
+        "post_clamp_matches_division_reference": false,
+        "declared_post_clamp_gate_reference": true,
+        "conditional_direct_healing_factor_from_declared_post_ratio": 1.15,
+        "last_hp_value_under_division_stage_gate": 4294881394,
+        "first_hp_value_outside_division_stage_gate": 4294881395,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "原值分商位于严格门中点",
+          "after_label": "独立明示后置原值",
+          "division_stage_raw_difference": 0,
+          "division_stage_gate_changed": false,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      }
+    ],
+    "source": "research/p2-recipient-native-ratio/REPORT.md",
+    "Clamp01_body_verified": false,
+    "division_output_used_as_post_clamp_ratio": false,
+    "actual_get_hpRatio_verified": false,
+    "actual_recipient_qualification": null,
+    "actual_healing_total": null,
+    "actual_acquisition_or_event_clock": null,
+    "current_hotfix_equivalence_proven": false,
+    "notes": [
+      "HP、最大HP、证据来源和观察顺序都是调用方声明；整数面板数不证明内部生命没有小数。",
+      "原件除法求33位分商后正值加1再右移1；正数中点向上，区别于精确有理数直接截断。",
+      "Clamp01方法体未闭合，因此除法阶段的门参考不代表实际get_hpRatio或实际受疗资格。",
+      "独立填写后置比例原值才计算其资格条件和直接治疗参数；留空不会自动借用除法阶段输出。",
+      "观察行的门变化只比较明示原值，不生成伤害、治疗、存活/复活、首跳、获取或同帧事件规则。",
+      "同一最大HP的末个符合值/首个不符合值仅针对除法阶段参考和当前LT/LE门；不认证实际血量轨迹。",
+      "原默认计算与固定比例控件均不改；完整治疗、实际资格、Clamp01和当前热更新仍未知。"
+    ]
+  },
+  {
+    "scope": "native_division_stage_and_independent_post_ratio_reference",
+    "operator": "char_2025_shu",
+    "operator_name": "黍",
+    "declaration": {
+      "operator": "char_2025_shu",
+      "cultivation": {
+        "elite": 2,
+        "level": 60,
+        "potential": 1,
+        "module_id": "uniequip_002_shu",
+        "module_level": 1
+      },
+      "observations": [
+        {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "原值分商位于严格门中点",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "独立明示后置原值",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147526597,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        }
+      ]
+    },
+    "cultivation": {
+      "declaration": {
+        "elite": 2,
+        "level": 60,
+        "potential": 1,
+        "module_id": "uniequip_002_shu",
+        "module_level": 1
+      },
+      "module_unlock_reference": true,
+      "matching_source_trait_selected": true,
+      "selected_trait": {
+        "operator_id": "char_2025_shu",
+        "operator_name": "黍",
+        "module_id": "uniequip_002_shu",
+        "module_level": 1,
+        "res_key": "shu_equip_1_1_p1",
+        "heal_scale": 1.15,
+        "hp_ratio_threshold": 0.5,
+        "comparison": "LE",
+        "template": "heal_scale_up[hpratio][LE]"
+      },
+      "actual_module_attachment_verified": false
+    },
+    "source_available": true,
+    "comparison": "LE",
+    "fp_one_raw": 4294967296,
+    "epsilon_raw": 42950,
+    "comparison_boundary_raw": 2147526598,
+    "rows": [
+      {
+        "ordinal": 1,
+        "label": "整数HP低于门参考",
+        "original_declaration": {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 214739774865408,
+        "max_hp_raw_reference": 429496729600000,
+        "native_division": {
+          "quotient_33_fractional_raw": 4294795497,
+          "ratio_raw": 2147397749,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 100000,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 16,
+              "left_shift": 1,
+              "scaled_remainder": 429479549730816,
+              "quotient_digit": 4294795497,
+              "quotient_contribution": 4294795497,
+              "quotient_accumulator": 4294795497,
+              "division_remainder": 30816
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147397749,
+        "ratio_stage_fraction": 0.4999800000805408,
+        "exact_rational_truncated_ratio_raw": 2147397748,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": true,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 50000,
+        "first_hp_value_outside_division_stage_gate": 50001,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": null
+      },
+      {
+        "ordinal": 2,
+        "label": "原值分商位于严格门中点",
+        "original_declaration": {
+          "label": "原值分商位于严格门中点",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4295053195,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4295053195,
+          "ratio_raw": 2147526598,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 31,
+              "left_shift": 1,
+              "scaled_remainder": 8590106390,
+              "quotient_digit": 4295053195,
+              "quotient_contribution": 4295053195,
+              "quotient_accumulator": 4295053195,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147526598,
+        "ratio_stage_fraction": 0.5000100000761449,
+        "exact_rational_truncated_ratio_raw": 2147526597,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 4295053194,
+        "first_hp_value_outside_division_stage_gate": 4295053195,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "整数HP低于门参考",
+          "after_label": "原值分商位于严格门中点",
+          "division_stage_raw_difference": 128849,
+          "division_stage_gate_changed": true,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      },
+      {
+        "ordinal": 3,
+        "label": "独立明示后置原值",
+        "original_declaration": {
+          "label": "独立明示后置原值",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147526597,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4295053195,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4295053195,
+          "ratio_raw": 2147526598,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 31,
+              "left_shift": 1,
+              "scaled_remainder": 8590106390,
+              "quotient_digit": 4295053195,
+              "quotient_contribution": 4295053195,
+              "quotient_accumulator": 4295053195,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147526598,
+        "ratio_stage_fraction": 0.5000100000761449,
+        "exact_rational_truncated_ratio_raw": 2147526597,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": 2147526597,
+        "post_clamp_matches_division_reference": false,
+        "declared_post_clamp_gate_reference": true,
+        "conditional_direct_healing_factor_from_declared_post_ratio": 1.15,
+        "last_hp_value_under_division_stage_gate": 4295053194,
+        "first_hp_value_outside_division_stage_gate": 4295053195,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "原值分商位于严格门中点",
+          "after_label": "独立明示后置原值",
+          "division_stage_raw_difference": 0,
+          "division_stage_gate_changed": false,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      }
+    ],
+    "source": "research/p2-recipient-native-ratio/REPORT.md",
+    "Clamp01_body_verified": false,
+    "division_output_used_as_post_clamp_ratio": false,
+    "actual_get_hpRatio_verified": false,
+    "actual_recipient_qualification": null,
+    "actual_healing_total": null,
+    "actual_acquisition_or_event_clock": null,
+    "current_hotfix_equivalence_proven": false,
+    "notes": [
+      "HP、最大HP、证据来源和观察顺序都是调用方声明；整数面板数不证明内部生命没有小数。",
+      "原件除法求33位分商后正值加1再右移1；正数中点向上，区别于精确有理数直接截断。",
+      "Clamp01方法体未闭合，因此除法阶段的门参考不代表实际get_hpRatio或实际受疗资格。",
+      "独立填写后置比例原值才计算其资格条件和直接治疗参数；留空不会自动借用除法阶段输出。",
+      "观察行的门变化只比较明示原值，不生成伤害、治疗、存活/复活、首跳、获取或同帧事件规则。",
+      "同一最大HP的末个符合值/首个不符合值仅针对除法阶段参考和当前LT/LE门；不认证实际血量轨迹。",
+      "原默认计算与固定比例控件均不改；完整治疗、实际资格、Clamp01和当前热更新仍未知。"
+    ]
+  },
+  {
+    "scope": "native_division_stage_and_independent_post_ratio_reference",
+    "operator": "char_298_susuro",
+    "operator_name": "苏苏洛",
+    "declaration": {
+      "operator": "char_298_susuro",
+      "cultivation": {
+        "elite": 2,
+        "level": 40,
+        "potential": 1,
+        "module_id": "uniequip_002_susuro",
+        "module_level": 1
+      },
+      "observations": [
+        {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "原值分商位于严格门中点",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        {
+          "label": "独立明示后置原值",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147526597,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        }
+      ]
+    },
+    "cultivation": {
+      "declaration": {
+        "elite": 2,
+        "level": 40,
+        "potential": 1,
+        "module_id": "uniequip_002_susuro",
+        "module_level": 1
+      },
+      "module_unlock_reference": true,
+      "matching_source_trait_selected": true,
+      "selected_trait": {
+        "module_id": "uniequip_002_susuro",
+        "module_level": 1,
+        "res_key": "susuro_equip_1_1_p1",
+        "heal_scale": 1.15,
+        "hp_ratio_threshold": 0.5
+      },
+      "actual_module_attachment_verified": false
+    },
+    "source_available": true,
+    "comparison": "LE",
+    "fp_one_raw": 4294967296,
+    "epsilon_raw": 42950,
+    "comparison_boundary_raw": 2147526598,
+    "rows": [
+      {
+        "ordinal": 1,
+        "label": "整数HP低于门参考",
+        "original_declaration": {
+          "label": "整数HP低于门参考",
+          "hp": 49998,
+          "max_hp": 100000,
+          "unit": "integer_hp",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 214739774865408,
+        "max_hp_raw_reference": 429496729600000,
+        "native_division": {
+          "quotient_33_fractional_raw": 4294795497,
+          "ratio_raw": 2147397749,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 100000,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 16,
+              "left_shift": 1,
+              "scaled_remainder": 429479549730816,
+              "quotient_digit": 4294795497,
+              "quotient_contribution": 4294795497,
+              "quotient_accumulator": 4294795497,
+              "division_remainder": 30816
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147397749,
+        "ratio_stage_fraction": 0.4999800000805408,
+        "exact_rational_truncated_ratio_raw": 2147397748,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": true,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 50000,
+        "first_hp_value_outside_division_stage_gate": 50001,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": null
+      },
+      {
+        "ordinal": 2,
+        "label": "原值分商位于严格门中点",
+        "original_declaration": {
+          "label": "原值分商位于严格门中点",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": null,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4295053195,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4295053195,
+          "ratio_raw": 2147526598,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 31,
+              "left_shift": 1,
+              "scaled_remainder": 8590106390,
+              "quotient_digit": 4295053195,
+              "quotient_contribution": 4295053195,
+              "quotient_accumulator": 4295053195,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147526598,
+        "ratio_stage_fraction": 0.5000100000761449,
+        "exact_rational_truncated_ratio_raw": 2147526597,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": null,
+        "post_clamp_matches_division_reference": null,
+        "declared_post_clamp_gate_reference": null,
+        "conditional_direct_healing_factor_from_declared_post_ratio": null,
+        "last_hp_value_under_division_stage_gate": 4295053194,
+        "first_hp_value_outside_division_stage_gate": 4295053195,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "整数HP低于门参考",
+          "after_label": "原值分商位于严格门中点",
+          "division_stage_raw_difference": 128849,
+          "division_stage_gate_changed": true,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      },
+      {
+        "ordinal": 3,
+        "label": "独立明示后置原值",
+        "original_declaration": {
+          "label": "独立明示后置原值",
+          "hp": 4295053195,
+          "max_hp": 8589934592,
+          "unit": "fp_raw",
+          "post_clamp_ratio_raw": 2147526597,
+          "evidence": {
+            "kind": "formula_reference",
+            "source": "公开FP除法与严格门算术参考；非游戏采样"
+          }
+        },
+        "hp_raw_reference": 4295053195,
+        "max_hp_raw_reference": 8589934592,
+        "native_division": {
+          "quotient_33_fractional_raw": 4295053195,
+          "ratio_raw": 2147526598,
+          "divisor_nibble_reduction_bits": 32,
+          "divisor_after_reduction": 2,
+          "numeric_steps": [
+            {
+              "bit_position": 0,
+              "leading_zeros": 31,
+              "left_shift": 1,
+              "scaled_remainder": 8590106390,
+              "quotient_digit": 4295053195,
+              "quotient_contribution": 4295053195,
+              "quotient_accumulator": 4295053195,
+              "division_remainder": 0
+            }
+          ],
+          "positive_midpoint_rounds_up": true,
+          "Clamp01_applied": false
+        },
+        "native_division_ratio_raw": 2147526598,
+        "ratio_stage_fraction": 0.5000100000761449,
+        "exact_rational_truncated_ratio_raw": 2147526597,
+        "native_minus_exact_truncation_raw": 1,
+        "comparison_boundary_raw": 2147526598,
+        "division_stage_gate_reference": false,
+        "exact_truncation_gate_reference": true,
+        "post_clamp_ratio_raw_declaration": 2147526597,
+        "post_clamp_matches_division_reference": false,
+        "declared_post_clamp_gate_reference": true,
+        "conditional_direct_healing_factor_from_declared_post_ratio": 1.15,
+        "last_hp_value_under_division_stage_gate": 4295053194,
+        "first_hp_value_outside_division_stage_gate": 4295053195,
+        "source_HP_values_verified": false,
+        "actual_get_hpRatio_raw": null,
+        "actual_recipient_qualification": null,
+        "actual_healing_amount": null,
+        "transition_witness": {
+          "before_label": "原值分商位于严格门中点",
+          "after_label": "独立明示后置原值",
+          "division_stage_raw_difference": 0,
+          "division_stage_gate_changed": false,
+          "declared_post_clamp_gate_changed": null,
+          "actual_runtime_transition_verified": false,
+          "native_HP_trajectory_or_event_order": null
+        }
+      }
+    ],
+    "source": "research/p2-recipient-native-ratio/REPORT.md",
+    "Clamp01_body_verified": false,
+    "division_output_used_as_post_clamp_ratio": false,
+    "actual_get_hpRatio_verified": false,
+    "actual_recipient_qualification": null,
+    "actual_healing_total": null,
+    "actual_acquisition_or_event_clock": null,
+    "current_hotfix_equivalence_proven": false,
+    "notes": [
+      "HP、最大HP、证据来源和观察顺序都是调用方声明；整数面板数不证明内部生命没有小数。",
+      "原件除法求33位分商后正值加1再右移1；正数中点向上，区别于精确有理数直接截断。",
+      "Clamp01方法体未闭合，因此除法阶段的门参考不代表实际get_hpRatio或实际受疗资格。",
+      "独立填写后置比例原值才计算其资格条件和直接治疗参数；留空不会自动借用除法阶段输出。",
+      "观察行的门变化只比较明示原值，不生成伤害、治疗、存活/复活、首跳、获取或同帧事件规则。",
+      "同一最大HP的末个符合值/首个不符合值仅针对除法阶段参考和当前LT/LE门；不认证实际血量轨迹。",
+      "原默认计算与固定比例控件均不改；完整治疗、实际资格、Clamp01和当前热更新仍未知。"
+    ]
+  }
+]

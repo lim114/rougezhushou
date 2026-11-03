@@ -1,0 +1,76 @@
+--- v1/rouge/account_cache.py
++++ v2/rouge/account_cache.py
+@@ -6,7 +6,6 @@
+ import json
+ import math
+ import time
+-from copy import deepcopy
+ from pathlib import Path
+ 
+ 
+@@ -110,6 +109,21 @@
+     # selected_skill outside the unlocked GUI choices is an ignored preference;
+     # the QComboBox supplies the actual integer skill used by the calculation.
+     return None
++
++
++def _merged_record(operator, captured_at, saved):
++    """Original producer unions; opaque values are never recursively copied."""
++    observed_fields = operator.get('fields', {})
++    fields = {**saved.get('fields', {}), **observed_fields}
++    ranks = {**{str(key): value for key, value in saved.get('skill_ranks', {}).items()},
++             **{str(key): value for key, value in operator.get('skill_ranks', {}).items()}}
++    return {**operator, 'fields': fields, 'skill_ranks': ranks, 'captured_at': captured_at,
++            'sources': {**saved.get('sources', {}), **operator.get('sources', {})},
++            'field_times': {**saved.get('field_times', {}),
++                            **{key: captured_at for key in observed_fields}},
++            'skill_times': {**saved.get('skill_times', {}),
++                            **{str(key): captured_at for key in operator.get('skill_ranks', {})}},
++            'merged_from_pages': True}
+ 
+ 
+ class AccountCache:
+@@ -166,7 +180,11 @@
+             self.issues[op] = issue
+             self._protect()
+             return {}
+-        return {key: deepcopy(value) for key, value in record.items() if key not in RUN_METADATA}
++        view = {key: value for key, value in record.items() if key not in RUN_METADATA}
++        for key in ('fields', 'skill_ranks', 'sources', 'field_times', 'skill_times'):
++            if key in view:
++                view[key] = dict(view[key])
++        return view
+ 
+     def notice(self, op, *, run_confirmed=False):
+         issue = self.issues.get(op)
+@@ -198,21 +216,16 @@
+             saved = {}
+         if not damaged and captured_at < saved.get('captured_at', 0):
+             return False
+-        observed_fields = operator.get('fields', {})
+-        fields = {**saved.get('fields', {}), **observed_fields}
+-        ranks = {**{str(key): value for key, value in saved.get('skill_ranks', {}).items()},
+-                 **{str(key): value for key, value in operator.get('skill_ranks', {}).items()}}
+-        changed = (fields != saved.get('fields') or ranks != saved.get('skill_ranks')
++        merged = _merged_record(operator, captured_at, saved)
++        changed = (merged['fields'] != saved.get('fields')
++                   or merged['skill_ranks'] != saved.get('skill_ranks')
+                    or saved.get('scope') != operator.get('scope'))
+-        self.records[op] = {**deepcopy(operator), 'fields': deepcopy(fields),
+-                           'skill_ranks': deepcopy(ranks), 'captured_at': captured_at,
+-                           'sources': {**deepcopy(saved.get('sources', {})),
+-                                       **deepcopy(operator.get('sources', {}))},
+-                           'field_times': {**deepcopy(saved.get('field_times', {})),
+-                                           **{key: captured_at for key in observed_fields}},
+-                           'skill_times': {**deepcopy(saved.get('skill_times', {})),
+-                                           **{str(key): captured_at for key in operator.get('skill_ranks', {})}},
+-                           'merged_from_pages': True}
++        if _record_issue(op, merged, self.profiles, self.implemented_ids):
++            # A newly supplied context may activate an unsafe old contribution.
++            # Confirm the valid incoming facts only; keep absent facts as preview.
++            self._protect()
++            merged = _merged_record(operator, captured_at, {})
++        self.records[op] = merged
+         if not _record_issue(op, self.records[op], self.profiles, self.implemented_ids):
+             self.issues.pop(op, None)
+         self._screen_all()

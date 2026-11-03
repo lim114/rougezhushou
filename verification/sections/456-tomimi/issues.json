@@ -1,0 +1,20 @@
+{
+  "initial_failures": [
+    "source-red/results.json",
+    "source-green/results.json",
+    "necessary-final/results.json",
+    "native-public/window.json",
+    "native-public2/window.json",
+    "native-simulator/window.json",
+    "native-simulator2/window.json"
+  ],
+  "corrections": [
+    "Actual dependent-page bug reproduced before fix: source.prepare=False left its active child visible. Remove the child if still owned.",
+    "Correct count is 134 exact local stage references plus 50 DLC1 references. Initial 48 was an arithmetic error, not missing local raw data.",
+    "The first embedded graphics browser changes Qt native surface Raster->Direct3D and can recreate HWND. The same retained Qt host and one visible reference window are the product requirement; no global AA flag or window rewrite added.",
+    "The live enemy table uses real tr/td. Original JS query returned an unsupported array value through runJavaScript. Explicit JSON serialization fixed the test extraction; actual displayed HP/ATK/DEF are now checked for ordinary and emergency modes."
+  ],
+  "final_public_receipt": "native-public4/window.json",
+  "final_node_chain_receipt": "nodechain-native-final/window.json",
+  "old_failures_preserved": true
+}

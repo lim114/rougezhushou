@@ -1,0 +1,114 @@
+{
+  "status": "SEALED_SOURCE_ONLY_V3_VISIBILITY_CONTRACT_PENDING_INDEPENDENT_REVIEW_AND_THIRD_LAST_ACTUAL_GUI",
+  "created_at": "2026-10-09T08:36:47.279897+00:00",
+  "baseline_window": {
+    "path": "/workspace/.continuation/full100-bounded-window-fixture-source-v2-complete/window.py",
+    "bytes": 660733,
+    "sha256": "b558ca3403ff4e2ec3ef8a8d37b585baf88666e36eaaaa8d486954e9eb2b5f59"
+  },
+  "candidate_window": {
+    "path": "/workspace/.continuation/full100-bounded-window-visibility-source-v3/window.py",
+    "bytes": 660800,
+    "sha256": "e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3"
+  },
+  "exact_changes": [
+    {
+      "baseline_line": 3125,
+      "before": "assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')",
+      "after": "assert window.continuous_attacks.isVisible() is (owner090 in catalog090()['operators'] and sp090 in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))",
+      "reason": "Current maintained app.py994 already displays continuous_attacks for implemented operators with attack-recovery or natural-recovery skills; section91 extended this existing UI contract. Old095 source3493 already checks both recovery types. The catalog indexing immediately before this assertion guarantees the known owner exists; membership is included explicitly to match the maintained implemented predicate."
+    }
+  ],
+  "current_app_source": {
+    "path": "/workspace/rougezhushou/rouge/app.py",
+    "bytes": 99596,
+    "sha256": "34f0c92061460b239fd0af80ec263673765a16753826f6151fde87a88b89a35b"
+  },
+  "existing_app_contract_line": 994,
+  "existing_app_contract": "(self.continuous_attacks,implemented and current.get('sp_type') in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))",
+  "historical095_bridge_source": {
+    "path": "/workspace/.continuation/full095-ui-cache-retry-source-v1/wine-full-ui-095-cache-retry.py",
+    "bytes": 1184954,
+    "sha256": "e5dec2d704cecbde56762cf7c2f92016f5123b592633fae12840a892869e6bc5"
+  },
+  "historical095_visibility_line": 3493,
+  "historical095_visibility_contract": "assert window.continuous_attacks.isVisible() is (sp090 in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))",
+  "retained_fixture_v2_contract": {
+    "path": "/workspace/.continuation/full100-bounded-window-fixture-source-v2-complete/fixture-contract-source.json",
+    "bytes": 24102,
+    "sha256": "0d83bd1d61a8e469a4d83a0d69365423cbb706de9e7c986b47116fbdfef482cb"
+  },
+  "actual_failed_gui_v2": {
+    "receipt": {
+      "path": "/workspace/.continuation/full100-window-actual-v2/wine-ui-100.json",
+      "bytes": 3734200,
+      "sha256": "e7a16d8c8fbc87c6d82acf85598bb1cc03b242ea3159417dec72022817e5f72f"
+    },
+    "tool_reported_by_Root": "ac5d30",
+    "actual_child_and_supervisor_primary_reported_by_Root": 1,
+    "passed": false,
+    "complete_ui_validation": false,
+    "completed_check_records": 4259,
+    "elapsed_seconds": 502.372,
+    "saved_state_records": 47,
+    "failure": {
+      "type": "AssertionError",
+      "message": "",
+      "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.continuation\\full100-bounded-window-fixture-source-v2-complete\\window.py\", line 3125, in <module>\n    assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    "source_drift": [],
+    "additional_source_drift": [],
+    "retained_partial_not_PASS": true
+  },
+  "assertion_transport": {
+    "static_assert_count_before": 831,
+    "static_assert_count_after": 831,
+    "changed_asserts": 1,
+    "other_assert_ASTs_identical_in_order": 830,
+    "all_numeric_expectations_and_matrices_byte_identical": true,
+    "all_old_fixture_v2_ten_transports_preserved": true
+  },
+  "source_hash_timing_investigation": {
+    "exact_source_hashes_call_sites": [
+      1143,
+      3049,
+      3254,
+      3360
+    ],
+    "source_hashes_call_sites_with_For_or_While_ancestor": [],
+    "preimport_maintained_source100_call_site": 50,
+    "maximum_full_map_scans_on_success": 5,
+    "full_map_scans_on_this_failed_v2_path_including_final": 4,
+    "per_52_state_map_scans_claim_supported": false,
+    "current_metadata_observation_primary_files": 743,
+    "current_metadata_observation_primary_bytes": 26560663,
+    "current_metadata_observation_product_files": 132,
+    "current_metadata_observation_product_bytes": 22083278,
+    "hash_policy_change_in_v3": false,
+    "runtime_per_operation_timings_available": false,
+    "cause_of_502_seconds_established": false,
+    "explanation": "Both current 090 group snapshots occur outside the row loop. No operation timings justify changing hash scope or claiming source scans caused the elapsed time. Keep all current primary and supplemental pre/post checks and the group checks byte-identical."
+  },
+  "preserved_runtime_contract": {
+    "preimport_complete_primary_rouge_tests_scripts": true,
+    "startup_and_final_complete_primary_SourceMap": true,
+    "supplemental_CORE_preimport_and_final": true,
+    "section090_complete_primary_before_after": true,
+    "independent_supervisor_v3_required": true,
+    "deadline_seconds": 600,
+    "four_PNGs_require_actual_Root_view": true,
+    "numeric_result_and_three_text_assertions_unchanged": true,
+    "global_trace_or_profile_enabled": false,
+    "old095_function_vectors_measured": false,
+    "game_captures_or_chat_enabled": false
+  },
+  "runtime_executions_by_author": 0,
+  "project_imports_tests_helpers_Wine_Git_executed": false,
+  "source_compile_without_execution": true,
+  "tracked_repo_writes": 0,
+  "unknowns": [
+    "Third actual GUI duration and outcome remain unmeasured; previous elapsed502.372 at47/52 saved states does not prove completion within600seconds.",
+    "Remaining original numeric and UI assertions can only be certified by Root actual execution, not this Source review."
+  ],
+  "attempt_limit": "Root third new full100 GUI attempt is last for this issue. Preserve failures and stop this issue after third unsuccessful attempt; do not retry historical full095."
+}

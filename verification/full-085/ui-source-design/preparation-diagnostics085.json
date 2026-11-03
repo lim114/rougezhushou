@@ -1,0 +1,64 @@
+[
+  {
+    "kind": "infrastructure",
+    "operation": "review_ui085_prep followup_task",
+    "outcome": "agent thread limit reached before any agent turn began",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "tool_result": "collab tool failed: agent thread limit reached",
+    "new_agent_turn_started": false
+  },
+  {
+    "kind": "readonly_public_schema_preparation",
+    "operation": "catalog selector summary assumed skill.number",
+    "outcome": "KeyError: 'number' before writing a receipt; corrected by enumerating actual public list indices",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 8, in <module>\nKeyError: 'number'\n",
+    "failing_submitted_reader_fragment": "[(s['number'],s['unlock_elite']) for s in profile['skills']]"
+  },
+  {
+    "kind": "readonly_static_preparation",
+    "operation": "helper name collision check traversed every nested function",
+    "outcome": "AssertionError add: separate case-generator nested add helpers share their local name, without a global override; corrected to actual global function scope",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 11, in <module>\nAssertionError: {'add'}\n",
+    "failing_submitted_reader_fragment": "base_names={n.name for n in ast.walk(base_ast) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}; assert not (base_names & set(helpers))"
+  },
+  {
+    "kind": "readonly_public_schema_preparation",
+    "operation": "optional SP source summary assumed skill.level.sp nesting",
+    "outcome": "KeyError: 'sp' before writing any receipt; required continuous-attacks state was established directly from app.py default and actual080 runner absence of writes, so no mechanic or assertion depended on this exploratory summary",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 5, in <module>\nKeyError: 'sp'\n",
+    "failing_submitted_reader_fragment": "[(n,s['levels'][-1]['sp']['sp_type']) for n,s in enumerate(profile['skills'],1)]"
+  },
+  {
+    "kind": "readonly_public_schema_preparation",
+    "operation": "optional Orchid module candidate summary directly iterated nullable parts",
+    "outcome": "TypeError: NoneType object is not iterable; corrected the reader with existing source nullable parts semantics (parts or []), before any API or writes to runner/contracts",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 7, in <module>\nTypeError: 'NoneType' object is not iterable\n",
+    "failing_submitted_reader_fragment": "for c in (part.get('addOrOverrideTalentDataBundle') or {}).get('candidates',[]):",
+    "diagnosis_note": "Initial parts attribution was incorrect; subsequent recorded source inspection identified explicit null candidates. Third reader used actual production candidates-or-empty expression and passed."
+  },
+  {
+    "kind": "readonly_public_schema_preparation",
+    "operation": "Orchid candidate reader second attempt fixed the wrong nullable level",
+    "outcome": "TypeError: NoneType object is not iterable; parts is a list, but some actual addOrOverrideTalentDataBundle.candidates is null. Exact production selected_talents source uses candidates or []; third source reader now follows that existing expression",
+    "application_API_calls": 0,
+    "Qt_or_Wine_started": false,
+    "product_test_failure": false,
+    "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 8, in <module>\nTypeError: 'NoneType' object is not iterable\n",
+    "failing_submitted_reader_fragment": "for part in (module_level.get('parts') or []):\n    for c in (part.get('addOrOverrideTalentDataBundle') or {}).get('candidates',[]):",
+    "final_resolution": "Third static reader passed; production-style (bundle.get(candidates) or []) is required."
+  }
+]

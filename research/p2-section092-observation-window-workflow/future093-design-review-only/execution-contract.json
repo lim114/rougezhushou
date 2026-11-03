@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "status": "FINAL_CONDITIONAL_DESIGN_EXECUTION_CONTRACT_STOPWRITE",
+  "qualification": "SOURCE_QUALIFIED; DESIGN_CONDITIONALLY_QUALIFIED_FOR_CANDIDATE_ONLY_UNDER_THIS_CONTRACT",
+  "frozen_original_design_unconditionally_complete": false,
+  "implementation_created": false,
+  "runtime_verified": false,
+  "section093_completed": false,
+  "allowed_product_boundary": [
+    "rouge/app.py",
+    "one narrow account-cache helper if useful"
+  ],
+  "minimal_execution_constraints": [
+    {
+      "id": "load-and-preserve",
+      "decision": "Load read-only. Distinguish genuinely missing file from existing unreadable, invalid JSON, invalid root or invalid consumed records. FileNotFoundError alone is not enough if an existing symlink/path would be overwritten; do not infer missing from generic OSError or a failed permission check. Existing unreadable/damaged originals enable a permanent preservation flag for this application session. No automatic repair is part of this group.",
+      "evidence": [
+        "app.py:101-113",
+        "app.py:873-877"
+      ]
+    },
+    {
+      "id": "all-records-before-first-save",
+      "decision": "Screen the entire decoded account map before any ordinary save can occur; per-record quarantine must not wait for that row to be browsed. Otherwise a valid observation for one id can rewrite a file whose different id is malformed. Keep usable records available independently. Unrecognized catalog ids that are otherwise opaque and unused must not be deleted solely because the current catalog cannot display them.",
+      "evidence": [
+        "app.py:769-778",
+        "app.py:860-877"
+      ]
+    },
+    {
+      "id": "identity-and-containers",
+      "decision": "For a record supplied to app consumers, require an object and an observed id string matching its account-map key and display identity. Missing/wrong id is unconfirmed cached identity; do not repair it from selected GUI identity. Present fields, skill_ranks, sources, field_times and skill_times must be mappings. Absent mappings retain the original empty defaults without becoming corruption. Whole-record quarantine is the minimum implementation for structural/identity damage; other records stay usable. Unknown ignored keys and nested source values stay untouched.",
+      "evidence": [
+        "app.py:771-778",
+        "app.py:807-838",
+        "app.py:861-871",
+        "operator_summary.py:8-10,28"
+      ]
+    },
+    {
+      "id": "timestamp",
+      "decision": "An omitted captured_at stays accepted with the existing implicit zero default for ordering. An explicitly supplied timestamp must be a finite numeric value other than bool and must be displayable by the actual target-platform time conversion; isolate null, text, nonfinite and conversion-failing values before account use. Do not impose an invented positive-epoch range or replace invalid/missing time with current time. time.localtime(None) accepts current time; its risk is a false fresh display and subsequent captured_at numeric comparison, not a startup TypeError.",
+      "evidence": [
+        "app.py:838",
+        "app.py:863",
+        "public-constructed-cases.json:captured_at_null,captured_at_text"
+      ]
+    },
+    {
+      "id": "consumed-cultivation-leaves",
+      "decision": "Check the account values actually consumed before calculate try: elite, visible level, trust, potential, usable selected skill and usable skill ranks; check equipped module identity/stage only when the existing consumer applies them. Use the existing operator profile and catalog/damage type, range and unlock guards, without adding a mechanism. Level None is a public API default but is not a valid observed QSpinBox setValue input; isolate it only in the cache/UI boundary. Do not reject trust bool solely by a global no-bool policy: the existing catalog consumer accepts it. Do not inspect or coerce unrelated ignored leaves. Whole-record quarantine for a consumed invalid leaf is an allowed minimum; report the offending field, and absent leaves continue to use labeled preview defaults.",
+      "evidence": [
+        "app.py:810-828",
+        "app.py:945-956",
+        "app.py:998-1000",
+        "catalog.py:28-58",
+        "damage.py:236-251"
+      ]
+    },
+    {
+      "id": "ignored-aliases-and-defaults",
+      "decision": "Retain legitimate scope=operator_profile and scope=account, and usable historical partial records with absent fields, skill_ranks, sources, timestamps and time maps. Preserve module_id=None and other existing ignored falsy aliases, including ignored module_level values; no global None/falsy/bool normalization, no new public API errors or error-order changes. When a cache value is inert for the selected consumer, do not quarantine merely to impose a new schema.",
+      "evidence": [
+        "operator_recognition.py:348-350",
+        "visual_recognition.py:126-129",
+        "tests/test_ui_refresh_045.py:233-235",
+        "catalog.py:33,49-54",
+        "tests/test_training_input_types.py:85-93"
+      ]
+    },
+    {
+      "id": "formatter-consumed-metadata",
+      "decision": "The account boundary must also protect existing formatter operations on invalid_fields, invalid_skill_ranks and missing_fields. Omitted values retain the original empty defaults; null/noniterable/unhashable values and missing-field entries that cannot perform the existing string operations must not reach the formatter. Validate consumption safety, not every extra metadata key or source string; harmless existing ignored entries are not new facts. Do not weaken the public formatter strict-id contract or move this responsibility into numerical/reporting APIs.",
+      "evidence": [
+        "operator_summary.py:8-10,28-45",
+        "app.py:1018-1022",
+        "app.py:473-478"
+      ]
+    },
+    {
+      "id": "account-run-separation",
+      "decision": "A disk account record with scope=run must not enter current_operator_state as a real member; quarantine it or exclude its operative run effects at the account view. Other known run-only metadata must not render emergency-hire/advanced claims or activate char buffs as current-run evidence merely because it occurs in an account file. Preserve opaque raw metadata and ignored extras while suppressing those operational effects. Real RunState records, membership, recruitment, events and files are not validated/coerced/written by this change; their valid fields keep their original precedence over the safe account reference.",
+      "evidence": [
+        "app.py:772-778",
+        "app.py:839-846",
+        "app.py:1042-1066",
+        "app.py:1200",
+        "operator_summary.py:26-27,39-41"
+      ]
+    },
+    {
+      "id": "stable-visible-recovery",
+      "decision": "Use the same safe account view for startup, row selection, base attack, rank display, supported calculation and overview/no-skill/unimplemented early returns. Keep a concise notice visible in training_status after each existing branch assigns it, including overview, or in another stable existing UI location. Separate per-id unavailable account facts from a global original-file preservation notice. A valid RunState member must not be called unknown because its account reference is damaged. Browser switching to a good id and returning to valid inputs must recover through the original paths without recreating Qt or clearing RunState. The existing explicit selected-id empty GUI preview is allowed but must remain preview, never a repaired observation.",
+      "evidence": [
+        "app.py:793-849",
+        "app.py:1015-1026",
+        "app.py:547-549"
+      ]
+    },
+    {
+      "id": "overlay-merge-and-issue-lifetime",
+      "decision": "Use only a genuinely valid new id-bearing observation and its supplied timestamp to rebuild an isolated record in memory. Bad old facts never participate in union. For good records preserve the original captured_at less-than rejection, equal-time acceptance, fields old-plus-new union, rank string-key normalization, sources/time-map merging and changed/save decision. Existing saved extra metadata that the original producer merge would drop is not newly retained by changing that merge. After new valid input, supplied fields become confirmed and still-absent old fields remain labeled unknown/preview; clear or replace the per-id quarantine status for the new usable memory view, but keep the global original-file preservation status. Preserve the original show_observed_operator browsing behavior.",
+      "evidence": [
+        "app.py:860-888"
+      ]
+    },
+    {
+      "id": "disk-write-guard",
+      "decision": "When the original is flagged unreadable/damaged, skip the entire normal account-file save side effect: no parent mkdir, temporary write or replace from an incomplete clean map, even after later valid observations. The original bytes/path are retained. The protection is permanent for this session, independent of the per-id view recovering. For a genuinely absent or clean public temporary file, retain the original normal saving behavior. There is no repair button, silent rewrite, restart-persistence guarantee or schema migration in this group.",
+      "evidence": [
+        "app.py:873-877"
+      ]
+    },
+    {
+      "id": "no-numerical-or-mechanism-changes",
+      "decision": "Do not edit RunState, recognizers, catalog/damage/timing/relic math, API aliases, formatter contract, report numerical rules or public exception ordering. GUI timing and relic JSON already implement their syntax/type checks and remain compatibility controls. No live/private sampling is required to prove publicly constructed corruption.",
+      "evidence": [
+        "app.py:1135-1161",
+        "NOTE.md",
+        "reviewable-group-design.json"
+      ]
+    }
+  ],
+  "future_validation_required_not_executed": [
+    "Temporary public fixtures for all five legal-JSON non-object root classes; malformed record/fields/rank classes; missing/wrong id; invalid timestamp; active bad leaf; corrupted merge metadata. The source 22 predictions cannot be labeled runtime PASS.",
+    "A mixed file containing a good id and an unbrowsed bad id: startup stays usable, good id works, later ordinary valid observation does not alter original bytes. Browse every quarantine family plus good, overview, no-skill and unimplemented paths.",
+    "Legitimate operator_profile/account, missing containers/time, source-string/unknown-extra controls; module_id=None and ignored module_level aliases; old/new/equal timestamp producer merges; no input mutation and clean/missing ordinary save controls.",
+    "Formatter-consumed bad metadata and foreign scope/run-only metadata controls; compare genuine RunState memory/files before and after previews and valid account overlay.",
+    "Full public saved before/after native outputs for good records and timing/relic GUI contexts, preserving math, notes, aliases and error ordering; corrupted fixture byte hashes before/after startup, browse, failed calculation and valid overlay.",
+    "Root-owned actual MainWindow/Wine open/browse/recalculate with visible notices and recovery. Timing/relic whitespace, empty object, syntax error, null/false/0/list top-level, valid target windows, target_windows empty, active needed condition, inactive stale text and return to valid text. Relevant regression and real window verification precede archival section completion."
+  ],
+  "attempt_policy": "Do not reopen or count older negative-only target as completed. If the same previously attempted target still has incomplete evidence after three attempts, defer it with the original attempt/failure records and new-evidence/stable-complete-output restart conditions. This distinct static corruption qualification is not a runtime retry or a section milestone.",
+  "counts": {
+    "project_imports": 0,
+    "project_API": 0,
+    "project_helpers": 0,
+    "formatter": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "private_reads": 0,
+    "network": 0,
+    "tracked_writes": 0
+  }
+}

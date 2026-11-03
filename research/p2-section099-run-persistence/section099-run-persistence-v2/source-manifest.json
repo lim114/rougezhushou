@@ -1,0 +1,105 @@
+{
+  "status": "SOURCE_ONLY_NOT_APPLIED_NOT_EXECUTED",
+  "section": 99,
+  "completed_increment": 0,
+  "runtime_pass": false,
+  "scope": "Run save IO continuity, qualified Unicode transport, separate load/save state, dangling-entry read protection and explicit manual-new-run boundary",
+  "expected_after098": {
+    "path": "/workspace/.continuation/resume098-run-cache-v2/candidate/rouge/run_state.py",
+    "bytes": 51094,
+    "sha256": "ca338423cdce026293d0987365eefac7a16fe3769f6b2dff9d4e0faf1b956363"
+  },
+  "baseline": {
+    "path": "/workspace/.continuation/section099-run-persistence-v2/baseline/rouge/run_state.py",
+    "bytes": 51094,
+    "sha256": "ca338423cdce026293d0987365eefac7a16fe3769f6b2dff9d4e0faf1b956363"
+  },
+  "candidate": {
+    "path": "/workspace/.continuation/section099-run-persistence-v2/candidate/rouge/run_state.py",
+    "bytes": 53169,
+    "sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9"
+  },
+  "tests": {
+    "path": "/workspace/.continuation/section099-run-persistence-v2/candidate/tests/test_run_persistence_099.py",
+    "bytes": 26468,
+    "sha256": "e1d3d192811bb5317c5d31ff06466c6a21634e4d25a5494d1dfd7a2b97120eb0"
+  },
+  "preliminary_v1_source_packet": "/workspace/.continuation/section099-run-persistence-v1/source-manifest.json",
+  "root_original_defect_reproduction_refs": [
+    {
+      "path": "/workspace/.continuation/resume099-100-original-reproduction-v1.json",
+      "bytes": 835,
+      "sha256": "bd54d399e55a506fc36edd507700cd7e23b1e50106a5bc44588f4d08f4e3d659"
+    },
+    {
+      "path": "/workspace/.continuation/resume099-100-original-reproduction-v1.log",
+      "bytes": 689,
+      "sha256": "7a5172cba4906e2b47289f538ca651f4ea3129e7cf1f8aa5c2b2c8480db5203b"
+    },
+    {
+      "path": "/workspace/.continuation/resume099-100-original-reproduction-v1.exit-code",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    }
+  ],
+  "patch": {
+    "path": "/workspace/.continuation/section099-run-persistence-v2/run-persistence.patch",
+    "bytes": 5171,
+    "sha256": "3ca8784c0f015b4690832c80e27385cd4172a81d54e75118e8c10997d716b856"
+  },
+  "assembly_source": {
+    "path": "/workspace/.continuation/section099-run-persistence-v2/build_candidate_after098.py",
+    "bytes": 8584,
+    "sha256": "0642513e487a7881632ef5e38c42508c8dcf724259563dfe39f15bf0e9fd55cd"
+  },
+  "app_transport": "No app replacement. Existing run_summary.setText(run.summary()) displays session persistence_notice after apply and reset, retaining actual 096/098 app increments.",
+  "registry_transport": "Root adds tests.test_run_persistence_099 to actually completed 098 scripts/verify_cloud.py registry, preserving all existing names/order.",
+  "manual_reset_policy": "Retain explicit new id/empty memory and clear load guard, but do not clear save_issue; no failed-session automatic retry or old-run rollback.",
+  "save_failure_policy": "OSError or native adjacent high/low refusal returns False, leaves accepted memory usable, never deletes/replays temporary evidence; other program/serialization errors propagate.",
+  "source_references": [
+    {
+      "path": "/workspace/rougezhushou/rouge/run_state.py",
+      "bytes": 42446,
+      "sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 99159,
+      "sha256": "0c388853b351e3869a01f32f42058fc8e0a0cb23fc67f25d6141bde13350423d"
+    },
+    {
+      "path": "/workspace/.continuation/section099-io-semantics-static-review-v1.md",
+      "bytes": 7429,
+      "sha256": "818133d7d546ee44c457eb45ef34ec00fee08d670b8df5e73461e5bc4cda5f41"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/public-documents/python-json-3.12.html",
+      "bytes": 107891,
+      "sha256": "1a5e4ba18342b32f5f174d129f9c226a21a9445a89384f13a3f33ec327c2b68f"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/public-documents/rfc8259.html",
+      "bytes": 244704,
+      "sha256": "8d22df005da5fbb48aad48f774d0277f9081b650e93dbb5502b1ad183846e215"
+    }
+  ],
+  "calls": {
+    "project_imports": 0,
+    "project_calls": 0,
+    "tests": 0,
+    "fixture_codecs": 0,
+    "Wine": 0,
+    "Qt": 0,
+    "Git": 0,
+    "private_reads": 0,
+    "tracked_writes": 0
+  },
+  "limitations": [
+    "No native Windows/game/chat verification.",
+    "No fsync/atomic durability or multiple-writer claim.",
+    "Fixed distinct normal run-state.json/run-state.tmp paths; aliases/.tmp target/path encoding remain outside this section; only dangling-entry read guard qualified.",
+    "No universal arbitrary Python graph/value or non-CPython Unicode round-trip claim.",
+    "Existing serializer key/NaN/opaque input policy not expanded or normalized.",
+    "Source-only packet is not actual completed098 source, reproduction, full095 PASS, commit or publication."
+  ]
+}

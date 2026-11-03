@@ -1,0 +1,27 @@
+{
+  "section": 20,
+  "completion_ref": "p2-section-020",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T16:57:44.966553+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_manual_close_reference tests.test_damage tests.test_timing tests.test_report tests.test_ines_dot_reference",
+      "run": 79,
+      "passed": 79,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 400,
+      "passed": 399,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 9,
+  "failed_attempts": 0,
+  "source_receipt": "research/p2-phase-guards/source-receipt.json",
+  "native_windows": false
+}

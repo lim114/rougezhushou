@@ -1,0 +1,40 @@
+{
+  "section": 468,
+  "kind": "functional_section",
+  "title": "计算目标同窗查阅与敌人说明精简",
+  "new_capability": "计算页和关卡目标页可直接打开对应作战资料，查看目标敌人、地图与出怪信息，返回保留计算结果和阅读位置。敌人正文改用简短中文，完整说明按需展开；首次定位敌人时直接显示正文和图片。",
+  "passed": true,
+  "passed_scope": "Exact target-to-stage shared navigation; unique enemy id/level selection; reading and calculation state retention; target/scope invalidation; independent legacy source; initial body visibility; concise enemy text and complete original notes; native wide/narrow layout.",
+  "remaining": "继续完善关卡目标排版、其余资料长说明与深层入口，核对视频中的字体、间距和原图呈现；同步推进已有识别方案。当前环境完整数值继续按P2待办校准。",
+  "unit_tests_run": 31,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/468-target-reference/final-concise/results.json",
+      "process": "verification/sections/468-target-reference/final-concise/process.json",
+      "tests_run": 31
+    }
+  ],
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/468-target-reference/native-concise/window.json",
+      "unique_checks": 68
+    }
+  },
+  "source_sha256": {
+    "rouge/app.py": "d8ce8a6b97e9bc784e51173f5a8a79c4a48453314f3fc1192d5566dd62ea602b",
+    "rouge/battle_view.py": "21c3050142ee147193e788850ea52f218aef1ed78aab7ffd2c36c5111b0f7e5f",
+    "rouge/current_battle_view.py": "f508e598d505e530d469e328b62092f5aa8ce245bea645ca1143d22c03204543",
+    "rouge/player_calculation_target.py": "7a6dd0951368866c9f2fb08cd68ae3749cfd6aec5a23d4dd76923875052fe81a",
+    "rouge/reference_copy.py": "c6b6bf32396afca94e5ea07d281fc73414a8809f49aa2d6262db0c11abf3b4ac",
+    "tests/test_calculation_target_468.py": "671ae880cd715cf1b493ad4dc7b374257a38072debaeaf9d20ab56d65e08323c",
+    "tests/test_expansion_integration_313.py": "0c30fc324d7a7365859f2847d3411c2bc3d89f3dd52c6fa0eb4f290ed8b79bc7"
+  },
+  "source_review": "verification/sections/468-target-reference/source-review.json",
+  "actual_local_test_window": "verification/sections/468-target-reference/live-window-final/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "recognition_algorithm_changed": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T23:25:00.008020+00:00"
+}

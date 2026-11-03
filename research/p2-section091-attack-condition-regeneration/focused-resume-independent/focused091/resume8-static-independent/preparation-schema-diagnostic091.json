@@ -1,0 +1,12 @@
+{
+  "format_version": 1,
+  "kind": "independent_stdlib_saved_receipt_schema_preparation_error",
+  "attempts": 1,
+  "error": "KeyError: records",
+  "cause": "Initial read-only stdlib preparation assumed execution receipt records; actual frozen schema is lossless_records and gzip states.",
+  "correction": "Read actual top-level keys, then use lossless_records/states; verify compressed/decompressed receipt hashes and counts.",
+  "project_calls": 0,
+  "product_failure": false,
+  "original_failed_trace": "Traceback (most recent call last):\n  File \"<stdin>\", line 9, in <module>\nKeyError: records",
+  "actual_root_fixture_failure_is_separate": "KeyError id; root actual attempt1 with16 completed states."
+}

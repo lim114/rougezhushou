@@ -1,0 +1,985 @@
+{
+  "format_version": 1,
+  "status": "PASS_FORMAL_INDEPENDENT_IMPLEMENTATION_SOURCE_ONLY096_NOT_EXECUTED",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "code_manifest_sha256": "255d95b7c7241ebc34bb85a01a543bac0f50f7d9b44ad9de7b178a4598c45c36",
+  "guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
+  "app_inverse_sha256": "ee7ef60a964dd570d016adeee2af212dcbba622f0f739f43d549b1cb4dd4d281",
+  "app_wholebyte_inverse_exact": true,
+  "registry_wholebyte_inverse_exact": true,
+  "candidate_manifest": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/public-artifacts-manifest-candidate096.json",
+    "bytes": 5923,
+    "sha256": "0a7db453bbe170aa23b978a8b5c34ef81f07dffd3594cbe976211cab5eeaca51"
+  },
+  "candidate_handoff": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/final-handoff-candidate096.json",
+    "bytes": 4556,
+    "sha256": "c6d87e11d445cad04772030712232d76a5fd5b3fbeaccc8969a11248591a7951"
+  },
+  "code_manifest": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/public-code-artifacts-manifest096.json",
+    "bytes": 2487,
+    "sha256": "255d95b7c7241ebc34bb85a01a543bac0f50f7d9b44ad9de7b178a4598c45c36"
+  },
+  "guard": {
+    "path": "/workspace/.continuation/root-source-095-v2.json",
+    "bytes": 84227,
+    "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+  },
+  "source_freeze": {
+    "path": "/workspace/.continuation/p2-condition096-candidate-v1/implementation-source-freeze096.json",
+    "bytes": 4422,
+    "sha256": "5e0edb42a2517877b3518648af665105e52e657d034589b45042bd7cb6091adb"
+  },
+  "independent_raw_source_fact_review": {
+    "path": "/workspace/.continuation/p2-condition096-independent-rawsource-v1/independent-raw-source-audit096.json",
+    "bytes": 97280,
+    "sha256": "c9d3f87d03e4e8a1380eaa7ac9a8b6aa8beec3130e02e51cdf1256221033aef1"
+  },
+  "independent_draft_source_review": {
+    "path": "/workspace/.continuation/p2-condition096-draft-logic-source-review-v1/independent-draft-logic-source-review096.json",
+    "bytes": 14182,
+    "sha256": "835184cdc5e94ae0ce288c8d09ea6e81abf33a6388710b7b46a031172f8a224d"
+  },
+  "actual_current_guard_sources_verified": 735,
+  "actual_source_drift": {},
+  "checks": [
+    {
+      "id": "S01",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Sealed complete candidate manifest",
+      "observation": "All 16 payload byte counts and SHA-256 hashes match; exact regular physical set is 18 including manifest and handoff.",
+      "evidence": {
+        "candidate_manifest": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/public-artifacts-manifest-candidate096.json",
+          "bytes": 5923,
+          "sha256": "0a7db453bbe170aa23b978a8b5c34ef81f07dffd3594cbe976211cab5eeaca51"
+        },
+        "code_manifest": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/public-code-artifacts-manifest096.json",
+          "bytes": 2487,
+          "sha256": "255d95b7c7241ebc34bb85a01a543bac0f50f7d9b44ad9de7b178a4598c45c36"
+        },
+        "handoff": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/final-handoff-candidate096.json",
+          "bytes": 4556,
+          "sha256": "c6d87e11d445cad04772030712232d76a5fd5b3fbeaccc8969a11248591a7951"
+        },
+        "physical_files": [
+          "IMPLEMENTATION_CONTRACT096.md",
+          "baseline/rouge/app.py",
+          "baseline/scripts/verify_cloud.py",
+          "draft-source-correction096.json",
+          "exact-source-inverse096.json",
+          "final-handoff-candidate096.json",
+          "history-before-condition-value-refresh/exact-source-inverse096.json",
+          "history-before-condition-value-refresh/rouge/app.py",
+          "implementation-source-freeze096.json",
+          "public-artifacts-manifest-candidate096.json",
+          "public-code-artifacts-manifest096.json",
+          "rouge/app.py",
+          "rouge/condition_cultivation.py",
+          "rouge/data/condition-cultivation-source.json",
+          "runtime-acceptance-plan096.json",
+          "scripts/verify_cloud.py",
+          "source-only-qualification096.json",
+          "tests/test_condition_cultivation.py"
+        ]
+      }
+    },
+    {
+      "id": "S02",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Exact current 735-source golden binding",
+      "observation": "Independently read and hashed every one of the 735 declared maintained sources; zero drift. Historical runtime fields in guard are not treated as current section authority.",
+      "evidence": {
+        "guard": {
+          "path": "/workspace/.continuation/root-source-095-v2.json",
+          "bytes": 84227,
+          "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+        },
+        "actual_current_source_entries": 735,
+        "actual_source_drift": {}
+      }
+    },
+    {
+      "id": "S03",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Exactly five proposed maintained files",
+      "observation": "Only two existing files have proposed insertions and three new files are proposed. Original app and registry match current guarded golden bytes; all new destinations remain absent.",
+      "evidence": {
+        "destinations": [
+          "rouge/app.py",
+          "rouge/condition_cultivation.py",
+          "rouge/data/condition-cultivation-source.json",
+          "tests/test_condition_cultivation.py",
+          "scripts/verify_cloud.py"
+        ]
+      }
+    },
+    {
+      "id": "S04",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Source-only prerequisite and status truth",
+      "observation": "The sealed candidate does not invent future full095 validation or commit/push receipt; those prerequisites remain null, runtime false and section increment zero. Previous draft correction is retained as source history, not target runtime failure.",
+      "evidence": {
+        "source_freeze": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/implementation-source-freeze096.json",
+          "bytes": 4422,
+          "sha256": "5e0edb42a2517877b3518648af665105e52e657d034589b45042bd7cb6091adb"
+        }
+      }
+    },
+    {
+      "id": "S05",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Whole-byte app and registry inverse",
+      "observation": "Removing only the three exact declared app insertions restores the whole 96,725-byte guarded app. Removing the unique 40-byte test registry insertion restores the whole 5,028-byte guarded registry; no whitespace or newline normalization.",
+      "evidence": {
+        "ledger": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/exact-source-inverse096.json",
+          "bytes": 4731,
+          "sha256": "ee7ef60a964dd570d016adeee2af212dcbba622f0f739f43d549b1cb4dd4d281"
+        },
+        "app_operation_count": 3,
+        "registry_operation_count": 1,
+        "restored_app_sha256": "589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd",
+        "restored_registry_sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223"
+      }
+    },
+    {
+      "id": "S06",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "All original numerical, state, early-return and text paths preserved",
+      "observation": "61 of all 63 qualified original functions, including three distinct nested work functions, are byte-exact; only make_damage_tab and update_skill_options contain new presentation insertions. The complete calculate method, early returns/error handling, native/report/text path, state merge and cultivation methods remain exact. The earlier draft used 61 unique local names/59 unchanged; this full qualified inventory removes that name-collision undercount.",
+      "evidence": {
+        "actual_original_qualified_functions": 63,
+        "actual_unchanged_qualified_functions": 61,
+        "unchanged_unique_local_names": [
+          "__init__",
+          "account_training_status",
+          "apply_operator_observation",
+          "apply_relic_history_notice",
+          "apply_run_observation",
+          "bind_desktop",
+          "calculate",
+          "cancel_chat",
+          "change_recognition_mode",
+          "chat_chunk",
+          "chat_finished",
+          "chat_mode_changed",
+          "clear_chat",
+          "closeEvent",
+          "connect_game",
+          "current_operator_state",
+          "desktop_context",
+          "desktop_request",
+          "desktop_state_received",
+          "filter_relics",
+          "finish_sample",
+          "level_changed",
+          "load_settings",
+          "main",
+          "make_capture_tab",
+          "make_chat_tab",
+          "make_map_tab",
+          "map_node_selected",
+          "number",
+          "recruited_operator_ids",
+          "refresh_operator_overview",
+          "refresh_windows",
+          "render_damage",
+          "render_map",
+          "reset_run",
+          "sample_failed",
+          "sample_now",
+          "sample_received",
+          "save_settings",
+          "select_battle_stage",
+          "select_operator",
+          "send_chat",
+          "show_damage_text",
+          "show_error",
+          "show_observed_operator",
+          "skill_changed",
+          "skill_rank_value",
+          "sync_animation_references",
+          "sync_run_config",
+          "sync_run_relics",
+          "sync_target_buffs",
+          "toggle_auto",
+          "training_conditions",
+          "update_base_attack",
+          "update_enemy_context",
+          "update_operator",
+          "update_sampling_status",
+          "update_target_enemies",
+          "work"
+        ],
+        "changed_original_functions": [
+          "MainWindow.make_damage_tab",
+          "MainWindow.update_skill_options"
+        ],
+        "new_functions": [
+          "MainWindow.update_condition_cultivation_explanations"
+        ],
+        "calculate_source_sha256": "10f92ca0e4c408fdcc42b7a8f83c7c5275eee80fc46a4e72d4eb5eb43660a701",
+        "all_qualified_source_sha256": {
+          "apply_relic_history_notice": "095f49d08b417b30a15c480945fb5c8a23cf2b84d709a3b34ca629acc5d1dfc1",
+          "number": "01f5ffd9ee9670583f47943e124bf02a9e49d6df24b4707f55e15f0727db40e1",
+          "MainWindow.__init__": "58b6c2c77d6547750aec4288c112fbdfd2a2d7ffb855a8141cca467558bdfc71",
+          "MainWindow.make_capture_tab": "775695da0e817fa77012cbae8af366ed278c9e28b0f853f83b8c716a6fa756d7",
+          "MainWindow.make_map_tab": "dde25b58c0b8f908e60455fae50c0b40e07259d8ff1481a95a3c93419329403d",
+          "MainWindow.map_node_selected": "85330b476eb540fb62c9ad9979828063f4ca934b355d5abc1d5169873a5d40d4",
+          "MainWindow.render_map": "27e61af5bb75c1c9dc28e29b76416e0c4701160e96826fae9a9eb26c45645928",
+          "MainWindow.refresh_windows": "a2f47d4e98d6e8a3bf4f68ae067f3b8667c066dc2d4e748e9c4ce3fb80d1810b",
+          "MainWindow.connect_game": "495ec4322213346cd134b7d19c8e3d5ee4a79d9e66a2d08262758f4224ecc3d8",
+          "MainWindow.toggle_auto": "58473e294ce3e9f9d4be787e887f283c724baacaffffde9363a0f98df71b1355",
+          "MainWindow.update_sampling_status": "76e6596c3230e9fe62aa559ef3a461f1582d05bf292f50e7dbea154af386e814",
+          "MainWindow.change_recognition_mode": "48671985a451eb7f56717f2664743ec42636261370ab64b91109b7989fc17fcc",
+          "MainWindow.sample_now": "d910d803b9e3d6577cf597ab887c8b20012b8eeef918b8c98f7239d27bf54fe5",
+          "MainWindow.sample_now.work": "6f67034a83cd1a3a4e9012172ce5d8db6c55291c74fcd3990f7231471d98db3a",
+          "MainWindow.finish_sample": "ac068a451fc398c916e30c18e8503b59543c2f8e361680d3269970fd930cf600",
+          "MainWindow.sample_failed": "d9717fa211787b9607a296fc926fc4c6f42654089f01cdecf920158c0e136652",
+          "MainWindow.sample_received": "1a6a0fce0dfc6a1e72049db27b7681567f9ce9e0641c381511a72b98fc538131",
+          "MainWindow.make_damage_tab": "58399b1dfa8ef7ea6fa968c6522a1308d4179d178320fba641e8a1815c48b8bd",
+          "MainWindow.update_target_enemies": "634781002d884b64b608ba5d8f08f0e2a45cb9edd871ac837a2cde880afd4c7f",
+          "MainWindow.select_battle_stage": "4b03948c645961d31c380a1ba8b5fef417f20f400b7f8047d699317b5b8b2b05",
+          "MainWindow.recruited_operator_ids": "59fc55084a5e412a8073875841ce4a8e269d5e133ec975dde2e2cd6f01b4bee0",
+          "MainWindow.refresh_operator_overview": "c8a78860b986c70e77f1206af415ea721a1e91e5ba28e588b084c176efd50abc",
+          "MainWindow.select_operator": "cdf28f73e1633b6f9bb9e76ba837f133e8ce47fde48c06f7e8967de6c78bfb0e",
+          "MainWindow.update_enemy_context": "97ee679c302eef92dbbce9bfed3d9368c77da20500d99ed19254236214c569bf",
+          "MainWindow.current_operator_state": "b659b854a03f783a92e4cb5b35854305c5e424201c4c3d3a19b0fe9b2ce17bfa",
+          "MainWindow.account_training_status": "0b0881488351fdf0ed46808e0d3ab5d051acd7fc758648be3e40b505ced995e7",
+          "MainWindow.training_conditions": "0fb52b33607fb6be77dc28e0f9762993d1e176c7f30c0a49efa5561cc81e069b",
+          "MainWindow.skill_rank_value": "a12bb4a5502935eccde77f01e633be761393cc606778c6f1085fbe3cdbde0226",
+          "MainWindow.update_operator": "1d0a3e871b9ce5edd8c4f8aa8e7808927c5ec0b997976680d9add8b01bc00222",
+          "MainWindow.level_changed": "f3923d99180f1914adeb010b8653e08d4981f16ce9c80abc200b7ebb82f25cc6",
+          "MainWindow.skill_changed": "f741ef385ba9766bb503be254901ed8b3ba44306ab0e9cb15cb860d6cf1baf79",
+          "MainWindow.apply_operator_observation": "ca1bd47acf0b6c3f9d4cf1b74a7b601866c8bd38658b208269098d8261bb209e",
+          "MainWindow.show_observed_operator": "cfbf650a7ffae8ab814d838102ad873668af623ced463d169889bd00bbaf0742",
+          "MainWindow.apply_run_observation": "854ea9f69c43324d2d63c41fe9f369361eb1ad22a554563f00d32807ec9e62bc",
+          "MainWindow.sync_run_config": "733435c4986250f3e4e260a279630e717819e42cc6c83dafa49050824b787b33",
+          "MainWindow.sync_run_relics": "3e78dcd223ed1ee6516057c45a1ef9916ceaa281f0377c094522f40a7bec8067",
+          "MainWindow.reset_run": "16bfa8c5f959d85f63108f0c34413cf42d26c8303ba4a973ba28532f8a7ffcda",
+          "MainWindow.update_base_attack": "1f16c58f8f6281673f485ef661c693c90bdea1efa98398937ecc1fecd03dbc43",
+          "MainWindow.update_skill_options": "97cd847b9d489d132810cf4a59f710d0c23be0511929032ce8fffbf3b533bc3f",
+          "MainWindow.filter_relics": "1db4e4cb783f850f3209ca938b8f3f504a11eecdabcd0f78c7ee9dbd5db6ebd2",
+          "MainWindow.calculate": "10f92ca0e4c408fdcc42b7a8f83c7c5275eee80fc46a4e72d4eb5eb43660a701",
+          "MainWindow.sync_animation_references": "f6e210601f1195dbe578e630963c2f63db581666492f5cdb57cf60da24f4c44c",
+          "MainWindow.sync_target_buffs": "6181d391d7ea4960470ae3f445f226cf99cbaf9c1f815fcb36a5e4db20063f37",
+          "MainWindow.render_damage": "c5cef9036d5a639d6d141951077db928ad44947df9d7e4bcd75ada53748650f9",
+          "MainWindow.show_damage_text": "2d48ed03cab17d7bbf51ffd7807011c59a75c9aea8576b91c05265976203183d",
+          "MainWindow.make_chat_tab": "c27214c4f4fa1463b663a4b64558c2eda4c962ec316ad5efb655bea534a9104d",
+          "MainWindow.chat_mode_changed": "d38115be67098de3647a865989f464aab56ab86d91f22b50848ba234d32c0b5f",
+          "MainWindow.desktop_request": "037dbc06666f9efaaf8a5b08f5ecad8cd4ed651ace0d9f06ce38bcf141d31ab3",
+          "MainWindow.desktop_request.work": "9ba40ed13397bb3dafccd4cbebf1c2dafa85ec03b805d437496a3166ea055865",
+          "MainWindow.bind_desktop": "1583786a1b08bdfb4191ec4191ebd9623d4f4ea451c0632071a1e3d38007d6ad",
+          "MainWindow.desktop_state_received": "8aa2281206150d35de30fc844934a22b4c8a7f70b0a98daa45d6918e1eadb61d",
+          "MainWindow.desktop_context": "5beb21cf8fdd5155075b74632d56171b3e25319b76fcb6fa98d942290306c4a4",
+          "MainWindow.save_settings": "eadf605cc582a35772f085852ef7990dc9fab572b59a16c89dd46a5872e744d9",
+          "MainWindow.load_settings": "5140b85d85ba919ea705a17ce6f841359d94fa197124ac68325b6d4c9e1ccc4b",
+          "MainWindow.send_chat": "7d319fa62e6b3cc34610169b04a7cdeb05d6c8f0eaf1cfed865491442e3ecb07",
+          "MainWindow.send_chat.work": "8b361a463bdb3a3b973d9adf33547d8e3cd2cfa7126111250b28bc6fd35d8eb8",
+          "MainWindow.chat_chunk": "a37d507a97c6ae441200fb15006fe987c825d7bafe66152fefd1967fe3877bfa",
+          "MainWindow.chat_finished": "b381e3fe72a35476bae2f3665b2204d561605fbb3cba8cb1055199763291efa5",
+          "MainWindow.cancel_chat": "3547259a5c820caaf48f4c0ac7f78f3987db1fdd16d96e4d69f7db025817fb6c",
+          "MainWindow.clear_chat": "52185ae45ed2929fb0367ef13ac5edaac93f72e85296e904e020334d460de3ca",
+          "MainWindow.show_error": "50ba8a9bdd2c0d31d7847d78e5cb98c459958bae91f10ae181d40e17b4b6b813",
+          "MainWindow.closeEvent": "cefc3acd2b2bccb229acd8811852a540498b8fd52d68f40a2208f0d50837bdb0",
+          "main": "492d9357f0d60a4e53ddd2ca68effb9ff5cb33d8437db6f6e390ad5ba41fdf58"
+        }
+      }
+    },
+    {
+      "id": "S07",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Complete candidate syntax and test registry",
+      "observation": "All four candidate Python files parse as AST without import or execution. The existing registry gains exactly one unique condition-cultivation test module; all 16 meaningful boundary test methods are source-read, with no test pass inferred.",
+      "evidence": {
+        "test_methods_written": [
+          "test_nine_fields_keep_existing_owner_skill_and_named_consumer_surface",
+          "test_placeholders_and_unrelated_owner_never_call_selector",
+          "test_orchid_E0_power_and_E1_nearby_have_distinct_qualification",
+          "test_base_potential_transition_uses_last_actual_candidate_coordinates",
+          "test_all_eight_modules_three_stages_before_gate_preserve_base_source",
+          "test_named_module_overlay_exact_part_stage_and_potential_not_neighbor",
+          "test_mizuki_other_modules_never_become_second_talent_hidden_source",
+          "test_zero_selected_value_remains_eligible_without_inventing_raw_identity",
+          "test_type_only_or_signed_zero_mutation_cannot_claim_exact_original_source",
+          "test_ines_count_and_hsgma_ratio_keep_independent_input_semantics",
+          "test_effective_preview_missing_fields_and_simulated_level_are_labelled",
+          "test_merged_run_and_account_view_retains_per_field_reference_provenance",
+          "test_rows_detached_from_caller_catalog_raw_source_and_one_another",
+          "test_opaque_state_and_unrelated_caller_values_are_never_copied",
+          "test_unavailable_presentation_source_does_not_rewrite_original_error",
+          "test_plain_UI_text_keeps_clock_attachment_and_account_unlock_unknown"
+        ],
+        "test_methods_executed": 0,
+        "registry_insertion": "    \"tests.test_condition_cultivation\",\n"
+      }
+    },
+    {
+      "id": "S08",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Actual pinned originals and producer catalog",
+      "observation": "Rehashed all four actual original tables and read their complete JSON, plus current golden catalog and literal OPTIONS. Source commit, table identities, URLs, bytes and hashes match the candidate provenance; no network fetch, source module import or mechanism invention.",
+      "evidence": {
+        "originals": [
+          {
+            "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+            "bytes": 14975251,
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+          },
+          {
+            "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+            "bytes": 11447929,
+            "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+          },
+          {
+            "path": "/workspace/.continuation/p2-after-070-source-audit/originals/uniequip_table.json",
+            "bytes": 3365012,
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9"
+          },
+          {
+            "path": "/workspace/.continuation/p2-after-070-source-audit/originals/battle_equip_table.json",
+            "bytes": 5710707,
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460"
+          }
+        ],
+        "catalog": {
+          "path": "/workspace/rougezhushou/rouge/data/catalog.json",
+          "bytes": 1624372,
+          "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+        },
+        "OPTIONS": {
+          "path": "/workspace/rougezhushou/rouge/operator_options.py",
+          "bytes": 5328,
+          "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83"
+        }
+      }
+    },
+    {
+      "id": "S09",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Complete typed and ordered original data retention",
+      "observation": "All six complete raw character talent-group lists, eight full raw module metadata records and all 24 complete raw phase lists equal their exact actual originals by strict serialized JSON. Hidden, negative-index, null, zero, string sidecars and dictionary/list order remain in the data; no nonzero-value filter.",
+      "evidence": {
+        "data": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/rouge/data/condition-cultivation-source.json",
+          "bytes": 193634,
+          "sha256": "7f1424565b2c85aa1755bebc0de9680fe394db424af0242c340f2063ec0c7c43"
+        },
+        "operators": 6,
+        "named_groups": 7,
+        "base_candidates": 20,
+        "modules": 8,
+        "phases": 24,
+        "module_gates": [
+          {
+            "owner": "char_2025_shu",
+            "module_id": "uniequip_002_shu",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_298_susuro",
+            "module_id": "uniequip_002_susuro",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 40
+          },
+          {
+            "owner": "char_1048_orchd2",
+            "module_id": "uniequip_002_orchd2",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_4087_ines",
+            "module_id": "uniequip_002_ines",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_437_mizuki",
+            "module_id": "uniequip_002_mizuki",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_437_mizuki",
+            "module_id": "uniequip_003_mizuki",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_437_mizuki",
+            "module_id": "uniequip_004_mizuki",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          },
+          {
+            "owner": "char_1044_hsgma2",
+            "module_id": "uniequip_002_hsgma2",
+            "phases": 3,
+            "unlock_elite": 2,
+            "unlock_level": 60
+          }
+        ]
+      }
+    },
+    {
+      "id": "S10",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Nine exact existing field owners and actual named consumers",
+      "observation": "Data fields retain the exact existing OPTIONS order, labels and skill surface; seven fixed named talent groups and all 20 normalized catalog base candidates match their pinned raw projections. First original gates are derived from actual first candidates, not global elite assumptions.",
+      "evidence": {
+        "field_records": [
+          {
+            "owner": "char_2025_shu",
+            "field": "three_professions",
+            "talent_index": 1,
+            "talent_name": "天有四时",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 2,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_2025_shu",
+            "field": "three_same_profession",
+            "talent_index": 1,
+            "talent_name": "天有四时",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 2,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_2025_shu",
+            "field": "four_sui",
+            "talent_index": 1,
+            "talent_name": "天有四时",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 2,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_298_susuro",
+            "field": "low_cost_healing_target",
+            "talent_index": 0,
+            "talent_name": "微创治疗",
+            "skills": [
+              1,
+              2
+            ],
+            "first_original_gate": {
+              "elite": 1,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_1048_orchd2",
+            "field": "power_coating",
+            "talent_index": 0,
+            "talent_name": "强击瓶专家",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 0,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_1048_orchd2",
+            "field": "near_previous_deployment",
+            "talent_index": 1,
+            "talent_name": "翔虫机动",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 1,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_4087_ines",
+            "field": "stolen_enemy_count",
+            "talent_index": 0,
+            "talent_name": "影织",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 1,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_437_mizuki",
+            "field": "enemy_below_half",
+            "talent_index": 1,
+            "talent_name": "反移情",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 2,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          },
+          {
+            "owner": "char_1044_hsgma2",
+            "field": "current_hp_ratio",
+            "talent_index": 1,
+            "talent_name": "鬼之架势",
+            "skills": [
+              1,
+              2,
+              3
+            ],
+            "first_original_gate": {
+              "elite": 2,
+              "level": 1,
+              "potential_one_based": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "S11",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Native JSON scalar types, float representation and order",
+      "observation": "Source comparator checks exact Python type before equality, ordered dictionary keys and list positions, then float.hex. All three base projection, selected module projection and full original module candidate comparisons use it. Bool False/int0/float0.0/-0.0 cannot conflate; reviewer did not call the comparator or any target codec.",
+      "evidence": {
+        "helper_function": "_typed_equal",
+        "line": 43,
+        "function_sha256": "edc8baa825dfd86510f7a5d575d71f3328ff060e5360e1892c7062f466bdb14c",
+        "typed_source_comparison_sites": 3
+      }
+    },
+    {
+      "id": "S12",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Base and module provenance use actual producer identities",
+      "observation": "Base lookup requires selected object identity at a fixed talent index and exact raw-to-catalog projection. Module lookup first maps returned parts by container identity to its real stage, then traverses parts/candidates in order, skips tokens and negative indices, retains last eligible per index and sequential overwrites. Final selected and complete raw candidate must both match; mismatch becomes missing source, without changing selection.",
+      "evidence": {
+        "lookup_line": 57,
+        "function_sha256": "b57a2077bf8b44bf7f61cde2d1dadcc5fe2caa4dfb77f2057ae21eac4de17729"
+      }
+    },
+    {
+      "id": "S13",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Existing selector predicate and module gate retained",
+      "observation": "Presentation source locator copies the original selector phase/level/potential predicate. Actual selected_talents determines eligibility and returned parts; therefore a module below its own gate retains a selected base talent and does not become unavailable. No source locator supplies a new numeric predicate.",
+      "evidence": {
+        "gold_selector": {
+          "path": "/workspace/rougezhushou/rouge/operator_engine.py",
+          "bytes": 156626,
+          "sha256": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50"
+        },
+        "presentation_eligible_function_sha256": "211c1053573b69138e035a2dcafe9af23e3ac00a3ebed40410309850602c0c9a"
+      }
+    },
+    {
+      "id": "S14",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Zero selected parameters and natural/exception branches",
+      "observation": "Eligibility is based on one actual selected named talent, not any parameter magnitude or raw-source availability. A selected zero-valued candidate remains met. Placeholder/unrelated/no-skill/no-applicable-definition paths return before selector calls; supported presentation selector errors produce unavailable rows without rewriting the caller or original numerical method/error path.",
+      "evidence": {
+        "function": "explanations",
+        "line": 129,
+        "function_sha256": "7d5c3b1381b8cfdd9fe17f3cedcea6656d4142b22eb777adb1e9f7f346310180"
+      }
+    },
+    {
+      "id": "S15",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Existing per-field run/account/preview provenance",
+      "observation": "Helper reads the already merged public state and only named cultivation keys. Run-confirmed fields, present account reference fields, absent preview fields and manual level override are separately labelled. Existing training_conditions/current_operator_state and precedence are unchanged; unknown/private/caller history is not copied.",
+      "evidence": {
+        "provenance_sha256": "207f4c1a2819b2c52e6fa38f580050f7e7a267466407b4d4f9d1a5320e3f34d8"
+      }
+    },
+    {
+      "id": "S16",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Safe actual UI construction and current input reads",
+      "observation": "New explanation method guards early construction before the row exists, then owner/skill/profile placeholders before training or selector reads. Actual UI passes existing effective training and public merged state, reads bool/numeric widget values without writes, clears the new row for unrelated contexts and changes only its own QLabel/rows plus applicable tooltips.",
+      "evidence": {
+        "line": 1026,
+        "function_sha256": "eacfbda2ba19b78139fe0b9928950f7f635f8f8cb45d645ce076b1a8baaba713",
+        "calculate_calls": 0
+      }
+    },
+    {
+      "id": "S17",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Nine extra presentation listeners preserve existing numeric signals",
+      "observation": "All old option setup and calculate listeners remain byte-exact. Exactly nine owner+field widgets receive an additional listener after the new row is fully constructed; each reads the current owner/skill and refreshes only presentation. No late-bound owner/key is used by the lambda. Original automatic numerical calls retain their existing listener and method.",
+      "evidence": {
+        "actual_source_target_widgets": 9,
+        "insertion_sha256": "cda8e6a4780508761345c62559d47174893a48714fb317c614b1805e8990653b"
+      }
+    },
+    {
+      "id": "S18",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Owner, skill, cultivation, module and nine value refresh ordering",
+      "observation": "The existing update_operator, observation flows, level_changed and skill_changed already call update_skill_options; the new refresh is inserted after existing owner/skill visibility and before unchanged calculation. Existing cultivation/state updates therefore refresh explanations, and nine extra presentation slots close the earlier declared-value stale-text source gap.",
+      "evidence": {
+        "changed_existing_refresh_method": "update_skill_options",
+        "approved_insertion_bytes": 66,
+        "original_training_refresh_methods_exact": true
+      }
+    },
+    {
+      "id": "S19",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Actual line breaks, clear named field text and plain UI source scope",
+      "observation": "AST Constant.value confirms actual LF characters in formatter and double-LF QLabel join, not visible backslash-n. Text names each condition/talent, current declared input and per-field cultivation source. No raw markup/hash/URL is rendered; account task unlock, actual trigger and native attachment remain unverified.",
+      "evidence": {
+        "formatter_actual_newline_constants": [
+          {
+            "line": 211,
+            "repr": "'。\\n'",
+            "unicode_codepoints": [
+              12290,
+              10
+            ]
+          },
+          {
+            "line": 211,
+            "repr": "'\\n培养来源：'",
+            "unicode_codepoints": [
+              10,
+              22521
+            ]
+          }
+        ],
+        "app_join_repr": "'\\n\\n'",
+        "withdrawn_initial_display_escaping_suspicion": true,
+        "author_source_failure_or_runtime_failure": false
+      }
+    },
+    {
+      "id": "S20",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Specific mechanisms remain correctly bounded",
+      "observation": "Source notes retain Orchd E0 power versus E1 nearby and non-normal arrow scope, Ines count parsing even without own selected multiplier, Hsgma independent ratio parsing/reference and existing modeled keys, Mizuki second named talent distinct from hidden first-talent attachment, Shu unresolved SP clocks. No blanket hide/disable, consumer invention or new arithmetic.",
+      "evidence": {
+        "scope_notes": [
+          {
+            "owner": "char_2025_shu",
+            "field": "three_professions",
+            "modeled_parameter_keys": [
+              "max_hp"
+            ],
+            "scope_note": "场上职业组成由当前条件声明；实际在场情况未核验。"
+          },
+          {
+            "owner": "char_2025_shu",
+            "field": "three_same_profession",
+            "modeled_parameter_keys": [
+              "attack_speed"
+            ],
+            "scope_note": "同职业人数由当前条件声明；实际在场情况未核验。"
+          },
+          {
+            "owner": "char_2025_shu",
+            "field": "four_sui",
+            "modeled_parameter_keys": [
+              "atk",
+              "interval",
+              "sp"
+            ],
+            "scope_note": "编队成员由当前条件声明；周期技力的首跳、重置和锁技得点仍未核验。"
+          },
+          {
+            "owner": "char_298_susuro",
+            "field": "low_cost_healing_target",
+            "modeled_parameter_keys": [
+              "heal_scale"
+            ],
+            "scope_note": "受疗者初始费用由当前条件声明；实际受疗者获取尚未核验。"
+          },
+          {
+            "owner": "char_1048_orchd2",
+            "field": "power_coating",
+            "modeled_parameter_keys": [
+              "power_attack_scale"
+            ],
+            "scope_note": "只解释已有技能箭矢路径，普通与蓄力攻击不使用强击瓶因子；首轮50次逐箭覆盖及消耗未核验。"
+          },
+          {
+            "owner": "char_1048_orchd2",
+            "field": "near_previous_deployment",
+            "modeled_parameter_keys": [
+              "atk"
+            ],
+            "scope_note": "部署地点与30秒覆盖由当前条件声明；实际部署时钟尚未核验。"
+          },
+          {
+            "owner": "char_4087_ines",
+            "field": "stolen_enemy_count",
+            "modeled_parameter_keys": [
+              "steal_atk"
+            ],
+            "scope_note": "人数仍按原规则解析和校验；实际敌人偷取、存活及持续过程未核验。"
+          },
+          {
+            "owner": "char_437_mizuki",
+            "field": "enemy_below_half",
+            "modeled_parameter_keys": [
+              "atk"
+            ],
+            "scope_note": "只解释第二天赋反移情；第一天赋的模组隐藏能力附着边界仍未核验。"
+          },
+          {
+            "owner": "char_1044_hsgma2",
+            "field": "current_hp_ratio",
+            "modeled_parameter_keys": [
+              "min_hp_ratio",
+              "min_atk",
+              "min_magic_resistance"
+            ],
+            "scope_note": "生命比例仍按原规则解析，可供独立条件资料使用；自身曲线沿既有计算，原件其它条目不因此新增数值。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "S21",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "No new public report/native/numerical or persistence contract",
+      "observation": "Candidate adds no result/report public keys, report sections or three-text insertions. Helper contains no numerical API, write/save, run/account mutation or network call; new UI selector use is presentation only. Full native/API/report/text invariance remains a required later runtime comparison, not a source proof of target execution.",
+      "evidence": {
+        "added_report_keys": [],
+        "added_sections": [],
+        "added_text_insertions": [],
+        "runtime_native_equality_claim": false
+      }
+    },
+    {
+      "id": "S22",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Written boundary tests match actual source facts",
+      "observation": "Source-read 16 tests cover all nine owner/skill surfaces, placeholders, Orchd E0/E1, Susuro P4/P5, all 8 modules x 3 stages before gate, exact overlay part/index/candidate order, Mizuki other-module distinction, selected zero values, False/int0/-0.0 source mismatch, independent Ines/Hsgma input semantics, run/account/manual preview, detached rows, opaque state, supported selector exceptions and explicit unknowns. Test methods are not executed and declaration assertions are not substituted for native equivalence.",
+      "evidence": {
+        "methods": [
+          "test_nine_fields_keep_existing_owner_skill_and_named_consumer_surface",
+          "test_placeholders_and_unrelated_owner_never_call_selector",
+          "test_orchid_E0_power_and_E1_nearby_have_distinct_qualification",
+          "test_base_potential_transition_uses_last_actual_candidate_coordinates",
+          "test_all_eight_modules_three_stages_before_gate_preserve_base_source",
+          "test_named_module_overlay_exact_part_stage_and_potential_not_neighbor",
+          "test_mizuki_other_modules_never_become_second_talent_hidden_source",
+          "test_zero_selected_value_remains_eligible_without_inventing_raw_identity",
+          "test_type_only_or_signed_zero_mutation_cannot_claim_exact_original_source",
+          "test_ines_count_and_hsgma_ratio_keep_independent_input_semantics",
+          "test_effective_preview_missing_fields_and_simulated_level_are_labelled",
+          "test_merged_run_and_account_view_retains_per_field_reference_provenance",
+          "test_rows_detached_from_caller_catalog_raw_source_and_one_another",
+          "test_opaque_state_and_unrelated_caller_values_are_never_copied",
+          "test_unavailable_presentation_source_does_not_rewrite_original_error",
+          "test_plain_UI_text_keeps_clock_attachment_and_account_unlock_unknown"
+        ],
+        "test_runtime_pass": false,
+        "later_required_full_native_three_text_and_UI_counts": true
+      }
+    },
+    {
+      "id": "S23",
+      "status": "PASS_SOURCE_ONLY",
+      "title": "Concrete later validation remains pending",
+      "observation": "Plan requires actual isolated source tests, full typed/aliased gold API/native/report/all-three-text pairs, relevant regressions, real-window construction/placeholders/nine value refreshes/cultivation provenance and durable state. All observations remain null; root must bind actual full095 and commit/push before application. This source review grants neither runtime PASS nor section completion.",
+      "evidence": {
+        "acceptance_plan": {
+          "path": "/workspace/.continuation/p2-condition096-candidate-v1/runtime-acceptance-plan096.json",
+          "bytes": 3903,
+          "sha256": "9b24185aee93d38be12457761c9acedf2ad9293a31f12a78bd7e0604fcc00720"
+        }
+      }
+    }
+  ],
+  "source_check_count": 23,
+  "source_checks_passed": 23,
+  "source_checks_blocked": 0,
+  "blocking_findings": [],
+  "function_source_bindings": [
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "_source_data",
+      "line": 26,
+      "end_line": 28,
+      "source_sha256": "5928172e4309b63f9f3fd40d3dc739805607ce353ef794793a94da6a8bd2cefb"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "_eligible",
+      "line": 31,
+      "end_line": 40,
+      "source_sha256": "211c1053573b69138e035a2dcafe9af23e3ac00a3ebed40410309850602c0c9a"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "_typed_equal",
+      "line": 43,
+      "end_line": 54,
+      "source_sha256": "edc8baa825dfd86510f7a5d575d71f3328ff060e5360e1892c7062f466bdb14c"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "_original_source",
+      "line": 57,
+      "end_line": 114,
+      "source_sha256": "b57a2077bf8b44bf7f61cde2d1dadcc5fe2caa4dfb77f2057ae21eac4de17729"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "_provenance",
+      "line": 117,
+      "end_line": 126,
+      "source_sha256": "207f4c1a2819b2c52e6fa38f580050f7e7a267466407b4d4f9d1a5320e3f34d8"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "explanations",
+      "line": 129,
+      "end_line": 183,
+      "source_sha256": "7d5c3b1381b8cfdd9fe17f3cedcea6656d4142b22eb777adb1e9f7f346310180"
+    },
+    {
+      "file": "rouge/condition_cultivation.py",
+      "function": "format_explanation",
+      "line": 186,
+      "end_line": 212,
+      "source_sha256": "6c73c156dbaa58979808b042f837c397e8af941fa847ca021a9017e73bb2b9b1"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "make_damage_tab",
+      "line": 514,
+      "end_line": 753,
+      "source_sha256": "a6659278c07a8141a7a3bffd2864cc79445de29a5a3392355fb56edd592111f7"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "update_skill_options",
+      "line": 973,
+      "end_line": 1024,
+      "source_sha256": "1e03bed4eb21d903c6649eeaab89e2faab34c1bfcd4f8e9a5d1cf0da320a6b2b"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "update_condition_cultivation_explanations",
+      "line": 1026,
+      "end_line": 1046,
+      "source_sha256": "eacfbda2ba19b78139fe0b9928950f7f635f8f8cb45d645ce076b1a8baaba713"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "calculate",
+      "line": 1053,
+      "end_line": 1206,
+      "source_sha256": "10f92ca0e4c408fdcc42b7a8f83c7c5275eee80fc46a4e72d4eb5eb43660a701"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "training_conditions",
+      "line": 817,
+      "end_line": 823,
+      "source_sha256": "0fb52b33607fb6be77dc28e0f9762993d1e176c7f30c0a49efa5561cc81e069b"
+    },
+    {
+      "file": "rouge/app.py",
+      "function": "current_operator_state",
+      "line": 799,
+      "end_line": 808,
+      "source_sha256": "b659b854a03f783a92e4cb5b35854305c5e424201c4c3d3a19b0fe9b2ce17bfa"
+    }
+  ],
+  "reviewer_source_diagnostics_preserved": [
+    {
+      "kind": "READ_ONLY_SEARCH_PATH_ERROR",
+      "tool_primary_exit_code": 2,
+      "missing_path": "/workspace/rougezhushou/rouge/operator_profiles.py",
+      "resolved_fact": "operator_profiles is defined in guarded rouge/catalog.py; actual producer file read. No candidate execution or author failure."
+    },
+    {
+      "kind": "WITHDRAWN_INITIAL_JSON_DISPLAY_ESCAPING_SUSPICION",
+      "initial_suspicion": "Tool output JSON escaping made actual LF source strings appear as double-backslash strings.",
+      "correction": "Independent AST Constant.value and ord confirm LF (10) and two LF (10,10); no literal backslash-n in formatter. Root was informed before this gate. Not an author SOURCE failure or runtime attempt."
+    }
+  ],
+  "review_execution": {
+    "stdlib_AST_JSON_sha256_bytes_only": true,
+    "candidate_helpers_selector_codecs_project_imports": 0,
+    "numerical_APIs_tests_Qt_Wine_game_chat": 0,
+    "Git_network_private_state_reads": 0,
+    "tracked_repository_writes": 0,
+    "writes": "Only this fresh independent external review directory."
+  },
+  "actual_full095_validation_receipt": null,
+  "actual_post_full095_commit_push": null,
+  "actual_candidate_runtime_executions": 0,
+  "completed_section_increment": 0,
+  "actual096_completed": false,
+  "required_later_validation": [
+    "Root actual full095 available validation and normal batch commit/push binding before any apply.",
+    "Actual 16 new tests and appropriate related/selected regressions.",
+    "Complete native caller/scenario/result types, float bits, key order, aliases, report objects and all three formatted texts byte-exact to gold, no stripping.",
+    "Real MainWindow constructor/placeholders/nine controls/cultivation and provenance/durable states with equal original numerical API counts and qualified extra presentation selector stacks."
+  ],
+  "limitations": [
+    "SOURCE-only gate does not establish candidate runtime success, native Windows/game behavior or unresolved mechanisms.",
+    "Standalone helper effective_training echoes the supplied scenario; actual UI supplies current training_conditions unchanged. No normalization or new numeric semantics are authorized.",
+    "Original UI/layout/widgets must still be physically observed during root window acceptance."
+  ],
+  "STOPWRITE": true
+}

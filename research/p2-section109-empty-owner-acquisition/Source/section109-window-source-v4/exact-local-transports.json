@@ -1,0 +1,29 @@
+{
+  "kind": "SECTION109_WINDOW_V4_EXACT_TRANSPORT",
+  "old_Gold_SourceSHA": "383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9",
+  "prior_v3SHA": "d2ada08dd3d1b8025fa5221499aec761be99bbd916c8feb5903b1d5a3815b719",
+  "newSHA": "eef3cb8b54f4c655b83dd73d00897675e7b69cf1e28ab79b55149a19c0a3c943",
+  "from_original_Gold_replacements": [
+    {
+      "before": "anchor='技能情况：'",
+      "after": "anchor='【伤害输出】'"
+    },
+    {
+      "before": "assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA",
+      "after": "assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA"
+    },
+    {
+      "before": "        assert result['total_damage'] is None  # Later independent clocks remain unbound.\n",
+      "after": "        if kind=='opening-medical':assert result['total_damage'] is None\n        else:\n            assert result['total_damage']==0 and skill['total_damage']==0\n            for key in ('phase_damage','cycle_damage','recharge_seconds','cycle_seconds'):assert skill[key] is None\n"
+    },
+    {
+      "before": "                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\n",
+      "after": "                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\n                if item['kind']=='opening-snow':assert type(caller['snow_entries']) is int and caller['snow_entries']==0\n"
+    }
+  ],
+  "strict_binding_block": "        # BEGIN_STRICT_OLD_GOLD_SOURCE\n        gold_source=(artifact/'window109-gold-source-v2.py').read_bytes()\n        assert sha(gold_source)=='383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9'\n        current_source=Path(__file__).read_bytes()\n        start_marker=b'        # BEGIN_STRICT_OLD_GOLD_SOURCE'+b'\\n'\n        end_marker=b'        # END_STRICT_OLD_GOLD_SOURCE'+b'\\n'\n        assert current_source.count(start_marker)==current_source.count(end_marker)==1\n        first=current_source.index(start_marker);last=current_source.index(end_marker)+len(end_marker)\n        without_binding=current_source[:first]+current_source[last:]\n        before=b\"anchor='\\xe6\\x8a\\x80\\xe8\\x83\\xbd\\xe6\\x83\\x85\\xe5\\x86\\xb5\\xef\\xbc\\x9a'\";after=b\"anchor='\\xe3\\x80\\x90\\xe4\\xbc\\xa4\\xe5\\xae\\xb3\\xe8\\xbe\\x93\\xe5\\x87\\xba\\xe3\\x80\\x91'\"\n        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)\n        before=b\"assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA\";after=b\"assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA\"\n        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)\n        before=b\"        assert result['total_damage'] is None  # Later independent clocks remain unbound.\\n\";after=b\"        if kind=='opening-medical':assert result['total_damage'] is None\\n        else:\\n            assert result['total_damage']==0 and skill['total_damage']==0\\n            for key in ('phase_damage','cycle_damage','recharge_seconds','cycle_seconds'):assert skill[key] is None\\n\"\n        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)\n        before=b\"                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\\n\";after=b\"                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\\n                if item['kind']=='opening-snow':assert type(caller['snow_entries']) is int and caller['snow_entries']==0\\n\"\n        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)\n        assert gold_source==without_binding\n        gold_source=(artifact/'window109-gold-source-v2.py').read_bytes()\n        # END_STRICT_OLD_GOLD_SOURCE\n",
+  "all_byte_inverse_to_Gold_v2": true,
+  "all_Gold_domain_and_purity_gates_unchanged": true,
+  "first_two_candidate_failures_preserved_by_Root": true,
+  "runtime_executed": false
+}

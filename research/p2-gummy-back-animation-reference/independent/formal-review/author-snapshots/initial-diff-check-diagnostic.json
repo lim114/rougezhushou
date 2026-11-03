@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "kind": "external draft whitespace-check preparation",
+  "failed_attempts": 1,
+  "command": "git diff --numstat && git diff --check && git status --short",
+  "observed_exit_code": 2,
+  "observed_stdout_was_truncated_by_tool": true,
+  "observed_numstat": {"rouge/data/original-animation-references.json": [196, 10], "tests/test_original_animation_048.py": [8, 4]},
+  "observed_warning_example": "rouge/data/original-animation-references.json:9802: trailing whitespace. (+ line ended in the retained CRLF)",
+  "cause": "The baseline JSON uses CRLF and the first plain Git whitespace check did not specify cr-at-eol; all newly serialized JSON lines retain the same CRLF format",
+  "resolution": "Use the precise Git whitespace check configuration including cr-at-eol; preserve the original JSON record bytes and line endings",
+  "source_or_test_bytes_changed_for_resolution": false,
+  "application_API_test_formatter_source_parser_download_calls": 0,
+  "product_failures": 0,
+  "same_problem_failure_count": 1
+}

@@ -1,0 +1,71 @@
+{
+  "status": "READONLY_CURRENT_SOURCE_AND_ARCHIVE_FACTS_NOT_RUNTIME_CERTIFICATION",
+  "baseline_sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9",
+  "explicit_producers": [
+    {
+      "function": "reset",
+      "line": 218,
+      "kind": "native-default-dict-key",
+      "value_AST": "Constant(value=False)",
+      "source_line": "            'inventory_verified':False,'inventory_confirmed_at':None,'relic_icon_memory':None,"
+    },
+    {
+      "function": "apply",
+      "line": 528,
+      "kind": "explicit-state-assignment",
+      "value_AST": "Constant(value=False)",
+      "source_excerpt": "state['inventory_verified']=False"
+    },
+    {
+      "function": "apply",
+      "line": 559,
+      "kind": "explicit-state-assignment",
+      "value_AST": "Constant(value=True)",
+      "source_excerpt": "state['inventory_verified']=True"
+    }
+  ],
+  "claim_consumers": [
+    {
+      "function": "apply",
+      "line": 499,
+      "source_line": "        prior_inventory_verified=state['inventory_verified']"
+    },
+    {
+      "function": "inventory_status",
+      "line": 712,
+      "source_line": "        complete=self.state['inventory_verified'] and count is not None and known+tools==count"
+    },
+    {
+      "function": "apply",
+      "line": 526,
+      "source_line": "            state['inventory_verified'] and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))"
+    }
+  ],
+  "opaque_acceptance": [
+    "RunState.__init__: saved JSON top-level operators/relics and consumed containers are checked, self.state.update(saved) installs raw inventory_verified without type check.",
+    "RunState.save: serializes state as original JSON without flag normalization; no new write is proposed just to qualify a view.",
+    "Missing inventory_verified remains reset False after state.update(saved)."
+  ],
+  "separate_fields_not_changed": [
+    "relic_count / count input (including existing float numeric contracts and bool input qualification)",
+    "resources timestamps (original accepted bool maintained)",
+    "effect_verified in config / char_buffs_complete (distinct existing contracts)",
+    "complete_bar / held / icon confirmed / other run fields"
+  ],
+  "current_direct_native_bool_producers_only": true,
+  "historical_public_JSON": "61 text-match JSON parsed;122 direct keys all bool; no skipped file. Not full historical/private/native schema evidence.",
+  "actual_root_original_controls": "copied exact7-case receipt: boolTrue/False, None, truthy str/list, int1/0 with count0; accepted/rawdiskunchanged/tmpabsent.",
+  "candidate_rule": "Only consuming confirmation eligibility: keep native JSON bool/int/float/None in original expressions; other types yield False without mutating raw field.",
+  "compatibility_controls": [
+    "boolTrue/False original native results",
+    "None remains native None",
+    "int1 only confirms when original count/recognized equality passes; int0 remains int0",
+    "numeric edge values retained as old-expression compatibility controls, not proven producer facts",
+    "relic_count total/expected types, values and float bits unchanged"
+  ],
+  "legitimate_evidence_upgrade": "Original full identified bar/current-or-valid-historical evidence or actual observed zero may write True; stale/cross-run/read-missing cannot synthesize that proof.",
+  "source_test_method_count": 15,
+  "actual_tests_run_by_author": 0,
+  "candidate_applied": false,
+  "completed_sections_added": 0
+}

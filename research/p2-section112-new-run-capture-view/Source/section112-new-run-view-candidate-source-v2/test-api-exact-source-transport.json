@@ -1,0 +1,15 @@
+{
+  "kind": "SECTION112_TEST_API_SOURCE_CORRECTION",
+  "STOPWRITE": true,
+  "from_packet": "/workspace/.continuation/section112-new-run-view-candidate-source-v1",
+  "to_packet": "/workspace/.continuation/section112-new-run-view-candidate-source-v2",
+  "existing_product_transports_unchanged": true,
+  "before_test_sha256": "d7708d01ab2f3ed7e50017b0e9e7813cb9fcccf356ea913ee5ede9038dadc53c",
+  "after_test_sha256": "6099be119bf15e35376980501cc011950545e1cb43eebd7772ffb0837beff6a8",
+  "before_lf": "        self.assertTrue(self.window.apply_operator_observation(account,self.stamp()))\n",
+  "after_lf": "        self.window.apply_operator_observation(account,self.stamp())\n        self.assertEqual(self.window.account_cache.records['mechanist']['fields'],account['fields'])\n        self.assertEqual(self.window.account_cache.records['mechanist']['skill_ranks'],account['skill_ranks'])\n        self.assertTrue((self.directory/'account.json').is_file())\n",
+  "occurrences": 1,
+  "whole_byte_inverse": true,
+  "real_API_contract": "MainWindow.apply_operator_observation returns None even after accepted AccountCache observation; call it then assert the original records and saved public account file, without changing the product return API.",
+  "runtime_executed": false
+}

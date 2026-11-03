@@ -1,0 +1,121 @@
+{
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "original_table": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+    "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+    "bytes": 11447929,
+    "sha256_matched": true
+  },
+  "selectors": [
+    "skill_table.skchr_gnosis_1.levels[9]",
+    "skill_table.skchr_gnosis_2.levels[9]",
+    "skill_table.skchr_gnosis_3.levels[9]"
+  ],
+  "skills": {
+    "skchr_gnosis_1": {
+      "name": "高速思考",
+      "rangeId": null,
+      "description": "下次攻击<@ba.vup>连续攻击两次</>，每次造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 4,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_gnosis_1",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 1.7,
+          "valueStr": null
+        }
+      ]
+    },
+    "skchr_gnosis_2": {
+      "name": "零度爆发",
+      "rangeId": null,
+      "description": "对范围内所有敌人造成<@ba.vup>{cold}</>秒<$ba.cold>寒冷</>和相当于攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害；<$ba.charged>蓄力</>：额外造成一层<$ba.cold>寒冷</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 2,
+        "spCost": 6,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_gnosis_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "cold",
+          "value": 4.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skchr_gnosis_3": {
+      "name": "失温症",
+      "rangeId": null,
+      "description": "攻击速度<@ba.vup>+{attack_speed}</>，同时攻击<@ba.vup>{max_target}</>个敌人；范围内所有敌人的<$ba.frozen>冻结</>延长至技能结束，且技能结束时对所有<$ba.frozen>冻结</>的敌人造成<@ba.vup>{atk_scale:0%}</>的法术伤害并结束<$ba.frozen>冻结</>；优先攻击未<$ba.frozen>冻结</>的单位",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 40,
+        "initSp": 25,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_gnosis_3",
+      "duration": 13.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 6.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack_speed",
+          "value": 130.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_target",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    }
+  },
+  "reused_resource_sha256": {
+    "rouge/data/original-animation-references.json": "28d9be1dd6fe6f91dc5773b1c685ea78fb0bb403d25c4f26d933adcfcbad3f9e",
+    "rouge/data/timing-profiles.json": "f65ef84219e6b7dae18d6b5ee1dadce304a616978336ea1edf83a7b05b73e324"
+  },
+  "facts": [
+    "S3 body attacks have scheduled impacts; only impacts within phase count as phase damage",
+    "S1 describes consecutive two attacks but does not prove a same-time event or relative gap",
+    "S3 description says terminal damage at skill end; target must exist to receive it"
+  ],
+  "unknowns": [
+    "S1 actual multi-event binding and scaling",
+    "S1 second-hit, end and unblock timing",
+    "S2 real instant impact binding",
+    "S3 exact end-frame order and freeze-removal damage order",
+    "Current hotfix equivalence"
+  ],
+  "fresh_native_binary_verification": false
+}

@@ -1,0 +1,42 @@
+{
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "sources": {
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    }
+  },
+  "original_sources_reused": true,
+  "primary_selector_payload": "rouge/data/p2-wang-resource-source.json",
+  "targeted_public_document_search": {
+    "url": "https://prts.wiki/w/%E6%9C%9B",
+    "revision_id": 435179,
+    "checked_date": "2026-10-13",
+    "page_sha256": "f9878af955c66d3cda9e330d9639c6b9cc430268f0cecc60de096081cf2e93a4",
+    "quote": "※通过天赋“额外部署的棋子”实为望自身发射的弹道 由此其不具有单位相关的性质（例如占据空位等），其存在形式可理解为 伊内丝 的影哨、 琴柳 扔出去的军旗等类似“抛射物” （后述简称为 跟子 ），与部署的 棋子 本身具有相同的响应与伤害能力，可参与连线机制 ※跟子除了和棋子一样可以可以生成在可部署的地块上之外，还可以生成在不存在角色类单位的 不可部署的地面地块 上，不过这不属于“部署”行为，可能不会受到各类部署限制效果影响；跟子所在格进行部署（或进行类似部署的行为）时，该跟子会随之消失。 ※触发第一天赋时，按照有敌人的>没有敌人的；不可部署地块>可部署地面地块>可部署高台地块的优先级生成；相同优先级时按棋子上>右>下>左的优先级生成 ",
+    "established": [
+      "天赋额外跟子是望发射的弹道，具有响应和伤害能力，不是卡片召唤物。",
+      "跟子不具有角色单位占位性质；不能与普通卡片手动棋子数量或部署位相加。"
+    ],
+    "not_established": [
+      "当前客户端脚本与热更新等价性。",
+      "跟子实际成功创建、消失及获取时钟。",
+      "S3弹药、超额创建、结束返还与模组特殊池。"
+    ]
+  },
+  "facts": [
+    "固定原始第一天赋attack@max_spawn_cnt：精0为0；精1潜1/潜3为8/9；精2潜1/潜3为9/10。",
+    "固定原始S1/S2各10级黑板cnt均2，中文明确主动立即获得两枚棋子。",
+    "库存与普通手动棋子上限复用已验证token-count-reference，不增加模组隐藏天赋或特殊池。"
+  ],
+  "boundaries": [
+    "只有调用方明确声明的各池改变才写入临时账本。",
+    "没有默认失败退款、损失返还、库存溢出丢弃、实际放置或技能获取时钟。",
+    "技能名义取得2不自动当实际入库2；实际入库需声明0–2或未知。",
+    "跟子上限仅是固定原始资料条件参考，含模组时完整额外池上限保持未知。"
+  ]
+}

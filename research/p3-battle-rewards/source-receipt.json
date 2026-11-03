@@ -1,0 +1,184 @@
+{
+  "title": "固定战斗宝箱条件数量与完整声明来源预览",
+  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "primary_sources": {
+    "roguelike_topic_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244
+    },
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929
+    }
+  },
+  "coverage": {
+    "fixed_stage_identities": 105,
+    "unique_fixed_levels": 68,
+    "predefined_reward_device_declarations": 263,
+    "main_queue_reward_references": 249,
+    "branch_reward_references": 62,
+    "random_groups_with_all_serialized_members": 62,
+    "entity_db_refs_are_initial_spawn_proof": false,
+    "actual_spawn_coverage_complete": false,
+    "complete_settlement_pool": false
+  },
+  "evidence": {
+    "primary_skill_descriptions": {
+      "trap_321_shnbox": "击破额外获得2源石锭",
+      "trap_322_shrbox": "反弹部分受到的伤害，击破额外获得5源石锭",
+      "trap_323_shsbox": "击破额外获得10源石锭",
+      "trap_320_shtlbx": "消耗50点部署费用开启，战斗后获得1个零件"
+    },
+    "exact_branch_binding": "Only explicit overrideSkillBlackboard branch_id equals serialized branch key; no routeIndex or alias suffix inference.",
+    "moving_level_boundary": "Current PRTS428232 only gives level0 +10/-10; level1/2 remain???; API never propagates0 to them.",
+    "declaration_position_boundary": "Exact raw predefined.position transformed by existing display_cell; branch source cell staysNone and calibrated image marker staysconditional.",
+    "same_name_boundary": "trap_321_shnbox device and enemy_2152_shezlc moving enemy have distinct IDs and distinct references."
+  },
+  "remaining_entry_review": {
+    "historical_unbound_scenes": 25,
+    "historical_unbound_choices": 57,
+    "new_entry_relationships_proven": 0,
+    "reason": "Pinned topic has no new sourceScene mapping; targeted current event-page fetch400. No NEXT/title/suffix reverse inference applied.",
+    "restart_conditions": "new pinned direct source pointer, explicit current variant text/choice attachment, or accessible event revision with reliable binding"
+  },
+  "online_observation": {
+    "observed_at": "2026-10-12",
+    "topic": {
+      "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+      "observed_revision": null,
+      "facts_lines": [
+        208,
+        216
+      ],
+      "whole_page_bytes_pinned": false,
+      "previous_independent_revision": "433770",
+      "revision_boundary": "207在线独立观察433770保留；本次主题页正文成功获取，页脚另次400，未再核出修订号。"
+    },
+    "devices": [
+      {
+        "entity_id": "trap_321_shnbox",
+        "url": "https://m.prts.wiki/w/恶笼草(装置)",
+        "observed_revision": "410407",
+        "facts_lines": [
+          60,
+          71
+        ],
+        "fact": "被击毁后的关卡结算源石锭参考2"
+      },
+      {
+        "entity_id": "trap_322_shrbox",
+        "url": "https://m.prts.wiki/w/畸变恶笼草",
+        "observed_revision": "410409",
+        "facts_lines": [
+          61,
+          72
+        ],
+        "fact": "被击毁后的关卡结算源石锭参考5"
+      },
+      {
+        "entity_id": "trap_323_shsbox",
+        "url": "https://m.prts.wiki/w/箱型恶笼草",
+        "observed_revision": "410406",
+        "facts_lines": [
+          60,
+          63,
+          74
+        ],
+        "fact": "受击后尝试召唤恶笼草，成功后装置无原因退场；召出实体击倒后奖励参考10，两者为不同可选目标"
+      }
+    ],
+    "moving_enemy": {
+      "url": "https://m.prts.wiki/w/恶笼草",
+      "observed_revision": "428232",
+      "facts_lines": [
+        101,
+        134,
+        167
+      ],
+      "fact": "级别0击倒后结算+10，到达路线终点后结算-10；级别1与2页面仍???",
+      "documented_level": 0,
+      "other_levels_quantity_verified": false
+    },
+    "failed_sources": [
+      {
+        "url": "https://m.prts.wiki/w/沉沦者的黑流树海/事件一览",
+        "result": "web fetch400 timeout，未作为当前完整目录来源"
+      },
+      {
+        "url": "https://m.prts.wiki/w/丰饶树冢",
+        "result": "web click400 timeout；费用50及1零件已有固定skill原文，主题独立观察未声称完整页面覆盖"
+      },
+      {
+        "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+        "result": "本次正文成功后页脚定位另次400，未将旧433770冒充本次页脚新核验。"
+      }
+    ],
+    "license_note": "PRTS其它内容CC BY-NC-SA 4.0，游戏原文版权另归鹰角及关联公司；固定原数据未冒称宽松许可。",
+    "probability_requested": false,
+    "probability_model_added": false
+  },
+  "license_note": "游戏文本版权归鹰角及关联公司。PRTS其它内容声明CC BY-NC-SA 4.0；原数据全库许可未另行核实。",
+  "verification": {
+    "platform": "Windows Python + Qt offscreen",
+    "actual_original_window_verified": true,
+    "necessary": {
+      "tests": 30,
+      "passed": 30,
+      "scope": [
+        "tests.test_battle_reward_planning",
+        "tests.test_node_catalog_view",
+        "tests.test_node_map_navigation.NodeMapNavigationTests",
+        "tests.test_supplemental_battle_view_142"
+      ],
+      "output": ".cache/batch209-400/p3/battle-rewards/necessary-tests.txt"
+    },
+    "expanded_scope": {
+      "tests": 49,
+      "passed": 48,
+      "failed": 1,
+      "additional_scope": "tests.test_readable_battle_047",
+      "failure": "047 test_numerical_and_reference_functions_are_identical_to_public_backup: root battle_preview.enemy_preview AST differs from047 backup; no candidate change to that file or function",
+      "not_removed_or_changed": true
+    },
+    "preparation_failures": [
+      {
+        "kind": "command_typo",
+        "detail": "first Python path used .venvenv; executable not launched; corrected to existing .venv"
+      },
+      {
+        "kind": "Qt fixture assertion",
+        "detail": "first10test run9passed1failed because QTextCursor.selectedText uses U+2029 for paragraph breaks while expected string sliced newline; fixture now compares actual prior selectedText, preservation requirement unchanged"
+      },
+      {
+        "kind": "pre-consumption UI review correction",
+        "detail": "reward detail early-return originally skipped adjacent enemy technical toggle; handler now refreshes both, assertion verifies exact currently displayed enemy ID, same30checks re-passed"
+      }
+    ],
+    "private_state_used": false,
+    "game_or_chat_actions": false,
+    "runtime_state_writes": false,
+    "generator_object_exact": true,
+    "window_receipt": "verification/section-209/window.json"
+  },
+  "baseline_hashes": {
+    "rouge/battle_view.py": "4b0ed251af237b701a5a18205cf4b140f8ab92c4cf3c5f37daf76893c7337834",
+    "rouge/node_catalog_view.py": "dabb29867ead765e48d91cebb0923f75b9038f1b500572718750a2eada69738a",
+    "rouge/battle_preview.py": "b5492daa1451cc29d0a76c88270ac0029e705f4682d74371988df4f8a30d6bd1"
+  },
+  "limits": [
+    "仅固定声明，不证明当前宝箱出现、开启、击倒或结算。",
+    "候选、相同位置和不同来源不相加为实际总奖励。",
+    "箱型装置退场和移动恶笼草击倒不是同一实体的重复奖励。",
+    "敌人资料引用不证明初始生成；动态脚本及完整结算池仍未知。",
+    "其它宝箱、特殊敌人、掉落池解锁/数量/分队与藏品共同修正及服务器脚本未完整恢复。",
+    "固定图标记为资料位置，不是新独立地标或当前战场定位验证。"
+  ],
+  "integrated_section": 209
+}

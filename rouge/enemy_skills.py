@@ -7,7 +7,9 @@ from pathlib import Path
 def skill_data():
     return json.loads((Path(__file__).with_name('data')/'enemy-skill-references.json').read_text(encoding='utf-8'))
 
-def enemy_skill_reference(stage_id,enemy_id,level):
+def enemy_skill_reference(stage_id,enemy_id,level,*,resource_plan=None,prefab_gate_plan=None):
+    if resource_plan is not None and prefab_gate_plan is not None:
+        raise ValueError('两种预算是同一基础池的替代声明，不能同时提交而重复解释为一次流程。')
     if isinstance(level,bool) or not isinstance(level,int) or level<0:
         raise ValueError('敌人引用等级需要非负整数。')
     data=skill_data();key=enemy_id+'@'+str(level)
@@ -15,13 +17,24 @@ def enemy_skill_reference(stage_id,enemy_id,level):
         raise ValueError('技能资料必须绑定本关卡的敌人和引用等级。')
     source=data['definitions'].get(enemy_id,{})
     definitions=[{'level':int(n),**copy.deepcopy(row)} for n,row in sorted(source.items(),key=lambda p:int(p[0])) if int(n)<=level]
-    return {'source':copy.deepcopy(data['source']),'requested_level':level,'definitions':definitions,
+    reference={'source':copy.deepcopy(data['source']),'requested_level':level,'definitions':definitions,
         'exact_requested_level_present':str(level) in source,
         'stage_overrides':copy.deepcopy(data['bindings'][stage_id][key]['stage_overrides']),
         'first_activation_seconds':None,'effective_skill_damage':None,'inheritance_resolved':False,
-        'limits':['按原始等级分别列出；未把null当空列表，也未猜测继承、覆盖或默认技能。',
+        'limits':['原始等级分别保留；已证的基包配置另列，未把null当空列表或猜测当前实战默认技能。',
             '冷却、初始冷却、技力和参数都是配置；不等于实际首发、轮次或技能伤害。',
             '图鉴触发、首领阶段、隐藏脚本和环境修正还需逐项核验；字段0不证明出生即发动。']}
+    from .enemy_reference_construction import source_path
+    reference['construction_reference']=source_path(data['bindings'][stage_id][key],reference['exact_requested_level_present'])
+    from .enemy_sp_reference import compiled_sp_reference
+    reference['compiled_sp_reference']=compiled_sp_reference(reference)
+    from .enemy_configuration import compiled_configuration
+    reference['compiled_configuration']=compiled_configuration(reference)
+    from .enemy_skill_resources import initial_skill_resource_reference
+    reference['initial_skill_resources']=initial_skill_resource_reference(reference,resource_plan)
+    from .enemy_prefab_skill_gates import prefab_skill_reference
+    reference['prefab_skill_gates']=prefab_skill_reference(stage_id,enemy_id,level,reference,prefab_gate_plan)
+    return reference
 
 def raw_text(value):
     if value is None:return '未知'
@@ -85,14 +98,53 @@ def enemy_skill_text(reference,technical=False):
         parts=([f'{configured}条招式配置'] if configured else [])+([f'{sp_records}组技力配置'] if sp_records else [])
         lines.append('未合并资料：'+('、'.join(parts) if parts else '仅包含待核验机制参数')+'。')
         if parameter_count:lines.append(f'另有{parameter_count}项未核验参数；原文可在技术资料中查看。')
-        lines.append('原始等级定义与本关卡覆盖未推定合并；配置不等于实际首发、轮次或技能伤害。')
+        lines.append('原始等级定义与本关卡覆盖分别保留，未推定合并为当前实战技能；配置不等于实际首发、轮次或技能伤害。')
     else:
         lines.append('未取得非空技能/技力配置；这不证明没有默认或隐藏技能。')
     if malformed:lines.append('部分参数格式未确认，保留原文并等待核验。')
     if any(d.get('skills')==[] for d in records):lines.append('部分技能字段为空，不证明没有默认/隐藏技能。')
-    if not reference['exact_requested_level_present']:
+    if reference.get('construction_reference',{}).get('mode')=='stage_constructor':
+        lines.append('本关卡采用独立构造，不使用数据库等级定义；资源标识与关卡别名分开。')
+    elif not reference['exact_requested_level_present']:
         lines.append('当前引用等级没有独立定义；低等级资料不能当作已确认的有效继承。')
+    compiled=reference.get('compiled_sp_reference')
+    if compiled and compiled['state']=='unavailable_exact_database_level':
+        lines.append('固定数据库缺少精确等级；默认/别名构建路径未核验，未借用较低等级技力配置。')
+    elif compiled and compiled['state']=='constructor_sp_baseline_unknown':
+        lines.append('未见非空技力覆盖，构造空指针分配基线尚未闭合；完整技力配置保持未知，不借用数据库。')
+    elif compiled and compiled['state']=='compiled_configuration_available':
+        lines.append('技力配置分项已按基包非空整记录规则解析；实际控制器、首次发动与完整回转仍未知。')
+    if compiled and compiled['initialization_reference']['state']=='conditional_baseline_available':
+        lines.append('默认或显式初始化来源已核验到基包条件分支；当前热更新和实际控制器仍未知。')
+    configuration=reference.get('compiled_configuration')
+    if configuration:
+        from .enemy_configuration import construction_text
+        lines.extend(['',construction_text(configuration,technical=technical)])
+    resources=reference.get('initial_skill_resources')
+    if resources:
+        from .enemy_skill_resources import skill_resource_text
+        content=skill_resource_text(resources,technical=technical)
+        if content:lines.extend(['',content])
+    prefab=reference.get('prefab_skill_gates')
+    if prefab:
+        from .enemy_prefab_skill_gates import prefab_skill_text
+        content=prefab_skill_text(prefab,technical=technical)
+        if content:lines.extend(['',content])
     if not technical:return '\n'.join(lines)
+    if compiled:
+        lines.extend(['','【基包技力配置继承参考】',
+            '解析状态：'+({'compiled_configuration_available':'有明确配置参考',
+                'no_explicit_sp_configuration':'未取得显式配置，不证明没有默认控制器',
+                'unavailable_exact_database_level':'精确等级不可用，构建路径待核验',
+                'unsupported_source_shape':'来源形状未覆盖，保留未知'}.get(compiled['state'],'未知')),
+            '按源配置解析的技力记录：'+raw_text(compiled['configuration']),
+            '继承来源链：'+raw_text(compiled['source_chain']),
+            '当前实际技力控制器、首次发动和完整回转：未知。'])
+        init=compiled['initialization_reference']
+        lines.extend(['【无热更新钩子的基包初始化参考】',
+            '初始化参考状态：'+raw_text(init['state'])+'；路径：'+raw_text(init['path']),
+            '条件成立时的字段赋值参考：'+raw_text(init['scalar_assignment_reference']),
+            *('• '+note for note in init['required_conditions'])])
     detail=[]
     for d in reference['definitions']:
         content=definition_text(d)

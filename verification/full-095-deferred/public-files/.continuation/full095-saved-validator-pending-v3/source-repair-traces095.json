@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "source_repair_version": 3,
+  "status": "SOURCE_ONLY_COMPLETE_S8_S10_STATIC_REJECTION_TRACES_NOT_EXECUTED",
+  "sealed_required_contract": {
+    "path": "/workspace/.continuation/full095-saved-validator-formal-source-review-v2/source-required-field-contract095.json",
+    "bytes": 11842,
+    "sha256": "f87ef979b6860f52281f48aa2279d1e9b7d9c4c2d9c71f8164f9d4d501958227"
+  },
+  "S9_previous_source_repair_preserved": true,
+  "traces": [
+    {
+      "id": "S8",
+      "mutation": "ordinary None self-selects raw schema and omits ordinary projection",
+      "source_rejection": "Explicit ordinary source role requires exactly three ordinary keys; raw admission exists only explicit current/historical durable account_bytes role.",
+      "executed": false
+    },
+    {
+      "id": "S8",
+      "mutation": "raw file_exists bool becomes int or byte_count int becomes float",
+      "source_rejection": "Exact source bool/integer checks plus ordered encoded_json projection equality reject coercion.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "required RunState.apply/AccountCache.observe/view caller group is absent",
+      "source_rejection": "All five source selectors require caller fields, ordinary wrappers, ordered actual inputs and exact unchanged boolean derived from native equality.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "generic returned snapshot/type is absent or wrong outcome",
+      "source_rejection": "Exact profile native vs fallback field set, supported returned native types and source-derived outcome including generic None+events distinction.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "MainWindow returns nonNone scalar with nonstring status",
+      "source_rejection": "Ordinary wrapper must be None or exact scenario/result dict and visible_status exact string.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "origin.function absent or case is wrong scalar type",
+      "source_rejection": "Mandatory entry metadata and exact origin keys/types with source-line equality.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "durable issues/account_bytes missing or account_bytes differs from account.json raw file",
+      "source_rejection": "Explicit current/historical seven-key capture schema; all ordinary dicts and source raw role required; account_bytes equals same filesystem account.json bytes without memory/disk assumption.",
+      "executed": false
+    },
+    {
+      "id": "S10",
+      "mutation": "UI/control/text/formatter metadata omitted from captures/checkpoints",
+      "source_rejection": "All nine UI keys and exact scalar/source values, full three text metadata and numeric formatter delta, exact before/auto/final fields; every intermediate row routed to role validators.",
+      "executed": false
+    }
+  ],
+  "tuple_JSON_projection_policy": "Native tuple stays native tuple; its JSON projection list is legal because full encoded_json comparison follows producer serialization.",
+  "manual_third_durable_snapshot_required": false,
+  "raw_API_return_equals_UI_postprocess_required": false,
+  "codec_or_helper_execution": 0,
+  "runtime_pass": false,
+  "actual_fullUI_saved_evidence_verified": false,
+  "completed_section_increment": 0
+}

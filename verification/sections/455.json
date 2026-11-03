@@ -1,0 +1,47 @@
+{
+  "section": 455,
+  "kind": "functional_section",
+  "title": "作战来源与完整事件在主窗双向跳转",
+  "new_capability": "从作战预览反查来源选项，再打开不期而遇或湖中仙女的完整对话、代价与后续；同一上级作战或事件直接返回原页，保留阅读。来源和完整事件的通用说明默认收起，选项列表随内容收缩，刷新并入标题行。",
+  "passed": true,
+  "passed_scope": "Exact map->event->configuration->stage->source-options->full-event navigation, encounter and lake routes, ancestor reuse, source cleanup and compact option layout.",
+  "limitations": "继续事件材料、其余作战工具、目录和完整工作区统一，首次页面高度、视频外观与识别覆盖/耗时；454组合测试退出异常继续保留。",
+  "unit_tests_run": 31,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/455-reverse-events/reverse-final3/results.json",
+      "process": "verification/sections/455-reverse-events/reverse-final3/process.json",
+      "tests_run": 23
+    },
+    {
+      "result": "verification/sections/455-reverse-events/standalone-final3/results.json",
+      "process": "verification/sections/455-reverse-events/standalone-final3/process.json",
+      "tests_run": 8
+    }
+  ],
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/455-reverse-events/native-final4/window.json",
+      "unique_checks": 55
+    }
+  },
+  "source_sha256": {
+    "rouge/current_battle_view.py": "79c82f287ae0245989d3086a1c69845dc5a344a31f4e739c03e0e375a6fe37bd",
+    "rouge/current_event_battles_view.py": "d170d204ef25a6dd0a4b1e7a6dd6edbe1cd17309ae7703e4866c710b1014aa7a",
+    "rouge/documented_event_flow_view.py": "a2719c6ace935e0fffbe57b0f178e707de14075468311b56c7639b0d6435929d",
+    "rouge/player_reference_links.py": "fc33e3eaa16c72ef56d9b2154bc797e4a242ba3bf341cd358d1ed828ee12f268",
+    "rouge/reference_copy.py": "0c3c6bed02ef11acb71e1f71630da713403c83a4de1e15b34ee64d114dd1105a",
+    "tests/test_current_event_battles_view_326.py": "ae283b17c164ddee58ea97d402bc6e338ac865d605d6e9902ec114f29e7726d7",
+    "tests/test_current_lake_view_328.py": "b61dcf99462ac6f168456f8f07777a53b1d367822f3739c9af130da373c554c3",
+    "tests/test_event_reader_layout_review.py": "a25db67ba64a8be2f47882f49e0880c5bf670831b33481514491bed816a8c507",
+    "tests/test_reference_copy_454.py": "9c79f1bf6212ebabc854302893506080bf0774307f1d92d453ea8f5bdd221f69",
+    "tests/test_reverse_events_455.py": "eda7375b108c05a968cf42fc6de612fa15d2c9fa16a2b1493fd0a3b18a1587f6"
+  },
+  "source_review": "verification/sections/455-reverse-events/source-review.json",
+  "actual_local_test_window": "verification/sections/455-reverse-events/live-window-final2/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T15:44:20.954317+00:00"
+}

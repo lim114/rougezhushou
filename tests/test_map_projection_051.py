@@ -166,7 +166,15 @@ class FixedGroundCandidateTests(unittest.TestCase):
             self.assertFalse(probe['accepted'])
             self.assertEqual(probe['pixel_tolerance'], 4)
             self.assertGreater(max(c['error_px'] for c in probe['checks']), 4)
-            self.assertIsNone(self.load(battle_data()['stages'][probe['input']['id']]))
+            projection = self.load(battle_data()['stages'][probe['input']['id']])
+            if projection is not None:
+                from rouge.fixed_landmark_mapping import FixedLandmarkReference
+                self.assertIsInstance(projection, FixedLandmarkReference)
+                self.assertEqual(projection.mapping_mode, 'direct_verified_centers')
+                self.assertFalse(projection.supports_segment_reference)
+                self.assertIsNone(projection.cell_at(256, 143))
+                self.assertIsNone(projection.project({'row': 0, 'col': 0}))
+                self.assertNotIn(probe['input']['id'], self.candidate['stages'])
         old_input = read(ROOT / '.cache/research/map-projection-049/calibration-input.json')
         for record in old_input['rejected_probes']:
             self.assertEqual(digest(ROOT / record['file']), record['sha256'])

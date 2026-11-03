@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "status": "PASS_STATIC_SUBREVIEW_ONLY",
+  "author_manifest_sha256": "cfedb0ab204f413d77fe695c614f6667df92886320abc23d5a6d99c9963ece73",
+  "actualroot90_commit": "2cbc45f03f99ed4f04b9c7e2612b58542f909168",
+  "changed_source_byte_checks": [
+    {
+      "path": "rouge/operator_engine.py",
+      "baseline_sha256": "d8091732fd0559c9ef49b45a8b0c906d61c2ab57469fc0afba4469e0ff977b7c",
+      "draft_sha256": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50",
+      "fixed_git_baseline_exact": true,
+      "forward_bytes_exact": true,
+      "inverse_bytes_exact": true
+    },
+    {
+      "path": "rouge/reporting.py",
+      "baseline_sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "draft_sha256": "b71dec77a7cb7ba88da7324982be6f4fd59c02ae8cd91bce44fe92f3546f5d01",
+      "fixed_git_baseline_exact": true,
+      "forward_bytes_exact": true,
+      "inverse_bytes_exact": true
+    }
+  ],
+  "unchanged_consumed_source_byte_checks": [
+    {
+      "path": "rouge/damage.py",
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09",
+      "both_trees_fixed_git_exact": true
+    },
+    {
+      "path": "rouge/estimate.py",
+      "sha256": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91",
+      "both_trees_fixed_git_exact": true
+    },
+    {
+      "path": "rouge/relics.py",
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "both_trees_fixed_git_exact": true
+    },
+    {
+      "path": "rouge/data/catalog.json",
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "both_trees_fixed_git_exact": true
+    }
+  ],
+  "static_findings": [
+    {
+      "finding": "Only two existing note sites change; no numeric field, schema, timeline, HPS, HP combination or regeneration multiplier calculation changes.",
+      "evidence": "product-draft.patch; bidirectional exact bytes above"
+    },
+    {
+      "finding": "Engine note is restricted to the existing Deepcolor branch, not normal and S1; earlier profile, rank, attributes, raw timing, token stats and count checks retain byte identity and order. The new numeric formatting consumes catalog S1 duration/rate floats, not a new caller input.",
+      "evidence": "damage.py:236-286; operator_engine.py:76-115,285-355; catalog Deepcolor S1 10 rank entries"
+    },
+    {
+      "finding": "The full plan is computed first. A shown plan uses the original min(nominal, window); equal or overlong windows can create two qualified strings where the old unqualified note was identical. Reverse-note comparison must preserve original list(dict.fromkeys(self.notes)) order/deduplication. This permitted note-count difference is not numeric-model growth.",
+      "evidence": "operator_engine.py:291-292,1304-1307,1545"
+    },
+    {
+      "finding": "Regeneration block admission remains regeneration present or Deepcolor S1. Added qualification is only Deepcolor S1; per-token/all-token rows still use the existing finisher multiplier. Report construction follows completed Combat calculation and existing finishers. No new prevalidation or error is introduced.",
+      "evidence": "reporting.py:199-213,251-257; damage.py:298-323; relics.py:419-425"
+    },
+    {
+      "finding": "Base nominal/window reference explicitly excludes the regeneration multiplier. Report rates explicitly include the adopted existing multiplier. Both qualifications keep actual presence, coverage, first/end ticks and actual total unknown; no native clock, lifetime, hotupdate or real-game certification is added.",
+      "evidence": "operator_engine.py:352-354; reporting.py:210-212; NOTE.md"
+    },
+    {
+      "finding": "Existing one-distinct-regeneration-factor handling is untouched; multiple-rose stacking policy is not completed or expanded by these wording changes.",
+      "evidence": "relics.py:419-421 fixed Git byte identity"
+    }
+  ],
+  "inventory_preparation_diagnostic": {
+    "first_rg_default_ignore_omitted_attribute_limits_display": true,
+    "initial_missing_dependency_suspicion": "RETRACTED_AFTER_FILE_FACT_CHECK",
+    "actual_both_tree_leaf_exists_regular_not_symlink": true,
+    "no_ignore_inventory_confirmed_both_paths": true,
+    "read_only_AST_relative_import_missing_names_both_trees": [],
+    "diagnostic_did_not_trigger_project_execution_or_package_mutation": true
+  },
+  "scope_limits": {
+    "all271_leaf_hash_audit": "PARENT_OWNS; not repeated here",
+    "saved_six_result_comparison": "PARENT_OWNS; not read or repeated here",
+    "source23_original_full_audit": "NOT_REPEATED",
+    "new_project_imports_API_helpers_tests_formatters_Qt_Wine_network": 0,
+    "tracked_mutations": 0,
+    "old389_or_full90_replays": 0,
+    "author_formatter_budget_description": "Three cases, one draft default format_report per case; no baseline formatter.",
+    "native_tick_lifetime_hotupdate_actual_total": "UNKNOWN; not certified"
+  }
+}

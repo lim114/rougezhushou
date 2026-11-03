@@ -1,0 +1,15 @@
+# 第260节后全量维护验收
+
+功能238–260已逐节提交及普通推送。本目录只记录260后的维护，不增加功能节数，261未启动。最终结论见summary.json；原245失败、三次完整窗口失败和初次新窗口脚本错误均留存。
+
+已应用修复：首次保存原子拒绝已有路径，手动新局将不可读原件无覆盖归档并保留中断恢复通知；地图浮点复验保留封存输出、原哈希/独立读数及4px门；236后旧查询数校正为21；真实CJK字体夹具及Qt正常退出清理；技术移动提示区分已证静态写入链与未核验真实实例。索引生成前拒绝陈旧current节/回执/发布证明/批次/全量指针，五处旧嵌套状态已历史化并同步。138份公开测试原件按原SHA恢复，缓存原件不入库；047当前保护使用六份真实公开Git原件，13不变函数+3来源核准扩展都有保护。
+
+当前完整离线选择器保留CORE历史、NEW及所有当前MODULES：Linux3734项/3511通过，Wine11.19 3836项/3632通过；零失败/错误、真实进程退出0、1096份源无漂移。两端各84声明跳过，Linux199/Wine180不可用记录均不计通过。Qt正常销毁有实际回执；没有确定或伪称复现245退出139的底层原因。
+
+当前完整窗口4283记录/52状态及精确10条既有113桥闭合。原552断言主try字节、全部case函数、42原投影与七份bridge proofs不改。831原断言及原失败作为不可变历史保留；仅三花组合与苏苏洛受疗比例缺失两helper作有来源修订：当前862断言，另外807原断言AST/顺序不变。三花按独立乘算和回复累加核验，苏苏洛完整总量None时同时保护六项已知小计，不把None转成0。修订ledger与136/216原场景及来源伪造/零值反例有独立回执。所有修改是显式源码修订，不动态替换计算结果，不扩大10条桥。
+
+另外238–260真实MainWindow29流程通过，使用qwindows/真实win32，临时公开状态隔离、刷新保留独立输入、本局记忆不变；真实Qt应用及134wrapper全部销毁。Wine是兼容环境，不代表Windows实机、当前游戏面板、原生时钟或聊天验收。
+
+剩余外部范围：原047前源码无公开preimage；060十例完整原JSON必须匹配SHA256 66e5babd5d88eeef681472958780822e6717617c1b403dbe1bdf75e1fc6e0326；原230私有operator-mechanist识别帧及其它缺件/095历史测量仍未迁移。本机230十二历史失败不能用当前可用通过数冒充全部复验。公共RapidOCR独立探针已验证小变化区域复用和控制损坏安全full fallback；它不替代旧私有帧，精确重触发条件在repair/adaptive-230-review/original-retrigger.json。
+
+复跑离线使用scripts/verify_full_available.py并保持当前selector union；Linux设置QT_QPA_PLATFORM=offscreen、ROUGE_TEST_CJK_FONT=/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc与PYTHONFAULTHANDLER=1，Wine通过scripts/wine_python.sh串行锁并明确ROUGE_WINE_PYTHON_LAUNCHER为已核验Wine11.19。运行时安装来源/hash见repair/persistence/runtime11/migration-manifest.json。前缀、deb和解包二进制不入库。复跑窗口应新建guard及输出目录，不覆盖这些历史回执。

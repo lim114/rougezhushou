@@ -6,6 +6,7 @@ import re
 
 import cv2
 import numpy as np
+from .run_config import NORMAL_GRADES
 
 DATA = Path(__file__).with_name('data')
 
@@ -119,7 +120,7 @@ def read_badge_grade(image, badge, texts, engine=None):
             continue
         xx = np.mean([point[0] for point in record['box']]) * width
         yy = np.mean([point[1] for point in record['box']]) * height
-        if left < xx < right and top < yy < bottom and 0 <= int(record['text']) <= 15:
+        if left < xx < right and top < yy < bottom and int(record['text']) in NORMAL_GRADES:
             valid.add(int(record['text']))
     if len(valid) == 1:
         return next(iter(valid))
@@ -129,6 +130,6 @@ def read_badge_grade(image, badge, texts, engine=None):
     enlarged = cv2.resize(crop, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
     raw, _ = engine(enlarged)
     for _, text, confidence in raw or []:
-        if confidence >= .94 and re.fullmatch(r'\d{1,2}', text) and 0 <= int(text) <= 15:
+        if confidence >= .94 and re.fullmatch(r'\d{1,2}', text) and int(text) in NORMAL_GRADES:
             valid.add(int(text))
     return next(iter(valid)) if len(valid) == 1 else None

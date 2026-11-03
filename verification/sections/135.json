@@ -1,0 +1,64 @@
+{
+  "section": 135,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:51:36.754461+08:00",
+  "prior_commit": "c881c45a2dda5e88f72f5be98a2a27fea23a30cd",
+  "title": "独立局外情景库与条件差异对照",
+  "remaining_project_item": "P2技能精度与本局环境：条件复现、培养和环境方案对照",
+  "new_capability": "保存最多20个独立局外计算情景，关闭重开后在独立编辑器载入，按当前资料重新对照最多6项及当前基准；逐项显示条件差异、窗口输出与同窗口差值，计算资料变化明确提示。实际界面工具入口整理为两列。",
+  "acceptance": [
+    "加载不创建文件",
+    "保存与关闭重开恢复",
+    "同名不覆盖",
+    "旧结果不复用",
+    "窗口不同和未知输出无差值",
+    "类型敏感的条件差异",
+    "外部修改和原子保存失败保护原文件",
+    "异常文件保持原字节且新编辑仅当前窗口",
+    "未消费未来记录与字段保留",
+    "载入不覆盖原计算账号或本局",
+    "实际窗口入口可见及截图查看"
+  ],
+  "limitations": [
+    "计算资料指纹不确认游戏热更新或原生机制",
+    "保存条件里的读取来源只代表原快照，不能代替当前本局观察",
+    "实际账户、原生时钟、获取、快照和环境脚本缺口仍保留"
+  ],
+  "sources": [
+    "rouge/scenario_library.py",
+    "rouge/scenario_comparison.py",
+    "rouge/scenario_library_view.py",
+    "rouge/app.py",
+    "tests/test_scenario_library_135.py"
+  ],
+  "evidence_reused": [
+    "rouge/damage.py",
+    "rouge/manual_scenario.py",
+    "rouge/technology_state.py"
+  ],
+  "screenshot_actually_viewed": true,
+  "screenshots": [
+    "verification/section-135/calculator-tools.png",
+    "verification/section-135/scenario-library.png"
+  ],
+  "storage_scope": "Private scenario-library.json beside operator account file; stores only explicit offline snapshots, never saved numeric results or account/run restore commands.",
+  "validation": {
+    "necessary_tests_run": 13,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 7,
+    "test_output": "verification/section-135/tests.txt",
+    "window_receipt": "verification/section-135/window.json"
+  },
+  "source_sha256": {
+    "rouge/scenario_library.py": "d42e4b8d1dfe71f0e3ccd4716528354e590935845e577bd04dce2970c6708d32",
+    "rouge/scenario_comparison.py": "0b5c2be4e3ba142d6d3a4341d3f51402a48660d55aeac0af0e22bf5c5192209a",
+    "rouge/scenario_library_view.py": "701354c2cc18bdb0bd960db26624a40f45697b4d9ea735a1bbfd4360d04ebc9a",
+    "rouge/app.py": "538d838aabe48e6528435cd24119e2e8ecaab295c6f02bda4e07410aea0c045a",
+    "tests/test_scenario_library_135.py": "970765fb7670717e8f20a6651a6ee49f4058ac482ca492fa680642f024ea03d4"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

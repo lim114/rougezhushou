@@ -1,0 +1,12 @@
+{
+  "scope": "Actual terminal output observed through exec session 77778; original stdout/stderr were not redirected to files",
+  "actual_observed_exit": 1,
+  "tests_run": 9,
+  "failed": 0,
+  "errors": 1,
+  "test": "tests.test_source_nodes_445.SourceNodes445.test_every_original_node_sprite_keeps_exact_pixels_across_shared_views",
+  "error": "NameError: name '__file__' is not defined",
+  "cause": "Dynamic old-source test module omitted __file__, which the real module uses to locate artwork",
+  "repair": "Bind the test module to the real application source path before evaluating its unchanged old source",
+  "production_patch_or_acceptance_weakened": false
+}

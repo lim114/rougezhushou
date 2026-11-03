@@ -1,0 +1,59 @@
+--- immutable-first/prepare_revision2.py
++++ independent-attempt2/prepare_revision2.py
+@@ -0,0 +1,56 @@
++"""Copy only the sealed controller allowlist; prepare, never execute validation."""
++import ast
++import json
++from pathlib import Path
++from hashlib import sha256
++
++BASE=Path(__file__).resolve().parent
++ROOT=BASE.parents[1]
++PRIOR=ROOT/'.cache/p3-full305-attempt2-prep'
++PRIOR_READY=PRIOR/'CONTROLLER_READY_ATTEMPT2.json'
++EXPECTED='96f44adcdc45ab28222228718f5c2f1645128fdfe38c910aa87edc933627d313'
++
++def sha(path):return sha256(path.read_bytes()).hexdigest()
++def write_new(path,raw):
++    path.parent.mkdir(parents=True,exist_ok=True)
++    with path.open('xb')as f:f.write(raw)
++def replace(path,old,new):
++    raw=path.read_text(encoding='utf8')
++    if raw.count(old)!=1:raise ValueError('Unique static edit anchor required: '+str(path))
++    path.write_text(raw.replace(old,new,1),encoding='utf8',newline='\n')
++
++def main():
++    if sha(PRIOR_READY)!=EXPECTED:raise ValueError('Sealed prior READY differs.')
++    prior=json.loads(PRIOR_READY.read_bytes())
++    for name,pin in prior['files'].items():
++        source=PRIOR/name
++        if sha(source)!=pin['sha256']or source.stat().st_size!=pin['bytes']:raise ValueError('Prior preparation drift: '+name)
++        write_new(BASE/name,source.read_bytes())
++    write_new(BASE/'PRIOR_ATTEMPT2_CONTROLLER_READY.json',PRIOR_READY.read_bytes())
++    origin=ROOT/'.cache/p3-305-full-failure-triage/native296'
++    handoff=json.loads((origin/'HANDOFF.json').read_bytes())
++    name=handoff['candidate_relative'];candidate=origin/'candidate'/name
++    if sha(candidate)!='9f770e45c11a8179201c852e24b8f26c80f3ea4523cb8f480f4375d1d2abdec2'or candidate.stat().st_size!=43455:raise ValueError('Exact reviewed native296 candidate required.')
++    write_new(BASE/'candidate'/name,candidate.read_bytes())
++    for filename in('HANDOFF.json','static-proof.json','candidate.diff'):
++        write_new(BASE/'native296-reviewed-preparation'/filename,(origin/filename).read_bytes())
++    replace(BASE/'full305_common.py',"READY_PATH = BASE / 'CONTROLLER_READY_ATTEMPT2.json'","READY_PATH = BASE / 'CONTROLLER_READY_ATTEMPT2_REV2.json'")
++    prepared=BASE/'prepared-inputs-final.json'
++    replace(prepared,'"p3_296": "scripts/verify_battle_entry_references_window_296.py"','"p3_296": "scripts/verify_battle_entry_references_window_296_full305.py"')
++    seal=BASE/'seal_attempt2_preparation.py'
++    replace(seal,"BASE/'ATTEMPT2_STATIC_PREPARATION.json'","BASE/'ATTEMPT2_REV2_STATIC_PREPARATION.json'")
++    replace(seal,"BASE/'final-migration-diffs'","BASE/'revision2-migration-diffs'")
++    replace(seal,"'public_promote_after_first_seal_only':{adapter.removeprefix('candidate/'):pin(BASE/adapter)},","'public_promote_after_first_seal_only':{adapter.removeprefix('candidate/'):pin(BASE/adapter), 'scripts/verify_battle_entry_references_window_296_full305.py':pin(BASE/'candidate/scripts/verify_battle_entry_references_window_296_full305.py')},")
++    for filename in('RUN_PLAN_ATTEMPT2.md','SOURCE_AND_RECEIPT_SCHEMA_ATTEMPT2.md'):
++        path=BASE/filename
++        raw=path.read_text(encoding='utf8').replace('.cache/p3-full305-attempt2-prep/','.cache/p3-full305-attempt2-prep-revision2/').replace('CONTROLLER_READY_ATTEMPT2.json','CONTROLLER_READY_ATTEMPT2_REV2.json')
++        path.write_text(raw,encoding='utf8',newline='\n')
++    report={'kind':'EXCLUSIVE_SECOND_CONTROLLER_REVISION2_COPY_NOT_RUNTIME_EXECUTION',
++        'prior_ready_sha256':EXPECTED,'prior_files':prior['files'],'prior_file_count':len(prior['files']),
++        'native296_candidate':{'file':name,'sha256':sha(candidate),'bytes':candidate.stat().st_size},
++        'all_prior_files_still_exact':all(sha(PRIOR/n)==p['sha256']for n,p in prior['files'].items()),
++        'Qt_tests_sourcefreeze_activation_and_full_execution_started':False}
++    write_new(BASE/'REVISION2_COPY_LINEAGE.json',(json.dumps(report,ensure_ascii=False,indent=2)+'\n').encode())
++    print(json.dumps({'copied_prior_files':len(prior['files']),'first_and_prior_unmodified':report['all_prior_files_still_exact'],'runtime_started':False}))
++
++if __name__=='__main__':main()

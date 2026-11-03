@@ -1,0 +1,1690 @@
+{
+  "cases": [
+    {
+      "id": "legacy-active-companion-fraction_text",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_stacks": 1,
+        "companion_attack": "2.5"
+      },
+      "scope": "Existing deployment-trigger companion consumer, not inferred events."
+    },
+    {
+      "id": "legacy-active-companion-null",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_stacks": 1,
+        "companion_attack": null
+      },
+      "scope": "Existing deployment-trigger companion consumer, not inferred events."
+    },
+    {
+      "id": "legacy-inactive-companion-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": true
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "legacy-inactive-companion-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": false
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "legacy-inactive-companion-null",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": null
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "legacy-base_attack-bool_true-existing-rule",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_24"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "legacy-base_attack-bool_false-existing-rule",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": false,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_24"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "legacy-enemy_defense-bool_true-existing-rule",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": true,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_84"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "legacy-enemy_defense-bool_false-existing-rule",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": false,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_84"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "legacy-target-overrides-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": true,
+        "enemy_resistance": true,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "enemy_id": "enemy_1093_ccsbr",
+          "level": 0,
+          "stage_id": "ro6_n_1_2"
+        }
+      },
+      "scope": "Selected fixed target overrides stale manual DEF/RES before new capture."
+    },
+    {
+      "id": "legacy-target-overrides-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": false,
+        "enemy_resistance": false,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "enemy_id": "enemy_1093_ccsbr",
+          "level": 0,
+          "stage_id": "ro6_n_1_2"
+        }
+      },
+      "scope": "Selected fixed target overrides stale manual DEF/RES before new capture."
+    },
+    {
+      "id": "legacy-bool-and-earlier-training",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": false,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "legacy-bool-and-earlier-target",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "stage_id": "missing",
+          "enemy_id": "missing",
+          "level": 0
+        }
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "legacy-bool-and-earlier-relic-input",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "char_buff_ids": true
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "generic-inactive-companion-bool_true",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": true
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "generic-inactive-companion-bool_false",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": false
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "generic-inactive-companion-null",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "companion_attack": null
+      },
+      "scope": "Do not activate an unused consumer; legacy parser retains existing non-boolean conversion/errors, generic ignores the field."
+    },
+    {
+      "id": "generic-base_attack-bool_true-existing-rule",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_24"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "generic-base_attack-bool_false-existing-rule",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": false,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_24"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "generic-enemy_defense-bool_true-existing-rule",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": true,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_84"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "generic-enemy_defense-bool_false-existing-rule",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": false,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [
+          "rogue_6_relic_legacy_84"
+        ],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Attack-rune bool already rejected by native _single; defense multiplication can wash bool. Observe original actual stage."
+    },
+    {
+      "id": "generic-target-overrides-bool_true",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": true,
+        "enemy_resistance": true,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "enemy_id": "enemy_1093_ccsbr",
+          "level": 0,
+          "stage_id": "ro6_n_1_2"
+        }
+      },
+      "scope": "Selected fixed target overrides stale manual DEF/RES before new capture."
+    },
+    {
+      "id": "generic-target-overrides-bool_false",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": false,
+        "enemy_resistance": false,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "enemy_id": "enemy_1093_ccsbr",
+          "level": 0,
+          "stage_id": "ro6_n_1_2"
+        }
+      },
+      "scope": "Selected fixed target overrides stale manual DEF/RES before new capture."
+    },
+    {
+      "id": "generic-bool-and-earlier-training",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": false,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        }
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "generic-bool-and-earlier-target",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "target_enemy": {
+          "stage_id": "missing",
+          "enemy_id": "missing",
+          "level": 0
+        }
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "generic-bool-and-earlier-relic-input",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": true,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "char_buff_ids": true
+      },
+      "scope": "Existing training/target/relic preparation error must retain priority."
+    },
+    {
+      "id": "generic-consumed-ratio-bool_true",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": true
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-bool_false",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": false
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-numeric_zero",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": 0
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-numeric_fraction",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": 2.5
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-zero_text",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": "0"
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-fraction_text",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": "2.5"
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "generic-consumed-ratio-null",
+      "scenario": {
+        "operator": "char_1044_hsgma2",
+        "skill": 1,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "current_hp_ratio": null
+      },
+      "scope": "Actually consumed non-integer numeric option, not a boolean HP condition."
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "initial_sp_bonus": true
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "initial_sp_bonus": false
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-null",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "initial_sp_bonus": null
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "sp_recovery_bonus": true
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "sp_recovery_bonus": false
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-null",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "sp_recovery_bonus": null
+      },
+      "scope": "Legacy nonnegative reader; keep original clock/formula."
+    },
+    {
+      "id": "legacy-inactive-healing-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "healing_targets": true
+      },
+      "scope": "Chosen route/skill nonhealer; preserve public capability and helper exemption."
+    },
+    {
+      "id": "legacy-inactive-healing-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "healing_targets": false
+      },
+      "scope": "Chosen route/skill nonhealer; preserve public capability and helper exemption."
+    },
+    {
+      "id": "generic-inactive-healing-bool_true",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "healing_targets": true
+      },
+      "scope": "Chosen route/skill nonhealer; preserve public capability and helper exemption."
+    },
+    {
+      "id": "generic-inactive-healing-bool_false",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "healing_targets": false
+      },
+      "scope": "Chosen route/skill nonhealer; preserve public capability and helper exemption."
+    },
+    {
+      "id": "legacy_active_elapsed-bool_true",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": true
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-bool_false",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": false
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-zero",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 0
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-fraction",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 2.5
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-text_zero",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "0"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-text_fraction",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "2.5"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_active_elapsed-null",
+      "scenario": {
+        "operator": "silverash",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": null
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-bool_true",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": true
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-bool_false",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": false
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-zero",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 0
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-fraction",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 2.5
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-text_zero",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "0"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-text_fraction",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "2.5"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "legacy_inactive_elapsed-null",
+      "scenario": {
+        "operator": "mechanist",
+        "skill": 3,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": null
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-bool_true",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": true
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-bool_false",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": false
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-zero",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 0
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-fraction",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": 2.5
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-text_zero",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "0"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-text_fraction",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": "2.5"
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_active_elapsed-null",
+      "scenario": {
+        "operator": "char_1038_whitw2",
+        "skill": 2,
+        "elite": 2,
+        "level": 90,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": null
+      },
+      "scope": "Observe original numeric/default/error contract and actual qualification of deployment_elapsed_seconds; no expected outcome predeclared."
+    },
+    {
+      "id": "generic_inactive_elapsed-bool_true",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": true
+      },
+      "scope": "Inactive elapsed field must not be newly consumed; observe original output/caller without guessed result."
+    },
+    {
+      "id": "generic_inactive_elapsed-bool_false",
+      "scenario": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 80,
+        "skill_rank": 10,
+        "trust": 100,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 100,
+        "enemy_resistance": 30,
+        "window_seconds": 3,
+        "relic_ids": [],
+        "effects": [],
+        "timing_mode": "frames",
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "deployment_elapsed_seconds": false
+      },
+      "scope": "Inactive elapsed field must not be newly consumed; observe original output/caller without guessed result."
+    }
+  ],
+  "original_full_fixture_sha256": "df338b17c9e4054338fc8c2b283d4f9842bc024f311c8665717b1b15230ecdef",
+  "original_offset": 67,
+  "original_total_cases": 133,
+  "future_actual_results": null
+}

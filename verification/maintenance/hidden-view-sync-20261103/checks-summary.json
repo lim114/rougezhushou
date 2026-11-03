@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "distinct_case_count": 62,
+  "coverage": "58 unchanged cases from the original62-case run plus4 current inventory-layout cases from the corrected targeted rerun. Do not add repeated runs to the case count.",
+  "original_run": "checks-process.json",
+  "original_case_count": 62,
+  "original_failed_cases": 3,
+  "original_failure_details": "checks-stderr.txt",
+  "baseline_reproduction": "baseline-inventory-process.json",
+  "corrected_inventory_run": "inventory-corrected-process.json",
+  "corrections": [
+    "Three pre-existing assertions used obsolete player wording; unchanged baseline reproduces them.",
+    "An added assertion initially assumed a missing held flag was unknown; the existing legacy default is true. Product qualification unchanged; final test covers legacy default, explicit null and true. Its failure remains in inventory-final-stderr.txt."
+  ],
+  "early_fixture_failure": {
+    "cases": 7,
+    "failures": 5,
+    "actual_exit": 1,
+    "tool_chunk": "1c1ea0",
+    "cause": "show() on a child of the hidden workspace did not make it visible. Fixture now detaches and asserts real Qt visibility. Early corrected7-case run chunk81de11 passed; same7 cases are included in the62-case run."
+  },
+  "source_sha256": {
+    "rouge/app.py": "51150349c9d138a3312a411376b1f60ea96e1181423323083675a9dd69605a2d",
+    "rouge/node_catalog_view.py": "fd14981a62e84c745b38e9d4072d43c103a8f3ba0634adab8a055395ae4753fa",
+    "rouge/player_inventory.py": "23818d52ec94311c84f80320e7ae60f3025ee32301beeaa523d02d5e3e805832",
+    "tests/test_sampling_view_refresh.py": "a369f7016b5d5e3324d6902ded46054acc2f3ae699bf0555ebdbb36617dccbf2",
+    "tests/test_inventory_layout_review.py": "79cebf0313c95d3fc5e3873a2da30abd6b09f15e363379dcf482d2f085cbeb20",
+    "scripts/benchmark_sampling_view_sync.py": "66a9530f93dcea3e6758ecbb40075f09b09f742829f7444fc71f16a9663e59d0",
+    "scripts/verify_sampling_view_sync.py": "f02adca8ab98bb2ff8a5dd5f5f9f978cdf35befc554aa44cefefb6cf26aa341d"
+  },
+  "full_suite_run": false
+}

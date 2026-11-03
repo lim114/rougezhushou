@@ -20,6 +20,14 @@ from .dynamic_ocr import bounds, normalize_regions, positive_overlap
 from .recognition_cache import CachedOCR
 
 
+def frame_signature(image):
+    """Bind complete-current coverage to exact input pixels and geometry."""
+    if not isinstance(image, np.ndarray):
+        return None
+    return {'shape': list(image.shape), 'dtype': image.dtype.str,
+            'sha256': hashlib.sha256(np.ascontiguousarray(image).tobytes()).digest().hex()}
+
+
 def _callable_identity(value):
     """Bound method wrapper objects are recreated by every attribute read."""
     if hasattr(value, '__self__') and hasattr(value, '__func__'):
@@ -35,16 +43,29 @@ class PageOCR:
     every ordinary call already detects the whole current frame.
     """
 
-    def __init__(self, engine, *, cache_enabled=True, max_bytes=24*1024*1024, max_entries=64):
+    def __init__(self, engine, *, cache_enabled=True, max_bytes=24*1024*1024, max_entries=64,
+                 reuse_text_rows=False):
         self.engine = engine
         self.provider = engine.engine if type(engine) is CachedOCR else engine
         self.cache_enabled = cache_enabled
+        self.reuse_text_rows = reuse_text_rows
         self.max_bytes = max_bytes
         self.max_entries = max_entries
         self._cache = OrderedDict()
         self._bytes = 0
         self._context = None
         self.metrics = {}
+        self._current_frame = None
+
+    def complete_frame_matches(self, image):
+        """Require pixel equality too; a digest collision is not frame identity."""
+        current = self._current_frame
+        return (isinstance(image, np.ndarray) and current is not None
+                and image.shape == current.shape and image.dtype == current.dtype
+                and np.array_equal(image, current))
+
+    def release_frame_snapshot(self):
+        self._current_frame = None
 
     def _supported(self):
         try:
@@ -65,18 +86,15 @@ class PageOCR:
                 bool(p.use_cls), _callable_identity(p.text_cls), float(p.max_side_len),
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
 
-    def _cache_key(self, crops):
-        payload = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes()) for a in crops)
-        key = tuple((shape, dtype, hashlib.sha256(pixels).digest())
-                    for shape, dtype, pixels in payload)
-        return key, payload
-
     def _recognize_batch(self, crops, *, force_discovery=False):
-        key, payload = self._cache_key(crops)
-        entry = self._cache.get(key)
-        if self.cache_enabled and not force_discovery and entry is not None and entry[0] == payload:
+        if self.reuse_text_rows:
+            return self._recognize_rows(crops,force_discovery=force_discovery)
+        key = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes())
+                    for a in crops) if self.cache_enabled else None
+        entry = self._cache.get(key) if self.cache_enabled else None
+        if not force_discovery and entry is not None:
             self._cache.move_to_end(key)
-            return deepcopy(entry[1]), 0.0, True
+            return deepcopy(entry[0]), 0.0, True
         r = self.provider.text_rec
         # These are precisely the original globally sorted RapidOCR batches.
         # Splitting into arbitrary page/crop groups would change padding and
@@ -90,18 +108,59 @@ class PageOCR:
         elapsed = time.perf_counter() - started
         result = r.postprocess_op(predictions, False, wh_ratio_list=ratios,
                                   max_wh_ratio=max_ratio)
-        size = sum(len(pixels) for _, _, pixels in payload)
-        if self.cache_enabled and size <= self.max_bytes:
-            if entry is not None:
-                self._bytes -= entry[2]
-            self._cache[key] = (payload, deepcopy(result), size)
-            self._bytes += size
-            while self._bytes > self.max_bytes or len(self._cache) > self.max_entries:
-                _, old = self._cache.popitem(last=False)
-                self._bytes -= old[2]
+        if self.cache_enabled:
+            size = sum(len(pixels) for _, _, pixels in key)
+            if size <= self.max_bytes:
+                if entry is not None:
+                    self._bytes -= entry[1]
+                self._cache[key] = (deepcopy(result), size)
+                self._bytes += size
+                while self._bytes > self.max_bytes or len(self._cache) > self.max_entries:
+                    _, old = self._cache.popitem(last=False)
+                    self._bytes -= old[1]
         return result, elapsed, False
 
+    def _recognize_rows(self, crops, *, force_discovery=False):
+        """Reuse exact normalized model inputs, retaining original batch padding.
+
+        RapidOCR's original width ordering and maximum ratio still determine
+        each row's tensor and decoder length. Only uncached rows enter inference;
+        current detector boxes and classifier transforms are never cached here.
+        """
+        r=self.provider.text_rec
+        ratios=[a.shape[1]/float(a.shape[0]) for a in crops]
+        maximum=max(r.rec_image_shape[2]/r.rec_image_shape[1],*ratios)
+        tensor=np.concatenate([r.resize_norm_img(a,maximum)[None] for a in crops]).astype(np.float32)
+        keys=[('normalized_row',row.shape,row.dtype.str,ratios[i],maximum,row.tobytes())
+              for i,row in enumerate(tensor)]
+        records=[self._cache.get(key) if self.cache_enabled and not force_discovery else None
+                 for key in keys]
+        missing=[i for i,entry in enumerate(records) if entry is None]
+        result=[deepcopy(entry[0]) if entry is not None else None for entry in records]
+        elapsed=0.
+        if missing:
+            started=time.perf_counter()
+            predictions=r.session(tensor[missing])[0]
+            elapsed=time.perf_counter()-started
+            values=r.postprocess_op(predictions,False,wh_ratio_list=[ratios[i] for i in missing],
+                                   max_wh_ratio=maximum)
+            for i,value in zip(missing,values):
+                result[i]=value
+                key=keys[i];size=len(key[-1])
+                if self.cache_enabled and size<=self.max_bytes:
+                    old=self._cache.pop(key,None)
+                    if old is not None:self._bytes-=old[1]
+                    self._cache[key]=(deepcopy(value),size);self._bytes+=size
+        for key,entry in zip(keys,records):
+            if entry is not None:self._cache.move_to_end(key)
+        while self._bytes>self.max_bytes or len(self._cache)>self.max_entries:
+            _,old=self._cache.popitem(last=False);self._bytes-=old[1]
+        self.metrics['inferred_text_rows']=self.metrics.get('inferred_text_rows',0)+len(missing)
+        self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(keys)-len(missing)
+        return result,elapsed,not missing
+
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
+        self._current_frame = None
         if kwargs or not self._supported():
             self._cache.clear()
             self._bytes = 0
@@ -112,6 +171,11 @@ class PageOCR:
                             'fallback_reason': 'unsupported_arguments' if kwargs else 'unsupported_provider'}
             engine = self.provider if force_discovery else self.engine
             return engine(image, **kwargs)
+        # Detection and recognition share one immutable current-frame snapshot.
+        # A caller changing its input during inference must not seed another
+        # strategy with that frame's text under different pixels.
+        current = image.copy() if isinstance(image, np.ndarray) else image
+        signature = frame_signature(current)
         p = self.provider
         context = self._configuration()
         if context != self._context:
@@ -123,15 +187,18 @@ class PageOCR:
                         'full_text_coverage': True, 'complete_current_texts': True, 'fallback_reason': None,
                         'detected_boxes': 0, 'page_boxes': 0, 'guard_boxes': 0,
                         'recognized_batches': 0, 'reused_batches': 0,
-                        'recognized_boxes': 0, 'page_first_batches': 0}
-        img = p.load_img(image)
+                        'recognized_boxes': 0, 'page_first_batches': 0,
+                        'frame_signature': signature}
+        img = p.load_img(current)
         raw_h, raw_w = img.shape[:2]
+        self.metrics['raw_frame_size'] = [raw_w, raw_h]
         domain = normalize_regions(regions, (raw_h, raw_w))
         img, ratio_h, ratio_w = p.preprocess(img)
         operations = {'preprocess': {'ratio_h': ratio_h, 'ratio_w': ratio_w}}
         img, operations = p.maybe_add_letterbox(img, operations)
         boxes, det_elapsed = p.auto_text_det(img)
         if boxes is None:
+            self._current_frame = current if isinstance(current, np.ndarray) else None
             return None, None
         crops = p.get_crop_img_list(img, boxes)
         cls_result, cls_elapsed = None, 0.0
@@ -162,8 +229,10 @@ class PageOCR:
             self.metrics['page_first_batches'] += int(any(inside[i] for i in batch))
         self.metrics.update(detected_boxes=len(crops), page_boxes=sum(inside),
                             guard_boxes=len(crops)-sum(inside), cache_bytes=self._bytes)
-        return p.get_final_res(origin, cls_result, rec_result,
-                               det_elapsed, cls_elapsed, rec_elapsed)
+        result = p.get_final_res(origin, cls_result, rec_result,
+                                 det_elapsed, cls_elapsed, rec_elapsed)
+        self._current_frame = current if isinstance(current, np.ndarray) else None
+        return result
 
     def read(self, image, *, regions=None, force_discovery=False):
         return self(image, regions=regions, force_discovery=force_discovery)

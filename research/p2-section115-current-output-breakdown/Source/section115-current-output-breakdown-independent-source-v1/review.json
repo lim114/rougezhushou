@@ -1,0 +1,253 @@
+{
+  "kind": "SECTION115_NONAUTHOR_SOURCE_REVIEW_NOT_RUNTIME",
+  "STOPWRITE": true,
+  "reviewer": "/root/resume097_account_io/resource104_candidate_independent/gold107_contract_source",
+  "verdict": "No Source blocker found in the sealed candidate or test fixtures. Exact future rebase, original receipts and actual validation remain Root-only and pending.",
+  "source_blockers": [],
+  "runtime_pass_claim": false,
+  "product_pass_claim": false,
+  "apply_ready": false,
+  "method": {
+    "stdlib_read_hash_JSON_AST_compile_only": true,
+    "compiled_code_objects_executed": false,
+    "project_helper_codec_native_API_tests_Qt_Wine_Git_executed": false,
+    "tracked_writes": false,
+    "external_review_write_only": true
+  },
+  "candidate": {
+    "directory": "/workspace/.continuation/section115-current-output-breakdown-candidate-source-v1",
+    "manifest": {
+      "bytes": 1612,
+      "sha256": "a4dc0afe3aa8fa7c9452920de40e6692521601b2c4f4ecc6923975866a1a1d3e"
+    },
+    "payload_count": 8,
+    "payload_total_bytes": 46174,
+    "all_payloads_verified": [
+      {
+        "path": "AUTHOR_SOURCE_CHECKS.json",
+        "bytes": 5261,
+        "sha256": "3a9655e7fea94660957f545cf4f7312d038122cc9cb83720aeafc0a3b8cdba57"
+      },
+      {
+        "path": "README.md",
+        "bytes": 2380,
+        "sha256": "fe0d4152194b5b90c52de62db48bfb562a92ef1a83e6ce536b233ddb70e94665"
+      },
+      {
+        "path": "helper-source.py",
+        "bytes": 5688,
+        "sha256": "a48101b141a74c820e7fd510333e7b99f6a474325838312923d3717a9213e1de"
+      },
+      {
+        "path": "local-transports.json",
+        "bytes": 7342,
+        "sha256": "4a53b45ee3536c366ffbe34b0390f6a0ff64e0d6e8e96b0585ee70d7592825b0"
+      },
+      {
+        "path": "product-local.diff",
+        "bytes": 6952,
+        "sha256": "3fbcded09400317ab0ba3d810ab056f45c8c7ce0d282818c82e77ec5793d178f"
+      },
+      {
+        "path": "registry-plan.json",
+        "bytes": 989,
+        "sha256": "52e04e0ab0badbc26cdbf958526afbecc2b719e72800cade4f2a3297e7efbc8c"
+      },
+      {
+        "path": "runtime-plan.json",
+        "bytes": 4911,
+        "sha256": "e0941c5a9b37ee892219089f15847b37f4c66065b34a86c77149f0b20bf3c3c7"
+      },
+      {
+        "path": "test_current_output_breakdown_115.py",
+        "bytes": 12651,
+        "sha256": "bf8dc00466828596bf1511c449785a0e6900ef04a07acf8a7ed2a2b99b51a348"
+      }
+    ]
+  },
+  "reporting_local_checks": {
+    "path": "rouge/reporting.py",
+    "before": {
+      "bytes": 98978,
+      "sha256": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1"
+    },
+    "in_memory_candidate": {
+      "bytes": 104731,
+      "sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f"
+    },
+    "unique_forward_reverse_anchors": 2,
+    "complete_inverse_exact": true,
+    "unified_diff_generated_exact": true,
+    "unchanged_old_function_AST_count": 10,
+    "build_report_AST_exact_after_removing_one_new_extend": true,
+    "new_helper_AST_matches_payload": true,
+    "whole_product_file_written": false
+  },
+  "source_findings": [
+    {
+      "contract": "Current observation scope",
+      "source": "helper-source.py:3–14,:59–64; rouge/operator_engine.py:1306–1309,:1520–1527",
+      "evidence": "Helper consumes result.components, which the producer sets to shown.components, rather than estimate.skill.hit_counts/full/normal. Legacy fallback occurs only when components is absent; explicit empty/None components remain empty. Existing scalar fields are displayed without constructing events or recipient counts."
+    },
+    {
+      "contract": "Known, conditional and unknown totals",
+      "source": "helper-source.py:49–54,:63–67; rouge/reporting.py:1043–1046,:1074–1081",
+      "evidence": "Each component total is copied directly, with conditional reference labeling only for actual_total=None. If an actual_total key exists its value is copied separately, including None. Overall None produces a warning; no subtotal, total or completeness is reconstructed. Existing renderer preserves None as unknown."
+    },
+    {
+      "contract": "No count multiplication or category conflation",
+      "source": "helper-source.py:15–33,:50–53,:60–69",
+      "evidence": "Hits/fractions and per_hit retain original values; total is never recomputed from them. Physical/magic/true/elemental/weakness damage, potential healing, independent regeneration and buildup occupy distinct groups. Buildup is not life damage; regeneration is not HPS; duplicate specialized summaries are explicitly not added again."
+    },
+    {
+      "contract": "Event amount statistics do not invent phase ranges",
+      "source": "helper-source.py:34–48; rouge/reporting.py:1076–1078",
+      "evidence": "Mean/min/max use only an existing nonempty, wholly finite int/float event_amounts list without bool. Variation is required; partial unknown values are not filtered into a known mean. The original per_hit and total remain. Separate metric rows have no range key, so the old renderer cannot describe event amounts as phase bounds."
+    },
+    {
+      "contract": "Pure presentation and old report preservation",
+      "source": "helper-source.py entire function; local-transports.json second block; rouge/module_source_reference.py:44–68",
+      "evidence": "New helper only reads result/component fields and creates local metric/section containers; it does not assign into caller/result. The build_report insertion appends at the end of the old sections. Existing specialized indices remain, and _existing_coverage selects fixed old IDs/token/relic prefixes, which exclude output_breakdown groups. The old ten helper ASTs remain exact and build_report is exact after removing the one extend."
+    },
+    {
+      "contract": "Actual public fixture qualification, not PASS",
+      "source": "test_current_output_breakdown_115.py:15–18,:43–150; fixed catalog/relic JSON and current operator/damage Source",
+      "evidence": "Nine methods call real calculate_damage and formatters with legitimate E2 level1 rank10 potential1 trust0 fields, no mocks/private rule injection. The six explicit synthetic formatter methods test field preservation only. Medical Amiya talent is eligible at this cultivation; expectation/coordinate sources and buildup are current producer paths. Mechanist variable amounts use public relic61: temporary_attack +0.6 for1 second, current damage.py:110–120,:178–180 event release-frame handling, and a20-second window. None of these Source checks claims actual numeric/API/test success."
+    }
+  ],
+  "test_source_checks": {
+    "source": {
+      "bytes": 12651,
+      "sha256": "bf8dc00466828596bf1511c449785a0e6900ef04a07acf8a7ed2a2b99b51a348"
+    },
+    "method_counts": {
+      "CurrentOutputBreakdownPublicTests": 9,
+      "CurrentOutputBreakdownFormatterBoundaryTests": 6
+    },
+    "total_methods": 15,
+    "assert_prefixed_calls": 85,
+    "direct_unittest_assert_calls": 77,
+    "component_assert_helper_calls": 8,
+    "fixture_qualification": [
+      {
+        "selector": "char_4107_vrdant",
+        "canonical_id": "char_4107_vrdant",
+        "skills": [
+          2
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      },
+      {
+        "selector": "char_1041_angel2",
+        "canonical_id": "char_1041_angel2",
+        "skills": [
+          1,
+          3
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      },
+      {
+        "selector": "char_1037_amiya3",
+        "canonical_id": "char_1037_amiya3",
+        "skills": [
+          2
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      },
+      {
+        "selector": "char_1042_phatm2",
+        "canonical_id": "char_1042_phatm2",
+        "skills": [
+          3
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      },
+      {
+        "selector": "mechanist",
+        "canonical_id": "char_4230_mcnist",
+        "skills": [
+          3
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      },
+      {
+        "selector": "kaltsit",
+        "canonical_id": "char_1052_kalts2",
+        "skills": [
+          1
+        ],
+        "training": [
+          2,
+          1,
+          10,
+          1,
+          0
+        ],
+        "source_qualified_only": true
+      }
+    ],
+    "source_compile_without_execution": true
+  },
+  "registry_source_checks": {
+    "selector": "tests.test_current_output_breakdown_115",
+    "single_unique_cloud_anchor": true,
+    "cloud_before": {
+      "bytes": 5602,
+      "sha256": "483e4f4b34b7983dc41f6ec71f51354ce1cf599601e9f27c78071eca4cd2e978"
+    },
+    "cloud_modules_before": 121,
+    "cloud_modules_in_memory_after": 122,
+    "old_order_exact": true,
+    "cloud_inverse_exact": true,
+    "full_helper": {
+      "bytes": 9360,
+      "sha256": "ccb75fedbb97a601fb496457ad5655f9e389c2ff3d66453b23d4ada01ca2c63f"
+    },
+    "full_helper_changes": null,
+    "union_rule": "verify_full_available.py:135–136 continues dict.fromkeys(historical test_modules + NEW_MODULES + verify_cloud.MODULES). No classifier/admission/skip change or duplicate full selector is needed.",
+    "future_counts_preclaimed": false
+  },
+  "compiled_code_objects_without_execution": 6,
+  "pending_root_requirements": [
+    "After earlier sections, obtain fresh actual complete Source+CORE guard and original public/formatter receipts; current snapshot SHA is provenance, not a future guard.",
+    "Rebase both unique reporting snippets and the single cloud selector on then-current bytes, reject duplicate helper/ambiguous anchors, retain113 edits and independently review exact rebased diff/inverse.",
+    "Root local transport utility currently documents111–114 schemas; this115 target/blocks schema needs an explicit Root application transport or supported adapter. Do not infer extra writes or registry increments.",
+    "Validate the15 methods and related report/module/friendly/summon/medical regressions. Compare complete calculation graphs preserving original numerical/clocks/unknown/reference states and existing report sections, permitting only intended new report sections.",
+    "Only real Root available-suite/Linux/Wine/window receipts can close115 and the batch; this Source review freezes no future result, exit, guard or source count."
+  ]
+}

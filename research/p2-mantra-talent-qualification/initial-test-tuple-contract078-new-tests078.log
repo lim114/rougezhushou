@@ -1,0 +1,56 @@
+test_E0_declared_palsy_keeps_known_direct_cast_and_cycle (test_mantra_talent_qualification.MantraTalentQualificationTests.test_E0_declared_palsy_keeps_known_direct_cast_and_cycle) ... ERROR
+test_S1_neural_and_river_uncertainty_is_not_inferred_away (test_mantra_talent_qualification.MantraTalentQualificationTests.test_S1_neural_and_river_uncertainty_is_not_inferred_away) ... ERROR
+test_S3_overflow_count_is_independent_of_palsy_damage_talent_count (test_mantra_talent_qualification.MantraTalentQualificationTests.test_S3_overflow_count_is_independent_of_palsy_damage_talent_count) ... ok
+test_caller_and_selected_source_caches_remain_isolated (test_mantra_talent_qualification.MantraTalentQualificationTests.test_caller_and_selected_source_caches_remain_isolated) ... ok
+test_four_exact_talent_source_candidates_keep_conditional_unknowns (test_mantra_talent_qualification.MantraTalentQualificationTests.test_four_exact_talent_source_candidates_keep_conditional_unknowns) ... ok
+test_raw_count_contract_survives_absent_talent_and_old_error_precedence (test_mantra_talent_qualification.MantraTalentQualificationTests.test_raw_count_contract_survives_absent_talent_and_old_error_precedence) ... ok
+test_selected_zero_attack_or_element_immunity_does_not_erase_source (test_mantra_talent_qualification.MantraTalentQualificationTests.test_selected_zero_attack_or_element_immunity_does_not_erase_source) ... ok
+test_zero_declarations_and_inactive_other_owner_fields_keep_full_output (test_mantra_talent_qualification.MantraTalentQualificationTests.test_zero_declarations_and_inactive_other_owner_fields_keep_full_output) ... ok
+test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts (test_mantra_talent_qualification.MantraTalentQualificationTests.test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts) ... ERROR
+
+======================================================================
+ERROR: test_E0_declared_palsy_keeps_known_direct_cast_and_cycle (test_mantra_talent_qualification.MantraTalentQualificationTests.test_E0_declared_palsy_keeps_known_direct_cast_and_cycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 41, in test_E0_declared_palsy_keeps_known_direct_cast_and_cycle
+    self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,declared)))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 28, in zero_count_with_declared_metadata
+    next(r for r in ref['parameter_rows'] if r[0]==LABEL)[1]=float(declared)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'tuple' object does not support item assignment
+
+======================================================================
+ERROR: test_S1_neural_and_river_uncertainty_is_not_inferred_away (test_mantra_talent_qualification.MantraTalentQualificationTests.test_S1_neural_and_river_uncertainty_is_not_inferred_away)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 123, in test_S1_neural_and_river_uncertainty_is_not_inferred_away
+    self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,1)))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 28, in zero_count_with_declared_metadata
+    next(r for r in ref['parameter_rows'] if r[0]==LABEL)[1]=float(declared)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'tuple' object does not support item assignment
+
+======================================================================
+ERROR: test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts (test_mantra_talent_qualification.MantraTalentQualificationTests.test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 96, in test_zero_window_global_absence_and_body_scope_keep_their_distinct_contracts
+    self.assertEqual(canonical(result),canonical(zero_count_with_declared_metadata(request,1)))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/test_mantra_talent_qualification.py", line 28, in zero_count_with_declared_metadata
+    next(r for r in ref['parameter_rows'] if r[0]==LABEL)[1]=float(declared)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'tuple' object does not support item assignment
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.132s
+
+FAILED (errors=3)
+{'utc': '2026-10-08T00:13:48.947427+00:00', 'related': False, 'run': 9, 'passed': 6, 'failures': 0, 'errors': 3, 'skipped': 0, 'source_start_sha256': '80b19e19950b45fa058d5ecb7b94d4991c06f5f9a70cac9e3854c3c429aa72d8', 'source_end_sha256': '80b19e19950b45fa058d5ecb7b94d4991c06f5f9a70cac9e3854c3c429aa72d8', 'source_unchanged': True, 'available_checks_passed': False}
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-mantra-talent-qualification-078/run_tests078.py", line 31, in <module>
+    assert start == end and result.wasSuccessful()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
