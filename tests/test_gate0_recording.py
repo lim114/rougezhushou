@@ -32,6 +32,21 @@ def fixture():
 
 
 class Gate0Tests(unittest.TestCase):
+    def test_ocr_row_counters_are_recorded_without_raw_inputs_or_text(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            recorder=SessionRecorder(Path(tmp)/'session',scenario='row_reuse')
+            state={'id':'isolated','config':{},'resources':{},'operators':{},'relics':{},'tactical_tools':{}}
+            observation={'page':'test','performance':{'ocr':{'mode':'full_discovery',
+                'inferred_text_rows':1,'reused_text_rows':4,'detected_boxes':5,
+                'complete_current_texts':True,'raw_text':'PRIVATE_TEXT',
+                'frame_signature':{'sha256':'PRIVATE_DIGEST'}}}}
+            recorder.sample(observation,state,applied=True,reason='test');recorder.close()
+            raw=(recorder.folder/'events.jsonl').read_text('utf8')
+            self.assertNotIn('PRIVATE',raw)
+            sample=next(json.loads(line) for line in raw.splitlines() if json.loads(line)['event']=='sample')
+            self.assertEqual(sample['performance']['ocr']['reused_text_rows'],4)
+            self.assertEqual(sample['performance']['ocr']['inferred_text_rows'],1)
+
     def test_overlay_matches_original_decisions_and_coordinates(self):
         raw=subprocess.check_output(['git','show','e17cd2237fd60a6bac71b0ee87fded16302796a2:rouge/player_game_map.py'])
         node=next(n for n in ast.parse(raw).body if isinstance(n,ast.FunctionDef)and n.name=='payload')

@@ -2913,7 +2913,7 @@
     }
   ],
   "next_section": 473,
-  "next_action": "游戏已还原，原测试窗口继续自动采样；60秒实测记录已完成，短页覆盖因持续过载未通过。优先核对真实页面路由为何全部回退整页OCR，再减少重复识别并复测；先读.cache/current-sync-live-status.json和本机目录指针，不重复启动窗口。保留472，473未开始；不清空本局、不操作游戏、不发送聊天。",
+  "next_action": "原测试窗口已更新，.cache/player_test_window_text_rows.py继续后台采样，60秒记录已完成；先读.cache/current-sync-live-status.json与本机目录指针，不重复启动。继续减少剩余完整检测与界面耗时，核对地图/节点页核心特征，再以相同输入和配对实机测短页覆盖。原始样本只留本机；保持472，不操作游戏、不重置本局、不发送聊天，不恢复全量检查。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3287,7 +3287,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "BACKGROUND_CAPTURE_RESUMED_OVERLOAD_OBSERVED",
+  "batch_status": "TEXT_ROW_REUSE_IMPLEMENTED_OVERLOAD_REMAINS",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3499,14 +3499,14 @@
     "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "BACKGROUND_CAPTURE_RESUMED_OVERLOAD_OBSERVED",
+    "status": "TEXT_ROW_REUSE_IMPLEMENTED_OVERLOAD_REMAINS",
     "completed_sections": 472,
     "next_section": 473,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
     "receipt": "verification/sections/472.json",
-    "scope": "原测试窗口后台采样恢复；真实约59秒记录持续过载，短页完整性未通过。继续查明整页发现回退并优化重复识别，保留原调度与紧凑窗口；473未开始。"
+    "scope": "整页回退逐行精确复用与96项定向检查完成；18份原画面结果一致。原测试窗口继续后台采样，队列持续过载与短页完整性仍待修复；472保持，473未开始。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10406,7 +10406,7 @@
   "execution_track": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "BACKGROUND_CAPTURE_RESUMED_OVERLOAD_OBSERVED",
+    "status": "TEXT_ROW_REUSE_IMPLEMENTED_OVERLOAD_REMAINS",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -10418,15 +10418,15 @@
     "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "urgent_repairs": "docs/decisions/2026-11-03-urgent-player-experience.md",
     "paired_video_review_complete": false,
-    "maintenance_validation": "verification/maintenance/current-sync-20261103/summary.json",
+    "maintenance_validation": "verification/maintenance/text-row-sync-20261103/summary.json",
     "actual_game_latency_verified": false,
-    "latest_live_validation": "verification/maintenance/current-sync-20261103/restored-game.json",
+    "latest_live_validation": "verification/maintenance/text-row-sync-20261103/live-summary.json",
     "actual_game_latency_measured": true,
     "short_page_coverage_accepted": false
   },
   "current_maintenance_save": {
-    "title": "当前优先与旧页补记已接入，真实后台过载待修复",
-    "receipt": "verification/maintenance/current-sync-20261103/summary.json",
+    "title": "整页回退逐行复用已接入，持续过载仍待修复",
+    "receipt": "verification/maintenance/text-row-sync-20261103/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
@@ -10437,7 +10437,8 @@
     },
     "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "previous_urgent_receipt": "verification/maintenance/player-urgent-20261103/summary.json",
-    "latest_live_validation": "verification/maintenance/current-sync-20261103/restored-game.json",
-    "live_validation_scope": "约59秒后台日志、25次结果；队列13—14帧、淘汰增加520；无配对录像，短页完整性未通过。"
+    "latest_live_validation": "verification/maintenance/text-row-sync-20261103/live-summary.json",
+    "live_validation_scope": "约59秒22次结果，逐行复用命中；队列13—14帧，候选淘汰增加506。未配对录像，短页覆盖不通过。",
+    "previous_implementation_receipt": "verification/maintenance/current-sync-20261103/summary.json"
   }
 }

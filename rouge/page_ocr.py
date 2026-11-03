@@ -43,10 +43,12 @@ class PageOCR:
     every ordinary call already detects the whole current frame.
     """
 
-    def __init__(self, engine, *, cache_enabled=True, max_bytes=24*1024*1024, max_entries=64):
+    def __init__(self, engine, *, cache_enabled=True, max_bytes=24*1024*1024, max_entries=64,
+                 reuse_text_rows=False):
         self.engine = engine
         self.provider = engine.engine if type(engine) is CachedOCR else engine
         self.cache_enabled = cache_enabled
+        self.reuse_text_rows = reuse_text_rows
         self.max_bytes = max_bytes
         self.max_entries = max_entries
         self._cache = OrderedDict()
@@ -85,6 +87,8 @@ class PageOCR:
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
 
     def _recognize_batch(self, crops, *, force_discovery=False):
+        if self.reuse_text_rows:
+            return self._recognize_rows(crops,force_discovery=force_discovery)
         key = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes())
                     for a in crops) if self.cache_enabled else None
         entry = self._cache.get(key) if self.cache_enabled else None
@@ -115,6 +119,45 @@ class PageOCR:
                     _, old = self._cache.popitem(last=False)
                     self._bytes -= old[1]
         return result, elapsed, False
+
+    def _recognize_rows(self, crops, *, force_discovery=False):
+        """Reuse exact normalized model inputs, retaining original batch padding.
+
+        RapidOCR's original width ordering and maximum ratio still determine
+        each row's tensor and decoder length. Only uncached rows enter inference;
+        current detector boxes and classifier transforms are never cached here.
+        """
+        r=self.provider.text_rec
+        ratios=[a.shape[1]/float(a.shape[0]) for a in crops]
+        maximum=max(r.rec_image_shape[2]/r.rec_image_shape[1],*ratios)
+        tensor=np.concatenate([r.resize_norm_img(a,maximum)[None] for a in crops]).astype(np.float32)
+        keys=[('normalized_row',row.shape,row.dtype.str,ratios[i],maximum,row.tobytes())
+              for i,row in enumerate(tensor)]
+        records=[self._cache.get(key) if self.cache_enabled and not force_discovery else None
+                 for key in keys]
+        missing=[i for i,entry in enumerate(records) if entry is None]
+        result=[deepcopy(entry[0]) if entry is not None else None for entry in records]
+        elapsed=0.
+        if missing:
+            started=time.perf_counter()
+            predictions=r.session(tensor[missing])[0]
+            elapsed=time.perf_counter()-started
+            values=r.postprocess_op(predictions,False,wh_ratio_list=[ratios[i] for i in missing],
+                                   max_wh_ratio=maximum)
+            for i,value in zip(missing,values):
+                result[i]=value
+                key=keys[i];size=len(key[-1])
+                if self.cache_enabled and size<=self.max_bytes:
+                    old=self._cache.pop(key,None)
+                    if old is not None:self._bytes-=old[1]
+                    self._cache[key]=(deepcopy(value),size);self._bytes+=size
+        for key,entry in zip(keys,records):
+            if entry is not None:self._cache.move_to_end(key)
+        while self._bytes>self.max_bytes or len(self._cache)>self.max_entries:
+            _,old=self._cache.popitem(last=False);self._bytes-=old[1]
+        self.metrics['inferred_text_rows']=self.metrics.get('inferred_text_rows',0)+len(missing)
+        self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(keys)-len(missing)
+        return result,elapsed,not missing
 
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
         self._current_frame = None

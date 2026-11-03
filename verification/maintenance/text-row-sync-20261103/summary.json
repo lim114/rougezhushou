@@ -1,0 +1,41 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "整页回退按文字行精确复用并核对真实后台",
+  "passed": true,
+  "passed_scope": "96focused cases;18exact-observation replay comparisons;visible responding original toolbar, actual background row-cache hits.",
+  "functional_section": 472,
+  "functional_section_incremented": false,
+  "gate0_passed": false,
+  "continuous_short_page_coverage_accepted": false,
+  "full_suite_run": false,
+  "checks_core": "verification/maintenance/text-row-sync-20261103/checks-core.json",
+  "checks_followup": "verification/maintenance/text-row-sync-20261103/checks-ui-process.json",
+  "replay": "verification/maintenance/text-row-sync-20261103/replay/summary.json",
+  "live": "verification/maintenance/text-row-sync-20261103/live-summary.json",
+  "source_sha256": {
+    "rouge/page_ocr.py": "5380ec959ee56bb85f5dc078699bacfea7b802466b1a9550c6bdefbe586f6c77",
+    "rouge/dynamic_ocr.py": "eccb65480c0adcad8a5fdba78ead2cebfbfa24443d97992d3ec37b91ad189fd6",
+    "rouge/recognition.py": "1731748eb8f31f6e4ef3289b2acb8b4681d50c5a91e7fe88dd225fbe05e59b06",
+    "rouge/session_recording.py": "699fe6b234b627e9653342655a456c347ba08891c50e727a5f1da307e15d5408"
+  },
+  "changes": [
+    "Unknown-page full discovery now uses the installed RapidOCR whole-frame detector plus bounded normalized-row recognition reuse.",
+    "Only exact normalized input, original width padding and decoder ratio can reuse text. Current positions and detections are read every frame.",
+    "Existing specialized-page batching and small-dirty-area paths remain; unsupported provider uses original engine.",
+    "Local instrumentation records allowlisted inference/reuse counts without raw text or frame signatures."
+  ],
+  "root_cause_scope": "Manifest contains operator detail/module, roster and owned popup only; exploration/node detail have no static-control plan. No thresholds were weakened or new page templates invented.",
+  "remaining": [
+    "Live backlog and capacity-driven candidate eviction persist; no continuous short-page acceptance.",
+    "Extend correct visual routing and reduce detector/UI work using actual paired scenes.",
+    "Original Gate0 transitions/resize/video alignment and remaining panel interactions."
+  ],
+  "new_dependencies": false,
+  "whole_OCR_backend_replaced": false,
+  "private_samples_uploaded": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_state_reset": false,
+  "at_UTC": "2026-11-03T09:20:35.867550+00:00",
+  "archive_manifest": "verification/maintenance/text-row-sync-20261103/archive-manifest.json"
+}

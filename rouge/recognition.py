@@ -51,6 +51,7 @@ class ScreenReader:
         self.page_routing_enabled=page_routing_enabled
         self.page_ocr_enabled=page_ocr_enabled
         self._page_ocr=None
+        self._discovery_ocr=None
         self._page_router=None;self._page_route_age=0;self._page_route_retry_after=0
         self._page_verified_identity=None
         self._last_frame = self._last_rect = self._last_result = None
@@ -108,7 +109,10 @@ class ScreenReader:
             from rapidocr_onnxruntime import RapidOCR
             self._engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
-            self._frame_ocr=DynamicOCR(self._engine) if self.cache_enabled else self._engine
+            if self.cache_enabled and self.page_ocr_enabled:
+                from .page_ocr import PageOCR
+                self._discovery_ocr=PageOCR(self._engine,reuse_text_rows=True,max_entries=256)
+            self._frame_ocr=DynamicOCR(self._engine,discovery_engine=self._discovery_ocr) if self.cache_enabled else self._engine
         elapsed('initialization')
         image,viewport=prepare_frame(image,client_rect)
         elapsed('viewport')

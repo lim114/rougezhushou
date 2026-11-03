@@ -66,6 +66,9 @@ class SessionRecorder:
         performance = observation.get('performance', {})
         timing = {k: deepcopy(v) for k, v in performance.items()
                   if k in ('total_ms', 'stages_ms', 'backend', 'reuse', 'state_fold_ms')}
+        timing['ocr']={k:v for k,v in performance.get('ocr',{}).items() if k in
+                      ('mode','inferred_text_rows','reused_text_rows','detected_boxes',
+                       'full_detection','complete_current_texts')}
         timing['routing'] = {k: v for k, v in performance.get('routing', {}).items()
                             if k in ('page', 'strategy', 'fallback_reason', 'feature_reuse', 'visual_ms', 'score')}
         self.event('sample', page=observation.get('page'), sampling=observation.get('_sampling'),

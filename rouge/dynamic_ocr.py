@@ -9,8 +9,9 @@ import cv2
 import numpy as np
 
 class DynamicOCR:
-    def __init__(self, engine):
+    def __init__(self, engine, *, discovery_engine=None):
         self.engine=engine;self.image=None;self.raw=[];self.age=0
+        self.discovery_engine=discovery_engine if discovery_engine is not None else engine
         self.metrics={};self.regions=None
 
     def seed_full_frame(self, image, raw):
@@ -76,8 +77,12 @@ class DynamicOCR:
             if seed_from_full and domain is not None:
                 domain=None
             if domain is None:
-                raw,_=self.engine(image);raw=raw or []
+                raw,_=self.discovery_engine(image);raw=raw or []
                 self.metrics={'mode':'full_discovery','pixels':h*w,'regions':1}
+                discovery_metrics=getattr(self.discovery_engine,'metrics',{})
+                self.metrics.update({key:discovery_metrics[key] for key in
+                    ('inferred_text_rows','reused_text_rows','detected_boxes','full_detection',
+                     'complete_current_texts') if key in discovery_metrics})
             else:
                 raw=[]
                 for x0,y0,x1,y1 in domain:
