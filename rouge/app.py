@@ -125,6 +125,8 @@ class MainWindow(QMainWindow):
         self.prefer_current_capture = True
         self.next_capture_attempt = 0
         self.observation = None
+        self.map_overlay_reference = None
+        self.compact_window = None
         self.map_frame = None
         self.map_frames = {}
         self.map_frame_sequences = {}
@@ -287,7 +289,6 @@ class MainWindow(QMainWindow):
         self.public_statistics=None
         self._node_statistics_source=None
         self.public_archive=None
-        self.compact_window=None
         self.compact_button=QPushButton('助手小窗');self.compact_button.clicked.connect(self.show_compact)
         self.context_bar.addWidget(self.compact_button)
         self.back_button=QPushButton('返回上页');self.back_button.setEnabled(bool(tabs._history))
@@ -650,8 +651,8 @@ class MainWindow(QMainWindow):
         self.capture.set_collecting(True)
         capture_start=time.perf_counter()
         try:
-            overlay=getattr(getattr(self,'compact_window',None),'game_overlay',None)
-            reference=getattr(self,'map_overlay_reference',None)
+            overlay=self.compact_window.game_overlay if self.compact_window is not None else None
+            reference=self.map_overlay_reference
             refresh_overlay=bool(automatic and overlay is not None and overlay.enabled and reference
                                  and reference['observation'].get('page')in('exploration','node_detail')
                                  and(reference['observation'].get('map')or{}).get('status')=='matched'
@@ -711,7 +712,7 @@ class MainWindow(QMainWindow):
                 fold_start=time.perf_counter()
                 observation['_timeline_result']=timeline.prepare(observation,selected['seq'],oldest_pending)
                 observation.setdefault('performance',{})['state_fold_ms']=(time.perf_counter()-fold_start)*1000
-                observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),'target':selected.get('target'),'captured_at':selected['captured_at'],'run_id':run_context['run_id']}
+                observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),'target':selected.get('target'),'captured_at':selected['captured_at'],'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
                 self.events.sample.emit((selected['image'],observation))
             except Exception as error:
                 self.events.sample_error.emit((epoch,generation,str(error)))
@@ -758,7 +759,7 @@ class MainWindow(QMainWindow):
         overlay_frame=observation.pop('_overlay_frame',None)
         if current_frame:
             self.last_sample_at=observation['captured_at'];self.last_sample_seq=seq
-            previous=getattr(self,'map_overlay_reference',None);graph=observation.get('map')or{}
+            previous=self.map_overlay_reference;graph=observation.get('map')or{}
             retain_map=bool(previous and observation.get('page')=='exploration'and graph.get('status')in('ambiguous','insufficient')
                             and graph.get('zone_id')==(previous['observation'].get('map')or{}).get('zone_id'))
             # A missed template read is not a new registration. Keep its real

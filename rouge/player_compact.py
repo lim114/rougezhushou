@@ -30,6 +30,7 @@ class CompactAssistant(QDialog):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating,True)
         self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None;self.statistics_popup=None;self.workspace_popup=None
         self.reference_window=ReferenceWindow(self)
+        self.overlay_web_pages={}
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)

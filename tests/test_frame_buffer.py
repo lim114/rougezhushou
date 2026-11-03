@@ -15,6 +15,15 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_pointer_exclusion_belongs_to_retained_frame_not_latest_mouse(self):
+        buffer=FrameBuffer(settle_seconds=0);bounds=[4,8,28,40]
+        buffer.offer(page(30),1,pointer_bounds=bounds)
+        bounds[0]=100
+        buffer.offer(page(130),2,pointer_bounds=[50,60,80,100])
+        first=buffer.take();last=buffer.latest()
+        self.assertEqual(first['pointer_bounds'],(4,8,28,40))
+        self.assertEqual(last['pointer_bounds'],(50,60,80,100))
+
     def test_transient_pages_are_read_after_the_user_has_already_left(self):
         buffer = FrameBuffer(settle_seconds=0)
         # Recognition is busy while the capture callback observes three short

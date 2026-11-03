@@ -134,6 +134,8 @@ class ReferenceWindow(PlayerDialog):
         self.setWindowTitle('黑流树海助手 · '+page.windowTitle())
         self.headers.setCurrentWidget(page.header)
         self.pages.setCurrentWidget(page)
+        self.setProperty('independentMapWeb',bool(page.property('mapOverlayWebPage')))
+        self.back.setVisible(not page.property('mapOverlayWebPage'));self.forward.setVisible(not page.property('mapOverlayWebPage'))
         page.show()
         self.presenting = True
         self.show()

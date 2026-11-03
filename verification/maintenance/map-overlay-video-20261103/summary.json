@@ -1,0 +1,146 @@
+{
+  "kind": "in_progress_implementation",
+  "status": "IMPLEMENTED_TWO_ROUND_ACCEPTANCE_PENDING",
+  "branch": "main",
+  "baseline_commit": "a6a9ddbbc17b9de773848cf20c589dfb42964dc4",
+  "functional_section_completed": false,
+  "completed_sections": 472,
+  "next_section": 473,
+  "scope": "左侧类型胶囊、白色历史频率、点击小卡和共享网页；原游戏定位放大按钮保留；光标遮挡校验修正",
+  "source_sha256": {
+    "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+    "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+    "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+    "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+    "rouge/player_game_binding.py": "3df0e1f5b1082d8c1f29c21907c5e9fed70631607470d2da5f9034c9414d7e40",
+    "rouge/player_game_map.py": "18e9f4a02da498c34060dee2d1032f23eda027b127901f9866ec21efcac0f98b",
+    "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+    "rouge/player_reference_links.py": "d977d590b9360367a01f01dfaf67ed491ab7cd025fe95cf38ba707f5731dc0c6",
+    "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+    "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+    "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+    "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738"
+  },
+  "checks": {
+    "original_102_tests": {
+      "modules": [
+        "tests.test_map_overlay_video",
+        "tests.test_software_pointer",
+        "tests.test_frame_buffer",
+        "tests.test_overlay_display",
+        "tests.test_player_feature_424",
+        "tests.test_sampling_flow",
+        "tests.test_player_statistics_388",
+        "tests.test_player_map_workspace_383",
+        "tests.test_player_map_interaction_392",
+        "tests.test_player_feature_425.NodeHitTests"
+      ],
+      "source_sha256": {
+        "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+        "rouge/capture.py": "2cfbf7ea31670d580c88b47ee9df5b995dd20960c2184e8ae3541324adb21b8c",
+        "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+        "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+        "rouge/player_game_binding.py": "3df0e1f5b1082d8c1f29c21907c5e9fed70631607470d2da5f9034c9414d7e40",
+        "rouge/player_game_map.py": "e976249f1084b288d67d71186d7737ad113704e992b75f5e489506d4875958b6",
+        "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+        "rouge/player_reference_links.py": "d977d590b9360367a01f01dfaf67ed491ab7cd025fe95cf38ba707f5731dc0c6",
+        "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+        "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+        "rouge/software_pointer.py": "4790be3e09a5e9723442970aa709067b49f3a1d747f8b910d0f3b55e4fe6d599",
+        "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738"
+      },
+      "started_at": 1793724512.9869266,
+      "actual_PID": 33832,
+      "actual_exit": 0,
+      "finished_at": 1793724563.5485318
+    },
+    "final_pointer_buffer_sampling": {
+      "tests": 29,
+      "actual_exit": 0,
+      "modules": [
+        "tests.test_software_pointer",
+        "tests.test_frame_buffer",
+        "tests.test_sampling_flow"
+      ],
+      "source_sha256": {
+        "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+        "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+        "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+        "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da"
+      }
+    },
+    "full_suite_run": false,
+    "baseline_window_size_failures": {
+      "tests": 2,
+      "same_failures_on_accepted_baseline": true,
+      "environment": "offscreen 800x800; not claimed passed"
+    },
+    "earlier_failed_pointer_check": {
+      "tests": 64,
+      "actual_exit": 1,
+      "failed": 1,
+      "correction": "exclude undefined masked normalized scores at zero-energy background; final related check passes"
+    },
+    "final_card_controller": {
+      "tests": 12,
+      "actual_exit": 0,
+      "scope": "test_map_overlay_video.ControllerTests; source expansion, no layout collapse, unchanged cells preserved",
+      "source_sha256": "18e9f4a02da498c34060dee2d1032f23eda027b127901f9866ec21efcac0f98b"
+    }
+  },
+  "real_acceptance": {
+    "type_switches": "recorded across earlier source versions; final-source two-round sequence pending",
+    "white_numbers": "user confirmed readable",
+    "card": "round1-pointer-final: ordinary node presses and card paints recorded, user confirmed move-in and source expansion; matching passes with one cursor-occluded anchor excluded and fourteen retained. Subsequent layout/source-state fix passed12 targeted controller checks; complete two-round test pending.",
+    "web": "isolated controller verified; actual game bound-stage web open pending",
+    "second_large_size_or_map": "pending",
+    "page_return_and_focus_with_card": "pending",
+    "wrong_node_missing_false_counts": null,
+    "reason_counts": "runs.json; recorded event counts, not time-share",
+    "freshness_and_structure_thresholds": "30s/2s, NCC .99 and contrast .9-1.1 unchanged; title plus >=3 unoccluded node anchors required"
+  },
+  "data_mapping": "floor and measured distance select one aggregate historical bucket for a canonical template position; different positions may share this bucket; no unique-site probability inferred. Unmatched template, inconsistent or duplicate node identity has no number.",
+  "local_only": "all screenshots, recordings, raw observations and per-session logs remain .local; no personal run data included here",
+  "pending": [
+    "final layout source: complete both large-window rounds and screenshot comparison",
+    "real linked webpage scenario",
+    "all five real metrics including wrong/missing/false node labels",
+    "developer decision on existing settings I/O failure branches; unchanged in this task"
+  ],
+  "decision": "docs/decisions/2026-11-03-overlay-video-controls.md",
+  "live_test_window": "ordinary startup, no preselected kind; actual launcher and source hashes kept locally",
+  "changed_files": [
+    "CLOUD_HANDOFF.md",
+    "CLOUD_INDEX.json",
+    "DEVELOPMENT_CHECKPOINT.json",
+    "PROJECT_COMPLETED.md",
+    "PROJECT_PROGRESS.md",
+    "PROJECT_REQUIREMENTS.md",
+    "VIDEO_PARITY.md",
+    "WORK_IN_PROGRESS.md",
+    "pyproject.toml",
+    "requirements.txt",
+    "rouge/app.py",
+    "rouge/capture.py",
+    "rouge/frame_buffer.py",
+    "rouge/player_compact.py",
+    "rouge/player_game_binding.py",
+    "rouge/player_game_map.py",
+    "rouge/player_map.py",
+    "rouge/player_reference_links.py",
+    "rouge/player_reference_window.py",
+    "rouge/public_node_statistics.py",
+    "rouge/tomimi_view.py",
+    "rouge/software_pointer.py",
+    "tests/test_frame_buffer.py",
+    "tests/test_map_overlay_video.py",
+    "tests/test_overlay_display.py",
+    "tests/test_sampling_flow.py",
+    "tests/test_software_pointer.py",
+    "docs/decisions/2026-11-03-overlay-video-controls.md",
+    "licenses/pynput-1.8.1-LGPL.txt",
+    "verification/maintenance/map-overlay-video-20261103/summary.json",
+    "verification/maintenance/map-overlay-video-20261103/runs.json",
+    "verification/maintenance/map-overlay-video-20261103/README.md"
+  ]
+}

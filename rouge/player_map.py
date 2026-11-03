@@ -193,6 +193,10 @@ class MapPanel(QWidget):
         self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.setInterval(220);self.leave_timer.timeout.connect(self.leave_hover)
         self.view.nodeHovered.connect(self.queue_hover);self.hover_card.entered.connect(self.leave_timer.stop);self.hover_card.left.connect(self.leave_timer.start)
         if self.statistics_source is not None:self.statistics_source.changed.connect(self.refresh_statistics)
+        companion=owner.compact_window
+        if companion is not None:
+            companion.game_overlay.kindChanged.connect(self.set_type_filter)
+            self.set_type_filter(companion.game_overlay.kind)
     def refresh_statistics(self):
         if self.isVisible():self.refresh()
     def set_type_filter(self,kind):

@@ -82,6 +82,7 @@ class GameWindowBinding(QObject):
         roots=[c,c.active_popup,self.owner.player_notes,self.owner.public_archive,self.owner.public_statistics];found=[]
         for widget in QApplication.topLevelWidgets():
             if not isinstance(widget,QDialog):continue
+            if widget.property('independentMapWeb'):continue
             chain=parent_chain(widget)
             if any(root in chain for root in roots):found.append((len(chain),widget))
         return [widget for _,widget in sorted(found,key=lambda row:row[0])]

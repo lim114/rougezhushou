@@ -89,7 +89,7 @@ def _frequency_rows(values):
     total=sum(n for _,n in values)
     if not total:return []
     # Denominator is all observed node types at this floor/distance, not maps or all distances.
-    return [{'type':key,'name':LABELS.get(key,key),'count':n,'total':total,'frequency':n/total}for key,n in values if n>0]
+    return [{'type':key,'name':LABELS.get(key,key),'count':n,'total':total,'frequency':n/total}for key,n in values]
 
 def frequency_rows(data,floor,distance):
     validate(data);_selection(floor,distance)

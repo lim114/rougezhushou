@@ -94,6 +94,11 @@ class GameCapture:
         if target['hwnd'] not in known or known[target['hwnd']]['pid'] != target['pid']:
             raise RuntimeError('游戏窗口已关闭或变化，请刷新窗口列表。')
         from windows_capture import WindowsCapture
+        from .software_pointer import SoftwarePointer
+        pointer=SoftwarePointer()
+        dpi_user=ctypes.WinDLL('user32',use_last_error=True)
+        dpi_user.SetThreadDpiAwarenessContext.argtypes=[ctypes.c_void_p]
+        dpi_user.SetThreadDpiAwarenessContext.restype=ctypes.c_void_p
         self.target = known[target['hwnd']]
         self.closed = False
         session = self._session
@@ -108,7 +113,18 @@ class GameCapture:
                 # retained candidates; expensive recognition runs on another worker.
                 image=frame.frame_buffer[:,:,:3]
                 client_rect=frame_client_rect(target['hwnd'],image)
-                self.buffer.offer(image,time.time(),client_rect,target)
+                point=None;may_learn=False
+                if client_rect is not None:
+                    prior=dpi_user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
+                    try:
+                        flags,handle,position=win32gui.GetCursorInfo()
+                        may_learn=not flags
+                        origin=win32gui.ClientToScreen(target['hwnd'],(0,0))
+                        point=(position[0]-origin[0]+client_rect[0],position[1]-origin[1]+client_rect[1])
+                    finally:
+                        if prior:dpi_user.SetThreadDpiAwarenessContext(prior)
+                pointer_bounds=pointer.locate(image,point,may_learn=may_learn)
+                self.buffer.offer(image,time.time(),client_rect,target,pointer_bounds=pointer_bounds)
         @self._capture.event
         def on_closed():
             with self._lock:

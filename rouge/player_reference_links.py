@@ -2,6 +2,23 @@
 from .player_reference_window import ReferenceWindow, ToolPage
 
 
+def open_overlay_web(companion,target,area):
+    """Reuse the shared reference window; this page outlives map eligibility."""
+    from .tomimi_view import TomimiPanel
+    page=companion.overlay_web_pages.get(target['url'])
+    if page is None:
+        page=ToolPage(target.get('provider','Tomimi')+' · '+target['name'],TomimiPanel(target),companion,object_name='mapReferenceWindow')
+        page.panel=page.body_scroll.widget();page.resize(min(1100,round(area.width()*.8)),min(680,round(area.height()*.8)))
+        reader=page.panel;reader.layout().removeWidget(reader.navigation);reader.layout().removeWidget(reader.address)
+        reader.navigation_bar.insertWidget(3,reader.address,1);reader.title.hide();reader.environment.hide()
+        reader.navigation.setObjectName('overlayWebNav');reader.navigation.setStyleSheet('#overlayWebNav{background:#f2f3f5;border-radius:6px;} #overlayWebNav QLineEdit{color:#252a30;background:#ffffff;border:0;border-radius:6px;padding:4px;} #overlayWebNav QToolButton{background:transparent;border:0;padding:3px;} #overlayWebNav QLabel{color:#44505b;background:transparent;}')
+        page.title_label.hide();page.header_bar.addWidget(reader.navigation,1)
+        page.setProperty('mapOverlayWebPage',True);page.setProperty('playerOpened',True);companion.overlay_web_pages[target['url']]=page
+    companion.present(page)
+    host=companion.reference_window;host.resize(page.preferred_size);host.move(area.center()-host.rect().center())
+    return page
+
+
 def event_context(panel):
     if panel.result is None:
         return None

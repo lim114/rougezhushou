@@ -1,7 +1,7 @@
 """Use the actual public website inside Qt's existing reference window."""
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QToolButton, QStyle
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QToolButton, QStyle,QLineEdit
 from PySide6.QtWebEngineCore import QWebEnginePage, QWebEngineProfile
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from .player_reference_window import ReferenceWindow, ToolPage
@@ -19,24 +19,26 @@ class TomimiPanel(QWidget):
         page = QWebEnginePage(self.profile, self.web)
         page.setBackgroundColor(QColor('#262626'))
         self.web.setPage(page)
-        bar = QHBoxLayout()
+        self.navigation=QWidget();bar = self.navigation_bar = QHBoxLayout(self.navigation);bar.setContentsMargins(0,0,0,0)
         for action, title, icon in ((QWebEnginePage.WebAction.Back, '网页上一页', QStyle.StandardPixmap.SP_ArrowBack),
                                     (QWebEnginePage.WebAction.Forward, '网页下一页', QStyle.StandardPixmap.SP_ArrowForward),
                                     (QWebEnginePage.WebAction.Reload, '刷新网页', QStyle.StandardPixmap.SP_BrowserReload)):
             command=page.action(action);command.setText(title);command.setIcon(self.style().standardIcon(icon))
             button = QToolButton(); button.setDefaultAction(command)
             button.setToolTip(title); button.setAccessibleName(title); bar.addWidget(button)
-        self.title = QLabel('Tomimi · '+target['name']); self.title.setWordWrap(True)
+        self.title = QLabel(target.get('provider','Tomimi')+' · '+target['name']); self.title.setWordWrap(True)
         bar.addWidget(self.title, 1)
-        bar.addWidget(QLabel('难度与藏品：网页内设置'))
+        self.environment=QLabel('网页资料'if target.get('provider')=='PRTS'else'难度与藏品：网页内设置');bar.addWidget(self.environment)
         self.status = QLabel('正在载入…'); bar.addWidget(self.status)
-        layout.addLayout(bar); layout.addWidget(self.web, 1)
+        layout.addWidget(self.navigation); layout.addWidget(self.web, 1)
+        self.address=QLineEdit(target['url']);self.address.setReadOnly(True);self.address.setAccessibleName('网页地址');layout.insertWidget(1,self.address)
+        self.web.urlChanged.connect(lambda url:self.address.setText(url.toString()))
         self.web.titleChanged.connect(self.title.setText)
         self.web.loadFinished.connect(self._loaded)
         self.web.setUrl(QUrl(target['url']))
 
     def _loaded(self, ok):
-        self.status.setText('tomimi.dev' if ok else '加载失败，点击刷新重试')
+        self.status.setText(self.web.url().host() if ok else '加载失败，点击刷新重试')
 
     def refresh_reference(self):
         # Parent qualification handles source changes; refresh preserves browser state.

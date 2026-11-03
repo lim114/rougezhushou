@@ -68,6 +68,13 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
         self.assertEqual(self.window.capture.stats()['pending'],0)
 
+    def test_overlay_reference_keeps_pointer_bounds_from_its_recognized_frame(self):
+        self.release.set();image=np.full((120,180,3),60,dtype=np.uint8)
+        self.window.capture.buffer.offer(image,time.time(),pointer_bounds=[20,30,50,80])
+        self.window.auto.setChecked(True)
+        self.wait_for(lambda:not self.window.busy and self.window.map_overlay_reference is not None)
+        self.assertEqual(self.window.map_overlay_reference['pointer_bounds'],(20,30,50,80))
+
     def test_reset_discards_queued_and_inflight_results(self):
         self.offer(20);self.window.auto.setChecked(True)
         self.wait_for(self.entered.is_set)

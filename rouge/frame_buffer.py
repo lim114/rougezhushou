@@ -91,7 +91,7 @@ class FrameBuffer:
                     client_rect=(list(frame['client_rect'])
                                  if frame['client_rect'] is not None else None),
                     target=dict(frame['target']), seq=frame['seq'],
-                    generation=frame['generation'])
+                    generation=frame['generation'],pointer_bounds=frame['pointer_bounds'])
 
     def _retained(self):
         retained = {id(frame['image']): frame['image'] for frame in self._pending}
@@ -152,7 +152,7 @@ class FrameBuffer:
             return 1.
         return float(cv2.absdiff(left['novelty'], right['novelty']).mean()) / 255.
 
-    def offer(self, image, captured_at, client_rect=None, target=None):
+    def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None):
         """Offer a BGR uint8 frame; even rejected offers consume a unique seq.
 
         Near-identical consecutive observations share a recognition candidate.
@@ -191,6 +191,7 @@ class FrameBuffer:
             identity = dict(target or {})
             rect = tuple(client_rect) if client_rect is not None else None
             frame = dict(image=image.copy(), captured_at=timestamp,
+                         pointer_bounds=tuple(pointer_bounds)if pointer_bounds is not None else None,
                          client_rect=rect, target=identity, seq=seq,
                          generation=self._generation,
                          key=(image.shape, rect, identity.get('hwnd'), identity.get('pid')),

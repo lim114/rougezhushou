@@ -157,7 +157,10 @@ class OverlaySamplingTests(unittest.TestCase):
         w.reader.read=incomplete
         w.map_overlay_reference={'captured_at':stamp-21,'observation':{'page':'exploration','map':{'zone_id':'z','status':'matched'}}}
         for value in(20,40,60,80):self.offer(value,stamp)
-        w.auto.setChecked(True);self.wait_for(lambda:len(self.seen)==4 and not w.busy)
+        w.auto.blockSignals(True);w.auto.setChecked(True);w.auto.blockSignals(False)
+        with patch.object(w,'finish_sample',side_effect=lambda:setattr(w,'busy',False)):
+            for count in range(1,5):
+                w.sample_now(automatic=True);self.wait_for(lambda:len(self.seen)==count and not w.busy)
         self.assertEqual(self.seen,[80,20,60,40])
 
 if __name__=='__main__':unittest.main()
