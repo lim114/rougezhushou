@@ -83,7 +83,8 @@ class SessionRecorder:
         current = self.clock() if now is None else now
         row = {**decision, 'did_show': did_show, 'enabled': enabled, 'kind': kind,
                'would_show': None}
-        identity = {k: v for k, v in row.items() if k not in ('reference_age_s', 'current_age_s', 'evaluation_ms')}
+        identity = {k: v for k, v in row.items() if k not in ('reference_age_s', 'current_age_s', 'evaluation_ms',
+                    'evaluated_at','reference_captured_at','current_captured_at','label_min_correlation')}
         if identity != self.last_overlay or current-self.last_overlay_at >= 1:
             self.event('overlay', **row)
             self.last_overlay = identity

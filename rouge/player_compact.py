@@ -73,7 +73,13 @@ class CompactAssistant(QDialog):
         from .player_game_hover import GameHover
         self.game_hover=GameHover(self,owner);self.game_hover_enabled.toggled.connect(self.game_hover.set_enabled)
         from .player_game_map import GameMapOverlay
-        self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+        from pathlib import Path
+        from .player_overlay_settings import OverlayPreferences
+        self.overlay_preferences=OverlayPreferences(Path(hotkey_path).with_name('player-map-overlay.json')if hotkey_path is not None else None)
+        self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled)
+        self.map_overlay_enabled.setChecked(self.overlay_preferences.enabled);self.game_overlay.set_enabled(self.overlay_preferences.enabled)
+        self.map_overlay_enabled.setToolTip(self.overlay_preferences.warning or '自动保存开关；仅在已确认的当前游戏地图显示。')
+        self.map_overlay_enabled.toggled.connect(self.set_map_overlay_enabled)
         from PySide6.QtWidgets import QSystemTrayIcon,QMenu
         self.tray=QSystemTrayIcon(self.tool_buttons[0].normal_icon,self);self.tray.setToolTip('黑流树海助手')
         self.tray_menu=QMenu(self)
@@ -84,6 +90,11 @@ class CompactAssistant(QDialog):
         self.tray.setContextMenu(self.tray_menu)
         self.tray.activated.connect(lambda reason:self._open_from_tray(by_name['本局概况'][1])if reason==QSystemTrayIcon.ActivationReason.Trigger else None)
         self.tray.show()
+    def set_map_overlay_enabled(self,value):
+        self.game_overlay.set_enabled(value)
+        warning=self.overlay_preferences.save(value)
+        self.map_overlay_enabled.setToolTip(warning or '自动保存开关；仅在已确认的当前游戏地图显示。')
+
     def _open_from_tray(self,callback):
         if self.hidden_windows is not None:self.toggle_visibility()
         return callback()

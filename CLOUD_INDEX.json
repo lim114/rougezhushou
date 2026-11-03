@@ -5,7 +5,7 @@
   "next_section": 473,
   "current_section_label": "第472节 + 首层四图的入口与保护目标标记",
   "current_completed_change": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
-  "batch_status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
+  "batch_status": "MAP_OVERLAY_DISPLAY_TARGETED_REAL_SCENARIOS_RECORDED",
   "next_full_validation_after": null,
   "full_validation_mode": "disabled_by_user",
   "full_validation_restore_requires_explicit_user_request": true,
@@ -18,7 +18,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "a93c906a1e5033bdaeb8042d01ef4fd05e9cf5980c2f5ec6ab01fdd063cf894d",
+    "sha256": "c349e5900a1531f5acab5e89c892810a9ebdbbd59cddcbb55349f5a8b6ce4772",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2844,12 +2844,12 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "4b52feb970479b6d358c11f45a2d546c4839269842c9dd5c45e89ce77950da05",
-    "PROJECT_PROGRESS.md": "949383de405cc28f3f6a6dd503f33b9628e4cd659269fe311ee0b2673bce430b",
-    "WORK_IN_PROGRESS.md": "39bb60829ea38429391b835839ce6e2ee9afd038e5d7e2954e1ba5fd52c8fe33",
-    "PROJECT_COMPLETED.md": "8e988cb061370901e1d3c7bab5bac6aedbe0cd6693adb704c9cf3d50f5de6168",
+    "DEVELOPMENT_CHECKPOINT.json": "408c480d7ef7e80068fae1c25d19f57b419663da4e5883c0279ea6dfa9c75fff",
+    "PROJECT_PROGRESS.md": "374e279db0664af809b39f26634040c2d26337569529ea12f8a3ffcd9e453181",
+    "WORK_IN_PROGRESS.md": "6652b9f025fcd52c20d3250023c6ad53cb837bc4a456b444652bd6688e7b276c",
+    "PROJECT_COMPLETED.md": "fb447ed4bd8bfb7c905d41d95b1960e5c04549c127fb4bbdc60a687c97ab178d",
     "AGENTS.md": "af32db3417cd878256a7232490dbb5e3cd48a79c8a24e8f414ea1af5c2ba2e0e",
-    "PROJECT_REQUIREMENTS.md": "a93c906a1e5033bdaeb8042d01ef4fd05e9cf5980c2f5ec6ab01fdd063cf894d",
+    "PROJECT_REQUIREMENTS.md": "c349e5900a1531f5acab5e89c892810a9ebdbbd59cddcbb55349f5a8b6ce4772",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
     "docs/decisions/2026-11-02-experience-gates.md": "1e5dd8d1b86a0c6ec09704035a18b24e2b443a91e2177f3ce9c3ca23defe3481"
   },
@@ -2857,7 +2857,7 @@
   "current_execution": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
+    "status": "MAP_OVERLAY_DISPLAY_TARGETED_REAL_SCENARIOS_RECORDED",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -2869,28 +2869,20 @@
     "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "urgent_repairs": "docs/decisions/2026-11-03-urgent-player-experience.md",
     "paired_video_review_complete": false,
-    "maintenance_validation": "verification/maintenance/hidden-view-sync-20261103/summary.json",
+    "maintenance_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "actual_game_latency_verified": false,
-    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
+    "latest_live_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "actual_game_latency_measured": true,
     "short_page_coverage_accepted": false
   },
   "current_maintenance": {
-    "title": "隐藏目录合并刷新，真实连续采样仍待验",
-    "receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
+    "title": "探索地图叠加显示修复，实机范围与剩余耗时已记录",
+    "receipt": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
-    "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
-    "tools_verified_publication": {
-      "commit": "83d90344f54c4fa75de53f99a6b20323a95a9795",
-      "proof": "verification/maintenance/gate0-publication.json",
-      "proof_sha256": "f933f1d51e17436b5bf0a0cd2e470a091431a916620b0ded02f007e47c28f4c1"
-    },
-    "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
-    "previous_urgent_receipt": "verification/maintenance/player-urgent-20261103/summary.json",
-    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
-    "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
-    "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json",
-    "receipt_sha256": "1d4ee066545663893dd83a94ecb6f6b180a724ca4ffdfedf935bc9bfbc926428"
+    "latest_live_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
+    "live_validation_scope": "探索静止、切页与缩放的本机定向记录；非完整10分钟会话，原失败保留，完整Gate0未通过。",
+    "previous_implementation_receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
+    "receipt_sha256": "6358d4c2c62ace97d4f0928f3cd1aba5a6badf29794ce9774be4c1d5f019970c"
   }
 }

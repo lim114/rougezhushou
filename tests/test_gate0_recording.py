@@ -32,6 +32,17 @@ def fixture():
 
 
 class Gate0Tests(unittest.TestCase):
+    def test_overlay_capture_times_do_not_turn_each_tick_into_a_new_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            recorder=SessionRecorder(Path(tmp)/'session',scenario='overlay_heartbeat')
+            for now in(0,.5,1,1.5):
+                recorder.overlay({'reason':'eligible','evaluated_at':now,'current_captured_at':now,
+                                  'reference_captured_at':now,'label_min_correlation':.999-now*.0001},
+                                 did_show=True,enabled=True,kind=None,now=now)
+            recorder.close()
+            rows=[json.loads(line) for line in (recorder.folder/'events.jsonl').read_text('utf8').splitlines()]
+            self.assertEqual(len([row for row in rows if row['event']=='overlay']),2)
+
     def test_ocr_row_counters_are_recorded_without_raw_inputs_or_text(self):
         with tempfile.TemporaryDirectory() as tmp:
             recorder=SessionRecorder(Path(tmp)/'session',scenario='row_reuse')

@@ -3288,7 +3288,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
+  "batch_status": "MAP_OVERLAY_DISPLAY_TARGETED_REAL_SCENARIOS_RECORDED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3500,14 +3500,14 @@
     "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
+    "status": "MAP_OVERLAY_DISPLAY_TARGETED_REAL_SCENARIOS_RECORDED",
     "completed_sections": 472,
     "next_section": 473,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
     "receipt": "verification/sections/472.json",
-    "scope": "隐藏目录合并刷新与显示前同步完成，62项定向用例/24项原窗口检查通过；隔离界面处理239.95→43.64毫秒。本批游戏未运行，继续文字检测吞吐与短页完整性，472保持。"
+    "scope": "叠加开关、文字结构核对与参考更新完成；44项最终定向检查通过，大窗口静止/切页与缩放恢复已记录。800x600连续性、缩放恢复速度、撤下延迟和过载短页仍待改进，472保持。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10407,7 +10407,7 @@
   "execution_track": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
+    "status": "MAP_OVERLAY_DISPLAY_TARGETED_REAL_SCENARIOS_RECORDED",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -10419,13 +10419,31 @@
     "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "urgent_repairs": "docs/decisions/2026-11-03-urgent-player-experience.md",
     "paired_video_review_complete": false,
-    "maintenance_validation": "verification/maintenance/hidden-view-sync-20261103/summary.json",
+    "maintenance_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "actual_game_latency_verified": false,
-    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
+    "latest_live_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "actual_game_latency_measured": true,
     "short_page_coverage_accepted": false
   },
   "current_maintenance_save": {
+    "title": "探索地图叠加显示修复，实机范围与剩余耗时已记录",
+    "receipt": "verification/maintenance/map-overlay-display-20261103/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "latest_live_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
+    "live_validation_scope": "探索静止、切页与缩放的本机定向记录；非完整10分钟会话，原失败保留，完整Gate0未通过。",
+    "previous_implementation_receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json"
+  },
+  "branch_transition": {
+    "active_branch": "main",
+    "retired_branch": "codex/p2-development",
+    "merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
+    "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
+    "historical_publication_branch_preserved": true,
+    "resume_script": "scripts/resume_development.sh",
+    "scope": "User explicitly switched ongoing development to main. Existing unfinished work and cancelled full checks remain."
+  },
+  "previous_hidden_view_maintenance_save": {
     "title": "隐藏目录合并刷新，真实连续采样仍待验",
     "receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
     "binding": "enclosing_commit",
@@ -10441,14 +10459,5 @@
     "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
     "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
     "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json"
-  },
-  "branch_transition": {
-    "active_branch": "main",
-    "retired_branch": "codex/p2-development",
-    "merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
-    "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
-    "historical_publication_branch_preserved": true,
-    "resume_script": "scripts/resume_development.sh",
-    "scope": "User explicitly switched ongoing development to main. Existing unfinished work and cancelled full checks remain."
   }
 }

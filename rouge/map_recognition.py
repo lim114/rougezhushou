@@ -240,6 +240,7 @@ def read_map(image, texts, labels, run):
             # frame's small ring establishes its visible clearing appearance.
             # Neither a missing label nor a template slot proves a clearing.
             'observed_type': '林间空地' if clearing else evidence.get('type'),
+            'label_box': evidence.get('label_box'),
             'observation_source': 'visible_clearing_ring' if clearing else
                 'visible_node_label' if evidence.get('type') else None,
             'visible': bool(evidence), 'prediction': None})

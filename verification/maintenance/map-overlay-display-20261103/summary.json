@@ -1,0 +1,521 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "探索地图叠加默认开启、动画结构核对与真实参考更新",
+  "functional_section": 472,
+  "functional_section_incremented": false,
+  "gate0_passed": false,
+  "all_requested_real_acceptance_passed": false,
+  "large_static_display_passed": true,
+  "small_window_continuity_passed": false,
+  "resize_registration_recovered": true,
+  "freshness_limits_changed": false,
+  "freshness_s": {
+    "reference": 30,
+    "current": 2
+  },
+  "appearance_changed": false,
+  "new_features_added": false,
+  "switch_cause": "GameMapOverlay default false; unchecked setting had no persistence. Missing preference now defaults true; explicit saved false is preserved without startup writes.",
+  "baseline": {
+    "historical_disabled_events": 448,
+    "enabled_static": {
+      "overlay_events": 54,
+      "reason_distribution": {
+        "reference_or_companion_unavailable": 10,
+        "anchor_pixels_changed": 44
+      },
+      "foreground_contexts": {
+        "True": 131
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 65.5270094871521,
+      "first_native_show_after_start_s": null,
+      "native_show_events": 0,
+      "eligible_reference_age_s": null,
+      "eligible_current_age_s": null,
+      "current_lane_receive_age_s": {
+        "n": 15,
+        "median": 2.2384917736053467,
+        "p95": 11.811954975128174,
+        "max": 11.811954975128174
+      },
+      "history_lane_samples": 13,
+      "sample_pages": {
+        "exploration": 27
+      },
+      "client_sizes": [],
+      "queue_overflow_start_end": [
+        0,
+        529
+      ],
+      "max_pending": 14,
+      "withdrawal_measurement": {
+        "events": 0,
+        "detected_to_hidden_max_ms": null,
+        "poll_uncertainty_max_ms": null,
+        "already_hidden_at_first_invalid_poll": 0,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    }
+  },
+  "real_scenarios": {
+    "large_static": {
+      "overlay_events": 52,
+      "reason_distribution": {
+        "reference_or_companion_unavailable": 9,
+        "eligible": 43
+      },
+      "foreground_contexts": {
+        "True": 244
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 65.00477433204651,
+      "first_native_show_after_start_s": 11.487178,
+      "native_show_events": 1,
+      "eligible_reference_age_s": {
+        "n": 43,
+        "median": 4.345907688140869,
+        "p95": 12.333373785018921,
+        "max": 13.741219758987427
+      },
+      "eligible_current_age_s": {
+        "n": 43,
+        "median": 0.08619189262390137,
+        "p95": 0.29305195808410645,
+        "max": 0.355877161026001
+      },
+      "current_lane_receive_age_s": {
+        "n": 13,
+        "median": 2.265585422515869,
+        "p95": 12.266343116760254,
+        "max": 12.266343116760254
+      },
+      "history_lane_samples": 12,
+      "sample_pages": {
+        "exploration": 24
+      },
+      "client_sizes": [
+        [
+          2048,
+          1080
+        ]
+      ],
+      "queue_overflow_start_end": [
+        0,
+        489
+      ],
+      "max_pending": 14,
+      "withdrawal_measurement": {
+        "events": 0,
+        "detected_to_hidden_max_ms": null,
+        "poll_uncertainty_max_ms": null,
+        "already_hidden_at_first_invalid_poll": 0,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    },
+    "switch_and_return": {
+      "overlay_events": 189,
+      "reason_distribution": {
+        "reference_or_companion_unavailable": 8,
+        "eligible": 149,
+        "window_not_eligible": 15,
+        "anchor_pixels_changed": 11,
+        "page_or_map_unmatched": 6
+      },
+      "foreground_contexts": {
+        "True": 821,
+        "False": 69
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 242.51046061515808,
+      "first_native_show_after_start_s": 10.365555999999998,
+      "native_show_events": 5,
+      "eligible_reference_age_s": {
+        "n": 149,
+        "median": 4.345172643661499,
+        "p95": 10.454399108886719,
+        "max": 16.13835573196411
+      },
+      "eligible_current_age_s": {
+        "n": 149,
+        "median": 0.09063124656677246,
+        "p95": 0.1990673542022705,
+        "max": 0.3296668529510498
+      },
+      "current_lane_receive_age_s": {
+        "n": 49,
+        "median": 2.239182710647583,
+        "p95": 8.17097520828247,
+        "max": 13.84979772567749
+      },
+      "history_lane_samples": 48,
+      "sample_pages": {
+        "exploration": 94,
+        "run_relics": 2
+      },
+      "client_sizes": [
+        [
+          2048,
+          1080
+        ]
+      ],
+      "queue_overflow_start_end": [
+        0,
+        1882
+      ],
+      "max_pending": 14,
+      "withdrawal_measurement": {
+        "events": 3,
+        "detected_to_hidden_max_ms": 512.7613000004203,
+        "poll_uncertainty_max_ms": 104.29690000091796,
+        "already_hidden_at_first_invalid_poll": 1,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    },
+    "initial_resize_failure_retained": {
+      "overlay_events": 248,
+      "reason_distribution": {
+        "eligible": 113,
+        "window_not_eligible": 15,
+        "anchor_pixels_changed": 11,
+        "page_or_map_unmatched": 109
+      },
+      "foreground_contexts": {
+        "True": 1176,
+        "False": 70
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 319.69523310661316,
+      "first_native_show_after_start_s": 0.33821500000000004,
+      "native_show_events": 9,
+      "eligible_reference_age_s": {
+        "n": 113,
+        "median": 7.93621563911438,
+        "p95": 14.40342664718628,
+        "max": 16.90245771408081
+      },
+      "eligible_current_age_s": {
+        "n": 113,
+        "median": 0.0748441219329834,
+        "p95": 0.23448395729064941,
+        "max": 0.3038640022277832
+      },
+      "current_lane_receive_age_s": {
+        "n": 42,
+        "median": 4.363954186439514,
+        "p95": 6.396916151046753,
+        "max": 8.927884340286255
+      },
+      "history_lane_samples": 40,
+      "sample_pages": {
+        "exploration": 50,
+        "unknown": 31
+      },
+      "client_sizes": [
+        [
+          800,
+          600
+        ],
+        [
+          2048,
+          1080
+        ]
+      ],
+      "queue_overflow_start_end": [
+        1884,
+        4517
+      ],
+      "max_pending": 16,
+      "withdrawal_measurement": {
+        "events": 8,
+        "detected_to_hidden_max_ms": 624.1702000006626,
+        "poll_uncertainty_max_ms": 125.49679999938235,
+        "already_hidden_at_first_invalid_poll": 1,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    },
+    "small_static_final": {
+      "overlay_events": 49,
+      "reason_distribution": {
+        "reference_or_companion_unavailable": 10,
+        "page_or_map_unmatched": 4,
+        "eligible": 35
+      },
+      "foreground_contexts": {
+        "True": 238
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 61.77956748008728,
+      "first_native_show_after_start_s": 17.621565,
+      "native_show_events": 1,
+      "eligible_reference_age_s": {
+        "n": 35,
+        "median": 8.75475525856018,
+        "p95": 22.1408908367157,
+        "max": 23.592185020446777
+      },
+      "eligible_current_age_s": {
+        "n": 35,
+        "median": 0.06567835807800293,
+        "p95": 0.2566051483154297,
+        "max": 0.2629873752593994
+      },
+      "current_lane_receive_age_s": {
+        "n": 8,
+        "median": 4.410607814788818,
+        "p95": 15.996764421463013,
+        "max": 15.996764421463013
+      },
+      "history_lane_samples": 5,
+      "sample_pages": {
+        "exploration": 12
+      },
+      "client_sizes": [
+        [
+          800,
+          600
+        ]
+      ],
+      "queue_overflow_start_end": [
+        0,
+        503
+      ],
+      "max_pending": 16,
+      "withdrawal_measurement": {
+        "events": 0,
+        "detected_to_hidden_max_ms": null,
+        "poll_uncertainty_max_ms": null,
+        "already_hidden_at_first_invalid_poll": 0,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    },
+    "resize_final": {
+      "overlay_events": 162,
+      "reason_distribution": {
+        "eligible": 100,
+        "reference_expired": 3,
+        "anchor_pixels_changed": 24,
+        "page_or_map_unmatched": 30,
+        "window_not_eligible": 5
+      },
+      "foreground_contexts": {
+        "True": 771,
+        "False": 18
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 204.97918820381165,
+      "first_native_show_after_start_s": 0.08574899999999999,
+      "native_show_events": 5,
+      "eligible_reference_age_s": {
+        "n": 100,
+        "median": 5.807506203651428,
+        "p95": 23.216878652572632,
+        "max": 29.713577032089233
+      },
+      "eligible_current_age_s": {
+        "n": 100,
+        "median": 0.08201158046722412,
+        "p95": 0.19400548934936523,
+        "max": 0.434206485748291
+      },
+      "current_lane_receive_age_s": {
+        "n": 35,
+        "median": 2.7206757068634033,
+        "p95": 5.944685697555542,
+        "max": 6.684599876403809
+      },
+      "history_lane_samples": 34,
+      "sample_pages": {
+        "exploration": 43,
+        "unknown": 26
+      },
+      "client_sizes": [
+        [
+          800,
+          600
+        ],
+        [
+          2048,
+          1080
+        ],
+        [
+          2558,
+          1440
+        ]
+      ],
+      "queue_overflow_start_end": [
+        506,
+        2143
+      ],
+      "max_pending": 16,
+      "withdrawal_measurement": {
+        "events": 4,
+        "detected_to_hidden_max_ms": 1713.3740000008402,
+        "poll_uncertainty_max_ms": 139.09790000070643,
+        "already_hidden_at_first_invalid_poll": 0,
+        "scope": "native-window visibility, independently polled validity; not physical user-action/compositor timing"
+      }
+    },
+    "large_static_final_fair_scheduler": {
+      "overlay_events": 51,
+      "reason_distribution": {
+        "reference_or_companion_unavailable": 7,
+        "eligible": 29,
+        "window_not_eligible": 15
+      },
+      "foreground_contexts": {
+        "True": 166,
+        "False": 74
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 65.15415859222412,
+      "first_native_show_after_start_s": 8.991605,
+      "native_show_events": 2,
+      "eligible_reference_age_s": {
+        "n": 29,
+        "median": 6.586416959762573,
+        "p95": 11.055411100387573,
+        "max": 12.568698644638062
+      },
+      "eligible_current_age_s": {
+        "n": 29,
+        "median": 0.09124016761779785,
+        "p95": 0.17740583419799805,
+        "max": 0.21703124046325684
+      },
+      "current_lane_receive_age_s": {
+        "n": 11,
+        "median": 3.0675582885742188,
+        "p95": 10.955111742019653,
+        "max": 10.955111742019653
+      },
+      "history_lane_samples": 9,
+      "sample_pages": {
+        "exploration": 19
+      },
+      "client_sizes": [
+        [
+          2048,
+          1080
+        ]
+      ],
+      "queue_overflow_start_end": [
+        0,
+        507
+      ],
+      "max_pending": 14,
+      "withdrawal_measurement": {
+        "events": 1
+      }
+    },
+    "large_static_final_warm": {
+      "overlay_events": 50,
+      "reason_distribution": {
+        "eligible": 50
+      },
+      "foreground_contexts": {
+        "True": 237
+      },
+      "scenario_completed": true,
+      "scene_elapsed_s": 65.06241178512573,
+      "first_native_show_after_start_s": 0.070694,
+      "native_show_events": 1,
+      "eligible_reference_age_s": {
+        "n": 50,
+        "median": 3.983659029006958,
+        "p95": 5.8152782917022705,
+        "max": 6.514015436172485
+      },
+      "eligible_current_age_s": {
+        "n": 50,
+        "median": 0.09489381313323975,
+        "p95": 0.25255608558654785,
+        "max": 0.29739904403686523
+      },
+      "current_lane_receive_age_s": {
+        "n": 15,
+        "median": 2.2953522205352783,
+        "p95": 2.6180977821350098,
+        "max": 2.6180977821350098
+      },
+      "history_lane_samples": 16,
+      "sample_pages": {
+        "exploration": 31
+      },
+      "client_sizes": [
+        [
+          2048,
+          1080
+        ]
+      ],
+      "queue_overflow_start_end": [
+        1137,
+        1623
+      ],
+      "max_pending": 14,
+      "withdrawal_measurement": {
+        "events": 0
+      }
+    }
+  },
+  "checks": {
+    "final_count": 44,
+    "actual_exit": 0,
+    "actual_PID": 17108,
+    "modules": [
+      "tests.test_overlay_display",
+      "tests.test_player_feature_424",
+      "tests.test_gate0_recording",
+      "tests.test_sampling_flow",
+      "tests.test_observation_timeline"
+    ],
+    "source_sha256": {
+      "rouge/player_game_map.py": "459356d5d4a9cc03fa5bd7ec361ba53ea6a816fb562c959daf3366057b6a4c0c",
+      "rouge/app.py": "661793e28822618c95456f9ccd709306489940b697ec9c3f37f69e40085ae29c",
+      "rouge/player_compact.py": "4235ef02f656d6f0ef9ae91efc1e14fc9e63a68f65abd2622711825386f15803",
+      "rouge/player_overlay_settings.py": "eb8ae8d64657a7b8ad99eeed5185b46213f355ba25b509a4d7852ccf984746f8",
+      "rouge/map_recognition.py": "7a2eba317bd9adf90d8180721ed37b3dcf4e571d096318dca4d4d6236d9aee7b",
+      "rouge/viewport.py": "141c5c78ba5be43443d8a3443d50afaeef3e9c9a452b5d028c76601919b22d38",
+      "rouge/session_recording.py": "7e825b2eec34a4320c14b8e2dbb3a107a10d0478153be8be33f5331b87797082",
+      "tests/test_overlay_display.py": "96a7eb39a033ad7c8a78bbd9155e92734015edbb4635e6e58aa22c9babe2f925",
+      "tests/test_gate0_recording.py": "a9b24f907a349cf93ed804636b54a14b93c3d2e3fd32bbdd3a72a8d7356c8b78"
+    },
+    "earlier_72_scope": "Original unchanged frame-buffer/template/projection checks retained; final overlay/app/recording/scheduling/timeline44 rechecked. No full suite.",
+    "original_failure": "An added integration fixture omitted nodes and raised3 KeyErrors; fixture corrected; original failure retained locally."
+  },
+  "sampling_tradeoff": "Keep current/history alternation, including repeated failed renewals; no pending-queue flush. At20s allow a real latest observation even when static dedup queues nothing. Historical facts merge chronologically. Existing capacity evictions remain; short-page completeness not accepted.",
+  "reference_policy": "Same-zone ambiguous/insufficient exploration reads retain the previous reference without changing its captured_at. Current pixels/window/geometry and original30s/2s gates still apply; explicit different pages/areas replace it.",
+  "unselected_kind": "Existing header may appear without selecting a node kind; existing node circles still follow the original type selection. Acceptance comparisons temporarily used the same作战 kind before/after without saving settings.",
+  "external_reuse": {
+    "implementation": "existing OpenCV GaussianBlur/matchTemplate and Qt QSaveFile",
+    "new_dependency": false,
+    "forked_project": false,
+    "sources": [
+      "https://docs.opencv.org/4.x/d4/dc6/tutorial_py_template_matching.html",
+      "https://docs.opencv.org/4.x/d4/d13/tutorial_py_filtering.html",
+      "https://doc.qt.io/qtforpython-6/PySide6/QtCore/QSaveFile.html"
+    ]
+  },
+  "private_evidence": "All session logs/screenshots/launchers and original failures remain under.local/gate0; not committed. Public data is aggregate-only.",
+  "remaining": [
+    "Cold-start recognition delay: large11.49s, small17.62s in the measured runs",
+    "Small800x600 reference still expired3 times before the final resize; no threshold relaxation",
+    "Last resize-to-next native show36.52s includes settings/page transitions; not pure recognition time",
+    "Withdrawal detection-to-hidden reached1.714s in the resize run; polling adds uncertainty",
+    "High-load candidate eviction and continuous short-page coverage",
+    "Other maps, small-node pages and cross-monitor/DPI real acceptance",
+    "No complete paired10-minute session or whole-suite acceptance claimed"
+  ],
+  "index_validation": {
+    "command": "python scripts/update_cloud_index.py; python -m unittest tests.test_cloud_index_sync",
+    "actual_exit": 0,
+    "tests": 33
+  },
+  "settings_and_state": {
+    "startup_preference_not_written": true,
+    "saved_false_preserved_by_test": true,
+    "chat_shortcut_account_configs_unchanged": true,
+    "run_memory": "updated only by ordinary read-only sampling; same_run true in live controller"
+  },
+  "last_live_source_binding": "Final44 tests and final65.06s warm static use final source:50 eligible events, zero withdrawal,237 foreground observations. Earlier switch/resize predates scheduling-fairness-only change; full sequence not repeated after that change."
+}

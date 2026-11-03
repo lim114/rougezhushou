@@ -650,8 +650,14 @@ class MainWindow(QMainWindow):
         self.capture.set_collecting(True)
         capture_start=time.perf_counter()
         try:
+            overlay=getattr(getattr(self,'compact_window',None),'game_overlay',None)
+            reference=getattr(self,'map_overlay_reference',None)
+            refresh_overlay=bool(automatic and overlay is not None and overlay.enabled and reference
+                                 and reference['observation'].get('page')in('exploration','node_detail')
+                                 and(reference['observation'].get('map')or{}).get('status')=='matched'
+                                 and time.time()-reference['captured_at']>=20)
             preferred=not automatic or self.prefer_current_capture
-            frame=self.capture.next_frame(force=not automatic,prefer_latest=preferred)
+            frame=self.capture.next_frame(force=not automatic or refresh_overlay,prefer_latest=preferred)
         except Exception as error:
             self.show_error('capture',str(error))
             return
@@ -752,7 +758,12 @@ class MainWindow(QMainWindow):
         overlay_frame=observation.pop('_overlay_frame',None)
         if current_frame:
             self.last_sample_at=observation['captured_at'];self.last_sample_seq=seq
-            self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
+            previous=getattr(self,'map_overlay_reference',None);graph=observation.get('map')or{}
+            retain_map=bool(previous and observation.get('page')=='exploration'and graph.get('status')in('ambiguous','insufficient')
+                            and graph.get('zone_id')==(previous['observation'].get('map')or{}).get('zone_id'))
+            # A missed template read is not a new registration. Keep its real
+            # capture time; payload still checks fresh pixels and the30s limit.
+            if not retain_map:self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
             self.observation=observation
         with calculation_batch(self):
             stage=observation.get('stage')

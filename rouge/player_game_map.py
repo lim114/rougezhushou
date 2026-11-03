@@ -1,5 +1,6 @@
 """Transparent, input-free annotations on a freshly corroborated game map."""
 import time,math
+import cv2
 import numpy as np
 from PySide6.QtCore import QObject,QTimer,Qt,QPointF,QPoint
 from PySide6.QtGui import QPainter,QColor,QPen
@@ -10,6 +11,7 @@ def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
         if diagnostics is not None:diagnostics["reason"]=reason
         return None
     now=time.time()if now is None else now
+    if diagnostics is not None:diagnostics['evaluated_at']=now
     if not reference or not current or not snapshot or not snapshot.get('active')or not snapshot.get('foreground_on_game'):return reject('window_not_eligible')
     if reference.get('run_id')!=run_id:return reject('run_changed')
     observation=reference['observation'];graph=observation.get('map')or{}
@@ -19,7 +21,7 @@ def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
     for frame,label,limit in ((reference,'reference',30),(current,'current',2)):
         if type(frame.get('captured_at'))not in(int,float):return reject(label+'_timestamp_invalid')
         age=now-frame['captured_at']
-        if diagnostics is not None:diagnostics[label+'_age_s']=age
+        if diagnostics is not None:diagnostics.update({label+'_age_s':age,label+'_captured_at':frame['captured_at']})
         if not 0<=age<=limit:return reject(label+'_expired' if label=='reference' else 'current_frame_expired')
         if tuple(frame.get('target',{}).get(k)for k in('hwnd','pid'))!=tuple(snapshot['key']):return reject('window_changed')
     source=reference['image'];image=current['image'];rect=reference.get('client_rect')
@@ -30,7 +32,9 @@ def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
     title=config_data()['zones'].get(graph.get('zone_id'),{}).get('name')
     header=next((t for t in observation.get('texts',[])if t.get('text')==title and t.get('confidence',0)>=.85),None)
     if not header:return reject('title_missing')
-    anchors=[];box=header['box'];anchors.append((int(min(p[0]for p in box)*w),int(min(p[1]for p in box)*h),int(max(p[0]for p in box)*w)+1,int(max(p[1]for p in box)*h)+1))
+    anchors=[];box=header['box'];anchors.append((int(min(p[0]for p in box)*w),int(min(p[1]for p in box)*h),int(max(p[0]for p in box)*w)+1,int(max(p[1]for p in box)*h)+1,False))
+    labels=[node for node in graph.get('nodes',[])if node.get('visible')is True and node.get('label_box')]
+    label_anchors=len(labels)>=3
     points=[]
     area=snapshot['logical_client']
     for node in graph.get('nodes',[]):
@@ -39,11 +43,27 @@ def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
         x,y=center[0]*w,center[1]*h
         if not x0<=x<x1 or not y0<=y<y1:continue
         points.append((node['id'],(x-x0)*area.width()/(x1-x0),(y-y0)*area.height()/(y1-y0)))
-        if node.get('visible')is True:anchors.append((round(x)-12,round(y)-12,round(x)+13,round(y)+13))
-    if diagnostics is not None:diagnostics['anchor_count']=len(anchors)
+        if label_anchors and node.get('visible')is True and node.get('label_box'):
+            box=node['label_box'];anchors.append((int(min(p[0]for p in box)*w),int(min(p[1]for p in box)*h),int(max(p[0]for p in box)*w)+1,int(max(p[1]for p in box)*h)+1,True))
+        elif not label_anchors and node.get('visible')is True:anchors.append((round(x)-12,round(y)-12,round(x)+13,round(y)+13,False))
+    if diagnostics is not None:diagnostics.update(anchor_count=len(anchors),anchor_strategy='node_labels'if label_anchors else'exact_legacy_centers')
     if len(anchors)<4:return reject('anchors_insufficient')
-    for x,y,u,v in anchors:
-        if not 0<=x<u<=w or not 0<=y<v<=h or not np.array_equal(source[y:v,x:u],image[y:v,x:u]):return reject('anchor_pixels_changed')
+    for x,y,u,v,label in anchors:
+        if not 0<=x<u<=w or not 0<=y<v<=h:return reject('anchor_pixels_changed')
+        before,after=source[y:v,x:u],image[y:v,x:u]
+        if np.array_equal(before,after):continue
+        if not label:return reject('anchor_pixels_changed')
+        # Only current OCR-confirmed labels use structural matching. Animated
+        # icon centers are not static controls. Position, title, window and the
+        # original30s/2s freshness limits still have to agree independently.
+        a=cv2.cvtColor(before,cv2.COLOR_BGR2GRAY).astype(np.float32);b=cv2.cvtColor(after,cv2.COLOR_BGR2GRAY).astype(np.float32)
+        # Remove slow background glow while retaining same-position lettering.
+        a-=cv2.GaussianBlur(a,(0,0),2);b-=cv2.GaussianBlur(b,(0,0),2)
+        correlation=float(cv2.matchTemplate(b,a,cv2.TM_CCOEFF_NORMED)[0,0])
+        contrast=float(b.std()/max(1.,a.std()))
+        if diagnostics is not None:diagnostics['label_min_correlation']=min(diagnostics.get('label_min_correlation',1.),correlation)
+        if not math.isfinite(correlation)or correlation<.99 or not .9<=contrast<=1.1:
+            return reject('anchor_pixels_changed')
     if diagnostics is not None:diagnostics['reason']='eligible'
     return {'graph':graph,'points':points,'rect':area,'scope':'fresh_pixels_registered_map'}
 
@@ -55,9 +75,10 @@ class OverlaySurface(QWidget):
     def paintEvent(self,event):
         if not self.data:return
         from .player_map_reference import overlay_rows
-        rows=overlay_rows(self.data['graph'],self.kind,self.frequencies);p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        rows=overlay_rows(self.data['graph'],self.kind,self.frequencies)if self.kind else{};p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing)
         for identity,x,y in self.data['points']:
-            row=rows[identity]
+            row=rows.get(identity)
+            if row is None:continue
             if row['match']not in('observed','template','candidate','history'):continue
             text=('候选·'if row['match']=='candidate'else'原·'if row['match']=='history'else'')+self.kind
             if row['frequency']:text+=f" 历史{row['frequency']['frequency']:.1%}"
@@ -95,8 +116,7 @@ class GameMapOverlay(QObject):
             return
         graph=self.current['graph'];saved=self.owner.run.state.get('maps',{}).get(graph['zone_id'])or{}
         if saved.get('template_id')==graph['template_id']and saved.get('captured_at')==reference['captured_at']:self.current['graph']=saved
-        if self.kind:self.surface.data=self.current;self.surface.kind=self.kind;self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
-        else:self.surface.hide()
+        self.surface.data=self.current;self.surface.kind=self.kind;self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
         self.hover(self.current,snapshot)
         if audit is not None:audit.overlay({**decision,'evaluation_ms':(time.perf_counter()-started)*1000},did_show=self.surface.isVisible(),enabled=self.enabled,kind=self.kind)
     def clear_hover(self):

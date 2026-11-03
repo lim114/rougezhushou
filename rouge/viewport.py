@@ -38,7 +38,7 @@ def map_evidence(value,viewport):
     def point(p):return [(left+p[0]*(right-left))/w,(top+p[1]*(bottom-top))/h]
     if isinstance(value,dict):
         for key,item in value.items():
-            if key in ('box','title_box') and isinstance(item,list):value[key]=[point(p) for p in item]
+            if key in ('box','title_box','label_box') and isinstance(item,list):value[key]=[point(p) for p in item]
             elif key in ('center','card_position') and isinstance(item,(tuple,list)) and len(item)==2:value[key]=point(item)
             else:map_evidence(item,viewport)
     elif isinstance(value,list):
