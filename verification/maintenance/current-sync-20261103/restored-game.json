@@ -1,0 +1,98 @@
+{
+  "kind": "targeted_live_validation",
+  "title": "游戏还原后的后台采样与过载核对",
+  "functional_section": 472,
+  "functional_section_incremented": false,
+  "passed": false,
+  "sampling_resumed": true,
+  "current_first_and_history_both_observed": true,
+  "continuous_short_page_coverage_accepted": false,
+  "gate0_passed": false,
+  "source_window_seconds": 59.155,
+  "accepted_samples": 25,
+  "warm_current_results": 13,
+  "warm_history_results": 11,
+  "obsolete_history_overwrote_current_view": false,
+  "newest_view_guard_scope": "Recorder metadata reports updates_current_view false for all historical backfill. No video truth labels were supplied.",
+  "timing_ms": {
+    "cold_first_recognition": 10556.1,
+    "warm_recognition": {
+      "count": 24,
+      "median": 2144.04,
+      "p95_nearest_rank": 2961.66,
+      "max": 2972.85
+    },
+    "warm_full_ocr": {
+      "count": 24,
+      "median": 1623.15,
+      "p95_nearest_rank": 2460.21,
+      "max": 2695.78
+    },
+    "warm_state_fold": {
+      "count": 24,
+      "median": 7.16,
+      "p95_nearest_rank": 12.74,
+      "max": 12.78
+    },
+    "warm_ui_handler": {
+      "count": 24,
+      "median": 286.78,
+      "p95_nearest_rank": 444.66,
+      "max": 453.01
+    },
+    "warm_current_capture_to_handler_end_approx": {
+      "count": 13,
+      "median": 2518.01,
+      "p95_nearest_rank": 14060.4,
+      "max": 14060.4
+    },
+    "warm_backfill_capture_to_handler_end_approx": {
+      "count": 11,
+      "median": 26386.75,
+      "p95_nearest_rank": 38229.78,
+      "max": 38229.78
+    }
+  },
+  "timing_scope": "Local source_ready wall clock plus monotonic offsets, measured at sample log after handler. Approximate; excludes compositor presentation and has no paired video truth. First sample excluded from warm statistics.",
+  "cache": {
+    "pending_min": 13,
+    "pending_max": 14,
+    "overflow_start": 98,
+    "overflow_end": 618,
+    "overflow_delta": 520,
+    "meaning": "Evicted capture candidates, not a count of lost distinct pages. No complete short-page guarantee."
+  },
+  "routing": {
+    "full_discovery_samples": 25,
+    "fallback_reasons": [
+      "unknown_or_incomplete_controls"
+    ]
+  },
+  "runtime": {
+    "auto_sampling": true,
+    "binding_active": true,
+    "outside_game": true,
+    "toolbar_visible": true,
+    "reader_visible": false,
+    "tray_visible": true,
+    "same_run": true
+  },
+  "main_findings": [
+    "Full-discovery OCR dominates warm processing; scheduling alone does not remove sustained overload.",
+    "Current results and historical backfill both occur; old interpreted pages do not replace newest view.",
+    "Toolbar remains outside game; shared reader is currently closed. Other panel interactions were not exercised."
+  ],
+  "next_work": [
+    "Investigate why real client controls repeatedly route to full_discovery, using private paired samples.",
+    "Reduce repeated whole-page OCR while preserving changed fields and page boundaries.",
+    "Repeat identical local input with metrics, then live short-page coverage with video truth."
+  ],
+  "raw_logs_screenshots_state_uploaded": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_state_reset": false,
+  "full_suite_run": false,
+  "product_code_changed": false,
+  "raw_evidence_sha256_published": false,
+  "at_UTC": "2026-11-03T07:12:14.298950+00:00"
+}
