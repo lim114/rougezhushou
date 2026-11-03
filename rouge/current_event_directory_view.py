@@ -6,7 +6,7 @@ from . import current_event_directory as model
 from .ui_state import replace_text
 
 
-def make_event_dialog(target, parent=None):
+def make_event_dialog(target, parent=None, *, page_owner=None):
     if type(target) is not dict or type(target.get('event')) is not dict: return None
     row = target['event']; reader = row['reader']; eid = row['event_id']
     fresh = model.reference(row.get('id'))
@@ -41,8 +41,15 @@ def make_event_dialog(target, parent=None):
         'flows321': ('documented_event_flow_view', 'DocumentedEventFlowDialog', (eid,))}
     if reader not in args: return None
     module, cls, positional = args[reader]
-    dialog = getattr(importlib.import_module('.' + module, __package__), cls)(*positional, parent=parent)
-    panel = dialog.panel
+    provider=importlib.import_module('.'+module,__package__)
+    if page_owner is None:
+        dialog=getattr(provider,cls)(*positional,parent=parent);panel=dialog.panel
+    else:
+        from .player_reference_window import ToolPage
+        from .player_map_reader import REFERENCE_STYLE
+        panel=getattr(provider,cls.replace('Dialog','Panel'))(*positional)
+        dialog=ToolPage(row['title']+' · 事件资料',panel,page_owner,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE)
+        dialog.panel=panel;dialog.resize(760,600);dialog.finished.connect(panel._close_battle)
     if panel.result is None or panel.result['event']['id'] != eid:
         dialog.close(); return None
     panel.scene.setCurrentIndex(panel.scene.findData(target['scene_id']))
@@ -54,9 +61,11 @@ def make_event_dialog(target, parent=None):
         if len(matches) != 1: dialog.close(); return None
         panel.choices.setCurrentRow(matches[0])
         if panel.choice_id != cid: dialog.close(); return None
-    dialog.finished.connect(lambda *_: panel.clear_reference())
-    from .player_map_reader import readable
-    return readable(dialog)
+    if page_owner is None:
+        dialog.finished.connect(lambda *_:panel.clear_reference())
+        from .player_map_reader import readable
+        return readable(dialog)
+    return dialog
 
 
 class CurrentEventDirectoryPanel(QWidget):

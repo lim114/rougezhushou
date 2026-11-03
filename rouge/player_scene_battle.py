@@ -27,15 +27,15 @@ class SceneBattlePanel(QWidget):
     noteRequested=Signal(object)
     def __init__(self,run,parent=None):
         super().__init__(parent);self.run=run;self.identity=None;self.result=None;self.enemies={};self.context_key=None;self.dialog=None
-        body=QVBoxLayout(self);self.notice=QLabel('最近读取的关卡资料，不证明当前位置、实际出现或本局面板。未完整核验的数值保持未知。');self.notice.setWordWrap(True);body.addWidget(self.notice)
+        body=QVBoxLayout(self);self.notice=QLabel('最近读取的关卡 · 选择对应版本查看');self.notice.setWordWrap(True);body.addWidget(self.notice)
         self.stages=QComboBox();self.stages.currentIndexChanged.connect(self.select_stage);body.addWidget(self.stages)
         self.tabs=QTabWidget();self.lists={}
         for tier,label in [('NORMAL','普通'),('ELITE','精英'),('BOSS','领袖'),(None,'类别未确认')]:
             widget=QListWidget();widget.setIconSize(QSize(48,48));widget.setViewMode(QListWidget.ViewMode.IconMode);widget.setResizeMode(QListWidget.ResizeMode.Adjust);widget.setGridSize(QSize(125,100));widget.setWordWrap(True);widget.currentItemChanged.connect(self.select_enemy);self.tabs.addTab(widget,label);self.lists[tier]=widget
         self.tabs.currentChanged.connect(self.select_enemy);body.addWidget(self.tabs,1)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
-        self.open_button=QPushButton('打开所选关卡的固定地图与完整资料');self.open_button.clicked.connect(self.open_stage);body.addWidget(self.open_button)
-        self.note_button=QPushButton('为这个准确关卡写笔记');body.addWidget(self.note_button);self.note_button.clicked.connect(self.write_note)
+        self.open_button=QPushButton('查看地图、敌人与出怪');self.open_button.clicked.connect(self.open_stage);body.addWidget(self.open_button)
+        self.note_button=QPushButton('记录关卡笔记');body.addWidget(self.note_button);self.note_button.clicked.connect(self.write_note)
         self.refresh()
     def write_note(self):
         self.refresh()
@@ -55,8 +55,8 @@ class SceneBattlePanel(QWidget):
         self.context_key=key;old=self.stages.currentData();self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('请选择准确关卡版本',None)
         for row in rows:self.stages.addItem(row['label'],row['id'])
         index=self.stages.findData(old)if old else-1;self.stages.setCurrentIndex(max(0,index));self.stages.blockSignals(False);self.select_stage()
-        if not rows:self.notice.setText('尚无可准确关联的最近关卡；旧资料已清除，可从地图节点打开固定关卡资料。')
-        else:self.notice.setText('最近读取：'+str(content.get('title')or'已记录关卡')+'。请核对所选版本；候选不是本局必出，图鉴不替代完整条件和预计面板。')
+        if not rows:self.notice.setText('暂无关卡资料，可从地图节点打开作战预览。')
+        else:self.notice.setText('最近读取：'+str(content.get('title')or'已记录关卡')+' · 选择版本查看')
     def select_stage(self,*_):
         identity=self.stages.currentData();self.identity=identity;self.result=model.stage_reference(identity)if identity else None;self.enemies={};self.detail.clear();self.open_button.setEnabled(self.result is not None)
         self.note_button.setVisible(self.result is not None)
@@ -70,14 +70,25 @@ class SceneBattlePanel(QWidget):
             if raw:pix.loadFromData(raw)
             occurrences[enemy['name']]+=1
             label=enemy['name']+(f"\n同名记录{occurrences[enemy['name']]}"if counts[enemy['name']]>1 else'')
-            item=QListWidgetItem(QIcon(pix),label);item.setData(Qt.ItemDataRole.UserRole,enemy['key']);item.setToolTip('关卡资料候选，不代表实际出现数量；未取得图片时不借用同名图片。');self.lists[enemy['tier']].addItem(item)
+            item=QListWidgetItem(QIcon(pix),label);item.setData(Qt.ItemDataRole.UserRole,enemy['key']);item.setToolTip('关卡敌人资料；出场条件见出怪记录。');self.lists[enemy['tier']].addItem(item)
     def select_enemy(self,*_):
         widget=self.tabs.currentWidget();item=widget.currentItem();enemy=self.enemies.get(item.data(Qt.ItemDataRole.UserRole))if item else None
-        text=model.enemy_text(enemy)if enemy else'请选择敌人；同名的不同引用分别保留，不相加为实际数量。'
+        text=model.enemy_text(enemy)if enemy else'选择敌人查看预计面板和机制。'
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
     def open_stage(self):
         self.refresh()
         if self.identity is None or self.result is None:return
+        from .player_reference_window import ReferenceWindow
+        host=self.window()
+        if isinstance(host,ReferenceWindow):
+            from .player_map_reader import make_reader
+            def context():
+                self.refresh()
+                return (self.run.state.get('id'),self.context_key,self.identity)if self.result is not None else None
+            return host.open_reference(self,'recent-stage',context,
+                lambda owner:make_reader('battle',{'id':self.identity,'title':self.result['name']},self,
+                    historical=self.historical_reading,config=self.run.state.get('config',{}),page_owner=owner),
+                verify=lambda panel:panel.set_context({}if self.historical_reading else self.run.state.get('config',{})) is not False)
         if self.dialog is None:
             from .player_map_reader import make_reader
             self.dialog=make_reader('battle',{'id':self.identity,'title':self.result['name']},self,historical=self.historical_reading,config=self.run.state.get('config',{}))

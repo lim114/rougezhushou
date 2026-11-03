@@ -65,7 +65,7 @@ class SessionRecorder:
         stage = observation.get('stage') or {}
         performance = observation.get('performance', {})
         timing = {k: deepcopy(v) for k, v in performance.items()
-                  if k in ('total_ms', 'stages_ms', 'backend', 'reuse')}
+                  if k in ('total_ms', 'stages_ms', 'backend', 'reuse', 'state_fold_ms')}
         timing['routing'] = {k: v for k, v in performance.get('routing', {}).items()
                             if k in ('page', 'strategy', 'fallback_reason', 'feature_reuse', 'visual_ms', 'score')}
         self.event('sample', page=observation.get('page'), sampling=observation.get('_sampling'),

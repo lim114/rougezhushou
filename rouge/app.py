@@ -119,10 +119,16 @@ class MainWindow(QMainWindow):
         self.closing = False
         self.sample_epoch = 0
         self.last_sample_at = 0
+        self.last_sample_seq = 0
+        self.observation_timeline = None
+        self.timeline_marker = None
+        self.prefer_current_capture = True
         self.next_capture_attempt = 0
         self.observation = None
         self.map_frame = None
         self.map_frames = {}
+        self.map_frame_sequences = {}
+        self.map_frame_seq = 0
         self.damage_result = None
         self.history = []
         self.chat_busy = False
@@ -512,6 +518,7 @@ class MainWindow(QMainWindow):
                    captured==remembered.get('captured_at') and captured>=self.run.state['started_at'] and self.map_frame is not None)
         if fresh:
             self.map_frames[zid]=(remembered['template_id'],captured,self.map_frame)
+            self.map_frame_sequences[zid]=self.map_frame_seq
         saved=self.map_frames.get(zid)
         paired=bool(remembered and saved and saved[:2]==(remembered['template_id'],remembered.get('captured_at')))
         image=saved[2] if paired else None
@@ -536,11 +543,12 @@ class MainWindow(QMainWindow):
         if content:
             report+='\n\n最近读取内容（位置未确认时仅作独立参考）：\n'+format_rewards(content,technical=True)
         replace_text(self.map_text,report)
-        self.map_nodes.blockSignals(True);self.map_nodes.clear();self.map_nodes.addItem('请选择地图上的节点',None)
-        if remembered:
-            for node in sorted(remembered['nodes'],key=lambda n:(n['row'],n['col'])):
-                self.map_nodes.addItem(location(node,remembered['grid']['rows']),node['id'])
-        self.map_nodes.blockSignals(False)
+        choices=[('请选择地图上的节点',None)]
+        if remembered:choices.extend((location(node,remembered['grid']['rows']),node['id'])for node in sorted(remembered['nodes'],key=lambda n:(n['row'],n['col'])))
+        if [(self.map_nodes.itemText(i),self.map_nodes.itemData(i))for i in range(self.map_nodes.count())]!=choices:
+            previous=self.map_nodes.currentData();self.map_nodes.blockSignals(True);self.map_nodes.clear()
+            for label,value in choices:self.map_nodes.addItem(label,value)
+            self.map_nodes.setCurrentIndex(max(0,self.map_nodes.findData(previous)));self.map_nodes.blockSignals(False)
         self.map_view.set_map(remembered,image,historical=not fresh)
         from .node_catalog_view import map_conditions
         from .event_run_context import observed_event_context
@@ -557,6 +565,8 @@ class MainWindow(QMainWindow):
         if self.movement_source_dialog:
             self.movement_source_dialog.set_map_context(remembered if fresh else None,
                 context=self.observed_event_context() if fresh else {},epoch=self.run.state['id'])
+
+        if getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
 
     def refresh_windows(self):
         if self.busy:
@@ -606,7 +616,7 @@ class MainWindow(QMainWindow):
         stats=self.capture.stats()
         age=max(0,time.time()-stats['oldest_at']) if stats.get('oldest_at') else 0
         self.sampling_status.setText(f"后台最多10帧/秒 · 待识别{stats['pending']}帧 · 缓存{stats['bytes']/1048576:.1f} MiB"
-            +(f' · 最早等待{age:.1f}秒' if stats['pending'] else '')
+            +(f' · 较早帧等待{age:.1f}秒' if stats['pending'] else '')
             +(f" · 缓存已满丢弃{stats['overflow']}帧" if stats['overflow'] else '')
             +(f" · 超出单帧预算{stats['oversized']}帧" if stats.get('oversized') else ''))
 
@@ -640,19 +650,27 @@ class MainWindow(QMainWindow):
         self.capture.set_collecting(True)
         capture_start=time.perf_counter()
         try:
-            frame=self.capture.next_frame(force=not automatic)
+            preferred=not automatic or self.prefer_current_capture
+            frame=self.capture.next_frame(force=not automatic,prefer_latest=preferred)
         except Exception as error:
             self.show_error('capture',str(error))
             return
         if frame is None and automatic:return
         epoch=self.sample_epoch
-        generation=self.capture.stats()['generation']
+        stats=self.capture.stats();generation=stats['generation']
+        if frame is not None:self.prefer_current_capture=not preferred if stats['pending'] else True
+        marker=(epoch,generation,self.run.state['id'])
+        if self.timeline_marker!=marker:
+            from .observation_timeline import ObservationTimeline
+            self.observation_timeline=ObservationTimeline(self.run,self.account_cache);self.timeline_marker=marker
+        timeline=self.observation_timeline
+        oldest_pending=stats.get('oldest_seq')
         self.busy = True
         self.sample_button.setEnabled(False)
         self.connect_button.setEnabled(False)
         self.capture_status.setText('正在提取已捕获页面；后台仍继续采集…')
         mode=self.recognition_mode.currentData()
-        run_context=self.run.recognition_context()
+        run_context=(timeline.base_run if frame and frame['captured_at']<self.last_sample_at else self.run).recognition_context()
         self.recognition_mode.setEnabled(False)
         def work():
             try:
@@ -683,6 +701,10 @@ class MainWindow(QMainWindow):
                 observation['captured_at'] = selected['captured_at']
                 observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
                 observation['_sampling']['recognition_attempts']=attempt+1
+                observation['_sampling']['lane']='current' if preferred else 'history'
+                fold_start=time.perf_counter()
+                observation['_timeline_result']=timeline.prepare(observation,selected['seq'],oldest_pending)
+                observation.setdefault('performance',{})['state_fold_ms']=(time.perf_counter()-fold_start)*1000
                 observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),'target':selected.get('target'),'captured_at':selected['captured_at'],'run_id':run_context['run_id']}
                 self.events.sample.emit((selected['image'],observation))
             except Exception as error:
@@ -714,17 +736,27 @@ class MainWindow(QMainWindow):
         marker=observation.get('_sampling')
         valid=not marker or (marker['epoch']==self.sample_epoch and marker['generation']==self.capture.stats()['generation'])
         self.finish_sample()
-        if not valid or observation.get('captured_at',0)<max(self.last_sample_at,self.run.state['started_at']):
+        prepared=observation.pop('_timeline_result',None)
+        seq=(marker or{}).get('seq')or 0
+        current_frame=(observation['captured_at'],seq)>=(self.last_sample_at,self.last_sample_seq)
+        if not valid or observation.get('captured_at',0)<self.run.state['started_at'] or (prepared is None and not current_frame):
             if self.session_recorder is not None:
                 self.session_recorder.sample(observation,self.run.state,applied=False,reason='stale_generation' if not valid else 'old_frame')
             return
-        self.last_sample_at=observation['captured_at']
+        if marker is not None:observation={**observation,'_sampling':{**marker,'updates_current_view':current_frame}}
+        run_changed=account_changed=False
+        if prepared is not None:
+            run_changed,account_changed=prepared.commit(self.run,self.account_cache)
+            self.operator_observations=self.account_cache.records
+            self.observation_timeline=prepared
         overlay_frame=observation.pop('_overlay_frame',None)
-        self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
-        self.observation = observation
+        if current_frame:
+            self.last_sample_at=observation['captured_at'];self.last_sample_seq=seq
+            self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
+            self.observation=observation
         with calculation_batch(self):
             stage=observation.get('stage')
-            if observation.get('page')=='node_detail' and stage:
+            if current_frame and observation.get('page')=='node_detail' and stage:
                 sid=stage.get('visible_variant_id') or stage.get('id')
                 key=(sid,stage['name'])
                 if key!=self.last_observed_stage:
@@ -733,10 +765,15 @@ class MainWindow(QMainWindow):
                         self.target_stage_choices.select_value(sid)
                 self.target_stage.setToolTip('最近节点详情：'+stage['name']+'；'+stage.get('variant_source','普通/紧急变体尚未确认，请选择明确的测试关卡。'))
             run_applied=False
-            if observation.get('run'):
-                run_applied=self.apply_run_observation(observation['run'],observation.get('captured_at',time.time()))
-            if observation.get('operator'):
-                self.apply_operator_observation(observation['operator'],observation.get('captured_at',time.time()))
+            if prepared is not None:
+                run_applied=run_changed
+                if run_changed:self.refresh_run_observation((observation.get('run')or{}).get('selected_operator')if current_frame else None,refresh_player=False)
+                elif account_changed:self.update_operator(preserve_level=self.level_override)
+            elif observation.get('run'):
+                run_applied=self.apply_run_observation(observation['run'],observation.get('captured_at',time.time()),refresh_player=False)
+            if current_frame and observation.get('operator'):
+                if prepared is None:self.apply_operator_observation(observation['operator'],observation.get('captured_at',time.time()))
+                else:self.show_observed_operator(observation['operator']['id'])
                 saved=self.account_cache.view(observation['operator']['id'])
                 profile=operator_profiles()[observation['operator']['id']]
                 self.capture_operator_picture.set_subject('operator',observation['operator']['id'],
@@ -745,19 +782,28 @@ class MainWindow(QMainWindow):
                 account_notice=self.account_cache.notice(observation['operator']['id'])
                 summary=format_operator_observation(saved) if saved else '本帧干员档案尚未确认；未使用不可用的账号记录。'
                 replace_text(self.operator_summary,note+summary+('\n'+account_notice if account_notice else ''))
-            elif run_applied and (observation.get('run') or {}).get('selected_operator'):
+            elif current_frame and run_applied and (observation.get('run') or {}).get('selected_operator'):
                 selected=observation['run']['selected_operator']
                 profile=operator_profiles()[selected]
                 self.capture_operator_picture.set_subject('operator',selected,profile['name']+' · '+PROFESSIONS[profile['profession']])
                 from .training_view import format_run_training_observation
                 replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))
-            else:
+            elif current_frame:
                 self.capture_operator_picture.set_subject(None,None,'')
                 replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
         rgb = image[:,:,::-1].copy()
         height,width,_ = rgb.shape
         qimage = QImage(rgb.data,width,height,rgb.strides[0],QImage.Format.Format_RGB888).copy()
-        self.map_frame=qimage
+        if not current_frame:
+            graph=observation.get('map')or{};remembered=self.run.state['maps'].get(graph.get('zone_id'))
+            if remembered and seq>=self.map_frame_sequences.get(graph.get('zone_id'),0) and (graph.get('template_id'),observation['captured_at'])==(remembered.get('template_id'),remembered.get('captured_at')):
+                self.map_frames[graph['zone_id']]=(graph['template_id'],observation['captured_at'],qimage)
+                self.map_frame_sequences[graph['zone_id']]=seq
+            self.render_map();self.update_sampling_status()
+            self.capture_status.setText('已补记较早页面；当前画面与最新数值保持。')
+            if self.session_recorder is not None:self.session_recorder.sample(observation,self.run.state,applied=True,reason='historical_backfill',ui_ms=(time.perf_counter()-ui_start)*1000)
+            return
+        self.map_frame=qimage;self.map_frame_seq=seq
         self.preview.setPixmap(QPixmap.fromImage(qimage).scaled(self.preview.size(),Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         replace_text(self.observed_text,json.dumps(observation,ensure_ascii=False,indent=2))
         performance=observation.get('performance',{})
@@ -1643,11 +1689,11 @@ class MainWindow(QMainWindow):
         self.level_override=preserve_level
         previous=self.skill.currentData()
         self.skill.blockSignals(True)
-        self.skill.clear()
         choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]
-        for skill in choices:
-            name = profile['skills'][skill-1]['levels'][-1]['name']
-            self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),f'S{skill} · {name}',skill)
+        rows=[(f"S{skill} · {profile['skills'][skill-1]['levels'][-1]['name']}",skill)for skill in choices]
+        if [(self.skill.itemText(i),self.skill.itemData(i))for i in range(self.skill.count())]!=rows:
+            self.skill.clear()
+            for label,skill in rows:self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),label,skill)
         preferred=fields.get('selected_skill',{'kaltsit':2,'silverash':3,'mechanist':1}.get(op,1))
         if self.skill_override and previous in choices:preferred=previous
         if preferred in choices:self.skill.setCurrentIndex(choices.index(preferred))
@@ -1696,23 +1742,25 @@ class MainWindow(QMainWindow):
         self.update_operator(preserve_level=preserve)
         return True
 
-    def apply_run_observation(self,observed,captured_at):
+    def apply_run_observation(self,observed,captured_at,*,refresh_player=True):
         with calculation_batch(self):
             if not self.run.apply(observed,captured_at):return False
-            self.refresh_operator_overview()
-            self.run_summary.setText(self.run.summary())
-            self.sync_run_config()
-            self.sync_run_relics()
-            selected=observed.get('selected_operator')
-            if not selected or not self.show_observed_operator(selected):
-                self.update_operator(preserve_level=self.level_override)
+            self.refresh_run_observation(observed.get('selected_operator'),refresh_player=refresh_player)
             return True
 
-    def sync_run_config(self):
+    def refresh_run_observation(self,selected=None,*,refresh_player=True):
+        self.refresh_operator_overview()
+        self.run_summary.setText(self.run.summary())
+        self.sync_run_config(refresh_player=refresh_player)
+        self.sync_run_relics()
+        if not selected or not self.show_observed_operator(selected):
+            self.update_operator(preserve_level=self.level_override)
+
+    def sync_run_config(self,*,refresh_player=True):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
         if hasattr(self,'context_bar'):self.context_bar.refresh()
         if hasattr(self,'inventory_panel'):self.inventory_panel.refresh()
-        if getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
+        if refresh_player and getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value
@@ -1761,7 +1809,7 @@ class MainWindow(QMainWindow):
             self.update_sampling_status()
             self.target_stage.setToolTip('本局节点详情尚未确认；可手动选择关卡进行局外预览。')
             self.map_frame=None
-            self.map_frames.clear()
+            self.map_frames.clear();self.map_frame_sequences.clear();self.map_frame_seq=0;self.last_sample_seq=0
             self.last_observed_operator=None;self.last_observed_stage=None
             self.target_stage.setCurrentIndex(0)
             self.target_enemy.setCurrentIndex(0)

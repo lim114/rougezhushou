@@ -172,7 +172,15 @@ class CompactAssistant(QDialog):
         if not visible:
             screen=self.screen().availableGeometry();size=host.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
             if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
-            host.move(x,max(screen.top(),y))
+            snapshot=self.game_binding.snapshot if self.game_binding.enabled else None
+            if snapshot and snapshot['active']:
+                from .player_game_binding import outside_position
+                client=snapshot['logical_client'];position=outside_position(client,screen,size)
+                if position is None:
+                    x=screen.right()-size.width()+1 if screen.right()-client.right()>=client.left()-screen.left()else screen.left()
+                    y=max(screen.top(),min(client.top(),screen.bottom()-size.height()+1));position=QPoint(x,y)
+                host.move(position)
+            else:host.move(x,max(screen.top(),y))
         return True
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
@@ -292,7 +300,7 @@ class CompactAssistant(QDialog):
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source(),page_owner=self);self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source(),page_owner=self);self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,560)
             panel.resources.requested.connect(self.open_resource)
             panel.statisticsRequested.connect(self.open_map_statistics)
         return self.present(self.map_popup)

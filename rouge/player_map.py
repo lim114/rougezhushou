@@ -62,7 +62,7 @@ def node_sprite(kind):
 class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
     def __init__(self):
-        super().__init__();self.background=QImage();self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(480,300)
+        super().__init__();self.background=QImage();self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(0,0)
     def sprite_for(self,kind):
         return node_sprite(kind)
     def set_type_filter(self,kind):
@@ -74,7 +74,7 @@ class PreviewMapView(MapView):
         name=f'area-{floor+1}.png'if floor and floor<6 else'area-1.png'if floor==6 else'blindness.png'
         self.background=QImage(str(ART/name));super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
     def _positions(self):
-        canvas=QRectF(self.contentsRect()).adjusted(38,36,-38,-72);points={}
+        canvas=QRectF(self.contentsRect()).adjusted(min(38,self.width()*.08),min(64,self.height()*.18),-min(38,self.width()*.08),-min(72,self.height()*.2));points={}
         if self.graph:
             rows=self.graph['grid']['rows'];cols=self.graph['grid']['cols']
             step=min(canvas.width()/max(1,cols-1),canvas.height()/max(1,rows-1),125)

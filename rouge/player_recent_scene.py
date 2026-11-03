@@ -111,8 +111,13 @@ class RecentScenePanel(SceneBattlePanel):
         target=self._target()
         if target is None:
             self.event_key=None;self.refresh();return False
-        self._close_event()
+        from .player_reference_window import ReferenceWindow
         from .current_event_directory_view import make_event_dialog
+        host=self.window()
+        if isinstance(host,ReferenceWindow):
+            return host.open_reference(self,'recent-event',self._target,
+                lambda owner:make_event_dialog(target,self,page_owner=owner))
+        self._close_event()
         self.event_dialog=make_event_dialog(target,self)
         if self.event_dialog is None:
             self.event_key=None;self.refresh();return False

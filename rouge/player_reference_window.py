@@ -141,6 +141,13 @@ class ReferenceWindow(PlayerDialog):
         if current is not page:
             area = self.screen().availableGeometry()
             size = page.preferred_size
+            binding=getattr(self.parentWidget(),'game_binding',None)
+            snapshot=binding.snapshot if binding and binding.enabled else None
+            if not page.property('playerOpened'):
+                from .player_game_binding import outside_position
+                if not(snapshot and snapshot['active']) or outside_position(snapshot['logical_client'],area,size) is None:
+                    size=QSize(min(size.width(),max(360,round(area.width()*.28))),min(size.height(),round(area.height()*.70)))
+            page.setProperty('playerOpened',True)
             self.resize(min(size.width(), area.width()-24), min(size.height(), area.height()-24))
             self._keep_visible(area)
         self.update_navigation()

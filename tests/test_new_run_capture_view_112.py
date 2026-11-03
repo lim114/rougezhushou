@@ -28,6 +28,7 @@ class NewRunCaptureView112Tests(unittest.TestCase):
     def setUp(self):
         temporary=tempfile.TemporaryDirectory(prefix='public-new-run-112-')
         self.addCleanup(temporary.cleanup);self.directory=Path(temporary.name)
+        root_patch=patch.object(module,'ROOT',self.directory);root_patch.start();self.addCleanup(root_patch.stop)
         for key,name in (('RUN_STATE','run.json'),('OPERATOR_STATE','account.json'),('SETTINGS','settings.json')):
             replacement=patch.object(module,key,self.directory/name)
             replacement.start();self.addCleanup(replacement.stop)
