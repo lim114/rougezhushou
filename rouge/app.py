@@ -554,7 +554,7 @@ class MainWindow(QMainWindow):
         from .event_run_context import observed_event_context
         context=observed_event_context(self.run)
         self.node_catalog.set_map_context(remembered,map_conditions(remembered,self.run.state.get('config',{})),
-            epoch=self.run.state['id'],historical=not fresh,runtime_context=context)
+            epoch=self.run.state['id'],historical=not fresh,runtime_context=context,defer_refresh=True)
         self.offline_tools.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         if self.include_historical_route_diagnostics:
             self.route_constraints.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
@@ -1759,7 +1759,7 @@ class MainWindow(QMainWindow):
     def sync_run_config(self,*,refresh_player=True):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
         if hasattr(self,'context_bar'):self.context_bar.refresh()
-        if hasattr(self,'inventory_panel'):self.inventory_panel.refresh()
+        if self.inventory_panel.isVisible():self.inventory_panel.refresh()
         if refresh_player and getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')

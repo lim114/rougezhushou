@@ -458,7 +458,12 @@ class NodeCatalogPanel(QWidget):
         self.map_contents.clicked.connect(self.show_map_entry_contents)
         self.refresh()
 
-    def set_map_context(self,graph,conditions=None,epoch=None,historical=True,runtime_context=None):
+    def showEvent(self,event):
+        self.refresh()
+        super().showEvent(event)
+
+    def set_map_context(self,graph,conditions=None,epoch=None,historical=True,runtime_context=None,
+                        *,defer_refresh=False):
         incoming=(deepcopy(graph),deepcopy(conditions or {}),epoch,bool(historical)) if graph else None
         valid_resident_context=type(historical) is bool
         changed=(incoming!=self.map_context or (runtime_context or {})!=self.runtime_context
@@ -466,7 +471,10 @@ class NodeCatalogPanel(QWidget):
         self._resident_map_context_valid=valid_resident_context
         self.map_context=incoming;self.runtime_context=deepcopy(runtime_context or {})
         self.map_button.setEnabled(bool(incoming))
-        if changed:self.refresh()
+        if changed and (not defer_refresh or self.isVisible() or
+                        any(isinstance(widget,QWidget) and widget.isVisible()
+                            for widget in vars(self).values())):
+            self.refresh()
 
     def show_map_nodes(self):
         self.dossier=None;self.kind.setCurrentIndex(self.kind.findData('map'))

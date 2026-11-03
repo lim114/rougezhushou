@@ -5,7 +5,7 @@
   "next_section": 473,
   "current_section_label": "第472节 + 首层四图的入口与保护目标标记",
   "current_completed_change": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
-  "batch_status": "TEXT_ROW_REUSE_IMPLEMENTED_OVERLOAD_REMAINS",
+  "batch_status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
   "next_full_validation_after": null,
   "full_validation_mode": "disabled_by_user",
   "full_validation_restore_requires_explicit_user_request": true,
@@ -18,7 +18,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "f044a6ca4b2e3c4303fe3b3eb5b0b32ff38bbf91f2a585cf2505564e0f086642",
+    "sha256": "e121a0b115a54fdf5bcc5036f004e7fe55407395d07660039f87cc04eb747d07",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2844,12 +2844,12 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "ae57fe2d82c99d16cc77794585b32d335e8c435329f89bf744f0a6572954bc3e",
-    "PROJECT_PROGRESS.md": "31935a6643bc5912f7c183929eda8f7b1959ca10f5ec4781a5ace566b37ae947",
-    "WORK_IN_PROGRESS.md": "bc26528734b5549c151483df3df05d9fde59e486b7082dc965b1a33162219982",
-    "PROJECT_COMPLETED.md": "565297b5f7395675330db7cc85221d40bf8729853d3531424f660ded7cdcce96",
+    "DEVELOPMENT_CHECKPOINT.json": "8886133f29e2dd9fd86367eb8c754579ae3822262d5693cedf2bf55f91604cd1",
+    "PROJECT_PROGRESS.md": "414159dd48671a483982846257ac883d68955599bab0d7ad94f3ae4861f2ca29",
+    "WORK_IN_PROGRESS.md": "4948cb71782a9850fb5375e47e7c5586d8df817923dc596f0db0dc960b3e5ff2",
+    "PROJECT_COMPLETED.md": "8e988cb061370901e1d3c7bab5bac6aedbe0cd6693adb704c9cf3d50f5de6168",
     "AGENTS.md": "4758520fe7db6c4963a48474f71d884ada1a3100cd8d785d7ee1c40d351f2df0",
-    "PROJECT_REQUIREMENTS.md": "f044a6ca4b2e3c4303fe3b3eb5b0b32ff38bbf91f2a585cf2505564e0f086642",
+    "PROJECT_REQUIREMENTS.md": "e121a0b115a54fdf5bcc5036f004e7fe55407395d07660039f87cc04eb747d07",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
     "docs/decisions/2026-11-02-experience-gates.md": "1e5dd8d1b86a0c6ec09704035a18b24e2b443a91e2177f3ce9c3ca23defe3481"
   },
@@ -2857,7 +2857,7 @@
   "current_execution": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "TEXT_ROW_REUSE_IMPLEMENTED_OVERLOAD_REMAINS",
+    "status": "HIDDEN_VIEW_REFRESH_COALESCED_LIVE_ACCEPTANCE_PENDING",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -2869,15 +2869,15 @@
     "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "urgent_repairs": "docs/decisions/2026-11-03-urgent-player-experience.md",
     "paired_video_review_complete": false,
-    "maintenance_validation": "verification/maintenance/text-row-sync-20261103/summary.json",
+    "maintenance_validation": "verification/maintenance/hidden-view-sync-20261103/summary.json",
     "actual_game_latency_verified": false,
-    "latest_live_validation": "verification/maintenance/text-row-sync-20261103/live-summary.json",
+    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
     "actual_game_latency_measured": true,
     "short_page_coverage_accepted": false
   },
   "current_maintenance": {
-    "title": "整页回退逐行复用已接入，持续过载仍待修复",
-    "receipt": "verification/maintenance/text-row-sync-20261103/summary.json",
+    "title": "隐藏目录合并刷新，真实连续采样仍待验",
+    "receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
@@ -2888,9 +2888,9 @@
     },
     "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
     "previous_urgent_receipt": "verification/maintenance/player-urgent-20261103/summary.json",
-    "latest_live_validation": "verification/maintenance/text-row-sync-20261103/live-summary.json",
-    "live_validation_scope": "约59秒22次结果，逐行复用命中；队列13—14帧，候选淘汰增加506。未配对录像，短页覆盖不通过。",
-    "previous_implementation_receipt": "verification/maintenance/current-sync-20261103/summary.json",
-    "receipt_sha256": "77fd28bab4b105569a8011e40537d0668a290b07e1095bfc0988bc3c149a56ca"
+    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
+    "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
+    "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json",
+    "receipt_sha256": "1d4ee066545663893dd83a94ecb6f6b180a724ca4ffdfedf935bc9bfbc926428"
   }
 }

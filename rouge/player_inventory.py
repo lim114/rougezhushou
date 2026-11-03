@@ -110,6 +110,10 @@ class InventoryPanel(QWidget):
         self.search.textChanged.connect(self.refresh);self.held.toggled.connect(self.refresh)
         for widget in(self.rarity,self.exchange,self.kind,self.version,self.category,self.access,self.source_node):widget.currentIndexChanged.connect(self.refresh)
         self.refresh()
+    def showEvent(self,event):
+        self.refresh()
+        super().showEvent(event)
+
     def reload_sources(self):
         from . import public_archive
         from .player_item_sources import ItemSourceIndex,VERSION_LABELS
