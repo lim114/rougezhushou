@@ -69,11 +69,9 @@ class NotesDialog(QDialog):
         self.reference_button=QPushButton('查看对应资料');bar.addWidget(self.reference_button);self.reference_button.hide()
         from .player_reference_notes import request_note_source
         self.reference_button.clicked.connect(lambda:request_note_source(self))
-        self.export_button=QPushButton('导出当前文字');bar.addWidget(self.export_button);self.export_button.clicked.connect(self.export_current)
-        self.editor.textChanged.connect(self.changed);self.save_button.clicked.connect(self.save);self.discard_button.clicked.connect(self.discard)
-    def export_current(self):
         from .player_note_export_ui import export_editor
-        return export_editor(self)
+        self.export_button=QPushButton('导出当前文字');bar.addWidget(self.export_button);self.export_button.clicked.connect(lambda:export_editor(self))
+        self.editor.textChanged.connect(self.changed);self.save_button.clicked.connect(self.save);self.discard_button.clicked.connect(self.discard)
     def changed(self):
         self.dirty=True;self.status.setText('有未保存修改')
         if self.autosave.isChecked()and self.key is not None:self.pending_key=self.key;self.autosave_timer.start()
@@ -103,8 +101,8 @@ class NotesDialog(QDialog):
         self.dirty=False
         scope='\n通用笔记 · 手动选择范围'if content.get('kind')=='note-scope'else'\n固定资料笔记'if content.get('kind')in('reference-stage','reference-scene')else'\n未确认变体时，同名场景共用笔记'
         self.context.setText('笔记对应：'+content['title']+scope)
-        from .player_reference_notes import sync_note_source
-        sync_note_source(self)
+        from .player_reference_notes import reference_target
+        self.reference_button.setVisible(reference_target(self.content)is not None)
         self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');self.refresh_preview();return True
     def save(self):
         self.autosave_timer.stop();self.pending_key=None
@@ -115,7 +113,7 @@ class NotesDialog(QDialog):
         try:
             from .player_note_library import NoteLibrary
             NoteLibrary(self.store.folder).record(self.content)
-        except(OSError,ValueError,TypeError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
+        except(OSError,ValueError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
         self.status.setText('已保存到本机；不会上传。'+warning);return True
     def discard(self):
         self.autosave_timer.stop();self.pending_key=None

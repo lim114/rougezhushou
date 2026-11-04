@@ -31,16 +31,17 @@ def scope_parts(content, rows):
 def parents(content, rows, floor=None, node=None):
     """Only known/manual scope, never infer a live scene's floor from its title."""
     if not content or not rows:return []
+    key=content_key(content)
     if content.get('kind')=='note-scope':
         parts=scope_parts(content,rows)
         if parts is None:return []
         floor,node=parts
     else:
-        row=next((r for r in rows if content_key(r['context'])==content_key(content)),None)
+        row=next((r for r in rows if content_key(r['context'])==key),None)
         if row is None:return []
         floor=floor if floor in row['floors'] else row['floors'][0] if len(row['floors'])==1 else None
         node=node if node in row['nodes'] else row['nodes'][0] if len(row['nodes'])==1 else None
     candidates=[scope(rows)]
     if floor is not None:candidates.append(scope(rows,floor))
     if node is not None:candidates.append(scope(rows,floor,node))
-    return [c for c in candidates if content_key(c)!=content_key(content)]
+    return [c for c in candidates if content_key(c)!=key]

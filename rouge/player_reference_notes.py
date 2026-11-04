@@ -20,9 +20,6 @@ def reference_target(content):
     if canonical is None or any(content.get(field)!=canonical[field]for field in('kind','title','event_id','variant_id')):return None
     return category,identity
 
-def sync_note_source(dialog):
-    dialog.reference_button.setVisible(reference_target(dialog.content)is not None)
-
 def request_note_source(dialog):
     if reference_target(dialog.content)is not None:dialog.openReference.emit(dict(dialog.content))
     else:dialog.reference_button.hide();dialog.status.setText('原固定资料暂时无法核对；笔记仍保留，未借用同名条目。')

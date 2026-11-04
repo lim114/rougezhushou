@@ -1,0 +1,54 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记保存异常收窄与资料入口精简",
+  "base_commit": "8da293128d93a0665569fbf26bd013a947f16011",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "Reuse target content key across parent matching/filtering.",
+    "rule2": "Inline single-caller reference visibility and export forwarding.",
+    "rule3": "D12 narrowed and D13 retained after explicit approval."
+  },
+  "decisions": {
+    "D12": "metadata_errors_narrowed_to_oserror_valueerror",
+    "D13": "retain_two_post_publication_cleanup_handlers"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_notes.py": "d56715f2a0437cf22be87bc1b86c19da233c39e1643c5d0aa6f0ba0924ed66c8",
+    "rouge/player_reference_notes.py": "42432003f73f425bf97606f8292a181591fef3e1d1a4443d96fe0631b2bdaa9f",
+    "rouge/player_note_scopes.py": "719b7ffdab3110f1b3960b22d5ea128a197fc9c4651d139130a1db01d9efa0b6",
+    "tests/test_note_save_review.py": "5771e35e5f620e503ba56a8d82aa197274317b8c71fb8ad5b1624ea285a66064"
+  },
+  "validation": {
+    "baseline": {
+      "run": 1,
+      "failed": 1
+    },
+    "targeted": {
+      "run": 30,
+      "passed": 30
+    },
+    "notestore_class_ast_unchanged": true,
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "real_game_acceptance": false,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 201.16
+    }
+  },
+  "coverage": {
+    "structural_only": 431,
+    "exception_equivalence_only": 78,
+    "selected_paths_only": 49,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Other storage protections and note/source paths still require review; no complete module certification.",
+    "Existing statistics semantics and section473 interaction gaps unchanged."
+  ]
+}
