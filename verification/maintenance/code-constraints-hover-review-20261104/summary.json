@@ -1,0 +1,54 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "按授权整改悬停与页脚补读兜底",
+  "base_commit": "4dca7f553a0ac759b281e085fa4ef4de46a6d8e6",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "runtime_modules_changed": 2,
+  "decisions": {
+    "D05": "remove_two_missing_attribute_fallbacks",
+    "D06": "retain_hover_worker_error_exit",
+    "D07": "remove_footer_recognizer_silent_fallback"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "new_low_probability_defenses_added": false,
+  "source_sha256": {
+    "rouge/player_game_hover.py": "c231baf86caa825090fdf83ff26e367ce3a52e9f7f95a9ba57420314e0d8d82b",
+    "rouge/recipient_recognition.py": "81f1b011b3b266fe5820107d3f3f0b5f231f3abc65244647e1c56565709c02c7",
+    "tests/test_hover_defense_decisions.py": "7c5b047b96f5fbd66a888f4150603dd4dcb91808c3c06d496113d03789e6993d",
+    "tests/test_recognition_059.py": "1e1907a55b826f6a1d7b7f7fcdf107650ffdff061d813be4a9054e3e7ae5b561"
+  },
+  "validation": {
+    "targeted": {
+      "run": 27,
+      "passed": 27
+    },
+    "baseline_footer_failure": {
+      "run": 1,
+      "failed": 1
+    },
+    "initial_tooling_failures": [
+      "newline replacement assertion followed by test loader error",
+      "missing space in property substitution; SyntaxError before tests loaded"
+    ],
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "real_game_acceptance": false
+    }
+  },
+  "coverage": {
+    "structural_only": 437,
+    "exception_equivalence_only": 82,
+    "selected_paths_only": 39,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Whole-program remediation incomplete, including unreviewed paths in these modules.",
+    "Section473 cursor/caption gaps and prior statistics missing-category mismatch unchanged."
+  ]
+}

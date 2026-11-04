@@ -134,7 +134,7 @@ class OwnedPopupFooterTests(unittest.TestCase):
         self.assertEqual(member['fields'],{});self.assertEqual(member['skill_ranks'],{})
         self.assertEqual(member['sources']['owned_popup_context']['footer']['收藏品']['footer_recheck'],new['footer_recheck'])
 
-    def test_recognizer_failure_wrong_text_and_invalid_scores_preserve_unknown(self):
+    def test_wrong_text_and_invalid_scores_preserve_unknown(self):
         results=[[['收藏品',.9499]],[['收藏品',float('nan')]],[['收藏品',float('inf')]],
                  [['收藏品',True]],[['收藏品',1.01]],[['收藏品','0.99']],[['藏品',.999]],
                  [['收藏品',.999],['收藏品',.999]],[],[['收藏品']],{'text':'收藏品'}]
@@ -144,9 +144,14 @@ class OwnedPopupFooterTests(unittest.TestCase):
                 result=reconfirm_owned_popup_footer(self.image,self.texts,engine)
                 self.assertIs(result,self.texts);self.assertEqual(len(calls),1)
                 self.assertIsNone(read_owned_popup_member(self.image,result))
+
+    def test_recognizer_failure_propagates_without_mutating_original_texts(self):
+        before=deepcopy(self.texts)
         engine,calls=self.engine(error=RuntimeError('unavailable'))
-        self.assertIs(reconfirm_owned_popup_footer(self.image,self.texts,engine),self.texts)
+        with self.assertRaisesRegex(RuntimeError,'unavailable'):
+            reconfirm_owned_popup_footer(self.image,self.texts,engine)
         self.assertEqual(len(calls),1)
+        self.assertEqual(self.texts,before)
 
     def test_complete_or_ambiguous_context_never_requests_footer_recognition(self):
         complete=deepcopy(self.texts)

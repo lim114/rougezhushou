@@ -216,10 +216,7 @@ def reconfirm_owned_popup_footer(image,texts,engine):
     right=min(width,math.ceil(x1)+2);bottom=min(height,math.ceil(y1)+2)
     crop=image[top:bottom,left:right]
     if not crop.size:return texts
-    try:
-        raw,_=engine(crop,use_det=False,use_cls=False)
-    except Exception:
-        return texts
+    raw,_=engine(crop,use_det=False,use_cls=False)
     if not isinstance(raw,(list,tuple)) or len(raw)!=1:return texts
     if not isinstance(raw[0],(list,tuple)) or len(raw[0])!=2:return texts
     exact,score=raw[0]
