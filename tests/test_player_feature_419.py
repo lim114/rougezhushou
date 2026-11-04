@@ -3,13 +3,13 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 from PySide6.QtWidgets import QApplication
-from rouge.player_note_selector import catalogue,matching,SceneNoteSelector
+from rouge.player_note_selector import catalogue_snapshot,matching,SceneNoteSelector
 from rouge.player_reference_notes import reference_target
 from rouge.player_notes import NoteStore,content_key
 from rouge.player_recent_notes import RecentNotesPanel
 class SelectorTests(unittest.TestCase):
  @classmethod
- def setUpClass(cls):cls.gui=QApplication.instance()or QApplication([]);cls.rows=catalogue()
+ def setUpClass(cls):cls.gui=QApplication.instance()or QApplication([]);cls.rows=catalogue_snapshot()['rows']
  def test_current_catalogue_contexts_resolve_exactly(self):
   self.assertTrue(self.rows)
   for row in self.rows[::max(1,len(self.rows)//12)]:self.assertIsNotNone(reference_target(row['context']))

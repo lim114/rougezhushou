@@ -26,11 +26,11 @@ class InlineNotesPanel(RecentNotesPanel):
         self.parent_body=QWidget();self.parent_body.setObjectName('noteAncestors');self.parent_layout=QVBoxLayout(self.parent_body);self.parent_area.setWidget(self.parent_body)
         self.layout().insertWidget(3,self.parent_area);self.parent_area.hide();self.parent_toggle.toggled.connect(self.refresh_parents);self.parent_toggle.toggled.connect(self.fit_content)
         self.parent_signature=None;self.parent_views=[];self.editRequested.connect(self.open_editor)
-        self.inline_ready=True
         self.compact_controls()
         editor.reference_button.clicked.disconnect()
         editor.reference_button.clicked.connect(self.request_reference)
         self.layout().setContentsMargins(2,0,2,2);self.layout().setSpacing(7)
+        self.inline_ready=True;self.fit_content()
 
     def compact_controls(self):
         """Reuse the editor's real actions; keep uncommon controls off the page."""
@@ -161,8 +161,9 @@ class InlineNotesPanel(RecentNotesPanel):
         return True
 
     def select_context(self,content):
+        key=content_key(content)
         editing=self.inline_ready and self.stack.currentWidget()is self.note_editor
-        if self.inline_ready and self.note_editor.dirty and content_key(content)!=self.note_editor.key:
+        if self.inline_ready and self.note_editor.dirty and key!=self.note_editor.key:
             if not self.finish_edit():return False
         if content.get('kind')=='note-scope':
             # A scope comes only from the current picker, not a game observation.
@@ -175,7 +176,7 @@ class InlineNotesPanel(RecentNotesPanel):
         if self.context!=content:self.more.setChecked(True);return False
         self.archived_key=None
         if content.get('kind')!='note-scope':
-            row=next((r for r in self.selector.rows if content_key(r['context'])==content_key(content)),None)
+            row=next((r for r in self.selector.rows if content_key(r['context'])==key),None)
             if row is not None:
                 for combo,values in((self.selector.floor,row['floors']),(self.selector.node,row['nodes'])):
                     if combo.currentData()not in values:combo.setCurrentIndex(combo.findData(values[0]if len(values)==1 else None))
@@ -226,10 +227,9 @@ class InlineNotesPanel(RecentNotesPanel):
                 self.more.setChecked(True)
         self.refresh_parents()
         self.fit_content()
-        if hasattr(self,'save_state'):
-            self.update_save_state()
-            from .player_reference_notes import reference_target
-            editor.reference_button.setVisible(reference_target(self.reference_context())is not None)
+        self.update_save_state()
+        from .player_reference_notes import reference_target
+        editor.reference_button.setVisible(reference_target(self.reference_context())is not None)
 
     def refresh_parents(self,*_):
         if not self.inline_ready:return

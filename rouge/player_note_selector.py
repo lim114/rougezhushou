@@ -25,8 +25,6 @@ def catalogue_snapshot():
     return {'rows':result,'unavailable':unavailable}
 
 
-def catalogue():return catalogue_snapshot()['rows']
-
 def matching(rows,floor=None,node=None):
     return [r for r in rows if(floor is None or floor in r['floors'])and(node is None or node in r['nodes'])]
 

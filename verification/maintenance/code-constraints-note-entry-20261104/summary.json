@@ -1,0 +1,63 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记身份复用、初始化顺序与转发精简",
+  "base_commit": "f51603b899cfd8753f27dc79dafd9f60ee9b95f0",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "Reuse parsed note keys; target identity computed once per select_context.",
+    "rule2": "Remove catalogue test-only forwarding and inline timer callback.",
+    "rule3": "D11 approved before changing initialization and removing hasattr."
+  },
+  "decisions": {
+    "D11": "initialize_controls_before_ready_and_remove_attribute_fallback"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_inline_notes.py": "5ca52ca416cd2530fcaba185ddd8e5c9fdad66b6b9d567548025ba37fa0d1170",
+    "rouge/player_note_library.py": "16fd7d07986b8a08d265b7c082947779977ac04ddf95afdce4e8a6bd6618093a",
+    "rouge/player_note_selector.py": "ac7dc6399d819349e1e847a0aa6beae0eeab337e3eede1bbbee780a546c148a3",
+    "rouge/player_recent_notes.py": "e30dace429cd2c94a1b5845f34d75227ffe04f18b788a222f51398bb0e7dae88",
+    "tests/test_note_entry_review.py": "8c85e9211ece150bae48b873f950af783f5a9815a18bca8c87c6c681961352fb",
+    "tests/test_player_feature_419.py": "e10e38b4f923d5570b82f72bf73eaf98bd93c2c3ad40bcc49221903fe0b4a295"
+  },
+  "validation": {
+    "before_D11": {
+      "run": 28,
+      "passed": 28
+    },
+    "D11_baseline": {
+      "run": 1,
+      "errors": 1
+    },
+    "final_notebook": {
+      "run": 31,
+      "passed": 31
+    },
+    "final_catalogue": {
+      "run": 10,
+      "passed": 10
+    },
+    "final_distinct_tests": 41,
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "real_game_acceptance": false,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 727.08
+    }
+  },
+  "coverage": {
+    "structural_only": 433,
+    "exception_equivalence_only": 79,
+    "selected_paths_only": 46,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Storage defenses and remaining paths in all four modules still require review; no whole module marked complete.",
+    "Whole-program, prior statistics semantics and section473 interaction gaps remain."
+  ]
+}

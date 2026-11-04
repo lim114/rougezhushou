@@ -96,7 +96,7 @@ class NoteLibraryPanel(QWidget):
         labels={content_key(row['context']):row for row in catalogue_snapshot()['rows']}if self.rows else{}
         self.entries.blockSignals(True);self.entries.clear()
         for i,row in enumerate(self.rows):
-            reference=labels.get(content_key(row['content']));label=reference['label']if reference and reference['context']==row['content']else row['title']
+            reference=labels.get(row['key']);label=reference['label']if reference and reference['context']==row['content']else row['title']
             item=QListWidgetItem(label);item.setData(Qt.ItemDataRole.UserRole,str(row['path']));item.setData(Qt.ItemDataRole.UserRole+1,i);self.entries.addItem(item)
             if str(row['path'])==identity:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.selected()

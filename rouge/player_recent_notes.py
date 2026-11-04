@@ -34,11 +34,8 @@ class RecentNotesPanel(QWidget):
         self.follow.toggled.connect(lambda _:self.refresh(force=True))
         self.reload.clicked.connect(self.reload_saved);self.edit.clicked.connect(self.request_edit)
         self.preview.linkBlocked.connect(lambda:self.status.setText('链接不会自动打开；可在编辑器中复制。笔记仍只保存在本机。'))
-        self.timer=QTimer(self);self.timer.setInterval(1000);self.timer.timeout.connect(self._tick);self.timer.start()
+        self.timer=QTimer(self);self.timer.setInterval(1000);self.timer.timeout.connect(lambda:self.refresh()if self.isVisible()else None);self.timer.start()
         self.refresh(force=True)
-
-    def _tick(self):
-        if self.isVisible():self.refresh()
 
     def select_context(self,content):
         from .player_reference_notes import reference_target

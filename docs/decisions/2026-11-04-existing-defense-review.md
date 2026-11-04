@@ -67,3 +67,13 @@ app.sample_now 在连接前后都调用 set_collecting(True)，但 connect_game 
 同批前两条整改：apply_hotkey只调用configure解析一次，复用成功后的标准名称；删除只做一次坐标转换转发的_drag_dock方法，将表达式并回dragged信号连接处，维护验收脚本改走该信号。正常输入ValueError仍在界面入口提示；复用的_move_dock、Qt生命周期回调与页面入口没有机械地按“调用次数少”删除。
 
 24项定向通过；原工具条4个失败在改动前源码上复现，补齐模拟主窗口的map_overlay_reference/session_recorder后通过。测试使用模拟注册接口，未做原生快捷键交互验收或游戏操作。加载已保存设置和配置入口仍各有自身校验，本轮仅关闭应用按钮的重复解析，不声称整个启动链已完成单次解析整改。
+
+## D11：内嵌笔记初始化的缺控件兜底（已确认并落实）
+
+位置：InlineNotesPanel.refresh 的 hasattr(self,'save_state')。旧构造函数在compact_controls创建保存状态、选项区域等控件之前就设置inline_ready=True；触发早期刷新时，末尾跳过保存状态刷新，但fit_content还可能先访问不存在的options_scroll。该兜底不能保证整个刷新安全。
+
+用户明确同意：将inline_ready=True放到全部控件构建完成之后，删除该hasattr；保留原有尚未就绪就返回，构建完成后首次计算布局。替代为保持原顺序和兜底，用户未选择。没有新增异常捕获或恢复重试。
+
+构造期间刷新测试在修改前复现options_scroll不存在，修改后通过。最终41项定向通过（笔记与控件31项、目录与选择器10项），首次前两条整改的28项通过也保留。未改NoteStore或NoteLibrary的文件写入、锁、冲突复核、链接和异常文件处理；这些存储防御仍属待逐项审查，不能从D11推导授权。
+
+本轮前两条：目录显示直接复用读取结果中的key；select_context的目标key只在本函数入口计算一次，不在候选循环重复计算；删除产品未调用、只有测试使用的catalogue列表包装；将单次_tick转发并回定时器连接。资料归属、草稿阻止切换、搜索及阅读保留仍按原行为。
