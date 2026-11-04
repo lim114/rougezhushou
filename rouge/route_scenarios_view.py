@@ -286,7 +286,7 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
         try:
             payload = self._payload(); self._scenario(payload)['action_points'] = self._optional_integer(self.scenario_ap.text()); self._write(payload)
             self.status.setText('已修改选中情景行动力；其它情景保留，旧结果需重新核对。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, TypeError, AttributeError, StopIteration) as exc: self.status.setText('未设置：' + str(exc))
 
     def _set_snapshot_uses(self):
         try:
@@ -297,7 +297,7 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
             if value is not None and value > maximum: raise ValueError('余次数超过固定原件初始次数。')
             item['remaining_uses'] = value; self._write(payload)
             self.status.setText('已修改选中情景的库存实例余次数；其它情景保留，旧结果需重新核对。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, KeyError, TypeError, AttributeError, StopIteration) as exc: self.status.setText('未设置：' + str(exc))
 
     def _import_graph(self):
         super()._import_graph()
@@ -305,7 +305,7 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
 
     def _run(self):
         try: payload = self._payload(); graph = payload.get('graph') or {}; bindings = self._bindings(graph)
-        except Exception as exc: self.status.setText('未运行：' + str(exc)); return
+        except (ValueError, TypeError, AttributeError) as exc: self.status.setText('未运行：' + str(exc)); return
         self._serial += 1; serial = self._serial; worker = _Worker(serial, payload); self._workers[serial] = worker
         self._contexts[serial] = {'graph': deepcopy(graph), 'links': bindings, 'input_text': self.editor.toPlainText()}
         worker.signals.finished.connect(self._finished); self.run_button.setEnabled(False)
@@ -316,8 +316,7 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
         if serial != self._serial: return
         self.run_button.setEnabled(True)
         if error: self.status.setText('未生成新结果：' + error + '；保留此前结果。'); return
-        try: rendered = render_scenario_matrix(result, context['graph'], context['links'])
-        except Exception as exc: self.status.setText('结果显示失败：' + str(exc) + '；保留此前结果。'); return
+        rendered = render_scenario_matrix(result, context['graph'], context['links'])
         self._result = deepcopy(result); self._result_links = deepcopy(context['links']); self._result_input_text = context['input_text']
         self.result_view.setHtml(rendered); self.raw_result.setPlainText(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
         self.status.setText('输入已修改，结果对应此前输入，请重新核对。' if self.editor.toPlainText() != self._result_input_text else '有限情景核对完成；实际收益、最优路线和情景概率未知。')

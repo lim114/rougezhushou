@@ -1425,7 +1425,7 @@ class OfflineToolsPanel(QWidget):
             if command=='skills':payload['operators']=[scenario['operator']]
             self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False))
             self.status.setText('已显式导入最后计算的干员条件。原观察值和条件标识未更改；成对对照需独立确认观察条件。')
-        except Exception as exc:self.status.setText('未导入：'+str(exc))
+        except (ValueError, TypeError) as exc:self.status.setText('未导入：'+str(exc))
 
     def _import_stage(self):
         try:
@@ -1478,7 +1478,7 @@ class OfflineToolsPanel(QWidget):
             self._origin=('历史' if cached['historical'] else '当前匹配')+'缓存图的显式副本；AP/次数/完成/阻碍仍是独立声明'
             self._refresh_graph_choices();self._update_buttons()
             self.status.setText('已显式导入地图/区域副本；目标、起点、库存和资源保留原声明，请核对。未写入本局。')
-        except Exception as exc:self.status.setText('未导入：'+str(exc))
+        except (ValueError, TypeError, AttributeError) as exc:self.status.setText('未导入：'+str(exc))
 
     def _fill_node(self):
         try:
@@ -1499,7 +1499,7 @@ class OfflineToolsPanel(QWidget):
             field='start' if command=='targets' else 'post_node' if command=='residents' else 'goal' if command=='search-routes' else 'target'
             payload[field]=node_id;self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2))
             self.status.setText('已填写声明'+('起点' if field=='start' else '据点' if field=='post_node' else '目标')+'；不改变助手或游戏中的实际位置。')
-        except Exception as exc:self.status.setText('未填写：'+str(exc))
+        except (ValueError, TypeError, AttributeError, KeyError) as exc:self.status.setText('未填写：'+str(exc))
 
     @staticmethod
     def _graph_layout(graph):
@@ -1555,12 +1555,10 @@ class OfflineToolsPanel(QWidget):
         if serial!=self._serial or (family,command)!=self.current_query():return
         self.run_button.setEnabled(True)
         if error:self._invalidate(error);return
-        try:
-            graph=context.get('payload',{}).get('graph');bindings=context.get('bindings',{})
-            links={key:binding for key,binding in bindings.items() if key in result_node_ids(command,result)}
-            rendered=render_offline_result(family,command,result,graph=graph,map_link_nodes=links,input_source=context.get('origin'))
-            raw=json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)
-        except Exception as exc:self._invalidate('结果结构无法显示：'+str(exc));return
+        graph=context.get('payload',{}).get('graph');bindings=context.get('bindings',{})
+        links={key:binding for key,binding in bindings.items() if key in result_node_ids(command,result)}
+        rendered=render_offline_result(family,command,result,graph=graph,map_link_nodes=links,input_source=context.get('origin'))
+        raw=json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)
         self._result=deepcopy(result)
         self._result_graph=deepcopy(graph);self._result_links=deepcopy(links)
         if rendered!=self._rendered:

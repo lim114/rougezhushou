@@ -185,14 +185,14 @@ class RouteContinuationPanel(ResidentRouteReviewPanel):
                 progress.append({'step': index + 1, 'target': step['target'], 'mode': step['mode'], 'movement_completed_declared': None, 'battle_result_declared': None})
             progress[ordinal - 1].update(movement_completed_declared=self.move_match.currentData(), battle_result_declared=self.battle_result.currentData())
             self._write(payload); self.status.setText('只更新选中步骤的独立进度声明；没有更新新图/AP/库存或补齐之前未知移动，请重新复核。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, TypeError, KeyError, IndexError, AttributeError) as exc: self.status.setText('未设置：' + str(exc))
 
     def _set_current_after(self):
         try:
             payload = self._payload(); key = self.graph_node.currentData()
             if not key: raise ValueError('请选择新图节点。')
             payload['after']['graph']['current_node'] = key; self._write(payload); self.status.setText('已独立声明新图当前位置；未推断移动、AP和库存，请重新复核。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, KeyError, TypeError) as exc: self.status.setText('未设置：' + str(exc))
 
     def _set_failure(self):
         try:
@@ -205,11 +205,11 @@ class RouteContinuationPanel(ResidentRouteReviewPanel):
             if not self._graph_cache: raise ValueError('没有可导入新图。')
             payload = self._payload(); payload['after']['graph'] = deepcopy(self._graph_cache['graph']); self._graph_import = deepcopy(self._graph_cache); self._write(payload)
             self.status.setText('只显式导入after新图；原图、计划、进度与新AP/库存声明保留，请核对身份和当前位置。')
-        except Exception as exc: self.status.setText('未导入：' + str(exc))
+        except (ValueError, KeyError, TypeError) as exc: self.status.setText('未导入：' + str(exc))
 
     def _run(self):
         try: payload = self._payload(); graph = payload['after']['graph']; bindings = self._bindings(graph)
-        except Exception as exc: self.status.setText('未运行：' + str(exc)); return
+        except (ValueError, KeyError, TypeError, AttributeError) as exc: self.status.setText('未运行：' + str(exc)); return
         self._serial += 1; serial = self._serial; worker = _Worker(serial, payload); self._workers[serial] = worker
         self._contexts[serial] = {'graph': deepcopy(graph), 'links': bindings, 'input_text': self.editor.toPlainText()}; worker.signals.finished.connect(self._finished)
         self.run_button.setEnabled(False); self.status.setText('正在复核明示前缀、独立新状态与余路……'); QThreadPool.globalInstance().start(worker)

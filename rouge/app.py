@@ -696,19 +696,11 @@ class MainWindow(QMainWindow):
                         self.visual_reader=VisualReader()
                     reader=self.visual_reader
                 else:reader=self.reader
-                for attempt in range(2):
-                    try:
-                        observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context)
-                        break
-                    except Exception:
-                        if attempt or self.closing or epoch!=self.sample_epoch:raise
-                        # Retry a transient local recognition failure once using
-                        # this saved page, even if the user has already left it.
-                        time.sleep(.25)
+                observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context)
                 observation['capture_ms']=capture_ms
                 observation['captured_at'] = selected['captured_at']
                 observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
-                observation['_sampling']['recognition_attempts']=attempt+1
+                observation['_sampling']['recognition_attempts']=1
                 observation['_sampling']['lane']='current' if preferred else 'history'
                 fold_start=time.perf_counter()
                 observation['_timeline_result']=timeline.prepare(observation,selected['seq'],oldest_pending)

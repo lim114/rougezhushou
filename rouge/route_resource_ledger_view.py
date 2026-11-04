@@ -158,7 +158,7 @@ class RouteResourceLedgerPanel(ResidentRouteReviewPanel):
             if key not in {row.get('item_id') for row in payload.get('passive_items') or []}: raise ValueError('该概念体未在passive_items中声明持有，请先核对。')
             payload.setdefault('activation_declarations', {}).setdefault(identity, {}).setdefault(str(ordinal), {})[key] = self.phase_match.currentData()
             self._write(payload); self.status.setText('已独立声明概念体阶段；旧结果对应此前输入，请重新核算。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, TypeError, AttributeError) as exc: self.status.setText('未设置：' + str(exc))
 
     def _set_after_battle(self):
         try:
@@ -166,7 +166,7 @@ class RouteResourceLedgerPanel(ResidentRouteReviewPanel):
             if not identity or not ordinal: raise ValueError('请选择路线与步骤。')
             payload.setdefault('after_battle_declarations', {}).setdefault(identity, {})[str(ordinal)] = self.phase_match.currentData()
             self._write(payload); self.status.setText('已独立声明战斗结束阶段；不由基础奖励或抵达推定，请重新核算。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, TypeError, AttributeError) as exc: self.status.setText('未设置：' + str(exc))
 
     def _set_terminal(self):
         try:
@@ -178,11 +178,11 @@ class RouteResourceLedgerPanel(ResidentRouteReviewPanel):
                 declaration['exit_node_type'] = types[0]
             payload.setdefault('terminals', {})[identity] = declaration; self._write(payload)
             self.status.setText('已设置独立转移和成功声明；不由抵达推定，旧结果需重新核算。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except (ValueError, KeyError, TypeError, AttributeError, IndexError, StopIteration) as exc: self.status.setText('未设置：' + str(exc))
 
     def _run(self):
         try: payload = self._payload(); graph = payload.get('graph') or {}; bindings = self._bindings(graph)
-        except Exception as exc: self.status.setText('未运行：' + str(exc)); return
+        except (ValueError, TypeError, AttributeError) as exc: self.status.setText('未运行：' + str(exc)); return
         self._serial += 1; serial = self._serial; worker = _Worker(serial, payload); self._workers[serial] = worker
         self._contexts[serial] = {'graph': deepcopy(graph), 'links': bindings, 'input_text': self.editor.toPlainText()}
         worker.signals.finished.connect(self._finished); self.run_button.setEnabled(False)

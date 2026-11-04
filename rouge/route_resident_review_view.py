@@ -242,7 +242,7 @@ class ResidentRouteReviewPanel(QWidget):
     def _run(self):
         try:
             payload = self._payload(); graph = payload.get('graph') or {}; bindings = self._bindings(graph)
-        except Exception as exc: self.status.setText('未运行：' + str(exc)); return
+        except (ValueError, TypeError, AttributeError) as exc: self.status.setText('未运行：' + str(exc)); return
         self._serial += 1; serial = self._serial; worker = _Worker(serial, payload); self._workers[serial] = worker
         self._contexts[serial] = {'graph': deepcopy(graph), 'links': bindings, 'input_text': self.editor.toPlainText()}
         worker.signals.finished.connect(self._finished); self.run_button.setEnabled(False)

@@ -1,0 +1,68 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "按逐项授权清理既有异常兜底与同帧重试",
+  "base_commit": "3579cb014364959c24ca1fddeb4e7da4d6fd0852",
+  "completed_sections": 472,
+  "next_section": 473,
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "runtime_modules_changed": 7,
+  "decisions": {
+    "D01": "retain_six_worker_error_boundaries",
+    "D02": "remove_two_render_fallbacks",
+    "D03": "narrow_sixteen_input_catches",
+    "D04": "remove_same_task_frame_retry"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "new_low_probability_defenses_added": false,
+  "known_prior_authorization": "OverlayPreferences only, per 2026-11-03 decision; no renewed or widened permission",
+  "validation": {
+    "editor_targeted": {
+      "run": 43,
+      "passed": 43
+    },
+    "sampling_overlay_targeted": {
+      "run": 28,
+      "passed": 28
+    },
+    "initial_render_regressions": {
+      "run": 3,
+      "failed": 2,
+      "passed": 1
+    },
+    "initial_input_regressions": {
+      "test_methods": 1,
+      "failed_subcases": 16
+    },
+    "initial_single_attempt_regression": {
+      "run": 1,
+      "failed": 1
+    },
+    "worker_classes_ast_unchanged": 6,
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "real_game_acceptance": false
+    }
+  },
+  "source_sha256": {
+    "rouge/app.py": "1d4df9c02285c517fc2ac61c82497a9a346fa771fb6f813350a1ca6cdd31abaf",
+    "rouge/offline_tools_view.py": "ad23249b98078775d639d53ecd3439aa8e817f3b92d1dbbb4b6a3b2a792a2311",
+    "rouge/route_constraints_view.py": "eb9e63c79c806405b6339975e3078b6639550a94879e109109e01db99966bcb2",
+    "rouge/route_continuation_view.py": "ae91cdca17e0fb570b7bb36d9e179eb9e9e2768e4f8a54208cd4708f1dd79d18",
+    "rouge/route_resident_review_view.py": "84588c88ec8df177cd771f57720f0a1f693a1c4508f55e04cf4dd2a9892a976a",
+    "rouge/route_resource_ledger_view.py": "efaad89494ec8701f7bf7f316bdcf5c3bb4b179b2b4b3539c55847007760a920",
+    "rouge/route_scenarios_view.py": "e19110a8899973ba410d4f9a35beef584928d187bb7ca725575496ee4944c2b4",
+    "tests/test_existing_defense_decisions.py": "fc1b7a8ea974f7f13af86beea2d0b2ef592618c27e9b502996005696f382a478",
+    "tests/test_sampling_flow.py": "8379a0e956fc1a7de2711c78af6bbc4541b51d8e16158e416d871c9214dc5a15"
+  },
+  "remaining": [
+    "Whole-program review remains incomplete; prior module counts do not increase because this batch deepens seven already partially reviewed modules.",
+    "Further existing low-probability defenses require explicit scoped approval before disposition.",
+    "Statistics missing-category mismatch and section473 cursor/caption acceptance gaps remain unchanged."
+  ]
+}

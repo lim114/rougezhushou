@@ -122,17 +122,25 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertFalse(self.window.auto.isChecked())
         self.assertFalse(self.window.capture.stats()['collecting'])
 
-    def test_transient_reader_failure_retries_saved_page_without_reopening(self):
-        self.release.set();original=self.window.reader.read;attempts=[]
+    def test_reader_failure_reports_once_and_next_frame_still_runs(self):
+        self.release.set();original=self.window.reader.read;attempts=[];errors=[]
+        self.window.events.sample_error.connect(errors.append)
         def unreliable(image,**kwargs):
-            attempts.append(1)
+            attempts.append(int(image[0,0,0]))
             if len(attempts)==1:raise RuntimeError('temporary recognition failure')
             return original(image,**kwargs)
         self.window.reader.read=unreliable
         self.offer(50);self.window.auto.setChecked(True)
-        self.wait_for(lambda:bool(self.window.operator_observations))
-        self.assertEqual(len(attempts),2)
-        self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],50)
+        self.wait_for(lambda:len(errors)==1 and not self.window.busy)
+        self.assertEqual(attempts,[50])
+        self.assertIn('temporary recognition failure',errors[0][2])
+        self.assertFalse(self.window.operator_observations)
+        self.assertTrue(self.window.sample_button.isEnabled())
+        self.offer(80)
+        self.wait_for(lambda:bool(self.window.operator_observations) and not self.window.busy)
+        self.assertEqual(attempts,[50,80])
+        self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
+        self.assertEqual(self.window.observation['_sampling']['recognition_attempts'],1)
 
     def test_manual_wait_for_first_frame_keeps_fifo_when_auto_resumes(self):
         self.window.sample_now()

@@ -282,7 +282,7 @@ class RouteConstraintsPanel(QWidget):
         try:
             payload = self._payload(); graph = payload.get('graph') or {}
             bindings = self._bindings(graph)
-        except Exception as exc:
+        except (ValueError, TypeError, AttributeError) as exc:
             self.status.setText('未运行：' + str(exc)); return
         self._serial += 1; serial = self._serial
         worker = _Worker(serial, payload); self._workers[serial] = worker
