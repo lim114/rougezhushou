@@ -90,10 +90,6 @@ def registered_rows(graph,kind,frequencies):
 def frequency_text(row):
     return '—'if row is None else '0%'if row['frequency']==0 else f"{row['frequency']:.2%}"
 
-def _projected_hit(points,px,py,radius):
-    hits=sorted((math.hypot(px-x,py-y),identity)for identity,x,y in points)
-    return hits[0][1]if hits and hits[0][0]<=radius and(len(hits)==1 or hits[1][0]-hits[0][0]>=6)else None
-
 def battle_targets(node):
     """A node kind is not a stage identity; only its bound title/variant opens URLs."""
     from urllib.parse import quote
@@ -226,7 +222,9 @@ class InteractionSurface(QWidget):
         if self.mask()!=region:self.setMask(region)
         self.show();self.update()
     def mousePressEvent(self,event):
-        if event.button()==Qt.MouseButton.LeftButton:
+        # Presses ignored by the card or type strip bubble here; they must not
+        # open a node caption hidden underneath.
+        if event.button()==Qt.MouseButton.LeftButton and self.childAt(event.position().toPoint())is None:
             identity=self.controller.hit(event.position())
             self.controller.record('node_pressed',x=event.position().x(),y=event.position().y(),hit=identity)
             if identity:self.controller.open_node(identity)
@@ -294,13 +292,11 @@ class GameMapOverlay(QObject):
                 else:self.dismiss_card('node_scope_changed')
             self.interaction.register(self.current)
         if audit is not None:audit.overlay({**decision,'evaluation_ms':(time.perf_counter()-started)*1000},did_show=self.surface.isVisible(),enabled=self.enabled,kind=self.kind)
-    def hit_radius(self):return max(16,min(36,round(self.interaction.height()*.05)))
     def hit(self,point):
+        # Only captions are input regions; node icons stay with the game.
         position=QPoint(round(point.x()),round(point.y()))
         labels=[key for key,rect in self.current['label_rects'].items()if rect.adjusted(-4,-4,4,4).contains(position)]if self.current else[]
-        if labels:return labels[0]if len(labels)==1 else None
-        points=self.current['points']if self.current else[]
-        return _projected_hit(points,point.x(),point.y(),self.hit_radius())
+        return labels[0]if len(labels)==1 else None
     def open_node(self,identity):
         started=time.perf_counter();self.tick()
         if not self.current:return
@@ -327,7 +323,6 @@ class GameMapOverlay(QObject):
             listener=self.mouse_listener;self.mouse_listener=None;listener.stop();listener.join()
             self.record('mouse_listener_stopped',listener_id=id(listener),reason=reason)
         if self.current is not None:self.interaction.register(self.current)
-    def clear_hover(self):self.dismiss_card()
     def outside_click(self,reading):
         binding,x,y=reading
         if not self.card.isVisible()or binding!=self.card.binding:return
@@ -382,10 +377,5 @@ class GameMapOverlay(QObject):
         return False
     def close(self):
         self.timer.stop();self.focus_return_timer.stop();self.current=None;self.dismiss_card('window_closed')
-        QApplication.instance().removeEventFilter(self);self.surface.close();self.interaction.close();self.current=None
+        QApplication.instance().removeEventFilter(self);self.surface.close();self.interaction.close()
         if self.view:self.more_card.close()
-
-def hit_node(data,snapshot):
-    if not snapshot.get('cursor_on_game'):return None
-    x,y,w,h=snapshot['physical_client'];px=(snapshot['cursor'][0]-x)*data['rect'].width()/w;py=(snapshot['cursor'][1]-y)*data['rect'].height()/h
-    return _projected_hit(data['points'],px,py,30)

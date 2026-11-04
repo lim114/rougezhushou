@@ -130,6 +130,13 @@ class ControllerTests(unittest.TestCase):
         QTest.mouseClick(self.overlay.interaction,Qt.MouseButton.LeftButton,pos=rect.center());self.qt.processEvents()
         self.assertTrue(self.overlay.card.isVisible());self.assertEqual(self.overlay.card.binding[-1],node['id'])
 
+    def test_press_on_card_body_cannot_open_caption_hidden_under_it(self):
+        a,b=[n['id']for n in self.reference['observation']['map']['nodes']if n['id']in self.overlay.current['label_rects']][:2]
+        self.overlay.open_node(a);self.qt.processEvents();hidden=self.overlay.current['label_rects'][b].center()
+        self.overlay.card.move(hidden-QPoint(self.overlay.card.width()//2,self.overlay.card.height()//2));self.overlay.interaction.register(self.overlay.current)
+        QTest.mouseClick(self.overlay.card.date,Qt.MouseButton.LeftButton,pos=self.overlay.card.date.mapFrom(self.overlay.interaction,hidden));self.qt.processEvents()
+        self.assertEqual(self.overlay.card.binding[-1],a)
+
     def test_hover_keeps_card_and_node_icon_remains_click_through(self):
         identity=self.overlay.current['points'][0][0];self.overlay.open_node(identity);self.qt.processEvents()
         QTest.mouseMove(self.overlay.card,QPoint(8,8));self.qt.processEvents();self.assertTrue(self.overlay.card.isVisible())
