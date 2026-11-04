@@ -1,3 +1,7 @@
+## 维护：笔记目录单次读取、清理精简与进度看板（2026-11-04）
+
+按D19/D20删除同次失败重读，临时路径一次删除；17项定向通过。增加审查深度图和产品门禁状态表，区分部分审查与完整验收。[回执](verification/maintenance/code-constraints-note-scan-20261104/README.md)。
+
 ## 维护：笔记标签单次身份校验与异常收窄（2026-11-04）
 
 D17删除字段投影后重复校验，D18停止吞掉内部TypeError；19项定向通过。原共享辅助和有操作顺序的Qt回调经核对保留，无新增函数。[回执](verification/maintenance/code-constraints-note-metadata-20261104/README.md)。只关闭所列路径，全程序继续整改。

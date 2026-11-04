@@ -45,15 +45,16 @@ class NoteLibrary:
             if destination.exists():os.replace(name,destination)
             else:os.link(name,destination)
         finally:
-            if Path(name).exists():Path(name).unlink()
+            Path(name).unlink(missing_ok=True)
     def rows(self,query=''):
         indexed=self.records();result=[];seen=set();q=query.strip().casefold()
         for key,row in indexed.items():
             path=_regular(self.folder/(sha256(key.encode()).hexdigest()+'.md'))
             if not path.is_file():continue
+            seen.add(path.name)
             try:text=path.read_text('utf8')
             except(OSError,UnicodeError):self.issues.append(path.name);continue
-            title=row['content']['title'];seen.add(path.name)
+            title=row['content']['title']
             if q not in(title+' '+text).casefold():continue
             result.append({'title':title,'key':key,'content':row['content'],'text':text,'path':path,'legacy':False})
         if self.folder.is_dir():

@@ -1,0 +1,62 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记目录单次读取、清理精简与进度看板",
+  "base_commit": "a807887fed03402ee6d7673b47af710d80f238a6",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "D19 avoids duplicate failed-body read within one refresh; D20 replaces exists/unlink with one unlink(missing_ok=True).",
+    "rule2": "No new helper; reviewed shared library/context helpers and lifecycle callbacks without forcing inline duplication.",
+    "rule3": "D19 and D20 changed only after individual explicit approval."
+  },
+  "decisions": {
+    "D19": "read_indexed_body_once_per_refresh",
+    "D20": "single_cleanup_call_missing_ok"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_library.py": "3474ab587a38cb4efdb0fd97a9e917378fc76b390b8fb1373a8be0f2d0a968a5",
+    "tests/test_note_scan_review.py": "9c952d4dcec3d7b1cbdd18aad0306d881a9607718358fe41c7a9140d75e8d698"
+  },
+  "validation": {
+    "baseline": {
+      "run": 3,
+      "passed": 1,
+      "failed": 1,
+      "errors": 1
+    },
+    "targeted": {
+      "run": 17,
+      "passed": 17
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 26.74,
+      "real_game_acceptance": false
+    },
+    "progress_visual_rendered_and_checked": true,
+    "coverage_reconstructed_and_current_path_inventory_matched": true
+  },
+  "coverage": {
+    "structural_only": 430,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 51,
+    "full_modules_certified": 0,
+    "total_runtime_modules": 558
+  },
+  "progress_report": "PROGRESS.md",
+  "progress_artifacts_sha256": {
+    "PROGRESS.md": "dbccbc7259f5cdf2290f2f7276f5ff56ab02e7a3d243baa743f62c0c2ea626c0",
+    "progress.svg": "1cb83c62fa27e76b43bc6e3e9700b2d745efd9c5ff3d4f72dbed5cab6042ad60",
+    "coverage-audit.json": "48bbad8f0e62b1ea57f57bcffb1ecd0fc3c37e39c5f112a068c1711eef9fe515"
+  },
+  "remaining": [
+    "Other storage and runtime paths require three-rule review; no complete-module certification.",
+    "Section473 cursor/caption interaction and Gate0-3 acceptance gaps remain; report reuses their existing status."
+  ]
+}
