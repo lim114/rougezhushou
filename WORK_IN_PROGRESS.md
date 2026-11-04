@@ -1,3 +1,7 @@
+## 当前断点：笔记导出复核与发布审查完成
+
+D14仅保留实际对话框后的内容复核；D15清理保护、D16目标及发布保护按用户授权保留，发布模块字节不变。13项定向通过，回执verification/maintenance/code-constraints-note-export-20261104/summary.json。第二条核对保留文本编码、共享字节发布和两处复用的检查，不机械内联。覆盖430结构清点、77异常等价、51部分路径，仍非整模块/全程序完成；继续其余三条整改，D14—D16不重复送审。
+
 ## 当前断点：笔记保存异常与资料入口整改完成
 
 parents复用目标键，移除sync_note_source/export_current两层单次转发。D12按授权仅保留标签OSError/ValueError提示，D13两处清理捕获按授权保留，NoteStore类AST不变。30项定向通过；回执verification/maintenance/code-constraints-note-save-20261104/summary.json。覆盖431结构清点、78异常等价、49部分路径，不表示完整模块；其余文件链接/保存/身份路径仍逐项回顾，不能扩大D12/D13授权。继续三条同步整改，不新增功能节。

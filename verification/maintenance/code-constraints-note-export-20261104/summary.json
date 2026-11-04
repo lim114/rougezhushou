@@ -1,0 +1,62 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记导出重复复核精简与发布保护审查",
+  "base_commit": "06a1592bf8bb0a877130ff2d139be858fb14954a",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "D14: recheck only after each actual modal dialog; eliminate duplicate on new-file path.",
+    "rule2": "Reviewed text encoding adapter, shared byte publisher and twice-used state check; no gratuitous inlining or new wrapper.",
+    "rule3": "D14-D16 separately approved before implementation or retention."
+  },
+  "decisions": {
+    "D14": "move_second_check_inside_overwrite_confirmation",
+    "D15": "retain_export_cleanup_handler",
+    "D16": "retain_target_checks_and_atomic_publication"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_export.py": "4fdce198dc80482e57dcf514b1fff247b55506875a020f8d96afcd3c2d6ec024",
+    "rouge/player_note_export_ui.py": "a928bbc8fd86c045622699b38c555f4acb85dc8815ebdff1e921b31ef3265610",
+    "tests/test_note_export_review.py": "6a7caeaf4e215f89a33fc45f189fd8980cf0780e89357dadb9c0f61171876a14"
+  },
+  "validation": {
+    "baseline": {
+      "run": 8,
+      "passed": 8
+    },
+    "before_successful_edit": {
+      "run": 13,
+      "passed": 13
+    },
+    "targeted": {
+      "run": 13,
+      "passed": 13
+    },
+    "publisher_bytes_unchanged": true,
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 667.39,
+      "real_game_acceptance": false
+    },
+    "attempts": [
+      "Initial CRLF replacement assertion stopped with no edit; exact LF replacement succeeded.",
+      "Initial window probe used unavailable psutil; no changes/dependencies installed. CIM plus native window probe succeeded."
+    ]
+  },
+  "coverage": {
+    "structural_only": 430,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 51,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Other note/storage and program paths still require three-rule review; no complete-module certification.",
+    "Section473 interaction gaps and statistics semantics unchanged."
+  ]
+}

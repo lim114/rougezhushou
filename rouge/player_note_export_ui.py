@@ -20,7 +20,7 @@ def export_editor(dialog):
         if answer!=QMessageBox.StandardButton.Yes:
             dialog.status.setText('已取消导出，已有文件没有改动。');return False
         overwrite=True
-    if not unchanged():return False
+        if not unchanged():return False
     try:result=export_note(original_text,path,overwrite=overwrite)
     except(OSError,ValueError)as error:
         from .player_file_messages import file_issue
