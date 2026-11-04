@@ -33,7 +33,7 @@ class Hotkey(unittest.TestCase):
         with tempfile.TemporaryDirectory()as d:
             p=Path(d)/'prefs.json'
             for raw in ('broken','[]',json.dumps({'enabled':'false','shortcut':'Tab','allow_single':True}),json.dumps({'enabled':True,'shortcut':'Tab','allow_single':False})):
-                p.write_text(raw);data,warning=load_preferences(p);self.assertEqual(data['shortcut'],DEFAULT);self.assertTrue(warning);self.assertEqual(p.read_text(),raw)
+                p.write_text(raw);data,warning=load_preferences(p);self.assertEqual(data['shortcut'],DEFAULT);self.assertFalse(data['enabled']);self.assertTrue(warning);self.assertEqual(p.read_text(),raw)
     def test_preferences_atomic_round_trip(self):
         with tempfile.TemporaryDirectory()as d:
             p=Path(d)/'child/prefs.json';data={'enabled':False,'shortcut':'Tab','allow_single':True}

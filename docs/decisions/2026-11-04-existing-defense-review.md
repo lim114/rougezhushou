@@ -53,3 +53,17 @@
 app.sample_now 在连接前后都调用 set_collecting(True)，但 connect_game 会依据自动采样开关再次设置采集状态。因此连接后的调用负责手动采样时重新启用采集，本轮不删。GameHover 在读取后复核新鲜画面、同局、窗口及鼠标位置，是异步期间实际可变状态的判定，不是对同一不变输入重复判空。
 
 验证：27项定向检查通过，覆盖悬停异常结束后再次悬停、隐藏时拒绝在途结果、正常卡片来源入口、正常页脚补读与歧义判定、补读异常不修改原文字并上报。既有私样本只在本机读取，不复制到回执。原测试窗口已正常关闭并更新启动，可见且响应。首次补丁脚本因换行匹配失败未写入，首次代码检查发现属性替换缺空格，均已修正；原失败日志保留本机。
+
+## D08—D10：快捷键读取、保存和系统调用（已确认）
+
+| 编号 | 位置、触发条件与原作用 | 用户决定与实际处理 | 影响及替代 |
+| --- | --- | --- | --- |
+| D08 | player_hotkey.load_preferences：文件损坏、无权限、格式错误时默认启用Ctrl+Alt+Space；shortcut非文字可导致AttributeError | 用户同意异常设置不自动启用，并在文件入口检查shortcut类型。首次运行仍启用默认快捷键，异常已有文件不改写，需用户明确应用 | 异常时少一个自动恢复入口，保留工具条；未选择“仍默认启用”。 |
+| D09 | save_preferences的mkdir失败上报、QSaveFile.open/write/commit检查，以及apply_hotkey的OSError提示 | 用户同意全部保留，无新增重试。保存函数原样，界面仍告知本次可用但未保存 | 防止保存失败却误报持久化成功；替代为移除这些提示/原子保存失败处理，用户未选择。 |
+| D10 | GlobalHotkey.configure/release：注销失败则拒绝切换/关闭，撤销刚注册的新键；编号超过0xBFFF拒绝注册 | 用户同意保留上述系统调用保护，原行为不变 | 注销失败仍需重新打开助手；撤销新注册本身失败的恢复不在本轮内，无实际发生率。替代为删除保护，用户未选择。 |
+
+来源：微软[RegisterHotKey](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerhotkey)规定应用编号范围为0x0000—0xBFFF；[UnregisterHotKey](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-unregisterhotkey)规定返回0表示失败。查阅日期2026-11-04。本轮保留既有Win32实现，没有引入第三方替换框架。
+
+同批前两条整改：apply_hotkey只调用configure解析一次，复用成功后的标准名称；删除只做一次坐标转换转发的_drag_dock方法，将表达式并回dragged信号连接处，维护验收脚本改走该信号。正常输入ValueError仍在界面入口提示；复用的_move_dock、Qt生命周期回调与页面入口没有机械地按“调用次数少”删除。
+
+24项定向通过；原工具条4个失败在改动前源码上复现，补齐模拟主窗口的map_overlay_reference/session_recorder后通过。测试使用模拟注册接口，未做原生快捷键交互验收或游戏操作。加载已保存设置和配置入口仍各有自身校验，本轮仅关闭应用按钮的重复解析，不声称整个启动链已完成单次解析整改。

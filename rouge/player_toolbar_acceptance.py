@@ -56,7 +56,7 @@ def check(window,gui,require):
         clicked=[];first.clicked.connect(lambda:clicked.append(True));origin=bar.pos()
         QTest.mousePress(first,Qt.MouseButton.LeftButton,pos=QPoint(16,16));QTest.mouseMove(first,QPoint(-20,16));QTest.mouseRelease(first,Qt.MouseButton.LeftButton,pos=QPoint(16,16));gui.processEvents()
         require(bar.pos()!=origin and not clicked,'dragging_icon_moves_toolbar_without_opening_a_tool')
-        bar._drag_dock(QPoint(100000,100000));gui.processEvents()
+        first.dragged.emit(QPoint(100000,100000));gui.processEvents()
         require(area.contains(bar.geometry()),'dragged_toolbar_is_clamped_to_screen_work_area')
         QTest.mouseClick(bar.buttons['地图与节点'],Qt.MouseButton.LeftButton,pos=QPoint(16,16));gui.processEvents()
         require(bar.map_popup.isVisible(),'actual_map_icon_opens_existing_map_panel')

@@ -42,14 +42,15 @@ def load_preferences(path):
     default = {'enabled': True, 'shortcut': DEFAULT, 'allow_single': False}
     try:
         data = json.loads(Path(path).read_text('utf8'))
-        if not isinstance(data, dict) or type(data.get('enabled')) is not bool or type(data.get('allow_single')) is not bool:
-            return default, '快捷键设置格式不正确，暂用默认值；原文件未改动。'
+        if (not isinstance(data, dict) or type(data.get('enabled')) is not bool
+                or type(data.get('allow_single')) is not bool or not isinstance(data.get('shortcut'), str)):
+            raise ValueError('Invalid shortcut preferences')
         canonical, _, _ = parse_shortcut(data['shortcut'], data['allow_single'])
         return {**default, **{k: data[k] for k in default}, 'shortcut': canonical}, ''
     except FileNotFoundError:
         return default, ''
     except (ValueError, TypeError, KeyError, OSError):
-        return default, '快捷键设置无法读取，暂用默认值；原文件未改动。'
+        return {**default, 'enabled': False}, '快捷键设置无法读取，本次未启用；请确认后点击应用。原文件未改动。'
 
 def save_preferences(path, data):
     path = Path(path)
@@ -94,6 +95,7 @@ class GlobalHotkey(QObject):
     def __init__(self, parent=None, api=None):
         super().__init__(parent)
         self.binding = None
+        self.shortcut = None
         self.receiver = NativeReceiver(self)
         self.api = api if api is not None else WindowsApi(int(self.receiver.winId())) if sys.platform == 'win32' else None
         self.app = QApplication.instance()
@@ -104,8 +106,10 @@ class GlobalHotkey(QObject):
         if not enabled:
             if not self.release():
                 return False, '旧快捷键未能释放，仍保持原设置。'
+            self.shortcut = canonical
             return True, '快捷键已关闭，可继续点击工具条。'
         if self.binding and self.binding[1:] == (modifiers, vk):
+            self.shortcut = canonical
             return True, '当前快捷键：' + canonical + '，按一次收起，再按一次恢复。'
         if self.api is None:
             return False, '当前系统不支持全局快捷键，请点击工具条。'
@@ -119,6 +123,7 @@ class GlobalHotkey(QObject):
             self.api.unregister(identity)
             return False, '旧快捷键未能释放，仍保持原设置。'
         self.binding = (identity, modifiers, vk)
+        self.shortcut = canonical
         return True, '当前快捷键：' + canonical + '，按一次收起，再按一次恢复。'
 
     def dispatch(self, message, identity, packed_keys):

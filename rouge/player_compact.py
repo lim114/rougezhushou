@@ -64,7 +64,7 @@ class CompactAssistant(QDialog):
         for name,label in zip(ORDER,NAMES):
             glyph,callback=by_name[name];button=DockButton(label,glyph,self)
             button.setAccessibleName(name);button.clicked.connect(callback)
-            button.hoverChanged.connect(self._hover_tool);button.dragged.connect(self._drag_dock)
+            button.hoverChanged.connect(self._hover_tool);button.dragged.connect(lambda delta:self._move_dock(self.pos()+delta))
             self.buttons[name]=button;self.tool_buttons.append(button)
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
         self.buttons['节点统计']=stat
@@ -117,7 +117,6 @@ class CompactAssistant(QDialog):
             position=outside_position(binding.snapshot['logical_client'],area,self.size(),position)
             if position is None:return
         self.move(max(area.left(),min(position.x(),area.right()-self.width()+1)),max(area.top(),min(position.y(),area.bottom()-self.height()+1)))
-    def _drag_dock(self,delta):self._move_dock(self.pos()+delta)
     def _hover_tool(self,button):
         for item in self.tool_buttons:item.set_expanded(item is button)
         from PySide6.QtWidgets import QToolTip
@@ -134,14 +133,14 @@ class CompactAssistant(QDialog):
         for button in self.tool_buttons:button.set_expanded(False,animate=False)
         super().hideEvent(event)
     def apply_hotkey(self):
-        from .player_hotkey import parse_shortcut,save_preferences
+        from .player_hotkey import save_preferences
+        desired={'enabled':self.hotkey_enabled.isChecked(),'shortcut':self.hotkey_keys.currentText(),'allow_single':self.hotkey_single.isChecked()}
         try:
-            canonical,_,_=parse_shortcut(self.hotkey_keys.currentText(),self.hotkey_single.isChecked())
+            ok,message=self.hotkey.configure(**desired)
         except ValueError as error:self.hotkey_status.setText(str(error));return
-        desired={'enabled':self.hotkey_enabled.isChecked(),'shortcut':canonical,'allow_single':self.hotkey_single.isChecked()}
-        ok,message=self.hotkey.configure(**desired)
         if ok:
-            self.hotkey_preferences=desired;self.hotkey_keys.setCurrentText(canonical)
+            desired['shortcut']=self.hotkey.shortcut
+            self.hotkey_preferences=desired;self.hotkey_keys.setCurrentText(self.hotkey.shortcut)
             try:
                 if self.hotkey_path is not None:save_preferences(self.hotkey_path,desired)
             except OSError as error:message+='\n'+str(error)+' 本次仍可用，重启后不会保留。'

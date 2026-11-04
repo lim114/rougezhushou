@@ -1,0 +1,65 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "快捷键入口单次解析与工具条转发精简",
+  "base_commit": "697dd01ffbbaeb933154861f3c4f84f6448f9cc5",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "Apply input parsed once; use canonical accepted shortcut.",
+    "rule2": "Inline one-use drag forwarding method; acceptance uses real signal.",
+    "rule3": "D08-D10 explicitly approved before modification or retention."
+  },
+  "decisions": {
+    "D08": "disable_on_invalid_existing_preferences",
+    "D09": "retain_atomic_save_failure_handling",
+    "D10": "retain_unregister_and_identifier_limit_handling"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_hotkey.py": "f6a28086dd30d8b51edc3ca955f09c558c405fdc2ba3b66d467db30eb45106af",
+    "rouge/player_compact.py": "3a1d66af4a1ca844cfa83ad381a2b95c48222e08f4f71b85f592ed8c8354b922",
+    "rouge/player_toolbar_acceptance.py": "f565fdbdb373054ae9ce5c37d9197bbb6dc1a813e50bd00efcf01e320ea9ab47",
+    "tests/test_hotkey_entry_review.py": "a3b3f8fb8c780acfc4a660c9e13b19551d58584ec074a6d36d85ed2be74e9551",
+    "tests/test_player_hotkey_393.py": "affa8ffa5d9c1083e37fee45abf8814e07557f035cf7ad69a2a80e77d4ed30fc",
+    "tests/test_player_toolbar_412.py": "6579eb029c353e93e26138da91a9303b4feabebae327202aeb75bcbe2c87fd4b"
+  },
+  "validation": {
+    "targeted": {
+      "run": 24,
+      "passed": 24
+    },
+    "baseline_bad_preferences": {
+      "run": 1,
+      "failed": 1
+    },
+    "initial_targeted": {
+      "run": 24,
+      "errors": 10,
+      "passed": 14
+    },
+    "old_toolbar_baseline": {
+      "run": 5,
+      "errors": 4,
+      "passed": 1
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "real_game_acceptance": false,
+      "stderr_empty": true
+    }
+  },
+  "coverage": {
+    "structural_only": 434,
+    "exception_equivalence_only": 82,
+    "selected_paths_only": 42,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Unreviewed startup validation and other paths remain; modules not marked fully compliant.",
+    "Section473 and existing statistics mismatch unchanged."
+  ]
+}

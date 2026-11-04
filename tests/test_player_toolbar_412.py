@@ -10,7 +10,7 @@ class ToolbarTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.gui=QApplication.instance()or QApplication([])
     def toolbar(self):
-        owner=QWidget();owner.run=SimpleNamespace(state={});owner.closing=True
+        owner=QWidget();owner.run=SimpleNamespace(state={});owner.closing=True;owner.map_overlay_reference=None;owner.session_recorder=None
         owner.open_scene_notes=lambda:None;owner.open_public_statistics=lambda:None
         owner.node_statistics_source=lambda:None
         bar=CompactAssistant(owner);self.addCleanup(owner.deleteLater);self.addCleanup(bar.close);return bar
