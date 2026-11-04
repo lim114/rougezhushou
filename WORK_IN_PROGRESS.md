@@ -1,3 +1,7 @@
+## 当前断点：首次窗口输入复用与主题模块审查完成
+
+D22仅首次尺寸计算读取可选绑定，D23首次默认主题按授权保留；网页标记读取一次，无用theme参数已删除。21项最终原生定向通过，离屏/原生旧尺寸失败已原源码复现、隔离旧测试混合条件后通过。回执verification/maintenance/code-constraints-window-theme-20261104/summary.json；进度图见同目录PROGRESS.md。player_theme整模块三条审查完成，其他两模块部分路径：426/77/54/1，共558。不扩展到上游代码或全程序实机准确性。继续其他未审路径，D22/D23不重复送审。
+
 ## 当前断点：笔记资料入口初始化与重复显示整改完成
 
 来源相等刷新不再重复转换正文，单次_show_reference并回构造入口；D21按授权初始化note_library_page并删除两处缺属性getattr。22项定向通过，回执verification/maintenance/code-constraints-note-reference-20261104/summary.json；进度图见同目录PROGRESS.md。429结构清点、77异常等价、52部分路径，完整模块验收0；增加一个部分路径模块，不代表整体完成。其他三条整改继续，D21不重复送审。

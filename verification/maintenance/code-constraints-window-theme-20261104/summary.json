@@ -1,0 +1,68 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "资料窗口首次输入复用与主题模块审查",
+  "base_commit": "4eb9efe1c5c02afb22205726c19bd23abe82b2d6",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "Read optional binding only for first-open sizing; cache map-web flag for three uses.",
+    "rule2": "Remove unused theme parameter, keep shared frame method and cached assets responsibilities.",
+    "rule3": "D22 optional binding and D23 default theme explicitly approved; default-theme showEvent unchanged."
+  },
+  "decisions": {
+    "D22": "retain_optional_binding_only_first_open",
+    "D23": "retain_first_show_default_theme"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_reference_window.py": "1485757edd3604d4ca635a0304bec203e34ef208e4ccb4c14fd135d0aec58a3b",
+    "rouge/player_window_frame.py": "b724c2440448fed3a0cd9a47db15db79b060b394067b1f788189b248515d4480",
+    "rouge/player_theme.py": "423beccd91c59ad7273781ec1e6d9ed3591aa8e79f778bad25ddad6146ccb947",
+    "tests/test_window_entry_review.py": "0396487c6c9da19ad063d5d0279f230e859876f7cffb217e963b5866ed74389f",
+    "tests/test_reference_window_451.py": "c40c7921f6c7c091498e370590fc03681a83d7e2de35196d1d89bf27ef5a51bd"
+  },
+  "full_module_review": {
+    "module": "rouge/player_theme.py",
+    "scope": "All current source statements reviewed against the three code constraints; not certification of third-party code or whole-product real-session behavior.",
+    "rule1": "No repeated input checks or catch blocks; enum dispatch/default variant is normal theme routing.",
+    "rule2": "assets/apply_theme are shared across many callers; no one-use wrapper.",
+    "rule3": "No low-probability fallback in this module; caller first-show fallback separately covered by D23."
+  },
+  "validation": {
+    "rounds": "rounds.json",
+    "final_native": {
+      "run": 21,
+      "passed": 21
+    },
+    "original_failures_reproduced": true,
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 0.15,
+      "real_game_acceptance": false
+    },
+    "progress_visual_rendered_and_checked": true,
+    "coverage_reconstructed_and_current_path_inventory_matched": true
+  },
+  "coverage": {
+    "structural_only": 426,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 54,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "progress_report": "PROGRESS.md",
+  "progress_artifacts_sha256": {
+    "PROGRESS.md": "c4c8dea160bb5c07971b8f8ce9f03290ca6e4eb6d93c3f6016f8e3262d6f79b9",
+    "progress.svg": "7de14f069b7d31a7ea24626c162754000e3e88f9a2226922c4d34b45c0a8d715",
+    "coverage-audit.json": "5332c11dc53ddee72d1eae5e7a569262e343a415a641e4f5a4a092c46b017a34"
+  },
+  "remaining": [
+    "557 runtime modules still lack complete three-rule review; JS/maintenance/tests also remain in scope.",
+    "Section473 and Gate0-3 real-session gaps unchanged."
+  ]
+}

@@ -49,7 +49,7 @@ class PlayerDialog(FramelessDialog):
         # Qt recreates native styles when the player's stay-on-top flag changes.
         self.updateFrameless()
 
-    def set_frame_theme(self, theme):
+    def set_frame_theme(self):
         button = self.titleBar.closeBtn
         for setter in (button.setNormalColor, button.setHoverColor, button.setPressedColor):
             setter('#ededed')

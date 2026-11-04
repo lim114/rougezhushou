@@ -39,6 +39,6 @@ def apply_theme(widget,theme='light',*,extra='',variant=None):
     from .player_window_frame import PlayerDialog
     widget.setProperty('playerTheme',theme);widget.setProperty('playerThemeVariant',variant);widget.setPalette(QPalette(palette));widget.setFont(QFont('Microsoft YaHei UI',9));widget.setStyleSheet(sheet+extra)
     if isinstance(widget,PlayerDialog):
-        widget.set_frame_theme(theme)
+        widget.set_frame_theme()
         # PlayerDialog draws this same style only over its actual panel rectangle.
         widget.setAttribute(Qt.WidgetAttribute.WA_StyledBackground,False)

@@ -114,6 +114,8 @@ class ReferenceWindowTests(unittest.TestCase):
         self.qt.processEvents()
         self.assertFalse(unused.isVisible())
         b, _, _ = self.page('小笔记')
+        # Isolate unregistered-page layout from first-open compact sizing.
+        b.setProperty('playerOpened', True)
         b.resize(500, 300)
         self.host.present(b)
         self.qt.processEvents()

@@ -134,8 +134,9 @@ class ReferenceWindow(PlayerDialog):
         self.setWindowTitle('黑流树海助手 · '+page.windowTitle())
         self.headers.setCurrentWidget(page.header)
         self.pages.setCurrentWidget(page)
-        self.setProperty('independentMapWeb',bool(page.property('mapOverlayWebPage')))
-        self.back.setVisible(not page.property('mapOverlayWebPage'));self.forward.setVisible(not page.property('mapOverlayWebPage'))
+        is_map_web=bool(page.property('mapOverlayWebPage'))
+        self.setProperty('independentMapWeb',is_map_web)
+        self.back.setVisible(not is_map_web);self.forward.setVisible(not is_map_web)
         page.show()
         self.presenting = True
         self.show()
@@ -143,9 +144,9 @@ class ReferenceWindow(PlayerDialog):
         if current is not page:
             area = self.screen().availableGeometry()
             size = page.preferred_size
-            binding=getattr(self.parentWidget(),'game_binding',None)
-            snapshot=binding.snapshot if binding and binding.enabled else None
             if not page.property('playerOpened'):
+                binding=getattr(self.parentWidget(),'game_binding',None)
+                snapshot=binding.snapshot if binding and binding.enabled else None
                 from .player_game_binding import outside_position
                 if not(snapshot and snapshot['active']) or outside_position(snapshot['logical_client'],area,size) is None:
                     size=QSize(min(size.width(),max(360,round(area.width()*.28))),min(size.height(),round(area.height()*.70)))

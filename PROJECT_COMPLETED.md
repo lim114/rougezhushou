@@ -1,3 +1,7 @@
+## 维护：首次窗口输入复用与主题模块审查（2026-11-04）
+
+D22/D23落实，网页标记复用、无用参数删除；21项最终原生定向通过。player_theme.py整模块三条规则审查完成，其他窗框/资料窗口仍部分路径。[回执及进度](verification/maintenance/code-constraints-window-theme-20261104/README.md)。
+
 ## 维护：笔记资料入口初始化与重复显示精简（2026-11-04）
 
 来源相等时跳过重复转换/设置，将单次显示函数并回构造入口；D21按授权初始化目录页并直接访问属性。22项定向通过，新增一个部分路径审查模块。[回执与进度](verification/maintenance/code-constraints-note-reference-20261104/README.md)。
