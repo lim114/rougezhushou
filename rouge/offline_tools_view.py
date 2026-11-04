@@ -1444,13 +1444,15 @@ class OfflineToolsPanel(QWidget):
             else:payload['stage_id']=self._stage
             self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False))
             self.status.setText('已显式导入关卡；敌人、等级、路线和格子仍保留原声明，请核对。两组对照只替换左关卡。')
-        except Exception as exc:self.status.setText('未导入：'+str(exc))
+        except ValueError as exc:self.status.setText('未导入：'+str(exc))
 
-    def _refresh_graph_choices(self,selected=None):
+    def _refresh_graph_choices(self,selected=None,*,payload=None):
         self.graph_node.blockSignals(True);self.graph_node.clear()
         self.graph_node.addItem('请选择声明图节点',None)
-        try:graph=self._payload().get('graph') or {}
-        except ValueError:graph={}
+        if payload is None:
+            try:payload=self._payload()
+            except ValueError:payload={}
+        graph=payload.get('graph') or {}
         nodes=graph.get('nodes') if isinstance(graph,dict) else None
         for node in nodes if isinstance(nodes,list) else []:
             if isinstance(node,dict) and isinstance(node.get('id'),str):
@@ -1535,11 +1537,11 @@ class OfflineToolsPanel(QWidget):
         try:
             require_query_scope(*self.current_query(),self.include_historical_route_diagnostics)
             payload=self._payload()
-        except Exception as exc:
+        except ValueError as exc:
             self._invalidate('不能运行：'+str(exc));return
         self._invalidate('正在运行局外查询……')
         serial=self._serial;family,command=self.current_query()
-        if family=='exploration':self._refresh_graph_choices(self.graph_node.currentData());self._update_buttons()
+        if family=='exploration':self._refresh_graph_choices(self.graph_node.currentData(),payload=payload);self._update_buttons()
         worker=_QueryWorker(serial,family,command,payload,
             include_historical_route_diagnostics=self.include_historical_route_diagnostics)
         self._worker_context[serial]={'payload':deepcopy(payload),'origin':self._origin,'bindings':self._bindings_for_payload(payload) if family=='exploration' else {}}

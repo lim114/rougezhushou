@@ -1,0 +1,52 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "存量整改：编辑器单次解析、初始化与异常边界",
+  "base_commit": "248fa31ce6e686982fb99e8e68a7bf4d58e764a3",
+  "completed_sections": 472,
+  "next_section": 473,
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "runtime_modules_changed": 6,
+  "broad_except_clauses_narrowed": 16,
+  "first_example_loads_per_child": 1,
+  "removed_constructor_attribute_guards": 2,
+  "removed_wrong_preset_fallbacks": 3,
+  "new_low_probability_defensive_code": false,
+  "validation": {
+    "targeted_tests": 39,
+    "passed": 39,
+    "full_suite_run": false,
+    "baseline_regressions": [
+      "Original first four tests: six RuntimeError swallowing failures and three premature-control access errors; task boundary/parser checks passed.",
+      "Offline double-parse test failed with two calls. Initial companion test used a nonexistent battle query; corrected compare query then reproduced two swallowed RuntimeErrors.",
+      "Six linked-control subcases reproduced repeated parsing before correction."
+    ],
+    "final_parse_calls_per_entry": 1,
+    "partial_nested_json_signals_clean": true,
+    "worker_error_delivery_preserved": true,
+    "user_overlay_source_untouched": true,
+    "test_window": {
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "normal_project_launch": true,
+      "real_game_acceptance": false
+    }
+  },
+  "source_sha256": {
+    "rouge/offline_tools_view.py": "3bcb5b8bce76d1f795116535a0ec9bf0c3358355c569dafa6bf5657a910c419e",
+    "rouge/route_constraints_view.py": "f7f7609ea6ec7b182bf17b8e40353a7400851d873928ac882ab8ff2b00df8d14",
+    "rouge/route_continuation_view.py": "3873acb4ebc0a64036bbc186cbfaa4b73999244c8374f88208993d452723af69",
+    "rouge/route_resident_review_view.py": "7075c307451387bc9d9b41eacde317158be637f5c0e92bc64ed872ad62799e10",
+    "rouge/route_resource_ledger_view.py": "1a99f043575af8ccb6d5914e236ceeb062820267df899c52f611d8c9da158288",
+    "rouge/route_scenarios_view.py": "1a253f64f8be106a768bda64b23f636b9c4461f24590d4c142639d58f6237cad",
+    "tests/test_editor_error_boundaries.py": "d4e85393de10a369fe909973a980c10729ea9a2ad3936d160e64755d616b7912"
+  },
+  "remaining": [
+    "Other call paths in these six modules still need review, including remaining 24 broad catches; six worker boundaries and result-rendering boundaries were not removed in this cleanup.",
+    "Whole-program review: 439 runtime modules only inventoried; 82 exception-equivalence-only; 37 selected-path-only.",
+    "Owned scripts and bridge code remain in scope; frozen historical evidence remains unchanged.",
+    "Original statistics missing-category mismatch and section473 input/cursor acceptance gaps remain."
+  ]
+}

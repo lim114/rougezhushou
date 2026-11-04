@@ -129,7 +129,7 @@ class _Worker(QRunnable):
 
 class RouteContinuationPanel(ResidentRouteReviewPanel):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(parent, defer_initial_example=True)
         self.preset.clear()
         for row in public_continuation_presets(): self.preset.addItem(row['label'], row['id'])
         self.add_resident.hide(); self.declare_victory.hide()
@@ -148,7 +148,7 @@ class RouteContinuationPanel(ResidentRouteReviewPanel):
         self.run_button.setText('复核变化并构造有限续接候选'); self._load_example()
 
     def _load_example(self):
-        row = next((row for row in public_continuation_presets() if row['id'] == self.preset.currentData()), public_continuation_presets()[0])
+        row = next(row for row in public_continuation_presets() if row['id'] == self.preset.currentData())
         self._graph_import = None; self._write(row['payload']); self.status.setText('已载入合成公开图与独立进度/新状态声明；旧结果保留至重算。')
 
     def _editor_changed(self):
@@ -164,7 +164,7 @@ class RouteContinuationPanel(ResidentRouteReviewPanel):
             for ordinal, step in enumerate(plan['steps'], 1): self.step_select.addItem('原步骤' + str(ordinal) + ' ' + _label(before_graph, step['target']), ordinal)
             if self.graph_node.findData(choice) >= 0: self.graph_node.setCurrentIndex(self.graph_node.findData(choice))
             if self.step_select.findData(step_choice) >= 0: self.step_select.setCurrentIndex(self.step_select.findData(step_choice))
-        except Exception: pass
+        except (ValueError, KeyError, TypeError, AttributeError): pass
         self.graph_node.blockSignals(False); self.route_select.blockSignals(False); self.step_select.blockSignals(False)
         self.import_graph.setEnabled(self._graph_cache is not None)
         running = self._contexts.get(self._serial)
@@ -198,7 +198,7 @@ class RouteContinuationPanel(ResidentRouteReviewPanel):
         try:
             payload = self._payload(); payload['continue_after_failure_declared'] = self.failure_match.currentData(); self._write(payload)
             self.status.setText('已独立声明失败后的继续资格；没有生成资源或胜利，请重新复核。')
-        except Exception as exc: self.status.setText('未设置：' + str(exc))
+        except ValueError as exc: self.status.setText('未设置：' + str(exc))
 
     def _import_graph(self):
         try:

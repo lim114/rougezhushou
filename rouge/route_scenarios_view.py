@@ -213,7 +213,7 @@ class _Worker(QRunnable):
 class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
     """Reuse sealed editing/snapshot/map guards; scenario computations are separate."""
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(parent, defer_initial_example=True)
         self.preset.clear()
         for preset in public_scenario_presets(): self.preset.addItem(preset['label'], preset['id'])
         self.add_resident.hide(); self.declare_victory.hide()
@@ -233,28 +233,28 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
         self.run_button.setText('核对全部声明情景的路线矩阵'); self._load_example()
 
     def _load_example(self):
-        preset = next((row for row in public_scenario_presets() if row['id'] == self.preset.currentData()), public_scenario_presets()[0])
+        preset = next(row for row in public_scenario_presets() if row['id'] == self.preset.currentData())
         self._graph_import = None; self._write(preset['payload'])
         self.status.setText('已载入公开合成图与独立情景声明；不是当前游戏观测。旧结果保留至重新核对。')
 
     def _editor_changed(self):
-        super()._editor_changed()
-        if not hasattr(self, 'scenario_select'): return
+        payload = super()._editor_changed()
         choice = self.scenario_select.currentData(); self.scenario_select.blockSignals(True); self.scenario_select.clear()
         try:
-            for row in self._payload().get('scenarios') or []:
+            for row in payload.get('scenarios') or []:
                 if isinstance(row, dict) and isinstance(row.get('id'), str): self.scenario_select.addItem(row.get('name') or row['id'], row['id'])
             if self.scenario_select.findData(choice) >= 0: self.scenario_select.setCurrentIndex(self.scenario_select.findData(choice))
-        except Exception: pass
-        self.scenario_select.blockSignals(False); self._refresh_scenario_fields()
+        except TypeError: pass
+        self.scenario_select.blockSignals(False); self._refresh_scenario_fields(payload=payload)
 
     def _scenario(self, payload):
         return next(row for row in payload.get('scenarios') or [] if row.get('id') == self.scenario_select.currentData())
 
-    def _refresh_scenario_fields(self):
+    def _refresh_scenario_fields(self, *, payload=None):
         choice = self.snapshot_item.currentData(); self.snapshot_item.blockSignals(True); self.snapshot_item.clear(); self.scenario_ap.clear()
         try:
-            scenario = self._scenario(self._payload()); ap = scenario.get('action_points'); self.scenario_ap.setText('未知' if ap is None else str(ap))
+            if payload is None:payload = self._payload()
+            scenario = self._scenario(payload); ap = scenario.get('action_points'); self.scenario_ap.setText('未知' if ap is None else str(ap))
             stock = scenario.get('inventory')
             if stock is None: self.snapshot_item.addItem('库存快照未知', None)
             elif not stock: self.snapshot_item.addItem('明确空库存', None)
@@ -263,16 +263,17 @@ class RouteScenarioMatrixPanel(ResidentRouteReviewPanel):
                     identity = item.get('instance_id', 'inventory:' + str(ordinal)); name = reference_data()['items'].get(item.get('item_id'), {}).get('name', item.get('item_id', '未知加工品'))
                     self.snapshot_item.addItem(name + ' [' + identity + ']', identity)
             if self.snapshot_item.findData(choice) >= 0: self.snapshot_item.setCurrentIndex(self.snapshot_item.findData(choice))
-        except Exception: pass
-        self.snapshot_item.blockSignals(False); self._refresh_uses()
+        except (ValueError, TypeError, AttributeError, StopIteration): payload = {}
+        self.snapshot_item.blockSignals(False); self._refresh_uses(payload=payload)
 
-    def _refresh_uses(self):
+    def _refresh_uses(self, *, payload=None):
         self.snapshot_uses.clear(); self.set_snapshot_uses.setEnabled(self.snapshot_item.currentData() is not None)
         try:
-            stock = self._scenario(self._payload())['inventory']; identity = self.snapshot_item.currentData()
+            if payload is None:payload = self._payload()
+            stock = self._scenario(payload)['inventory']; identity = self.snapshot_item.currentData()
             item = next(row for ordinal, row in enumerate(stock, 1) if row.get('instance_id', 'inventory:' + str(ordinal)) == identity)
             value = item.get('remaining_uses'); self.snapshot_uses.setText('未知' if value is None else str(value))
-        except Exception: pass
+        except (ValueError, KeyError, TypeError, AttributeError, StopIteration): pass
 
     @staticmethod
     def _optional_integer(value):

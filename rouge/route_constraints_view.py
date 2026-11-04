@@ -177,7 +177,7 @@ class RouteConstraintsPanel(QWidget):
     def _payload(self):
         try:
             value = json.loads(self.editor.toPlainText(), parse_constant=lambda value: (_ for _ in ()).throw(ValueError('不支持非有限数值。')))
-        except (json.JSONDecodeError, ValueError) as exc:
+        except ValueError as exc:
             raise ValueError('输入JSON无法读取：' + str(exc)) from exc
         if not isinstance(value, dict):
             raise ValueError('输入需要JSON对象。')
@@ -206,7 +206,7 @@ class RouteConstraintsPanel(QWidget):
             index = self.graph_node.findData(selected)
             if index >= 0:
                 self.graph_node.setCurrentIndex(index)
-        except Exception:
+        except (ValueError, TypeError, AttributeError):
             pass
         self.graph_node.blockSignals(False); self.apply_node.setEnabled(self.graph_node.currentData() is not None)
         self.import_graph.setEnabled(self._graph_cache is not None)
@@ -244,7 +244,7 @@ class RouteConstraintsPanel(QWidget):
                     value.append(key)
                 payload[field] = value
             self._write(payload); self.status.setText('已修改临时声明。请重新构造候选；不改变实际地图或本局。')
-        except Exception as exc:
+        except ValueError as exc:
             self.status.setText('未修改：' + str(exc))
 
     def _import_graph(self):
@@ -254,7 +254,7 @@ class RouteConstraintsPanel(QWidget):
             payload = self._payload(); payload['graph'] = deepcopy(self._graph_cache['graph'])
             self._graph_import = deepcopy(self._graph_cache); self._write(payload)
             self.status.setText('已显式导入缓存地图；终点、必经、避开、顺序、资格与资源声明保留，请核对节点ID是否仍适用。')
-        except Exception as exc:
+        except (ValueError, TypeError) as exc:
             self.status.setText('未导入：' + str(exc))
 
     @staticmethod

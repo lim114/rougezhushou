@@ -108,7 +108,7 @@ class ResidentRouteReviewPanel(QWidget):
     mapNodeSelected = Signal(str, object)
     resultChanged = Signal(object)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, defer_initial_example=False):
         super().__init__(parent)
         self._graph_cache = self._graph_import = None; self._result = None; self._result_input_text = None
         self._result_links = {}; self._workers = {}; self._contexts = {}; self._serial = 0
@@ -139,15 +139,11 @@ class ResidentRouteReviewPanel(QWidget):
         self.load_example.clicked.connect(self._load_example); self.import_graph.clicked.connect(self._import_graph)
         self.add_resident.clicked.connect(self._add_resident); self.declare_victory.clicked.connect(self._declare_victory)
         self.run_button.clicked.connect(self._run); self.result_view.anchorClicked.connect(self._map_anchor)
-        self._load_example()
+        if not defer_initial_example:self._load_example()
 
-    def _payload(self):
-        try: value = json.loads(self.editor.toPlainText(), parse_constant=lambda value: (_ for _ in ()).throw(ValueError('不支持非有限数值。')))
-        except (json.JSONDecodeError, ValueError) as exc: raise ValueError('输入JSON无法读取：' + str(exc)) from exc
-        if not isinstance(value, dict): raise ValueError('输入需要JSON对象。')
-        return value
+    _payload = RouteConstraintsPanel._payload
 
-    def _write(self, payload): self.editor.setPlainText(json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False))
+    _write = RouteConstraintsPanel._write
 
     def _load_example(self):
         payload = next(row['payload'] for row in public_resident_review_presets() if row['id'] == self.preset.currentData())
@@ -161,6 +157,7 @@ class ResidentRouteReviewPanel(QWidget):
     def _editor_changed(self):
         node_choice, route_choice = self.graph_node.currentData(), self.route_select.currentData()
         self.graph_node.blockSignals(True); self.route_select.blockSignals(True); self.graph_node.clear(); self.route_select.clear()
+        payload = {}
         try:
             payload = self._payload(); graph = payload.get('graph') or {}
             for node in graph.get('nodes', []):
@@ -171,36 +168,39 @@ class ResidentRouteReviewPanel(QWidget):
                     self.route_select.addItem(route.get('name') or route['id'], route['id'])
             if self.graph_node.findData(node_choice) >= 0: self.graph_node.setCurrentIndex(self.graph_node.findData(node_choice))
             if self.route_select.findData(route_choice) >= 0: self.route_select.setCurrentIndex(self.route_select.findData(route_choice))
-        except Exception: pass
-        self.graph_node.blockSignals(False); self.route_select.blockSignals(False); self._refresh_steps()
+        except (ValueError, TypeError, AttributeError): pass
+        self.graph_node.blockSignals(False); self.route_select.blockSignals(False); self._refresh_steps(payload=payload)
         self.add_resident.setEnabled(self.graph_node.currentData() is not None); self.import_graph.setEnabled(self._graph_cache is not None)
         running = self._contexts.get(self._serial)
         if running and self.editor.toPlainText() != running['input_text']:
             self.status.setText('正在核对运行时此前声明；输入已修改，结果将对应此前输入。')
         elif self._result is not None and self.editor.toPlainText() != self._result_input_text:
             self.status.setText('声明已修改；当前结果对应此前输入，请重新核对。')
+        return payload
 
-    def _refresh_steps(self):
+    def _refresh_steps(self, *, payload=None):
         choice = self.step_select.currentData(); self.step_select.blockSignals(True); self.step_select.clear()
         try:
-            payload = self._payload(); graph = payload.get('graph') or {}
+            if payload is None:payload = self._payload()
+            graph = payload.get('graph') or {}
             route = next(row for row in payload.get('routes') or [] if row.get('id') == self.route_select.currentData())
             for ordinal, step in enumerate(route.get('steps') or [], 1):
                 if isinstance(step, dict) and isinstance(step.get('target'), str):
                     self.step_select.addItem('步骤' + str(ordinal) + ' ' + _label(graph, step['target']), ordinal)
             if self.step_select.findData(choice) >= 0: self.step_select.setCurrentIndex(self.step_select.findData(choice))
-        except Exception: pass
-        self.step_select.blockSignals(False); self._update_victory_button()
+        except (ValueError, TypeError, AttributeError, StopIteration): payload = {}
+        self.step_select.blockSignals(False); self._update_victory_button(payload=payload)
 
-    def _update_victory_button(self):
+    def _update_victory_button(self, *, payload=None):
         enabled = False
         try:
-            payload = self._payload(); route = next(row for row in payload.get('routes') or [] if row.get('id') == self.route_select.currentData())
+            if payload is None:payload = self._payload()
+            route = next(row for row in payload.get('routes') or [] if row.get('id') == self.route_select.currentData())
             ordinal = self.step_select.currentData(); target = route['steps'][ordinal - 1]['target']
             node = next(row for row in payload['graph']['nodes'] if row['id'] == target)
             from .exploration_planning import _type_candidates
             enabled = _type_candidates(node)[0] == ['BATTLE_SAVAGE']
-        except Exception: pass
+        except (ValueError, KeyError, TypeError, AttributeError, StopIteration, IndexError): pass
         self.declare_victory.setEnabled(enabled)
 
     def _add_resident(self):
@@ -212,7 +212,7 @@ class ResidentRouteReviewPanel(QWidget):
             while 'resident:' + str(ordinal) in used: ordinal += 1
             residents.append({'id': 'resident:' + str(ordinal), 'node_id': self.graph_node.currentData()}); self._write(payload)
             self.status.setText('已追加临时居民快照声明；旧结果对应此前输入，请重新核对。')
-        except Exception as exc: self.status.setText('未追加：' + str(exc))
+        except ValueError as exc: self.status.setText('未追加：' + str(exc))
 
     def _declare_victory(self):
         try:
@@ -225,7 +225,7 @@ class ResidentRouteReviewPanel(QWidget):
             if ordinal not in steps: steps.append(ordinal)
             payload['resident_post_victories'] = events; self._write(payload)
             self.status.setText('已独立声明本步骤据点获胜；不是由抵达推定。请重新核对条件驱逐，实际获胜仍未验证。')
-        except Exception as exc: self.status.setText('未声明：' + str(exc))
+        except ValueError as exc: self.status.setText('未声明：' + str(exc))
 
     def _import_graph(self):
         try:
@@ -233,7 +233,7 @@ class ResidentRouteReviewPanel(QWidget):
             payload = self._payload(); payload['graph'] = deepcopy(self._graph_cache['graph'])
             self._graph_import = deepcopy(self._graph_cache); self._write(payload)
             self.status.setText('已显式导入缓存地图；居民、路线、资源及胜利声明保留，请核对节点与连线是否仍适用。')
-        except Exception as exc: self.status.setText('未导入：' + str(exc))
+        except (ValueError, TypeError) as exc: self.status.setText('未导入：' + str(exc))
 
     _layout = staticmethod(RouteConstraintsPanel._layout)
     _bindings = RouteConstraintsPanel._bindings

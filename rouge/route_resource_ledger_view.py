@@ -123,7 +123,7 @@ class _Worker(QRunnable):
 class RouteResourceLedgerPanel(ResidentRouteReviewPanel):
     """Reuse sealed graph/editor/snapshot/map guards, not resident game logic."""
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(parent, defer_initial_example=True)
         self.preset.clear()
         for preset in public_resource_presets(): self.preset.addItem(preset['label'], preset['id'])
         self.add_resident.hide(); self.declare_victory.hide()
@@ -145,9 +145,9 @@ class RouteResourceLedgerPanel(ResidentRouteReviewPanel):
         self.set_terminal.clicked.connect(self._set_terminal); self.run_button.setText('核算声明路线的来源数量与出口'); self._load_example()
 
     def _load_example(self):
-        preset = next((row for row in public_resource_presets() if row['id'] == self.preset.currentData()), public_resource_presets()[0])
+        preset = next(row for row in public_resource_presets() if row['id'] == self.preset.currentData())
         self._graph_import = None; self._write(preset['payload'])
-        if hasattr(self, 'passive_select') and preset['payload'].get('passive_items'):
+        if preset['payload'].get('passive_items'):
             self.passive_select.setCurrentIndex(self.passive_select.findData(preset['payload']['passive_items'][0]['item_id']))
         self.status.setText('已载入公开合成图和说明声明；不是当前观测。旧结果保留至重新核算。')
 
