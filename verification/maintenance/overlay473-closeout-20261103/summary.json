@@ -4,24 +4,28 @@
   "completed_sections": 472,
   "next_section": 473,
   "section473_complete": false,
-  "base_commit": "44f9de529a7cb04f629da99ee149cfe1e5b90e90",
+  "base_commit": "b856d83900926357998fdc9f6fa3a1295aca8ec0",
   "binding": "enclosing_commit",
   "source_sha256": {
-    "rouge/player_game_map.py": "eefa37ef4b8287cd176a5e88a86d928beb4006c2eb8f5eb3a954a041524ff9ce",
+    "rouge/player_game_map.py": "11663c38a3e032dae8818d664c4a05b75e0466301660ff5b2d4d3a8a2b790fa2",
     "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
     "tests/test_map_overlay_video.py": "e66655bcfd2ee2cab04399e415c046756eb50ebd95b695880752dff24cacde8c",
     "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5",
-    "tests/test_node_card_source_review.py": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b"
+    "tests/test_node_card_source_review.py": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b",
+    "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+    "tests/test_node_selection_binding_473.py": "5903d329aa42b3de151044892bc715ccb3822fe160eae243de89d19e0e6d3186"
   },
   "decisions": {
     "shared_floor_distance_frequency": "implemented; source explanation retained; separate-point statistics removed from473 gaps",
-    "listener": "only card lifetime; startup has no listener; all closing paths stop/join/release",
+    "listener": "Card-lifetime implementation retained. User permits card-or-type-strip-hover scope, but that input experiment failed real tests and was archived. Manual click-focus choice is pending.",
     "settings": "one mkdir/open I/O exit; atomic write/commit and unreadable-file preservation kept; first-run unchanged"
   },
   "additional_fixes": [
     "direct owner.session_recorder twice",
     "report file_details placeholder expanded",
-    "cached node card restores binding before content-cache early return"
+    "cached node card restores binding before content-cache early return",
+    "fit the selected neutral ring independently of the template icon center",
+    "battle web links reuse confirmed content of the same node after map return"
   ],
   "targeted_checks": [
     {
@@ -79,14 +83,15 @@
   "full_suite_run": false,
   "real_verification": {
     "first_round_previously_accepted": "retained; not repeated",
-    "new_final_visuals": "phase-a screenshots saved, including dark caption backing and full grid; final eefa source screenshots still pending",
-    "actual_stage_web": "user reported stage unconfirmed; no stage title/variant bound; awaiting manual game-detail test",
-    "second_large_size": "awaiting user",
-    "page_return": "dedicated scenario pending",
-    "focus_out_with_card": "dedicated scenario pending",
+    "new_final_visuals": "Local full-window pairs made for capsule/percentages, three-column card, actual PRTS403 and loaded Tomimi. Per-row conclusions in README.",
+    "actual_stage_web": "Both buttons opened actual same-stage URLs. Tomimi content loaded. PRTS returned HTTP403; enemy content not accepted.",
+    "second_large_size": "1920x1200 physically confirmed. Round D ordinary UI recorded 35 type selections, multiple unknown-node cards and battle cards. Wheel regression remains open.",
+    "page_return": "Stage memory return works in isolated regression and actual linked card; dedicated page-switch acceptance still pending.",
+    "focus_out_with_card": "Withdrawal events recorded during webpage opening; dedicated complete scenario still pending.",
     "game_escape": "dedicated scenario pending",
     "removed_hook_outside_click": "controlled test pending; Windows silent removal not inferred from thread running",
-    "busy_game_click_feel": "awaiting human feedback; API dispatch timing is separate"
+    "busy_game_click_feel": "awaiting human feedback; API dispatch timing is separate",
+    "wheel": "E/F/G user reproductions failed. G consumed native wheel messages, but raw game frame still zoomed. Experimental input source and tests archived locally. Current product restored to validated D stage-memory fix."
   },
   "preliminary_placement": {
     "phase": "round2-closeout-a",
@@ -107,13 +112,29 @@
     {
       "run": "round2-closeout-b",
       "issue": "private screenshot worker reused an existing directory and exited; original traceback kept; phase-c uses unique directory and thread-internal ready event"
+    },
+    {
+      "run": "round2-closeout-c",
+      "issue": "User retest still unconfirmed. Actual detail title/variant read, selection not bound. Corrected ring-center fit and later remembered-content lookup in round D."
+    },
+    {
+      "run": "round2-wheel-fix-e",
+      "issue": "Scoped pynput wheel routing did not prevent game zoom."
+    },
+    {
+      "run": "round2-wheel-trace-f",
+      "issue": "Same source, extra diagnostics: Qt wheel seen, corresponding low-level wheel absent, user reproduced zoom."
+    },
+    {
+      "run": "round2-native-wheel-g",
+      "issue": "Native window consumed wheel and scrolled type list, but game raw frame still zoomed. Archived failed approach."
     }
   ],
   "pending": [
-    "final-source images and node placement table at second large size",
-    "actual stage webpages or exact unconfirmed-identity diagnosis",
-    "page-return, focus-out and game-Esc scenarios",
-    "hook removal outside-click behavior and busy-click human feedback"
+    "wheel isolation or agreed interaction change",
+    "PRTS403 content loading",
+    "dedicated page-return/focus-out/game-Esc tests",
+    "controlled hook-removal behavior and busy-click human feedback"
   ],
   "not_in_scope": [
     "800x600 recognition",
@@ -128,7 +149,87 @@
     "fixed_time_limit_seconds": null,
     "thread_ready_confirmed": true,
     "live_status_field": "screenshot_recorder_alive",
-    "source": "ordinary-closeout-v13.py",
-    "new_round_b_failure_retained": true
+    "source": "ordinary-closeout-v18.py",
+    "new_round_b_failure_retained": true,
+    "live_phase": "round2-bound-links-h"
+  },
+  "snapshot_utc": "2026-11-04T04:35:39.203988+00:00",
+  "stage_binding_checks": {
+    "selectors": [
+      "tests.test_node_selection_binding_473",
+      "tests.test_map_overlay_video.FrequencyBindingTests",
+      "tests.test_node_content.NodeContentTests.test_two_battle_nodes_keep_different_stage_titles_across_fog_and_restart",
+      "tests.test_node_content.NodeContentTests.test_visible_selected_battle_binds_stage_to_selection_not_current_position"
+    ],
+    "actual_exit": 0,
+    "actual_duration_s": 25.183,
+    "source_sha256": {
+      "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+      "rouge/player_game_map.py": "11663c38a3e032dae8818d664c4a05b75e0466301660ff5b2d4d3a8a2b790fa2",
+      "tests/test_node_selection_binding_473.py": "5903d329aa42b3de151044892bc715ccb3822fe160eae243de89d19e0e6d3186"
+    },
+    "full_suite_run": false,
+    "tests": 13
+  },
+  "retained_image_checks": {
+    "cases": 4,
+    "passed": 4,
+    "positive_cases": 1,
+    "negative_cases": 3,
+    "selection_ms": {
+      "n": 4,
+      "median": 52.95175000355812,
+      "p95": 68.42430499964394,
+      "max": 70.62859999859938
+    },
+    "conditions": "One static-layout negative reused adjacent-frame template geometry; no full same-frame pipeline claim for that case.",
+    "corrected_fixture": "An initial expected selection came from stale page metadata. Raw-image review established a plain map with no selection. Both attempts retained locally."
+  },
+  "selection_method": {
+    "library": "existing OpenCV HoughCircles plus Canny neutral edges",
+    "installed_version": "4.14.0",
+    "source": "https://docs.opencv.org/4.13.0/d4/d70/tutorial_hough_circle.html",
+    "selection_arc_coverage": 0.65,
+    "payload_thresholds_changed": false,
+    "confirmed_memory_only": true
+  },
+  "second_size_placement": {
+    "round": "round2-native-wheel-g",
+    "overlay_sha256": "33052f18e91da2695039ecb83d833c10855502d20c4a46dee8172b26d532f8fe",
+    "physical_client": [
+      1920,
+      1200
+    ],
+    "manually_reviewed_positions": 20,
+    "numbers": 2,
+    "wrong_node": 0,
+    "missing": 0,
+    "false_display": 0,
+    "basis": "Manual overlay/raw-image comparison at every template row/column plus independent public bucket lookup",
+    "per_node_evidence": "local placement-review/phase-g-review.md and phase-g-manual-ids.png",
+    "scope": "This captured frame and candidate rules only; wheel stability not accepted."
+  },
+  "unchanged_drawing_from_reviewed_round": true,
+  "archived_input_checks": {
+    "selectors": [
+      "tests.test_map_overlay_video.ControllerTests",
+      "tests.test_map_overlay_video.FrequencyBindingTests"
+    ],
+    "actual_exit": 0,
+    "actual_duration_s": 20.857,
+    "source_sha256": {
+      "rouge/player_game_map.py": "8755c999bbe9eb0f6b5e317f1ce946082ebdc55a1ba3c3b4af594203f513d84b",
+      "tests/test_map_overlay_video.py": "1c23b8283f4ba6d4d80ac36c2dcb95f6dbf5e6e9dbe660c377df8382e1163032"
+    },
+    "full_suite_run": false,
+    "tests": 23,
+    "acceptance": "unit pass, real wheel fail; implementation not retained in product"
+  },
+  "physical_click_sample": {
+    "round": "round2-native-wheel-g",
+    "samples": 1,
+    "os_down_to_percent_paint_ms": 1459.611,
+    "handler_to_percent_paint_ms": 123.0447,
+    "qualification": "A matched type-button native press; queue delay included only in first measurement. Other latency distributions start at GUI handler."
   }
 }

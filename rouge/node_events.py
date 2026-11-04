@@ -101,8 +101,37 @@ def mark_selected_node(image,graph):
                 sectors[valid]|=bright[yy[valid],xx[valid]]
             best=max(best,float(sectors.mean()))
         if best>=.65:hits.append((best,node['id']))
-    graph['selected_node']=hits[0][1] if len(hits)==1 else None
-    graph['selection_evidence']='same_frame_bright_rim' if len(hits)==1 else 'unconfirmed'
+    evidence='same_frame_bright_rim'
+    visible=[node for node in graph['nodes'] if node.get('visible')]
+    if not hits and visible:
+        # Fit the rim center independently of the template's icon center.
+        # Its dim neutral segments remain edges even below the bright mask.
+        points=np.array([node['center'] for node in visible])*[sw,sh]
+        max_radius=round(sh*.09)
+        left,top=np.maximum(0,np.floor(points.min(axis=0)-max_radius*1.5)).astype(int)
+        right,bottom=np.minimum([sw,sh],np.ceil(points.max(axis=0)+max_radius*1.5)).astype(int)
+        region=(bright[top:bottom,left:right]*255).astype(np.uint8)
+        circles=cv2.HoughCircles(cv2.GaussianBlur(region,(5,5),0),cv2.HOUGH_GRADIENT,
+            1,sh*.045,param1=100,param2=15,minRadius=round(sh*.045),maxRadius=max_radius)
+        if circles is not None:
+            edges=(cv2.Canny(gray,80,160)>0)&(hsv[:,:,1]<90)
+            for cx,cy,radius in circles[0]:
+                cx+=left;cy+=top
+                owners=[node for node,point in zip(visible,points)
+                    if np.linalg.norm(point-[cx,cy])<=radius/2]
+                if len(owners)!=1:continue
+                sectors=np.zeros(len(angles),dtype=bool)
+                for offset in (-1,0,1):
+                    xx=np.rint(cx+(radius+offset)*np.cos(angles)).astype(int)
+                    yy=np.rint(cy+(radius+offset)*np.sin(angles)).astype(int)
+                    valid=(xx>=0)&(xx<sw)&(yy>=0)&(yy<sh)
+                    sectors[valid]|=edges[yy[valid],xx[valid]]
+                coverage=float(sectors.mean())
+                if coverage>=.65:hits.append((coverage,owners[0]['id']))
+            evidence='same_frame_neutral_rim'
+    identities={identity for _,identity in hits}
+    graph['selected_node']=next(iter(identities)) if len(identities)==1 else None
+    graph['selection_evidence']=evidence if len(identities)==1 else 'unconfirmed'
     if graph['selected_node'] or hits:return
     current=graph.get('current_node');nodes={n['id']:n for n in graph['nodes']}
     if current not in nodes:return

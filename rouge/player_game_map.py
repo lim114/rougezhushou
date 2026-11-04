@@ -99,7 +99,7 @@ def battle_targets(node):
     from urllib.parse import quote
     from .catalog import catalog
     from .tomimi_reference import target
-    content=node.get('content')or{}
+    content=node.get('content')or node.get('remembered_content')or{}
     if content.get('kind')!='battle' or content.get('source')!='same_frame_selected_node':return {}
     sid=content.get('variant_id');stage=catalog()['stages'].get(sid)
     if not stage or stage['name']!=content.get('title'):return {}

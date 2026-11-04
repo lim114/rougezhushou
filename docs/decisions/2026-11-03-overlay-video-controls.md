@@ -12,7 +12,7 @@
 ## 11月3日收尾确认的三项决定
 
 1. 同意在具体节点旁显示同层、距入口最短步数相同的共用历史频率。小卡来源现有共用说明保留；独立点位统计不再列为473缺口，本局条件概率留后续。原片hd_70多个位置同时显示27.11%与25.16%，用户已核对为相同口径。
-2. 保留pynput，但仅小卡打开期间创建并启动Listener；换卡不重复安装。卡外、助手Esc、叠加撤下及窗口关闭统一stop并join，清空引用；启动和无卡时不装全局鼠标钩子。回调只发队列信号，不操作游戏。实机记录实际安装/卸载、满载识别时的点击响应与卡外关闭；低级钩子超时可被Windows静默摘除，线程running不能当作仍在系统安装的证据。
+2. 保留pynput，用户随后确认将监听时段扩展为“小卡打开或鼠标停在左侧类型栏”，以修复两处滚轮带动游戏缩放。共用一个Listener；离开类型栏且无小卡、叠加撤下或关闭窗口时stop并join、释放引用。启动和其余空闲时间不装钩子。仅助手这两个区域内、游戏仍在前台的滚轮会交给对应列表并拦下；游戏区域的滚轮、鼠标点击和键盘保持正常。实机记录实际安装/卸载、满载识别时的点击响应与卡外关闭；低级钩子超时可被Windows静默摘除，线程running不能当作仍在系统安装的证据。
 3. 保留QSaveFile原子保存的open/write/commit和损坏文件不覆盖、不误开启的保护。mkdir和open失败合并为一个I/O失败出口和同一句提示；FileNotFoundError首次运行路径保持。
 
 官方依据：[pynput监听线程与停止后新建规则](https://pynput.readthedocs.io/en/latest/mouse.html#the-mouse-listener-thread)、[微软低级鼠标钩子与超时移除说明](https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelmouseproc)。本地核对固定pynput1.8.1源码；stop后join用于等待其SystemHook退出、完成UnhookWindowsHookEx，而非重用停止的线程。
@@ -49,7 +49,7 @@ MainWindow初始化直接设置compact_window=None、map_overlay_reference=None�
 
 评估了[CrossHairLIN](https://github.com/liuroland55/CrossHairLIN)（PySide6、MIT，自述全窗穿透/交互切换）与[koverlay](https://github.com/erik96/koverlay)（MIT、Wayland）。前者的整窗切换不能直接满足局部热区，后者不适用Windows；未复制其源码。绘制和局部穿透使用Qt6的[窗口类型](https://doc.qt.io/qt-6/qt.html#WindowType-enum)与[区域遮罩](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QWidget.html#PySide6.QtWidgets.QWidget.setMask)，图集、统计与网页阅读器沿用项目实现。
 
-卡外点击采用成熟的[pynput鼠标监听](https://pynput.readthedocs.io/en/latest/mouse.html#monitoring-the-mouse)，固定1.8.1，仅Windows依赖，LGPLv3许可保存在`licenses/pynput-1.8.1-LGPL.txt`。核对PyPI wheel源码后安装，SHA256为`42dfcf27404459ca16ca889c8fb8ffe42a9fe54f722fd1a3e130728e59e768d2`。仅小卡打开时创建监听器，处理左键按下，`suppress=False`；关闭卡片时stop/join并释放，不创建输入控制器，不注册移动回调或键盘钩子。低级钩子自身仍接收系统鼠标事件，其同步/GIL风险按上面的实测要求核验；Esc只由助手自身Qt事件处理。
+卡外点击采用成熟的[pynput鼠标监听](https://pynput.readthedocs.io/en/latest/mouse.html#monitoring-the-mouse)，固定1.8.1，仅Windows依赖，LGPLv3许可保存在`licenses/pynput-1.8.1-LGPL.txt`。核对PyPI wheel源码后安装，SHA256为`42dfcf27404459ca16ca889c8fb8ffe42a9fe54f722fd1a3e130728e59e768d2`。按上面最新决定在小卡打开或悬停类型栏时共用监听器，处理左键按下及这两个区域的滚轮，`suppress=False`；两个监听条件都结束时stop/join并释放，不创建输入控制器，不注册移动回调或键盘钩子。低级钩子自身仍接收系统鼠标事件，其同步/GIL风险按上面的实测要求核验；Esc只由助手自身Qt事件处理。
 
 ## 游戏光标遮挡
 
@@ -60,3 +60,20 @@ MainWindow初始化直接设置compact_window=None、map_overlay_reference=None�
 光标范围与各自帧一起传递和保留。核对时只排除参考帧或当前帧光标实际相交的节点文字，标题始终参与，仍需标题加至少三个未遮挡节点；原30秒/2秒、0.99相关度和0.9–1.1对比度不变。模板只保存在进程内，不把私人采样制作成仓库资产。该规则的局部样本与实机交互分别验收。
 
 截图、逐轮日志及源码摘要只存本机.local；公开回执保留汇总和未通过范围，不上传本局内容。
+
+## 收尾中的关卡绑定修正
+
+用户实机重测仍显示关卡待确认。原图与后台结果确认标题和变体已经读到，问题在选中光圈的中心与模板图标中心略有偏移、部分弧段较暗。原算法只沿模板中心采样亮弧，没有绑定具体节点。
+
+复用现有OpenCV的HoughCircles拟合光圈中心，在可见节点围成的区域内搜索；再用低饱和边缘核验0.65的原弧覆盖，并要求光圈只对应一个节点。无唯一结果保留待确认。属于选中身份识别修正，原payload的30秒/2秒、标题及至少三未遮挡节点、0.99与0.9—1.1不变。本机固定OpenCV版本见本次回执。方法依据[OpenCV官方霍夫圆教程](https://docs.opencv.org/4.13.0/d4/d70/tutorial_hough_circle.html)。
+
+返回探索地图后网页入口读取同一节点已确认的remembered_content，沿用same_frame_selected_node来源、准确标题/变体核验。运行状态原有同局/地图归属规则保持；其它节点不借用该标题。13项定向检查通过，实际网页打开继续按用户操作验收。
+
+
+## 两处滚轮的实机记录
+
+用户确认类型栏和节点小卡都会出现滚轮带动游戏缩放。已同意仅在小卡打开或悬停类型栏时共用监听，离开且无卡即卸载。先用pynput的win32_event_filter处理两个区域，原Qt列表收到角度事件，键盘及卡外滚轮不变。E轮仍失败，F轮确认Qt收到普通鼠标Wheel、低级监听仅收到点击而没有对应滚轮。G轮补上助手窗口WM_MOUSEWHEEL处理，日志确认本窗已消费消息，游戏原图仍出现真实缩放。因此这条输入问题继续未通过，不能据局部单测销项。
+
+方法来源为[pynput定向事件过滤](https://pynput.readthedocs.io/en/latest/faq.html#how-do-i-suppress-specific-events-only)、[微软WM_MOUSEWHEEL说明](https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel)与[Qt滚轮事件](https://doc.qt.io/qt-6.11/qwheelevent.html)。没有输入控制器、游戏进程注入或游戏按键/点击发送。已经向用户提出后续交互选择，答复前不改变前台判定或自动切焦点。
+
+E/F/G未通过输入方案及测试已归档本机，产品恢复保留关卡绑定修复的D版，当前实际仍仅小卡期间监听。上面的类型栏悬停范围为用户已允许的实现范围，尚无实机通过实现。焦点取舍与PRTS403继续待办。
