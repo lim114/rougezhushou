@@ -54,7 +54,7 @@ class CompactAssistant(QDialog):
         self.binding_status=QLabel('尚未找到游戏；可先独立查阅。');self.binding_status.setWordWrap(True);layout.addWidget(self.binding_status)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
         stat=QPushButton('节点历史统计');stat.clicked.connect(self.open_statistics);layout.addWidget(stat)
-        self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
+        self.note_library=None;self.note_library_page=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
         self.settings_scroll=QScrollArea();self.settings_scroll.setWidgetResizable(True);self.settings_scroll.setWidget(settings);self.settings_popup=ToolPage('工具设置',self.settings_scroll,self,on_show=self.refresh);self.settings_popup.resize(420,570)
         self.recent_notes_popup=None

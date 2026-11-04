@@ -120,3 +120,13 @@ D12的新测试在原代码上失败（TypeError被吞掉），改后通过；D1
 | D20 | NoteLibrary.record：清理临时路径前exists，再unlink；路径在两者间消失会报错 | 建议改为unlink(missing_ok=True)，保留不存在时跳过，仅删先查后删；其它删除错误继续抛出，无新增捕获。替代为保留原流程。 |
 
 隔离基线3项：重复错误登记失败、清理路径消失报错、权限错误继续抛出通过。用户明确选择删除同次重复读取、采用一次删除调用，现已按范围落实。最终17项定向通过。第二条同步审查：复用的目录/资料辅助及Qt生命周期方法保留，本轮无需新增函数。
+
+## D21：笔记资料入口的缺属性兜底（已确认并落实）
+
+位置：player_note_reference.open_shared两处getattr，分别容忍MainWindow.compact_window与CompactAssistant.note_library_page不存在。MainWindow已在初始化设置compact_window=None；note_library_page仅在首次建立目录时设置。
+
+建议：直接访问compact_window；CompactAssistant初始化note_library_page=None后直接访问它。保留助手未创建、当前页为空和非笔记页面的正常分支。构造契约破坏则暴露错误，替代为保留两处getattr。授权仅限此入口，不扩展到共享窗口其它兜底。
+
+同批前两条：NoteScenePanel每次仍核对最新来源；来源相等时不再重复转换/设置正文，将只剩构造时调用的_show_reference并回构造入口。来源变化仍清除旧内容、拒绝展示。新增基线2项中1失败（重复转换3次）、1通过，修改后2项通过。
+
+用户已明确同意初始化并删除两处缺属性兜底。现已在CompactAssistant初始化note_library_page=None，并直接访问两个属性；正常未创建助手/无当前页分支保留。测试的手工CompactAssistant替身同步补齐初始化契约。初始化基线1项报错（属性缺失），最终22项定向通过；覆盖首次尚无目录、共享资料跳转、来源失效、草稿阻止切换及阅读保持。

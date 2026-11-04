@@ -1,3 +1,7 @@
+## 当前断点：笔记资料入口初始化与重复显示整改完成
+
+来源相等刷新不再重复转换正文，单次_show_reference并回构造入口；D21按授权初始化note_library_page并删除两处缺属性getattr。22项定向通过，回执verification/maintenance/code-constraints-note-reference-20261104/summary.json；进度图见同目录PROGRESS.md。429结构清点、77异常等价、52部分路径，完整模块验收0；增加一个部分路径模块，不代表整体完成。其他三条整改继续，D21不重复送审。
+
 ## 当前断点：目录单次读取、清理精简与进度看板完成
 
 D19/D20已按用户确认落实：同次刷新只读失败正文一次，下次刷新仍可恢复；临时文件一次删除，不吞其它清理错误。17项定向通过，回执verification/maintenance/code-constraints-note-scan-20261104/summary.json，直观进度见同目录PROGRESS.md。558模块清单与增量已重新汇总，430/77/51，完整模块验收0；本批深化已有模块，不增加覆盖数或功能节。其余三条整改继续，D19/D20不重复送审。

@@ -21,7 +21,7 @@ class LibraryPageTests(unittest.TestCase):
         self.editor=NotesDialog(self.path/'notes');self.editor.autosave.setChecked(False)
         self.owner=QWidget();self.owner.owner=SimpleNamespace(player_notes=self.editor,run=RunState(self.path/'run.json'))
         self.owner.reference_window=self.host=ReferenceWindow(self.owner);self.owner.present=self.host.present;self.owner.refresh=lambda:None
-        self.owner.note_library=None;self.owner.recent_notes_popup=None
+        self.owner.note_library=None;self.owner.note_library_page=None;self.owner.recent_notes_popup=None
         for name in ['open_note_library','notes_popup','open_saved_note']:
             setattr(self.owner,name,MethodType(getattr(CompactAssistant,name),self.owner))
         self.context={'kind':'battle','title':'公开笔记甲','variant_id':'public-test-a'}

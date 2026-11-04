@@ -12,25 +12,23 @@ class NoteScenePanel(QWidget):
         layout=QVBoxLayout(self);self.title=QLabel();self.title.setWordWrap(True);layout.addWidget(self.title)
         self.tabs=QTabWidget();self.text=QPlainTextEdit();self.text.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True)
         self.tabs.addTab(self.text,'情景原文');self.tabs.addTab(self.details,'资料说明');layout.addWidget(self.tabs,1)
-        if self.result is not None:self._show_reference()
-
-    def _show_reference(self):
-        self.title.setText(self.result['row']['label']);replace_text(self.text,model._plain(self.result['row']['value'].get('description'))or'暂无对话原文')
-        replace_text(self.details,self.result['player_text'])
+        if self.result is not None:
+            self.title.setText(self.result['row']['label']);replace_text(self.text,model._plain(self.result['row']['value'].get('description'))or'暂无对话原文')
+            replace_text(self.details,self.result['player_text'])
 
     def refresh_reference(self):
         fresh=model.detail('scenes',self.identity)
         if fresh is None or fresh!=self.result:
             self.result=None;self.title.clear();self.text.clear();self.details.clear();return False
-        self._show_reference();return True
+        return True
 
 
 def open_shared(window,content,target):
-    companion=getattr(window,'compact_window',None)
+    companion=window.compact_window
     if companion is None:return None
     host=companion.reference_window;current=host.pages.currentWidget()
     if current is None:return None
-    if current is getattr(companion,'note_library_page',None):source=companion.note_library
+    if current is companion.note_library_page:source=companion.note_library
     elif current is companion.recent_notes_popup:source=current.panel
     else:return None
     def context():

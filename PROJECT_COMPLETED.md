@@ -1,3 +1,7 @@
+## 维护：笔记资料入口初始化与重复显示精简（2026-11-04）
+
+来源相等时跳过重复转换/设置，将单次显示函数并回构造入口；D21按授权初始化目录页并直接访问属性。22项定向通过，新增一个部分路径审查模块。[回执与进度](verification/maintenance/code-constraints-note-reference-20261104/README.md)。
+
 ## 维护：笔记目录单次读取、清理精简与进度看板（2026-11-04）
 
 按D19/D20删除同次失败重读，临时路径一次删除；17项定向通过。增加审查深度图和产品门禁状态表，区分部分审查与完整验收。[回执](verification/maintenance/code-constraints-note-scan-20261104/README.md)。

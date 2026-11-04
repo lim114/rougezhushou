@@ -1,0 +1,70 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记资料入口初始化与重复显示精简",
+  "base_commit": "432a9cdcc5ba3535d63104f8d2c0de27fd89da0e",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "rules_addressed": {
+    "rule1": "Revalidate source once each refresh, skip repeated formatting/setting when unchanged. D21 direct attributes after constructor initialization.",
+    "rule2": "Inline now single-use _show_reference into construction.",
+    "rule3": "D21 explicitly approved before deleting attribute fallbacks."
+  },
+  "decisions": {
+    "D21": "initialize_note_library_page_and_remove_two_getattr_fallbacks"
+  },
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_reference.py": "28ac9077f2928b14210bca83537f28a1ebef2c6d34048f1bb1f7a7ddf00e7e2b",
+    "rouge/player_compact.py": "5ccb42f538b42350534f3967f3bcb969575e169fcf9e633e3a72b2ff273b04fc",
+    "tests/test_note_reference_entry_review.py": "f0fc59f6dc6090e6aaf4148b2e1818a23f2f8384299682fa9b3016e0dac6063e",
+    "tests/test_note_library_457.py": "c68e0a5751e9ccec24446369be14434aed31521f1e1aeb5f1ba268a89dba3651"
+  },
+  "validation": {
+    "refresh_baseline": {
+      "run": 2,
+      "passed": 1,
+      "failed": 1
+    },
+    "refresh_targeted": {
+      "run": 2,
+      "passed": 2
+    },
+    "initialization_baseline": {
+      "run": 1,
+      "errors": 1
+    },
+    "targeted": {
+      "run": 22,
+      "passed": 22
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "normal_project_launch": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "wm_null_single_sample_ms": 654.63,
+      "real_game_acceptance": false
+    },
+    "progress_visual_rendered_and_checked": true,
+    "coverage_reconstructed_and_current_path_inventory_matched": true
+  },
+  "coverage": {
+    "structural_only": 429,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 52,
+    "full_modules_certified": 0,
+    "total_runtime_modules": 558
+  },
+  "progress_report": "PROGRESS.md",
+  "progress_artifacts_sha256": {
+    "PROGRESS.md": "dbf363d54749353eabc37a9f24f291a0ec155a7a450e0766ff6fe0df2ebe8507",
+    "progress.svg": "28958237cbd42f26ec1539dff63d0efc91ae04961de743928539bfa9ed3abe42",
+    "coverage-audit.json": "e0816c533a04586fbaa4d9c557a4534c37005aad0a47a74d4f1b543ae5caca8d"
+  },
+  "remaining": [
+    "Other source, window and storage paths require scoped review; no complete-module certification.",
+    "Section473 cursor/caption issues and Gate0-3 acceptance remain; no new game verification in this batch."
+  ]
+}
