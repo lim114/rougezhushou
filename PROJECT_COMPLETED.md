@@ -1,3 +1,7 @@
+## 维护：笔记标签单次身份校验与异常收窄（2026-11-04）
+
+D17删除字段投影后重复校验，D18停止吞掉内部TypeError；19项定向通过。原共享辅助和有操作顺序的Qt回调经核对保留，无新增函数。[回执](verification/maintenance/code-constraints-note-metadata-20261104/README.md)。只关闭所列路径，全程序继续整改。
+
 ## 维护：笔记导出复核与文件发布审查（2026-11-04）
 
 删除无覆盖对话框时的重复复核；D15、D16按授权保留清理与目标文件保护。13项定向通过，未跑全量；单次逻辑审查确认现有文本/字节职责及复用检查无需合并。[回执](verification/maintenance/code-constraints-note-export-20261104/README.md)。

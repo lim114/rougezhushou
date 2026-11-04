@@ -25,7 +25,7 @@ class NoteLibrary:
                 key=content_key(content)
                 if key is None or path.name!=sha256(key.encode()).hexdigest()+'.meta.json':raise ValueError('场景身份无法核对。')
                 notes[key]={'content':content}
-            except(OSError,ValueError,TypeError):self.issues.append(path.name)
+            except(OSError,ValueError):self.issues.append(path.name)
         return notes
     def record(self,content):
         from .player_notes import content_key
@@ -33,7 +33,6 @@ class NoteLibrary:
         key=content_key(content)
         if key is None:raise ValueError('笔记场景未确认。')
         saved={k:content[k]for k in('kind','title','variant_id','event_id')if k in content}
-        if content_key(saved)!=key:raise ValueError('笔记场景无法无损保存。')
         destination=_regular(self.folder/(sha256(key.encode()).hexdigest()+'.meta.json'))
         if destination.exists():
             prior=json.loads(destination.read_text('utf8'))
