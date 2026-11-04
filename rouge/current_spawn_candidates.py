@@ -58,7 +58,7 @@ def _packet():
             return None
         return {'inventory': inventory, 'notes': notes, 'characters': characters,
                 'character_source': character_source, 'source_identity': MANIFEST_SHA256}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
         return None
 
 
@@ -66,11 +66,6 @@ def _queue_name(queue):
     if queue['kind'] == 'main':
         return f"第{queue['wave']}波 · 第{queue['fragment']}组"
     return f"条件分支{queue['branch_index']} · 第{queue['phase']}段"
-
-
-def _relation_key(stage_id, queue_selector, kind, raw_key):
-    # Full structural identity, not an array position or a name heuristic.
-    return json.dumps([stage_id, queue_selector, kind, raw_key], ensure_ascii=False, separators=(',', ':'))
 
 
 def _member(action, characters):
@@ -134,7 +129,7 @@ def _build(current, characters):
                     raise ValueError('Unexpected relation-key type')
             for ordinal, (key, members) in enumerate(grouped.items(), 1):
                 relations[kind].append({
-                    'key': _relation_key(current['id'], queue['source_selector'], kind, key),
+                    'key': json.dumps([current['id'], queue['source_selector'], kind, key], ensure_ascii=False, separators=(',', ':')),
                     'kind': kind, 'scope_key': scope['key'], 'queue': deepcopy(queue),
                     'name': scope['name'] + ' · ' + KINDS[kind] + str(ordinal),
                     'raw_relation_key': key, 'original_field': field,

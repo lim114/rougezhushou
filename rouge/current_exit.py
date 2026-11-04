@@ -32,7 +32,7 @@ def packet():
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         if data['difficulty16']not in current['current']['details']['difficulties']:return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def _targets(data, category, key):
     if category == 'scenes': return [(sid, None) for sid, s in data['scenes'].items() if s['raw_scene_id'] == key]

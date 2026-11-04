@@ -59,7 +59,7 @@ def packet():
                 'actual_rewards': None, 'actual_zone_to_fog_mapping': None,
                 'current_server_verified': False, 'run_updated': False,
                 'calculation_applied': False}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
         return None
 
 

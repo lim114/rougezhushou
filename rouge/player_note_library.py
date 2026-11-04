@@ -25,7 +25,7 @@ class NoteLibrary:
                 key=content_key(content)
                 if key is None or path.name!=sha256(key.encode()).hexdigest()+'.meta.json':raise ValueError('场景身份无法核对。')
                 notes[key]={'content':content}
-            except(OSError,ValueError,UnicodeError,TypeError):self.issues.append(path.name)
+            except(OSError,ValueError,TypeError):self.issues.append(path.name)
         return notes
     def record(self,content):
         from .player_notes import content_key
@@ -61,7 +61,7 @@ class NoteLibrary:
             for path in sorted(self.folder.glob('*.md')):
                 if path.name in seen or not re.fullmatch(r'[0-9a-f]{64}\.md',path.name):continue
                 try:_regular(path);text=path.read_text('utf8')
-                except(OSError,ValueError,UnicodeError):self.issues.append(path.name);continue
+                except(OSError,ValueError):self.issues.append(path.name);continue
                 if q and q not in text.casefold():continue
                 result.append({'title':'旧笔记（场景标签未记录）','key':None,'content':None,'text':text,'path':path,'legacy':True})
         return result
@@ -90,7 +90,7 @@ class NoteLibraryPanel(QWidget):
         old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value()
         try:
             self.rows=self.library.rows(self.search.text());self.notice.setText(f'共{len(self.rows)}条笔记'+(f' · {len(self.library.issues)}份文件读取异常'if self.library.issues else''))
-        except(OSError,ValueError,UnicodeError)as error:self.rows=[];self.notice.setText(str(error))
+        except(OSError,ValueError)as error:self.rows=[];self.notice.setText(str(error))
         from .player_note_selector import catalogue_snapshot
         from .player_notes import content_key
         labels={content_key(row['context']):row for row in catalogue_snapshot()['rows']}if self.rows else{}

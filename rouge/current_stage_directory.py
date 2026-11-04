@@ -30,7 +30,7 @@ def packet():
         for sid,r in data['rows'].items():
             if r['original_stage']!=stages[sid]:return None
         return {'data':data,'source_identity':MANIFEST_SHA256,'actual_generation_pool':None,'actual_server_verified':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError):return None
+    except(OSError,ValueError,KeyError,TypeError):return None
 
 def rows(floor=None,kind=None,*,reference=None):
     if floor not in dict(FLOORS)or kind not in dict(KINDS):raise ValueError('分类尚未支持。')

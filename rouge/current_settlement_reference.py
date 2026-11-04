@@ -26,7 +26,7 @@ def packet():
         current=directory.packet()
         if current is None:return None
         return {'data':json.loads(objects[DATA]),'directory':current,'source_identity':MANIFEST_SHA256,'actual_reward':None}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError):return None
+    except(OSError,ValueError,KeyError,TypeError):return None
 
 def stage_reference(stage_id,entry='unknown',region='catalog'):
     if entry not in dict(ENTRIES)or region not in dict(REGIONS):raise ValueError('入口或区域尚未支持。')

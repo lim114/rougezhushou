@@ -100,7 +100,7 @@ def _verified_packet():
         from . import node_catalog
         if not _same_json(node_catalog._event(EVENT_ID), current): return None
         return deepcopy(packet)
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError, UnicodeError, StopIteration, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,StopIteration,RecursionError):
         return None
 
 

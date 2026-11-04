@@ -98,7 +98,7 @@ def packet():
                 'actual_free_slots': None, 'actual_goods': None, 'actual_gold_lost': None,
                 'actual_shop_eligible': None, 'actual_outcome': None, 'actual_server_verified': False,
                 'run_updated': False, 'numerical_combat_model_added': False}
-    except (OSError, ValueError, TypeError, KeyError, UnicodeError, AttributeError, IndexError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError):
         return None
 
 

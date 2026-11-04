@@ -37,7 +37,7 @@ def packet():
         return {'inputs':objects[PACK+'/source-inputs.json'],'selection':objects[PACK+'/source-selection.json'],
                 'portraits':objects[PACK+'/enemy-images.json'],'version':base,'identity':MANIFEST_SHA256,
                 'numeric_environment_migrated':False,'map_projection_verified':False,'actual_server_verified':False}
-    except(OSError,ValueError,TypeError,KeyError,UnicodeError,RecursionError):return None
+    except(OSError,ValueError,TypeError,KeyError,RecursionError):return None
 
 
 def _writes(target,source):

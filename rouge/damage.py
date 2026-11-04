@@ -394,10 +394,6 @@ def _evaluate_damage(prepared,wine_phase=None) -> dict:
     result['report']=build_report(pristine[0],result)
     return result
 
-def _calculate_damage(scenario: dict,wine_phase=None) -> dict:
-    return _evaluate_damage(_prepare_damage(scenario),wine_phase)
-
-
 class _PhaseBounds:
     """Retain extrema and eligibility, rather than every complete calculation."""
     def __init__(self):

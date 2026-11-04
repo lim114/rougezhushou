@@ -33,7 +33,7 @@ def packet():
         for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_received':None,'actual_marked':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def context(values=None):
     if values is not None and type(values)is not dict:raise ValueError('请使用本页支持的条件。')

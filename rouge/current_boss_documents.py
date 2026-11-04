@@ -105,7 +105,7 @@ def packet():
                 'source_identity': (MANIFEST_SHA256, current['identity']),
                 'actual_phase': None, 'actual_skill_time': None, 'expected_stats': None,
                 'actual_server_verified': False, 'numeric_model_added': False, 'run_updated': False}
-    except (OSError, ValueError, TypeError, KeyError, IndexError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,IndexError,AttributeError,RecursionError):
         return None
 
 

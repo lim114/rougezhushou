@@ -36,7 +36,7 @@ def packet():
         data=json.loads(values[DATA])
         if data['schema']!='current_node_readers_332_v1'or set(data['current_sources'])!=set(PROVIDERS):return None
         return {'data':data,'source_identity':MANIFEST_SHA256,'actual_same_version':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def provider_reference(reader,event_id):
     if reader not in PROVIDERS:return None
@@ -96,7 +96,7 @@ def binding_for(record):
         reference=provider_reference(row['reader'],row['current_event_id'])
         if not matches_current(row,reference):return None
         return {**deepcopy(row),'source_identity':(p['source_identity'],deepcopy(row['current_source_identity'])),'reference_only':True,'actual_node_version_confirmed':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def recheck(binding):
     if type(binding)is not dict or type(binding.get('expected_summary'))is not dict:return None

@@ -93,8 +93,7 @@ def _packet():
                     or not _same(skills['bindings']['ro6_b_5'][enemy + '@0'], selected['complete_skill_bindings'][enemy])):
                 return None
         return deepcopy(data)
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, StopIteration,
-            IndexError, RecursionError, UnicodeError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError):
         return None
 
 

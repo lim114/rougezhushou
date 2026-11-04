@@ -101,7 +101,7 @@ def packet():
                 'actual_weather':None,'actual_phase':None,'actual_combination':None,
                 'actual_affected_nodes':None,'actual_received':None,'actual_eligible':None,
                 'calculation_applied':False,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 
 def _context(mode,difficulty,floor,affected,action,squad,paired):

@@ -26,5 +26,5 @@ def portrait(enemy):
             candidates=[r for r in tree['tree']if r.get('path')==identity+'.png']
             if len(candidates)!=1 or candidates[0]['sha']!=row['git_blob_sha1']or candidates[0]['size']!=row['bytes']:return None
             return row
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError):return None
     return None

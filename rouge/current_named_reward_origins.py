@@ -53,7 +53,7 @@ def packet():
         if d['schema']!='current_named_rewards_347_v1'or d['game_commit']!=version.NEW_COMMIT or d['complete_acquisition_pool']is not False:return None
         if d['rows']!=source_rows(packets,current['current']['details'],mods):return None
         return {'data':d,'source_identity':(MANIFEST_SHA256,tuple((k,p['source_identity'])for k,p in packets.items())),'actual_received':None,'actual_eligible':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError,StopIteration):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError,StopIteration):return None
 def reference(category,item_id):
     if type(category)is not str or type(item_id)is not str or category!='relics'or item_id not in ITEM_IDS:return None
     p=packet()

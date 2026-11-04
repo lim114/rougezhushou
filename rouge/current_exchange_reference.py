@@ -37,7 +37,7 @@ def packet():
         if any(primary['choices'].get(k)!=v for k,v in data['original_choices'].items()):return None
         if {k:v for k,v in primary['choiceScenes'].items()if v['title']=='回滚文明'}!=data['related_scenes']:return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_inventory':None,'actual_offer':None,'actual_reward_pool':None,'actual_reward':None,'actual_received_quantity':None,'run_updated':False,'legacy_catalogue_replaced':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 
 def catalogue_rows(ref,*,can_offer=None,rarity=None,change=None,query=''):

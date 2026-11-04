@@ -65,7 +65,7 @@ def packet():
                 'actual_present': None, 'actual_skill_time': None, 'actual_smoke_cells': None,
                 'actual_status_removed': None, 'current_server_verified': False,
                 'numeric_model_added': False, 'run_updated': False}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
         return None
 
 

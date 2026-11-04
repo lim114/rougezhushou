@@ -36,7 +36,7 @@ def packet():
         return {'current':current,'selected':objects[PACK+'/selected-originals.json'],'sources':objects[PACK+'/source-selection.json'],
             'documentation_scope':objects[PACK+'/documentation-scope.json'],'rare_docs':objects['research/p3-rare-rewards/documented-outcomes.json'],
             'source_identity':MANIFEST_SHA256,'actual_total':None,'complete_reward_pool_known':False}
-    except(OSError,ValueError,TypeError,KeyError,UnicodeError,RecursionError):return None
+    except(OSError,ValueError,TypeError,KeyError,RecursionError):return None
 
 
 def device_rule(entity,raw,ref):

@@ -113,6 +113,7 @@ class MainWindow(QMainWindow):
         self.visual_reader = None
         self.events = Events()
         self.busy = False
+        self._damage_ready = False
         self._calculation_batch_depth = 0
         self._calculation_requested = False
         self._scenario_receivers = ()
@@ -502,9 +503,9 @@ class MainWindow(QMainWindow):
             # Viewing availability follows the latest map selection, without binding its dossier.
             self.node_catalog.bind_button.setEnabled(type(node_id) is str and
                 any(node.get('id')==node_id for node in graph.get('nodes',[])))
-        if update_catalog and hasattr(self,'node_catalog'):
-            from .node_catalog_view import map_conditions
-            self.node_catalog.set_node(graph,node_id,**map_conditions(graph,self.run.state.get('config',{})))
+            if update_catalog:
+                from .node_catalog_view import map_conditions
+                self.node_catalog.set_node(graph,node_id,**map_conditions(graph,self.run.state.get('config',{})))
         self.map_nodes.blockSignals(True)
         self.map_nodes.setCurrentIndex(max(0,self.map_nodes.findData(node_id or None)))
         self.map_nodes.blockSignals(False)
@@ -567,7 +568,7 @@ class MainWindow(QMainWindow):
             self.movement_source_dialog.set_map_context(remembered if fresh else None,
                 context=self.observed_event_context() if fresh else {},epoch=self.run.state['id'])
 
-        if getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
+        if self.compact_window is not None:self.compact_window.refresh()
 
     def refresh_windows(self):
         if self.busy:
@@ -848,7 +849,7 @@ class MainWindow(QMainWindow):
         scope=QLabel('计算基准：更新前档案');scope.setToolTip(LEGACY_NOTICE);layout.addWidget(scope)
         self.calculation_scope=QComboBox();self.calculation_scope.addItem('套用本局分队与难度','run');self.calculation_scope.addItem('档案预览：不套用分队与难度','archive')
         self.calculation_scope.setToolTip('档案预览保留当前培养、藏品和目标设置，仅移除本局分队与难度修正。')
-        self.calculation_scope.currentIndexChanged.connect(lambda:self.calculate() if hasattr(self,'raw_damage') else None)
+        self.calculation_scope.currentIndexChanged.connect(lambda:self.calculate())
         selectors.addRow('计算方式',self.calculation_scope)
         columns = QHBoxLayout()
         form = QFormLayout()
@@ -939,7 +940,7 @@ class MainWindow(QMainWindow):
         self.orb_mode.addItem('全程行动模式；所有来源均在目标占据列外','active_other_column')
         form.addRow('源阶方情景（测试）',self.orb_mode)
         form.setRowVisible(self.orb_mode,False)
-        self.orb_mode.currentIndexChanged.connect(lambda:self.calculate() if hasattr(self,'raw_damage') else None)
+        self.orb_mode.currentIndexChanged.connect(lambda:self.calculate())
         form.addRow('手动目标防御（测试）',self.defense)
         self.resistance = number(0,100,1)
         form.addRow('手动目标法抗 %（测试）',self.resistance)
@@ -1200,6 +1201,7 @@ class MainWindow(QMainWindow):
         self.cooperative.toggled.connect(lambda:self.calculate())
         self.fragile.toggled.connect(lambda:self.calculate())
         self.shield_duration_known.toggled.connect(lambda:self.calculate())
+        self._damage_ready = True
         return tab
 
     def update_target_enemies(self):
@@ -1340,7 +1342,7 @@ class MainWindow(QMainWindow):
             self.orb_mode.blockSignals(True);self.orb_mode.setCurrentIndex(0);self.orb_mode.blockSignals(False)
             self.displayed_enemy_context=key
         self.damage_form.setRowVisible(self.orb_mode,target.get('enemy_id')=='enemy_2148_shorbb')
-        if hasattr(self,'raw_damage'):self.calculate()
+        self.calculate()
 
     def show_charge_timeline(self):
         if not self.damage_result:return
@@ -1358,7 +1360,7 @@ class MainWindow(QMainWindow):
         from .reference_dialog import ReferenceDialog
         from copy import deepcopy
         identity=self.operator.currentData();profile=operator_profiles()[identity]
-        scenario=deepcopy(self.damage_result['scenario']) if getattr(self,'damage_result',None) else {
+        scenario=deepcopy(self.damage_result['scenario']) if self.damage_result else {
             'operator':identity,'skill':self.skill.currentData() or 1,'skill_rank':7,
             'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value()}
         elite=scenario.get('elite',len(profile['phases'])-1)
@@ -1376,7 +1378,7 @@ class MainWindow(QMainWindow):
         self.cultivation_comparison_dialog.show()
 
     def show_damage_budget(self):
-        if not getattr(self,'damage_result',None):return
+        if not self.damage_result:return
         from .damage_budget import damage_sources,damage_budget,format_damage_budget
         from .reference_dialog import ReferenceDialog
         from copy import deepcopy
@@ -1617,8 +1619,8 @@ class MainWindow(QMainWindow):
         elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)
         return select_rank(profile,self.skill.currentData(),elite,state=state,
             account=self.account_cache.view(op),
-            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()),
-            run_common_reference=(hasattr(self,'run_common_skill_reference') and self.run_common_skill_reference.isChecked()),
+            account_reference=self.account_skill_reference.isChecked(),
+            run_common_reference=self.run_common_skill_reference.isChecked(),
             level=self.level.value())
 
     def skill_rank_value(self):
@@ -1626,17 +1628,14 @@ class MainWindow(QMainWindow):
 
     def clear_skill_rank_reference(self):
         self.account_skill_reference_key=None
-        if hasattr(self,'account_skill_reference'):
-            self.account_skill_reference.blockSignals(True)
-            self.account_skill_reference.setChecked(False)
-            self.account_skill_reference.blockSignals(False)
-        if hasattr(self,'run_common_skill_reference'):
-            self.run_common_skill_reference.blockSignals(True)
-            self.run_common_skill_reference.setChecked(False)
-            self.run_common_skill_reference.blockSignals(False)
+        self.account_skill_reference.blockSignals(True)
+        self.account_skill_reference.setChecked(False)
+        self.account_skill_reference.blockSignals(False)
+        self.run_common_skill_reference.blockSignals(True)
+        self.run_common_skill_reference.setChecked(False)
+        self.run_common_skill_reference.blockSignals(False)
 
     def update_skill_rank_source(self):
-        if not hasattr(self,'skill_cultivation_explanation'):return
         from .skill_cultivation import explanation,format_explanation
         op,skill=self.operator.currentData(),self.skill.currentData()
         key=(op,skill)
@@ -1675,8 +1674,7 @@ class MainWindow(QMainWindow):
         if not hasattr(self,'attack'):
             return
         op = self.operator.currentData()
-        if hasattr(self,'token_comparison_button'):
-            self.token_comparison_button.setEnabled(bool(catalog()['operators'].get(op,{}).get('tokens')))
+        self.token_comparison_button.setEnabled(bool(catalog()['operators'].get(op,{}).get('tokens')))
         if op is None:
             self.display_operator=None;self.skill_override=False;self.level_override=False
             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)
@@ -1769,10 +1767,10 @@ class MainWindow(QMainWindow):
             self.update_operator(preserve_level=self.level_override)
 
     def sync_run_config(self,*,refresh_player=True):
-        if hasattr(self,'run_cards'):self.run_cards.refresh()
+        self.run_cards.refresh()
         if hasattr(self,'context_bar'):self.context_bar.refresh()
         if self.inventory_panel.isVisible():self.inventory_panel.refresh()
-        if refresh_player and getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
+        if refresh_player and self.compact_window is not None:self.compact_window.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value
@@ -1798,13 +1796,13 @@ class MainWindow(QMainWindow):
             if automatic:
                 item.setCheckState(Qt.CheckState.Checked if item.data(Qt.ItemDataRole.UserRole) in held else Qt.CheckState.Unchecked)
         self.relic_list.blockSignals(False)
-        if hasattr(self,'raw_damage'):self.calculate()
+        self.calculate()
 
     def reset_run(self):
         with calculation_batch(self):
             from .player_history_store import archive_before_manual_reset
             try:archive_before_manual_reset(self.run,Path(self.run.file).parent/'run-history')
-            except(OSError,ValueError,UnicodeError,TypeError,RecursionError)as error:
+            except(OSError,ValueError,TypeError,RecursionError)as error:
                 from .player_file_messages import file_issue
                 self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
             self.sample_epoch += 1
@@ -1852,10 +1850,8 @@ class MainWindow(QMainWindow):
         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
         from .reporting import has_healing
         implemented=op in catalog()['operators']
-        if hasattr(self,'wang_resource_button'):
-            self.wang_resource_button.setVisible(op=='char_2027_wang' and skill in (1,2))
-        if hasattr(self,'supplemental_token_module_button'):
-            self.supplemental_token_module_button.setVisible(op in ('char_2023_ling','char_248_mgllan'))
+        self.wang_resource_button.setVisible(op=='char_2027_wang' and skill in (1,2))
+        self.supplemental_token_module_button.setVisible(op in ('char_2023_ling','char_248_mgllan'))
         healer=implemented and has_healing(op,skill)
         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
                     (self.healing_targets,healer),
@@ -1913,15 +1909,13 @@ class MainWindow(QMainWindow):
         known=self.current_operator_state().get('skill_ranks',{})
         if skill is None:
             self.rank.setText('无可用技能')
-            if hasattr(self,'raw_damage'):self.calculate()
+            self.calculate()
             return
         from .skill_cultivation import rank_label
         self.rank.setText(rank_label(self.skill_rank_selection()))
-        if hasattr(self,'raw_damage'):self.calculate()
+        self.calculate()
 
     def update_condition_cultivation_explanations(self,op,skill):
-        # Early construction callbacks may run before this presentation row exists.
-        if not hasattr(self,'condition_cultivation_explanation'):return
         from .condition_cultivation import TARGET_OPERATORS,TARGET_FIELDS,explanations,format_explanation
         self.condition_cultivation_rows=[]
         self.condition_cultivation_explanation.setText('')
@@ -1963,7 +1957,6 @@ class MainWindow(QMainWindow):
         self.relic_context.setEnabled(key is not None)
 
     def sync_player_tools(self,op,skill):
-        if not hasattr(self,'damage_tools_fold'):return
         self.charge_timeline_button.setVisible(op=='mechanist'and skill==3)
         self.shield_timeline_button.setVisible(op=='mechanist'and skill==2)
         self.damage_form.setRowVisible(self.mechanist_reference_tools,op=='mechanist'and skill==2)
@@ -1971,6 +1964,7 @@ class MainWindow(QMainWindow):
         self.token_comparison_button.setVisible(tokens);self.token_budget_button.setVisible(tokens)
 
     def calculate(self):
+        if not self._damage_ready:return
         if self._calculation_batch_depth:
             self._calculation_requested = True
             return
@@ -1981,20 +1975,19 @@ class MainWindow(QMainWindow):
                 for receive in self._scenario_receivers:receive(None)
 
     def _calculate_current(self):
-        if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
-        if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
-        if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
-        if hasattr(self,'skill_upgrade_button'):self.skill_upgrade_button.setEnabled(False)
-        if hasattr(self,'enemy_comparison_button'):self.enemy_comparison_button.setEnabled(False)
-        if hasattr(self,'scenario_library_button'):self.scenario_library_button.setEnabled(False)
-        if hasattr(self,'damage_budget_button'):self.damage_budget_button.setEnabled(False)
+        self.charge_timeline_button.setEnabled(False)
+        self.shield_timeline_button.setEnabled(False)
+        self.healing_budget_button.setEnabled(False)
+        self.skill_upgrade_button.setEnabled(False)
+        self.enemy_comparison_button.setEnabled(False)
+        self.scenario_library_button.setEnabled(False)
+        self.damage_budget_button.setEnabled(False)
         self.damage_result=None
-        if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
+        self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
         self.sync_player_tools(op,self.skill.currentData())
         self.sync_animation_references(op,self.skill.currentData())
-        if hasattr(self,'target_buff_list'):
-            self.sync_target_buffs(op)
+        self.sync_target_buffs(op)
         self.sync_scenario_previews(op,self.skill.currentData())
         if op is None:
             self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')
@@ -2222,7 +2215,7 @@ class MainWindow(QMainWindow):
     def show_damage_text(self,text):
         target=self.target_enemy.currentData() or {}
         key=(self.operator.currentData(),self.skill.currentData(),self.raw_damage.isChecked(),self.calculation_scope.currentData(),
-             self.damage_technical.isChecked() if hasattr(self,'damage_technical') else False,
+             self.damage_technical.isChecked(),
              self.target_stage.currentData(),target.get('enemy_id'),target.get('level'))
         keep=self.damage_detail_key==key;selected=self.damage_sections.currentText()if keep else '总览'
         changed=replace_text(self.damage_text,text,preserve=keep)
@@ -2548,16 +2541,16 @@ class MainWindow(QMainWindow):
         return panel
 
     def closeEvent(self, event):
-        if hasattr(self,'player_notes')and self.player_notes.dirty and self.player_notes.autosave.isChecked():self.player_notes.save_pending()
-        if hasattr(self,'player_notes')and self.player_notes.dirty:
+        if self.player_notes.dirty and self.player_notes.autosave.isChecked():self.player_notes.save_pending()
+        if self.player_notes.dirty:
             if self.diagnostic_layout:self.player_notes.show()
             else:self.show_compact();self.compact_window.open_saved_note(self.player_notes.content)
             self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
-        if hasattr(self,'player_notes'):self.player_notes.close()
-        if getattr(self,'public_statistics',None)is not None:self.public_statistics.close()
-        if getattr(self,'public_archive',None)is not None:self.public_archive.close()
+        self.player_notes.close()
+        if self.public_statistics is not None:self.public_statistics.close()
+        if self.public_archive is not None:self.public_archive.close()
         self.closing=True
-        if getattr(self,'compact_window',None)is not None:self.compact_window.close()
+        if self.compact_window is not None:self.compact_window.close()
         self.node_catalog._close_current_event_reference()
         self.node_catalog._close_shop_vault()
         for panel in self.common_reference_panels.values():panel.close_children()
@@ -2568,7 +2561,7 @@ class MainWindow(QMainWindow):
         event.accept()
         # The compact Tool window is not a Qt primary window. With the main
         # window hidden, accepting WM_CLOSE alone may leave its event loop alive.
-        if getattr(self,'compact_window',None)is not None:QApplication.instance().quit()
+        if self.compact_window is not None:QApplication.instance().quit()
 
 def main():
     app=QApplication(sys.argv)

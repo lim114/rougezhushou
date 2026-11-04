@@ -38,7 +38,7 @@ def packet():
                 board={b['key']:b['valueStr']for b in row['force_add_choice_buff']['blackboard']}
                 if board!={'choice_id':cid,'scene_ids':SCENE}:return None
         return {'data':d,'source_identity':(MANIFEST_SHA256,v['source_identity']),'actual_eligible':None,'actual_received':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError):return None
 
 def reference(event_id='startup',previous_regions=None,mode=None,gold=None,inherited=None,group='all'):
     if event_id!='startup'or group not in('all','regular','inherited'):return None

@@ -181,7 +181,7 @@ def packet():
         return {'data': data, 'source_identity': (MANIFEST_SHA256, current['source_identity']),
                 'actual_unlocked': None, 'actual_received': None, 'account_updated': False,
                 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError, IndexError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):
         return None
 
 

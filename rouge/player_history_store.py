@@ -103,7 +103,7 @@ class RunHistoryStore:
         for path in sorted(self.folder.glob('*.json')):
             try:
                 record = self.read(path)
-            except (OSError, ValueError, UnicodeError, TypeError, RecursionError) as error:
+            except (OSError,ValueError,TypeError,RecursionError) as error:
                 issues.append({'file': path.name, 'message': str(error)})
                 continue
             key = record['state']['id']

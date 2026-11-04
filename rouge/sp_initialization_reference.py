@@ -404,10 +404,6 @@ def _timer(m, mode, normal, argument=None):
     m.write(mode, 'timer', after, normal, argument=argument, detail=detail)
 
 
-def _data_access(m, data):
-    return m.stage('data_access', data['exists'])
-
-
 def _cost(m, data):
     token = _read_stage(m, 'cost_read', data['cost_read'], 'payload_id')
     if m.active:
@@ -556,7 +552,7 @@ def _run_action(state, action, context):
         if kind == 'reset':
             if not m.write('owner_write', 'owner_id', action['owner_id'], action['owner_write_normally']):
                 return m.finish()
-        if not _data_access(m, data):
+        if not m.stage('data_access', data['exists']):
             return m.finish()
         if kind == 'reset':
             # Reset stores type before cost; UpdateSpData does cost first.

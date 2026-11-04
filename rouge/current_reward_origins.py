@@ -63,7 +63,7 @@ def packet():
         if d['rows'] != source_rows(packets) or d['complete_acquisition_pool'] is not False: return None
         return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, v['source_identity']) for k, v in packets.items())),
                 'actual_received': None, 'actual_eligible': None, 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError):
         return None
 
 

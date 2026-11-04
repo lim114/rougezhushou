@@ -31,7 +31,7 @@ def packet():
         for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 GOLD_EVENTS=('沉寂之屋',)
 CATALOGUE_IDS=('community_group_007','community_group_009')
@@ -62,7 +62,7 @@ def catalogue_binding(record):
         r=reference(row['current_event_id'])
         if r is None:return None
         return {**deepcopy(row),'legacy_event_id':record['id'],'title':row['current_event_id'],'reader':'vine333','current_event':deepcopy(r['event']),'current_original_scenes':{k:deepcopy(v)for k,v in p['data']['originals']['scenes'].items()if v['title']==row['current_event_id']},'current_source_identity':json.loads(json.dumps(r['source_identity'])),'source_identity':(MANIFEST_SHA256,json.loads(json.dumps(r['source_identity']))),'reference_only':True,'actual_node_version_confirmed':False,'mapping_mode':'event_reference_only','actual_same_game_version':None,'actual_scene':None,'actual_choice':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def locate(category,key):
     if type(category)is not str or type(key)is not str or category not in('scenes','choices'):return None

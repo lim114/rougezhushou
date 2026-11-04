@@ -112,8 +112,7 @@ def _packet():
                 or not _same(skills['bindings'][TARGET[0]][TARGET[1] + '@0'], selected['current_skill_binding_complete'])):
             return None
         return deepcopy(data)
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, StopIteration,
-            IndexError, RecursionError, UnicodeError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError):
         return None
 
 

@@ -31,7 +31,7 @@ def packet():
         for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def raw_role(v):
     return {'复原藏品':'choose_relic','复原零件':'choose_part','继续赞助它':'unknown_exchange','接过藏品':'claim_relic','接过零件':'claim_part','复原“文明”':'restore','等待结果':'claim_civil','离开':'leave','远离这个疯子':'leave','有点可疑':'decline'}.get(v['title'],'unknown')

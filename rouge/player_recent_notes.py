@@ -74,7 +74,7 @@ class RecentNotesPanel(QWidget):
             stamp=(stat.st_mtime_ns,stat.st_ctime_ns,stat.st_size,stat.st_ino)if stat else None
             if not force and stamp==self._stamp:return
             text,_=self.store.read(key)
-        except(OSError,ValueError,UnicodeError)as error:
+        except(OSError,ValueError)as error:
             from .player_file_messages import file_issue
             self.preview.read_markdown('');self._stamp=object();self.status.setText(file_issue(error));self.status.setToolTip(str(error));return
         self._stamp=stamp;self.preview.read_markdown(text);self.status.setToolTip('')

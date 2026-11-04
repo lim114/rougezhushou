@@ -87,7 +87,7 @@ def _verified_packet():
         elif _sha(_canonical(_parsed_packet[2]))!=_parsed_packet[1]:return None
         if not _valid_schema(_parsed_packet[2],current):return None
         return deepcopy(_parsed_packet[2])
-    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,UnicodeError):return None
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError):return None
 
 
 def source_data():

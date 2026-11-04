@@ -22,7 +22,7 @@ def export_editor(dialog):
         overwrite=True
     if not unchanged():return False
     try:result=export_note(original_text,path,overwrite=overwrite)
-    except(OSError,ValueError,UnicodeError)as error:
+    except(OSError,ValueError)as error:
         from .player_file_messages import file_issue
         dialog.status.setText('导出未完成：'+file_issue(error)+' 当前编辑仍保留。');dialog.status.setToolTip(str(error));return False
     dialog.status.setText('当前文字已导出到所选本机位置；'+('场景笔记仍有未保存修改。'if dialog.dirty else'场景笔记没有改动。')+(result['warning']or''));return True

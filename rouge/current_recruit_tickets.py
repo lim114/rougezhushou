@@ -151,7 +151,7 @@ def packet():
             'actual_inventory': None, 'actual_owned': None, 'actual_recruited': None,
             'actual_cost': None, 'actual_random_result': None, 'run_updated': False,
         }
-    except (OSError, ValueError, KeyError, TypeError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):
         return None
 
 

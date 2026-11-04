@@ -54,7 +54,7 @@ def _verified_packet():
                 return None
             _parsed_packet = packet
         return deepcopy(_parsed_packet)
-    except (OSError, ValueError, TypeError, KeyError, UnicodeError):
+    except (OSError,ValueError,TypeError,KeyError):
         return None
 
 

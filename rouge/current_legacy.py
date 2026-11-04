@@ -58,7 +58,7 @@ def packet():
                 'actual_held': None, 'actual_inherited': None, 'actual_claim_consumed': None,
                 'actual_next_received': None, 'current_server_verified': False,
                 'run_updated': False, 'next_run_created': False, 'calculation_applied': False}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
         return None
 
 
@@ -210,7 +210,7 @@ def resolve_link(result, request, *, legacy_id):
         return {'request': deepcopy(request), 'target': target, 'original': original,
                 'source_identity': deepcopy(fresh['source_identity']),
                 'actual_received': None, 'run_updated': False, 'next_run_created': False}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, StopIteration):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration):
         return None
 
 

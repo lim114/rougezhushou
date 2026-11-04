@@ -115,7 +115,7 @@ def packet():
                 'actual_eligible': None, 'actual_source_active': None, 'actual_received': None,
                 'actual_quantity': None, 'actual_candidate': None, 'actual_cultivation': None,
                 'actual_cost': None, 'run_updated': False, 'calculation_applied': False}
-    except (OSError, ValueError, KeyError, TypeError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):
         return None
 
 

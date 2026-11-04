@@ -50,7 +50,7 @@ def packet():
                 'source':objects[PACK+'/sources.json'],'source_identity':MANIFEST_SHA256,
                 'actual_eligibility':None,'actual_rewards':None,'current_server_verified':False,
                 'run_state_updated':False,'baseline_calculation_migrated':False,'position_mapping_verified':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,UnicodeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 
 def _tables(snapshot):

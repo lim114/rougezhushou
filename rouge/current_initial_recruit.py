@@ -205,7 +205,7 @@ def packet():
             return None
         return {'data': data, 'documents': documents, 'source_identity': (MANIFEST_SHA256, version_packet['source_identity']),
                 'actual_unlocked': None, 'run_updated': False}
-    except (OSError, ValueError, TypeError, KeyError, UnicodeError, AttributeError, IndexError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError):
         return None
 
 

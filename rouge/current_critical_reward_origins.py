@@ -92,7 +92,7 @@ def packet():
                 or data['rows'] != source_rows(current['current']['details'], *upstream)): return None
         return {'data': data, 'source_identity': (MANIFEST_SHA256, current['source_identity']),
                 'actual_received': None, 'actual_eligible': None, 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError, StopIteration):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,StopIteration):
         return None
 
 

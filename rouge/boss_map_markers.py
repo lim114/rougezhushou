@@ -26,7 +26,7 @@ def packet():
             if name==DATA:data=json.loads(raw)
         if data is None or data['schema']!='boss_map_markers_348_v1'or tuple(data['bindings'])!=STAGES:return None
         return{'data':data,'source_identity':MANIFEST_SHA256}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 def mapping_for(stage_id,current):
     if type(stage_id)is not str or stage_id not in STAGES:return None
     try:
@@ -39,4 +39,4 @@ def mapping_for(stage_id,current):
         for point in row['points']:
             if level['mapData']['tiles'][level['mapData']['map'][point['row']][point['col']]]['tileKey']!=point['tile_key']:return None
         return{'mapping':deepcopy(row),'source_identity':p['source_identity'],'absolute_accuracy_verified':False,'actual_spawn_position':None}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,IndexError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):return None

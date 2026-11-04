@@ -31,7 +31,7 @@ def evidence_identity():
             data=path.read_bytes()
             if len(data)!=pin['bytes']or sha256(data).hexdigest()!=pin['sha256']:return None
         return MANIFEST_SHA256
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError):return None
+    except(OSError,ValueError,KeyError,TypeError):return None
 
 
 BWIKI = 'https://wiki.biligame.com/arknights/地形?oldid=352021'

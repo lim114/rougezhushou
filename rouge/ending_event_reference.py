@@ -31,7 +31,7 @@ def packet():
    for key,record in data['selected_originals'][name].items():
     if originals[table].get(key)!=record:return None
   return {'data':data,'current':current,'identity':MANIFEST_SHA256,'actual_eligible':None,'run_updated':False}
- except(OSError,ValueError,KeyError,TypeError,UnicodeError):return None
+ except(OSError,ValueError,KeyError,TypeError):return None
 
 def context(values=None):
  if values is not None and type(values)is not dict:raise ValueError('条件需要对象。')

@@ -98,8 +98,7 @@ def _packet():
             if not _same(skills['definitions'][enemy], selected['complete_skill_definitions'][enemy]):
                 return None
         return deepcopy(data)
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, StopIteration,
-            IndexError, RecursionError, UnicodeError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError):
         return None
 
 

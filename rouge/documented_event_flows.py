@@ -42,7 +42,7 @@ def packet():
         return {'data': data, 'source_identity': (MANIFEST_SHA256, current['source_identity']),
                 'actual_eligible': None, 'actual_choice': None, 'actual_received': None,
                 'actual_game_parent_script_restored': False, 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError, RecursionError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):
         return None
 
 

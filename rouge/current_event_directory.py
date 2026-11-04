@@ -173,7 +173,7 @@ def packet():
         return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, identity) for k, identity in notes['provider_source_identities'].items())),
                 'version_source_identity': notes['version_source_identity'],
                 'actual_eligible': None, 'actual_node': None, 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError, StopIteration, RecursionError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,StopIteration,RecursionError):
         return None
 
 

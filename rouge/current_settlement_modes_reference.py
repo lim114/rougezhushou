@@ -70,7 +70,7 @@ def packet():
         return {'data': data, 'directory': previous['directory'],
                 'source_identity': (MANIFEST_SHA256, previous['source_identity'], previous['directory']['source_identity']),
                 'actual_reward_total': None, 'inventory_updated': False}
-    except (OSError, ValueError, TypeError, KeyError, UnicodeError, AttributeError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError):
         return None
 
 

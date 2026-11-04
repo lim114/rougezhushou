@@ -185,7 +185,7 @@ class MapPanel(QWidget):
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
         legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：待读取　比例：历史统计');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
-        self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry);self.refresh()
+        self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry)
         self.entry_search.textChanged.connect(lambda _text:self.selected(self.view.selected))
         from .player_map_hover import NodeHoverCard
         self.hover_card=NodeHoverCard(self);self.hover_card.entryRequested.connect(self.open_hover_entry);self.hover_pending=None
@@ -197,6 +197,7 @@ class MapPanel(QWidget):
         if companion is not None:
             companion.game_overlay.kindChanged.connect(self.set_type_filter)
             self.set_type_filter(companion.game_overlay.kind)
+        self.refresh()
     def refresh_statistics(self):
         if self.isVisible():self.refresh()
     def set_type_filter(self,kind):
@@ -205,8 +206,8 @@ class MapPanel(QWidget):
         self.filter_notice.setText(('正在查看：'+kind)if kind else'')
         self.filter_notice.setVisible(bool(kind))
         self.clear_filter.setVisible(bool(kind))
-        companion=getattr(self.owner,'compact_window',None)
-        if companion is not None and hasattr(companion,'game_overlay'):companion.game_overlay.set_kind(kind)
+        companion=self.owner.compact_window
+        if companion is not None:companion.game_overlay.set_kind(kind)
     def queue_hover(self,node_id,point):
         self.hover_timer.stop();self.leave_timer.stop()
         if not node_id:self.hover_pending=None;self.leave_timer.start();return
@@ -236,9 +237,8 @@ class MapPanel(QWidget):
         return False
     def hideEvent(self,event):
         suspended=self.window().property('playerSuspended')
-        if hasattr(self,'hover_card'):
-            self.hover_timer.stop()
-            if not suspended:self.hover_card.dismiss()
+        self.hover_timer.stop()
+        if not suspended:self.hover_card.dismiss()
         switching=self.page_owner is not None and self.page_owner.reference_window.switching
         if not suspended and not switching:self.close_reference()
         super().hideEvent(event)
@@ -294,7 +294,7 @@ class MapPanel(QWidget):
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
         from .player_floor_resources import snapshots,snapshot_text,snapshot_entries
         row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key and r.get('template_id')==(graph or{}).get('template_id')),None);self.floor_resources.setText(snapshot_text(row))
-        if hasattr(self,'hover_card')and ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
+        if ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
             self.hover_timer.stop();self.leave_timer.stop();self.hover_pending=None;self.hover_card.dismiss()
         historical=not(graph and original.graph and key==original.graph.get('zone_id')and graph.get('template_id')==original.graph.get('template_id')and not original.historical)
         if historical and graph:
@@ -321,7 +321,7 @@ class MapPanel(QWidget):
         self.status.setText(self.status.text()+f'　保密等级 {grade if grade is not None else "未读"} · 分队 {squad}')
         self.context_notice.setToolTip(self.status.text()+'\n'+self.floor_resources.text())
         self.change_zoom()
-        if hasattr(self,'hover_card')and self.hover_card.isVisible():
+        if self.hover_card.isVisible():
             binding=self.hover_card.binding
             if not graph or not binding or binding[:3]!=(self.epoch,graph.get('zone_id'),graph.get('template_id')):self.hover_card.dismiss()
             else:self.hover_card.install(binding,graph,binding[-1],self.owner.run.state.get('config',{}),self.view,force=True)

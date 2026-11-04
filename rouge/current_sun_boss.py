@@ -63,7 +63,7 @@ def packet():
                 'actual_form': None, 'actual_phase': None, 'actual_faith': None,
                 'actual_skill_time': None, 'actual_terrain': None, 'actual_altar_cells': None,
                 'current_server_verified': False, 'numeric_model_added': False, 'run_updated': False}
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
         return None
 
 

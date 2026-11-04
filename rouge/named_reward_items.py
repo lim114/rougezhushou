@@ -107,7 +107,7 @@ def _verified_packet(event_id):
         if not _same_json(node_rewards._reference()['event_rewards'],packet['expected_original_rewards']):return None
         if not _same_json(node_catalog.event_reward_options(event_id),packet['expected_reward_queries'][event_id]):return None
         return deepcopy(packet)
-    except(OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,UnicodeError,StopIteration,RecursionError):return None
+    except(OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,StopIteration,RecursionError):return None
 
 
 def _common(event_id):

@@ -63,7 +63,7 @@ def _packet():
    ch=next(c for c in s['choices']if c['key']==row['choice_key'])
    if not _same(row['catalog_choice'],ch)or row['text']!=ch['conditional']:return None
   return deepcopy(d)
- except(OSError,ValueError,KeyError,TypeError,StopIteration,AttributeError,IndexError,RecursionError,UnicodeError):return None
+ except(OSError,ValueError,KeyError,TypeError,StopIteration,AttributeError,IndexError,RecursionError):return None
 
 def source_data():return _packet()
 

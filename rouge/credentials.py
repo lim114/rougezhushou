@@ -1,4 +1,5 @@
 """API keys live in Windows Credential Manager, never in project settings."""
+import pywintypes
 import win32cred
 
 TARGET = 'RougeBlackflowHelper/provider/'
@@ -14,5 +15,5 @@ def read_key(profile):
     try:
         blob = win32cred.CredRead(TARGET + profile, win32cred.CRED_TYPE_GENERIC)['CredentialBlob']
         return blob.decode('utf-16-le') if isinstance(blob, bytes) else blob
-    except Exception:
+    except pywintypes.error:
         return ''

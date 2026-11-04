@@ -240,7 +240,7 @@ class InlineNotesPanel(RecentNotesPanel):
         values=[]
         for context in contexts:
             try:text,_=self.store.read(content_key(context));error=None
-            except(OSError,ValueError,UnicodeError)as exc:
+            except(OSError,ValueError)as exc:
                 from .player_file_messages import file_issue
                 text='';error=file_issue(exc)
             values.append((context,text,error))

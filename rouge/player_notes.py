@@ -96,7 +96,7 @@ class NotesDialog(QDialog):
         same=key==self.key
         if self.dirty:return True
         try:text,digest=self.store.read(key)
-        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
+        except(OSError,ValueError)as e:self.report_issue(e);return False
         if same and digest==self.digest:return True
         self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content})
         with QSignalBlocker(self.editor):replace_text(self.editor,text,preserve=same)
@@ -110,18 +110,18 @@ class NotesDialog(QDialog):
         self.autosave_timer.stop();self.pending_key=None
         if self.key is None:return False
         try:self.digest=self.store.save(self.key,self.editor.toPlainText(),self.digest)
-        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
+        except(OSError,ValueError)as e:self.report_issue(e);return False
         self.dirty=False;warning=self.store.save_warning or''
         try:
             from .player_note_library import NoteLibrary
             NoteLibrary(self.store.folder).record(self.content)
-        except(OSError,ValueError,UnicodeError,TypeError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
+        except(OSError,ValueError,TypeError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
         self.status.setText('已保存到本机；不会上传。'+warning);return True
     def discard(self):
         self.autosave_timer.stop();self.pending_key=None
         if self.key is None:return
         try:text,digest=self.store.read(self.key)
-        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return
+        except(OSError,ValueError)as e:self.report_issue(e);return
         with QSignalBlocker(self.editor):replace_text(self.editor,text)
         self.digest=digest;self.dirty=False;self.status.setText('已恢复为本机保存的内容。');self.refresh_preview()
     def report_issue(self,error):

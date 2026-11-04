@@ -79,7 +79,7 @@ def _packet():
     or row['original_runtime_callback_verified']is not False):return None
   if seen!=[(sid,eid,0)for sid in STAGES for eid in ALIASES]:return None
   return deepcopy(d)
- except(OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError,UnicodeError):return None
+ except(OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError):return None
 
 def source_data():return _packet()
 def _unavailable(stage_id,enemy_id,level):

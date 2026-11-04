@@ -211,7 +211,7 @@ def packet():
             return None
         return {'data': data, 'source_identity': (MANIFEST_SHA256, source['source_identity']),
                 'run_updated': False, 'actual_gameplay_verified': False}
-    except (OSError, ValueError, KeyError, TypeError, UnicodeError, AttributeError, IndexError):
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):
         return None
 
 

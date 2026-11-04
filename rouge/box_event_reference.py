@@ -35,7 +35,7 @@ def packet():
         for group,table in(('choices','choices'),('scenes','choiceScenes'),('stages','stages'),('items','items')):
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_variant':None,'actual_received':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 
 def reference(event_id='box',has_covenant=None):

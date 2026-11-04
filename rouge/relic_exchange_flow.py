@@ -68,7 +68,7 @@ def _packet():
   from . import node_catalog
   if not _same(node_catalog._event(EVENT_ID),e):return None
   return deepcopy(d)
- except(OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError,UnicodeError):return None
+ except(OSError,ValueError,TypeError,KeyError,AttributeError,StopIteration,IndexError,RecursionError):return None
 
 def _unavailable(**extra):
  return{'target':True,'status':'source_unavailable','source_valid':False,'event_id':EVENT_ID,

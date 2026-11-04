@@ -57,7 +57,7 @@ def packet():
         return {'data': data, 'source_identity': (MANIFEST_SHA256, base['source_identity']),
                 'version_source_identity': base['version_source_identity'], 'actual_inventory': None,
                 'actual_eligible': None, 'run_updated': False}
-    except (OSError, ValueError, KeyError, TypeError, AttributeError, UnicodeError, RecursionError): return None
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError): return None
 
 
 def reference(identity=None, *, item_id=None, role=None, query=''):

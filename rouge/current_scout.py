@@ -33,7 +33,7 @@ def packet():
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         if any(current['current']['details']['gameConst'].get(k)!=v for k,v in data['current_game_const'].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def reference(event_id='scout'):
     if type(event_id)is not str or event_id!='scout':return None

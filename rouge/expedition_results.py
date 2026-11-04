@@ -120,7 +120,7 @@ def _verified_packet():
             return None
         if not _valid_schema(_parsed_packet[2], current): return None
         return deepcopy(_parsed_packet[2])
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError, UnicodeError):
+    except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError):
         return None
 
 

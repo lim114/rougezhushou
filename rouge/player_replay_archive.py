@@ -90,7 +90,7 @@ def reload_history(panel,initial=False):
     try:
         records,panel.history_issues=panel.history_store.records()
         panel.archives={'archive:'+row['state']['id']:row for row in records}
-    except(OSError,ValueError,UnicodeError,TypeError,RecursionError)as problem:
+    except(OSError,ValueError,TypeError,RecursionError)as problem:
         from .player_file_messages import file_issue
         panel.history_issues=[];error=file_issue(problem);panel.history_status.setToolTip(str(problem))
     else:panel.history_status.setToolTip('')

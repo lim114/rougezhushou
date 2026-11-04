@@ -28,7 +28,7 @@ def packet():
         data=json.loads(objects[DATA])
         if set(data['all_current_stage_ids'])!=set(current['version']['current']['details']['stages']):return None
         return {'data':data,'current':current,'source_identity':sha256((MANIFEST_SHA256+terrain_identity).encode()).hexdigest(),'terrain_source_identity':terrain_identity,'absolute_accuracy_verified':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError):return None
+    except(OSError,ValueError,KeyError,TypeError):return None
 def stage_reference(stage_id):
     ref=packet()
     if ref is None or type(stage_id)is not str:return None

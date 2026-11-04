@@ -110,7 +110,7 @@ def packet():
                'actual_fire_direction':None,'actual_staff_position':None,'actual_damage':None,
                'actual_clock':None,'actual_received_buff':None,'current_server_verified':False,
                'run_updated':False,'numerical_model_applied':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,UnicodeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 
 def reference(stage_id,enemy_key=None,card=None):

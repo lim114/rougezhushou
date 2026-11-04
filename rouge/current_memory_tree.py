@@ -31,7 +31,7 @@ def packet():
         for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
             if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
 def reference(event_id='memorytree',action_points=None,processed_parts=None,source_key=None,controller=None):
     if type(event_id)is not str or event_id!='memorytree':return None
@@ -98,4 +98,4 @@ def catalogue_binding(record):
         if 'scenes'in record and not same(record['scenes'],row['expected_legacy_event']['scenes']):return None
         if not same(node_catalog._event(record['id']),row['expected_legacy_event']):return None
         return {**deepcopy(row),'legacy_event_id':record['id'],'title':'愈创之心','reader':'memory336','current_event':deepcopy(r['event']),'current_original_scenes':deepcopy(r['data']['originals']['scenes']),'current_source_identity':json.loads(json.dumps(r['source_identity'])),'source_identity':(MANIFEST_SHA256,json.loads(json.dumps(r['source_identity']))),'reference_only':True,'actual_node_version_confirmed':False,'actual_scene':None,'actual_choice':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,UnicodeError,AttributeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None

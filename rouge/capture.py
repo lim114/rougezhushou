@@ -1,4 +1,5 @@
 """Window-scoped Windows Graphics Capture. Never captures the whole desktop."""
+import pywintypes
 import threading
 import time
 import win32gui
@@ -52,7 +53,7 @@ def list_game_windows():
                 return
             windows.append({'hwnd': hwnd, 'pid': pid, 'title': title, 'executable': executable,
                             'minimized': bool(win32gui.IsIconic(hwnd))})
-        except Exception:
+        except pywintypes.error:
             return
     win32gui.EnumWindows(visit, None)
     return windows

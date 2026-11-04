@@ -46,7 +46,7 @@ def packet():
         return{'data':data,'current':current,'source_identity':(MANIFEST_SHA256,current['identity']),
                'actual_present':None,'actual_form':None,'actual_skill_time':None,'actual_partner_retired':None,
                'actual_shield':None,'expected_stats':None,'current_server_verified':False,'numeric_model_added':False,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,UnicodeError,RecursionError):return None
+    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 def reference(stage_id,enemy_key=None):
     if type(stage_id)is not str or stage_id not in STAGES or(enemy_key is not None and type(enemy_key)is not str):return None
     result=packet()
