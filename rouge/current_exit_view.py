@@ -7,11 +7,12 @@ from . import current_exit as model
 class CurrentExitPanel(DocumentedEventFlowPanel):
     def __init__(self, target=None, parent=None):
         self.source_request = target['source_request'] if target else None
-        super().__init__('exit', parent=parent, reference_model=model)
+        super().__init__('exit', parent=parent, reference_model=model, defer_initial_refresh=True)
         row = QHBoxLayout(); row.addWidget(QLabel('仅本页常规模式对照：'))
         for name, label, maximum in (('difficulty', '保密等级', 16), ('action_points', '结算前行动力', 99999), ('gold', '源石锭', 99999)):
             row.addWidget(QLabel(label)); box = QSpinBox(); box.setRange(-1, maximum); box.setSpecialValueText('未知'); box.setValue(-1); box.setAccessibleName('仅本页'+label+'对照'); setattr(self, name, box); row.addWidget(box); box.valueChanged.connect(self._conditions_changed)
         self.add_condition_row(row)
+        self.refresh_reference(initial_scene=None, initial=True)
         if target:
             targets = self.result['source_targets'] if self.result else []
             sid, cid = targets[0] if len(targets) == 1 else (None, None)
@@ -21,9 +22,9 @@ class CurrentExitPanel(DocumentedEventFlowPanel):
                     if self.choices.item(i).data(Qt.ItemDataRole.UserRole) == cid: self.choices.setCurrentRow(i); break
 
     def _fresh_reference(self):
-        def number(name):
-            w = getattr(self, name, None); return None if w is None or w.value() < 0 else w.value()
-        return model.reference('exit', number('action_points'), number('gold'), number('difficulty'), self.source_request)
+        ap,gold,difficulty=(box.value() for box in (self.action_points,self.gold,self.difficulty))
+        return model.reference('exit', None if ap<0 else ap, None if gold<0 else gold,
+                               None if difficulty<0 else difficulty, self.source_request)
 
     def _conditions_changed(self, *_): self.refresh_reference()
 

@@ -6,7 +6,7 @@ from . import current_memory_tree as model
 
 class CurrentMemoryTreePanel(DocumentedEventFlowPanel):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
-        super().__init__('memorytree',scene_id,parent,reference_model=model)
+        super().__init__('memorytree',scene_id,parent,reference_model=model, defer_initial_refresh=True)
         row=QHBoxLayout();row.addWidget(QLabel('仅本页条件对照：'))
         for name,label in [('action_points','行动力'),('processed_parts','加工品数量')]:
             row.addWidget(QLabel(label));box=QSpinBox();box.setRange(-1,99999);box.setSpecialValueText('未知');box.setValue(-1);box.setAccessibleName('仅本页'+label+'对照');setattr(self,name,box);row.addWidget(box);box.valueChanged.connect(self._conditions_changed)
@@ -16,15 +16,14 @@ class CurrentMemoryTreePanel(DocumentedEventFlowPanel):
             for text,value in [('尚未确认',None),('持有',True),('未持有',False)]:box.addItem(text,value)
             setattr(self,name,box);row.addWidget(box);box.currentIndexChanged.connect(self._conditions_changed)
         self.add_condition_row(row)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
     def _fresh_reference(self):
-        def count(name):
-            w=getattr(self,name,None);return None if w is None or w.value()<0 else w.value()
-        def held(name):
-            w=getattr(self,name,None);return None if w is None else w.currentData()
-        return model.reference(self.event_id,count('action_points'),count('processed_parts'),held('source_key'),held('controller'))
+        ap,parts=self.action_points.value(),self.processed_parts.value()
+        return model.reference(self.event_id, None if ap<0 else ap, None if parts<0 else parts,
+                               self.source_key.currentData(),self.controller.currentData())
     def _conditions_changed(self,*_):self.refresh_reference()
 
 from .player_window_frame import PlayerDialog

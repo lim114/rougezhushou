@@ -6,17 +6,18 @@ from . import current_encounters as model
 
 class CurrentEncountersPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
-        super().__init__(event_id,scene_id,parent,reference_model=model)
+        super().__init__(event_id,scene_id,parent,reference_model=model, defer_initial_refresh=True)
         if event_id=='黑诞':
             row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：是否持有笼控器'));self.controller=QComboBox();self.controller.setAccessibleName('本页笼控器持有对照')
             for text,value in(('尚未确认',None),('持有',True),('未持有',False)):self.controller.addItem(text,value)
             row.addWidget(self.controller,1);self.add_condition_row(row);self.controller.currentIndexChanged.connect(self._condition_changed)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
 
     def _fresh_reference(self):
-        control=getattr(self,'controller',None);return model.reference(self.event_id,control.currentData()if control is not None else None)
+        return model.reference(self.event_id, self.controller.currentData() if self.event_id=='黑诞' else None)
 
     def _condition_changed(self,*_):self._close_battle();self.refresh_reference()
 

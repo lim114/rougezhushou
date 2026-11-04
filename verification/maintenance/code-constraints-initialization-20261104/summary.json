@@ -1,0 +1,105 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "存量代码整改：先完成控件构造，再首次刷新或计算",
+  "binding": "enclosing_commit",
+  "base_commit": "ec9fcbea419b172122b92450dadebbe38c35fe42",
+  "completed_sections": 472,
+  "next_section": 473,
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "scope": {
+    "runtime_modules_changed": 24,
+    "event_child_panels": 19,
+    "constructor_chains": 3,
+    "getattr_hasattr_calls_before": 41,
+    "getattr_hasattr_calls_after": 0,
+    "review_status_counts": {
+      "structural_inventory_only": 445,
+      "changed_entry_or_callsite_review": 7,
+      "exception_tuple_equivalence_only": 82,
+      "initialization_call_path_reviewed": 24
+    }
+  },
+  "authorization": {
+    "rule3_requires_explicit_user_consent": true,
+    "low_probability_defensive_code_added": false,
+    "user_overlay_changes_untouched": true
+  },
+  "validation": {
+    "event_views_initial": {
+      "run": 146,
+      "passed": 133,
+      "failed": 13
+    },
+    "baseline_failed_cases": {
+      "run": 13,
+      "failed": 13,
+      "errors": 0
+    },
+    "corrected_test_fixtures": {
+      "run": 13,
+      "passed": 13
+    },
+    "related_views_and_new_initialization": {
+      "run": 25,
+      "passed": 25,
+      "overlap_with_event_views": 3
+    },
+    "full_suite_run": false,
+    "test_window": {
+      "normal_project_process": true,
+      "visible": true,
+      "responds": true,
+      "stderr_empty": true,
+      "real_game_acceptance": false
+    }
+  },
+  "remaining": [
+    "Finish per-call-path review of 445 runtime Python modules with structural inventory only.",
+    "Review other logic of 82 exception-only modules and remaining paths of 31 entry/initialization-reviewed modules.",
+    "Owned bridge JS, maintained scripts and test code remain in whole-program review scope. Historical frozen evidence and third-party source are not silently rewritten.",
+    "Previous statistics missing-category mismatch remains; no frequency semantics changed.",
+    "Section473 caption/cursor interaction acceptance gaps remain separate."
+  ],
+  "source_sha256": {
+    "rouge/box_event_view.py": "7e783ced0a8da3ed76093c164bf60b45306d0a4669b7648c82881850e49d7572",
+    "rouge/current_agency_view.py": "62cd6305d325f9c3134778f869233ec5400c052d1840c1013802821a3d9a191c",
+    "rouge/current_cave_view.py": "43ae7aa127995ad22e81cc986bcdcc4d28407f37f591dba8692cfaee989f0216",
+    "rouge/current_encounters_view.py": "f6ea2464bc79a31ddd832e6f1c63e06c38f75995ac959a6fbc4b190a10aff723",
+    "rouge/current_exit_view.py": "6a8d07097ca0664a258a62666f854db33f34e137dd51ed35279d558ac1bd4bcd",
+    "rouge/current_lake_view.py": "53dbd3cbfdf55551e08a988ee000b9cf88fc6a5d61a95e607ee0251d059ece4f",
+    "rouge/current_memory_tree_view.py": "18f521c7d42f3533261bfefa56a78064a0cbb7adba5a746ca028564da3e1d1ff",
+    "rouge/current_peace_view.py": "40c441ae0b61099d6f50d5d2b150f617824854ec49129235d00f06cfe712a978",
+    "rouge/current_portal_view.py": "d14b51f58727ea3134cb57f5b91484a20a5b17f815cf89bcdcc1f8e2fe17d24a",
+    "rouge/current_reconstruction_view.py": "1bd4bb5b5a05248343c1c3c2f5048de150654ea43b22848cd5dbfb5fe25efa02",
+    "rouge/current_resource_events_view.py": "9d205308c455706a70b54549cd84c3d68b4d3052d488a89205c9f7ff09758568",
+    "rouge/current_resting_view.py": "25eb4664051474fe212448a8720dbb27abd8495b3bb9698b00dd39bd01bb905f",
+    "rouge/current_ritual_view.py": "2d7fbd747e9f5feeb45f76e30d0a53a907f1f1b3f3870eee38884ec9a49dee9a",
+    "rouge/current_sand_view.py": "74997355d43517a1b1b16b108fe579fda95a331d2b235d05ca714e462bcd49f4",
+    "rouge/current_scout_view.py": "cb1da7d1733920d423673ad15fa4b42afe10a051a4bf0d8cd2e65db724d803d3",
+    "rouge/current_shadow_view.py": "176d1883887bd0cc9c9afb6b5fdb9993569d76151f3a9ba6f3079de1d966ca38",
+    "rouge/current_startup_view.py": "a5fc7b34113e82fbf0e288cdefeb2bcd9a096af34d240688e1d18f3fda2bb896",
+    "rouge/current_unattended_shop_view.py": "897aea5bf64ec243cda77ecbba26a4511d3fa820e11ac982a4cf2aed9c76ca52",
+    "rouge/current_vine_events_view.py": "713e2edf60feba5d8ca263fe6cabba6bb5f3c1834668ea1665295974d7ff1371",
+    "rouge/documented_event_flow_view.py": "dfb7e99e77dd538c68079286c6537d1d04d20981b47c910166c3f301f17aa4fe",
+    "rouge/player_recent_scene.py": "f4ff8e02826ef47f0863aaf1797b59311c3a29d35872d51f8f43f46f74d4e689",
+    "rouge/player_scene_battle.py": "e626161a67f0114e4af8e2c417561a3f448174c5fe898687607e2ec5348c1d54",
+    "rouge/reference_dialog.py": "846aac1a9ea7327c770f9df8478fe7924be36e12c36d21ac06a09c7fac40cde1",
+    "rouge/supplemental_run_view.py": "cc9edeee6b1d65e7bc780f2862c3502c37670c445bb201f61b31366ef9b00967"
+  },
+  "targeted_test_sha256": {
+    "tests/test_current_agency_view_340.py": "3c947281f4b444013f549a5fd458e6b7d9d4eab242ce77f183172e014d65a5ce",
+    "tests/test_current_cave_view_334.py": "d760c596a0b14f555de38c798f53d4e2b65986e1b1d6b44a71712e43f14224ea",
+    "tests/test_current_encounters_view_327.py": "251498ec41f124e8a799c45c7fa517955ebe07e899627b25c090f5a01588ee60",
+    "tests/test_current_exit_view_339.py": "57599722d6b46ebf11097bb38da1ca56f3de2bec92c4207065fedfaab0f3629f",
+    "tests/test_current_lake_view_328.py": "ae4b0675bcb38e6de875e25ff8b37fcdcac61700b6b031407005eb490c6b3854",
+    "tests/test_current_peace_view_343.py": "7cc7abceaae188f3306fe4e07215665d24d959c0f6590e4330aa1e446240f91f",
+    "tests/test_current_portal_view_341.py": "e4ef136d11b83436324ac432801c870f9d9de57b9cfe230a1f9f453dd089c3b6",
+    "tests/test_current_reconstruction_view_344.py": "d3ee643af2c50f1b7c2c0c7607607899e39ef74bc9a13b3c097c956a60915128",
+    "tests/test_current_resting_view_345.py": "73f9deb8c635f34676df0e26b33259234c25e32c376df935e0b8394a56299c0a",
+    "tests/test_current_scout_view_342.py": "7f9a2caa3428a55a264b34d96e3ac086207b9018088627a95c2c800d89d0b773",
+    "tests/test_current_shadow_view_346.py": "4ff9f85dc51d1bbc2e56771ec3cdcc5386516128cbca276c8065976cdea753df",
+    "tests/test_current_vine_events_view_333.py": "c9bcb3b252c8968d9f72f612c419b83daa3f7336f868076c2f3fb3b24e96f38e",
+    "tests/test_event_panel_initialization.py": "9dad5775992ea29b991534b2fc4273fc291acaf1ef09e7838cac5ce7ff272952"
+  }
+}

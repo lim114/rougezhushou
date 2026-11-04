@@ -7,7 +7,7 @@ from . import current_sand_reference as model
 class CurrentSandPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id='informer',scene_id=None,choice_id=None,parent=None):
         self.related_dialog=None;self.controls={}
-        super().__init__(event_id,scene_id,parent,reference_model=model)
+        super().__init__(event_id,scene_id,parent,reference_model=model, defer_initial_refresh=True)
         group=QWidget();form=QFormLayout(group);form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         definitions=[('scope','查看范围',[('当前条件','current'),('历史资料','history')]),('floor','层数',[('未知',None)]+[(str(n),n)for n in range(1,7)]),('node_type','节点',[('未知','unknown'),('不期而遇','不期而遇'),('命运所指','命运所指'),('其它','other')]),('cleared_reboot','强制重启是否已通关',None),('has_alpha','持有沙盘α',None),('has_beta','持有沙盘β',None),('target_marked','窥视箱中已标记',None)]
         for key,label,values in definitions:
@@ -17,20 +17,19 @@ class CurrentSandPanel(DocumentedEventFlowPanel):
         self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('本页对照：源石锭');form.addRow('源石锭',self.gold);self.gold.valueChanged.connect(self._context_changed)
         self.condition_scroll=QScrollArea();self.condition_scroll.setWidgetResizable(True);self.condition_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.condition_scroll.setMaximumHeight(150);self.condition_scroll.setWidget(group);row=QHBoxLayout();row.addWidget(self.condition_scroll);self.add_condition_row(row)
         self.related_button=QPushButton('查看窥视箱中：条件与相关作战');self.layout().insertWidget(4,self.related_button);self.related_button.clicked.connect(self.open_related)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
         self._sync_related()
 
     def _fresh_reference(self):
-        if not hasattr(self,'gold'):return model.reference(self.event_id)
         values={k:v.currentData()for k,v in self.controls.items()};values['gold']=None if self.gold.value()<0 else self.gold.value();return model.reference(self.event_id,values)
 
     def _close_related(self):
         if self.related_dialog is not None:self.related_dialog.close()
 
     def _sync_related(self):
-        if not hasattr(self,'related_button'):return
         self.related_button.setVisible(self.result is not None);self.related_button.setEnabled(self.result is not None)
 
     def clear_reference(self):

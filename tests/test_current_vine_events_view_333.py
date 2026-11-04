@@ -35,7 +35,7 @@ class CurrentVineEventsView333Tests(unittest.TestCase):
  def test_new_catalogue_entries_open_reference_not_runtime_values_parent_refresh_and_close(self):
   p=NodeCatalogPanel();p.show();self.addCleanup(p.close);p.runtime_context={'gold':888,'seeds':5,'has_controller':True}
   for key in model.CATALOGUE_IDS:
-   p.list.setCurrentRow(next(i for i,e in enumerate(p.entries)if e['key']=='event:'+key));self.assertTrue(p.open_current_event_reference());d=p.current_reference_window;r=d.panel;self.assertIsNone(r.choice_id);self.assertIsNone(r.result['actual_eligible']);self.assertIn('请核对实际游戏版本',d.node_reference_banner.text())
+   p.list.setCurrentRow(next(i for i,e in enumerate(p.entries)if e['key']=='event:'+key));self.assertTrue(p.open_current_event_reference());d=p.current_reference_window;r=d.panel;self.assertIsNone(r.choice_id);self.assertIsNone(r.result['actual_eligible']);self.assertEqual(d.node_reference_banner.text(),'节点资料')
    if hasattr(r,'gold'):self.assertEqual(r.gold.value(),-1)
    else:self.assertIsNone(r.controller.currentData());self.assertEqual(r.seeds.value(),-1)
    p.refresh();self.assertTrue(d.isVisible());p.close();self.assertFalse(d.isVisible());p.show()

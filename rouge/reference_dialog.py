@@ -6,7 +6,7 @@ from .manual_scenario import parse_preview_object
 
 
 class ReferenceDialog(QDialog):
-    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None):
+    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None, *, defer_initial_calculation=False):
         super().__init__(parent)
         self.result = None; self.evaluator = evaluator; self.formatter = formatter; self.columns = columns
         self.setWindowTitle(title); self.resize(1050,700)
@@ -22,7 +22,7 @@ class ReferenceDialog(QDialog):
         self.notice = QPlainTextEdit(); self.notice.setReadOnly(True); layout.addWidget(self.notice,1)
         self.editor.textChanged.connect(self.invalidate)
         self.calculate_button.clicked.connect(self.calculate); self.copy_button.clicked.connect(self.copy)
-        self.calculate()
+        if not defer_initial_calculation:self.calculate()
 
     def invalidate(self):
         self.result = None; self.copy_button.setEnabled(False); self.table.setRowCount(0)

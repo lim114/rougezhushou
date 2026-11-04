@@ -9,18 +9,19 @@ class CurrentReconstructionPanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         self.source_request=(target or{}).get('source_request');self.catalogue_dialog=None
         initial=None if not self.source_request else'source-scene'if self.source_request['category']=='scenes'else'source-choice'
-        super().__init__('reconstruction',initial,parent,reference_model=model)
+        super().__init__('reconstruction',initial,parent,reference_model=model, defer_initial_refresh=True)
         self.natural_controls=QWidget();row=QHBoxLayout(self.natural_controls);row.setContentsMargins(0,0,0,0);row.addWidget(QLabel('仅本页自然物件数对照：'))
         self.naturals=QSpinBox();self.naturals.setRange(-1,999999);self.naturals.setSpecialValueText('尚未确认');self.naturals.setValue(-1);self.naturals.setAccessibleName('仅本页自然物数量');row.addWidget(self.naturals);row.addStretch(1);self.layout().insertWidget(1,self.natural_controls);self.naturals.valueChanged.connect(self.refresh_reference)
         self.reward_card=QWidget();row=QHBoxLayout(self.reward_card);row.setContentsMargins(0,0,0,0);self.reward_icon=QLabel();self.reward_icon.setAccessibleName('具名领取参考：焚毁文明图片');row.addWidget(self.reward_icon);row.addWidget(QLabel('焚毁“文明” · 领取参考（不是已持有）'));row.addStretch(1);self.layout().insertWidget(2,self.reward_card)
         self.catalogue_button=QPushButton('查阅当前收藏品能否交出（不是奖励池）');self.layout().insertWidget(3,self.catalogue_button);self.catalogue_button.clicked.connect(self.open_catalogue)
+        self.refresh_reference(initial_scene=initial, initial=True)
         if initial=='source-choice':self.choices.setCurrentRow(0)
         self._update_specific()
     def _fresh_reference(self):
-        w=getattr(self,'naturals',None);count=None if w is None or w.value()<0 else w.value()
-        return model.reference('reconstruction',count,self.source_request)
+        count=self.naturals.value()
+        return model.reference('reconstruction', None if count<0 else count, self.source_request)
     def _close_battle(self):
-        child=getattr(self,'catalogue_dialog',None)
+        child=self.catalogue_dialog
         if child is not None:child.close();self.catalogue_dialog=None
         super()._close_battle()
     def _choice_changed(self,item,*args,preserve=False):
@@ -28,7 +29,6 @@ class CurrentReconstructionPanel(DocumentedEventFlowPanel):
     def clear_reference(self):
         super().clear_reference();self._update_specific()
     def _update_specific(self):
-        if not hasattr(self,'catalogue_button'):return
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
         self.natural_controls.setVisible(bool(c and c['role']=='restore'))
         show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()

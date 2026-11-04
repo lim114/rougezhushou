@@ -7,10 +7,11 @@ from . import current_scout as model
 
 class CurrentScoutPanel(DocumentedEventFlowPanel):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
-        super().__init__('scout',scene_id,parent,reference_model=model)
+        super().__init__('scout',scene_id,parent,reference_model=model, defer_initial_refresh=True)
         self.return_card=QWidget();row=QHBoxLayout(self.return_card);row.setContentsMargins(0,0,0,0)
         self.return_icon=QLabel();self.return_icon.setAccessibleName('探索源头归来参考：怦然信标图片');row.addWidget(self.return_icon)
         self.return_label=QLabel('探索源头归来参考 · 怦然信标（不是已领取）');row.addWidget(self.return_label);row.addStretch(1);self.layout().insertWidget(1,self.return_card)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
@@ -20,7 +21,6 @@ class CurrentScoutPanel(DocumentedEventFlowPanel):
     def clear_reference(self):
         super().clear_reference();self._update_return_card()
     def _update_return_card(self):
-        if not hasattr(self,'return_card'):return
         show=bool(self.result and model.shows_return_item(self.result,self.scene_id,self.choice_id));self.return_card.setVisible(show);self.return_icon.clear()
         if show:
             raw=model.icon_bytes();pixmap=QPixmap()

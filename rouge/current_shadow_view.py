@@ -8,9 +8,10 @@ class CurrentShadowPanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         target=target or {};self.source_request=target.get('source_request')
         initial=('source-scene'if self.source_request['category']=='scenes'else'source-choice')if self.source_request else target.get('scene_id')
-        super().__init__('shadow',initial,parent,reference_model=model)
+        super().__init__('shadow',initial,parent,reference_model=model, defer_initial_refresh=True)
         self.choices.setAccessibleName('资料选项或随机结果参考，不是游戏操作')
         self.reward_card=QWidget();row=QHBoxLayout(self.reward_card);row.setContentsMargins(0,0,0,0);self.reward_icon=QLabel();self.reward_icon.setAccessibleName('犬植浆准确物品图片');row.addWidget(self.reward_icon);row.addWidget(QLabel('犬植浆 · 当前固定资料（不是已领取）'));row.addStretch(1);self.layout().insertWidget(1,self.reward_card)
+        self.refresh_reference(initial_scene=initial, initial=True)
         if self.source_request and self.source_request['category']=='choices':self.choices.setCurrentRow(0)
         elif target.get('choice_id'):
             for i in range(self.choices.count()):
@@ -21,7 +22,6 @@ class CurrentShadowPanel(DocumentedEventFlowPanel):
         super()._choice_changed(item,*args,preserve=preserve);self._update_reward()
     def clear_reference(self):super().clear_reference();self._update_reward()
     def _update_reward(self):
-        if not hasattr(self,'reward_card'):return
         show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:
             raw=model.icon_bytes();picture=QPixmap()

@@ -25,7 +25,7 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,Q
 class SceneBattlePanel(QWidget):
     historical_reading=False
     noteRequested=Signal(object)
-    def __init__(self,run,parent=None):
+    def __init__(self,run,parent=None,*,defer_initial_refresh=False):
         super().__init__(parent);self.run=run;self.identity=None;self.result=None;self.enemies={};self.context_key=None;self.dialog=None
         body=QVBoxLayout(self);self.notice=QLabel('最近读取的关卡 · 选择对应版本查看');self.notice.setWordWrap(True);body.addWidget(self.notice)
         self.stages=QComboBox();self.stages.currentIndexChanged.connect(self.select_stage);body.addWidget(self.stages)
@@ -36,7 +36,7 @@ class SceneBattlePanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
         self.open_button=QPushButton('查看地图、敌人与出怪');self.open_button.clicked.connect(self.open_stage);body.addWidget(self.open_button)
         self.note_button=QPushButton('记录关卡笔记');body.addWidget(self.note_button);self.note_button.clicked.connect(self.write_note)
-        self.refresh()
+        if not defer_initial_refresh:self.refresh()
     def write_note(self):
         self.refresh()
         if self.result is None:return

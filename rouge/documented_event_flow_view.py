@@ -19,7 +19,7 @@ class EventHeadingHighlighter(QSyntaxHighlighter):
 
 
 class DocumentedEventFlowPanel(QWidget):
-    def __init__(self, event_id, scene_id=None, parent=None, *, reference_model=None):
+    def __init__(self, event_id, scene_id=None, parent=None, *, reference_model=None, defer_initial_refresh=False):
         super().__init__(parent)
         self.reference_model = reference_model or model
         self.event_id = event_id; self.result = None; self.scene_id = None; self.choice_id = None
@@ -46,7 +46,8 @@ class DocumentedEventFlowPanel(QWidget):
         self.scene.currentIndexChanged.connect(self._scene_changed); self.choices.currentItemChanged.connect(self._choice_changed)
         self.refresh_button.clicked.connect(self.refresh_reference); self.start_button.clicked.connect(self.go_start)
         self.next_button.clicked.connect(self.follow_scene); self.battle_button.clicked.connect(self.open_battle)
-        self.refresh_reference(initial_scene=scene_id, initial=True)
+        if not defer_initial_refresh:
+            self.refresh_reference(initial_scene=scene_id, initial=True)
 
     def add_condition_row(self,row):
         widget=QWidget();widget.setObjectName('eventFlowConditionRow');row.setContentsMargins(0,0,0,0);widget.setLayout(row)

@@ -24,7 +24,7 @@ class SupplementalRunDialog(ReferenceDialog):
             '；'.join(k+'（'+v['name']+'）' for k,v in profiles.items()),preview,
             lambda p:run_skill_reference(p,self.environment),format_run_reference,
             [('name','分项'),('base_value','不含本局修正'),('value','计入本局属性'),
-             ('delta','差值'),('unit','单位'),('declared_total','声明次数合计')],parent)
+             ('delta','差值'),('unit','单位'),('declared_total','声明次数合计')],parent,defer_initial_calculation=True)
         self.refresh_button=QPushButton('更新本局条件')
         self.tools_layout=QGridLayout();self.layout().insertLayout(2,self.tools_layout)
         self.tools_layout.addWidget(self.refresh_button,0,0)
@@ -44,16 +44,15 @@ class SupplementalRunDialog(ReferenceDialog):
         self.tools_layout.addWidget(self.damage_button,2,0);self.tools_layout.addWidget(self.healing_button,2,1)
         self.damage_button.clicked.connect(self.show_damage_budget)
         self.healing_button.clicked.connect(self.show_healing_budget)
-        self.update_budget_entries()
+        self.calculate()
 
     def invalidate(self):
         super().invalidate()
-        if hasattr(self,'damage_button'):
-            self.damage_button.hide();self.healing_button.hide()
+        self.damage_button.hide();self.healing_button.hide()
 
     def calculate(self):
         super().calculate()
-        if hasattr(self,'damage_button'):self.update_budget_entries()
+        self.update_budget_entries()
 
     def update_budget_entries(self):
         if self.result is None:return

@@ -4,7 +4,7 @@
 
 ## 存量代码整改剩余
 
-- 继续逐调用审查初始化回调、重复校验、宽泛异常与单次辅助函数。469个运行时模块只有结构扫描；82个模块只完成异常类型等价精简，不能算全程序审查完成。详细范围见verification/maintenance/code-constraints-review-20261104/module-inventory.json。
+- 继续逐调用审查宽泛异常、重复校验与单次辅助函数：445个运行模块仅结构扫描，82个仅异常等价精简，31个只审过入口/初始化调用链；后者也需补其余方法。桥接JS、维护脚本和测试代码仍需回顾。当前清单见verification/maintenance/code-constraints-initialization-20261104/module-inventory.json。
 - 原有统计查询与缓存索引对缺失类别补0的处理不一致，需要独立核定口径；本轮未修改该逻辑。
 
 ## 本批探索叠加剩余验收

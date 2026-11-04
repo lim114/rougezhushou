@@ -6,7 +6,7 @@ from . import current_startup as model
 
 class CurrentStartupPanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
-        super().__init__('startup',model.SCENE,parent,reference_model=model)
+        super().__init__('startup',model.SCENE,parent,reference_model=model, defer_initial_refresh=True)
         controls=QHBoxLayout();self.group=QComboBox()
         for text,value in [('总览（资料目录，不是本次菜单）','all'),('常规支援候选','regular'),('继承的额外支援','inherited')]:self.group.addItem(text,value)
         self.mode=QComboBox()
@@ -24,7 +24,7 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
         self.reward_icon=QLabel();self.reward_icon.setFixedSize(64,64);self.reward_name=QLabel();self.reward_card=QHBoxLayout();self.reward_card.addWidget(self.reward_icon);self.reward_card.addWidget(self.reward_name,1);self.layout().insertLayout(4,self.reward_card)
         for widget in(self.group,self.mode,self.inherited):widget.currentIndexChanged.connect(self.refresh_reference)
         self.previous.valueChanged.connect(self.refresh_reference);self.gold.valueChanged.connect(self.refresh_reference)
-        self.refresh_reference()
+        self.refresh_reference(initial_scene=model.SCENE, initial=True)
         if target:
             if target==model.locate('choices',target.get('choice_id'))or target==model.locate('scenes',target.get('scene_id')):
                 self.scene.setCurrentIndex(self.scene.findData(model.SCENE))
@@ -33,21 +33,16 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
                     if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid:self.choices.setCurrentRow(i);break
 
     def _fresh_reference(self):
-        def number(name):
-            w=getattr(self,name,None);return None if w is None or w.value()<0 else w.value()
-        def value(name,default=None):
-            w=getattr(self,name,None);return default if w is None else w.currentData()
-        return model.reference('startup',number('previous'),value('mode'),number('gold'),value('inherited'),value('group','all'))
+        previous,gold=self.previous.value(),self.gold.value()
+        return model.reference('startup', None if previous<0 else previous,self.mode.currentData(),
+                               None if gold<0 else gold,self.inherited.currentData(),self.group.currentData())
 
     def _choice_changed(self,*args,**kwargs):
         super()._choice_changed(*args,**kwargs)
-        if not hasattr(self,'gold'):return
         row=self.result['choices'].get(self.choice_id)if self.result else None
         inherited=bool(row and row['kind']=='inherited')
         for w in(self.cost_label,self.gold):w.setVisible(self.choice_id=='choice_ro6_startbuff_3')
-        if not hasattr(self,'inherited'):return
         for w in(self.inheritance_label,self.inherited):w.setVisible(inherited)
-        if not hasattr(self,'reward_icon'):return
         self.reward_icon.clear();self.reward_name.clear();self.reward_icon.setVisible(inherited);self.reward_name.setVisible(inherited)
         if inherited:
             item=self.result['data']['originals']['items'][row['item_id']];path=model.ROOT/'rouge/data/relic-icons'/ (item['iconId']+'.png');pixmap=QPixmap(str(path))
@@ -56,10 +51,8 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
 
     def clear_reference(self):
         super().clear_reference()
-        if hasattr(self,'reward_icon'):self.reward_icon.clear();self.reward_name.clear();self.reward_icon.hide();self.reward_name.hide()
-        for name in('cost_label','gold','inheritance_label','inherited'):
-            w=getattr(self,name,None)
-            if w is not None:w.hide()
+        self.reward_icon.clear();self.reward_name.clear();self.reward_icon.hide();self.reward_name.hide()
+        for widget in(self.cost_label,self.gold,self.inheritance_label,self.inherited):widget.hide()
 
 class CurrentStartupDialog(QDialog):
     def __init__(self,target=None,parent=None):

@@ -9,10 +9,11 @@ from . import current_lake as model
 class CurrentLakePanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         self.requested_choice=target.get('choice_id')if target else None
-        super().__init__('lake',target.get('scene_id')if target else None,parent,reference_model=model)
+        super().__init__('lake',target.get('scene_id')if target else None,parent,reference_model=model, defer_initial_refresh=True)
         row=FlowLayout();self.outcome_buttons=[QPushButton(),QPushButton()]
         for button in self.outcome_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_documented_outcome(b.property('sceneId')))
         self.layout().insertLayout(3,row)
+        self.refresh_reference(initial_scene=target.get('scene_id') if target else None, initial=True)
         if target and target['phase_needed']:
             self.scene.setCurrentIndex(0)
             if self.result:replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=False)
@@ -31,7 +32,6 @@ class CurrentLakePanel(DocumentedEventFlowPanel):
             replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=preserve)
 
     def _sync_outcomes(self):
-        if not hasattr(self,'outcome_buttons'):return
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;outcomes=c['documented_outcomes']if c else[]
         for i,button in enumerate(self.outcome_buttons):
             button.setVisible(i<len(outcomes));button.setEnabled(i<len(outcomes));button.setProperty('sceneId',outcomes[i]['scene_id']if i<len(outcomes)else None)

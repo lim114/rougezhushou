@@ -7,22 +7,23 @@ from . import current_unattended_shop as model
 class CurrentUnattendedShopPanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         self.requested_original_id=target.get('original_choice_id')if target else None
-        super().__init__('shop',target.get('scene_id')if target else None,parent,reference_model=model)
+        super().__init__('shop',target.get('scene_id')if target else None,parent,reference_model=model, defer_initial_refresh=True)
         row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：源石锭'));self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);row.addWidget(self.gold);row.addWidget(QLabel('四叶草化石'));self.fossil=QComboBox()
         for label,value in(('尚未确认',None),('持有',True),('未持有',False)):self.fossil.addItem(label,value)
         row.addWidget(self.fossil);self.layout().insertLayout(1,row);self.gold.valueChanged.connect(self._condition_changed);self.fossil.currentIndexChanged.connect(self._condition_changed)
         self.gold.setAccessibleName('本页开桶源石锭对照');self.fossil.setAccessibleName('本页四叶草化石持有对照');row=QHBoxLayout();self.followup_buttons=[QPushButton(),QPushButton()]
         for button in self.followup_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_documented_followup(b.property('sceneId')))
         self.layout().insertLayout(4,row)
+        self.refresh_reference(initial_scene=target.get('scene_id') if target else None, initial=True)
         if target and target.get('choice_id'):
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==target['choice_id']:self.choices.setCurrentRow(i);break
         self._sync_followups()
     def _fresh_reference(self):
-        gold=getattr(self,'gold',None);fossil=getattr(self,'fossil',None);return model.reference('shop',None if gold is None or gold.value()<0 else gold.value(),fossil.currentData()if fossil is not None else None,self.requested_original_id)
+        gold=self.gold.value()
+        return model.reference('shop', None if gold<0 else gold, self.fossil.currentData(), self.requested_original_id)
     def _condition_changed(self,*_):self.refresh_reference()
     def _sync_followups(self):
-        if not hasattr(self,'followup_buttons'):return
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;ids=c['next_scene_ids']if c and len(c['next_scene_ids'])>1 else[]
         for i,button in enumerate(self.followup_buttons):
             active=i<len(ids);button.setVisible(active);button.setEnabled(active and c['listed_condition_match']is not False);button.setProperty('sceneId',ids[i]if active else None)

@@ -9,15 +9,16 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None,*,allow_original_popup=True):
         self.source_request=(target or{}).get('source_request');self.allow_original_popup=allow_original_popup;self.original_dialog=None
         initial=None if not self.source_request else'source-scene'if self.source_request['category']=='scenes'else'source-choice'
-        super().__init__('resting',initial,parent,reference_model=model)
+        super().__init__('resting',initial,parent,reference_model=model, defer_initial_refresh=True)
         self.choices.setAccessibleName('资料选项或结果参考，不是游戏操作')
         self.reward_card=QWidget();row=QHBoxLayout(self.reward_card);row.setContentsMargins(0,0,0,0);self.reward_icon=QLabel();self.reward_icon.setAccessibleName('源私钥同名物品资料图片');row.addWidget(self.reward_icon);row.addWidget(QLabel('源私钥 · 同名物品资料（不代表已领取）'));row.addStretch(1);self.layout().insertWidget(1,self.reward_card)
         self.original_button=QPushButton('对照99源石锭原项：它明确指向病床对话');self.layout().insertWidget(2,self.original_button);self.original_button.clicked.connect(self.open_original)
+        self.refresh_reference(initial_scene=initial, initial=True)
         if initial=='source-choice':self.choices.setCurrentRow(0)
         self._update_specific()
     def _fresh_reference(self):return model.reference('resting',self.source_request)
     def _close_battle(self):
-        child=getattr(self,'original_dialog',None)
+        child=self.original_dialog
         if child is not None:child.close();self.original_dialog=None
         super()._close_battle()
     def _choice_changed(self,item,*args,preserve=False):
@@ -25,7 +26,6 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
     def clear_reference(self):
         super().clear_reference();self._update_specific()
     def _update_specific(self):
-        if not hasattr(self,'original_button'):return
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
         available=bool(self.allow_original_popup and self.result and model.conflicting_original_target(self.result,self.scene_id,self.choice_id));self.original_button.setVisible(available);self.original_button.setEnabled(available)
         show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()

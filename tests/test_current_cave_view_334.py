@@ -36,7 +36,7 @@ class CurrentCaveView334Tests(unittest.TestCase):
  def test_parent_refresh_keeps_two_real_nonzero_readers_source_and_phase(self):
   d=self.dialog(model.locate('choices','choice_ro6_bat6_3'));d.resize(850,440);p=d.panel
   for reader in(p.player,p.technical):
-   p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(3);c.setPosition(16,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.scene_id,p.choice_id,p.source_request.copy());self.assertTrue(p.refresh_reference());c=reader.textCursor();self.assertEqual(prior,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.scene_id,p.choice_id,p.source_request))
+   reader.setFixedHeight(40);p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(3);c.setPosition(16,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.scene_id,p.choice_id,p.source_request.copy());self.assertTrue(p.refresh_reference());c=reader.textCursor();self.assertEqual(prior,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.scene_id,p.choice_id,p.source_request))
  def test_version_and_catalogue_entries_repeat_open_source_loss_and_no_irrelevant_inputs(self):
   p=ExpansionUpdatePanel();p.show();self.addCleanup(p.close);p.scope.setCurrentIndex(p.scope.findData(False));p.category.setCurrentIndex(p.category.findData('choices'))
   for key in('choice_ro6_bat6_3','choice_ro6_bat6_19','choice_ro6_bat6_7'):

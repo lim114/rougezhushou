@@ -36,7 +36,7 @@ class RecentScenePanel(SceneBattlePanel):
     def __init__(self,run,parent=None,*,historical=False):
         self.historical_reading=historical
         self.scene_run=run.state.get('id');self.event_key=None;self.event_result=None;self.event_dialog=None
-        super().__init__(run,parent)
+        super().__init__(run,parent,defer_initial_refresh=True)
         self.event_body=QWidget();body=QVBoxLayout(self.event_body);body.setContentsMargins(0,0,0,0)
         self.event_choices=QComboBox();self.event_choices.setAccessibleName('最近读取事件的准确资料');body.addWidget(self.event_choices)
         self.event_entries=QComboBox();self.event_entries.setAccessibleName('事件中的对话与选项记录');body.addWidget(self.event_entries)
@@ -56,7 +56,6 @@ class RecentScenePanel(SceneBattlePanel):
             self.event_dialog.close();self.event_dialog=None
 
     def refresh(self):
-        if not hasattr(self,'event_body'):return super().refresh()
         run_changed=self.scene_run!=self.run.state.get('id')
         if run_changed:
             self.scene_run=self.run.state.get('id');self.context_key=None;self.event_key=None

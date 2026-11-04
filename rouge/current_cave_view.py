@@ -8,13 +8,14 @@ from . import current_cave as model
 class CurrentCavePanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         self.requested_choice=target.get('choice_id')if target else None;self.source_request=target.get('source_request')if target else None
-        super().__init__('cave',target.get('scene_id')if target else None,parent,reference_model=model)
+        super().__init__('cave',target.get('scene_id')if target else None,parent,reference_model=model, defer_initial_refresh=True)
         row=QHBoxLayout();self.outcome_buttons=[QPushButton()for _ in range(4)]
         for button in self.outcome_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_documented_outcome(b.property('sceneId')))
         self.layout().insertLayout(3,row)
         row=QHBoxLayout();self.followup_buttons=[QPushButton(),QPushButton()]
         for button in self.followup_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_reference_followup(b.property('sceneId')))
         self.layout().insertLayout(4,row)
+        self.refresh_reference(initial_scene=target.get('scene_id') if target else None, initial=True)
         if target and target['phase_needed']:
             self.scene.setCurrentIndex(0)
             if self.result:replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=False)
@@ -35,13 +36,11 @@ class CurrentCavePanel(DocumentedEventFlowPanel):
             replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=preserve)
 
     def _sync_outcomes(self):
-        if not hasattr(self,'outcome_buttons'):return
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;outcomes=c['documented_outcomes']if c else[]
         for i,button in enumerate(self.outcome_buttons):
             button.setVisible(i<len(outcomes));button.setEnabled(i<len(outcomes));button.setProperty('sceneId',outcomes[i]['scene_id']if i<len(outcomes)else None)
             if i<len(outcomes):button.setText('查看文献结果：'+model.scene_label(self.result,outcomes[i]['scene_id']).removeprefix('文献结果：'))
 
-        if not hasattr(self,'followup_buttons'):return
         followups=c['reference_followups']if c else[]
         for i,button in enumerate(self.followup_buttons):
             button.setVisible(i<len(followups));button.setEnabled(i<len(followups));button.setProperty('sceneId',followups[i]['scene_id']if i<len(followups)else None)

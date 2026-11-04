@@ -7,18 +7,18 @@ from .documented_event_flow_view import DocumentedEventFlowPanel
 
 class BoxEventPanel(DocumentedEventFlowPanel):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
-        super().__init__('box',scene_id,parent,reference_model=model)
+        super().__init__('box',scene_id,parent,reference_model=model, defer_initial_refresh=True)
         row=QHBoxLayout();row.addWidget(QLabel('用于本页对照：是否持有祭日之契'))
         self.covenant=QComboBox();self.covenant.setAccessibleName('本页对照的祭日之契持有状态')
         for text,value in(('尚未确认',None),('持有',True),('未持有',False)):self.covenant.addItem(text,value)
         row.addWidget(self.covenant,1);self.add_condition_row(row);self.covenant.currentIndexChanged.connect(self._condition_changed)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
 
     def _fresh_reference(self):
-        control=getattr(self,'covenant',None)
-        return model.reference('box',control.currentData()if control is not None else None)
+        return model.reference('box', self.covenant.currentData())
 
     def _condition_changed(self,*_):
         self._close_battle();self.refresh_reference()

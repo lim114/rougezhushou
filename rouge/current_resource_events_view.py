@@ -6,14 +6,16 @@ from . import current_resource_events as model
 
 class CurrentResourceEventsPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
-        super().__init__(event_id,scene_id,parent,reference_model=model)
+        super().__init__(event_id,scene_id,parent,reference_model=model, defer_initial_refresh=True)
         if event_id in model.GOLD_EVENTS:
             row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：源石锭'));self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('仅本页源石锭支付对照');row.addWidget(self.gold);self.add_condition_row(row);self.gold.valueChanged.connect(self._gold_changed)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
     def _fresh_reference(self):
-        control=getattr(self,'gold',None);return model.reference(self.event_id,None if control is None or control.value()<0 else control.value())
+        gold=self.gold.value() if self.event_id in model.GOLD_EVENTS else -1
+        return model.reference(self.event_id, None if gold<0 else gold)
     def _gold_changed(self,*_):self.refresh_reference()
 
 from .player_window_frame import PlayerDialog

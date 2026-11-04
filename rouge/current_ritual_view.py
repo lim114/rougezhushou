@@ -8,10 +8,11 @@ from .flow_layout import FlowLayout
 class CurrentRitualPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id='ritual',scene_id=None,choice_id=None,parent=None):
         self.material_dialog=None
-        super().__init__(event_id,scene_id,parent,reference_model=model)
+        super().__init__(event_id,scene_id,parent,reference_model=model, defer_initial_refresh=True)
         row=FlowLayout();self.material_button=QPushButton('查看这件材料的来源');self.related_button=QPushButton('查看相关首领：畸症（未套用削弱）')
         row.addWidget(self.material_button);row.addWidget(self.related_button);self.layout().insertLayout(3,row)
         self.material_button.clicked.connect(self.open_material);self.related_button.clicked.connect(self.open_related)
+        self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
@@ -21,7 +22,6 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
         if self.material_dialog is not None:self.material_dialog.close()
 
     def _sync_extra(self):
-        if not hasattr(self,'material_button'):return
         source=model.acquisition_reference(self.result,self.scene_id,self.choice_id)if self.result else None
         if source and source['kind']=='exchange':
             from .current_exchange_reference import target_entry

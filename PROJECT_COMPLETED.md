@@ -1,3 +1,7 @@
+## 维护：事件与计算页面初始化顺序整改（2026-11-04）
+
+24个运行模块调整为先建完控件再首次刷新/计算，移除41处控件存在性兜底；修正13个已在改动前复现的过时测试断言。仅关闭本轮初始化问题，不表示全程序整改完成，不增加功能节数。[回执](verification/maintenance/code-constraints-initialization-20261104/README.md)。
+
 ## 维护：探索地图叠加显示（2026-11-03）
 
 维护归档：存量代码首批入口/初始化与96处异常清单精简已完成，未新增功能节数，不表示全程序整改完成。见[回执](verification/maintenance/code-constraints-review-20261104/README.md)。

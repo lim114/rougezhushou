@@ -48,6 +48,6 @@ class CurrentScoutView342Tests(unittest.TestCase):
                 old=d
         self.assertTrue(p.refresh_reference());self.assertTrue(old.isVisible());p._unavailable();self.assertFalse(old.isVisible())
     def test_catalogue_current_reader_defaults_and_parent_close(self):
-        p=NodeCatalogPanel();self.addCleanup(p.close);p.show();p.list.setCurrentRow(next(i for i,e in enumerate(p.entries)if e['key']=='event:community_group_024'));self.qt.processEvents();self.assertTrue(p.open_current_event_reference());d=p.current_reference_window;self.assertIsNone(d.panel.choice_id);self.assertTrue(d.panel.return_card.isHidden());self.assertIn('请核对实际游戏版本',d.node_reference_banner.text());p.refresh();self.assertTrue(d.isVisible());p.close();self.qt.processEvents();self.assertFalse(d.isVisible())
+        p=NodeCatalogPanel();self.addCleanup(p.close);p.show();p.list.setCurrentRow(next(i for i,e in enumerate(p.entries)if e['key']=='event:community_group_024'));self.qt.processEvents();self.assertTrue(p.open_current_event_reference());d=p.current_reference_window;self.assertIsNone(d.panel.choice_id);self.assertTrue(d.panel.return_card.isHidden());self.assertEqual(d.node_reference_banner.text(),'节点资料');p.refresh();self.assertTrue(d.isVisible());p.close();self.qt.processEvents();self.assertFalse(d.isVisible())
 
 if __name__=='__main__':unittest.main()
