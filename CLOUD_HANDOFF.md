@@ -11,7 +11,7 @@
 
 最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `SECTION473_SCROLL_FOCUS_ACCEPTED_WEB_CLOSEOUT_PENDING`。已采集1场，完成录像对照0场。
 
-当前实现维护：第473节作战名称点击穿透待定位，网页验收暂停；回执 `verification/maintenance/overlay473-closeout-20261103/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+当前实现维护：第473节PRTS正文和小卡等待已实测通过，最终截图与光标缺口保留；回执 `verification/maintenance/overlay473-closeout-20261103/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->

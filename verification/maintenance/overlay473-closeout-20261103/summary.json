@@ -4,7 +4,7 @@
   "completed_sections": 472,
   "next_section": 473,
   "section473_complete": false,
-  "base_commit": "086937790f39f57dbf49f2067a857016fa93deea",
+  "base_commit": "1d753b519f888ce14766cc84ffff44e01f1e31ed",
   "binding": "enclosing_commit",
   "source_sha256": {
     "rouge/player_game_map.py": "a48220756bca7d8f087c0c868b388f00b91e2b51eadfa76c51d7c5843f8ab4e1",
@@ -15,7 +15,9 @@
     "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
     "tests/test_node_selection_binding_473.py": "5903d329aa42b3de151044892bc715ccb3822fe160eae243de89d19e0e6d3186",
     "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0",
-    "rouge/player_reference_links.py": "813893dd6c41b582c243cf83e5fe5938d5dac1ac651721bdaddd429297adf154"
+    "rouge/player_reference_links.py": "813893dd6c41b582c243cf83e5fe5938d5dac1ac651721bdaddd429297adf154",
+    "rouge/run_state.py": "fee369a8904d34eb1ac4e91f935276d2b4ad894c92a39161b93d20e73b27430e",
+    "rouge/tomimi_view.py": "98c90ea93813abb9a9464bb3896fdb37f955efe41e3651698ee1919e9655ab2e"
   },
   "decisions": {
     "shared_floor_distance_frequency": "implemented; source explanation retained; separate-point statistics removed from473 gaps",
@@ -102,6 +104,46 @@
       },
       "full_suite_run": false,
       "tests": 32
+    },
+    {
+      "actual_exit": 0,
+      "selectors": [
+        "tests.test_run_persistence_099.RunPersistenceTests.test_loaded_lone_surrogate_keys_and_values_keep_exact_decoded_points",
+        "tests.test_run_persistence_099.RunPersistenceTests.test_native_nonadjacent_surrogates_and_literal_escapes_remain_distinct",
+        "tests.test_run_persistence_099.RunPersistenceTests.test_ascii_escaped_pair_loads_as_scalar_and_saves_normally",
+        "tests.test_run_persistence_099.RunPersistenceTests.test_native_adjacent_pair_refuses_before_io_and_keeps_accepted_memory",
+        "tests.test_run_persistence_099.RunPersistenceTests.test_pair_refusal_of_absent_target_does_not_create_parent",
+        "tests.test_tomimi_456.BrowserNavigationTests"
+      ],
+      "source_sha256": {
+        "rouge/run_state.py": "fee369a8904d34eb1ac4e91f935276d2b4ad894c92a39161b93d20e73b27430e",
+        "rouge/tomimi_view.py": "98c90ea93813abb9a9464bb3896fdb37f955efe41e3651698ee1919e9655ab2e"
+      },
+      "equivalence_cases": 1464,
+      "synthetic_chars": 6800000,
+      "scan_timings": {
+        "old": {
+          "median_ms": 869.3394000001717,
+          "all_ms": [
+            869.3394000001717,
+            1128.8746000063838,
+            1406.699099999969,
+            778.4195999993244,
+            762.0212000038009
+          ]
+        },
+        "new": {
+          "median_ms": 27.445899992017075,
+          "all_ms": [
+            27.445899992017075,
+            25.91160000883974,
+            28.66159999393858,
+            28.549199996632524,
+            27.229200000874698
+          ]
+        }
+      },
+      "full_suite": false
     }
   ],
   "payload_ast_unchanged_from_base": true,
@@ -166,13 +208,16 @@
     {
       "run": "round2-web-size-l",
       "issue": "User reports battle caption click reaches game. Assistant node_pressed absent despite mapped label geometry; cause under investigation."
+    },
+    {
+      "run": "launcher-v23",
+      "issue": "Diagnostic script phase replacement failed; recorder refused existing folder before app startup. No log overwritten. Corrected fresh launcher v24."
     }
   ],
   "pending": [
-    "L user reports battle-caption click enters game instead of assistant; coordinate exists, no node_pressed event; native hit/visibility probe awaiting reproduction",
-    "PRTS actual enemy content403; final visible-profile paired probe pending user action",
-    "final smaller web-window screenshot and ratio acceptance",
-    "fast pointer jump can miss game-rendered cursor in local ROI; previous measured full-frame search not integrated"
+    "final loaded PRTS-body comparison screenshot",
+    "fast pointer jump local ROI tracking gap and earlier intermittent caption click-through",
+    "queue lock and serialization latency remain broader performance work"
   ],
   "not_in_scope": [
     "800x600 recognition",
@@ -187,9 +232,9 @@
     "fixed_time_limit_seconds": null,
     "thread_ready_confirmed": true,
     "live_status_field": "screenshot_recorder_alive",
-    "source": "ordinary-closeout-v22.py",
+    "source": "ordinary-closeout-v25.py",
     "new_round_b_failure_retained": true,
-    "live_phase": "round2-web-size-l",
+    "live_phase": "round2-prts-save-n",
     "fixed_duration_limit": false
   },
   "snapshot_utc": "2026-11-04T06:17:19.028938+00:00",
@@ -297,5 +342,30 @@
     "basis": "Manual full overlay/raw-game review plus aggregate count/total arithmetic; local per-node ledger phase-k-review.json",
     "scope": "One captured frame; current L changes cursor appearance and web window sizing only."
   },
-  "scope_note": "No new section, no full suite. Original payload function and numerical freshness/structure thresholds unchanged. Private screenshots/logs stay local."
+  "scope_note": "No new section, no full suite. Original payload function and numerical freshness/structure thresholds unchanged. Private screenshots/logs stay local.",
+  "caption_followup": {
+    "round": "round2-web-size-l",
+    "user_result": "this time opens but visibly slow",
+    "card_handler_to_paint_ms": 2723.5941,
+    "card_prepare_ms": 144.5824,
+    "battle_web_open_recorded": true,
+    "earlier_click_through": "retained, not reproduced in this successful click; no hit-mask fix claimed",
+    "production_round": "round2-prts-save-n",
+    "production_card_handler_to_paint_ms": 88.9458,
+    "production_user_result": "card wait no longer noticeable"
+  },
+  "prts_profile_comparison": {
+    "before": "actual PRTS visible window403; screenshot retained",
+    "after": {
+      "same_reader": true,
+      "load_ok": true,
+      "characters": 45672,
+      "expected_stage_title": true,
+      "enemy_text": true,
+      "forbidden": false
+    },
+    "production": "PRTS-only profile HTTP user agent set before page creation",
+    "production_visual_acceptance": "N: user confirms actual article displayed; final loaded-body comparison screenshot pending",
+    "user_agent": "rougezhushou/0.70 (QtWebEngine; local desktop reference viewer)"
+  }
 }

@@ -4,6 +4,7 @@ import time
 import uuid
 import copy
 import math
+import re
 from collections import Counter
 from pathlib import Path
 from .catalog import catalog,operator_profiles,tactical_tools
@@ -269,8 +270,7 @@ class RunState:
         text=json.dumps(self.state,ensure_ascii=False,indent=2)
         # Decoding an escaped native high/low pair would fold two Python points.
         # Refuse that lossy write before any directory or temporary-file IO.
-        if any(0xd800<=ord(a)<=0xdbff and 0xdc00<=ord(b)<=0xdfff
-               for a,b in zip(text,text[1:])):
+        if re.search(r'[\ud800-\udbff][\udc00-\udfff]',text):
             self.save_issue='本局记录含暂时无法无损保存的文字，保存未完成'
             return False
         # Escape lone code units after JSON quoting, retaining ordinary Unicode

@@ -16,6 +16,8 @@ class TomimiPanel(QWidget):
         # The view owns its page; the profile outlives that view in this layout.
         self.web = QWebEngineView(self)
         self.profile = QWebEngineProfile(self)
+        if target.get('provider') == 'PRTS':
+            self.profile.setHttpUserAgent('rougezhushou/0.70 (QtWebEngine; local desktop reference viewer)')
         page = QWebEnginePage(self.profile, self.web)
         page.setBackgroundColor(QColor('#262626'))
         self.web.setPage(page)
