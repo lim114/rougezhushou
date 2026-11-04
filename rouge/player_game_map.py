@@ -142,9 +142,13 @@ class RoundPanel(QWidget):
 class NodeCard(RoundPanel):
     def __init__(self,parent,controller):
         super().__init__(parent);self.controller=controller;self.binding=None;self.content_key=None
+        self.setCursor(Qt.CursorShape.ArrowCursor)
         self.setObjectName('gameNodeCard');self.setStyleSheet('#gameNodeCard QLabel{color:#f4f7f7;background:transparent;border:0;} #gameNodeCard QPushButton,#gameNodeCard QToolButton{color:#eef5f5;background:rgba(255,255,255,15);border:1px solid rgba(205,225,225,50);border-radius:7px;padding:7px;} #gameNodeCard QPushButton:hover,#gameNodeCard QToolButton:hover{background:rgba(255,255,255,40);} #gameNodeCard QPushButton:disabled{color:#849093;}')
         self.body=QVBoxLayout(self);self.body.setContentsMargins(18,16,18,16);self.body.setSpacing(14)
-        self.heading=QLabel('历史频率 · 路标Wiki');self.heading.setStyleSheet('font-size:12pt;font-weight:600;');self.body.addWidget(self.heading)
+        self.heading=QLabel('历史频率 · 路标Wiki');self.heading.setStyleSheet('font-size:12pt;font-weight:600;')
+        heading=QHBoxLayout();heading.addWidget(self.heading,1)
+        self.close_button=QToolButton();self.close_button.setText('×');self.close_button.setToolTip('关闭节点卡');self.close_button.setAccessibleName('关闭节点卡')
+        self.close_button.clicked.connect(lambda:controller.dismiss_card('close_button'));heading.addWidget(self.close_button);self.body.addLayout(heading)
         self.date=QLabel();self.body.addWidget(self.date);self.evidence=QLabel();self.evidence.setWordWrap(True);self.body.addWidget(self.evidence)
         self.cells=QWidget();self.grid=QGridLayout(self.cells);self.grid.setContentsMargins(0,4,0,4);self.grid.setHorizontalSpacing(20);self.grid.setVerticalSpacing(18)
         for i in range(3):self.grid.setColumnStretch(i,1)
@@ -197,8 +201,9 @@ class NodeCard(RoundPanel):
 
 class InteractionSurface(QWidget):
     def __init__(self,parent,controller):
-        flags=Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint|Qt.WindowType.WindowStaysOnTopHint|Qt.WindowType.WindowDoesNotAcceptFocus
+        flags=Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint|Qt.WindowType.WindowStaysOnTopHint
         super().__init__(parent,flags);self.controller=controller;self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.setWindowTitle('地图节点交互');self.setProperty('playerVisibility','ephemeral')
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.strip=RoundPanel(self);layout=QVBoxLayout(self.strip);layout.setContentsMargins(5,12,5,12)
         scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setFrameShape(QScrollArea.Shape.NoFrame);scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setStyleSheet('QScrollArea,QWidget{background:transparent;border:0;} QToolButton{background:transparent;border:0;border-radius:22px;} QToolButton:checked{background:rgba(210,240,225,45);} QToolButton:hover{background:rgba(210,240,225,25);}')
@@ -207,21 +212,17 @@ class InteractionSurface(QWidget):
         for kind in TYPE_KINDS:
             button=QToolButton();button.setFixedSize(44,44);button.setIcon(QIcon(QPixmap.fromImage(node_sprite(kind))));button.setIconSize(QSize(38,38));button.setCheckable(True);button.setToolTip(kind+' · 历史频率');button.setAccessibleName('叠加类型：'+kind);button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
             button.clicked.connect(lambda checked=False,k=kind:controller.set_kind(k if checked else None));buttons.addWidget(button);self.buttons[kind]=button
-        buttons.addStretch();scroll.setWidget(body);layout.addWidget(scroll);self.card=NodeCard(self,controller);self.bridge=QRect()
+        buttons.addStretch();scroll.setWidget(body);layout.addWidget(scroll);self.card=NodeCard(self,controller)
     def paintEvent(self,event):
         if not self.controller.current:return
-        p=QPainter(self);p.setPen(Qt.PenStyle.NoPen);p.setBrush(QColor(0,0,0,1));r=self.controller.hit_radius()
-        for _,x,y in self.controller.current['points']:p.drawEllipse(QPointF(x,y),r,r)
-        p.drawRect(self.bridge)
+        p=QPainter(self);p.setPen(Qt.PenStyle.NoPen);p.setBrush(QColor(0,0,0,1))
+        for rect in self.controller.current['label_rects'].values():p.drawRect(rect.adjusted(-4,-4,4,4))
     def register(self,data):
         self.setGeometry(data['rect']);self.strip.setGeometry(round(self.width()*.014),round(self.height()*.24),54,min(360,round(self.height()*.4)))
-        region=QRegion(self.strip.geometry());radius=self.controller.hit_radius()
-        for _,x,y in data['points']:region|=QRegion(round(x-radius),round(y-radius),radius*2,radius*2,QRegion.RegionType.Ellipse)
+        region=QRegion(self.strip.geometry())
         for rect in data['label_rects'].values():region|=QRegion(rect.adjusted(-4,-4,4,4))
-        self.bridge=QRect()
         if self.card.isVisible():
-            _,x,y=next(p for p in data['points']if p[0]==self.controller.card_node);edge=self.card.x()if self.card.x()>x else self.card.geometry().right()if self.card.geometry().right()<x else round(x)
-            self.bridge=QRect(min(round(x),edge),round(y)-8,abs(edge-round(x))+1,16);region|=QRegion(self.bridge);region|=QRegion(self.card.geometry())
+            region|=QRegion(self.card.geometry())
         if self.mask()!=region:self.setMask(region)
         self.show();self.update()
     def mousePressEvent(self,event):
@@ -241,6 +242,7 @@ class GameMapOverlay(QObject):
         self.frequencies=statistics_source.index if statistics_source is not None else default_frequencies();self.surface.frequencies=self.frequencies
         if statistics_source is not None:statistics_source.changed.connect(self.refresh_statistics)
         self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.tick);self.timer.start()
+        self.focus_return_timer=QTimer(self);self.focus_return_timer.setSingleShot(True);self.focus_return_timer.setInterval(80);self.focus_return_timer.timeout.connect(self.return_game_focus)
         self.mouse_listener=None;self.mousePressed.connect(self.outside_click,Qt.ConnectionType.QueuedConnection)
         QApplication.instance().installEventFilter(self)
     def record(self,action,**fields):
@@ -262,6 +264,10 @@ class GameMapOverlay(QObject):
         audit=self.owner.session_recorder;started=time.perf_counter();decision={'reason':'disabled'if not self.enabled else'reference_or_companion_unavailable'}
         if self.enabled and reference and not self.owner.closing and c.hidden_windows is None:
             snapshot=c.game_binding.api.read(c.game_binding.target())
+            # A user's click may activate this overlay; showing it never does.
+            if snapshot and snapshot.get('foreground_hwnd')==int(self.interaction.winId()):
+                snapshot={**snapshot,'foreground_on_game':True}
+                decision['foreground_scope']='overlay_interaction'
             self.current=payload(reference,self.owner.capture.buffer.latest(),snapshot,self.owner.run.state['id'],diagnostics=decision)
         if not self.current:
             self.surface.hide();self.surface.data=None;self.dismiss_card(decision['reason']);self.interaction.hide()
@@ -320,17 +326,33 @@ class GameMapOverlay(QObject):
         if self.mouse_listener is not None:
             listener=self.mouse_listener;self.mouse_listener=None;listener.stop();listener.join()
             self.record('mouse_listener_stopped',listener_id=id(listener),reason=reason)
+        if self.current is not None:self.interaction.register(self.current)
     def clear_hover(self):self.dismiss_card()
     def outside_click(self,reading):
         binding,x,y=reading
         if not self.card.isVisible()or binding!=self.card.binding:return
-        client=self.current['rect'];physical=self.snapshot['physical_client'];point=QPoint(round((x-physical[0])*client.width()/physical[2]),round((y-physical[1])*client.height()/physical[3]));hit=self.hit(point)
-        if not self.card.geometry().contains(point)and not self.interaction.strip.geometry().contains(point)and not hit:
-            self.dismiss_card('outside_click');self.interaction.register(self.current)
+        client=self.current['rect'];physical=self.snapshot['physical_client'];point=QPoint(round((x-physical[0])*client.width()/physical[2]),round((y-physical[1])*client.height()/physical[3]))
+        caption=any(rect.adjusted(-4,-4,4,4).contains(point)for rect in self.current['label_rects'].values())
+        if not self.card.geometry().contains(point)and not self.interaction.strip.geometry().contains(point)and not caption:
+            self.dismiss_card('outside_click')
+    def return_game_focus(self):
+        snapshot=self.companion.game_binding.api.read(self.companion.game_binding.target())
+        if (not snapshot or not snapshot.get('cursor_on_game')
+                or snapshot.get('foreground_hwnd')!=int(self.interaction.winId())
+                or QApplication.platformName()!='windows'):
+            return
+        from ctypes import windll
+        from ctypes.wintypes import HWND
+        accepted=bool(windll.user32.SetForegroundWindow(HWND(snapshot['key'][0])))
+        self.record('game_focus_returned',accepted=accepted,reason='pointer_returned_to_game')
     def eventFilter(self,widget,event):
+        if widget is self.interaction and event.type()==QEvent.Type.Leave:
+            self.focus_return_timer.start()
+        elif widget is self.interaction and event.type()==QEvent.Type.Enter:
+            self.focus_return_timer.stop()
         if event.type()==QEvent.Type.KeyPress and event.key()==Qt.Key.Key_Escape and self.card.isVisible()and isinstance(widget,QWidget)and widget.window()in QApplication.topLevelWidgets():
             if widget is self.interaction or self.interaction.isAncestorOf(widget)or widget is self.companion or self.companion.isAncestorOf(widget):
-                self.dismiss_card('escape');self.interaction.register(self.current);return True
+                self.dismiss_card('escape');return True
         return False
     def open_web(self,kind):
         if not self.current or not self.card_node:return
@@ -359,7 +381,7 @@ class GameMapOverlay(QObject):
                 panel.floors.setCurrentIndex(i);return panel.open_hover_entry(node_id,kind,identity)
         return False
     def close(self):
-        self.timer.stop();self.dismiss_card('window_closed')
+        self.timer.stop();self.focus_return_timer.stop();self.current=None;self.dismiss_card('window_closed')
         QApplication.instance().removeEventFilter(self);self.surface.close();self.interaction.close();self.current=None
         if self.view:self.more_card.close()
 

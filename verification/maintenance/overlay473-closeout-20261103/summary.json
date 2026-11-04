@@ -1,31 +1,38 @@
 {
   "scope": "section473 closeout, not a new functional section",
-  "status": "THREE_DECISIONS_IMPLEMENTED_REAL_SCENARIOS_IN_PROGRESS",
+  "status": "SCROLL_FOCUS_AND_CLOSE_ACCEPTED_WEB_CLOSEOUT_PENDING",
   "completed_sections": 472,
   "next_section": 473,
   "section473_complete": false,
-  "base_commit": "b856d83900926357998fdc9f6fa3a1295aca8ec0",
+  "base_commit": "086937790f39f57dbf49f2067a857016fa93deea",
   "binding": "enclosing_commit",
   "source_sha256": {
-    "rouge/player_game_map.py": "11663c38a3e032dae8818d664c4a05b75e0466301660ff5b2d4d3a8a2b790fa2",
+    "rouge/player_game_map.py": "a48220756bca7d8f087c0c868b388f00b91e2b51eadfa76c51d7c5843f8ab4e1",
     "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
-    "tests/test_map_overlay_video.py": "e66655bcfd2ee2cab04399e415c046756eb50ebd95b695880752dff24cacde8c",
+    "tests/test_map_overlay_video.py": "f7c7f455b9fb9b92b9364185709cf25fa085186e7613f9bd3c073977dda52d1d",
     "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5",
     "tests/test_node_card_source_review.py": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b",
     "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
-    "tests/test_node_selection_binding_473.py": "5903d329aa42b3de151044892bc715ccb3822fe160eae243de89d19e0e6d3186"
+    "tests/test_node_selection_binding_473.py": "5903d329aa42b3de151044892bc715ccb3822fe160eae243de89d19e0e6d3186",
+    "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0",
+    "rouge/player_reference_links.py": "813893dd6c41b582c243cf83e5fe5938d5dac1ac651721bdaddd429297adf154"
   },
   "decisions": {
     "shared_floor_distance_frequency": "implemented; source explanation retained; separate-point statistics removed from473 gaps",
-    "listener": "Card-lifetime implementation retained. User permits card-or-type-strip-hover scope, but that input experiment failed real tests and was archived. Manual click-focus choice is pending.",
-    "settings": "one mkdir/open I/O exit; atomic write/commit and unreadable-file preservation kept; first-run unchanged"
+    "listener": "Only while card open; native Qt scrolling after user click activation. Controlled removal disables outside-click; user accepts explicit close button / assistant Esc, no automatic recovery.",
+    "settings": "one mkdir/open I/O exit; atomic write/commit and unreadable-file preservation kept; first-run unchanged",
+    "focus": "User click activates assistant without show-time activation; pointer returning to the bound game region may return foreground; only the exact owned interaction HWND extends payload foreground eligibility."
   },
   "additional_fixes": [
     "direct owner.session_recorder twice",
     "report file_details placeholder expanded",
     "cached node card restores binding before content-cache early return",
     "fit the selected neutral ring independently of the template icon center",
-    "battle web links reuse confirmed content of the same node after map return"
+    "battle web links reuse confirmed content of the same node after map return",
+    "remove node icon and bridge input masks; captions open assistant, icons pass to game",
+    "immediate input-mask removal on card close",
+    "explicit close button and local Esc fallback",
+    "web window requested ratio .65 instead of .8; final real ratio pending"
   ],
   "targeted_checks": [
     {
@@ -77,6 +84,24 @@
       },
       "fixture_change": "minimum owner now declares MainWindow session_recorder and map_overlay_reference defaults",
       "source_sha256": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b"
+    },
+    {
+      "selectors": [
+        "tests.test_map_overlay_video.ControllerTests",
+        "tests.test_map_overlay_video.FrequencyBindingTests",
+        "tests.test_player_feature_424.OverlayTests",
+        "tests.test_tomimi_456.BrowserNavigationTests"
+      ],
+      "actual_exit": 0,
+      "actual_duration_s": 45.436,
+      "source_sha256": {
+        "rouge/player_game_map.py": "a48220756bca7d8f087c0c868b388f00b91e2b51eadfa76c51d7c5843f8ab4e1",
+        "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0",
+        "rouge/player_reference_links.py": "813893dd6c41b582c243cf83e5fe5938d5dac1ac651721bdaddd429297adf154",
+        "tests/test_map_overlay_video.py": "f7c7f455b9fb9b92b9364185709cf25fa085186e7613f9bd3c073977dda52d1d"
+      },
+      "full_suite_run": false,
+      "tests": 32
     }
   ],
   "payload_ast_unchanged_from_base": true,
@@ -84,14 +109,15 @@
   "real_verification": {
     "first_round_previously_accepted": "retained; not repeated",
     "new_final_visuals": "Local full-window pairs made for capsule/percentages, three-column card, actual PRTS403 and loaded Tomimi. Per-row conclusions in README.",
-    "actual_stage_web": "Both buttons opened actual same-stage URLs. Tomimi content loaded. PRTS returned HTTP403; enemy content not accepted.",
+    "actual_stage_web": "D: both real URLs open; Tomimi content passed, PRTS403. L final-size visible-page check pending.",
     "second_large_size": "1920x1200 physically confirmed. Round D ordinary UI recorded 35 type selections, multiple unknown-node cards and battle cards. Wheel regression remains open.",
-    "page_return": "Stage memory return works in isolated regression and actual linked card; dedicated page-switch acceptance still pending.",
-    "focus_out_with_card": "Withdrawal events recorded during webpage opening; dedicated complete scenario still pending.",
-    "game_escape": "dedicated scenario pending",
+    "page_return": "I: user completed roster/collection switch and return; sampled pages include roster and exploration.",
+    "focus_out_with_card": "K: card withdrawn for window_not_eligible after user leaves game; same payload gate preserved.",
+    "game_escape": "User confirms game and assistant Esc normal; K has two assistant Esc closures, no global keyboard hook.",
     "removed_hook_outside_click": "controlled test pending; Windows silent removal not inferred from thread running",
     "busy_game_click_feel": "awaiting human feedback; API dispatch timing is separate",
-    "wheel": "E/F/G user reproductions failed. G consumed native wheel messages, but raw game frame still zoomed. Experimental input source and tests archived locally. Current product restored to validated D stage-memory fix."
+    "wheel": "I: user confirms both regions scroll without game zoom. Raw-game position replay retained.",
+    "first_game_click": "J: user confirms roster and collection open on first click after pointer-return activation; icon/caption separation corrected in K."
   },
   "preliminary_placement": {
     "phase": "round2-closeout-a",
@@ -128,13 +154,20 @@
     {
       "run": "round2-native-wheel-g",
       "issue": "Native window consumed wheel and scrolled type list, but game raw frame still zoomed. Archived failed approach."
+    },
+    {
+      "run": "round2-click-focus-i",
+      "issue": "Wheel fixed; user identified first return-to-game click only activates."
+    },
+    {
+      "run": "round2-focus-return-j",
+      "issue": "First game click restored; icon hit regions still intercepted game nodes; fixed in K."
     }
   ],
   "pending": [
-    "wheel isolation or agreed interaction change",
-    "PRTS403 content loading",
-    "dedicated page-return/focus-out/game-Esc tests",
-    "controlled hook-removal behavior and busy-click human feedback"
+    "PRTS actual enemy content403; final visible-profile paired probe pending user action",
+    "final smaller web-window screenshot and ratio acceptance",
+    "fast pointer jump can miss game-rendered cursor in local ROI; previous measured full-frame search not integrated"
   ],
   "not_in_scope": [
     "800x600 recognition",
@@ -149,11 +182,12 @@
     "fixed_time_limit_seconds": null,
     "thread_ready_confirmed": true,
     "live_status_field": "screenshot_recorder_alive",
-    "source": "ordinary-closeout-v18.py",
+    "source": "ordinary-closeout-v22.py",
     "new_round_b_failure_retained": true,
-    "live_phase": "round2-bound-links-h"
+    "live_phase": "round2-web-size-l",
+    "fixed_duration_limit": false
   },
-  "snapshot_utc": "2026-11-04T04:35:39.203988+00:00",
+  "snapshot_utc": "2026-11-04T06:17:19.028938+00:00",
   "stage_binding_checks": {
     "selectors": [
       "tests.test_node_selection_binding_473",
@@ -231,5 +265,32 @@
     "os_down_to_percent_paint_ms": 1459.611,
     "handler_to_percent_paint_ms": 123.0447,
     "qualification": "A matched type-button native press; queue delay included only in first measurement. Other latency distributions start at GUI handler."
-  }
+  },
+  "hook_loss_acceptance": {
+    "round": "round2-node-input-k",
+    "controlled_removals": 2,
+    "first_trial": "foreign-focus withdrawal; outside-click result inconclusive",
+    "second_trial": "user confirms outside click does not close; x closes",
+    "accepted": "retain x and assistant Esc; document limitation; no recovery",
+    "install_success": 10,
+    "uninstall_success": 10,
+    "failed_redundant_cleanup": 2,
+    "controlled_vs_os_timeout": "Only own-hook controlled removal tested. No forced OS timeout."
+  },
+  "placement_followup": {
+    "round": "round2-node-input-k",
+    "overlay_sha256": "4509946d22c943b680f6300c4fc1a54a5ffa66753c3bbd87fe672eb6c05b014a",
+    "physical_client": [
+      1920,
+      1200
+    ],
+    "positions": 20,
+    "numbers": 7,
+    "wrong_node": 0,
+    "missing": 0,
+    "false_display": 0,
+    "basis": "Manual full overlay/raw-game review plus aggregate count/total arithmetic; local per-node ledger phase-k-review.json",
+    "scope": "One captured frame; current L changes cursor appearance and web window sizing only."
+  },
+  "scope_note": "No new section, no full suite. Original payload function and numerical freshness/structure thresholds unchanged. Private screenshots/logs stay local."
 }

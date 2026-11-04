@@ -8,7 +8,7 @@ def open_overlay_web(companion,target,area):
     page=companion.overlay_web_pages.get(target['url'])
     if page is None:
         page=ToolPage(target.get('provider','Tomimi')+' · '+target['name'],TomimiPanel(target),companion,object_name='mapReferenceWindow')
-        page.panel=page.body_scroll.widget();page.resize(min(1100,round(area.width()*.8)),min(680,round(area.height()*.8)))
+        page.panel=page.body_scroll.widget();page.resize(min(1100,round(area.width()*.65)),min(680,round(area.height()*.65)))
         reader=page.panel;reader.layout().removeWidget(reader.navigation);reader.layout().removeWidget(reader.address)
         reader.navigation_bar.insertWidget(3,reader.address,1);reader.title.hide();reader.environment.hide()
         reader.navigation.setObjectName('overlayWebNav');reader.navigation.setStyleSheet('#overlayWebNav{background:#f2f3f5;border-radius:6px;} #overlayWebNav QLineEdit{color:#252a30;background:#ffffff;border:0;border-radius:6px;padding:4px;} #overlayWebNav QToolButton{background:transparent;border:0;padding:3px;} #overlayWebNav QLabel{color:#44505b;background:transparent;}')

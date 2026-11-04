@@ -77,3 +77,22 @@ MainWindow初始化直接设置compact_window=None、map_overlay_reference=None�
 方法来源为[pynput定向事件过滤](https://pynput.readthedocs.io/en/latest/faq.html#how-do-i-suppress-specific-events-only)、[微软WM_MOUSEWHEEL说明](https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel)与[Qt滚轮事件](https://doc.qt.io/qt-6.11/qwheelevent.html)。没有输入控制器、游戏进程注入或游戏按键/点击发送。已经向用户提出后续交互选择，答复前不改变前台判定或自动切焦点。
 
 E/F/G未通过输入方案及测试已归档本机，产品恢复保留关卡绑定修复的D版，当前实际仍仅小卡期间监听。上面的类型栏悬停范围为用户已允许的实现范围，尚无实机通过实现。焦点取舍与PRTS403继续待办。
+
+## 点击激活与归还焦点的最终取舍
+
+用户随后明确接受点击助手时自然获得焦点。交互窗去掉WindowDoesNotAcceptFocus，保留WA_ShowWithoutActivating；叠加只额外允许自身交互窗处于前台，其它程序仍撤下。前台窗口句柄由BindingApi读取，原快照保留原值，探索控制器只在自身窗口前台时传入调整后的副本。payload的30秒/2秒、标题及文字阈值保持。
+
+I轮用户实测确认两处滚动正常、游戏未缩放。该轮反馈的卡顿进一步确认为切回游戏第一次点击需重按。用户再确认，鼠标离开助手回到游戏可点击区域时可归还游戏焦点。J版在离开交互窗后80毫秒重新核对窗口与鼠标归属，仍在游戏区域且前台为自身交互窗时调用SetForegroundWindow；进入助手即取消待处理动作，关闭时停止计时器。实际结果按本轮回执记录。
+
+类型栏和小卡直接复用Qt滚动，pynput保留小卡期间监听。新增行为依据[Qt窗口标志和显示属性](https://doc.qt.io/qt-6.11/qt.html)、[微软SetForegroundWindow](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setforegroundwindow)。
+
+
+## 节点点击与监听失效的最终决定
+
+游戏节点图标保留给游戏；点击节点名称或白色百分比打开助手小卡，交互文字显示手形鼠标。卡片右上角保留“×”。卡片关闭后立即移除其窗口热区，不留下透明遮挡。
+
+K轮两次受控移除都只摘除本助手自己的鼠标钩子。第一次随后切出前台，卡片因窗口失效撤下，不算卡外点击验收；第二次用户确认卡外点击不再关闭而“×”正常。用户明确选择保留“× / 助手Esc”作为关闭入口并记录该限制，不增加自动恢复。此试验模拟监听缺失，不代表复现Windows自身超时摘除。
+
+K轮安装10次、成功卸载10次，其中2次是受控提前卸载；后续清理同一已摘除句柄返回失败2次，另列，不伪装成全部调用成功。助手Esc关闭2次有Qt记录；用户确认游戏自己的Esc正常。没有全局键盘钩子。
+
+此前允许类型栏悬停期间监听属于许可范围，最终实现无需采用：用户点击自然获焦后，两处滚动使用Qt原生控件，小卡关闭时仍为0鼠标钩子。I轮用户确认两处滚轮正常、游戏不缩放；J轮用户确认归还焦点后队伍和藏品第一下即可打开。保留E/F/G失败轮次和来源。

@@ -82,9 +82,42 @@ class ControllerTests(unittest.TestCase):
     def test_only_hotspots_and_strip_take_input(self):
         self.qt.processEvents();layer=self.overlay.interaction;mask=layer.mask()
         self.assertFalse(mask.contains(QPoint(2,2)))
-        _,x,y=self.overlay.current['points'][0];self.assertTrue(mask.contains(QPoint(round(x),round(y))))
+        identity,x,y=self.overlay.current['points'][0];self.assertFalse(mask.contains(QPoint(round(x),round(y))))
+        self.assertTrue(mask.contains(self.overlay.current['label_rects'][identity].center()))
         self.assertTrue(self.overlay.surface.windowFlags()&Qt.WindowType.WindowTransparentForInput)
-        self.assertTrue(layer.windowFlags()&Qt.WindowType.WindowDoesNotAcceptFocus)
+        self.assertFalse(layer.windowFlags()&Qt.WindowType.WindowDoesNotAcceptFocus)
+        self.assertTrue(layer.testAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating))
+
+    def test_manually_activated_interaction_keeps_overlay_and_other_windows_withdraw_it(self):
+        self.snapshot.update(foreground_on_game=False,foreground_hwnd=int(self.overlay.interaction.winId()))
+        self.overlay.tick()
+        self.assertTrue(self.overlay.interaction.isVisible())
+        self.assertFalse(self.snapshot['foreground_on_game'])
+        self.overlay.open_node(self.overlay.current['points'][0][0])
+        self.snapshot['foreground_hwnd']=int(self.c.winId())
+        self.overlay.tick()
+        self.assertFalse(self.overlay.card.isVisible())
+        self.assertFalse(self.overlay.interaction.isVisible())
+        self.assertFalse(self.overlay.surface.isVisible())
+
+    def test_own_foreground_does_not_make_stale_reference_eligible(self):
+        self.snapshot.update(foreground_on_game=False,foreground_hwnd=int(self.overlay.interaction.winId()))
+        self.reference['captured_at']=69
+        self.overlay.tick()
+        self.assertFalse(self.overlay.interaction.isVisible())
+
+    def test_pointer_return_activates_only_bound_game_from_interaction(self):
+        self.snapshot.update(cursor_on_game=True,foreground_hwnd=int(self.overlay.interaction.winId()))
+        with patch('ctypes.windll.user32.SetForegroundWindow',return_value=1) as activate, \
+                patch('rouge.player_game_map.QApplication.platformName',return_value='windows'):
+            self.overlay.return_game_focus()
+            self.assertEqual(activate.call_args.args[0].value,self.snapshot['key'][0])
+            activate.reset_mock()
+            self.snapshot['cursor_on_game']=False
+            self.overlay.return_game_focus()
+            self.snapshot.update(cursor_on_game=True,foreground_hwnd=int(self.c.winId()))
+            self.overlay.return_game_focus()
+            activate.assert_not_called()
 
     def test_card_on_click_and_every_surface_removed_on_rejection(self):
         identity=self.reference['observation']['map']['nodes'][0]['id'];self.overlay.open_node(identity);self.qt.processEvents()
@@ -97,12 +130,23 @@ class ControllerTests(unittest.TestCase):
         QTest.mouseClick(self.overlay.interaction,Qt.MouseButton.LeftButton,pos=rect.center());self.qt.processEvents()
         self.assertTrue(self.overlay.card.isVisible());self.assertEqual(self.overlay.card.binding[-1],node['id'])
 
-    def test_hover_keeps_card_and_retains_node_to_card_pointer_path(self):
+    def test_hover_keeps_card_and_node_icon_remains_click_through(self):
         identity=self.overlay.current['points'][0][0];self.overlay.open_node(identity);self.qt.processEvents()
         QTest.mouseMove(self.overlay.card,QPoint(8,8));self.qt.processEvents();self.assertTrue(self.overlay.card.isVisible())
         _,x,y=next(p for p in self.overlay.current['points']if p[0]==identity)
-        self.assertTrue(self.overlay.interaction.mask().contains(QPoint(round(x),round(y))))
-        self.assertTrue(self.overlay.interaction.mask().contains(self.overlay.interaction.bridge.center()))
+        self.assertFalse(self.overlay.interaction.mask().contains(QPoint(round(x),round(y))))
+        self.assertTrue(self.overlay.interaction.mask().contains(self.overlay.card.geometry().center()))
+
+    def test_close_button_releases_listener_and_removes_card_input_region_immediately(self):
+        identity=self.overlay.current['points'][0][0]
+        self.overlay.open_node(identity);self.qt.processEvents()
+        QTest.mouseClick(self.overlay.card.close_button,Qt.MouseButton.LeftButton)
+        self.assertFalse(self.overlay.card.isVisible())
+        self.assertIsNone(self.overlay.mouse_listener)
+        from PySide6.QtGui import QRegion
+        expected=QRegion(self.overlay.interaction.strip.geometry())
+        for rect in self.overlay.current['label_rects'].values():expected|=QRegion(rect.adjusted(-4,-4,4,4))
+        self.assertEqual(self.overlay.interaction.mask(),expected)
 
     def test_card_refresh_does_not_collapse_rows_or_replace_unchanged_content(self):
         node=next(n for n in self.reference['observation']['map']['nodes']if not n['template_type'])

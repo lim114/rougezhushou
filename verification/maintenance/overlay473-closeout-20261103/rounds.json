@@ -1,5 +1,5 @@
 {
-  "snapshot_utc": "2026-11-04T04:35:39.201978+00:00",
+  "snapshot_utc": "2026-11-04T06:17:19.008535+00:00",
   "rounds": [
     {
       "run": "round2-closeout-a",
@@ -681,12 +681,14 @@
         }
       ],
       "source_overlay_sha256": "11663c38a3e032dae8818d664c4a05b75e0466301660ff5b2d4d3a8a2b790fa2",
-      "closed": false,
-      "observed_log_bytes": 258185,
+      "closed": true,
+      "observed_log_bytes": 2036644,
       "actions": {},
       "reasons": {
         "reference_or_companion_unavailable": 12,
-        "eligible": 193
+        "eligible": 1583,
+        "anchor_pixels_changed": 5,
+        "window_not_eligible": 32
       },
       "hook_install_calls": 0,
       "successful_hook_installs": 0,
@@ -711,6 +713,396 @@
           "t_ms": 17693.213,
           "elapsed_ms": 18681.755199999316,
           "foreground_to_interactive_ms": 14434.290600009263
+        }
+      ],
+      "withdrawal_ms": {
+        "n": 4,
+        "median": 92.34419999847887,
+        "p95": 116.32601999808685,
+        "max": 119.26439999660943
+      },
+      "withdrawal_poll_uncertainty_ms": {
+        "n": 4,
+        "median": 109.46980000153417,
+        "p95": 121.43113499478204,
+        "max": 121.81349999445956
+      },
+      "native_wheel_messages": 0,
+      "qt_wheel_messages": 0
+    },
+    {
+      "run": "round2-click-focus-i",
+      "started_utc": "2026-11-04T05:09:32.285991+00:00",
+      "source_freezes": [
+        {
+          "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+          "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+          "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+          "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+          "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+          "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+          "rouge/player_game_map.py": "0490a7acb281ca1b8c06a5e87aa6877f692b57f9e2c36e096ecca33b9178ccf8",
+          "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+          "rouge/player_reference_links.py": "d977d590b9360367a01f01dfaf67ed491ab7cd025fe95cf38ba707f5731dc0c6",
+          "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738",
+          "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+          "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+          "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+          "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0"
+        }
+      ],
+      "source_overlay_sha256": "0490a7acb281ca1b8c06a5e87aa6877f692b57f9e2c36e096ecca33b9178ccf8",
+      "closed": true,
+      "observed_log_bytes": 1030423,
+      "actions": {
+        "type_selected": 20,
+        "percentages_painted": 20,
+        "node_pressed": 24,
+        "mouse_listener_started": 4,
+        "card_shown": 23,
+        "card_painted": 19,
+        "source_expanded": 1,
+        "card_dismissed": 4,
+        "mouse_listener_stopped": 4
+      },
+      "reasons": {
+        "reference_or_companion_unavailable": 11,
+        "eligible": 668,
+        "window_not_eligible": 88,
+        "anchor_pixels_changed": 21,
+        "page_or_map_unmatched": 7
+      },
+      "hook_install_calls": 4,
+      "successful_hook_installs": 4,
+      "hook_uninstall_calls": 4,
+      "successful_hook_uninstalls": 4,
+      "failed_hook_uninstalls": 0,
+      "controlled_removals": 0,
+      "stop_reasons": {
+        "outside_click": 1,
+        "anchor_pixels_changed": 3
+      },
+      "mouse_callback_samples": 51,
+      "busy_mouse_samples": 42,
+      "busy_os_to_python_ms": {
+        "n": 42,
+        "median": 0.0,
+        "p95": 16.0,
+        "max": 63.0
+      },
+      "callback_body_ms": {
+        "n": 51,
+        "median": 0.08250000246334821,
+        "p95": 47.16690000350354,
+        "max": 63.176199997542426
+      },
+      "screenshot_records": 49,
+      "ready_events": 1,
+      "numeric_latency_ms": {
+        "n": 14,
+        "median": 64.0577999947709,
+        "p95": 212.02583000194863,
+        "max": 214.61009999620728
+      },
+      "card_latency_ms": {
+        "n": 19,
+        "median": 63.505400001304224,
+        "p95": 221.54825999168665,
+        "max": 283.3787999988999
+      },
+      "web_open_events": 0,
+      "same_frame_content_bound_samples": 9,
+      "first_interactive": [
+        {
+          "event": "first_interactive",
+          "t_ms": 16964.397,
+          "elapsed_ms": 17681.389600009425,
+          "foreground_to_interactive_ms": 14085.544999994454
+        }
+      ],
+      "withdrawal_ms": {
+        "n": 15,
+        "median": 219.84629999496974,
+        "p95": 462.19712000165583,
+        "max": 560.5753999989247
+      },
+      "withdrawal_poll_uncertainty_ms": {
+        "n": 15,
+        "median": 109.93900000175927,
+        "p95": 387.9346800051278,
+        "max": 560.5753999989247
+      },
+      "native_wheel_messages": 0,
+      "qt_wheel_messages": 508
+    },
+    {
+      "run": "round2-focus-return-j",
+      "started_utc": "2026-11-04T05:28:06.581309+00:00",
+      "source_freezes": [
+        {
+          "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+          "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+          "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+          "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+          "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+          "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+          "rouge/player_game_map.py": "b683c3e360cd2f75046ed9300c1bd9673a5eafd598a927a91f95f55a73a1f426",
+          "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+          "rouge/player_reference_links.py": "d977d590b9360367a01f01dfaf67ed491ab7cd025fe95cf38ba707f5731dc0c6",
+          "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738",
+          "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+          "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+          "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+          "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0"
+        }
+      ],
+      "source_overlay_sha256": "b683c3e360cd2f75046ed9300c1bd9673a5eafd598a927a91f95f55a73a1f426",
+      "closed": true,
+      "observed_log_bytes": 526243,
+      "actions": {
+        "type_selected": 5,
+        "percentages_painted": 5,
+        "node_pressed": 11,
+        "mouse_listener_started": 7,
+        "card_shown": 11,
+        "card_painted": 11,
+        "game_focus_returned": 12,
+        "card_dismissed": 7,
+        "mouse_listener_stopped": 7
+      },
+      "reasons": {
+        "reference_or_companion_unavailable": 8,
+        "eligible": 337,
+        "window_not_eligible": 76,
+        "anchor_pixels_changed": 4
+      },
+      "hook_install_calls": 7,
+      "successful_hook_installs": 7,
+      "hook_uninstall_calls": 7,
+      "successful_hook_uninstalls": 7,
+      "failed_hook_uninstalls": 0,
+      "controlled_removals": 0,
+      "stop_reasons": {
+        "node_scope_changed": 4,
+        "anchor_pixels_changed": 2,
+        "window_not_eligible": 1
+      },
+      "mouse_callback_samples": 16,
+      "busy_mouse_samples": 8,
+      "busy_os_to_python_ms": {
+        "n": 8,
+        "median": 7.5,
+        "p95": 25.749999999999993,
+        "max": 31.0
+      },
+      "callback_body_ms": {
+        "n": 16,
+        "median": 0.12235000758664683,
+        "p95": 19.76989999093348,
+        "max": 31.40539999003522
+      },
+      "screenshot_records": 35,
+      "ready_events": 1,
+      "numeric_latency_ms": {
+        "n": 2,
+        "median": 2718.078500001866,
+        "p95": 5149.704799999745,
+        "max": 5419.885499999509
+      },
+      "card_latency_ms": {
+        "n": 11,
+        "median": 119.4614999985788,
+        "p95": 949.8636499993154,
+        "max": 1672.7850000024773
+      },
+      "web_open_events": 0,
+      "same_frame_content_bound_samples": 0,
+      "first_interactive": [
+        {
+          "event": "first_interactive",
+          "t_ms": 13533.602,
+          "elapsed_ms": 14324.086900000111,
+          "foreground_to_interactive_ms": 10133.271600003354
+        }
+      ],
+      "withdrawal_ms": {
+        "n": 7,
+        "median": 309.0878000075463,
+        "p95": 1349.8714900066252,
+        "max": 1722.5959000061266
+      },
+      "withdrawal_poll_uncertainty_ms": {
+        "n": 7,
+        "median": 103.46089999075048,
+        "p95": 759.2463500055596,
+        "max": 939.5318000024417
+      },
+      "native_wheel_messages": 0,
+      "qt_wheel_messages": 106
+    },
+    {
+      "run": "round2-node-input-k",
+      "started_utc": "2026-11-04T05:37:50.737863+00:00",
+      "source_freezes": [
+        {
+          "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+          "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+          "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+          "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+          "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+          "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+          "rouge/player_game_map.py": "4509946d22c943b680f6300c4fc1a54a5ffa66753c3bbd87fe672eb6c05b014a",
+          "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+          "rouge/player_reference_links.py": "d977d590b9360367a01f01dfaf67ed491ab7cd025fe95cf38ba707f5731dc0c6",
+          "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738",
+          "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+          "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+          "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+          "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0"
+        }
+      ],
+      "source_overlay_sha256": "4509946d22c943b680f6300c4fc1a54a5ffa66753c3bbd87fe672eb6c05b014a",
+      "closed": true,
+      "observed_log_bytes": 1353866,
+      "actions": {
+        "type_selected": 21,
+        "percentages_painted": 21,
+        "game_focus_returned": 20,
+        "node_pressed": 12,
+        "mouse_listener_started": 10,
+        "card_shown": 10,
+        "card_painted": 10,
+        "card_dismissed": 10,
+        "mouse_listener_stopped": 10
+      },
+      "reasons": {
+        "reference_or_companion_unavailable": 9,
+        "eligible": 791,
+        "window_not_eligible": 296,
+        "anchor_pixels_changed": 45,
+        "current_frame_expired": 1,
+        "page_or_map_unmatched": 7
+      },
+      "hook_install_calls": 10,
+      "successful_hook_installs": 10,
+      "hook_uninstall_calls": 12,
+      "successful_hook_uninstalls": 10,
+      "failed_hook_uninstalls": 2,
+      "controlled_removals": 2,
+      "stop_reasons": {
+        "close_button": 5,
+        "window_not_eligible": 1,
+        "node_scope_changed": 1,
+        "escape": 2,
+        "anchor_pixels_changed": 1
+      },
+      "mouse_callback_samples": 9,
+      "busy_mouse_samples": 6,
+      "busy_os_to_python_ms": {
+        "n": 6,
+        "median": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "callback_body_ms": {
+        "n": 9,
+        "median": 0.0543000060133636,
+        "p95": 16.591100004734464,
+        "max": 27.54330000607297
+      },
+      "screenshot_records": 109,
+      "ready_events": 1,
+      "numeric_latency_ms": {
+        "n": 12,
+        "median": 85.40049999282928,
+        "p95": 759.4830850073766,
+        "max": 1540.7159000023967
+      },
+      "card_latency_ms": {
+        "n": 10,
+        "median": 89.3104999922798,
+        "p95": 1081.2487650015087,
+        "max": 1687.4700000043958
+      },
+      "web_open_events": 0,
+      "same_frame_content_bound_samples": 0,
+      "first_interactive": [
+        {
+          "event": "first_interactive",
+          "t_ms": 13759.177,
+          "elapsed_ms": 14771.807099998114,
+          "foreground_to_interactive_ms": 10305.29679999745
+        }
+      ],
+      "withdrawal_ms": {
+        "n": 23,
+        "median": 195.55799999216106,
+        "p95": 1541.7781700074552,
+        "max": 1818.926799998735
+      },
+      "withdrawal_poll_uncertainty_ms": {
+        "n": 23,
+        "median": 112.60989999573212,
+        "p95": 886.549170003854,
+        "max": 996.5987000032328
+      },
+      "native_wheel_messages": 0,
+      "qt_wheel_messages": 0
+    },
+    {
+      "run": "round2-web-size-l",
+      "started_utc": "2026-11-04T06:04:21.879420+00:00",
+      "source_freezes": [
+        {
+          "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3",
+          "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+          "rouge/software_pointer.py": "35cbe8fc58e9752d64064fc395d95fcbe35316d897eead6767ab259b226d1d28",
+          "rouge/capture.py": "5ebb5d5a893738ce36140864c0684884fceb9e26cea884296a99992f19e820d8",
+          "rouge/frame_buffer.py": "018d90d9e299ca271bfc5b36699ba1e4998313f5f6bd82f364734a590b9de6df",
+          "rouge/app.py": "5faecb98645ca4eddd54941063d4c9629276ba3c3f0229f856227630e78fa7da",
+          "rouge/player_game_map.py": "a48220756bca7d8f087c0c868b388f00b91e2b51eadfa76c51d7c5843f8ab4e1",
+          "rouge/player_map.py": "79f9ad7d7857a5ee3c149232dfca0874ef4c19df6d2df8ddc959cae53955c917",
+          "rouge/player_reference_links.py": "813893dd6c41b582c243cf83e5fe5938d5dac1ac651721bdaddd429297adf154",
+          "rouge/tomimi_view.py": "a7c118c731d9ef35b802e4e3ec4c41cd540b861e144bc1ac61f9da081e4d0738",
+          "rouge/public_node_statistics.py": "10fadb319e148de6353de7149112f288673c3c64d980be663383ee62b6d540fb",
+          "rouge/player_compact.py": "515d4b191959afddfa86f9e7a97cdd4356962ee7f7291ec44fe206893289f853",
+          "rouge/player_reference_window.py": "91abab8d89c7a6c6b74a37903a5a5482e537c590d6040c11214be2d60ba6c159",
+          "rouge/player_game_binding.py": "17dba71d5174a7ca12518a120f4a13cfc081b76f7327d4adb035c9cb779237e0"
+        }
+      ],
+      "source_overlay_sha256": "a48220756bca7d8f087c0c868b388f00b91e2b51eadfa76c51d7c5843f8ab4e1",
+      "closed": false,
+      "observed_log_bytes": 518231,
+      "actions": {},
+      "reasons": {
+        "reference_or_companion_unavailable": 13,
+        "page_or_map_unmatched": 69,
+        "window_not_eligible": 272,
+        "eligible": 191
+      },
+      "hook_install_calls": 0,
+      "successful_hook_installs": 0,
+      "hook_uninstall_calls": 0,
+      "successful_hook_uninstalls": 0,
+      "failed_hook_uninstalls": 0,
+      "controlled_removals": 0,
+      "stop_reasons": {},
+      "mouse_callback_samples": 0,
+      "busy_mouse_samples": 0,
+      "busy_os_to_python_ms": null,
+      "callback_body_ms": null,
+      "screenshot_records": 3,
+      "ready_events": 1,
+      "numeric_latency_ms": null,
+      "card_latency_ms": null,
+      "web_open_events": 0,
+      "same_frame_content_bound_samples": 0,
+      "first_interactive": [
+        {
+          "event": "first_interactive",
+          "t_ms": 501957.587,
+          "elapsed_ms": 502697.8239000018,
+          "foreground_to_interactive_ms": 498130.7048000017
         }
       ],
       "withdrawal_ms": null,
