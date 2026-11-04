@@ -1,3 +1,7 @@
+## 当前断点：笔记范围入口整改完成
+
+D24—D26均获确认并落实，32项原生定向通过，测试窗口已更新并核对可见、响应；云端回执verification/maintenance/code-constraints-note-scope-20261104/summary.json。三条同步：输入捕获收窄、完整身份一次核对、单次来源包装删除。继续其它未审路径，不重复送审D24—D26。覆盖426/77/54/1不变，不增加功能节；旧基线与启动工具未回传情况已记录，未计全程序完成。
+
 ## 当前断点：笔记范围入口回顾，等待D24—D26决定
 
 已复现重复来源解析和内部异常被吞掉；产品源码未改。三项逐项询问待答复，详见docs/decisions/2026-11-04-existing-defense-review.md末尾。拟用测试在本机.local/code-constraints-review-14/pending_scope_cases.py；原基线baseline.log保留，既有3项ScopeTests通过。当前回执verification/maintenance/code-constraints-note-scope-pending-20261104/summary.json。确认后先落实授权范围，再跑定向验证、更新测试窗口和索引。覆盖426/77/54/1不变，不新增功能节。

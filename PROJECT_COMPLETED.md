@@ -1,3 +1,7 @@
+## 维护：笔记范围入口校验与单次辅助整改（2026-11-04）
+
+D24—D26按授权完成，32项原生定向通过；来源解析一次，内部异常不再被当作坏输入，单次source包装删除。仍为部分路径整改。[回执与进度](verification/maintenance/code-constraints-note-scope-20261104/README.md)。
+
 ## 维护：首次窗口输入复用与主题模块审查（2026-11-04）
 
 D22/D23落实，网页标记复用、无用参数删除；21项最终原生定向通过。player_theme.py整模块三条规则审查完成，其他窗框/资料窗口仍部分路径。[回执及进度](verification/maintenance/code-constraints-window-theme-20261104/README.md)。

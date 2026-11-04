@@ -4,28 +4,26 @@ from .player_notes import content_key
 from .current_stage_directory import FLOORS
 
 
-def source(rows):
-    return json.loads(rows[0]['context']['variant_id'])[0] if rows else None
-
-
 def scope(rows, floor=None, node=None):
     if not rows:return None
     title='黑流树海'
     if floor is not None:title+=' · '+dict(FLOORS)[floor]
     if node is not None:title+=' · '+node
-    identity=json.dumps([source(rows),floor,node],ensure_ascii=True,separators=(',',':'))
+    version=json.loads(rows[0]['context']['variant_id'])[0]
+    identity=json.dumps([version,floor,node],ensure_ascii=True,separators=(',',':'))
     return {'kind':'note-scope','title':title,'variant_id':identity}
 
 
 def scope_parts(content, rows):
     if not rows or content.get('kind')!='note-scope':return None
     try:
-        version,floor,node=json.loads(content['variant_id'])
-        if version!=source(rows)or floor not in dict(FLOORS):return None
-        if node is not None and node not in {n for r in rows for n in r['nodes']}:return None
-        if scope(rows,floor,node)!=content:return None
-        return floor,node
+        _,floor,node=json.loads(content['variant_id'])
     except(ValueError,TypeError,KeyError):return None
+    if floor is not None and not isinstance(floor,str):return None
+    if floor not in dict(FLOORS):return None
+    if node is not None and (not isinstance(node,str)or node not in {n for r in rows for n in r['nodes']}):return None
+    if scope(rows,floor,node)!=content:return None
+    return floor,node
 
 
 def parents(content, rows, floor=None, node=None):

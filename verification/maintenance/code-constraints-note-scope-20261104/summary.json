@@ -1,0 +1,58 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记范围入口校验与单次辅助整改",
+  "base_commit": "0e15b4deae9e1915d1feb66aa3002a4be64a37da",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "resolved_decisions": [
+    "D24",
+    "D25",
+    "D26"
+  ],
+  "pending_decisions": [],
+  "rules_addressed": {
+    "rule1": "Input-only catch, explicit malformed-field rejection and one complete identity comparison.",
+    "rule2": "Inline single-use source expression and remove duplicate empty-rows guard.",
+    "rule3": "All three changes explicitly approved before implementation."
+  },
+  "source_sha256": {
+    "rouge/player_note_scopes.py": "1beaff1d5fac13a28911a6fe4d6d4736f0b2c20860b038d447bcf41edbbd3efb",
+    "tests/test_note_scope_entry_review.py": "ba9b3f07f2612084c91582864d7d02f546bed244cf740475dc0e4f5811f5845a"
+  },
+  "validation": {
+    "rounds": "rounds.json",
+    "final_native": {
+      "run": 32,
+      "passed": 32
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "normal_project_launch": true,
+      "stderr_empty": true,
+      "single_response_samples_ms": [
+        464.46,
+        654.77
+      ],
+      "performance_acceptance": false,
+      "screenshot_verified": true,
+      "launch_tool_returned": false,
+      "fallback_process_and_native_window_verification": true
+    }
+  },
+  "coverage": {
+    "structural_only": 426,
+    "selected_paths_only": 54,
+    "exception_equivalence_only": 77,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Other module paths need separate three-rule review.",
+    "No new whole-module or real-game acceptance."
+  ],
+  "progress_report": "PROGRESS.md"
+}
