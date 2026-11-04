@@ -1,3 +1,7 @@
+## 当前断点：笔记范围入口回顾，等待D24—D26决定
+
+已复现重复来源解析和内部异常被吞掉；产品源码未改。三项逐项询问待答复，详见docs/decisions/2026-11-04-existing-defense-review.md末尾。拟用测试在本机.local/code-constraints-review-14/pending_scope_cases.py；原基线baseline.log保留，既有3项ScopeTests通过。当前回执verification/maintenance/code-constraints-note-scope-pending-20261104/summary.json。确认后先落实授权范围，再跑定向验证、更新测试窗口和索引。覆盖426/77/54/1不变，不新增功能节。
+
 ## 当前断点：首次窗口输入复用与主题模块审查完成
 
 D22仅首次尺寸计算读取可选绑定，D23首次默认主题按授权保留；网页标记读取一次，无用theme参数已删除。21项最终原生定向通过，离屏/原生旧尺寸失败已原源码复现、隔离旧测试混合条件后通过。回执verification/maintenance/code-constraints-window-theme-20261104/summary.json；进度图见同目录PROGRESS.md。player_theme整模块三条审查完成，其他两模块部分路径：426/77/54/1，共558。不扩展到上游代码或全程序实机准确性。继续其他未审路径，D22/D23不重复送审。
