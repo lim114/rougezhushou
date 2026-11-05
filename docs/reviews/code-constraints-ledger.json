@@ -1,0 +1,202 @@
+{
+  "goal": "Eliminate unapproved ordinary duplication/over-extraction across current code; collect low-probability defenses for unified user review.",
+  "complete": false,
+  "full_validation_enabled": false,
+  "subagents_authorized": false,
+  "scope": {
+    "runtime": "rouge Python and bridge CJS",
+    "other_current_code": "tests, maintenance/build scripts and reachable vendored code remain in scope",
+    "frozen_evidence": "Do not rewrite historical verification/research source snapshots; classify references and preserve original bytes.",
+    "tracked_code_file_count_at_start": 11367,
+    "count_is_not_active_code_count": true
+  },
+  "reviewed_entries": [
+    {
+      "file": "rouge/__init__.py",
+      "sha256": "3f046774f9500f00b34d7ff71cd765410aeebcc4e7df7a665cc384d9c68e12c8",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Only a package docstring; no executable validation or wrapper."
+    },
+    {
+      "file": "rouge/bridge/__init__.py",
+      "sha256": "0071601dded3186c2e819116057b0f3635f0676b5bb9c7e151f8002a06d22a01",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Only an asset-package docstring."
+    },
+    {
+      "file": "rouge/current_guest_crystals_view.py",
+      "sha256": "fdd65ea94267dbc60f520da2f5233e049cad741727a2e9f62e95ec4c1b7072eb",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Declarative model/title/panel-type adapter consumed by GuestMechanismPanel/Dialog."
+    },
+    {
+      "file": "rouge/current_guest_material_view.py",
+      "sha256": "9093170d7d620d4d2d677eb34c14b99a78af9a547e32f840e47e34cbedbc3d7c",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Declarative model/title/panel-type adapter consumed by shared reader."
+    },
+    {
+      "file": "rouge/current_guest_knights_view.py",
+      "sha256": "509c77059bf549d8a2598c818143b140ca0c31fc4414f5dcc8acd95ab0195aec",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Shared-reader adapter; _technical_extra is a polymorphic extension called with a selected row or None by _topic_changed."
+    },
+    {
+      "file": "rouge/attribute_limits.py",
+      "sha256": "94e9ee16e4fe978a12d8e4c16f45ee3612d2ae0a48f9027dfe1d46b47ce5c29a",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Shared numerical operations used by damage/operator/relic consumers; optional output keys represent distinct result fields, not duplicate entry guards. Mechanism values unchanged."
+    },
+    {
+      "file": "rouge/current_lone_dog_view.py",
+      "sha256": "0fed54b123e2164b6e144b547b548c83357a245ab0c550dba6a72eca0b3c356c",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Optional choice selection is normal reader input; constructors and closeEvent are Qt/base-class entry points."
+    },
+    {
+      "file": "rouge/mechanism_reader_header.py",
+      "sha256": "e093ead7069afc43061f514b2d7901062ffa2a6a03cc72dcf54981b426f8850a",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Constructor lays out supplied controls; no input guards, catches, or single-use wrappers."
+    },
+    {
+      "file": "rouge/susuro_healing_view.py",
+      "sha256": "b9c44b4e5f5211c44e64089b6a95277159699aab78dcfe7a8233f0bc5da88e90",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "None means unspecified ratio; Qt value/toggle/setValue callbacks share value(), no speculative recovery."
+    },
+    {
+      "file": "rouge/current_rest_travel_view.py",
+      "sha256": "14c8cb29586765eaf070010fd6d6d089e521cb9e42de607c7f991e67305a1dc6",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Optional target normalized once; choice read once for selection. Other methods are model/Qt lifecycle overrides."
+    },
+    {
+      "file": "rouge/player_enemy_search.py",
+      "sha256": "ef9604cb7c275eaff52a47b320d70f60c285be34c211393d1eb732e6b99101b6",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D38",
+      "trigger": "matches：非字典敌人/非字符串查询返回False；资料片段非字符串被忽略",
+      "impact": "坏数据静默当作不匹配，可能隐藏内部类型错误",
+      "recommendation": "核对当前读取入口契约后删除内部坏类型兜底，或保留并注明过滤范围"
+    },
+    {
+      "file": "rouge/credentials.py",
+      "sha256": "0de6427a228cd3c74d21fe8d9a41e181c0a1d5a574651cd3d85ba067d289cfd6",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D39",
+      "trigger": "read_key捕获所有pywintypes.error并返回空密钥",
+      "impact": "系统访问失败与没有保存密钥混在一起",
+      "recommendation": "建议仅已确认的“未找到凭据”返回空，其它系统错误上报；具体系统错误码待核对"
+    },
+    {
+      "file": "rouge/player_file_messages.py",
+      "sha256": "9f9324f141e03d8d0aedb54813b8b2eb8c07e8cfddc8ca9e0a2e794b45a034a1",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D40",
+      "trigger": "file_issue未知非中文错误使用“原件和当前编辑均保留”通用提示",
+      "impact": "该函数本身无法证明调用者是否已经写入",
+      "recommendation": "建议保留中文提示但改为不声称保存状态的文案；替代为原样显示错误"
+    },
+    {
+      "file": "rouge/player_source_map.py",
+      "sha256": "44652a7eb8d621b630b9e20ae4fa17f44cd97f67ab5438f1930dad43867bd08e",
+      "rule1": "followup_required",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D41",
+      "trigger": "targets对缺索引/池/坏行返回空；companion通过hasattr/getattr查找可选宿主",
+      "impact": "避免在没有对应资料或宿主时导航，但可能静默吞掉内部类型/属性契约破坏",
+      "recommendation": "需分别保留正常缺资料状态、核准可选宿主协议后删除多余坏结构兜底"
+    },
+    {
+      "file": "rouge/observed_map_symbols.py",
+      "sha256": "3743a427326d74548dd963045e284131092292141a13a6dcfc33c6774a439b98",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D42",
+      "trigger": "mapping_for文件读取失败、摘要/版本/关卡对照不符返回None",
+      "impact": "避免错误地图标记；公开数据损坏或版本漂移时不显示补充点位",
+      "recommendation": "建议保留来源绑定；不能仅因字节摘要存在就删版本检查，代码版本也可能变化"
+    },
+    {
+      "file": "rouge/manual_scenario.py",
+      "sha256": "1a15f179950e1cb0856e303d06fc02562b825f4ca730fd41489456b3d9c5f603",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D43",
+      "trigger": "parse_preview_object拒绝重复JSON字段和非有限数值",
+      "impact": "避免编辑器接受歧义字段/无限数值；这些输入不能用于临时计算",
+      "recommendation": "建议保留；普通JSON语法/对象入口与框架解析回调不当作单次包装删除"
+    },
+    {
+      "file": "rouge/tomimi_reference.py",
+      "sha256": "e2c5fa5217ea70fd058a9c831d4367b850edda31d052084314da9510411549d2",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D44",
+      "trigger": "target缺资料/无对应level或名称不符返回None",
+      "impact": "避免跳错关卡；不同版本无法对应时网页入口不可用",
+      "recommendation": "建议保留身份对照，替代为允许仅按level匹配或暴露缺项"
+    },
+    {
+      "file": "rouge/node_statistics_source.py",
+      "sha256": "dfff2dd55e2ff044c62c3bc19bcf9e54036d17043f5f47a0bcf5ec060165164f",
+      "rule1": "followup_required",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D45",
+      "trigger": "构造捕获OSError/ValueError/KeyError/TypeError后静默使用空索引",
+      "impact": "缓存/默认数据失败不阻止启动，也可能吞掉索引内部缺陷",
+      "recommendation": "建议把捕获收窄到读取/输入解析，内部构造缺陷暴露；model.load与FrequencyIndex重复验证另作普通整改"
+    },
+    {
+      "file": "rouge/reference_image.py",
+      "sha256": "96fe588622cd6da8b0dc1856616dace8dddf59f657d56de2dcf8225c57e6ec1b",
+      "rule1": "clear_except_pending_defense",
+      "rule2": "reviewed_no_single_use_wrapper_found",
+      "rule3": "pending_user_review",
+      "decision": "D46",
+      "trigger": "set_data缺图/PNG解析失败显示替代文字，_fit在无图时跳过",
+      "impact": "图片缺失时保持可读界面；不能把解码成功路径的检查与空窗口resize回调机械合并",
+      "recommendation": "建议保留缺图/解码失败展示；无图resize是正常生命周期状态"
+    },
+    {
+      "file": "rouge/condition_inputs.py",
+      "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808",
+      "rule1": "followup_required",
+      "rule2": "shared_helpers_and_decorator_callbacks_confirmed",
+      "rule3": "not_certified",
+      "evidence": "Reads share a ContextVar with delayed validation across damage/estimate/operator/timing. Need call-chain review before deciding repeated checks are removable."
+    }
+  ]
+}

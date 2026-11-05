@@ -1,3 +1,7 @@
+## 维护：首组20模块回顾与休整旅行入口精简（2026-11-05）
+
+新增10个本模块三条代码审查完成；可选定位参数入口处理一次，3项定向通过。未授权防御移入统一清单等待审核，目标仍未完成。[回执](verification/maintenance/code-constraints-runtime-wave1-20261105/README.md)。
+
 ## 维护：目录空搜索精简与三处授权落实（2026-11-05）
 
 D35—D37按用户选择保留并验证；空查询不再处理每条正文的搜索转换，16项定向通过，测试窗口更新。[回执与进度](verification/maintenance/code-constraints-note-directory-contracts-20261105/README.md)。

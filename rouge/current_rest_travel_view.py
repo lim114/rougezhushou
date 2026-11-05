@@ -6,11 +6,13 @@ from . import current_rest_travel as model
 
 class CurrentRestTravelPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id,target=None,parent=None):
-        self.source_request=target.get('source_request')if target else None
-        super().__init__(event_id,target.get('scene_id')if target else None,parent,reference_model=model)
-        if target and target.get('choice_id'):
+        target=target or{}
+        self.source_request=target.get('source_request')
+        super().__init__(event_id,target.get('scene_id'),parent,reference_model=model)
+        choice_id=target.get('choice_id')
+        if choice_id:
             for i in range(self.choices.count()):
-                if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==target['choice_id']:self.choices.setCurrentRow(i);break
+                if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
     def _fresh_reference(self):return model.reference(self.event_id,self.source_request)
     def clear_reference(self):self.source_request=None;super().clear_reference()
 

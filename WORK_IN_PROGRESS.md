@@ -1,3 +1,7 @@
+## 当前断点：按主动目标推进全仓库审查，首组20模块（2026-11-05）
+
+用户要求持续推进至仅剩待其审核的低概率防御；用户允许分批交付；批次结束保留断点，不把批次完成等同全程序完成。9组待审统一在docs/reviews/pending-defenses.md，逐规则账本docs/reviews/code-constraints-ledger.json。已读20模块，新增10个本模块三条审查完成；休整旅行入口已精简，3项定向通过。覆盖406/77/63/12；回执verification/maintenance/code-constraints-runtime-wave1-20261105/summary.json。下一步继续未读运行模块，并处理condition_inputs/统计源重复验证的调用链；不要将研究/验收冻结副本当当前源码改写，不恢复全量测试，不启动子代理。
+
 ## 当前断点：目录空搜索精简与D35—D37落实（2026-11-05）
 
 D35文件/父目录链接拒绝、D36旧标签格式与身份、D37目录类型错误均已明确批准保留，对应函数AST不变。空查询跳过正文拼接与转换，16项定向通过；测试窗口已更新可见响应。回执verification/maintenance/code-constraints-note-directory-contracts-20261105/summary.json，覆盖425/77/54/2不变。继续目录发布/覆盖及其它未审路径，不重复询问D01—D37；真实符号链接权限限制仍保留。
