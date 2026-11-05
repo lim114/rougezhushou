@@ -76,7 +76,7 @@ class MainCaller283(unittest.TestCase):
         scenario = {'operator': 'kaltsit', 'skill': 2, 'relic_ids': ['rogue_6_relic_legacy_90']}
         main = damage.calculate_damage(scenario)
         before = deepcopy(main)
-        with patch.object(calibration, 'calculate_damage', return_value=main) as calculate, \
+        with patch.object(calibration, '_calculate_prepared', return_value=main) as calculate, \
              patch.object(native, 'panel_native_finalization', side_effect=AssertionError('calibration cannot recompute native')):
             panel = calibration.panel_layers(scenario)
         self.assertEqual(calculate.call_count, 1)

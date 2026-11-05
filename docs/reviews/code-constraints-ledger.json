@@ -909,21 +909,21 @@
     },
     {
       "file": "rouge/calibration.py",
-      "sha256": "e12944f2ee5a84abc8bba9cda6f51f94991be936625dedb29dba8a751001a8a0",
-      "rule1": "selected_preparation_default_duplicates_removed",
-      "rule2": "no_arbitrary_single_use_wrapper_in_reviewed_paths",
-      "rule3": "pending_remainder_D104_shield",
+      "sha256": "b848f4f2a3f5b4f73993170fdbbb7bff628a45759c4733d00452aa6f78a14e70",
+      "rule1": "selected_cultivation_and_rune_repeated_work_removed",
+      "rule2": "shared_term_helper_has_multiple_uses_no_new_one_use_wrapper",
+      "rule3": "existing_raise_try_nodes_unchanged_pending_remaining_review",
       "full_module_review_complete": false,
-      "evidence": "Only _scenario/panel_layers paths reviewed: default cultivation level resolved only when missing. panel_layers prepares once and evaluates a deepcopy of that preparation through shared _calculate_prepared; preserves original rune/display snapshots. _cultivated remains a distinct pre-rune layer; other calibration functions and cross-layer attribute lookup reuse still require review. No defenses removed."
+      "evidence": "panel_layers reuses its already resolved cultivated attributes in _prepare_damage. Rune preparation copies the dictionary before applying changes; cultivation and rune display layers remain independent. Other paths remain partial review."
     },
     {
       "file": "rouge/damage.py",
-      "sha256": "e0680947156e8310fb2129581c81888e963fa7a1f070e9827d8fa9057516313b",
-      "rule1": "selected_preparation_default_duplicates_removed",
-      "rule2": "no_arbitrary_single_use_wrapper_in_reviewed_paths",
-      "rule3": "pending_remainder_D104_shield",
+      "sha256": "7faeeb8f06efadc5d7bca98a4a376cec6638b793750d1699e82cc1b5ebc0ad21",
+      "rule1": "selected_cultivation_and_rune_repeated_work_removed",
+      "rule2": "shared_term_helper_has_multiple_uses_no_new_one_use_wrapper",
+      "rule3": "existing_raise_try_nodes_unchanged_pending_remaining_review",
       "full_module_review_complete": false,
-      "evidence": "calculate_damage retains the public input preparation boundary and delegates to _calculate_prepared. The latter is shared by public calculation and calibration (two actual callers), not a single-use wrapper. Envelope body after preparation AST identical; all other damage functions unchanged. Phase copies preserve alias/isolation behavior, verified by existing unknown-clock synthetic fixture. Whole damage module not certified."
+      "evidence": "_prepare_damage accepts trusted cultivated_attributes from calibration; ordinary calculate_damage still resolves cultivation at its existing entry. No validation, raise or catch removed. This explicit prepared-input mode is not error recovery. Whole damage module remains under review."
     },
     {
       "file": "rouge/estimate.py",
@@ -942,6 +942,15 @@
       "rule3": "pending_remainder_D104_shield",
       "full_module_review_complete": false,
       "evidence": "Entire finisher read. timing default now lazy, phase unbound/shared-clock flags unchanged. ordinary is shared across four fields, no arbitrary wrapper. Scope checks select mechanist S2 and declared damage; unknown window subtotal becomes0 in a separate existing fallback, D104 recorded and unchanged. No full certification while D104 pending."
+    },
+    {
+      "file": "rouge/relic_attributes.py",
+      "sha256": "1bf295d226374d6713614a4ba9f5850ce33b5bc6281378d18f1864c17f0dc79d",
+      "rule1": "selected_cultivation_and_rune_repeated_work_removed",
+      "rule2": "shared_term_helper_has_multiple_uses_no_new_one_use_wrapper",
+      "rule3": "existing_raise_try_nodes_unchanged_pending_remaining_review",
+      "full_module_review_complete": false,
+      "evidence": "apply_attribute_runes classifies effects once into field groups, preserving field/effect order and numeric conversions; shared term function/import constructed once per invocation rather than per field. prepare_attribute_runes partitions ordinary effects and runes once, preserving token-only exclusion and object identity. Preview and actual application still repeat work and remain for next batch. No whole-module certification."
     }
   ]
 }

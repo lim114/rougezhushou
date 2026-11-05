@@ -1,0 +1,170 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "培养属性复用与符文分类去重",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "d23b47c04f108c52fe33139bde64409974e5581d",
+  "source_sha256": {
+    "rouge/calibration.py": "b848f4f2a3f5b4f73993170fdbbb7bff628a45759c4733d00452aa6f78a14e70",
+    "rouge/damage.py": "7faeeb8f06efadc5d7bca98a4a376cec6638b793750d1699e82cc1b5ebc0ad21",
+    "rouge/relic_attributes.py": "1bf295d226374d6713614a4ba9f5850ce33b5bc6281378d18f1864c17f0dc79d"
+  },
+  "changed_sources": [
+    "rouge/calibration.py",
+    "rouge/damage.py",
+    "rouge/relic_attributes.py"
+  ],
+  "test_sha256": {
+    "tests/test_cultivation_input_review.py": "fcc6eb280bec07e503641e064b86e0d0a2dc201238d50f0720fc3688a8486382",
+    "tests/test_calibration_preparation_review.py": "4245fcbaded52efdd8e6cb619cc274b7f5efd8a5aec0909a3c305f59faed2bd8",
+    "tests/test_panel_native_main_283.py": "2cad33f60c0925b64af5e8e8fd2cacf61c059d81e2af0e937fa09e6116378078",
+    "tests/test_attack_speed_bounds_065.py": "4edd181021b24e0cd6c9a91cec10d8f2903016cb8a9bffdfde82cd863aadf907",
+    "tests/test_extended_calibration_285.py": "b441a32a1b10d0852e16afea28fb96309aaa43b20845e4e04388f3ab0b50aa04"
+  },
+  "full_module_reviews_added": 0,
+  "fully_reviewed_modules": [],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97",
+    "D98",
+    "D99",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 31,
+    "structural_only": 357,
+    "selected_paths_only": 95,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "inherited_fixture": {
+      "run": 1,
+      "failures": 1,
+      "elapsed_seconds": 0.106,
+      "cause": "old calculate_damage spy missed the shared executor introduced in previous batch; retargeted spy, preserved copy/source assertions"
+    },
+    "baseline": {
+      "run": 2,
+      "failures": 2,
+      "elapsed_seconds": 0.113,
+      "findings": [
+        "cultivation reads2 expected1",
+        "rune classifications12 expected2"
+      ]
+    },
+    "first_targeted": {
+      "run": 27,
+      "passed": 27,
+      "elapsed_seconds": 0.814,
+      "scope": "cultivation input, preparation, native panel caller class, attack speed bounds, one extended panel case"
+    },
+    "final_targeted": {
+      "run": 15,
+      "passed": 15,
+      "elapsed_seconds": 0.308,
+      "scope": "after one-pass effect partition: cultivation input, shared rune identity case, attack speed bounds"
+    },
+    "old_new_calculations": {
+      "records": 15,
+      "layer_reports": 12,
+      "damage_reports": 12,
+      "map_results": 3,
+      "complete_outputs_equal": true,
+      "inputs_unchanged": true,
+      "before_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "after_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "capture_script_sha256": "c4027edd609fdb2796dcf39157d2c4054a5d84776173f406318df295def232eb"
+    },
+    "source_equivalence": [
+      {
+        "file": "rouge/damage.py",
+        "raise_try_nodes_unchanged": true
+      },
+      {
+        "file": "rouge/calibration.py",
+        "raise_try_nodes_unchanged": true
+      },
+      {
+        "file": "rouge/relic_attributes.py",
+        "raise_try_nodes_unchanged": true
+      }
+    ],
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar only; no game operation or chat"
+    },
+    "local_evidence": ".local/code-constraints-review-44/"
+  }
+}

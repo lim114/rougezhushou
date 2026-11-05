@@ -17,18 +17,20 @@ def is_attribute_rune(effect):
 def apply_attribute_runes(attributes, effects):
     """Return an independent snapshot; never fold runes into talent multipliers."""
     attributes = dict(attributes)
-    for field in FIELDS.values():
-        rules = [e for e in effects if is_attribute_rune(e) and FIELDS[e['kind']] == field]
+    grouped = {field: [] for field in FIELDS.values()}
+    for effect in effects:
+        if is_attribute_rune(effect):grouped[FIELDS[effect['kind']]].append(effect)
+    # The native rune accumulator is FP/Q32. AttributesData's HP/ATK/DEF
+    # are ObscuredInt: FP -> float32 -> ties-to-even happens before talents.
+    # Reuse the previously sealed pure numeric conversion, not card costs.
+    from .deployment import _fp, _fp_product, _single, _Q32
+    def term(effect):
+        if effect.get('native_count_scale') == 'float32_before_fp':
+            return _fp(_single(_single(effect['native_rune_base']) * _single(effect['native_rune_factor'])))
+        return _fp(effect['value'])
+    for field, rules in grouped.items():
         if not rules:
             continue
-        # The native rune accumulator is FP/Q32. AttributesData's HP/ATK/DEF
-        # are ObscuredInt: FP -> float32 -> ties-to-even happens before talents.
-        # Reuse the previously sealed pure numeric conversion, not card costs.
-        from .deployment import _fp, _fp_product, _single, _Q32
-        def term(effect):
-            if effect.get('native_count_scale') == 'float32_before_fp':
-                return _fp(_single(_single(effect['native_rune_base']) * _single(effect['native_rune_factor'])))
-            return _fp(effect['value'])
         addition = sum(term(e) for e in rules if e['formula_item'] == 'ADDITION')
         multiplier = _Q32 + sum(term(e) for e in rules if e['formula_item'] == 'MULTIPLIER')
         value = _fp_product(_fp(attributes[field]) + addition, multiplier)
@@ -51,9 +53,14 @@ def apply_attribute_runes(attributes, effects):
 def prepare_attribute_runes(scenario, attributes):
     """Split resolved current-operator runes from ordinary battle effects once."""
     scenario = dict(scenario)
-    runes = [e for e in scenario.get('effects', []) + scenario.get('_relic_rules', [])
-             if is_attribute_rune(e) and not e.get('token_only')]
-    scenario['effects'] = [e for e in scenario.get('effects', []) if not is_attribute_rune(e)]
+    runes, ordinary = [], []
+    for effect in scenario.get('effects', []):
+        if is_attribute_rune(effect):
+            if not effect.get('token_only'):runes.append(effect)
+        else:ordinary.append(effect)
+    for effect in scenario.get('_relic_rules', []):
+        if is_attribute_rune(effect) and not effect.get('token_only'):runes.append(effect)
+    scenario['effects'] = ordinary
     scenario['_attribute_runes'] = runes
     cultivated = dict(attributes)
     original_attack = scenario['base_attack']

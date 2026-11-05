@@ -227,7 +227,7 @@ def _skill_damage_base(scenario: dict) -> dict:
         'interval_seconds': interval, 'damage_type': 'physical' if mechanist else 'true', 'inapplicable_relics': inapplicable, **status}
 
 
-def _prepare_damage(scenario: dict):
+def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     from .catalog import operator_attributes
     scenario=dict(scenario)
     profile=catalog()['operators'][scenario['operator']]
@@ -236,9 +236,11 @@ def _prepare_damage(scenario: dict):
         raise ValueError('请选择该干员的有效技能。')
     if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
         raise ValueError('技能等级需要为1–10的整数。')
-    attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),
-                                   scenario.get('trust',100),scenario.get('potential',1),
-                                   scenario.get('module_id'),scenario.get('module_level',0))
+    attributes=cultivated_attributes
+    if attributes is None:
+        attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),
+                                       scenario.get('trust',100),scenario.get('potential',1),
+                                       scenario.get('module_id'),scenario.get('module_level',0))
     scenario.setdefault('base_attack',attributes['attack'])
     elite=scenario.get('elite',2)
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):

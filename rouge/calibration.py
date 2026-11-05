@@ -60,7 +60,7 @@ def _context(s):
 def panel_layers(scenario):
     """Expose ordered cultivation/rune/talent/skill stages, without changing math."""
     s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
-    prepared=_prepare_damage(deepcopy(s));resolved,rune,_,_=prepared
+    prepared=_prepare_damage(deepcopy(s),cultivated_attributes=cult);resolved,rune,_,_=prepared
     result=_calculate_prepared(s,deepcopy(prepared));base=result['estimate']['base_stats']
     skill=result['estimate']['skill']
     stages=[('培养与模组',cult),('藏品与分队符文写回',rune),('已覆盖常态天赋与效果',base),

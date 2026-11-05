@@ -1,3 +1,7 @@
+## 维护：培养属性复用与符文分类去重（2026-11-05）
+
+本批三个模块的培养读取、符文分类和效果分流重复已修正，定向检查及旧新完整结果对照通过，测试窗口更新。仅完成这些路径，整模块仍待审。[回执](verification/maintenance/code-constraints-cultivation-runes-20261105/README.md)。
+
 ## 维护：校准准备与默认构造去重（2026-11-05）
 
 校准共用准备副本，消除已存在时序/等级/格子的重复默认构造；33项定向通过，旧新完整报告一致。分支位置总览完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-prepared-defaults-20261105/README.md)。
