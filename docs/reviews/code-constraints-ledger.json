@@ -484,11 +484,11 @@
     },
     {
       "file": "rouge/player_map.py",
-      "sha256": "1d4336b78beb7edc79eb18e0fb2818b3c7c584b9dd398f2219b29ef3b1d080f4",
-      "rule1": "same_refresh_zone_info_and_geometry_reused_selection_signal_not_duplicated",
-      "rule2": "existing_shared_geometry_helper_takes_current_points_no_new_wrapper",
+      "sha256": "0af000fd4ca3f7859bda3afb196ce38e7c7a96b3da039e41b9fd3348772ae0e4",
+      "rule1": "per_node_reading_state_has_one_restoration_owner",
+      "rule2": "redundant_restoration_passes_and_single_remaining_wrapper_removed",
       "rule3": "pending_user_review",
-      "evidence": "Traced refresh/painting/hit/selection/readers. Reuses NodeFinder.zones, current point map, one badge width/current-position lookup, and one historical snapshot text. select_node emits existing connected select_interactive; redundant direct calls removed in locate/focus. Source/error/optional reader guards unchanged, D80-D86 pending. Not whole-module certification; reading expansion and shared dossier paths still need review.",
+      "evidence": "Floor memory now stores only selected node; entry_readings remains sole owner of query/reference/expansion/scroll. Removed duplicate selection/scroll restore in show_floor, default expansion pass and now-single-use restore_entry_expansion wrapper. Normal overview scroll retained, vanished reference scroll cleared. Existing guarded methods and selected catch AST unchanged. Other map and reader/theme paths remain incomplete.",
       "decisions": [
         "D80",
         "D81",
@@ -539,6 +539,18 @@
       "rule2": "direct_domain_operation_or_required_acceptance_entry",
       "rule3": "no_unapproved_low_probability_defense_found",
       "evidence": "Entire small acceptance entry reviewed with player_acceptance dispatch. Direct sequential assertions serve this test only; no unnecessary helper extraction, catch or repeated boundary validation. try/finally restores fixture state on every exit, not speculative recovery. This is source review, not a new full/game acceptance run."
+    },
+    {
+      "file": "rouge/player_map_reader.py",
+      "sha256": "ce381a6911f41fb86d0e1d79f2ce05f371d3e12bc97a38d8ad95d7835db90d96",
+      "rule1": "reader_entry_contracts_traced_theme_reapplication_followup_remaining",
+      "rule2": "readable_and_prepare_reference_window_have_multiple_current_callers",
+      "rule3": "pending_user_review",
+      "decisions": [
+        "D87",
+        "D88"
+      ],
+      "evidence": "Read entire small reader dispatcher and current callers. No code change. Optional readable None and make_reader malformed-record guards recorded. Theme preparation is shared across many event/stage readers; identical reapplication versus intentional variant change needs constructor-level followup. Missing current source is normal domain state, not automatically a removable defense."
     }
   ]
 }

@@ -53,3 +53,5 @@
 | D84 | `rouge/player_map.py:MapPanel.remember_entry_reading`：reading_key元素不是非空文字或根分组标签不是文字时跳过保存 | 坏身份不写入阅读记忆；也可能让内部初始化问题表现为阅读状态丢失 | 正常未选节点分支保留；异常类型保护待确认，当前不变 |
 | D85 | `rouge/player_map.py:MapPanel.check_reference`：getattr默认None读取node_reference_binding/panel，hasattr容忍无refresh_reference方法 | 兼容不同资料窗口接口；也可能掩盖漏初始化的属性 | 建议逐类核对窗口契约后统一接口；不在本批擅自删除可选读取 |
 | D86 | `rouge/player_map.py:MapPanel.open_entry`：make_reader没有返回精确浮窗时转到原完整目录并激活主窗口 | 仍能查资料，但会改变打开位置且可能掩盖缺少精确入口 | 建议明确哪些类型仍需该备用路径后决定保留范围；本批未触发或改变它 |
+| D87 | `rouge/player_map_reader.py:readable`：dialog为None时不应用主题、直接返回None | 兼容未构造成功的可选窗口；也可能掩盖调用者漏创建窗口 | 建议先逐个核对调用方是否确实会传None，再决定保留范围。当前原函数未修改，prepare_reference_window等多调用入口仍保留 |
+| D88 | `rouge/player_map_reader.py:make_reader`：record非字典或id/title非文字时返回None | 不让坏资料进入事件/作战构造；调用方可能把坏输入当作无精确入口 | 建议与上游资料入口契约合并核对后决定；当前类型检查不动。正常未支持类型、资料暂不可用与这一坏输入保护分开 |

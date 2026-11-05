@@ -1,3 +1,7 @@
+## 维护：地图阅读状态去重（2026-11-05）
+
+单一节点状态管理阅读位置；分组展开一次，失效资料不再恢复旧位置，切楼层和待确认节点保留有效阅读。11项定向通过，所有中间失败保留，测试窗口已更新。[回执](verification/maintenance/code-constraints-map-reading-state-20261105/README.md)。
+
 ## 维护：地图刷新与几何计算去重（2026-11-05）
 
 复用楼层信息、节点坐标、标签宽度和历史资源说明，删除信号后的重复详情刷新。17项定向最终通过，24组像素/384命中点与旧源码一致；旧时区测试失败及修正记录保留。测试窗口已更新。[回执](verification/maintenance/code-constraints-map-refresh-geometry-20261105/README.md)。

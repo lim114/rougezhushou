@@ -144,7 +144,7 @@ class PreviewMapView(MapView):
 class MapPanel(QWidget):
     statisticsRequested=Signal(object,object)
     def __init__(self,owner,*,statistics_source=None,page_owner=None):
-        super().__init__();self.owner=owner;self.page_owner=page_owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
+        super().__init__();self.owner=owner;self.page_owner=page_owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.floor_selections={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         from .flow_layout import FlowLayout
         body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5);body.setSpacing(5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
@@ -246,7 +246,7 @@ class MapPanel(QWidget):
         if self.statistics_source is not None:self.view.frequencies=self.statistics_source.index
         if epoch!=self.epoch:
             self.close_reference()
-            self.readings.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
+            self.floor_selections.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
         self.latest_position.setEnabled(self.latest_position_key()is not None)
@@ -289,7 +289,7 @@ class MapPanel(QWidget):
         self.floors.setCurrentIndex(index);self.view.select_node(key[2]);return True
     def show_floor(self,*_):
         if self.view.graph:
-            old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
+            old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.floor_selections[old]=self.view.selected
         index=self.floors.currentIndex();key=self.floors.tabData(index)if index>=0 else None
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
         from .player_floor_resources import snapshots,snapshot_text,snapshot_entries
@@ -303,17 +303,10 @@ class MapPanel(QWidget):
         else:
             self.resources.refresh(self.owner.run.state);self.resources.setAccessibleName('本局最近已读资源；未读不代表零；不是历史层当时数量')
         self.context_notice.setText(('历史地图 · '+('资源为该图最后一次读取记录，其它未读'if row else'该图当时资源未记录'))if historical and graph else'最近已读地图 · 资源为本局最近读值'if graph else'尚无地图记录；等待后台读取')
-        saved=self.readings.get((key,(graph or{}).get('template_id')),(None,None,0))
+        saved=self.floor_selections.get((key,(graph or{}).get('template_id')))
         self.view.blockSignals(True);self.view.set_map(graph,historical=historical)
-        if graph and saved[0]in {n['id']for n in graph['nodes']}:self.view.select_node(saved[0])
+        if graph and saved in {n['id']for n in graph['nodes']}:self.view.select_node(saved)
         self.view.blockSignals(False);self.selected(self.view.selected)
-        for i in range(self.entries.topLevelItemCount()):
-            parent=self.entries.topLevelItem(i)
-            for j in range(parent.childCount()):
-                item=parent.child(j)
-                if item.data(0,Qt.ItemDataRole.UserRole)==saved[1]:self.entries.setCurrentItem(item)
-        self.detail.verticalScrollBar().setValue(saved[2])
-        self.restore_entry_expansion()
         name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近读取')if graph else'等待地图读取，随后自动显示。')
         from .run_config import difficulty_value
         config=self.owner.run.state.get('config',{});grade=difficulty_value(config.get('difficulty'))
@@ -357,7 +350,8 @@ class MapPanel(QWidget):
         except(ValueError,KeyError,TypeError)as error:
             self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
         if dossier is None:
-            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n节点类型：待确认。');self.entries.blockSignals(False);return
+            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n节点类型：待确认。')
+            self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if keep is None else 0);self.entries.blockSignals(False);return
         groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows']),('已列条件排除的事件（不是候选）','event',dossier.get('excluded_event_candidates',[]))]
         chosen=None
         total=sum(len(rows)for _,_,rows in groups);shown=0
@@ -368,11 +362,12 @@ class MapPanel(QWidget):
             for row in rows:
                 key=(label,kind,row.get('id')or row.get('node_type'));item=QTreeWidgetItem([row.get('title')or row.get('node_type')or'功能节点']);item.setToolTip(0,item.text(0));item.setData(0,Qt.ItemDataRole.UserRole,key);root.addChild(item);self.rows[key]=row
                 if key==keep:chosen=item
-            root.setExpanded(not label.startswith('已列条件排除'))
         self.entries.blockSignals(False);self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
         if chosen:self.entries.setCurrentItem(chosen)
-        self.restore_entry_expansion()
-        self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen else 0)
+        expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
+        for i in range(self.entries.topLevelItemCount()):
+            root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not str(label).startswith('已列条件排除')))
+        self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen or keep is None else 0)
         self.entry_count.setText(f'节点资料 {shown} / {total}')
         # Only synchronize the owning current map; historical-floor reading never rebinds it.
         if self.owner.map_view.graph and graph.get('zone_id')==self.owner.map_view.graph.get('zone_id')and graph.get('template_id')==self.owner.map_view.graph.get('template_id'):self.owner.map_view.select_node(node_id)
@@ -387,10 +382,6 @@ class MapPanel(QWidget):
         self.entry_readings[self.reading_key]={'query':self.entry_search.text(),'selected':self.selected_reference,
             'expanded':{**previous.get('expanded',{}),**expanded},'scroll':self.detail.verticalScrollBar().value()}
 
-    def restore_entry_expansion(self):
-        expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
-        for i in range(self.entries.topLevelItemCount()):
-            root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not str(label).startswith('已列条件排除')))
     def read_entry(self,*_):
         item=self.entries.currentItem();key=item.data(0,Qt.ItemDataRole.UserRole)if item else None;row=self.rows.get(key)
         self.selected_reference=key if row else None;self.open_button.setEnabled(bool(row and key[1]in('event','battle')))
