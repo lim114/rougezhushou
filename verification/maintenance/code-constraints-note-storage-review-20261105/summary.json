@@ -1,0 +1,62 @@
+{
+  "kind": "review_preparation",
+  "binding": "enclosing_commit",
+  "title": "笔记正文存储保护核对，D29—D31待确认",
+  "base_commit": "3607ebf8ad1da989bfadd68a2b29868d65ee3689",
+  "functional_section_incremented": false,
+  "product_source_changed": false,
+  "full_program_remediation_complete": false,
+  "pending_decisions": [
+    "D29",
+    "D30",
+    "D31"
+  ],
+  "resolved_decisions": [],
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_notes.py": "d56715f2a0437cf22be87bc1b86c19da233c39e1643c5d0aa6f0ba0924ed66c8",
+    "rouge/persistence_install.py": "f62d71a1a400479cc2162731de5e6b5243697413b7e2d8fc8f7fb92ac030c607",
+    "tests/test_note_store_boundary_review.py": "97ed76b815641a5daa328f59cbc12de632a5973c97e85c381094c311cfd10e41"
+  },
+  "rules_review": {
+    "rule1": "Two digest checks straddle temporary-file creation; not repeated validation of immutable input. Reusing destination path proposed under D30.",
+    "rule2": "path/read/save have multiple callers and distinct responsibilities; no new helper.",
+    "rule3": "D29 file-link rejection, D30 save lock/path reuse and D31 two-time checks individually pending; D13 cleanup authorization not expanded."
+  },
+  "validation": {
+    "real_link_round": {
+      "run": 2,
+      "passed": 1,
+      "errors": 1,
+      "reason": "Windows error 1314 while creating fixture; real link behavior unverified"
+    },
+    "isolated_behavior_round": {
+      "run": 4,
+      "passed": 4,
+      "link_metadata_simulated": true
+    },
+    "full_suite_run": false,
+    "product_source_unchanged": true,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": false,
+      "single_response_ms": 21.17,
+      "performance_acceptance": false
+    }
+  },
+  "coverage": {
+    "structural_only": 426,
+    "selected_paths_only": 54,
+    "exception_equivalence_only": 77,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "coverage_basis": "verification/maintenance/code-constraints-note-scan-boundary-20261104/summary.json",
+  "remaining": [
+    "Await D29-D31 decisions.",
+    "Real Windows symbolic-link case requires OS privilege; simulation does not replace it.",
+    "Other unreviewed paths remain open."
+  ],
+  "progress_report": "PROGRESS.md"
+}
