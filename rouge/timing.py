@@ -450,7 +450,8 @@ def phase_totals(components,boundary):
 
 
 def annotate_result(scenario,result):
-    timing=result.setdefault('timing',AttackTimeline(scenario).output())
+    if 'timing' not in result:result['timing']=AttackTimeline(scenario).output()
+    timing=result['timing']
     if timing['mode']=='continuous':
         result['estimate']['notes'].extend(timing.get('target_scope_notes',[]))
         return

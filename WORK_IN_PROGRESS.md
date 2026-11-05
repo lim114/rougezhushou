@@ -1,3 +1,7 @@
+## 当前断点：结果时序与汇总复用（2026-11-05）
+
+已有timing不再重复构造AttackTimeline；伤害/治疗汇总状态与来源只取一次，normal缺失仅入口归一化。24组完整旧新输出一致；63项两轮通过，旧2项中1失败保留。uncertain_sources全模块审查通过；D103重复来源核验未改。测试窗口更新可见响应。覆盖362/75/91/30，D38—D103共66组。回执verification/maintenance/code-constraints-result-summaries-20261105/summary.json。继续剩余模块，普通冗余尚未清零，不增功能节数。
+
 ## 当前断点：技力条件扫描与单次包装整改（2026-11-05）
 
 periodic/Combat两处attack_sp扫描去重；删未使用calculate_extended；阿米娅source_state内联。31组旧新完整结果/错误一致，54项定向通过；charge_reference完整源码审查通过。D102被调用端重复资料存在保护登记未改。测试窗口已更新可见响应。覆盖364/75/90/29，D38—D102共65组。回执verification/maintenance/code-constraints-charge-consumers-20261105/summary.json。下一批继续其余计算/资料/运行模块，普通剩余未清零；不增功能节数。

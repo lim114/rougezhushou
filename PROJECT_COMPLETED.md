@@ -1,3 +1,7 @@
+## 维护：结果时序复用与汇总去重（2026-11-05）
+
+已有时序零重复构造，伤害治疗汇总共用本次状态和来源；24组输出一致，63项最终定向通过，原失败保留。uncertain_sources完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-result-summaries-20261105/README.md)。
+
 ## 维护：技力扫描与单次状态包装整改（2026-11-05）
 
 两处规则重复扫描改为一次，删除闲置包装并内联单一状态消费；54项定向通过，31组旧新一致。冲锋分项模块完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-charge-consumers-20261105/README.md)。

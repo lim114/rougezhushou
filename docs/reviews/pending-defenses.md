@@ -69,3 +69,4 @@
 | D100 | `reference_dialog.ReferenceDialog.calculate`：解析和evaluator共同捕获ValueError/KeyError/TypeError | 输入错误有提示，计算器内部缺陷也变成输入提示；旧结果已被invalidate清空 | 建议逐个计算器明确输入错误出口后收窄到解析/输入校验，内部计算缺陷暴露；替代保留此出口。未修改，待审，不借D03授权扩大范围 |
 | D101 | `timing.profiles`：公开timing-profiles.json不存在时返回空operators并缓存 | 允许缺资料启动，但缺文件可能表现为所有时序资料未知；恢复文件后缓存仍可能保持空 | 建议明确安装包必需文件契约后取消缺文件静默默认，或保留并提供来源缺失状态；本批未改，等待审核 |
 | D102 | `amiya_continuous_reference.attach_result`：full缺amiya_continuous_reference时直接返回；当前唯一产品调用方已检查该项 | 允许绕过调用方单独调用时静默无操作；正常产品路径重复确认同一份结果 | 建议将被调用函数改为直接读取已确认项，保留调用方分派；替代保留可独立调用约定。本批未删，等待审核 |
+| D103 | `relic_damage_factors.parameter_factor`已逐条verified_rule后调用source_factor，后者重新筛选并再次逐条核验同一来源 | 独立source_factor仍需入口来源核对；当前连用路径重复核对不含异步、I/O或用户交互 | 建议提取供两入口共用的已核验来源算式，两个入口各核对一次；不取消独立入口核验、不放宽来源绑定。替代保留当前双重核对。本批未改，待审核 |

@@ -7,32 +7,38 @@ def mask_pending_damage(result, full, shown, normal, duration, cycle):
         return bool(plan and any(c['damage_type'] not in ('healing','regeneration','buildup') and 'actual_total' in c and c['actual_total'] is None
                                 for c in plan['components']))
 
-    def known(plan, boundary=None):
-        components = [c for c in plan['components'] if 'actual_total' not in c]
+    def known_sources(plan):
+        return [c for c in plan['components'] if 'actual_total' not in c]
+
+    def known(components, boundary=None):
         if boundary is not None:
             return phase_totals(components, boundary)[0]
         return sum(c['total'] for c in components
                    if c['damage_type'] not in ('healing', 'regeneration', 'buildup'))
 
-    if not any(pending(plan) for plan in (full, shown, normal)):
+    full_pending, shown_pending, normal_pending = (pending(plan) for plan in (full, shown, normal))
+    if not (full_pending or shown_pending or normal_pending):
         return
+    full_known = known_sources(full)
+    shown_known = known_sources(shown)
+    normal_known = known_sources(normal) if normal else []
     skill = result['estimate']['skill']
     subtotal = {
-        'total_damage': known(full) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
-        'phase_damage': known(full, duration) if duration is not None else None,
-        'window_damage': known(shown),
-        'cycle_damage': (known(full, cycle) + (known(normal) if normal else 0))
+        'total_damage': known(full_known) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
+        'phase_damage': known(full_known, duration) if duration is not None else None,
+        'window_damage': known(shown_known),
+        'cycle_damage': (known(full_known, cycle) + known(normal_known))
                         if cycle is not None else None,
     }
     subtotal['cycle_dps'] = subtotal['cycle_damage'] / cycle if cycle else None
     observation_seconds = skill['window_seconds']
     subtotal['window_dps'] = subtotal['window_damage'] / observation_seconds if observation_seconds else None
     result['known_damage_subtotals'] = subtotal
-    if pending(full):
+    if full_pending:
         skill['total_damage'] = skill['phase_damage'] = None
-    if cycle is not None and (pending(full) or pending(normal)):
+    if cycle is not None and (full_pending or normal_pending):
         skill['cycle_damage'] = skill['cycle_dps'] = None
-    if pending(shown):
+    if shown_pending:
         result['total_damage'] = None
         skill['window_damage'] = skill['window_dps'] = None
     for c in full['components']:
@@ -46,26 +52,33 @@ def mask_pending_healing(result, full, shown, normal, duration, cycle):
         return bool(plan and any(c['damage_type']=='healing' and 'actual_total' in c
                                 and c['actual_total'] is None for c in plan['components']))
 
-    def known(plan, boundary=None):
+    def known_sources(plan):
         components=[c for c in plan['components'] if c['damage_type']=='healing' and 'actual_total' not in c]
         components += [source for c in plan['components'] if c['damage_type']=='healing'
                        for source in c.get('known_healing_sources',[])]
+        return components
+
+    def known(components, boundary=None):
         return phase_totals(components,boundary)[1] if boundary is not None else sum(c['total'] for c in components)
 
-    if not any(pending(plan) for plan in (full,shown,normal)):
+    full_pending, shown_pending, normal_pending = (pending(plan) for plan in (full, shown, normal))
+    if not (full_pending or shown_pending or normal_pending):
         return
+    full_known = known_sources(full)
+    shown_known = known_sources(shown)
+    normal_known = known_sources(normal) if normal else []
     skill=result['estimate']['skill']
-    subtotal={'total_healing':known(full) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
-        'phase_healing':known(full,duration) if duration is not None else None,
-        'window_healing':known(shown),
-        'cycle_healing':known(full,cycle)+(known(normal) if normal else 0) if cycle is not None else None}
+    subtotal={'total_healing':known(full_known) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
+        'phase_healing':known(full_known,duration) if duration is not None else None,
+        'window_healing':known(shown_known),
+        'cycle_healing':known(full_known,cycle)+known(normal_known) if cycle is not None else None}
     subtotal['cycle_hps']=subtotal['cycle_healing']/cycle if cycle else None
     observation_seconds=skill['window_seconds']
     subtotal['window_hps']=subtotal['window_healing']/observation_seconds if observation_seconds else None
     result['known_healing_subtotals']=subtotal
-    if pending(full):skill['total_healing']=skill['phase_healing']=None
-    if cycle is not None and (pending(full) or pending(normal)):skill['cycle_healing']=skill['cycle_hps']=None
-    if pending(shown):
+    if full_pending:skill['total_healing']=skill['phase_healing']=None
+    if cycle is not None and (full_pending or normal_pending):skill['cycle_healing']=skill['cycle_hps']=None
+    if shown_pending:
         result['total_healing']=None
         skill['window_healing']=skill['window_hps']=None
     for c in full['components']:
