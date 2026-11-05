@@ -1,3 +1,7 @@
+## 维护：笔记资料菜单重复构造与导入整改（2026-11-05）
+
+只创建一次共用context，逐项动态导入改为入口导入；8个不同定向检查通过，测试窗口更新。验收辅助模块完成三条源码审查，实机未重跑。[回执](verification/maintenance/code-constraints-note-menu-20261105/README.md)。
+
 ## 维护：资料导航入口去重与两个整模块审查（2026-11-05）
 
 宿主入口只判断一次、双向页面构造去重；player_reference_links/player_cannot_links按三条完整审查通过。29个不同定向方法有通过证据，旧失败保留，测试窗口更新。[回执](verification/maintenance/code-constraints-reference-navigation-20261105/README.md)。

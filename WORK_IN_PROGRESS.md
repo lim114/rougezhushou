@@ -1,3 +1,7 @@
+## 当前断点：笔记资料菜单入口小批整改（2026-11-05）
+
+context只构造一次、Qt从逐项导入移到导航入口；跨菜单点击来源复核保留，保护条件不改。8个不同定向测试通过，测试窗口更新可见响应。三文件整读，验收脚本新增整模块源码审查；笔记D98/D99、ReferenceDialog D100待审，未运行旧实机验收。覆盖369/75/87/27；D38—D100共63组。回执verification/maintenance/code-constraints-note-menu-20261105/summary.json。下一批继续输入/计算边界和未审模块，普通剩余未清零；允许分批，不加功能节数。
+
 ## 当前断点：资料导航入口去重与整模块审查（2026-11-05）
 
 材料作战宿主检查一次，祖先回跳复用host，双向关联作战共用页面构造，材料标题后置，网页保留reader。player_reference_links/player_cannot_links整模块审查通过；tomimi普通逻辑审过、D44待审。29个不同定向方法有通过证据；旧夹具缺game_binding错误在旧源码复现后补测试字段，原失败保留。D97记录来源说明二次读取保护，未改代码。测试窗口更新。覆盖370/75/87/26；D38—D97共60组。回执verification/maintenance/code-constraints-reference-navigation-20261105/summary.json。下一步继续笔记资料入口等剩余模块，保持整体目标，不加功能节数。

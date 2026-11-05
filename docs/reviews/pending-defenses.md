@@ -64,3 +64,6 @@
 | D95 | `current_event_directory.resolve`：坏result/entry_key返回None，并重新读取与比对整份结果 | 阻止失效或被改写的资料跳转，但与后续窗口入口可能重复读来源 | 建议先核对两个实际调用时间点，再明确保留哪处完整核对；无选择属于正常状态，不能一并删除。本批不动 |
 | D96 | `current_event_directory.derive/_snapshot`：缺绑定、缺来源、无对应事件、构建数量不符时抛ValueError | 资料构建停止，避免发布不完整目录；固定数量限制后续扩展 | 建议保留构建失败显露，固定数量约束与来源更新一起核对；_event仅内联，原有无事件失败分支保持 |
 | D97 | `current_event_directory.packet`：来源说明NOTES先读取并验摘要，随后在清单循环再次读同一文件并核验；不是玩家笔记 | 能发现两次读取间文件变化，但同次调用重复I/O和路径检查。定向模拟第二次字节变化已确认返回None，未改文件 | 建议复用首份已验证字节，在清单循环保留类型/摘要校验，使同次解析使用同一快照；代价是不再发现读取后立刻变化。替代保留二次读取。本批不修改，等审核 |
+| D98 | `player_reference_notes.note_for`：公开资料name不是非空文字时返回None | 坏标题被视为无资料，隐藏笔记入口；并不检查私人笔记正文 | 建议核准上游数据契约后在资料读取入口处理，内部不重复兜底；替代保留当前分支。未修改，待审 |
+| D99 | `player_reference_notes`：菜单request先note_for再open_note/reference_target/note_for；open_reference先核对身份，刷新选择后再note_for比较 | 同次导航重复读来源，但选择信号可同步更新页面，末次比较能拒绝中途变化；菜单展开和后来点击是不同时间点，不能合并 | 建议只对确证无交互/信号间隔的链路传递一次核准结果；保留跨交互及刷新后的核对。替代保留现状。本批只移动context定义，不改校验 |
+| D100 | `reference_dialog.ReferenceDialog.calculate`：解析和evaluator共同捕获ValueError/KeyError/TypeError | 输入错误有提示，计算器内部缺陷也变成输入提示；旧结果已被invalidate清空 | 建议逐个计算器明确输入错误出口后收窄到解析/输入校验，内部计算缺陷暴露；替代保留此出口。未修改，待审，不借D03授权扩大范围 |

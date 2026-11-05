@@ -41,9 +41,10 @@ def open_reference(window,content):
     panel.search.clear()
     if category=='stages':panel.stage_floor.setCurrentIndex(0);panel.stage_kind.setCurrentIndex(0)
     panel.scope.setCurrentIndex(panel.scope.findData(False));panel.refresh_reference()
+    from PySide6.QtCore import Qt
     for index in range(panel.entries.count()):
         item=panel.entries.item(index)
-        if item.data(__import__('PySide6.QtCore',fromlist=['Qt']).Qt.ItemDataRole.UserRole)==identity:
+        if item.data(Qt.ItemDataRole.UserRole)==identity:
             panel.entries.setCurrentRow(index)
             if panel.result is None or note_for(category,identity)!=content:return False
             window.show();window.raise_();window.activateWindow();return True
@@ -52,11 +53,11 @@ def open_reference(window,content):
 def install(window):
     notes=window.player_notes;notes.openReference.connect(lambda content:open_reference(window,content))
     if window.diagnostic_layout:return
+    def context(reader):
+        row=(reader.result or{}).get('row',{});return note_for(row.get('category'),row.get('id'))
     for panel in window.common_reference_panels.values():
         if not any(category in KINDS for category in panel.allowed_categories):continue
         action=panel.query_menu.menu.addAction('为所选固定资料写笔记');action.setVisible(False);panel.reference_note_action=action
-        def context(reader):
-            row=(reader.result or{}).get('row',{});return note_for(row.get('category'),row.get('id'))
         def sync(reader=panel,entry=action):entry.setVisible(context(reader)is not None)
         def request(_checked=False,reader=panel):
             content=context(reader)
