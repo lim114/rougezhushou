@@ -53,15 +53,12 @@ def _file(name):
     return path
 
 
-def _event(data, event_id):
-    if 'event' in data:
-        row = data['event']; return row if row['id'] == event_id else None
-    events = data['events']
-    return events.get(event_id) if type(events) is dict else next((e for e in events if e['id'] == event_id), None)
-
-
 def _snapshot(data, event_id):
-    event = _event(data, event_id)
+    if 'event' in data:
+        row = data['event']; event = row if row['id'] == event_id else None
+    else:
+        events = data['events']
+        event = events.get(event_id) if type(events) is dict else next((e for e in events if e['id'] == event_id), None)
     if event is None: raise ValueError('Exact current event required')
     return {'event': deepcopy(event),
             'scenes': {sid: deepcopy(data['scenes'][sid]) for sid in event['scene_ids']},
@@ -189,8 +186,9 @@ def reference(event_id=None, *, query='', node_type=None, topic=None):
         if node_type == 'unclassified' and original['node_types']: continue
         if node_type not in (None, 'unclassified') and node_type not in original['node_types']: continue
         if topic is not None and topic not in original['topics']: continue
-        text = '\n'.join([original['title'], *[e['title']+'\n'+e['description']+'\n'+'\n'.join(e['related_item_names']) for e in original['entries']]])
-        if needle and needle not in text.casefold(): continue
+        if needle:
+            text = '\n'.join([original['title'], *[e['title']+'\n'+e['description']+'\n'+'\n'.join(e['related_item_names']) for e in original['entries']]])
+            if needle not in text.casefold(): continue
         rows.append(deepcopy(original))
     selected = next((r for r in rows if r['id'] == event_id), None)
     if event_id is not None and selected is None: return None

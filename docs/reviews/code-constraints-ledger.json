@@ -744,13 +744,19 @@
     },
     {
       "file": "rouge/current_event_directory_view.py",
-      "sha256": "e2d172d6a3f1bd9fa73d833e818298f4561f348b578aa0fa21afa948350b7281",
+      "sha256": "a9282414d926a3ff5edbb8e61327781b2b70142d2e191bd3c975de948626317e",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
         "rule3": "existing_conditions_and_exception_handlers_preserved",
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
+      },
+      "directory_entry_review": {
+        "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
+        "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
+        "rule3": "existing_defenses_preserved; D89-D96 pending review",
+        "remaining": "derive reloads provider reference; source loader and cross-entry freshness checks still need scoped review"
       }
     },
     {
@@ -762,6 +768,16 @@
         "rule3": "existing_conditions_and_exception_handlers_preserved",
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_event_directory.py",
+      "sha256": "a0e5fe364e5aa2f7f3bdfd5a7ca06bfca491dc7cbd4a0349e70b7510d0d5192e",
+      "directory_entry_review": {
+        "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
+        "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
+        "rule3": "existing_defenses_preserved; D89-D96 pending review",
+        "remaining": "derive reloads provider reference; source loader and cross-entry freshness checks still need scoped review"
       }
     }
   ]

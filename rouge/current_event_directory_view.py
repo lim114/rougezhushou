@@ -4,6 +4,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QListWidget, QListWidgetItem, QPlainTextEdit, QTabWidget, QPushButton
 from . import current_event_directory as model
 from .ui_state import replace_text
+from .current_node_readers_view import READERS, EVENT_ARGUMENT_READERS
+
+DIRECTORY_READERS = {**READERS, 'flows321': ('documented_event_flow_view', 'DocumentedEventFlowDialog')}
 
 
 def make_event_dialog(target, parent=None, *, page_owner=None):
@@ -17,30 +20,9 @@ def make_event_dialog(target, parent=None, *, page_owner=None):
                 'scene_id': entry['scene_id'] if entry else row['event']['entry_scene_id'],
                 'choice_id': entry['choice_id'] if entry else None, 'actual_eligible': None, 'run_updated': False}
     if not model.same(target, expected): return None
-    args = {
-        'resources': ('current_resource_events_view', 'CurrentResourceEventsDialog', (eid,)),
-        'vine333': ('current_vine_events_view', 'CurrentVineEventsDialog', (eid,)),
-        'encounters': ('current_encounters_view', 'CurrentEncountersDialog', (eid,)),
-        'shadow346': ('current_shadow_view', 'CurrentShadowDialog', ()),
-        'memory336': ('current_memory_tree_view', 'CurrentMemoryTreeDialog', ()),
-        'lake': ('current_lake_view', 'CurrentLakeDialog', ()),
-        'cave334': ('current_cave_view', 'CurrentCaveDialog', ()),
-        'agency340': ('current_agency_view', 'CurrentAgencyDialog', ()),
-        'peace343': ('current_peace_view', 'CurrentPeaceDialog', ()),
-        'dog335': ('current_lone_dog_view', 'CurrentLoneDogDialog', ()),
-        'sand': ('current_sand_view', 'CurrentSandDialog', (eid,)),
-        'resting345': ('current_resting_view', 'CurrentRestingDialog', ()),
-        'scout342': ('current_scout_view', 'CurrentScoutDialog', ()),
-        'reconstruction344': ('current_reconstruction_view', 'CurrentReconstructionDialog', ()),
-        'shop': ('current_unattended_shop_view', 'CurrentUnattendedShopDialog', ()),
-        'portal341': ('current_portal_view', 'CurrentPortalDialog', ()),
-        'box': ('box_event_view', 'BoxEventDialog', ()),
-        'ritual': ('current_ritual_view', 'CurrentRitualDialog', (eid,)),
-        'exit339': ('current_exit_view', 'CurrentExitDialog', ()),
-        'rest': ('current_rest_travel_view', 'CurrentRestTravelDialog', (eid,)),
-        'flows321': ('documented_event_flow_view', 'DocumentedEventFlowDialog', (eid,))}
-    if reader not in args: return None
-    module, cls, positional = args[reader]
+    if reader not in DIRECTORY_READERS: return None
+    module, cls = DIRECTORY_READERS[reader]
+    positional = (eid,) if reader in EVENT_ARGUMENT_READERS or reader == 'flows321' else ()
     provider=importlib.import_module('.'+module,__package__)
     if page_owner is None:
         dialog=getattr(provider,cls)(*positional,parent=parent);panel=dialog.panel
@@ -103,10 +85,8 @@ class CurrentEventDirectoryPanel(QWidget):
         self.open_button.setEnabled(False); self.count.setText('来源尚未核对；没有沿用旧目录。')
         replace_text(self.player, model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
 
-    def _filters(self): return {'query': self.query.text(), 'node_type': self.node_type.currentData(), 'topic': self.topic.currentData()}
-
     def refresh_reference(self, *_):
-        fresh = model.reference(**self._filters())
+        fresh = model.reference(query=self.query.text(), node_type=self.node_type.currentData(), topic=self.topic.currentData())
         if fresh is None: self.clear_reference(); return False
         keep = self.result is not None and model.same(self.result['source_identity'], fresh['source_identity'])
         selected = self.event_id if keep else None; entry = self.entry_key if keep else None

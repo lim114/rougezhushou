@@ -57,3 +57,9 @@
 | D88 | `rouge/player_map_reader.py:make_reader`：record非字典或id/title非文字时返回None | 不让坏资料进入事件/作战构造；调用方可能把坏输入当作无精确入口 | 建议与上游资料入口契约合并核对后决定；当前类型检查不动。正常未支持类型、资料暂不可用与这一坏输入保护分开 |
 | D89 | `rouge/current_event_directory_view.py:make_event_dialog`：target或target.event不是字典时直接返回None | 拒绝错误类型进入资料构造，但把错误调用表现为无法打开资料 | 建议核对model.resolve与外部调用契约后决定是否保留此入口保护；本批不动。真实来源身份、场景和选项对应核对另属资料准确性条件，不据此一并删除 |
 | D90 | `rouge/current_event_directory_view.py:CurrentEventDirectoryPanel._close_event`：hasattr(panel, clear_reference)为否时跳过清理，仅关闭窗口 | 兼容缺少清理方法的面板，也可能掩盖不完整接口并保留旧资料 | 建议逐类确认21个面板契约后改为直接清理；本批保留，等待审核 |
+| D91 | `current_event_directory._file`：拒绝非规范路径、链接、目录外路径及链接父目录 | 约束公开资料读取位置；主动使用链接迁移资料也会被拒绝 | 建议保留路径归属保护，核对类型校验先后；本批整个函数不变 |
+| D92 | `current_event_directory.packet`：捕获OSError/ValueError/KeyError/TypeError/AttributeError/StopIteration/RecursionError并返回None | 文件损坏与内部程序缺陷都变成来源不可用 | 建议保留文件/解析错误出口，逐路径核对后收窄内部缺陷兜底；本批捕获不动 |
+| D93 | `current_event_directory.packet`：清单摘要、schema/版本、字节数、来源身份、快照、重复ID及固定39行/38组不匹配即拒绝 | 绑定固定来源并防止混入错误资料；扩充资料需同步固定口径 | 建议保留来源绑定，分别评估固定数量与身份保护；不能单凭低概率整组删除。本批所有检查不变 |
+| D94 | `current_event_directory.reference`：query/event_id/node_type/topic类型、160字查询上限和已知topic检查 | 错误查询返回None；超长查询被拒绝而非截断 | 建议集中保留明确的公共入口契约，是否仍需160字上限待用户决定；本批不动 |
+| D95 | `current_event_directory.resolve`：坏result/entry_key返回None，并重新读取与比对整份结果 | 阻止失效或被改写的资料跳转，但与后续窗口入口可能重复读来源 | 建议先核对两个实际调用时间点，再明确保留哪处完整核对；无选择属于正常状态，不能一并删除。本批不动 |
+| D96 | `current_event_directory.derive/_snapshot`：缺绑定、缺来源、无对应事件、构建数量不符时抛ValueError | 资料构建停止，避免发布不完整目录；固定数量限制后续扩展 | 建议保留构建失败显露，固定数量约束与来源更新一起核对；_event仅内联，原有无事件失败分支保持 |

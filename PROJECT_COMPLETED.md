@@ -1,3 +1,7 @@
+## 维护：事件目录注册与单次包装去重（2026-11-05）
+
+共用20类窗口映射，保留目录专属flows321；内联两个单次包装并跳过空查询全文拼接。24项定向通过及旧新等价比对，测试窗口更新。[回执](verification/maintenance/code-constraints-event-directory-entry-20261105/README.md)。
+
 ## 维护：事件资料窗口主题入口去重（2026-11-05）
 
 21类构造统一设置最终主题，删除两工厂与关联箱子重复设置；21类8项前后相同。23项定向两轮通过，失败记录保留，测试窗口更新。[回执](verification/maintenance/code-constraints-event-theme-ownership-20261105/README.md)。仅完成构造与调用路径，未宣称所有事件面板完整整改。
