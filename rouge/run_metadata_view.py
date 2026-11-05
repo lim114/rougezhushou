@@ -4,7 +4,7 @@ The raw persisted evidence and the numerical API stay authoritative. Unknown
 IDs remain in the caller so calculation keeps its existing explicit error.
 """
 
-from .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata,RECIPIENT_KEYS
+from .record_flags import record_flag,metadata_mask,projected_run_metadata,RECIPIENT_KEYS
 
 
 def format_run_buff_status(state, buffs):
@@ -13,15 +13,17 @@ def format_run_buff_status(state, buffs):
     The saved-shape and current-run gates already qualify consumed ID lists.
     This is a display consumer, not a new recipient schema or repair.
     """
-    if state.get('scope')=='run' and record_flag(state,'present') is None:
+    in_run = state.get('scope') == 'run'
+    present = record_flag(state, 'present') if in_run else False
+    if in_run and present is None:
         return '本局记录的在场状态未确认；原强化记录保留，暂不自动套用。'
-    qualified=projected_run_metadata(state)
-    if (state.get('scope')=='run' and active_record(state,'present')
-            and metadata_mask(state).intersection(RECIPIENT_KEYS) and not qualified.get('char_buff_ids')):
+    mask = metadata_mask(state)
+    qualified = projected_run_metadata(state, mask=mask)
+    retained = mask.intersection(RECIPIENT_KEYS)
+    current = in_run and present is True
+    if current and retained and not qualified.get('char_buff_ids'):
         return '保留的个人强化资格尚未重新确认；原记录保留，暂不自动套用。'
-    retained=metadata_mask(state).intersection(RECIPIENT_KEYS)
     state=qualified
-    current = state.get('scope') == 'run' and active_record(state,'present')
     ids = state.get('char_buff_ids', []) if current else []
     pending = state.get('char_buff_pending_ids', []) if current else []
     unknown = [bid for bid in ids + pending if bid not in buffs]

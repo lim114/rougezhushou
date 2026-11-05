@@ -29,3 +29,6 @@
 | D60 | `rouge/record_flags.py`：metadata_mask无效名单屏蔽全部本局元信息；projected_run_metadata对坏qualified_char_buff_ids改为空投影 | 原件不写回；坏元数据不被当成已确认招募或强化事实 | 建议保留只读未知投影，核对入口后再决定内部重复校验；不自动修复私人记录 |
 | D61 | `rouge/relic_quantities.py`：confirmed_bar_counts与kettle_copies要求完整明确图标栏、唯一非水壶ID、数量及持有身份一致 | 不从大数字或部分图标推算重复水壶份数；缺证据返回None | 建议保留数量证据对照；与概况重复读取标记的跨调用优化仍待核对，不削弱这些条件 |
 | D62 | `rouge/relic_quantities.py`：kettle_copies在任一合并记录不是dict时直接返回None | 坏历史条目不会在数量判断中触发类型错误，整组水壶数量暂时未知 | 建议在记录读取边界统一处理后再决定此内部整表检查去留；本批保持原样 |
+| D63 | `rouge/run_metadata_view.py`：format_run_buff_status遇到未收录的强化ID时显示无法识别提示，不继续显示为已确认强化 | 避免给未知ID补名称或使混合名单看似完整；原始ID仍保留供计算入口拒绝 | 建议保留未知ID提示；若调整为只显示已知分项需明确展示口径。原分支未改 |
+| D64 | `rouge/player_team.py`：qualified_fields在只读副本中移除非整数、超范围、无对应模组或模组阶段矛盾的字段 | 坏保存/读取数据不作为有效培养展示；原记录不写回 | 建议保留范围条件；先确认是否可由上游入口保证结构，再决定内部类型过滤去留。重复invalid_fields读取已独立精简 |
+| D65 | `rouge/player_team.py`：crew_rows遇到非字典干员记录时跳过 | 损坏单条不会阻断整队展示，但内部错误被隐藏 | 建议在记录加载边界处理后再决定内部跳过是否保留；账号范围/已离队过滤是正常功能条件，不在本条删除范围 |

@@ -339,11 +339,11 @@
     },
     {
       "file": "rouge/record_flags.py",
-      "sha256": "9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d",
-      "rule1": "selected_paths_fixed_cross_call_or_guard_followup",
-      "rule2": "framework_callbacks_and_shared_domain_operations_confirmed",
-      "rule3": "pending_user_review_or_remaining_contracts",
-      "evidence": "Actual shared consumers traced in run_state, recipient_state, run_metadata_view and player_team. Wrappers express shared tri-state semantics, not one-use indirection; metadata duplicate projections in callers remain followup. D59/D60 unchanged.",
+      "sha256": "74809742678b8966a5d6b9eb6c447b4581d20ac3d2ad41c98f9118a46289948d",
+      "rule1": "repeated_projection_fixed_remaining_guards_pending",
+      "rule2": "shared_domain_operations_and_framework_callbacks_confirmed",
+      "rule3": "pending_user_review",
+      "evidence": "projected_run_metadata accepts optional keyword mask computed immediately by the caller. Omitted mask retains original one-parse entry; present mask is reused, not parsed again. This normal input-selection branch is not a new error fallback. D59/D60 validation/projection guards unchanged; remaining callers still require review.",
       "decisions": [
         "D59",
         "D60"
@@ -368,6 +368,37 @@
       "rule2": "framework_callbacks_and_shared_domain_operations_confirmed",
       "rule3": "no_unapproved_low_probability_defense_found",
       "evidence": "Entire unchanged Qt v6.11.2-derived layout reviewed. itemAt/takeAt out-of-range None is ordinary QLayout enumeration/teardown contract (destructor reaches it), not speculative recovery. heightForWidth/sizeHint/setGeometry are required framework entry points; shared _do_layout has two callers. Existing copyright/license retained."
+    },
+    {
+      "file": "rouge/run_metadata_view.py",
+      "sha256": "26707ec2012f2ca4645060990ec94ddf0632a37b3080a9ae73d0a741897cc286",
+      "rule1": "repeated_projection_fixed_remaining_guards_pending",
+      "rule2": "shared_domain_operations_and_framework_callbacks_confirmed",
+      "rule3": "pending_user_review",
+      "evidence": "Run/presence and metadata mask qualified once; the same fresh mask drives projection and retained label. Unknown-ID branch D63 unchanged. Early unconfirmed-presence and inactive-scope behavior verified against existing cases.",
+      "decisions": [
+        "D63"
+      ]
+    },
+    {
+      "file": "rouge/recipient_state.py",
+      "sha256": "00dbf3c75e58ead9981865770cf76d3130f7ec766450b741b30bdfc05a27f674",
+      "rule1": "reviewed_clear",
+      "rule2": "shared_domain_operations_and_framework_callbacks_confirmed",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Entire module reviewed. Qualification of actual trigger/time/complete-popup is normal recipient lifecycle, not speculative exception recovery. Eligible rules preserve order; absent_buffs evaluated once only after a real eligible trigger, reused for candidates and update. compatible_buffs/absent_buffs have real shared callers; lifecycle_rules owns cached fixed-file loading; merge/invalidate are run_state entry points. No exception catches or low-probability repair found."
+    },
+    {
+      "file": "rouge/player_team.py",
+      "sha256": "bbeb3c4d1dc32e21af9b60cf8bd73046b9e51d1b08873c05dc614df7967bd7e1",
+      "rule1": "repeated_projection_fixed_remaining_guards_pending",
+      "rule2": "shared_domain_operations_and_framework_callbacks_confirmed",
+      "rule3": "pending_user_review",
+      "evidence": "Refresh reads each currentItem once; qualified_fields reads invalid_fields once; skill-rank type checked once; unused math import removed. D64/D65 remain. Qt callbacks and shared crew formatting are genuine consumers, not new one-use wrappers.",
+      "decisions": [
+        "D64",
+        "D65"
+      ]
     }
   ]
 }

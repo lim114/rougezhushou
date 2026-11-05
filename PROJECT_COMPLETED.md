@@ -1,3 +1,7 @@
+## 维护：强化投影与队伍选择去重（2026-11-05）
+
+在场和元信息一次解析，未领取集合一次计算复用，队伍选择/等级检查去重；46个不同定向方法通过。recipient_state完成本模块三条代码审查，测试窗口已更新。[回执](verification/maintenance/code-constraints-recipient-projection-20261105/README.md)。
+
 ## 维护：资源概况与历史刷新去重（2026-11-05）
 
 复用持有标记、筛选值、条目编号及资源条键列表；28个不同定向方法通过。资源条、Qt布局完成本模块三条代码审查；原项目测试窗口已更新。[回执](verification/maintenance/code-constraints-resource-refresh-20261105/README.md)。

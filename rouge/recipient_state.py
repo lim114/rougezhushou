@@ -65,8 +65,7 @@ def invalidate_recipient_absence(state, observations, gained_relic_ids, promoted
             continue
         if 'char_buff_ids' in current and current.get('char_buffs_complete') is True:
             continue
-        reasons = []
-        candidates = set()
+        eligible = []
         for rid, rule in rules.items():
             gained = rid in gained_relic_ids and rule['trigger'] in ('gain_random', 'upgrade_ticket')
             promoted = oid in promoted_ids and rid in held and rule['trigger'] in ('next_recruit_or_upgrade', 'upgrade_ticket')
@@ -75,14 +74,21 @@ def invalidate_recipient_absence(state, observations, gained_relic_ids, promoted
             # Historical icon resolution must not supersede a later popup.
             if gained and not promoted and state['relics'][rid]['captured_at'] <= member.get('char_buff_absence_observed_at', 0):
                 continue
-            affected = set(rule['char_buff_ids']) & absent_buffs(member)
+            eligible.append((rid, rule, promoted))
+        if not eligible:
+            continue
+        absent = absent_buffs(member)
+        reasons = []
+        candidates = set()
+        for rid, rule, promoted in eligible:
+            affected = set(rule['char_buff_ids']) & absent
             if affected:
                 candidates.update(affected)
                 reasons.append({'relic_id': rid, 'trigger': rule['trigger'],
                                 'observation': 'promotion' if promoted else 'newly_confirmed_item'})
         if not candidates:
             continue
-        member['char_buff_absent_ids'] = sorted(absent_buffs(member) - candidates)
+        member['char_buff_absent_ids'] = sorted(absent - candidates)
         member['char_buffs_complete'] = False
         member['char_buff_pending_ids'] = sorted(set(member.get('char_buff_pending_ids', [])) | candidates)
         state['history'].append({'at': captured_at, 'kind': 'char_buff_absence_invalidated', 'id': oid,

@@ -5,7 +5,8 @@ from .view_catalog import PROFESSIONS,portrait_icon,profession_icon,skill_icon
 import math
 
 def qualified_fields(record, profile):
-    fields={k:v for k,v in record.get('fields',{}).items()if k not in record.get('invalid_fields',[])}
+    invalid=record.get('invalid_fields',[])
+    fields={k:v for k,v in record.get('fields',{}).items()if k not in invalid}
     phases=profile.get('phases',[])
     elite=fields.get('elite')
     if type(elite)is not int or not 0<=elite<len(phases):fields.pop('elite',None)
@@ -42,7 +43,7 @@ def crew_text(row):
     selected=f.get('selected_skill');labels+=['所选技能：'+((p['skills'][selected-1]['levels'][0].get('name')or'名称未核对')if selected is not None else'未读到'),'','已读技能等级']
     for i,skill in enumerate(p.get('skills',[]),1):
         rank=r.get('skill_ranks',{}).get(str(i));rank=None if str(i)in r.get('invalid_skill_ranks',[])else rank
-        text='专精'+{8:'一',9:'二',10:'三'}[rank]if type(rank)is int and rank in(8,9,10)else'等级'+str(rank)if type(rank)is int and 1<=rank<=7 else'未读到'
+        text=('专精'+{8:'一',9:'二',10:'三'}[rank]if rank in(8,9,10)else'等级'+str(rank)if 1<=rank<=7 else'未读到')if type(rank)is int else'未读到'
         name=(skill.get('levels')or[{}])[0].get('name')or f'第{i}技能';labels.append(name+'：'+text)
     labels+=['','信赖按属性加成进度显示，100%封顶；不把它冒充游戏信赖总进度。','未读信息不会用账号详情补齐；这是最近培养记录，不代表所有藏品加成已核对或本局实际面板。']
     return '\n'.join(labels)
@@ -60,7 +61,7 @@ class TeamPanel(QWidget):
     def refresh(self):
         rows=crew_rows(self.run.state);key=repr(rows)
         if key==self.key:return
-        self.key=key;old={k:w.currentItem().data(Qt.ItemDataRole.UserRole)if w.currentItem()else None for k,w in self.lists.items()};positions={k:w.verticalScrollBar().value()for k,w in self.lists.items()};self.rows={r['id']:r for r in rows}
+        self.key=key;old={k:item.data(Qt.ItemDataRole.UserRole)if (item:=w.currentItem())else None for k,w in self.lists.items()};positions={k:w.verticalScrollBar().value()for k,w in self.lists.items()};self.rows={r['id']:r for r in rows}
         for k,w in self.lists.items():
             w.blockSignals(True);w.clear()
             for row in rows:

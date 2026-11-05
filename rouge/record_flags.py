@@ -31,14 +31,15 @@ def metadata_mask(record):
     return set(RUN_METADATA_KEYS)
 
 
-def projected_run_metadata(record):
+def projected_run_metadata(record, *, mask=None):
     """Leave healthy aliases intact; mask only explicitly unconfirmed history.
 
     A fresh partial popup may qualify its own visible positives, while an old
     complete/negative list remains historical until a fresh full popup arrives.
     This projection never writes or repairs the retained member or its proofs.
     """
-    mask = metadata_mask(record)
+    if mask is None:
+        mask = metadata_mask(record)
     if not mask:
         return record
     view = dict(record)
