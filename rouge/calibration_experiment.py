@@ -17,10 +17,11 @@ def _intersection(entries):
     """Closed/open interval Helly witness: at most two conflicting records."""
     if not entries:
         return None, None
-    lower = max(_bounds(value)[0] for _, value in entries)
-    upper = min(_bounds(value)[1] for _, value in entries)
-    lower_records = [(key, value) for key, value in entries if _bounds(value)[0] == lower]
-    upper_records = [(key, value) for key, value in entries if _bounds(value)[1] == upper]
+    bounds = [(key, value, *_bounds(value)) for key, value in entries]
+    lower = max(lo for _, _, lo, _ in bounds)
+    upper = min(hi for _, _, _, hi in bounds)
+    lower_records = [(key, value) for key, value, lo, _ in bounds if lo == lower]
+    upper_records = [(key, value) for key, value, _, hi in bounds if hi == upper]
     lower_closed = all(value['lower_inclusive'] for _, value in lower_records)
     upper_closed = all(value['upper_inclusive'] for _, value in upper_records)
     if lower > upper or (lower == upper and not (lower_closed and upper_closed)):
@@ -37,13 +38,6 @@ def _subset(left, right):
     blo, bhi = _bounds(right)
     return (alo > blo or (alo == blo and (not left['lower_inclusive'] or right['lower_inclusive']))) and (
         ahi < bhi or (ahi == bhi and (not left['upper_inclusive'] or right['upper_inclusive'])))
-
-
-def _control_differences(base, current, varying):
-    return [{'field': key, 'control_present': key in base, 'record_present': key in current,
-        'control': deepcopy(base.get(key)), 'record': deepcopy(current.get(key)), 'allowed_to_vary': key in varying}
-        for key in sorted(set(base) | set(current))
-        if key not in base or key not in current or base[key] != current[key]]
 
 
 def _panel_value(data, channel, model):
@@ -159,7 +153,12 @@ def calibration_experiment(experiment):
             current = model['context']['scenario']
             result['declared_scenario'] = deepcopy(current)
             result['model_source'] = deepcopy(model['source'])
-            differences = _control_differences(base, current, varying)
+            differences = [
+                {'field': key, 'control_present': key in base, 'record_present': key in current,
+                 'control': deepcopy(base.get(key)), 'record': deepcopy(current.get(key)),
+                 'allowed_to_vary': key in varying}
+                for key in sorted(set(base) | set(current))
+                if key not in base or key not in current or base[key] != current[key]]
             result['changed_controls'] = differences
             if current['operator'] != operator:
                 result['blocking_reasons'].append('operator_identity_mismatch')

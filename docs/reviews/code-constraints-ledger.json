@@ -981,12 +981,12 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "2f638ae66a01f1f2d7e0721a49f4acc43eeba8244ac106964f89f5862ddc0e4a",
-      "rule1": "selected_prediction_and_tolerance_repetition_removed",
-      "rule2": "single_use_changes_inlined_other_helpers_substantive_or_multiple_use",
-      "rule3": "handlers_unchanged_D109_D110_experiment_pending",
+      "sha256": "ea41c1d0c8e64c8e987e240c885b3694473a6a80833ea1b69b749342738fce53",
+      "rule1": "intervals_parsed_once_per_intersection_prior_model_reuse_retained",
+      "rule2": "sole_use_control_projection_inlined_domain_intersection_and_subset_retained",
+      "rule3": "D109_D110_D111_pending_unchanged",
       "full_module_review_complete": false,
-      "evidence": "_panel_value uses the model already produced by calibration_experiment, no recomputation. Existing data shape guards and broad per-record catch unchanged, registered D109/D110. Other experiment interval/control/aggregate paths not yet fully reviewed; no whole-module certification."
+      "evidence": "Interval intersections decode each record once (4N to N); preserve exact rational endpoints, strict endpoint witnesses, record order and owned witness copies. Inlined sole-use control difference projection. Empty input is a supported no-data result. _intersection and _subset remain distinct multi-use domain operations. D109/D110 unchanged; D111 timing structure guard added to pending queue unchanged. Partial module review: no full-module completion claim."
     }
   ]
 }

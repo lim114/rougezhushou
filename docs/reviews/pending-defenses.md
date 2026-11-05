@@ -77,3 +77,4 @@
 | D108 | `catalog.operator_attributes`：阶段首尾等级相同则插值比例取0，避免分母为0 | 可表达只有一个等级点的阶段，结果取首帧；本批固定全干员资料中未出现此情形 | 建议按单等级资料的正式支持契约决定保留；替代在数据入口拒绝该结构并移除计算内分支。未修改，不以当前0例推断永远不可达，待审核 |
 | D109 | `calibration_experiment._panel_value`重复检查data对象/键集合、observation对象类型；唯一产品调用方同一轮已核对这些结构 | 单独绕过调用者使用私有函数时有定制错误；当前正常链重复核对，values类型和非空仍是该函数首次检查 | 建议保留调用入口检查和values检查，删除已确认结构的重复分支；替代保留独立私有调用支持。本批未删除，待审核 |
 | D110 | `calibration_experiment.calibration_experiment`每条记录的try涵盖结构检查、面板计算、条件比较和数值分析，捕获ValueError/TypeError/KeyError/IndexError/OverflowError并记为record_validation_error | 一条坏记录不会中断其他记录，但内部缺陷也可能显示成输入错误 | 建议划清输入解析/校验边界，收窄捕获范围并保留坏记录可见；替代保留现有隔离。捕获体、类型与覆盖阶段不变，本批仅复用阶段内已有面板；待审核 |
+| D111 | `calibration_experiment._timing_value`再次检查data是字典且仅含scenario/observation；唯一产品调用方已在同轮核对完全相同结构 | 支持绕过调用者直接调用私有函数时给定制错误，当前链重复检查；底层compare_bounded_timing自己的公开入口仍需有效输入校验 | 建议只删除此私有适配器的重复结构分支，保留调用入口与底层时刻数据校验；替代保留私有独立调用支持。本批未改，待审核 |

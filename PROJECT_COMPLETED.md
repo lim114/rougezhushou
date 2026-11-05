@@ -1,3 +1,7 @@
+## 维护：实验区间与条件投影（2026-11-05）
+
+区间一次解析、单次条件差异内联。20项定向通过，18份报告与1728种区间组合旧新一致；原测试窗口更新。[回执](verification/maintenance/code-constraints-experiment-intervals-20261105/README.md)。仅相关路径完成。
+
 ## 维护：成对与实验预测复用（2026-11-05）
 
 复用已生成面板、容差入口一次并内联单次变化投影；paired_calibration整模块审查完成。36项定向和12组完整输出对照通过，测试窗口更新。[回执](verification/maintenance/code-constraints-paired-prediction-20261105/README.md)。
