@@ -55,7 +55,7 @@ class NoteLibrary:
             try:text=path.read_text('utf8')
             except(OSError,UnicodeError):self.issues.append(path.name);continue
             title=row['content']['title']
-            if q not in(title+' '+text).casefold():continue
+            if q and q not in(title+' '+text).casefold():continue
             result.append({'title':title,'key':key,'content':row['content'],'text':text,'path':path,'legacy':False})
         if self.folder.is_dir():
             for path in sorted(self.folder.glob('*.md')):

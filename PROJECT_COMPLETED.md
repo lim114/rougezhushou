@@ -1,3 +1,7 @@
+## 维护：目录空搜索精简与三处授权落实（2026-11-05）
+
+D35—D37按用户选择保留并验证；空查询不再处理每条正文的搜索转换，16项定向通过，测试窗口更新。[回执与进度](verification/maintenance/code-constraints-note-directory-contracts-20261105/README.md)。
+
 ## 维护：D32笔记资源加载与预览模块审查（2026-11-05）
 
 本机/HTTP/HTTPS图片、HTML/CSS按授权加载，四处目录绑定；移除旧文档拦截转发。29项定向加1项实际锚点点击通过，测试窗口已更新。player_note_preview.py完成三条整模块审查。[回执及进度](verification/maintenance/code-constraints-note-resources-20261105/README.md)。

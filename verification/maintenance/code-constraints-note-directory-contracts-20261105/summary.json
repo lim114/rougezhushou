@@ -1,0 +1,73 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记目录空搜索精简与D35—D37授权落实",
+  "base_commit": "762cc36d9c8176fe66f8d1d4fd200d77e9ff72b0",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "product_source_changed": true,
+  "resolved_decisions": [
+    "D35",
+    "D36",
+    "D37"
+  ],
+  "pending_decisions": [],
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_library.py": "3516a8ab38b54a6d2e60cc68e6f0f02574e50b9be2852ae567eaf17014cc0ad4"
+  },
+  "test_sha256": {
+    "tests/test_note_directory_contract_review.py": "b992c7b220901f4359c6f9e3e878bf0b8e48fcc9be411bc8a1cdad88723a6595",
+    "tests/test_player_note_library_399.py": "dce4e3a6862fe47ea06ea293de76535be7f10bfbfb393a444991bd250566bb74",
+    "tests/test_note_library_boundary_review.py": "6cd91e1bba4f4a196d48e365f08eabc5fd3790e74a24975748dd7aa4effb5ded",
+    "tests/test_note_scan_review.py": "9c952d4dcec3d7b1cbdd18aad0306d881a9607718358fe41c7a9140d75e8d698"
+  },
+  "rules_review": {
+    "rule1": "Blank query is normalized once and skips unnecessary concatenation/casefold over indexed note bodies, matching the legacy path. Existing validated filesystem and tag boundaries unchanged.",
+    "rule2": "No helper extracted. _regular is shared across paths and reference_context across actions; retain genuine shared entry points.",
+    "rule3": "D35 file/parent link rejection, D36 existing tag identity/format and D37 folder-type error explicitly approved. No other protection authorized by inference."
+  },
+  "validation": {
+    "baseline": {
+      "run": 6,
+      "passed": 5,
+      "failed": 1,
+      "blank_query_casefold_calls": 3
+    },
+    "targeted": {
+      "run": 16,
+      "passed": 16,
+      "elapsed_seconds": 0.64,
+      "blank_query_casefold_calls": 1,
+      "platform": "Windows Qt"
+    },
+    "approved_function_asts_unchanged": [
+      "_regular",
+      "record",
+      "records"
+    ],
+    "symlink_metadata_mocked": true,
+    "real_windows_symlink_fixture": "Existing privilege-1314 limitation retained; not rerun without environment change.",
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "single_response_ms": 0.12,
+      "performance_acceptance": false
+    }
+  },
+  "coverage": {
+    "structural_only": 425,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 54,
+    "full_modules_certified": 2,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "remaining": [
+    "Directory publication/overwrite race and other unreviewed paths remain; this is not full-module certification.",
+    "Actual Windows symlink fixture still requires the previously unavailable privilege."
+  ],
+  "progress_report": "PROGRESS.md"
+}
