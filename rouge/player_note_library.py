@@ -88,9 +88,11 @@ class NoteLibraryPanel(QWidget):
     def refresh(self,*_):
         self.search_timer.stop()
         old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value()
+        query=self.search.text()
         try:
-            self.rows=self.library.rows(self.search.text());self.notice.setText(f'共{len(self.rows)}条笔记'+(f' · {len(self.library.issues)}份文件读取异常'if self.library.issues else''))
+            self.rows=self.library.rows(query)
         except(OSError,ValueError)as error:self.rows=[];self.notice.setText(str(error))
+        else:self.notice.setText(f'共{len(self.rows)}条笔记'+(f' · {len(self.library.issues)}份文件读取异常'if self.library.issues else''))
         from .player_note_selector import catalogue_snapshot
         from .player_notes import content_key
         labels={content_key(row['context']):row for row in catalogue_snapshot()['rows']}if self.rows else{}

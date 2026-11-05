@@ -1,3 +1,7 @@
+## 当前断点：D28目录扫描异常边界整改完成
+
+D28已获批并落实，9项原生定向通过，测试窗口已更新并核对可见、响应。回执verification/maintenance/code-constraints-note-scan-boundary-20261104/summary.json。D28不重复送审；继续其它未审路径，不扩展到写入/锁/链接保护。覆盖426/77/54/1不变，不增加功能节。
+
 ## 当前断点：目录普通精简完成，D28待确认
 
 对照表每轮构建一次，条目路径文字复用；19项原生定向通过，测试窗口已更新并核对可见、响应。D28：目录扫描捕获包住界面更新，1项基线失败已复现；原捕获未改，等待用户选择。拟用测试在.local/code-constraints-review-16/pending_boundary_case.py，批准后移入tests并完成该项。回执verification/maintenance/code-constraints-note-directory-20261104/summary.json；覆盖426/77/54/1不变。

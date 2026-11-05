@@ -1,3 +1,7 @@
+## 维护：笔记目录扫描异常边界收窄（2026-11-04）
+
+D28按用户确认完成：仅捕获文件扫描，搜索框/成功提示在捕获外；9项原生定向通过。[回执和进度](verification/maintenance/code-constraints-note-scan-boundary-20261104/README.md)。
+
 ## 维护：笔记目录重复计算精简（2026-11-04）
 
 仅完成类型对照表每轮复用与条目路径文字复用，19项定向通过。D28捕获范围问题待确认，未计完成。[回执与进度](verification/maintenance/code-constraints-note-directory-20261104/README.md)。
