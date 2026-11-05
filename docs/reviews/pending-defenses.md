@@ -75,3 +75,5 @@
 | D106 | `panel_native_bridge._record`：term缺省或空字典时以`term or _term(None)`补未知算式 | 支持缺项调用；当前prepare/finish三个产品调用点均传入算式，可能掩盖生产者漏传或空字典 | 建议确认独立调用契约后让term成为必传参数并直接使用，未知基础仍用明确_term(None)表达；替代保留缺省。未修改，待审核 |
 | D107 | `catalog.operator_attributes`：潜能属性不在mapping或formulaItem不是ADDITION时忽略；模组属性不在小写映射时也忽略 | 新字段/公式不会中断计算，但可能漏掉有效加成；当前已适配干员模组字段均在映射中，全干员资料另有cost/block_cnt字段 | 建议明确支持字段范围后，对未支持项保留显式未知或限定来源，而非静默给完整结果；替代保留当前筛选并标明支持范围。此项不授权扩展费用/阻挡计算，本批未修改，待审核 |
 | D108 | `catalog.operator_attributes`：阶段首尾等级相同则插值比例取0，避免分母为0 | 可表达只有一个等级点的阶段，结果取首帧；本批固定全干员资料中未出现此情形 | 建议按单等级资料的正式支持契约决定保留；替代在数据入口拒绝该结构并移除计算内分支。未修改，不以当前0例推断永远不可达，待审核 |
+| D109 | `calibration_experiment._panel_value`重复检查data对象/键集合、observation对象类型；唯一产品调用方同一轮已核对这些结构 | 单独绕过调用者使用私有函数时有定制错误；当前正常链重复核对，values类型和非空仍是该函数首次检查 | 建议保留调用入口检查和values检查，删除已确认结构的重复分支；替代保留独立私有调用支持。本批未删除，待审核 |
+| D110 | `calibration_experiment.calibration_experiment`每条记录的try涵盖结构检查、面板计算、条件比较和数值分析，捕获ValueError/TypeError/KeyError/IndexError/OverflowError并记为record_validation_error | 一条坏记录不会中断其他记录，但内部缺陷也可能显示成输入错误 | 建议划清输入解析/校验边界，收窄捕获范围并保留坏记录可见；替代保留现有隔离。捕获体、类型与覆盖阶段不变，本批仅复用阶段内已有面板；待审核 |

@@ -46,8 +46,8 @@ def _control_differences(base, current, varying):
         if key not in base or key not in current or base[key] != current[key]]
 
 
-def _panel_value(data, channel):
-    from .calibration import compare_panel
+def _panel_value(data, channel, model):
+    from .calibration import _compare_prediction
     if not isinstance(data, dict) or set(data) != {'scenario', 'observation'}:
         raise ValueError('面板样本需为scenario与独立observation。')
     observation = deepcopy(data['observation'])
@@ -55,7 +55,7 @@ def _panel_value(data, channel):
         raise ValueError('面板样本需有非空界限记录。')
     intervals = {key: _interval(*_reading(value, '独立面板界限/' + str(key))) for key, value in observation['values'].items()}
     observation['values'] = {key: interval['lower'] for key, interval in intervals.items()}
-    comparison = compare_panel(data['scenario'], observation)
+    comparison = _compare_prediction(model, observation, 0)
     if comparison['panel'] != channel['panel']:
         raise ValueError('面板样本层与实验通道不相符。')
     selected = next((r for r in comparison['rows'] if r['field'] == channel['field']), None)
@@ -169,7 +169,7 @@ def calibration_experiment(experiment):
                 result['blocking_reasons'].append('evidence_kind_mismatch')
             if raw['evidence_version'] != version:
                 result['blocking_reasons'].append('caller_evidence_version_mismatch')
-            reading, expected, reason, detail = (_panel_value(data, channel) if channel['kind'] == 'panel' else _timing_value(data, channel))
+            reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel))
             result.update(observed_interval=reading, model_reference=expected,
                 residual_interval=_residual(reading, expected), comparison_detail=detail,
                 declared_observation=deepcopy(observation))

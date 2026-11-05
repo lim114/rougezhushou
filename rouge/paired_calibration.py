@@ -5,7 +5,7 @@ delta never certifies either absolute panel, a mechanism, or a game client.
 """
 from copy import deepcopy
 
-from .calibration import LABELS, BOUNDARY, _number, compare_panel, panel_layers
+from .calibration import LABELS, BOUNDARY, _number, _compare_prediction, panel_layers
 from .relic_panel_diagnostics import relic_panel_diagnostics
 
 
@@ -13,13 +13,6 @@ def _record(record, name):
     if not isinstance(record, dict) or set(record) != {'scenario', 'observation'}:
         raise ValueError(name + '需包含且仅包含 scenario 与 observation。')
     return deepcopy(record)
-
-
-def _changes(left, right):
-    return [{'field': key, 'before_present': key in left, 'after_present': key in right,
-             'before': deepcopy(left.get(key)), 'after': deepcopy(right.get(key))}
-            for key in sorted(set(left) | set(right))
-            if key not in left or key not in right or left[key] != right[key]]
 
 
 def _relic_transition(before_model, after_model, changes):
@@ -72,8 +65,8 @@ def compare_paired_panels(before, after, tolerance=0):
         raise ValueError('前后成对校准必须为同一干员。')
     # Validate both full observations, including fields later excluded from the
     # intersection. A malformed one-sided field must not disappear silently.
-    before_comparison = compare_panel(left['scenario'], left['observation'], tolerance)
-    after_comparison = compare_panel(right['scenario'], right['observation'], tolerance)
+    before_comparison = _compare_prediction(before_model, left['observation'], tolerance)
+    after_comparison = _compare_prediction(after_model, right['observation'], tolerance)
     if before_comparison['panel'] != after_comparison['panel']:
         raise ValueError('前后成对校准必须为同一面板层；不同层不能计算前后差。')
     if before_comparison['evidence_kind'] != after_comparison['evidence_kind']:
@@ -106,7 +99,11 @@ def compare_paired_panels(before, after, tolerance=0):
             'before_other_stage_matches': deepcopy(a['other_stage_matches']),
             'after_other_stage_matches': deepcopy(b['other_stage_matches']),
             'actual_cause_of_residual': None})
-    changes = _changes(before_model['context']['scenario'], after_model['context']['scenario'])
+    before_context, after_context = before_model['context']['scenario'], after_model['context']['scenario']
+    changes = [{'field': key, 'before_present': key in before_context, 'after_present': key in after_context,
+                'before': deepcopy(before_context.get(key)), 'after': deepcopy(after_context.get(key))}
+               for key in sorted(set(before_context) | set(after_context))
+               if key not in before_context or key not in after_context or before_context[key] != after_context[key]]
     return {'scope': 'independently_declared_before_after_panel_calibration',
         'operator': before_model['operator'], 'panel': before_comparison['panel'],
         'evidence_kind': before_comparison['evidence_kind'], 'tolerance': tolerance,

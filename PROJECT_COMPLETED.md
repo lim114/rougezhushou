@@ -1,3 +1,7 @@
+## 维护：成对与实验预测复用（2026-11-05）
+
+复用已生成面板、容差入口一次并内联单次变化投影；paired_calibration整模块审查完成。36项定向和12组完整输出对照通过，测试窗口更新。[回执](verification/maintenance/code-constraints-paired-prediction-20261105/README.md)。
+
 ## 维护：技能矩阵培养复用（2026-11-05）
 
 每名干员培养只读一次，跨技能结果仍独立；18项定向及7组完整矩阵对照通过，测试窗口更新。仅完成此路径。[回执](verification/maintenance/code-constraints-skill-cultivation-20261105/README.md)。

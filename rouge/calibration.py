@@ -87,12 +87,12 @@ COMMANDS['relic-panels'] = relic_panel_diagnostics
 
 def compare_panel(scenario, observation, tolerance=0):
     """Compare only the declared matching panel/context; never relabel a source."""
-    return _compare_prediction(panel_layers(scenario),observation,tolerance)
+    predicted=panel_layers(scenario);_number(tolerance,'tolerance')
+    return _compare_prediction(predicted,observation,tolerance)
 
 
 def _compare_prediction(predicted, observation, tolerance):
-    """Compare an already calculated panel; both query entries share this boundary."""
-    _number(tolerance,'tolerance')
+    """Compare an existing panel using a caller-validated tolerance."""
     if not isinstance(observation,dict):raise ValueError('observation需要JSON对象。')
     if observation.get('context_token')!=predicted['context_token']:
         raise ValueError('观察值与预测条件不一致；请先用panel导出相同条件标识。')
@@ -475,7 +475,8 @@ def calibration_worksheets(cases=None):
         seen.add(case['id']);s=case['scenario'];panel=panel_layers(s)
         observation={key:deepcopy(case[key]) for key in ('panel','values','source','evidence_kind')}
         observation['context_token']=case.get('context_token',panel['context_token'])
-        compared=_compare_prediction(panel,observation,case.get('tolerance',0))
+        tolerance=_number(case.get('tolerance',0),'tolerance')
+        compared=_compare_prediction(panel,observation,tolerance)
         rows.append({'id':case['id'],'scenario':deepcopy(s),'comparison':compared})
     return {'rows':rows,'case_count':len(rows),
         'matching_reference_cases':sum(r['comparison']['all_compared_values_match'] for r in rows),
