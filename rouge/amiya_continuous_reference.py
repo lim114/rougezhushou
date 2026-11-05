@@ -3,7 +3,7 @@ from copy import deepcopy
 from .condition_inputs import read_continuous_attacks
 
 
-def source_state(scenario):
+def preserve_plan(scenario, components, duration):
     if (scenario['operator'] != 'char_002_amiya' or scenario['skill'] != 1 or
             scenario.get('timing_mode', 'frames') != 'continuous'):
         return None
@@ -14,18 +14,9 @@ def source_state(scenario):
     # excluded by the existing ordinary attack and natural-SP reference model.
     if lifetime == 0 and options.get('target_disappears_seconds') == 0:
         return None
-    if lifetime == 0 or options.get('target_windows') == []:
-        return 'empty'
-    if (lifetime is not None and lifetime > 0) or options.get('target_windows'):
-        return 'unbound'
-    return None
-
-
-def preserve_plan(scenario, components, duration):
-    state = source_state(scenario)
-    if state is None:
+    excluded = lifetime == 0 or options.get('target_windows') == []
+    if not excluded and not ((lifetime is not None and lifetime > 0) or options.get('target_windows')):
         return None
-    excluded = state == 'empty'
     damage = [c for c in components if c['damage_type'] not in ('healing', 'regeneration', 'buildup')]
     if excluded:
         for component in damage:

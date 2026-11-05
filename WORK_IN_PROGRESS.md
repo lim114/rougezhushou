@@ -1,3 +1,7 @@
+## 当前断点：技力条件扫描与单次包装整改（2026-11-05）
+
+periodic/Combat两处attack_sp扫描去重；删未使用calculate_extended；阿米娅source_state内联。31组旧新完整结果/错误一致，54项定向通过；charge_reference完整源码审查通过。D102被调用端重复资料存在保护登记未改。测试窗口已更新可见响应。覆盖364/75/90/29，D38—D102共65组。回执verification/maintenance/code-constraints-charge-consumers-20261105/summary.json。下一批继续其余计算/资料/运行模块，普通剩余未清零；不增功能节数。
+
 ## 当前断点：四条充能配置整理去重（2026-11-05）
 
 charge_timing供周期/攻击/混合/事件四路径使用，保留各自硬直/晕眩逻辑。16组旧新配置与完整输出相同、输入不变；定向72项中28通过44历史停用跳过，不计跳过为通过。condition_inputs完整源码审查通过，其调用方重复attack_sp扫描仍待处理；timing/sp_events仅部分审查。D101缺时序文件默认登记待审。测试窗口已更新可见响应。覆盖367/75/88/28，D38—D101共64组。回执verification/maintenance/code-constraints-charge-timing-20261105/summary.json。下一批继续已核实重复扫描和其余模块；不增加功能节数。

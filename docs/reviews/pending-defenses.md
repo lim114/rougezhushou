@@ -68,3 +68,4 @@
 | D99 | `player_reference_notes`：菜单request先note_for再open_note/reference_target/note_for；open_reference先核对身份，刷新选择后再note_for比较 | 同次导航重复读来源，但选择信号可同步更新页面，末次比较能拒绝中途变化；菜单展开和后来点击是不同时间点，不能合并 | 建议只对确证无交互/信号间隔的链路传递一次核准结果；保留跨交互及刷新后的核对。替代保留现状。本批只移动context定义，不改校验 |
 | D100 | `reference_dialog.ReferenceDialog.calculate`：解析和evaluator共同捕获ValueError/KeyError/TypeError | 输入错误有提示，计算器内部缺陷也变成输入提示；旧结果已被invalidate清空 | 建议逐个计算器明确输入错误出口后收窄到解析/输入校验，内部计算缺陷暴露；替代保留此出口。未修改，待审，不借D03授权扩大范围 |
 | D101 | `timing.profiles`：公开timing-profiles.json不存在时返回空operators并缓存 | 允许缺资料启动，但缺文件可能表现为所有时序资料未知；恢复文件后缓存仍可能保持空 | 建议明确安装包必需文件契约后取消缺文件静默默认，或保留并提供来源缺失状态；本批未改，等待审核 |
+| D102 | `amiya_continuous_reference.attach_result`：full缺amiya_continuous_reference时直接返回；当前唯一产品调用方已检查该项 | 允许绕过调用方单独调用时静默无操作；正常产品路径重复确认同一份结果 | 建议将被调用函数改为直接读取已确认项，保留调用方分派；替代保留可独立调用约定。本批未删，等待审核 |

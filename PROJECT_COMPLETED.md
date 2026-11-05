@@ -1,3 +1,7 @@
+## 维护：技力扫描与单次状态包装整改（2026-11-05）
+
+两处规则重复扫描改为一次，删除闲置包装并内联单一状态消费；54项定向通过，31组旧新一致。冲锋分项模块完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-charge-consumers-20261105/README.md)。
+
 ## 维护：四条充能路径共用初动条件整理（2026-11-05）
 
 删除四份重复投影，条件观察模块完整源码审查通过。16组旧新对照一致，定向28通过、44旧测试跳过。测试窗口更新。[回执](verification/maintenance/code-constraints-charge-timing-20261105/README.md)。

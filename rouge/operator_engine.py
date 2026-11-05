@@ -1363,7 +1363,7 @@ class Combat:
                     first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
                     mixed_recovery=(attack_sp,sp['values'].get('stun',0))
                 self.notes.append('术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。')
-            elif read_continuous_attacks(self.s,active=lambda:any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[]))) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):
+            elif any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])) and read_continuous_attacks(self.s):
                 first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,0,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
                 mixed_recovery=(0,0)
         elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(self.s) or has_periodic_sp(self.s)):
@@ -1992,7 +1992,3 @@ class Combat:
         from .guardian_healing import attach_result as attach_guardian_healing
         attach_guardian_healing(result,self.guardian_module_healing_reference)
         return result
-
-
-
-def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()

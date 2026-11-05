@@ -837,12 +837,12 @@
     },
     {
       "file": "rouge/timing.py",
-      "sha256": "be3981e343bfb3afd5442248e0f34528f5ce489bbcb510a0d55539d5d6420b85",
-      "rule1": "charge_projection_duplicates_removed_other_paths_pending",
-      "rule2": "shared_helpers_have_multiple_real_consumers",
-      "rule3": "not_fully_reviewed_D101_for_timing",
+      "sha256": "8e08e6385457a08200a654cdcb3c9b394d167c60dfafcc52d37e67cf82507cec",
+      "rule1": "selected_consumers_deduplicated_remainder_pending",
+      "rule2": "unused_wrapper_and_single_caller_state_helper_removed_where_reviewed",
+      "rule3": "pending_remainder_D101_timing_D102_amiya",
       "full_module_review_complete": false,
-      "evidence": "Only charge preparation paths reviewed: periodic_charge_seconds, charge_seconds, mixed_charge_seconds now share charge_timing with a fourth consumer sp_events. Initial condition projection is identical; offset lock adjustment and stun append remain caller-specific. All other functions/classes AST unchanged. Remaining AttackTimeline and repeated attack-sp rule scans are not certified. profiles missing-file fallback D101 recorded, unchanged."
+      "evidence": "Periodic charge computes numeric attack-sp increment once and uses its value for relevance and events. Incoming-damage branch untouched. Public calculate_damage->_prepare_damage->relics.prepare replaces _relic_rules with compiled rules; this removes duplicate scans on this internal prepared contract. Direct malformed private-rule injections are not promised compatible error ordering. Other timing functions unchanged; D101 stays pending. Not a full timing audit."
     },
     {
       "file": "rouge/sp_events.py",
@@ -852,6 +852,33 @@
       "rule3": "not_fully_reviewed_D101_for_timing",
       "full_module_review_complete": false,
       "evidence": "charge preparation now reuses charge_timing; event parsing, event ordering and return semantics unchanged. Entire charge path read; module event parser and other paths remain outside full review. Four route families x initial/cycle x frame/continuous =16 old/new configurations and complete results equal, original inputs unchanged."
+    },
+    {
+      "file": "rouge/operator_engine.py",
+      "sha256": "662336fe34968f6bdee1ed57002870b457a78e2f2839c77ebe4042098c5eee93",
+      "rule1": "selected_consumers_deduplicated_remainder_pending",
+      "rule2": "unused_wrapper_and_single_caller_state_helper_removed_where_reviewed",
+      "rule3": "pending_remainder_D101_timing_D102_amiya",
+      "full_module_review_complete": false,
+      "evidence": "Natural recovery first checks attack_sp presence once, then observes the condition only when consumed; deferred text error semantics preserved on public cases. Removed calculate_extended: active source/scripts/tests search found only its definition; no package entry or documented API use found. Other Combat methods AST unchanged. Large engine only selected paths reviewed."
+    },
+    {
+      "file": "rouge/amiya_continuous_reference.py",
+      "sha256": "d893194613dd1d1eab1a97668d0e614aef3689b933022ef7cd5b17ceddc85c18",
+      "rule1": "selected_consumers_deduplicated_remainder_pending",
+      "rule2": "unused_wrapper_and_single_caller_state_helper_removed_where_reviewed",
+      "rule3": "pending_remainder_D101_timing_D102_amiya",
+      "full_module_review_complete": false,
+      "evidence": "Entire file read. source_state had exactly one caller preserve_plan and only encoded empty/unbound/None before caller decoded it; inlined into preserve_plan preserving numeric-zero early return and excluded/positive-source cases. attach_result unchanged; its optional-reference early return duplicates the currently sole caller guard and is D102 pending. Deep copies retain conditional components separately before damage mutations, not defensive recovery. Full certification withheld for D102."
+    },
+    {
+      "file": "rouge/charge_reference.py",
+      "sha256": "908273c0c2ef88897778bb568838f4fa8053d96d93674aeb17390e88dc692a05",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "reviewed_clear_no_low_probability_defense_identified",
+      "full_module_review_complete": true,
+      "evidence": "Entire unchanged finish_charge_reference read with damage caller/estimate producer. Operator/skill/count branches select applicable domain and do not repeat input validity checks. int converts previously accepted count; subtotal max(0) is nonnegative damage arithmetic, not an exception fallback. Window-versus-cast classification intentionally differs. One finisher required by damage orchestration, no gratuitous wrapper, no catch/speculative recovery. Existing tests exercise zero/count/window/late-projectile separation. Full three-rule source audit complete; not new native collision evidence."
     }
   ]
 }

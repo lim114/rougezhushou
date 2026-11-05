@@ -73,9 +73,10 @@ def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,
         if incoming_interval>0:
             step=frame_time(incoming_interval)
             events.extend((f+1,increment) for f in range(step,horizon,step))
-    elif read_continuous_attacks(scenario,active=lambda:increment+sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')>0):
+    else:
         increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
-        events.extend((f+1,increment) for f in stream['release_frames'])
+        if read_continuous_attacks(scenario,active=increment>0):
+            events.extend((f+1,increment) for f in stream['release_frames'])
     charge=0;ready=0 if required<=0 else None
     for frame,value in sorted(events):
         if ready is not None:break
