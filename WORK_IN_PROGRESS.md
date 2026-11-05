@@ -1,3 +1,7 @@
+## 当前断点：个人统计入口与单次说明包装整改（2026-11-05）
+
+持有标记、选中藏品、筛选文字复用；filter_notes/cohort_note单次包装已移除，固定说明改为常量且文字保持。18项定向通过，测试窗口更新可见响应。覆盖381/76/82/19，D38—D77统一待审。回执verification/maintenance/code-constraints-personal-statistics-entry-20261105/summary.json。下一步继续select_cohort到统计/逐局列表的重复归档资格核对及商店/历史层刷新；不扩大为全程序完成。
+
 ## 当前断点：强化投影与队伍选择去重（2026-11-05）
 
 在场标记/元信息集合一次解析；符合本次触发的强化规则复用一次未领取集合；队伍选择与等级类型检查去重。46个不同定向方法通过，测试窗口已更新可见响应。覆盖386/77/77/18，recipient_state新增整模块审查完成；D38—D65统一待审。回执verification/maintenance/code-constraints-recipient-projection-20261105/summary.json。继续剩余调用链；功能编号不变，不跑全量。

@@ -1,7 +1,7 @@
 from copy import deepcopy
 import unittest
 from rouge.run_config import config_data
-from rouge.player_statistics_cohorts import cohort,cohort_options,select_cohort,cohort_note,UNREAD
+from rouge.player_statistics_cohorts import cohort,cohort_options,select_cohort,COHORT_NOTE,UNREAD
 
 def record(identity,grade=None,squad=None):
     config={}
@@ -13,7 +13,7 @@ class CohortTests(unittest.TestCase):
     def test_base_and_strengthened_variant_share_only_known_family(self):
         rows=[record('a',15,'rogue_6_band_1'),record('b',15,'rogue_6_band_2'),record('c')];before=deepcopy(rows)
         self.assertEqual([r['state']['id']for r in select_cohort(rows,squad='rogue_6_band_1')],['a','b']);self.assertEqual(rows,before)
-        self.assertIn('不表示效果完全相同',cohort_note(None,None))
+        self.assertIn('不表示效果完全相同',COHORT_NOTE)
     def test_unread_missing_or_unverified_config_are_separate_from_zero(self):
         rows=[record('zero',0),record('missing'),record('invalid',True),record('outside',17)]
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=0)],['zero'])

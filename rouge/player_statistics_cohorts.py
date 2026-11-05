@@ -40,8 +40,7 @@ def select_cohort(records, *, difficulty=None, squad=None):
         result.append(record)
     return result
 
-def cohort_note(difficulty, squad):
-    return ('筛选的是归档中已读保密等级与分队类型；未读项目单独保留。'
+COHORT_NOTE = ('筛选的是归档中已读保密等级与分队类型；未读项目单独保留。'
             '同一分队的基础、强化阶段合并为一种类型，不表示效果完全相同。'
             '筛选不改变原记录、样本缺失处理或收藏品完整性分母。'
             '这不是不同分队的强度结论；版本、个人选择和读取缺失仍可能影响样本。')

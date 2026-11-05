@@ -32,3 +32,15 @@
 | D63 | `rouge/run_metadata_view.py`：format_run_buff_status遇到未收录的强化ID时显示无法识别提示，不继续显示为已确认强化 | 避免给未知ID补名称或使混合名单看似完整；原始ID仍保留供计算入口拒绝 | 建议保留未知ID提示；若调整为只显示已知分项需明确展示口径。原分支未改 |
 | D64 | `rouge/player_team.py`：qualified_fields在只读副本中移除非整数、超范围、无对应模组或模组阶段矛盾的字段 | 坏保存/读取数据不作为有效培养展示；原记录不写回 | 建议保留范围条件；先确认是否可由上游入口保证结构，再决定内部类型过滤去留。重复invalid_fields读取已独立精简 |
 | D65 | `rouge/player_team.py`：crew_rows遇到非字典干员记录时跳过 | 损坏单条不会阻断整队展示，但内部错误被隐藏 | 建议在记录加载边界处理后再决定内部跳过是否保留；账号范围/已离队过滤是正常功能条件，不在本条删除范围 |
+| D66 | `rouge/player_personal_statistics.py`：unique_archives跳过坏记录/非字典state/空或非文字对局ID | 坏档案不混入统计；正常同局多版本去重另属功能规则 | 建议核对store入口后确定内部坏结构过滤是否还需保留；不删同局去重 |
+| D67 | `rouge/player_personal_statistics.py`：nonnegative_integer拒绝超过浮点显示上限的整数；complete_inventory拒绝坏集合、坏记录、未知持有身份或数量不符 | 不把不可核对归档放进完整清单分母 | 保留正常分母定义；巨大整数/内部坏结构检查需要单独确认。重复record_flag读取已移除，返回规则未改 |
+| D68 | `rouge/player_personal_statistics.py`：refresh捕获store.records的OSError/ValueError/TypeError/RecursionError，清空旧统计并提示 | 历史读取失败不展示旧结果，也可能吞内部类型/递归缺陷 | 建议保留真实文件/格式失败出口，并在store契约核对后收窄内部错误；目前原捕获不变 |
+| D69 | `rouge/player_personal_statistics.py`：statistics返回前深拷贝已新建的结果字典 | 现有正常资料中结果只含新建容器与标量，拷贝不增加隔离效果；可能为异常共享目录值保留隔离 | 建议删除这次拷贝；先作为既有保护登记，等待确认，不扩展到sample_rows中的原始字段复制 |
+| D70 | `rouge/player_statistics_samples.py`：numeric_value捕获AttributeError/TypeError，将坏嵌套资源结构当未读 | 坏记录不进入数值样本，内部结构错误也被隐藏 | 建议由档案入口统一处理结构，再决定这层捕获；本批未改 |
+| D71 | `rouge/player_statistics_samples.py`：sample_binding拒绝非字典/非文字ID/不满足64位十六进制的摘要 | 无可核对身份时不开放归档跳转 | 建议保留身份绑定，不以仅有对局ID替代；后续可只在明确入口解析一次 |
+| D72 | `rouge/player_statistics_cohorts.py`：select_cohort收到非法难度或分队类型返回空列表 | 错误筛选不会退化成全部归档，但可能显示成无样本 | 建议保留入口参数规则并决定是否改为明确错误；目前原分支不变 |
+| D73 | `rouge/player_floor_resources.py`：snapshots跳过坏事件、错来源、未知区域和不可核对数值/容量 | 历史层资源不借用当前值或猜测坏记录 | 来源/同帧规则为正常功能约束；坏结构容错建议待入口契约核对后决定，当前不删 |
+| D74 | `rouge/player_floor_resources.py`：FloorResourcesPage.refresh通过getattr默认None容忍未初始化identity | 首次刷新以缺属性代表未加载 | 建议构造时初始化identity并直接读取，正常未选条目判断保留；尚未授权 |
+| D75 | `rouge/player_shop_memory.py`：qualified对坏快照/坏商品行、名称身份不匹配、重复商品返回None | 防止不可靠记录作为已读商品；一个坏行使整个快照不用于展示 | 建议保留身份标准，核对入口后区分重复验证与坏结构兜底；本批未改 |
+| D76 | `rouge/player_shop_memory.py`：remember拒绝不同局、非数值时间或超过2秒的请求 | 旧悬停结果不会写进另一局；不重试也不修改原记录 | 建议保留写入归属和新鲜度边界；其阈值不因精简放宽 |
+| D77 | `rouge/player_shop_memory.py`：recorded_shops跳过坏历史事件/非有限或负时间，资料缺失时返回空 | 无法核对的商店记录不用于对比；不替原件补数据 | 建议保留缺资料状态并核对历史入口是否已覆盖类型过滤；当前不改 |

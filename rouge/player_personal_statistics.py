@@ -17,9 +17,12 @@ def complete_inventory(state):
         if not isinstance(records, dict):
             return False
         for identity, record in records.items():
-            if not isinstance(record, dict) or record_flag(record, 'held') is None:
+            if not isinstance(record, dict):
                 return False
-            if active_record(record, 'held'):
+            held = record_flag(record, 'held')
+            if held is None:
+                return False
+            if held:
                 if identity not in known:
                     return False
                 total += 1
@@ -146,20 +149,22 @@ class PersonalStatisticsPage(QWidget):
         self.render()
 
     def render(self, *_):
+        relic_id = self.relic.currentData()
         if not self.source_available:
             self.result = None
             self.card_controls.sync()
             self.detail_key=None
             self.detail.setPlainText('本机历史暂未读到，统计未知；没有用0局或旧结果替代。')
-            self.samples.install(None,self.relic.currentData())
+            self.samples.install(None,relic_id)
             return
-        from .player_cohort_ui import selected_records,filter_notes
+        from .player_cohort_ui import selected_records
         selected=selected_records(self)
-        self.result = statistics(selected, self.relic.currentData())
-        self.samples.install(selected,self.relic.currentData())
+        self.result = statistics(selected, relic_id)
+        self.samples.install(selected,relic_id)
         self.card_controls.sync()
         from html import escape
         from .player_cohort_ui import filter_text
+        scope_text = filter_text(self)
         rows=[]
         for row in self.result['measures'].values():
             value=f'{row["mean"]:.2f}'if row['mean']is not None else'未知'
@@ -169,10 +174,12 @@ class PersonalStatisticsPage(QWidget):
             value=f'{relic["fraction"]:.1%}'if relic['fraction']is not None else'未知'
             rows.append((relic['name']+'持有率',value,str(relic['sample_count'])+'局',str(relic['excluded_incomplete_count'])+'局'))
         cells=''.join('<tr>'+''.join('<td>'+escape(value)+'</td>'for value in row)+'</tr>'for row in rows)
-        text=('<h3>归档前最近读值 · '+str(self.result['archive_count'])+'局样本</h3><p>'+escape(filter_text(self))+'</p>'
+        text=('<h3>归档前最近读值 · '+str(self.result['archive_count'])+'局样本</h3><p>'+escape(scope_text)+'</p>'
               '<table cellpadding="5" cellspacing="0" border="1"><tr><th>项目</th><th>平均 / 比例</th><th>计入</th><th>未计入</th></tr>'+cells+'</table>'
               '<p>未读不当作0；只用本机归档，不上传，样本数不是通关数。<br>平均值不是整局收益；持有率只看完整清单，不是掉落概率。胜率与最终结算仍未知；版本、个人选择与读取缺失可能影响结果。</p>'
               '<a href="statistics-details" style="color:'+self.detail.palette().text().color().name()+'">'+('收起完整统计口径'if self.details_open else'展开完整统计口径')+'</a>')
-        if self.details_open:text+='<pre style="white-space:pre-wrap">'+escape(filter_notes(self)+'\n\n'+statistics_text(self.result))+'</pre>'
+        if self.details_open:
+            from .player_statistics_cohorts import COHORT_NOTE
+            text+='<pre style="white-space:pre-wrap">'+escape(scope_text+'\n'+COHORT_NOTE+'\n\n'+statistics_text(self.result))+'</pre>'
         if self.detail_key!=text:
             offset=self.detail.verticalScrollBar().value();self.detail.setHtml(text);self.detail.verticalScrollBar().setValue(offset);self.detail_key=text

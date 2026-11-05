@@ -1,0 +1,110 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "个人统计入口去重与单次说明包装移除",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "4c53619b87e2fac8ad524acdd862f6a741a7fd78",
+  "source_sha256": {
+    "rouge/player_personal_statistics.py": "c9236ce5810dfed99c123a3d9c03c304577eecb19e0f315ab2eb71f35bfff938",
+    "rouge/player_cohort_ui.py": "9c78142efb5c9f83144b90e5e47524c43b60308f298621922941149741df369f",
+    "rouge/player_statistics_cohorts.py": "75372f700776d4c77a9ab6a7f1086c812deb45aa3dbe1a6c4ec0e8c4aa2bd7fc",
+    "rouge/player_statistics_samples.py": "8cf3bc7573d368a67777d702554a3af6c5fcad9949fd83a5e439534199f26c53",
+    "rouge/player_floor_resources.py": "2eaf2f23b285f545a59cea05f3e44c0ef5bbc3f2fcc57468c093506467eda500",
+    "rouge/player_shop_memory.py": "85b0bc53445546e4322c8acfe0055146e6aef064038689580a7306f45336c220"
+  },
+  "test_sha256": {
+    "tests/test_personal_statistics_entry_review.py": "caa540e3e018d26c1ce13bed38e1744d5b79c904217fd1da16bc61d371b44716",
+    "tests/test_player_statistics_cohorts_407.py": "e074ffec07b48467ce1786bd9d1ed3e858df0423164bb70f4a93494bfa99305d"
+  },
+  "changed_sources": [
+    "rouge/player_personal_statistics.py",
+    "rouge/player_cohort_ui.py",
+    "rouge/player_statistics_cohorts.py"
+  ],
+  "reviewed_modules": 6,
+  "full_module_reviews_added": 1,
+  "full_modules_added": [
+    "rouge/player_cohort_ui.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "baseline": {
+      "run": 2,
+      "failures": 2,
+      "elapsed_seconds": 0.362
+    },
+    "targeted": {
+      "run": 15,
+      "passed": 15,
+      "elapsed_seconds": 0.084
+    },
+    "kettle_statistics": {
+      "run": 3,
+      "passed": 3,
+      "elapsed_seconds": 0.082
+    },
+    "unique_targeted_methods": 18,
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar; isolated archives, no game actions"
+    },
+    "local_evidence": ".local/code-constraints-review-29/"
+  },
+  "coverage": {
+    "full_modules_certified": 19,
+    "structural_only": 381,
+    "selected_paths_only": 82,
+    "exception_equivalence_only": 76,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

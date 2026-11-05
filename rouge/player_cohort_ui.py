@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QComboBox,QHBoxLayout
-from .player_statistics_cohorts import cohort_options,select_cohort,cohort_note
+from .player_statistics_cohorts import cohort_options,select_cohort
 
 def attach_filters(page,body):
     bar=QHBoxLayout();page.grade_filter=QComboBox();page.squad_filter=QComboBox();bar.addWidget(page.grade_filter);bar.addWidget(page.squad_filter);body.insertLayout(1,bar)
@@ -17,5 +17,4 @@ def refresh_filters(page):
 
 def selected_records(page):return select_cohort(page.records,difficulty=page.grade_filter.currentData(),squad=page.squad_filter.currentData())
 def filter_text(page):return page.grade_filter.currentText()+' · '+page.squad_filter.currentText()
-def filter_notes(page):return filter_text(page)+'\n'+cohort_note(page.grade_filter.currentData(),page.squad_filter.currentData())
 

@@ -1,3 +1,7 @@
+## 维护：个人统计入口与说明包装精简（2026-11-05）
+
+复用持有标记和当前选择；删除两个单次说明包装，保留原说明文字与共用筛选入口。18项定向通过，player_cohort_ui完成本模块代码审查，测试窗口已更新。[回执](verification/maintenance/code-constraints-personal-statistics-entry-20261105/README.md)。
+
 ## 维护：强化投影与队伍选择去重（2026-11-05）
 
 在场和元信息一次解析，未领取集合一次计算复用，队伍选择/等级检查去重；46个不同定向方法通过。recipient_state完成本模块三条代码审查，测试窗口已更新。[回执](verification/maintenance/code-constraints-recipient-projection-20261105/README.md)。
