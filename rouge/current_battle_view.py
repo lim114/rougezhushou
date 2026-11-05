@@ -578,7 +578,7 @@ class CurrentBattlePanel(QWidget):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
         kind=self.queue_kind.currentData();actions=self.result['actions']if self.result else[]
         selected_group=None if self.sender()is self.queue_kind else self.action_group.currentData()
-        groups=list(dict.fromkeys(group_key(a)for a in action_rows(actions,kind)if group_key(a)is not None))
+        groups=list(dict.fromkeys(group for a in action_rows(actions,kind)if (group:=group_key(a))is not None))
         blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部分组',None)
         for group in groups:self.action_group.addItem(group_label(group),group)
         index=self.action_group.findData(selected_group)

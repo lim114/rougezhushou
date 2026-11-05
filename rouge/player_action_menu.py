@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget,QHBoxLayout,QLabel,QToolButton,QMenu
 class ButtonMenu(QWidget):
     def __init__(self,owner,buttons,*,title='更多查询'):
         super().__init__(owner);layout=owner.layout()
-        positions=[layout.indexOf(button)for button in buttons if layout.indexOf(button)>=0]
+        positions=[index for button in buttons if (index:=layout.indexOf(button))>=0]
         index=min(positions)if positions else layout.count()
         self.holder=QWidget(owner);self.holder.hide();self.actions=[]
         row=QHBoxLayout(self);row.setContentsMargins(0,0,0,0)

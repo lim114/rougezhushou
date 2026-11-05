@@ -1,0 +1,104 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "资料入口重复汇总与分组校验精简",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "91396c19ab6b78815ea4b937ca43e49ce2dbe2aa",
+  "source_sha256": {
+    "rouge/player_action_menu.py": "7cab1e3377e78537b6e29e7106e6e98dc18913aac75d8f44f2d69c56e39c4b1b",
+    "rouge/player_context.py": "740cbb6e5594b68f8bab75276c76745d344aa07e66082afc04f91c52f6457201",
+    "rouge/player_overview.py": "4424b1e56cc367275382b307ac70dcb3802a6c9456aa7ef0da0ee66129645ff9",
+    "rouge/current_battle_view.py": "54b01edc621db88e47ad1a53af3aae749456e7e2bc466572a70ba125d4e026c4",
+    "rouge/player_note_style.py": "71cfd402c4040e7f9790c54ccc67280f99b9823a48c03948386d4a0248e47106",
+    "rouge/player_shop_replay.py": "a559e9ba781a9b2a1aca9101ea4e22b84eb3c5d73bc58b14c77a4dee4154a82b",
+    "rouge/player_spawn_filters.py": "e7b41a45f2ddfaf34c39018731dfdc38692ef437cbd490770d02cfc679c19501",
+    "rouge/player_tile_information.py": "eab30e22b107da099e1c3423fdda3d4af406e1e9fd38ad8c51e25f7da2d15cbc",
+    "rouge/player_recorded_scene.py": "dbeb29b6d250c6851c03c3e7e2c47da4e705eeb90fad781706df0425999842bf",
+    "rouge/condition_inputs.py": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808"
+  },
+  "test_sha256": {
+    "tests/test_player_reader_entry_review.py": "87b7e4c5e449bede95413b695529df7622b43c714a15e2aab6acd922f94c1852"
+  },
+  "changed_sources": [
+    "rouge/player_action_menu.py",
+    "rouge/player_context.py",
+    "rouge/player_overview.py",
+    "rouge/current_battle_view.py"
+  ],
+  "reviewed_modules": 10,
+  "full_module_reviews_added": 3,
+  "full_modules_added": [
+    "rouge/player_overview.py",
+    "rouge/player_note_style.py",
+    "rouge/player_shop_replay.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "initial_fixture_issue": "First overview test counted its own expected-value call; corrected before product edits. First battle fixture lacked action_index; corrected without product changes. Original logs retained locally.",
+    "baseline_corrected": {
+      "run": 3,
+      "passed": 1,
+      "failures": 2,
+      "elapsed_seconds": 0.037,
+      "reason": "overview computed twice and menu layout positions queried twice"
+    },
+    "reader_targeted": {
+      "run": 14,
+      "passed": 14,
+      "elapsed_seconds": 0.157
+    },
+    "battle_baseline_corrected": {
+      "run": 1,
+      "failures": 1,
+      "elapsed_seconds": 0.107,
+      "reason": "4 source actions caused 8 group_key calls"
+    },
+    "battle_targeted": {
+      "run": 9,
+      "passed": 9,
+      "elapsed_seconds": 0.125
+    },
+    "unique_targeted_methods": 20,
+    "full_suite_run": false,
+    "unchanged_modules": "Code review only; no new runtime correctness claims for unchanged shop/style and pending paths.",
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar; no game interaction"
+    },
+    "local_evidence": ".local/code-constraints-review-26/"
+  },
+  "coverage": {
+    "full_modules_certified": 15,
+    "structural_only": 395,
+    "selected_paths_only": 71,
+    "exception_equivalence_only": 77,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

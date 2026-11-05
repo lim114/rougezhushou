@@ -194,10 +194,10 @@
     {
       "file": "rouge/condition_inputs.py",
       "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808",
-      "rule1": "followup_required",
-      "rule2": "shared_helpers_and_decorator_callbacks_confirmed",
-      "rule3": "not_certified",
-      "evidence": "Reads share a ContextVar with delayed validation across damage/estimate/operator/timing. Need call-chain review before deciding repeated checks are removable."
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "Traced real consumers in damage/estimate/timing/operator_engine/sp_events. Observation marks actual branch use; decorator raises once after core and resets ContextVar in finally. Outside scope reads and nested/parallel isolation have explicit existing tests. Do not eagerly validate inactive conditions or reorder legacy errors; repeated observation optimization still needs a semantics-preserving design."
     },
     {
       "file": "rouge/public_node_statistics.py",
@@ -218,6 +218,95 @@
         "D48"
       ],
       "evidence": "Only default_frequencies owns cached default source. Existing exception clauses unchanged; event art/dossier paths are not certified by this batch."
+    },
+    {
+      "file": "rouge/player_action_menu.py",
+      "sha256": "7cab1e3377e78537b6e29e7106e6e98dc18913aac75d8f44f2d69c56e39c4b1b",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "Layout position read once per button; existing signal callbacks and action synchronization remain. D50/D51 untouched.",
+      "decisions": [
+        "D50",
+        "D51"
+      ]
+    },
+    {
+      "file": "rouge/player_context.py",
+      "sha256": "740cbb6e5594b68f8bab75276c76745d344aa07e66082afc04f91c52f6457201",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "Read title once without changing D49 fallback. Fold initializes visibility via its existing toggle path, eliminating duplicate hide. Toggle is a real signal callback, not a one-use wrapper.",
+      "decisions": [
+        "D49"
+      ]
+    },
+    {
+      "file": "rouge/player_overview.py",
+      "sha256": "4424b1e56cc367275382b307ac70dcb3802a6c9456aa7ef0da0ee66129645ff9",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "One initial overview_facts snapshot now supplies both card names and values; refresh is the later update entry. Domain counters remain in their existing shared providers. No low-probability fallback or one-use helper inside this module."
+    },
+    {
+      "file": "rouge/current_battle_view.py",
+      "sha256": "54b01edc621db88e47ad1a53af3aae749456e7e2bc466572a70ba125d4e026c4",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "Only _actions_changed grouping reviewed: group_key once per action while building group choices. Later filtering uses separate selected criteria. Rest of large module not certified."
+    },
+    {
+      "file": "rouge/player_note_style.py",
+      "sha256": "71cfd402c4040e7f9790c54ccc67280f99b9823a48c03948386d4a0248e47106",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Shared stylesheet data only, imported by actual note windows; no executable checks, catches or function wrappers."
+    },
+    {
+      "file": "rouge/player_shop_replay.py",
+      "sha256": "a559e9ba781a9b2a1aca9101ea4e22b84eb3c5d73bc58b14c77a4dee4154a82b",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Snapshot detachment is the read-only replay contract; id/history change controls normal refresh. Missing selected observation is an ordinary navigation result. Qt methods have actual replay consumer; no extra exception catch or low-probability recovery."
+    },
+    {
+      "file": "rouge/player_spawn_filters.py",
+      "sha256": "e7b41a45f2ddfaf34c39018731dfdc38692ef437cbd490770d02cfc679c19501",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "group_key/action_rows shared by battle reader and filters; record_text has one source caller but owns actual domain formatting, not a forwarding wrapper. D52 guards unchanged.",
+      "decisions": [
+        "D52"
+      ]
+    },
+    {
+      "file": "rouge/player_tile_information.py",
+      "sha256": "eab30e22b107da099e1c3423fdda3d4af406e1e9fd38ad8c51e25f7da2d15cbc",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "label performs shared field translation four times; formatting stays in one actual domain entry. D53 guards unchanged.",
+      "decisions": [
+        "D53"
+      ]
+    },
+    {
+      "file": "rouge/player_recorded_scene.py",
+      "sha256": "dbeb29b6d250c6851c03c3e7e2c47da4e705eeb90fad781706df0425999842bf",
+      "rule1": "selected_paths_reviewed_followup_remaining",
+      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule3": "see_pending_decisions_or_remaining_scope",
+      "evidence": "content_context used by direct confirmed and historical matching paths, not a single-use extraction. D54 malformed-input filtering and D55 identity criteria unchanged.",
+      "decisions": [
+        "D54",
+        "D55"
+      ]
     }
   ]
 }

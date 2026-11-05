@@ -3,8 +3,8 @@ from PySide6.QtWidgets import QToolBar,QLabel,QPushButton,QWidget,QVBoxLayout,QT
 from PySide6.QtCore import Qt
 
 def recent_content(state):
-    row=state.get('last_node_content')or{}
-    return row.get('title')if isinstance(row.get('title'),str)else''
+    row=state.get('last_node_content')or{};title=row.get('title')
+    return title if isinstance(title,str)else''
 
 class ContextBar(QToolBar):
     def __init__(self,run,open_content,parent=None):
@@ -23,7 +23,7 @@ class Fold(QWidget):
         super().__init__(parent);body=QVBoxLayout(self);body.setContentsMargins(0,0,0,0)
         self.toggle=QToolButton();self.toggle.setText(title);self.toggle.setCheckable(True)
         self.toggle.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon);body.addWidget(self.toggle)
-        self.content=content;body.addWidget(content);content.hide()
+        self.content=content;body.addWidget(content)
         self.toggle.toggled.connect(self._toggle);self._toggle(False)
     def _toggle(self,value):
         self.content.setVisible(value);self.toggle.setArrowType(Qt.ArrowType.DownArrow if value else Qt.ArrowType.RightArrow)
