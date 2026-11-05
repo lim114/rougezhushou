@@ -97,8 +97,8 @@ class NoteLibraryPanel(QWidget):
         self.entries.blockSignals(True);self.entries.clear()
         for i,row in enumerate(self.rows):
             reference=labels.get(row['key']);label=reference['label']if reference and reference['context']==row['content']else row['title']
-            item=QListWidgetItem(label);item.setData(Qt.ItemDataRole.UserRole,str(row['path']));item.setData(Qt.ItemDataRole.UserRole+1,i);self.entries.addItem(item)
-            if str(row['path'])==identity:self.entries.setCurrentItem(item)
+            path=str(row['path']);item=QListWidgetItem(label);item.setData(Qt.ItemDataRole.UserRole,path);item.setData(Qt.ItemDataRole.UserRole+1,i);self.entries.addItem(item)
+            if path==identity:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.selected()
         return True
     def selected(self,*_):

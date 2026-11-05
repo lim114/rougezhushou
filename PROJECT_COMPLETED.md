@@ -1,3 +1,7 @@
+## 维护：笔记目录重复计算精简（2026-11-04）
+
+仅完成类型对照表每轮复用与条目路径文字复用，19项定向通过。D28捕获范围问题待确认，未计完成。[回执与进度](verification/maintenance/code-constraints-note-directory-20261104/README.md)。
+
 ## 维护：手动笔记刷新与目录筛选精简（2026-11-04）
 
 手动阅读跳过无关实时输入，恢复跟随和新局仍更新；目录筛选复用选择值、单次matching内联。D27读取出口经批准保留，32项原生定向通过。[回执与进度](verification/maintenance/code-constraints-note-refresh-20261104/README.md)。

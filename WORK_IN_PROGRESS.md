@@ -1,3 +1,7 @@
+## 当前断点：目录普通精简完成，D28待确认
+
+对照表每轮构建一次，条目路径文字复用；19项原生定向通过，测试窗口已更新并核对可见、响应。D28：目录扫描捕获包住界面更新，1项基线失败已复现；原捕获未改，等待用户选择。拟用测试在.local/code-constraints-review-16/pending_boundary_case.py，批准后移入tests并完成该项。回执verification/maintenance/code-constraints-note-directory-20261104/summary.json；覆盖426/77/54/1不变。
+
 ## 当前断点：手动笔记刷新与目录筛选整改完成
 
 手动刷新不读无关场景、筛选条件复用、单次matching内联；D27读取错误出口已明确批准保留，整段try/except AST不变。32项原生定向通过，测试窗口已更新并核对可见、响应。回执verification/maintenance/code-constraints-note-refresh-20261104/summary.json。继续其它未审路径，D27不重复送审，不扩展到写入/锁/链接保护；426/77/54/1覆盖数量不变。

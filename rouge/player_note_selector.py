@@ -10,7 +10,7 @@ def catalogue_snapshot():
     else:unavailable.append('关卡分类')
     if event is not None and event['version_source_identity']==ref['source_identity']:categories.append('scenes')
     else:unavailable.append('事件分类')
-    result=[];groups={}
+    result=[];groups={};stage_kinds=dict(stages.KINDS)
     for row in event['data']['rows']if 'scenes'in categories else[]:
         for sid in row['event']['scene_ids']:groups.setdefault(sid,[]).extend(row['catalogue_groups'])
     for category in categories:
@@ -18,7 +18,7 @@ def catalogue_snapshot():
             identity=row['id'];kind='reference-stage'if category=='stages'else'reference-scene'
             context={'kind':kind,'title':row['name'],'event_id':identity,'variant_id':json.dumps([ref['source_identity'],identity],ensure_ascii=True,sort_keys=True,separators=(',',':'))}
             if category=='stages':
-                info=stage['data']['rows'][identity];floors=[info['floor']];nodes=[dict(stages.KINDS)[info['play_kind']]]
+                info=stage['data']['rows'][identity];floors=[info['floor']];nodes=[stage_kinds[info['play_kind']]]
             else:
                 matched=groups.get(identity,[]);floors=list(dict.fromkeys(('unknown'if n=='unknown'else'floor'+str(n))for g in matched for n in(g.get('floors')or['unknown'])))or['unknown'];nodes=list(dict.fromkeys(t for g in matched for t in g['node_types']))or['节点类别未确认']
             result.append({'context':context,'label':row['label'],'floors':floors,'nodes':nodes})
