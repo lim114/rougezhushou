@@ -39,8 +39,13 @@ def _text(value, name):
 def timing_reference(scenario):
     """Reuse the final existing forecast, preserving every unknown and warning."""
     from .calibration import _panel_calculation
-    from .catalog import catalog
     panel, result = _panel_calculation(scenario)
+    return _timing_prediction(panel, result)
+
+
+def _timing_prediction(panel, result):
+    """Project timing channels from an already calculated matching panel/result."""
+    from .catalog import catalog
     normalized = panel['context']['scenario']
     skill = result['estimate']['skill']
     profile = catalog()['operators'][normalized['operator']]

@@ -271,9 +271,15 @@ def _stamp(raw, clock, fps, name):
 
 
 def compare_bounded_timing(scenario, observation, tolerance_seconds=0):
-    from .timing_calibration import KINDS, RELEASE_KINDS, EVENTS, LABELS, timing_reference
+    from .timing_calibration import timing_reference
     tolerance = _number(tolerance_seconds, '明确秒数容差')
     reference = timing_reference(scenario)
+    return _compare_bounded_reference(reference, observation, tolerance_seconds, tolerance)
+
+
+def _compare_bounded_reference(reference, observation, tolerance_seconds, tolerance):
+    """Compare independent bounds using an existing reference and validated tolerance."""
+    from .timing_calibration import KINDS, RELEASE_KINDS, EVENTS, LABELS
     allowed = {'context_token', 'operator', 'skill_id', 'evidence_kind', 'source', 'clock',
         'first_cycle_is_initial', 'release_kind', 'cycles', 'attack_speed_attribute', 'ordering_protocol', 'ordering_constraints'}
     if not isinstance(observation, dict) or set(observation) - allowed:

@@ -981,21 +981,33 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "ea41c1d0c8e64c8e987e240c885b3694473a6a80833ea1b69b749342738fce53",
-      "rule1": "intervals_parsed_once_per_intersection_prior_model_reuse_retained",
-      "rule2": "sole_use_control_projection_inlined_domain_intersection_and_subset_retained",
-      "rule3": "D109_D110_D111_pending_unchanged",
+      "sha256": "92c2584960333e32d918b0cdad2936d9fe23691ee8f97c22f8622bf28ed95561",
+      "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
+      "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
+      "rule3": "pending_scoped_approvals_unchanged",
       "full_module_review_complete": false,
-      "evidence": "Interval intersections decode each record once (4N to N); preserve exact rational endpoints, strict endpoint witnesses, record order and owned witness copies. Inlined sole-use control difference projection. Empty input is a supported no-data result. _intersection and _subset remain distinct multi-use domain operations. D109/D110 unchanged; D111 timing structure guard added to pending queue unchanged. Partial module review: no full-module completion claim."
+      "evidence": "Whole experiment source revisited with previous interval/control audit. Timing record reuses model and calculation; control+3 samples7 to4 computations. Panel branch preserves previous4-call contract. Existing D109/D110/D111 unchanged; every independent observation, source, identity and control difference still checked; no records dropped. All ordinary paths reviewed, module completion pending its listed defenses.",
+      "ordinary_rules_review_complete": true
     },
     {
       "file": "rouge/timing_calibration.py",
-      "sha256": "b25863361c5892dabd83c5672a7d7e81aaa5b42b1110cb7041ad33af6a8ab133",
-      "rule1": "shared_calculation_no_second_normalization_or_execution_summary_once",
-      "rule2": "shared_substantive_calculation_two_consumers_existing_domain_helpers_retained",
-      "rule3": "D112_pending_unchanged",
+      "sha256": "fa1f80f6b611ac6c4b5ed7a3b5b64d91c13548f097fdc081777564d19bdc173a",
+      "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
+      "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
+      "rule3": "pending_scoped_approvals_unchanged",
       "full_module_review_complete": false,
-      "evidence": "Entire timing_calibration reviewed. timing_reference uses panel calculation once; _summary checks recorded values once and reuses extrema. _clock and _cycle are substantive input parsers, _measure/_summary/_text/_number are reused; template stamp used repeatedly. Identity, temporal sequence, frame/second conversion, charge/cadence applicability and unknown branches are normal domain contracts. Huge input integer demonstrably needs OverflowError conversion at numeric entry (existing invalid-input test). ValueError part of same narrow catch queued D112 unchanged; full module not certified until approved. No new recovery or fallback."
+      "evidence": "Existing scenario entry now projects through shared _timing_prediction. Both scenario entry and experiment use this substantive projection; no added guards. Entire prior timing review retained with D112 unchanged.",
+      "ordinary_rules_review_complete": true
+    },
+    {
+      "file": "rouge/bounded_calibration.py",
+      "sha256": "66f77d72ce8ef3efbcdfb9e0f874c44bfff2ed6f959ce9c6d697b5a11408a239",
+      "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
+      "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
+      "rule3": "pending_scoped_approvals_unchanged",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Whole bounded_calibration source reviewed: explicit interval arithmetic and declared graph ordering are substantive reused domain operations; clock/stamp/panel parsers validate distinct input structures. Shared _compare_bounded_reference consumes validated tolerance and existing reference. Public entry keeps tolerance-first validation; experiment passes literal0/Fraction0. D113 numeric ValueError, D114 exact-bound fallback, D115 nested tolerance checks, D116 converted-panel shape recheck are unchanged pending approval. None means a supported missing reading; graph aliases/strict cycles/input limits are domain constraints, not removed."
     }
   ]
 }

@@ -1,3 +1,7 @@
+## 维护：时刻实验预测传递（2026-11-05）
+
+同一时刻样本预测复用，控制+3样本7→4次；63项定向和24报告/6坏记录对照通过，窗口更新。[回执](verification/maintenance/code-constraints-experiment-timing-20261105/README.md)。待审保护仍未销项。
+
 ## 维护：面板时序共用预测（2026-11-05）
 
 九技能时序计算每项2→1次，汇总空列表/极值去重。47项定向及最终相关19项通过，24报告和6藏品条件一致，原窗口更新。[回执](verification/maintenance/code-constraints-timing-prediction-20261105/README.md)。仅列已改路径，不将待审模块销项。

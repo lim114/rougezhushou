@@ -4,7 +4,8 @@ A feasible common residual is a hypothesis range, never a correction, hidden
 mechanism, causal conclusion, fitted coefficient, or native certification.
 """
 from copy import deepcopy
-from .bounded_calibration import _reading, _interval, _bounds, _residual, compare_bounded_timing
+from fractions import Fraction
+from .bounded_calibration import _reading, _interval, _bounds, _residual, _compare_bounded_reference
 
 
 def _text(value, name):
@@ -60,10 +61,12 @@ def _panel_value(data, channel, model):
     return reading, expected, reason, comparison
 
 
-def _timing_value(data, channel):
+def _timing_value(data, channel, model, calculation):
+    from .timing_calibration import _timing_prediction
     if not isinstance(data, dict) or set(data) != {'scenario', 'observation'}:
         raise ValueError('时刻样本需为scenario与独立observation。')
-    result = compare_bounded_timing(**data)
+    reference = _timing_prediction(model, calculation)
+    result = _compare_bounded_reference(reference, data['observation'], 0, Fraction(0))
     collection = (result['release_interval_rows'] if channel['metric'] == 'release_interval' else
                   result['repeat_cycle_rows'] if channel['metric'] == 'start_to_start' else result['comparisons'])
     selected = next((r for r in collection if r['metric'] == channel['metric'] and r['cycle_id'] == channel['cycle_id'] and
@@ -78,7 +81,7 @@ def _timing_value(data, channel):
 
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
-    from .calibration import panel_layers, OPERATORS, LABELS
+    from .calibration import panel_layers, _panel_calculation, OPERATORS, LABELS
     from .timing_calibration import LABELS as TIMING_LABELS
     allowed = {'id', 'hypothesis', 'operator', 'channel', 'control_scenario', 'varying_fields',
                'evidence_kind', 'evidence_version', 'records'}
@@ -149,7 +152,10 @@ def calibration_experiment(experiment):
                 raise ValueError('独立记录结构不正确。')
             observation = data['observation']
             result.update(source=observation.get('source'), context_token=observation.get('context_token'))
-            model = panel_layers(data['scenario'])
+            if channel['kind'] == 'panel':
+                model = panel_layers(data['scenario'])
+            else:
+                model, calculation = _panel_calculation(data['scenario'])
             current = model['context']['scenario']
             result['declared_scenario'] = deepcopy(current)
             result['model_source'] = deepcopy(model['source'])
@@ -168,7 +174,7 @@ def calibration_experiment(experiment):
                 result['blocking_reasons'].append('evidence_kind_mismatch')
             if raw['evidence_version'] != version:
                 result['blocking_reasons'].append('caller_evidence_version_mismatch')
-            reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel))
+            reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel, model, calculation))
             result.update(observed_interval=reading, model_reference=expected,
                 residual_interval=_residual(reading, expected), comparison_detail=detail,
                 declared_observation=deepcopy(observation))
