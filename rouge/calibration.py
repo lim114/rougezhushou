@@ -53,6 +53,12 @@ def _cultivated(scenario, **overrides):
 
 def panel_layers(scenario):
     """Expose ordered cultivation/rune/talent/skill stages, without changing math."""
+    panel, _ = _panel_calculation(scenario)
+    return panel
+
+
+def _panel_calculation(scenario):
+    """Build the panel and retain its calculation for timing consumers."""
     s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
     prepared=_prepare_damage(deepcopy(s),cultivated_attributes=cult);resolved,rune,_,_=prepared
     result=_calculate_prepared(s,deepcopy(prepared));base=result['estimate']['base_stats']
@@ -69,7 +75,7 @@ def panel_layers(scenario):
     ctx={'scenario':deepcopy(s),'source_commit':catalog()['source']['commit']}
     token=sha256(json.dumps(ctx,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
     profile=catalog()['operators'][s['operator']]
-    return {'operator':profile['name'],'operator_key':s['operator'],'operator_id':profile['id'],
+    panel={'operator':profile['name'],'operator_key':s['operator'],'operator_id':profile['id'],
             'selected_operator':{'key':s['operator'],'id':profile['id'],'name':profile['name']},'context':ctx,
             'context_token':token,'rows':rows,'panels':{name:deepcopy(stats) for name,stats in stages},
             'rune_sources':deepcopy(resolved.get('_attribute_runes',[])),
@@ -78,6 +84,7 @@ def panel_layers(scenario):
             'warnings':deepcopy(result.get('warnings',[])),'native_verified':False,
             'notes':[BOUNDARY,'相邻层差值用于定位偏差，不代表把跨层效果相加即可重新得到结果。',
                      '技能面板仅列当前模型已输出的攻击与攻速；未覆盖的技能生命、防御变化没有伪造数值。']}
+    return panel, result
 
 COMMANDS={'panel':panel_layers}
 

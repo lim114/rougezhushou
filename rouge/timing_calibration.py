@@ -38,12 +38,10 @@ def _text(value, name):
 
 def timing_reference(scenario):
     """Reuse the final existing forecast, preserving every unknown and warning."""
-    from .calibration import panel_layers
+    from .calibration import _panel_calculation
     from .catalog import catalog
-    from .damage import calculate_damage
-    panel = panel_layers(scenario)
+    panel, result = _panel_calculation(scenario)
     normalized = panel['context']['scenario']
-    result = calculate_damage(deepcopy(normalized))
     skill = result['estimate']['skill']
     profile = catalog()['operators'][normalized['operator']]
     entry = profile['skills'][normalized['skill'] - 1]
@@ -174,10 +172,14 @@ def _measure(identity, metric, start, end, expected, tolerance, reason=None):
 
 def _summary(rows):
     values = [row['observed_seconds'] for row in rows if row['observed_seconds'] is not None]
-    return {'recorded_count': len(values), 'minimum_seconds': min(values) if values else None,
-            'maximum_seconds': max(values) if values else None,
-            'range_seconds': max(values) - min(values) if values else None,
-            'mean_seconds': math.fsum(value / len(values) for value in values) if values else None,
+    if values:
+        minimum, maximum = min(values), max(values)
+        span = maximum - minimum
+        mean = math.fsum(value / len(values) for value in values)
+    else:
+        minimum = maximum = span = mean = None
+    return {'recorded_count': len(values), 'minimum_seconds': minimum,
+            'maximum_seconds': maximum, 'range_seconds': span, 'mean_seconds': mean,
             'actual_cause_of_variation': None}
 
 

@@ -909,12 +909,12 @@
     },
     {
       "file": "rouge/calibration.py",
-      "sha256": "6bc696ba3569d02d5a0870ad4ba83fe10aab7cef58dd06b4bafea24609ce41eb",
-      "rule1": "selected_prediction_and_tolerance_repetition_removed",
-      "rule2": "single_use_changes_inlined_other_helpers_substantive_or_multiple_use",
-      "rule3": "handlers_unchanged_D109_D110_experiment_pending",
+      "sha256": "2cfaed346ed653a5c853f007c3a5e816d89a172efc4e387108dd624e146d4415",
+      "rule1": "shared_calculation_no_second_normalization_or_execution_summary_once",
+      "rule2": "shared_substantive_calculation_two_consumers_existing_domain_helpers_retained",
+      "rule3": "no_protection_changed_this_path_other_paths_partial",
       "full_module_review_complete": false,
-      "evidence": "Comparison tolerance is checked once at each public entry; _compare_prediction receives a caller-validated value. compare_panel and each worksheet case retain previous validation order. Paired entry validates once for both observations; experiment passes literal0. Other calibration paths remain partial review."
+      "evidence": "Panel construction and its existing damage calculation now have a shared internal owner _panel_calculation, called by panel_layers and timing_reference. Public panel projection keeps its signature and schema; no private calculation data added to public reports. Input normalization, cultivation, preparation and calculation retain order. Other calibration paths remain partial."
     },
     {
       "file": "rouge/damage.py",
@@ -987,6 +987,15 @@
       "rule3": "D109_D110_D111_pending_unchanged",
       "full_module_review_complete": false,
       "evidence": "Interval intersections decode each record once (4N to N); preserve exact rational endpoints, strict endpoint witnesses, record order and owned witness copies. Inlined sole-use control difference projection. Empty input is a supported no-data result. _intersection and _subset remain distinct multi-use domain operations. D109/D110 unchanged; D111 timing structure guard added to pending queue unchanged. Partial module review: no full-module completion claim."
+    },
+    {
+      "file": "rouge/timing_calibration.py",
+      "sha256": "b25863361c5892dabd83c5672a7d7e81aaa5b42b1110cb7041ad33af6a8ab133",
+      "rule1": "shared_calculation_no_second_normalization_or_execution_summary_once",
+      "rule2": "shared_substantive_calculation_two_consumers_existing_domain_helpers_retained",
+      "rule3": "D112_pending_unchanged",
+      "full_module_review_complete": false,
+      "evidence": "Entire timing_calibration reviewed. timing_reference uses panel calculation once; _summary checks recorded values once and reuses extrema. _clock and _cycle are substantive input parsers, _measure/_summary/_text/_number are reused; template stamp used repeatedly. Identity, temporal sequence, frame/second conversion, charge/cadence applicability and unknown branches are normal domain contracts. Huge input integer demonstrably needs OverflowError conversion at numeric entry (existing invalid-input test). ValueError part of same narrow catch queued D112 unchanged; full module not certified until approved. No new recovery or fallback."
     }
   ]
 }

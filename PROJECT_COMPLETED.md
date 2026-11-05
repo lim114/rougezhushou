@@ -1,3 +1,7 @@
+## 维护：面板时序共用预测（2026-11-05）
+
+九技能时序计算每项2→1次，汇总空列表/极值去重。47项定向及最终相关19项通过，24报告和6藏品条件一致，原窗口更新。[回执](verification/maintenance/code-constraints-timing-prediction-20261105/README.md)。仅列已改路径，不将待审模块销项。
+
 ## 维护：实验区间与条件投影（2026-11-05）
 
 区间一次解析、单次条件差异内联。20项定向通过，18份报告与1728种区间组合旧新一致；原测试窗口更新。[回执](verification/maintenance/code-constraints-experiment-intervals-20261105/README.md)。仅相关路径完成。
