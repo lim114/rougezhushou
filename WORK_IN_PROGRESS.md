@@ -1,3 +1,7 @@
+## 当前断点：事件目录构建复用同次来源快照（2026-11-05）
+
+39事件来源读取78→39，场景标题277→137；快照和选项同次读取，两条实际构建分支共用_entries。14项定向通过，完整固定目录保持一致，旧失败留存。来源函数与既有raise未变，D38—D96共59组仍待审；测试窗口更新。覆盖372/75/87/24不变。下一步核对packet notes两次读取的校验职责及其它入口重复，统计共同入口继续待办。回执verification/maintenance/code-constraints-event-derive-snapshot-20261105/summary.json。不加功能节数。
+
 ## 当前断点：事件目录注册与单次包装去重（2026-11-05）
 
 复用20类窗口注册与参数约定，仅扩flows321；_filters/_event内联，空查询省掉全文拼接。24项定向通过；旧新56查询/6快照/21映射一致。来源保护未改，D91—D96待审核；下一批处理derive重复来源读取，packet notes复读需区分校验阶段。测试窗口已更新。覆盖372/75/87/24，D38—D96共59组。回执verification/maintenance/code-constraints-event-directory-entry-20261105/summary.json。不增加功能节数，统计共同入口及全程序整改继续。

@@ -79,8 +79,38 @@ def topic_ids(text, has_battle):
     return [key for key, _ in TOPICS if key in matches]
 
 
-def derive(catalogue, bindings, modules):
+def _entries(row, ref, provider):
+    """Build choice rows from the same snapshot for catalogue and extra events."""
     from . import expansion_reference as version
+    originals = ref['data'].get('originals', {})
+    original_choices = originals.get('choices', {}); items = originals.get('items', {})
+    entries = []
+    for sid in row['event']['scene_ids']:
+        choice_ids = row['scenes'][sid]['choice_ids']
+        if not choice_ids: continue
+        scene_label = provider.scene_label(ref, sid)
+        for cid in choice_ids:
+            choice = row['choices'][cid]
+            original = original_choices.get(cid, {})
+            title = choice.get('title', original.get('title', ''))
+            description = choice.get('description', original.get('description', ''))
+            ids = [choice.get(key) for key in ('item_id', 'reward_item_id', 'offered_item_id', 'effect_item_id', 'required_item_id', 'named_reward_item_id', 'named_part_item_id')]
+            ids.append((original.get('displayData') or {}).get('itemId'))
+            names = list(dict.fromkeys(items[i]['name'] for i in ids if i in items))
+            has_battle = bool(choice.get('stage_ids') or choice.get('has_documented_battle_link'))
+            text = version._plain(title + '\n' + description)
+            entries.append({'key': row['id'] + ':' + sid + ':' + cid, 'scene_id': sid,
+                            'choice_id': cid, 'scene_label': scene_label,
+                            'title': version._plain(title), 'description': version._plain(description),
+                            'related_item_names': names,
+                            'topics': topic_ids(text, has_battle),
+                            'presentation': choice.get('presentation', 'documented_choice'),
+                            'actual_game_button': choice.get('actual_game_button'),
+                            'actual_eligible': None})
+    return entries
+
+
+def derive(catalogue, bindings, modules):
     rows = []; by_pair = {}
     for summary in catalogue:
         binding = bindings[summary['id']]
@@ -94,37 +124,19 @@ def derive(catalogue, bindings, modules):
         row = {'id': pair[0] + ':' + pair[1], 'reader': pair[0], 'event_id': pair[1],
                'title': ref['event']['title'], 'catalogue_groups': [deepcopy(summary)],
                'reader_source_identity': json.loads(json.dumps(ref['source_identity'])), **snapshot}
+        row['entries'] = _entries(row, ref, modules[pair[0]])
         rows.append(row); by_pair[pair] = row
     for event_id in ('button', 'blueprint', 'revive'):
         ref = modules['flows321'].reference(event_id)
         if ref is None: raise ValueError('Current extra event source unavailable')
-        rows.append({'id': 'flows321:' + event_id, 'reader': 'flows321', 'event_id': event_id,
+        row = {'id': 'flows321:' + event_id, 'reader': 'flows321', 'event_id': event_id,
                      'title': ref['event']['title'], 'catalogue_groups': [],
                      'reader_source_identity': json.loads(json.dumps(ref['source_identity'])),
-                     **_snapshot(ref['data'], event_id)})
+                     **_snapshot(ref['data'], event_id)}
+        row['entries'] = _entries(row, ref, modules['flows321'])
+        rows.append(row)
     for row in rows:
-        ref = modules[row['reader']].reference(row['event_id']); entries = []
-        for sid in row['event']['scene_ids']:
-            for cid in row['scenes'][sid]['choice_ids']:
-                choice = row['choices'][cid]
-                original = ref['data'].get('originals', {}).get('choices', {}).get(cid, {})
-                title = choice.get('title', original.get('title', ''))
-                description = choice.get('description', original.get('description', ''))
-                ids = [choice.get(key) for key in ('item_id', 'reward_item_id', 'offered_item_id', 'effect_item_id', 'required_item_id', 'named_reward_item_id', 'named_part_item_id')]
-                ids.append((original.get('displayData') or {}).get('itemId'))
-                items = ref['data'].get('originals', {}).get('items', {})
-                names = list(dict.fromkeys(items[i]['name'] for i in ids if i in items))
-                has_battle = bool(choice.get('stage_ids') or choice.get('has_documented_battle_link'))
-                text = version._plain(title + '\n' + description)
-                entries.append({'key': row['id'] + ':' + sid + ':' + cid, 'scene_id': sid,
-                                'choice_id': cid, 'scene_label': modules[row['reader']].scene_label(ref, sid),
-                                'title': version._plain(title), 'description': version._plain(description),
-                                'related_item_names': names,
-                                'topics': topic_ids(text, has_battle),
-                                'presentation': choice.get('presentation', 'documented_choice'),
-                                'actual_game_button': choice.get('actual_game_button'),
-                                'actual_eligible': None})
-        row['entries'] = entries
+        entries = row['entries']
         row['node_types'] = list(dict.fromkeys(t for group in row['catalogue_groups'] for t in group['node_types']))
         row['topics'] = [topic for topic, _ in TOPICS if any(topic in e['topics'] for e in entries)]
         row['actual_eligible'] = None; row['actual_node'] = None

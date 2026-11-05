@@ -772,12 +772,18 @@
     },
     {
       "file": "rouge/current_event_directory.py",
-      "sha256": "a0e5fe364e5aa2f7f3bdfd5a7ca06bfca491dc7cbd4a0349e70b7510d0d5192e",
+      "sha256": "6a0b13ffd4e695f5bc1543af44952bc14201a54766c682a0070b7ab4264a8376",
       "directory_entry_review": {
         "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
         "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
         "rule3": "existing_defenses_preserved; D89-D96 pending review",
         "remaining": "derive reloads provider reference; source loader and cross-entry freshness checks still need scoped review"
+      },
+      "derive_snapshot_review": {
+        "rule1": "event_snapshot_and_entries_use_one_provider_reference; scene_label_once_per_nonempty_scene",
+        "rule2": "entries_builder_has_two_real_call_sites_for_catalogue_and_extra_events; no_one_use_wrapper",
+        "rule3": "all_prior_raise_nodes_and_source_loader_functions_unchanged",
+        "remaining": "source loader notes re-read and D91-D96 defense decisions; no whole-program certification"
       }
     }
   ]

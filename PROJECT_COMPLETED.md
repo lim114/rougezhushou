@@ -1,3 +1,7 @@
+## 维护：事件目录构建来源去重（2026-11-05）
+
+同次来源生成事件快照和选项，来源读取78→39，场景标题277→137，完整固定资料一致。14项定向通过，测试窗口更新。[回执](verification/maintenance/code-constraints-event-derive-snapshot-20261105/README.md)。
+
 ## 维护：事件目录注册与单次包装去重（2026-11-05）
 
 共用20类窗口映射，保留目录专属flows321；内联两个单次包装并跳过空查询全文拼接。24项定向通过及旧新等价比对，测试窗口更新。[回执](verification/maintenance/code-constraints-event-directory-entry-20261105/README.md)。
