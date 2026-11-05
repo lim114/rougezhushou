@@ -81,8 +81,8 @@ class PreviewMapView(MapView):
             left=canvas.center().x()-(cols-1)*step/2;top=canvas.center().y()-(rows-1)*step/2
             points={n['id']:QPointF(left+n['col']*step,top+n['row']*step)for n in self.graph['nodes']}
         return QRectF(self.contentsRect()),points
-    def icon_size(self):
-        _,points=self._positions();xs=sorted({round(p.x(),2)for p in points.values()})
+    def icon_size(self,points):
+        xs=sorted({round(p.x(),2)for p in points.values()})
         return min(60,max(28,min((b-a for a,b in zip(xs,xs[1:])),default=85)*.66))
     def paintEvent(self,event):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
@@ -91,7 +91,7 @@ class PreviewMapView(MapView):
         if not self.background.isNull():p.drawImage(QRectF(self.rect()),self.background);p.fillRect(self.rect(),QColor(0,0,0,85))
         if not self.graph:
             p.setPen(QColor('#eff4f4'));p.drawText(self.rect(),Qt.AlignmentFlag.AlignCenter,'尚无本局地图记录\n后台读到地图后会自动显示');return
-        _,points=self._positions();size=self.icon_size()
+        _,points=self._positions();size=self.icon_size(points)
         for a,b in self.graph.get('edges',[]):
             if a not in points or b not in points:continue
             path=QPainterPath(points[a]);mid=(points[a]+points[b])/2
@@ -99,6 +99,7 @@ class PreviewMapView(MapView):
             p.setPen(QPen(QColor(135,143,136,90),7,Qt.PenStyle.SolidLine,Qt.PenCapStyle.RoundCap));p.drawPath(path)
             p.setPen(QPen(QColor(183,189,179,135),1.5));p.drawPath(path)
         font=self.font();font.setPointSize(9);p.setFont(font)
+        width=max(46,min(112,self._badge_width(points)));current=self.graph.get('current_node');last=self.graph.get('last_confirmed_current_node')or current
         for node in self.graph['nodes']:
             point=points[node['id']];kind,note,evidence=node_style(node);overlay=self.overlay.get(node['id'],{});match=overlay.get('match')
             image_kind=self.filter_kind if match=='candidate'else kind;icon=self.sprite_for(image_kind)
@@ -115,13 +116,11 @@ class PreviewMapView(MapView):
                 p.setPen(QPen(QColor('#ffd087')if match=='history'else QColor('#8cebd2'),1.7,Qt.PenStyle.DashLine if match=='candidate'else Qt.PenStyle.SolidLine));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+7,size/2+7)
             if node['id']==self.selected:
                 p.setPen(QPen(QColor('#ffffff'),2));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+4,size/2+4)
-            current=self.graph.get('current_node')
-            last=self.graph.get('last_confirmed_current_node')or current
             if node['id']==current and not self.historical or node['id']==last and(self.historical or not current):
                 p.setPen(QPen(QColor('#ffcf79')if self.historical or not current else QColor('#a1ffd2'),2,Qt.PenStyle.DashLine if self.historical or not current else Qt.PenStyle.SolidLine))
                 p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+9,size/2+9)
                 p.drawText(QRectF(point.x()-55,point.y()-size/2-30,110,20),Qt.AlignmentFlag.AlignCenter,'最近位置'if self.historical or not current else'当前位置')
-            width=max(46,min(112,self._badge_width(points)));label=kind or'类型未确认'
+            label=kind or'类型未确认'
             if kind=='林间空地'and node.get('remembered_type'):label='原·'+node['remembered_type']
             if evidence=='template':label+='·模板'
             elif evidence=='history'and kind!='林间空地':label+='·记录'
@@ -133,7 +132,7 @@ class PreviewMapView(MapView):
                 row=overlay.get('frequency');label=f"历史 {row['frequency']:.1%}"if row else'历史比例未知'
                 badge.translate(0,20);p.fillRect(badge,QColor(13,42,35,220));p.setPen(QColor('#bef6e3'));p.drawText(badge,Qt.AlignmentFlag.AlignCenter,label)
     def _hit(self,point):
-        _,points=self._positions();size=self.icon_size()
+        _,points=self._positions();size=self.icon_size(points)
         hits=[((p-point).manhattanLength(),key)for key,p in points.items()if QRectF(p.x()-size/2-5,p.y()-size/2-7,size+10,size+35).contains(point)]
         return min(hits)[1]if hits else None
     def mouseMoveEvent(self,event):
@@ -251,10 +250,10 @@ class MapPanel(QWidget):
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
         self.latest_position.setEnabled(self.latest_position_key()is not None)
-        self.update_node_finder();self.floors.blockSignals(True)
+        finder=self.update_node_finder();self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
-        for key,graph in sorted(self.graphs.items(),key=lambda pair:(zone_info(pair[1])[1]or 99,pair[0])):
-            name,floor=zone_info(graph);i=self.floors.addTab('第'+'一二三四五六'[floor-1]+'层'if floor else name);self.floors.setTabData(i,key);self.floors.setTabToolTip(i,name)
+        for key,graph,name,floor in finder.zones:
+            i=self.floors.addTab('第'+'一二三四五六'[floor-1]+'层'if floor else name);self.floors.setTabData(i,key);self.floors.setTabToolTip(i,name)
         keys=[self.floors.tabData(i)for i in range(self.floors.count())];wanted=old_key if old_key in keys else(original.graph or{}).get('zone_id')
         self.floors.setCurrentIndex(keys.index(wanted)if wanted in keys else 0 if keys else-1);self.floors.blockSignals(False);self.show_floor()
     def update_node_finder(self,*_):
@@ -267,6 +266,7 @@ class MapPanel(QWidget):
         if i>=0:self.node_results.setCurrentIndex(i)
         self.node_results.blockSignals(False);self.find_node.setEnabled(self.node_results.count()>0)
         self.node_results.setToolTip('只查找本局保存的地图位置；已读名称须直接关联到该节点。搜索不到不表示未生成。')
+        return finder
     def locate_found_node(self):
         key=self.node_results.currentData()
         if not key:return False
@@ -274,7 +274,7 @@ class MapPanel(QWidget):
         if not g or g.get('template_id')!=template or not any(n['id']==node for n in g['nodes']):return False
         index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==zone),None)
         if index is None:return False
-        self.floors.setCurrentIndex(index);self.view.select_node(node);self.select_interactive(node);return True
+        self.floors.setCurrentIndex(index);self.view.select_node(node);return True
     def latest_position_key(self):
         original=self.owner.map_view;g=original.graph
         if not g:return None
@@ -286,19 +286,19 @@ class MapPanel(QWidget):
         if not key:return False
         index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==key[0]),None)
         if index is None:return False
-        self.floors.setCurrentIndex(index);self.view.select_node(key[2]);self.select_interactive(key[2]);return True
+        self.floors.setCurrentIndex(index);self.view.select_node(key[2]);return True
     def show_floor(self,*_):
         if self.view.graph:
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
         index=self.floors.currentIndex();key=self.floors.tabData(index)if index>=0 else None
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
         from .player_floor_resources import snapshots,snapshot_text,snapshot_entries
-        row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key and r.get('template_id')==(graph or{}).get('template_id')),None);self.floor_resources.setText(snapshot_text(row))
+        row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key and r.get('template_id')==(graph or{}).get('template_id')),None);snapshot_note=snapshot_text(row);self.floor_resources.setText(snapshot_note)
         if ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
             self.hover_timer.stop();self.leave_timer.stop();self.hover_pending=None;self.hover_card.dismiss()
         historical=not(graph and original.graph and key==original.graph.get('zone_id')and graph.get('template_id')==original.graph.get('template_id')and not original.historical)
         if historical and graph:
-            self.resources.set_rows([{**entry,'note':snapshot_text(row)}for entry in snapshot_entries(row)]if row else[{'key':'unread','name':'该层资源','value':'未记录','note':snapshot_text(None)}])
+            self.resources.set_rows([{**entry,'note':snapshot_note}for entry in snapshot_entries(row)]if row else[{'key':'unread','name':'该层资源','value':'未记录','note':snapshot_note}])
             self.resources.setAccessibleName('所选历史地图资源；缺记录不借用本局最近值')
         else:
             self.resources.refresh(self.owner.run.state);self.resources.setAccessibleName('本局最近已读资源；未读不代表零；不是历史层当时数量')

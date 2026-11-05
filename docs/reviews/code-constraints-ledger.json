@@ -473,22 +473,31 @@
     },
     {
       "file": "rouge/player_map_find.py",
-      "sha256": "19b471ee38f013bd3814784576f9303f0a9f4cd901d2f74aa2cc10bef35057a5",
-      "rule1": "finder_refresh_duplicate_projection_removed_other_paths_pending",
-      "rule2": "direct_domain_operation_or_required_acceptance_entry",
-      "rule3": "pending_user_review_or_unreviewed_paths",
-      "evidence": "One per-refresh NodeFinder owns exact labels and disjoint coverage; one zone_info per graph and one node_style per node. find handles normal text/category filters without repeating projection. Old rows/coverage wrappers removed, current callers migrated. Original malformed-content guards unchanged, D79 pending.",
+      "sha256": "3b53d266e100c17e74ae10b0fbbf6ac86888a33f5c7f364c30f618c6682ef5ea",
+      "rule1": "same_refresh_zone_info_and_geometry_reused_selection_signal_not_duplicated",
+      "rule2": "existing_shared_geometry_helper_takes_current_points_no_new_wrapper",
+      "rule3": "pending_user_review",
+      "evidence": "NodeFinder exposes its already sorted zones to current refresh; no second sort/zone_info for floor tabs. Next refresh builds a new finder. D79 unchanged; not whole-module certification.",
       "decisions": [
         "D79"
       ]
     },
     {
       "file": "rouge/player_map.py",
-      "sha256": "3a3e4effaee8e6b35f84389474a302aedc8064a21168f42efe6d44baab0fd263",
-      "rule1": "finder_refresh_duplicate_projection_removed_other_paths_pending",
-      "rule2": "direct_domain_operation_or_required_acceptance_entry",
-      "rule3": "pending_user_review_or_unreviewed_paths",
-      "evidence": "Only update_node_finder reviewed/changed: one NodeFinder for counts plus filtered rows. Next refresh creates a new projection, selection/notice semantics preserved. Other module paths not certified; floor-tab refresh still calls zone_info in sorting and labels and needs followup."
+      "sha256": "1d4336b78beb7edc79eb18e0fb2818b3c7c584b9dd398f2219b29ef3b1d080f4",
+      "rule1": "same_refresh_zone_info_and_geometry_reused_selection_signal_not_duplicated",
+      "rule2": "existing_shared_geometry_helper_takes_current_points_no_new_wrapper",
+      "rule3": "pending_user_review",
+      "evidence": "Traced refresh/painting/hit/selection/readers. Reuses NodeFinder.zones, current point map, one badge width/current-position lookup, and one historical snapshot text. select_node emits existing connected select_interactive; redundant direct calls removed in locate/focus. Source/error/optional reader guards unchanged, D80-D86 pending. Not whole-module certification; reading expansion and shared dossier paths still need review.",
+      "decisions": [
+        "D80",
+        "D81",
+        "D82",
+        "D83",
+        "D84",
+        "D85",
+        "D86"
+      ]
     },
     {
       "file": "rouge/player_overlay_settings.py",

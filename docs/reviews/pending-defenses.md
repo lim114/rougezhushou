@@ -46,3 +46,10 @@
 | D77 | `rouge/player_shop_memory.py`：recorded_shops跳过坏历史事件/非有限或负时间，资料缺失时返回空 | 无法核对的商店记录不用于对比；不替原件补数据 | 建议保留缺资料状态并核对历史入口是否已覆盖类型过滤；当前不改 |
 | D78 | `rouge/player_shop_memory.py:ShopMemoryPanel.open_source`：先调用refresh（会reload_sources），随后无对话框或异步等待又reload_sources | 第二次文件状态检查可读到恰在两次调用间变化的公开资料；通常重复stat，资料变更时可能重读。未证明是有意防御，按用户要求先保留待审 | 建议删第二次调用，采用本次refresh取得的来源；外部资料若恰在调用间改变，下次操作再更新。不改reload_sources内的错误处理，不新增缓存或重试 |
 | D79 | `rouge/player_map_find.py:NodeFinder.__init__`：原rows中的非字典content/非文字title忽略逻辑原样迁入；仅登记异常内容结构的过滤 | 坏内容不会成为搜索标题，但也会隐藏历史结构缺陷；正常未读取内容和same_frame_selected_node归属要求另属功能规则 | 建议保留同帧绑定规则，异常结构过滤待历史入口契约核对后决定。当前只移动原表达式，未删校验或新增恢复 |
+| D80 | `rouge/player_map.py:node_sprite`：已声明图标的sprite缺失时返回空图；alpha裁剪无有效像素时沿用原图 | 缺素材仍能画未知节点，坏图可能被静默隐藏；不含正常未知类型 | 建议区分未知类型和已声明素材损坏；本批未改原分支，待确认是否保留静默处理 |
+| D81 | `rouge/player_map.py:PreviewMapView.paintEvent`：连线任一端不在节点坐标表时跳过该连线 | 不因坏边中断绘制，也可能漏显结构错误 | 建议核对地图入口契约后决定；当前原样保留，不补边或猜坐标 |
+| D82 | `rouge/player_map.py:MapPanel.open_hover_entry`：node_dossier的ValueError/KeyError/TypeError直接返回False | 坏资料阻止跳转且保留查询，内部类型或键错误也被吞掉 | 建议把真实资料失败与内部缺陷分开后收窄；本批不改捕获范围 |
+| D83 | `rouge/player_map.py:MapPanel.selected`：node_dossier的ValueError/KeyError/TypeError变成节点资料错误提示 | 本次不继续展示资料，也可能掩盖内部缺陷 | 建议只保留资料入口已定义的失败；先核对下游错误类型，当前保持 |
+| D84 | `rouge/player_map.py:MapPanel.remember_entry_reading`：reading_key元素不是非空文字或根分组标签不是文字时跳过保存 | 坏身份不写入阅读记忆；也可能让内部初始化问题表现为阅读状态丢失 | 正常未选节点分支保留；异常类型保护待确认，当前不变 |
+| D85 | `rouge/player_map.py:MapPanel.check_reference`：getattr默认None读取node_reference_binding/panel，hasattr容忍无refresh_reference方法 | 兼容不同资料窗口接口；也可能掩盖漏初始化的属性 | 建议逐类核对窗口契约后统一接口；不在本批擅自删除可选读取 |
+| D86 | `rouge/player_map.py:MapPanel.open_entry`：make_reader没有返回精确浮窗时转到原完整目录并激活主窗口 | 仍能查资料，但会改变打开位置且可能掩盖缺少精确入口 | 建议明确哪些类型仍需该备用路径后决定保留范围；本批未触发或改变它 |

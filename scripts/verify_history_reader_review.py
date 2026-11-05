@@ -28,7 +28,7 @@ if __name__=='__main__':
             page.entries.setCurrentRow(2);gui.processEvents();nodes={n['id']:n for n in page.view.graph['nodes']}
             require(nodes[a]['observed_type']=='诡意行商'and nodes[b]['observed_type']=='不期而遇'and 'observed_type'not in nodes[c],'map_accumulates_only_two_reads_before_selected_step')
             require(page.view.graph['last_confirmed_current_node']==a and page.view.selected==b,'selected_node_and_latest_historical_position_are_distinct')
-            point=page.view._positions()[1][a];require(point.y()-page.view.icon_size()/2-30>=0,'historical_position_caption_stays_inside_visible_map')
+            points=page.view._positions()[1];point=points[a];require(point.y()-page.view.icon_size(points)/2-30>=0,'historical_position_caption_stays_inside_visible_map')
             require('源石锭 7'in page.resources.text()and'999'not in page.resources.text(),'historical_resource_is_saved_zone_snapshot_not_final_or_current_amount')
             panel.notice.setText('隔离历史示例 · 截至所选记录，非实机对局');save(bar.replay_popup,'history-middle')
             QTest.keyClick(page.entries,Qt.Key.Key_Home);gui.processEvents()

@@ -5,7 +5,8 @@ class NodeFinder:
         from .map_reporting import location
         self.entries=[];self.counts={k:0 for k in('read','fixed','unknown')}
         zones=[(zone,g,*zone_info(g))for zone,g in graphs.items()]
-        for zone,g,name,floor in sorted(zones,key=lambda row:(row[3]or 99,row[0])):
+        self.zones=sorted(zones,key=lambda row:(row[3]or 99,row[0]))
+        for zone,g,name,floor in self.zones:
             for n in g.get('nodes',[]):
                 kind,note,origin=node_style(n);category='read'if origin in('observed','history')else'fixed'if origin=='template'else'unknown';titles=[]
                 self.counts[category]+=1

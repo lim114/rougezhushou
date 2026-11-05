@@ -1,0 +1,141 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图刷新与绘制复用当次数据并移除重复选择回调",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "b5bc3916858b8566eb5bb6b79417a949735a3a92",
+  "source_sha256": {
+    "rouge/player_map.py": "1d4336b78beb7edc79eb18e0fb2818b3c7c584b9dd398f2219b29ef3b1d080f4",
+    "rouge/player_map_find.py": "3b53d266e100c17e74ae10b0fbbf6ac86888a33f5c7f364c30f618c6682ef5ea"
+  },
+  "test_sha256": {
+    "tests/test_map_refresh_geometry_review.py": "878836266fad6e815000f9f0428edf041427f174fded26f133d0cd6862e8ae23",
+    "tests/test_map_finder_entry_review.py": "8e5db4deb93e64cdd7de5c42faa3cb8cd22f0e75e222384322101ac7d1caef81",
+    "tests/test_player_feature_437.py": "ab8af6d39a02af8c5c7ef79fa0b679b97a736b9e6ce325533340fdacfb3bbc43",
+    "tests/test_player_feature_440.py": "ed6da4d2a42b78d7545ac43d21f019a9c0d5798ebaabdd96d384e9a88fed875a",
+    "tests/test_player_feature_438.py": "0942153ed247da47d0afa8fb6f40d52f89c6ebf1b3f84cb2466c274d98b78325",
+    "tests/test_history_reader_review.py": "8926251b4bd00e5ee870797af1cfb7a678d2e7e65c66d92c1780b5814dfc7405",
+    "tests/test_player_feature_435.py": "4a129d585e5b3fbf28a838d86bf04c9f067e271e03b92229f0d2d4175bc84807"
+  },
+  "script_sha256": {
+    "scripts/verify_history_reader_review.py": "22854bf54c23840b028e76f53bc748e2851baed8ff86f6ba70137a61e56c0083"
+  },
+  "changed_sources": [
+    "rouge/player_map.py",
+    "rouge/player_map_find.py"
+  ],
+  "full_module_reviews_added": 0,
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "baseline": {
+      "run": 3,
+      "failures": 3,
+      "elapsed_seconds": 2.633
+    },
+    "targeted": {
+      "run": 11,
+      "passed": 11,
+      "elapsed_seconds": 5.577
+    },
+    "reading_regression_first": {
+      "run": 6,
+      "passed": 5,
+      "failures": 1,
+      "elapsed_seconds": 7.199,
+      "reason": "existing test hardcodes year 1970; current local timezone shows 1969-12-31"
+    },
+    "original_source_replay": {
+      "run": 1,
+      "failures": 1,
+      "same_fixed_year_failure": true
+    },
+    "timezone_assertion_corrected": {
+      "run": 1,
+      "passed": 1,
+      "elapsed_seconds": 0.413,
+      "change": "assert exact local date from fixture timestamp; production time formatter unchanged"
+    },
+    "unique_targeted_methods": 17,
+    "all_unique_methods_final_passed": true,
+    "render_comparison": {
+      "cases": 24,
+      "pixel_equal": true,
+      "hit_points": 384,
+      "hits_equal": true,
+      "before_source_sha256": "3a3e4effaee8e6b35f84389474a302aedc8064a21168f42efe6d44baab0fd263",
+      "after_source_sha256": "1d4336b78beb7edc79eb18e0fb2818b3c7c584b9dd398f2219b29ef3b1d080f4"
+    },
+    "script_compile_only": true,
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar only; geometry and reading use isolated public fixtures, not game acceptance"
+    },
+    "local_evidence": ".local/code-constraints-review-32/"
+  },
+  "coverage": {
+    "full_modules_certified": 24,
+    "structural_only": 375,
+    "selected_paths_only": 83,
+    "exception_equivalence_only": 76,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

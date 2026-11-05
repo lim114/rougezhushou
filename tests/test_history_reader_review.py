@@ -1,5 +1,6 @@
 """History-prefix maps, resource provenance, and one-pass archive filtering."""
 from copy import deepcopy
+from datetime import datetime
 from unittest.mock import patch
 import unittest
 from PySide6.QtWidgets import QApplication
@@ -68,8 +69,9 @@ class HistoryReaderUiTests(unittest.TestCase):
         state,t,ids=history_example();page=NodeReplayPage();self.addCleanup(page.close);page.show();page.refresh(state);page.entries.setCurrentRow(2)
         graph=deepcopy(page.view.graph);self.assertIn('源石锭 7',page.resources.text());before=deepcopy(state)
         page.resize(720,500);self.qt.processEvents()
-        point=page.view._positions()[1][ids[0]];self.assertGreaterEqual(point.y()-page.view.icon_size()/2-30,0)
-        self.assertNotIn('1970',page.entries.item(0).text());self.assertIn('1970',page.entries.item(0).toolTip())
+        points=page.view._positions()[1];point=points[ids[0]];self.assertGreaterEqual(point.y()-page.view.icon_size(points)/2-30,0)
+        local_time=datetime.fromtimestamp(state['history'][1]['at']).strftime('%Y-%m-%d %H:%M:%S')
+        self.assertNotIn(local_time,page.entries.item(0).text());self.assertIn(local_time,page.entries.item(0).toolTip())
         state['history'].append({'kind':'map_position_updated','zone_id':t['zone_id'],'current':ids[-1],'at':109});page.refresh(state)
         self.assertEqual(page.entries.currentRow(),2);self.assertEqual(page.view.graph,graph);self.assertIn('源石锭 7',page.resources.text())
         page.entries.setCurrentRow(page.entries.count()-1);self.assertIn('源石锭 99',page.resources.text());self.assertEqual(state['history'][:-1],before['history'])
