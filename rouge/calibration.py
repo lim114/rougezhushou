@@ -51,12 +51,6 @@ def _cultivated(scenario, **overrides):
     s={**scenario,**overrides}
     return operator_attributes(s['operator'],s['elite'],s['level'],s['trust'],s['potential'],s['module_id'],s['module_level'])
 
-def _fingerprint(value):
-    return sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
-
-def _context(s):
-    return {'scenario':deepcopy(s),'source_commit':catalog()['source']['commit']}
-
 def panel_layers(scenario):
     """Expose ordered cultivation/rune/talent/skill stages, without changing math."""
     s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
@@ -72,11 +66,12 @@ def panel_layers(scenario):
                  None if i==0 or field not in stats or field not in stages[i-1][1]
                  else stats[field]-stages[i-1][1][field]} for i,(name,stats) in enumerate(stages)]
         if any(v['value'] is not None for v in values):rows.append({'field':field,'label':label,'stages':values})
-    ctx=_context(s)
+    ctx={'scenario':deepcopy(s),'source_commit':catalog()['source']['commit']}
+    token=sha256(json.dumps(ctx,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
     profile=catalog()['operators'][s['operator']]
     return {'operator':profile['name'],'operator_key':s['operator'],'operator_id':profile['id'],
             'selected_operator':{'key':s['operator'],'id':profile['id'],'name':profile['name']},'context':ctx,
-            'context_token':_fingerprint(ctx),'rows':rows,'panels':{name:deepcopy(stats) for name,stats in stages},
+            'context_token':token,'rows':rows,'panels':{name:deepcopy(stats) for name,stats in stages},
             'rune_sources':deepcopy(resolved.get('_attribute_runes',[])),
             'native_panel_reference':deepcopy(result['panel_native_finalization']),
             'source':_source(),'model_complete':result['estimate'].get('complete',False),
@@ -92,7 +87,12 @@ COMMANDS['relic-panels'] = relic_panel_diagnostics
 
 def compare_panel(scenario, observation, tolerance=0):
     """Compare only the declared matching panel/context; never relabel a source."""
-    predicted=panel_layers(scenario);_number(tolerance,'tolerance')
+    return _compare_prediction(panel_layers(scenario),observation,tolerance)
+
+
+def _compare_prediction(predicted, observation, tolerance):
+    """Compare an already calculated panel; both query entries share this boundary."""
+    _number(tolerance,'tolerance')
     if not isinstance(observation,dict):raise ValueError('observation需要JSON对象。')
     if observation.get('context_token')!=predicted['context_token']:
         raise ValueError('观察值与预测条件不一致；请先用panel导出相同条件标识。')
@@ -376,7 +376,7 @@ def packet_worksheet(scenario):
     """Expose stat/multiplier/defense arithmetic without assuming attack counts."""
     from .enemy_environment import damage_factor
     s=_scenario(scenario);prepared=_prepare_damage(deepcopy(s));resolved=prepared[0]
-    result=calculate_damage(deepcopy(s));profile=catalog()['operators'][s['operator']]
+    result=_calculate_prepared(s,deepcopy(prepared));profile=catalog()['operators'][s['operator']]
     bb=profile['skills'][s['skill']-1]['levels'][s['skill_rank']-1]['values']
     attack=result['attack'];op=s['operator'];number=s['skill'];rows=[]
     defense=float(resolved.get('enemy_defense',0));resistance=float(resolved.get('enemy_resistance',0))
@@ -462,7 +462,7 @@ def calibration_worksheets(cases=None):
         seen.add(case['id']);s=case['scenario'];panel=panel_layers(s)
         observation={key:deepcopy(case[key]) for key in ('panel','values','source','evidence_kind')}
         observation['context_token']=case.get('context_token',panel['context_token'])
-        compared=compare_panel(s,observation,case.get('tolerance',0))
+        compared=_compare_prediction(panel,observation,case.get('tolerance',0))
         rows.append({'id':case['id'],'scenario':deepcopy(s),'comparison':compared})
     return {'rows':rows,'case_count':len(rows),
         'matching_reference_cases':sum(r['comparison']['all_compared_values_match'] for r in rows),
@@ -483,17 +483,13 @@ def barrier_packet_ledger(ledger):
 COMMANDS['barrier-ledger'] = barrier_packet_ledger
 
 
-def shield_grant_snapshots(scenario, snapshots, ordinary_native_path, float_rounding=None):
-    from .mechanist_shield_grants import mechanist_shield_grants
-    return mechanist_shield_grants(scenario,snapshots,ordinary_native_path,float_rounding)
+from .mechanist_shield_grants import mechanist_shield_grants as shield_grant_snapshots
 
 
 COMMANDS['shield-grants'] = shield_grant_snapshots
 
 
-def source_shield_inventory(inventory):
-    from .shield_source_inventory import mechanist_shield_inventory
-    return mechanist_shield_inventory(inventory)
+from .shield_source_inventory import mechanist_shield_inventory as source_shield_inventory
 
 
 COMMANDS['shield-inventory'] = source_shield_inventory

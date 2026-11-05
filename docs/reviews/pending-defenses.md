@@ -71,3 +71,5 @@
 | D102 | `amiya_continuous_reference.attach_result`：full缺amiya_continuous_reference时直接返回；当前唯一产品调用方已检查该项 | 允许绕过调用方单独调用时静默无操作；正常产品路径重复确认同一份结果 | 建议将被调用函数改为直接读取已确认项，保留调用方分派；替代保留可独立调用约定。本批未删，等待审核 |
 | D103 | `relic_damage_factors.parameter_factor`已逐条verified_rule后调用source_factor，后者重新筛选并再次逐条核验同一来源 | 独立source_factor仍需入口来源核对；当前连用路径重复核对不含异步、I/O或用户交互 | 建议提取供两入口共用的已核验来源算式，两个入口各核对一次；不取消独立入口核验、不放宽来源绑定。替代保留当前双重核对。本批未改，待审核 |
 | D104 | `shield_break_reference.finish_shield_break_reference`：ordinary(window_damage)为None时把已知窗口小计改成0 | 窗口小计不会空缺，但可能把尚不确定的来源当作零；需核对各生产路径是否可达 | 建议先核对可达生产者后保留未知或直接使用已证数值，勿把None自动视为零；替代保留并限定其前置条件。本批未改，待审核 |
+| D105 | `panel_native_bridge._bits/_raw/prepare.term_value`：浮点打包或名义定点转换遇到OverflowError、struct.error、ValueError时返回None | 超大或无法转换的数值显示为未知；也可能把内部转换缺陷隐藏为资料不足。普通None未知输入与这些异常出口应分开核对 | 建议逐处限定可达输入后只保留实际数值范围错误，内部类型/格式缺陷暴露；替代保留原出口。三处捕获未改，term_value仅移出逐字段循环，原捕获体和范围不变；待审核 |
+| D106 | `panel_native_bridge._record`：term缺省或空字典时以`term or _term(None)`补未知算式 | 支持缺项调用；当前prepare/finish三个产品调用点均传入算式，可能掩盖生产者漏传或空字典 | 建议确认独立调用契约后让term成为必传参数并直接使用，未知基础仍用明确_term(None)表达；替代保留缺省。未修改，待审核 |

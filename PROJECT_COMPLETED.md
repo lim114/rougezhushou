@@ -1,3 +1,7 @@
+## 维护：校准工作表与桥接分组（2026-11-05）
+
+已修正单包和算例的重复计算、单次包装及桥接重复分类，保留实际参数适配。19项定向通过，旧新完整结果一致，测试窗口更新。仅完成所述路径。[回执](verification/maintenance/code-constraints-calibration-consumers-20261105/README.md)。
+
 ## 维护：符文预览与实际属性共用一次应用（2026-11-05）
 
 符文分类与数值应用共用，培养攻击一致时不重复求值；relic_attributes整模块三条审查完成，定向检查和完整旧新报告对照通过，测试窗口更新。[回执](verification/maintenance/code-constraints-rune-preview-20261105/README.md)。

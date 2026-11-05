@@ -59,7 +59,6 @@ def _term(basis, *, addition=0, multiplier=0, final_addition=0, final_scaler=1):
 
 
 def _record(phase, field, value, term=None):
-    from .mechanist_explosion_math import multiply
     term = term or _term(None)
     scaler = Q
     for value_factor in term['final_scaler']:
@@ -75,22 +74,25 @@ def _record(phase, field, value, term=None):
 def prepare(scenario, cultivated, rune_attributes, runes):
     """Consume the same resolved rune objects used by the main calculation."""
     from .relic_attributes import FIELDS as RUNE_FIELDS
-    from .mechanist_explosion_math import add, multiply
+    from .mechanist_explosion_math import add
     rows=[]
+    grouped={}
+    for effect in runes:
+        grouped.setdefault(RUNE_FIELDS[effect['kind']],[]).append(effect)
+    def term_value(effect):
+        if effect.get('native_count_scale')=='float32_before_fp':
+            from .deployment import _single
+            try:
+                return _raw(_single(_single(effect['native_rune_base'])*_single(effect['native_rune_factor'])))
+            except (ValueError, OverflowError):
+                return None
+        return _raw(effect['value'])
     for field in FIELDS:
         if field not in cultivated:
             continue
         rows.append(_record('cultivation',field,cultivated[field],_term(cultivated[field])))
         row=_record('rune',field,rune_attributes[field],_term(cultivated[field]))
-        selected=[e for e in runes if RUNE_FIELDS[e['kind']]==field]
-        def term_value(effect):
-            if effect.get('native_count_scale')=='float32_before_fp':
-                from .deployment import _single
-                try:
-                    return _raw(_single(_single(effect['native_rune_base'])*_single(effect['native_rune_factor'])))
-                except (ValueError, OverflowError):
-                    return None
-            return _raw(effect['value'])
+        selected=grouped.get(field,[])
         row['addition_raw']=_sum_raw([term_value(e) for e in selected if e['formula_item']=='ADDITION'])
         row['multiplier_delta_raw']=_sum_raw([term_value(e) for e in selected if e['formula_item']=='MULTIPLIER'])
         scaler=Q

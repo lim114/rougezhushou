@@ -1,0 +1,274 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "校准工作表复用计算结果与桥接符文分组",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "2f34b49512a42176c8c6c46fed907086487af4d4",
+  "source_sha256": {
+    "rouge/calibration.py": "08b07a96e2db5178b16783d2a5cef9f5909fb84be5bde8c9341b5ae5a15dd915",
+    "rouge/panel_native_bridge.py": "d9348d2d14a24037262e65be96758707a30bbabcb2a183a94fdaea5d6dada191"
+  },
+  "changed_sources": [
+    "rouge/calibration.py",
+    "rouge/panel_native_bridge.py"
+  ],
+  "test_sha256": {
+    "tests/test_calibration_consumers_review.py": "ef77e4f8f123aaeb3c825572481a90b5c0421d948007b1d4bb93d4d67c8c6cb2",
+    "tests/test_calibration.py": "cd50f1d2a2367983fa953a111374811ee0ddb2498622be594e496c2ed24dbf02",
+    "tests/test_panel_native_main_283.py": "1063801bb2bcc55f535f7566553875a479e608f05900847a14f6966c3be82b82"
+  },
+  "full_module_reviews_added": 0,
+  "fully_reviewed_modules": [],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97",
+    "D98",
+    "D99",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 32,
+    "structural_only": 356,
+    "selected_paths_only": 95,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "baseline": {
+      "run": 2,
+      "failures": 2,
+      "elapsed_seconds": 0.113,
+      "findings": [
+        "packet preparation2 expected1",
+        "worksheet prediction2 expected1"
+      ]
+    },
+    "targeted": {
+      "run": 19,
+      "passed": 19,
+      "elapsed_seconds": 0.662,
+      "scope": "2 new consumer tests;7 selected panel/pair/packet/worksheet cases;10 native main caller cases"
+    },
+    "old_new_calculations": {
+      "records": 10,
+      "panel_reports": 9,
+      "packet_reports": 9,
+      "paired_reports": 9,
+      "default_worksheet_cases": 10,
+      "complete_outputs_equal": true,
+      "inputs_unchanged": true,
+      "before_sha256": "52c459c353dd59eda23005ccdb2b9aa2996c9032d1b3727335278b72b6798ce2",
+      "after_sha256": "52c459c353dd59eda23005ccdb2b9aa2996c9032d1b3727335278b72b6798ce2",
+      "capture_script_sha256": "9fd810f41eb0d8e39f03c5e8c2f3eff6b0b6f98ebf750319b10ea5a617fe2f8f"
+    },
+    "source_equivalence": {
+      "source_checks": [
+        {
+          "file": "rouge/calibration.py",
+          "try_raise_nodes_unchanged": true
+        },
+        {
+          "file": "rouge/panel_native_bridge.py",
+          "try_raise_nodes_unchanged": true
+        }
+      ],
+      "command_keyword_signatures": [
+        {
+          "name": "barrier_packet_ledger",
+          "keyword_names": [
+            "ledger"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "shield_grant_snapshots",
+          "keyword_names": [
+            "scenario",
+            "snapshots",
+            "ordinary_native_path",
+            "float_rounding"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "source_shield_inventory",
+          "keyword_names": [
+            "inventory"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "explosion_values",
+          "keyword_names": [
+            "explosion"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "modifier_values",
+          "keyword_names": [
+            "packet"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "regeneration_clock",
+          "keyword_names": [
+            "recovery"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "recovery_attributes",
+          "keyword_names": [
+            "attributes"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "sp_recovery_clock",
+          "keyword_names": [
+            "sp_clock"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "sp_setter_values",
+          "keyword_names": [
+            "sp_writes"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "sp_initialization_values",
+          "keyword_names": [
+            "sp_initialization"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "skill_sp_cost_values",
+          "keyword_names": [
+            "sp_cost"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "skill_data_cost_values",
+          "keyword_names": [
+            "sp_data"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "skill_sp_increment_values",
+          "keyword_names": [
+            "sp_increments"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "skill_cost_consensus_values",
+          "keyword_names": [
+            "sp_cost_consensus"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "skill_data_cost_consensus_values",
+          "keyword_names": [
+            "sp_data_consensus"
+          ],
+          "unchanged": true
+        },
+        {
+          "name": "sp_recovery_attribute_values",
+          "keyword_names": [
+            "sp_attributes"
+          ],
+          "unchanged": true
+        }
+      ],
+      "direct_aliases": 2,
+      "complete_results_equal": true
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar; no game or chat operation"
+    },
+    "local_evidence": ".local/code-constraints-review-46/"
+  }
+}
