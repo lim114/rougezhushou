@@ -1,0 +1,163 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "面板校准复用准备结果及默认构造去重",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5ca5adb55e25675f73d1b9aade16866b608d5b1b",
+  "source_sha256": {
+    "rouge/branch_position_overview.py": "29594bda59cab509b6ecc1fec2e4e8aacd09b9c2b8227eda25a64bd27b69016c",
+    "rouge/calibration.py": "e12944f2ee5a84abc8bba9cda6f51f94991be936625dedb29dba8a751001a8a0",
+    "rouge/damage.py": "e0680947156e8310fb2129581c81888e963fa7a1f070e9827d8fa9057516313b",
+    "rouge/estimate.py": "7118fb7ca444c1f72ce94302b2ec345bc73dc020ab99c6393bba8aeb6792b408",
+    "rouge/shield_break_reference.py": "f4568f122b21e6544ab2fdeba4018d369674a57e017a1b3f7dc861e61f33ec42"
+  },
+  "changed_sources": [
+    "rouge/branch_position_overview.py",
+    "rouge/calibration.py",
+    "rouge/damage.py",
+    "rouge/estimate.py",
+    "rouge/shield_break_reference.py"
+  ],
+  "test_sha256": {
+    "tests/test_calibration_preparation_review.py": "4245fcbaded52efdd8e6cb619cc274b7f5efd8a5aec0909a3c305f59faed2bd8",
+    "tests/test_calibration.py": "cd50f1d2a2367983fa953a111374811ee0ddb2498622be594e496c2ed24dbf02",
+    "tests/test_extended_calibration_285.py": "b441a32a1b10d0852e16afea28fb96309aaa43b20845e4e04388f3ab0b50aa04",
+    "tests/test_branch_position_overview.py": "40c3b3f7d921f25784842eca2b3ccc32d499ed5c1e0d39582d8c3068180e07b9",
+    "tests/test_shield_break_reference.py": "437cc69c1a0711fb5b258ed75ead438995b8b10e25bf43925ba9d71375be1f5d",
+    "tests/test_wine_timing.py": "3209af9401e846cb1dc951552ac04a9e235aeaf63e7595c38b8636edbdc3dc98",
+    "tests/test_selected_module_source_reference.py": "8e10476b85a829ed952cd361653e897a63c34ffa0277526f593d9e83d140f560"
+  },
+  "full_module_reviews_added": 1,
+  "fully_reviewed_modules": [
+    "rouge/branch_position_overview.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97",
+    "D98",
+    "D99",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 31,
+    "structural_only": 358,
+    "selected_paths_only": 94,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "baseline": {
+      "run": 2,
+      "failures": 2,
+      "elapsed_seconds": 0.127,
+      "findings": [
+        "panel preparation called2 expected1",
+        "group cell deepcopy called2 expected1"
+      ]
+    },
+    "targeted": {
+      "run": 33,
+      "passed": 33,
+      "elapsed_seconds": 2.632,
+      "scope": "two new entry tests; four panel calibration cases; actual extended panel test; branch model class; shield and wine cases; one synthetic unknown-clock envelope test"
+    },
+    "test_adaptation": "Existing extended panel spy moved from calculate_damage to shared _calculate_prepared; still calls real implementation and checks report/copy isolation. No product fallback added.",
+    "old_new_calculations": {
+      "records": 15,
+      "layer_reports": 12,
+      "damage_reports": 12,
+      "map_results": 3,
+      "complete_outputs_equal": true,
+      "inputs_unchanged": true,
+      "before_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "after_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "capture_script_sha256": "c4027edd609fdb2796dcf39157d2c4054a5d84776173f406318df295def232eb"
+    },
+    "source_equivalence": {
+      "phase_envelope_body_unchanged": true,
+      "other_damage_functions_unchanged": true,
+      "raise_try_nodes_unchanged_files": [
+        "rouge/shield_break_reference.py",
+        "rouge/estimate.py",
+        "rouge/calibration.py",
+        "rouge/branch_position_overview.py"
+      ]
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar only; offline calculations/public map data, no game operation"
+    },
+    "local_evidence": ".local/code-constraints-review-43/"
+  }
+}

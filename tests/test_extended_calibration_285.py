@@ -147,11 +147,11 @@ class ExtendedCalibration285Tests(unittest.TestCase):
         self.assertTrue(all('module_id' not in s and 'charge_count' not in s and 'companion_attack' not in s for s in other))
 
     def test_07_actual_extended_four_layers_copy_main_and_pair_context_is_still_strict(self):
-        c=self.calibration;calculate=c.calculate_damage;captured=[]
-        def spy(s):
-            result=calculate(s);captured.append(result);return result
+        c=self.calibration;calculate=c._calculate_prepared;captured=[]
+        def spy(s,prepared):
+            result=calculate(s,prepared);captured.append(result);return result
         scenario={'operator':MYRTLE,'skill':1};before=deepcopy(scenario)
-        with patch.object(c,'calculate_damage',side_effect=spy):
+        with patch.object(c,'_calculate_prepared',side_effect=spy):
             layers=c.panel_layers(scenario)
         self.assertEqual(len(captured),1)
         self.assertEqual(scenario,before)

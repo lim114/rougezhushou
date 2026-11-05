@@ -1,3 +1,7 @@
+## 当前断点：校准准备与默认构造去重（2026-11-05）
+
+panel_layers准备次数2→1，复用准备副本计算；等级/两处时序默认值懒构造，同坐标格子仅复制一次。12层报告+12伤害报告+3地图结果旧新一致；33项定向通过，2项旧失败保留。branch_position_overview全模块审查通过，D104未知窗口小计改0登记未改。测试窗口更新。覆盖358/75/94/31；D38—D104共67组。回执verification/maintenance/code-constraints-prepared-defaults-20261105/summary.json。继续校准其它属性重复、其余资料/运行模块，不增功能节数。
+
 ## 当前断点：结果时序与汇总复用（2026-11-05）
 
 已有timing不再重复构造AttackTimeline；伤害/治疗汇总状态与来源只取一次，normal缺失仅入口归一化。24组完整旧新输出一致；63项两轮通过，旧2项中1失败保留。uncertain_sources全模块审查通过；D103重复来源核验未改。测试窗口更新可见响应。覆盖362/75/91/30，D38—D103共66组。回执verification/maintenance/code-constraints-result-summaries-20261105/summary.json。继续剩余模块，普通冗余尚未清零，不增功能节数。

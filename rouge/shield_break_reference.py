@@ -63,7 +63,8 @@ def finish_shield_break_reference(scenario, result):
         'owner_and_structure_count_mapping_verified': True,
         'ammunition_budget_reference': declared_barrier_ammo(int(source['values']['trigger_time']), count),
         'events_scheduled': False, 'source_commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add'}
-    result.setdefault('timing', AttackTimeline(scenario).output())['phase_clock_unbound'] = True
+    if 'timing' not in result:result['timing'] = AttackTimeline(scenario).output()
+    result['timing']['phase_clock_unbound'] = True
     result['timing']['resource_and_damage_shared_clock'] = False
     result['scope'] = result['estimate']['scenario_scope'] = (
         '声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。')

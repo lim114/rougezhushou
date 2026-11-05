@@ -70,3 +70,4 @@
 | D101 | `timing.profiles`：公开timing-profiles.json不存在时返回空operators并缓存 | 允许缺资料启动，但缺文件可能表现为所有时序资料未知；恢复文件后缓存仍可能保持空 | 建议明确安装包必需文件契约后取消缺文件静默默认，或保留并提供来源缺失状态；本批未改，等待审核 |
 | D102 | `amiya_continuous_reference.attach_result`：full缺amiya_continuous_reference时直接返回；当前唯一产品调用方已检查该项 | 允许绕过调用方单独调用时静默无操作；正常产品路径重复确认同一份结果 | 建议将被调用函数改为直接读取已确认项，保留调用方分派；替代保留可独立调用约定。本批未删，等待审核 |
 | D103 | `relic_damage_factors.parameter_factor`已逐条verified_rule后调用source_factor，后者重新筛选并再次逐条核验同一来源 | 独立source_factor仍需入口来源核对；当前连用路径重复核对不含异步、I/O或用户交互 | 建议提取供两入口共用的已核验来源算式，两个入口各核对一次；不取消独立入口核验、不放宽来源绑定。替代保留当前双重核对。本批未改，待审核 |
+| D104 | `shield_break_reference.finish_shield_break_reference`：ordinary(window_damage)为None时把已知窗口小计改成0 | 窗口小计不会空缺，但可能把尚不确定的来源当作零；需核对各生产路径是否可达 | 建议先核对可达生产者后保留未知或直接使用已证数值，勿把None自动视为零；替代保留并限定其前置条件。本批未改，待审核 |

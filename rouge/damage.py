@@ -411,8 +411,12 @@ class _PhaseBounds:
 
 
 def calculate_damage(scenario: dict) -> dict:
+    return _calculate_prepared(scenario,_prepare_damage(scenario))
+
+
+def _calculate_prepared(scenario,prepared) -> dict:
+    """Consume one qualified preparation; callers keep display snapshots separate."""
     from copy import deepcopy
-    prepared=_prepare_damage(scenario)
     wines=[r for r in prepared[2]['rules'] if r['kind']=='periodic_sp']
     if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
     from .timing import frame_time

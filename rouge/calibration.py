@@ -9,7 +9,7 @@ import json
 import math
 from pathlib import Path
 from .catalog import catalog, operator_attributes
-from .damage import calculate_damage, _prepare_damage
+from .damage import calculate_damage, _prepare_damage, _calculate_prepared
 
 OPERATORS = ('kaltsit', 'silverash', 'mechanist')
 LABELS = {'hp':'生命上限','attack':'攻击力','defense':'防御力',
@@ -37,7 +37,9 @@ def _scenario(scenario, *, all_operators=False):
     if out.get('operator') not in allowed:raise ValueError('此查询仅支持固定资料中已适配干员。' if all_operators else '校准工具仅支持首批三名干员。')
     if any(str(key).startswith('_') for key in out):raise ValueError('校准输入不能注入内部字段。')
     out.setdefault('skill',1);out.setdefault('skill_rank',10)
-    out.setdefault('elite',2);out.setdefault('level',catalog()['operators'][out['operator']]['phases'][out['elite']]['max_level'] if isinstance(out['elite'],int) and not isinstance(out['elite'],bool) and 0<=out['elite']<=2 else None)
+    out.setdefault('elite',2)
+    if 'level' not in out:
+        out['level']=catalog()['operators'][out['operator']]['phases'][out['elite']]['max_level'] if isinstance(out['elite'],int) and not isinstance(out['elite'],bool) and 0<=out['elite']<=2 else None
     out.setdefault('trust',100);out.setdefault('potential',1)
     out.setdefault('module_id',None);out.setdefault('module_level',0)
     out.setdefault('timing_mode','frames')
@@ -59,7 +61,7 @@ def panel_layers(scenario):
     """Expose ordered cultivation/rune/talent/skill stages, without changing math."""
     s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
     prepared=_prepare_damage(deepcopy(s));resolved,rune,_,_=prepared
-    result=calculate_damage(deepcopy(s));base=result['estimate']['base_stats']
+    result=_calculate_prepared(s,deepcopy(prepared));base=result['estimate']['base_stats']
     skill=result['estimate']['skill']
     stages=[('培养与模组',cult),('藏品与分队符文写回',rune),('已覆盖常态天赋与效果',base),
             ('技能期间参考',{'attack':skill.get('skill_attack'),

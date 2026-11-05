@@ -242,7 +242,8 @@ def build_estimate(scenario,result,attributes,compute_skill):
             inside_damage,inside_healing=phase_totals(placed_components,cycle)
             cycle_damage=inside_damage+normal_damage;cycle_healing=inside_healing+normal_healing
         cycle_dps=cycle_damage/cycle;cycle_hps=cycle_healing/cycle
-        result.setdefault('timing',normal.output())['recharge_streams']=normal.streams
+        if 'timing' not in result:result['timing']=normal.output()
+        result['timing']['recharge_streams']=normal.streams
     from .panel_native_bridge import normal_terms, first_three_skill_terms
     native_normal=normal_terms(attributes,scenario['base_attack'],
         hp_multiplier=hp_bonus+total('hp_pct'),attack_multiplier=total('attack_pct'),

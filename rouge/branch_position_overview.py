@@ -10,7 +10,8 @@ def branch_position_overview(stage_id, branch_id=None, phase=None):
         for reference in branch['map_references']:
             cell = reference['cell']
             key = (cell['row'], cell['col'])
-            group = groups.setdefault(key, {'cell': deepcopy(cell), 'references': []})
+            if key not in groups:groups[key] = {'cell': deepcopy(cell), 'references': []}
+            group = groups[key]
             # References retain distinct identities even when positions coincide.
             group['references'].append(deepcopy(reference))
     rows = []

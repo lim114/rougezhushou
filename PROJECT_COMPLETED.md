@@ -1,3 +1,7 @@
+## 维护：校准准备与默认构造去重（2026-11-05）
+
+校准共用准备副本，消除已存在时序/等级/格子的重复默认构造；33项定向通过，旧新完整报告一致。分支位置总览完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-prepared-defaults-20261105/README.md)。
+
 ## 维护：结果时序复用与汇总去重（2026-11-05）
 
 已有时序零重复构造，伤害治疗汇总共用本次状态和来源；24组输出一致，63项最终定向通过，原失败保留。uncertain_sources完整源码审查通过，测试窗口更新。[回执](verification/maintenance/code-constraints-result-summaries-20261105/README.md)。
