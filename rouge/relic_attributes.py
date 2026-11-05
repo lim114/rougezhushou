@@ -16,10 +16,16 @@ def is_attribute_rune(effect):
 
 def apply_attribute_runes(attributes, effects):
     """Return an independent snapshot; never fold runes into talent multipliers."""
+    runes = [effect for effect in effects if is_attribute_rune(effect)]
+    return _apply_selected_runes(attributes, runes)[0]
+
+
+def _apply_selected_runes(attributes, runes, preview_attack=None):
+    """Apply classified runes once, including an optional explicit ATK preview."""
     attributes = dict(attributes)
     grouped = {field: [] for field in FIELDS.values()}
-    for effect in effects:
-        if is_attribute_rune(effect):grouped[FIELDS[effect['kind']]].append(effect)
+    for effect in runes:
+        grouped[FIELDS[effect['kind']]].append(effect)
     # The native rune accumulator is FP/Q32. AttributesData's HP/ATK/DEF
     # are ObscuredInt: FP -> float32 -> ties-to-even happens before talents.
     # Reuse the previously sealed pure numeric conversion, not card costs.
@@ -33,21 +39,32 @@ def apply_attribute_runes(attributes, effects):
             continue
         addition = sum(term(e) for e in rules if e['formula_item'] == 'ADDITION')
         multiplier = _Q32 + sum(term(e) for e in rules if e['formula_item'] == 'MULTIPLIER')
-        value = _fp_product(_fp(attributes[field]) + addition, multiplier)
+        scalers = []
         for effect in rules:
             if effect['formula_item'] == 'FINAL_SCALER':
                 factor = _fp(effect['value'])
                 if factor < 0:
                     factor += _Q32
+                scalers.append(factor)
+        bases = [attributes[field]]
+        preview_field = field == 'attack' and preview_attack is not None
+        if preview_field and preview_attack != bases[0]:
+            bases.append(preview_attack)
+        values = []
+        for basis in bases:
+            value = _fp_product(_fp(basis) + addition, multiplier)
+            for factor in scalers:
                 value = _fp_product(value, factor)
-        value = max(0, _single(_single(value) / _Q32))
-        attributes[field] = round(value) if field in ('hp', 'attack', 'defense', 'redeploy_seconds') else value
-        if field == 'resistance':
-            attributes[field] = min(100, attributes[field])
+            value = max(0, _single(_single(value) / _Q32))
+            value = round(value) if field in ('hp', 'attack', 'defense', 'redeploy_seconds') else value
+            values.append(min(100, value) if field == 'resistance' else value)
+        attributes[field] = values[0]
+        if preview_field:
+            preview_attack = values[-1]
     if 'attack_speed' in attributes:
         from .attribute_limits import attack_speed_attribute
         attributes['attack_speed'] = attack_speed_attribute(attributes['attack_speed'])
-    return attributes
+    return attributes, preview_attack
 
 
 def prepare_attribute_runes(scenario, attributes):
@@ -63,11 +80,8 @@ def prepare_attribute_runes(scenario, attributes):
     scenario['effects'] = ordinary
     scenario['_attribute_runes'] = runes
     cultivated = dict(attributes)
-    original_attack = scenario['base_attack']
     # Explicit preview attack uses the same proven rune layer as cultivated ATK.
-    preview = apply_attribute_runes({**attributes, 'attack': original_attack}, runes)
-    scenario['base_attack'] = preview['attack']
-    attributes = apply_attribute_runes(attributes, runes)
+    attributes, scenario['base_attack'] = _apply_selected_runes(attributes, runes, scenario['base_attack'])
     scenario['_attribute_attack_speed'] = attributes['attack_speed']
     from .panel_native_bridge import prepare as prepare_native_panels
     prepare_native_panels(scenario, cultivated, attributes, runes)

@@ -45,26 +45,24 @@ class MainCaller283(unittest.TestCase):
                     'effects': [{'kind': 'attack_pct', 'value': .25}]}
         before = deepcopy(scenario)
         applications, preparations = [], []
-        original_apply, original_prepare = relic_attributes.apply_attribute_runes, bridge.prepare
+        original_apply, original_prepare = relic_attributes._apply_selected_runes, bridge.prepare
 
-        def apply(attributes, effects):
+        def apply(attributes, effects, preview_attack=None):
             applications.append(effects)
-            return original_apply(attributes, effects)
+            return original_apply(attributes, effects, preview_attack)
 
         def prepare(s, cultivated, attributes, runes):
             self.assertIs(s['_attribute_runes'], runes)
             preparations.append((runes, deepcopy(runes)))
             return original_prepare(s, cultivated, attributes, runes)
 
-        with patch.object(relic_attributes, 'apply_attribute_runes', side_effect=apply), \
+        with patch.object(relic_attributes, '_apply_selected_runes', side_effect=apply), \
              patch.object(bridge, 'prepare', side_effect=prepare):
             result = damage.calculate_damage(scenario)
         self.assertEqual(scenario, before)
         self.assertEqual(len(preparations), 1)
         shared, selected = preparations[0]
-        self.assertGreaterEqual(len(applications), 2)
-        self.assertIs(applications[0], shared)
-        self.assertIs(applications[1], shared)
+        self.assertEqual(sum(effects is shared for effects in applications), 1)
         self.assertTrue(selected)
         self.assertTrue(all(e['attribute_layer'] == 'relic_rune' for e in selected))
         self.assertFalse(any(e.get('token_only') for e in selected))

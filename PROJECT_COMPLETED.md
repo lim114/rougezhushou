@@ -1,3 +1,7 @@
+## 维护：符文预览与实际属性共用一次应用（2026-11-05）
+
+符文分类与数值应用共用，培养攻击一致时不重复求值；relic_attributes整模块三条审查完成，定向检查和完整旧新报告对照通过，测试窗口更新。[回执](verification/maintenance/code-constraints-rune-preview-20261105/README.md)。
+
 ## 维护：培养属性复用与符文分类去重（2026-11-05）
 
 本批三个模块的培养读取、符文分类和效果分流重复已修正，定向检查及旧新完整结果对照通过，测试窗口更新。仅完成这些路径，整模块仍待审。[回执](verification/maintenance/code-constraints-cultivation-runes-20261105/README.md)。

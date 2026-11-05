@@ -1,0 +1,167 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "符文预览与实际属性共用一次应用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "763c60bd498bd3d23e9a8c9621c5ce718f60838f",
+  "source_sha256": {
+    "rouge/relic_attributes.py": "534447e3a2dcf6f4737a16ffdec0bd93779294baafeecb45e637899706021981"
+  },
+  "changed_sources": [
+    "rouge/relic_attributes.py"
+  ],
+  "test_sha256": {
+    "tests/test_rune_preview_review.py": "2c39487fec1e8f75753e96fd3ece85cd102ada788e9b9d19dd9fbbae8249959c",
+    "tests/test_cultivation_input_review.py": "fcc6eb280bec07e503641e064b86e0d0a2dc201238d50f0720fc3688a8486382",
+    "tests/test_panel_native_main_283.py": "1063801bb2bcc55f535f7566553875a479e608f05900847a14f6966c3be82b82",
+    "tests/test_attack_speed_bounds_065.py": "4edd181021b24e0cd6c9a91cec10d8f2903016cb8a9bffdfde82cd863aadf907"
+  },
+  "full_module_reviews_added": 1,
+  "fully_reviewed_modules": [
+    "rouge/relic_attributes.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97",
+    "D98",
+    "D99",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 32,
+    "structural_only": 357,
+    "selected_paths_only": 94,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "baseline": {
+      "run": 2,
+      "failed_subtests": 3,
+      "elapsed_seconds": 0.022,
+      "finding": "three preview variants classify7 times for3 inputs"
+    },
+    "first_targeted": {
+      "run": 26,
+      "passed": 25,
+      "failures": 1,
+      "elapsed_seconds": 0.478,
+      "cause": "test counted separate summon application as duplicate; corrected to count same operator rune list identity"
+    },
+    "second_targeted": {
+      "run": 26,
+      "passed": 26,
+      "elapsed_seconds": 0.524
+    },
+    "final_predicate_refactor": {
+      "run": 2,
+      "passed": 2,
+      "elapsed_seconds": 0.023,
+      "scope": "after reuse of preview-field predicate; complete output comparison repeated"
+    },
+    "numeric_equivalence": {
+      "cases": 21,
+      "equal": true,
+      "scope": "18 six-field/three-preview combinations covering addition,multiplier,float32 count scaling,negative and positive final scalers;3 optional field inputs",
+      "source_phase": "before final predicate-only reuse"
+    },
+    "old_new_calculations": {
+      "records": 15,
+      "layer_reports": 12,
+      "damage_reports": 12,
+      "map_results": 3,
+      "complete_outputs_equal": true,
+      "inputs_unchanged": true,
+      "before_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "after_sha256": "b175849ba88fca802c988115bd4cc8f448100554b17295728567aab7ecceef4f",
+      "capture_script_sha256": "c4027edd609fdb2796dcf39157d2c4054a5d84776173f406318df295def232eb"
+    },
+    "source_equivalence": {
+      "source_sha256": "534447e3a2dcf6f4737a16ffdec0bd93779294baafeecb45e637899706021981",
+      "base_source_sha256": "1bf295d226374d6713614a4ba9f5850ce33b5bc6281378d18f1864c17f0dc79d",
+      "try_raise_nodes_old_new": 0,
+      "caller_review": [
+        "damage._prepare_damage",
+        "summons.token_attributes",
+        "supplemental_run",
+        "public apply and prepared input both share _apply_selected_runes"
+      ]
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar; no game or chat operation"
+    },
+    "local_evidence": ".local/code-constraints-review-45/"
+  }
+}

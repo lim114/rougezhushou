@@ -945,12 +945,12 @@
     },
     {
       "file": "rouge/relic_attributes.py",
-      "sha256": "1bf295d226374d6713614a4ba9f5850ce33b5bc6281378d18f1864c17f0dc79d",
-      "rule1": "selected_cultivation_and_rune_repeated_work_removed",
-      "rule2": "shared_term_helper_has_multiple_uses_no_new_one_use_wrapper",
-      "rule3": "existing_raise_try_nodes_unchanged_pending_remaining_review",
-      "full_module_review_complete": false,
-      "evidence": "apply_attribute_runes classifies effects once into field groups, preserving field/effect order and numeric conversions; shared term function/import constructed once per invocation rather than per field. prepare_attribute_runes partitions ordinary effects and runes once, preserving token-only exclusion and object identity. Preview and actual application still repeat work and remain for next batch. No whole-module certification."
+      "sha256": "534447e3a2dcf6f4737a16ffdec0bd93779294baafeecb45e637899706021981",
+      "rule1": "reviewed_clear_classification_and_application_at_entry_once",
+      "rule2": "shared_executor_two_actual_callers_and_term_two_arithmetic_uses",
+      "rule3": "reviewed_clear_no_low_probability_defense_identified",
+      "full_module_review_complete": true,
+      "evidence": "Entire relic_attributes module and active callers reviewed. Public apply filters once; prepared scenario partitions once and passes classified runes to the shared executor. Two real callers of executor; term used by two arithmetic branches. Field coefficients computed once, common attack basis evaluated once, distinct explicit preview evaluated only for attack. Preserves numeric order, clamp domains, optional-field API, token exclusion, object identity and independent snapshots. No exception recovery or low-probability fallback identified; zero try/raise before and after. Numeric/source consumers remain separate modules and are not certified by this review."
     }
   ]
 }
