@@ -22,9 +22,6 @@ def operator_profiles():
 def stage_previews():
     return json.loads((Path(__file__).parent / 'data' / 'previews.json').read_text(encoding='utf-8'))['stages']
 
-def operator_attack(operator, elite=2, level=None, trust=100):
-    return operator_attributes(operator,elite,level,trust)['attack']
-
 def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
     profile = operator_profiles()[operator]
     if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):

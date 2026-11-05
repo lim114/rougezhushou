@@ -218,17 +218,25 @@ COMMANDS['skills']=skill_matrix
 
 def cultivation_curve(scenario, levels=None):
     """Explain every level's base rounding and trust/potential/module increments."""
-    s=_scenario(scenario);_cultivated(s)
+    s=_scenario(scenario);current=_cultivated(s)
     cap=catalog()['operators'][s['operator']]['phases'][s['elite']]['max_level']
     levels=list(range(1,cap+1)) if levels is None else list(levels)
     if not levels or len(levels)>cap or len(set(levels))!=len(levels):raise ValueError('levels需要不重复的有效等级。')
+    variants=((0,1,None,0),(s['trust'],1,None,0),(s['trust'],s['potential'],None,0),
+              (s['trust'],s['potential'],s['module_id'] or None,s['module_level'] if s['module_id'] else 0))
+    current_level=cap if s['level'] is None else s['level']
+    cache={(current_level,*variants[-1]):current}
     rows=[]
     for level in sorted(levels):
         if not isinstance(level,int) or isinstance(level,bool) or not 1<=level<=cap:raise ValueError('等级超出当前阶段。')
-        bare=_cultivated(s,level=level,trust=0,potential=1,module_id=None,module_level=0)
-        trust=_cultivated(s,level=level,potential=1,module_id=None,module_level=0)
-        pot=_cultivated(s,level=level,module_id=None,module_level=0)
-        all_stats=_cultivated(s,level=level)
+        layers=[]
+        for trust_value,potential,module_id,module_level in variants:
+            key=(level,trust_value,potential,module_id,module_level)
+            if key not in cache:
+                cache[key]=_cultivated(s,level=level,trust=trust_value,potential=potential,
+                                      module_id=module_id,module_level=module_level)
+            layers.append(cache[key])
+        bare,trust,pot,all_stats=layers
         rows.append({'level':level,'cultivated':all_stats,'contributions':{
             f:{'level_base':bare[f],'trust_increment':trust[f]-bare[f],
                'potential_increment':pot[f]-trust[f],'module_increment':all_stats[f]-pot[f]}
@@ -274,7 +282,7 @@ COMMANDS['modules']=module_stages
 def talent_states(scenario, elapsed_seconds=None):
     """Inspect selected talent variants and their declaration-dependent panels."""
     from .operator_engine import selected_talents
-    s=_scenario(scenario);_cultivated(s)
+    s=_scenario(scenario);cultivated=_cultivated(s)
     profile=catalog()['operators'][s['operator']]
     selected,_=selected_talents(profile,s)
     times=[0,14.9,15,30] if elapsed_seconds is None else list(elapsed_seconds)
@@ -283,7 +291,8 @@ def talent_states(scenario, elapsed_seconds=None):
     for elapsed in times:
         _number(elapsed,'在场秒数')
         request={**deepcopy(s),'deployment_elapsed_seconds':elapsed}
-        result=calculate_damage(request);stats=result['estimate']['base_stats'];references=[]
+        prepared=_prepare_damage(request,cultivated_attributes=cultivated)
+        result=_calculate_prepared(request,prepared);stats=result['estimate']['base_stats'];references=[]
         for talent in selected:
             bb=talent['values']
             if s['operator']=='silverash' and talent['name']=='雪境先驱':

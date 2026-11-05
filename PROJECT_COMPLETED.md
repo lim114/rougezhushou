@@ -1,3 +1,7 @@
+## 维护：培养曲线与天赋查询复用（2026-11-05）
+
+相同培养组合与不变培养输入已复用，删除无调用投影；6项定向及旧新完整报告对照通过，测试窗口更新。仅完成所述路径。[回执](verification/maintenance/code-constraints-cultivation-queries-20261105/README.md)。
+
 ## 维护：校准工作表与桥接分组（2026-11-05）
 
 已修正单包和算例的重复计算、单次包装及桥接重复分类，保留实际参数适配。19项定向通过，旧新完整结果一致，测试窗口更新。仅完成所述路径。[回执](verification/maintenance/code-constraints-calibration-consumers-20261105/README.md)。

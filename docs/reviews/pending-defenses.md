@@ -73,3 +73,5 @@
 | D104 | `shield_break_reference.finish_shield_break_reference`：ordinary(window_damage)为None时把已知窗口小计改成0 | 窗口小计不会空缺，但可能把尚不确定的来源当作零；需核对各生产路径是否可达 | 建议先核对可达生产者后保留未知或直接使用已证数值，勿把None自动视为零；替代保留并限定其前置条件。本批未改，待审核 |
 | D105 | `panel_native_bridge._bits/_raw/prepare.term_value`：浮点打包或名义定点转换遇到OverflowError、struct.error、ValueError时返回None | 超大或无法转换的数值显示为未知；也可能把内部转换缺陷隐藏为资料不足。普通None未知输入与这些异常出口应分开核对 | 建议逐处限定可达输入后只保留实际数值范围错误，内部类型/格式缺陷暴露；替代保留原出口。三处捕获未改，term_value仅移出逐字段循环，原捕获体和范围不变；待审核 |
 | D106 | `panel_native_bridge._record`：term缺省或空字典时以`term or _term(None)`补未知算式 | 支持缺项调用；当前prepare/finish三个产品调用点均传入算式，可能掩盖生产者漏传或空字典 | 建议确认独立调用契约后让term成为必传参数并直接使用，未知基础仍用明确_term(None)表达；替代保留缺省。未修改，待审核 |
+| D107 | `catalog.operator_attributes`：潜能属性不在mapping或formulaItem不是ADDITION时忽略；模组属性不在小写映射时也忽略 | 新字段/公式不会中断计算，但可能漏掉有效加成；当前已适配干员模组字段均在映射中，全干员资料另有cost/block_cnt字段 | 建议明确支持字段范围后，对未支持项保留显式未知或限定来源，而非静默给完整结果；替代保留当前筛选并标明支持范围。此项不授权扩展费用/阻挡计算，本批未修改，待审核 |
+| D108 | `catalog.operator_attributes`：阶段首尾等级相同则插值比例取0，避免分母为0 | 可表达只有一个等级点的阶段，结果取首帧；本批固定全干员资料中未出现此情形 | 建议按单等级资料的正式支持契约决定保留；替代在数据入口拒绝该结构并移除计算内分支。未修改，不以当前0例推断永远不可达，待审核 |
