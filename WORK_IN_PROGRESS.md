@@ -1,3 +1,7 @@
+## 当前断点：商店记录选择与说明去重（2026-11-05）
+
+选中记录和图片说明各读取一次；商品入口校验后直接访问已确认字段。7项定向通过，原测试窗口更新可见响应。覆盖381/76/82/19不变；D78来源二次刷新加入统一待审，D38—D78共41组。回执verification/maintenance/code-constraints-shop-reading-20261105/summary.json。统计/逐局列表独立入口的重复资格核对仍需共同快照边界；继续剩余普通整改，未授权防御不改，不增加功能节数。
+
 ## 当前断点：个人统计入口与单次说明包装整改（2026-11-05）
 
 持有标记、选中藏品、筛选文字复用；filter_notes/cohort_note单次包装已移除，固定说明改为常量且文字保持。18项定向通过，测试窗口更新可见响应。覆盖381/76/82/19，D38—D77统一待审。回执verification/maintenance/code-constraints-personal-statistics-entry-20261105/summary.json。下一步继续select_cohort到统计/逐局列表的重复归档资格核对及商店/历史层刷新；不扩大为全程序完成。

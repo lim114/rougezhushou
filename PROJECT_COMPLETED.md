@@ -1,3 +1,7 @@
+## 维护：商店记录重复取值精简（2026-11-05）
+
+复用所选记录和图片说明，保留入口身份检查与旧记录阅读行为。7项定向通过，测试窗口已更新；本批为部分路径整改，整模块完成数不增加。[回执](verification/maintenance/code-constraints-shop-reading-20261105/README.md)。
+
 ## 维护：个人统计入口与说明包装精简（2026-11-05）
 
 复用持有标记和当前选择；删除两个单次说明包装，保留原说明文字与共用筛选入口。18项定向通过，player_cohort_ui完成本模块代码审查，测试窗口已更新。[回执](verification/maintenance/code-constraints-personal-statistics-entry-20261105/README.md)。

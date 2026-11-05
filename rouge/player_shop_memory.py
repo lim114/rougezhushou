@@ -16,8 +16,8 @@ def qualified(snapshot,*,items=None):
     result=[];seen=set()
     for row in rows:
         if not isinstance(row,dict)or not isinstance(row.get('id'),str)or not isinstance(row.get('name'),str):return None
-        item=items.get(row.get('id'))
-        if not item or canonical(item['name'])!=canonical(row.get('name'))or row['id']in seen:return None
+        item=items.get(row['id'])
+        if not item or canonical(item['name'])!=canonical(row['name'])or row['id']in seen:return None
         seen.add(row['id']);record={'id':row['id'],'name':item['name']}
         if type(row.get('price'))is int and row['price']>=0:record['price']=row['price']
         result.append(record)
@@ -112,9 +112,9 @@ class ShopMemoryPanel(QWidget):
         self.comparison.setVisible(visible);self.comparison_toggle.setText('收起前后清单对照'if visible else'展开前后清单对照')
     def show_snapshot(self,*_):
         from .expansion_reference import packet
-        public=packet();row=self.rows.get(self.snapshots.currentData())or{};old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.source_card.dismiss()
+        public=packet();selected=self.snapshots.currentData();row=self.rows.get(selected)or{};old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.source_card.dismiss()
         self.summary.setText(('记录尚未保存。'if self.run.save_issue else'')+('暂无商品资料'if public is None else f'已读商品{len(row.get("items",[]))}件'if row else'尚无本局商店记录'))
-        comparison=compare_shops(list(self.rows.items()),self.snapshots.currentData());self.comparison.setText(comparison_text(comparison));query=self.search.text().strip().casefold()
+        comparison=compare_shops(list(self.rows.items()),selected);self.comparison.setText(comparison_text(comparison));query=self.search.text().strip().casefold()
         if public:
             for record in row.get('items',[]):
                 if query and query not in record['name'].casefold():continue
@@ -132,7 +132,8 @@ class ShopMemoryPanel(QWidget):
         record=next((r for r in snapshot.get('items',[])if r['id']==identity),{})
         price=str(record['price'])+'源石锭（当次读取）'if 'price'in record else'未读'
         text=item['name']+'\n\n标价：'+price+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称和标价，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。'
-        if entry and entry.toolTip():text+='\n\n图片说明\n'+entry.toolTip()
+        note=entry.toolTip()if entry else''
+        if note:text+='\n\n图片说明\n'+note
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
         if not item:self.details_toggle.setChecked(False)
     def open_source(self):

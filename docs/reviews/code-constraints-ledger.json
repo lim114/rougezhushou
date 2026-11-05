@@ -459,15 +459,16 @@
     },
     {
       "file": "rouge/player_shop_memory.py",
-      "sha256": "85b0bc53445546e4322c8acfe0055146e6aef064038689580a7306f45336c220",
-      "rule1": "selected_paths_fixed_cross_entry_followup_remaining",
-      "rule2": "shared_domain_helpers_and_callbacks_identified",
+      "sha256": "d745185a6a31a6a1bd8591f432e8997d54daaf4d69fb1948bf3d3d8139ebc4be",
+      "rule1": "selected_snapshot_and_tooltip_read_once_qualified_keys_accessed_directly",
+      "rule2": "shared_domain_operations_and_qt_callbacks_retained_no_new_wrapper",
       "rule3": "pending_user_review",
-      "evidence": "Read shop observation qualification/retention/comparison and UI refresh. D75-D77 unchanged; duplicate selected-snapshot reads and refresh/source lookups still require next bounded pass. No behavior changed in shop module.",
+      "evidence": "Reused one selected snapshot in show_snapshot and one tooltip in selected. qualified retains its entry field validation; established id/name keys use direct access. All predicates/catches unchanged. Traced open_source -> refresh -> InventoryPanel.reload_sources: second reload retained as D78 pending. Helpers have shared callers or Qt signal/lifecycle roles. Not full-module certification.",
       "decisions": [
         "D75",
         "D76",
-        "D77"
+        "D77",
+        "D78"
       ]
     }
   ]

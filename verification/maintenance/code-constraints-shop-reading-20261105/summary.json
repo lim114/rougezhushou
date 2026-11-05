@@ -1,0 +1,100 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "商店记录选择与图片说明重复读取精简",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "ce937d0b87eb002ad1f513da9ec0c2f3b1b5108f",
+  "source_sha256": {
+    "rouge/player_shop_memory.py": "d745185a6a31a6a1bd8591f432e8997d54daaf4d69fb1948bf3d3d8139ebc4be"
+  },
+  "read_only_dependency_sha256": {
+    "rouge/player_inventory.py": "23818d52ec94311c84f80320e7ae60f3025ee32301beeaa523d02d5e3e805832"
+  },
+  "test_sha256": {
+    "tests/test_shop_prices_443.py": "c1cec4c0ee3a83d3f3dd514b861453dbc204360351cdddef3ea9c48fd8ff65d8",
+    "tests/test_catalogue_header_review.py": "453fa74138fc3ed9585a78f244c375ee9eb80f5395a5c1853749d28316002a2d",
+    "tests/test_relic_display_images_review.py": "b3a3345505660f0f920028d65719dd32cfe4109cdce047b567d767dac95bfce4"
+  },
+  "changed_sources": [
+    "rouge/player_shop_memory.py"
+  ],
+  "reviewed_scope": "shop display callbacks and source refresh call chain; statistics independent entry contracts traced, not redesigned",
+  "full_module_reviews_added": 0,
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "baseline": {
+      "run": 6,
+      "passed": 6,
+      "elapsed_seconds": 1.981
+    },
+    "targeted": {
+      "run": 7,
+      "passed": 7,
+      "elapsed_seconds": 1.669
+    },
+    "unique_targeted_methods": 7,
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar only; no game actions or full visual acceptance"
+    },
+    "local_evidence": ".local/code-constraints-review-30/"
+  },
+  "coverage": {
+    "full_modules_certified": 19,
+    "structural_only": 381,
+    "selected_paths_only": 82,
+    "exception_equivalence_only": 76,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

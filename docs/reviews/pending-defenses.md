@@ -44,3 +44,4 @@
 | D75 | `rouge/player_shop_memory.py`：qualified对坏快照/坏商品行、名称身份不匹配、重复商品返回None | 防止不可靠记录作为已读商品；一个坏行使整个快照不用于展示 | 建议保留身份标准，核对入口后区分重复验证与坏结构兜底；本批未改 |
 | D76 | `rouge/player_shop_memory.py`：remember拒绝不同局、非数值时间或超过2秒的请求 | 旧悬停结果不会写进另一局；不重试也不修改原记录 | 建议保留写入归属和新鲜度边界；其阈值不因精简放宽 |
 | D77 | `rouge/player_shop_memory.py`：recorded_shops跳过坏历史事件/非有限或负时间，资料缺失时返回空 | 无法核对的商店记录不用于对比；不替原件补数据 | 建议保留缺资料状态并核对历史入口是否已覆盖类型过滤；当前不改 |
+| D78 | `rouge/player_shop_memory.py:ShopMemoryPanel.open_source`：先调用refresh（会reload_sources），随后无对话框或异步等待又reload_sources | 第二次文件状态检查可读到恰在两次调用间变化的公开资料；通常重复stat，资料变更时可能重读。未证明是有意防御，按用户要求先保留待审 | 建议删第二次调用，采用本次refresh取得的来源；外部资料若恰在调用间改变，下次操作再更新。不改reload_sources内的错误处理，不新增缓存或重试 |
