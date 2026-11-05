@@ -108,8 +108,9 @@ class ResourceHistoryPage(QWidget):
         offset = self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True)
         self.entries.clear()
+        selected_resource = self.filter.currentData()
         for row in self.rows:
-            if self.filter.currentData() is not None and row['resource'] != self.filter.currentData():
+            if selected_resource is not None and row['resource'] != selected_resource:
                 continue
             value = f'{row["value"]:g}' if row['value'] is not None else '未核对'
             delta = f'（变化{row["delta"]:+g}）' if row['delta'] is not None else '（变化未知）'
@@ -129,7 +130,10 @@ class ResourceHistoryPage(QWidget):
 
     def selected(self, *_):
         item = self.entries.currentItem()
-        row = next((row for row in self.rows if row['index'] == item.data(Qt.ItemDataRole.UserRole)), None) if item else None
+        row = None
+        if item:
+            identity = item.data(Qt.ItemDataRole.UserRole)
+            row = next((row for row in self.rows if row['index'] == identity), None)
         text = resource_text(row) if row else '选择一条资源读取记录；没有读到的变化保持未知。'
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)

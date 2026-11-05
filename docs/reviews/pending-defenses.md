@@ -22,3 +22,10 @@
 | D53 | `rouge/player_tile_information.py`：格子/地块类型及行列不合格返回提示，非文字或未收录标签显示未知 | 避免坏位置被显示成有效地形；新增游戏标签不会被猜成既有标签 | 建议保留未知标签展示；结构验证能否只留上游入口待逐调用确认，当前不删 |
 | D54 | `rouge/player_recorded_scene.py`：content_context及recorded_context对坏类型、空标题、无效索引/时间/身份字段返回None或跳过 | 异常历史记录不会导航到资料，内部损坏也会静默被过滤 | 建议核对历史加载契约后区分入口拒绝与内部重复检查；现在不把所有空值路径当作冗余删除 |
 | D55 | `rouge/player_recorded_scene.py`：确认记录须same_frame_selected_node来源；旧记录按时间/标题/位置匹配，仅一个唯一内容才返回 | 防止历史条目关联到另一节点或把歧义记录当唯一内容 | 建议保留来源及唯一身份对照；替代为允许选择候选，涉及产品行为，未授权 |
+| D56 | `rouge/player_resource_history.py`：numeric_read遇到巨大整数转换为浮点溢出时捕获OverflowError返回False；count调用方同样沿用此结果 | 避免异常资源读数使列表构建中断，但坏数值按未读显示 | 建议保留入口的有限非负数规则；溢出捕获是否保留单独确认，暂不改变 |
+| D57 | `rouge/player_resource_history.py`：ResourceHistoryPage.refresh通过getattr默认None读取未初始化的run_id | 首次刷新允许属性缺失，后续换局会清除旧选择 | 建议在构造时初始化run_id并直接访问；保留换局重置选择的正常行为，尚未授权 |
+| D58 | `rouge/player_resource_history.py`：resource_rows遇到非字典历史记录或非字符串resource时跳过 | 损坏历史记录不会阻断剩余列表，但内部类型错误被静默隐藏 | 建议核对历史加载入口契约后决定保留入口过滤或暴露内部错误；本批未改 |
+| D59 | `rouge/record_flags.py`：record_flag缺字段沿用True，已存在但不是精确bool则返回None | 保留旧格式语义，同时拒绝把文字/数字当作当前持有或在队 | 建议保留旧格式与三态区分；替代是要求全部记录显式迁移。涉及私人状态，未经批准不改 |
+| D60 | `rouge/record_flags.py`：metadata_mask无效名单屏蔽全部本局元信息；projected_run_metadata对坏qualified_char_buff_ids改为空投影 | 原件不写回；坏元数据不被当成已确认招募或强化事实 | 建议保留只读未知投影，核对入口后再决定内部重复校验；不自动修复私人记录 |
+| D61 | `rouge/relic_quantities.py`：confirmed_bar_counts与kettle_copies要求完整明确图标栏、唯一非水壶ID、数量及持有身份一致 | 不从大数字或部分图标推算重复水壶份数；缺证据返回None | 建议保留数量证据对照；与概况重复读取标记的跨调用优化仍待核对，不削弱这些条件 |
+| D62 | `rouge/relic_quantities.py`：kettle_copies在任一合并记录不是dict时直接返回None | 坏历史条目不会在数量判断中触发类型错误，整组水壶数量暂时未知 | 建议在记录读取边界统一处理后再决定此内部整表检查去留；本批保持原样 |

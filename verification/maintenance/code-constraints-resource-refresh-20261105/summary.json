@@ -1,0 +1,97 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "资源概况与历史刷新复用已读结果",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "01092bff0fa08fda15c7d2260fe99ebca71b613e",
+  "source_sha256": {
+    "rouge/player_resource_facts.py": "9f4d47f598922a772476c96887c54add90d8ec77461a3eb598c397d5c0ab00fb",
+    "rouge/player_resource_history.py": "c3496d2e9ac3753d85deb9324b717dfbaf46ea8aff04d4836c75fcdb12fe9fdd",
+    "rouge/player_resource_strip.py": "72b10d0f7effc20db03373e8c2a6433fa8a26089fb96899c9cc15c8349e85ff5",
+    "rouge/record_flags.py": "9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d",
+    "rouge/relic_quantities.py": "c659ccb223feaf61e4a1ab4fb6e0995d2ff114902752f8cfb3eca5ce5e1524af",
+    "rouge/flow_layout.py": "7e332e8f759cac6eab3d0bfbced3806bb00bad7c89ae5826a3e2bd23b9db61b8"
+  },
+  "test_sha256": {
+    "tests/test_resource_entry_review.py": "80d89bc0671aa782abc9e4f35566893112808d07c9918dc5554c3d5b601cce3d"
+  },
+  "changed_sources": [
+    "rouge/player_resource_facts.py",
+    "rouge/player_resource_history.py",
+    "rouge/player_resource_strip.py"
+  ],
+  "reviewed_modules": 6,
+  "full_module_reviews_added": 2,
+  "full_modules_added": [
+    "rouge/player_resource_strip.py",
+    "rouge/flow_layout.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "baseline": {
+      "run": 3,
+      "failures": 3,
+      "elapsed_seconds": 0.326,
+      "reason": "Repeated held qualification, selected filter and selected record ID reads"
+    },
+    "first_targeted": {
+      "run": 19,
+      "passed": 19,
+      "elapsed_seconds": 0.829
+    },
+    "final_targeted": {
+      "run": 14,
+      "passed": 14,
+      "elapsed_seconds": 0.268,
+      "reason": "After consolidating selected-item null check; adds existing kettle quantity cases"
+    },
+    "unique_targeted_methods": 28,
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar; no game actions or live inventory acceptance"
+    },
+    "local_evidence": ".local/code-constraints-review-27/"
+  },
+  "coverage": {
+    "full_modules_certified": 17,
+    "structural_only": 389,
+    "selected_paths_only": 75,
+    "exception_equivalence_only": 77,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

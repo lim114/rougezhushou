@@ -1,5 +1,5 @@
 """Player-facing counts: read quantities, qualified members and missing data differ."""
-from .record_flags import active_record, unconfirmed_item_ids
+from .record_flags import active_record, record_flag
 from .player_resource_history import numeric_read,read_capacity
 from .player_replay import observation_time
 
@@ -9,13 +9,15 @@ def count(value):
 
 
 def inventory_summary(state):
-    relics = sum(active_record(r, 'held') for r in state.get('relics', {}).values())
+    relic_flags = [record_flag(r, 'held') for r in state.get('relics', {}).values()]
+    tool_flags = [record_flag(r, 'held') for r in state.get('tactical_tools', {}).values()]
+    relics = sum(flag is True for flag in relic_flags)
     from .relic_quantities import kettle_copies
     copies=kettle_copies(state)
     if copies is not None:relics+=copies-1
-    tools = sum(active_record(r, 'held') for r in state.get('tactical_tools', {}).values())
+    tools = sum(flag is True for flag in tool_flags)
     total = count(state.get('relic_count'))
-    unknown = unconfirmed_item_ids(state)
+    unknown = any(flag is None for flag in (*relic_flags, *tool_flags))
     complete = (state.get('inventory_verified') is True and total is not None
                 and relics + tools == total and not unknown)
     # The game badge includes tools. Subtract them only after a full match.
