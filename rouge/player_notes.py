@@ -86,7 +86,7 @@ class NotesDialog(QDialog):
     def refresh_preview(self,*_):
         if self.pages.currentIndex()==1:self.preview.read_markdown(self.editor.toPlainText())
     def blocked_link(self):
-        self.status.setText(('有未保存修改。'if self.dirty else'')+'预览中的链接不会自动打开；可回到编辑页复制使用。')
+        self.status.setText(('有未保存修改。'if self.dirty else'')+'此链接不是网页地址；可回到编辑页复制使用。')
     def set_context(self,content):
         key=content_key(content)
         if key is None:return False

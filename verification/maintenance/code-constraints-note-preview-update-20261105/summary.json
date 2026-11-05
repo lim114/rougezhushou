@@ -1,0 +1,68 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "笔记网页链接与成功缓存整改，D32资源范围待确认",
+  "base_commit": "c070aadbb0c493870f5e6c482db26634a70bcbc6",
+  "functional_section_incremented": false,
+  "product_source_changed": true,
+  "full_program_remediation_complete": false,
+  "resolved_decisions": [
+    "D33",
+    "D34"
+  ],
+  "pending_decisions": [
+    "D32"
+  ],
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_preview.py": "95515d3542e8463b9bd6153755027a513e458df418f1cd982797ef1b2c0a4774",
+    "rouge/player_inline_notes.py": "ab713c352a7226c186ea49ec95c59b055030a6861eef139f8db020240a7f8ead",
+    "rouge/player_notes.py": "9fc190695d9a277481d88044f633b7efcbdca6c90a2d18839e3fd8bf022a1487",
+    "rouge/player_recent_notes.py": "da77a7a83bf6f271e6c9c547972afb1228d5e263e4885ca4e17929030df9f811",
+    "rouge/player_recent_notes_acceptance.py": "9abbcd59f6a181c044984bad01404543fa4683a209ce70262810f6b0252ee60c"
+  },
+  "test_sha256": {
+    "tests/test_note_preview_boundary_review.py": "8ad92d9e6ac0efc46143fba2f7f059541bc0b685cc98025999b1e039726c4a28",
+    "tests/test_notebook_layout_review.py": "fceeb7ddb88ade324e9f094c5a566b773aca3f0d5498341fec72dbfd5a820a31",
+    "tests/test_player_note_preview_398.py": "4756872c0aae330a938b7d0808c3f7e2f4e044fa637d50086543a9a2beee180c",
+    "tests/test_notebook_rendering_460.py": "4558356f224661109eb1fcd165bd7b9bdf0d976b613d9973a319ae9a57fccd21"
+  },
+  "rules_review": {
+    "rule1": "Completed-text cache is updated only after rendering and reading restoration succeed; existing entry skip remains once.",
+    "rule2": "No helper added. Qt resource and Mistune callbacks are framework entries, not one-use wrappers.",
+    "rule3": "Only D33/D34 implemented. D32 resource range is still awaiting confirmation; original blocking code remains pending, not approved."
+  },
+  "validation": {
+    "targeted": {
+      "run": 21,
+      "passed": 21,
+      "elapsed_seconds": 9.702,
+      "platform": "Windows Qt",
+      "browser_dispatch_mocked": true,
+      "full_acceptance_helper_run": false
+    },
+    "full_suite_run": false,
+    "baseline_receipt": "verification/maintenance/code-constraints-note-preview-review-20261105/summary.json",
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "single_response_ms": 0.07,
+      "performance_acceptance": false
+    }
+  },
+  "coverage": {
+    "structural_only": 425,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 55,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "remaining": [
+    "D32: confirm resource types, local/HTTP/HTTPS scope, and relative-path base before implementation.",
+    "Actual external browser page loading was not exercised; tests verify click dispatch without opening third-party pages.",
+    "Other module paths remain under review."
+  ],
+  "progress_report": "PROGRESS.md"
+}

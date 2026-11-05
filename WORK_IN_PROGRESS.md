@@ -1,3 +1,7 @@
+## 当前断点：D33网页链接与D34成功缓存已完成，D32范围待确认（2026-11-05）
+
+21项原生定向通过，原项目测试窗口已更新并可见响应。D32已获允许资源的方向，具体类型/协议仍待用户确认，旧拦截暂未改，不计整模块完成。回执verification/maintenance/code-constraints-note-preview-update-20261105/summary.json；覆盖425/77/55/1。继续时先接用户D32范围答复，不重复询问D33/D34。
+
 ## 当前断点：笔记预览回顾，D32—D34待确认（2026-11-05）
 
 产品源码未改，三项已分别询问。基线3方法中2通过，缓存方法在转换/setHtml/恢复阅读三个注入失败点均失败；9项既有预览检查通过。拟用测试.local/code-constraints-review-20/pending_preview_cases.py，授权后移入tests修正缓存并最终验收。逐函数回顾完成但未计整模块通过；现有测试窗口仍可见、响应。回执verification/maintenance/code-constraints-note-preview-review-20261105/summary.json；覆盖426/77/54/1不变。

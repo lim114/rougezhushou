@@ -72,12 +72,14 @@ class NotebookLayoutReviewTests(unittest.TestCase):
         self.assertTrue(self.panel.options.isVisible());self.assertEqual(self.editor.editor.toPlainText(),'当前草稿')
         self.assertEqual(self.editor.store.read(self.editor.key)[0],'外部版本')
 
-    def test_clicking_external_link_remains_blocked_instead_of_entering_editor(self):
+    def test_clicking_web_link_opens_browser_instead_of_entering_editor(self):
         p=self.panel;p.preview.read_markdown('[外部链接](https://example.invalid/no-request)');self.qt.processEvents()
         position=next(QPoint(x,y)for y in range(3,65,3)for x in range(3,250,3)if p.preview.anchorAt(QPoint(x,y)))
         calls=[];p.preview.linkBlocked.connect(lambda:calls.append(True))
-        QTest.mouseClick(p.preview.viewport(),Qt.MouseButton.LeftButton,pos=position);self.qt.processEvents()
-        self.assertEqual(calls,[True]);self.assertIs(p.stack.currentWidget(),p.preview)
+        with patch('rouge.player_note_preview.QDesktopServices.openUrl',return_value=True)as opened:
+            QTest.mouseClick(p.preview.viewport(),Qt.MouseButton.LeftButton,pos=position);self.qt.processEvents()
+            opened.assert_called_once();self.assertEqual(opened.call_args.args[0].toString(),'https://example.invalid/no-request')
+        self.assertEqual(calls,[]);self.assertIs(p.stack.currentWidget(),p.preview)
 
     def test_keyboard_editing_and_long_note_resize_keep_current_text_and_selection(self):
         p=self.panel;p.preview.setFocus();QTest.keyClick(p.preview,Qt.Key.Key_F2);self.qt.processEvents()

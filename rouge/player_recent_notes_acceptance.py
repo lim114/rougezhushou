@@ -36,7 +36,7 @@ def check(window,gui,require):
     window.run.state['last_node_content']=first;bar.refresh();gui.processEvents()
     require(panel.context==first,'new_confirmed_scene_recovers_without_mutating_saved_note')
     require('#sceneNotesSurface'in popup.styleSheet()and'background:white'in panel.styleSheet(),'light_surface_and_white_note_card_style_installed')
-    panel.preview.linkBlocked.emit();require('不会自动打开'in panel.status.text(),'note_links_do_not_launch_external_apps')
+    panel.preview.linkBlocked.emit();require('不是网页地址'in panel.status.text(),'non_web_note_links_show_manual_handling_hint')
     panel.reload.click()
     close=popup.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'actual_notebook_close_control_exists');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
     require(not popup.isVisible(),'actual_notebook_close_button_closes_only_reading_window')

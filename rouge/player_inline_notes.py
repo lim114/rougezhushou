@@ -258,7 +258,7 @@ class InlineNotesPanel(RecentNotesPanel):
             view=NotePreview();view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
             view.document().documentLayout().documentSizeChanged.connect(lambda size,v=view:v.setFixedHeight(max(70,ceil(size.height())+32)))
             view.document().documentLayout().documentSizeChanged.connect(self.fit_content)
-            view.read_markdown(error or text or '此范围尚无笔记。');view.linkBlocked.connect(lambda:self.status.setText('上级笔记中的链接不会自动打开。'))
+            view.read_markdown(error or text or '此范围尚无笔记。');view.linkBlocked.connect(lambda:self.status.setText('此链接不是网页地址；可在对应笔记中复制。'))
             self.parent_layout.addWidget(view);self.parent_views.append(view)
 
     def open_scope(self,content):

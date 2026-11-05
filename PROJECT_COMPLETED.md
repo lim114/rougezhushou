@@ -1,3 +1,7 @@
+## 维护：笔记网页链接与成功缓存（2026-11-05）
+
+D33网页点击交给默认浏览器，D34在渲染与阅读恢复成功后更新缓存；21项定向通过，测试窗口已更新。D32具体资源范围仍待确认，未计整模块通过。[回执和进度](verification/maintenance/code-constraints-note-preview-update-20261105/README.md)。
+
 ## 维护：笔记保存目标路径复用（2026-11-05）
 
 D29—D31授权落实，保存锁与发布共用destination，原链接拒绝和两次摘要核对保留；9项原生定向通过。真实链接夹具权限限制单列未验证。[回执和进度](verification/maintenance/code-constraints-note-save-destination-20261105/README.md)。

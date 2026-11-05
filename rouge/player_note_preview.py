@@ -1,6 +1,6 @@
-"""Local Markdown presentation. Resource loading is denied, never delegated."""
+"""Markdown preview with explicit browser links and controlled resource loading."""
 from PySide6.QtCore import QByteArray,Signal
-from PySide6.QtGui import QTextDocument,QImage,QColor
+from PySide6.QtGui import QTextDocument,QImage,QColor,QDesktopServices
 from PySide6.QtWidgets import QTextBrowser
 from mistune import HTMLRenderer, create_markdown
 from .ui_state import _reading_state, _restore_reading
@@ -32,12 +32,13 @@ class NotePreview(QTextBrowser):
         super().__init__(parent);self._text=None;self.safe_document=NoExternalResources(self);self.setDocument(self.safe_document);self.setOpenExternalLinks(False);self.setOpenLinks(False);self.anchorClicked.connect(self._anchor)
     def _anchor(self,url):
         if not url.scheme()and not url.path()and url.fragment():self.scrollToAnchor(url.fragment())
+        elif url.scheme()in('http','https'):QDesktopServices.openUrl(url)
         else:self.linkBlocked.emit()
     def loadResource(self,kind,url):
         return self.safe_document.loadResource(kind,url)
     def read_markdown(self,text,*,preserve=True):
         if preserve and text==self._text:return
-        self._text=text
         state=_reading_state(self)if preserve else None
         self.setHtml(render_note(text).strip())
         if state is not None:_restore_reading(self,state,False)
+        self._text=text

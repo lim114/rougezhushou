@@ -43,11 +43,11 @@ class NotePreviewTests(unittest.TestCase):
             self.assertEqual(calls,[]);self.assertFalse(view.openExternalLinks());self.assertFalse(view.openLinks())
         finally:view.close();server.shutdown();server.server_close();thread.join(2)
 
-    def test_links_are_not_opened_as_external_browser_actions(self):
+    def test_web_link_click_requests_external_browser_once(self):
         view=NotePreview();seen=[];view.linkBlocked.connect(lambda:seen.append(True))
         try:
-            with patch.object(QDesktopServices,'openUrl',return_value=False)as opened:
-                view.anchorClicked.emit(QUrl('https://example.invalid/notes'));self.gui.processEvents();opened.assert_not_called();self.assertEqual(seen,[True])
+            with patch.object(QDesktopServices,'openUrl',return_value=True)as opened:
+                url=QUrl('https://example.invalid/notes');view.anchorClicked.emit(url);self.gui.processEvents();opened.assert_called_once_with(url);self.assertEqual(seen,[])
         finally:view.close()
 
     def test_preview_preserves_dirty_edit_binding_and_exact_saved_markdown(self):

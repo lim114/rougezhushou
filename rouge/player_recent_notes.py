@@ -33,7 +33,7 @@ class RecentNotesPanel(QWidget):
         self.edit=QPushButton('编辑这份笔记');body.addWidget(self.edit)
         self.follow.toggled.connect(lambda _:self.refresh(force=True))
         self.reload.clicked.connect(self.reload_saved);self.edit.clicked.connect(self.request_edit)
-        self.preview.linkBlocked.connect(lambda:self.status.setText('链接不会自动打开；可在编辑器中复制。笔记仍只保存在本机。'))
+        self.preview.linkBlocked.connect(lambda:self.status.setText('此链接不是网页地址；可在编辑器中复制。笔记仍只保存在本机。'))
         self.timer=QTimer(self);self.timer.setInterval(1000);self.timer.timeout.connect(lambda:self.refresh()if self.isVisible()else None);self.timer.start()
         self.refresh(force=True)
 
