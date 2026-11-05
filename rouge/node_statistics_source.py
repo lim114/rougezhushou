@@ -13,12 +13,12 @@ class NodeStatisticsSource(QObject):
         super().__init__(parent);self.cache=Path(cache);self.data=None;self.index=model.FrequencyIndex()
         try:
             data=model.load(self.cache if self.cache.is_file()else model.DEFAULT)
-            self.index=model.FrequencyIndex(data);self.data=data
+            self.index=model.FrequencyIndex.from_validated(data);self.data=data
         except(OSError,ValueError,KeyError,TypeError):pass
 
     def accept(self,data):
-        if not isinstance(data,dict):raise ValueError('新统计数据缺失或格式不正确。')
-        index=model.FrequencyIndex(data)
+        model.validate(data)
+        index=model.FrequencyIndex.from_validated(data)
         self.cache.parent.mkdir(parents=True,exist_ok=True)
         temp=self.cache.with_suffix('.tmp')
         temp.write_text(json.dumps(data,ensure_ascii=False),encoding='utf8');os.replace(temp,self.cache)

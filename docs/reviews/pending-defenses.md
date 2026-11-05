@@ -11,5 +11,7 @@
 | D42 | `observed_map_symbols.py`：mapping_for文件读取失败、摘要/版本/关卡对照不符返回None | 避免错误地图标记；公开数据损坏或版本漂移时不显示补充点位 | 建议保留来源绑定；不能仅因字节摘要存在就删版本检查，代码版本也可能变化 |
 | D43 | `manual_scenario.py`：parse_preview_object拒绝重复JSON字段和非有限数值 | 避免编辑器接受歧义字段/无限数值；这些输入不能用于临时计算 | 建议保留；普通JSON语法/对象入口与框架解析回调不当作单次包装删除 |
 | D44 | `tomimi_reference.py`：target缺资料/无对应level或名称不符返回None | 避免跳错关卡；不同版本无法对应时网页入口不可用 | 建议保留身份对照，替代为允许仅按level匹配或暴露缺项 |
-| D45 | `node_statistics_source.py`：构造捕获OSError/ValueError/KeyError/TypeError后静默使用空索引 | 缓存/默认数据失败不阻止启动，也可能吞掉索引内部缺陷 | 建议把捕获收窄到读取/输入解析，内部构造缺陷暴露；model.load与FrequencyIndex重复验证另作普通整改 |
+| D45 | `node_statistics_source.py`：构造捕获OSError/ValueError/KeyError/TypeError后静默使用空索引 | 缓存/默认数据失败不阻止启动，也可能吞掉索引内部缺陷 | 建议把捕获收窄到读取/输入解析，内部构造缺陷暴露；model.load与FrequencyIndex重复验证已独立整改，捕获保持原样 |
 | D46 | `reference_image.py`：set_data缺图/PNG解析失败显示替代文字，_fit在无图时跳过 | 图片缺失时保持可读界面；不能把解码成功路径的检查与空窗口resize回调机械合并 | 建议保留缺图/解码失败展示；无图resize是正常生命周期状态 |
+| D47 | `player_map_reference.default_frequencies`：读取默认统计或构造索引发生ValueError/KeyError/TypeError/OSError时返回空索引 | 不阻止地图打开，也可能掩盖内部索引缺陷 | 建议仅保留读取/格式错误提示并暴露内部缺陷；替代为保持静默空索引。去留未批准，原捕获未改 |
+| D48 | `player_map_reference.historical_rows`：查询索引发生ValueError/KeyError/TypeError/OSError时返回空行 | 查询失败与确实无统计混为一类；可能吞掉内部错误 | 先明确无覆盖位置的正常返回，再收窄输入错误范围；替代为保持现状。去留未批准，原捕获未改 |

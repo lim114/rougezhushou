@@ -5,11 +5,8 @@ import json
 from . import public_node_statistics as statistics
 
 @lru_cache(maxsize=1)
-def public_counts():return statistics.load()
-
-@lru_cache(maxsize=1)
 def default_frequencies():
-    try:return statistics.FrequencyIndex(public_counts())
+    try:return statistics.FrequencyIndex.from_validated(statistics.load())
     except(ValueError,KeyError,TypeError,OSError):return statistics.FrequencyIndex()
 
 def historical_rows(zone_id,distance,frequencies=None):

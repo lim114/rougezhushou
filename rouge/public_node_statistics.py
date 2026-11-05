@@ -100,7 +100,16 @@ class FrequencyIndex:
     def __init__(self,data=None):
         self.metadata=None;self.identity=None;self._rows={}
         if data is None:return
-        validate(data);self.metadata=deepcopy(data['metadata'])
+        self._project_validated(validate(data))
+
+    @classmethod
+    def from_validated(cls,data):
+        """Build from data validated immediately by the calling entry point."""
+        index=cls();index._project_validated(data)
+        return index
+
+    def _project_validated(self,data):
+        self.metadata=deepcopy(data['metadata'])
         frozen={'metadata':self.metadata,'counts':list(data['counts'].items())}
         self.identity=sha256(json.dumps(frozen,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf8')).hexdigest()
         buckets={}

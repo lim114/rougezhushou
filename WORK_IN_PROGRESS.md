@@ -1,3 +1,7 @@
+## 当前断点：统计单次校验与默认缓存整改（2026-11-05）
+
+按用户允许分批收尾。统计文件加载和接受更新各完整校验一次；删除单次public_counts和重复缓存。最终21项中20通过、1个既有补零差异失败，已用修改前源码复现；本批未改统计口径。测试窗口已更新、可见响应。D38—D48统一待审，覆盖404/77/65/12；回执verification/maintenance/code-constraints-statistics-entry-20261105/summary.json。继续其它普通整改，不把本批完成等同全程序完成。
+
 ## 当前断点：按主动目标推进全仓库审查，首组20模块（2026-11-05）
 
 用户要求持续推进至仅剩待其审核的低概率防御；用户允许分批交付；批次结束保留断点，不把批次完成等同全程序完成。9组待审统一在docs/reviews/pending-defenses.md，逐规则账本docs/reviews/code-constraints-ledger.json。已读20模块，新增10个本模块三条审查完成；休整旅行入口已精简，3项定向通过。覆盖406/77/63/12；回执verification/maintenance/code-constraints-runtime-wave1-20261105/summary.json。下一步继续未读运行模块，并处理condition_inputs/统计源重复验证的调用链；不要将研究/验收冻结副本当当前源码改写，不恢复全量测试，不启动子代理。
