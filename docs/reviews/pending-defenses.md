@@ -45,3 +45,4 @@
 | D76 | `rouge/player_shop_memory.py`：remember拒绝不同局、非数值时间或超过2秒的请求 | 旧悬停结果不会写进另一局；不重试也不修改原记录 | 建议保留写入归属和新鲜度边界；其阈值不因精简放宽 |
 | D77 | `rouge/player_shop_memory.py`：recorded_shops跳过坏历史事件/非有限或负时间，资料缺失时返回空 | 无法核对的商店记录不用于对比；不替原件补数据 | 建议保留缺资料状态并核对历史入口是否已覆盖类型过滤；当前不改 |
 | D78 | `rouge/player_shop_memory.py:ShopMemoryPanel.open_source`：先调用refresh（会reload_sources），随后无对话框或异步等待又reload_sources | 第二次文件状态检查可读到恰在两次调用间变化的公开资料；通常重复stat，资料变更时可能重读。未证明是有意防御，按用户要求先保留待审 | 建议删第二次调用，采用本次refresh取得的来源；外部资料若恰在调用间改变，下次操作再更新。不改reload_sources内的错误处理，不新增缓存或重试 |
+| D79 | `rouge/player_map_find.py:NodeFinder.__init__`：原rows中的非字典content/非文字title忽略逻辑原样迁入；仅登记异常内容结构的过滤 | 坏内容不会成为搜索标题，但也会隐藏历史结构缺陷；正常未读取内容和same_frame_selected_node归属要求另属功能规则 | 建议保留同帧绑定规则，异常结构过滤待历史入口契约核对后决定。当前只移动原表达式，未删校验或新增恢复 |

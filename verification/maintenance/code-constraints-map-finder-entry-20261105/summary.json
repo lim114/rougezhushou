@@ -1,0 +1,126 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图查找单次投影与叠加设置取值精简",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "4c7eb33fbbfeca34872b99afcb690d3d68956742",
+  "source_sha256": {
+    "rouge/player_map_find.py": "19b471ee38f013bd3814784576f9303f0a9f4cd901d2f74aa2cc10bef35057a5",
+    "rouge/player_map.py": "3a3e4effaee8e6b35f84389474a302aedc8064a21168f42efe6d44baab0fd263",
+    "rouge/player_overlay_settings.py": "2939c499e9141c980132d613c983fa53b59128c2515ebb44bb6b11411ec0f281",
+    "rouge/player_feature_440_acceptance.py": "b3d97ed507968d79c37fffe062ff3f9a245739098278da46e79153b38a4a5650",
+    "rouge/player_feature_437_acceptance.py": "c685cda89221c8506570ade6c0df0bf409c3326d99d2a77f3ad3f06f72dc91ec",
+    "rouge/player_feature_438_acceptance.py": "a0c521eaa10dfd7a9edcb4bb5b1241c98b81be8c40a1b1eec084f54ccbaf23d7",
+    "rouge/player_feature_439_acceptance.py": "e92fd7420c14ddf55f1256ced84e42f92d72ebaf8951587b1a99f8f3a376be5b"
+  },
+  "test_sha256": {
+    "tests/test_map_finder_entry_review.py": "8e5db4deb93e64cdd7de5c42faa3cb8cd22f0e75e222384322101ac7d1caef81",
+    "tests/test_player_feature_437.py": "ab8af6d39a02af8c5c7ef79fa0b679b97a736b9e6ce325533340fdacfb3bbc43",
+    "tests/test_player_feature_440.py": "ed6da4d2a42b78d7545ac43d21f019a9c0d5798ebaabdd96d384e9a88fed875a",
+    "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5",
+    "tests/test_player_feature_438.py": "0942153ed247da47d0afa8fb6f40d52f89c6ebf1b3f84cb2466c274d98b78325",
+    "tests/test_player_feature_439.py": "afebca85dad736d4d0ebdb3d40c96a45cf77cc07210cbba3e190eea9831c1956"
+  },
+  "changed_sources": [
+    "rouge/player_map_find.py",
+    "rouge/player_map.py",
+    "rouge/player_overlay_settings.py",
+    "rouge/player_feature_440_acceptance.py"
+  ],
+  "full_module_reviews_added": 5,
+  "full_modules_added": [
+    "rouge/player_overlay_settings.py",
+    "rouge/player_feature_437_acceptance.py",
+    "rouge/player_feature_438_acceptance.py",
+    "rouge/player_feature_439_acceptance.py",
+    "rouge/player_feature_440_acceptance.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79"
+  ],
+  "resolved_decisions": [],
+  "approval_reused": "docs/decisions/2026-11-03-overlay-video-controls.md",
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "validation": {
+    "baseline": {
+      "run": 1,
+      "failures": 1,
+      "elapsed_seconds": 0.196,
+      "actual_node_style_calls": 60,
+      "expected_calls": 30
+    },
+    "targeted": {
+      "run": 11,
+      "passed": 11,
+      "elapsed_seconds": 0.132
+    },
+    "map_window": {
+      "run": 2,
+      "passed": 2,
+      "elapsed_seconds": 4.73
+    },
+    "unique_targeted_methods": 13,
+    "settings_equivalence_cases": 12,
+    "authorized_save_ast_unchanged": true,
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "actual toolbar; map integration uses isolated fixtures, not live game"
+    },
+    "local_evidence": ".local/code-constraints-review-31/"
+  },
+  "coverage": {
+    "full_modules_certified": 24,
+    "structural_only": 375,
+    "selected_paths_only": 83,
+    "exception_equivalence_only": 76,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json"
+}

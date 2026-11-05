@@ -470,6 +470,66 @@
         "D77",
         "D78"
       ]
+    },
+    {
+      "file": "rouge/player_map_find.py",
+      "sha256": "19b471ee38f013bd3814784576f9303f0a9f4cd901d2f74aa2cc10bef35057a5",
+      "rule1": "finder_refresh_duplicate_projection_removed_other_paths_pending",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "pending_user_review_or_unreviewed_paths",
+      "evidence": "One per-refresh NodeFinder owns exact labels and disjoint coverage; one zone_info per graph and one node_style per node. find handles normal text/category filters without repeating projection. Old rows/coverage wrappers removed, current callers migrated. Original malformed-content guards unchanged, D79 pending.",
+      "decisions": [
+        "D79"
+      ]
+    },
+    {
+      "file": "rouge/player_map.py",
+      "sha256": "3a3e4effaee8e6b35f84389474a302aedc8064a21168f42efe6d44baab0fd263",
+      "rule1": "finder_refresh_duplicate_projection_removed_other_paths_pending",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "pending_user_review_or_unreviewed_paths",
+      "evidence": "Only update_node_finder reviewed/changed: one NodeFinder for counts plus filtered rows. Next refresh creates a new projection, selection/notice semantics preserved. Other module paths not certified; floor-tab refresh still calls zone_info in sorting and labels and needs followup."
+    },
+    {
+      "file": "rouge/player_overlay_settings.py",
+      "sha256": "2939c499e9141c980132d613c983fa53b59128c2515ebb44bb6b11411ec0f281",
+      "rule1": "reviewed_clear",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "existing_defenses_explicitly_approved",
+      "evidence": "Entire constructor/save reviewed with CompactAssistant boolean control caller. enabled read once after JSON parse; 12 input cases equivalent to prior code. save AST unchanged. Existing read/format and atomic-save protections explicitly authorized in 2026-11-03-overlay-video-controls.md, section cleanup b; no new defense.",
+      "approval": "docs/decisions/2026-11-03-overlay-video-controls.md:cleanup-b"
+    },
+    {
+      "file": "rouge/player_feature_440_acceptance.py",
+      "sha256": "b3d97ed507968d79c37fffe062ff3f9a245739098278da46e79153b38a4a5650",
+      "rule1": "reviewed_clear",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Entire small acceptance entry reviewed with player_acceptance dispatch. Direct sequential assertions serve this test only; no unnecessary helper extraction, catch or repeated boundary validation. try/finally restores fixture state on every exit, not speculative recovery. This is source review, not a new full/game acceptance run."
+    },
+    {
+      "file": "rouge/player_feature_437_acceptance.py",
+      "sha256": "c685cda89221c8506570ade6c0df0bf409c3326d99d2a77f3ad3f06f72dc91ec",
+      "rule1": "reviewed_clear",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Entire small acceptance entry reviewed with player_acceptance dispatch. Direct sequential assertions serve this test only; no unnecessary helper extraction, catch or repeated boundary validation. try/finally restores fixture state on every exit, not speculative recovery. This is source review, not a new full/game acceptance run."
+    },
+    {
+      "file": "rouge/player_feature_438_acceptance.py",
+      "sha256": "a0c521eaa10dfd7a9edcb4bb5b1241c98b81be8c40a1b1eec084f54ccbaf23d7",
+      "rule1": "reviewed_clear",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Entire small acceptance entry reviewed with player_acceptance dispatch. Direct sequential assertions serve this test only; no unnecessary helper extraction, catch or repeated boundary validation. try/finally restores fixture state on every exit, not speculative recovery. This is source review, not a new full/game acceptance run."
+    },
+    {
+      "file": "rouge/player_feature_439_acceptance.py",
+      "sha256": "e92fd7420c14ddf55f1256ced84e42f92d72ebaf8951587b1a99f8f3a376be5b",
+      "rule1": "reviewed_clear",
+      "rule2": "direct_domain_operation_or_required_acceptance_entry",
+      "rule3": "no_unapproved_low_probability_defense_found",
+      "evidence": "Entire small acceptance entry reviewed with player_acceptance dispatch. Direct sequential assertions serve this test only; no unnecessary helper extraction, catch or repeated boundary validation. try/finally restores fixture state on every exit, not speculative recovery. This is source review, not a new full/game acceptance run."
     }
   ]
 }

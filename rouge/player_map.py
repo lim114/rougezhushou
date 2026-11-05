@@ -258,11 +258,11 @@ class MapPanel(QWidget):
         keys=[self.floors.tabData(i)for i in range(self.floors.count())];wanted=old_key if old_key in keys else(original.graph or{}).get('zone_id')
         self.floors.setCurrentIndex(keys.index(wanted)if wanted in keys else 0 if keys else-1);self.floors.blockSignals(False);self.show_floor()
     def update_node_finder(self,*_):
-        from .player_map_find import rows
+        from .player_map_find import NodeFinder
         previous=self.node_results.currentData();self.node_results.blockSignals(True);self.node_results.clear()
-        from .player_map_find import coverage
-        c=coverage(self.graphs);self.coverage_notice.setText(f"本局已保存{len(self.graphs)}个区域：已读或历史类型{c['read']}处，模板固定{c['fixed']}处，尚待确认{c['unknown']}处。只筛查找列表，不改变地图候选。")
-        for row in rows(self.graphs,self.node_query.text(),self.read_scope.currentData()):self.node_results.addItem(row['label'],row['key'])
+        finder=NodeFinder(self.graphs)
+        c=finder.counts;self.coverage_notice.setText(f"本局已保存{len(self.graphs)}个区域：已读或历史类型{c['read']}处，模板固定{c['fixed']}处，尚待确认{c['unknown']}处。只筛查找列表，不改变地图候选。")
+        for row in finder.find(self.node_query.text(),self.read_scope.currentData()):self.node_results.addItem(row['label'],row['key'])
         i=self.node_results.findData(previous)
         if i>=0:self.node_results.setCurrentIndex(i)
         self.node_results.blockSignals(False);self.find_node.setEnabled(self.node_results.count()>0)

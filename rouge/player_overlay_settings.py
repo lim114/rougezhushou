@@ -11,9 +11,10 @@ class OverlayPreferences:
         if self.path is None:return
         try:
             data=json.loads(self.path.read_text('utf8'))
-            if not isinstance(data,dict)or type(data.get('enabled',True))is not bool:
+            enabled=data.get('enabled',True)if isinstance(data,dict)else None
+            if type(enabled)is not bool:
                 raise ValueError('Invalid overlay preference')
-            self.data=data;self.enabled=data.get('enabled',True)
+            self.data=data;self.enabled=enabled
         except FileNotFoundError:pass
         except(OSError,ValueError):
             self.enabled=False;self.readable=False
