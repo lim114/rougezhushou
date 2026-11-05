@@ -78,7 +78,7 @@ class NoteLibraryPanel(QWidget):
         self.setObjectName('sceneNotesLibrary');apply_theme(self,extra=NOTE_STYLE)
         self.notice=QLabel('本机场景笔记');self.notice.setWordWrap(True);body.addWidget(self.notice);self.search=QLineEdit();self.search.setPlaceholderText('搜索场景名称或笔记内容');body.addWidget(self.search)
         from .player_note_preview import NotePreview
-        self.split=QSplitter(Qt.Orientation.Horizontal);self.entries=QListWidget();self.entries.setMinimumWidth(130);self.split.addWidget(self.entries);self.detail=NotePreview();self.detail_key=None;self.split.addWidget(self.detail);self.split.setStretchFactor(1,2);self.split.setChildrenCollapsible(False);body.addWidget(self.split,1)
+        self.split=QSplitter(Qt.Orientation.Horizontal);self.entries=QListWidget();self.entries.setMinimumWidth(130);self.split.addWidget(self.entries);self.detail=NotePreview(folder=self.library.folder);self.detail_key=None;self.split.addWidget(self.detail);self.split.setStretchFactor(1,2);self.split.setChildrenCollapsible(False);body.addWidget(self.split,1)
         from .flow_layout import FlowLayout
         actions=QWidget();row=FlowLayout(actions);self.open_button=QPushButton('编辑笔记');row.addWidget(self.open_button);self.reference_button=QPushButton('查看对应资料');row.addWidget(self.reference_button);body.addWidget(actions);self.reference_button.clicked.connect(self.open_reference)
         for action in (self.open_button,self.reference_button):action.setAutoDefault(False)

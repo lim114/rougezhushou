@@ -1,3 +1,7 @@
+## 维护：D32笔记资源加载与预览模块审查（2026-11-05）
+
+本机/HTTP/HTTPS图片、HTML/CSS按授权加载，四处目录绑定；移除旧文档拦截转发。29项定向加1项实际锚点点击通过，测试窗口已更新。player_note_preview.py完成三条整模块审查。[回执及进度](verification/maintenance/code-constraints-note-resources-20261105/README.md)。
+
 ## 维护：笔记网页链接与成功缓存（2026-11-05）
 
 D33网页点击交给默认浏览器，D34在渲染与阅读恢复成功后更新缓存；21项定向通过，测试窗口已更新。D32具体资源范围仍待确认，未计整模块通过。[回执和进度](verification/maintenance/code-constraints-note-preview-update-20261105/README.md)。

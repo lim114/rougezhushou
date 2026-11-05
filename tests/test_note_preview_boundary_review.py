@@ -44,14 +44,14 @@ class NotePreviewBoundaryTests(unittest.TestCase):
             scroll.assert_called_once_with('details')
         self.assertEqual(blocked, [])
 
-    def test_browser_resource_override_returns_empty_stylesheet(self):
+    def test_custom_protocol_resource_is_not_requested(self):
         view = module.NotePreview()
         self.addCleanup(view.close)
-        url = QUrl('https://example.invalid/not-requested.css')
+        url = QUrl('custom-app:style.css')
         resource = view.loadResource(QTextDocument.ResourceType.StyleSheetResource, url)
         self.assertIsInstance(resource, QByteArray)
         self.assertTrue(resource.isEmpty())
-        self.assertIn((QTextDocument.ResourceType.StyleSheetResource, url.toString()), view.safe_document.blocked)
+        self.assertEqual(view._pending,set())
 
     def test_render_does_not_open_browser_and_non_web_click_stays_manual(self):
         view = module.NotePreview()

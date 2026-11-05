@@ -57,7 +57,7 @@ class NotesDialog(QDialog):
         self.context=QLabel();self.context.setWordWrap(True);body.addWidget(self.context)
         self.pages=QTabWidget();body.addWidget(self.pages,1)
         self.editor=QPlainTextEdit();self.editor.setPlaceholderText('记下这关的机制、注意事项或上次失误。可用#写标题，用-列要点。');self.pages.addTab(self.editor,'编辑文字')
-        self.preview=NotePreview();self.pages.addTab(self.preview,'排版预览')
+        self.preview=NotePreview(folder=self.store.folder);self.pages.addTab(self.preview,'排版预览')
         self.preview_timer=QTimer(self);self.preview_timer.setSingleShot(True);self.preview_timer.setInterval(180);self.preview_timer.timeout.connect(self.refresh_preview)
         self.pages.currentChanged.connect(self.refresh_preview)
         self.preview.linkBlocked.connect(self.blocked_link)

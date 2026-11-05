@@ -1,0 +1,97 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "D32笔记资源加载与预览模块三条审查完成",
+  "base_commit": "5f8891f81a950c13d5e7e6c15d777233624fe4b9",
+  "functional_section_incremented": false,
+  "product_source_changed": true,
+  "full_program_remediation_complete": false,
+  "resolved_decisions": [
+    "D32"
+  ],
+  "pending_decisions": [],
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_preview.py": "515f2f7bae024213b1dca8f7905c58ddb4a874b9b1b56c4c86c1d369ac831740",
+    "rouge/player_notes.py": "b54cde42af2af8bc7821fa5982347f49b3a5c78abf120b5f6519c89306fbe1c2",
+    "rouge/player_recent_notes.py": "891b46134f1d79ef77d800f910acc04a545153a3649c860e1c4eeeeb0f8ce795",
+    "rouge/player_note_library.py": "7070424b85e5f13497eb16ee26a937984be760718b2112451325c13849fb0478",
+    "rouge/player_inline_notes.py": "60b57d3ff9ff25b6b0f7909173a1e84fdb828f30a1e5e89be528f9fd198ca867"
+  },
+  "test_sha256": {
+    "tests/test_note_resources_review.py": "e7909f1e4c06f0ff92a206372215cbbb27ce919272627d90767ec9309c2b41d5",
+    "tests/test_note_preview_boundary_review.py": "617c1e2b5336dfb0829d5c6753085085ce52896d71cd0b9f5b5f17cc7c932fd1",
+    "tests/test_notebook_layout_review.py": "0dc65b7a8f8a750be4123c037a5e62bf4b5886fc0c957090df9e348ced6f4725",
+    "tests/test_player_note_preview_398.py": "319d73b3932143ed479690ec77625ffc5a1abcb1ebf0555c5d68b69aa59d2ece",
+    "tests/test_notebook_rendering_460.py": "4558356f224661109eb1fcd165bd7b9bdf0d976b613d9973a319ae9a57fccd21"
+  },
+  "rules_review": {
+    "rule1": "Resource type/scheme is checked at the loadResource entry only. Completed cache and in-flight set represent different states; repeated requests reuse them. Render completion remains after successful display/reading restore.",
+    "rule2": "Removed the separate blocking document and its forwarding callback. Network completion is a Qt signal handler; no single-use helper extracted.",
+    "rule3": "D32 explicit scope replaces the old blanket denial. Only normal resource success/failure handling, no retry, timeout override, certificate bypass or recovery mechanism added."
+  },
+  "validation": {
+    "targeted": {
+      "run": 29,
+      "passed": 29,
+      "elapsed_seconds": 7.508,
+      "platform": "Windows Qt"
+    },
+    "additional_actual_anchor_click": {
+      "run": 1,
+      "passed": 1
+    },
+    "full_suite_run": false,
+    "browser_dispatch_mocked": true,
+    "network_transport": "real local HTTP and TLS; ephemeral certificate trusted on fixture requests only",
+    "visual_preview_checked": true,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "single_response_ms": 0.09,
+      "performance_acceptance": false
+    },
+    "prior_rounds": [
+      {
+        "log": "initial.log",
+        "run": 6,
+        "passed": 5,
+        "errors": 1,
+        "cause": "Lazy image request was started after the wait; assertion failed and outstanding file request prevented fixture deletion."
+      },
+      {
+        "log": "initial-rerun.log",
+        "run": 6,
+        "passed": 6
+      },
+      {
+        "log": "resources-first.log",
+        "run": 7,
+        "passed": 5,
+        "failures": 2,
+        "cause": "CSS fixture omitted the Qt-supported head/type declaration; lazy paint was not allowed to enqueue resources before waiting."
+      },
+      {
+        "log": "resources-rerun.log",
+        "run": 7,
+        "passed": 6,
+        "failures": 1,
+        "cause": "Pixel assertion sampled an x coordinate outside the inline image; replaced with whole-viewport pixel count."
+      }
+    ]
+  },
+  "coverage": {
+    "structural_only": 425,
+    "exception_equivalence_only": 77,
+    "selected_paths_only": 54,
+    "full_modules_certified": 2,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "remaining": [
+    "Actual third-party browser page loading is not part of the mocked link-dispatch test.",
+    "Other program modules and unreviewed paths remain; Qt/Mistune internals are not certified by this module review."
+  ],
+  "progress_report": "PROGRESS.md"
+}

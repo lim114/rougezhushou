@@ -28,7 +28,7 @@ class RecentNotesPanel(QWidget):
         self.selector=SceneNoteSelector(self);self.selector.chosen.connect(self.select_context);body.addWidget(self.selector)
         bar=QHBoxLayout();self.follow=QCheckBox('跟随最近读取的场景');self.follow.setChecked(True);bar.addWidget(self.follow);bar.addStretch()
         self.reload=QPushButton('刷新笔记');bar.addWidget(self.reload);body.addLayout(bar)
-        self.preview=NotePreview();self.preview.setMinimumHeight(180);body.addWidget(self.preview,1)
+        self.preview=NotePreview(folder=self.store.folder);self.preview.setMinimumHeight(180);body.addWidget(self.preview,1)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         self.edit=QPushButton('编辑这份笔记');body.addWidget(self.edit)
         self.follow.toggled.connect(lambda _:self.refresh(force=True))

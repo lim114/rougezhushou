@@ -34,6 +34,17 @@ class NotebookLayoutReviewTests(unittest.TestCase):
     def blur(self):
         self.panel.selector.floor.setFocus();self.editor.editor.clearFocus();self.panel.leave_editor();self.qt.processEvents()
 
+    def test_all_notebook_previews_use_the_note_directory(self):
+        from PySide6.QtCore import QUrl
+        from rouge.player_note_library import NoteLibraryPanel
+        library=NoteLibraryPanel(self.editor.store.folder,defer_population=True)
+        self.addCleanup(library.close)
+        self.panel.parent_toggle.setChecked(True);self.qt.processEvents()
+        self.assertTrue(self.panel.parent_views)
+        expected=QUrl.fromLocalFile(str(self.editor.store.folder.resolve())+'/')
+        for view in (self.editor.preview,self.panel.preview,library.detail,*self.panel.parent_views):
+            self.assertEqual(view.document().baseUrl(),expected)
+
     def test_default_surface_reuses_actions_but_does_not_reserve_footer_rows(self):
         p=self.panel
         self.assertFalse(p.options.isVisible());self.assertFalse(self.editor.pages.tabBar().isVisible())

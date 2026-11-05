@@ -255,7 +255,7 @@ class InlineNotesPanel(RecentNotesPanel):
             label=QLabel('当前场景没有可唯一对应的上级范围；可手选楼层或节点后查看通用笔记。');label.setWordWrap(True);self.parent_layout.addWidget(label)
         for context,text,error in values:
             title=QPushButton(context['title']);title.setToolTip('打开此范围的通用笔记');title.clicked.connect(lambda _checked=False,c=context:self.open_scope(c));self.parent_layout.addWidget(title)
-            view=NotePreview();view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+            view=NotePreview(folder=self.store.folder);view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
             view.document().documentLayout().documentSizeChanged.connect(lambda size,v=view:v.setFixedHeight(max(70,ceil(size.height())+32)))
             view.document().documentLayout().documentSizeChanged.connect(self.fit_content)
             view.read_markdown(error or text or '此范围尚无笔记。');view.linkBlocked.connect(lambda:self.status.setText('此链接不是网页地址；可在对应笔记中复制。'))

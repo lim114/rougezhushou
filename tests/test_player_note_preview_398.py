@@ -5,7 +5,7 @@ from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from unittest.mock import patch
 import unittest
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import QUrl,QByteArray
+from PySide6.QtCore import QUrl,QByteArray,QBuffer,QIODevice
 from PySide6.QtGui import QTextDocument,QTextCursor,QDesktopServices,QImage,QColor
 from PySide6.QtTest import QTest
 from rouge.player_note_preview import NotePreview
@@ -23,24 +23,31 @@ class NotePreviewTests(unittest.TestCase):
             view.read_markdown(text);self.assertEqual(view.textCursor().selectedText(),selected)
         finally:view.close()
 
-    def test_local_picture_resource_is_empty_and_not_replaced_by_file_contents(self):
+    def test_local_picture_resource_displays_file_contents(self):
         with TemporaryDirectory()as tmp:
             path=Path(tmp)/'private-fixture.png';picture=QImage(4,4,QImage.Format.Format_ARGB32);picture.fill(QColor('red'));self.assertTrue(picture.save(str(path)))
             view=NotePreview()
             try:
-                url=QUrl.fromLocalFile(str(path));view.read_markdown('![本机示例]('+url.toString()+')');resource=view.document().resource(QTextDocument.ResourceType.ImageResource,url)
-                self.assertIsInstance(resource,QImage);self.assertEqual((resource.width(),resource.height()),(1,1));self.assertEqual(resource.pixelColor(0,0).alpha(),0);self.assertTrue(view.safe_document.blocked)
+                url=QUrl.fromLocalFile(str(path));view.read_markdown('![本机示例]('+url.toString()+')');view.document().resource(QTextDocument.ResourceType.ImageResource,url)
+                for _ in range(100):
+                    QTest.qWait(10)
+                    if not view._pending:break
+                resource=QImage.fromData(view.loadResource(QTextDocument.ResourceType.ImageResource,url))
+                self.assertEqual((resource.width(),resource.height()),(4,4));self.assertEqual(resource.pixelColor(0,0),QColor('red'))
             finally:view.close()
 
-    def test_network_image_does_not_request_even_a_local_owned_server(self):
-        calls=[]
+    def test_network_image_loads_once_from_local_owned_server(self):
+        calls=[];image=QImage(4,4,QImage.Format.Format_ARGB32);image.fill(QColor('blue'));buffer=QBuffer();buffer.open(QIODevice.OpenModeFlag.WriteOnly);image.save(buffer,'PNG');png=bytes(buffer.data())
         class Handler(BaseHTTPRequestHandler):
-            def do_GET(self):calls.append(self.path);self.send_response(200);self.end_headers()
+            def do_GET(self):calls.append(self.path);self.send_response(200);self.end_headers();self.wfile.write(png)
             def log_message(self,*_):pass
         server=ThreadingHTTPServer(('127.0.0.1',0),Handler);thread=Thread(target=lambda:server.serve_forever(poll_interval=.01),daemon=True);thread.start();view=NotePreview()
         try:
-            url=QUrl(f'http://127.0.0.1:{server.server_port}/owned-fixture.png');view.read_markdown('![外部示例]('+url.toString()+')');view.document().resource(QTextDocument.ResourceType.ImageResource,url);QTest.qWait(80)
-            self.assertEqual(calls,[]);self.assertFalse(view.openExternalLinks());self.assertFalse(view.openLinks())
+            url=QUrl(f'http://127.0.0.1:{server.server_port}/owned-fixture.png');view.read_markdown('![外部示例]('+url.toString()+')');view.document().resource(QTextDocument.ResourceType.ImageResource,url);
+            for _ in range(200):
+                QTest.qWait(10)
+                if not view._pending:break
+            self.assertEqual(calls,['/owned-fixture.png']);self.assertEqual(QImage.fromData(view.loadResource(QTextDocument.ResourceType.ImageResource,url)).pixelColor(0,0),QColor('blue'));self.assertFalse(view.openExternalLinks());self.assertFalse(view.openLinks())
         finally:view.close();server.shutdown();server.server_close();thread.join(2)
 
     def test_web_link_click_requests_external_browser_once(self):
