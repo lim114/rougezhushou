@@ -1,3 +1,7 @@
+## 维护：作战资料窗口主题入口去重（2026-11-05）
+
+一次构造最终主题，移除重复应用；4项定向通过，测试窗口已更新。[回执](verification/maintenance/code-constraints-reader-theme-entry-20261105/README.md)。本批完成范围仅独立作战入口，整程序回顾继续。
+
 ## 维护：地图阅读状态去重（2026-11-05）
 
 单一节点状态管理阅读位置；分组展开一次，失效资料不再恢复旧位置，切楼层和待确认节点保留有效阅读。11项定向通过，所有中间失败保留，测试窗口已更新。[回执](verification/maintenance/code-constraints-map-reading-state-20261105/README.md)。

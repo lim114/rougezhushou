@@ -1,0 +1,116 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "作战资料窗口一次应用最终主题",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "6c3e1852b7b553a068ce002239bba102fff837ae",
+  "source_sha256": {
+    "rouge/player_map_reader.py": "42bfd3abf66ea77bd20bfa1b06af14ec51b65e7958c43c8ba4524b4336171516"
+  },
+  "changed_sources": [
+    "rouge/player_map_reader.py"
+  ],
+  "test_sha256": {
+    "tests/test_map_reader_theme_entry_review.py": "44bbd53349574652a074ef30752a55d5dd6d26a9930222984ae3c2e61cbb9c91",
+    "tests/test_compact_battle_window_review.py": "62d6d9bcfcc4f47ac5ceee3a74dbee40b024b2ca7fdc79f44a5daf423bc86baf",
+    "tests/test_battle_tool_readers_464.py": "9a22bef5113ddd4bc36db851a10b5bb46b7cee7b761140311aa116946b809b0f"
+  },
+  "full_module_reviews_added": 0,
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 24,
+    "structural_only": 374,
+    "selected_paths_only": 84,
+    "exception_equivalence_only": 76,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "baseline": {
+      "run": 1,
+      "failures": 1,
+      "elapsed_seconds": 2.424,
+      "evidence": "same dialog received apply_theme twice"
+    },
+    "first_targeted": {
+      "run": 1,
+      "passed": 1,
+      "elapsed_seconds": 1.074
+    },
+    "final_targeted": {
+      "run": 4,
+      "passed": 4,
+      "elapsed_seconds": 14.632
+    },
+    "unique_targeted_methods": 4,
+    "unchanged_defenses": [
+      "D87 readable None guard",
+      "D88 make_reader malformed record guard"
+    ],
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar visible/responding; isolated public stage tests validate reader behavior, not real game"
+    },
+    "local_evidence": ".local/code-constraints-review-34/"
+  }
+}
