@@ -174,13 +174,15 @@
     {
       "file": "rouge/tomimi_reference.py",
       "sha256": "e2c5fa5217ea70fd058a9c831d4367b850edda31d052084314da9510411549d2",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "pending_user_review_D44",
       "decision": "D44",
       "trigger": "target缺资料/无对应level或名称不符返回None",
       "impact": "避免跳错关卡；不同版本无法对应时网页入口不可用",
-      "recommendation": "建议保留身份对照，替代为允许仅按level匹配或暴露缺项"
+      "recommendation": "建议保留身份对照，替代为允许仅按level匹配或暴露缺项",
+      "full_module_review_complete": false,
+      "evidence": "Both functions read: cached fixed public stage table and pure target builder; no ordinary duplicate validation or one-use wrapper. Optional missing reference is normal availability state. Existing D44 stage name/identity gate remains pending, so this module is not fully certified."
     },
     {
       "file": "rouge/node_statistics_source.py",
@@ -784,7 +786,26 @@
         "rule2": "entries_builder_has_two_real_call_sites_for_catalogue_and_extra_events; no_one_use_wrapper",
         "rule3": "all_prior_raise_nodes_and_source_loader_functions_unchanged",
         "remaining": "source loader notes re-read and D91-D96 defense decisions; no whole-program certification"
-      }
+      },
+      "notes_reread_review": "D97: second file read detects a source-notes mutation between reads; scoped read_bytes simulation confirmed rejection; no source file changed or protection removed."
+    },
+    {
+      "file": "rouge/player_reference_links.py",
+      "sha256": "a4b7893e9b4e8b5ed3e181a052cb2f3c8b9b0ad26e7d7ea942a5c37b99c595db",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "reviewed_clear_no_low_probability_defense_identified",
+      "full_module_review_complete": true,
+      "evidence": "All functions and closures read. Host checks dispatch standalone versus shared UI, once per material-stage route after fix; source-unavailable results are normal UI state. Shared event-battle page factory has two real callers. Ancestor helper has three callers and reuses passed host. Deferred create/context/read_recipe callbacks are required by host/Qt interfaces, not gratuitous wrappers. Material title built after result availability; web page retains the created reader directly. No try/catch, missing-attribute recovery, speculative retry or new defense."
+    },
+    {
+      "file": "rouge/player_cannot_links.py",
+      "sha256": "57e18f390332b688060ae1353e0598050565d0d1cc30b96649a3a4647e13a648",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "reviewed_clear_no_low_probability_defense_identified",
+      "full_module_review_complete": true,
+      "evidence": "Entire unchanged module read: two public navigation entries; each checks supported host once. Deferred context and create are host API callbacks. select is used both on existing battle ancestor and new battle page, so retained. Missing source, failed exact UI selection and changed enemy identity are actual navigation states; discarded dependent page semantics retained. No broad catch or unapproved low-probability fallback identified. Five exact shop/vault route tests pass."
     }
   ]
 }

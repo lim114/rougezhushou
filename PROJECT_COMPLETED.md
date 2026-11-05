@@ -1,3 +1,7 @@
+## 维护：资料导航入口去重与两个整模块审查（2026-11-05）
+
+宿主入口只判断一次、双向页面构造去重；player_reference_links/player_cannot_links按三条完整审查通过。29个不同定向方法有通过证据，旧失败保留，测试窗口更新。[回执](verification/maintenance/code-constraints-reference-navigation-20261105/README.md)。
+
 ## 维护：事件目录构建来源去重（2026-11-05）
 
 同次来源生成事件快照和选项，来源读取78→39，场景标题277→137，完整固定资料一致。14项定向通过，测试窗口更新。[回执](verification/maintenance/code-constraints-event-derive-snapshot-20261105/README.md)。

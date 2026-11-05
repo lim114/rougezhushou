@@ -1,3 +1,7 @@
+## 当前断点：资料导航入口去重与整模块审查（2026-11-05）
+
+材料作战宿主检查一次，祖先回跳复用host，双向关联作战共用页面构造，材料标题后置，网页保留reader。player_reference_links/player_cannot_links整模块审查通过；tomimi普通逻辑审过、D44待审。29个不同定向方法有通过证据；旧夹具缺game_binding错误在旧源码复现后补测试字段，原失败保留。D97记录来源说明二次读取保护，未改代码。测试窗口更新。覆盖370/75/87/26；D38—D97共60组。回执verification/maintenance/code-constraints-reference-navigation-20261105/summary.json。下一步继续笔记资料入口等剩余模块，保持整体目标，不加功能节数。
+
 ## 当前断点：事件目录构建复用同次来源快照（2026-11-05）
 
 39事件来源读取78→39，场景标题277→137；快照和选项同次读取，两条实际构建分支共用_entries。14项定向通过，完整固定目录保持一致，旧失败留存。来源函数与既有raise未变，D38—D96共59组仍待审；测试窗口更新。覆盖372/75/87/24不变。下一步核对packet notes两次读取的校验职责及其它入口重复，统计共同入口继续待办。回执verification/maintenance/code-constraints-event-derive-snapshot-20261105/summary.json。不加功能节数。

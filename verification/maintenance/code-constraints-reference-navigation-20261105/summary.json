@@ -1,0 +1,155 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "资料跳转入口去重及两个导航模块完整审查",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "8f1b63806d73fc5b49a27c74224c64bd5b43abcb",
+  "source_sha256": {
+    "rouge/player_reference_links.py": "a4b7893e9b4e8b5ed3e181a052cb2f3c8b9b0ad26e7d7ea942a5c37b99c595db",
+    "rouge/player_cannot_links.py": "57e18f390332b688060ae1353e0598050565d0d1cc30b96649a3a4647e13a648",
+    "rouge/tomimi_reference.py": "e2c5fa5217ea70fd058a9c831d4367b850edda31d052084314da9510411549d2"
+  },
+  "changed_sources": [
+    "rouge/player_reference_links.py"
+  ],
+  "test_sha256": {
+    "tests/test_reference_host_entry_review.py": "8f5b17739d4934424d05cb00fbdff1f70f34f8f0a7fee01c5947e610e5ec82df",
+    "tests/test_linked_battles_453.py": "1d64e8b04cd81435dd01f3c4cea0f87ab26102265c59b5da4b0148d91d88952f",
+    "tests/test_reverse_events_455.py": "18d517f273ff1c270e9c498d4314887dc003688a4f22195baab111044b82b6e3",
+    "tests/test_material_sources_463.py": "e60cc094d80fca9cf7eb955a45b0f0da1c84e5be50ff9130c4b42be118763256",
+    "tests/test_reference_theme_465.py": "a277e39fcedae163f94b8d05d824581f3a8d23a0aceb2168e8724cb0df0d242f"
+  },
+  "full_module_reviews_added": 2,
+  "fully_reviewed_modules": [
+    "rouge/player_reference_links.py",
+    "rouge/player_cannot_links.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 26,
+    "structural_only": 370,
+    "selected_paths_only": 87,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "baseline": {
+      "run": 1,
+      "failures": 1,
+      "elapsed_seconds": 0.293,
+      "evidence": "material-stage dispatch reads host twice"
+    },
+    "first_targeted": {
+      "run": 1,
+      "passed": 1,
+      "elapsed_seconds": 0.123
+    },
+    "combined_targeted": {
+      "run": 23,
+      "passed": 22,
+      "errors": 1,
+      "elapsed_seconds": 66.414,
+      "error": "old isolated owner missing game_binding"
+    },
+    "old_source_fixture": {
+      "run": 1,
+      "errors": 1,
+      "elapsed_seconds": 0.462,
+      "evidence": "same missing game_binding on HEAD source"
+    },
+    "fixture_change": "test owner explicitly declares disabled game_binding; product adds no fallback",
+    "fixture_and_shop_navigation": {
+      "run": 6,
+      "passed": 6,
+      "elapsed_seconds": 34.598
+    },
+    "entry_final": {
+      "run": 2,
+      "passed": 2,
+      "elapsed_seconds": 0.122
+    },
+    "unique_targeted_methods_finally_passed": 29,
+    "pass_evidence_reused": "22 unchanged-source passes plus corrected fixture and five shop paths; entry tests include one new standalone case",
+    "notes_reread": {
+      "notes_reads": 2,
+      "changed_second_read_rejected": true,
+      "unchanged_sources_still_valid": true,
+      "files_modified": false
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar; isolated public reference navigation, not live game"
+    },
+    "local_evidence": ".local/code-constraints-review-38/"
+  }
+}

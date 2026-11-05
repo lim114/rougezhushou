@@ -127,6 +127,7 @@ class LinkedBattleTests(unittest.TestCase):
         from rouge.player_compact import CompactAssistant
         calls = []
         self.owner.pin = SimpleNamespace(isChecked=lambda: True)
+        self.owner.game_binding = SimpleNamespace(enabled=False)
         self.owner.active_popup = None
         self.owner.refresh = lambda: calls.append(True)
         a = ToolPage('地图', QWidget(), self.owner, on_show=self.owner.refresh)
