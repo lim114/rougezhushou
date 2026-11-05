@@ -12,4 +12,6 @@ class CurrentLoneDogPanel(DocumentedEventFlowPanel):
 class CurrentLoneDogDialog(QDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('独活 · 同行者与前往、标记的区别');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentLoneDogPanel(scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

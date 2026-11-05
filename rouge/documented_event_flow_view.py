@@ -160,6 +160,8 @@ class DocumentedEventFlowDialog(PlayerDialog):
     def __init__(self, event_id, scene_id=None, parent=None):
         super().__init__(parent); self.setWindowTitle('事件选项、奖励与后续'); self.resize(1050, 810)
         layout = QVBoxLayout(self); self.panel = DocumentedEventFlowPanel(event_id, scene_id, self); layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
 
     def closeEvent(self, event):
         self.panel._close_battle(); super().closeEvent(event)

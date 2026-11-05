@@ -46,4 +46,6 @@ class CurrentRestingDialog(QDialog):
     def __init__(self,target=None,parent=None,*,allow_original_popup=True):
         super().__init__(parent);self.setWindowTitle('安眠一隅 · 分支、领取与来源差异');self.resize(1100,820)
         layout=QVBoxLayout(self);self.panel=CurrentRestingPanel(target,self,allow_original_popup=allow_original_popup);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

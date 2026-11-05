@@ -55,3 +55,5 @@
 | D86 | `rouge/player_map.py:MapPanel.open_entry`：make_reader没有返回精确浮窗时转到原完整目录并激活主窗口 | 仍能查资料，但会改变打开位置且可能掩盖缺少精确入口 | 建议明确哪些类型仍需该备用路径后决定保留范围；本批未触发或改变它 |
 | D87 | `rouge/player_map_reader.py:readable`：dialog为None时不应用主题、直接返回None | 兼容未构造成功的可选窗口；也可能掩盖调用者漏创建窗口 | 建议先逐个核对调用方是否确实会传None，再决定保留范围。当前原函数未修改，prepare_reference_window等多调用入口仍保留 |
 | D88 | `rouge/player_map_reader.py:make_reader`：record非字典或id/title非文字时返回None | 不让坏资料进入事件/作战构造；调用方可能把坏输入当作无精确入口 | 建议与上游资料入口契约合并核对后决定；当前类型检查不动。正常未支持类型、资料暂不可用与这一坏输入保护分开 |
+| D89 | `rouge/current_event_directory_view.py:make_event_dialog`：target或target.event不是字典时直接返回None | 拒绝错误类型进入资料构造，但把错误调用表现为无法打开资料 | 建议核对model.resolve与外部调用契约后决定是否保留此入口保护；本批不动。真实来源身份、场景和选项对应核对另属资料准确性条件，不据此一并删除 |
+| D90 | `rouge/current_event_directory_view.py:CurrentEventDirectoryPanel._close_event`：hasattr(panel, clear_reference)为否时跳过清理，仅关闭窗口 | 兼容缺少清理方法的面板，也可能掩盖不完整接口并保留旧资料 | 建议逐类确认21个面板契约后改为直接清理；本批保留，等待审核 |

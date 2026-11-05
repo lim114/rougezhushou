@@ -30,4 +30,6 @@ class CurrentShadowPanel(DocumentedEventFlowPanel):
 class CurrentShadowDialog(QDialog):
     def __init__(self,target=None,parent=None):
         super().__init__(parent);self.setWindowTitle('被歌颂的影子 · 逐圈代价、结果与离开');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentShadowPanel(target,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

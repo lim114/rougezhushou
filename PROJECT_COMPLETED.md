@@ -1,3 +1,7 @@
+## 维护：事件资料窗口主题入口去重（2026-11-05）
+
+21类构造统一设置最终主题，删除两工厂与关联箱子重复设置；21类8项前后相同。23项定向两轮通过，失败记录保留，测试窗口更新。[回执](verification/maintenance/code-constraints-event-theme-ownership-20261105/README.md)。仅完成构造与调用路径，未宣称所有事件面板完整整改。
+
 ## 维护：作战资料窗口主题入口去重（2026-11-05）
 
 一次构造最终主题，移除重复应用；4项定向通过，测试窗口已更新。[回执](verification/maintenance/code-constraints-reader-theme-entry-20261105/README.md)。本批完成范围仅独立作战入口，整程序回顾继续。

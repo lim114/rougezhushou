@@ -63,8 +63,6 @@ def make_event_dialog(target, parent=None, *, page_owner=None):
         if panel.choice_id != cid: dialog.close(); return None
     if page_owner is None:
         dialog.finished.connect(lambda *_:panel.clear_reference())
-        from .player_map_reader import readable
-        return readable(dialog)
     return dialog
 
 

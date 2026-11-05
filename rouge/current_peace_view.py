@@ -38,4 +38,6 @@ class CurrentPeaceDialog(QDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('和平守卫者 · 悬赏、前往与标记');self.resize(1100,820)
         layout=QVBoxLayout(self);self.panel=CurrentPeacePanel(scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

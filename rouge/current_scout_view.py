@@ -31,4 +31,6 @@ class CurrentScoutDialog(QDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('未涉足之树 · 派出、确认与归来');self.resize(1100,820)
         layout=QVBoxLayout(self);self.panel=CurrentScoutPanel(scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

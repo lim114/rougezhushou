@@ -63,7 +63,4 @@ def make_dialog(binding, parent=None, *, historical=False, page_owner=None):
     dialog.layout().insertWidget(0, banner)
     dialog.node_reference_banner = banner
     dialog.node_reference_binding = b
-    if page_owner is None:
-        from .player_map_reader import readable
-        return readable(dialog)
     return dialog

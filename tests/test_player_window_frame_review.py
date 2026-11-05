@@ -10,7 +10,6 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication,QWidget,QVBoxLayout,QLabel
 from rouge.player_compact import ToolPopover
 from rouge.player_window_frame import PlayerDialog
-from rouge.player_map_reader import readable
 
 R=Path(__file__).resolve().parents[1]
 class PlayerWindowFrameReview(unittest.TestCase):
@@ -20,7 +19,7 @@ class PlayerWindowFrameReview(unittest.TestCase):
   owner=QWidget();self.addCleanup(owner.close);body=QWidget();QVBoxLayout(body).addWidget(QLabel('公开资料'));d=ToolPopover('公开窗口',body,owner,theme=theme);d.resize(640,400);d.show();self.addCleanup(d.close);self.qt.processEvents();return d,body
  def event(self):
   from rouge.current_vine_events_view import CurrentVineEventsDialog
-  d=readable(CurrentVineEventsDialog('呼吸的红苔'));d.show();self.addCleanup(d.close);self.qt.processEvents();return d
+  d=CurrentVineEventsDialog('呼吸的红苔');d.show();self.addCleanup(d.close);self.qt.processEvents();return d
  def test_upstream_sources_keep_declared_bytes_with_one_exact_owned_window_adaptation(self):
   m=json.loads((R/'research/shared-player-frame-20261101/upstream.json').read_bytes());self.assertEqual(m['commit'],'fc00919f4915c91a2b6320a8ae7eb1d977ca4f57');self.assertEqual(len(m['files']),19)
   for name,row in m['files'].items():

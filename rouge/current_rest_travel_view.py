@@ -19,4 +19,6 @@ class CurrentRestTravelPanel(DocumentedEventFlowPanel):
 class CurrentRestTravelDialog(QDialog):
     def __init__(self,event_id,target=None,parent=None):
         super().__init__(parent);self.setWindowTitle(event_id+' · 选项、奖励与后续');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentRestTravelPanel(event_id,target,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

@@ -61,11 +61,18 @@
     },
     {
       "file": "rouge/current_lone_dog_view.py",
-      "sha256": "0fed54b123e2164b6e144b547b548c83357a245ab0c550dba6a72eca0b3c356c",
+      "sha256": "8e3b8e067bb96ff4f13271de468418a42e67b6aaa1f8f70b712f9415708af5ea",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "no_unapproved_low_probability_defense_found",
-      "evidence": "Optional choice selection is normal reader input; constructors and closeEvent are Qt/base-class entry points."
+      "evidence": "Optional choice selection is normal reader input; constructors and closeEvent are Qt/base-class entry points.",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": true
+      }
     },
     {
       "file": "rouge/mechanism_reader_header.py",
@@ -85,11 +92,18 @@
     },
     {
       "file": "rouge/current_rest_travel_view.py",
-      "sha256": "14c8cb29586765eaf070010fd6d6d089e521cb9e42de607c7f991e67305a1dc6",
+      "sha256": "ebcc5581b2b2b7928df3bb2835b4be7489c8030e721e4edd0b29ac2df80e56d8",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "no_unapproved_low_probability_defense_found",
-      "evidence": "Optional target normalized once; choice read once for selection. Other methods are model/Qt lifecycle overrides."
+      "evidence": "Optional target normalized once; choice read once for selection. Other methods are model/Qt lifecycle overrides.",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": true
+      }
     },
     {
       "file": "rouge/player_enemy_search.py",
@@ -551,6 +565,204 @@
         "D88"
       ],
       "evidence": "Standalone battle uses existing ToolPopover object_name/extra_style parameters to construct final reference theme once; shared ToolPage unchanged. readable and prepare_reference_window AST plus make_reader entry guard unchanged (D87/D88 pending). Event dialog constructors mix already-themed PlayerDialog and raw QDialog; no blanket removal. Further event paths and pending guards prevent full-module certification."
+    },
+    {
+      "file": "rouge/current_shadow_view.py",
+      "sha256": "819d8e3917875b676771ad4a9b79cfe2f4e9ef640847555327412b7fb9920df4",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_resting_view.py",
+      "sha256": "0a738066dbd950853280413d333a60f4a6af3093b724e3ba19c0c1fc00c48f7c",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_reconstruction_view.py",
+      "sha256": "e48ab8511bc560b7e2dc164f21a0d4475b01ea6598e4d233f0286ed0919ab76b",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_peace_view.py",
+      "sha256": "ae56a84f81bacac5a680606565ae8a413cf1f44c0e661c4fb7474bf80c527c95",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_scout_view.py",
+      "sha256": "9fe017bdc295a9589fcdeeaaf7b103a14339d81456fd43f332f924e57fe8ddd2",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_portal_view.py",
+      "sha256": "eabea51b22b12364bd7d98ae5d4c782cc0e7b16ededb283da21e5428b878ba72",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_agency_view.py",
+      "sha256": "f9fe17144a244801b2d17126541350a07ece75550a094b5bd3e427341225b540",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_exit_view.py",
+      "sha256": "0e7ed08dc17ce2021220bd90246466a3f3ac16629514b9c5f127707cc7842627",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_memory_tree_view.py",
+      "sha256": "dee84599eed688afc9c89fb0a1e95d5ad12104f2fa59f7dd5f36f1e3aab57726",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_cave_view.py",
+      "sha256": "02d4d0ad60dfef7bc910db994fed164d970c911d9136983cdafcd43700101a56",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_vine_events_view.py",
+      "sha256": "0fa4f4c70c143caac5bc01b55517f973c4e0c4b65ffec1a1f189ce7345cb2366",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_unattended_shop_view.py",
+      "sha256": "99e440523c2d902b0b59cb61c14d5c18fb372157005d77aa93264c2f7421e3e3",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_resource_events_view.py",
+      "sha256": "0a98a19ea6a4ed4d02e6c73d899477699f82265b53f0a798d07ac858d918804a",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/box_event_view.py",
+      "sha256": "966e834c26c278438631ba51d75774575301126a9879fff6e12e372df93a939b",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/documented_event_flow_view.py",
+      "sha256": "576fbbe418cc22f66c808d79e1dab47b9c1a0cfc5b195748a5307eb311f32e59",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_node_readers_view.py",
+      "sha256": "fec5f1f495ba75ae4f621b438be16e10f453ef5220f886d4ec07e0ad013e63d1",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_event_directory_view.py",
+      "sha256": "e2d172d6a3f1bd9fa73d833e818298f4561f348b578aa0fa21afa948350b7281",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
+    },
+    {
+      "file": "rouge/current_sand_view.py",
+      "sha256": "42f0874445bd85c7cceba59079785be14aea8d0332e244c2a536afa99b384279",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      }
     }
   ]
 }

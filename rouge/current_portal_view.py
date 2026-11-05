@@ -26,4 +26,6 @@ class CurrentPortalPanel(DocumentedEventFlowPanel):
 class CurrentPortalDialog(QDialog):
     def __init__(self,target=None,parent=None):
         super().__init__(parent);self.setWindowTitle('溯源 · 六种雾色、加工品与明确后续');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentPortalPanel(target,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

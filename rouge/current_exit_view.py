@@ -35,4 +35,6 @@ class CurrentExitDialog(PlayerDialog):
     def __init__(self, target=None, parent=None):
         super().__init__(parent); self.setWindowTitle('险路尽头 · 招募、换层与独立奖励'); self.resize(760, 600)
         layout=QVBoxLayout(self); self.panel=CurrentExitPanel(target, self); layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self, event): self.panel._close_battle(); super().closeEvent(event)

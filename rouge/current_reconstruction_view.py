@@ -49,4 +49,6 @@ class CurrentReconstructionDialog(QDialog):
     def __init__(self,target=None,parent=None):
         super().__init__(parent);self.setWindowTitle('回滚文明 · 交出、领取与是否继续');self.resize(1100,820)
         layout=QVBoxLayout(self);self.panel=CurrentReconstructionPanel(target,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

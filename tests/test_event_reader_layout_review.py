@@ -6,7 +6,6 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
 from PySide6.QtTest import QTest
 from rouge.current_vine_events_view import CurrentVineEventsDialog
-from rouge.player_map_reader import readable
 from rouge.reference_copy import mechanism_copy
 from tests.test_current_vine_events_333 import by_original
 R=Path(__file__).resolve().parents[1]
@@ -14,7 +13,7 @@ class EventReaderLayoutTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
  def dialog(self,title='呼吸的红苔'):
-  d=readable(CurrentVineEventsDialog(title));d.show();self.qt.processEvents();self.addCleanup(d.close);return d
+  d=CurrentVineEventsDialog(title);d.show();self.qt.processEvents();self.addCleanup(d.close);return d
  def pick(self,p,key):
   c=by_original(p.result,key);p.choices.setCurrentRow(next(i for i in range(p.choices.count())if p.choices.item(i).data(Qt.ItemDataRole.UserRole)==c['id']));return c
  def test_external_class_is_exact_except_binding_imports(self):
@@ -39,7 +38,7 @@ class EventReaderLayoutTests(unittest.TestCase):
  def test_no_empty_condition_panel_for_other_events(self):
   from rouge.current_encounters_view import CurrentEncountersDialog
   from rouge import current_encounters as m
-  title=next(k for k in m.packet()['data']['events']if k!='黑诞');d=readable(CurrentEncountersDialog(title));d.show();self.addCleanup(d.close);self.qt.processEvents();self.assertTrue(d.panel.conditions.isHidden());self.assertFalse(hasattr(d.panel,'controller'))
+  title=next(k for k in m.packet()['data']['events']if k!='黑诞');d=CurrentEncountersDialog(title);d.show();self.addCleanup(d.close);self.qt.processEvents();self.assertTrue(d.panel.conditions.isHidden());self.assertFalse(hasattr(d.panel,'controller'))
  def test_all_six_condition_dialog_families_have_compact_visible_forms(self):
   from rouge.box_event_view import BoxEventDialog
   from rouge.current_exit_view import CurrentExitDialog
@@ -49,7 +48,7 @@ class EventReaderLayoutTests(unittest.TestCase):
   from rouge import current_resource_events as m
   makers=[BoxEventDialog,CurrentExitDialog,CurrentMemoryTreeDialog,lambda:CurrentEncountersDialog('黑诞'),lambda:CurrentResourceEventsDialog(m.GOLD_EVENTS[0])]
   for make in makers:
-   d=readable(make());d.show();self.addCleanup(d.close);self.qt.processEvents();self.assertEqual((d.width(),d.height()),(760,600));p=d.panel;self.assertFalse(p.conditions.isExpanded());self.assertFalse(p.conditions.isHidden());p.conditions.expand(False);self.qt.processEvents();self.assertTrue(p.conditions.content().isVisible());self.assertGreater(p.conditions.content().height(),0);self.assertLess(p.conditions.geometry().bottom(),p.scene.geometry().top())
+   d=make();d.show();self.addCleanup(d.close);self.qt.processEvents();self.assertEqual((d.width(),d.height()),(760,600));p=d.panel;self.assertFalse(p.conditions.isExpanded());self.assertFalse(p.conditions.isHidden());p.conditions.expand(False);self.qt.processEvents();self.assertTrue(p.conditions.content().isVisible());self.assertGreater(p.conditions.content().height(),0);self.assertLess(p.conditions.geometry().bottom(),p.scene.geometry().top())
  def test_common_factory_applies_same_external_theme_for_direct_catalog_route(self):
   from rouge import current_vine_events as m,current_node_readers as bridge
   from rouge.current_node_readers_view import make_dialog

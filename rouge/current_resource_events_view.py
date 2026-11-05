@@ -24,4 +24,6 @@ from .player_window_frame import PlayerDialog
 class CurrentResourceEventsDialog(PlayerDialog):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle(event_id+' · 选项、代价与奖励');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentResourceEventsPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)
