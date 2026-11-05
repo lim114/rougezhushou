@@ -48,10 +48,10 @@ class RecentNotesPanel(QWidget):
         self.selector.reload();self.refresh(force=True)
 
     def refresh(self,*,force=False):
-        current=scene_context(self.run.state.get('last_node_content'))
-        reset=self._run_id!=self.run.state.get('id')
-        if reset:self._run_id=self.run.state.get('id')
-        target=current if self.follow.isChecked()or reset else self.context
+        run_id=self.run.state.get('id');reset=self._run_id!=run_id
+        if reset:self._run_id=run_id
+        follow=self.follow.isChecked()
+        target=scene_context(self.run.state.get('last_node_content'))if follow or reset else self.context
         key=content_key(target);changed=key!=self.key
         if changed or reset:
             self.context=target;self.key=key;self._stamp=object();self._next_check=0
@@ -60,10 +60,10 @@ class RecentNotesPanel(QWidget):
         if target is None:
             self.scene.setText('尚未读到可关联的场景')
             self.preview.read_markdown('')
-            self.status.setText('读取到作战或事件名称后，这里会展示对应的本机笔记。'if self.follow.isChecked()else'已暂停跟随；请选择一份资料，或重新勾选跟随后自动关联。笔记原件仍保留。');return
+            self.status.setText('读取到作战或事件名称后，这里会展示对应的本机笔记。'if follow else'已暂停跟随；请选择一份资料，或重新勾选跟随后自动关联。笔记原件仍保留。');return
         self.context=target
         manual=target.get('kind')in('reference-stage','reference-scene')
-        self.scene.setText(('手选固定资料：'if manual else'最近读取：'if self.follow.isChecked()else'已暂停跟随，正在阅读：')+target['title'])
+        self.scene.setText(('手选固定资料：'if manual else'最近读取：'if follow else'已暂停跟随，正在阅读：')+target['title'])
         if not force and not changed and time.monotonic()<self._next_check:return
         self._next_check=time.monotonic()+1
         try:

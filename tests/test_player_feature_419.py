@@ -3,7 +3,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 from PySide6.QtWidgets import QApplication
-from rouge.player_note_selector import catalogue_snapshot,matching,SceneNoteSelector
+from rouge.player_note_selector import catalogue_snapshot,SceneNoteSelector
 from rouge.player_reference_notes import reference_target
 from rouge.player_notes import NoteStore,content_key
 from rouge.player_recent_notes import RecentNotesPanel
@@ -16,7 +16,13 @@ class SelectorTests(unittest.TestCase):
   self.assertEqual(len({content_key(r['context'])for r in self.rows}),len(self.rows))
  def test_filter_is_intersection_and_unknown_not_every_floor(self):
   rows=[{'floors':['floor1'],'nodes':['作战']},{'floors':['unknown'],'nodes':['作战']},{'floors':['floor1'],'nodes':['不期而遇']}]
-  self.assertEqual(matching(rows,'floor1','作战'),rows[:1]);self.assertEqual(matching(rows,'unknown'),rows[1:2])
+  for i,row in enumerate(rows):row.update(label=str(i),context={'kind':'reference-stage','title':str(i),'variant_id':'["test-source","'+str(i)+'"]'})
+  with patch('rouge.player_note_selector.catalogue_snapshot',return_value={'rows':rows,'unavailable':[]}):widget=SceneNoteSelector()
+  self.addCleanup(widget.close)
+  widget.floor.setCurrentIndex(widget.floor.findData('floor1'));widget.node.setCurrentIndex(widget.node.findData('作战'))
+  self.assertEqual([widget.scene.itemData(i)for i in range(1,widget.scene.count())],[rows[0]['context']])
+  widget.floor.setCurrentIndex(widget.floor.findData('unknown'));widget.node.setCurrentIndex(widget.node.findData(None))
+  self.assertEqual([widget.scene.itemData(i)for i in range(1,widget.scene.count())],[rows[1]['context']])
  def test_manual_selection_pauses_follow_without_run_write(self):
   with tempfile.TemporaryDirectory()as d:
    state={'id':'one','last_node_content':{'kind':'event','title':'原场景'}};run=SimpleNamespace(state=state.copy());panel=RecentNotesPanel(run,NoteStore(d));target=self.rows[0]['context']

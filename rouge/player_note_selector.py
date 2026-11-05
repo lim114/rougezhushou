@@ -25,9 +25,6 @@ def catalogue_snapshot():
     return {'rows':result,'unavailable':unavailable}
 
 
-def matching(rows,floor=None,node=None):
-    return [r for r in rows if(floor is None or floor in r['floors'])and(node is None or node in r['nodes'])]
-
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget,QGridLayout,QLabel,QComboBox
 class SceneNoteSelector(QWidget):
@@ -53,9 +50,11 @@ class SceneNoteSelector(QWidget):
     def filter(self,*_):
         old=self.scene.currentData();self.scene.blockSignals(True);self.scene.clear()
         from .player_note_scopes import scope
-        context=scope(self.rows,self.floor.currentData(),self.node.currentData())
+        floor=self.floor.currentData();node=self.node.currentData()
+        context=scope(self.rows,floor,node)
         if context is not None:self.scene.addItem('通用笔记（当前范围）',context)
-        for row in matching(self.rows,self.floor.currentData(),self.node.currentData()):self.scene.addItem(row['label'],row['context'])
+        for row in self.rows:
+            if(floor is None or floor in row['floors'])and(node is None or node in row['nodes']):self.scene.addItem(row['label'],row['context'])
         self.scene.setCurrentIndex(self.scene.findData(old)if old is not None else-1);self.scene.setPlaceholderText('选择具体场景');self.scene.blockSignals(False)
     def select(self,*_):
         value=self.scene.currentData()

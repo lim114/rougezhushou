@@ -1,0 +1,54 @@
+{
+  "kind": "implementation_maintenance",
+  "binding": "enclosing_commit",
+  "title": "手动笔记刷新与目录筛选精简",
+  "base_commit": "60bbda37dac810b52daea5dfaf40a5b3c3ccf90b",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "resolved_decisions": [
+    "D27"
+  ],
+  "pending_decisions": [],
+  "rules_addressed": {
+    "rule1": "Read live scene only for follow or new-run reset; reuse run id, follow choice and picker values.",
+    "rule2": "Inline single-use matching into selector filter; no additional helper.",
+    "rule3": "D27 read-error outlet explicitly retained; complete try/except AST unchanged."
+  },
+  "source_sha256": {
+    "rouge/player_recent_notes.py": "a64011a5f245a33c6e4401bc805ccf265a6ff5acc75c236b5a5be6290851668c",
+    "rouge/player_note_selector.py": "6f26378585234eff4f5cda4a874ad0ff4fb0a3855cba0c39640bcc618b07cfd3",
+    "tests/test_note_refresh_entry_review.py": "c92c639e157bfd6f282caaafd52ee41e60df51f658bb7e6c5c6de960b3a957f8",
+    "tests/test_player_feature_419.py": "c5f8b1a5f2dfbd5f4877b99e101e47b96e18cfb0e29c425145772e1e19ca616c"
+  },
+  "validation": {
+    "rounds": "rounds.json",
+    "final_native": {
+      "run": 32,
+      "passed": 32
+    },
+    "full_suite_run": false,
+    "d27_try_ast_unchanged": true,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "normal_project_launch": true,
+      "stderr_empty": true,
+      "single_response_ms": 261.67,
+      "performance_acceptance": false,
+      "screenshot_verified": true
+    }
+  },
+  "coverage": {
+    "structural_only": 426,
+    "selected_paths_only": 54,
+    "exception_equivalence_only": 77,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "Other module paths and storage protections need separate review.",
+    "No new whole-module or real-game acceptance."
+  ],
+  "progress_report": "PROGRESS.md"
+}

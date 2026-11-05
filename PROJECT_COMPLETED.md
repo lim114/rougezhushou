@@ -1,3 +1,7 @@
+## 维护：手动笔记刷新与目录筛选精简（2026-11-04）
+
+手动阅读跳过无关实时输入，恢复跟随和新局仍更新；目录筛选复用选择值、单次matching内联。D27读取出口经批准保留，32项原生定向通过。[回执与进度](verification/maintenance/code-constraints-note-refresh-20261104/README.md)。
+
 ## 维护：笔记范围入口校验与单次辅助整改（2026-11-04）
 
 D24—D26按授权完成，32项原生定向通过；来源解析一次，内部异常不再被当作坏输入，单次source包装删除。仍为部分路径整改。[回执与进度](verification/maintenance/code-constraints-note-scope-20261104/README.md)。
