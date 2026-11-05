@@ -1,3 +1,7 @@
+## 当前断点：笔记保存目标路径复用与D29—D31落实（2026-11-05）
+
+三项已明确同意并落实，9项原生定向通过；锁与发布共用destination，read/判断分支及共享锁工具未改。测试窗口已更新并核对可见响应。回执verification/maintenance/code-constraints-note-save-destination-20261105/summary.json。继续其余未审路径，不重复送审D29—D31；真实符号链接仍受夹具权限1314限制，无环境变化不重试。覆盖426/77/54/1不变。Git单次openssl后端核对远端成功，未改持久配置。
+
 ## 当前断点：笔记正文存储核对，D29—D31待确认（2026-11-05）
 
 产品源码未改，D29文件链接拒绝、D30保存锁/目标路径复用、D31两个时间点摘要核对已逐项询问，等待明确选择。新增tests/test_note_store_boundary_review.py；4项隔离行为通过，真实符号链接夹具错误1314未通过，原测试留.local/code-constraints-review-18/real_link_cases.py。现有测试窗口可见且响应，不重复重启。回执verification/maintenance/code-constraints-note-storage-review-20261105/summary.json；覆盖426/77/54/1不变。

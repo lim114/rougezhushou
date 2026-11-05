@@ -1,3 +1,7 @@
+## 维护：笔记保存目标路径复用（2026-11-05）
+
+D29—D31授权落实，保存锁与发布共用destination，原链接拒绝和两次摘要核对保留；9项原生定向通过。真实链接夹具权限限制单列未验证。[回执和进度](verification/maintenance/code-constraints-note-save-destination-20261105/README.md)。
+
 ## 维护：笔记目录扫描异常边界收窄（2026-11-04）
 
 D28按用户确认完成：仅捕获文件扫描，搜索框/成功提示在捕获外；9项原生定向通过。[回执和进度](verification/maintenance/code-constraints-note-scan-boundary-20261104/README.md)。

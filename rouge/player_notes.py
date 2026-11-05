@@ -24,10 +24,10 @@ class NoteStore:
         return raw.decode('utf8'),sha256(raw).hexdigest()
     def save(self,key,text,expected):
         from .persistence_install import record_save_lock
-        raw=text.encode('utf8');self.save_warning=None;published=False
+        raw=text.encode('utf8');destination=self.path(key);self.save_warning=None;published=False
         self.folder.mkdir(parents=True,exist_ok=True)
         try:
-            with record_save_lock(self.path(key)):
+            with record_save_lock(destination):
                 _,current=self.read(key)
                 if current!=expected:raise ValueError('笔记已被其他窗口或软件修改；为保留双方内容，本次未覆盖。')
                 fd,name=tempfile.mkstemp(prefix='.note-',dir=self.folder)
@@ -36,7 +36,7 @@ class NoteStore:
                     # Other software may not participate in our save lock.
                     # Check again after preparing bytes; do not claim an OS-wide CAS.
                     if self.read(key)[1]!=expected:raise ValueError('笔记在保存期间被修改；本次未覆盖，编辑内容仍保留。')
-                    os.replace(name,self.path(key));published=True
+                    os.replace(name,destination);published=True
                 finally:
                     try:Path(name).unlink(missing_ok=True)
                     except OSError:
