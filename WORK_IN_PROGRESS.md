@@ -1,3 +1,7 @@
+## 当前断点：笔记预览回顾，D32—D34待确认（2026-11-05）
+
+产品源码未改，三项已分别询问。基线3方法中2通过，缓存方法在转换/setHtml/恢复阅读三个注入失败点均失败；9项既有预览检查通过。拟用测试.local/code-constraints-review-20/pending_preview_cases.py，授权后移入tests修正缓存并最终验收。逐函数回顾完成但未计整模块通过；现有测试窗口仍可见、响应。回执verification/maintenance/code-constraints-note-preview-review-20261105/summary.json；覆盖426/77/54/1不变。
+
 ## 当前断点：笔记保存目标路径复用与D29—D31落实（2026-11-05）
 
 三项已明确同意并落实，9项原生定向通过；锁与发布共用destination，read/判断分支及共享锁工具未改。测试窗口已更新并核对可见响应。回执verification/maintenance/code-constraints-note-save-destination-20261105/summary.json。继续其余未审路径，不重复送审D29—D31；真实符号链接仍受夹具权限1314限制，无环境变化不重试。覆盖426/77/54/1不变。Git单次openssl后端核对远端成功，未改持久配置。

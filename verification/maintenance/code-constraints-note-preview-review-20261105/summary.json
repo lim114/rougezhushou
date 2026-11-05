@@ -1,0 +1,62 @@
+{
+  "kind": "review_preparation",
+  "binding": "enclosing_commit",
+  "title": "笔记预览缓存与资源边界回顾，D32—D34待确认",
+  "base_commit": "a9fc0c9ee5268246717787632f94a42915b77caa",
+  "functional_section_incremented": false,
+  "product_source_changed": false,
+  "full_program_remediation_complete": false,
+  "pending_decisions": [
+    "D32",
+    "D33",
+    "D34"
+  ],
+  "resolved_decisions": [],
+  "authorization_source": "docs/decisions/2026-11-04-existing-defense-review.md",
+  "source_sha256": {
+    "rouge/player_note_preview.py": "73db3d0dc83c6261227c98e91159631cd1546219b509ccda59799f26a092ed29"
+  },
+  "rules_review": {
+    "rule1": "Reproduced premature completed-text cache causing identical-input refresh to skip after a failure at three stages.",
+    "rule2": "Reviewed all preview functions; loadResource/task_list_item are framework entry points, not ordinary one-use wrappers. No helper added.",
+    "rule3": "Resource interception, link behavior and completion-cache change individually pending; no product change or completed-module claim."
+  },
+  "validation": {
+    "baseline": {
+      "run": 3,
+      "passing_methods": 2,
+      "failure_assertions": 3,
+      "failure_stages": [
+        "markdown_conversion",
+        "setHtml",
+        "reading_state_restore"
+      ],
+      "faults_injected": true
+    },
+    "existing_behavior": {
+      "run": 9,
+      "passed": 9
+    },
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": false,
+      "single_response_ms": 1013.41,
+      "performance_acceptance": false
+    }
+  },
+  "coverage": {
+    "structural_only": 426,
+    "selected_paths_only": 54,
+    "exception_equivalence_only": 77,
+    "full_modules_certified": 1,
+    "total_runtime_modules": 558
+  },
+  "coverage_basis": "verification/maintenance/code-constraints-note-save-destination-20261105/summary.json",
+  "remaining": [
+    "Await D32-D34 decisions; then move local proposed cases into tests, implement approved changes and validate.",
+    "Other program paths remain unreviewed."
+  ],
+  "progress_report": "PROGRESS.md"
+}
