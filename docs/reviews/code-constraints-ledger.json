@@ -210,10 +210,11 @@
     {
       "file": "rouge/condition_inputs.py",
       "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808",
-      "rule1": "selected_paths_reviewed_followup_remaining",
-      "rule2": "callbacks_and_shared_domain_helpers_retained",
-      "rule3": "see_pending_decisions_or_remaining_scope",
-      "evidence": "Traced real consumers in damage/estimate/timing/operator_engine/sp_events. Observation marks actual branch use; decorator raises once after core and resets ContextVar in finally. Outside scope reads and nested/parallel isolation have explicit existing tests. Do not eagerly validate inactive conditions or reorder legacy errors; repeated observation optimization still needs a semantics-preserving design."
+      "rule1": "reviewed_clear",
+      "rule2": "shared_helpers_have_multiple_real_consumers",
+      "rule3": "reviewed_clear_no_low_probability_defense_identified",
+      "evidence": "Entire unchanged module and real callsites reviewed. read_continuous_attacks serves multiple calculators; observe also has an independent post-ready call in sp_events. The decorator creates an isolated evaluation scope and validates once at its exit; consumer observations mark actual branch use rather than repeated input validation. Callable active predicates preserve lazy relevance, and finally resets required ContextVar lifetime (not speculative exception recovery). Required decorator wrapper and shared helpers retained. Eight existing tests cover ignored inputs, prior-error precedence, caller immutability, nesting, threads and standalone/tail consumers. No unapproved low-probability fallback found in this module. Caller duplicate rule scans remain separate work.",
+      "full_module_review_complete": true
     },
     {
       "file": "rouge/public_node_statistics.py",
@@ -833,6 +834,24 @@
       "rule3": "reviewed_clear_no_low_probability_defense_identified",
       "full_module_review_complete": true,
       "evidence": "Entire check function read. require calls assert distinct interaction outcomes; before/deepcopy verifies private run state is unchanged, not a runtime fallback. Temporary note store belongs to acceptance host. Source patch and repeated clicks test changes at different moments; no catch, redundant validation, gratuitous wrappers or low-probability defense. Source review only; live acceptance scenario not rerun."
+    },
+    {
+      "file": "rouge/timing.py",
+      "sha256": "be3981e343bfb3afd5442248e0f34528f5ce489bbcb510a0d55539d5d6420b85",
+      "rule1": "charge_projection_duplicates_removed_other_paths_pending",
+      "rule2": "shared_helpers_have_multiple_real_consumers",
+      "rule3": "not_fully_reviewed_D101_for_timing",
+      "full_module_review_complete": false,
+      "evidence": "Only charge preparation paths reviewed: periodic_charge_seconds, charge_seconds, mixed_charge_seconds now share charge_timing with a fourth consumer sp_events. Initial condition projection is identical; offset lock adjustment and stun append remain caller-specific. All other functions/classes AST unchanged. Remaining AttackTimeline and repeated attack-sp rule scans are not certified. profiles missing-file fallback D101 recorded, unchanged."
+    },
+    {
+      "file": "rouge/sp_events.py",
+      "sha256": "7771f6ca9f6f17e856153a1537ecf5536c664a49f862935033ecf893ae1c579a",
+      "rule1": "charge_projection_duplicates_removed_other_paths_pending",
+      "rule2": "shared_helpers_have_multiple_real_consumers",
+      "rule3": "not_fully_reviewed_D101_for_timing",
+      "full_module_review_complete": false,
+      "evidence": "charge preparation now reuses charge_timing; event parsing, event ordering and return semantics unchanged. Entire charge path read; module event parser and other paths remain outside full review. Four route families x initial/cycle x frame/continuous =16 old/new configurations and complete results equal, original inputs unchanged."
     }
   ]
 }

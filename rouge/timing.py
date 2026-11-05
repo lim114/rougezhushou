@@ -39,6 +39,17 @@ def wine_events(scenario,horizon,offset=0,initial=False):
             events.extend((f+1,wine['value']) for f in range(phase,horizon,period))
     return events
 
+def charge_timing(scenario,initial):
+    """Copy shared charging conditions; deployment uses its own initial windows."""
+    config=dict(scenario.get('timing',{}))
+    if initial:
+        for key in ('target_windows','movement_windows','interrupt_windows'):
+            config.pop(key,None)
+            if 'initial_'+key in config:config[key]=config['initial_'+key]
+        config.pop('target_disappears_seconds',None)
+        config.pop('post_skill_lock_frames',None)
+    return config
+
 def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=False,resume=0,
                             wait_next_attack=False,incoming_interval=None,attribute_speed=None):
     """Merge discrete credits after blocking, using each verified owner timer."""
@@ -47,13 +58,8 @@ def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,
     if required<=0 and not wait_next_attack:return 0
     wines=[r for r in scenario['_relic_rules'] if r['kind']=='periodic_sp']
     horizon=min(108000,min(frame_time(w['interval'])*(math.ceil(required/w['value'])+1)+2 for w in wines))
-    config=dict(scenario.get('timing',{}))
-    if initial:
-        for key in ('target_windows','movement_windows','interrupt_windows'):
-            config.pop(key,None)
-            if 'initial_'+key in config:config[key]=config['initial_'+key]
-        config.pop('target_disappears_seconds',None);config.pop('post_skill_lock_frames',None)
-    elif offset:
+    config=charge_timing(scenario,initial)
+    if not initial and offset:
         config['post_skill_lock_frames']=max(0,finite(config.get('post_skill_lock_frames',0),'技能结束硬直帧')-
                                            frame_time(config.get('sp_lockout_extra_seconds',0)))
     config['_resume_frames']=resume
@@ -100,14 +106,8 @@ def charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=F
     increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
     if required<=0 and not wait_next_attack:return 0
     if increment<=0 and required>0:return None
-    config=dict(scenario.get('timing',{}))
-    if initial:
-        for key in ('target_windows','movement_windows','interrupt_windows'):
-            config.pop(key,None)
-            if 'initial_'+key in config:config[key]=config['initial_'+key]
-        config.pop('target_disappears_seconds',None)
-        config.pop('post_skill_lock_frames',None)
-    elif offset:
+    config=charge_timing(scenario,initial)
+    if not initial and offset:
         config['post_skill_lock_frames']=max(0,finite(config.get('post_skill_lock_frames',0),'技能结束硬直帧')-frame_time(config.get('sp_lockout_extra_seconds',0)))
     config['_resume_frames']=resume
     config['_deployment_initial']=initial
@@ -134,14 +134,8 @@ def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=
     attack_sp+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
     blocked=frame_time(blocked_seconds)/FPS
     if required<=0:return blocked
-    config=dict(scenario.get('timing',{}))
-    if initial:
-        for key in ('target_windows','movement_windows','interrupt_windows'):
-            config.pop(key,None)
-            if 'initial_'+key in config:config[key]=config['initial_'+key]
-        config.pop('post_skill_lock_frames',None)
-        config.pop('target_disappears_seconds',None)
-    elif stun:
+    config=charge_timing(scenario,initial)
+    if not initial and stun:
         config['interrupt_windows']=[*config.get('interrupt_windows',[]),[offset,offset+stun]]
     config['_resume_frames']=resume
     config['_deployment_initial']=initial

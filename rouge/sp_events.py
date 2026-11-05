@@ -7,7 +7,7 @@ shield loss, a probability, an enemy's attack interval, or an on-screen pose.
 """
 import math
 from .condition_inputs import read_continuous_attacks, observe_continuous_attacks
-from .timing import AttackTimeline, FPS, cadence, finite, frame_time
+from .timing import AttackTimeline, FPS, cadence, finite, frame_time, charge_timing
 
 EVENT_TYPES = {'attack': '受到攻击', 'damage': '受到伤害', 'elemental_loss': '受到元素损伤',
                'dealt_damage': '本体成功造成伤害', 'kill': '本体击倒敌人'}
@@ -115,15 +115,8 @@ def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
             wine_events(scenario,frame_time(max(0,horizon-blocked)),origin+blocked,initial))
     elif rate <= 0 and native_attack <= 0:
         horizon = min(horizon, max((event[0] for event in events), default=blocked))
-    config = dict(scenario.get('timing', {}))
-    if initial:
-        for key in ('target_windows', 'movement_windows', 'interrupt_windows'):
-            config.pop(key, None)
-            if 'initial_' + key in config:
-                config[key] = config['initial_' + key]
-        config.pop('target_disappears_seconds', None)
-        config.pop('post_skill_lock_frames', None)
-    elif stun:
+    config = charge_timing(scenario, initial)
+    if not initial and stun:
         config['interrupt_windows'] = [*config.get('interrupt_windows', []), [origin, origin + stun]]
     config['_resume_frames'] = resume
     config['_deployment_initial'] = initial

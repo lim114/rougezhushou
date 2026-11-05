@@ -1,0 +1,159 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "四条充能路径共用初动条件整理",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "8a30bae95b01954a071182d3a9a75914e2d39d1d",
+  "source_sha256": {
+    "rouge/timing.py": "be3981e343bfb3afd5442248e0f34528f5ce489bbcb510a0d55539d5d6420b85",
+    "rouge/sp_events.py": "7771f6ca9f6f17e856153a1537ecf5536c664a49f862935033ecf893ae1c579a",
+    "rouge/condition_inputs.py": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808"
+  },
+  "changed_sources": [
+    "rouge/timing.py",
+    "rouge/sp_events.py"
+  ],
+  "test_sha256": {
+    "tests/test_continuous_attacks_text_input.py": "8f60e65bae208476eadd06650b7aa4c87f43442fe092a52254f1b3631c2ce9f3",
+    "tests/test_wine_timing.py": "3209af9401e846cb1dc951552ac04a9e235aeaf63e7595c38b8636edbdc3dc98",
+    "tests/test_timing.py": "28334f8fa23dd0a4dcd5c06153604e9f40b2e9276102423376e20d9c74e9c3ff",
+    "tests/test_event_sp_028.py": "4a8f3721e54ecc6fa5c567dae0782180b87281ee3e81429cc110e21edf5d6ccc",
+    "tests/test_received_sp_026.py": "1ec57d6795118263ba3a56f9c607f7a94962ec5b5da7af0eb55012306f5c95f0"
+  },
+  "full_module_reviews_added": 1,
+  "fully_reviewed_modules": [
+    "rouge/condition_inputs.py"
+  ],
+  "pending_decisions": [
+    "D38",
+    "D39",
+    "D40",
+    "D41",
+    "D42",
+    "D43",
+    "D44",
+    "D45",
+    "D46",
+    "D47",
+    "D48",
+    "D49",
+    "D50",
+    "D51",
+    "D52",
+    "D53",
+    "D54",
+    "D55",
+    "D56",
+    "D57",
+    "D58",
+    "D59",
+    "D60",
+    "D61",
+    "D62",
+    "D63",
+    "D64",
+    "D65",
+    "D66",
+    "D67",
+    "D68",
+    "D69",
+    "D70",
+    "D71",
+    "D72",
+    "D73",
+    "D74",
+    "D75",
+    "D76",
+    "D77",
+    "D78",
+    "D79",
+    "D80",
+    "D81",
+    "D82",
+    "D83",
+    "D84",
+    "D85",
+    "D86",
+    "D87",
+    "D88",
+    "D89",
+    "D90",
+    "D91",
+    "D92",
+    "D93",
+    "D94",
+    "D95",
+    "D96",
+    "D97",
+    "D98",
+    "D99",
+    "D100",
+    "D101"
+  ],
+  "resolved_decisions": [],
+  "pending_review_document": "docs/reviews/pending-defenses.md",
+  "review_ledger": "docs/reviews/code-constraints-ledger.json",
+  "coverage": {
+    "full_modules_certified": 28,
+    "structural_only": 367,
+    "selected_paths_only": 88,
+    "exception_equivalence_only": 75,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "validation": {
+    "targeted": {
+      "run": 72,
+      "passed": 28,
+      "skipped": 44,
+      "errors": 0,
+      "elapsed_seconds": 0.71,
+      "skip_reason": "pre-existing retired battle-only relic assertions; not counted passed"
+    },
+    "old_new_routes": {
+      "cases": 16,
+      "config_and_full_result_byte_equal": true,
+      "inputs_unchanged": true,
+      "before_sha256": "5a232faa49f3ba0a9bac291eb7c68e2f9a16cd55294e4d2db394d76bb770e62f",
+      "after_sha256": "5a232faa49f3ba0a9bac291eb7c68e2f9a16cd55294e4d2db394d76bb770e62f",
+      "capture_script_sha256": "2bf832516a42a45cc68431315cd1d830f60aa205d9bbbf2291adf1b5892e476d"
+    },
+    "source_equivalence": [
+      {
+        "file": "rouge/timing.py",
+        "other_functions_classes_ast_equal": [
+          "finite",
+          "frame_time",
+          "cadence",
+          "has_periodic_sp",
+          "wine_events",
+          "profiles",
+          "impact_delays",
+          "AttackTimeline",
+          "phase_totals",
+          "annotate_result"
+        ],
+        "raise_try_nodes_equal": true
+      },
+      {
+        "file": "rouge/sp_events.py",
+        "other_functions_classes_ast_equal": [
+          "has_received_sp",
+          "has_event_sp",
+          "event_phases"
+        ],
+        "raise_try_nodes_equal": true
+      }
+    ],
+    "full_suite_run": false,
+    "live_window": {
+      "visible": true,
+      "responds": true,
+      "restarted": true,
+      "screenshot_reviewed": true,
+      "scope": "original toolbar only; calculation checks offline, no real-game operations"
+    },
+    "local_evidence": ".local/code-constraints-review-40/"
+  }
+}

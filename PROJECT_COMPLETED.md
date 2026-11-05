@@ -1,3 +1,7 @@
+## 维护：四条充能路径共用初动条件整理（2026-11-05）
+
+删除四份重复投影，条件观察模块完整源码审查通过。16组旧新对照一致，定向28通过、44旧测试跳过。测试窗口更新。[回执](verification/maintenance/code-constraints-charge-timing-20261105/README.md)。
+
 ## 维护：笔记资料菜单重复构造与导入整改（2026-11-05）
 
 只创建一次共用context，逐项动态导入改为入口导入；8个不同定向检查通过，测试窗口更新。验收辅助模块完成三条源码审查，实机未重跑。[回执](verification/maintenance/code-constraints-note-menu-20261105/README.md)。
