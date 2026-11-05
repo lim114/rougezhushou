@@ -1,3 +1,7 @@
+## 维护：技能矩阵培养复用（2026-11-05）
+
+每名干员培养只读一次，跨技能结果仍独立；18项定向及7组完整矩阵对照通过，测试窗口更新。仅完成此路径。[回执](verification/maintenance/code-constraints-skill-cultivation-20261105/README.md)。
+
 ## 维护：培养曲线与天赋查询复用（2026-11-05）
 
 相同培养组合与不变培养输入已复用，删除无调用投影；6项定向及旧新完整报告对照通过，测试窗口更新。仅完成所述路径。[回执](verification/maintenance/code-constraints-cultivation-queries-20261105/README.md)。

@@ -128,7 +128,8 @@ COMMANDS['pair']=compare_panel
 
 def skill_matrix(scenario, operators=None):
     """Reuse each skill's main result without crossing extended owner conditions."""
-    base=_scenario(scenario,all_operators=True);_cultivated(base)
+    base=_scenario(scenario,all_operators=True)
+    cultivation={base['operator']:_cultivated(base)}
     rank=_integer(base['skill_rank'],'技能等级',10)
     if rank<1:raise ValueError('技能等级需要为1–10。')
     selected_skill=_integer(base['skill'],'所选技能',len(catalog()['operators'][base['operator']]['skills']))
@@ -189,7 +190,10 @@ def skill_matrix(scenario, operators=None):
                 row.update(status='培养条件未开放',full_skill_damage=None,full_skill_healing=None,
                            native_panel_reference=None,declared_components=[])
             else:
-                result=calculate_damage(s);skill=result['estimate']['skill']
+                if op not in cultivation:
+                    cultivation[op]=_cultivated(s,module_id=None,module_level=0)
+                prepared=_prepare_damage(s,cultivated_attributes=cultivation[op])
+                result=_calculate_prepared(s,prepared);skill=result['estimate']['skill']
                 complete=bool(result['estimate'].get('complete',False))
                 row.update(name=skill['name'],status='条件模型参考' if complete else '存在未核验项',
                     initial_seconds_reference=skill.get('initial_seconds'),recharge_seconds_reference=skill.get('recharge_seconds'),

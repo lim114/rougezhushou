@@ -47,7 +47,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
 
     def fake_calculator(self, calls, returned=None):
         """Explicit synthetic owner markers; no asserted production numbers."""
-        def calculate(scenario):
+        def calculate(scenario, prepared):
             calls.append(deepcopy(scenario))
             entry=self.calibration.catalog()['operators'][scenario['operator']]['skills'][scenario['skill']-1]
             result={'estimate':{'skill':{'name':entry['levels'][scenario['skill_rank']-1]['name'],
@@ -62,7 +62,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
 
     def test_01_public_legacy_default_still_nine_with_three_identities(self):
         c=self.calibration;calls=[];payload=self.view.public_payload('calibration','skills')
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(calls)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(calls)):
             result=c.skill_matrix(**payload)
         self.assertEqual(result['selection_mode'],'legacy_first_three')
         self.assertEqual(len(result['rows']),9)
@@ -76,7 +76,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
 
     def test_02_all_twenty_nine_extended_owners_route_all_seventy_eight_skills_to_self(self):
         c=self.calibration;calls=[];results=[];catalog=c.catalog()['operators']
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(calls)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(calls)):
             for op,profile in catalog.items():
                 if op in c.OPERATORS:continue
                 scenario={'operator':op};before=deepcopy(scenario)
@@ -94,7 +94,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
 
     def test_03_matrix_copies_corresponding_main_native_and_special_components(self):
         c=self.calibration;calls=[];returned=[]
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(calls,returned)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(calls,returned)):
             result=c.skill_matrix({'operator':MYRTLE},operators=[MYRTLE])
         self.assertEqual(result['selection_mode'],'explicit_current_operator')
         for row,main in zip(result['rows'],returned):
@@ -106,7 +106,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
 
     def test_04_locked_skills_keep_names_reasons_and_never_call_calculate(self):
         c=self.calibration;calls=[]
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(calls)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(calls)):
             result=c.skill_matrix({'operator':SHU,'elite':0,'skill_rank':7})
         self.assertEqual([s['skill'] for s in calls],[1])
         locked=result['rows'][1:]
@@ -114,7 +114,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
         self.assertTrue(all(r['name'] and not r['unlocked'] and r['unlock_reasons'] and
             r['status']=='培养条件未开放' and r['native_panel_reference'] is None and
             r['full_skill_damage'] is None and r['full_skill_healing'] is None for r in locked))
-        with patch.object(c,'calculate_damage',side_effect=AssertionError('Locked skill calculated')):
+        with patch.object(c,'_calculate_prepared',side_effect=AssertionError('Locked skill calculated')):
             all_locked=c.skill_matrix({'operator':SHU,'elite':1,'skill_rank':10})
         self.assertTrue(all(not r['unlocked'] and any('专精' in reason for reason in r['unlock_reasons']) for r in all_locked['rows']))
 
@@ -138,7 +138,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
         c=self.calibration;calls=[]
         scenario={'operator':'mechanist','module_id':'uniequip_002_mcnist','module_level':3,
                   'charge_count':2,'companion_attack':123}
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(calls)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(calls)):
             result=c.skill_matrix(scenario,operators=['mechanist','silverash'])
         self.assertEqual(result['selection_mode'],'explicit_first_three')
         self.assertEqual(len(result['rows']),6)
@@ -169,10 +169,10 @@ class ExtendedCalibration285Tests(unittest.TestCase):
             c.compare_panel({**scenario,'potential':2},observation)
 
     def test_08_actual_deepcolor_skill_unknown_is_preserved_with_main_components(self):
-        c=self.calibration;calculate=c.calculate_damage;captured=[]
-        def spy(s):
-            result=calculate(s);captured.append(result);return result
-        with patch.object(c,'calculate_damage',side_effect=spy):
+        c=self.calibration;calculate=c._calculate_prepared;captured=[]
+        def spy(s,prepared):
+            result=calculate(s,prepared);captured.append(result);return result
+        with patch.object(c,'_calculate_prepared',side_effect=spy):
             result=c.skill_matrix({'operator':DEEP})
         self.assertEqual(len(captured),2)
         for row,main in zip(result['rows'],captured):
@@ -208,13 +208,13 @@ class ExtendedCalibration285Tests(unittest.TestCase):
         self.assertEqual(len(v.QUERIES['calibration']),27)
 
     def test_13_actual_scoped_animation_is_kept_only_for_compatible_rows(self):
-        c=self.calibration;calculate=c.calculate_damage;calls=[]
+        c=self.calibration;calculate=c._calculate_prepared;calls=[]
         reference='char_1037_amiya3:Front:Skill_2_Attack'
         scenario={'operator':'char_1037_amiya3','skill':2,
             'timing':{'animation_reference':reference,'target_windows':[[0,30]]}}
         before=deepcopy(scenario)
-        def spy(s):calls.append(deepcopy(s));return calculate(s)
-        with patch.object(c,'calculate_damage',side_effect=spy):result=c.skill_matrix(scenario)
+        def spy(s,prepared):calls.append(deepcopy(s));return calculate(s,prepared)
+        with patch.object(c,'_calculate_prepared',side_effect=spy):result=c.skill_matrix(scenario)
         self.assertEqual(scenario,before)
         self.assertEqual([s['skill'] for s in calls],[1,2])
         self.assertNotIn('animation_reference',calls[0]['timing'])
@@ -223,16 +223,16 @@ class ExtendedCalibration285Tests(unittest.TestCase):
         self.assertEqual([x['field'] for x in result['rows'][0]['omitted_conditions']],['timing.animation_reference'])
         self.assertEqual(result['rows'][1]['omitted_conditions'],[])
         self.assertIn('未指定替代动作',self.view.render_offline_result('calibration','skills',result))
-        with patch.object(c,'calculate_damage',side_effect=AssertionError('Invalid original must not calculate')):
+        with patch.object(c,'_calculate_prepared',side_effect=AssertionError('Invalid original must not calculate')):
             with self.assertRaisesRegex(ValueError,'动画参考'):
                 c.skill_matrix({**scenario,'timing':{'animation_reference':'invalid'}})
         shared=[]
-        with patch.object(c,'calculate_damage',side_effect=self.fake_calculator(shared)):
+        with patch.object(c,'_calculate_prepared',side_effect=self.fake_calculator(shared)):
             c.skill_matrix({'operator':MYRTLE,'skill':1,
                 'timing':{'animation_reference':'char_151_myrtle:Front:Attack','target_windows':[[0,30]]}})
         self.assertTrue(all(s['timing']['animation_reference']=='char_151_myrtle:Front:Attack' for s in shared))
         calls.clear()
-        with patch.object(c,'calculate_damage',side_effect=spy):
+        with patch.object(c,'_calculate_prepared',side_effect=spy):
             cross=c.skill_matrix({'operator':'kaltsit','skill':2,'timing':{
                 'normal_animation_reference':'char_1052_kalts2:Front:Attack_Loop','target_windows':[[0,30]]}})
         self.assertEqual(len(cross['rows']),9)
@@ -242,7 +242,7 @@ class ExtendedCalibration285Tests(unittest.TestCase):
                             for s in calls if s['operator']!='kaltsit'))
 
     def test_14_actual_recipient_and_recruitment_facts_do_not_cross_first_three_owners(self):
-        c=self.calibration;calculate=c.calculate_damage
+        c=self.calibration;calculate=c._calculate_prepared
         owner_keys=('char_buff_ids','char_buff_absent_ids','char_buff_pending_ids','char_buffs_complete','recruitment_kind')
         for buff in ('rogue_6_from_relic_6','rogue_6_from_relic_13'):
             with self.subTest(buff=buff):
@@ -250,8 +250,8 @@ class ExtendedCalibration285Tests(unittest.TestCase):
                     'char_buff_absent_ids':[],'char_buff_pending_ids':[],'char_buffs_complete':True,
                     'recruitment_kind':'emergency_hire','relic_ids':['rogue_6_relic_legacy_16']}
                 before=deepcopy(scenario);calls=[]
-                def spy(s):calls.append(deepcopy(s));return calculate(s)
-                with patch.object(c,'calculate_damage',side_effect=spy):result=c.skill_matrix(scenario)
+                def spy(s,prepared):calls.append(deepcopy(s));return calculate(s,prepared)
+                with patch.object(c,'_calculate_prepared',side_effect=spy):result=c.skill_matrix(scenario)
                 self.assertEqual(scenario,before)
                 self.assertEqual(len(result['rows']),9)
                 own=[s for s in calls if s['operator']=='kaltsit'];foreign=[s for s in calls if s['operator']!='kaltsit']
