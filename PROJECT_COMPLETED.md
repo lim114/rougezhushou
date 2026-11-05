@@ -1,3 +1,7 @@
+## 维护：藏品诊断组合复用（2026-11-05）
+
+相同有序组合当前查询复用，字段合计去重。24项定向和19报告对照通过，原窗口更新。[回执](verification/maintenance/code-constraints-relic-diagnostic-reuse-20261105/README.md)。D117未批准，不计整模块销项。
+
 ## 维护：时刻实验预测传递（2026-11-05）
 
 同一时刻样本预测复用，控制+3样本7→4次；63项定向和24报告/6坏记录对照通过，窗口更新。[回执](verification/maintenance/code-constraints-experiment-timing-20261105/README.md)。待审保护仍未销项。

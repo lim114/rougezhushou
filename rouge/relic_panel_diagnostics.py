@@ -17,12 +17,15 @@ def relic_panel_diagnostics(scenario, relic_ids=None):
         raise ValueError('需选1–12件已在scenario声明且不重复的藏品；其余来源保留为共同背景。')
     background = [v for v in selected if v not in audited]
 
+    predictions = {}
     def model(ids):
-        variant = deepcopy(s)
-        variant['relic_ids'] = list(ids)
-        # In particular do not delete char_buff_ids. Acquired targeted buffs
-        # are a separate declared source, not simulated discard consequences.
-        return panel_layers(variant)
+        key = tuple(ids)
+        if key not in predictions:
+            variant = deepcopy(s)
+            variant['relic_ids'] = list(ids)
+            # Acquired targeted buffs remain a separate declared source.
+            predictions[key] = panel_layers(variant)
+        return predictions[key]
 
     full = model(selected)
     baseline = model(background)
@@ -61,11 +64,12 @@ def relic_panel_diagnostics(scenario, relic_ids=None):
             singles = [next(row['single_background_model_difference'] for row in source['fields']
                             if row['panel'] == panel and row['field'] == field) for source in source_rows]
             difference = None if value is None or base is None else value-base
-            residual = None if difference is None or any(v is None for v in singles) else difference-sum(singles)
+            single_sum = None if any(v is None for v in singles) else sum(singles)
+            residual = None if difference is None or single_sum is None else difference-single_sum
             combinations.append({'panel': panel, 'field': field, 'label': LABELS[field],
                 'combined_model_reference': value, 'background_model_reference': base,
                 'combined_model_difference': difference,
-                'sum_single_background_model_differences': None if any(v is None for v in singles) else sum(singles),
+                'sum_single_background_model_differences': single_sum,
                 'nonadditive_model_residual': residual, 'actual_combination_effect': None})
     return {'scope': 'counterfactual_existing_panel_model_diagnostics', 'operator': full['operator'],
             'audited_relic_ids': audited, 'background_relic_ids': background,
