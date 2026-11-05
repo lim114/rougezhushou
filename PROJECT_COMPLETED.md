@@ -1,3 +1,7 @@
+## 维护：补充技能复用与分类（2026-11-05）
+
+基准预测复用、效果分类一次、单次包装内联。50项不同定向及最终2项复验通过，42报告/文本一致，窗口更新。[回执](verification/maintenance/code-constraints-supplemental-reuse-20261105/README.md)。基准字段投影仍待处理，审批项不销项。
+
 ## 维护：培养方案属性复用（2026-11-05）
 
 每方案已验证属性供技能准备复用，基准映射去重。7项定向、13报告/文本旧新一致，窗口更新。[回执](verification/maintenance/code-constraints-cultivation-proposals-20261105/README.md)。审批项仍未销项。

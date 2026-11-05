@@ -1038,6 +1038,26 @@
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "evidence": "Whole supplemental_cultivation source reviewed without edits. Defaults, proposal validation, one original reference and each changed cultivation/recruitment source are legitimate separate cases. Missing recruitment key versus explicit None is not assumed an identical environment. Existing formatter is already direct alias. No redundant wrapper identified; D120 per-proposal broad catch pending unchanged. Downstream supplemental_run/comparison remain separate module scope."
+    },
+    {
+      "file": "rouge/supplemental_comparison.py",
+      "sha256": "2b91da5b44b9e81d8570a6a7e293f00b474476969342fe67bd54c81459d2ee5e",
+      "rule1": "current_rank_calculation_reused_baseline_projection_remaining",
+      "rule2": "shared_metric_projection_remains_next_batch",
+      "rule3": "D122_D123_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Current-rank comparison uses a deep independent copy of existing baseline. Original preview skill_rank was validated by baseline computation before loop. Other ranks still computed independently. Remaining ordinary repetition: comparison_rows projects same baseline for every variant across rank/cultivation/enemy consumers; next batch must address. D123 absent-baseline fallback unchanged. No full-module pass."
+    },
+    {
+      "file": "rouge/supplemental_run.py",
+      "sha256": "7867eee4ff72e29f0ebad97611e77e6030fac97ab2c3e8f481ebd70f651d81a7",
+      "rule1": "classify_once_per_effect",
+      "rule2": "ordinary_attribute_single_use_wrapper_inlined",
+      "rule3": "D122_D123_pending_unchanged",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Whole supplemental_run reviewed. Classifiers evaluated once per effect then reused for supported buckets and unsupported list; independent categories may overlap. Ordinary attribute predicate inlined after becoming sole use, preserving source qualification. Target enemy special rules and token exclusions unchanged. Baseline ValueError isolation D122 unchanged pending. Source loading, qualified fields, actual input guards and supported unknown states retained. Domain finishers remain separate module scope."
     }
   ]
 }

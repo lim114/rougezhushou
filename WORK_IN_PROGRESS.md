@@ -1,3 +1,7 @@
+## 当前断点：补充技能复用与分类（2026-11-05）
+
+当前等级+另一等级3→2次计算，效果每类一次分类，单次普通属性包装内联。43+7项不同定向通过，内联后相关2项通过；21环境42报告/文本旧新一致。D122/D123登记未改，共D38—D123共86组。窗口更新，覆盖346/75/104/33。回执verification/maintenance/code-constraints-supplemental-reuse-20261105/summary.json。下一批优先comparison_rows重复基准字段投影（rank/cultivation/enemy三调用链），其后受益人验证与未审模块，不增节数。
+
 ## 当前断点：培养方案属性复用（2026-11-05）
 
 培养对照两个方案4→2次属性读取，补充技能基准字段表一次生成；7项定向及13报告/文本旧新一致。两个培养对照模块普通路径已审，D118—D121新增未改，总D38—D121共84组。窗口更新，覆盖348/75/102/33。回执verification/maintenance/code-constraints-cultivation-proposals-20261105/summary.json。下一批继续supplemental_run/comparison及受益人验证链、其它未审模块；不增节数。

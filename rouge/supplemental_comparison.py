@@ -44,7 +44,8 @@ def compare_ranks(operator_preview,environment,preview):
     baseline=run_skill_reference(original,environment)
     variants=[];rows=[]
     for rank in ranks:
-        result=run_skill_reference({**original,'skill_rank':rank},environment)
+        result=(deepcopy(baseline) if rank==original['skill_rank'] else
+                run_skill_reference({**original,'skill_rank':rank},environment))
         variants.append({'rank':rank,'result':result})
         rows.extend(comparison_rows(result,baseline,rank=rank))
     return {'operator_preview':original,'environment':environment,'preview':deepcopy(preview),

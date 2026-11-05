@@ -22,14 +22,6 @@ ORDINARY_SOURCES={
 }
 
 
-def _ordinary_attribute(effect):
-    source=ORDINARY_SOURCES.get(effect.get('relic_id'))
-    return bool(source and effect.get('_verified_rule') is True and
-        (effect.get('source_buff_key'),effect.get('source_buff_index'),effect.get('condition'))==source[:3]
-        and effect['kind'] in source[3] and not is_attribute_rune(effect)
-        and not effect.get('token_only'))
-
-
 @lru_cache(maxsize=1)
 def selectors():
     return json.loads((Path(__file__).parent/'data/supplemental-run-selectors.json').read_text(encoding='utf-8'))
@@ -90,19 +82,24 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
                  'warnings':[],'complete':True}
         finish_run(summary,run_resolution)
     resolved=scenario.get('effects',[])+scenario.get('_relic_rules',[])
-    runes=[e for e in resolved if is_attribute_rune(e) and not e.get('token_only')]
-    ordinary=[e for e in resolved if _ordinary_attribute(e)]
-    costs=[e for e in resolved if supported_cost(e)]
-    sp_rules=[e for e in resolved if supported_sp(e)]
-    healing_rules=[e for e in resolved if supported_healing(e,raw['kind'])]
-    damage_rules=[e for e in resolved if supported_damage(e)]
-    unsupported=[e for e in resolved if not is_attribute_rune(e) and
-                 not _ordinary_attribute(e) and not supported_cost(e) and not supported_sp(e)
-                 and not supported_healing(e,raw['kind'])
-                 and not supported_damage(e)
-                 and not (target_enemy is not None and e.get('_verified_rule') and
-                          e['kind'] in ('enemy_hp_factor','enemy_atk_factor','enemy_spawn_hp_branch','enemy_weight_delta'))
-                 and not e.get('token_only')]
+    runes=[];ordinary=[];costs=[];sp_rules=[];healing_rules=[];damage_rules=[];unsupported=[]
+    for effect in resolved:
+        rune=is_attribute_rune(effect)
+        source=ORDINARY_SOURCES.get(effect.get('relic_id'))
+        ordinary_match=bool(source and effect.get('_verified_rule') is True and
+            (effect.get('source_buff_key'),effect.get('source_buff_index'),effect.get('condition'))==source[:3]
+            and effect['kind'] in source[3] and not rune and not effect.get('token_only'))
+        cost_match=supported_cost(effect);sp_match=supported_sp(effect)
+        healing_match=supported_healing(effect,raw['kind']);damage_match=supported_damage(effect)
+        for applies,bucket in ((rune and not effect.get('token_only'),runes),(ordinary_match,ordinary),
+                               (cost_match,costs),(sp_match,sp_rules),(healing_match,healing_rules),
+                               (damage_match,damage_rules)):
+            if applies:bucket.append(effect)
+        if (not any((rune,ordinary_match,cost_match,sp_match,healing_match,damage_match))
+                and not (target_enemy is not None and effect.get('_verified_rule') and
+                         effect['kind'] in ('enemy_hp_factor','enemy_atk_factor','enemy_spawn_hp_branch','enemy_weight_delta'))
+                and not effect.get('token_only')):
+            unsupported.append(effect)
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
     modified=apply_attribute_runes(stats,runes)
