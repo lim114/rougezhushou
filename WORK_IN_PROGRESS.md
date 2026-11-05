@@ -1,3 +1,7 @@
+## 当前断点：培养方案属性复用（2026-11-05）
+
+培养对照两个方案4→2次属性读取，补充技能基准字段表一次生成；7项定向及13报告/文本旧新一致。两个培养对照模块普通路径已审，D118—D121新增未改，总D38—D121共84组。窗口更新，覆盖348/75/102/33。回执verification/maintenance/code-constraints-cultivation-proposals-20261105/summary.json。下一批继续supplemental_run/comparison及受益人验证链、其它未审模块；不增节数。
+
 ## 当前断点：藏品诊断组合复用（2026-11-05）
 
 同次查询按有序藏品组合复用：1/2件4→2、6→4次，3件仍8组；字段合计一次。24项定向、19报告完整旧新一致。模块普通路径全审，D117嵌套场景检查未改，总D38—D117共80组。窗口更新，覆盖350/75/100/33。回执verification/maintenance/code-constraints-relic-diagnostic-reuse-20261105/summary.json。受益人完整计算仍负责后续输入校验，继续验证链和剩余模块审查，不增节数。

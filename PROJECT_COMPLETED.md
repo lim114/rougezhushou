@@ -1,3 +1,7 @@
+## 维护：培养方案属性复用（2026-11-05）
+
+每方案已验证属性供技能准备复用，基准映射去重。7项定向、13报告/文本旧新一致，窗口更新。[回执](verification/maintenance/code-constraints-cultivation-proposals-20261105/README.md)。审批项仍未销项。
+
 ## 维护：藏品诊断组合复用（2026-11-05）
 
 相同有序组合当前查询复用，字段合计去重。24项定向和19报告对照通过，原窗口更新。[回执](verification/maintenance/code-constraints-relic-diagnostic-reuse-20261105/README.md)。D117未批准，不计整模块销项。

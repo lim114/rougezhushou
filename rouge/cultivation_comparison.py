@@ -2,7 +2,7 @@
 import json
 from copy import deepcopy
 from .catalog import catalog,operator_profiles,operator_attributes
-from .damage import calculate_damage
+from .damage import _prepare_damage, _calculate_prepared
 from .healing_budget import _amount
 from .supplemental_skills import defaults,skill_reference,supplemental_profiles
 
@@ -43,7 +43,8 @@ def compare_cultivation(scenario,preview):
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
         try:
             if identity in catalog()['operators']:
-                modeled=calculate_damage(proposed);metrics=modeled['estimate']['skill']
+                prepared=_prepare_damage(proposed,cultivated_attributes=attributes)
+                modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']
                 row.update(status='技能已计参考' if modeled['complete'] else '技能部分参考',
                            window_damage=metrics.get('window_damage'),window_healing=metrics.get('window_healing'))
                 row['notes'].extend(modeled['estimate']['notes'])
@@ -59,11 +60,11 @@ def compare_cultivation(scenario,preview):
             row['error']=str(error);row['status']='仅属性；技能不可测算'
     baseline=rows[0]
     if baseline['attributes'] is None:raise ValueError('基准培养方案不可测算：'+baseline['error'])
+    base={r['name']:r['value'] for r in baseline['skill_reference']['rows']} if baseline['skill_reference'] else {}
     for row in rows:
         for key in ('attack','hp','defense','window_damage','window_healing'):
             a=row[key];b=baseline[key];row['delta_'+key]=a-b if a is not None and b is not None else None
         if row['skill_reference'] and baseline['skill_reference']:
-            base={r['name']:r['value'] for r in baseline['skill_reference']['rows']}
             row['skill_differences']={r['name']:r['value']-base[r['name']] if r['value'] is not None and base.get(r['name']) is not None else None for r in row['skill_reference']['rows']}
     return {'scenario':deepcopy(scenario),'preview':deepcopy(preview),'rows':rows,'baseline_name':baseline['name'],
             'operator_name':operator_profiles()[identity]['name'],
