@@ -1,0 +1,49 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件藏品图片读取收窄错误出口",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "056614eaded7c0938472aa2a1f878f6feb3e3bb6",
+  "changed_sources": [
+    "rouge/current_peace.py",
+    "rouge/current_resting.py",
+    "tests/test_event_icon_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_peace.py": "73c52193312ba9f4caade20a6fd3dd555d268fbe5500cad38350fa3215eb181a",
+    "rouge/current_resting.py": "6316392cdcbc1d793ac9aa3a1e3facebb5b39c4a3fe4a409ab7ad327ea2488d9",
+    "tests/test_event_icon_boundary_review.py": "a380f83fb1f8c3b7b73a4daf3b7490382563315ea43823721d0786d0d4c4fa2a"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D186",
+    "D191"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 25,
+    "command": "python -m unittest tests.test_event_icon_boundary_review tests.test_current_peace_343 tests.test_current_resting_345",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-191",
+    "baseline": "Old committed modules: six internal-record error subcases fail; final25 tests pass.",
+    "live_window": "Pending user exit of old assistant; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "D186/D191 catches limited to filesystem operations and OSError. Metadata and bytes/hash evaluation outside catch. No repeated validation or new helper.",
+    "requirements": "Unreadable or corrupted images remain unavailable without removing valid text. Existing path/link, file length, digest and PNG signature checks retained. Bad metadata types or missing fields propagate."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ]
+}

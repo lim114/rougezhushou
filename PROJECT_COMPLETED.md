@@ -1,3 +1,7 @@
+## 维护：事件藏品图片读取收窄错误出口（2026-11-06）
+
+D186/D191完成，25项定向通过，限定两处图片读取路径。回执 `verification/maintenance/code-constraints-event-icons-review-20261106/summary.json`。
+
 ## 维护：奖励查询区分错误参数与正常无条目（2026-11-06）
 
 D167/D172/D177完成，29项定向通过，未完成整模块审查。回执 `verification/maintenance/code-constraints-reward-query-review-20261106/summary.json`。

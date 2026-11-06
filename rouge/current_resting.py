@@ -129,17 +129,17 @@ def player_text(result,sid,cid=None, *, prepared_choice=...):
 def icon_bytes():
     p=packet()
     if p is None:return None
+    r=p['data']['icon_reference'];name=r['file'];rel=PurePosixPath(name)
+    if not name.startswith('rouge/data/relic-icons/')or '..'in rel.parts or rel.is_absolute()or'\\'in name or':'in name:return None
+    path=ROOT/name
     try:
-        r=p['data']['icon_reference'];name=r['file'];rel=PurePosixPath(name)
-        if not name.startswith('rouge/data/relic-icons/')or '..'in rel.parts or rel.is_absolute()or'\\'in name or':'in name:return None
-        path=ROOT/name
         if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
         for parent in path.parents:
             if parent==ROOT:break
             if parent.is_symlink():return None
         raw=path.read_bytes()
-        return raw if len(raw)==r['bytes']and sha256(raw).hexdigest()==r['sha256']and raw.startswith(b'\x89PNG\r\n\x1a\n')else None
-    except(OSError,KeyError,TypeError,ValueError):return None
+    except OSError:return None
+    return raw if len(raw)==r['bytes']and sha256(raw).hexdigest()==r['sha256']and raw.startswith(b'\x89PNG\r\n\x1a\n')else None
 
 def catalogue_binding(record):
     if type(record) is not dict or record.get('id')!='community_group_023':return None

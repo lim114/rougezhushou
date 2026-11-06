@@ -1,3 +1,7 @@
+## 当前断点：事件藏品图片读取收窄错误出口（2026-11-06）
+
+D186/D191完成，25项定向通过；原280组完成76组、剩204组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-icons-review-20261106/summary.json。
+
 ## 当前断点：奖励查询区分错误参数与正常无条目（2026-11-06）
 
 D167/D172/D177完成，29项定向通过；原280组完成74组、剩206组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-reward-query-review-20261106/summary.json。
