@@ -1,3 +1,7 @@
+## 维护：险路尽头与和平守卫者加载入口整改（2026-11-06）
+
+D178–D180、D183–D185完成，最终30项定向通过，首轮错误保留；不代表整模块完成。回执 `verification/maintenance/code-constraints-event-packets-review-20261106/summary.json`。
+
 ## 维护：关键奖励加载收窄异常与复用根路径（2026-11-06）
 
 D173–D175完成，11项定向通过，仅证明本批加载路径，未完成整模块审查。回执 `verification/maintenance/code-constraints-critical-packet-review-20261106/summary.json`。

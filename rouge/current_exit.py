@@ -14,25 +14,26 @@ def packet():
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         m=json.loads(raw);expected={DATA,PACK+'/source-receipt.json',PACK+'/documented-section.html',PACK+'/source-notes.json','research/p3-expansion-313/current-topic.json','research/p3-expansion-313/baseline-topic.json','rouge/data/node-catalog.json'}
         if m['schema']!='current_exit_339_manifest_v1'or m['game_commit']!=version.NEW_COMMIT or set(m['files'])!=expected:return None
-        values={}
+        values={};root=ROOT.resolve()
         for name,pin in m['files'].items():
             rel=PurePosixPath(name)
             if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name:return None
             path=ROOT.joinpath(*rel.parts)
-            if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
+            if path.is_symlink()or not path.resolve().is_relative_to(root):return None
             for parent in path.parents:
                 if parent==ROOT:break
                 if parent.is_symlink():return None
             content=path.read_bytes()
             if len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             values[name]=content
-        data=json.loads(values[DATA]);current=version.packet()
-        if current is None or data['schema']!='current_exit_339_v1':return None
-        for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
-            if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
-        if data['difficulty16']not in current['current']['details']['difficulties']:return None
-        return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
+        data=json.loads(values[DATA])
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    current=version.packet()
+    if current is None or data['schema']!='current_exit_339_v1':return None
+    for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
+        if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
+    if data['difficulty16']not in current['current']['details']['difficulties']:return None
+    return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
 
 def _targets(data, category, key):
     if category == 'scenes': return [(sid, None) for sid, s in data['scenes'].items() if s['raw_scene_id'] == key]

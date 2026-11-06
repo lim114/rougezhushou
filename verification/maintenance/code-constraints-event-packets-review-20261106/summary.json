@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "险路尽头与和平守卫者加载入口整改",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5916313bdd4131c624f90a24667ba0737534d5f9",
+  "changed_sources": [
+    "rouge/current_exit.py",
+    "rouge/current_peace.py",
+    "tests/test_event_packet_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_exit.py": "69fe2b558c01a2d92d29d1aa38d9ad610c5fb1b08e91d7715cb83a3825011466",
+    "rouge/current_peace.py": "b9ffba5b954f9c505414ba164e7b703bf9d09def7df43ec5ccbe43e1696d5bb1",
+    "tests/test_event_packet_boundary_review.py": "a03803a25bf41207308a88b40f5e360b47a5f2a3c7fee7b957185fb4bbbb38de"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D178",
+    "D179",
+    "D180",
+    "D183",
+    "D184",
+    "D185"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 30,
+    "command": "python -m unittest tests.test_event_packet_boundary_review tests.test_current_exit_339 tests.test_current_peace_343",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-189",
+    "baseline": "Previous committed modules in isolated namespace: twelve internal-error subcases failed.",
+    "link_check": "Path.is_symlink predicate simulated; not real Windows symlink creation.",
+    "live_window": "Original app update pending; no UI change/live acceptance claimed.",
+    "first_round": "30 tests, one NameError from accidental replacement in icon_bytes; restored that unrelated line, then all30 passed. First failure preserved."
+  },
+  "review": {
+    "standards": "D178/D183 catch only file/JSON boundary. Upstream and internal defects propagate. D180/D185 resolve root once per packet. No wrapper added.",
+    "requirements": "D179/D184 manifest, version, members, file hashes and originals unchanged; difficulty16 retained. D180/D185 path/link boundaries unchanged. icon_bytes unchanged in final diff. Other entrypoints not certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ]
+}

@@ -1,3 +1,7 @@
+## 当前断点：险路尽头与和平守卫者加载入口整改（2026-11-06）
+
+本批6组完成，最终30项定向通过，首轮1错误已修复并保留记录；原280组完成71组、剩209组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-packets-review-20261106/summary.json。
+
 ## 当前断点：关键奖励加载收窄异常与复用根路径（2026-11-06）
 
 D173/D174/D175完成，11项定向通过；原280组完成65组、剩215组。D319/D320待答复；原生来源摘要与新版窗口验收待补。回执verification/maintenance/code-constraints-critical-packet-review-20261106/summary.json。
