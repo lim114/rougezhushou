@@ -25,4 +25,4 @@ def make_event_dialog(row,parent=None):
     if reader=='shadow':
         from .current_shadow_view import CurrentShadowDialog
         return CurrentShadowDialog(target,parent)
-    return None
+    raise ValueError('不支持的奖励资料类型：'+reader)

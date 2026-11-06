@@ -79,7 +79,7 @@ class CurrentRewardOriginsPanel(QWidget):
             from .current_named_reward_origins_view import make_event_dialog
             self.event_dialog = make_event_dialog(row, self)
             if self.event_dialog is None: self._clear(); return False
-        else: return False
+        else: raise ValueError('不支持的奖励来源类型：'+row['reader'])
         if self.event_dialog.panel.result is None: self._clear(); return False
         self.event_dialog.show(); return True
 

@@ -1,3 +1,7 @@
+## 当前断点：奖励资料未知类型明确上报（2026-11-06）
+
+D154/D158完成，26项定向通过；原280组剩230组。D153/D155及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-dispatch-review-20261106/summary.json。
+
 ## 当前断点：奖励资料工厂删除类型兜底与重复清理（2026-11-06）
 
 D152/D159完成，24项定向通过（其中2项增强后重跑通过）；原280组剩232组。D153及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-factory-review-20261106/summary.json。

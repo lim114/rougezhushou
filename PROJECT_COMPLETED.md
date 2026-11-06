@@ -5148,3 +5148,7 @@ D150完成，18项定向通过。回执：verification/maintenance/code-constrai
 ## 维护：奖励资料工厂删除类型兜底与重复清理（2026-11-06）
 
 D152/D159完成，24项定向通过。回执：verification/maintenance/code-constraints-reward-factory-review-20261106/summary.json。不增加功能节数。
+
+## 维护：奖励资料未知类型明确上报（2026-11-06）
+
+D154/D158完成，26项定向通过。回执：verification/maintenance/code-constraints-reward-dispatch-review-20261106/summary.json。不增加功能节数。

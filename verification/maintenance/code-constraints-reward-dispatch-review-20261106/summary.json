@@ -1,0 +1,48 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "奖励资料未知类型明确上报",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "ac91b1c292199bbb37b39b6f14a07c8c648ab593",
+  "changed_sources": [
+    "rouge/current_named_reward_origins_view.py",
+    "rouge/current_reward_origins_view.py",
+    "tests/test_reward_reader_dispatch_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_named_reward_origins_view.py": "5099332870d06160c5ea0aaeb226b04a6b68850a48787982a529ff8dd35c2b18",
+    "rouge/current_reward_origins_view.py": "c1fd53ce2489c1cd31e7636cf39148ea1b346c67e6eb040234722ae3d858d0e2",
+    "tests/test_reward_reader_dispatch_review.py": "2f18431857b0897575534c56105c948167f1aee8948f83e5ef8be3c6cb474ff7"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D154",
+    "D158"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 26,
+    "command": "python -m unittest tests.test_reward_reader_dispatch_review tests.test_reward_factory_contract_review tests.test_current_named_reward_origins_view_347 tests.test_current_reward_origins_view_338 tests.test_current_critical_reward_origins_view_349",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-181",
+    "before": "Both unknown verified reader tests failed to raise.",
+    "live_window": "Isolated Qt tests only; original app update pending."
+  },
+  "review": {
+    "standards": "D154/D158 replace silent unknown-enum exits with explicit ValueError at dispatch; no extra input checks/helpers/catches.",
+    "requirements": "Known dispatch and fresh-row validation unchanged. Source unavailable remains None/False; only unsupported internal reader now raises with its identifier."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}
