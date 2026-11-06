@@ -41,8 +41,9 @@ def same(a, b):
 
 
 def _file(name):
+    if type(name) is not str: raise ValueError('Regular public source required')
     rel = PurePosixPath(name)
-    if type(name) is not str or rel.is_absolute() or '..' in rel.parts or '\\' in name or ':' in name or rel.as_posix() != name:
+    if rel.is_absolute() or '..' in rel.parts or '\\' in name or ':' in name or rel.as_posix() != name:
         raise ValueError('Regular public source required')
     path = ROOT.joinpath(*rel.parts)
     if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(ROOT.resolve()):

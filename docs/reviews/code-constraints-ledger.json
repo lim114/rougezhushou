@@ -932,7 +932,7 @@
     },
     {
       "file": "rouge/current_event_directory.py",
-      "sha256": "f1eee03376f59ac0ebe9f56eff1c426c9457c34511f24729d5f03a62dd9442b1",
+      "sha256": "02893c1f0f3552147b4fe88dedeafea70332c56ef50e67aa0d89296e8c1e675d",
       "directory_entry_review": {
         "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
         "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
@@ -963,6 +963,11 @@
         "decision": "D92",
         "evidence": "verification/maintenance/code-constraints-event-error-boundary-review-20261106/summary.json",
         "result": "File access errors retained; internal errors propagate; 18 targeted tests pass."
+      },
+      "source_path_contract_review": {
+        "decision": "D91",
+        "evidence": "verification/maintenance/code-constraints-event-path-contract-review-20261106/summary.json",
+        "result": "Existing type guard precedes parsing; path protection retained; 8 targeted tests pass."
       }
     },
     {

@@ -1,3 +1,7 @@
+## 当前断点：事件资料路径入口整改（2026-11-06）
+
+D91完成，8项定向通过；原280组剩257组。D95及其他模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-event-path-contract-review-20261106/summary.json。
+
 ## 当前断点：地图资料入口契约整改（2026-11-06）
 
 D88完成，25项定向通过；原280组剩258组。其余模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-map-reader-contract-review-20261106/summary.json。
