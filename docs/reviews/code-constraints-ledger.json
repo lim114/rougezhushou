@@ -1873,6 +1873,16 @@
       "rule2": "Single-use queue-name wrapper inlined; member projection retained as coherent record builder",
       "rule3": "D250_D254_pending",
       "evidence": "Entire module and view/battle callers read; four targeted group/branch/member/projection tests passed."
+    },
+    {
+      "file": "rouge/current_map_position.py",
+      "sha256": "4f5f8b53c0c6dddb91597f87465b0cea4eeb81e8cab784dcfe82664c86479f14",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Map point membership computed once per query; validation boundaries pending D259",
+      "rule2": "No redundant single-use wrappers found; other models read as caller context only",
+      "rule3": "D255_D259_pending",
+      "evidence": "Entire model read; 5 final targeted tests pass; 113 fixed levels/1167 old-new directory queries equal; no name cache retained because decoder calls did not decrease."
     }
   ]
 }

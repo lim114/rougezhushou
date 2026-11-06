@@ -68,12 +68,12 @@ def cell_reference(result,row,col):
 def terrain_locations(result,tile_key=None):
     if result is None or(tile_key is not None and type(tile_key)is not str):return []
     from .current_terrain import terrain_info
-    rows=[]
+    rows=[];mapped={(p['row'],p['col'])for p in result['points']}
     for row in range(result['rows']):
         for col in range(result['cols']):
             tile=result['tiles'][result['map'][row][col]]
             if tile_key is not None and tile.get('tileKey')!=tile_key:continue
-            rows.append({'row':row,'col':col,'tile_key':tile.get('tileKey'),'name':terrain_info(tile)['name'],'mapped_to_original':any(p['row']==row and p['col']==col for p in result['points'])})
+            rows.append({'row':row,'col':col,'tile_key':tile.get('tileKey'),'name':terrain_info(tile)['name'],'mapped_to_original':(row,col)in mapped})
     return rows
 def summary_text(result):
     if (result.get('mapping_evidence')or{}).get('annotation_kind')=='visible_map_symbol':

@@ -1,3 +1,7 @@
+## 维护：地图目录标记查询复用（2026-11-06）
+
+已整改重复扫描，更新旧文案检查并保留完整说明断言；模块未销项。[回执](verification/maintenance/code-constraints-map-membership-review-20261106/README.md)。
+
 ## 维护：候选队列名称内联（2026-11-06）
 
 已删除单次包装，4项定向检查通过；全模块回顾未完成。[回执](verification/maintenance/code-constraints-candidate-model-review-20261106/README.md)。

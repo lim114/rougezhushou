@@ -1,3 +1,7 @@
+## 当前断点：地图位置模型回顾与标记归属查询复用（2026-11-06）
+
+去除逐格重复标记扫描；最终5定向通过，113份关卡/1167查询一致。保留初轮旧文案失败证据。D255—D259待审，共222组。回执verification/maintenance/code-constraints-map-membership-review-20261106/summary.json。
+
 ## 当前断点：出怪候选模型回顾与单次队列名称内联（2026-11-06）
 
 单次名称包装已内联，4项定向检查通过；D250—D254待审，共217组。重复身份检查与位置查询留待批准，模块未销项。回执verification/maintenance/code-constraints-candidate-model-review-20261106/summary.json。

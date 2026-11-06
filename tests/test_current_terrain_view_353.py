@@ -30,7 +30,7 @@ class CurrentTerrainView353Tests(unittest.TestCase):
         wanted={'tile_healing':'3%','tile_bigforce':'1个等级','tile_infection':'100点真实伤害'}
         for key,text in wanted.items():
             p.terrain_kind.setCurrentIndex(p.terrain_kind.findData(key));p.terrain_cells.setCurrentIndex(1);self.app.processEvents()
-            self.assertIn(text,p.player.toPlainText());self.assertIn('没有将地形效果写入本局计算',p.player.toPlainText())
+            self.assertIn(text,p.player.toPlainText());self.assertIn('资料类型：固定地图。',p.player.toPlainText());self.assertIn('没有将地形效果写入本局计算',p.technical.toPlainText())
         self.assertEqual(json.dumps(p.result,sort_keys=True),original)
     def test_refresh_preserves_type_cell_and_both_nonzero_readers(self):
         p=self.panel();p.resize(950,400);p.terrain_kind.setCurrentIndex(p.terrain_kind.findData('tile_infection'));p.terrain_cells.setCurrentIndex(1);self.app.processEvents()
