@@ -1654,13 +1654,13 @@
     },
     {
       "file": "rouge/current_sand_reference.py",
-      "sha256": "23317867efaa9755f704180a6dcefcc21839646e34fbd070656499ba0f511de6",
-      "ordinary_rules_review_complete": false,
+      "sha256": "aba720f00a7c804b81344806eba140d126e183f787f12be25ee09b53e05e7dfb",
+      "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "rule1": "player_text_reuses_selected_choice_documented_checks",
+      "rule2": "single_use_any_three_state_expression_inlined_all_used_twice_add_used_multiple_times",
+      "rule3": "D210_D213_pending",
+      "evidence": "Read entire sand model and corresponding panel; packet already parses validated bytes. context is normal public validation. _any has one call; identical True/False/None expression now at use. player_text reuses choice.documented_checks; no-choice still computes scene conditions. _all has two callers and local add multiple callers.17 targeted model/view checks and2592 old/new text/condition cases match. Source protections unchanged; no full certification pending D210-D213."
     },
     {
       "file": "rouge/current_scout.py",

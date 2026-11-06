@@ -1,3 +1,7 @@
+## 当前断点：沙地模型复用条件清单并内联单次判断（2026-11-06）
+
+条件清单复用、单次_any内联；17定向通过、2592对照一致，窗口更新。D210—D213待审，共176组；整模块47不变。回执verification/maintenance/code-constraints-sand-condition-reuse-20261106/summary.json；继续仪式模型和其它模块。
+
 ## 当前断点：仪式与沙地面板去除重复同步并复用材料选项（2026-11-06）
 
 删除四处重复同步，仪式文字/控件复用选项；18定向通过，22对照一致，测试窗口更新。172组待审不变，整模块47。回执verification/maintenance/code-constraints-ritual-sand-refresh-reuse-20261106/summary.json；后续继续两面板剩余调用及模型审查。

@@ -199,3 +199,8 @@
 | D208 | current_exchange_reference.target_entry对category/key非字符串返回None | 错误内部调用静默变成无目标 | 建议明确入口契约后让内部类型错误暴露，或保留原始查询接口。合法但不支持的类别、无匹配、非唯一匹配属于正常无入口，不包含在此项。原样待审 |
 
 | D209 | CurrentExchangePanel.__init__的target.get('item_id')与target.get('group_id') | 目标缺字段时静默当作未选择；实际非None产品目标均由target_entry构建且总含两个键，键值本身允许None | 建议改为必填键读取，保留值为None的正常目录状态；替代保留缺字段兼容。两处原样待统一审核，不借用其它模块授权 |
+
+| D210 | current_sand_reference.packet统一捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 文件错误及内部类型、字段、递归缺陷都成为无资料 | 建议收窄实际文件/解析错误，内部缺陷暴露；替代保留整体兜底。原样待审 |
+| D211 | 同packet固定清单摘要/schema/版本/成员、文件摘要及当前原件对照 | 来源变化或错版时拒绝结果，已有values复用校验字节 | 建议保留来源身份职责并核对各层必要性；替代信任快照。原样待审 |
+| D212 | 同packet相对路径、ROOT范围、文件/父目录链接拒绝 | 阻止越界及链接资料，也限制链接部署 | 建议保留或另定部署范围；替代扩大路径读取。原样待审 |
+| D213 | current_sand_reference.reference/locate/choice_reference的非字符串参数返回None | 内部类型错误静默变成无资料/无选项 | 建议明确入口契约后使内部类型错误暴露；替代保留原始查询接口。合法None选择、非本事件/非本场景成员仍是正常无匹配，不包含在此项。原样待审 |

@@ -67,7 +67,6 @@ def locate(category,key):
 def scene_label(result,sid):return LABELS.get(sid,'请选择对话')
 
 def _all(rows):return False if any(x['matches']is False for x in rows)else None if not rows or any(x['matches']is None for x in rows)else True
-def _any(a,b):return True if a is True or b is True else False if a is False and b is False else None
 
 def condition_checks(result,cid=None):
     c=result['context'];event=result['event']['id'];rows=[]
@@ -75,7 +74,7 @@ def condition_checks(result,cid=None):
     add('处于第二至第四层'if event=='informer'else'处于第五层',None if c['floor']is None else c['floor']in((2,3,4)if event=='informer'else(5,)))
     add('节点是不期而遇'if event=='informer'else'节点是命运所指',None if c['node_type']=='unknown'else c['node_type']==('不期而遇'if event=='informer'else'命运所指'))
     if event=='curiosity':
-        add('已完成强制重启，解锁相关选项和收藏品',c['cleared_reboot']);add('至少持有沙盘α、沙盘β中的一种',_any(c['has_alpha'],c['has_beta']))
+        add('已完成强制重启，解锁相关选项和收藏品',c['cleared_reboot']);add('至少持有沙盘α、沙盘β中的一种',True if c['has_alpha']is True or c['has_beta']is True else False if c['has_alpha']is False and c['has_beta']is False else None)
     if cid=='choice_ro6_bomb1_1':add('已完成强制重启，解锁相关选项和收藏品',c['cleared_reboot'])
     if cid=='choice_ro6_end1_1':
         add('窥视箱中尚未被标记',None if c['target_marked']is None else not c['target_marked']);add('至少有50源石锭',None if c['gold']is None else c['gold']>=50)
@@ -102,7 +101,7 @@ def player_text(result,sid,cid=None, *, prepared_choice=...):
             else:lines+=['','【随机获得】1件'+reward.get('quality','')+reward['kind'],'可获得的具体名单、实际发放方式尚未核验，不能指定成某件藏品或零件。']
         if c['cost_gold']==50:lines+=['','【标记与代价】','文献说明：尚未标记窥视箱中时，可支付50源石锭标出目标。这是寻找目标的标记选项，不是再获得一件收藏品，也不会立即开始作战。']
         if c['next_scene_id']:lines+=['','【明确的后续对话】',scene_label(result,c['next_scene_id'])]
-    checks=condition_checks(result,cid if c else None);lines+=['','【文献条件对照 · 仅本页】']
+    checks=c['documented_checks']if c else condition_checks(result);lines+=['','【文献条件对照 · 仅本页】']
     for row in checks:lines+=[{True:'已知符合：',False:'已知不符：',None:'尚未确认：'}[row['matches']]+row['label']]
     if ctx['scope']=='history':lines+=['按历史资料查阅；当前持有、层数或源石锭不用于否定过去已经看见的事件。']
     elif _all(checks)is False:lines+=['至少一项文献条件不符，不将它作为本局可用分支；仍可阅读，后续按钮不可用。']
