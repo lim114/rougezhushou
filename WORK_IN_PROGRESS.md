@@ -1,3 +1,7 @@
+## 当前断点：事件清理接口整改（2026-11-06）
+
+D90完成；21种接口核对、11项定向通过；原280组余263组，模块总覆盖不变。回执verification/maintenance/code-constraints-event-cleanup-review-20261106/summary.json。
+
 ## 当前断点：事件查询长度提示（2026-11-06）
 
 D94完成；26定向通过，原280组余264组；模块覆盖保持68完整/200部分/40异常等价/250结构。回执verification/maintenance/code-constraints-event-query-review-20261106/summary.json。

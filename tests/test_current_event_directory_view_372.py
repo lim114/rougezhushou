@@ -47,7 +47,13 @@ class CurrentEventDirectoryViewTests(TestCase):
             target = model.resolve(result, entry['key']); dialog = make_event_dialog(target)
             self.assertIsNotNone(dialog, row['reader'])
             self.assertEqual((dialog.panel.scene_id, dialog.panel.choice_id), (entry['scene_id'], entry['choice_id']))
-            dialog.close()
+            owner=CurrentEventDirectoryPanel()
+            owner.event_dialog=dialog
+            owner._close_event()
+            self.assertIsNone(owner.event_dialog)
+            self.assertIsNone(dialog.panel.result)
+            self.assertFalse(dialog.isVisible())
+            owner.close()
         self.assertEqual(len(seen), 21)
 
     def test_same_source_preserves_filters_event_entry_and_child(self):

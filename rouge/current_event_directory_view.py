@@ -74,7 +74,7 @@ class CurrentEventDirectoryPanel(QWidget):
     def _close_event(self):
         if self.event_dialog is not None:
             panel = self.event_dialog.panel
-            if hasattr(panel, 'clear_reference'): panel.clear_reference()
+            panel.clear_reference()
             self.event_dialog.close()
         self.event_dialog = None
 
