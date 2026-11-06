@@ -331,3 +331,8 @@
 | D309 | player_feature_426_acceptance.check_prices/check、427/428/430.check 的 finally 恢复 window.run.state，共5处 | 验收中途异常仍恢复此前隔离状态；成功路径也恢复 | 建议保留，避免失败后隔离窗口沿用构造状态；替代只成功时恢复，失败后由隔离会话退出清理。未获授权，原样保留；本批未运行这些历史验收 |
 
 | D310 | player_feature_431/432/435/436/437/438/439/440_acceptance.check 的8处finally；438还恢复map_view图和historical标记 | 隔离验收中途失败仍恢复测试前状态，成功也恢复 | 建议保留，避免失败后沿用构造状态或旧地图；替代仅成功时恢复，由隔离会话退出清理。未获授权，全部原样；本批未运行历史验收 |
+
+| D311 | player_calculation_target.open_target/create：open_full拒绝返回False；make_reader无资料时提示并返回None；目标身份不唯一时不自动选择 | 资料不可用或引用歧义时保留计算结果、不选错敌人；无选择时返回是正常交互，不算本项 | 建议保留来源/唯一身份处理；替代直接报错或只开关卡不自动选敌人。原样待审；context在导航前后和后续prepare读取不同时间点，不能直接缓存一次 |
+| D312 | recruitment_recognition.recruitment_marker：denominator为0时score=0 | 模板/观察均无白像素时避免本次除零，但随后white/expected仍可能除零 | 建议核对模板尺寸支持范围后去掉无效局部保护或统一入口约束；替代原样。不得仅删除后宣布已解决；本批保留，未增加小尺寸防御 |
+| D313 | enemy_reference_construction.configuration_path：construction_reference缺失时按旧exact_requested_level_present生成database路径 | 支持旧内部标量调用，但固定资料理论上已有来源记录 | 建议完成旧调用迁移后删除兼容分支；替代保留有明确标签的旧契约。原样待审；source_path未知use_db与compiled_identity模式分支是来源语义，不合并删除 |
+| D314 | player_history_codec.encode循环引用拒绝与finally移除栈；decode整数/浮点规范格式、重复键拒绝以及对象赋值TypeError转ValueError | 避免非规范/循环快照或重复字段被无声改写；TypeError捕获还包含递归值解码 | 建议保留无损格式与循环/重复键约束，收窄TypeError范围；替代原样或取消相应格式拒绝。含binary长度与规范hex双重判断，需确认后合并；本批未动，未授权 |

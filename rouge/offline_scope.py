@@ -28,19 +28,16 @@ REFERENCE_PENDING = {
 }
 
 
-def reference_effect(effect, relic_id):
-    return (relic_id in REFERENCE_RELIC_IDS or effect['kind'] in REFERENCE_KINDS or
-        effect.get('condition') in COMBAT_CONDITIONS)
-
-
 def partition(entry, identity):
     relic_id = entry.get('relic_id', identity)
+    reference_only = relic_id in REFERENCE_RELIC_IDS
     active, reference = [], []
     for effect in entry['effects']:
-        (reference if reference_effect(effect, relic_id) else active).append(effect)
+        (reference if reference_only or effect['kind'] in REFERENCE_KINDS or
+            effect.get('condition') in COMBAT_CONDITIONS else active).append(effect)
     pending, reference_pending = [], []
     for message in entry['pending']:
-        (reference_pending if relic_id in REFERENCE_RELIC_IDS or message in REFERENCE_PENDING else pending).append(message)
+        (reference_pending if reference_only or message in REFERENCE_PENDING else pending).append(message)
     return active, reference, pending, reference_pending
 
 

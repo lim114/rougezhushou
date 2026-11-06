@@ -18,7 +18,8 @@ class SoftwarePointer:
             px,py=point;x=max(0,px-6);y=max(0,py-6);u=min(width,px+100);v=min(height,py+110)
             if x<u and y<v:
                 crop=image[y:v,x:u]
-                white=((crop.min(2)>120)&(crop.max(2)-crop.min(2)<45)).astype(np.uint8)
+                minimum=crop.min(2)
+                white=((minimum>120)&(crop.max(2)-minimum<45)).astype(np.uint8)
                 _,labels,stats,_=cv2.connectedComponentsWithStats(white)
                 candidates=[]
                 for i,(left,top,w,h,area)in enumerate(stats[1:],1):

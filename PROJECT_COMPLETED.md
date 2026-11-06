@@ -1,3 +1,7 @@
+## 维护：七个小模块契约（2026-11-06）
+
+level_panel_view/software_pointer/offline_scope完成规则回顾；四文件冗余清理。其余四份待审。[回执](verification/maintenance/code-constraints-small-module-contracts-review-20261106/README.md)。
+
 ## 维护：出怪列表重复筛选清理（2026-11-06）
 
 CurrentBattlePanel._actions_changed复用队列筛选，16项定向通过；大模块其余路径和D52继续待办。[回执](verification/maintenance/code-constraints-spawn-filter-reuse-review-20261106/README.md)。

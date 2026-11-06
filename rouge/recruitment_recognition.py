@@ -17,10 +17,10 @@ def promotion_marker(image,x,y,space=(1,1)):
     crop=image[y0:y1,x0:x1]
     if not crop.size:return None
     gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
-    best=None
+    best=None;limit=min(gray.shape)
     for scale in (.038,.041,.044,.047):
         size=round(h*scale*uy)
-        if size>min(gray.shape):continue
+        if size>limit:continue
         scores=cv2.matchTemplate(gray,cv2.resize(reference('advanced'),(size,size)),cv2.TM_CCOEFF_NORMED)
         _,score,_,location=cv2.minMaxLoc(scores)
         if best is None or score>best[0]:best=(float(score),location,size)
@@ -43,8 +43,9 @@ def recruitment_marker(image,x,y,space=(1,1)):
         mask=cv2.resize(reference('emergency'),(width,height))>210
         expected=float(np.sum(mask))
         for dx in (-.002,0,.002):
+            cx=round((x-.023*ux+dx*ux)*w)
             for dy in (-.002,0,.002):
-                cx=round((x-.023*ux+dx*ux)*w);cy=round((y-.002*uy+dy*uy)*h)
+                cy=round((y-.002*uy+dy*uy)*h)
                 roi=image[cy-height//2:cy-height//2+height,cx-width//2:cx-width//2+width]
                 if roi.shape[:2]!=(height,width):continue
                 actual=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)>210

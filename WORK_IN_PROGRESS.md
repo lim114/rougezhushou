@@ -1,3 +1,7 @@
+## 当前断点：七个小模块契约回顾及识别和藏品范围冗余清理（2026-11-06）
+
+四文件普通冗余修改；17定向及319组旧新对照通过。七份完整阅读，三份规则销项，D311—314待审，共277组。回执verification/maintenance/code-constraints-small-module-contracts-review-20261106/summary.json。
+
 ## 当前断点：出怪列表复用队列筛选结果（2026-11-06）
 
 实际出怪列表分组/条目复用同次kind筛选；16项定向通过，测试窗口更新。D52原样待审，无新审批组，无整模块新增销项。回执verification/maintenance/code-constraints-spawn-filter-reuse-review-20261106/summary.json。

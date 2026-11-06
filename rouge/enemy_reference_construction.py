@@ -20,7 +20,7 @@ def source_path(binding,exact):
         result.update(state='exact_database_level_available' if exact else 'unavailable_exact_database_level',
             compiled_result_available=bool(exact),database_records_used=bool(exact))
     else:
-        present=binding.get('overwritten_data_present') is True
+        present=result['overwritten_data_present']
         result.update(state='stage_constructor_overrides_available' if present else 'unavailable_constructor_overrides',
             compiled_result_available=present)
     return result
