@@ -50,14 +50,15 @@ def context(values=None):
     return out
 
 def reference(event_id='informer',values=None):
-    if type(event_id)is not str or event_id not in('informer','curiosity'):return None
+    if type(event_id)is not str:raise TypeError('event_id must be str')
+    if event_id not in('informer','curiosity'):return None
     c=context(values);r=packet()
     if r is None:return None
     d=r['data'];event=next(e for e in d['events']if e['id']==event_id)
     return {**r,'event':deepcopy(event),'scenes':{k:deepcopy(d['scenes'][k])for k in event['scene_ids']},'choices':{k:deepcopy(d['choices'][k])for k in event['choice_ids']},'context':c,'context_is_local_reference_only':True}
 
 def locate(category,key):
-    if type(category)is not str or type(key)is not str:return None
+    if type(category)is not str or type(key)is not str:raise TypeError('category and key must be str')
     if not((category=='scenes'and key in LABELS)or(category=='choices'and key in('choice_ro6_bomb1_1','choice_ro6_bomb1_2','choice_ro6_bomb1_3','choice_ro6_end1_1','choice_ro6_end1_2'))or(category=='relics'and key in('rogue_6_relic_final_1','rogue_6_relic_final_2'))):return None
     r=packet()
     if r is None:return None
@@ -82,7 +83,8 @@ def condition_checks(result,cid=None):
     return rows
 
 def choice_reference(result,sid,cid):
-    if type(sid)is not str or type(cid)is not str:return None
+    if (sid is not None and type(sid)is not str)or(cid is not None and type(cid)is not str):raise TypeError('sid and cid must be str or None')
+    if sid is None or cid is None:return None
     s=result['scenes'].get(sid);c=result['choices'].get(cid)
     if not(s and c and cid in s['choice_ids']and c['scene_id']==sid):return None
     out=deepcopy(c);out['documented_checks']=condition_checks(result,cid)

@@ -1,3 +1,7 @@
+## 当前断点：线人与仪式查询区分错误类型和未选择（2026-11-06）
+
+D213/D217完成，32定向通过；原280组完成105、剩175。D319/D320待答复；旧界面测试及原窗口更新缺口保留。回执verification/maintenance/code-constraints-sand-ritual-query-contract-20261106/summary.json。
+
 ## 当前断点：事件作战查询统一参数校验（2026-11-06）
 
 D224完成；17定向16通过，1个旧滚动测试在原源码同样失败。原280组完成103、剩177；D319/D320待答复，旧窗口更新待补。回执verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json。

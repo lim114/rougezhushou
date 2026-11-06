@@ -39,14 +39,15 @@ def packet():
     return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_consumed':None,'actual_weakened':None,'run_updated':False,'calculation_applied':False}
 
 def reference(event_id='ritual'):
-    if type(event_id)is not str or event_id not in('ritual','tears'):return None
+    if type(event_id)is not str:raise TypeError('event_id must be str')
+    if event_id not in('ritual','tears'):return None
     ref=packet()
     if ref is None:return None
     data=ref['data'];event=next(e for e in data['events']if e['id']==event_id)
     return {**ref,'event':deepcopy(event),'scenes':{k:deepcopy(data['scenes'][k])for k in event['scene_ids']},'choices':{k:deepcopy(data['choices'][k])for k in event['choice_ids']}}
 
 def locate(category,key,*,source=None):
-    if type(category)is not str or type(key)is not str:return None
+    if type(category)is not str or type(key)is not str:raise TypeError('category and key must be str')
     candidate=(category=='scenes'and key in LABELS)or(category=='choices'and(key.startswith('choice_ro6_end3_')or key in('choice_ro6_chimera2_1','choice_ro6_chimera2_2')))or(category=='relics'and key in MATERIALS)
     if not candidate:return None
     ref=packet() if source is None else source
@@ -65,7 +66,8 @@ def locate(category,key,*,source=None):
 def scene_label(result,sid):return LABELS.get(sid,'请选择对话')
 
 def choice_reference(result,sid,cid):
-    if type(sid)is not str or type(cid)is not str:return None
+    if (sid is not None and type(sid)is not str)or(cid is not None and type(cid)is not str):raise TypeError('sid and cid must be str or None')
+    if sid is None or cid is None:return None
     s=result['scenes'].get(sid);c=result['choices'].get(cid)
     return deepcopy(c)if s and c and cid in s['choice_ids']and c['scene_id']==sid else None
 

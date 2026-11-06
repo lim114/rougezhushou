@@ -1,0 +1,53 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "线人与仪式查询区分错误类型和未选择",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "694dbebe63c96d1b6959a15371ee5d01e02e0cfe",
+  "changed_sources": [
+    "rouge/current_sand_reference.py",
+    "rouge/current_ritual_reference.py",
+    "tests/test_sand_ritual_query_contract.py"
+  ],
+  "source_sha256": {
+    "rouge/current_sand_reference.py": "908ec7f76a331dea986452a5cb850b46f841afb55c80524ee5ac8bfe662621c4",
+    "rouge/current_ritual_reference.py": "cc1cc5e0665fe81b31ee109a94bd3d05313cbd0c929f859a576f2be496e2c270",
+    "tests/test_sand_ritual_query_contract.py": "efbc2e48fe4b829672f17a4260212e23167d488437ca27c0ae9f13d4405e2b37"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D213",
+    "D217"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 32,
+    "tests_failed": 0,
+    "tests_run": 32,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_sand_ritual_query_contract tests.test_current_sand_reference_325 tests.test_current_ritual_reference_324 tests.test_current_sand_view_325 tests.test_current_ritual_view_324",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-203",
+    "old_source_regression": "3 new tests:62 subtest failures on prior source; current32 tests all pass.",
+    "live_window": "Offscreen Qt only; original window update pending."
+  },
+  "review": {
+    "standards": "Approved D213/D217:existing type gates raise TypeError, each independent entry validates once; no catches/helpers introduced. None selection remains a normal state.",
+    "requirements": "Unknown strings/nonmembers remain no-match; source identity and material multiple-match unchanged. Source/context and all UI regressions covered by targeted suites."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}
