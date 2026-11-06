@@ -213,3 +213,8 @@
 | D218 | CurrentSandPanel.open_related固定scene_ro6_end2_enter定位不到时关闭关联窗并返回False | 固定来源缺失时拒绝打开，避免沿用旧窗 | 建议保留明确定位失败出口；替代直接使用固定目标会在后续访问失败或显示无资料。原样待审 |
 | D219 | CurrentRitualPanel._sync_extra/open_material交换目标预检失败隐藏按钮；事件/交换目标重新定位失败时清空/关闭，交换失败又_sync_extra | 来源变动时撤下入口，但失败路径再次定位并可能重复关闭 | 建议保留失效撤下并合并同次失败路径重读/关闭；替代原样多次核对。仍含待改普通重复，不能因已登记就销项。原样待审 |
 | D220 | CurrentRitualPanel.open_material来源kind不在event/exchange/battle时返回False | 未支持或错误内部类型静默不打开 | 建议明确来源枚举契约后暴露内部未知类型；替代保留可扩展类型无动作行为。原样待审，不影响三类正常入口 |
+
+| D221 | current_event_battles.packet整段捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 读取错误和内部缺陷统一返回无资料 | 建议收窄至文件与解析入口；替代保持整段捕获。原样待审 |
+| D222 | 同packet清单摘要/schema/版本/文件成员、大小/摘要以及当前choices/scenes/stages原件比对 | 来源漂移拒绝展示；DATA复用已核验values字节 | 建议保留来源一致性职责；替代信任固定资料，错版可能继续展示。原样待审 |
+| D223 | 同packet相对路径/ROOT范围/文件及父目录链接拒绝 | 拒绝越界和链接部署 | 建议保留或另定可加载范围；替代允许链接和外部路径。原样待审 |
+| D224 | current_event_battles.reference/locate/choice/stage_has_reference参数类型拒绝 | 内部错误类型返回无资料，部分包装与下层重复类型校验 | 建议确定边界后只在入口校验；替代保留公开查询接口保护。合法None、类别/前缀筛选、双查询互斥和无匹配返回不属于本项。原样待审 |

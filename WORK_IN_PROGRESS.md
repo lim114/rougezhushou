@@ -1,3 +1,7 @@
+## 当前断点：事件作战模型与调用契约核对（2026-11-06）
+
+模型与实际入口已读；D221—D224待审，共187组。配置名称重复查找及视图result重复判断尚待修正，模块不销项；源码未改，沿用第111批测试窗口。回执verification/maintenance/code-constraints-event-battle-contract-review-20261106/summary.json。
+
 ## 当前断点：事件作战选项与配置列表复用（2026-11-06）
 
 选项、文字、配置及配置名复用同次结果；14定向通过，27范围/71选项/202名称前后一致，窗口更新。183组待审不变。回执verification/maintenance/code-constraints-event-battle-selection-reuse-20261106/summary.json；下一批核对事件作战模型来源和其它路径。
