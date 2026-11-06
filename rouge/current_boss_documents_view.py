@@ -84,7 +84,7 @@ class CurrentBossDocumentsPanel(QWidget):
         if self.map_dialog is not None:
             mapped = model.map_reference(fresh, prepared_reference=fresh)
             if mapped is None: self._close_map(); self.status.setText('这关固定地图无法重新核对，旧地图已关闭；文献仍可阅读。')
-            elif not self.map_dialog.panel.refresh_reference(): self._close_map()
+            elif not self.map_dialog.panel.refresh_reference(prepared_reference=mapped['map']): self._close_map()
             elif self.map_dialog.panel.result != mapped['map']:
                 self._close_map(); self.status.setText('地图重新读取的资料与本关不一致，旧地图已清除；完整文献仍可阅读。')
         return True

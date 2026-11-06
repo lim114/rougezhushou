@@ -5302,3 +5302,7 @@ D283完成，分支、关联项、头像与正文复用本次实体，卡片复�
 ## 维护：地图刷新复用父页面已核验资料（2026-11-06）
 
 D280/D284部分完成，24定向通过；独立入口与地图身份检查保留，子窗口链未销项。回执：`verification/maintenance/code-constraints-map-parent-snapshot-20261106/summary.json`。
+
+## 维护：地图子窗口刷新复用已核验地图（2026-11-06）
+
+D280/D284仅刷新链部分完成；31定向通过，独立刷新及异源撤下保留，共享打开链未销项。回执：`verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json`。

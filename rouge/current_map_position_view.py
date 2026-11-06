@@ -119,8 +119,8 @@ class CurrentMapPositionPanel(QWidget):
             blocked=combo.blockSignals(True);combo.clear();combo.setEnabled(False);combo.blockSignals(blocked)
         self.grid.highlight_cells=set()
         self.result=None;self.selected=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.blockSignals(blocked);self.combo.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
-    def refresh_reference(self):
-        fresh=model.stage_reference(self.stage_id)
+    def refresh_reference(self, *, prepared_reference=...):
+        fresh=model.stage_reference(self.stage_id) if prepared_reference is ... else prepared_reference
         if fresh is None:self.clear_reference();return False
         raw=model.battle.version.image_bytes(fresh['image'])
         if raw is None:self.clear_reference();return False

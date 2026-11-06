@@ -122,4 +122,4 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 
 - D296剩余：reference/entity/view_result其余入口重复核对；resolve_related重复刷新已修。组合模型+Qt检查异常退出未确定原因，分进程22项通过；见`verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json`。
 
-- D280/D284剩余：地图子窗口刷新与共享入口重复读取；父页面同次文献复用已完成，见`verification/maintenance/code-constraints-map-parent-snapshot-20261106/summary.json`。
+- D280/D284剩余：地图共享打开入口重复读取；父页面与已打开子窗口刷新复用已完成，见`verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json`。

@@ -1,3 +1,7 @@
+## 当前断点：地图子窗口刷新复用已核验地图（2026-11-06）
+
+D280/D284部分推进，31项定向通过；独立刷新正常，父级异源结果对照保留。共享打开入口仍待整改。原280组完成128、剩152不变。回执 verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json。
+
 ## 当前断点：地图刷新复用父页面已核验资料（2026-11-06）
 
 D280/D284部分完成，24项定向通过；子窗口及共享入口重复读取仍待整改。原280组完成128、剩152不变。原待审和测试窗口缺口保留。回执 verification/maintenance/code-constraints-map-parent-snapshot-20261106/summary.json。

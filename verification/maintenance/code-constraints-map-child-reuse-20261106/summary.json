@@ -1,0 +1,57 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图子窗口刷新复用已核验地图",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "52dda7f47f9dd8c0f72467016c6feb7b37897869",
+  "changed_sources": [
+    "rouge/current_map_position_view.py",
+    "rouge/current_sun_boss_view.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_document_map_child_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position_view.py": "bb6453c65773850a1af5f7106d6f80b637afe685cd110ef06038d4b948cb935b",
+    "rouge/current_sun_boss_view.py": "baba841d5578d07f8e0a096c4c8679904a53871d1ba6d282bc12c472a0292dd0",
+    "rouge/current_boss_documents_view.py": "03fbb7b1aeba5f38c4cf17119f51013de80f6cba0ad9b01832f2753b98fd0675",
+    "tests/test_document_map_child_reuse.py": "99d5a18e95a7c0286bb783c0ee8440feab78b727c92b0cbffc3e8113ee355851"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 31,
+    "tests_passed": 31,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_map_child_reuse tests.test_current_map_position_view_319 tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-226",
+    "old_source_regression": "Two old parent view modules reproduce2 failed subcases in new2 tests; shared map reader unchanged during comparison.",
+    "live_window": "Isolated Qt only; original test window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 partial: child refresh accepts just-validated parent map, independent refresh still reads. No new function/catch or defensive guard.",
+    "requirements": "Parent full result comparison retained, foreign source failure tests pass. Map image loading and unavailable handling unchanged. Shared opening path remains pending."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D280",
+    "D284"
+  ]
+}

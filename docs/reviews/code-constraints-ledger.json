@@ -2381,7 +2381,7 @@
     },
     {
       "file": "rouge/current_map_position_view.py",
-      "sha256": "6e49c58fcf8f24a6349c0a45c57a507af5784e09750c5b73c47aa36e76ece307",
+      "sha256": "bb6453c65773850a1af5f7106d6f80b637afe685cd110ef06038d4b948cb935b",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
@@ -2397,7 +2397,16 @@
         ],
         "receipt": "verification/maintenance/code-constraints-map-selection-once-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json",
+          "rule1": "Child refresh reuses parent validated map; independent refresh reads.",
+          "rule2": "Existing refresh owns UI rendering.",
+          "rule3": "Approved D280/D284 partial; full parent result comparison retained.",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/current_action_positions.py",
@@ -2562,7 +2571,7 @@
     },
     {
       "file": "rouge/current_boss_documents_view.py",
-      "sha256": "472d5515ae1ead8c297fce3de2583b7d0aa9ba0beb76fae66323aa4989a4168c",
+      "sha256": "03fbb7b1aeba5f38c4cf17119f51013de80f6cba0ad9b01832f2753b98fd0675",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Elbert topic read once; repeated entity and map checks remain pending",
@@ -2586,6 +2595,13 @@
           "rule1": "Parent refresh reuses its validated reference for map projection.",
           "rule2": "No new helper.",
           "rule3": "Approved D280/D284 partial; all map identity checks retained.",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json",
+          "rule1": "Child refresh reuses parent validated map; independent refresh reads.",
+          "rule2": "Existing refresh owns UI rendering.",
+          "rule3": "Approved D280/D284 partial; full parent result comparison retained.",
           "full_module_review_complete": false
         }
       ]
@@ -2614,7 +2630,7 @@
     },
     {
       "file": "rouge/current_sun_boss_view.py",
-      "sha256": "1cc17fd8395476f8cf5cc0ff6e2fec14eca33d6e9ea8eb7691ca994fd25db140",
+      "sha256": "baba841d5578d07f8e0a096c4c8679904a53871d1ba6d282bc12c472a0292dd0",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Invariant group comparison once outside member loop; Hanko returns existing bool directly",
@@ -2638,6 +2654,13 @@
           "rule1": "Parent refresh reuses its validated reference for map projection.",
           "rule2": "No new helper.",
           "rule3": "Approved D280/D284 partial; all map identity checks retained.",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json",
+          "rule1": "Child refresh reuses parent validated map; independent refresh reads.",
+          "rule2": "Existing refresh owns UI rendering.",
+          "rule3": "Approved D280/D284 partial; full parent result comparison retained.",
           "full_module_review_complete": false
         }
       ]
