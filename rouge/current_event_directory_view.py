@@ -86,7 +86,12 @@ class CurrentEventDirectoryPanel(QWidget):
         replace_text(self.player, model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
 
     def refresh_reference(self, *_):
-        fresh = model.reference(query=self.query.text(), node_type=self.node_type.currentData(), topic=self.topic.currentData())
+        try:
+            fresh = model.reference(query=self.query.text(), node_type=self.node_type.currentData(), topic=self.topic.currentData())
+        except model.QueryTooLong as error:
+            self.clear_reference()
+            self.count.setText(str(error));replace_text(self.player,str(error),preserve=False)
+            return False
         if fresh is None: self.clear_reference(); return False
         keep = self.result is not None and model.same(self.result['source_identity'], fresh['source_identity'])
         selected = self.event_id if keep else None; entry = self.entry_key if keep else None

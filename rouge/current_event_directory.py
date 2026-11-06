@@ -186,8 +186,13 @@ def packet():
         return None
 
 
+class QueryTooLong(ValueError):
+    """The public query exceeds the explicitly supported length."""
+
+
 def reference(event_id=None, *, query='', node_type=None, topic=None):
-    if type(query) is not str or len(query) > 160: return None
+    if type(query) is not str: return None
+    if len(query) > 160: raise QueryTooLong('搜索文字不能超过160字，请缩短后重试。')
     if event_id is not None and type(event_id) is not str: return None
     if node_type is not None and type(node_type) is not str: return None
     if topic is not None and (type(topic) is not str or topic not in dict(TOPICS)): return None
@@ -210,7 +215,10 @@ def reference(event_id=None, *, query='', node_type=None, topic=None):
 
 def resolve(result, entry_key=None):
     if type(result) is not dict or result.get('selected') is None: return None
-    fresh = reference(result['selected']['id'], **result['filters'])
+    try:
+        fresh = reference(result['selected']['id'], **result['filters'])
+    except QueryTooLong:
+        return None
     if fresh is None or not same(fresh, result): return None
     row = fresh['selected']; entry = None
     if entry_key is not None:

@@ -66,7 +66,8 @@ class CurrentEventDirectoryTests(TestCase):
 
     def test_invalid_types_and_filtered_selection_rejected(self):
         self.assertIsNone(model.reference(query=None)); self.assertIsNone(model.reference(topic=True))
-        self.assertIsNone(model.reference(event_id=True)); self.assertIsNone(model.reference(query='a'*161))
+        self.assertIsNone(model.reference(event_id=True))
+        with self.assertRaises(model.QueryTooLong):model.reference(query='a'*161)
         self.assertIsNone(model.reference('flows321:button', node_type='不期而遇'))
         self.assertIsNone(model.resolve(model.reference()))
 

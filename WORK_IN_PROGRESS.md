@@ -1,3 +1,7 @@
+## 当前断点：事件查询长度提示（2026-11-06）
+
+D94完成；26定向通过，原280组余264组；模块覆盖保持68完整/200部分/40异常等价/250结构。回执verification/maintenance/code-constraints-event-query-review-20261106/summary.json。
+
 ## 当前断点：地图搜索模块完整回顾（2026-11-06）
 
 D79完成，6定向通过；68完整/200部分/40异常等价/250结构。原280组余265组，D318已另行完成，无新待审。回执verification/maintenance/code-constraints-node-finder-review-20261106/summary.json。
