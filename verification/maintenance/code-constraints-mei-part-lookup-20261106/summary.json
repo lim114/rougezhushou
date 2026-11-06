@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "梅模组来源部件核对与索引查找合并",
+  "base_commit": "f84c918ef59961d217e94841508d88ba4fa45655",
+  "changed_sources": [
+    "rouge/mei_module_reference.py"
+  ],
+  "source_sha256": {
+    "rouge/mei_module_reference.py": "3016ce110e03f93841f066131c8768b919e61c4048a12c5ae31ebaf0fbaf0983"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D139"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_mei_part_lookup_review tests.test_mei_airborne_module_reference tests.test_mei_reference_reuse_review",
+        "tests_run": 16,
+        "tests_passed": 16,
+        "seconds": 0.281
+      }
+    ],
+    "live_window": "Original test window update remains pending after prior automatic approval rejection; numeric unit checks do not certify live UI."
+  },
+  "review": {
+    "standards": "Same catalog_parts snapshot formerly scanned for membership then index. One first-equal index now supplies both source gate and selector. D139 approved identity protection retained; category4 permits duplicate work handling under category2. No catch, new validation or wrapper.",
+    "requirements": "Foreign/modified parts remain rejected; equal copied/duplicate part keeps first source index, original source unmodified. Three module stages, eligible/unknown conditions and reuse tests pass. No formula or qualification threshold change."
+  },
+  "partially_implemented": []
+}

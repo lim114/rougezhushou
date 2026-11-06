@@ -1,3 +1,7 @@
+## 当前断点：梅模组来源部件核对与索引查找合并（2026-11-06）
+
+D139完成：一次查找复用部件归属与索引，保留外来部件拒绝；16项定向通过。原280组完成173、剩107，测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-mei-part-lookup-20261106/summary.json`。
+
 ## 当前断点：单精度位转换仅捕获实际打包溢出（2026-11-06）
 
 D105部分推进，_bits仅捕获pack溢出，格式/解包缺陷显露；3项定向通过。_raw与term_value继续核对。原280组仍完成172、剩108；测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-panel-bits-20261106/summary.json`。

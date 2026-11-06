@@ -5470,3 +5470,7 @@ D53/D55按授权保留并复核，10项定向通过；未改产品源码，不�
 ## 维护：单精度位转换仅捕获实际打包溢出（2026-11-06）
 
 D105局部完成：格式及解包缺陷不再伪装未知数值，3项定向通过。未关闭整组，未新增功能节。回执 `verification/maintenance/code-constraints-panel-bits-20261106/summary.json`。
+
+## 维护：梅模组来源部件核对与索引查找合并（2026-11-06）
+
+D139完成：来源保护保留，同快照重复查找移除，16项定向通过。未新增功能节。回执 `verification/maintenance/code-constraints-mei-part-lookup-20261106/summary.json`。
