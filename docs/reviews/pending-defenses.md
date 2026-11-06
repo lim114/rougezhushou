@@ -294,3 +294,8 @@
 | D282 | CurrentHankoPanel和CurrentSunBossPanel刷新图标及选中头像的缺字节/PNG失败分支 | 无图保留条目，坏头像不沿用旧图 | 建议保留缺图与解码失败展示；替代显式报错。各两处，原样待审 |
 | D283 | 两视图refresh及follow_related/follow_form失效清空；topics/cards/related/entity/player_text多次解析当前实体 | 错源或过期请求不跳转，但同次重复实体核对 | 建议审批后共用已核验实体并保留跨刷新验证；替代独立查询分别校验。原样待审，普通重复未销项 |
 | D284 | CurrentSunBossPanel地图刷新/打开中的map_reference、子窗口刷新/结果比较及共享入口后的独立回退 | 错关卡/失效地图关闭，重复读取与同源对照 | 建议明确一次核验边界并复用；替代保留各层核对。原样待审，不借其它视图授权 |
+
+| D285 | current_hanko/current_sun_boss.packet各一处OSError/ValueError/TypeError/KeyError/AttributeError/RecursionError捕获 | 文件或结构异常统一资料不可用，也可能掩盖内部错误 | 建议后续收窄到文件/解析入口；保留还是拆分待审，本批不改 |
+| D286 | 两packet的清单摘要、文件集合、字节类型/长度/摘要、schema/版本及原始表/绑定逐项对照 | 固定资料与原件身份一致，嵌套battle.packet再次核对底层 | 建议保留资料完整性入口，审批后明确共享核验结果的边界；原样待审 |
+| D287 | 两reference与target_available的类型/成员检查，packet后stage_reference重读；实体绑定及选中key核对 | 错关卡/错实体不返回；target_available与reference重复类型判断 | 建议入口统一参数校验并复用同次资料读取，跨入口仍核对；本批仅替换列表查找，不改保护 |
+| D288 | 两模型entity/topics/cards/player_text/resolve相关的坏输入/无实体/无主题分支与刷新后的完整相等检查 | 失效实体和旧入口不显示；当前实体多次解析及深复制 | 与D283衔接：保留跨刷新失效检查，同次查询重复待审批后收拢。Sun map保护见D284，不重复授权 |

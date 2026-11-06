@@ -76,9 +76,12 @@ def reference(stage_id, enemy_key=None):
     if (stage is None or stage['source_identity'] != result['current']['identity']
             or not _same(stage['stage'], result['data']['originals']['stages'][stage_id])
             or not _same(stage['level'], result['data']['originals']['levels'][stage['level_key']])): return None
+    enemies = {}
+    for enemy in stage['enemies']:
+        enemies.setdefault(enemy['key'], enemy)
     rows = []
     for binding in result['data']['bindings'][stage_id]['rows']:
-        enemy = next((r for r in stage['enemies'] if r['key'] == binding['key']), None)
+        enemy = enemies.get(binding['key'])
         if (enemy is None or not _same(enemy['raw_binding'], binding['raw_binding'])
                 or enemy['id'] != binding['entity_id'] or type(enemy['level']) is not int
                 or enemy['level'] != binding['level']): return None
