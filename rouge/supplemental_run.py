@@ -7,7 +7,7 @@ from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
                                   supplemental_profiles,format_reference)
 from .relic_attributes import is_attribute_rune,apply_attribute_runes
-from .supplemental_cost import supported_cost,cost_reference
+from .supplemental_cost import COST_KINDS,supported_cost,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
 from .supplemental_healing import supported_healing,apply_healing_reference
 from .supplemental_damage import supported_damage,damage_reference,apply_damage_reference
@@ -82,7 +82,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
                  'warnings':[],'complete':True}
         finish_run(summary,run_resolution)
     resolved=scenario.get('effects',[])+scenario.get('_relic_rules',[])
-    runes=[];ordinary=[];costs=[];sp_rules=[];healing_rules=[];damage_rules=[];unsupported=[]
+    runes=[];ordinary=[];costs=[];sp_rules=[];healing_rules=[];damage_rules=[];unsupported=[];unresolved_costs=[]
     for effect in resolved:
         rune=is_attribute_rune(effect)
         source=ORDINARY_SOURCES.get(effect.get('relic_id'))
@@ -91,6 +91,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
             and effect['kind'] in source[3] and not rune and not effect.get('token_only'))
         cost_match=supported_cost(effect);sp_match=supported_sp(effect)
         healing_match=supported_healing(effect,raw['kind']);damage_match=supported_damage(effect)
+        if not cost_match and effect['kind'] in COST_KINDS:unresolved_costs.append(effect)
         for applies,bucket in ((rune and not effect.get('token_only'),runes),(ordinary_match,ordinary),
                                (cost_match,costs),(sp_match,sp_rules),(healing_match,healing_rules),
                                (damage_match,damage_rules)):
@@ -103,7 +104,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
     modified=apply_attribute_runes(stats,runes)
-    damage=damage_reference(scenario,resolved,relic_resolution['records'])
+    damage=damage_reference(scenario,damage_rules,relic_resolution['records'])
     effective_preview={**preview,'enemy_defense':damage['effective_target_defense']
         if damage['effective_target_defense'] is not None else scenario['enemy_defense'],
         'enemy_resistance':scenario['enemy_resistance']}
@@ -112,10 +113,10 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
     result['target_enemy']=deepcopy(run_resolution.get('enemy'))
     result['damage_reference']=damage
     apply_damage_reference(result,damage)
-    cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'],operator=identity)
+    cost=cost_reference(stats,result['talents'],costs,unresolved_costs,relic_resolution['records'],operator=identity)
     result['deployment_reference']=cost
-    result['sp_reference']=sp_reference(result['skill_parameter'],resolved,relic_resolution['records'])
-    result['healing_reference']=apply_healing_reference(result,resolved,relic_resolution['records'],raw['kind'])
+    result['sp_reference']=sp_reference(result['skill_parameter'],sp_rules,relic_resolution['records'])
+    result['healing_reference']=apply_healing_reference(result,healing_rules,relic_resolution['records'],raw['kind'])
     if preview['operator']=='char_123_fang':
         row=next(r for r in result['rows'] if r['name']=='单次回费')
         row['value']+=cost['skill_start_dp'];row['declared_total']=row['value']*preview['count']

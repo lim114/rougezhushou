@@ -1,3 +1,7 @@
+## 维护：效果入口一次分类（2026-11-05）
+
+四类计算链单次分类，删除单次自然回技包装；治疗和伤害两个模块完成三条回顾。最终60项不同定向、147报告/244来源组合一致，窗口更新。[回执](verification/maintenance/code-constraints-effect-boundary-20261105/README.md)。
+
 ## 维护：技力与治疗来源整理（2026-11-05）
 
 两轮记录合一、效果类型一次投影；32项定向及147情景/128组合/42通用报告旧新一致，测试窗口更新。[回执](verification/maintenance/code-constraints-recovery-records-20261105/README.md)。仍属局部整改，D124待审未改。

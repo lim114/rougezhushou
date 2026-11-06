@@ -11,21 +11,17 @@ NATURAL_SP_SOURCES={
 }
 
 
-def supported_natural_sp(rule):
+def supported_sp(rule):
+    if not rule.get('_verified_rule') or rule.get('token_only'):return False
+    if rule['kind'] in SP_KINDS:return True
     source=NATURAL_SP_SOURCES.get(rule.get('relic_id'))
-    return bool(source and rule.get('_verified_rule') and not rule.get('token_only')
-        and rule.get('kind')=='sp_recovery' and
+    return bool(source and rule.get('kind')=='sp_recovery' and
         (rule.get('source_buff_key'),rule.get('source_buff_index'),
          rule.get('group'),rule.get('value'))==source)
 
 
-def supported_sp(rule):
-    return bool(rule.get('_verified_rule') and not rule.get('token_only') and
-        (rule['kind'] in SP_KINDS or supported_natural_sp(rule)))
-
-
-def sp_reference(skill,rules,records):
-    selected=[r for r in rules if supported_sp(r)]
+def sp_reference(skill,selected,records):
+    """Calculate from effects already accepted by supported_sp."""
     scenario={'_relic_rules':selected}
     adjusted=effective_skill({'sp_cost':skill['spData']['spCost'],'initial_sp':skill['spData']['initSp']},scenario)
     cost_pending=[];initial_pending=[];end_pending=[];recovery_pending=[]
@@ -43,7 +39,7 @@ def sp_reference(skill,rules,records):
     cost=None if cost_pending else adjusted['sp_cost']
     initial=None if initial_pending else adjusted['initial_sp']
     end=None if end_pending else sum(r['value'] for r in selected if r['kind']=='end_sp')
-    natural=[r for r in selected if supported_natural_sp(r)]
+    natural=[r for r in selected if r['kind']=='sp_recovery']
     natural_applicable=skill['spData']['spType']=='INCREASE_WITH_TIME'
     bonus=sum(r['value'] for r in natural) if natural_applicable else 0
     rate=(None if recovery_pending else skill['spData']['increment']+bonus) if natural_applicable else None

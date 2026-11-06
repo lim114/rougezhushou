@@ -11,8 +11,8 @@ def supported_healing(rule,kind):
         (rule['kind'] in REGEN_KINDS or rule['kind']=='healing_factor' and kind in HEAL_KINDS))
 
 
-def apply_healing_reference(result,rules,records,kind):
-    selected=[r for r in rules if supported_healing(r,kind)]
+def apply_healing_reference(result,selected,records,kind):
+    """Apply effects qualified for this operator's healing kind."""
     healing=[r for r in selected if r['kind']=='healing_factor']
     regeneration=[r for r in selected if r['kind']=='regeneration_factor']
     pending_healing=[];pending_regen=[]

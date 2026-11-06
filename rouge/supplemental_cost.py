@@ -23,11 +23,8 @@ def supported_cost(rule):
             and rule.get('source_buff_key')=='global_buff_normal' and rule.get('source_buff_index')==0)
 
 
-def cost_reference(stats,talents,rules,records,*,operator=None):
-    selected=[];unresolved=[]
-    for rule in rules:
-        if supported_cost(rule):selected.append(rule)
-        elif rule['kind'] in COST_KINDS:unresolved.append(rule)
+def cost_reference(stats,talents,selected,unresolved,records,*,operator=None):
+    """Calculate from the caller's qualified cost and unresolved effect buckets."""
     cost_inputs={
         'rune_additions':[r['value'] for r in selected if r['kind']=='deployment_cost_add' and _rune_cost_add(r)],
         'rune_multipliers':[r['value'] for r in selected if r['kind']=='deployment_cost_pct'],

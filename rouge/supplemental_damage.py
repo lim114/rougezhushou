@@ -10,21 +10,22 @@ def supported_damage(rule):
             and rule.get('damage_type') in ('physical','magic','true')))
 
 
-def damage_reference(scenario,rules,records):
-    selected=[r for r in rules if supported_damage(r)]
+def damage_reference(scenario,selected,records):
+    """Calculate target modifiers from already qualified damage effects."""
     penetration=sum(r['value'] for r in selected if r['kind']=='defense_penetration')
     pending_defense=[];warnings=[]
     for record in records:
-        entry=mechanics()['relics'].get(record['id']) or mechanics()['char_buffs'].get(record['id'])
+        data=mechanics()
+        entry=data['relics'].get(record['id']) or data['char_buffs'].get(record['id'])
         if entry and (record['pending'] or record['missing_conditions']) and any(e['kind']=='enemy_def_delta' for e in entry['effects']):
             pending_defense.append(record['name'])
     factors={}
     from .relic_damage_factors import source_factor,EVIDENCE
+    from .enemy_environment import damage_factor
     compositions={}
     for dtype in ('physical','magic','true'):
         type_rules=[r for r in selected if r['kind']=='damage_taken' and r['damage_type']==dtype]
         ordinary=source_factor(type_rules,dtype)
-        from .enemy_environment import damage_factor
         factors[dtype]=None if ordinary is None else ordinary*damage_factor(scenario,dtype)
         if ordinary is None:warnings.append('同类型来源不在已核验预处理合并白名单；'+dtype+'伤害组合未知。')
         if len({r['relic_id'] for r in type_rules})>1 and ordinary is not None:
@@ -38,8 +39,9 @@ def damage_reference(scenario,rules,records):
 
 
 def apply_damage_reference(result,reference):
+    damage_types={'物理伤害':'physical','期望伤害':'physical','法术伤害':'magic'}
     for row in result['rows']:
-        dtype={'物理伤害':'physical','期望伤害':'physical','法术伤害':'magic'}.get(row['unit'])
+        dtype=damage_types.get(row['unit'])
         if dtype is None:continue
         factor=reference['damage_factors'][dtype]
         row['value']=(None if factor is None or dtype=='physical' and reference['pending_defense'] else
