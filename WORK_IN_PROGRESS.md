@@ -1,3 +1,7 @@
+## 当前断点：持有条件对照复用同次核验的原始数据（2026-11-06）
+
+D307部分完成，18定向通过、11输出等价；缺字段策略已另问用户，原行为保留。原280组完成131、剩149不变。原测试窗口更新及D319/D320待确认不变。回执 verification/maintenance/code-constraints-held-source-snapshot-20261106/summary.json。
+
 ## 当前断点：科技资料同次显示复用节点与账户状态（2026-11-06）
 
 D300完成，25定向通过、342输出等价；隔离科技列表筛选通过。初轮UI计数混入分队独立查询已修正测试范围。原280组完成131、剩149。原测试窗口更新及D319/D320待确认不变。回执 verification/maintenance/code-constraints-technology-snapshot-20261106/summary.json。

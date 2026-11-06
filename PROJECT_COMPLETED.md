@@ -5326,3 +5326,7 @@ D280/D284销项：共享入口、父子刷新及独立首开同次复用；独�
 ## 维护：科技资料同次显示复用节点与账户状态（2026-11-06）
 
 D300：列表复用已读节点；正文状态只读一次，描述复用同一记录。25项定向检查、342份正文等价及隔离列表筛选通过。完整程序整改仍在进行；原窗口尚未更新。回执：`verification/maintenance/code-constraints-technology-snapshot-20261106/summary.json`。
+
+## 维护：持有条件对照复用同次核验的原始数据（2026-11-06）
+
+仅D307同次读取复用部分完成，18定向通过、11输出等价。缺字段规则待用户确认，整组不销项。回执：`verification/maintenance/code-constraints-held-source-snapshot-20261106/summary.json`。

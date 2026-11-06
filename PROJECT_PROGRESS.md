@@ -123,3 +123,5 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 - D296剩余：reference/entity/view_result其余入口重复核对；resolve_related重复刷新已修。组合模型+Qt检查异常退出未确定原因，分进程22项通过；见`verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json`。
 
 - 既有ReferenceWindow尺寸检查850/776受隔离屏幕约束，旧源码同样失败；保留验收缺口。
+
+- D307剩余：持有条件对照缺少必需字段时是否拒绝匹配，已发起补充确认。同次原件重复读取已修正。
