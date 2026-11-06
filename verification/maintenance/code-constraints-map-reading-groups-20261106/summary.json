@@ -1,0 +1,54 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "title": "地图阅读分组复用内部文字标签契约",
+  "base_commit": "b01504b2a85aa8a4b45fcfcc6eb36977b214b0ea",
+  "changed_sources": [
+    "rouge/player_map.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map.py": "fe9af1bdea3af26afd0f23cd7336d1504788fe20b0355aabe9a60b24f657e9b5"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_map_reading_groups_review tests.test_map_reader_panel_review tests.test_map_manual_catalog_review",
+        "tests_run": 10,
+        "tests_passed": 10,
+        "seconds": 0.07
+      }
+    ],
+    "live_window": "Original test window update remains pending after prior automatic approval rejection; offscreen checks do not certify live UI."
+  },
+  "review": {
+    "standards": "selected constructs all six root labels from fixed strings and writes role257 itself; same-tree restoration/remembering now reuse that contract without str conversion or isinstance filter. Scope identity check retained pending full input contract audit. No new catch or wrapper.",
+    "requirements": "All six generated groups save expanded/collapsed states; hidden prior groups, search and selected reference preserved. None/incomplete identity still does not write. D84 partial only; D82/D83 not closed because source JSON lacks a unified validated boundary."
+  },
+  "partially_implemented": [
+    "D84"
+  ]
+}

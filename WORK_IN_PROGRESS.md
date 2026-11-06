@@ -1,3 +1,7 @@
+## 当前断点：地图阅读分组复用内部文字标签契约（2026-11-06）
+
+D84部分推进：分组标签重复检查与字符串转换移除，阅读身份入口继续核对；10项定向通过。D82/D83下游JSON未统一校验，暂未删除整层捕获。原280组仍完成167、剩113，测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-map-reading-groups-20261106/summary.json`。
+
 ## 当前断点：地图资料窗口按工厂契约直接读取必需面板（2026-11-06）
 
 D85完成；核对两类工厂和20个事件窗口构造，12项定向检查通过。原280组完成167、剩113。原测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-reader-panel-20261106/summary.json`。

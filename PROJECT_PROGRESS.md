@@ -16,6 +16,8 @@ D38—D317的280组均已作出决定；D317、D298、D312、D313、D69、D72、
 
 ## 存量代码整改剩余
 
+- D84：分组标签冗余已移除，阅读身份校验调用契约仍需核对；D82/D83需先明确资料加载边界。
+
 - 按用户主动目标持续推进，普通冗余直接处理；已批准待实施的280组见docs/decisions/2026-11-06-defense-review-approval.md；新增未决见docs/reviews/pending-defenses.md，逐规则状态见docs/reviews/code-constraints-ledger.json。尚未达到仅剩待审防御的结束条件。
 - timing/operator_engine其余计算链入口、统计查询边界与缺失类别补零口径、player_source_map可选宿主边界仍需继续核对。
 

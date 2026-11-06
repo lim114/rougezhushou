@@ -366,7 +366,7 @@ class MapPanel(QWidget):
         if chosen:self.entries.setCurrentItem(chosen)
         expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
         for i in range(self.entries.topLevelItemCount()):
-            root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not str(label).startswith('已列条件排除')))
+            root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not label.startswith('已列条件排除')))
         self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen or keep is None else 0)
         self.entry_count.setText(f'节点资料 {shown} / {total}')
         # Only synchronize the owning current map; historical-floor reading never rebinds it.
@@ -377,7 +377,7 @@ class MapPanel(QWidget):
         expanded={}
         for i in range(self.entries.topLevelItemCount()):
             root=self.entries.topLevelItem(i);label=root.data(0,257)
-            if isinstance(label,str):expanded[label]=root.isExpanded()
+            expanded[label]=root.isExpanded()
         previous=self.entry_readings.get(self.reading_key,{})
         self.entry_readings[self.reading_key]={'query':self.entry_search.text(),'selected':self.selected_reference,
             'expanded':{**previous.get('expanded',{}),**expanded},'scroll':self.detail.verticalScrollBar().value()}

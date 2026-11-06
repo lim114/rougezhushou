@@ -5438,3 +5438,7 @@ D86：精确资料缺失时提供明确手动目录按钮，取消不打开主�
 ## 维护：地图资料窗口按工厂契约直接读取必需面板（2026-11-06）
 
 D85完成：必需panel直接读取，保留真实可选的事件绑定与刷新接口；12项定向通过，窗口原生更新仍待完成。不增加功能节。回执 `verification/maintenance/code-constraints-reader-panel-20261106/summary.json`。
+
+## 维护：地图阅读分组复用内部文字标签契约（2026-11-06）
+
+删除内部固定分组标签的重复类型检查和字符串转换；10项定向通过。仅D84局部完成，不关闭整组。回执 `verification/maintenance/code-constraints-map-reading-groups-20261106/summary.json`。
