@@ -1108,12 +1108,17 @@
     },
     {
       "file": "rouge/calibration.py",
-      "sha256": "2cfaed346ed653a5c853f007c3a5e816d89a172efc4e387108dd624e146d4415",
+      "sha256": "f1c03ec2fba362a3d62d0bf324e32027de5c4ff71057064554f994efdf8714ba",
       "rule1": "shared_calculation_no_second_normalization_or_execution_summary_once",
       "rule2": "shared_substantive_calculation_two_consumers_existing_domain_helpers_retained",
       "rule3": "no_protection_changed_this_path_other_paths_partial",
       "full_module_review_complete": false,
-      "evidence": "Panel construction and its existing damage calculation now have a shared internal owner _panel_calculation, called by panel_layers and timing_reference. Public panel projection keeps its signature and schema; no private calculation data added to public reports. Input normalization, cultivation, preparation and calculation retain order. Other calibration paths remain partial."
+      "evidence": "Panel construction and its existing damage calculation now have a shared internal owner _panel_calculation, called by panel_layers and timing_reference. Public panel projection keeps its signature and schema; no private calculation data added to public reports. Input normalization, cultivation, preparation and calculation retain order. Other calibration paths remain partial.",
+      "relic_diagnostic_entry_review": {
+        "decision": "D117",
+        "evidence": "verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json",
+        "result": "52 targeted tests pass; no whole-module certification."
+      }
     },
     {
       "file": "rouge/damage.py",
@@ -1258,13 +1263,18 @@
     },
     {
       "file": "rouge/relic_panel_diagnostics.py",
-      "sha256": "5b611e9cec708d6d747972fe54c91a66ffa0c9ac14347645f30733848c3e076a",
+      "sha256": "baadd32e631d55bc058bc7fb15966adedb8cafb956abef61c1644c656e494ad1",
       "rule1": "same_ordered_combination_once_per_query_sum_and_unknown_scan_once",
       "rule2": "model_helper_reused_for_multiple_counterfactual_groups",
       "rule3": "D117_pending_unchanged_no_new_defense",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Whole relic_panel_diagnostics reviewed. One query caches panel predictions by exact ordered relic tuple; no cross-query cache, no mutation of cached models. 1/2 audited sources4->2/6->4 predictions;3 still8 distinct. Sum and unknown scan once per field. Model helper reused for full/background/without/alone; no one-use extraction. Unknown source title/warnings, None arithmetic, declared subset uniqueness and targeted-buff retention are ordinary contracts covered by existing tests. Nested _scenario structural/internal-key checks D117 unchanged pending approval; initial first-three operator policy must remain. No new defensive code."
+      "evidence": "Whole relic_panel_diagnostics reviewed. One query caches panel predictions by exact ordered relic tuple; no cross-query cache, no mutation of cached models. 1/2 audited sources4->2/6->4 predictions;3 still8 distinct. Sum and unknown scan once per field. Model helper reused for full/background/without/alone; no one-use extraction. Unknown source title/warnings, None arithmetic, declared subset uniqueness and targeted-buff retention are ordinary contracts covered by existing tests. Nested _scenario structural/internal-key checks D117 unchanged pending approval; initial first-three operator policy must remain. No new defensive code.",
+      "relic_diagnostic_entry_review": {
+        "decision": "D117",
+        "evidence": "verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json",
+        "result": "52 targeted tests pass; no whole-module certification."
+      }
     },
     {
       "file": "rouge/cultivation_comparison.py",

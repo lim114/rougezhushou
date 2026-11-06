@@ -59,7 +59,11 @@ def panel_layers(scenario):
 
 def _panel_calculation(scenario):
     """Build the panel and retain its calculation for timing consumers."""
-    s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
+    return _normalized_panel_calculation(_scenario(scenario,all_operators=True))
+
+
+def _normalized_panel_calculation(s):
+    cult=_cultivated(s)
     prepared=_prepare_damage(deepcopy(s),cultivated_attributes=cult);resolved,rune,_,_=prepared
     result=_calculate_prepared(s,deepcopy(prepared));base=result['estimate']['base_stats']
     skill=result['estimate']['skill']

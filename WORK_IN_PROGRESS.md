@@ -1,3 +1,7 @@
+## 当前断点：藏品诊断入口复用（2026-11-06）
+
+D117完成，52项定向通过；原280组剩244组。其他模块继续核对；原生来源摘要缺口及新版窗口仍待补。回执verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json。
+
 ## 当前断点：组合校准入口复用（2026-11-06）
 
 D115/D116完成，73+3项定向通过；原280组剩245组。原生来源摘要缺口及新版窗口仍待补。回执verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json。

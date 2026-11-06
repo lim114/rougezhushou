@@ -1,0 +1,44 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "藏品诊断复用已规范化场景",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "fbbc557a17f8584c01170c4459bb221c2e514da2",
+  "changed_sources": [
+    "rouge/calibration.py",
+    "rouge/relic_panel_diagnostics.py"
+  ],
+  "source_sha256": {
+    "rouge/calibration.py": "f1c03ec2fba362a3d62d0bf324e32027de5c4ff71057064554f994efdf8714ba",
+    "rouge/relic_panel_diagnostics.py": "baadd32e631d55bc058bc7fb15966adedb8cafb956abef61c1644c656e494ad1"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D117"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 52,
+    "command": "python -m unittest tests.test_relic_diagnostic_entry_review tests.test_relic_panel_diagnostics tests.test_calibration tests.test_paired_calibration",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-171",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Diagnostic normalizes once; shared internal panel builder has public calculation and diagnostic callers. Distinct relic subsets still prepare independently. No new guard/catch.",
+    "requirements": "D117: first-three restriction retained; public panel validation retained; same-subset cache and caller isolation preserved. 52 tests pass."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

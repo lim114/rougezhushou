@@ -3,7 +3,7 @@ from copy import deepcopy
 
 
 def relic_panel_diagnostics(scenario, relic_ids=None):
-    from .calibration import _scenario, panel_layers, LABELS, BOUNDARY
+    from .calibration import _scenario, _normalized_panel_calculation, LABELS, BOUNDARY
     from .relics import mechanics
     s = _scenario(scenario)
     selected = s.get('relic_ids', [])
@@ -24,7 +24,7 @@ def relic_panel_diagnostics(scenario, relic_ids=None):
             variant = deepcopy(s)
             variant['relic_ids'] = list(ids)
             # Acquired targeted buffs remain a separate declared source.
-            predictions[key] = panel_layers(variant)
+            predictions[key], _ = _normalized_panel_calculation(variant)
         return predictions[key]
 
     full = model(selected)

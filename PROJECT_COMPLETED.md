@@ -5112,3 +5112,5 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 - 2026-11-06 D114：区间计算移除浮点端点回退，56项通过；回执 verification/maintenance/code-constraints-exact-interval-review-20261106/summary.json。
 
 - 2026-11-06 D115/D116：组合校准复用已校验容差与记录结构，73+3项通过；回执 verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json。
+
+- 2026-11-06 D117：藏品诊断复用规范化场景，52项通过；回执 verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json。
