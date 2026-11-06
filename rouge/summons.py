@@ -158,8 +158,12 @@ def token_concurrent_limit(profile,scenario,token_id):
     return reference['concurrent_limit'] if reference else base
 
 
-def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
-    """Calculate token cultivation from runes already selected by the caller."""
+def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module_references=None):
+    """Use selected runes and, when supplied, the caller's resolved module pair.
+
+    A pair of (None, None) means both references were checked and do not apply.
+    Standalone callers resolve the pair here; no module result is cached.
+    """
     phases=profile['tokens'][token_id]['phases'];elite=scenario.get('elite',2)
     phase=phases[min(elite,len(phases)-1)]
     level=min(scenario.get('level') or profile['phases'][elite]['max_level'],phase['max_level'])
@@ -173,7 +177,10 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
     rune_hp=stats['hp']!=base_hp
     ordinary_base_hp=stats['hp']
     stats['hp']*=1+hp_pct
-    reference=module_reference(profile,scenario,token_id)
+    if module_references is None:
+        module_references=(module_reference(profile,scenario,token_id),
+                           token_cost_reference(profile,scenario,token_id))
+    reference,cost_reference=module_references
     if reference:
         stats['deployment_cost']=max(0,stats['deployment_cost']+reference['cost_add'])
         reference={**reference,'module_only_hp':base_hp*(1+reference['hp_pct']),
@@ -189,7 +196,6 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
                 stats['hp']=None;reference['hp_composition_pending']=True
             else:stats['hp']=reference['module_only_hp']
         stats['module_reference']=reference
-    cost_reference=token_cost_reference(profile,scenario,token_id)
     if cost_reference:
         base_cost=stats['deployment_cost']
         stats['deployment_cost']=max(0,base_cost+cost_reference['cost_add'])

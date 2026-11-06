@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 from .catalog import catalog,operator_attributes
-from .summons import (module_rules,token_attributes,token_concurrent_limit,
+from .summons import (module_rules,module_reference,token_attributes,token_concurrent_limit,
                       token_cost_reference)
 from .token_counts import token_count_reference
 
@@ -32,9 +32,11 @@ def compare_token_module(operator,cultivation,module_id=None):
             'source':None,'count_reference':deepcopy(base_counts)}]
         for level in range(1,len(module['levels'])+1) if module else ():
             scenario={**base_scenario,'module_id':module_id,'module_level':level}
-            stats=token_attributes(profile,scenario,identity)
-            reference=stats.get('module_reference')
+            reference=module_reference(profile,scenario,identity)
             cost_reference=token_cost_reference(profile,scenario,identity)
+            stats=token_attributes(profile,scenario,identity,
+                                   module_references=(reference,cost_reference))
+            reference=stats.get('module_reference')
             unlocked=training['elite']>=module['unlock_elite'] and training['level']>=module['unlock_level']
             counts=token_count_reference(profile,scenario,identity) if unlocked else None
             # Known effects are a partial projection. Do not treat a missing

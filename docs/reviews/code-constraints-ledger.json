@@ -1123,23 +1123,33 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "ff4a03ede9e0b3c6f2f94f6cf6022472d2d58673d6a5fa75ce86c96e60169337",
-      "rule1": "consume_classified_runes_once_and_sum_ordinary_token_effects_once",
-      "rule2": "obsolete_filter_wrapper_removed_no_new_helper",
-      "rule3": "existing_defenses_unchanged_D128_D129_registered",
+      "sha256": "df9fbadcce5664c6e3fa5976b41a1cf9362262f0a0265d489832cb2fa24d09b5",
+      "rule1": "caller_resolved_module_pair_consumed_without_rechecking",
+      "rule2": "existing_token_attributes_shared_no_helper_added",
+      "rule3": "pending_defenses_and_unknown_composition_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Supplemental and token callers already classify rune inputs; reuse existing _apply_selected_runes. Token finish splits applied rules once and sums each ordinary kind once using original order and sum semantics. Raw filtering wrapper had no remaining product callers and was removed; two tests and six historical validation-script call sites adapted, no historical full suite run. Prior relic_attributes whole-module pass retained after examining remaining four functions; other modules only changed-path review. D128 equal-level interpolation and D129 unqualified regeneration factor fallback unchanged. Full preflight and other ordinary work remain."
+      "evidence": "relics.finish and module-upgrade comparison supply their resolved HP/cost module pair to token_attributes. None means ordinary standalone resolution; (None,None) is a resolved non-applicable pair and is not looked up again. This is an explicit two-caller calculation path, not an error fallback. Module dicts not mutated. No-effect/no-module panel omission unchanged. Standalone cost lookup moves before HP application, fixed-source valid outputs verified. Remaining ordinary work: duration reference recomputation, repeated base counts in module comparison, cultivation field parsing and discarded preflight report. D128/D129 and other protections untouched."
     },
     {
       "file": "rouge/relics.py",
-      "sha256": "d0e1b1ac29b4b2e592a3e11d88796eab7c448cdf63757d027fe92bef382ab070",
-      "rule1": "consume_classified_runes_once_and_sum_ordinary_token_effects_once",
-      "rule2": "obsolete_filter_wrapper_removed_no_new_helper",
-      "rule3": "existing_defenses_unchanged_D128_D129_registered",
+      "sha256": "1a209c01c04fcd81bd00ce7a117c18797b771a994c724613a3e6e5d4751e1896",
+      "rule1": "caller_resolved_module_pair_consumed_without_rechecking",
+      "rule2": "existing_token_attributes_shared_no_helper_added",
+      "rule3": "pending_defenses_and_unknown_composition_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Supplemental and token callers already classify rune inputs; reuse existing _apply_selected_runes. Token finish splits applied rules once and sums each ordinary kind once using original order and sum semantics. Raw filtering wrapper had no remaining product callers and was removed; two tests and six historical validation-script call sites adapted, no historical full suite run. Prior relic_attributes whole-module pass retained after examining remaining four functions; other modules only changed-path review. D128 equal-level interpolation and D129 unqualified regeneration factor fallback unchanged. Full preflight and other ordinary work remain."
+      "evidence": "relics.finish and module-upgrade comparison supply their resolved HP/cost module pair to token_attributes. None means ordinary standalone resolution; (None,None) is a resolved non-applicable pair and is not looked up again. This is an explicit two-caller calculation path, not an error fallback. Module dicts not mutated. No-effect/no-module panel omission unchanged. Standalone cost lookup moves before HP application, fixed-source valid outputs verified. Remaining ordinary work: duration reference recomputation, repeated base counts in module comparison, cultivation field parsing and discarded preflight report. D128/D129 and other protections untouched."
+    },
+    {
+      "file": "rouge/token_module_comparison.py",
+      "sha256": "2fb981f9d257db18ce7591414bc062436432a0ee0c24fb85089c1cf63453993c",
+      "rule1": "caller_resolved_module_pair_consumed_without_rechecking",
+      "rule2": "existing_token_attributes_shared_no_helper_added",
+      "rule3": "pending_defenses_and_unknown_composition_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "relics.finish and module-upgrade comparison supply their resolved HP/cost module pair to token_attributes. None means ordinary standalone resolution; (None,None) is a resolved non-applicable pair and is not looked up again. This is an explicit two-caller calculation path, not an error fallback. Module dicts not mutated. No-effect/no-module panel omission unchanged. Standalone cost lookup moves before HP application, fixed-source valid outputs verified. Remaining ordinary work: duration reference recomputation, repeated base counts in module comparison, cultivation field parsing and discarded preflight report. D128/D129 and other protections untouched."
     }
   ]
 }

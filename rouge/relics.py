@@ -481,7 +481,8 @@ def finish(result,resolution,attributes,scenario):
             if effect['kind'] in ordinary and not is_attribute_rune(effect):
                 ordinary[effect['kind']].append(effect['value'])
         totals={kind:sum(values) for kind,values in ordinary.items()}
-        stats=token_attributes(profile,scenario,tid,totals['hp_pct'],rune_effects=runes)
+        stats=token_attributes(profile,scenario,tid,totals['hp_pct'],rune_effects=runes,
+                               module_references=(module,cost_module))
         for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+totals[kind]
         stats['attack_speed']=effective_attack_speed(stats['attack_speed']+totals['attack_speed'])
         stats['resistance']=min(100,stats['resistance']+sum(e['value'] for e in manual_effects if e['kind']=='resistance_flat'))

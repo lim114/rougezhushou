@@ -1,3 +1,7 @@
+## 维护：召唤物模组引用复用（2026-11-05）
+
+面板与升级对照使用已解析模组结果，减少重复规则查询；55项定向、96计算/48模组对照一致，窗口更新。[回执](verification/maintenance/code-constraints-token-module-reuse-20261105/README.md)。
+
 ## 维护：Combat召唤物效果单次分类（2026-11-05）
 
 两重叠方法合并供两个真实调用者复用，分类3→1；37项定向、96报告/文字旧新一致，窗口更新。[回执](verification/maintenance/code-constraints-combat-token-partition-20261105/README.md)。

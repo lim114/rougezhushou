@@ -1,3 +1,7 @@
+## 当前断点：召唤物模组引用复用（2026-11-05）
+
+relics.finish和token_module_comparison传入已解析模组对，面板每引用2→1，望四阶段费用7→4；55项定向、96完整计算/48模组对照一致。窗口正常重启，覆盖337/75/110/36，D38—D129仍92组。回执verification/maintenance/code-constraints-token-module-reuse-20261105/summary.json。下一批继续summons.duration_reference在token_attributes与finish_duration_references重复生成、token_module_comparison的base_counts又经token_concurrent_limit重算；保留参考副本隔离、无面板和未知规则分支，再继续培养字段/完整前置报告验证职责。scripts/verify_calculation_replay_056的token_attributes替换仅用于它加载的旧源码，不要按当前签名误改历史oracle。D128/129不动，其余模块继续，不增节数。
+
 ## 当前断点：Combat召唤物效果单次分类（2026-11-05）
 
 合并token_stats/effects_for_token为token_reference，深海色/维什戴尔每次plan分类3→1，两调用处复用面板和普通效果。37项定向、96完整报告和文字一致，所有raise/except AST不变。窗口正常重启，覆盖338/75/109/36，D38—D129仍92组。回执verification/maintenance/code-constraints-combat-token-partition-20261105/summary.json。下一批继续summons模组/培养参数重复解析：relics.finish先解析module_reference/token_cost_reference，token_attributes又解析同一项，需保留无效果且无模组时不生成面板的入口行为；再推进完整前置报告验证职责及其它模块。D123基准投影等保护保持待审，不增节数。
