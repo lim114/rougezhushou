@@ -1,3 +1,7 @@
+## 维护：召唤物培养条件重复读取（2026-11-06）
+
+基础/模组候选与解锁复用入口条件；普通重复读取完成，D315未完成。[回执](verification/maintenance/code-constraints-drone-context-review-20261106/README.md)。
+
 ## 维护：干员摘要无用参数清理（2026-11-06）
 
 operator_summary规则回顾完成，app调用移除无用培养读取；其余资料模块未整体销项。[回执](verification/maintenance/code-constraints-operator-summary-review-20261106/README.md)。

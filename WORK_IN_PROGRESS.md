@@ -1,3 +1,7 @@
+## 当前断点：召唤物候选资格复用入口培养条件（2026-11-06）
+
+入口复用培养三值；18定向、288组对照通过，保护判断原样。上批drone_traits普通冗余销项，仅D315待审；全程序继续。回执verification/maintenance/code-constraints-drone-context-review-20261106/summary.json。
+
 ## 当前断点：干员摘要删除无用培养参数并回顾三处资料契约（2026-11-06）
 
 删除摘要无用参数/调用方无用计算，复用字段；7项定向、16组输出/16处签名通过。operator_summary销项，D315—317待审；drone_traits培养读取仍需普通整改。回执verification/maintenance/code-constraints-operator-summary-review-20261106/summary.json。
