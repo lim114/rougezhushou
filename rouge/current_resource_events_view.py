@@ -1,6 +1,6 @@
 """Resource-event flow with gold controls only on fixed-gold events."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QSpinBox
+from PySide6.QtWidgets import QVBoxLayout,QHBoxLayout,QLabel,QSpinBox
 from .documented_event_flow_view import DocumentedEventFlowPanel
 from . import current_resource_events as model
 
@@ -8,7 +8,7 @@ class CurrentResourceEventsPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
         super().__init__(event_id,scene_id,parent,reference_model=model, defer_initial_refresh=True)
         if event_id in model.GOLD_EVENTS:
-            row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：源石锭'));self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('仅本页源石锭支付对照');row.addWidget(self.gold);self.add_condition_row(row);self.gold.valueChanged.connect(self._gold_changed)
+            row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：源石锭'));self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('仅本页源石锭支付对照');row.addWidget(self.gold);self.add_condition_row(row);self.gold.valueChanged.connect(self.refresh_reference)
         self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
@@ -16,7 +16,6 @@ class CurrentResourceEventsPanel(DocumentedEventFlowPanel):
     def _fresh_reference(self):
         gold=self.gold.value() if self.event_id in model.GOLD_EVENTS else -1
         return model.reference(self.event_id, None if gold<0 else gold)
-    def _gold_changed(self,*_):self.refresh_reference()
 
 from .player_window_frame import PlayerDialog
 

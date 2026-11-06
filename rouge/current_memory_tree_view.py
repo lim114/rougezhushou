@@ -1,6 +1,6 @@
 """Read-only, event-specific resource declarations for the memory tree."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QSpinBox,QComboBox
+from PySide6.QtWidgets import QVBoxLayout,QHBoxLayout,QLabel,QSpinBox,QComboBox
 from .documented_event_flow_view import DocumentedEventFlowPanel
 from . import current_memory_tree as model
 

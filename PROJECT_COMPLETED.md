@@ -1,3 +1,7 @@
+## 维护：四个小型事件面板核对（2026-11-06）
+
+愈创、独活、休整旅行、资源事件整模块核对；新增2，总43。资源刷新包装删除，7定向通过。[回执](verification/maintenance/code-constraints-four-event-panel-closure-20261106/README.md)。
+
 ## 维护：湖中仙女与遭遇事件分支及作战入口复用（2026-11-06）
 
 4模块相关路径去重，遭遇7初轮通过、湖7复测通过及两类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-lake-encounters-choice-20261106/README.md)。
