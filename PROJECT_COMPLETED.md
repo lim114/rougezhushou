@@ -5370,3 +5370,7 @@ D129完成；未知回复倍率保留有证分项，完整本体/召唤物回复
 ## 维护：回放提交双向账户保护传递复核（2026-11-06）
 
 D299保留保护标记合并；回放发现损坏、准备后原账户进入保护两场景都保留原文件。9定向通过，测试仅用临时文件。回执：`verification/maintenance/code-constraints-timeline-account-protection-20261106/summary.json`。
+
+## 维护：文献正文与技术详情复用本次选中实体（2026-11-06）
+
+D281完成；正文与技术详情复用选中实体，独立选择解析一次；正文仍重核来源。27定向通过，旧视图新测试复现2次而非1次读取。回执：`verification/maintenance/code-constraints-boss-document-render-reuse-20261106/summary.json`。

@@ -1,3 +1,7 @@
+## 当前断点：文献正文与技术详情复用本次选中实体（2026-11-06）
+
+D281完成，27定向通过，旧视图双重实体读取复现。原280组完成148、剩132；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-boss-document-render-reuse-20261106/summary.json。
+
 ## 当前断点：回放提交双向账户保护传递复核（2026-11-06）
 
 D299按批准保留，9定向通过，新增回放/原账户两方向保护传递。原280组完成147、剩133；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-timeline-account-protection-20261106/summary.json。

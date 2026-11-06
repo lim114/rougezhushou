@@ -1,0 +1,57 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "文献正文与技术详情复用本次选中实体",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "c44df454252de7d5403dff8633508a7cbbfea83f",
+  "changed_sources": [
+    "rouge/current_boss_documents.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_boss_document_selection_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_boss_documents.py": "8d421dc73778f4e68e1795b8e37ff164f8181f3ffe864141d1ae4dce617e5ea1",
+    "rouge/current_boss_documents_view.py": "89cb4b4e8d5d23c27eb40bccdf35a086bff5778ef7a2a3333b3322b9445f35d5",
+    "tests/test_boss_document_selection_reuse.py": "aafe06719292858e75c86d7bee26a412c02e4bf81e5ee243014bfcf864c32f08"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D281"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 27,
+    "tests_passed": 27,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_boss_document_selection_reuse tests.test_current_boss_documents_369 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-243",
+    "old_source_regression": "Old view reproduces2 entity reads instead of1; one test fails",
+    "seconds": 60.184,
+    "live_window": "No visual change; original test window update pending."
+  },
+  "review": {
+    "standards": "D281 same-operation reuse completed. Selection row shared by topics,related,portrait,player text and technical output. Independent topic render resolves once; player_text still calls_fresh and compares full source. No catch/helper/guard added.",
+    "requirements": "27 model/isolated Qt checks pass. Prepared entity cannot bypass stale source rejection. Existing refresh and navigation failure clearing preserved. No real game acceptance claimed."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

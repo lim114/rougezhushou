@@ -117,12 +117,13 @@ class CurrentBossDocumentsPanel(QWidget):
 
     def _render(self, *_, prepared_entity=...):
         topic = self.topic.currentData()
+        row = model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity
         identity = (self.result['source_identity'], self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, prepared_entity=row), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'current_source_identity': self.result['source_identity'],
-            'selected_current_reference_and_authentic_legacy_document': model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity,
+            'selected_current_reference_and_authentic_legacy_document': row,
             'current_level_source': self.result['source'], 'complete_level_qualification': self.result['qualification'],
             'fixed_document_revisions': self.result['documents'], 'related_exact_current_references': self.result['related'],
             'actual_phase': None, 'actual_skill_time': None, 'expected_stats': None,

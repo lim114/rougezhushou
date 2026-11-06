@@ -207,11 +207,11 @@ def map_reference(result, *, prepared_reference=...):
             'map': mapped, 'actual_phase': None, 'actual_entity_position': None, 'run_updated': False}
 
 
-def player_text(result, enemy_key=None, topic_id=None):
+def player_text(result, enemy_key=None, topic_id=None, *, prepared_entity=...):
     fresh = _fresh(result)
     if fresh is None: return UNAVAILABLE
     if topic_id is not None and type(topic_id) is not str: return UNAVAILABLE
-    row = entity(fresh, enemy_key)
+    row = entity(fresh, enemy_key) if prepared_entity is ... else prepared_entity
     lines = ['【' + fresh['stage_name'] + ' · 完整机制文献】', NOTICE,
              '当前固定资料：国服2026年10月16日。关卡、准确敌人条目与文献来源分别核对，不按同名推及其他关卡。']
     if fresh['stage_id'] == 'ro6_b_2_b':
