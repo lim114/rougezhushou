@@ -284,3 +284,9 @@
 | D275 | terrain_info未知输入降级、read缺值/非负及整数推力/区间顺序判断 | 异常数据不形成数值说明 | 建议保留明确未知与合法值边界；替代将坏资料作为输入错误上报。不授权猜测未知机制，原样待审 |
 
 | D276 | ui_state.calculation_batch的try/finally与complete标记 | 输入更新异常时仍减少批次深度并清除请求，不发布半成品计算；异常继续上抛 | 建议保留失败后的批次释放与不发布行为；替代普通顺序收尾，异常可能遗留批次深度/请求。不新增重试；原样待审 |
+
+| D277 | CurrentElbertPanel.clear_reference/refresh_reference/_entity_changed三处try/finally恢复blockSignals | 控件更新异常后仍恢复信号，异常继续上报 | 建议保留恢复；替代普通顺序恢复，异常可能留下禁用信号。原样待审 |
+| D278 | CurrentElbertPanel与CurrentBossDocumentsPanel刷新图标和选中头像缺字节/PNG失败分支 | 坏图不显示旧头像；列表无图保留条目，头像转文字 | 建议保留缺图及解码失败表现；替代显式报告坏图。两份视图各两处，原样待审 |
+| D279 | Elbert刷新/view_result/resolve_related失败清空；已选实体再次经related_entities、view_result、selected_card执行entity检查 | 失效选择不沿用旧资料，但同次重复实体解析 | 建议审批后共享已核验实体并保留新读取的归属验证；替代独立验证。原样待审，普通重复未销项 |
+| D280 | BossDocuments刷新/打开地图的map_reference、子窗口刷新及result比较；open_fixed_map返回None后独立窗口校验 | 失效/不同源地图关闭；多层重复读取与比较 | 建议明确单一来源核对入口并复用，保留独立窗口适用路径；替代维持多重核对。原样待审 |
+| D281 | BossDocuments刷新与resolve_entity失败清空，topics/related_entities/entity/player_text再次解析选择 | 来源失败不保留旧资料，但同次重复实体查询 | 建议审批后复用当前实体，保留跨刷新归属核对；替代各查询独立验证。原样待审 |

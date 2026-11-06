@@ -93,11 +93,12 @@ class CurrentElbertPanel(QWidget):
 
     def _topic_changed(self,*_):
         if self.base is None:return
-        self.result=model.view_result(self.base,self.selected_key,self.topic.currentData())
+        topic=self.topic.currentData()
+        self.result=model.view_result(self.base,self.selected_key,topic)
         if self.result is None:self.clear_reference();return
-        identity=(self.source_identity,self.stage_id,self.selected_key,self.topic.currentData());keep=identity==self._view_key
+        identity=(self.source_identity,self.stage_id,self.selected_key,topic);keep=identity==self._view_key
         heading = {'summon': '火种从哪里来', 'blink': '闪现', 'staff': '退场后留下的法杖',
-                   'collision': '碰撞与爆炸', 'configuration': '默认文献如何变化'}.get(self.topic.currentData())
+                   'collision': '碰撞与爆炸', 'configuration': '默认文献如何变化'}.get(topic)
         replace_mechanism_text(self.player, model.player_text(self.result), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【' + heading + '】' if heading else None)
         row=self.result['selected'];card=model.selected_card(self.result,self.selected_key)

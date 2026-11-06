@@ -1,3 +1,7 @@
+## 当前断点：敌人机制主题读取复用与两份界面回顾（2026-11-06）
+
+主题读取3→1，9定向通过；两视图全文核对，D277—D281待审，共244组。实体/地图重复解析未销项。测试窗口更新。回执verification/maintenance/code-constraints-enemy-topic-review-20261106/summary.json。
+
 ## 当前断点：说明阅读与滚动状态重复读取整改（2026-11-06）
 
 三模块普通规则核对，说明阅读器新增完整销项，标题模块维持已完成；33最终定向通过。D276批次失败释放待审，共239组。保留初轮日志失败，测试窗口更新。回执verification/maintenance/code-constraints-reading-state-review-20261106/summary.json。

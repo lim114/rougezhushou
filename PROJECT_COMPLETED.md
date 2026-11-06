@@ -1,3 +1,7 @@
+## 维护：敌人机制主题复用（2026-11-06）
+
+已修同次主题重复读取，9定向通过；两模块仍有待审范围，不完整销项。[回执](verification/maintenance/code-constraints-enemy-topic-review-20261106/README.md)。
+
 ## 维护：说明阅读器与标题模块完成整改（2026-11-06）
 
 mechanism_reading新增完整销项，mechanism_reader_header复核维持完成；ui_state普通规则完成，D276待审。33定向通过。[回执](verification/maintenance/code-constraints-reading-state-review-20261106/README.md)。
