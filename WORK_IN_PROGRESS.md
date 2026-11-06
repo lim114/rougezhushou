@@ -1,3 +1,7 @@
+## 当前断点：共享事件面板与22类资料模型复用分支（2026-11-06）
+
+共享面板将已取得分支传给22模型，独立调用保留。初轮155通过/1失败，修正测试视口后该项通过，943文字状态三路一致；初轮1项视口前置失败已证旧版同样失败，修正测试视口后单项通过，窗口更新。下一批继续子类专属更新/嵌套奖励辅助函数重复准备；157组待审不变。回执verification/maintenance/code-constraints-event-prepared-choice-20261106/summary.json；维护不增节数。
+
 ## 当前断点：四类事件面板初始化重复刷新删除（2026-11-06）
 
 四构造末尾重复更新已删，37定向通过，8构造新旧显示一致且更新2→1，窗口更新。下一批优先基类_choice_changed/模型player_text重复分支准备，统筹接口和实际调用者；D194等157组待审不改。回执verification/maintenance/code-constraints-event-initial-refresh-20261106/summary.json；覆盖不变，维护不增节数。

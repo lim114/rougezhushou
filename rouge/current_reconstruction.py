@@ -78,7 +78,7 @@ def catalogue_allowed(result,sid,cid):
 def shows_reward(result,sid,cid):
     c=choice_reference(result,sid,cid);return bool(c and c['role']=='claim_civil')
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】回滚文明','分别查阅交出物品、领取结果和是否继续；不代表本局已经交换、支付或领取。',
            '','【出现与交换条件参考】文献排除第Ⅰ、Ⅵ层；完整出现资格仍需核对。',
            '“声带”允许交换零件；“手掌”使交换次数增加1次，且再次交换须与首次同为收藏品或同为零件。',
@@ -91,7 +91,7 @@ def player_text(result,sid,cid=None):
         lines+=['','【原始条目范围】只显示本次打开的完整原件；同文案或相邻编号不证明前置、首次/再次交换及实际选项组合。']
         if sid in('source-scene','source-next'):lines+=['此原对话没有已证明的后续菜单，不借其它同文案记录拼接。']
         if result['requested_choice_association']=='full_literal_sacrifice_candidate':lines+=['交换候选与文献全文相符，但原件没有指定下一段；不据此确定游戏中的分支归属或实际转换结果。']
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         role=c['role'];lines+=['','【查阅选项】'+c['title'],version._plain(c['description'])]
         if role in('choose_relic','continue_relic','choose_part','continue_part','unknown_exchange'):

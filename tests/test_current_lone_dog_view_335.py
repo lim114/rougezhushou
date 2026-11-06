@@ -22,7 +22,7 @@ class CurrentLoneDogView335Tests(unittest.TestCase):
  def test_same_source_refresh_keeps_two_nonzero_readers_and_selected_move(self):
   t=model.locate('choices','choice_ro6_task2_3');d=self.dialog(t['scene_id'],t['choice_id']);d.resize(850,440);p=d.panel
   for reader in(p.player,p.technical):
-   p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(3);c.setPosition(16,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id);self.assertTrue(p.refresh_reference());c=reader.textCursor();self.assertEqual(prior,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id))
+   reader.setFixedHeight(60);p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(3);c.setPosition(16,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id);self.assertTrue(p.refresh_reference());c=reader.textCursor();self.assertEqual(prior,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id))
  def test_version7_and_catalogue_overview_defaults_repeated_open_and_parent_close(self):
   p=ExpansionUpdatePanel();p.show();self.addCleanup(p.close);p.scope.setCurrentIndex(p.scope.findData(False));r=model.reference()
   for category in('scenes','choices'):

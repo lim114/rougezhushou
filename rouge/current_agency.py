@@ -65,11 +65,11 @@ def choice_reference(result,sid,cid):
     c=deepcopy(c);c['listed_condition_match']=None if c['role']!='promoted' or result['declared_offer_reference'] is None else '或'.join(c['profession_pair'])==result['declared_offer_reference']
     return c
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】临时中介所','本页只读固定资料，不代表本局已经出现该职业组、取得希望或招募干员。']
     if sid not in result['scenes']:return '\n'.join(lines+['','请选择要查阅的对话。'])
     lines+=['','【当前对话】'+scene_label(result,sid),version._plain(result['data']['originals']['scenes'][sid]['description'])]
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         role=c['role'];lines+=['','【查阅选项】'+c['title'],version._plain(c['description'])]
         if role=='promoted':

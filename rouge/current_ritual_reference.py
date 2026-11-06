@@ -72,9 +72,9 @@ def acquisition_reference(result,sid,cid):
     c=choice_reference(result,sid,cid)
     return deepcopy(result['data']['acquisitions'].get(c['offered_item_id']))if c else None
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；这里不表示本局已进行到这一步。'
-    d=result['data'];c=choice_reference(result,sid,cid);original=d['originals']
+    d=result['data'];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);original=d['originals']
     lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(original['scenes'][sid]['description'])]
     if c:
         o=original['choices'][cid];lines+=['','【查看的选项】'+o['title'],'【原文写明】',version._plain(o['description'])]

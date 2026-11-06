@@ -74,9 +74,9 @@ def choice_reference(result,sid,cid):
     out=deepcopy(choice);out['listed_condition_match']=result['declared_has_covenant']if choice['requires_covenant']else None;return out
 
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；这里不表示本局已进行到这一步。'
-    data=result['data'];scene=result['scenes'][sid];c=choice_reference(result,sid,cid)
+    data=result['data'];scene=result['scenes'][sid];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     status={None:'尚未确认',True:'按你用于对照的条件：持有',False:'按你用于对照的条件：未持有'}[result['declared_has_covenant']]
     lines=['【正在查阅】窥视箱中',scene_label(result,sid),'','【关键藏品】祭日之契：'+status,'这只是本页的条件对照，不会修改本局持有记录。','','【当前对话】',version._plain(data['originals']['scenes'][sid]['description'])]
     if c:

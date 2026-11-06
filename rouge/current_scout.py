@@ -67,14 +67,14 @@ def shows_return_item(result,sid,cid=None):
     c=choice_reference(result,sid,cid)
     return bool(c and c['role']in('origin','confirm'))
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】未涉足之树','固定版本的事件与归来资料；本页不会派出干员，也不表示已经归来或领取。',
            '','【出现条件参考】先行一步的文献范围为第Ⅱ、Ⅲ、Ⅳ层；文献排除第Ⅰ、Ⅴ、Ⅵ层。',
            '“探索源头”的结局相关选项与收藏品，资料要求先完成结局“强制重启”。',
            '本页仍展示资料供查阅；不代表当前账户已解锁，也不代表同一次事件全部选项都可选。完整服务器资格仍需核对。']
     if sid not in result['scenes']:return '\n'.join(lines+['','请选择要查阅的对话。'])
     lines+=['','【当前对话】'+scene_label(result,sid),version._plain(result['data']['originals']['scenes'][sid]['description'])]
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         role=c['role'];lines+=['','【查阅选项】'+c['title'],version._plain(c['description'])]
         if role in('inside','origin'):

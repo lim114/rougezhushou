@@ -65,9 +65,9 @@ def choice_reference(result,sid,cid):
     return {**deepcopy(c),'listed_condition_match':match}
 
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择查阅的对话，不代表本局已经到达。'
-    original=result['data']['originals'];c=choice_reference(result,sid,cid)
+    original=result['data']['originals'];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     lines=['【正在查阅】愈创之心',scene_label(result,sid),'','【当前对话】',version._plain(original['scenes'][sid]['description'])]
     if c:
         role=c['role'];lines+=['','【查看的选项】'+c['title'],version._plain(c['description'])]

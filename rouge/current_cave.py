@@ -73,9 +73,9 @@ def phase_prompt(result,cid=None):
     req=result.get('source_request');target=locate(req['category'],req['key'])if req else None;parents=target['possible_scene_ids']if target else result['choices'].get(cid,{}).get('scene_ids',[])
     return '【相同文字出现在两个文献阶段】\n请先选择要查阅的阶段：\n'+'\n'.join(scene_label(result,s)for s in parents)+'\n原始记录已保留，但不能靠文字或编号认定本局处于哪一步。'
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return phase_prompt(result,cid)
-    s=result['scenes'][sid];c=choice_reference(result,sid,cid);lines=['【正在查阅】洞中宝',scene_label(result,sid),'','【当前对话】',version._plain(s['description'])]
+    s=result['scenes'][sid];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);lines=['【正在查阅】洞中宝',scene_label(result,sid),'','【当前对话】',version._plain(s['description'])]
     if result['source_request']:lines+=['','【资料定位】保留了从版本页打开的原始记录；它不等于本局实际阶段或选择。']
     if c:
         lines+=['','【查看的选项】'+c['title'],'【原文写明】',version._plain(c['description'])]

@@ -73,7 +73,7 @@ def choice_reference(result,sid,cid):
     c['listed_condition_match']=None if count is None or rule is None else count>=1 if rule=='has'else count==0
     return c
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】溯源','固定版本资料参考；不代表本局已经出现该雾色、支付加工品或进入特殊区域。']
     s=result['scenes'].get(sid)
     if s is None or sid=='overview':return '\n'.join(lines+['','请从上方选择红、蓝、绿、金、橙或紫雾资料；颜色均写出中文，不只靠颜色区分。','加工品与自然物、概念体不同；本页件数只对照加工品，不代入零件总数。','本页不判断哪种雾色在本局出现，也不提供路线建议或生成概率。'])
@@ -85,7 +85,7 @@ def player_text(result,sid,cid=None):
         if sid in('source-next','source-scene'):lines+=['只显示这份明确的原对话，不补猜它的后续选项。']
     elif sid=='fog:绿雾':lines+=['','【原文歧义】两个离开对话标签都列了绿雾；两份均保留，实际选择依据未知，不默认其一。']
     if sid=='source-choice'and result.get('requested_choice_association')=='full_literal_teleport_candidate':lines+=['','【同文确认候选】此原件只有与文献一致的完整文字，尚未证明其属于溯源在游戏中的具体分支；不据此拼前置或传送目的地。']
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         role=c['role'];lines+=['','【查阅选项】'+c['title'],version._plain(c['description'])]
         if role=='pay':lines+=['','【单次代价】1件加工品。','三条是分开的选项，不一起消耗3件，也不能仅凭第一/二/三个按钮确定具体候选加工品。','本页不指定丢弃哪件、不扣实际库存、不添加奖励；消费的实际阶段及候选成员仍未知。']

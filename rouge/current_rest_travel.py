@@ -72,9 +72,9 @@ def choice_reference(result,sid,cid):
     return deepcopy(c)
 
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；不表示本局已经到达或已领取。'
-    c=choice_reference(result,sid,cid);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(result['scenes'][sid]['description'])]
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(result['scenes'][sid]['description'])]
     if result['event']['id']=='金色凝滞':lines+=['','【选项目录不等于当前菜单】','资料收录7条说明，原注写“随机3个”。留存招募券的求援是否与其它项共用这三项名额，仍未核验。','可逐条查阅，但不把7项当成本局同时出现，也不把各项收益相加。']
     else:lines+=['','【同一句话的三种画面】','文献记载三张画面，当前同文对话合并阅读，全部原始记录仍保留；不按画面编号猜资格或分支。']
     if c:

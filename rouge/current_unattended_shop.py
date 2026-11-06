@@ -71,9 +71,9 @@ def followup_allowed(result,sid,cid,destination):
     return bool(c and c['listed_condition_match']is not False and destination in c['next_scene_ids'])
 
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；这里不表示本局已经到达。'
-    c=choice_reference(result,sid,cid);o=result['data']['originals'];lines=['【正在查阅】无人商店',scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);o=result['data']['originals'];lines=['【正在查阅】无人商店',scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
     if c:
         lines+=['','【查看的选项】'+c['title'],'【原文写明】',version._plain(c['description']),'','【相同文字的记录】'+str(len(c['variant_ids']))+'份','全部保留供核对，不能当成多次选择、多次扣费或多次领取；本局使用哪份仍未确认。']
         if result['requested_original_id']in c['variant_ids']:lines+=['你是从一份指定原始记录进入本页；这只定位资料，不确认本局采用该记录。']

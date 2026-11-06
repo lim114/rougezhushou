@@ -67,11 +67,11 @@ def shows_reward(result,sid,cid=None,*,choice=...):
     c=choice_reference(result,sid,cid) if choice is ... else choice
     return sid==result['data']['joined_scene_id']or bool(c and c['role']=='join')
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】和平守卫者','固定版本的事件资料；查阅不代表已经接悬赏、移动、标记或作战。']
     if sid not in result['scenes']:return '\n'.join(lines+['','请选择要查阅的对话。'])
     lines+=['','【当前对话】'+scene_label(result,sid),version._plain(result['data']['originals']['scenes'][sid]['description'])]
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         role=c['role'];lines+=['','【查阅选项】'+c['title'],version._plain(c['description'])]
         if role=='join':lines+=['','【接取悬赏的结果参考】获得厄运火杆；实际领取件数与是否持有仍未知。','接取悬赏之后，资料另列“立即前往”与“仅标记”两种选择；获得收藏品不等于已经前往或获胜。']

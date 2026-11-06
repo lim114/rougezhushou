@@ -90,7 +90,7 @@ def choice_reference(result, sid, cid):
     row['base_exit_processed_part_reference'] = (None if v['difficulty'] is None else 0 if v['difficulty'] == 16 else 1) if c['role'] == 'persuade_part' else None
     row['actual_received'] = None; return row
 
-def player_text(result, sid, cid=None):
+def player_text(result, sid, cid=None, *, prepared_choice=...):
     lines = ['【正在查阅】险路尽头', '仅作常规模式固定资料对照；不代表本局已经到达、支付、领取或换层。']
     if result['source_request']:
         lines += ['', '【打开来源】从原始条目或谒日之祈说明打开，保留准确原件。']
@@ -101,7 +101,7 @@ def player_text(result, sid, cid=None):
     if s['raw_scene_id']:
         lines += ['', '【当前对话】', version._plain(result['data']['originals']['scenes'][s['raw_scene_id']]['description'])]
     else: lines += ['', '这份原选项明确指向本事件的后续对话，但前置情景没有文献证据；不把它接在初始菜单上。']
-    c = choice_reference(result, sid, cid)
+    c = (choice_reference(result, sid, cid) if prepared_choice is ... else prepared_choice)
     if c:
         role = c['role']; lines += ['', '【查看的选项】'+c['title'], version._plain(c['description'])]
         if role in ('persuade_part', 'persuade_no_part', 'confirm'):

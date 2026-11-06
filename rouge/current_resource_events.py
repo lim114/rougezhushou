@@ -68,9 +68,9 @@ def choice_reference(result,sid,cid):
     row=deepcopy(c);cost=c['gold_cost_reference'];gold=result['declared_gold'];row['listed_condition_match']=gold>=cost if gold is not None and cost is not None else None;return row
 
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；这里不表示本局已经走到这一步。'
-    o=result['data']['originals'];c=choice_reference(result,sid,cid);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
+    o=result['data']['originals'];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
     if c:
         lines+=['','【查看的选项】'+c['title'],'【原文写明】',version._plain(c['description'])]
         if c['gold_cost_reference']is not None:

@@ -103,7 +103,7 @@ class DocumentedEventFlowPanel(QWidget):
         self.choice_id = cid
         if self.result is None: return
         choice = self.reference_model.choice_reference(self.result, self.scene_id, cid)
-        full_text=self.reference_model.player_text(self.result,self.scene_id,cid)
+        full_text=self.reference_model.player_text(self.result,self.scene_id,cid,prepared_choice=choice)
         replace_text(self.player,mechanism_copy(full_text,'',extra_detail_headings=('【范围与未知】',))[0],preserve=keep)
         replace_text(self.reference_notes,full_text,preserve=keep)
         if not keep:self.reference_scope.collapse(animate=False)

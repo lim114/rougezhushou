@@ -71,7 +71,7 @@ def shows_reward(result,sid,cid):
     c=choice_reference(result,sid,cid)
     return bool(c and any(result['data']['originals']['choices'][key]['displayData']['itemId']=='rogue_6_relic_artifact_4'for key in c['variant_ids']))
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】被歌颂的影子','每一圈的代价、随机结果和领取分开查看；不是本局已经发生的记录，不把不同结果相加。']
     s=result['scenes'].get(sid)
     if s is None:return '\n'.join(lines+['','请选择查阅位置。'])
@@ -84,7 +84,7 @@ def player_text(result,sid,cid=None):
     elif s['scope']=='documented'and len(s['source_scene_ids'])>1:lines+=['','【同文提示】多份原对话全文相同，本页按文献位置区分，不能据此唯一确定服务器实际条目。']
     if sid in('node-27','node-26','node-25','node-24','node-21'):
         lines+=['','【资料区别】文献在回复生命结果复用了“谢谢你”的叙述；原件另有狗群安静下来的对话。不能仅凭文字或编号把两者强绑为同一条。回复数值按本次按钮原文查阅。']
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if c:
         outcome=c['presentation']=='outcome_reference'
         lines+=['','【'+('结果参考'if outcome else'查看的选项')+'】'+c['title'],version._plain(c['description'])]

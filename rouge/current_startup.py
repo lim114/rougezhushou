@@ -75,11 +75,11 @@ def choice_reference(result,sid,cid):
     row['checks']=checks;row['listed_condition_match']=False if any(c['matches']is False for c in checks)else None if any(c['matches']is None for c in checks)else True
     row['actual_eligible']=None;row['actual_received']=None;return row
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid!=SCENE:return '请选择开始探索时的行动奖励。这里不列为普通地图自然事件。'
     lines=['【行动奖励 · 当前固定版本】','这是开始探索前的支援资料，不是普通探索节点。上一局通过的区域数不是本局层数或最高抵达层号。',
            '常规候选库有6项，文献说明每次展示其中3项；继承带来的额外蓝色支援另有1项。这里的资料目录不等于本次游戏菜单，也不把12项合并领取。', '',version._plain(result['data']['originals']['scenes'][SCENE]['description'])]
-    row=choice_reference(result,sid,cid)
+    row=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     if row:
         original=row['original'];lines+=['','【查看的支援】'+original['title'],'【代价与效果原文】',version._plain(original['description']),'','【本页条件对照】']
         lines += [c['label']+'：'+('未知'if c['matches']is None else'相符'if c['matches']else'不符')for c in row['checks']]

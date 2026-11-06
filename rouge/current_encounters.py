@@ -73,9 +73,9 @@ def battle_target(result,sid,cid):
     valid=[t for t in targets if t is not None]
     return deepcopy(valid[0])if len(valid)==1 else None
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的对话；这里不表示本局已经走到这一步。'
-    d=result['data'];o=d['originals'];c=choice_reference(result,sid,cid);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
+    d=result['data'];o=d['originals'];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
     if c:
         lines+=['','【查看的选项】'+c['title'],'【原文写明】',version._plain(c['description'])]
         if len(c['variant_ids'])>1:lines+=['','【同文案的不同记录】','游戏资料有4份同文案记录，均指向这一段后续对话，其它记录内容有差别。全部保留，不能指定本局使用哪一份，也不当作4次选择或4次扣除。']

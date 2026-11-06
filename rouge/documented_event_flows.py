@@ -80,13 +80,13 @@ def choice_reference(result, scene_id, choice_id):
     return deepcopy(choice)
 
 
-def player_text(result, scene_id, choice_id=None):
+def player_text(result, scene_id, choice_id=None, *, prepared_choice=...):
     scene = result['scenes'].get(scene_id)
     if scene is None: return '请选择情景。这里只查看固定资料，不表示游戏当前已经进行到这一步。'
     originals = result['data']['originals']; original_scene = originals['scenes'][scene_id]
     lines = ['【正在查阅】' + result['event']['title'], scene_label(result, scene_id),
              '', '【当前情景】', version._plain(original_scene['description'])]
-    choice = choice_reference(result, scene_id, choice_id)
+    choice = (choice_reference(result, scene_id, choice_id) if prepared_choice is ... else prepared_choice)
     if choice is None:
         lines += ['', '本情景的文献列出' + str(len(scene['choice_ids'])) + '个选项。' if scene['choice_ids']
                   else '文献未为这个后续情景列出专属选项；不补入其它同名情景的选项。']

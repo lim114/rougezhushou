@@ -68,9 +68,9 @@ def phase_prompt(result,cid):
     if c is None:return '请选择要查阅的阶段；这里不表示本局已到达。'
     return '【同一选项出现在多个阶段】'+c['title']+'\n请先从上方选择对话阶段：\n'+'\n'.join(scene_label(result,s)for s in c['scene_ids'])+'\n不会默认第一次遇见，也不会修改本局进度。'
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择要查阅的阶段；这里不表示本局已到达。'
-    c=choice_reference(result,sid,cid);o=result['data']['originals'];lines=['【正在查阅】湖中仙女',scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);o=result['data']['originals'];lines=['【正在查阅】湖中仙女',scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
     if c:
         lines+=['','【查看的选项】'+c['title'],'【原文写明】',version._plain(c['description'])]
         if c['gold_cost_reference']is not None:lines+=['','【本次代价】1源石锭','只说明这一次选择的原文代价，不自动累计本局投入，也不判断当前是否可付或实际扣除。']

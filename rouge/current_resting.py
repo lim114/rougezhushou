@@ -81,7 +81,7 @@ def reward_label(ref):
     if ref is None:return None
     return str(ref['quantity'])+{'hope':'希望','shield':'护盾','gold':'源石锭','precious_processed_part':'件珍贵的加工品'}[ref['kind']]
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】安眠一隅','分开查阅不同情况的结果；不代表本局已经进入、出现或领取，不把不同情况奖励相加。']
     s=result['scenes'].get(sid)
     if s is None:return '\n'.join(lines+['','请选择要查阅的位置。'])
@@ -97,7 +97,7 @@ def player_text(result,sid,cid=None):
         lines+=['','【数量注释尚不一致】旧PRTS在捕梦网后的“触碰图案”写随机2种，但只列动物泥偶1项；BWIKI这组也只列该项。','不能据此认定只有1项或补出第2项；“安静观察”是另外列出的领取选项，不擅自拿来凑随机结果数。']
     if sid in('doc:16','outcomes:squirrel'):
         lines+=['','【来源分组不同】BWIKI松鼠后列果园和豹子2项；旧PRTS的注释写2项，却另列动物泥偶而成为3项。','果园、豹子按BWIKI分别查阅；旧PRTS动物泥偶单列为归属未证候选，不当成本局已证实可出现结果。']
-    c=choice_reference(result,sid,cid)
+    c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice)
     scope=c['scope']if c else s['scope']
     if scope=='legacy_unresolved':lines+=['','【仅旧资料另列，当前归属未证】此条来自旧PRTS松鼠后的额外动物泥偶；BWIKI当前分组未列。','只保留完整文字供核对，不证明当前服务器或本局可达。']
     if c:

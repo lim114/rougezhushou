@@ -91,9 +91,9 @@ def choice_reference(result,sid,cid):
     out['listed_condition_match']=None if ctx['scope']=='history'else False if matched is False else None if conflict else matched
     out['contradictory_marker_declaration']=conflict;out['actual_eligible']=None;return out
 
-def player_text(result,sid,cid=None):
+def player_text(result,sid,cid=None, *, prepared_choice=...):
     if sid not in result['scenes']:return '请选择文献情景；这里不表示本局已经到达。'
-    d=result['data'];o=d['originals'];c=choice_reference(result,sid,cid);ctx=result['context'];lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
+    d=result['data'];o=d['originals'];c=(choice_reference(result,sid,cid) if prepared_choice is ... else prepared_choice);ctx=result['context'];lines=['【正在查阅】'+result['event']['title'],scene_label(result,sid),'','【当前对话】',version._plain(o['scenes'][sid]['description'])]
     if c:
         original=o['choices'][cid];lines+=['','【查看的选项】'+original['title'],'【原文写明】',version._plain(original['description'])]
         reward=c['reward']
