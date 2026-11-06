@@ -1,7 +1,6 @@
 """Open only a revalidated acquisition's exact existing reader and target."""
 from . import current_named_reward_origins as model
 def make_event_dialog(row,parent=None):
-    if type(row)is not dict or type(row.get('item_id'))is not str:return None
     fresh=model.reference('relics',row['item_id'])
     if fresh is None or not any(model_row==row for model_row in fresh['rows']):return None
     target=row['target'];reader=row['reader_key']

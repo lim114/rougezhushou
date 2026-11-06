@@ -1,3 +1,7 @@
+## 当前断点：奖励资料工厂删除类型兜底与重复清理（2026-11-06）
+
+D152/D159完成，24项定向通过（其中2项增强后重跑通过）；原280组剩232组。D153及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-factory-review-20261106/summary.json。
+
 ## 当前断点：受疗原值面板收窄输入错误捕获（2026-11-06）
 
 D150完成，18项定向通过；原280组剩234组。其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-recipient-panel-errors-review-20261106/summary.json。

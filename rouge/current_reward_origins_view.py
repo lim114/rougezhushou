@@ -80,7 +80,7 @@ class CurrentRewardOriginsPanel(QWidget):
             self.event_dialog = make_event_dialog(row, self)
             if self.event_dialog is None: self._clear(); return False
         else: return False
-        if self.event_dialog.panel.result is None: self._close_event(); self._clear(); return False
+        if self.event_dialog.panel.result is None: self._clear(); return False
         self.event_dialog.show(); return True
 
     def closeEvent(self, event): self._close_event(); super().closeEvent(event)
