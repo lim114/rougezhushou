@@ -1,3 +1,7 @@
+## 当前断点：科技资料只读复用与跳转刷新合并（2026-11-06）
+
+只读标签/门槛避免整表复制，筛选读取一次，跳转合并刷新。26定向通过、228旧新文字一致；科技界面完整销项，D300—D303待审，共266组。回执verification/maintenance/code-constraints-technology-review-20261106/summary.json。
+
 ## 当前断点：资源识别候选复用与时间线基线复制精简（2026-11-06）
 
 资源重复筛选/坐标/模板复用，时间线仅最后可合并处复制基线。7定向通过，12资源旧新一致，4记录合并复制10→4且状态一致。资源模块完整销项，D299待审，共262组。回执verification/maintenance/code-constraints-resource-timeline-review-20261106/summary.json。

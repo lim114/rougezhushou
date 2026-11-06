@@ -30,13 +30,14 @@ def technology_gates():
 
 
 def technology_labels():
-    nodes = technology_nodes()
+    nodes = _data()['developments'].values()
     counts = Counter(n['buffName'] for n in nodes)
     seen = Counter()
     labels = {}
     for node in nodes:
         name = node['buffName']; seen[name] += 1
-        labels[node['buffId']] = name+(f'（{seen[name]}/{counts[name]}）' if counts[name]>1 else '')
+        count = counts[name]
+        labels[node['buffId']] = name+(f'（{seen[name]}/{count}）' if count>1 else '')
     return labels
 
 
@@ -51,7 +52,7 @@ def format_technology(node_id, *, technical=False, account_state=None):
              f"花费：{node['tokenCost']}", '', *(_plain(t) for t in node['rawDesc'])]
     if account_state is not None:
         lines = [account_state.describe(node_id), '', *lines]
-    gate = technology_gates().get(node_id)
+    gate = _data()['developmentsDifficultyNodeInfos'].get(node_id)
     if gate:
         lines += ['', '生效门槛资料：'+gate['enableDesc']]
     for key, label in (('frontNodeId', '前置显示节点'), ('nextNodeId', '后续显示节点')):

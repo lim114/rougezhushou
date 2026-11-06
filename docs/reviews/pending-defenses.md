@@ -314,3 +314,8 @@
 | D298 | viewport.prepare_frame无效/过小client_rect沿用整帧、去黑边后不足320×180回退全客户区 | 无效区域不裁剪为空或过小，可能把无效参数当正常整帧 | 建议由入口明确无效区域处理策略；替代保持当前回退。原样待审。正常全黑画面/内容边界探测不是异常恢复 |
 
 | D299 | ObservationTimeline.commit合并account.preserve_original保护标记 | 回放副本或原账户任一已禁止覆盖时，提交仍保留保护，AccountCache.save不覆盖私人原件 | 建议保留这处传递；替代仅沿用原账户标记会漏掉回放中新发现的问题。此前账户模块授权不自动扩展到此处，本批原样待审 |
+
+| D300 | technology.format_technology先technology_node后describe/view，TechnologyState.view再次technology_node；界面逐项view及重复状态读取 | 查询入口拒绝无效ID，但同次显示重复核验和复制 | 建议入口一次核验并复用记录，保留独立调用校验；替代维持各查询独立验证。原样待审，普通重复未销项 |
+| D301 | TechnologyState.__init__链接拒绝、读取/解析失败保护；FileNotFoundError后lstat区分不存在和不可读路径 | 防止损坏/不可读原件被默认新档覆盖 | 建议保留原件保护并审批读取边界，替代失败直接报错；未新增恢复/重试，原样待审 |
+| D302 | _timestamp的类型/时区/转换及ValueError/OverflowError；_validate的格式/唯一名称/记录校验、未来节点透传 | 拒绝不可展示时间与损坏记录，保留未来元数据 | 建议保留入口格式核验及透传，审批后区分输入与内部异常；读取和保存是不同时间点，原样待审 |
+| D303 | TechnologyState.save保护标记、链接/不存在路径核对、摘要冲突拒绝、临时文件fsync/replace、失败保护及finally清理失败忽略 | 不覆盖外部改动或损坏原件；清理错误被隐藏 | 建议保留原子发布/冲突保护，单列清理失败处理供审核；替代直接抛出错误。完整现有分支原样待审 |

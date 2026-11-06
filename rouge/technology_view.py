@@ -1,4 +1,5 @@
 """Technology references and explicitly edited account-labelled records."""
+from PySide6.QtCore import QSignalBlocker
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QHBoxLayout, QLabel,
     QLineEdit, QPlainTextEdit, QPushButton, QTabWidget, QVBoxLayout, QWidget)
 from .technology import format_technology, technology_labels, technology_nodes
@@ -72,7 +73,9 @@ class TechnologyReferencePanel(QWidget):
         self.profiles.blockSignals(False)
 
     def show_technology(self, identity):
-        self.search.clear(); self.status_filter.setCurrentIndex(0)
+        with QSignalBlocker(self.search), QSignalBlocker(self.status_filter):
+            self.search.clear(); self.status_filter.setCurrentIndex(0)
+        self.populate()
         self.nodes.setCurrentIndex(self.nodes.findData(identity))
         self.reference_tabs.setCurrentIndex(0)
 
@@ -97,10 +100,11 @@ class TechnologyReferencePanel(QWidget):
 
     def populate(self, *_args):
         selected = self.nodes.currentData(); labels = technology_labels()
+        status_filter = self.status_filter.currentData()
         self.nodes.blockSignals(True); self.nodes.clear()
         for node in technology_nodes(self.search.text()):
             state = self.account_state.view(node['buffId'])['status']
-            if self.status_filter.currentData() is not None and state != self.status_filter.currentData():
+            if status_filter is not None and state != status_filter:
                 continue
             label = labels[node['buffId']]
             if state != 'unknown': label += '（手动：' + STATUS_LABELS[state] + '）'
