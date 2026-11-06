@@ -42,10 +42,10 @@ def reference(event_id,has_controller=None):
     d=ref['data'];e=d['events'][event_id]
     return {**ref,'event':deepcopy(e),'scenes':{k:deepcopy(d['scenes'][k])for k in e['scene_ids']},'choices':{k:deepcopy(d['choices'][k])for k in e['choice_ids']},'declared_has_controller':has_controller,'condition_is_local_reference_only':True}
 
-def locate(category,key):
+def locate(category,key,*,source=None):
     if type(category)is not str or type(key)is not str or category not in('scenes','choices'):return None
     if not key.startswith('scene_ro6_'if category=='scenes'else'choice_ro6_'):return None
-    ref=packet()
+    ref=packet() if source is None else source
     if ref is None:return None
     d=ref['data']
     if category=='scenes'and key in d['scenes']:return {'event_id':d['scenes'][key]['event_id'],'scene_id':key,'choice_id':None}

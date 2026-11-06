@@ -52,11 +52,11 @@ def reference(event_id='shadow',source_request=None):
         event['scene_ids']+=list(k for k in scenes if k not in d['scenes']);event['choice_ids']+=list(k for k in choices if k not in d['choices'])
     return {**p,'event':event,'scenes':scenes,'choices':choices,'source_request':deepcopy(source_request),'requested_original':original,'actual_inventory':None,'actual_received':None,'actual_result':None,'actual_choice':None,'actual_transition':None,'actual_pool':None,'actual_life':None,'actual_round':None}
 
-def locate(category,key):
+def locate(category,key,*,source=None):
     if type(category)is not str or type(key)is not str:return None
-    if category=='relics'and key=='rogue_6_relic_artifact_4':return {'scene_id':'node-17','choice_id':'node-17:option:0'}if packet()else None
+    if category=='relics'and key=='rogue_6_relic_artifact_4':return {'scene_id':'node-17','choice_id':'node-17:option:0'}if (packet() if source is None else source)else None
     if category not in('scenes','choices'):return None
-    p=packet()
+    p=packet() if source is None else source
     if p is None or key not in p['data']['originals'][category]:return None
     return {'source_request':{'category':category,'key':key}}
 

@@ -34,18 +34,18 @@ def packet():
         return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
     except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
 
-def reference(event_id='peace',completed=None):
+def reference(event_id='peace',completed=None,*,source=None):
     if type(event_id)is not str or event_id!='peace'or(completed is not None and type(completed)is not bool):return None
-    p=packet()
+    p=packet() if source is None else source
     if p is None:return None
     d=p['data']
     return {**p,'event':deepcopy(d['event']),'scenes':deepcopy(d['scenes']),'choices':deepcopy(d['choices']),
             'declared_completed_reference':completed,'actual_current_floor_completion':None,'actual_target_node':None,
             'actual_moved':None,'actual_marked':None,'actual_battle_won':None,'actual_received':None,'actual_attack_speed_stacks':None}
 
-def locate(category,key):
+def locate(category,key,*,source=None):
     if type(category)is not str or type(key)is not str or category not in('scenes','choices'):return None
-    r=reference()
+    r=reference(source=source)
     if r is None:return None
     if category=='scenes'and key in r['scenes']:return {'scene_id':key,'choice_id':None}
     if category=='choices'and key in r['choices']:return {'scene_id':r['choices'][key]['scene_id'],'choice_id':key}

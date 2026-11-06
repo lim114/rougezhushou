@@ -44,11 +44,11 @@ def reference(event_id='ritual'):
     data=ref['data'];event=next(e for e in data['events']if e['id']==event_id)
     return {**ref,'event':deepcopy(event),'scenes':{k:deepcopy(data['scenes'][k])for k in event['scene_ids']},'choices':{k:deepcopy(data['choices'][k])for k in event['choice_ids']}}
 
-def locate(category,key):
+def locate(category,key,*,source=None):
     if type(category)is not str or type(key)is not str:return None
     candidate=(category=='scenes'and key in LABELS)or(category=='choices'and(key.startswith('choice_ro6_end3_')or key in('choice_ro6_chimera2_1','choice_ro6_chimera2_2')))or(category=='relics'and key in MATERIALS)
     if not candidate:return None
-    ref=packet()
+    ref=packet() if source is None else source
     if ref is None:return None
     d=ref['data'];sid=None;cid=None
     if category=='scenes'and key in d['scenes']:sid=key

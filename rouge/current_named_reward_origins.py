@@ -11,7 +11,7 @@ SELECTIONS=(('resources','choice_ro6_relic1_1','rogue_6_relic_fight_11'),('resou
 ITEM_IDS=frozenset(v[2]for v in SELECTIONS)
 def providers():return{k:importlib.import_module('.'+v,__package__)for k,v in PROVIDER_MODULES.items()}
 def source_rows(packets,current,modules):
-    rows=[]
+    rows=[];identities={}
     for reader,cid,iid in SELECTIONS:
         d=packets[reader]['data'];original=d['originals']['choices'][cid];item=current['items'][iid]
         if original!=current['choices'][cid]or item['type']!='RELIC':raise ValueError('Exact current reward source required')
@@ -25,13 +25,14 @@ def source_rows(packets,current,modules):
         else:
             if pointer!=iid or name.strip('“”')!=item['name'].strip('“”'):raise ValueError('Exact pointer and full reward name must agree except outer quotes')
             basis='explicit_original_item_pointer_and_full_name'
-        target=modules[reader].locate('choices',cid)
+        target=modules[reader].locate('choices',cid,source=packets[reader])
         if target is None:raise ValueError('Existing exact original-choice entry required')
         if 'event'in d:event=d['event']
         else:
             events=d['events'];event=events[target['event_id']]if type(events)is dict else next(v for v in events if v['id']==target['event_id'])
         if iid in d['originals']['items']and d['originals']['items'][iid]!=item:raise ValueError('Reader item record differs')
-        rows.append({'key':'named347:'+cid,'reader':'named347','reader_key':reader,'event_title':event['title'],'event_id':event['id'],'scene_id':target.get('scene_id','source-choice'),'choice_id':cid,'item_id':iid,'item':deepcopy(item),'choice':deepcopy(original),'target':deepcopy(target),'binding_basis':basis,'original_item_pointer':pointer,'actual_quantity':None,'actual_received':None,'actual_eligible':None,'reader_source_identity':json.loads(json.dumps(packets[reader]['source_identity']))})
+        if reader not in identities:identities[reader]=json.loads(json.dumps(packets[reader]['source_identity']))
+        rows.append({'key':'named347:'+cid,'reader':'named347','reader_key':reader,'event_title':event['title'],'event_id':event['id'],'scene_id':target.get('scene_id','source-choice'),'choice_id':cid,'item_id':iid,'item':deepcopy(item),'choice':deepcopy(original),'target':deepcopy(target),'binding_basis':basis,'original_item_pointer':pointer,'actual_quantity':None,'actual_received':None,'actual_eligible':None,'reader_source_identity':deepcopy(identities[reader])})
     if len(rows)!=11 or len({r['item_id']for r in rows})!=11:raise ValueError('Keep11 distinct newly linked named acquisitions')
     return rows
 def packet():

@@ -57,9 +57,9 @@ def reference(event_id='reconstruction',naturals=None,source_request=None):
             'requested_choice_association':d['original_choice_association'].get(source_request['key'])if source_request and source_request['category']=='choices'else None,
             'actual_inventory':None,'actual_consumed':None,'actual_received':None,'actual_choice':None,'actual_variant':None,'actual_reward_pool':None,'actual_remaining_exchanges':None,'actual_first_type':None}
 
-def locate(category,key):
+def locate(category,key,*,source=None):
     if type(category)is not str or type(key)is not str or category not in('scenes','choices'):return None
-    p=packet()
+    p=packet() if source is None else source
     if p is None or key not in p['data']['originals'][category]:return None
     return {'source_request':{'category':category,'key':key}}
 

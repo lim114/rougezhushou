@@ -1,3 +1,7 @@
+## 当前断点：具名奖励七类来源复用（2026-11-05）
+
+7类locate及peace.reference接受同操作source；具名构建来源加载18→7，标识转换11→7且每行独立。旧3测试失败留证，最终20定向通过；589定位/6详情/11完整行新旧一致。窗口更新；145组防御未改，覆盖316/64/137/41。回执verification/maintenance/code-constraints-named-provider-reuse-20261105/summary.json。8模块仅相关路径推进，下一批继续剩余准备与调用链；维护不增节数。
+
 ## 当前断点：关键藏品来源准备复用（2026-11-05）
 
 DATA已验证字节复用2→1，险路尽头packet3→1；来源传入locate/reference，原参数/身份判断不变。旧3测试全失败留证，28定向通过；18定位/68详情/12关键藏品结果文字与完整包一致。窗口更新。D173—182原样待审，共145组；覆盖316/71/130/41，未整模块销项。回执verification/maintenance/code-constraints-critical-source-reuse-20261105/summary.json。下一批继续准备来源传递/目标查找边界及其它普通待办；维护不增节数。
