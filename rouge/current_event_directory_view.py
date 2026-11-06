@@ -10,7 +10,6 @@ DIRECTORY_READERS = {**READERS, 'flows321': ('documented_event_flow_view', 'Docu
 
 
 def make_event_dialog(target, parent=None, *, page_owner=None):
-    if type(target) is not dict or type(target.get('event')) is not dict: return None
     row = target['event']; reader = row['reader']; eid = row['event_id']
     fresh = model.reference(row.get('id'))
     if fresh is None or not model.same(row, fresh['selected']): return None

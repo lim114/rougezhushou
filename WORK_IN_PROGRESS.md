@@ -1,3 +1,7 @@
+## 当前断点：事件资料构造入口整改（2026-11-06）
+
+D89完成，29项定向通过；原280组剩260组。D88、D92继续核对；测试窗口更新待用户退出旧助手。回执verification/maintenance/code-constraints-event-dialog-contract-review-20261106/summary.json。
+
 ## 当前断点：事件目录来源快照整改（2026-11-06）
 
 D97完成，15项定向通过；原280组剩261组。D92及其余输入契约继续核对；测试窗口更新仍未完成。回执verification/maintenance/code-constraints-event-source-snapshot-review-20261106/summary.json。
