@@ -1,3 +1,7 @@
+## 当前断点：首领分组不变条件移出循环与布尔返回简化（2026-11-06）
+
+两页分组条件移出循环，直接返回既有bool；18项通过+旧文案修正后1项通过，保留原失败。D282—D284待审，共247组，窗口更新。回执verification/maintenance/code-constraints-boss-group-review-20261106/summary.json。
+
 ## 当前断点：敌人机制主题读取复用与两份界面回顾（2026-11-06）
 
 主题读取3→1，9定向通过；两视图全文核对，D277—D281待审，共244组。实体/地图重复解析未销项。测试窗口更新。回执verification/maintenance/code-constraints-enemy-topic-review-20261106/summary.json。

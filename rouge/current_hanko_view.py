@@ -61,9 +61,10 @@ class CurrentHankoPanel(QWidget):
         self.result = fresh
         groups = []
         for actor_kind, label in (('boss', '本关首领'), ('smoke', '独立烟雾实体')):
+            target_kind = actor_kind == 'smoke'
             items = []
             for row in fresh['rows']:
-                if (row['actor'] == 'smoke') != (actor_kind == 'smoke'): continue
+                if (row['actor'] == 'smoke') != target_kind: continue
                 icon = QIcon(); picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
                 if raw and picture.loadFromData(raw, 'PNG'): icon = QIcon(picture)
                 items.append((row['enemy']['name'] + ' · 引用' + str(row['reference_index'] + 1), row['key'], icon))
@@ -118,8 +119,7 @@ class CurrentHankoPanel(QWidget):
         target = model.resolve_related(self.result, self.selected_key, request)
         if target is None:
             self.clear_reference(); self.status.setText('关联入口无法重新核对，旧实体和招式已清除；恢复后请手动选择。'); return False
-        if not self.entities.select_value(target['enemy_key']): return False
-        return True
+        return self.entities.select_value(target['enemy_key'])
 
 
 from .battle_enemy_readers import EnemyMechanismDialog

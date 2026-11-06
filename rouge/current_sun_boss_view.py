@@ -76,9 +76,10 @@ class CurrentSunBossPanel(QWidget):
         self.topic.setEnabled(True); self.related.setEnabled(True)
         groups = []
         for kind, label in (('normal', '起始形态资料'), ('other', '转变形态资料（不是新增敌人）')):
+            target_kind = kind == 'normal'
             entries = []
             for row in fresh['rows']:
-                if (row['form'] == 'normal') != (kind == 'normal'): continue
+                if (row['form'] == 'normal') != target_kind: continue
                 icon = QIcon(); picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
                 if raw and picture.loadFromData(raw, 'PNG'): icon = QIcon(picture)
                 entries.append((row['enemy']['name'], row['key'], icon))

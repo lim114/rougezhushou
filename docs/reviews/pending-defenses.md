@@ -290,3 +290,7 @@
 | D279 | Elbert刷新/view_result/resolve_related失败清空；已选实体再次经related_entities、view_result、selected_card执行entity检查 | 失效选择不沿用旧资料，但同次重复实体解析 | 建议审批后共享已核验实体并保留新读取的归属验证；替代独立验证。原样待审，普通重复未销项 |
 | D280 | BossDocuments刷新/打开地图的map_reference、子窗口刷新及result比较；open_fixed_map返回None后独立窗口校验 | 失效/不同源地图关闭；多层重复读取与比较 | 建议明确单一来源核对入口并复用，保留独立窗口适用路径；替代维持多重核对。原样待审 |
 | D281 | BossDocuments刷新与resolve_entity失败清空，topics/related_entities/entity/player_text再次解析选择 | 来源失败不保留旧资料，但同次重复实体查询 | 建议审批后复用当前实体，保留跨刷新归属核对；替代各查询独立验证。原样待审 |
+
+| D282 | CurrentHankoPanel和CurrentSunBossPanel刷新图标及选中头像的缺字节/PNG失败分支 | 无图保留条目，坏头像不沿用旧图 | 建议保留缺图与解码失败展示；替代显式报错。各两处，原样待审 |
+| D283 | 两视图refresh及follow_related/follow_form失效清空；topics/cards/related/entity/player_text多次解析当前实体 | 错源或过期请求不跳转，但同次重复实体核对 | 建议审批后共用已核验实体并保留跨刷新验证；替代独立查询分别校验。原样待审，普通重复未销项 |
+| D284 | CurrentSunBossPanel地图刷新/打开中的map_reference、子窗口刷新/结果比较及共享入口后的独立回退 | 错关卡/失效地图关闭，重复读取与同源对照 | 建议明确一次核验边界并复用；替代保留各层核对。原样待审，不借其它视图授权 |

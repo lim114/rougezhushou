@@ -29,7 +29,7 @@ class CurrentSunBossView368Tests(unittest.TestCase):
     def topic(self, key): self.panel.topic.setCurrentIndex(self.panel.topic.findData(key)); self.app.processEvents()
 
     def test_default_and_exact_enemy_entry_keep_form_selection_distinct_from_actual_state(self):
-        self.assertIsNone(self.panel.selected_key); self.assertIn('不是三名', self.panel.player.toPlainText())
+        self.assertIsNone(self.panel.selected_key); self.assertIn('“形态”与“阶段”是两回事', self.panel.player.toPlainText())
         self.assertEqual(len(self.panel.forms.groups), 2)
         other = CurrentSunBossPanel('ro6_b_7', self.keys['sun'])
         self.assertEqual(other.selected_key, self.keys['sun']); self.assertIsNone(other.result['actual_form']); other.close()
