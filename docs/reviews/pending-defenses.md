@@ -108,3 +108,8 @@
 | D134 | `summons.duration_reference/module_reference/token_cost_reference/token_attributes`及`token_counts.token_count_reference`共五处用scenario.get("level") or 满级处理输入 | 缺少等级/None正常使用默认，但0、False、空字符串也静默当满级；直调资料函数会得到满级参考，当前主计算入口通常先拒绝这些值 | 建议明确仅缺省/None使用默认，其余由实际外部入口拒绝，已验证调用直接传培养；替代保留现有假值默认。五处统一待审，本批复用解析结果但保留原or语义；本机4类输入新旧结果相同 |
 
 | D135 | `operator_engine.selected_talents`使用scenario.get("level") or 满级 | 未给等级是正常默认，但0/False/空字符串也会按满级选择天赋；深海色实际直调四种值均与70级相同 | 建议仅缺省/None使用默认，已验证培养从入口传入；替代保留假值默认。此项独立于D134五处，未改、待审核，不推定主计算入口允许这些值 |
+
+| D136 | ammo_reference.refill_parameters及refill_before_empty_is_safe的两处OverflowError捕获 | 超大整数经math.isfinite转浮点溢出，分别返回None/False；现有10**400测试覆盖 | 建议保留数值入口的这两处错误出口；替代先限定范围再转数值。未改，待审核，不授权其它捕获 |
+| D137 | partial_packet_reference使用get("partial_packet_rules",[]) | 固定资料缺该字段时静默作为无支持规则；当前资料有此字段 | 建议直接读取必填字段；替代保留旧格式缺字段兼容。未改，待审核 |
+| D138 | mei_module_reference.reference的level or 满级 | 0/False/空字符串也按满级参与模组条件 | 建议仅缺省/None默认；替代保留假值默认。独立于D134/135，未改，待审核 |
+| D139 | mei_module_reference.reference的part not in catalog_parts | 拒绝其它模组/培养来源的part被当成本模组资料；已有foreign_parts算例 | 建议保留来源核对；替代删除会允许外来条目进入候选。与后续index重复查找需一起考虑，未改，待审核 |

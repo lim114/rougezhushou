@@ -28,10 +28,11 @@ def qualification(scenario):
     ref = parameter_reference(profile, scenario, parts) if scenario.get('module_id') == MODULE and parts else None
     reskey = rule()['stages'].get(str(stage))
     bound = bool(ref and any(p.get('resKey') == reskey and p.get('target') == 'TRAIT' for p in parts))
-    return {'qualified': bound and type(skill) is int and skill in (1, 2),
+    valid_skill = type(skill) is int and skill in (1, 2)
+    return {'qualified': bound and valid_skill,
             'cultivation_qualified': bool(ref), 'native_trait_resource_bound': bound,
             'module_id': scenario.get('module_id'), 'module_level': stage,
-            'native_skill_index': skill-1 if type(skill) is int and skill in (1, 2) else None,
+            'native_skill_index': skill-1 if valid_skill else None,
             'native_skill_gate': 'none_in_current_trait_prefabs',
             'map_gate': 'none_in_original_module_parts'}
 
@@ -42,7 +43,10 @@ def finish(scenario, result):
     enabled = scenario.get(FLAG, False)
     if type(enabled) is not bool:
         raise ValueError(FLAG+' 需要明确的布尔值。')
-    if not enabled or not qualification(scenario)['qualified']:
+    if not enabled:
+        return
+    qualified = qualification(scenario)
+    if not qualified['qualified']:
         return
     motion = (scenario.get('relic_context') or {}).get(MOTION)
     if motion is not None and (type(motion) is not str or motion not in MOTIONS):
@@ -52,7 +56,8 @@ def finish(scenario, result):
     factor = None if motion in (None, 'unknown') else multiplier if motion == 'fly' else 1.0
     skill = scenario['skill']
     profile = catalog()['operators']['char_133_mm']
-    bb = profile['skills'][skill-1]['levels'][scenario.get('skill_rank', 10)-1]['values']
+    selected_skill = profile['skills'][skill-1]['levels'][scenario.get('skill_rank', 10)-1]
+    bb = selected_skill['values']
     defense = scenario.get('enemy_defense', 0) * max(0, 1-sum(
         r['value'] for r in scenario.get('_relic_rules', []) if r['kind'] == 'defense_penetration'))
     final = damage_factor(scenario, 'physical') * (1+sum(
@@ -83,10 +88,10 @@ def finish(scenario, result):
         return row
 
     packet('normal', '常态单次普攻', result['estimate']['base_stats']['attack'], 1)
-    part = next(c for c in result['components'] if c['name'] == profile['skills'][skill-1]['levels'][scenario.get('skill_rank', 10)-1]['name'])
+    part = next(c for c in result['components'] if c['name'] == selected_skill['name'])
     selected = packet('skill', '麻痹弹单次物理伤害' if skill == 1 else '技能期间单次物理普攻',
                       result['attack'], bb['atk_scale'] if skill == 1 else 1, part['hits'])
-    ref = {'selected': True, 'qualified': qualification(scenario),
+    ref = {'selected': True, 'qualified': qualified,
            'scope': 'explicit_current_native_module_packet_conditions',
            'target_motion_declaration': motion, 'condition_source': 'manual_offline_preview',
            'native_multiplier_parameter': multiplier, 'packets': rows,

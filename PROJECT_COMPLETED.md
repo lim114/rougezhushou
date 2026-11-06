@@ -1,3 +1,7 @@
+## 维护：梅模组资格复用与陈动作资料审查（2026-11-05）
+
+资格计算2→1，技能判断与记录复用；69项定向、100完整报告与4错误结果一致。陈动作资料模块回顾完成，另外三个保留缺口。[回执](verification/maintenance/code-constraints-reference-boundaries-20261105/README.md)。
+
 ## 维护：手动召唤物效果筛选收拢（2026-11-05）
 
 面板一次筛选，删除两处单次包装并保留Combat独立副本。76项定向、210完整/60对照一致。[回执](verification/maintenance/code-constraints-manual-token-selection-20261105/README.md)。
