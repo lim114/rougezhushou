@@ -1,0 +1,60 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "动作位置合法边界与失效撤下按授权保留",
+  "base_commit": "0e24f2a3c98efdf689b43b1858bef96c3731d367",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/current_action_positions.py": "baeb6478a153ed0ac39b286b42aacd926a000373cb48d1e77c75df21ac679f42",
+    "rouge/current_action_positions_view.py": "319ebb8d9c7492b6748ec536477b912deaf099581ba319bfc78c0aa57bdc8f6b"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D264",
+    "D265"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "Selected tests: route_index_bool_negative_float_missing_and_undefined_motion_are_unknown; wait_and_disappear_placeholders_never_become_cells; empty_and_ambiguous_aliases_do_not_choose_one_or_use_route_index; actual_map_source_damage_clears_everything_and_recovery_requires_choice; parent_failure_and_bad_image_decode_cannot_keep_previous_markers",
+        "tests_run": 5,
+        "tests_passed": 5,
+        "seconds": 4.639,
+        "environment": "Qt offscreen; not native game acceptance"
+      }
+    ],
+    "live_window": "Product source unchanged; no restart. Prior original-window update remains pending."
+  },
+  "review": {
+    "standards": "D264 retains approved index/motion/position boundaries; source coordinates are checked once via display_cell. Nested add is used for start/checkpoint/end/predefined entries and owns row assembly, not a pointless single-call wrapper. D265 source/image availability and decoder failure are distinct boundaries. D266 earlier removed duplicate clear on set_reference; no duplicate cleanup on current failed path.",
+    "requirements": "Invalid index and unsupported motion generate no invented position. Wait/disappear and ambiguous predefined aliases remain normal unknown domain states. Copied source corruption and bad PNG remove old data/markers; recovery requires selection. No extra thresholds, retries or catches."
+  },
+  "reviewed_unchanged_sources": [
+    "rouge/current_action_positions.py",
+    "rouge/current_action_positions_view.py"
+  ]
+}

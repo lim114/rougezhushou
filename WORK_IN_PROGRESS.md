@@ -1,3 +1,7 @@
+## 当前断点：动作位置边界与失效撤下核对（2026-11-06）
+
+D264/D265按授权保留并复核，5项定向通过；产品源码未改。原280组完成181、剩99。原测试窗口更新及待审项继续保留。回执 `verification/maintenance/code-constraints-action-boundary-retention-20261106/summary.json`。
+
 ## 当前断点：动作与地图共用核验资料包（2026-11-06）
 
 D263完成，动作编号检查前置，动作与地图基于同一核验包，避免重复读取。7项定向通过；首轮编辑换行匹配失败和测试导入错误已保留。原280组完成179、剩101。原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-action-map-packet-20261106/summary.json`。

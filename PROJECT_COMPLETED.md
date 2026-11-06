@@ -5494,3 +5494,7 @@ D259/D260/D261完成。明确独立入口和跨来源重读边界，复用先前
 
 ### 维护：动作地图共用资料包（2026-11-06）
 D263完成：一次核验资料供动作和地图使用，独立地图入口继续自行读取；7项定向通过，缺资料不自动改读其它来源。回执 `verification/maintenance/code-constraints-action-map-packet-20261106/summary.json`。
+
+
+### 维护：动作位置边界核对（2026-11-06）
+D264/D265完成：合法路线/运动/坐标边界及失效撤下按授权保留，位置记录组装函数具备实际多处复用职责；5项定向通过，Qt离屏不当作实机。回执 `verification/maintenance/code-constraints-action-boundary-retention-20261106/summary.json`。
