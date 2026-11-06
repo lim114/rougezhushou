@@ -23,13 +23,13 @@ class CurrentSandPanel(DocumentedEventFlowPanel):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
 
     def _fresh_reference(self):
-        values={k:v.currentData()for k,v in self.controls.items()};values['gold']=None if self.gold.value()<0 else self.gold.value();return model.reference(self.event_id,values)
+        values={k:v.currentData()for k,v in self.controls.items()};gold=self.gold.value();values['gold']=None if gold<0 else gold;return model.reference(self.event_id,values)
 
     def _close_related(self):
         if self.related_dialog is not None:self.related_dialog.close()
 
     def _sync_related(self):
-        self.related_button.setVisible(self.result is not None);self.related_button.setEnabled(self.result is not None)
+        available=self.result is not None;self.related_button.setVisible(available);self.related_button.setEnabled(available)
 
     def clear_reference(self):
         self._close_related();super().clear_reference();self._sync_related()

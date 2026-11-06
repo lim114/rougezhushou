@@ -209,3 +209,7 @@
 | D215 | 同packet固定清单摘要/schema/版本/成员、文件摘要及四类当前原件比较 | 错版/漂移资料拒绝返回；DATA已使用校验后的values字节 | 建议保留来源身份职责并核对重复层；替代信任固定资料。原样待审 |
 | D216 | 同packet相对路径、ROOT范围及文件/父目录符号链接拒绝 | 越界/链接资料不读，也限制链接部署 | 建议保留或另定部署范围；替代扩大读取路径。原样待审 |
 | D217 | current_ritual_reference.reference/locate/choice_reference非字符串参数返回None | 内部类型错误变成无资料或未选择 | 建议确认入口后使错误类型显露，或保留原始查询接口。合法None选择、材料多匹配和非本场景成员属于正常无匹配，不含在本项。原样待审 |
+
+| D218 | CurrentSandPanel.open_related固定scene_ro6_end2_enter定位不到时关闭关联窗并返回False | 固定来源缺失时拒绝打开，避免沿用旧窗 | 建议保留明确定位失败出口；替代直接使用固定目标会在后续访问失败或显示无资料。原样待审 |
+| D219 | CurrentRitualPanel._sync_extra/open_material交换目标预检失败隐藏按钮；事件/交换目标重新定位失败时清空/关闭，交换失败又_sync_extra | 来源变动时撤下入口，但失败路径再次定位并可能重复关闭 | 建议保留失效撤下并合并同次失败路径重读/关闭；替代原样多次核对。仍含待改普通重复，不能因已登记就销项。原样待审 |
+| D220 | CurrentRitualPanel.open_material来源kind不在event/exchange/battle时返回False | 未支持或错误内部类型静默不打开 | 建议明确来源枚举契约后暴露内部未知类型；替代保留可扩展类型无动作行为。原样待审，不影响三类正常入口 |

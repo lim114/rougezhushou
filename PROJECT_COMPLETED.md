@@ -1,3 +1,7 @@
+## 维护：事件视图状态与关闭复用（2026-11-06）
+
+三类普通重复已改，12定向和关闭一次计数通过。D219重复路径未销项。[回执](verification/maintenance/code-constraints-event-view-state-reuse-20261106/README.md)。
+
 ## 维护：仪式模型审查记录（2026-11-06）
 
 模型及入口核对已记录，保护仍待审核，未计整模块完成。[回执](verification/maintenance/code-constraints-ritual-model-contract-review-20261106/README.md)。

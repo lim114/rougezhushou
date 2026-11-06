@@ -26,11 +26,11 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
             from .current_exchange_reference import target_entry
             if target_entry('choices',source['source_choice_id'])is None:source=None
         self.material_button.setVisible(source is not None);self.material_button.setEnabled(source is not None)
-        self.related_button.setVisible(self.result is not None and self.event_id=='ritual');self.related_button.setEnabled(self.result is not None and self.event_id=='ritual')
+        related=self.result is not None and self.event_id=='ritual';self.related_button.setVisible(related);self.related_button.setEnabled(related)
         if source is None:self._close_material()
 
     def clear_reference(self):
-        self._close_material();super().clear_reference();self._sync_extra(None)
+        super().clear_reference();self._sync_extra(None)
 
     def _choice_changed(self,item,*args,preserve=False):
         cid=item.data(Qt.ItemDataRole.UserRole)if item else None
