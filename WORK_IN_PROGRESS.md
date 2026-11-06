@@ -1,3 +1,7 @@
+## 当前断点：敌人行程资料异常处理收窄（2026-11-06）
+
+D246完成，18定向通过；原280组完成108、剩172。D319/D320待审，原窗口及既有验证缺口保留。回执verification/maintenance/code-constraints-route-error-boundary-20261106/summary.json。
+
 ## 当前断点：敌人出怪资料异常处理限于读取入口（2026-11-06）
 
 D236完成，15定向通过；原280组完成107、剩173。D319/D320待审核，旧窗口和既有验证缺口保留。回执verification/maintenance/code-constraints-enemy-error-boundary-20261106/summary.json。

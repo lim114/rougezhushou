@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "敌人行程资料异常处理收窄",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "6014f8f1cfd7c725e911841ac454a31f3765a32c",
+  "changed_sources": [
+    "rouge/current_route_itinerary.py",
+    "tests/test_route_itinerary_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_route_itinerary.py": "e770eb76bf135b646fa4f7a6cc28173d642a72a84a495c9244b9df65eee66392",
+    "tests/test_route_itinerary_error_boundary.py": "42b0df71622d9b81b2f942ab1e8910de1f1ee4d986566b28683fbb5f5935479f"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D246"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 18,
+    "tests_failed": 0,
+    "tests_run": 18,
+    "command": "python -m unittest tests.test_route_itinerary_error_boundary tests.test_current_route_itinerary_375",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-206",
+    "old_source_regression": "3 new tests reproduce8 subtest failures on original source. Final18 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D246 approved:catch file/path and JSON parse failures only; verified manifest and derivation errors propagate. No helper or duplicate validation added.",
+    "requirements": "Route order, unassigned actions, source identity and position conditions unchanged;18 targeted tests pass."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

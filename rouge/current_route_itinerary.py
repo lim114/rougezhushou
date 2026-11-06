@@ -17,18 +17,21 @@ def same(a,b):
     if type(a)in(list,tuple):return len(a)==len(b)and all(same(x,y)for x,y in zip(a,b))
     return a==b
 def packet():
-    try:
-        raw=battle.version._file(MANIFEST).read_bytes()
-        if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        m=json.loads(raw)
-        if m['schema']!='current_route_itinerary_375_manifest_v1'or set(m['files'])!={PACK+'/scope-inventory.json',PACK+'/source-notes.json'}:return None
-        objects={}
-        for name,pin in m['files'].items():
-            body=battle.version._file(name).read_bytes()
-            if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
-            objects[name]=json.loads(body)
-        return{'inventory':objects[PACK+'/scope-inventory.json'],'notes':objects[PACK+'/source-notes.json'],'identity':MANIFEST_SHA256}
-    except(OSError,ValueError,KeyError,TypeError):return None
+    try:raw=battle.version._file(MANIFEST).read_bytes()
+    except(OSError,ValueError):return None
+    if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
+    try:m=json.loads(raw)
+    except(UnicodeError,json.JSONDecodeError):return None
+    if m['schema']!='current_route_itinerary_375_manifest_v1'or set(m['files'])!={PACK+'/scope-inventory.json',PACK+'/source-notes.json'}:return None
+    objects={}
+    for name,pin in m['files'].items():
+        try:body=battle.version._file(name).read_bytes()
+        except(OSError,ValueError):return None
+        if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
+        try:objects[name]=json.loads(body)
+        except(UnicodeError,json.JSONDecodeError):return None
+    return{'inventory':objects[PACK+'/scope-inventory.json'],'notes':objects[PACK+'/source-notes.json'],'identity':MANIFEST_SHA256}
+
 def _derive(current,source_identity):
     level=current['level'];grid=level['mapData']['map'];rows=len(grid);cols=len(grid[0]);entries=[];bound=set();unassigned=[]
     for scope,field in(('base','routes'),('extra','extraRoutes')):
@@ -53,8 +56,7 @@ def stage_reference(stage_id):
     if current is None or ref is None or ref['inventory']['battle_identity']!=current['source_identity']:return None
     selected=ref['inventory']['stages'].get(stage_id)
     if selected is None or selected['level_key']!=current['level_key']or selected['original_source']!=current['source']:return None
-    try:return _derive(current,ref['identity'])
-    except(ValueError,KeyError,TypeError,IndexError):return None
+    return _derive(current,ref['identity'])
 def routes(result,query='',scope=None):
     if type(result)is not dict or type(query)is not str or scope not in dict(SCOPES):return[]
     q=query.strip().casefold()
