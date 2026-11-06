@@ -1,3 +1,7 @@
+## 当前断点：事件作战对话框关闭只执行一次（2026-11-06）
+
+关闭链路2次改为1次，7视图+1关闭按钮检查通过，测试窗口更新。D225—D226登记，共189组待审；回执verification/maintenance/code-constraints-event-battle-dialog-close-20261106/summary.json，继续其它普通冗余与生命周期核对。
+
 ## 当前断点：事件作战单次查找与重复关闭整改（2026-11-06）
 
 单次查找、result入口判断和刷新重复关闭已修；14初轮/7最终视图通过，窗口已更新。187组待审未改，整模块数47不变。回执verification/maintenance/code-constraints-event-battle-lookup-close-20261106/summary.json；继续剩余生命周期及其它模块。

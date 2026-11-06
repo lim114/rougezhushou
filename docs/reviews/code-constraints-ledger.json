@@ -1784,13 +1784,13 @@
     },
     {
       "file": "rouge/current_event_battles_view.py",
-      "sha256": "006464418e9f9d80b3df48bd7a95c97e83b9dac9203e6dde650392f737fbb152",
+      "sha256": "c3d86b424e57908448ac991d0bf795b39bb912f8bffdaa6243abc190faa36d7c",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "single_stage_lookup_and_result_entry_check; refresh_delegates_close_to_selection",
-      "rule2": "no_new_helpers",
-      "rule3": "D221_D224_unchanged",
-      "evidence": "stage_label retrieves matching row once and retains unknown label. _selected checks result once before choice. refresh always dispatches _selected with keep=False when source changes, so initial close removed; targetless retained selection still closes, changed selection already closed. 14 initial targeted tests pass; final view7 pass after close cleanup. Same27 scopes71 choices202 labels. Remaining lifecycle and pending defenses prevent whole-module certification."
+      "rule1": "dialog_close_delegates_to_reject_once",
+      "rule2": "removed_redundant_closeEvent_override",
+      "rule3": "D225_D226_pending",
+      "evidence": "Native Qt probe: close previously called each panel close method twice; reject once. Removed dialog closeEvent wrapper, after both paths call each once. Panel closeEvent remains for independent panel use; ToolPage finished wiring separately inspected. Seven view tests and exact titlebar close/destroy test pass. Shared navigation fallback is normal host selection; packet freshness and failed reader behavior listed D225 D226. Remaining lifecycle not certified."
     }
   ]
 }

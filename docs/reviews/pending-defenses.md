@@ -218,3 +218,6 @@
 | D222 | 同packet清单摘要/schema/版本/文件成员、大小/摘要以及当前choices/scenes/stages原件比对 | 来源漂移拒绝展示；DATA复用已核验values字节 | 建议保留来源一致性职责；替代信任固定资料，错版可能继续展示。原样待审 |
 | D223 | 同packet相对路径/ROOT范围/文件及父目录链接拒绝 | 拒绝越界和链接部署 | 建议保留或另定可加载范围；替代允许链接和外部路径。原样待审 |
 | D224 | current_event_battles.reference/locate/choice/stage_has_reference参数类型拒绝 | 内部错误类型返回无资料，部分包装与下层重复类型校验 | 建议确定边界后只在入口校验；替代保留公开查询接口保护。合法None、类别/前缀筛选、双查询互斥和无匹配返回不属于本项。原样待审 |
+
+| D225 | CurrentEventBattlesPanel.open_battle/open_full_flow点击时重新reference，变化则clear_reference并返回False | 页面展示后来源改变，撤下旧选项及子窗；两次核对发生于不同时间 | 建议保留点击时失效撤下；替代使用显示时快照，可能继续打开过期来源。原样待审 |
+| D226 | CurrentEventBattlesPanel.open_battle预览refresh_reference失败关闭、make_reader返回None不显示 | 作战资料无法核实时撤下或拒绝预览；正常无选择分支不含本项 | 建议保留创建/刷新失败出口；替代直接访问会抛错或保留失效窗口。原样待审，不扩大到共享工厂全部保护 |

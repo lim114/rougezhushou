@@ -1,3 +1,7 @@
+## 维护：事件作战对话框重复关闭修正（2026-11-06）
+
+移除重复closeEvent包装，保留reject统一清理，定向检查通过。[回执](verification/maintenance/code-constraints-event-battle-dialog-close-20261106/README.md)。
+
 ## 维护：事件作战查找与关闭整改（2026-11-06）
 
 已修本批普通冗余并通过定向检查，未计模块整体完成。[回执](verification/maintenance/code-constraints-event-battle-lookup-close-20261106/README.md)。

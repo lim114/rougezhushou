@@ -123,6 +123,5 @@ class CurrentEventBattlesDialog(PlayerDialog):
         super().__init__(parent);self.setWindowTitle('事件与固定作战 · 选项和版本核对');layout=QVBoxLayout(self);self.panel=CurrentEventBattlesPanel(event_id,choice_id,stage_id,self);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,760,600)
-    def closeEvent(self,event):self.panel._close_battle();self.panel._close_flow();super().closeEvent(event)
 
     def reject(self):self.panel._close_battle();self.panel._close_flow();super().reject()
