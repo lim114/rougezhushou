@@ -1,5 +1,7 @@
 ## 维护：统计历史读取错误出口收窄（2026-11-06）
 
+- 2026-11-06：D87删除主题入口不可达None及无用返回，18项定向通过。回执 `verification/maintenance/code-constraints-reader-theme-contract-review-20261106/summary.json`。
+
 - 2026-11-06：D90删除事件面板缺清理方法兜底，21种实际面板、11项定向通过。回执 `verification/maintenance/code-constraints-event-cleanup-review-20261106/summary.json`。
 
 - 2026-11-06：D94事件查询160字限制明确提示、不截断并支持恢复；26定向通过。回执 `verification/maintenance/code-constraints-event-query-review-20261106/summary.json`。

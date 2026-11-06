@@ -594,15 +594,15 @@
     },
     {
       "file": "rouge/player_map_reader.py",
-      "sha256": "42bfd3abf66ea77bd20bfa1b06af14ec51b65e7958c43c8ba4524b4336171516",
+      "sha256": "46c884e027f8deaff77483d9aab215bd1a9e4972f41511722d109baae1dadcd0",
       "rule1": "validated_id_read_directly_and_final_theme_applied_once_at_battle_constructor",
       "rule2": "removed_second_theme_pass_without_new_wrapper",
-      "rule3": "pending_user_review",
+      "rule3": "D87_implemented_D88_remaining",
       "decisions": [
         "D87",
         "D88"
       ],
-      "evidence": "Standalone battle uses existing ToolPopover object_name/extra_style parameters to construct final reference theme once; shared ToolPage unchanged. readable and prepare_reference_window AST plus make_reader entry guard unchanged (D87/D88 pending). Event dialog constructors mix already-themed PlayerDialog and raw QDialog; no blanket removal. Further event paths and pending guards prevent full-module certification."
+      "evidence": "36 direct/forwarding call sites verified; readable nullable branch and unused return removed;18 targeted checks pass. D88 remains; not whole-module complete."
     },
     {
       "file": "rouge/current_shadow_view.py",

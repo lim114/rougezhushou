@@ -14,10 +14,8 @@ QDialog#mapReferenceWindow QPlainTextEdit,QDialog#mapReferenceWindow QTextBrowse
 '''
 
 def readable(dialog):
-    if dialog is not None:
-        from .player_theme import apply_theme
-        dialog.setObjectName('mapReferenceWindow');apply_theme(dialog,'dark',extra=REFERENCE_STYLE)
-    return dialog
+    from .player_theme import apply_theme
+    dialog.setObjectName('mapReferenceWindow');apply_theme(dialog,'dark',extra=REFERENCE_STYLE)
 
 def prepare_reference_window(dialog,width,height):
     from PySide6.QtWidgets import QPushButton

@@ -1,0 +1,45 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "资料窗口主题入口删除不可达空值兜底",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "76ce8db7b2158c20a0b6197a0210fa98b41e5a1d",
+  "changed_sources": [
+    "rouge/player_map_reader.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map_reader.py": "46c884e027f8deaff77483d9aab215bd1a9e4972f41511722d109baae1dadcd0"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D87"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 18,
+    "command": "python -m unittest tests.test_event_reader_layout_review tests.test_event_theme_ownership_review",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-159",
+    "preflight_failure": "Initial caller assertion missed prepare_event_dialog forwarding layer; no source edited. Test log path creation failed; initial pipeline not counted. Four forwarding callers then verified.",
+    "live_window": {
+      "status": "not_updated",
+      "reason": "Automatic approval rejected combined remote-fetch/old-app-stop/restart command. Existing app left running; no new-source Windows acceptance claimed."
+    }
+  },
+  "review": {
+    "standards": "36 external call sites including four event preparation callers pass constructed self; sole forwarding call takes dialog. readable guard and unused return removed; shared theme and size policies retained.",
+    "requirements": "D87 approved contract verified; 18 theme/layout tests pass. No change to optional make_reader result or D88 input guard."
+  },
+  "remaining": [
+    "D88 reader input contract",
+    "Other modules and cross-entry checks"
+  ]
+}
