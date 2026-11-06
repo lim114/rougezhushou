@@ -164,7 +164,7 @@ class CurrentSunBossPanel(QWidget):
         if mapped is None:
             self.status.setText('这份准确固定地图暂时无法核对，旧地图已关闭；不借用同名熄日。'); return False
         from .current_map_position_view import CurrentMapPositionDialog
-        child = CurrentMapPositionDialog(mapped['stage_id'], self)
+        child = CurrentMapPositionDialog(mapped['stage_id'], self, initial_reference=mapped['map'])
         if child.panel.result is None or child.panel.result != mapped['map']:
             child.panel.clear_reference(); child.close(); return False
         child.finished.connect(lambda _result: self._map_finished(child))

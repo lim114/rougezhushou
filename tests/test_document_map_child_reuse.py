@@ -14,7 +14,9 @@ class DocumentMapChildReuseTests(unittest.TestCase):
             with self.subTest(stage=stage):
                 panel = cls(stage, key)
                 self.addCleanup(panel.close)
-                self.assertTrue(panel.open_map())
+                with patch.object(maps.model, 'stage_reference', wraps=maps.model.stage_reference) as read:
+                    self.assertTrue(panel.open_map())
+                    read.assert_called_once_with(stage)
                 with patch.object(maps.model, 'stage_reference', wraps=maps.model.stage_reference) as read:
                     self.assertTrue(panel.refresh_reference())
                     read.assert_called_once_with(stage)

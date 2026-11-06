@@ -104,7 +104,7 @@ class CurrentOriginalCenters(QWidget):
             p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setPen(QPen(QColor('#ffb4ee'),3));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(center,8,8);p.drawLine(center+QPointF(-13,0),center+QPointF(13,0));p.drawLine(center+QPointF(0,-13),center+QPointF(0,13))
 
 class CurrentMapPositionPanel(QWidget):
-    def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None):
+    def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None,initial_reference=...):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None
         self.reference_loader=reference_loader
         layout=QVBoxLayout(self);self.notice=QLabel('点选原图编号或格子，查看对应位置。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
@@ -113,7 +113,7 @@ class CurrentMapPositionPanel(QWidget):
         split=self.map_split=QSplitter();self._map_sizes={};self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);split.setSizes([500,650]);layout.addWidget(split,2)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'格子与位置说明');self.tabs.addTab(self.technical,'地形与核对依据');layout.addWidget(self.tabs,1)
         self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(lambda _:self._combo_selected(self.combo));self.refresh_button.clicked.connect(self.refresh_reference)
-        if not defer_load:self.refresh_reference()
+        if not defer_load:self.refresh_reference(prepared_reference=initial_reference)
         self.original.markerSelected.connect(lambda key:self.combo.setCurrentIndex(self.combo.findData(key)));self.marker_toggle.toggled.connect(self.original.set_markers_visible)
         self.terrain_kind.currentIndexChanged.connect(self._terrain_changed);self.terrain_cells.currentIndexChanged.connect(lambda _:self._combo_selected(self.terrain_cells))
     def clear_reference(self):
@@ -185,7 +185,7 @@ from .player_window_frame import PlayerDialog
 
 
 class CurrentMapPositionDialog(PlayerDialog):
-    def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self);layout.addWidget(self.panel)
+    def __init__(self,stage_id,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self,initial_reference=initial_reference);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,960,640)

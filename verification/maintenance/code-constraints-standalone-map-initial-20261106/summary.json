@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "独立地图首开复用父级核验结果",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "8097977f6c6e9316104b2928bcd4eb5d20fd8cf9",
+  "changed_sources": [
+    "rouge/current_map_position_view.py",
+    "rouge/current_sun_boss_view.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_document_map_child_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position_view.py": "c2200c27a69f494eab9690693be14b731ab436ad8fe0bca44190fc8386d25c24",
+    "rouge/current_sun_boss_view.py": "6e796872e15557be9814fba1565cc6c737ff635482e38c7a1cd00b8678cb722b",
+    "rouge/current_boss_documents_view.py": "3c06e9f0bfebbe7b703c9b13b4e2593c46e90006a686eee92a96cb85367063b4",
+    "tests/test_document_map_child_reuse.py": "425047b3a7f04fc58888533a35e2bf285a2e29223e340867b9cfa15ad9d8692e"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D280",
+    "D284"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 31,
+    "tests_passed": 31,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_map_child_reuse tests.test_current_map_position_view_319 tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-230",
+    "old_source_regression": "Old parent modules reproduce2 failed subcases for first-open double reading.",
+    "reused_evidence": "verification/maintenance/code-constraints-shared-map-loader-20261106/summary.json shared loading path unchanged, covered by previous35 targeted checks.",
+    "live_window": "Isolated Qt only; original test window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 complete within approved paths: standalone initial data used once without storing for later refresh. Shared loader, existing child refresh and parent validated source reuse from prior receipts. No new helper/catch/defense.",
+    "requirements": "Independent later refresh still reads; image failure clearing and full parent-child result comparison retained. Standalone first open and parent refresh read map once. Source/geometry guards preserved."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

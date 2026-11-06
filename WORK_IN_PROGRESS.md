@@ -1,3 +1,7 @@
+## 当前断点：独立地图首开复用父级核验结果（2026-11-06）
+
+D280/D284完成，31定向通过，旧父模块2子项复现双读。原280组完成130、剩150；原待审/测试窗口和既有验收缺口保留。回执 verification/maintenance/code-constraints-standalone-map-initial-20261106/summary.json。
+
 ## 当前断点：共享地图核验结果直接交给读取器（2026-11-06）
 
 D280/D284共享读取链完成，35定向通过；独立对话框首开仍有预读/构造重复，整组待完成。原280组完成128、剩152不变。回执 verification/maintenance/code-constraints-shared-map-loader-20261106/summary.json。原待审及验收缺口保留。
