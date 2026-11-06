@@ -127,3 +127,5 @@
 
 | D148 | recipient_native_ratio._source的OSError捕获、固定SHA256不符返回None及诊断未知传播 | 固定原件派生包读不到/字节不符时不计算封存数值，仍返回声明与未知结果；lru_cache也会缓存None | 建议保留证据绑定和未知出口，缓存失效策略另议；替代直接抛出或取消绑定会改变可用性/来源口径。原样未改，待审核 |
 | D149 | recipient_native_ratio._cultivation查不到已选固定模组时ValueError | 输入身份已通过，但本地固定培养目录缺项时报告明确错误 | 建议保留；替代移除会在后续访问时报内部异常。仅此位置，原样未改，待审核 |
+
+| D150 | RecipientNativeRatioPanel._append与calculate的ValueError/TypeError出口 | 正常格式/范围错误需要提示；TypeError还会把内部缺陷当输入问题，_append捕获范围也包含序列化与界面更新 | 建议保留正常ValueError提示、删除TypeError兜底并收窄_append到解析/验证；替代保留原范围。两处原样未改，待审核，不包含其它面板 |

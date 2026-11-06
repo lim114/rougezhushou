@@ -111,16 +111,14 @@ class RecipientNativeRatioPanel(QWidget):
     def _append(self):
         try:
             payload = self.current_query()
-            recipient_native_ratio_diagnostic(payload)
-            if payload['operator'] != self.operator.currentData():
-                raise ValueError('追加原值的干员与编辑中的培养作用域不符。')
-            payload['observations'].append({'label': self.label.text(),
+            observation = {'label': self.label.text(),
                 'hp': _integer_text(self.hp.text(), '当前HP'),
                 'max_hp': _integer_text(self.maximum.text(), '最大HP'), 'unit': self.unit.currentData(),
                 'post_clamp_ratio_raw': _integer_text(self.post_raw.text(), '后置原值') if self.post_known.isChecked() else None,
-                'evidence': {'kind': self.evidence_kind.currentData(), 'source': self.evidence_source.text()}})
-            recipient_native_ratio_diagnostic(payload)
-            self.editor.setPlainText(json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False))
+                'evidence': {'kind': self.evidence_kind.currentData(), 'source': self.evidence_source.text()}}
+            result = recipient_native_ratio_diagnostic(payload, append_observation=observation,
+                expected_operator=self.operator.currentData(), validate_only=True)
+            self.editor.setPlainText(json.dumps(result['declaration'], ensure_ascii=False, indent=2, allow_nan=False))
         except (ValueError, TypeError) as error:
             self.status.setText(str(error))
 

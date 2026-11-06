@@ -1264,13 +1264,23 @@
     },
     {
       "file": "rouge/recipient_native_ratio.py",
-      "sha256": "66f5e2d268f00a7006bf42e14d6a27464809502202c5fc4fd9a672e593cae855",
-      "rule1": "native_ratio_whole_source_review_pending_defenses",
+      "sha256": "54f13deda5046f2fed9e329868e83144225144274e78e0e6b8349a49376b3f19",
+      "rule1": "native_ratio_append_validation_boundary_review_complete",
       "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
-      "rule3": "D148_D149_pending",
+      "rule3": "D148_D149_unchanged",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Complete module and view callers reviewed. Standalone raw boundary retains exact validation; shared numeric core is consumed by boundary, validated observations and binary search. Integer/raw input caps prove prepared values fit 0<=numerator<=positive denominator<=MAX_RAW. Core AST unchanged. Single-caller _last_true_value inlined at cache miss. Repeated required-field set/text lambda moved outside loops. _integer/_label and cultivation object validation are substantive boundaries; missing-source/hash and missing-module protections left pending. View append performs two full diagnostics and remains separate ordinary unfinished work."
+      "evidence": "Diagnostic entry accepts optional append observation and expected owner. Checks parent/owner/cultivation/list capacity once, then every old/new row once. Original empty list still rejected and total capacity remains 32. Validation-only mode stops before numeric core/binary search/report construction; caller input remains unchanged. Default report path and original numeric core unchanged. Existing unavailable-source and missing-module defenses untouched."
+    },
+    {
+      "file": "rouge/recipient_native_ratio_view.py",
+      "sha256": "149fbbd16026c10f355393af73643a45ec7974e5e5becdd402f99a2133278234",
+      "rule1": "native_ratio_view_full_source_review_pending_exception_scope",
+      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
+      "rule3": "D150_pending",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Entire view and MainWindow receiver contract reviewed. Append no longer preflights full original and recomputes combined report: it calls one validation-only boundary, updates editor only on success. Existing signal clears stale displayed result only after editor change; failure preserves editor/result. set_context really receives None from MainWindow and keeps valid selection. JSON duplicate/nonfinite rejection is input grammar, not incidental defense. Helpers _unique_pairs/_integer_text have real callback/multiple input roles; no new wrapper. Existing ValueError/TypeError catches remain pending D150."
     }
   ]
 }

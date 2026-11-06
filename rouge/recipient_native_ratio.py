@@ -124,17 +124,25 @@ def _cultivation(operator, value, source):
             'selected_trait': deepcopy(trait), 'actual_module_attachment_verified': False}
 
 
-def recipient_native_ratio_diagnostic(payload):
+def recipient_native_ratio_diagnostic(payload, *, append_observation=None, expected_operator=None, validate_only=False):
+    """Validate declarations once; calculate ratio references when requested."""
     if type(payload) is not dict or set(payload) != {'operator', 'cultivation', 'observations'}:
         raise ValueError('诊断需要operator、cultivation和observations。')
     operator = payload['operator']
     if type(operator) is not str or operator not in OPERATORS:
         raise ValueError('诊断只支持已证古米、黍、苏苏洛的对应模组。')
+    if expected_operator is not None and operator != expected_operator:
+        raise ValueError('追加原值的干员与编辑中的培养作用域不符。')
     source = _source()
     cultivation = _cultivation(operator, payload['cultivation'], source)
     observations = payload['observations']
-    if type(observations) is not list or not 1 <= len(observations) <= 32:
+    appending = append_observation is not None
+    limit = 31 if appending else 32
+    if type(observations) is not list or not 1 <= len(observations) <= limit:
         raise ValueError('原值观察声明需要1–32项。')
+    if appending:
+        observations = [*observations, append_observation]
+        payload = {**payload, 'observations': observations}
     info = source['operators'][operator] if source is not None else None
     boundary = None if info is None else source['threshold_raw'] + (source['epsilon_raw'] if info['comparison'] == 'LE' else -source['epsilon_raw'])
     rows, names, limits, previous = [], set(), {}, None
@@ -161,6 +169,8 @@ def recipient_native_ratio_diagnostic(payload):
         if type(evidence['kind']) is not str or evidence['kind'] not in ('formula_reference', 'public_case', 'game_panel_declaration'):
             raise ValueError('证据kind需要formula_reference、public_case或game_panel_declaration。')
         _label(evidence['source'], '原值证据来源')
+        if validate_only:
+            continue
         native = None if source is None else _positive_ratio_division(hp * scale, maximum * scale, trace=True)
         ratio = None if native is None else native['ratio_raw']
         exact_truncated = None if source is None else (hp * ONE) // maximum
@@ -207,6 +217,8 @@ def recipient_native_ratio_diagnostic(payload):
                 'native_HP_trajectory_or_event_order': None}
         rows.append(row)
         previous = row
+    if validate_only:
+        return {'declaration': deepcopy(payload)}
     return {'scope': 'native_division_stage_and_independent_post_ratio_reference',
         'operator': operator, 'operator_name': info['name'] if info else operator,
         'declaration': deepcopy(payload), 'cultivation': cultivation,

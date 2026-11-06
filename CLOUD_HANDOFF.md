@@ -11,7 +11,7 @@
 
 最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `CODE_CONSTRAINTS_REVIEW_IN_PROGRESS`。已采集1场，完成录像对照0场。
 
-当前实现维护：原值诊断复用已验证培养与数值输入；回执 `verification/maintenance/code-constraints-recipient-prepared-inputs-20261105/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+当前实现维护：追加观察一次验证并取消无用诊断计算；回执 `verification/maintenance/code-constraints-recipient-append-validation-20261105/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
