@@ -23,7 +23,7 @@ LABELS = {
 def _number(value, name):
     try:
         valid = not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(value) and value >= 0
-    except (OverflowError, ValueError):
+    except OverflowError:
         valid = False
     if not valid:
         raise ValueError(name + '需要有限非负数。')

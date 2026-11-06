@@ -61,8 +61,6 @@ def _panel_value(data, channel, model):
 
 def _timing_value(data, channel, model, calculation):
     from .timing_calibration import _timing_prediction
-    if not isinstance(data, dict) or set(data) != {'scenario', 'observation'}:
-        raise ValueError('时刻样本需为scenario与独立observation。')
     reference = _timing_prediction(model, calculation)
     result = _compare_bounded_reference(reference, data['observation'], 0, Fraction(0))
     collection = (result['release_interval_rows'] if channel['metric'] == 'release_interval' else

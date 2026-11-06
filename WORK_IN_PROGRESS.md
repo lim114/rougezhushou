@@ -1,3 +1,7 @@
+## 当前断点：校准链入口整改（2026-11-06）
+
+D111/D112/D113完成，78项定向通过；原280组剩248组。原生来源摘要缺口与新版窗口仍待补。回执verification/maintenance/code-constraints-calibration-boundaries-review-20261106/summary.json。
+
 ## 当前断点：数值与校准契约整改（2026-11-06）
 
 D106/D109完成，26项通过；原生面板7处失败在旧源码也复现，catalog.py冻结来源摘要不符待核。原280组剩251组；新版窗口待补。回执verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json。

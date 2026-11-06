@@ -1,0 +1,48 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "校准时刻结构复用与数值异常收窄",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "13a64150e3c2452d47d1adcf45834e9fd21838cb",
+  "changed_sources": [
+    "rouge/calibration_experiment.py",
+    "rouge/timing_calibration.py",
+    "rouge/bounded_calibration.py"
+  ],
+  "source_sha256": {
+    "rouge/calibration_experiment.py": "3cfce0738cb329da35b7dd3f5564f376722524813e2ab5571ef84f264f60d8a6",
+    "rouge/timing_calibration.py": "ebd67caad616ec398f0a093b06cf0dce12730d7787509920841be8789dd0dd88",
+    "rouge/bounded_calibration.py": "508089b131a86bc1c0b07707775cb0bed989b6abe0bad939ff111de9c86c4203"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D111",
+    "D112",
+    "D113"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 78,
+    "command": "python -m unittest tests.test_calibration_number_boundary_review tests.test_calibration_experiment tests.test_bounded_calibration tests.test_timing_calibration",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-168",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Timing private adapter reuses caller data structure check. Both numeric entries keep OverflowError only; no wrapper or new guard.",
+    "requirements": "D111/D112/D113 approved scopes. Builtin invalid numeric values rejected; zero valid; internal ValueError identity retained; timing/public experiment coverage passes."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

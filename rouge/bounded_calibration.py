@@ -15,7 +15,7 @@ STATES = ('all_compatible', 'possible_overlap', 'no_overlap', 'model_unknown', '
 def _number(value, name):
     try:
         good = not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(value) and 0 <= value <= 1e12
-    except (ValueError, OverflowError):
+    except OverflowError:
         good = False
     if not good:
         raise ValueError(name + '需要0–1e12范围内的有限数；界限由调用方声明。')
