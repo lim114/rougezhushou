@@ -21,7 +21,8 @@ def forecasts(result, config):
         return {}
     grade=difficulty_value(config.get('difficulty'))
     current=result['difficulty_reference'].get(str(grade))
-    old_profile=config_data()['difficulties'].get(str(grade))
+    configuration=config_data()
+    old_profile=configuration['difficulties'].get(str(grade))
     reason=None
     if grade is None or current is None:
         reason='本页尚无已支持的常规保密等级，未借用其它难度或模式。'
@@ -36,7 +37,7 @@ def forecasts(result, config):
             if current_reference is None:
                 reason='此关的当前关卡与敌人属性来源无法核对，未借用旧计算。'
     zone=config.get('zone')or{}
-    zone_name=zone.get('name')or config_data()['zones'].get(zone.get('id'),{}).get('name')or'区域未确认'
+    zone_name=zone.get('name')or configuration['zones'].get(zone.get('id'),{}).get('name')or'区域未确认'
     raw_grade=(config.get('difficulty')or{}).get('value')
     label='保密等级 '+str(raw_grade if raw_grade is not None else'未确认')+' · '+zone_name
     difficulty_reference=({'profiles':result['difficulty_reference'],'source':result['difficulty_source']}
