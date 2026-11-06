@@ -1,0 +1,47 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "治疗附加器直接读取已生成结果",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "84c31b1effe8a3781f5affb40e5911cad75ece99",
+  "changed_sources": [
+    "rouge/susuro_healing.py",
+    "rouge/guardian_healing.py",
+    "tests/test_healing_result_contract_review.py"
+  ],
+  "source_sha256": {
+    "rouge/susuro_healing.py": "1ceb6f92a7787c624f99fae598ac0edbe1d76366b464b602cc358b220fb0b001",
+    "rouge/guardian_healing.py": "ecfc51a0da487c0861c749253c40aa6df02e53ab1bd11078b4896a11620d589a",
+    "tests/test_healing_result_contract_review.py": "b225663536c08ef34074674e1a5d92945ca286e7df56c5c236868e457e6314d9"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D147"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 28,
+    "command": "python -m unittest tests.test_healing_result_contract_review tests.test_healing_unlock_contract_review tests.test_susuro_module_healing tests.test_guardian_healing_gates",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-178",
+    "before": "Two tests, fourteen missing-field subcases failed; normal unknown/zero/positive subtotal semantics passed.",
+    "live_window": "Pending closure of old app after policy rejection; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "D147 removes four fallback expressions across two consumers; no new checks/helpers/catches.",
+    "requirements": "Combat.calculate emits six skill healing fields and top total before both attachment calls; no deletion on this path. Missing fields raise; explicit None/zero and known positive subtotal behavior unchanged."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

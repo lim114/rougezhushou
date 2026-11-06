@@ -5136,3 +5136,7 @@ D136保留复核、D137整改完成，31项定向通过。回执：verification/
 ## 维护：治疗模组直接读取候选解锁条件（2026-11-06）
 
 D145完成，26项定向通过。回执：verification/maintenance/code-constraints-healing-unlock-review-20261106/summary.json。不增加功能节数。
+
+## 维护：治疗附加器直接读取已生成结果（2026-11-06）
+
+D147完成，28项定向通过。回执：verification/maintenance/code-constraints-healing-result-review-20261106/summary.json。不增加功能节数。

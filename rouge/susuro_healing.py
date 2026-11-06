@@ -63,13 +63,13 @@ def attach_result(result,ref):
     if ref['qualified'] is not None:return
     skill=result['estimate']['skill']
     fields=('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps')
-    result['known_healing_subtotals']={key:skill.get(key) for key in fields}
+    result['known_healing_subtotals']={key:skill[key] for key in fields}
     affected=False
     for key,value in result['known_healing_subtotals'].items():
         if value not in (None,0):
             skill[key]=None
             affected=True
-    total=result.get('total_healing')
+    total=result['total_healing']
     if total not in (None,0):
         result['total_healing']=None
         affected=True

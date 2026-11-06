@@ -1,3 +1,7 @@
+## 当前断点：治疗附加器直接读取已生成结果（2026-11-06）
+
+D147完成，28项定向通过；原280组剩235组。D144及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-healing-result-review-20261106/summary.json。
+
 ## 当前断点：治疗模组直接读取候选解锁条件（2026-11-06）
 
 D145完成，26项定向通过；原280组剩236组。D144/D147及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-healing-unlock-review-20261106/summary.json。
