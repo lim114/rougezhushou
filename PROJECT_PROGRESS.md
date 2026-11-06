@@ -122,4 +122,4 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 
 - D296剩余：reference/entity/view_result其余入口重复核对；resolve_related重复刷新已修。组合模型+Qt检查异常退出未确定原因，分进程22项通过；见`verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json`。
 
-- D280/D284剩余：父级预读与共享verify链；共享地图构造/首次prepare重复读取已消除。窗口尺寸测试在旧源码上同样受隔离屏幕约束失败，见`verification/maintenance/code-constraints-shared-map-initial-load-20261106/summary.json`。
+- D280/D284剩余：共享地图reader与verify回调的重复读取；父级重复预读已删除，独立路径预读保留。见`verification/maintenance/code-constraints-shared-map-preflight-20261106/summary.json`。既有窗口尺寸850/776验收缺口保留。

@@ -138,14 +138,15 @@ class CurrentBossDocumentsPanel(QWidget):
         self.enemy_requested.emit(request['enemy_key']); self.status.clear(); return True
 
     def open_map(self):
-        mapped = model.map_reference(self.result); self._close_map()
-        if mapped is None:
-            self.status.setText('这份准确固定地图无法核对，旧地图已关闭；不借用同名或其他版本地图。'); return False
+        self._close_map()
         from .player_reference_links import open_fixed_map
-        opened=open_fixed_map(self,mapped['stage_id'],
+        opened=open_fixed_map(self,self.stage_id,
             context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.result['level_key']),
             verify=lambda reader:(fresh:=model.map_reference(self.result))is not None and reader.result==fresh['map'])
         if opened is not None:return opened
+        mapped = model.map_reference(self.result)
+        if mapped is None:
+            self.status.setText('这份准确固定地图无法核对，旧地图已关闭；不借用同名或其他版本地图。'); return False
         from .current_map_position_view import CurrentMapPositionDialog
         child = CurrentMapPositionDialog(mapped['stage_id'], self)
         if child.panel.result is None or child.panel.result != mapped['map']:

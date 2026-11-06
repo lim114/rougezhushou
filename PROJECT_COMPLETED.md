@@ -5310,3 +5310,7 @@ D280/D284仅刷新链部分完成；31定向通过，独立刷新及异源撤下
 ## 维护：共享地图首次显示只加载一次（2026-11-06）
 
 D280/D284部分完成：共享入口延迟加载，独立窗口保持立即加载；最终11定向通过。首次失败及旧窗口尺寸失败留存，完整链未销项。回执：`verification/maintenance/code-constraints-shared-map-initial-load-20261106/summary.json`。
+
+## 维护：共享地图删除父页面重复预读（2026-11-06）
+
+D280/D284部分推进，25定向通过；共享入口先由prepare核对，独立入口预读与结果对照保留，整组未销项。回执：`verification/maintenance/code-constraints-shared-map-preflight-20261106/summary.json`。

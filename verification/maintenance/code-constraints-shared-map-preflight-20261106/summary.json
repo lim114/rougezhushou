@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "共享地图删除父页面重复预读",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "1bdbf64938d3b59f47e081e726e5a621fda1e826",
+  "changed_sources": [
+    "rouge/current_sun_boss_view.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_document_shared_map_preflight.py"
+  ],
+  "source_sha256": {
+    "rouge/current_sun_boss_view.py": "061d39338862f22e59b8fb05c8ef59f56d3c8aa752e51c6f9c36a983070262d0",
+    "rouge/current_boss_documents_view.py": "b8356f2029474ab192fc4073066bf6ee181225e81433380627b217db9d1ef8ff",
+    "tests/test_document_shared_map_preflight.py": "716a18b86d715ef42205e5e1096c0032ea690dbfc1d7a8ce343678ba2daf0bfe"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 25,
+    "tests_passed": 25,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_shared_map_preflight tests.test_shared_map_initial_load tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-228",
+    "old_source_regression": "New integration test reproduces2 failed subcases on old parent modules.",
+    "live_window": "Real Qt shared-page composition in isolated mode; original window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 partial: shared path relies on its existing prepare+verify instead of first calling map_reference in parent. Standalone path still preloads and compares child result. No new abstraction/catch/defense.",
+    "requirements": "One documentary-map verification in shared path, failed verify discards page. Independent paths and owned-map failure tests pass. Map reader vs verification callback duplicate remains pending."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D280",
+    "D284"
+  ]
+}
