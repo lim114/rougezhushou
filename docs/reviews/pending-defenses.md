@@ -187,3 +187,8 @@
 
 | D199 | CurrentStartupPanel.__init__：传入target重新调用locate并比较完整对象，不符则忽略选中目标 | 可拦截过期或错误目标，但与上游已定位入口可能重复读取；未授权不得直接删除 | 建议核对构造期间来源变化职责后保留一次身份检查；替代直接信任上游目标。当前原样待审，普通分支复用不改变此处 |
 | D200 | CurrentStartupPanel._choice_changed：QPixmap文件加载后isNull时跳过setPixmap | 图片缺失或解码失败显示空图但保留名称；错误未明确提示 | 建议保留缺图处理并明确失败表现；替代显式报告加载错误。本项不授权模型图片摘要和文件保护，原样待审 |
+
+| D201 | CurrentReconstructionPanel._update_specific 的QPixmap.loadFromData失败转图片暂缺 | 有字节但不能解码时继续保留事件文字，图片失败不直接上报；raw=None单独作为接口无图状态 | 建议保留解码替代显示，或明确报告解码失败；本项不覆盖模型图片文件校验。原样待审 |
+| D202 | CurrentRestingPanel._update_specific 的QPixmap.loadFromData失败转图片暂缺 | 同上，源私钥图片失败仍保留文字 | 建议保留替代显示，或明确报告错误；与D191模型图源保护分开。原样待审 |
+| D203 | CurrentReconstructionPanel._update_specific/open_catalogue：先offers.packet预检，已有子窗再refresh_reference，或新建子窗再次packet；刷新失败关闭子窗 | 资料失效时撤下目录，事件正文仍可用；同次操作有重复读源；点击与此前显示检查是不同时间点 | 建议合并同次预检与子窗读取，保留点击时及刷新失效撤下职责；替代维持多次读取覆盖期间变化。涉及保护改动，暂不改，也不算普通重复已整改 |
+| D204 | CurrentRestingPanel._update_specific：已打开原件对照在refresh_reference失败时关闭；open_original的_recheck与target为空拒绝 | 原资料失效或冲突原项无法定位时撤下/拒绝对照，避免继续显示旧资料 | 建议保留失效撤下和点击复核；冲突定位重新读源已登记D193，需一并界定复用范围，勿当不同授权。allow_original_popup=False是正常单层对照功能，不属本项。原样待审 |

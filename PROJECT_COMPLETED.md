@@ -1,3 +1,7 @@
+## 维护：子窗生命周期审查记录（2026-11-06）
+
+完成两个视图及相关调用链的检查和保护登记；未把待审重复读源算整改完成，整模块数不变。[回执](verification/maintenance/code-constraints-owned-event-children-review-20261106/README.md)。
+
 ## 维护：行动奖励分支复用（2026-11-06）
 
 子类复用父类返回分支，删除同次重复查找，5项定向通过。整模块仍待防御审核。[回执](verification/maintenance/code-constraints-startup-selection-reuse-20261106/README.md)。
