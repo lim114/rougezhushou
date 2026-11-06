@@ -57,8 +57,8 @@ def choice_reference(result,sid,cid):
     if not(s and c and cid in s['choice_ids']and sid in c['scene_ids']):return None
     return {**deepcopy(c),'scene_id':sid}
 
-def battle_target(result,sid,cid):
-    c=choice_reference(result,sid,cid)
+def battle_target(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     if c is None or not c['has_documented_battle_link']:return None
     from .current_event_battles import locate as locate_battle
     return locate_battle('choices',cid)

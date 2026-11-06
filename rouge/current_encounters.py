@@ -65,8 +65,8 @@ def choice_reference(result,sid,cid):
     if not(s and c and cid in s['choice_ids']and c['scene_id']==sid):return None
     row=deepcopy(c);row['listed_condition_match']=result['declared_has_controller']if c['required_item_id']else None;return row
 
-def battle_target(result,sid,cid):
-    c=choice_reference(result,sid,cid)
+def battle_target(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     if c is None or not c['has_documented_battle_link']or c['listed_condition_match']is False:return None
     from .current_event_battles import locate as battle_locate
     targets=[battle_locate('choices',key)for key in c['variant_ids']]

@@ -18,7 +18,6 @@ class CurrentLakePanel(DocumentedEventFlowPanel):
             self.scene.setCurrentIndex(0)
             if self.result:replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=False)
         else:self._select_requested()
-        self._sync_outcomes()
 
     def _select_requested(self):
         if self.requested_choice is None:return
@@ -31,23 +30,24 @@ class CurrentLakePanel(DocumentedEventFlowPanel):
         if self.result and self.scene_id is None and self.requested_choice in self.result['choices']:
             replace_text(self.player,model.phase_prompt(self.result,self.requested_choice),preserve=preserve)
 
-    def _sync_outcomes(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;outcomes=c['documented_outcomes']if c else[]
+    def _sync_outcomes(self,c):
+        outcomes=c['documented_outcomes']if c else[]
         for i,button in enumerate(self.outcome_buttons):
-            button.setVisible(i<len(outcomes));button.setEnabled(i<len(outcomes));button.setProperty('sceneId',outcomes[i]['scene_id']if i<len(outcomes)else None)
-            if i<len(outcomes):button.setText('查看文献结果：'+model.scene_label(self.result,outcomes[i]['scene_id']).removeprefix('随机结果：'))
+            active=i<len(outcomes)
+            button.setVisible(active);button.setEnabled(active);button.setProperty('sceneId',outcomes[i]['scene_id']if active else None)
+            if active:button.setText('查看文献结果：'+model.scene_label(self.result,outcomes[i]['scene_id']).removeprefix('随机结果：'))
 
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve)
-        self._sync_outcomes()
+        c=super()._choice_changed(item,*args,preserve=preserve)
+        self._sync_outcomes(c)
         if self.result is None:return
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id);hint=bool(c and c['has_documented_battle_link']);target=model.battle_target(self.result,self.scene_id,self.choice_id)if hint else None
+        hint=bool(c and c['has_documented_battle_link']);target=model.battle_target(self.result,self.scene_id,self.choice_id,choice=c)if hint else None
         self.battle_button.setVisible(hint);self.battle_button.setEnabled(target is not None);self.battle_button.setText('查看本选项的作战配置与固定地图')
         if target is None:self._close_battle()
         if preserve and self.battle_dialog is not None and self.battle_dialog.isVisible():self.battle_dialog.panel.refresh_reference()
 
     def clear_reference(self):
-        self.requested_choice=None;super().clear_reference();self._sync_outcomes()
+        self.requested_choice=None;super().clear_reference();self._sync_outcomes(None)
 
     def open_documented_outcome(self,sid):
         if not self._recheck():return False

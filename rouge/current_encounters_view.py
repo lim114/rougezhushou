@@ -22,9 +22,9 @@ class CurrentEncountersPanel(DocumentedEventFlowPanel):
     def _condition_changed(self,*_):self._close_battle();self.refresh_reference()
 
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve)
+        choice=super()._choice_changed(item,*args,preserve=preserve)
         if self.result is None:return
-        choice=model.choice_reference(self.result,self.scene_id,self.choice_id);hint=bool(choice and choice['has_documented_battle_link']);target=model.battle_target(self.result,self.scene_id,self.choice_id)if hint else None
+        hint=bool(choice and choice['has_documented_battle_link']);target=model.battle_target(self.result,self.scene_id,self.choice_id,choice=choice)if hint else None
         self.battle_button.setVisible(hint);self.battle_button.setEnabled(target is not None);self.battle_button.setText('查看本选项的作战配置与固定地图')
         if target is None:self._close_battle()
         if preserve and self.battle_dialog is not None and self.battle_dialog.isVisible():self.battle_dialog.panel.refresh_reference()

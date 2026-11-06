@@ -1480,13 +1480,13 @@
     },
     {
       "file": "rouge/current_encounters.py",
-      "sha256": "26a77bc6dd09ac6e645d0cc84772e94688d8c531ae918704f16289d11a5d74fe",
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
+      "sha256": "d17dfaf681fec8cf9e60b183872d72f1673d2a8653b0267a56b32cd4acfa7860",
+      "rule1": "reuse_choice_for_outcomes_and_battle_target",
+      "rule2": "remove_lake_duplicate_constructor_sync_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "evidence": "Lake/encounters reuse base choice for outcomes/battle hints and battle_target; standalone battle_target unchanged by default. Lake duplicate constructor sync removed and per-button range condition computed once. Encounter condition callback retains close-then-refresh behavior (not a redundant forwarding wrapper). No guard/catch removed. First-selection old/new text/buttons equal, reads3to1 and2to1; whole-module review remains incomplete."
     },
     {
       "file": "rouge/current_peace.py",
@@ -1570,13 +1570,13 @@
     },
     {
       "file": "rouge/current_lake.py",
-      "sha256": "e797a76536429cdf41e15eae2d88d5f3dc35af38daeb49ebd67208b17c96a9ba",
+      "sha256": "9cb3352a1a77c507fdfffcb099f55f080ab65153e4feec4d24c26a9072f83f48",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "rule1": "reuse_choice_for_outcomes_and_battle_target",
+      "rule2": "remove_lake_duplicate_constructor_sync_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Lake/encounters reuse base choice for outcomes/battle hints and battle_target; standalone battle_target unchanged by default. Lake duplicate constructor sync removed and per-button range condition computed once. Encounter condition callback retains close-then-refresh behavior (not a redundant forwarding wrapper). No guard/catch removed. First-selection old/new text/buttons equal, reads3to1 and2to1; whole-module review remains incomplete."
     },
     {
       "file": "rouge/current_lone_dog.py",
@@ -1677,6 +1677,26 @@
       "rule2": "no_new_helpers_public_standalone_calls_preserved",
       "rule3": "no_guard_or_catch_removed",
       "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+    },
+    {
+      "file": "rouge/current_lake_view.py",
+      "sha256": "c3948a00376d0e572acbf089a12d85616d12b9540c2bfc42a78fe5846013b071",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "reuse_choice_for_outcomes_and_battle_target",
+      "rule2": "remove_lake_duplicate_constructor_sync_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Lake/encounters reuse base choice for outcomes/battle hints and battle_target; standalone battle_target unchanged by default. Lake duplicate constructor sync removed and per-button range condition computed once. Encounter condition callback retains close-then-refresh behavior (not a redundant forwarding wrapper). No guard/catch removed. First-selection old/new text/buttons equal, reads3to1 and2to1; whole-module review remains incomplete."
+    },
+    {
+      "file": "rouge/current_encounters_view.py",
+      "sha256": "c92d6c8147fd579d7aa236561f3fffba083a1e295483675dd4361ba58bfc7eff",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "reuse_choice_for_outcomes_and_battle_target",
+      "rule2": "remove_lake_duplicate_constructor_sync_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Lake/encounters reuse base choice for outcomes/battle hints and battle_target; standalone battle_target unchanged by default. Lake duplicate constructor sync removed and per-button range condition computed once. Encounter condition callback retains close-then-refresh behavior (not a redundant forwarding wrapper). No guard/catch removed. First-selection old/new text/buttons equal, reads3to1 and2to1; whole-module review remains incomplete."
     }
   ]
 }

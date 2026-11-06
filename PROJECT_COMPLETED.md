@@ -1,3 +1,7 @@
+## 维护：湖中仙女与遭遇事件分支及作战入口复用（2026-11-06）
+
+4模块相关路径去重，遭遇7初轮通过、湖7复测通过及两类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-lake-encounters-choice-20261106/README.md)。
+
 ## 维护：愈创商店洞穴面板重复刷新与按钮判断整改（2026-11-06）
 
 3模块相关路径去重，16定向与3类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-tree-shop-cave-reuse-20261106/README.md)。
