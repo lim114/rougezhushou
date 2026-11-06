@@ -63,8 +63,8 @@ def choice_reference(result,sid,cid):
     c=deepcopy(c);c['documented_no_move_reference']=True if c['role']=='move'and result['declared_completed_reference']is True else None
     return c
 
-def shows_reward(result,sid,cid=None):
-    c=choice_reference(result,sid,cid)
+def shows_reward(result,sid,cid=None,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     return sid==result['data']['joined_scene_id']or bool(c and c['role']=='join')
 
 def player_text(result,sid,cid=None):
@@ -85,7 +85,7 @@ def player_text(result,sid,cid=None):
         if c['next_scene_id']:lines+=['','【可翻阅的后续】'+scene_label(result,c['next_scene_id']),'按钮只翻阅资料，不执行接取、发放或移动。']
     elif result['scenes'][sid]['choice_ids']:lines+=['','请选择一条资料分支；后续结果分开阅读，不作为本局已经发生的事实。']
     else:lines+=['','完整资料未列出更多后续；不自动接回悬赏或补出作战。']
-    if shows_reward(result,sid,cid):
+    if shows_reward(result,sid,cid,choice=c):
         item=next(iter(result['data']['originals']['items'].values()))
         lines+=['','【悬赏收藏品】'+item['name']+'（当前固定版本说明，不代表已持有）',version._plain(item['usage']),
                 '【生效时点】敌人生命减少限定于与“居民”作战；永久攻速奖励还要求作战胜利。',
@@ -120,8 +120,9 @@ def catalogue_binding(record):
     if any(k not in record or not same(record[k],v)for k,v in row['expected_summary'].items()):return None
     if 'scenes'in record and not same(record['scenes'],row['expected_legacy_event']['scenes']):return None
     if not same(node_catalog._event(record['id']),row['expected_legacy_event']):return None
+    identity=json.loads(json.dumps(r['source_identity']))
     return {**deepcopy(row),'legacy_event_id':record['id'],'title':'和平守卫者','reader':'peace343',
             'current_event':deepcopy(r['event']),'current_original_scenes':deepcopy(r['data']['originals']['scenes']),
-            'current_source_identity':json.loads(json.dumps(r['source_identity'])),
-            'source_identity':(MANIFEST_SHA256,json.loads(json.dumps(r['source_identity']))),'reference_only':True,
+            'current_source_identity':identity,
+            'source_identity':(MANIFEST_SHA256,deepcopy(identity)),'reference_only':True,
             'actual_node_version_confirmed':False,'actual_scene':None,'actual_choice':None,'run_updated':False}

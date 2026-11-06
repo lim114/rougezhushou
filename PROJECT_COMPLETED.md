@@ -1,3 +1,7 @@
+## 维护：和平守卫者分支与来源标识复用（2026-11-06）
+
+文字与面板复用分支，目录来源转换一次，18定向及90状态对照通过；窗口更新。[回执](verification/maintenance/code-constraints-peace-choice-reuse-20261106/README.md)。仅完成这些路径，未整模块销项。
+
 ## 维护：具名奖励来源与标识重复准备整改（2026-11-05）
 
 7类来源共用同操作已核对包，标识按来源转换并逐行隔离，20定向与589定位等对照通过，窗口更新。[回执](verification/maintenance/code-constraints-named-provider-reuse-20261105/README.md)。不计整模块完成。
