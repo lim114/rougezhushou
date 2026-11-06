@@ -1,3 +1,7 @@
+## 当前断点：敌人搜索使用已归一化资料契约（2026-11-06）
+
+D38完成，5项定向通过；三份固定关卡的生成记录核对。原280组完成163、剩117；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json`。
+
 ## 当前断点：凭据读取区分系统失败与缺失并修正通用文件提示（2026-11-06）
 
 D39/D40完成，6项定向通过，微软CredRead文档已核对；不读取真实密钥。原280组完成162、剩118；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json`。

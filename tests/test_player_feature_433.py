@@ -10,9 +10,10 @@ class EnemyTextLookup(unittest.TestCase):
   self.assertTrue(matches(row,'沉默'));self.assertTrue(matches(row,'隐匿'))
   self.assertFalse(matches(row,'BOSS'));self.assertFalse(matches(row,'opaque-id'))
  def test_negative_sentence_is_text_match_not_a_silence_qualification(self):
-  self.assertTrue(matches({'name':'测试','description':'不能被沉默'},'沉默'))
+  self.assertTrue(matches({'name':'测试','description':'不能被沉默','abilities':[]},'沉默'))
  def test_empty_and_invalid_queries_do_not_invent_hidden_mechanism(self):
-  self.assertTrue(matches({'name':'测试'},''));self.assertFalse(matches(None,'测试'));self.assertFalse(matches({'name':'测试'},'尚未公开的机制'))
+  row={'name':'测试','description':'','abilities':[]}
+  self.assertTrue(matches(row,''));self.assertFalse(matches(row,'尚未公开的机制'))
 
 class ExactPortraitRecovery(unittest.TestCase):
  def enemy(self):return next(e for e in battle.stage_reference('ro6_b_5_b')['enemies']if e['id']=='enemy_1250_lyengs_2')

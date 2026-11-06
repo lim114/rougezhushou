@@ -5422,3 +5422,7 @@ D297完成；入口保证模板至少10个有效像素，二值分母至少10，
 ## 维护：凭据读取区分系统失败与缺失并修正通用文件提示（2026-11-06）
 
 D39/D40完成；仅ERROR_NOT_FOUND返回空，系统错误上报；通用文案不保证保存状态。6项模拟凭据检查通过。回执 `verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json`。
+
+## 维护：敌人搜索使用已归一化资料契约（2026-11-06）
+
+D38完成；内部坏数据不再伪装成不匹配，来源已提供字符串文本，5项定向通过。回执 `verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json`。

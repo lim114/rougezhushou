@@ -113,14 +113,21 @@
     },
     {
       "file": "rouge/player_enemy_search.py",
-      "sha256": "ef9604cb7c275eaff52a47b320d70f60c285be34c211393d1eb732e6b99101b6",
+      "sha256": "7cf14421ae3c4d4e5eec3001f3fdb842b4faa7cdb75f01c593627470adcd3a6b",
       "rule1": "clear_except_pending_defense",
       "rule2": "reviewed_no_single_use_wrapper_found",
       "rule3": "pending_user_review",
       "decision": "D38",
       "trigger": "matches：非字典敌人/非字符串查询返回False；资料片段非字符串被忽略",
       "impact": "坏数据静默当作不匹配，可能隐藏内部类型错误",
-      "recommendation": "核对当前读取入口契约后删除内部坏类型兜底，或保留并注明过滤范围"
+      "recommendation": "核对当前读取入口契约后删除内部坏类型兜底，或保留并注明过滤范围",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json",
+          "scope": "D38 producer-backed string contract; invalid internals surface",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/credentials.py",

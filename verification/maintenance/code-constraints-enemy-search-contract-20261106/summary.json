@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "敌人搜索使用已归一化资料契约",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "386fdc92a511a665121e198888f50cdffb3cbf23",
+  "changed_sources": [
+    "rouge/player_enemy_search.py",
+    "tests/test_player_feature_433.py",
+    "tests/test_enemy_search_contract.py"
+  ],
+  "source_sha256": {
+    "rouge/player_enemy_search.py": "7cf14421ae3c4d4e5eec3001f3fdb842b4faa7cdb75f01c593627470adcd3a6b",
+    "tests/test_player_feature_433.py": "4c0474394bb6d97c29b534822e3861370e3d7ddf5affa8b884035687556e41fb",
+    "tests/test_enemy_search_contract.py": "362f5668b75c454f34b45df967f481bb696309df53d5dd0d82aac1068873e152"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D38"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_enemy_search_contract tests.test_player_feature_433.EnemyTextLookup",
+    "tests_run": 5,
+    "tests_passed": 5,
+    "seconds": 0.535,
+    "live_window": "Model contract tests only; original test window update pending."
+  },
+  "review": {
+    "standards": "D38 production caller CurrentBattlePanel.install_enemy_choices receives normalized enemy_records and QLineEdit string. enemy_records plain() supplies name/description/abilities strings. Removed internal dict/query type fallback and silent non-string exclusion; no new guard/helper.",
+    "requirements": "Three pinned stage producers verified; name/empty queries match; mechanism text only, no tier/id or hidden inference. Bad internal shape/type raises. Old partial test fixtures migrated to complete production records; new explicit invalid tests assert errors."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}
