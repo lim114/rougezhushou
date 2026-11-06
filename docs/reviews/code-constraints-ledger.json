@@ -2291,13 +2291,20 @@
     },
     {
       "file": "rouge/current_stage_objects.py",
-      "sha256": "4934437d0f2be49b8ba684b76a517e22568594a93855e0577190d6443dde3d3f",
+      "sha256": "e76fead88d8a22dea568652a6d33a813352627c0c5c7b8d56a3cefd59701392d",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "character_skill_list_reused_without_changing_index_bounds",
       "rule2": "description_two_calls; from_battle_used_by_battle_panel_and_stage_reference",
       "rule3": "D241_D245_pending",
-      "evidence": "Entire object model read, real view and battle callers inspected. Skill list read once per object and used for traversal/index length/access.3 targeted source/text checks pass; 555 old/new derive cases across37 public entities and skill index/level variants equal. These do not establish full model correctness. Remaining input/position repetition under pending protections."
+      "evidence": "Entire object model read, real view and battle callers inspected. Skill list read once per object and used for traversal/index length/access.3 targeted source/text checks pass; 555 old/new derive cases across37 public entities and skill index/level variants equal. These do not establish full model correctness. Remaining input/position repetition under pending protections.",
+      "object_error_boundary": {
+        "decisions": [
+          "D241"
+        ],
+        "receipt": "verification/maintenance/code-constraints-object-error-boundary-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_route_itinerary.py",

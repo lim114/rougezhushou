@@ -5236,3 +5236,5 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 - 2026-11-06：D224查询类型契约与重复校验整改完成；16项通过，1项原源码同现界面失败保留待办。回执 `verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json`。
 
 - 2026-11-06：D213/D217查询契约整改，32项定向通过；回执 `verification/maintenance/code-constraints-sand-ritual-query-contract-20261106/summary.json`。
+
+- 2026-11-06：D241物件资料错误出口收窄，最终18定向通过；回执 `verification/maintenance/code-constraints-object-error-boundary-20261106/summary.json`。

@@ -1,3 +1,7 @@
+## 当前断点：关卡物件资料异常捕获收窄到读取入口（2026-11-06）
+
+D241完成，最终18定向通过，首轮语法错误已修正并留证；原280组完成106、剩174。D230/D232共享窗口首次打开核验尚待合并，未销项。回执verification/maintenance/code-constraints-object-error-boundary-20261106/summary.json。
+
 ## 当前断点：线人与仪式查询区分错误类型和未选择（2026-11-06）
 
 D213/D217完成，32定向通过；原280组完成105、剩175。D319/D320待答复；旧界面测试及原窗口更新缺口保留。回执verification/maintenance/code-constraints-sand-ritual-query-contract-20261106/summary.json。

@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "关卡物件资料异常捕获收窄到读取入口",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "85e5717cba05832b8cde51032eb23153cbbdf1fc",
+  "changed_sources": [
+    "rouge/current_stage_objects.py",
+    "tests/test_stage_objects_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_stage_objects.py": "e76fead88d8a22dea568652a6d33a813352627c0c5c7b8d56a3cefd59701392d",
+    "tests/test_stage_objects_error_boundary.py": "b82f82aeb93ffab5267be6c6a8ce2ff7cfee1d46709b0a30802ba04ca5880a0d"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D241"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 18,
+    "tests_failed": 0,
+    "tests_run": 18,
+    "command": "python -m unittest tests.test_stage_objects_error_boundary tests.test_current_stage_objects_373",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-204",
+    "old_source_regression": "4 new tests,8 subtest failures on original source.",
+    "first_round": "Source replacement left obsolete text and failed import with SyntaxError; corrected and retained first-tests.txt. Final18 pass.",
+    "live_window": "No UI change; original-window update remains pending."
+  },
+  "review": {
+    "standards": "D241:only file/path and JSON parse operations caught; verified manifest contracts and derivation errors propagate. No helper or duplicate validation added.",
+    "requirements": "Preserved path refusal, digest/size/version/source identity rules. Existing object suite and new error contract pass."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

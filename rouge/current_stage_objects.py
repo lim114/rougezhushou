@@ -18,21 +18,24 @@ def same(a,b):
     if type(a)in(list,tuple):return len(a)==len(b)and all(same(x,y)for x,y in zip(a,b))
     return a==b
 def packet():
-    try:
-        raw=battle.version._file(MANIFEST).read_bytes()
-        if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(raw)
-        if manifest['schema']!='current_stage_objects_373_manifest_v1'or manifest['game_commit']!=battle.version.NEW_COMMIT:return None
-        if set(manifest['files'])!={PACK+'/selected-originals.json',PACK+'/source-selection.json',PACK+'/source-notes.json',PACK+'/source-extraction-audit.json',PACK+'/scope-inventory.json'}:return None
-        objects={}
-        for name,pin in manifest['files'].items():
-            body=battle.version._file(name).read_bytes()
-            if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
-            objects[name]=json.loads(body)
-        selected=objects[PACK+'/selected-originals.json']
-        if selected['commit']!=battle.version.NEW_COMMIT:return None
-        return{'selected':selected,'sources':objects[PACK+'/source-selection.json'],'notes':objects[PACK+'/source-notes.json'],'identity':MANIFEST_SHA256,'inventory':objects[PACK+'/scope-inventory.json']}
-    except(OSError,ValueError,KeyError,TypeError):return None
+    try:raw=battle.version._file(MANIFEST).read_bytes()
+    except(OSError,ValueError):return None
+    if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
+    try:manifest=json.loads(raw)
+    except(UnicodeError,json.JSONDecodeError):return None
+    if manifest['schema']!='current_stage_objects_373_manifest_v1'or manifest['game_commit']!=battle.version.NEW_COMMIT:return None
+    if set(manifest['files'])!={PACK+'/selected-originals.json',PACK+'/source-selection.json',PACK+'/source-notes.json',PACK+'/source-extraction-audit.json',PACK+'/scope-inventory.json'}:return None
+    objects={}
+    for name,pin in manifest['files'].items():
+        try:body=battle.version._file(name).read_bytes()
+        except(OSError,ValueError):return None
+        if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
+        try:objects[name]=json.loads(body)
+        except(UnicodeError,json.JSONDecodeError):return None
+    selected=objects[PACK+'/selected-originals.json']
+    if selected['commit']!=battle.version.NEW_COMMIT:return None
+    return{'selected':selected,'sources':objects[PACK+'/source-selection.json'],'notes':objects[PACK+'/source-notes.json'],'identity':MANIFEST_SHA256,'inventory':objects[PACK+'/scope-inventory.json']}
+
 def description(value):
     text=re.sub(r'\{[^}]+\}','（具体数值待核对）',value or'')
     return battle.plain(text).replace('\\n','\n').strip()
@@ -70,8 +73,7 @@ def from_battle(current):
     if reference['inventory']['battle_identity']!=current['source_identity']or stage_id not in reference['inventory']['stages']:return None
     declared=reference['inventory']['stages'][stage_id]
     if declared['level_key']!=current['level_key']or declared['original_source']!=current['source']:return None
-    try:return _derive(current,reference)
-    except(ValueError,KeyError,TypeError,IndexError):return None
+    return _derive(current,reference)
 def rows(result,query='',kind=None,link=None):
     if type(result)is not dict or type(query)is not str or kind not in dict(KINDS)or link not in dict(LINKS):return[]
     wanted=query.strip().casefold()
