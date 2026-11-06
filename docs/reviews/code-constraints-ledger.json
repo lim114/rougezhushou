@@ -1955,6 +1955,32 @@
         "D270"
       ],
       "evidence": "Entire source read against current_map_position caller and dedicated marker tests. No source changes; no new runtime validation claimed."
+    },
+    {
+      "file": "rouge/reference_copy.py",
+      "sha256": "b6709f6824450068129d5a41b8c29a31d560fefd57b9fc977a8d87c52b52aa8a",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "rule1": "Single dictionary lookup preserves absent and empty replacement semantics",
+      "rule2": "Single coherent presentation function, no wrappers",
+      "rule3": [],
+      "evidence": "Full code/callers read; copy has no exception or rare-defense branches.132 unchanged string mappings,2484 old-new cases equal,6 targeted tests pass."
+    },
+    {
+      "file": "rouge/current_terrain.py",
+      "sha256": "aa424a5bf67bb7782b8e03556d192bcf82e6073070929d236e4b5799df39066c",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Number and blackboard validation/duplicate handling pending D273-D275",
+      "rule2": "Text/change helpers reused; parameter parser is coherent domain work, not an arbitrary one-line wrapper",
+      "rule3": [
+        "D271",
+        "D272",
+        "D273",
+        "D274",
+        "D275"
+      ],
+      "evidence": "Full source and dedicated numerical edge tests read; no terrain source modification; no new mechanism or value claims."
     }
   ]
 }

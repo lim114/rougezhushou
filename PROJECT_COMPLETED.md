@@ -1,3 +1,7 @@
+## 维护：说明文字模块完成整改（2026-11-06）
+
+reference_copy三条约束核对完成，重复查表已改；地形模块仅登记待审，不销项。[回执](verification/maintenance/code-constraints-reference-copy-terrain-review-20261106/README.md)。
+
 ## 维护：地图标记资料回顾记录（2026-11-06）
 
 三份源码与调用核对完成，首层补充模块前两条规则核对完成；全模块仍待保护审批。[回执](verification/maintenance/code-constraints-map-marker-contract-review-20261106/README.md)。

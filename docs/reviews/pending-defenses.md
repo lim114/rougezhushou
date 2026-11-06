@@ -276,3 +276,9 @@
 | D268 | 上述两模块packet清单路径语法、文件/父目录链接、resolve范围检查 | 拒绝路径越界与链接文件，ROOT.resolve逐成员重复 | 建议保留路径职责并确定是否可入口一次计算；替代信任固定清单。原样待审 |
 | D269 | 两模块清单摘要/schema/commit/成员集合/文件长度摘要与data/bindings核对、mapping_for入口类型/STAGES | 错包、错版或非支持关卡返回None；外层也筛选STAGES | 建议保留来源职责，确认公共入口后合并重复判断及并行清单流程；替代各模块独立验证。原样待审 |
 | D270 | 两模块mapping_for核对关卡、图片、完整几何及各点tileKey，上层current_map_position再次核对图片/几何 | 防止标记套错地图，但同次链路重复来源对照 | 建议确定唯一绑定入口后复用核验结果；替代保留逐层核对。原样待审，不以登记销项 |
+
+| D271 | current_terrain.evidence_identity整段OSError/ValueError/KeyError/TypeError捕获 | 文件及内部格式错误统一无证据返回 | 建议收窄到资料解析入口；替代保留统一出口。原样待审 |
+| D272 | evidence_identity清单/成员链接与根目录范围、摘要/schema/长度核对 | 错源或损坏证据不用于地形说明，重复ROOT.resolve | 建议保留证据职责并确认根路径是否可一次解析；替代信任清单。原样待审 |
+| D273 | _number精确int/float类型后isfinite仍捕获OverflowError、TypeError | 拒绝非有限值、超大整数；精确内建类型后的TypeError无已知触发 | 建议保留溢出处理，删除TypeError；替代完整保留。数值入口仅_parameters一处调用，是否内联随保护批准处理 |
+| D274 | _parameters黑板/条目/key类型、seen/invalid/重复值剔除及valueStr检查 | 异常或重复参数保持未知；重复key进入invalid后又判invalid | 建议保留歧义处理并合并同次重复判断；替代维持现有流程。普通重复未整改，原样待审 |
+| D275 | terrain_info未知输入降级、read缺值/非负及整数推力/区间顺序判断 | 异常数据不形成数值说明 | 建议保留明确未知与合法值边界；替代将坏资料作为输入错误上报。不授权猜测未知机制，原样待审 |

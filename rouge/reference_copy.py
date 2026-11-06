@@ -152,10 +152,10 @@ def mechanism_copy(text, base_notice, *, extra_detail_headings=()):
             notes.append(line)
         elif line == base_notice:
             continue
-        elif line in SHORT_LINES:
+        elif (short := SHORT_LINES.get(line)) is not None:
             notes.append(line)
-            if SHORT_LINES[line]:
-                body.append(SHORT_LINES[line])
+            if short:
+                body.append(short)
         else:
             body.append(line)
     return '\n'.join(body).strip(), '\n'.join(notes).strip()

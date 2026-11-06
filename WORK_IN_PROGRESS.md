@@ -1,3 +1,7 @@
+## 当前断点：说明文字重复查表整改与地形数值入口回顾（2026-11-06）
+
+reference_copy完整整改通过，6定向/2484旧新组合一致；地形解码新增D271—D275，统一238组待审。测试窗口更新。回执verification/maintenance/code-constraints-reference-copy-terrain-review-20261106/summary.json。
+
 ## 当前断点：三类地图标记资料模块契约回顾（2026-11-06）
 
 三模块全文/调用已核对，源码未改。首层补充模块普通规则核对完成，D42仍待审；新增D267—D270，统一233组。回执verification/maintenance/code-constraints-map-marker-contract-review-20261106/summary.json。
