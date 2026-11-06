@@ -1,3 +1,7 @@
+## 当前断点：十份地图与统计验收源码回顾及循环内重复读取清理（2026-11-06）
+
+434循环外复用筛选结果、清未用导入；439复用树节点。十份源码回顾及编译/入口/清理AST通过；433/434规则销项，其余八份D310待审，共273组。回执verification/maintenance/code-constraints-acceptance-431-440-review-20261106/summary.json。
+
 ## 当前断点：五份商店与历史资料验收源码回顾和重复读取清理（2026-11-06）
 
 426读取复用、426/428清未用导入；五份源码回顾，五编译/六入口及清理AST核对通过。429规则销项，五处状态恢复D309待审，共272组。回执verification/maintenance/code-constraints-acceptance-426-430-review-20261106/summary.json。
@@ -5273,3 +5277,5 @@ P1–3仍未全部完成；下次先看PROJECT_PROGRESS.md的实际缺口，再�
 ## 第95节第三次窗口检验运行断点
 
 已实际启动第三次identity窗口检验；session83856 / launch8555a4。当前仍在运行，未取得原始结束码或最终UI收据。两个历史丢失状态继续保留NULL，六项实际0不重跑。源码735文件未改，96及以后暂停。真实运行快照：/workspace/.continuation/ROOT_CURRENT_WORK_095_UI_IDENTITY_RETRY_RUNNING_V1.json。完成本次UI后继续Saved、四图实看及严格闭合，再报告、commit/push；第三次失败按三次规则搁置，不进行第四次。
+
+本轮统一待审口径：437—440旧账本把finally认作常规夹具清理；与相邻模块的失败恢复待审口径不一致。现先列D310请开发者确认，未改清理代码，不改写旧回执。四份由完整转为待审，新增433/434两份完整，因此总数61→59；不是代码新增缺陷。

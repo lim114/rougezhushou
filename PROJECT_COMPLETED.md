@@ -1,3 +1,7 @@
+## 维护：地图与统计验收源码回顾（2026-11-06）
+
+433/434规则回顾完成，434/439普通冗余修正；其他finally待审。不代表历史功能重新实机通过。[回执](verification/maintenance/code-constraints-acceptance-431-440-review-20261106/README.md)。
+
 ## 维护：商店与历史资料验收源码回顾（2026-11-06）
 
 429模块代码规则回顾完成，426/428普通冗余修正；其余finally待审，不代表历史功能重新实机通过。[回执](verification/maintenance/code-constraints-acceptance-426-430-review-20261106/README.md)。

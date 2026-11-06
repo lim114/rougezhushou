@@ -329,3 +329,5 @@
 | D308 | player_feature_418_acceptance.check的finally清空hover.card；422/423.check的finally恢复window.run.state，共3处 | 验收中途失败仍释放测试卡片/恢复隔离状态；418末尾正常路径也已清空一次 | 建议保留最终清理/恢复并审批后删418重复释放；替代仅成功路径清理。仅本三模块，原样待审；未执行这些历史验收 |
 
 | D309 | player_feature_426_acceptance.check_prices/check、427/428/430.check 的 finally 恢复 window.run.state，共5处 | 验收中途异常仍恢复此前隔离状态；成功路径也恢复 | 建议保留，避免失败后隔离窗口沿用构造状态；替代只成功时恢复，失败后由隔离会话退出清理。未获授权，原样保留；本批未运行这些历史验收 |
+
+| D310 | player_feature_431/432/435/436/437/438/439/440_acceptance.check 的8处finally；438还恢复map_view图和historical标记 | 隔离验收中途失败仍恢复测试前状态，成功也恢复 | 建议保留，避免失败后沿用构造状态或旧地图；替代仅成功时恢复，由隔离会话退出清理。未获授权，全部原样；本批未运行历史验收 |

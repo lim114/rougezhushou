@@ -1,7 +1,6 @@
 def check(window,gui,require):
  from .player_map_reader import make_reader
  from .player_spawn_filters import action_rows,group_key
- from PySide6.QtCore import Qt
  dialog=make_reader('battle',{'id':'ro6_b_7','title':'熄日'},window);dialog.show();gui.processEvents();p=dialog.panel;p.tabs.setCurrentIndex(2)
  require(dialog.windowTitle().startswith(p.result['name']),'floating_stage_title_is_derived_from_exact_stage_source')
  require(p.actions.count()==len(p.result['actions']),'default_preview_retains_complete_original_action_list')
@@ -10,7 +9,8 @@ def check(window,gui,require):
  require(p.actions.count()==len(expected)and all(group_key(a)==group for a in expected),'selected_configuration_group_has_only_exact_original_members')
  p.action_group.setCurrentIndex(0);p.action_focus.setCurrentIndex(p.action_focus.findData('enemy'));gui.processEvents()
  require(p.actions.count()==0 and '请先在敌人页选择'in p.action_filter_notice.text(),'missing_enemy_selection_never_becomes_all_candidates')
- enemy=next(e for e in p.result['enemies']if any(e['key']==candidate['key']for a in action_rows(p.result['actions'],'main')for candidate in a['enemy_candidates']))
+ main_actions=action_rows(p.result['actions'],'main')
+ enemy=next(e for e in p.result['enemies']if any(e['key']==candidate['key']for a in main_actions for candidate in a['enemy_candidates']))
  p.enemy_choices.select_value(enemy['key']);gui.processEvents();expected=action_rows(p.result['actions'],'main',focus='enemy',enemy_key=enemy['key'])
  require(p.actions.count()==len(expected)and p.actions.count()>0,'enemy_reference_filter_keeps_all_matching_candidate_actions')
  p.actions.setCurrentRow(0);key=p.action_key;p.refresh_reference();gui.processEvents()
