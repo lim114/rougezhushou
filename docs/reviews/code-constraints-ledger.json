@@ -3132,7 +3132,7 @@
     },
     {
       "file": "rouge/elite_recognition.py",
-      "sha256": "c6966426a1586bd69441f2a048bac67694aad7e3e42b7d1d21b066ced211e052",
+      "sha256": "db7e73fa0b9027c3c4631a74152c39eea0b183000091e631e33887cf2a15c3b6",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "Repeated immutable size/bounds/mask/viewport geometry computed once; ordinary OCR empty results, cache budget and thresholds preserved",
@@ -3140,7 +3140,14 @@
       "rule3": [
         "D297"
       ],
-      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery"
+      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-elite-denominator-20261106/summary.json",
+          "scope": "D297 proven positive denominator branch removal",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/viewport.py",

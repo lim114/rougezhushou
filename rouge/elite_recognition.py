@@ -31,7 +31,7 @@ def card_elite(image,x,y,space=(1,1)):
                     actual=(cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)>180).astype(np.uint8)
                     # Compare the entire silhouette: elite 1's blades are a subset of elite 2's.
                     denominator=float(np.sum(actual)+mask_pixels)
-                    score=2*float(np.sum(actual&mask))/denominator if denominator else 0
+                    score=2*float(np.sum(actual&mask))/denominator
                     best=max(best,score)
         scores.append((best,elite))
     scores.sort(reverse=True)

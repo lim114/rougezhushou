@@ -1,3 +1,7 @@
+## 当前断点：精英标识匹配删除不可达零分母分支（2026-11-06）
+
+D297完成，3项合成图定向检查通过，不当作实机准确率验收。原280组完成160、剩120；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-elite-denominator-20261106/summary.json`。
+
 ## 当前断点：资源历史页显式初始化对局身份并复用读取（2026-11-06）
 
 D56/D57完成，6项定向通过。原280组完成159、剩121；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-resource-history-state-20261106/summary.json`。
