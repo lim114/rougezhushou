@@ -1,3 +1,7 @@
+## 当前断点：分队账户条件删除三处空记录兜底（2026-11-06）
+
+D304完成，19定向通过、48方案等价。原280组完成132、剩148；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-squad-account-contract-20261106/summary.json。
+
 ## 当前断点：持有条件对照复用同次核验的原始数据（2026-11-06）
 
 D307部分完成，18定向通过、11输出等价；缺字段策略已另问用户，原行为保留。原280组完成131、剩149不变。原测试窗口更新及D319/D320待确认不变。回执 verification/maintenance/code-constraints-held-source-snapshot-20261106/summary.json。

@@ -5330,3 +5330,7 @@ D300：列表复用已读节点；正文状态只读一次，描述复用同一�
 ## 维护：持有条件对照复用同次核验的原始数据（2026-11-06）
 
 仅D307同次读取复用部分完成，18定向通过、11输出等价。缺字段规则待用户确认，整组不销项。回执：`verification/maintenance/code-constraints-held-source-snapshot-20261106/summary.json`。
+
+## 维护：分队账户条件删除三处空记录兜底（2026-11-06）
+
+D304完成；核对TechnologyState.view及生产调用，删除三处不可达空记录分支。19定向通过、48方案等价。回执：`verification/maintenance/code-constraints-squad-account-contract-20261106/summary.json`。

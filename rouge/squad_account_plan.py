@@ -23,9 +23,9 @@ def squad_account_plan(account_state, grade):
         if node:
             row['technology_id'] = node['id']; row['technology_name'] = node['name']
             manual = account_state.view(node['id'])
-            row.update(manual_status=manual['status'] if manual else 'unknown',
-                       manual_source=manual['source'] if manual else None,
-                       manual_updated_at=manual['updated_at'] if manual else None)
+            row.update(manual_status=manual['status'],
+                       manual_source=manual['source'],
+                       manual_updated_at=manual['updated_at'])
             gate = node['gate_reference']
             if gate:
                 row.update(gate_grade_parameter=gate['enable_grade_parameter'],
