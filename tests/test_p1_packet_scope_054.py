@@ -20,6 +20,15 @@ class PacketScope054Tests(unittest.TestCase):
         # A red immutability assertion must not contaminate following tests.
         refill_source.cache_clear()
 
+    def test_missing_rule_collection_is_not_an_empty_supported_source(self):
+        with patch('rouge.ammo_reference.refill_source',return_value={}):
+            with self.assertRaises(KeyError):
+                partial_packet_reference(ANGEL,3,5)
+
+    def test_explicit_empty_rule_collection_has_no_reference(self):
+        with patch('rouge.ammo_reference.refill_source',return_value={'partial_packet_rules':[]}):
+            self.assertIsNone(partial_packet_reference(ANGEL,3,5))
+
     def test_reference_matches_only_the_documented_operator_skill_and_attack_cost(self):
         reference = partial_packet_reference(ANGEL, 3, 5)
         self.assertEqual(reference['partial_last_packet'], 'full_attack')

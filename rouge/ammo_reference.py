@@ -12,7 +12,7 @@ def refill_source():
 
 def partial_packet_reference(operator_id,skill,cost):
     """Only an explicitly documented skill may complete an underfilled packet."""
-    for rule in refill_source().get('partial_packet_rules',[]):
+    for rule in refill_source()['partial_packet_rules']:
         if (rule['operator_id']==operator_id and rule['skill']==skill and
                 rule['attack_cost_reference']==cost and rule['partial_last_packet']=='full_attack'):
             return deepcopy(rule)

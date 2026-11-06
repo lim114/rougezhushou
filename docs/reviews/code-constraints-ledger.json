@@ -1463,13 +1463,17 @@
     },
     {
       "file": "rouge/ammo_reference.py",
-      "sha256": "d6bad7b385300dbdc69fb909691cc627e88b27efd71bfb6ad068dfa12b1f2772",
+      "sha256": "cfa818d8bff7725933e8165be11daddb8bd5b2c176309c5ebe3de2ef646a5f4a",
       "rule1": "refill_parameters_and_callers_reviewed_pending_defenses",
       "rule2": "real_shared_functions_retained_no_new_single_use_wrapper",
       "rule3": "D136_D137_pending",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Full source and actual ammo/refill callers reviewed. Each ratio/interval/type check has a separate input or applicability role. Cached source and detached partial packet are shared ownership boundaries. Two OverflowError catches and optional fixed-source partial_packet_rules remain untouched pending approval."
+      "evidence": "Full source and actual ammo/refill callers reviewed. Each ratio/interval/type check has a separate input or applicability role. Cached source and detached partial packet are shared ownership boundaries. Two OverflowError catches and optional fixed-source partial_packet_rules remain untouched pending approval.",
+      "ammo_source_review": {
+        "receipt": "verification/maintenance/code-constraints-ammo-source-review-20261106/summary.json",
+        "scope": "D136 retained and verified; D137 direct read; not full module certification."
+      }
     },
     {
       "file": "rouge/chen_motion_reference.py",

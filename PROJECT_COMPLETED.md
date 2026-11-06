@@ -5128,3 +5128,7 @@ D131完成，13项定向通过。回执：verification/maintenance/code-constrai
 ## 维护：藏品关联强化在资料入口核验并复用（2026-11-06）
 
 仅D124完成，27项定向通过。回执：verification/maintenance/code-constraints-bound-sp-source-review-20261106/summary.json。不增加功能节数。
+
+## 维护：弹药规则必填读取与已授权数值出口复核（2026-11-06）
+
+D136保留复核、D137整改完成，31项定向通过。回执：verification/maintenance/code-constraints-ammo-source-review-20261106/summary.json。不增加功能节数。

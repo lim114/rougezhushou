@@ -1,3 +1,7 @@
+## 当前断点：弹药规则必填读取与已授权数值出口复核（2026-11-06）
+
+D136/D137完成，31项定向通过；原280组剩237组。培养默认值、其他模块及原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-ammo-source-review-20261106/summary.json。
+
 ## 当前断点：藏品关联强化在资料入口核验并复用（2026-11-06）
 
 D124完成，27项定向通过；原280组剩239组。等级默认值链路已定位但尚未修改，后续按外部入口与内部培养复用共同处理；其他模块及原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-bound-sp-source-review-20261106/summary.json。

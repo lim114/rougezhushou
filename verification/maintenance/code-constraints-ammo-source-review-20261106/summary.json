@@ -1,0 +1,46 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "弹药规则必填读取与已授权数值出口复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "755673c558b5bd9b4223b86d0368156fb09fc943",
+  "changed_sources": [
+    "rouge/ammo_reference.py",
+    "tests/test_p1_packet_scope_054.py"
+  ],
+  "source_sha256": {
+    "rouge/ammo_reference.py": "cfa818d8bff7725933e8165be11daddb8bd5b2c176309c5ebe3de2ef646a5f4a",
+    "tests/test_p1_packet_scope_054.py": "80aa5eab03fff143e4fb9159ed56f1f6729be5af19603d53bae03fd561409875"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D136",
+    "D137"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 31,
+    "command": "python -m unittest tests.test_p1_packet_scope_054 tests.test_ammo_refill_041",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-176",
+    "before": "Two contract tests: missing collection failed to raise; explicit empty collection passed.",
+    "live_window": "Pending closure of old app after policy rejection; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "D137 required collection direct read; no added helper/check/catch. D136 existing two numeric OverflowError exits retained under approval category7.",
+    "requirements": "Absent required source no longer looks unsupported. Explicit empty collection remains legal; huge maximum/interval values retain None/False. Exact operator/skill/cost scope and proof copy isolation tested."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}
