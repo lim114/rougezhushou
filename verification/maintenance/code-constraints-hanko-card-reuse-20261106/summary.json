@@ -1,0 +1,54 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "汉科技能卡与正文复用实体解析",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "00225682987716d5b6aff6491bc863e6a67ba842",
+  "changed_sources": [
+    "rouge/current_hanko.py",
+    "tests/test_hanko_card_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_hanko.py": "59c610fd16f1a80deae45d02c35e8db558e5b0026cf0107b4cf386a23803d8db",
+    "tests/test_hanko_card_reuse.py": "d81980684c9143bb0ba32945ba9a1778f713ecf217147dda4916789a6b2fcf54"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 12,
+    "tests_passed": 12,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_hanko_card_reuse tests.test_current_hanko_365",
+    "local_evidence": ".local/code-constraints-review-222",
+    "old_source_regression": "New2 tests reproduce24 failing subcases on original source.",
+    "equivalence": "24 card and full-text outputs identical to original source across6 stages.",
+    "preparation_failure": "Initial edit script LF separator mismatch failed before writing source; corrected and retained. No tests ran in that attempt.",
+    "live_window": "No UI change; original test window update pending."
+  },
+  "review": {
+    "standards": "D288 partial: topics and selected_card accept same-operation resolved entity; player_text passes its entity through. Independent calls resolve once. No new function or defense.",
+    "requirements": "Entity membership/topic validation and copied card ownership retained. All24 card/text outputs equal. Sun model and view chains still pending."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D288"
+  ]
+}

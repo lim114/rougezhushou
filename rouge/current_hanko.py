@@ -115,15 +115,15 @@ def entity(result, enemy_key):
     return next((deepcopy(row) for row in result['rows'] if row['key'] == enemy_key), None)
 
 
-def topics(result, enemy_key):
-    row = entity(result, enemy_key)
+def topics(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     if row is None: return []
     return [(key, TOPICS[key]) for key in result['data']['profiles'][row['actor']]['topics']]
 
 
-def selected_card(result, enemy_key, topic):
-    row = entity(result, enemy_key)
-    if row is None or type(topic) is not str or topic not in dict(topics(result, enemy_key)): return None
+def selected_card(result, enemy_key, topic, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
+    if row is None or type(topic) is not str or topic not in dict(topics(result, enemy_key, prepared_entity=row)): return None
     index = {'blink': 0, 'flare': 1, 'attack': 2, 'smoke': 0}[topic]
     return deepcopy(result['materials']['actors'][row['actor']]['cards'][index])
 
@@ -177,7 +177,7 @@ def player_text(result, enemy_key=None, topic=None):
             lines += ['', '社区修正版：', corrected,
                       '社区认为游戏内的反隐表述与实际表现不符：照明弹不会清除其中所有隐匿、迷彩。原文与修正均保留，当前服务器执行没有在本页验证。']
     if topic is not None:
-        card = selected_card(result, enemy_key, topic)
+        card = selected_card(result, enemy_key, topic, prepared_entity=row)
         if card is None: return '\n'.join(lines + ['', '所选招式不属于这份准确实体，旧招式内容不显示。'])
         lines += ['', '【完整文献参考 · ' + card['title'] + '】',
                   '以下为通用文献原项，不是本局预测数值；本关覆盖与实际执行仍需单独核对。']

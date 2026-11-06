@@ -1,3 +1,7 @@
+## 当前断点：汉科技能卡与正文复用实体解析（2026-11-06）
+
+D288部分完成，12项定向通过，24组卡片/正文与旧版完全一致。原280组完成126、剩154不变；Sun及视图链路待改。回执 verification/maintenance/code-constraints-hanko-card-reuse-20261106/summary.json。原待审和窗口缺口保留。
+
 ## 当前断点：埃尔伯特资料包复用已解析根目录（2026-11-06）
 
 D294完成，17项定向检查通过；旧代码3测试中1项复现重复解析。原280组完成126、剩154。D281/D296、原组合Qt退出、D319/D320及原窗口待补。回执 verification/maintenance/code-constraints-elbert-root-reuse-20261106/summary.json。

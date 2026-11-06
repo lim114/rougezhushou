@@ -121,3 +121,5 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 - D281剩余：刷新与关联跳转整链核对；同次选择及正文内部实体复用已完成，见`verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json`。
 
 - D296剩余：reference/entity/view_result其余入口重复核对；resolve_related重复刷新已修。组合模型+Qt检查异常退出未确定原因，分进程22项通过；见`verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json`。
+
+- D288剩余：熄日模型及两视图选择链；汉科正文→技能卡→主题已复用实体，24组输出等价。见`verification/maintenance/code-constraints-hanko-card-reuse-20261106/summary.json`。
