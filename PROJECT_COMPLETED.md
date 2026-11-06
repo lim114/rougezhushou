@@ -5096,3 +5096,5 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 - 2026-11-06 D89：事件资料构造错误传参不再冒充缺资料，29项定向通过；回执 verification/maintenance/code-constraints-event-dialog-contract-review-20261106/summary.json。新版窗口待补。
 
 - 2026-11-06 D92：事件目录异常捕获收窄至来源读取，18项定向通过；回执 verification/maintenance/code-constraints-event-error-boundary-review-20261106/summary.json。新版窗口待补。
+
+- 2026-11-06 D88：地图资料入口移除重复记录校验，25项定向通过；回执 verification/maintenance/code-constraints-map-reader-contract-review-20261106/summary.json。新版窗口待补。

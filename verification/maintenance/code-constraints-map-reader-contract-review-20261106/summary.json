@@ -1,0 +1,41 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图资料入口移除重复记录格式检查",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "c049b1bf913af97f1d90513f14705b5546d5e48c",
+  "changed_sources": [
+    "rouge/player_map_reader.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map_reader.py": "892031f9e722baf1486f25f01b4b2177fd9ff0c70beff2bad22c7a6169d060a3"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D88"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 25,
+    "command": "python -m unittest tests.test_map_reader_contract_review tests.test_player_feature_431 tests.test_event_reader_layout_review",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-163",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Battle callers construct records; title unused and loaded from source. Event binding owns record validation. Missing battle id is programmer error. Removed duplicate guard; no wrapper/catch added.",
+    "requirements": "D88 scope: unknown identity, unavailable source and unsupported kinds still return None. Existing source identity validation retained."
+  },
+  "remaining": [
+    "Remaining runtime modules and independent entry contracts",
+    "Test window update"
+  ]
+}

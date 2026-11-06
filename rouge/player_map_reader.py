@@ -26,7 +26,6 @@ def prepare_reference_window(dialog,width,height):
 
 
 def make_reader(kind,record,parent,*,historical=False,config=None,page_owner=None):
-    if not isinstance(record,dict)or not isinstance(record.get('id'),str)or not isinstance(record.get('title'),str):return None
     if kind=='battle':
         identity=record['id']
         from .current_battle_view import CurrentBattlePanel,size_battle_window

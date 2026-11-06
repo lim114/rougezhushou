@@ -594,7 +594,7 @@
     },
     {
       "file": "rouge/player_map_reader.py",
-      "sha256": "46c884e027f8deaff77483d9aab215bd1a9e4972f41511722d109baae1dadcd0",
+      "sha256": "892031f9e722baf1486f25f01b4b2177fd9ff0c70beff2bad22c7a6169d060a3",
       "rule1": "validated_id_read_directly_and_final_theme_applied_once_at_battle_constructor",
       "rule2": "removed_second_theme_pass_without_new_wrapper",
       "rule3": "D87_implemented_D88_remaining",
@@ -602,7 +602,12 @@
         "D87",
         "D88"
       ],
-      "evidence": "36 direct/forwarding call sites verified; readable nullable branch and unused return removed;18 targeted checks pass. D88 remains; not whole-module complete."
+      "evidence": "36 direct/forwarding call sites verified; readable nullable branch and unused return removed;18 targeted checks pass. D88 remains; not whole-module complete.",
+      "record_contract_review": {
+        "decision": "D88",
+        "evidence": "verification/maintenance/code-constraints-map-reader-contract-review-20261106/summary.json",
+        "result": "Battle source owns title; event binding owns validation; 25 tests pass."
+      }
     },
     {
       "file": "rouge/current_shadow_view.py",
