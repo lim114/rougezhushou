@@ -57,7 +57,8 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
             from .current_exchange_reference import target_entry
             from .current_exchange_view import CurrentExchangeDialog
             target=target_entry('choices',source['source_choice_id'])
-            if target is None:self._close_material();self._sync_extra();return False
+            if target is None:
+                self._close_material();self.material_button.hide();self.material_button.setEnabled(False);return False
             new=CurrentExchangeDialog(target,self)
         elif source['kind']=='battle':
             from .current_battle_view import CurrentBattleDialog

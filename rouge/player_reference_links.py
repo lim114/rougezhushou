@@ -161,7 +161,9 @@ def open_material_source(panel, source):
         from .current_exchange_reference import target_entry
         target = target_entry('choices', source['source_choice_id'])
         if target is None:
-            panel._sync_extra()
+            panel._close_material()
+            panel.material_button.hide()
+            panel.material_button.setEnabled(False)
             return False
     else:
         return False

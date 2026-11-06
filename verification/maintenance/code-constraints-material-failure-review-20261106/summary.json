@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "材料来源失败路径删除同次重复定位",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "76d8d57d9c2b7e8477ab4ff319f3209d153803a3",
+  "changed_sources": [
+    "rouge/current_ritual_view.py",
+    "rouge/player_reference_links.py",
+    "tests/test_material_failure_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_ritual_view.py": "558caa9cb23ed7a691c11856c757d421d507854cab3abb337ffd9fef1fb13f2b",
+    "rouge/player_reference_links.py": "57e0fc2f259d55921e625a9e4407c164ce386e01bbc2c84734b2546fa992cc5c",
+    "tests/test_material_failure_review.py": "3cd624d9842aded470c1a5506b68922e3cbd662e32b49b933c9f1ffde8078922"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D219"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 8,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_material_failure_review tests.test_current_ritual_view_324",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-198",
+    "baseline": "Old committed modules: both new failure-path tests fail; final8 pass.",
+    "scope": "Two isolated failed-lookup paths plus existing ritual Qt suite. Shared host is mocked in new test.",
+    "live_window": "Original app update pending user exit."
+  },
+  "review": {
+    "standards": "D219 failed exchange lookup now closes owned material and hides/disables entry directly instead of invoking _sync_extra and repeating lookup. No wrapper or new defense.",
+    "requirements": "Standalone and shared-window paths updated. Display precheck and later click verification retained as separate temporal boundaries; event location failure still clears reference. Event text remains on exchange failure. User refresh can recover."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": true
+}

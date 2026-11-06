@@ -1,3 +1,7 @@
+## 维护：材料来源失败路径删除同次重复定位（2026-11-06）
+
+D219完成，8项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-material-failure-review-20261106/summary.json`。
+
 ## 维护：线人与仪式资料加载入口整改（2026-11-06）
 
 D210–D212、D214–D216完成，22项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-sand-ritual-packets-review-20261106/summary.json`。
