@@ -1,3 +1,7 @@
+## 当前断点：三类机制文献复用本次关卡资料（2026-11-06）
+
+D287/D292部分完成；45项原有检查通过，新增测试关卡输入纠正后2项通过。280组仍完成148、剩132。回执 `verification/maintenance/code-constraints-document-packet-reuse-20261106/summary.json`。
+
 ## 当前断点：文献正文与技术详情复用本次选中实体（2026-11-06）
 
 D281完成，27定向通过，旧视图双重实体读取复现。原280组完成148、剩132；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-boss-document-render-reuse-20261106/summary.json。

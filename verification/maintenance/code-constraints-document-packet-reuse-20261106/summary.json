@@ -1,0 +1,69 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "三类机制文献复用本次关卡资料",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "92f3f60889ef452392e4d5d9c10b0ffb3b41e583",
+  "changed_sources": [
+    "rouge/current_battle_reference.py",
+    "rouge/current_hanko.py",
+    "rouge/current_sun_boss.py",
+    "rouge/current_boss_documents.py",
+    "tests/test_document_packet_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_battle_reference.py": "ee7060154e2caecab596b394a72bf050b321298f5b0bd537983debf5e8036460",
+    "rouge/current_hanko.py": "feca98a678056e350a312b49560cf7484a10c9d680608e96ec064c67129fdd01",
+    "rouge/current_sun_boss.py": "cf79f1cf811b47ace5fc9fc70b6bf20e17bba297d7db6cc628b4e1a7205efcef",
+    "rouge/current_boss_documents.py": "6d32bbbe0c30e7d2b181b64da5e3d5bd42ecd010b5bf53239936c71ed4f8e4da",
+    "tests/test_document_packet_reuse.py": "a3ec0d92c21b5e2be89c0fd4c6d9037bd24431f14ec0d6c4c0aa3f33dbbe332f"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "initial_run": {
+      "run": 47,
+      "passed": 46,
+      "failed": 1,
+      "seconds": 43.606,
+      "reason": "New test used ro6_b_6 for Sun model; supported stage is ro6_b_7. Product source unchanged after this run."
+    },
+    "corrected_test_run": {
+      "run": 2,
+      "passed": 2,
+      "seconds": 1.317
+    },
+    "command": "python -m unittest tests.test_document_packet_reuse tests.test_current_hanko_365 tests.test_current_sun_boss_368 tests.test_current_boss_documents_369 tests.test_current_battle_reference_314",
+    "rerun_command": "python -m unittest tests.test_document_packet_reuse",
+    "live_window": "Original test window update remains pending."
+  },
+  "review": {
+    "standards": "Approved D287/D292 same-operation source reuse only. Existing stage query receives verified packet; independent calls read normally. No helper, catch or new guard.",
+    "requirements": "Three models each call battle.packet once. Prepared/independent stage outputs equal; invalid stage and missing packet still rejected. Existing source/entity checks retained. Remaining parameter/query duplication not closed."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D287",
+    "D292"
+  ]
+}

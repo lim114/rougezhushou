@@ -5374,3 +5374,7 @@ D299保留保护标记合并；回放发现损坏、准备后原账户进入保�
 ## 维护：文献正文与技术详情复用本次选中实体（2026-11-06）
 
 D281完成；正文与技术详情复用选中实体，独立选择解析一次；正文仍重核来源。27定向通过，旧视图新测试复现2次而非1次读取。回执：`verification/maintenance/code-constraints-boss-document-render-reuse-20261106/summary.json`。
+
+## 维护：三类机制文献复用本次关卡资料（2026-11-06）
+
+同次来源复用完成，D287/D292其他范围未销项。回执 `verification/maintenance/code-constraints-document-packet-reuse-20261106/summary.json`。

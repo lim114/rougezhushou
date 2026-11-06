@@ -78,7 +78,7 @@ def reference(stage_id, enemy_key=None):
     if enemy_key is not None and type(enemy_key) is not str: return None
     result = packet()
     if result is None: return None
-    source = battle.stage_reference(stage_id)
+    source = battle.stage_reference(stage_id, prepared_packet=result['current'])
     if (source is None or source['source_identity'] != result['current']['identity']
             or not _same(source['stage'], result['data']['originals']['stages'][stage_id])
             or not _same(source['level'], result['data']['originals']['levels'][source['level_key']])): return None

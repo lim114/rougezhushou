@@ -90,8 +90,8 @@ def queues(level):
                    'source_selector':'$.branches['+json.dumps(key)+f'].phases[{pi}]','actions':p.get('actions')or[]}
 
 
-def stage_reference(stage_id):
-    ref=packet()
+def stage_reference(stage_id, *, prepared_packet=...):
+    ref=packet() if prepared_packet is ... else prepared_packet
     if ref is None:return None
     stages=ref['version']['current']['details']['stages']
     if type(stage_id)is not str or stage_id not in stages:return None

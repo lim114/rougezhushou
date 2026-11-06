@@ -119,7 +119,7 @@ def reference(stage_id, enemy_key=None):
             or (stage_id, enemy_key) not in {(t[0], t[1]) for t in TARGETS}): return None
     result = packet()
     if result is None: return None
-    stage = battle.stage_reference(stage_id)
+    stage = battle.stage_reference(stage_id, prepared_packet=result['current'])
     if (stage is None or stage['source_identity'] != result['current']['identity']
             or not _same(stage['stage'], result['data']['originals']['stages'][stage_id])
             or not _same(stage['level'], result['data']['originals']['levels'][stage['level_key']])): return None
