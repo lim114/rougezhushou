@@ -1,3 +1,7 @@
+## 维护：四类事件专属控件与嵌套奖励复用分支（2026-11-06）
+
+7模块相关路径去重，37定向与4类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-event-specific-choice-20261106/README.md)。
+
 ## 维护：共享事件面板与22类资料模型复用分支（2026-11-06）
 
 共享面板与22模型文字接口完成同次分支复用。155项初轮通过及1项修正视口复测通过，943状态对照通过。仅相关路径完成。[回执](verification/maintenance/code-constraints-event-prepared-choice-20261106/README.md)。

@@ -72,11 +72,11 @@ def choice_reference(result,sid,cid):
     c=deepcopy(c);count=result['declared_naturals_reference'];c['listed_condition_match']=None if c['natural_cost_reference']is None or count is None else count>=c['natural_cost_reference']
     return c
 
-def catalogue_allowed(result,sid,cid):
-    c=choice_reference(result,sid,cid);return bool(c and c['role']in('choose_relic','continue_relic'))
+def catalogue_allowed(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice;return bool(c and c['role']in('choose_relic','continue_relic'))
 
-def shows_reward(result,sid,cid):
-    c=choice_reference(result,sid,cid);return bool(c and c['role']=='claim_civil')
+def shows_reward(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice;return bool(c and c['role']=='claim_civil')
 
 def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】回滚文明','分别查阅交出物品、领取结果和是否继续；不代表本局已经交换、支付或领取。',

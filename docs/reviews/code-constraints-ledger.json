@@ -571,7 +571,7 @@
     },
     {
       "file": "rouge/current_shadow_view.py",
-      "sha256": "0a47070a32996f32c5911d1f3844d8f8cdce25a5bb255745e0647524b8010df0",
+      "sha256": "73944aa1c74e6371e3138e13a3d33368c75b6569eaa2eb6fdbd69660b34dbe54",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -581,14 +581,14 @@
       },
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
-      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
       "rule3": "no_guard_or_catch_changed",
-      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_resting_view.py",
-      "sha256": "a6e33dd8a3d3b3510a0bfc16640eace8f24892342281cea1546283438b2cac23",
+      "sha256": "45bf47cf4c675ecc074fb3dbbc1ad878276b1e97d90204c58a94c72dc3870f9f",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -596,16 +596,16 @@
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
       },
-      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
-      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
       "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_reconstruction_view.py",
-      "sha256": "0b98a77f4ab8c4164e3ec9f7d0b816e9776e14ecff143e6a02e55c418d1114ad",
+      "sha256": "bee3cb6ba2fbff963ec3be737d2670e106182e3652236200c5085ad4777e443f",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -615,14 +615,14 @@
       },
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
-      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
       "rule3": "no_guard_or_catch_changed",
-      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_peace_view.py",
-      "sha256": "9c49e945528d42d65041ac8fb2590eae8ae8a928d81b2e374abb89c40d333c50",
+      "sha256": "9f2320226df1d6ef222e50b5244f12ac4ddc566f4bbdb3cd1552a80cb6cfb9c6",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -630,12 +630,12 @@
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
       },
-      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
-      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
       "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_scout_view.py",
@@ -749,7 +749,7 @@
     },
     {
       "file": "rouge/documented_event_flow_view.py",
-      "sha256": "9523166b3c6896e59c934d8b4d7012f503e1d638f38e0bfcde69b6c65d1a57c5",
+      "sha256": "312b6f768bd39b7616d8687bf6ad38c2e4ea381f0d841c7f27c32a7e4301470a",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -759,10 +759,10 @@
       },
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_node_readers_view.py",
@@ -1474,13 +1474,13 @@
     },
     {
       "file": "rouge/current_reconstruction.py",
-      "sha256": "a4d793d8410d729571c6859c50dfab6407c8106d271c752745dfd3e5805b7ab8",
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
+      "sha256": "7060000ac2b5781e8719e8696a990cc1f9b191bd25be55346da80621da70d580",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
+      "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/current_resting.py",
@@ -1494,13 +1494,13 @@
     },
     {
       "file": "rouge/current_shadow.py",
-      "sha256": "2b2834868d74dbdf937d4ceba8fa52ed554ca09898b6630cc0e717f81da748b2",
-      "rule1": "base_passes_existing_choice_to_22_player_text_models",
-      "rule2": "no_new_helpers_public_standalone_calls_preserved",
-      "rule3": "no_guard_or_catch_removed",
+      "sha256": "04bcba4473490e18460ed8080d77b1b8a383042343f2b7306328d4db69e2e432",
+      "rule1": "base_returns_choice_for_four_specialized_controls",
+      "rule2": "no_new_helpers_or_cache",
+      "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "evidence": "Shared callback returns existing choice; four subclass updates consume it, clear passes None. Shadow nested reward and reconstruction reward/catalogue helpers accept prepared choice while standalone calls retain existing behavior. 37 targeted view tests pass; old/new first valid selection reads 2/2/4/3 to1 each, display equal. Other caller paths and guards not certified as whole-module complete."
     },
     {
       "file": "rouge/box_event_reference.py",

@@ -18,10 +18,10 @@ class CurrentShadowPanel(DocumentedEventFlowPanel):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==target['choice_id']:self.choices.setCurrentRow(i);break
     def _fresh_reference(self):return model.reference('shadow',self.source_request)
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_reward()
-    def clear_reference(self):super().clear_reference();self._update_reward()
-    def _update_reward(self):
-        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_reward(choice)
+    def clear_reference(self):super().clear_reference();self._update_reward(None)
+    def _update_reward(self,c):
+        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id,choice=c));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:
             raw=model.icon_bytes();picture=QPixmap()
             if raw is not None and picture.loadFromData(raw):self.reward_icon.setPixmap(picture.scaled(52,52,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))

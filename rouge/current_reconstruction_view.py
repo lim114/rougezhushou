@@ -24,18 +24,17 @@ class CurrentReconstructionPanel(DocumentedEventFlowPanel):
         if child is not None:child.close();self.catalogue_dialog=None
         super()._close_battle()
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_specific()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_specific(choice)
     def clear_reference(self):
-        super().clear_reference();self._update_specific()
-    def _update_specific(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
+        super().clear_reference();self._update_specific(None)
+    def _update_specific(self,c):
         self.natural_controls.setVisible(bool(c and c['role']=='restore'))
-        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()
+        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id,choice=c));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:
             raw=model.icon_bytes();pixmap=QPixmap()
             if raw is not None and pixmap.loadFromData(raw):self.reward_icon.setPixmap(pixmap.scaled(52,52,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
             else:self.reward_icon.setText('焚毁“文明”（图片暂缺）')
-        allowed=bool(self.result and model.catalogue_allowed(self.result,self.scene_id,self.choice_id));available=allowed and offers.packet()is not None;self.catalogue_button.setVisible(available);self.catalogue_button.setEnabled(available)
+        allowed=bool(self.result and model.catalogue_allowed(self.result,self.scene_id,self.choice_id,choice=c));available=allowed and offers.packet()is not None;self.catalogue_button.setVisible(available);self.catalogue_button.setEnabled(available)
         if self.catalogue_dialog is not None:
             if not available or not self.catalogue_dialog.panel.refresh_reference():self.catalogue_dialog.close();self.catalogue_dialog=None
     def open_catalogue(self):

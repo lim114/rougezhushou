@@ -67,8 +67,8 @@ def choice_reference(result,sid,cid):
     s=result['scenes'].get(sid);c=result['choices'].get(cid)
     return deepcopy(c)if s and c and cid in s['choice_ids']and c['scene_id']==sid else None
 
-def shows_reward(result,sid,cid):
-    c=choice_reference(result,sid,cid)
+def shows_reward(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     return bool(c and any(result['data']['originals']['choices'][key]['displayData']['itemId']=='rogue_6_relic_artifact_4'for key in c['variant_ids']))
 
 def player_text(result,sid,cid=None, *, prepared_choice=...):
@@ -93,7 +93,7 @@ def player_text(result,sid,cid=None, *, prepared_choice=...):
             if s['scope']=='original'and c['next_scene_id']is None:lines+=['此原项没有明确下一段，不根据相同消耗猜随机结果或所属圈数。']
         if c['next_scene_id']and c['next_scene_id'].endswith(':results'):lines+=['','下方只打开本阶段文献结果目录，不代表已触发或已抽到任何结果。']
         if c['title']in('收下','休息好了'):lines+=['','【本次领取或回复】'+version._plain(c['description']),'这是这一项写明的效果，不与其它随机结果相加；随机自然物、加工品和收藏品不擅自补出具体物品名单。']
-        if shows_reward(result,sid,cid):
+        if shows_reward(result,sid,cid,choice=c):
             item=result['data']['originals']['items']['rogue_6_relic_artifact_4'];lines+=['','【犬植浆】',version._plain(item['usage']),'按原选项的物品编号对应名称和图片，不按社区清单序号套效果；不是获得6源石锭或揭露商店视野。此处不推定领取件数、光环实际层数或自动套入战斗数值。']
         if c['next_scene_id']:lines+=['','【可继续查阅】'+scene_label(result,c['next_scene_id']),'只翻阅资料，不在游戏中选择或领取。']
     elif s['choice_ids']:lines+=['','请选择本段资料列出的选项或结果参考；不表示本局同时可选或已发生。']

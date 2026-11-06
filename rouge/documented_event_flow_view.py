@@ -116,6 +116,7 @@ class DocumentedEventFlowPanel(QWidget):
         if choice and len(choice['stage_ids']) == 1:
             self.battle_button.setText('查看' + self.result['data']['originals']['stages'][choice['stage_ids'][0]]['name'] + '固定作战资料')
         if not keep: self.tabs.setCurrentIndex(0)
+        return choice
 
     def _recheck(self):
         if self.result is None or self._fresh_reference() != self.result:

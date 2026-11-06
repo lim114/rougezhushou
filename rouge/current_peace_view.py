@@ -21,11 +21,10 @@ class CurrentPeacePanel(DocumentedEventFlowPanel):
     def _fresh_reference(self):
         return model.reference('peace', self.completed.currentData())
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_specific()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_specific(choice)
     def clear_reference(self):
-        super().clear_reference();self._update_specific()
-    def _update_specific(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
+        super().clear_reference();self._update_specific(None)
+    def _update_specific(self,c):
         self.completion_controls.setVisible(bool(c and c['role']=='move'))
         show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id,choice=c));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:

@@ -21,11 +21,10 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
         if child is not None:child.close();self.original_dialog=None
         super()._close_battle()
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_specific()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_specific(choice)
     def clear_reference(self):
-        super().clear_reference();self._update_specific()
-    def _update_specific(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
+        super().clear_reference();self._update_specific(None)
+    def _update_specific(self,c):
         available=bool(self.allow_original_popup and self.result and model.conflicting_original_target(self.result,self.scene_id,self.choice_id,choice=c));self.original_button.setVisible(available);self.original_button.setEnabled(available)
         show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id,choice=c));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:
