@@ -5256,3 +5256,5 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 - 2026-11-06：D266动作位置切换重复清空合并，9定向通过；回执 `verification/maintenance/code-constraints-action-clear-once-20261106/summary.json`。
 
 - 2026-11-06：D267/D268标记资料错误/路径整改及过时测试前提校正，回执 `verification/maintenance/code-constraints-marker-packets-20261106/summary.json`。
+
+- 2026-11-06：D271–D274地形证据及参数入口精简，33定向通过、500组等价；回执 `verification/maintenance/code-constraints-terrain-boundaries-20261106/summary.json`。

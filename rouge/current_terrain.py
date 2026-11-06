@@ -18,20 +18,20 @@ MANIFEST_SHA256='afcf5b6c0d1669d01e83f4819887aa4fa2aaadef644e3e83b7e03402ada3ada
 def evidence_identity():
     """Fail closed on actual evidence loss, including after a warm read."""
     try:
-        path=ROOT/MANIFEST
-        if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
+        root=ROOT.resolve();path=ROOT/MANIFEST
+        if path.is_symlink()or not path.resolve().is_relative_to(root):return None
         raw=path.read_bytes()
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         packet=json.loads(raw)
         if packet['schema']!='current_terrain_353_evidence_v1':return None
         for name,pin in packet['files'].items():
             path=ROOT/name
-            if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
+            if path.is_symlink()or not path.resolve().is_relative_to(root):return None
             if any(parent.is_symlink()for parent in path.parents if parent!=ROOT and ROOT in parent.parents):return None
             data=path.read_bytes()
             if len(data)!=pin['bytes']or sha256(data).hexdigest()!=pin['sha256']:return None
         return MANIFEST_SHA256
-    except(OSError,ValueError,KeyError,TypeError):return None
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
 
 
 BWIKI = 'https://wiki.biligame.com/arknights/地形?oldid=352021'
@@ -86,7 +86,7 @@ def _number(value):
         return False
     try:
         return isfinite(value)
-    except (OverflowError, TypeError):
+    except OverflowError:
         return False
 
 
@@ -121,11 +121,10 @@ def _parameters(tile, expected, unknowns):
         if key in seen:
             invalid.add(key)
             values.pop(key, None)
+            continue
         seen.add(key)
         if key not in expected:
             extra = True
-            continue
-        if key in invalid:
             continue
         value = row.get('value')
         if not _number(value) or row.get('valueStr') not in (None, ''):

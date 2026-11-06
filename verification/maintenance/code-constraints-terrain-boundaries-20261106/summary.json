@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地形证据与参数入口精简",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "3eb9bc0694609c6097d8ee2695b0101551ea1c6d",
+  "changed_sources": [
+    "rouge/current_terrain.py",
+    "tests/test_terrain_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_terrain.py": "b8d7023c07cb9b512d5b42a9bd9a0bae9db3c01935eb5bf01e47c36cecc9267e",
+    "tests/test_terrain_boundary_review.py": "3930edfd2663c2e48e86e29c842ca40631e2995ebfdf3e74b23e48b256084cc2"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D271",
+    "D272",
+    "D273",
+    "D274"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 33,
+    "tests_passed": 33,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_terrain_boundary_review tests.test_current_terrain_353 tests.test_current_terrain_directory_378",
+    "local_evidence": ".local/code-constraints-review-214",
+    "old_source_regression": "New4 tests reproduce5 failures on prior source.",
+    "equivalence": "500 deterministic parameter cases:identical values and warning lists.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D271 narrows read/JSON catch; D272 root resolved once; D273 only OverflowError caught; D274 duplicate key exits immediately, removing later invalid lookup. _number retained for independent numeric domain responsibility, not call-count abstraction.",
+    "requirements": "Existing path/source/digest conditions retained; huge integer overflow stays invalid, bool excluded; duplicate/unknown parameter semantics unchanged across500 cases.33 targeted checks pass."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

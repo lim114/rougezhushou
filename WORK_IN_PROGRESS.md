@@ -1,3 +1,7 @@
+## 当前断点：地形证据与参数入口精简（2026-11-06）
+
+D271–D274完成，33定向通过，500组参数值/提示等价；原280组完成121、剩159。D319/D320及原窗口待补。回执verification/maintenance/code-constraints-terrain-boundaries-20261106/summary.json。
+
 ## 当前断点：两套地图标记错误边界与路径复用（2026-11-06）
 
 D267/D268完成；首轮17/18通过，过时断言校正后最终5/5通过，其余原通过证据保留。原280组完成117、剩163；待审/原窗口缺口保留。回执verification/maintenance/code-constraints-marker-packets-20261106/summary.json。
