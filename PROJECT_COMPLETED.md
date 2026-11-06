@@ -1,3 +1,7 @@
+## 维护：交换资料加载异常边界与根路径复用（2026-11-06）
+
+D205–D207完成，13项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-exchange-packet-review-20261106/summary.json`。
+
 ## 维护：交换目录参数与必填目标字段整改（2026-11-06）
 
 D208/D209完成，17项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-exchange-target-review-20261106/summary.json`。

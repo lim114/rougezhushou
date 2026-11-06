@@ -17,27 +17,28 @@ def packet():
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         manifest=json.loads(raw);expected={DATA,PACK+'/source-receipt.json',PACK+'/documented-table.html','research/p3-expansion-313/current-topic.json','research/p3-expansion-313/baseline-topic.json'}
         if manifest['schema']!='current_exchange_323_manifest_v1'or manifest['game_commit']!=version.NEW_COMMIT or set(manifest['files'])!=expected:return None
-        blobs={}
+        blobs={};root=ROOT.resolve()
         for name,pin in manifest['files'].items():
             rel=PurePosixPath(name)
             if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name:return None
             path=ROOT.joinpath(*rel.parts)
-            if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
+            if path.is_symlink()or not path.resolve().is_relative_to(root):return None
             for parent in path.parents:
                 if parent==ROOT:break
                 if parent.is_symlink():return None
             content=path.read_bytes()
             if len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             blobs[name]=content
-        data=json.loads(blobs[DATA]);current=version.packet()
-        if current is None or data['schema']!='current_exchange_323_v1':return None
-        primary=current['current']['details'];old=current['baseline']['details'];actual={k:v for k,v in primary['items'].items()if v['type']=='RELIC'}
-        if {r['id']:r['item']for r in data['catalogue']}!=actual:return None
-        if any(r['before']!=old['items'].get(r['id'])or type(r['can_offer'])is not bool or r['can_offer']is not r['item']['canSacrifice']for r in data['catalogue']):return None
-        if any(primary['choices'].get(k)!=v for k,v in data['original_choices'].items()):return None
-        if {k:v for k,v in primary['choiceScenes'].items()if v['title']=='回滚文明'}!=data['related_scenes']:return None
-        return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_inventory':None,'actual_offer':None,'actual_reward_pool':None,'actual_reward':None,'actual_received_quantity':None,'run_updated':False,'legacy_catalogue_replaced':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
+        data=json.loads(blobs[DATA])
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    current=version.packet()
+    if current is None or data['schema']!='current_exchange_323_v1':return None
+    primary=current['current']['details'];old=current['baseline']['details'];actual={k:v for k,v in primary['items'].items()if v['type']=='RELIC'}
+    if {r['id']:r['item']for r in data['catalogue']}!=actual:return None
+    if any(r['before']!=old['items'].get(r['id'])or type(r['can_offer'])is not bool or r['can_offer']is not r['item']['canSacrifice']for r in data['catalogue']):return None
+    if any(primary['choices'].get(k)!=v for k,v in data['original_choices'].items()):return None
+    if {k:v for k,v in primary['choiceScenes'].items()if v['title']=='回滚文明'}!=data['related_scenes']:return None
+    return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_inventory':None,'actual_offer':None,'actual_reward_pool':None,'actual_reward':None,'actual_received_quantity':None,'run_updated':False,'legacy_catalogue_replaced':False}
 
 
 def catalogue_rows(ref,*,can_offer=None,rarity=None,change=None,query=''):
