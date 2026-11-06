@@ -8,7 +8,8 @@ import cv2
 
 def units(image, anchor, reference_font):
     h, w = image.shape[:2]
-    height = (max(p[1] for p in anchor['box']) - min(p[1] for p in anchor['box'])) * h
+    y0=min(p[1] for p in anchor['box']);y1=max(p[1] for p in anchor['box'])
+    height = (y1-y0) * h
     # Detector boxes expand after coarse whole-frame downsampling. Glyph height
     # is stable for the same rendered label, including a moved panel.
     ink_reference = {24.9: (17, False), 23.8: (16, False), 18.6: (8, False),
@@ -16,7 +17,6 @@ def units(image, anchor, reference_font):
     text=anchor.get('text','').upper()
     if ink_reference and (text.startswith('RANK') or text.endswith('LV') or text in ('EXP','信赖值')):
         x0=min(p[0] for p in anchor['box']);x1=max(p[0] for p in anchor['box'])
-        y0=min(p[1] for p in anchor['box']);y1=max(p[1] for p in anchor['box'])
         roi=crop(image,(x0,y0,x1,y1))
         if roi.size:
             gray=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)

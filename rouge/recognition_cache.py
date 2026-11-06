@@ -20,9 +20,10 @@ class ExactImageCache:
             return deepcopy(entry[1])
         self.misses += 1
         value = compute()
-        if len(pixels) <= self.max_bytes:
+        pixel_bytes = len(pixels)
+        if pixel_bytes <= self.max_bytes:
             self.entries[key] = (pixels, deepcopy(value))
-            self.bytes += len(pixels)
+            self.bytes += pixel_bytes
             while self.bytes > self.max_bytes or len(self.entries) > self.max_entries:
                 _, removed = self.entries.popitem(last=False)
                 self.bytes -= len(removed[0])

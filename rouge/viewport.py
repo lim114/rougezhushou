@@ -19,8 +19,9 @@ def prepare_frame(image,client_rect=None):
         visible=np.flatnonzero(~mask)
         if not len(visible):return 0,length
         a,b=int(visible[0]),int(visible[-1])+1
-        return (a if a>=max(4,round(length*.005)) else 0,
-                b if length-b>=max(4,round(length*.005)) else length)
+        threshold=max(4,round(length*.005))
+        return (a if a>=threshold else 0,
+                b if length-b>=threshold else length)
     top,bottom=edges(rows,ch);left,right=edges(cols,cw)
     if right-left<320 or bottom-top<180:left,top,right,bottom=0,0,cw,ch
     content=image[top:bottom,left:right]
@@ -36,11 +37,13 @@ def map_evidence(value,viewport):
     """Keep externally exposed evidence coordinates on the original capture."""
     w,h=viewport['source_size'];left,top,right,bottom=viewport['content_rect']
     def point(p):return [(left+p[0]*(right-left))/w,(top+p[1]*(bottom-top))/h]
-    if isinstance(value,dict):
-        for key,item in value.items():
-            if key in ('box','title_box','label_box') and isinstance(item,list):value[key]=[point(p) for p in item]
-            elif key in ('center','card_position') and isinstance(item,(tuple,list)) and len(item)==2:value[key]=point(item)
-            else:map_evidence(item,viewport)
-    elif isinstance(value,list):
-        for item in value:map_evidence(item,viewport)
+    def visit(value):
+        if isinstance(value,dict):
+            for key,item in value.items():
+                if key in ('box','title_box','label_box') and isinstance(item,list):value[key]=[point(p) for p in item]
+                elif key in ('center','card_position') and isinstance(item,(tuple,list)) and len(item)==2:value[key]=point(item)
+                else:visit(item)
+        elif isinstance(value,list):
+            for item in value:visit(item)
+    visit(value)
     return value

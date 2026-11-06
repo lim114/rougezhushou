@@ -309,3 +309,6 @@
 | D294 | _read_public相对路径、符号链接/父目录及ROOT边界检查 | 拒绝资料路径越界/链接，含ROOT.resolve重复调用 | 建议保留路径入口，审批后复用已解析ROOT；替代仅限定清单。原样待审，不借其它模块路径授权 |
 | D295 | packet整体捕获与清单/摘要/长度/schema/版本/source_rows/battle身份核对 | 资料损坏时不可用，内部TypeError等也被吞掉；battle原件再次读取 | 建议收窄文件/解析出口并明确同次来源核验边界；替代保留现有。原样待审 |
 | D296 | reference/entity/view_result/locate/resolve_related的空值、类型、成员与刷新来源检查 | 旧实体不显示、不跳错入口；view_result重复空值，resolve_related经reference后locate再次reference | 建议入口统一与同次已核验结果复用，保留跨刷新身份检查；替代每层独立验证。衔接D279，原样待审 |
+
+| D297 | elite_recognition.card_elite的denominator为零时返回0分 | 上游mask非零像素至少10，且actual/mask均为0/1；现有分支对当前契约不可达 | 建议删除零分母兜底；替代保留以容忍未来改变mask约定。保留原样待审，未以数学推导直接删除 |
+| D298 | viewport.prepare_frame无效/过小client_rect沿用整帧、去黑边后不足320×180回退全客户区 | 无效区域不裁剪为空或过小，可能把无效参数当正常整帧 | 建议由入口明确无效区域处理策略；替代保持当前回退。原样待审。正常全黑画面/内容边界探测不是异常恢复 |

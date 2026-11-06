@@ -1,3 +1,7 @@
+## 当前断点：识别缓存与图像几何不变值复用（2026-11-06）
+
+四模块重复不变值整改，缓存/文字锚点新增完整销项；16定向通过，81旧新对照一致。D297—D298待审，共261组。回执verification/maintenance/code-constraints-recognition-geometry-review-20261106/summary.json。
+
 ## 当前断点：埃尔伯特资料构造分支重复比较整改（2026-11-06）
 
 删除构造赋值后同对象重复相等比较；9界面+10模型通过，保留错误测试名导入失败；4关8实体新旧输出一致。D293—D296待审，共259组。回执verification/maintenance/code-constraints-elbert-model-review-20261106/summary.json。

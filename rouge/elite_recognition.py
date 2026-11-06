@@ -21,14 +21,16 @@ def card_elite(image,x,y,space=(1,1)):
             template=cv2.resize(original,(size,size),interpolation=cv2.INTER_AREA)
             mask=((cv2.cvtColor(template[:,:,:3],cv2.COLOR_BGR2GRAY)>150)&(template[:,:,3]>150)).astype(np.uint8)
             if np.count_nonzero(mask)<10:continue
+            mask_pixels=np.sum(mask)
             for dx in (-.003,0,.003):
+                cx=round((x+.016*ux+dx*ux)*w)
                 for dy in (-.003,0,.003):
-                    cx=round((x+.016*ux+dx*ux)*w);cy=round((y-.052*uy+dy*uy)*h)
+                    cy=round((y-.052*uy+dy*uy)*h)
                     roi=image[cy-size//2:cy-size//2+size,cx-size//2:cx-size//2+size]
                     if roi.shape[:2]!=(size,size):continue
                     actual=(cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)>180).astype(np.uint8)
                     # Compare the entire silhouette: elite 1's blades are a subset of elite 2's.
-                    denominator=float(np.sum(actual)+np.sum(mask))
+                    denominator=float(np.sum(actual)+mask_pixels)
                     score=2*float(np.sum(actual&mask))/denominator if denominator else 0
                     best=max(best,score)
         scores.append((best,elite))

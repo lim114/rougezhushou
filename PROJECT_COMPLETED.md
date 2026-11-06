@@ -1,3 +1,7 @@
+## 维护：识别缓存与几何复用（2026-11-06）
+
+recognition_cache、anchors整模块回顾完成；elite/viewport普通重复整改，保护待审。[回执](verification/maintenance/code-constraints-recognition-geometry-review-20261106/README.md)。
+
 ## 维护：埃尔伯特构造比较简化（2026-11-06）
 
 已删除普通冗余比较；其余来源与重复核验待审。[回执](verification/maintenance/code-constraints-elbert-model-review-20261106/README.md)。
