@@ -36,12 +36,12 @@ def compare_cultivation(scenario,preview):
                     (not mid and (type(ml) is not int or (mid is None and ml!=0)))):
                 raise ValueError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
             attributes,_,row['module_applied']=_operator_attribute_reference(identity,**conditions)
-            row['attributes']=attributes
-            for key in ('attack','hp','defense'):row[key]=attributes[key]
-            row['status']='基础属性参考'
-            if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         except (ValueError,KeyError,TypeError) as error:
             row.update(status='不可测算',error=str(error));continue
+        row['attributes']=attributes
+        for key in ('attack','hp','defense'):row[key]=attributes[key]
+        row['status']='基础属性参考'
+        if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
         try:
             if identity in catalog()['operators']:

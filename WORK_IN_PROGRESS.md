@@ -1,3 +1,7 @@
+## 当前断点：培养结果组装移出输入错误捕获（2026-11-06）
+
+D118部分完成：结果内部缺字段不再变成方案错误，输入错误保留逐行提示；12项定向通过。原280组仍完成168、剩112。测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-cultivation-result-20261106/summary.json`。
+
 ## 当前断点：无加成基准仅捕获明确的自身生命缺口超限（2026-11-06）
 
 D122完成：保留无加成生命缺口超限提示，其它内部ValueError直接暴露，28项定向通过。原280组完成168、剩112；测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json`。

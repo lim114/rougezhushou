@@ -1467,13 +1467,20 @@
     },
     {
       "file": "rouge/cultivation_comparison.py",
-      "sha256": "824ed64c9eaf558628cdce56c2c31db67076bf8ee125b9651da08dd60f1bfbec",
+      "sha256": "0faec28b6d7d5796d54bf1a9fb3301752b1bbf62910e7479455751f03acca66e",
       "rule1": "equipped_stage_owned_by_attribute_entry_no_module_pair_owned_by_comparison",
       "rule2": "no_new_helper_or_single_use_wrapper",
       "rule3": "D118_D119_D121_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Equipped module stage type/range now validated once by attribute entry. Comparison only owns module identity shape and unequipped/null-stage pairing, retaining legacy empty string behavior. Full source and consumers reread. JSON accepted/rejected sets unchanged; error messages/order can differ. Python IntEnum stage now follows attribute entry isinstance-int contract. Pending trust and catch decisions untouched. Supplemental proposal path still reruns cultivation through skill_reference; continue tracing alongside its existing D125 validation boundary. No full module completion claim."
+      "evidence": "Equipped module stage type/range now validated once by attribute entry. Comparison only owns module identity shape and unequipped/null-stage pairing, retaining legacy empty string behavior. Full source and consumers reread. JSON accepted/rejected sets unchanged; error messages/order can differ. Python IntEnum stage now follows attribute entry isinstance-int contract. Pending trust and catch decisions untouched. Supplemental proposal path still reruns cultivation through skill_reference; continue tracing alongside its existing D125 validation boundary. No full module completion claim.",
+      "scoped_reviews": [
+        {
+          "decision": "D118 partial",
+          "receipt": "verification/maintenance/code-constraints-cultivation-result-20261106/summary.json",
+          "scope": "result assembly outside catch; preparation contract remains"
+        }
+      ]
     },
     {
       "file": "rouge/supplemental_cultivation.py",

@@ -5446,3 +5446,7 @@ D85完成：必需panel直接读取，保留真实可选的事件绑定与刷新
 ## 维护：无加成基准仅捕获明确的自身生命缺口超限（2026-11-06）
 
 D122完成：通过具体输入异常收窄基准捕获；28项定向通过，公式未改。原测试窗口未更新，不增加功能节。回执 `verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json`。
+
+## 维护：培养结果组装移出输入错误捕获（2026-11-06）
+
+D118局部完成：结果行组装不再归入输入错误，12项定向通过；未关闭整组，未新增功能节。回执 `verification/maintenance/code-constraints-cultivation-result-20261106/summary.json`。
