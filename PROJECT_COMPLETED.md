@@ -5140,3 +5140,7 @@ D145完成，26项定向通过。回执：verification/maintenance/code-constrai
 ## 维护：治疗附加器直接读取已生成结果（2026-11-06）
 
 D147完成，28项定向通过。回执：verification/maintenance/code-constraints-healing-result-review-20261106/summary.json。不增加功能节数。
+
+## 维护：受疗原值面板收窄输入错误捕获（2026-11-06）
+
+D150完成，18项定向通过。回执：verification/maintenance/code-constraints-recipient-panel-errors-review-20261106/summary.json。不增加功能节数。

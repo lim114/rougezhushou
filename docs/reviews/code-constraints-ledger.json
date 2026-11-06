@@ -1573,13 +1573,17 @@
     },
     {
       "file": "rouge/recipient_native_ratio_view.py",
-      "sha256": "149fbbd16026c10f355393af73643a45ec7974e5e5becdd402f99a2133278234",
+      "sha256": "4453c89ad2ab323432576f662aa5514229043da9ce74908e568b2a335247dea9",
       "rule1": "native_ratio_view_full_source_review_pending_exception_scope",
       "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
       "rule3": "D150_pending",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Entire view and MainWindow receiver contract reviewed. Append no longer preflights full original and recomputes combined report: it calls one validation-only boundary, updates editor only on success. Existing signal clears stale displayed result only after editor change; failure preserves editor/result. set_context really receives None from MainWindow and keeps valid selection. JSON duplicate/nonfinite rejection is input grammar, not incidental defense. Helpers _unique_pairs/_integer_text have real callback/multiple input roles; no new wrapper. Existing ValueError/TypeError catches remain pending D150."
+      "evidence": "Entire view and MainWindow receiver contract reviewed. Append no longer preflights full original and recomputes combined report: it calls one validation-only boundary, updates editor only on success. Existing signal clears stale displayed result only after editor change; failure preserves editor/result. set_context really receives None from MainWindow and keeps valid selection. JSON duplicate/nonfinite rejection is input grammar, not incidental defense. Helpers _unique_pairs/_integer_text have real callback/multiple input roles; no new wrapper. Existing ValueError/TypeError catches remain pending D150.",
+      "recipient_panel_errors_review": {
+        "receipt": "verification/maintenance/code-constraints-recipient-panel-errors-review-20261106/summary.json",
+        "scope": "D150 only; full module review incomplete."
+      }
     },
     {
       "file": "rouge/information_scope.py",

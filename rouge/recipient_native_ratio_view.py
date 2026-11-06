@@ -118,14 +118,15 @@ class RecipientNativeRatioPanel(QWidget):
                 'evidence': {'kind': self.evidence_kind.currentData(), 'source': self.evidence_source.text()}}
             result = recipient_native_ratio_diagnostic(payload, append_observation=observation,
                 expected_operator=self.operator.currentData(), validate_only=True)
-            self.editor.setPlainText(json.dumps(result['declaration'], ensure_ascii=False, indent=2, allow_nan=False))
-        except (ValueError, TypeError) as error:
+        except ValueError as error:
             self.status.setText(str(error))
+            return
+        self.editor.setPlainText(json.dumps(result['declaration'], ensure_ascii=False, indent=2, allow_nan=False))
 
     def calculate(self):
         try:
             result = recipient_native_ratio_diagnostic(self.current_query())
-        except (ValueError, TypeError) as error:
+        except ValueError as error:
             self._result = None
             self.result_view.clear()
             self.status.setText(str(error))

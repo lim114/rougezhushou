@@ -1,0 +1,45 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "受疗原值面板收窄输入错误捕获",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5cc923bdaf225ec10f726cf23eae9a803733afa9",
+  "changed_sources": [
+    "rouge/recipient_native_ratio_view.py",
+    "tests/test_recipient_panel_errors_review.py"
+  ],
+  "source_sha256": {
+    "rouge/recipient_native_ratio_view.py": "4453c89ad2ab323432576f662aa5514229043da9ce74908e568b2a335247dea9",
+    "tests/test_recipient_panel_errors_review.py": "9627f5da88aa6cf03c40c717a7bf8bbcf003e1f886e4e8ba3a1495d6dac8c488"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D150"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 18,
+    "command": "python -m unittest tests.test_recipient_panel_errors_review tests.test_recipient_native_ratio",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-179",
+    "before": "Three failures: both TypeError paths and append serialization ValueError were swallowed.",
+    "live_window": "Qt tests isolated; original app restart pending closure after policy rejection."
+  },
+  "review": {
+    "standards": "D150 removes TypeError catches; append serialization and widget write outside parse/validate catch. No extra validator/helper/defense.",
+    "requirements": "Invalid JSON remains a prompt and preserves editor content. Internal errors propagate. Existing ratio arithmetic, source identity and panel interaction checks pass."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}
