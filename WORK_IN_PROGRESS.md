@@ -1,3 +1,7 @@
+## 当前断点：三类文献目标入口统一类型校验（2026-11-06）
+
+D287/D292完成，40项定向通过。原280组完成150、剩130；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-document-target-entry-20261106/summary.json`。
+
 ## 当前断点：三类机制文献复用本次关卡资料（2026-11-06）
 
 D287/D292部分完成；45项原有检查通过，新增测试关卡输入纠正后2项通过。280组仍完成148、剩132。回执 `verification/maintenance/code-constraints-document-packet-reuse-20261106/summary.json`。

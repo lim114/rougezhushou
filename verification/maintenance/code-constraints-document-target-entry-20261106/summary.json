@@ -1,0 +1,67 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "三类文献目标入口统一类型校验",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "e90df4601c1e2067ac424c9471fc0f634ea148e8",
+  "changed_sources": [
+    "rouge/current_hanko.py",
+    "rouge/current_sun_boss.py",
+    "rouge/current_boss_documents.py",
+    "tests/test_document_packet_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_hanko.py": "6ef8d10434b14aa96eac9069c647b62c78fb2a157746c62d5ca93f50234c14a5",
+    "rouge/current_sun_boss.py": "fa0bed07dc795e6af5a3180b849af1f16e920bad2ecfa7ac820c616983bb5c3a",
+    "rouge/current_boss_documents.py": "0ea372e5ed090352b8a057e1664bd7f9b162d4509b85353cb2bde5ff2fa926bc",
+    "tests/test_document_packet_reuse.py": "651a603de6e7090e772f3d3f6a2d5436dfec4c9d10ade26bc16bc0864eec156f"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D287",
+    "D292"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_document_packet_reuse",
+        "tests": 3,
+        "passed": 3,
+        "seconds": 2.372
+      },
+      {
+        "command": "python -m unittest tests.test_current_hanko_365 tests.test_current_sun_boss_368 tests.test_current_boss_documents_369",
+        "tests": 37,
+        "passed": 37,
+        "seconds": 35.27
+      }
+    ],
+    "live_window": "Original test window update pending; no visual change."
+  },
+  "review": {
+    "standards": "target_available retains required-selection semantics; reference alone checks key type. No new helper, catch or defensive behavior. Previous batch shared packet; original binding, level and legacy authorization gates retained as approved.",
+    "requirements": "None/numeric/bool/list/dict rejected without data load; valid selected entity resolves once; unknown entity rejected. Existing 37 mechanism/source tests pass. D287/D292 scoped items completed; whole modules not certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

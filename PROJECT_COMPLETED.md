@@ -5378,3 +5378,7 @@ D281完成；正文与技术详情复用选中实体，独立选择解析一次�
 ## 维护：三类机制文献复用本次关卡资料（2026-11-06）
 
 同次来源复用完成，D287/D292其他范围未销项。回执 `verification/maintenance/code-constraints-document-packet-reuse-20261106/summary.json`。
+
+## 维护：三类文献目标入口统一类型校验（2026-11-06）
+
+D287/D292完成；复用本次资料、类型在reference校验，保留具体实体选择要求与来源/绑定/旧文献身份核对。40项定向通过。回执 `verification/maintenance/code-constraints-document-target-entry-20261106/summary.json`。

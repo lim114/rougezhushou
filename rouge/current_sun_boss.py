@@ -104,7 +104,7 @@ def reference(stage_id, enemy_key=None):
 
 
 def target_available(stage_id, enemy_key):
-    return type(enemy_key) is str and reference(stage_id, enemy_key) is not None
+    return enemy_key is not None and reference(stage_id, enemy_key) is not None
 
 
 def entity(result, enemy_key):

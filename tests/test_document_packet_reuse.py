@@ -24,3 +24,16 @@ class DocumentPacketReuseTests(unittest.TestCase):
             self.assertEqual(battle.stage_reference('ro6_b_1', prepared_packet=source), expected)
             self.assertIsNone(battle.stage_reference('missing', prepared_packet=source))
             self.assertIsNone(battle.stage_reference('ro6_b_1', prepared_packet=None))
+
+    def test_target_entry_delegates_type_check_but_requires_selection(self):
+        for model, stage in ((current_hanko, 'ro6_b_1'),
+                             (current_sun_boss, 'ro6_b_7'),
+                             (current_boss_documents, 'ro6_b_5')):
+            with self.subTest(model=model.__name__):
+                with patch.object(model, 'packet', side_effect=AssertionError('invalid input loaded data')):
+                    for key in (None, 0, False, [], {}):
+                        self.assertFalse(model.target_available(stage, key))
+                with patch.object(model, 'reference', wraps=model.reference) as query:
+                    self.assertTrue(model.target_available(stage, '0'))
+                query.assert_called_once_with(stage, '0')
+                self.assertFalse(model.target_available(stage, 'not-an-entity'))
