@@ -1,3 +1,7 @@
+## 当前断点：交换视图完整调用契约核对（2026-11-06）
+
+视图及四类入口核对完成，两处缺字段默认D209原样待审，共172组；整模块47不变。源码未改，复用104/105证据，不重启窗口。回执verification/maintenance/code-constraints-exchange-view-contract-review-20261106/summary.json。继续其它模块普通冗余审查。
+
 ## 当前断点：交换模型完整核对与搜索文字单次整理（2026-11-06）
 
 搜索文字仅整理一次；2定向通过，288过滤组合前后一致。测试窗口已更新。交换模型保护D205—D208待审，共171组；整模块47不变。回执verification/maintenance/code-constraints-exchange-filter-review-20261106/summary.json。继续其它普通冗余及完整模块回顾。
