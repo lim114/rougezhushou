@@ -129,7 +129,7 @@ class PersonalStatisticsPage(QWidget):
     def refresh(self):
         try:
             records, issues = self.store.records()
-        except (OSError,ValueError,TypeError,RecursionError) as error:
+        except (OSError,ValueError) as error:
             from .player_file_messages import file_issue
             self.records = []
             self.source_available = False

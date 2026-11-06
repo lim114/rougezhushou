@@ -1,3 +1,7 @@
+## 当前断点：统计历史读取错误出口收窄（2026-11-06）
+
+D68完成；16定向通过。273组已批准待实施，模块数量不变，跨入口归档重复核对仍未完成。本次额度例外继续有效。回执verification/maintenance/code-constraints-history-error-boundary-review-20261106/summary.json。
+
 ## 当前断点：统计筛选错误明确显示与结果重复拷贝清理（2026-11-06）
 
 D69/D72完成；14定向通过，模块仍部分核验。274组已批准待落实；跨入口重复归档资格仍待处理。用户已取消本次额度收尾限制，见docs/decisions/2026-11-06-quota-wrapup-exception.md。回执verification/maintenance/code-constraints-statistics-filter-review-20261106/summary.json。

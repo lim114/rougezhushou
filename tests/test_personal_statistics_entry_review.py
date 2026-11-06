@@ -40,6 +40,20 @@ class PersonalStatisticsEntryTests(unittest.TestCase):
         self.assertEqual(second['relic']['name'],name)
         self.assertEqual(rows[0]['state']['resources']['gold']['value'],12)
 
+    def test_history_read_failures_clear_stale_results_but_internal_errors_propagate(self):
+        page=PersonalStatisticsPage(SimpleNamespace(records=lambda:([],[])));self.addCleanup(page.close)
+        for error in (OSError('unreadable'),ValueError('bad format')):
+            with self.subTest(error=type(error).__name__),patch.object(page.store,'records',side_effect=error):
+                page.refresh()
+                self.assertFalse(page.source_available)
+                self.assertIsNone(page.result)
+                self.assertIn('本机历史暂时不可用',page.notice.text())
+            page.refresh()
+            self.assertEqual(page.result['archive_count'],0)
+        for error in (TypeError('internal type'),RecursionError('internal recursion')):
+            with self.subTest(error=type(error).__name__),patch.object(page.store,'records',side_effect=error):
+                with self.assertRaises(type(error)):page.refresh()
+
     def test_complete_inventory_reads_each_presence_once(self):
         class Record(dict):
             reads=0

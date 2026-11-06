@@ -1,3 +1,7 @@
+## 维护：统计历史读取错误出口收窄（2026-11-06）
+
+D68销项，统计模块其他缺口保留。[回执](verification/maintenance/code-constraints-history-error-boundary-review-20261106/README.md)。
+
 ## 维护：统计筛选错误明确显示与结果重复拷贝清理（2026-11-06）
 
 D69、D72销项，两模块仍保留其他缺口。[回执](verification/maintenance/code-constraints-statistics-filter-review-20261106/README.md)。

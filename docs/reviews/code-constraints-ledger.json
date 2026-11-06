@@ -434,11 +434,11 @@
     },
     {
       "file": "rouge/player_personal_statistics.py",
-      "sha256": "78bd7a51141cffaaff3345f3446c63414327dba3d3ffc40c5355fc997e16514a",
-      "rule1": "D72 invalid selector errors are distinct from archive/internal errors; render catches only InvalidCohortFilter. Downstream repeated qualification remains open.",
+      "sha256": "def85bfe7dccebce3a92932ae41ff0310e0e03160d2a6f216427df9ec16944ea",
+      "rule1": "D68 outer store.records catch narrowed to OSError/ValueError; internal TypeError/RecursionError propagate. D72 dedicated filter error unchanged; cross-entry qualification remains open.",
       "rule2": "D69 freshly built result returned directly, mutable container isolation tested. Existing shared domain helpers retained.",
-      "rule3": "D69/D72 implemented within approval; other listed module decisions not certified",
-      "evidence": "14 targeted checks;invalid selectors remove old output, recovery works,internal ValueError propagates;result mutation does not alter source or later results.",
+      "rule3": "D68/D69 implemented; D66/D67 and remaining ordinary paths still require review",
+      "evidence": "RunHistoryStore.records/read and codec call chain inspected;16 targeted tests verify read failures withdraw output, recovery and internal error propagation. Prior D69/D72 evidence retained.",
       "decisions": [
         "D66",
         "D67",
