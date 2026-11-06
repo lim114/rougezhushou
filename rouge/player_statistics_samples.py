@@ -39,7 +39,7 @@ def sample_binding(row):
     if not isinstance(digest,str)or len(digest)!=64 or any(c not in'0123456789abcdef'for c in digest):return None
     return {'id':row['id'],'state_sha256':digest}
 
-from PySide6.QtCore import Qt,Signal
+from PySide6.QtCore import Qt,Signal,QSignalBlocker
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QComboBox,QTableWidget,QTableWidgetItem,QAbstractItemView,QPushButton,QHeaderView
 
 class StatisticsSamplesPage(QWidget):
@@ -63,22 +63,28 @@ class StatisticsSamplesPage(QWidget):
         from .player_replay import observation_time
         key=self.metric.currentData();rows=sample_rows(self.records,key,self.relic_id);signature=repr((self.source_available,key,self.relic_id,rows))
         if signature==self.signature:return
-        old=self.table.currentRow();keep=sample_binding(self.rows[old])if 0<=old<len(self.rows)else None
-        self.signature=signature;self.rows=rows;self.table.setRowCount(0)
-        for index,row in enumerate(rows):
-            self.table.insertRow(index);value=row['value']
-            label=('确认持有'if value else'完整清单中未持有')if key=='relic'and value is not None else str(value)if value is not None else'未知（未计入）'
-            for col,text in enumerate((observation_time(row['started_at']),label,('计入：'if row['included']else'未计入：')+row['reason'])):
-                self.table.setItem(index,col,QTableWidgetItem(text))
-            if keep is not None and sample_binding(row)==keep:self.table.selectRow(index)
+        old=self.table.item(self.table.currentRow(),0);keep=old.data(Qt.ItemDataRole.UserRole)if old is not None else None
+        self.signature=signature;self.rows=rows
+        with QSignalBlocker(self.table):
+            self.table.setRowCount(0)
+            for index,row in enumerate(rows):
+                self.table.insertRow(index);value=row['value']
+                binding=sample_binding(row)
+                identity=(binding['id'],binding['state_sha256'])if binding is not None else None
+                label=('确认持有'if value else'完整清单中未持有')if key=='relic'and value is not None else str(value)if value is not None else'未知（未计入）'
+                for col,text in enumerate((observation_time(row['started_at']),label,('计入：'if row['included']else'未计入：')+row['reason'])):
+                    self.table.setItem(index,col,QTableWidgetItem(text))
+                self.table.item(index,0).setData(Qt.ItemDataRole.UserRole,identity)
+                if keep is not None and identity==keep:self.table.selectRow(index)
         included=sum(row['included']for row in rows)
         self.notice.setText('本机历史暂时不可用，本项统计未知；没有将未读记录当作0局。'if not self.source_available else'请先在上方选择一件收藏品。'if key=='relic'and self.relic_id is None else f'当前筛选下共{len(rows)}局，计入{included}局，另有{len(rows)-included}局未计入。0是实际读到的数量；未知不会当作0。这里只解释归档记录，不是结算、掉落概率或分队强弱。')
         self.selection_changed()
 
     def selection_changed(self):
-        index=self.table.currentRow();row=self.rows[index]if 0<=index<len(self.rows)else None
-        self.open_button.setEnabled(sample_binding(row)is not None)
+        item=self.table.item(self.table.currentRow(),0)
+        self.open_button.setEnabled(item is not None and item.data(Qt.ItemDataRole.UserRole)is not None)
 
     def request_archive(self):
-        index=self.table.currentRow();binding=sample_binding(self.rows[index])if 0<=index<len(self.rows)else None
-        if binding is not None:self.archiveRequested.emit(binding)
+        item=self.table.item(self.table.currentRow(),0)
+        identity=item.data(Qt.ItemDataRole.UserRole)if item is not None else None
+        if identity is not None:self.archiveRequested.emit({'id':identity[0],'state_sha256':identity[1]})

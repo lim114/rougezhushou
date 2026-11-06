@@ -1,3 +1,7 @@
+## 当前断点：统计明细身份入口复用（2026-11-06）
+
+D71完成；24定向通过，270组已批准待落实。跨入口归档资格核对继续。回执verification/maintenance/code-constraints-sample-binding-review-20261106/summary.json。
+
 ## 当前断点：资源数值解析与层资源初始化整改（2026-11-06）
 
 D70/D74完成，23项定向通过；271组已批准待实施，模块数量不变。归档跨入口重复校验继续待处理。回执verification/maintenance/code-constraints-resource-entry-review-20261106/summary.json。
