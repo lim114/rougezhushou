@@ -62,3 +62,37 @@ class AcceptanceCleanupTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'interrupted'):
                 a423.check(window, MagicMock(), lambda *args: None)
         self.assertEqual(window.run.state, before)
+
+    def test_other_approved_entries_restore_state_on_interruption(self):
+        from importlib import import_module
+        cases = [(426, 'check_prices'), (426, 'check'), (427, 'check'),
+                 (428, 'check'), (430, 'check'), (431, 'check'),
+                 (432, 'check'), (435, 'check'), (436, 'check'),
+                 (437, 'check'), (438, 'check'), (439, 'check'), (440, 'check')]
+        for section, entry in cases:
+            with self.subTest(section=section, entry=entry):
+                before = {'id': 'isolated', 'history': [], 'maps': {},
+                          'resources': {}, 'relics': {}, 'started_at': 0}
+                old_graph = {'original': True}
+                view = SimpleNamespace(graph=old_graph, historical=False)
+                def set_map(graph, *, historical):
+                    view.graph = graph
+                    view.historical = historical
+                view.set_map = set_map
+                window = SimpleNamespace(run=SimpleNamespace(state=deepcopy(before)), map_view=view,
+                                         findChildren=lambda *args: [])
+                reached = []
+                def interrupt(*args):
+                    reached.append(True)
+                    window.run.state['id'] = 'interrupted'
+                    raise RuntimeError('deliberate interruption')
+                window.show_compact = interrupt
+                window.apply_run_observation = interrupt
+                module = import_module(f'rouge.player_feature_{section}_acceptance')
+                with self.assertRaisesRegex(RuntimeError, 'deliberate interruption'):
+                    getattr(module, entry)(window, MagicMock(), lambda *args: None)
+                self.assertEqual(reached, [True])
+                self.assertEqual(window.run.state, before)
+                if section == 438:
+                    self.assertIs(view.graph, old_graph)
+                    self.assertFalse(view.historical)
