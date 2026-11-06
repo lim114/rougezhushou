@@ -5168,3 +5168,7 @@ D160整改、D162保留复核完成，7项定向通过。回执：verification/m
 ## 维护：关键奖励构造复用已核验资料（2026-11-06）
 
 D161完成，13项定向通过，D320另列待审。回执：verification/maintenance/code-constraints-critical-source-reuse-review-20261106/summary.json。不增加功能节数。
+
+## 维护：奖励资料加载收窄异常与复用根路径（2026-11-06）
+
+D163整改、D164保留复核、D165保留并复用根路径完成，17项定向通过。回执：verification/maintenance/code-constraints-reward-packet-review-20261106/summary.json。不增加功能节数。

@@ -50,22 +50,27 @@ def packet():
         expected.update(p.DATA for p in PROVIDERS.values())
         expected.update(p.MANIFEST for p in PROVIDERS.values())
         if manifest['schema'] != 'current_reward_origins_338_manifest_v1' or set(manifest['files']) != expected: return None
+        root = ROOT.resolve()
         for name, pin in manifest['files'].items():
             path = ROOT / name
-            if path.is_symlink() or not path.resolve().is_relative_to(ROOT.resolve()): return None
+            if path.is_symlink() or not path.resolve().is_relative_to(root): return None
             if any(p.is_symlink() for p in path.parents if p != ROOT and ROOT in p.parents): return None
             content = path.read_bytes()
             if len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
             if name == DATA: data_raw = content
         d = json.loads(data_raw)
-        packets = {k: p.packet() for k, p in PROVIDERS.items()}
-        if any(v is None for v in packets.values()): return None
-        if d['schema'] != 'current_reward_origins_338_v1' or d['game_commit'] != version.NEW_COMMIT: return None
-        if d['rows'] != source_rows(packets) or d['complete_acquisition_pool'] is not False: return None
-        return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, v['source_identity']) for k, v in packets.items())),
-                'actual_received': None, 'actual_eligible': None, 'run_updated': False}
-    except (OSError,ValueError,KeyError,TypeError,AttributeError):
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
+    packets = {k: p.packet() for k, p in PROVIDERS.items()}
+    if any(v is None for v in packets.values()): return None
+    if d['schema'] != 'current_reward_origins_338_v1' or d['game_commit'] != version.NEW_COMMIT: return None
+    try:
+        rows = source_rows(packets)
+    except ValueError:
+        return None
+    if d['rows'] != rows or d['complete_acquisition_pool'] is not False: return None
+    return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, v['source_identity']) for k, v in packets.items())),
+            'actual_received': None, 'actual_eligible': None, 'run_updated': False}
 
 
 def reference(category, item_id):
