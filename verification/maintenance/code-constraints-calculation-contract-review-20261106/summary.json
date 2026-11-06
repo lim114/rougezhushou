@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "数值算式必填与校准结构复用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "0ab4b265e12b2e3a60cc98bef71638960eb4d0cc",
+  "changed_sources": [
+    "rouge/panel_native_bridge.py",
+    "rouge/calibration_experiment.py"
+  ],
+  "source_sha256": {
+    "rouge/panel_native_bridge.py": "4c7efbe7926132f8733c99ab2817ae31bdbab631cc974ffde9d37125765258aa",
+    "rouge/calibration_experiment.py": "e1b962b44e3417f69da1ffbdf807c14c7ac6afc340c73d3e8d4447294f6f1a6e"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D106",
+    "D109"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 26,
+    "command": "python -m unittest tests.test_calculation_contract_reuse_review tests.test_calibration_experiment",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-167",
+    "additional_native_suite": {
+      "tests_run": 10,
+      "failures": 7,
+      "baseline_same_failures": true,
+      "reason": "Frozen source manifest digest for rouge/catalog.py differs from current file; manifest and file left unchanged."
+    },
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "All three _record callsites supply explicit term; None basis remains explicit _term(None). _panel_value only product caller checks data and observation before dispatch; values validation retained.",
+    "requirements": "D106/D109 approved scope. No new wrappers or catch. Public malformed experiment records still blocked; explicit unknown preserved."
+  },
+  "remaining": [
+    "Native panel source acceptance: catalog.py differs from frozen source manifest",
+    "Other modules",
+    "Test window update"
+  ]
+}

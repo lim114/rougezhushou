@@ -43,10 +43,8 @@ def _subset(left, right):
 
 def _panel_value(data, channel, model):
     from .calibration import _compare_prediction
-    if not isinstance(data, dict) or set(data) != {'scenario', 'observation'}:
-        raise ValueError('面板样本需为scenario与独立observation。')
     observation = deepcopy(data['observation'])
-    if not isinstance(observation, dict) or not isinstance(observation.get('values'), dict) or not observation['values']:
+    if not isinstance(observation.get('values'), dict) or not observation['values']:
         raise ValueError('面板样本需有非空界限记录。')
     intervals = {key: _interval(*_reading(value, '独立面板界限/' + str(key))) for key, value in observation['values'].items()}
     observation['values'] = {key: interval['lower'] for key, interval in intervals.items()}

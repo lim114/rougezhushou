@@ -5104,3 +5104,5 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 - 2026-11-06 D98/D99：笔记资料标题契约及同次点击重复读取整改，9项定向通过；回执 verification/maintenance/code-constraints-reference-note-entry-review-20261106/summary.json。新版窗口待补。
 
 - 2026-11-06 D102/D103：计算链参考判空与来源重复核验整改，32项定向通过；回执 verification/maintenance/code-constraints-calculation-validation-review-20261106/summary.json。新版窗口待补。
+
+- 2026-11-06 D106/D109：显式算式与同轮校准结构复用，26项通过；原生来源验收未通过，见 verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json。

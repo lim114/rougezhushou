@@ -58,8 +58,7 @@ def _term(basis, *, addition=0, multiplier=0, final_addition=0, final_scaler=1):
             'final_addition':[final_addition], 'final_scaler':[final_scaler]}
 
 
-def _record(phase, field, value, term=None):
-    term = term or _term(None)
+def _record(phase, field, value, term):
     scaler = Q
     for value_factor in term['final_scaler']:
         scaler = _product(scaler, _raw(value_factor))

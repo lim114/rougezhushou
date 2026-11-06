@@ -1154,12 +1154,17 @@
     },
     {
       "file": "rouge/panel_native_bridge.py",
-      "sha256": "d9348d2d14a24037262e65be96758707a30bbabcb2a183a94fdaea5d6dada191",
+      "sha256": "4c7efbe7926132f8733c99ab2817ae31bdbab631cc974ffde9d37125765258aa",
       "rule1": "selected_repeated_preparation_prediction_and_rune_scan_removed",
       "rule2": "two_single_use_functions_inlined_two_aliases_removed_shared_comparison_two_callers",
       "rule3": "try_raise_bodies_unchanged_D105_D106_pending_bridge",
       "full_module_review_complete": false,
-      "evidence": "prepare groups rune sources once instead of scanning each field, constructs multi-use term_value once; its catch body unchanged. Removed unused multiply imports. All module source read, but conversion helpers and default term need D105/D106 approval; repeated conversion/read paths still require review. No whole-module certification. Existing try/raise AST bodies equal before/after."
+      "evidence": "prepare groups rune sources once instead of scanning each field, constructs multi-use term_value once; its catch body unchanged. Removed unused multiply imports. All module source read, but conversion helpers and default term need D105/D106 approval; repeated conversion/read paths still require review. No whole-module certification. Existing try/raise AST bodies equal before/after.",
+      "calculation_contract_review": {
+        "decision": "D106",
+        "evidence": "verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json",
+        "result": "26 contract/calibration tests pass; 7 native source failures reproduce on baseline."
+      }
     },
     {
       "file": "rouge/catalog.py",
@@ -1182,13 +1187,18 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "92c2584960333e32d918b0cdad2936d9fe23691ee8f97c22f8622bf28ed95561",
+      "sha256": "e1b962b44e3417f69da1ffbdf807c14c7ac6afc340c73d3e8d4447294f6f1a6e",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
       "full_module_review_complete": false,
       "evidence": "Whole experiment source revisited with previous interval/control audit. Timing record reuses model and calculation; control+3 samples7 to4 computations. Panel branch preserves previous4-call contract. Existing D109/D110/D111 unchanged; every independent observation, source, identity and control difference still checked; no records dropped. All ordinary paths reviewed, module completion pending its listed defenses.",
-      "ordinary_rules_review_complete": true
+      "ordinary_rules_review_complete": true,
+      "calculation_contract_review": {
+        "decision": "D109",
+        "evidence": "verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json",
+        "result": "26 contract/calibration tests pass; 7 native source failures reproduce on baseline."
+      }
     },
     {
       "file": "rouge/timing_calibration.py",
