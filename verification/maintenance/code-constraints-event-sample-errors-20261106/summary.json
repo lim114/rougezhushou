@@ -1,0 +1,57 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件历史统计收窄读取异常出口",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5c001adcc2abfb1bb81e2c3c099814963e27a3c9",
+  "changed_sources": [
+    "rouge/public_event_samples.py",
+    "tests/test_event_sample_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/public_event_samples.py": "3028c366db608c850dcd2c5554e89d37fca1db49ca78c8722bb688d5608620d2",
+    "tests/test_event_sample_error_boundary.py": "77124654170901eb37a85d6e2d1a75c0013eafad3acd19630f2625b21864f27c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D316"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_event_sample_error_boundary tests.test_public_event_samples_450",
+    "tests_run": 8,
+    "tests_passed": 8,
+    "seconds": 0.22,
+    "initial_run": {
+      "tests": 8,
+      "failure_reports": 3,
+      "reason": "First bytes replacement matched CRLF but file uses LF, so source remained unchanged; tests reproduced broad catch. Applied LF replacement then reran."
+    },
+    "live_window": "Isolated Qt card checks pass; original test window update remains pending."
+  },
+  "review": {
+    "standards": "Catch only samples OSError/ValueError; cohort lookup outside catch; TypeError/KeyError propagate. Existing schema/key/count/total validation retained. No new helper or defense.",
+    "requirements": "Known first-floor 74/438 and fixed cohort totals unchanged; missing input remains unavailable; internal lookup ValueError surfaces; exact event bindings and card click/scroll tests pass. D316 scoped review complete, not whole-program acceptance."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

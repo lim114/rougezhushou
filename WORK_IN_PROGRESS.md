@@ -1,3 +1,7 @@
+## 当前断点：事件历史统计收窄读取异常出口（2026-11-06）
+
+D316完成，8项定向通过，旧逻辑3处吞错复现。原280组完成152、剩128；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-event-sample-errors-20261106/summary.json`。
+
 ## 当前断点：埃尔伯特构造分支统一布尔类型拒绝（2026-11-06）
 
 D293完成，14项定向通过。原280组完成151、剩129；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-elbert-constructor-check-20261106/summary.json`。

@@ -5386,3 +5386,7 @@ D287/D292完成；复用本次资料、类型在reference校验，保留具体�
 ## 维护：埃尔伯特构造分支统一布尔类型拒绝（2026-11-06）
 
 D293完成；构造分支拒绝非布尔useDb，删除前一次重复类型检查，保留唯一原项、显式身份、等级与数量约束。14项定向通过。回执 `verification/maintenance/code-constraints-elbert-constructor-check-20261106/summary.json`。
+
+## 维护：事件历史统计收窄读取异常出口（2026-11-06）
+
+D316完成；仅samples读取/校验错误转无资料，内部类型、缺键及后处理错误直接暴露。8项定向通过。回执 `verification/maintenance/code-constraints-event-sample-errors-20261106/summary.json`。

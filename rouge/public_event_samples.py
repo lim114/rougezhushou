@@ -43,8 +43,9 @@ def references(graph):
     # Hidden zones do not prove the entrance floor or the dataset's treehole cohort.
     if context['floor']is None or context['special_region']:return {}
     try:
-        metadata,cohorts=samples();counts=cohorts.get((context['floor'],False),{})
-    except(OSError,ValueError,KeyError,TypeError):return {}
+        metadata,cohorts=samples()
+    except(OSError,ValueError):return {}
+    counts=cohorts.get((context['floor'],False),{})
     total=sum(counts.values())
     if not total:return {}
     return {key:{'event_id':identity,'count':counts[identity],'total':total,
