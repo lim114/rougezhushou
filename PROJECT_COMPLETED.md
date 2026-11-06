@@ -5474,3 +5474,7 @@ D105局部完成：格式及解包缺陷不再伪装未知数值，3项定向通
 ## 维护：梅模组来源部件核对与索引查找合并（2026-11-06）
 
 D139完成：来源保护保留，同快照重复查找移除，16项定向通过。未新增功能节。回执 `verification/maintenance/code-constraints-mei-part-lookup-20261106/summary.json`。
+
+## 维护：灵知模组与花类治疗来源约束按授权复核（2026-11-06）
+
+D140/D143按授权保留并复核，22项定向通过；产品源码未改，不增加功能节，不当作实机数值校准。回执 `verification/maintenance/code-constraints-module-healing-retention-20261106/summary.json`。
