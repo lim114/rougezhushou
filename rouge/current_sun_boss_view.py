@@ -89,7 +89,7 @@ class CurrentSunBossPanel(QWidget):
         else: self.form_combo.setCurrentIndex(0)
         self.form_combo.blockSignals(block); self._form_changed(preserve=keep)
         if self.map_dialog is not None:
-            mapped = model.map_reference(fresh)
+            mapped = model.map_reference(fresh, prepared_reference=fresh)
             if mapped is None: self._close_map(); self.status.setText('固定地图来源无法核对，旧地图窗口已关闭；机制文献仍可阅读。')
             elif not self.map_dialog.panel.refresh_reference(): self._close_map()
             elif self.map_dialog.panel.result != mapped['map']:

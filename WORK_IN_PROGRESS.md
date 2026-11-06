@@ -1,3 +1,7 @@
+## 当前断点：地图刷新复用父页面已核验资料（2026-11-06）
+
+D280/D284部分完成，24项定向通过；子窗口及共享入口重复读取仍待整改。原280组完成128、剩152不变。原待审和测试窗口缺口保留。回执 verification/maintenance/code-constraints-map-parent-snapshot-20261106/summary.json。
+
 ## 当前断点：汉科与熄日界面同次选择解析一次（2026-11-06）
 
 D283完成，最终25项定向通过；初轮两条错误测试预期已修正，原失败保留。原280组完成128、剩152。地图链D284及原待审/窗口缺口保留。回执 verification/maintenance/code-constraints-document-panel-selection-20261106/summary.json。

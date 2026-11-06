@@ -5298,3 +5298,7 @@ D288模型范围完成，13定向通过、30组输出等价；汉科证据见上
 ## 维护：汉科与熄日界面同次选择解析一次（2026-11-06）
 
 D283完成，分支、关联项、头像与正文复用本次实体，卡片复用于正文和调试内容。最终25定向通过，初轮失败保留；地图链D284未销项。回执：`verification/maintenance/code-constraints-document-panel-selection-20261106/summary.json`。
+
+## 维护：地图刷新复用父页面已核验资料（2026-11-06）
+
+D280/D284部分完成，24定向通过；独立入口与地图身份检查保留，子窗口链未销项。回执：`verification/maintenance/code-constraints-map-parent-snapshot-20261106/summary.json`。

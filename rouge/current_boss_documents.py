@@ -194,8 +194,8 @@ def resolve_entity(result, enemy_key, request):
             'source_identity': deepcopy(fresh['source_identity']), 'run_updated': False}
 
 
-def map_reference(result):
-    fresh = _fresh(result)
+def map_reference(result, *, prepared_reference=...):
+    fresh = _fresh(result) if prepared_reference is ... else prepared_reference
     if fresh is None: return None
     from . import current_map_position as maps
     mapped = maps.stage_reference(fresh['stage_id'])

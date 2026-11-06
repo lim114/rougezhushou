@@ -142,10 +142,13 @@ def resolve_form(result, enemy_key, request):
             'source_identity': deepcopy(fresh['source_identity']), 'actual_form': None, 'run_updated': False}
 
 
-def map_reference(result):
-    if type(result) is not dict: return None
-    fresh = reference(result.get('stage_id'), result.get('selected_key'))
-    if fresh is None or not _same(fresh, result): return None
+def map_reference(result, *, prepared_reference=...):
+    if prepared_reference is ...:
+        if type(result) is not dict: return None
+        fresh = reference(result.get('stage_id'), result.get('selected_key'))
+        if fresh is None or not _same(fresh, result): return None
+    else:
+        fresh = prepared_reference
     from . import current_map_position as maps
     mapped = maps.stage_reference(fresh['stage_id'])
     original = fresh['data']['originals']['levels'][fresh['level_key']]

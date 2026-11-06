@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图刷新复用父页面已核验资料",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "81d6aad4ea72575a652a8fe05d768c8048d87c40",
+  "changed_sources": [
+    "rouge/current_sun_boss.py",
+    "rouge/current_boss_documents.py",
+    "rouge/current_sun_boss_view.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_document_map_snapshot.py"
+  ],
+  "source_sha256": {
+    "rouge/current_sun_boss.py": "37656fed4695a5f324473093b396a5a26c9a9eb70a8d4abee48b8a8a18a68785",
+    "rouge/current_boss_documents.py": "50e3b381fa7822a4df2be9c394b346ad24ae635aaca423ab7b9c5d7dcf37f240",
+    "rouge/current_sun_boss_view.py": "1cc17fd8395476f8cf5cc0ff6e2fec14eca33d6e9ea8eb7691ca994fd25db140",
+    "rouge/current_boss_documents_view.py": "472d5515ae1ead8c297fce3de2583b7d0aa9ba0beb76fae66323aa4989a4168c",
+    "tests/test_document_map_snapshot.py": "2cb9b36434d6dab49b324987dab7c6d2169b72611d4f5e9c368cd03c6be60909"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 24,
+    "tests_passed": 24,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_map_snapshot tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-225",
+    "contract": "Prepared and independent map outputs equal; prepared path does not reread documentary reference; independent source failure and wrong map identity still rejected.",
+    "live_window": "Isolated Qt tests only; original window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 partial: parent refresh passes just-verified result into map_reference. Independent open/verify paths still refresh and compare. No new helper/catch/defense.",
+    "requirements": "Map stage, level key and complete geometry checks retained; map child refresh/result equality unchanged. Remaining child/shared-window duplicate reads not certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D280",
+    "D284"
+  ]
+}
