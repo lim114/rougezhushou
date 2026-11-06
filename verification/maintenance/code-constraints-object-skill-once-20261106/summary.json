@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "物件技能选择按声明核验一次",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "1e3fdcd6831f9e5fb4c73a87aba73b5f0c8cddca",
+  "changed_sources": [
+    "rouge/current_stage_objects.py",
+    "tests/test_object_skill_selection_once.py"
+  ],
+  "source_sha256": {
+    "rouge/current_stage_objects.py": "f47e5b201928126a61ee87caaef4668ec43feb17c20ef9118b7caaa6b1de324c",
+    "tests/test_object_skill_selection_once.py": "096d1c60b5c7f0273c04e72bcdaabeb169ba2a50435310914e27d1674eb14799"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D243"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 20,
+    "tests_failed": 0,
+    "tests_run": 20,
+    "command": "python -m unittest tests.test_object_skill_selection_once tests.test_current_stage_objects_373 tests.test_stage_objects_error_boundary",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-210",
+    "old_source_regression": "2 new tests:1 failure on prior source due repeated index reads. Final20 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D243 approved per-declaration selection reuse:skill index and main level read once; index validity and level integer type computed before skill loop. No helper/catch added.",
+    "requirements": "Each skill level-table bound still checked separately; invalid bool/None/out-of-range preserved unknown. Missing entity/skill record still raises; D241 error tests pass."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

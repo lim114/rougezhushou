@@ -1,3 +1,7 @@
+## 当前断点：物件技能选择按声明核验一次（2026-11-06）
+
+D243完成，20定向通过；原280组完成113、剩167。D319/D320待审，原窗口和既有缺口保留。回执verification/maintenance/code-constraints-object-skill-once-20261106/summary.json。
+
 ## 当前断点：出怪候选内部错误不再伪装无资料（2026-11-06）
 
 D250完成，16定向通过；原280组完成112、剩168。D319/D320待审核，原窗口和既有验证缺口保留。回执verification/maintenance/code-constraints-candidate-error-boundary-20261106/summary.json。
