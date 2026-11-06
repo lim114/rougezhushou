@@ -5124,3 +5124,7 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 ## 维护：召唤物配额窗口收窄输入错误捕获（2026-11-06）
 
 D131完成，13项定向通过。回执：verification/maintenance/code-constraints-token-budget-errors-review-20261106/summary.json。不增加功能节数。
+
+## 维护：藏品关联强化在资料入口核验并复用（2026-11-06）
+
+仅D124完成，27项定向通过。回执：verification/maintenance/code-constraints-bound-sp-source-review-20261106/summary.json。不增加功能节数。

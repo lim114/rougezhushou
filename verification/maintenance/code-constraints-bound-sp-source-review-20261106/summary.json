@@ -1,0 +1,49 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "藏品关联强化在资料入口核验并复用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "6d4530a2fbf5e4f770fa77780064aef33362bd09",
+  "changed_sources": [
+    "rouge/relics.py",
+    "rouge/supplemental_sp.py",
+    "tests/test_bound_sp_source_review.py"
+  ],
+  "source_sha256": {
+    "rouge/relics.py": "8b36faa2de2627f3016747597917b7bd893af43dce7e43f3d7d0343b1f8a2aff",
+    "rouge/supplemental_sp.py": "ccacd8a09a469d14f5e2823661e8830d8e69edf68eb6b88bdf152d5bf58f3d1a",
+    "tests/test_bound_sp_source_review.py": "91874a6f4dbb3c265f378a38cdcdc20dcd7118ed6ae0cac5962ab9e760c583f1"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D124"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 27,
+    "command": "python -m unittest tests.test_bound_sp_source_review tests.test_supplemental_sp_144 tests.test_supplemental_natural_sp_186 tests.test_supplemental_run_141",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-175",
+    "before": "Three failing cases: missing child, missing effects, duplicate source lookup.",
+    "intermediate": "27 tests, one duplicate lookup failure: CRLF replacement did not match LF source; corrected before final run.",
+    "declared_bindings_checked": 15,
+    "live_window": "Pending closure of old app after policy rejection; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "D124 authorized source-entry validation once per cached load. Consumer directly reads required fields and obtains one source snapshot outside record loop. No helper or catch added.",
+    "requirements": "Missing declared child/effects fails load; optional bindings and empty effects remain valid. Unknown recipient still yields unknown recovery rate."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

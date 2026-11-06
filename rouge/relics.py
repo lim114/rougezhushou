@@ -12,7 +12,15 @@ SUPPORTED=BASE_KINDS|{'redeploy_delta','initial_sp','end_sp','caster_end_sp','sp
     'status_duration_delta','token_deploy_slot_free','buildup_factor','temporary_ammo_speed','temporary_attack','deployment_attack_speed','defense_penetration',
     'skill_forbidden','automatic_skill','periodic_sp','regeneration_hp_ratio','enemy_atk_factor','defense_flat','final_attack_factor','first_damage_scale','ammo_refill','barrier_on_deploy_ratio','evasion_chance','shield_layers','neural_burst_scale'}
 @lru_cache(maxsize=1)
-def mechanics():return json.loads((Path(__file__).with_name('data')/'relic-mechanics.json').read_text(encoding='utf-8'))
+def mechanics():
+    data=json.loads((Path(__file__).with_name('data')/'relic-mechanics.json').read_text(encoding='utf-8'))
+    for entries in (data['relics'],data['char_buffs']):
+        for identity,entry in entries.items():
+            for binding in entry.get('bound_char_buffs',[]):
+                target=binding['id']
+                if target not in data['char_buffs'] or 'effects' not in data['char_buffs'][target]:
+                    raise ValueError(f'关联强化资料缺失：{identity} → {target}。')
+    return data
 
 def matches(effect,profile,token=False):
     profession='token' if token else profile['profession']

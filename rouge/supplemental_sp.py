@@ -25,8 +25,8 @@ def sp_reference(skill,selected,records):
     scenario={'_relic_rules':selected}
     adjusted=effective_skill({'sp_cost':skill['spData']['spCost'],'initial_sp':skill['spData']['initSp']},scenario)
     cost_pending=[];initial_pending=[];end_pending=[];recovery_pending=[]
+    data=mechanics()
     for record in records:
-        data=mechanics()
         entry=data['relics'].get(record['id']) or data['char_buffs'].get(record['id'])
         if not entry or not (record['pending'] or record['missing_conditions']):continue
         kinds={e['kind'] for e in entry['effects']}
@@ -34,7 +34,7 @@ def sp_reference(skill,selected,records):
             if kind in kinds:key.append(record['name'])
         if record['missing_conditions']:
             kinds.update(e['kind'] for binding in entry.get('bound_char_buffs',[])
-                for e in data['char_buffs'].get(binding['id'],{}).get('effects',[]))
+                for e in data['char_buffs'][binding['id']]['effects'])
         if 'sp_recovery' in kinds:recovery_pending.append(record['name'])
     cost=None if cost_pending else adjusted['sp_cost']
     initial=None if initial_pending else adjusted['initial_sp']

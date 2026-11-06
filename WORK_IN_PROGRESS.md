@@ -1,3 +1,7 @@
+## 当前断点：藏品关联强化在资料入口核验并复用（2026-11-06）
+
+D124完成，27项定向通过；原280组剩239组。等级默认值链路已定位但尚未修改，后续按外部入口与内部培养复用共同处理；其他模块及原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-bound-sp-source-review-20261106/summary.json。
+
 ## 当前断点：召唤物配额窗口收窄输入错误捕获（2026-11-06）
 
 D131完成，13项定向检查通过；原280组剩240组。其他模块继续核对；原生来源摘要缺口及新版窗口待补。回执verification/maintenance/code-constraints-token-budget-errors-review-20261106/summary.json。
