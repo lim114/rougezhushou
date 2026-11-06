@@ -1,0 +1,54 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "埃尔伯特资料包复用已解析根目录",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "7570257026d98fa16338c0bfbb4fbf25d6405c0c",
+  "changed_sources": [
+    "rouge/current_elbert_reference.py",
+    "tests/test_current_elbert_366.py",
+    "tests/test_elbert_public_root.py"
+  ],
+  "source_sha256": {
+    "rouge/current_elbert_reference.py": "ea5a702c5fbfe51e1e943a041b6702db8856f3a5744ac44bfb7551dc1f35bd7f",
+    "tests/test_current_elbert_366.py": "372cc33e3780deb1ad9dddf7c95f357a171a3329ed3c52163b3b59d1a5022559",
+    "tests/test_elbert_public_root.py": "fea989da960f6d90c5b10402e0ed40f9aac44a4bd32d464f886d66358c836f6c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D294"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 17,
+    "tests_passed": 17,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_elbert_public_root tests.test_elbert_packet_error_boundary tests.test_current_elbert_366",
+    "local_evidence": ".local/code-constraints-review-221",
+    "old_source_regression": "New3 tests:1 failure on old repeated root resolution;2 pass.",
+    "live_window": "No UI change; original test window update pending."
+  },
+  "review": {
+    "standards": "D294: packet resolves root once and supplies it to _read_public; independent _read_public resolves its own root. No wrapper or catch added.",
+    "requirements": "Relative path rules, root boundary, file and parent symlink rejection retained. Existing corruption test spy forwards keyword arguments; its rejection assertion is unchanged."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

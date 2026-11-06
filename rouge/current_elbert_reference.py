@@ -72,12 +72,12 @@ def source_rows(snapshot,inputs):
     return result
 
 
-def _read_public(name):
+def _read_public(name,*,root=None):
     if type(name)is not str:raise ValueError('Public relative source required')
     rel=PurePosixPath(name)
     if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name or rel.as_posix()!=name:raise ValueError('Unsafe source')
     path=ROOT.joinpath(*rel.parts)
-    if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):raise ValueError('Linked source refused')
+    if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve() if root is None else root):raise ValueError('Linked source refused')
     for parent in path.parents:
         if parent==ROOT:break
         if parent.is_symlink():raise ValueError('Linked source parent refused')
@@ -86,7 +86,8 @@ def _read_public(name):
 
 def packet():
     try:
-        try: raw=_read_public(MANIFEST)
+        root=ROOT.resolve()
+        try: raw=_read_public(MANIFEST,root=root)
         except ValueError:return None
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         manifest=json.loads(raw)
@@ -97,7 +98,7 @@ def packet():
         if manifest['schema']!='current_elbert_366_manifest_v1'or manifest['game_commit']!=battle.version.NEW_COMMIT or set(manifest['files'])!=expected:return None
         values={}
         for name,pin in manifest['files'].items():
-            try: content=_read_public(name)
+            try: content=_read_public(name,root=root)
             except ValueError:return None
             if type(pin['bytes'])is not int or len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             values[name]=content

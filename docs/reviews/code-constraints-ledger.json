@@ -2696,7 +2696,7 @@
     },
     {
       "file": "rouge/current_elbert_reference.py",
-      "sha256": "8b878cd40800434a4c527cde0d2d5a6ff06330617358159af0b8db286b3a6010",
+      "sha256": "ea5a702c5fbfe51e1e943a041b6702db8856f3a5744ac44bfb7551dc1f35bd7f",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Removed equality to same assigned database object; guard/source/entity duplication pending",
@@ -2729,6 +2729,13 @@
           "rule1": "Scoped file/JSON and declared ValueError boundaries.",
           "rule2": "No wrapper introduced.",
           "rule3": "Approved D295; existing explicit constructor rejection retained.",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-elbert-root-reuse-20261106/summary.json",
+          "rule1": "Root resolved once per packet; separate read entries resolve anew.",
+          "rule2": "Existing read helper owns path checks and IO.",
+          "rule3": "Approved D294; link and boundary guards retained.",
           "full_module_review_complete": false
         }
       ]

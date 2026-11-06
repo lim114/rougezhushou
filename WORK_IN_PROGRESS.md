@@ -1,3 +1,7 @@
+## 当前断点：埃尔伯特资料包复用已解析根目录（2026-11-06）
+
+D294完成，17项定向检查通过；旧代码3测试中1项复现重复解析。原280组完成126、剩154。D281/D296、原组合Qt退出、D319/D320及原窗口待补。回执 verification/maintenance/code-constraints-elbert-root-reuse-20261106/summary.json。
+
 ## 当前断点：埃尔伯特资料入口错误边界收窄（2026-11-06）
 
 D295完成，14项定向检查通过；旧代码4测试复现10个失败项/子项。原280组完成125、剩155。D281/D296仍部分完成；原组合Qt退出、D319/D320及原窗口待补。回执 verification/maintenance/code-constraints-elbert-packet-boundary-20261106/summary.json。

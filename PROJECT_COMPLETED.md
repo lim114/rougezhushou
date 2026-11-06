@@ -5282,3 +5282,7 @@ D296仅resolve_related重复刷新完成，保留刷新后完整来源及关卡�
 ## 维护：埃尔伯特资料入口错误边界收窄（2026-11-06）
 
 完成D295，保留实际文件/格式错误与构造拒绝，内部错误直接上报。14项定向通过；旧代码失败保留。回执：`verification/maintenance/code-constraints-elbert-packet-boundary-20261106/summary.json`。
+
+## 维护：埃尔伯特资料包复用已解析根目录（2026-11-06）
+
+完成D294，同包复用根目录，独立入口重核，路径和链接限制保留。17项定向通过，旧代码失败留存。回执：`verification/maintenance/code-constraints-elbert-root-reuse-20261106/summary.json`。

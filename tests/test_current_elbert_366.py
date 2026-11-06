@@ -99,8 +99,8 @@ class CurrentElbert366Tests(unittest.TestCase):
 
     def test_bad_public_source_or_battle_packet_cannot_retain_stale_document(self):
         original=model._read_public
-        def broken(name):
-            raw=original(name)
+        def broken(name,**kwargs):
+            raw=original(name,**kwargs)
             return raw+b'changed'if name.endswith('firebrand-page.html')else raw
         with patch.object(model,'_read_public',side_effect=broken):self.assertIsNone(model.packet())
         with patch.object(model.battle,'packet',return_value=None):self.assertIsNone(model.packet())
