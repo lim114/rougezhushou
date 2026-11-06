@@ -5366,3 +5366,7 @@ D108/D128保留等等级端点分支；合成单等级算例、双点插值及�
 ## 维护：未知生命回复倍率保留分项并撤下完整量（2026-11-06）
 
 D129完成；未知回复倍率保留有证分项，完整本体/召唤物回复及报告标未知。29通过4历史跳过，未知分支由故障注入验证，不推断新机制。回执：`verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json`。
+
+## 维护：回放提交双向账户保护传递复核（2026-11-06）
+
+D299保留保护标记合并；回放发现损坏、准备后原账户进入保护两场景都保留原文件。9定向通过，测试仅用临时文件。回执：`verification/maintenance/code-constraints-timeline-account-protection-20261106/summary.json`。

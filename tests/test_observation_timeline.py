@@ -65,6 +65,30 @@ class ObservationTimelineTests(unittest.TestCase):
         self.assertTrue(self.run.preserve_unreadable);self.assertTrue(self.account.preserve_original)
         self.assertFalse((self.folder/'run.json').exists());self.assertFalse((self.folder/'account.json').exists())
 
+    def test_replay_discovered_damage_keeps_original_file(self):
+        self.account.observe(self.observations()[0]['operator'],self.at)
+        original=self.account.path.read_bytes()
+        self.account.records['kaltsit']['fields']['potential']=0
+        self.assertFalse(self.account.preserve_original)
+        timeline=ObservationTimeline(self.run,self.account).prepare(self.observations()[3],4,None)
+        self.assertTrue(timeline.account.preserve_original)
+        self.assertFalse(self.account.preserve_original)
+        _,changed=timeline.commit(self.run,self.account)
+        self.assertTrue(changed)
+        self.assertTrue(self.account.preserve_original)
+        self.assertEqual(self.account.path.read_bytes(),original)
+        self.assertEqual(self.account.records['kaltsit']['fields']['level'],90)
+
+    def test_protection_added_after_prepare_is_not_lost(self):
+        self.account.observe(self.observations()[0]['operator'],self.at)
+        original=self.account.path.read_bytes()
+        timeline=ObservationTimeline(self.run,self.account).prepare(self.observations()[3],4,None)
+        self.assertFalse(timeline.account.preserve_original)
+        self.account.preserve_original=True
+        timeline.commit(self.run,self.account)
+        self.assertTrue(self.account.preserve_original)
+        self.assertEqual(self.account.path.read_bytes(),original)
+
     def test_current_first_retains_each_short_capture_and_drains_earliest_next(self):
         buffer=FrameBuffer(settle_seconds=0)
         for i in range(1,9):buffer.offer(np.full((20,30,3),20*i,np.uint8),self.at+i)

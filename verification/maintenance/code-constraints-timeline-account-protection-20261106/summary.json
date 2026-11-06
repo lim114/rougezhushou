@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "回放提交双向账户保护传递复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "cc82de397fd3c1d8570a752fa437b33065b0c77e",
+  "changed_sources": [
+    "tests/test_observation_timeline.py"
+  ],
+  "source_sha256": {
+    "tests/test_observation_timeline.py": "2d91e6dfe65fb03af6a396ffc0e47271e988cab5ffa0d64f7e806144452e079c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D299"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 9,
+    "tests_passed": 9,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_observation_timeline",
+    "local_evidence": ".local/code-constraints-review-242",
+    "new_protection_cases": 2,
+    "live_window": "No visual change; original test window update pending."
+  },
+  "review": {
+    "standards": "D299 approved merge retained. Replay and live account flags represent separate states; logicalOR preserves either. No redundant check or new product code.",
+    "requirements": "9 targeted checks pass. Real AccountCache on temporary files: replay discovers invalid potential and protects original; live protection added after preparation survives commit. Memory receives valid observations while file bytes unchanged. No private originals touched."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": false,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/observation_timeline.py": "5fa35e3e0a01723407e30a1cb4a7efec04e5c19275d506201d17c8abc6222453"
+  }
+}

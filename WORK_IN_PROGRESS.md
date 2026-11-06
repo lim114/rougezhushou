@@ -1,3 +1,7 @@
+## 当前断点：回放提交双向账户保护传递复核（2026-11-06）
+
+D299按批准保留，9定向通过，新增回放/原账户两方向保护传递。原280组完成147、剩133；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-timeline-account-protection-20261106/summary.json。
+
 ## 当前断点：未知生命回复倍率保留分项并撤下完整量（2026-11-06）
 
 D129完成，29通过4历史跳过；未知倍率不再当1，报告区分分项/完整量。原280组完成146、剩134；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json。
