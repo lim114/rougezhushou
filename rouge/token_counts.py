@@ -17,9 +17,9 @@ def token_count_reference(profile,scenario,token_id):
     eligible=[p for p in data['potential_candidates'] if p['elite']<=elite and
         (p['elite']<elite or p['level']<=level) and p['required_potential_rank']<=potential]
     candidate=eligible[-1] if eligible else None
-    module=next((m for m in profile['modules'] if m['id']==data['module_id']),None)
-    module_applied=bool(module and scenario.get('module_id')==data['module_id'] and
-        elite>=data['module_unlock_elite'] and level>=data['module_unlock_level'])
+    module_applied=bool(scenario.get('module_id')==data['module_id'] and
+        elite>=data['module_unlock_elite'] and level>=data['module_unlock_level'] and
+        any(m['id']==data['module_id'] for m in profile['modules']))
     stage=next((s for s in data['module_stages'] if s['module_level']==scenario.get('module_level')),None) if module_applied else None
     held=phase['held_base']+(candidate['held_add'] if candidate else 0)+(stage['held_add'] if stage else 0)
     concurrent=phase['manual_concurrent_base']+(candidate['manual_concurrent_add'] if candidate else 0)+(stage['manual_concurrent_add'] if stage else 0)

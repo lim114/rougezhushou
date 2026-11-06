@@ -1124,13 +1124,13 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "c4b419b66f9ddb07d8a88327c1fee1ce7fe4239d5137353dae9795d9c2f75aa6",
-      "rule1": "reuse_existing_duration_snapshot_and_resolved_count_reference",
-      "rule2": "concurrent_limit_core_shared_by_two_real_entry_paths",
-      "rule3": "all_existing_protective_branches_unchanged",
+      "sha256": "a7e023959322d56817567573c766bd68f8b8c08c9953bc1a4471c14c9a8d13ab",
+      "rule1": "operator_cultivation_read_once_for_token_and_references",
+      "rule2": "no_new_helper_optional_prepared_input_has_real_callers",
+      "rule3": "D128_D134_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "finish_duration_references sole product caller runs after relics.finish, which initializes relic_token_stats and resolves duration for every included panel. Reuse an isolated deep copy, including known absence; tokens without a panel still resolve normally. Concurrent-limit calculation body moved unchanged to _concurrent_limit shared by standalone API and module comparison with already-read counts. No extra defensive validation or exception handlers. Remaining cultivation/module parsing and broader source review not complete."
+      "evidence": "Token attributes now retain the uncapped operator level separately from capped token level. Resolved (elite, operator_level) is passed to module/cost/duration references; standalone calls still resolve their own cultivation. Optional prepared input supports two actual paths, not exception recovery. No helper added. Existing ratio fallback D128 and false-level default D134 unchanged. Remaining cross-caller module lookup and cultivated-reference preparation, manual effect selection and other caller paths are not certified."
     },
     {
       "file": "rouge/relics.py",
@@ -1171,6 +1171,16 @@
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "evidence": "Read complete dialog. No module edits. Existing result-not-yet-calculated states, invalidate and explicit recalculate are normal UI flow. D131 captures ValueError/KeyError/TypeError around calculation; D132 optional get on required stock_within_reference result. No approval inferred. Caller/callee boundary audit is partial; no whole-module certification."
+    },
+    {
+      "file": "rouge/token_counts.py",
+      "sha256": "76d9b0c87e76006d7a2d124e68374fae3e9ac211ce4f4c4e8eb7b35ec876b571",
+      "rule1": "eligibility_before_module_membership_lookup",
+      "rule2": "no_new_helper_optional_prepared_input_has_real_callers",
+      "rule3": "D134_recorded_unchanged",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Whole 35-line module and callers read. Identity checks are source applicability for operator/scenario/token and optional token-bearing profiles; potential/elite predicates select game candidates. Only query module membership after selected identity and documented unlock conditions hold. All original criteria retained. Ordinary body has no duplicate entry validation or single-use helper: cached data loader is shared. Existing level default also coerces 0/False/empty string; D134 pending, not certified as full module. Output None fields distinguish unknown live state from source values."
     }
   ]
 }

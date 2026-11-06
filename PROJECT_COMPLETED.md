@@ -1,3 +1,7 @@
+## 维护：召唤物资料培养复用（2026-11-05）
+
+干员培养读取复用且保留召唤物等级截断区别；不适用模组不查询。73项定向及96/48完整对照与7920资料结果一致。[回执](verification/maintenance/code-constraints-token-cultivation-reference-20261105/README.md)。
+
 ## 维护：预算复用已解析模组（2026-11-05）
 
 入口链身份扫描2→1，费用未知判断一次；token_budget.py普通冗余已审完，D133仍待授权，未整模块销项。54项定向、792对照/3219预算/3223属性及5/45/12错误结果一致。[回执](verification/maintenance/code-constraints-token-equipment-reference-20261105/README.md)。

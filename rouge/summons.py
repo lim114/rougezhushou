@@ -35,20 +35,24 @@ def _duration_rules():
     return json.loads((Path(__file__).with_name('data')/'token-duration-reference.json').read_text(encoding='utf-8'))
 
 
-def duration_reference(profile,scenario,token_id):
+def duration_reference(profile,scenario,token_id,*,cultivation=None):
     """Return an isolated duration parameter; actual token presence is unknown.
 
     The product's current theme is rogue_6. An explicit map_tag allows callers
     to inspect another map without inheriting its conditional module override.
     No parameter here schedules deployment, withdrawal, death or damage.
+    cultivation optionally supplies resolved operator (elite, level), before
+    applying any separate token-level cap.
     """
     from copy import deepcopy
     data=_duration_rules()
     rule=next((r for r in data['rules'] if r['operator_id']==profile['id'] and
         r['token_id']==token_id and token_id in profile.get('tokens',{})),None)
     if rule is None:return None
-    elite=scenario.get('elite',2)
-    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    if cultivation is None:
+        elite=scenario.get('elite',2)
+        level=scenario.get('level') or profile['phases'][elite]['max_level']
+    else:elite,level=cultivation
     potential=scenario.get('potential',1)-1
     def eligible(candidate):
         phase=candidate['unlock_elite']
@@ -99,12 +103,15 @@ def module_rules():
     return json.loads((Path(__file__).with_name('data')/'summon-module-rules.json').read_text(encoding='utf-8'))
 
 
-def module_reference(profile,scenario,token_id):
+def module_reference(profile,scenario,token_id,*,cultivation=None):
+    """Accept the caller's resolved operator cultivation or read it once here."""
     module_id=scenario.get('module_id');rule=module_rules().get(module_id)
     if not rule or rule['operator']!=scenario['operator'] or rule['token_id']!=token_id:return None
     module=next((m for m in profile['modules'] if m['id']==module_id),None)
-    elite=scenario.get('elite',2)
-    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    if cultivation is None:
+        elite=scenario.get('elite',2)
+        level=scenario.get('level') or profile['phases'][elite]['max_level']
+    else:elite,level=cultivation
     stage=rule['stages'].get(str(scenario.get('module_level',0)))
     if not module or not stage or elite<module['unlock_elite'] or level<module['unlock_level']:return None
     return {'module_id':module_id,'module_level':scenario['module_level'],**stage,
@@ -119,11 +126,12 @@ def _token_cost_rules():
     return json.loads((Path(__file__).with_name('data')/'token-module-cost-reference.json').read_text(encoding='utf-8'))
 
 
-def token_cost_reference(profile,scenario,token_id):
+def token_cost_reference(profile,scenario,token_id,*,cultivation=None):
     """Only the pinned direct token cost addition is applied.
 
     Hidden talents, token deployment limits and actual lifecycle remain separate
     from this cultivation cost. The existing SUM-Y path is not duplicated.
+    cultivation is the resolved operator (elite, level), not a token-level cap.
     """
     from copy import deepcopy
     data=_token_cost_rules()
@@ -132,8 +140,10 @@ def token_cost_reference(profile,scenario,token_id):
         token_id in profile.get('tokens',{})),None)
     if rule is None:return None
     module=next((m for m in profile['modules'] if m['id']==rule['module_id']),None)
-    elite=scenario.get('elite',2)
-    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    if cultivation is None:
+        elite=scenario.get('elite',2)
+        level=scenario.get('level') or profile['phases'][elite]['max_level']
+    else:elite,level=cultivation
     stage=next((s for s in rule['stages'] if s['module_level']==scenario.get('module_level',0)),None)
     if (not module or not stage or elite<rule['module_unlock_elite'] or
             level<rule['module_unlock_level'] or elite<module['unlock_elite'] or level<module['unlock_level']):return None
@@ -176,7 +186,9 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module
     """
     phases=profile['tokens'][token_id]['phases'];elite=scenario.get('elite',2)
     phase=phases[min(elite,len(phases)-1)]
-    level=min(scenario.get('level') or profile['phases'][elite]['max_level'],phase['max_level'])
+    operator_level=scenario.get('level') or profile['phases'][elite]['max_level']
+    cultivation=(elite,operator_level)
+    level=min(operator_level,phase['max_level'])
     first,last=phase['frames'][0],phase['frames'][-1]
     ratio=(level-first['level'])/(last['level']-first['level']) if last['level']!=first['level'] else 0
     stats={k:first[k]+ratio*(v-first[k]) for k,v in last.items() if k!='level'}
@@ -188,8 +200,8 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module
     ordinary_base_hp=stats['hp']
     stats['hp']*=1+hp_pct
     if module_references is None:
-        module_references=(module_reference(profile,scenario,token_id),
-                           token_cost_reference(profile,scenario,token_id))
+        module_references=(module_reference(profile,scenario,token_id,cultivation=cultivation),
+                           token_cost_reference(profile,scenario,token_id,cultivation=cultivation))
     reference,cost_reference=module_references
     if reference:
         stats['deployment_cost']=max(0,stats['deployment_cost']+reference['cost_add'])
@@ -211,6 +223,6 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module
         stats['deployment_cost']=max(0,base_cost+cost_reference['cost_add'])
         stats['module_cost_reference']={**cost_reference,'base_cost':base_cost,
             'module_only_cost':stats['deployment_cost']}
-    duration=duration_reference(profile,scenario,token_id)
+    duration=duration_reference(profile,scenario,token_id,cultivation=cultivation)
     if duration is not None:stats['duration_reference']=duration
     return stats
