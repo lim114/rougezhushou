@@ -1,3 +1,7 @@
+## 当前断点：出怪列表复用队列筛选结果（2026-11-06）
+
+实际出怪列表分组/条目复用同次kind筛选；16项定向通过，测试窗口更新。D52原样待审，无新审批组，无整模块新增销项。回执verification/maintenance/code-constraints-spawn-filter-reuse-review-20261106/summary.json。
+
 ## 当前断点：十份地图与统计验收源码回顾及循环内重复读取清理（2026-11-06）
 
 434循环外复用筛选结果、清未用导入；439复用树节点。十份源码回顾及编译/入口/清理AST通过；433/434规则销项，其余八份D310待审，共273组。回执verification/maintenance/code-constraints-acceptance-431-440-review-20261106/summary.json。

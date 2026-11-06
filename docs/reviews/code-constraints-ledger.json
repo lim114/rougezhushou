@@ -280,11 +280,11 @@
     },
     {
       "file": "rouge/current_battle_view.py",
-      "sha256": "de9f7860de1d429f311de7fbbc30fa426d3a6eee0860695a968cd1bb37a0abff",
-      "rule1": "reuse_route_and_filter_state; keys_read_before_search; dialog_cleanup_once",
-      "rule2": "remove_two_closeEvent_wrappers_no_new_helper",
+      "sha256": "01c805c9f745f20b23db8437481f02b3d8ccd035dfd37fffd91fd5de3583316c",
+      "rule1": "Caller filters kind once, then applies group/focus to the same rows; source validators under D52 unchanged",
+      "rule2": "Shared grouping/filter functions retained; record_text owns domain formatting; no new wrapper",
       "rule3": "D231_D232_pending_unchanged",
-      "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. Remaining step_label repeated formatting and preflight under D232; no full certification.",
+      "evidence": "Entire player_spawn_filters and caller _actions_changed/focus_action inspected; action_rows does not mutate inputs; 16 targeted tests passed13.405s; other current_battle_view methods not certified",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false
     },
@@ -307,13 +307,15 @@
     {
       "file": "rouge/player_spawn_filters.py",
       "sha256": "e7b41a45f2ddfaf34c39018731dfdc38692ef437cbd490770d02cfc679c19501",
-      "rule1": "selected_paths_reviewed_followup_remaining",
-      "rule2": "callbacks_and_shared_domain_helpers_retained",
+      "rule1": "Caller filters kind once, then applies group/focus to the same rows; source validators under D52 unchanged",
+      "rule2": "Shared grouping/filter functions retained; record_text owns domain formatting; no new wrapper",
       "rule3": "see_pending_decisions_or_remaining_scope",
-      "evidence": "group_key/action_rows shared by battle reader and filters; record_text has one source caller but owns actual domain formatting, not a forwarding wrapper. D52 guards unchanged.",
+      "evidence": "Entire player_spawn_filters and caller _actions_changed/focus_action inspected; action_rows does not mutate inputs; 16 targeted tests passed13.405s; other current_battle_view methods not certified",
       "decisions": [
         "D52"
-      ]
+      ],
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false
     },
     {
       "file": "rouge/player_tile_information.py",

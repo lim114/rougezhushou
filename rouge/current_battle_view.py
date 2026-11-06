@@ -578,13 +578,14 @@ class CurrentBattlePanel(QWidget):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
         kind=self.queue_kind.currentData();actions=self.result['actions']if self.result else[]
         selected_group=None if self.sender()is self.queue_kind else self.action_group.currentData()
-        groups=list(dict.fromkeys(group for a in action_rows(actions,kind)if (group:=group_key(a))is not None))
+        kind_rows=action_rows(actions,kind)
+        groups=list(dict.fromkeys(group for a in kind_rows if (group:=group_key(a))is not None))
         blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部分组',None)
         for group in groups:self.action_group.addItem(group_label(group),group)
         index=self.action_group.findData(selected_group)
         if selected_group is not None and index<0:self.action_group.addItem('原分组在当前范围无资料',selected_group);index=self.action_group.count()-1
         self.action_group.setCurrentIndex(max(0,index));self.action_group.blockSignals(blocked)
-        rows=action_rows(actions,kind,self.action_group.currentData(),self.action_focus.currentData(),self.enemy_key)
+        rows=action_rows(kind_rows,None,self.action_group.currentData(),self.action_focus.currentData(),self.enemy_key)
         offset=self.actions.verticalScrollBar().value()if preserve else 0
         blocked=self.actions.blockSignals(True);self.actions.clear()
         for action in rows:

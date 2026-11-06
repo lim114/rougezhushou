@@ -1,3 +1,7 @@
+## 维护：出怪列表重复筛选清理（2026-11-06）
+
+CurrentBattlePanel._actions_changed复用队列筛选，16项定向通过；大模块其余路径和D52继续待办。[回执](verification/maintenance/code-constraints-spawn-filter-reuse-review-20261106/README.md)。
+
 ## 维护：地图与统计验收源码回顾（2026-11-06）
 
 433/434规则回顾完成，434/439普通冗余修正；其他finally待审。不代表历史功能重新实机通过。[回执](verification/maintenance/code-constraints-acceptance-431-440-review-20261106/README.md)。
