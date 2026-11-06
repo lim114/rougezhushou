@@ -1,0 +1,53 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "首领文献同次选择复用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "fc20eb8db9d5fe22a67dd7a3b363a810fcda5075",
+  "changed_sources": [
+    "rouge/current_boss_documents.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_boss_document_selection_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_boss_documents.py": "7469e38921578c90b90fa522b6c7b2a969327ee1d9eece959f63fa071f174cf4",
+    "rouge/current_boss_documents_view.py": "910022d0736d8d9050d26f28f47b746e6a1193ffe22599fd957cb9e2fa73ff31",
+    "tests/test_boss_document_selection_reuse.py": "c7c93204ae77261c6c365735708f38e0a6bc793a5b946cb56943f5dd0508f5fe"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 26,
+    "tests_passed": 26,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_boss_document_selection_reuse tests.test_current_boss_documents_view_369 tests.test_current_boss_documents_369",
+    "local_evidence": ".local/code-constraints-review-216",
+    "old_source_regression": "New2 tests:1 fails on original source due to repeated lookup;1 passes.",
+    "live_window": "Original test window update pending; isolated Qt checks only."
+  },
+  "review": {
+    "standards": "Same-selection topics, related entries, portrait and technical view share resolved row. Public independent queries still resolve. Fresh player_text reuses its own entity for topics. No new helper/catch/defense.",
+    "requirements": "Fresh source validation before player text and related navigation preserved. D281 remains partially implemented: entire refresh/resolve chain not yet certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D281"
+  ]
+}

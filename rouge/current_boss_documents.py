@@ -161,8 +161,8 @@ def entity(result, enemy_key):
     return next((deepcopy(row) for row in result['rows'] if row['enemy_key'] == enemy_key), None)
 
 
-def topics(result, enemy_key):
-    row = entity(result, enemy_key)
+def topics(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     if row is None: return []
     doc = row['legacy_document']['reference']
     return [{'id': r['id'], 'name': r['name']} for r in doc['phases' if row['family'] == 'phase' else 'topics']]
@@ -174,8 +174,9 @@ def _fresh(result):
     return fresh if fresh is not None and _same(fresh, result) else None
 
 
-def related_entities(result, enemy_key):
-    if entity(result, enemy_key) is None: return []
+def related_entities(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
+    if row is None: return []
     return [{'key': e['key'], 'entity_id': e['id'], 'level': e['level'], 'name': e['name']}
             for e in result['related'] if e['key'] != enemy_key]
 
@@ -219,7 +220,7 @@ def player_text(result, enemy_key=None, topic_id=None):
     if row is None:
         return '\n'.join(lines + ['', '请选择本关有完整文献的准确敌人条目；选择只是阅读，不表示实际出现或处于该形态。',
             *['• ' + r['enemy']['name'] + '：' + LABELS[r['family']] for r in fresh['rows']]])
-    if topic_id is not None and topic_id not in {r['id'] for r in topics(fresh, enemy_key)}:
+    if topic_id is not None and topic_id not in {r['id'] for r in topics(fresh, enemy_key, prepared_entity=row)}:
         return '所选机制分支无法核对，请手动重新选择。'
     _, renderer = _legacy(row['family'])
     # Render only the authentic guarded legacy object, never a rewritten current

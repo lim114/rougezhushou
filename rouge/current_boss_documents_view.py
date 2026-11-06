@@ -95,33 +95,34 @@ class CurrentBossDocumentsPanel(QWidget):
         old_related = self.related.currentData() if keep else None
         if key != self.selected_key: self._close_map()
         self.selected_key = key
+        row = model.entity(self.result, key)
         block = self.topic.blockSignals(True); self.topic.clear()
         self.topic.addItem('完整总览（保留全部招式、条件和差异）', None)
-        for row in model.topics(self.result, key): self.topic.addItem(row['name'], row['id'])
+        for topic in model.topics(self.result, key, prepared_entity=row): self.topic.addItem(topic['name'], topic['id'])
         self.topic.setCurrentIndex(max(0, self.topic.findData(old_topic))); self.topic.blockSignals(block)
         self.topic.setEnabled(key is not None)
         block = self.related.blockSignals(True); self.related.clear()
         self.related.addItem('选择本关明确列出的关联条目', None)
-        for request in model.related_entities(self.result, key): self.related.addItem(request['name'], request)
+        for request in model.related_entities(self.result, key, prepared_entity=row): self.related.addItem(request['name'], request)
         self.related.setCurrentIndex(max(0, self.related.findData(old_related))); self.related.blockSignals(block)
         self.related_button.setEnabled(self.related.count() > 1)
         self.map_button.setEnabled(self.result is not None)
-        self.portrait.clear(); row = model.entity(self.result, key); self.portrait.setVisible(row is not None)
+        self.portrait.clear(); self.portrait.setVisible(row is not None)
         if row is not None:
             picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
             if raw and picture.loadFromData(raw, 'PNG'):
                 self.portrait.setPixmap(picture.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
             else: self.portrait.setText('这份准确敌人条目没有可核对图片，不替换成同名图。')
-        self.status.clear(); self._render()
+        self.status.clear(); self._render(prepared_entity=row)
 
-    def _render(self, *_):
+    def _render(self, *_, prepared_entity=...):
         topic = self.topic.currentData()
         identity = (self.result['source_identity'], self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
         replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'current_source_identity': self.result['source_identity'],
-            'selected_current_reference_and_authentic_legacy_document': model.entity(self.result, self.selected_key),
+            'selected_current_reference_and_authentic_legacy_document': model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity,
             'current_level_source': self.result['source'], 'complete_level_qualification': self.result['qualification'],
             'fixed_document_revisions': self.result['documents'], 'related_exact_current_references': self.result['related'],
             'actual_phase': None, 'actual_skill_time': None, 'expected_stats': None,

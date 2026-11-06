@@ -1,3 +1,7 @@
+## 当前断点：首领文献同次选择复用（2026-11-06）
+
+D281部分完成，26项定向检查通过；刷新和关联跳转整链仍待审。原280组完成122、剩158不变。回执 verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json；D319/D320、原测试窗口和既有验证缺口保留。
+
 ## 当前断点：实体选择复用本次解析结果（2026-11-06）
 
 D279完成，20项定向检查通过；原代码对照复现重复查找。原280组完成122、剩158。D296仍待整改；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-elbert-selection-reuse-20261106/summary.json。

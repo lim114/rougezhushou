@@ -117,3 +117,5 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 - D320：关键奖励已核验调用的None分支去留待确认，见docs/reviews/pending-defenses.md。
 
 - 2026-11-06：事件作战旧界面滚动检查maximum=0，原源码同样失败；本轮16/17通过，不计完整界面验收。详见verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json。
+
+- D281剩余：刷新与关联跳转整链核对；同次选择及正文内部实体复用已完成，见`verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json`。

@@ -5262,3 +5262,7 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 ## 维护：实体选择复用本次解析结果（2026-11-06）
 
 完成D279：实体、关联项和卡片共享本次解析，下一次交互重新查找。20项定向检查通过；原源码新测试失败已保留。仅该范围完成，不增加功能节数。回执：`verification/maintenance/code-constraints-elbert-selection-reuse-20261106/summary.json`。
+
+## 维护：首领文献同次选择复用（2026-11-06）
+
+D281部分完成：分支、关联项、头像与调试内容复用当前实体；正文保留来源重核、内部复用新实体。26项定向检查通过，原源码对照2项中1项失败已留证；D281整体未销项。回执：`verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json`。
