@@ -271,3 +271,8 @@
 | D264 | _reference基础路线索引类型/范围、未定义motionMode与位置无效时不给标记 | 坏索引或不支持运动不能误借其它路线 | 建议保留明确无位置状态；替代将固定资料异常显式上报。分支实际路线未知、别名多义和等待占位属正常领域语义，不当低概率异常删除 |
 | D265 | CurrentActionPositionsPanel.refresh_reference无资料/无图与_selected解码失败清空返回 | 失效后撤下旧位置与文字 | 建议保留失效撤下；替代保留带过期标注的旧内容。本项不授权底层图片及来源保护，原样待审 |
 | D266 | CurrentActionPositionsPanel.set_reference换身份先clear_reference，再refresh失败会再次clear_reference | 换条目不遗留旧选择；失败路径重复清空 | 建议审批后按身份切换与刷新失败各自职责合并重复清理；替代维持现有双清空。普通重复未销项 |
+
+| D267 | current_map_markers与boss_map_markers的packet/mapping_for整段捕获 | 文件、解析及内部键/类型/索引错误均返回None | 建议分别收窄读取入口，内部错误显露；替代保留统一出口。两模块同类流程原样待审 |
+| D268 | 上述两模块packet清单路径语法、文件/父目录链接、resolve范围检查 | 拒绝路径越界与链接文件，ROOT.resolve逐成员重复 | 建议保留路径职责并确定是否可入口一次计算；替代信任固定清单。原样待审 |
+| D269 | 两模块清单摘要/schema/commit/成员集合/文件长度摘要与data/bindings核对、mapping_for入口类型/STAGES | 错包、错版或非支持关卡返回None；外层也筛选STAGES | 建议保留来源职责，确认公共入口后合并重复判断及并行清单流程；替代各模块独立验证。原样待审 |
+| D270 | 两模块mapping_for核对关卡、图片、完整几何及各点tileKey，上层current_map_position再次核对图片/几何 | 防止标记套错地图，但同次链路重复来源对照 | 建议确定唯一绑定入口后复用核验结果；替代保留逐层核对。原样待审，不以登记销项 |

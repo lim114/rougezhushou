@@ -1,3 +1,7 @@
+## 维护：地图标记资料回顾记录（2026-11-06）
+
+三份源码与调用核对完成，首层补充模块前两条规则核对完成；全模块仍待保护审批。[回执](verification/maintenance/code-constraints-map-marker-contract-review-20261106/README.md)。
+
 ## 维护：动作位置契约回顾记录（2026-11-06）
 
 完成两份源码及调用核对、登记待审；没有声明模块整改完成。[回执](verification/maintenance/code-constraints-action-position-contract-review-20261106/README.md)。

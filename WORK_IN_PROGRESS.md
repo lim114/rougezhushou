@@ -1,3 +1,7 @@
+## 当前断点：三类地图标记资料模块契约回顾（2026-11-06）
+
+三模块全文/调用已核对，源码未改。首层补充模块普通规则核对完成，D42仍待审；新增D267—D270，统一233组。回执verification/maintenance/code-constraints-map-marker-contract-review-20261106/summary.json。
+
 ## 当前断点：动作位置模型与界面契约回顾（2026-11-06）
 
 两模块全文与实际调用已核对，源码未改，沿用测试窗口。新增D263—D266，共229组待审；重复读取/范围检查/失败双清空未销项。回执verification/maintenance/code-constraints-action-position-contract-review-20261106/summary.json。
