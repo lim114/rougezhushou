@@ -5486,3 +5486,7 @@ D259局部完成，11项定向通过；非法类型不读资料包，合法请�
 
 ### 维护：位置中心查询复用（2026-11-06）
 动作与预置物件在display_cell验证后直接匹配中心点，省去重复范围核验和未使用地形查询。6项定向通过；未扩大投影范围，未完成全程序整改。回执 `verification/maintenance/code-constraints-position-center-reuse-20261106/summary.json`。
+
+
+### 维护：地图入口与失效撤下核对（2026-11-06）
+D259/D260/D261完成。明确独立入口和跨来源重读边界，复用先前两处重复查询整改；资料损坏与PNG解码失败清空行为按授权保留。5项定向通过（含Qt离屏），不表示实机验收。回执 `verification/maintenance/code-constraints-map-boundaries-20261106/summary.json`。

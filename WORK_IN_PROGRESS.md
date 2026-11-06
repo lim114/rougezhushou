@@ -1,3 +1,7 @@
+## 当前断点：地图入口与失效撤下核对完成（2026-11-06）
+
+D259/D260/D261完成；跨来源重读的格子边界保留，同快照重复已删。5项定向通过，产品源码未改。原280组完成178、剩102；原测试窗口更新和待审项仍保留。回执 `verification/maintenance/code-constraints-map-boundaries-20261106/summary.json`。
+
 ## 当前断点：位置查询复用已核验格子（2026-11-06）
 
 动作与预置物件的中心查询不再重复调用完整格子查询；6项定向通过。D259继续按路径收尾，原280组仍完成175、剩105。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-position-center-reuse-20261106/summary.json`。

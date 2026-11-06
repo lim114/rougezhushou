@@ -1,0 +1,73 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "地图独立入口、跨读取边界与失效撤下完成核对",
+  "base_commit": "54934d2ee52159e8e1469ed14ddc7b9ac21b7a71",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/current_map_position.py": "4d4f2542bb1d1ed63c2fe6fca6a2ab6d10e12e4c52550143f4c9e414b201d236",
+    "rouge/current_map_position_view.py": "c2200c27a69f494eab9690693be14b731ab436ad8fe0bca44190fc8386d25c24",
+    "rouge/current_route_itinerary.py": "e770eb76bf135b646fa4f7a6cc28173d642a72a84a495c9244b9df65eee66392",
+    "rouge/current_action_positions.py": "dbbbe9296e91c77c90d7bb53da2533801ee154fe802db25e60f9726784e03c68",
+    "rouge/current_stage_objects.py": "3c87d1145e2778449c9303f5e59e549e47c5cd71977d80d8bd3dae3b2d8a7de7"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D259",
+    "D260",
+    "D261"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "Selected CurrentMapPositionView319Tests source damage and PNG decoding; CurrentRouteItinerary375Tests valid position/wait refusal",
+        "tests_run": 3,
+        "tests_passed": 3,
+        "seconds": 3.464,
+        "environment": "Qt offscreen; not native game acceptance"
+      },
+      {
+        "command": "python -m unittest tests.test_itinerary_position_boundary_review",
+        "tests_run": 2,
+        "tests_passed": 2,
+        "seconds": 0.002
+      }
+    ],
+    "live_window": "No product code changed; no restart required. Earlier original-window update remains pending."
+  },
+  "review": {
+    "standards": "D259: stage_reference validates ID before IO; cell_reference and terrain_locations are independent entry points. Panel select_cell invokes once and passes prepared result to render. Action and object same-grid redundant queries removed in preceding receipt. Itinerary resolve then separately loads grid, so range recheck crosses a source reload and is retained. D260/D261 retain approved stale-content removal and decode-failure clearing; model freshness and decoder are different boundaries.",
+    "requirements": "Reproducible smaller reloaded grid rejects old cell; valid unmapped step remains available without a center. Actual copied-source corruption removes stale panel state; invalid PNG clears markers and reports failed refresh. Coverage is named paths, not whole modules."
+  },
+  "reviewed_unchanged_sources": [
+    "rouge/current_map_position.py",
+    "rouge/current_map_position_view.py",
+    "rouge/current_route_itinerary.py",
+    "rouge/current_action_positions.py",
+    "rouge/current_stage_objects.py"
+  ]
+}
