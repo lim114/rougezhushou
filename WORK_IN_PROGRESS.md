@@ -1,3 +1,7 @@
+## 当前断点：具名奖励加载收窄异常与复用根路径（2026-11-06）
+
+D168/D169/D170完成，14项定向通过；原280组完成62组、剩218组。D319/D320待答复；原生来源摘要与新版窗口验收仍待补。回执verification/maintenance/code-constraints-named-packet-review-20261106/summary.json。
+
 ## 当前断点：奖励资料加载收窄异常与复用根路径（2026-11-06）
 
 D163/D164/D165完成，17项定向通过；原280组剩221组。D319/D320仍待答复；其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-packet-review-20261106/summary.json。

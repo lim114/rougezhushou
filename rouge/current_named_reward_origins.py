@@ -36,26 +36,33 @@ def source_rows(packets,current,modules):
     if len(rows)!=11 or len({r['item_id']for r in rows})!=11:raise ValueError('Keep11 distinct newly linked named acquisitions')
     return rows
 def packet():
+    mods=providers()
     try:
         raw=(ROOT/MANIFEST).read_bytes()
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        m=json.loads(raw);mods=providers();expected={DATA,PACK+'/source-notes.json'}|{v.DATA for v in mods.values()}|{v.MANIFEST for v in mods.values()}
+        m=json.loads(raw);expected={DATA,PACK+'/source-notes.json'}|{v.DATA for v in mods.values()}|{v.MANIFEST for v in mods.values()}
         if m['schema']!='current_named_rewards_347_manifest_v1'or m['game_commit']!=version.NEW_COMMIT or set(m['files'])!=expected:return None
+        root=ROOT.resolve()
         for name,pin in m['files'].items():
             rel=PurePosixPath(name)
             if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name:return None
             p=ROOT.joinpath(*rel.parts)
-            if p.is_symlink()or not p.resolve().is_relative_to(ROOT.resolve()):return None
+            if p.is_symlink()or not p.resolve().is_relative_to(root):return None
             if any(a.is_symlink()for a in p.parents if a!=ROOT and ROOT in a.parents):return None
             content=p.read_bytes()
             if len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             if name==DATA:data_raw=content
-        d=json.loads(data_raw);packets={k:v.packet()for k,v in mods.items()};current=version.packet()
-        if current is None or any(p is None for p in packets.values()):return None
-        if d['schema']!='current_named_rewards_347_v1'or d['game_commit']!=version.NEW_COMMIT or d['complete_acquisition_pool']is not False:return None
-        if d['rows']!=source_rows(packets,current['current']['details'],mods):return None
-        return {'data':d,'source_identity':(MANIFEST_SHA256,tuple((k,p['source_identity'])for k,p in packets.items())),'actual_received':None,'actual_eligible':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError,StopIteration):return None
+        d=json.loads(data_raw)
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    packets={k:v.packet()for k,v in mods.items()};current=version.packet()
+    if current is None or any(p is None for p in packets.values()):return None
+    if d['schema']!='current_named_rewards_347_v1'or d['game_commit']!=version.NEW_COMMIT or d['complete_acquisition_pool']is not False:return None
+    try:
+        rows=source_rows(packets,current['current']['details'],mods)
+    except ValueError:return None
+    if d['rows']!=rows:return None
+    return {'data':d,'source_identity':(MANIFEST_SHA256,tuple((k,p['source_identity'])for k,p in packets.items())),'actual_received':None,'actual_eligible':None,'run_updated':False}
+
 def reference(category,item_id):
     if type(category)is not str or type(item_id)is not str or category!='relics'or item_id not in ITEM_IDS:return None
     p=packet()

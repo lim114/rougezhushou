@@ -1,3 +1,7 @@
+## 维护：具名奖励加载收窄异常与复用根路径（2026-11-06）
+
+D168–D170已落实；14项定向通过，仅证明本批加载路径，不代表整个模块或程序完成。回执 `verification/maintenance/code-constraints-named-packet-review-20261106/summary.json`。
+
 ## 维护：统计历史读取错误出口收窄（2026-11-06）
 
 - 2026-11-06：D87删除主题入口不可达None及无用返回，18项定向通过。回执 `verification/maintenance/code-constraints-reader-theme-contract-review-20261106/summary.json`。
