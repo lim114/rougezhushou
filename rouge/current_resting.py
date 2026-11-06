@@ -69,13 +69,13 @@ def choice_reference(result,sid,cid):
     if not s or not c or cid not in s['choice_ids']:return None
     return deepcopy(c)
 
-def conflicting_original_target(result,sid,cid):
-    c=choice_reference(result,sid,cid)
+def conflicting_original_target(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     if not c or c['source_only']or not c['explicit_next_conflict']or not c['conflicting_original_id']:return None
     return locate('choices',c['conflicting_original_id'])
 
-def shows_reward(result,sid,cid):
-    c=choice_reference(result,sid,cid);return bool(c and c['role']=='named_item')
+def shows_reward(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice;return bool(c and c['role']=='named_item')
 
 def reward_label(ref):
     if ref is None:return None
@@ -151,8 +151,9 @@ def catalogue_binding(record):
     if any(k not in record or not same(record[k],v)for k,v in row['expected_summary'].items()):return None
     if 'scenes'in record and not same(record['scenes'],row['expected_legacy_event']['scenes']):return None
     if not same(node_catalog._event(record['id']),row['expected_legacy_event']):return None
+    identity=json.loads(json.dumps(r['source_identity']))
     return {**deepcopy(row),'legacy_event_id':record['id'],'title':'安眠一隅','reader':'resting345',
             'current_event':deepcopy(r['event']),'current_original_scenes':deepcopy(r['data']['originals']['scenes']),
-            'current_source_identity':json.loads(json.dumps(r['source_identity'])),
-            'source_identity':(MANIFEST_SHA256,json.loads(json.dumps(r['source_identity']))),'reference_only':True,
+            'current_source_identity':identity,
+            'source_identity':(MANIFEST_SHA256,deepcopy(identity)),'reference_only':True,
             'actual_node_version_confirmed':False,'actual_scene':None,'actual_choice':None,'run_updated':False}

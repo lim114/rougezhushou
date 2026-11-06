@@ -1,3 +1,7 @@
+## 维护：安眠一隅分支与来源标识复用（2026-11-06）
+
+文字与面板复用分支，目录来源转换一次，22定向及1926状态对照通过；窗口更新。[回执](verification/maintenance/code-constraints-resting-choice-reuse-20261106/README.md)。仅完成这些路径，未整模块销项。
+
 ## 维护：和平守卫者分支与来源标识复用（2026-11-06）
 
 文字与面板复用分支，目录来源转换一次，18定向及90状态对照通过；窗口更新。[回执](verification/maintenance/code-constraints-peace-choice-reuse-20261106/README.md)。仅完成这些路径，未整模块销项。

@@ -27,8 +27,8 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
         super().clear_reference();self._update_specific()
     def _update_specific(self):
         c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
-        available=bool(self.allow_original_popup and self.result and model.conflicting_original_target(self.result,self.scene_id,self.choice_id));self.original_button.setVisible(available);self.original_button.setEnabled(available)
-        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id));self.reward_card.setVisible(show);self.reward_icon.clear()
+        available=bool(self.allow_original_popup and self.result and model.conflicting_original_target(self.result,self.scene_id,self.choice_id,choice=c));self.original_button.setVisible(available);self.original_button.setEnabled(available)
+        show=bool(self.result and model.shows_reward(self.result,self.scene_id,self.choice_id,choice=c));self.reward_card.setVisible(show);self.reward_icon.clear()
         if show:
             raw=model.icon_bytes();pixmap=QPixmap()
             if raw is not None and pixmap.loadFromData(raw):self.reward_icon.setPixmap(pixmap.scaled(52,52,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
