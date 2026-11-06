@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "汉科与熄日界面同次选择解析一次",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "d1f72191e3f9177722523d634c4b2f75341e053d",
+  "changed_sources": [
+    "rouge/current_hanko.py",
+    "rouge/current_sun_boss.py",
+    "rouge/current_hanko_view.py",
+    "rouge/current_sun_boss_view.py",
+    "tests/test_document_panel_selection_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_hanko.py": "237449f577b522acd20364d4b8fc4526672f67101d8477c6da044859e7abe83e",
+    "rouge/current_sun_boss.py": "418a7226b4b20cb02c8be09e32387fd590743c5681b33b179f84772a113d4b9c",
+    "rouge/current_hanko_view.py": "68a1e5d8a28a523ff09d02bedea386c75da1abc5f10d738ca6e4e6b2a9a1c061",
+    "rouge/current_sun_boss_view.py": "4fdb1ef08a48e501d8243d8dc2a0319e5d1d5db3573d790c6781a367f1003987",
+    "tests/test_document_panel_selection_reuse.py": "299fe176e24496282c3d1bebb9eb1fb2d744d45dd41d7d1763d55e243708a275"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D283"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 25,
+    "tests_passed": 25,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_panel_selection_reuse tests.test_current_hanko_view_365 tests.test_current_sun_boss_view_368 tests.test_hanko_card_reuse tests.test_sun_card_reuse",
+    "local_evidence": ".local/code-constraints-review-224",
+    "old_source_regression": "New2 tests fail on old source due to repeated entity lookups.",
+    "prior_attempt": "23/25 passed;2 new assertions wrongly compared player prose to unsplit model text. Corrected using existing mechanism_copy projection; original failures retained.",
+    "live_window": "Isolated Qt tests pass; original window update pending."
+  },
+  "review": {
+    "standards": "D283: selection callback resolves once and passes entity through topics/cards/related/portrait/render; later topic/card signal resolves anew. Selected card shared between heading/text/technical details. No new helpers, catches or defense.",
+    "requirements": "Fresh reference failure and related request mismatch clear old display; refresh reading-state and exact-identity tests pass. D284 map refresh chain is separate and pending. All tested transitions resolve once and rendered copy matches existing player projection."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

@@ -80,29 +80,31 @@ class CurrentHankoPanel(QWidget):
         old_topic = self.topic.currentData() if keep else None
         old_related = self.related.currentData() if keep else None
         self.selected_key = key
+        row = model.entity(self.result, key)
         for control in (self.topic, self.related): control.blockSignals(True); control.clear()
         self.topic.addItem('先看要点与适用限制', None)
-        for topic, label in model.topics(self.result, key): self.topic.addItem(label, topic)
+        for topic, label in model.topics(self.result, key, prepared_entity=row): self.topic.addItem(label, topic)
         self.topic.setCurrentIndex(max(0, self.topic.findData(old_topic)))
         self.related.addItem('选择本关的另一份准确实体', None)
-        for request in model.related_entities(self.result, key): self.related.addItem(request['name'], request)
+        for request in model.related_entities(self.result, key, prepared_entity=row): self.related.addItem(request['name'], request)
         self.related.setCurrentIndex(max(0, self.related.findData(old_related)))
         for control in (self.topic, self.related): control.blockSignals(False)
         self.related_button.setEnabled(key is not None and self.related.count() > 1)
-        row = model.entity(self.result, key); self.portrait.clear(); self.portrait.setVisible(row is not None)
+        self.portrait.clear(); self.portrait.setVisible(row is not None)
         if row:
             picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
             if raw and picture.loadFromData(raw, 'PNG'):
                 self.portrait.setPixmap(picture.scaled(74, 74, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
             else: self.portrait.setText('这份准确辅助实体没有独立图片；不借用其它图标。' if row['actor'] == 'smoke' else '此准确引用的图片无法核对。')
-        self.status.clear(); self._topic_changed()
+        self.status.clear(); self._topic_changed(prepared_entity=row)
 
-    def _topic_changed(self, *_):
-        row = model.entity(self.result, self.selected_key); topic = self.topic.currentData()
+    def _topic_changed(self, *_, prepared_entity=...):
+        row = model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity
+        topic = self.topic.currentData()
         identity = (self.result['source_identity'], self.stage_id, self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        card = model.selected_card(self.result, self.selected_key, topic)
-        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
+        card = model.selected_card(self.result, self.selected_key, topic, prepared_entity=row)
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, prepared_entity=row, prepared_card=card), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【完整文献参考 · ' + card['title'] + '】' if card else None)
         technical = {'stage_id': self.stage_id, 'level_key': self.result['level_key'],
                      'source_identity': self.result['source_identity'], 'current_reference': row,

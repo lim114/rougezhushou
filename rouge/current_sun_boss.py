@@ -112,8 +112,8 @@ def entity(result, enemy_key):
     return next((deepcopy(row) for row in result['rows'] if row['key'] == enemy_key), None)
 
 
-def cards(result, enemy_key):
-    row = entity(result, enemy_key)
+def cards(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     if row is None: return []
     return deepcopy(result['materials']['forms'][row['form']]['cards'])
 
@@ -125,8 +125,9 @@ def card(result, enemy_key, index, *, prepared_entity=...):
     return next((deepcopy(r) for r in result['materials']['forms'][row['form']]['cards'] if r['index'] == index), None)
 
 
-def related_forms(result, enemy_key):
-    if entity(result, enemy_key) is None: return []
+def related_forms(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
+    if row is None: return []
     return [{'key': row['key'], 'entity_id': row['entity_id'], 'level': row['level'],
              'name': row['enemy']['name']} for row in result['rows'] if row['key'] != enemy_key]
 
@@ -161,10 +162,10 @@ def _player(value):
     return value.replace('物理普通伤害', '物理伤害').replace('法术普通伤害', '法术伤害').replace('Buff', '效果')
 
 
-def player_text(result, enemy_key=None, topic='overview', card_index=None):
+def player_text(result, enemy_key=None, topic='overview', card_index=None, *, prepared_entity=..., prepared_card=...):
     if result is None: return UNAVAILABLE
     if type(topic) is not str or topic not in dict(TOPICS): return UNAVAILABLE
-    row = entity(result, enemy_key)
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     lines = ['【' + result['stage_name'] + ' · 沉沦之人】', NOTICE,
              '“形态”与“阶段”是两回事：形态有沉沦之人、日照与日蚀三种；击倒后重生才进入第二阶段。',
              '这两份同名熄日配置独立保存，不按名称、图像或编号互借参数。']
@@ -194,7 +195,7 @@ def player_text(result, enemy_key=None, topic='overview', card_index=None):
                   '文献要求伤害成功造成生命实际降低才增加对应受击信仰；不能按命中次数或弹道数量直接累计。',
                   '六种异常分别叠层与刷新，不能把某一种叠满推广为所有异常免疫；原数据库初始字段也不能代替动态状态。']
     elif topic == 'skills':
-        selected = card(result, enemy_key, card_index, prepared_entity=row)
+        selected = card(result, enemy_key, card_index, prepared_entity=row) if prepared_card is ... else prepared_card
         if selected is None:
             lines += ['', '请从本形态原项中选择一条招式或天赋；同名招式在不同形态仍保留为独立原项。']
         else:

@@ -1,3 +1,7 @@
+## 当前断点：汉科与熄日界面同次选择解析一次（2026-11-06）
+
+D283完成，最终25项定向通过；初轮两条错误测试预期已修正，原失败保留。原280组完成128、剩152。地图链D284及原待审/窗口缺口保留。回执 verification/maintenance/code-constraints-document-panel-selection-20261106/summary.json。
+
 ## 当前断点：熄日卡片复用形态并只复制所选卡（2026-11-06）
 
 D288模型范围完成；视图选择链属于D283继续待办。13项定向通过、30组输出等价，复用前批未变汉科12项/24组证据。原280组完成127、剩153。回执 verification/maintenance/code-constraints-sun-card-reuse-20261106/summary.json。原待审和窗口缺口保留。

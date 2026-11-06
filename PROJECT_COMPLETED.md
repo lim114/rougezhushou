@@ -5294,3 +5294,7 @@ D288部分完成，12定向通过，24组卡片与正文保持等价；整组未
 ## 维护：熄日卡片复用形态并只复制所选卡（2026-11-06）
 
 D288模型范围完成，13定向通过、30组输出等价；汉科证据见上一回执。视图属于D283，未销项。回执：`verification/maintenance/code-constraints-sun-card-reuse-20261106/summary.json`。
+
+## 维护：汉科与熄日界面同次选择解析一次（2026-11-06）
+
+D283完成，分支、关联项、头像与正文复用本次实体，卡片复用于正文和调试内容。最终25定向通过，初轮失败保留；地图链D284未销项。回执：`verification/maintenance/code-constraints-document-panel-selection-20261106/summary.json`。

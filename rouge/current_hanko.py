@@ -128,8 +128,8 @@ def selected_card(result, enemy_key, topic, *, prepared_entity=...):
     return deepcopy(result['materials']['actors'][row['actor']]['cards'][index])
 
 
-def related_entities(result, enemy_key):
-    row = entity(result, enemy_key)
+def related_entities(result, enemy_key, *, prepared_entity=...):
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     if row is None: return []
     return [{'enemy_key': r['key'], 'name': r['enemy']['name'], 'entity_id': r['entity_id'],
              'level': r['level']} for r in result['rows'] if r['key'] != enemy_key]
@@ -146,9 +146,9 @@ def resolve_related(result, enemy_key, request):
             'run_updated': False}
 
 
-def player_text(result, enemy_key=None, topic=None):
+def player_text(result, enemy_key=None, topic=None, *, prepared_entity=..., prepared_card=...):
     if result is None: return UNAVAILABLE
-    row = entity(result, enemy_key)
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
     lines = ['【' + result['stage_name'] + ' · 汉科与烟雾】', NOTICE,
              '本页仅包含本关的准确引用；没有按相同名字套用其它关卡的面板、招式参数或地图位置。']
     if row is None:
@@ -177,7 +177,7 @@ def player_text(result, enemy_key=None, topic=None):
             lines += ['', '社区修正版：', corrected,
                       '社区认为游戏内的反隐表述与实际表现不符：照明弹不会清除其中所有隐匿、迷彩。原文与修正均保留，当前服务器执行没有在本页验证。']
     if topic is not None:
-        card = selected_card(result, enemy_key, topic, prepared_entity=row)
+        card = selected_card(result, enemy_key, topic, prepared_entity=row) if prepared_card is ... else prepared_card
         if card is None: return '\n'.join(lines + ['', '所选招式不属于这份准确实体，旧招式内容不显示。'])
         lines += ['', '【完整文献参考 · ' + card['title'] + '】',
                   '以下为通用文献原项，不是本局预测数值；本关覆盖与实际执行仍需单独核对。']

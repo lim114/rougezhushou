@@ -103,37 +103,38 @@ class CurrentSunBossPanel(QWidget):
         if key != self.selected_key:
             self._close_map(); block = self.topic.blockSignals(True); self.topic.setCurrentIndex(0); self.topic.blockSignals(block)
         self.selected_key = key
+        row = model.entity(self.result, key)
         for control in (self.card, self.related): control.blockSignals(True); control.clear()
         self.card.addItem('选择本形态的招式或天赋原项', None)
-        for item in model.cards(self.result, key): self.card.addItem(item['title'], item['index'])
+        for item in model.cards(self.result, key, prepared_entity=row): self.card.addItem(item['title'], item['index'])
         self.card.setCurrentIndex(max(0, self.card.findData(old_card)))
         self.related.addItem('选择同一首领的其它形态资料', None)
-        for request in model.related_forms(self.result, key): self.related.addItem(request['name'], request)
+        for request in model.related_forms(self.result, key, prepared_entity=row): self.related.addItem(request['name'], request)
         self.related.setCurrentIndex(max(0, self.related.findData(old_related)))
         for control in (self.card, self.related): control.blockSignals(False)
         self.related_button.setEnabled(key is not None and self.related.count() > 1)
-        row = model.entity(self.result, key); self.portrait.clear(); self.portrait.setVisible(row is not None)
+        self.portrait.clear(); self.portrait.setVisible(row is not None)
         if row:
             picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
             if raw and picture.loadFromData(raw, 'PNG'):
                 self.portrait.setPixmap(picture.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
             else: self.portrait.setText('这份准确形态资料没有可核对的图片，不替换为同名图。')
-        self.status.clear(); self._render()
+        self.status.clear(); self._render(prepared_entity=row)
 
-    def _render(self, *_):
+    def _render(self, *_, prepared_entity=...):
+        row = model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity
         topic = self.topic.currentData(); index = self.card.currentData()
         self.card.setVisible(topic == 'skills' and self.selected_key is not None)
         self.map_button.setVisible(topic in ('terrain', 'altar') and self.selected_key is not None)
         self.map_button.setEnabled(self.result is not None)
         identity = (self.result['source_identity'], self.selected_key, topic, index) if self.result else None
         keep = identity == self._view_key
-        selected_card = model.card(self.result, self.selected_key, index)
+        selected_card = model.card(self.result, self.selected_key, index, prepared_entity=row)
         heading = {'faith': '文献中的信仰、状态与阶段', 'terrain': '第二阶段',
                    'altar': '陨石与祭台 · 首领文献原项'}.get(topic)
         if topic == 'skills' and selected_card: heading = '完整文献原项 · ' + selected_card['title']
-        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, index), preserve=keep,
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, index, prepared_entity=row, prepared_card=selected_card), preserve=keep,
             details=self.notice, follow_change=self.sender() in (self.topic, self.card), heading='【' + heading + '】' if heading else None)
-        row = model.entity(self.result, self.selected_key)
         technical = {'stage_id': self.stage_id, 'source_identity': self.result['source_identity'],
             'selected_current_reference': row,
             'complete_selected_document_card': selected_card,
