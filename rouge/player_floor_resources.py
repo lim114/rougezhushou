@@ -62,11 +62,11 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QListWidget,QListWidgetItem
 class FloorResourcesPage(QWidget):
     def __init__(self):
-        super().__init__();self.rows=[];body=QVBoxLayout(self);body.addWidget(QLabel('只展示同一画面已确认区域与资源的记录；旧数据不会追填。'));self.entries=QListWidget();body.addWidget(self.entries,1);self.detail=QLabel();self.detail.setWordWrap(True);body.addWidget(self.detail);self.entries.currentRowChanged.connect(self.selected)
+        super().__init__();self.rows=[];self.identity=None;body=QVBoxLayout(self);body.addWidget(QLabel('只展示同一画面已确认区域与资源的记录；旧数据不会追填。'));self.entries=QListWidget();body.addWidget(self.entries,1);self.detail=QLabel();self.detail.setWordWrap(True);body.addWidget(self.detail);self.entries.currentRowChanged.connect(self.selected)
     def refresh(self,state):
         from .player_map import zone_info
         rows=snapshots(state);identity=(state.get('id'),rows)
-        if getattr(self,'identity',None)==identity:return
+        if self.identity==identity:return
         old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old and self.identity[0]==state.get('id')else None;self.identity=deepcopy(identity);self.rows=rows;self.entries.blockSignals(True);self.entries.clear()
         for row in rows:
             label=zone_info({'zone_id':row['zone_id']})[0];item=QListWidgetItem(label+' · '+observation_time(row.get('at')));item.setData(Qt.ItemDataRole.UserRole,row['index']);self.entries.addItem(item)

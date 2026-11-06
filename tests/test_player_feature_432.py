@@ -20,6 +20,16 @@ class StatisticSampleProvenance(unittest.TestCase):
  def test_invalid_numeric_types_stay_excluded(self):
   for value in(True,-1,float('nan'),float('inf'),'10',1.2,10**1000):
    rows=sample_rows([record('one',resources={'gold':{'value':value}})],'gold');self.assertFalse(rows[0]['included']);self.assertIsNone(rows[0]['value'])
+ def test_malformed_resource_fields_remain_unknown_without_hiding_internal_errors(self):
+  from rouge.player_statistics_samples import numeric_value
+  for malformed in(None,[],True,7,'bad'):
+   self.assertIsNone(numeric_value({'resources':malformed},'gold'))
+   self.assertIsNone(numeric_value({'resources':{'gold':malformed}},'gold'))
+  self.assertEqual(numeric_value({'resources':None,'relic_count':0},'relic_count'),0)
+  class BrokenReading(dict):
+   def get(self,*args):raise TypeError('internal read failure')
+  with self.assertRaisesRegex(TypeError,'internal read failure'):
+   numeric_value({'resources':{'gold':BrokenReading()}},'gold')
  def test_archive_navigation_requires_exact_verified_state_digest(self):
   self.assertIsNone(sample_binding({'id':'one'}));self.assertIsNone(sample_binding({'id':'one','state_sha256':'bad'}))
   binding={'id':'one','state_sha256':'a'*64};self.assertEqual(sample_binding(binding),binding)

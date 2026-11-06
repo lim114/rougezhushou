@@ -1,3 +1,7 @@
+## 当前断点：资源数值解析与层资源初始化整改（2026-11-06）
+
+D70/D74完成，23项定向通过；271组已批准待实施，模块数量不变。归档跨入口重复校验继续待处理。回执verification/maintenance/code-constraints-resource-entry-review-20261106/summary.json。
+
 ## 当前断点：统计历史读取错误出口收窄（2026-11-06）
 
 D68完成；16定向通过。273组已批准待实施，模块数量不变，跨入口归档重复核对仍未完成。本次额度例外继续有效。回执verification/maintenance/code-constraints-history-error-boundary-review-20261106/summary.json。

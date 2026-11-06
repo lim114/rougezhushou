@@ -1,5 +1,7 @@
 ## 维护：统计历史读取错误出口收窄（2026-11-06）
 
+- 2026-11-06：D70资源字典解析替代宽捕获，D74层资源构造初始化；23项定向通过。回执 `verification/maintenance/code-constraints-resource-entry-review-20261106/summary.json`。
+
 D68销项，统计模块其他缺口保留。[回执](verification/maintenance/code-constraints-history-error-boundary-review-20261106/README.md)。
 
 ## 维护：统计筛选错误明确显示与结果重复拷贝清理（2026-11-06）

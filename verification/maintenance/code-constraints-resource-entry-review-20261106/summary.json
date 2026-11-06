@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "资源数值解析与层资源初始化整改",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "e5cf9bd6c2b4c5251396ddddff3121b8f1c55b20",
+  "changed_sources": [
+    "rouge/player_statistics_samples.py",
+    "rouge/player_floor_resources.py"
+  ],
+  "source_sha256": {
+    "rouge/player_statistics_samples.py": "a12e7fba9d0c850ffd11477f104d2f0bf4733e92fa28b6b2ac1dcf2132e2f522",
+    "rouge/player_floor_resources.py": "3c14fe09e96e351dd213fc603c9275ab6ce9cc242cd1c699b764047ed75601b1"
+  },
+  "coverage": {
+    "full_modules_certified": 67,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D70",
+    "D74"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 23,
+    "command": "python -m unittest tests.test_player_feature_432 tests.test_player_statistics_406 tests.test_personal_statistics_entry_review tests.test_floor_resource_entry_review tests.test_player_feature_422",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-152",
+    "live_window": [
+      {
+        "pid": 29108,
+        "visible": true,
+        "responds": true
+      }
+    ]
+  },
+  "review": {
+    "standards": "D70 parses resource dictionaries once without broad catches; D74 initializes identity before refresh. No new helper or defense.",
+    "requirements": "Malformed JSON resource shapes remain unknown; internal errors propagate. Selection survives unchanged refresh and clears on new run."
+  },
+  "remaining": [
+    "D71 binding entry reuse",
+    "D73 snapshot qualification",
+    "Cross-entry repeated archive qualification; public entries must retain validation."
+  ]
+}

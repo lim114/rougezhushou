@@ -6,8 +6,14 @@ from .record_flags import active_record
 MEASURES={'gold':'归档前最近读到的源石锭','parts_count':'归档前最近读到的零件数','relic_count':'归档前最近读到的藏品栏总数（含道具）'}
 
 def numeric_value(state,key):
-    try:value=state.get('relic_count')if key=='relic_count'else state.get('resources',{}).get(key,{}).get('value')
-    except(AttributeError,TypeError):value=None
+    if key=='relic_count':
+        value=state.get('relic_count')
+    else:
+        resources=state.get('resources',{})
+        if not isinstance(resources,dict):return None
+        reading=resources.get(key,{})
+        if not isinstance(reading,dict):return None
+        value=reading.get('value')
     return value if nonnegative_integer(value)else None
 
 def sample_rows(records,key,relic_id=None):
