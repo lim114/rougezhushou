@@ -304,3 +304,8 @@
 | D290 | current_boss_documents.packet整体捕获OSError/ValueError/TypeError/KeyError/IndexError/AttributeError/RecursionError | 资料不可读取/损坏统一不可用，也吞掉内部程序错误 | 建议收窄文件与解析出口，内部缺陷显露；替代保留整体捕获。原样待审 |
 | D291 | packet清单/摘要/文件长度类型、版本/schema、原表/目标/允许差异逐项核对及_same严格类型递归 | 固定来源与旧新资料迁移的一致性保护；底层battle.packet再次核验 | 建议保留来源入口并审批共享核验边界；替代各层独立核验。本批仅去未使用循环变量 |
 | D292 | reference参数与target_available重复类型检查，packet后stage_reference来源重读，enemy和legacy结果类型/身份核对 | 错实体或旧资料失败不授权显示 | 建议入口校验与同次来源复用，保留旧文献授权边界；替代独立反复核对。刷新/实体/地图分别衔接D281/D280，不扩大授权 |
+
+| D293 | current_elbert_reference._undefined_override及source_rows的等级/useDb类型、唯一数据库原项、构造组合、身份包装与每关实体数检查 | 未核验覆盖配置或身份不明确时拒绝；prefab/name缺项先用空字典再拒绝 | 建议保留构造与身份入口核验，审批后合并重复形状检查；替代移至更上层统一验证。原样待审 |
+| D294 | _read_public相对路径、符号链接/父目录及ROOT边界检查 | 拒绝资料路径越界/链接，含ROOT.resolve重复调用 | 建议保留路径入口，审批后复用已解析ROOT；替代仅限定清单。原样待审，不借其它模块路径授权 |
+| D295 | packet整体捕获与清单/摘要/长度/schema/版本/source_rows/battle身份核对 | 资料损坏时不可用，内部TypeError等也被吞掉；battle原件再次读取 | 建议收窄文件/解析出口并明确同次来源核验边界；替代保留现有。原样待审 |
+| D296 | reference/entity/view_result/locate/resolve_related的空值、类型、成员与刷新来源检查 | 旧实体不显示、不跳错入口；view_result重复空值，resolve_related经reference后locate再次reference | 建议入口统一与同次已核验结果复用，保留跨刷新身份检查；替代每层独立验证。衔接D279，原样待审 |

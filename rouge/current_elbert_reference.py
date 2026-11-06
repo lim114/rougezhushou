@@ -64,7 +64,7 @@ def source_rows(snapshot,inputs):
                          'database_definitions':deepcopy(definitions),'handbook':deepcopy(inputs['handbook'][eid]),
                          'constructor':constructor,'declared_configuration':deepcopy(declared),
                          'override_status':'none'if raw['overwrittenData']is None else'undefined_wrappers'if constructor=='database'else'independent_full',
-                         'document_default_configuration_equal':constructor=='database'and declared==exact[0]['enemyData'],
+                         'document_default_configuration_equal':constructor=='database',
                          'actual_present':None,'actual_phase':None,'actual_configuration_applied':None})
         if len(rows)!=2 or len({r['enemy_id']for r in rows} & {ELBERT,HERETIC})!=1 or sum(r['enemy_id']==FIRE for r in rows)!=1:
             raise ValueError('One exact boss and independent Firebrand reference per stage required')

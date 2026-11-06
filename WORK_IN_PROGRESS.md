@@ -1,3 +1,7 @@
+## 当前断点：埃尔伯特资料构造分支重复比较整改（2026-11-06）
+
+删除构造赋值后同对象重复相等比较；9界面+10模型通过，保留错误测试名导入失败；4关8实体新旧输出一致。D293—D296待审，共259组。回执verification/maintenance/code-constraints-elbert-model-review-20261106/summary.json。
+
 ## 当前断点：首领文献模型索引复用及旧资料边界回顾（2026-11-06）
 
 首领文献同次敌人索引复用，去未使用循环绑定；24定向通过。D289—D292待审，共255组。回执verification/maintenance/code-constraints-boss-documents-review-20261106/summary.json。

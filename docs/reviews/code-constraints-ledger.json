@@ -2110,6 +2110,22 @@
         "D292"
       ],
       "evidence": "Entire model read with UI/test callers; existing guards unchanged; targeted checks recorded below"
+    },
+    {
+      "file": "rouge/current_elbert_reference.py",
+      "sha256": "d489b995dea8ab4f8fcf9e052305e935dc40f98c44d2a69fe15b4450e700aff2",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Removed equality to same assigned database object; guard/source/entity duplication pending",
+      "rule2": "_undefined_override isolates multi-branch constructor predicate; source_rows is packet/test boundary; query helpers have UI callers",
+      "rule3": [
+        "D279",
+        "D293",
+        "D294",
+        "D295",
+        "D296"
+      ],
+      "evidence": "Full model read; nine UI passes and ten model passes; wrong test module import retained; all four public stage/eight entity outputs equal to baseline"
     }
   ]
 }
