@@ -1,3 +1,7 @@
+## 当前断点：出怪分组边界按授权复核并登记配图异常待审（2026-11-06）
+
+D52按授权保留并完成复核，5项定向通过；D322已提问待答复，产品源码未改。原280组完成170、剩110。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-spawn-filter-retention-20261106/summary.json`。
+
 ## 当前断点：培养技能执行移出输入捕获并复用干员分类（2026-11-06）
 
 D119部分推进，两条技能执行/结果组装移出输入捕获；16项定向通过，干员分类同批复用。准备函数内部边界继续审查。原280组仍完成169、剩111，测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-cultivation-execution-20261106/summary.json`。

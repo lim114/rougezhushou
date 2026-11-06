@@ -5458,3 +5458,7 @@ D118完成，18项定向通过；明确区分培养输入错误与内部计算/�
 ## 维护：培养技能执行移出输入捕获并复用干员分类（2026-11-06）
 
 D119局部完成，16项定向通过：内部技能执行错误不再变成输入提示，分类读取同批复用。未关闭整组，未新增功能节。回执 `verification/maintenance/code-constraints-cultivation-execution-20261106/summary.json`。
+
+## 维护：出怪分组边界按授权复核并登记配图异常待审（2026-11-06）
+
+D52按授权保留并完成复核；5项定向通过，产品源码未改，未新增功能节。D322仍待用户确认。回执 `verification/maintenance/code-constraints-spawn-filter-retention-20261106/summary.json`。
