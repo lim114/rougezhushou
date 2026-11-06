@@ -179,3 +179,8 @@
 | D192 | catalogue_binding固定id/摘要/场景和旧事件比较 | 错归属拒绝绑定 | 建议保留身份职责并查重复；替代信任目录；未修改，待审 |
 | D193 | reference的source_request形状/类型/成员拒绝及冲突入口重新locate | 坏请求无资料，冲突按钮重读来源确认目标 | 建议确认入口和刷新时点后再合并；替代保留原检查；未修改，待审 |
 | D194 | reward_label的None返回；仅一个产品调用者 | 缺奖励返回None，调用处拼接仍可能TypeError | 建议确认删除None兜底并内联格式化；替代保留现函数。属于单次包装，但保护尚未授权删除；未修改，待审 |
+
+| D195 | current_agency_view.CurrentAgencyPanel._update_professions：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 职业资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D196 | current_peace_view.CurrentPeacePanel._update_specific：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 厄运火杆资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D197 | current_scout_view.CurrentScoutPanel._update_return_card：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 怦然信标资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D198 | current_shadow_view.CurrentShadowPanel._update_reward：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 犬植浆资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |

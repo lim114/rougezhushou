@@ -1,3 +1,7 @@
+## 维护：溯源视图整模块核对（2026-11-06）
+
+溯源完整源码及调用关系核对完成，整模块总47；另四个图片视图仅普通规则核对完成，未计整模块通过。[回执](verification/maintenance/code-constraints-portal-image-panel-review-20261106/README.md)。
+
 ## 维护：三个事件面板核对（2026-11-06）
 
 险路、藤蔓、窥视整模块核对；新增3，总46。两处刷新包装删除，5定向通过。[回执](verification/maintenance/code-constraints-exit-vine-box-closure-20261106/README.md)。
