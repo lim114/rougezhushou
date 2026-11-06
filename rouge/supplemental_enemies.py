@@ -1,7 +1,8 @@
 """Low-star single-hit references bound to fixed stage candidates and grades."""
 from copy import deepcopy
 from .catalog import catalog,stage_previews
-from .supplemental_run import run_skill_reference
+from .supplemental_run import _run_skill_reference
+from .supplemental_skills import _cultivated_stats
 from .supplemental_comparison import comparison_rows,format_comparison
 
 
@@ -39,7 +40,8 @@ def compare_fixed_enemies(operator_preview,environment,preview):
         if len(matches)!=1 or key in seen:raise ValueError('目标需唯一匹配关卡引用且不能重复。')
         records.append(matches[0]);seen.add(key)
     original=deepcopy(operator_preview);environment=deepcopy(environment)
-    run_skill_reference(original,environment) # Validate cultivation and raw run input first.
+    stats=_cultivated_stats(original)
+    _run_skill_reference(original,environment,stats) # Validate raw run input before overriding the grade.
     conditions=[]
     for grade in grades:
         env=deepcopy(environment)
@@ -55,7 +57,7 @@ def compare_fixed_enemies(operator_preview,environment,preview):
         for grade,env in conditions:
             target={'stage_id':sid,'enemy_id':record['id'],'level':record['level']}
             if record['id']=='enemy_2148_shorbb':target['orb_mode']=mode
-            result=run_skill_reference(original,env,target_enemy=target)
+            result=_run_skill_reference(original,env,stats,target_enemy=target)
             if baseline is None:baseline=result
             labels={'enemy_name':record['name'],'grade':grade,'enemy_id':record['id'],'level':record['level']}
             rows.extend(comparison_rows(result,baseline,**labels))

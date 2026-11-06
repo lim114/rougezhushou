@@ -1,3 +1,7 @@
+## 维护：敌人对照培养边界复用（2026-11-05）
+
+固定培养入口一次验证/计算，两个真实入口共享计算主体；26项定向、63报告/567结果和15错误输入一致，窗口更新。[回执](verification/maintenance/code-constraints-enemy-cultivation-20261105/README.md)。完整预检仍未销项。
+
 ## 维护：敌人对照准备复用（2026-11-05）
 
 候选索引与同难度环境复用，保留歧义拒绝及结果隔离；9项定向、27报告/243结果一致，窗口更新。[回执](verification/maintenance/code-constraints-enemy-preparation-20261105/README.md)。预检完整计算尚未销项。

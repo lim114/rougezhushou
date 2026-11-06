@@ -1,3 +1,7 @@
+## 当前断点：敌人对照培养边界复用（2026-11-05）
+
+两敌人两难度培养计算5→1，计算主体原样共享，26项定向、63报告/567结果及15错误输入旧新一致。测试窗口正常重启可见响应，覆盖340/75/107/36不变，D38—D127仍90组。回执verification/maintenance/code-constraints-enemy-cultivation-20261105/summary.json。前置完整报告仍未销项，不能仅prepare_run替换，后续继续验证职责拆分。下一独立普通冗余：supplemental_run已分类runes再交apply_attribute_runes重复资格筛选，已有_apply_selected_runes可复用；核实调用与未知/代币过滤后整改。D123基准投影/D122基准异常/D125培养重复字段校验/D127默认难度均未动。其余模块持续回顾，不增节数。
+
 ## 当前断点：敌人对照准备复用（2026-11-05）
 
 候选扫描3→1、两敌人两难度环境复制5→3；9项定向、27报告/243结果旧新一致，来源歧义与副本隔离保留。窗口更新，覆盖340/75/107/36不变，D38—D127仍90组。回执verification/maintenance/code-constraints-enemy-preparation-20261105/summary.json。前置完整计算不能直接删除：原difficulty.value=True或16原应拒绝，跳过后被对照4覆盖通过。下一批沿run_modifiers.prepare_run和supplemental_run入口抽取等价的原输入验证，预检仍普通待整改，不能改记为待审批；D123基准投影/D127默认回退保持待审。继续其余模块，不增节数。

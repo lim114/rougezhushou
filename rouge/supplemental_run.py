@@ -33,7 +33,15 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
     Attribute runes and the proven, stable ordinary HP/ATK/DEF sources are
     consumed. Other resolved rules remain explicit gaps, including costs/SP.
     """
-    stats=_cultivated_stats(preview)
+    return _run_skill_reference(preview,environment,_cultivated_stats(preview),target_enemy=target_enemy)
+
+
+def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
+    """Use cultivation already validated by the standalone or comparison entry.
+
+    Each run still owns its environment snapshot and target-specific resolution.
+    The shared cultivation basis is read-only throughout calculation.
+    """
     if type(environment) is not dict or set(environment)!=ENVIRONMENT_KEYS:
         raise ValueError('本局条件需要relic_ids、run_config、relic_context、inventory_status、operator_metadata；不能传入已处理的属性或效果。')
     environment=deepcopy(environment)
