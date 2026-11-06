@@ -5266,3 +5266,7 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 ## 维护：首领文献同次选择复用（2026-11-06）
 
 D281部分完成：分支、关联项、头像与调试内容复用当前实体；正文保留来源重核、内部复用新实体。26项定向检查通过，原源码对照2项中1项失败已留证；D281整体未销项。回执：`verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json`。
+
+## 维护：首领文献错误捕获限于读取入口（2026-11-06）
+
+完成D290，保留资料读取/路径/JSON错误出口，内部缺陷直接上报。20项定向检查通过；旧代码失败保留。回执：`verification/maintenance/code-constraints-boss-error-boundary-20261106/summary.json`。

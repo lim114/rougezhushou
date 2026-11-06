@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "首领文献错误捕获限于读取入口",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "81b711b0dc389c03853ebb4a809c4cd4b334a64d",
+  "changed_sources": [
+    "rouge/current_boss_documents.py",
+    "tests/test_boss_document_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_boss_documents.py": "683b920216c755800a73f317f5b6ae2fe9f1acb170333e4b5e7d68b8866113be",
+    "tests/test_boss_document_error_boundary.py": "494c64028f1d33b2ee039fb9860cabceebbd906cc3b962713775956e1015ce13"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D290"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 20,
+    "tests_passed": 20,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_boss_document_error_boundary tests.test_current_boss_documents_369",
+    "local_evidence": ".local/code-constraints-review-217",
+    "old_source_regression": "New4 tests reproduce8 failed subcases on original source.",
+    "live_window": "No layout change; original test window update pending."
+  },
+  "review": {
+    "standards": "D290: catch only path validation ValueError at _file calls and file/JSON errors in reading block; downstream battle.packet and cross-source comparisons outside catch. No new helper or recovery.",
+    "requirements": "Manifest pins, file membership, versions, original tables and allowed migration differences unchanged. Real missing/invalid sources still unavailable; internal defects propagate."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

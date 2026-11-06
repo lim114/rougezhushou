@@ -1,3 +1,7 @@
+## 当前断点：首领文献错误捕获限于读取入口（2026-11-06）
+
+D290完成，20项定向检查通过；旧代码4测试复现8个失败子项。原280组完成123、剩157。D281仍部分完成；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-boss-error-boundary-20261106/summary.json。
+
 ## 当前断点：首领文献同次选择复用（2026-11-06）
 
 D281部分完成，26项定向检查通过；刷新和关联跳转整链仍待审。原280组完成122、剩158不变。回执 verification/maintenance/code-constraints-boss-selection-reuse-20261106/summary.json；D319/D320、原测试窗口和既有验证缺口保留。

@@ -61,7 +61,9 @@ def _legacy(family):
 
 def packet():
     try:
-        raw = battle.version._file(MANIFEST).read_bytes()
+        try: path = battle.version._file(MANIFEST)
+        except ValueError: return None
+        raw = path.read_bytes()
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw)
         expected = {PACK + '/' + n for n in ('qualified-current-records.json', 'source-notes.json', 'web-check-record.json')}
@@ -71,42 +73,44 @@ def packet():
                 or set(manifest['files']) != expected): return None
         blobs = {}
         for name, pin in manifest['files'].items():
-            content = battle.version._file(name).read_bytes()
+            try: path = battle.version._file(name)
+            except ValueError: return None
+            content = path.read_bytes()
             if (type(pin['bytes']) is not int or len(content) != pin['bytes']
                     or sha256(content).hexdigest() != pin['sha256']): return None
             blobs[name] = content
         data = json.loads(blobs[PACK + '/qualified-current-records.json'])
-        current = battle.packet()
-        if (current is None or data['schema'] != 'current_boss_documents_369_v1'
-                or data['current_commit'] != battle.version.NEW_COMMIT
-                or set(data['families']) != set(LABELS)): return None
-        declared = tuple((r['stage_id'], r['enemy_key'], r['enemy_id'], r['level'], r['family']) for r in data['targets'])
-        if not _same(declared, TARGETS): return None
-        stages = current['version']['current']['details']['stages']; inputs = current['inputs']
-        if any(not _same(v, stages.get(k)) for k, v in data['originals']['stages'].items()): return None
-        for table in ('levels', 'enemy_definitions', 'handbook'):
-            if any(not _same(v, inputs[table].get(k)) for k, v in data['originals'][table].items()): return None
-        for spec in data['families'].values():
-            for row in spec['level_qualification']:
-                old = data['old_levels'][row['stage_id']]; new = inputs['levels'][row['level_key']]
-                changed = sorted(k for k in set(old) | set(new) if not _same(old.get(k), new.get(k)))
-                permitted = ['runes'] if row['stage_id'] == 'ro6_b_2_b' else []
-                if changed != permitted or row['changed_top_fields'] != permitted: return None
-                if permitted and (new['runes'] is not None or not _same(
-                        row['differences'], [{'field': 'runes', 'previous': old['runes'], 'current': None}])): return None
-                if row['whole_level_equal'] is not (not permitted): return None
-        for target in data['targets']:
-            sid = target['stage_id']; key = 'levels/' + stages[sid]['levelId'].lower() + '.json'
-            binding = inputs['levels'][key]['enemyDbRefs'][int(target['enemy_key'])]
-            if (not _same(binding, target['raw_binding']) or binding['id'] != target['enemy_id']
-                    or type(binding['level']) is not int or binding['level'] != target['level']
-                    or not _same(target['legacy_identity'], [sid, binding['id'], binding['level']])): return None
-        return {'data': data, 'current': current,
-                'source_identity': (MANIFEST_SHA256, current['identity']),
-                'actual_phase': None, 'actual_skill_time': None, 'expected_stats': None,
-                'actual_server_verified': False, 'numeric_model_added': False, 'run_updated': False}
-    except (OSError,ValueError,TypeError,KeyError,IndexError,AttributeError,RecursionError):
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
+    current = battle.packet()
+    if (current is None or data['schema'] != 'current_boss_documents_369_v1'
+            or data['current_commit'] != battle.version.NEW_COMMIT
+            or set(data['families']) != set(LABELS)): return None
+    declared = tuple((r['stage_id'], r['enemy_key'], r['enemy_id'], r['level'], r['family']) for r in data['targets'])
+    if not _same(declared, TARGETS): return None
+    stages = current['version']['current']['details']['stages']; inputs = current['inputs']
+    if any(not _same(v, stages.get(k)) for k, v in data['originals']['stages'].items()): return None
+    for table in ('levels', 'enemy_definitions', 'handbook'):
+        if any(not _same(v, inputs[table].get(k)) for k, v in data['originals'][table].items()): return None
+    for spec in data['families'].values():
+        for row in spec['level_qualification']:
+            old = data['old_levels'][row['stage_id']]; new = inputs['levels'][row['level_key']]
+            changed = sorted(k for k in set(old) | set(new) if not _same(old.get(k), new.get(k)))
+            permitted = ['runes'] if row['stage_id'] == 'ro6_b_2_b' else []
+            if changed != permitted or row['changed_top_fields'] != permitted: return None
+            if permitted and (new['runes'] is not None or not _same(
+                    row['differences'], [{'field': 'runes', 'previous': old['runes'], 'current': None}])): return None
+            if row['whole_level_equal'] is not (not permitted): return None
+    for target in data['targets']:
+        sid = target['stage_id']; key = 'levels/' + stages[sid]['levelId'].lower() + '.json'
+        binding = inputs['levels'][key]['enemyDbRefs'][int(target['enemy_key'])]
+        if (not _same(binding, target['raw_binding']) or binding['id'] != target['enemy_id']
+                or type(binding['level']) is not int or binding['level'] != target['level']
+                or not _same(target['legacy_identity'], [sid, binding['id'], binding['level']])): return None
+    return {'data': data, 'current': current,
+            'source_identity': (MANIFEST_SHA256, current['identity']),
+            'actual_phase': None, 'actual_skill_time': None, 'expected_stats': None,
+            'actual_server_verified': False, 'numeric_model_added': False, 'run_updated': False}
 
 
 def reference(stage_id, enemy_key=None):
