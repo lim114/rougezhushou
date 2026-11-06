@@ -1143,13 +1143,13 @@
     },
     {
       "file": "rouge/token_module_comparison.py",
-      "sha256": "c0602f9bfc6ceee46715c0a229886fb51d3526842904c8ca01187da041d02877",
-      "rule1": "reuse_existing_duration_snapshot_and_resolved_count_reference",
-      "rule2": "concurrent_limit_core_shared_by_two_real_entry_paths",
-      "rule3": "all_existing_protective_branches_unchanged",
+      "sha256": "582c365cddf9d5a2522a4a959ac1027c67dd7cdc8ebe43561eb0a2ed62d5d4b7",
+      "rule1": "base_and_upgrade_conditions_and_unlock_evaluated_once",
+      "rule2": "single_existing_entry_no_helper_added",
+      "rule3": "D130_verified_difference_null_guards_recorded_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "finish_duration_references sole product caller runs after relics.finish, which initializes relic_token_stats and resolves duration for every included panel. Reuse an isolated deep copy, including known absence; tokens without a panel still resolve normally. Concurrent-limit calculation body moved unchanged to _concurrent_limit shared by standalone API and module comparison with already-read counts. No extra defensive validation or exception handlers. Remaining cultivation/module parsing and broader source review not complete."
+      "evidence": "Whole 64-line module and its app/token_budget callers inspected. Base and stage conditions do not depend on token identity, and summoned-attribute/module/count consumers read them without mutation; build once for each request. Every token still owns its result dictionaries. Existing optional module, unknown-rule and locked-upgrade branches are product applicability states. D130 concerns only null checks after fields are already verified. Remaining ordinary cross-call work: token_budget validates complete cultivation/equipment then comparison validates the overlapping cultivation again; distinct equipment validation must be retained. No whole-module certification yet."
     }
   ]
 }

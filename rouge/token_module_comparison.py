@@ -19,9 +19,14 @@ def compare_token_module(operator,cultivation,module_id=None):
     if training.get('level') is None:training['level']=profile['phases'][training['elite']]['max_level']
     module=next((m for m in profile['modules'] if m['id']==module_id),None)
     if module_id is not None and module is None:raise ValueError('模组不属于当前干员。')
+    base_scenario={'operator':operator,**training,'module_id':None,'module_level':0}
+    upgrades=[]
+    if module:
+        unlocked=training['elite']>=module['unlock_elite'] and training['level']>=module['unlock_level']
+        upgrades=[(level,{**base_scenario,'module_id':module_id,'module_level':level},unlocked)
+                  for level in range(1,len(module['levels'])+1)]
     tokens=[]
     for identity,token in profile.get('tokens',{}).items():
-        base_scenario={'operator':operator,**training,'module_id':None,'module_level':0}
         base_stats=token_attributes(profile,base_scenario,identity)
         base={k:base_stats[k] for k in STAT_FIELDS}
         rule=next((r for r in module_rules().values() if r['operator']==operator and r['token_id']==identity),None)
@@ -30,14 +35,12 @@ def compare_token_module(operator,cultivation,module_id=None):
         base['concurrent_limit']=_concurrent_limit(profile,base_scenario,identity,base_counts)
         stages=[{'module_level':0,'state':'base','values':base,'differences':{},'verified_fields':list(STAT_FIELDS),
             'source':None,'count_reference':deepcopy(base_counts)}]
-        for level in range(1,len(module['levels'])+1) if module else ():
-            scenario={**base_scenario,'module_id':module_id,'module_level':level}
+        for level,scenario,unlocked in upgrades:
             reference=module_reference(profile,scenario,identity)
             cost_reference=token_cost_reference(profile,scenario,identity)
             stats=token_attributes(profile,scenario,identity,
                                    module_references=(reference,cost_reference))
             reference=stats.get('module_reference')
-            unlocked=training['elite']>=module['unlock_elite'] and training['level']>=module['unlock_level']
             counts=token_count_reference(profile,scenario,identity) if unlocked else None
             # Known effects are a partial projection. Do not treat a missing
             # rule as zero effect or inherit an operator's equipment stats.

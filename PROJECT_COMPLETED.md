@@ -1,3 +1,7 @@
+## 维护：模组对照条件一次准备（2026-11-05）
+
+基础与升级条件复用，保持各召唤物输出独立；27项定向、792模块报告/5错误输入一致，窗口更新。[回执](verification/maintenance/code-constraints-token-comparison-preparation-20261105/README.md)。
+
 ## 维护：持续时间与数量资料复用（2026-11-05）
 
 汇总复用独立持续时间副本，模组对照复用数量记录；39项定向、96计算/48模组对照一致，窗口更新。[回执](verification/maintenance/code-constraints-token-duration-count-reuse-20261105/README.md)。

@@ -1,3 +1,7 @@
+## 当前断点：模组对照条件一次准备（2026-11-05）
+
+基础/升级情景及解锁条件一次准备，双召唤物8→4条件对象；27项定向、固定目录32干员792报告/5错误输入一致。完整读模块与app/token_budget调用，D130已确认差值重复判空登记未改；预算先校验培养装备、对照再校验培养仍普通未完成。窗口正常重启，覆盖337/75/110/36，D38—D130共93组。回执verification/maintenance/code-constraints-token-comparison-preparation-20261105/summary.json。下一批优先打通token_budget与compare_token_module已验证培养边界，保留装备校验和原报错顺序，不能把普通重复校验记为待审；再继续summons培养字段/完整前置报告和其余模块。维护不增节数。
+
 ## 当前断点：持续时间与数量资料复用（2026-11-05）
 
 finish_duration_references复用relic_token_stats已读资料并深复制，无面板仍读取；数量上限主体由独立入口和模组对照共用，避免base_counts重读。39项定向、96计算/48模组对照一致。窗口正常重启，覆盖337/75/110/36，D38—D129仍92组。回执verification/maintenance/code-constraints-token-duration-count-reuse-20261105/summary.json。下一批继续summons模组/培养字段重复解析、token_module_comparison训练/基准准备的整模块审查，再推进完整前置报告与其余模块；保持已读资料独立副本。D128/129及D123等保护不改，不增节数。
