@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "单精度位转换仅捕获实际打包溢出",
+  "base_commit": "b5740e8a64146833fb29d0337d7b21329eb207b3",
+  "changed_sources": [
+    "rouge/panel_native_bridge.py"
+  ],
+  "source_sha256": {
+    "rouge/panel_native_bridge.py": "5f9d674bb7e8f17e75da267e1123139de7e45cc5b4a366d102675b7cb4c37fbb"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_panel_bits_boundary_review",
+        "tests_run": 3,
+        "tests_passed": 3,
+        "seconds": 0.001
+      }
+    ],
+    "live_window": "Original test window update remains pending after prior automatic approval rejection; numeric unit checks do not certify live UI."
+  },
+  "review": {
+    "standards": "_bits accepts numeric finite builtins via existing _number. Fixed-format pack can overflow for large finite inputs; only that operation retains OverflowError catch. Struct format/decode defects no longer become unknown output. D105 category1 authorization covers narrowing; _raw and term_value remain pending.",
+    "requirements": "Independent IEEE754 constants for 0,1,-1,1.5 preserved; large finite signed numbers and existing invalid/unknown values still return None. Injected struct.error and unpack OverflowError propagate. No formulas, thresholds or retry added."
+  },
+  "partially_implemented": [
+    "D105"
+  ]
+}

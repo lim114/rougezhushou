@@ -5466,3 +5466,7 @@ D52按授权保留并完成复核；5项定向通过，产品源码未改，未�
 ## 维护：格子说明入口与历史节点唯一归属按授权复核（2026-11-06）
 
 D53/D55按授权保留并复核，10项定向通过；未改产品源码，不增加功能节。D54及D323未销项。回执 `verification/maintenance/code-constraints-tile-history-retention-20261106/summary.json`。
+
+## 维护：单精度位转换仅捕获实际打包溢出（2026-11-06）
+
+D105局部完成：格式及解包缺陷不再伪装未知数值，3项定向通过。未关闭整组，未新增功能节。回执 `verification/maintenance/code-constraints-panel-bits-20261106/summary.json`。

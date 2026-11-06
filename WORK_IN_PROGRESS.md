@@ -1,3 +1,7 @@
+## 当前断点：单精度位转换仅捕获实际打包溢出（2026-11-06）
+
+D105部分推进，_bits仅捕获pack溢出，格式/解包缺陷显露；3项定向通过。_raw与term_value继续核对。原280组仍完成172、剩108；测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-panel-bits-20261106/summary.json`。
+
 ## 当前断点：格子说明入口与历史节点唯一归属按授权复核（2026-11-06）
 
 D53/D55按授权保留并复核，10项定向通过；D323历史超大时间溢出已复现并提问，源码未改。原280组完成172、剩108。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-tile-history-retention-20261106/summary.json`。

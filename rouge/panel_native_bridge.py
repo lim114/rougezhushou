@@ -24,10 +24,11 @@ def _bits(value):
     if value is None:
         return None
     try:
-        bits = struct.unpack('<I', struct.pack('<f', value))[0]
-        return bits if bits & 0x7f800000 != 0x7f800000 else None
-    except (OverflowError, struct.error):
+        packed = struct.pack('<f', value)
+    except OverflowError:
         return None
+    bits = struct.unpack('<I', packed)[0]
+    return bits if bits & 0x7f800000 != 0x7f800000 else None
 
 
 def _raw(value):

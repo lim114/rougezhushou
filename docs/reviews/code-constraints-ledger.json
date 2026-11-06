@@ -1357,7 +1357,7 @@
     },
     {
       "file": "rouge/panel_native_bridge.py",
-      "sha256": "4c7efbe7926132f8733c99ab2817ae31bdbab631cc974ffde9d37125765258aa",
+      "sha256": "5f9d674bb7e8f17e75da267e1123139de7e45cc5b4a366d102675b7cb4c37fbb",
       "rule1": "selected_repeated_preparation_prediction_and_rune_scan_removed",
       "rule2": "two_single_use_functions_inlined_two_aliases_removed_shared_comparison_two_callers",
       "rule3": "try_raise_bodies_unchanged_D105_D106_pending_bridge",
@@ -1367,7 +1367,14 @@
         "decision": "D106",
         "evidence": "verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json",
         "result": "26 contract/calibration tests pass; 7 native source failures reproduce on baseline."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "decision": "D105 partial",
+          "receipt": "verification/maintenance/code-constraints-panel-bits-20261106/summary.json",
+          "scope": "_bits only; other conversions pending"
+        }
+      ]
     },
     {
       "file": "rouge/catalog.py",
