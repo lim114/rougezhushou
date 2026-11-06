@@ -1,3 +1,7 @@
+## 当前断点：无效裁剪与招募模板统一入口处理（2026-11-06）
+
+D298/D312完成；10定向、27标记及18裁剪对照通过。66完整/200部分/40异常/252结构，277组已批准待落实，无新增待审。回执verification/maintenance/code-constraints-recognition-entry-review-20261106/summary.json。目标继续。
+
 ## 当前断点：兑换资料稀有度契约清理及D317落实（2026-11-06）
 
 用户恢复目标，继续整改。D317完成，5项定向及562组对照通过；64完整/202部分/40异常等价/252结构。其余279组已批准待实施，不重复提问；本机AGENTS.md修改保留未提交。回执verification/maintenance/code-constraints-exchange-contract-review-20261106/summary.json。

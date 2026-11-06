@@ -1,3 +1,7 @@
+## 维护：无效裁剪与招募模板统一入口处理（2026-11-06）
+
+D298、D312完成，两模块规则销项。[回执](verification/maintenance/code-constraints-recognition-entry-review-20261106/README.md)。
+
 ## 维护：兑换资料稀有度契约清理及D317落实（2026-11-06）
 
 D317实施与定向复核完成，兑换资料模块销项。[回执](verification/maintenance/code-constraints-exchange-contract-review-20261106/README.md)。

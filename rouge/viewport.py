@@ -7,8 +7,9 @@ def prepare_frame(image,client_rect=None):
     origin_x=origin_y=0
     if client_rect is not None:
         x0,y0,x1,y1=map(int,client_rect)
-        if 0<=x0<x1<=w and 0<=y0<y1<=h and x1-x0>=320 and y1-y0>=180:
-            image=image[y0:y1,x0:x1];origin_x,origin_y=x0,y0
+        if not (0<=x0<x1<=w and 0<=y0<y1<=h and x1-x0>=320 and y1-y0>=180):
+            raise ValueError('本次采样的客户区无效或小于320×180。')
+        image=image[y0:y1,x0:x1];origin_x,origin_y=x0,y0
     ch,cw=image.shape[:2]
     # Only contiguous, almost entirely black outer padding is removed. Dark
     # interior panels are not candidates. Thin game borders remain untouched.
@@ -23,7 +24,8 @@ def prepare_frame(image,client_rect=None):
         return (a if a>=threshold else 0,
                 b if length-b>=threshold else length)
     top,bottom=edges(rows,ch);left,right=edges(cols,cw)
-    if right-left<320 or bottom-top<180:left,top,right,bottom=0,0,cw,ch
+    if right-left<320 or bottom-top<180:
+        raise ValueError('本次采样的有效画面小于320×180。')
     content=image[top:bottom,left:right]
     # Continuous scale, recalculated after every resize. Give small text/pips
     # enough pixels for OCR and visual matching while bounding analysis cost.

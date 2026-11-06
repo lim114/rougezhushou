@@ -1,0 +1,80 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "无效裁剪与招募模板统一入口处理",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "1e7edbbdcc8f4b6fa8c2982552e488a61d99fc07",
+  "changed_sources": [
+    "rouge/viewport.py",
+    "rouge/recruitment_recognition.py"
+  ],
+  "source_sha256": {
+    "rouge/viewport.py": "befcd7273a271a978bc17d29a1e987f3ec7c556fc8df6e0e88c150343dd652a5",
+    "rouge/recruitment_recognition.py": "940434ef1eeab718dfae7fb12579977fe82f2aefdb2d1d076fd45785cc4f0fed"
+  },
+  "coverage": {
+    "full_modules_certified": 66,
+    "structural_only": 252,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D298",
+    "D312"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 10,
+    "command": "python -m unittest tests.test_image_geometry_review tests.test_recruitment_marker_contract",
+    "equivalence": {
+      "marker_comparisons": 27,
+      "viewport_comparisons": 18,
+      "resolutions": [
+        [
+          800,
+          600
+        ],
+        [
+          1920,
+          1080
+        ],
+        [
+          2560,
+          1440
+        ]
+      ],
+      "scope": "synthetic valid inputs; invalid behavior tested separately; no live game accuracy claim"
+    },
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-148",
+    "live_window": [
+      {
+        "pid": 33120,
+        "visible": true,
+        "responds": true,
+        "rect": [
+          1415,
+          971,
+          1691,
+          1007
+        ]
+      }
+    ]
+  },
+  "review": {
+    "standards": "Each immutable input checked at entry; masks/reference/ratio reused, no new wrapper or catch.",
+    "requirements": "D298 and D312 applied within approved scope; all original recognition thresholds and normal edge discovery unchanged."
+  },
+  "preserved_user_changes": [
+    "AGENTS.md",
+    ".agents/"
+  ],
+  "wrap_up": {
+    "remaining_weekly_percent_observed": 12,
+    "threshold": 15,
+    "next_batch_not_started": true
+  }
+}

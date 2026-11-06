@@ -5,6 +5,22 @@ import numpy as np
 from rouge.viewport import map_evidence, prepare_frame
 
 class ImageGeometryReviewTests(unittest.TestCase):
+    def test_invalid_client_rect_is_not_replaced_by_full_frame(self):
+        image=np.full((900,1400,3),30,np.uint8)
+        for rect in ((-1,0,800,600),(0,0,1500,600),(100,50,100,850),
+                     (0,0,319,180),(0,0,320,179)):
+            with self.subTest(rect=rect),self.assertRaisesRegex(ValueError,'客户区'):
+                prepare_frame(image,rect)
+
+    def test_small_detected_content_is_not_replaced_by_client_frame(self):
+        image=np.zeros((800,1200,3),np.uint8);image[300:400,400:600]=30
+        with self.assertRaisesRegex(ValueError,'有效画面'):
+            prepare_frame(image)
+
+    def test_black_frame_keeps_normal_no_visible_edge_result(self):
+        _,view=prepare_frame(np.zeros((600,800,3),np.uint8))
+        self.assertEqual(view['content_rect'],[0,0,800,600])
+
     def test_nested_evidence_stays_in_original_capture_coordinates(self):
         value={'items':[{'box':[[0,0],[1,1]],'center':(.5,.5),
                         'nested':{'label_box':[[.25,.75]],'card_position':[0,1]}},

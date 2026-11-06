@@ -38,10 +38,17 @@ def recruitment_marker(image,x,y,space=(1,1)):
     """Emergency is the person-and-clock silhouette beside the level, not the gold diamond."""
     ux,uy=space
     h,w=image.shape[:2];best=0;minimum_white=None
+    template=reference('emergency');templates=[]
     for scale in (.042,.045,.048):
         height=round(h*scale*uy);width=round(height*49/51)
-        mask=cv2.resize(reference('emergency'),(width,height))>210
+        if min(height,width)<=0:
+            raise ValueError('应急标识模板尺寸无效。')
+        mask=cv2.resize(template,(width,height))>210
         expected=float(np.sum(mask))
+        if not expected:
+            raise ValueError('应急标识模板没有可匹配的白色像素。')
+        templates.append((height,width,mask,expected))
+    for height,width,mask,expected in templates:
         for dx in (-.002,0,.002):
             cx=round((x-.023*ux+dx*ux)*w)
             for dy in (-.002,0,.002):
@@ -50,9 +57,10 @@ def recruitment_marker(image,x,y,space=(1,1)):
                 if roi.shape[:2]!=(height,width):continue
                 actual=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)>210
                 white=float(np.sum(actual));denominator=expected+white
-                score=2*float(np.sum(actual&mask))/denominator if denominator else 0
+                score=2*float(np.sum(actual&mask))/denominator
                 best=max(best,score)
-                minimum_white=white/expected if minimum_white is None else min(minimum_white,white/expected)
+                white_ratio=white/expected
+                minimum_white=white_ratio if minimum_white is None else min(minimum_white,white_ratio)
     if best>=.70:return {'kind':'emergency_hire','score':best,'version':2,'source':'等级左侧人形与时钟应急标识'}
     if minimum_white is not None and minimum_white<.05:
         return {'kind':'non_emergency','score':best,'version':2,'source':'等级左侧区域未显示应急人形/时钟标识'}

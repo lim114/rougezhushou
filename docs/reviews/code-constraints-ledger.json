@@ -2179,15 +2179,15 @@
     },
     {
       "file": "rouge/viewport.py",
-      "sha256": "2600a30a6570c5fdc6783baaefd5bb110240a437a16aa33f5848a284ec157975",
+      "sha256": "befcd7273a271a978bc17d29a1e987f3ec7c556fc8df6e0e88c150343dd652a5",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
-      "rule1": "Repeated immutable size/bounds/mask/viewport geometry computed once; ordinary OCR empty results, cache budget and thresholds preserved",
-      "rule2": "Cache adapter is public callable; crop shared; viewport edges twice/point twice/visit recursive; elite references cached resource loader",
+      "full_module_review_complete": true,
+      "rule1": "Reject invalid client rectangle and undersized detected content at frame entry. Normal edge discovery preserved; coordinate mapping reuses established viewport.",
+      "rule2": "edges used twice, point shared and visit recursive; no new helper.",
       "rule3": [
-        "D298"
+        "D298 approved and implemented"
       ],
-      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery"
+      "evidence": "Full source and both OCR/visual callers read.10 targeted tests,27 marker and18 viewport valid-input old/new comparisons. Existing app sample_error handles ValueError; no additional catch/retry."
     },
     {
       "file": "rouge/resource_recognition.py",
@@ -2574,15 +2574,15 @@
     },
     {
       "file": "rouge/recruitment_recognition.py",
-      "sha256": "2e16a417d1bc957172b23887a2c0e63165fd65513a47f719dc92fabd89d27e04",
+      "sha256": "940434ef1eeab718dfae7fb12579977fe82f2aefdb2d1d076fd45785cc4f0fed",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
-      "rule1": "Complete body reviewed; reuse crop minimum, loop coordinates, constructor flag and offline item membership; declared unknowns/recognition thresholds retained",
-      "rule2": "Single-use reference_effect inlined; shared projections and framework callbacks retained; calculation context is live callback across navigation",
+      "full_module_review_complete": true,
+      "rule1": "Prepare all three masks once and reject empty/sizeless templates before observation; reference read once and white ratio computed once per observation; no local zero denominator fallback.",
+      "rule2": "reference is shared cached image loader; two marker entry points retain independent recognition responsibilities; no new helper.",
       "rule3": [
-        "D312"
+        "D312 approved and implemented"
       ],
-      "evidence": "Seven full bodies, source/consumer contracts and related checks;17 targeted tests;319 old/new comparisons; details in receipt"
+      "evidence": "Full source and both OCR/visual callers read.10 targeted tests,27 marker and18 viewport valid-input old/new comparisons. Existing app sample_error handles ValueError; no additional catch/retry."
     },
     {
       "file": "rouge/player_history_codec.py",
