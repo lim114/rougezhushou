@@ -1,0 +1,42 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件目录异常捕获收窄到来源读取",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "1f7c829c21dd3d7f50a83500cee76685dd330caa",
+  "changed_sources": [
+    "rouge/current_event_directory.py"
+  ],
+  "source_sha256": {
+    "rouge/current_event_directory.py": "f1eee03376f59ac0ebe9f56eff1c426c9457c34511f24729d5f03a62dd9442b1"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D92"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 18,
+    "command": "python -m unittest tests.test_event_directory_error_boundary_review tests.test_event_directory_snapshot_review tests.test_current_event_directory_372",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-162",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Remove KeyError TypeError AttributeError StopIteration RecursionError catch; retain OSError/ValueError only around source access; validated snapshot work outside catch. No helper added.",
+    "requirements": "D92 approved narrowing; source bytes verified against pinned manifest before downstream decoding. Corrupt bytes and source identity checks retained. Internal errors exposed."
+  },
+  "remaining": [
+    "D88 map reader input contract",
+    "Other module contracts",
+    "Test window update"
+  ]
+}

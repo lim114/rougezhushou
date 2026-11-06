@@ -927,7 +927,7 @@
     },
     {
       "file": "rouge/current_event_directory.py",
-      "sha256": "1460ab22c0d14914ce7d66443f36b982c7a67e7eb48eb2fd75e513d2e988da24",
+      "sha256": "f1eee03376f59ac0ebe9f56eff1c426c9457c34511f24729d5f03a62dd9442b1",
       "directory_entry_review": {
         "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
         "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
@@ -953,6 +953,11 @@
         "decision": "D97",
         "evidence": "verification/maintenance/code-constraints-event-source-snapshot-review-20261106/summary.json",
         "result": "Same load reads once; next load revalidates; 15 tests pass. D92 pending."
+      },
+      "source_error_boundary_review": {
+        "decision": "D92",
+        "evidence": "verification/maintenance/code-constraints-event-error-boundary-review-20261106/summary.json",
+        "result": "File access errors retained; internal errors propagate; 18 targeted tests pass."
       }
     },
     {

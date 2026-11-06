@@ -147,8 +147,8 @@ def derive(catalogue, bindings, modules):
 
 
 def packet():
+    from . import expansion_reference as version
     try:
-        from . import expansion_reference as version
         raw = _file(MANIFEST).read_bytes()
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw); notes_raw = _file(NOTES).read_bytes()
@@ -165,26 +165,26 @@ def packet():
             content = _file(name).read_bytes()
             if type(pin['bytes']) is not int or len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
             blobs[name] = content
-        d = json.loads(blobs[DATA]); source_data = {key: json.loads(blobs[path]) for key, path in notes['provider_data_files'].items()}
-        if (d['schema'] != 'current_event_directory_372_v1' or set(source_data) != set(PROVIDERS)
-                or set(notes['provider_source_identities']) != set(PROVIDERS)): return None
-        catalogue = json.loads(blobs['rouge/data/node-catalog.json'])['events']
-        ids = set()
-        for row in d['rows']:
-            if row['id'] in ids: return None
-            ids.add(row['id'])
-            if not same(row['reader_source_identity'], notes['provider_source_identities'][row['reader']]): return None
-            snap = _snapshot(source_data[row['reader']], row['event_id'])
-            if any(not same(row[key], value) for key, value in snap.items()): return None
-            for group in row['catalogue_groups']:
-                old = next((e for e in catalogue if e['id'] == group['id']), None)
-                if old is None or any(not same(group[k], old[k]) for k in group): return None
-        if len(d['rows']) != 39 or sum(len(r['catalogue_groups']) for r in d['rows']) != 38: return None
-        return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, identity) for k, identity in notes['provider_source_identities'].items())),
-                'version_source_identity': notes['version_source_identity'],
-                'actual_eligible': None, 'actual_node': None, 'run_updated': False}
-    except (OSError,ValueError,KeyError,TypeError,AttributeError,StopIteration,RecursionError):
+    except (OSError, ValueError):
         return None
+    d = json.loads(blobs[DATA]); source_data = {key: json.loads(blobs[path]) for key, path in notes['provider_data_files'].items()}
+    if (d['schema'] != 'current_event_directory_372_v1' or set(source_data) != set(PROVIDERS)
+            or set(notes['provider_source_identities']) != set(PROVIDERS)): return None
+    catalogue = json.loads(blobs['rouge/data/node-catalog.json'])['events']
+    ids = set()
+    for row in d['rows']:
+        if row['id'] in ids: return None
+        ids.add(row['id'])
+        if not same(row['reader_source_identity'], notes['provider_source_identities'][row['reader']]): return None
+        snap = _snapshot(source_data[row['reader']], row['event_id'])
+        if any(not same(row[key], value) for key, value in snap.items()): return None
+        for group in row['catalogue_groups']:
+            old = next((e for e in catalogue if e['id'] == group['id']), None)
+            if old is None or any(not same(group[k], old[k]) for k in group): return None
+    if len(d['rows']) != 39 or sum(len(r['catalogue_groups']) for r in d['rows']) != 38: return None
+    return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, identity) for k, identity in notes['provider_source_identities'].items())),
+            'version_source_identity': notes['version_source_identity'],
+            'actual_eligible': None, 'actual_node': None, 'run_updated': False}
 
 
 class QueryTooLong(ValueError):
