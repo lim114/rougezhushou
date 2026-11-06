@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "隔离验收卡片统一清理与异常恢复复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "2d2cd8da203ca7b69282d7766a311092950551ff",
+  "changed_sources": [
+    "rouge/player_feature_418_acceptance.py",
+    "tests/test_acceptance_cleanup_scope.py"
+  ],
+  "source_sha256": {
+    "rouge/player_feature_418_acceptance.py": "bd1cb9fcb6dbfc7bac413925066420858586876510829f04f0986dc9bae28ba4",
+    "tests/test_acceptance_cleanup_scope.py": "346f10174ad0b7b2fb9a47c2509b9085437b95f3caa3198e5d77daad27d7b55c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D308"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 3,
+    "tests_passed": 3,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_acceptance_cleanup_scope",
+    "local_evidence": ".local/code-constraints-review-235",
+    "old_source_regression": "Old418 success path clears twice, reproduced1 failing subcase; new normal and exceptional paths clear once",
+    "live_window": "No visual change; original test window update pending."
+  },
+  "review": {
+    "standards": "D308 explicitly approved finally preservation and418 duplicate cleanup removal.422/423 restoration retained. No catch/retry/production wrapper added.",
+    "requirements": "Only cleanup lifecycle tested with isolated test doubles and injected failures. No historical full acceptance invoked, and no game or private state accessed. D309/D310 read but not closed in this batch."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/player_feature_422_acceptance.py": "692e332cb993f989ad3f073002c732fa8306ec5de2294f6870e795bbb269fabf",
+    "rouge/player_feature_423_acceptance.py": "bf38c22f28bfdc52944e1fb8f6c967d523ed4882258c74ff5c2dfe7974f13134"
+  }
+}

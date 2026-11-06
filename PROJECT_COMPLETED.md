@@ -5338,3 +5338,7 @@ D304完成；核对TechnologyState.view及生产调用，删除三处不可达�
 ## 维护：科技资料读写保护复核与清理失败提示（2026-11-06）
 
 D301/D302/D303按已授权保护复核；清理失败不再静默，明确区分已保存与未保存。23定向通过，旧源码两项复现失败。回执：`verification/maintenance/code-constraints-technology-persistence-20261106/summary.json`。
+
+## 维护：隔离验收卡片统一清理与异常恢复复核（2026-11-06）
+
+D308完成；418删除正常路径重复清理，finally保留；422/423异常恢复保留。3项隔离清理测试通过，未运行历史功能验收。回执：`verification/maintenance/code-constraints-acceptance-cleanup-20261106/summary.json`。

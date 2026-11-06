@@ -1,3 +1,7 @@
+## 当前断点：隔离验收卡片统一清理与异常恢复复核（2026-11-06）
+
+D308完成，3项隔离清理检查通过，旧418正常路径双重清理复现失败。原280组完成136、剩144；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-acceptance-cleanup-20261106/summary.json。
+
 ## 当前断点：科技资料读写保护复核与清理失败提示（2026-11-06）
 
 D301/D302/D303完成，23定向通过、旧版两项清理测试复现失败。原280组完成135、剩145；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-technology-persistence-20261106/summary.json。

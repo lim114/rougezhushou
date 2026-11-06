@@ -13,5 +13,5 @@ def check(window,gui,require):
   c.toggle_visibility();gui.processEvents();require(c.hidden_windows is not None,'hotkey_hides_owned_surfaces');require(c.game_hover.last_request is None,'hide_invalidates_pending_hover')
   c.game_hover.tick();require(c.game_hover.gate.key is None,'hidden_assistant_does_not_wait_or_capture')
   c.toggle_visibility();gui.processEvents();require(c.hidden_windows is None and c.isVisible(),'hotkey_restore_restarts_from_visible_state')
-  c.game_hover.card=None;card.show_conditions.setChecked(False);card.show();window.player_validation_target=card
+  card.show_conditions.setChecked(False);card.show();window.player_validation_target=card
  finally:c.game_hover.card=None
