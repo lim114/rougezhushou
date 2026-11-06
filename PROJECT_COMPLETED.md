@@ -5156,3 +5156,7 @@ D154/D158完成，26项定向通过。回执：verification/maintenance/code-con
 ## 维护：奖励选择信号契约与点击来源复核（2026-11-06）
 
 D155整改、D156保留复核完成，12项定向通过。回执：verification/maintenance/code-constraints-reward-selection-review-20261106/summary.json。不增加功能节数。
+
+## 维护：具名奖励复用点击时已核验来源（2026-11-06）
+
+D153完成，31项定向通过；D319另列待审。回执：verification/maintenance/code-constraints-named-source-reuse-review-20261106/summary.json。不增加功能节数。

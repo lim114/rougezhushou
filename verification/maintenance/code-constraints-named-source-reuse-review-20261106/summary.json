@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "具名奖励复用点击时已核验来源",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "9fc8042a792719afcf0c76fb8504b3a488ad8b07",
+  "changed_sources": [
+    "rouge/current_named_reward_origins_view.py",
+    "rouge/current_reward_origins_view.py",
+    "tests/test_reward_factory_contract_review.py",
+    "tests/test_named_reward_source_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_named_reward_origins_view.py": "58e03f9b43c0f19793b2fdf9dd84604ad5b5c6028cae869fce8c82008c31279c",
+    "rouge/current_reward_origins_view.py": "76e808c0d7a7418f51eb06d459ccf1e982dceb8e88fc3a8d3525ffa4a6062699",
+    "tests/test_reward_factory_contract_review.py": "2ef44f998bdb50df3b4c351f4f3ea9dd7f695742e3aaebe3455822aabc845d36",
+    "tests/test_named_reward_source_boundary_review.py": "fc29b6b9945c4b0f75d84377fe13ea62ad437b1bd2b1f960a13a46cb588cf03e"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D153"
+  ],
+  "new_pending_decisions": [
+    "D319"
+  ],
+  "validation": {
+    "tests_passed": 31,
+    "command": "python -m unittest tests.test_named_reward_source_boundary_review tests.test_reward_factory_contract_review tests.test_reward_reader_dispatch_review tests.test_reward_selection_contract_review tests.test_current_named_reward_origins_view_347 tests.test_current_reward_origins_view_338 tests.test_current_critical_reward_origins_view_349",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-183",
+    "live_window": "Isolated Qt only; original app update pending."
+  },
+  "review": {
+    "standards": "Shared dispatch used by two actual paths: standalone validation and parent validated row. Old child closed before source refresh, so snapshot reuse does not cross its close callbacks. No new defensive behavior.",
+    "requirements": "Parent named reference called once; standalone source loss still refuses construction; source check occurs after closing child. Existing target windows retain their own current-source checks. Former D159 None guard now unreachable for named path; kept pending D319 approval."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

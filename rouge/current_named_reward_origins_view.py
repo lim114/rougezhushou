@@ -3,6 +3,10 @@ from . import current_named_reward_origins as model
 def make_event_dialog(row,parent=None):
     fresh=model.reference('relics',row['item_id'])
     if fresh is None or not any(model_row==row for model_row in fresh['rows']):return None
+    return _dialog_from_verified_row(row,parent)
+
+def _dialog_from_verified_row(row,parent=None):
+    """Dispatch a row from the caller's current verified source snapshot."""
     target=row['target'];reader=row['reader_key']
     if reader=='resources':
         from .current_resource_events_view import CurrentResourceEventsDialog

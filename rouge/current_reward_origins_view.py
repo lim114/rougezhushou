@@ -56,11 +56,12 @@ class CurrentRewardOriginsPanel(QWidget):
     def open_event(self):
         old = self.result; selected = self.entries.currentItem()
         if old is None or selected is None: return False
-        key = selected.data(Qt.ItemDataRole.UserRole); fresh = model.reference(self.category, self.item_id)
+        key = selected.data(Qt.ItemDataRole.UserRole)
+        self._close_event()
+        fresh = model.reference(self.category, self.item_id)
         if fresh is None or fresh != old: self._clear(); return False
         row = next((r for r in fresh['rows'] if r['key'] == key), None)
         if row is None: self._clear(); return False
-        self._close_event()
         if row['reader'] == 'memory':
             from .current_memory_tree_view import CurrentMemoryTreeDialog
             self.event_dialog = CurrentMemoryTreeDialog(row['scene_id'], row['choice_id'], self)
@@ -75,8 +76,8 @@ class CurrentRewardOriginsPanel(QWidget):
             self.event_dialog = make_event_dialog(row, self)
             if self.event_dialog is None: self._clear(); return False
         elif row['reader'] == 'named347':
-            from .current_named_reward_origins_view import make_event_dialog
-            self.event_dialog = make_event_dialog(row, self)
+            from .current_named_reward_origins_view import _dialog_from_verified_row
+            self.event_dialog = _dialog_from_verified_row(row, self)
             if self.event_dialog is None: self._clear(); return False
         else: raise ValueError('不支持的奖励来源类型：'+row['reader'])
         if self.event_dialog.panel.result is None: self._clear(); return False

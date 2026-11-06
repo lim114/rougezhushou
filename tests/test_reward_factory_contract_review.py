@@ -20,7 +20,7 @@ class RewardFactoryContractTests(unittest.TestCase):
         self.addCleanup(panel.close)
         panel.entries.setCurrentRow(0)
         child=Mock();child.panel=SimpleNamespace(result=None)
-        with patch('rouge.current_named_reward_origins_view.make_event_dialog',return_value=child), patch.object(panel,'_close_event',wraps=panel._close_event) as close:
+        with patch('rouge.current_named_reward_origins_view._dialog_from_verified_row',return_value=child), patch.object(panel,'_close_event',wraps=panel._close_event) as close:
             self.assertFalse(panel.open_event())
         self.assertEqual(close.call_count,2)  # previous child, then failed child via _clear
         child.close.assert_called_once_with()
