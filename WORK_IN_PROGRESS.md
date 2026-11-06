@@ -1,3 +1,7 @@
+## 当前断点：计算条件不可变值与事件上下文读取复用（2026-11-06）
+
+去不可变数值deepcopy，复用gold读取和ID排序；首轮33通过1旧文案失败，旧源码复现，修正该项后通过。维什戴尔资格模块完整销项，D305—D307待审，共270组。回执verification/maintenance/code-constraints-condition-context-review-20261106/summary.json。
+
 ## 当前断点：分队条件分支精简与表格刷新合并（2026-11-06）
 
 合并可选科技/门槛判断、移除独占资料额外复制、表格选择通知合并。13定向及最终4复验通过，48旧新清单一致；分队参考/界面完整销项，D304待审，共267组。回执verification/maintenance/code-constraints-squad-plan-review-20261106/summary.json。

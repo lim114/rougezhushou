@@ -1,3 +1,7 @@
+## 维护：条件上下文读取精简（2026-11-06）
+
+wisdel_summon_qualification整模块回顾完成；其他三模块来源与证据保护待审。[回执](verification/maintenance/code-constraints-condition-context-review-20261106/README.md)。
+
 ## 维护：分队资料与界面精简（2026-11-06）
 
 squad_unlock_reference和squad_account_view整模块回顾完成；清单空结果兜底待审。[回执](verification/maintenance/code-constraints-squad-plan-review-20261106/README.md)。

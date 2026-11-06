@@ -1,5 +1,4 @@
 """Current snapshot declarations, qualified before shared environment arithmetic."""
-from copy import deepcopy
 import math
 from . import current_battle_reference as model
 from .enemy_environment import apply_fixed_environment
@@ -39,7 +38,7 @@ def environment(reference, enemy, config, grade):
            or values[key] < 0 for key in keys):
         return None, '这份当前引用尚无完整的四项明确属性，缺项不填零。'
     component = {'enemy_id': enemy['id'], 'level_type': enemy['tier'],
-                 'stats': {key: deepcopy(values[key]) for key in keys},
+                 'stats': {key: values[key] for key in keys},
                  'steps': [], 'pending': [], 'damage_factor': 1}
     apply_fixed_environment(component, reference['stage'], reference['preview'],
         {'value': grade}, config.get('zone'), difficulty_profiles=reference['difficulty_profiles'])

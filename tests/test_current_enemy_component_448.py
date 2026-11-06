@@ -57,4 +57,4 @@ class CurrentEnemyComponent448Tests(unittest.TestCase):
     self.assertEqual(outputs[0],outputs[1],(sid,grade))
  def test_new_subtotals_reach_actual_reader_and_refresh_keeps_selection(self):
   from rouge.current_battle_view import CurrentBattlePanel
-  p=CurrentBattlePanel(self.normal['id']);self.addCleanup(p.close);p.set_context(self.config());self.assertTrue(p.enemy_choices.select_value('0'));before=p.enemy_player.toPlainText();self.assertIn('12,480',before);self.assertIn('完整本局面板：未知',before);p.set_context(self.config(zone='zone_2'));self.assertEqual(p.enemy_key,'0');self.assertIn('14,976',p.enemy_player.toPlainText());self.assertNotEqual(before,p.enemy_player.toPlainText())
+  p=CurrentBattlePanel(self.normal['id']);self.addCleanup(p.close);p.set_context(self.config());self.assertTrue(p.enemy_choices.select_value('0'));before=p.enemy_player.toPlainText();self.assertIn('12,480',before);self.assertIn('完整面板：待补齐阶段、技能与藏品影响。',before);p.set_context(self.config(zone='zone_2'));self.assertEqual(p.enemy_key,'0');self.assertIn('14,976',p.enemy_player.toPlainText());self.assertNotEqual(before,p.enemy_player.toPlainText())
