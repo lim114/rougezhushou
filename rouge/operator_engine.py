@@ -159,20 +159,18 @@ class Combat:
 
     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
     def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)
-    def effects_for_token(self,token_id):
-        from .relic_attributes import is_attribute_rune
-        return [e for e in self.token_effects if not is_attribute_rune(e) and
-                (not e.get('token_ids') or token_id in e['token_ids'])]
-
-    def token_stats(self,token_id):
+    def token_reference(self,token_id):
         from .summons import token_attributes
         from .relic_attributes import is_attribute_rune
-        runes=[e for e in self.token_effects if is_attribute_rune(e) and
-               (not e.get('token_ids') or token_id in e['token_ids'])]
+        runes=[];ordinary=[]
+        for effect in self.token_effects:
+            rune=is_attribute_rune(effect)
+            if not effect.get('token_ids') or token_id in effect['token_ids']:
+                (runes if rune else ordinary).append(effect)
         runes += [e for e in self.s.get('_attribute_runes',[]) if
                   e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
-        hp_pct=sum(e['value'] for e in self.effects_for_token(token_id) if e['kind']=='hp_pct')
-        return token_attributes(self.p,self.s,token_id,hp_pct,rune_effects=runes)
+        hp_pct=sum(e['value'] for e in ordinary if e['kind']=='hp_pct')
+        return token_attributes(self.p,self.s,token_id,hp_pct,rune_effects=runes),ordinary
 
     def apply_self_talents(self):
         op=self.s['operator']
@@ -348,8 +346,7 @@ class Combat:
             attack=self.base_attack
             own_events=attack_times()
             emit('本体普攻',attack if normal else self.base_attack,'magic',len(own_events),event_times=own_events)
-            token=self.token_stats('token_10001_deepcl_tentac')
-            token_effects=self.effects_for_token('token_10001_deepcl_tentac')
+            token,token_effects=self.token_reference('token_10001_deepcl_tentac')
             from .summons import token_concurrent_limit
             cap=token_concurrent_limit(self.p,self.s,'token_10001_deepcl_tentac')
             count=self.option('summon_count',1,maximum=cap if cap is not None else
@@ -1147,8 +1144,7 @@ class Combat:
             if count and probability:components[-1]['actual_total']=None
             ghosts=self.option('ghost_count',0,maximum=3,integer=True)
             if ghosts:
-                token=self.token_stats('token_10035_wisdel_wward')
-                token_effects=self.effects_for_token('token_10035_wisdel_wward')
+                token,token_effects=self.token_reference('token_10035_wisdel_wward')
                 # Explicit cast count avoids asserting a deterministic random SP regeneration schedule.
                 cast_count=self.option('ghost_casts',0,maximum=1000,integer=True)
                 if cast_count and window==0:

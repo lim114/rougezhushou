@@ -1,3 +1,7 @@
+## 当前断点：Combat召唤物效果单次分类（2026-11-05）
+
+合并token_stats/effects_for_token为token_reference，深海色/维什戴尔每次plan分类3→1，两调用处复用面板和普通效果。37项定向、96完整报告和文字一致，所有raise/except AST不变。窗口正常重启，覆盖338/75/109/36，D38—D129仍92组。回执verification/maintenance/code-constraints-combat-token-partition-20261105/summary.json。下一批继续summons模组/培养参数重复解析：relics.finish先解析module_reference/token_cost_reference，token_attributes又解析同一项，需保留无效果且无模组时不生成面板的入口行为；再推进完整前置报告验证职责及其它模块。D123基准投影等保护保持待审，不增节数。
+
 ## 当前断点：符文分类结果复用与召唤物汇总（2026-11-05）
 
 补充/召唤物已分类符文不重筛，汇总每属性一次sum；删除无产品调用的包装，2份测试与6份历史脚本适配（未运行历史全量）。75项最终定向、96召唤物报告及21补充报告旧新一致。窗口正常重启，覆盖338/75/109/36，D38—D129共92组。回执verification/maintenance/code-constraints-selected-runes-20261105/summary.json。D128召唤物单等级默认0、D129回复倍率未知改1仅登记。下一批继续完整前置报告的验证职责、operator_engine.token_stats/effects_for_token重复分类及summons模组/培养参数重复解析；只按真实调用契约整改。D123基准投影等待审核。其余模块继续，不增节数。

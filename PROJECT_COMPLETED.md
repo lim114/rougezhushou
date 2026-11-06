@@ -1,3 +1,7 @@
+## 维护：Combat召唤物效果单次分类（2026-11-05）
+
+两重叠方法合并供两个真实调用者复用，分类3→1；37项定向、96报告/文字旧新一致，窗口更新。[回执](verification/maintenance/code-constraints-combat-token-partition-20261105/README.md)。
+
 ## 维护：符文分类结果复用与召唤物汇总（2026-11-05）
 
 已分类符文直接计算、普通属性每类一次sum、移除无产品调用包装；75项定向与117份报告对比一致，窗口更新。[回执](verification/maintenance/code-constraints-selected-runes-20261105/README.md)。
