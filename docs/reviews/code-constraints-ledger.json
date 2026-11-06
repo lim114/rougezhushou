@@ -2281,13 +2281,20 @@
     },
     {
       "file": "rouge/current_enemy_spawns.py",
-      "sha256": "cea370caf2b0184c3c7528bb4669a7df022ccb34c5fbab77c958352bb4b082ce",
+      "sha256": "160c68cb1206242e129859321083ada814524601d059bea10dc8e65432b3dd22",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "position_reloads_battle_under_D240; exact_binding_not_same_as_enemy_id",
       "rule2": "derive_is_coherent_transform; same_recursive_and_resolve_multiple_callers",
       "rule3": "D236_D240_pending",
-      "evidence": "Entire model read plus view follow_action/position, battle callback, dynamic tool factory, source file resolver and targeted tests. Evidence JSON read once per file; selected notes file still parsed to verify valid JSON. _same compares bool/int distinctly; no replacement with loose equality. position requires action permission then position source identity, repeated stage load needs contract approval D240. No product source edits."
+      "evidence": "Entire model read plus view follow_action/position, battle callback, dynamic tool factory, source file resolver and targeted tests. Evidence JSON read once per file; selected notes file still parsed to verify valid JSON. _same compares bool/int distinctly; no replacement with loose equality. position requires action permission then position source identity, repeated stage load needs contract approval D240. No product source edits.",
+      "enemy_error_boundary": {
+        "decisions": [
+          "D236"
+        ],
+        "receipt": "verification/maintenance/code-constraints-enemy-error-boundary-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_stage_objects.py",

@@ -1,3 +1,7 @@
+## 当前断点：敌人出怪资料异常处理限于读取入口（2026-11-06）
+
+D236完成，15定向通过；原280组完成107、剩173。D319/D320待审核，旧窗口和既有验证缺口保留。回执verification/maintenance/code-constraints-enemy-error-boundary-20261106/summary.json。
+
 ## 当前断点：关卡物件资料异常捕获收窄到读取入口（2026-11-06）
 
 D241完成，最终18定向通过，首轮语法错误已修正并留证；原280组完成106、剩174。D230/D232共享窗口首次打开核验尚待合并，未销项。回执verification/maintenance/code-constraints-object-error-boundary-20261106/summary.json。

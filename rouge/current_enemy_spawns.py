@@ -14,18 +14,20 @@ MANIFEST_SHA256='0536025c7c3e37d498f3fca43461378bdd561b4d6ea7fc2db8277b91f20f433
 def evidence():
     import json
     from hashlib import sha256
-    try:
-        raw=battle.version._file(MANIFEST).read_bytes()
-        if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(raw)
-        if manifest['schema']!='current_enemy_spawns_371_manifest_v1' or set(manifest['files'])!={PACK+'/scope-inventory.json',PACK+'/source-notes.json'}:return None
-        objects={}
-        for name,pin in manifest['files'].items():
-            body=battle.version._file(name).read_bytes()
-            if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
-            objects[name]=json.loads(body)
-        return objects[PACK+'/scope-inventory.json']
-    except(OSError,ValueError,TypeError,KeyError):return None
+    try:raw=battle.version._file(MANIFEST).read_bytes()
+    except(OSError,ValueError):return None
+    if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
+    try:manifest=json.loads(raw)
+    except(UnicodeError,json.JSONDecodeError):return None
+    if manifest['schema']!='current_enemy_spawns_371_manifest_v1' or set(manifest['files'])!={PACK+'/scope-inventory.json',PACK+'/source-notes.json'}:return None
+    objects={}
+    for name,pin in manifest['files'].items():
+        try:body=battle.version._file(name).read_bytes()
+        except(OSError,ValueError):return None
+        if type(pin['bytes'])is not int or len(body)!=pin['bytes']or sha256(body).hexdigest()!=pin['sha256']:return None
+        try:objects[name]=json.loads(body)
+        except(UnicodeError,json.JSONDecodeError):return None
+    return objects[PACK+'/scope-inventory.json']
 
 KINDS=((None,'总览（全部对应条目）'),('main','主波次'),('branch','条件分支'))
 
@@ -65,8 +67,7 @@ def stage_reference(stage_id,enemy_key):
     if current is None or scope is None or scope['source_identity']!=current['source_identity']or stage_id not in scope['stages']:return None
     declared=scope['stages'][stage_id]
     if declared['level_key']!=current['level_key']or declared['original_source']!=current['source']:return None
-    try:return _derive(current,enemy_key)
-    except(KeyError,TypeError,ValueError,IndexError):return None
+    return _derive(current,enemy_key)
 
 def rows(result,kind=None):
     if type(result)is not dict or kind not in dict(KINDS):return []

@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "敌人出怪资料异常处理限于读取入口",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "0c7e3050ff945a3f45ce6fc93d29ead46cfc39f7",
+  "changed_sources": [
+    "rouge/current_enemy_spawns.py",
+    "tests/test_enemy_spawns_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_enemy_spawns.py": "160c68cb1206242e129859321083ada814524601d059bea10dc8e65432b3dd22",
+    "tests/test_enemy_spawns_error_boundary.py": "2f7fc7c144017d77ff9e1ed89334b5added7f9f1bd48e49f0f910a3adb8bee72"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D236"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 15,
+    "tests_failed": 0,
+    "tests_run": 15,
+    "command": "python -m unittest tests.test_enemy_spawns_error_boundary tests.test_current_enemy_spawns_371",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-205",
+    "old_source_regression": "3 new tests reproduce8 subtest failures on original source. Final15 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D236 authorized:catch only actual path/file and JSON operations, internal manifest and derivation errors propagate. No new wrappers or repeated validation.",
+    "requirements": "Source identity, candidate bindings, snapshot equality, unknown member behavior unchanged. Targeted error and existing model tests pass."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}
