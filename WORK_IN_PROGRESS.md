@@ -1,3 +1,7 @@
+## 当前断点：四类事件面板初始化重复刷新删除（2026-11-06）
+
+四构造末尾重复更新已删，37定向通过，8构造新旧显示一致且更新2→1，窗口更新。下一批优先基类_choice_changed/模型player_text重复分支准备，统筹接口和实际调用者；D194等157组待审不改。回执verification/maintenance/code-constraints-event-initial-refresh-20261106/summary.json；覆盖不变，维护不增节数。
+
 ## 当前断点：安眠一隅分支与来源标识复用（2026-11-06）
 
 安眠一隅面板三次分支读取合为一次，目录标识转换一次。22定向通过，25上下文1926文字/奖励/冲突状态与完整目录新旧一致；窗口更新。157组待审保持原样。回执verification/maintenance/code-constraints-resting-choice-reuse-20261106/summary.json；下一批继续完整来源/调用链与其它普通冗余，不重复本批已证路径。维护不增节数。

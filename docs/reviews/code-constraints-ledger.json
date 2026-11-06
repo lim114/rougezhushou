@@ -571,18 +571,24 @@
     },
     {
       "file": "rouge/current_shadow_view.py",
-      "sha256": "819d8e3917875b676771ad4a9b79cfe2f4e9ef640847555327412b7fb9920df4",
+      "sha256": "0a47070a32996f32c5911d1f3844d8f8cdce25a5bb255745e0647524b8010df0",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
         "rule3": "existing_conditions_and_exception_handlers_preserved",
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
-      }
+      },
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
+      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
     },
     {
       "file": "rouge/current_resting_view.py",
-      "sha256": "7eea43e406da10601d765f584638b986a944c01971c290778698fff31ce47d96",
+      "sha256": "a6e33dd8a3d3b3510a0bfc16640eace8f24892342281cea1546283438b2cac23",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -590,27 +596,16 @@
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
       },
-      "rule1": "reuse_selected_choice_in_text_and_panel_and_normalize_catalogue_identity_once",
-      "rule2": "no_new_helpers_existing_shows_reward_shared_by_model_and_panel",
-      "rule3": "pending_D188_D194_unchanged_no_new_defense",
+      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
+      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "22 targeted tests pass;1926 old/new text, reward and conflict target cases equal; full catalogue equal and identity outputs independent. This covers selected paths, not whole-module certification."
+      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
     },
     {
       "file": "rouge/current_reconstruction_view.py",
-      "sha256": "e48ab8511bc560b7e2dc164f21a0d4475b01ea6598e4d233f0286ed0919ab76b",
-      "event_theme_ownership_review": {
-        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
-        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
-        "rule3": "existing_conditions_and_exception_handlers_preserved",
-        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
-        "full_prior_review_retained": false
-      }
-    },
-    {
-      "file": "rouge/current_peace_view.py",
-      "sha256": "1bd2a4d788bf43dff65f7b52b293afb63d6447366224e60b57e3e07c2b899e3e",
+      "sha256": "0b98a77f4ab8c4164e3ec9f7d0b816e9776e14ecff143e6a02e55c418d1114ad",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -618,12 +613,29 @@
         "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
         "full_prior_review_retained": false
       },
-      "rule1": "reuse_selected_choice_in_text_and_panel_and_normalize_catalogue_identity_once",
-      "rule2": "no_new_helpers_existing_shows_reward_shared_by_model_and_panel",
-      "rule3": "pending_D183_D187_unchanged_no_new_defense",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "18 targeted tests pass;90 old/new text and reward cases equal; full catalogue equal and identity outputs independent. This covers selected paths, not whole-module certification."
+      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
+      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
+    },
+    {
+      "file": "rouge/current_peace_view.py",
+      "sha256": "9c49e945528d42d65041ac8fb2590eae8ae8a928d81b2e374abb89c40d333c50",
+      "event_theme_ownership_review": {
+        "rule1": "constructor_owns_final_theme_no_factory_reapplication",
+        "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
+        "rule3": "existing_conditions_and_exception_handlers_preserved",
+        "scope": "dialog constructors and their factory/related-box callers; panels not newly certified as whole modules",
+        "full_prior_review_retained": false
+      },
+      "rule1": "constructor_relies_on_existing_refresh_or_clear_callback",
+      "rule2": "removed_four_duplicate_calls_no_new_helpers",
+      "rule3": "no_guard_or_catch_changed",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read base refresh/_scene_changed/_choice_changed/clear and four constructors. Initialization already invokes specific update before trailing call. 37 view tests pass; 8 normal/unavailable old-new constructor checks show updates2to1 with equal display. Other base/model duplicate choice preparation remains ordinary work; no whole-module certification."
     },
     {
       "file": "rouge/current_scout_view.py",

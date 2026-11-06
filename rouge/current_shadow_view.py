@@ -16,7 +16,6 @@ class CurrentShadowPanel(DocumentedEventFlowPanel):
         elif target.get('choice_id'):
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==target['choice_id']:self.choices.setCurrentRow(i);break
-        self._update_reward()
     def _fresh_reference(self):return model.reference('shadow',self.source_request)
     def _choice_changed(self,item,*args,preserve=False):
         super()._choice_changed(item,*args,preserve=preserve);self._update_reward()

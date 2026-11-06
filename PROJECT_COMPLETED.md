@@ -1,3 +1,7 @@
+## 维护：四类事件面板初始化重复刷新删除（2026-11-06）
+
+四处冗余调用删除，37定向及8构造对照通过。仅构造路径完成。[回执](verification/maintenance/code-constraints-event-initial-refresh-20261106/README.md)。
+
 ## 维护：安眠一隅分支与来源标识复用（2026-11-06）
 
 文字与面板复用分支，目录来源转换一次，22定向及1926状态对照通过；窗口更新。[回执](verification/maintenance/code-constraints-resting-choice-reuse-20261106/README.md)。仅完成这些路径，未整模块销项。

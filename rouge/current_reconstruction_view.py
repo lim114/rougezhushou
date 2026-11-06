@@ -16,7 +16,6 @@ class CurrentReconstructionPanel(DocumentedEventFlowPanel):
         self.catalogue_button=QPushButton('查阅当前收藏品能否交出（不是奖励池）');self.layout().insertWidget(3,self.catalogue_button);self.catalogue_button.clicked.connect(self.open_catalogue)
         self.refresh_reference(initial_scene=initial, initial=True)
         if initial=='source-choice':self.choices.setCurrentRow(0)
-        self._update_specific()
     def _fresh_reference(self):
         count=self.naturals.value()
         return model.reference('reconstruction', None if count<0 else count, self.source_request)

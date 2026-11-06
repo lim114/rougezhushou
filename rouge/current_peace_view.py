@@ -18,7 +18,6 @@ class CurrentPeacePanel(DocumentedEventFlowPanel):
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
-        self._update_specific()
     def _fresh_reference(self):
         return model.reference('peace', self.completed.currentData())
     def _choice_changed(self,item,*args,preserve=False):

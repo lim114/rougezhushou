@@ -15,7 +15,6 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
         self.original_button=QPushButton('对照99源石锭原项：它明确指向病床对话');self.layout().insertWidget(2,self.original_button);self.original_button.clicked.connect(self.open_original)
         self.refresh_reference(initial_scene=initial, initial=True)
         if initial=='source-choice':self.choices.setCurrentRow(0)
-        self._update_specific()
     def _fresh_reference(self):return model.reference('resting',self.source_request)
     def _close_battle(self):
         child=self.original_dialog
