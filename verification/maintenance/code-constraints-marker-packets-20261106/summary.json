@@ -1,0 +1,62 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "两套地图标记错误边界与路径复用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "8aa52be5798b75935e99e6414b42dd00b75cbad0",
+  "changed_sources": [
+    "rouge/current_map_markers.py",
+    "rouge/boss_map_markers.py",
+    "tests/test_marker_packet_error_boundary.py",
+    "tests/test_boss_map_markers_348.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_markers.py": "6426e3a1e6332d6cc3f72f6ed32f3aef00f757f2135f87e24e0ae0e8cf79ea16",
+    "rouge/boss_map_markers.py": "f4dfc650be4ec2b0aa159d7dfb4ff728188f69fff37150f46df05577e9a5c732",
+    "tests/test_marker_packet_error_boundary.py": "63744ea78bd7d2f00b7bcd2e656418ae7ddfc496b9ef90da90c1e7d7d50f1061",
+    "tests/test_boss_map_markers_348.py": "b0d153a22835e457837fa6641dfa5f4a6d2d3a5d33b6edde94af65c2b79b47a8"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D267",
+    "D268"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "initial_tests_run": 18,
+    "initial_tests_passed": 17,
+    "initial_tests_failed": 1,
+    "final_tests_run": 5,
+    "final_tests_passed": 5,
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-213",
+    "commands": [
+      "python -m unittest tests.test_marker_packet_error_boundary tests.test_current_map_markers_337 tests.test_boss_map_markers_348",
+      "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_marker_packet_error_boundary tests.test_boss_map_markers_348.BossMapMarkers348Tests.test_old33_geometry_bindings_two_entropy_symbols_and_remaining133_preserved tests.test_observed_map_symbols_472.FloorMapSymbolTests.test_eight_exact_configurations_cover_every_declared_entrance_and_goal"
+    ],
+    "old_source_regression": "New3 tests reproduce12 subtest failures. Original-source stale assertion separately fails:section472 added symbols to ro6_n_1_2.",
+    "stale_test_resolution": "Updated old empty-symbol assertion to pinned observed-map-symbols points; kept unsupported ro6_n_2_1 empty assertion. Existing section472 eight-stage source check passes. Other17 initial passes retained unchanged.",
+    "live_window": "No product UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D267:read/JSON errors retained, mapping internal defects propagate. D268:root resolved once per packet; path/link rules retained. No helper/catch recovery added.",
+    "requirements": "Geometry/image/stage identity guards unchanged. Stale test corrected from fixed current observed-symbol data without changing product data."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

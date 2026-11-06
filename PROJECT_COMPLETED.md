@@ -5254,3 +5254,5 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 - 2026-11-06：D262与D259的面板解析路径完成，9定向通过；D259整体仍待办。回执 `verification/maintenance/code-constraints-map-selection-once-20261106/summary.json`。
 
 - 2026-11-06：D266动作位置切换重复清空合并，9定向通过；回执 `verification/maintenance/code-constraints-action-clear-once-20261106/summary.json`。
+
+- 2026-11-06：D267/D268标记资料错误/路径整改及过时测试前提校正，回执 `verification/maintenance/code-constraints-marker-packets-20261106/summary.json`。

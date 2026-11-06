@@ -1,3 +1,7 @@
+## 当前断点：两套地图标记错误边界与路径复用（2026-11-06）
+
+D267/D268完成；首轮17/18通过，过时断言校正后最终5/5通过，其余原通过证据保留。原280组完成117、剩163；待审/原窗口缺口保留。回执verification/maintenance/code-constraints-marker-packets-20261106/summary.json。
+
 ## 当前断点：动作位置切换删除重复清空（2026-11-06）
 
 D266完成，9定向通过；原280组完成115、剩165。D319/D320待审，D259仍部分完成，原窗口和既有缺口保留。回执verification/maintenance/code-constraints-action-clear-once-20261106/summary.json。

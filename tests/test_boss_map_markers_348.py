@@ -47,7 +47,10 @@ class BossMapMarkers348Tests(unittest.TestCase):
     def test_old33_geometry_bindings_two_entropy_symbols_and_remaining133_preserved(self):
         old=positions.packet()['data'];self.assertEqual(len(old['compatible_stages']),33);self.assertEqual(len(old_symbols.STAGES),2);self.assertEqual(len(set(old['all_current_stage_ids'])-set(old['compatible_stages'])-set(old_symbols.STAGES)-set(model.STAGES)),133)
         for sid in old_symbols.STAGES:self.assertEqual(len(positions.stage_reference(sid)['points']),8)
-        self.assertEqual(positions.stage_reference('ro6_n_6_2')['points'],old['compatible_stages']['ro6_n_6_2']['points']);self.assertEqual(positions.stage_reference('ro6_n_1_2')['points'],[])
+        self.assertEqual(positions.stage_reference('ro6_n_6_2')['points'],old['compatible_stages']['ro6_n_6_2']['points']);self.assertEqual(positions.stage_reference('ro6_n_2_1')['points'],[])
+        from rouge import observed_map_symbols as extra
+        observed=json.loads((extra.ROOT/extra.DATA).read_bytes())
+        self.assertEqual(positions.stage_reference('ro6_n_1_2')['points'],observed['bindings']['ro6_n_1_2']['points'])
     def test_nominal_action_cells_gain_only_matching_symbols_no_actual_path_or_clock(self):
         first_without_marker=set();checked=0
         for sid in model.STAGES:
