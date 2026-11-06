@@ -266,3 +266,8 @@
 | D260 | CurrentMapPositionPanel.refresh_reference资料/图片缺失清空返回False；_render图片失败清空 | 刷新失败不沿用旧位置，正常无选择不属于此项 | 建议保留失效撤下行为；替代显示旧资料但须明确过期。本项不授权模型读取校验，原样待审 |
 | D261 | CurrentOriginalCenters.set_image中PNG解码失败时清空point/markers并返回False | 损坏字节不会留下旧标记；无图是正常生命周期 | 建议保留解码失败处理；替代显式抛出解码错误。原样待审 |
 | D262 | CurrentMapPositionPanel._render中的result非空保护与下游cell_text依赖非空的契约 | 三条内部调用均已有有效result，该局部判断不能独立支持无资料绘制 | 建议删除无效局部兜底、保留入口；替代明确完整支持无资料绘制。原样待审；select_cell与_render重复cell_reference仍归D259 |
+
+| D263 | current_action_positions.reference同时取得battle/grid后检查无资料及action_key类型；_reference缺动作返回None | 错输入与失效资料不输出位置，但两个模型分别加载同源关卡 | 建议确定入口契约并共用已核验资料；替代独立查询各自验证。原样待审；格子重复范围检查已归D259 |
+| D264 | _reference基础路线索引类型/范围、未定义motionMode与位置无效时不给标记 | 坏索引或不支持运动不能误借其它路线 | 建议保留明确无位置状态；替代将固定资料异常显式上报。分支实际路线未知、别名多义和等待占位属正常领域语义，不当低概率异常删除 |
+| D265 | CurrentActionPositionsPanel.refresh_reference无资料/无图与_selected解码失败清空返回 | 失效后撤下旧位置与文字 | 建议保留失效撤下；替代保留带过期标注的旧内容。本项不授权底层图片及来源保护，原样待审 |
+| D266 | CurrentActionPositionsPanel.set_reference换身份先clear_reference，再refresh失败会再次clear_reference | 换条目不遗留旧选择；失败路径重复清空 | 建议审批后按身份切换与刷新失败各自职责合并重复清理；替代维持现有双清空。普通重复未销项 |

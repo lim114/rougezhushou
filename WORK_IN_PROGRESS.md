@@ -1,3 +1,7 @@
+## 当前断点：动作位置模型与界面契约回顾（2026-11-06）
+
+两模块全文与实际调用已核对，源码未改，沿用测试窗口。新增D263—D266，共229组待审；重复读取/范围检查/失败双清空未销项。回执verification/maintenance/code-constraints-action-position-contract-review-20261106/summary.json。
+
 ## 当前断点：地图选择入口合并与已解析地形复用（2026-11-06）
 
 共享选择入口、复用格子地形和坐标键；15定向通过，单次选格解析算例7→2。D260—D262待审，共225组；D259重复格子解析仍未处理。回执verification/maintenance/code-constraints-map-selection-review-20261106/summary.json。

@@ -1,3 +1,7 @@
+## 维护：动作位置契约回顾记录（2026-11-06）
+
+完成两份源码及调用核对、登记待审；没有声明模块整改完成。[回执](verification/maintenance/code-constraints-action-position-contract-review-20261106/README.md)。
+
 ## 维护：地图选择与地形复用（2026-11-06）
 
 三处普通重复已整改，15定向通过；模块未销项。[回执](verification/maintenance/code-constraints-map-selection-review-20261106/README.md)。

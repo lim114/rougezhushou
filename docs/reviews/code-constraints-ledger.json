@@ -1893,6 +1893,33 @@
       "rule2": "Two identical combo callbacks merged into one shared handler",
       "rule3": "D260_D262_pending",
       "evidence": "Entire module read. 13 map/terrain view tests plus 2 marker tests pass. Fixed map old/new selected output equal and terrain decoder calls7to2; not general latency proof."
+    },
+    {
+      "file": "rouge/current_action_positions.py",
+      "sha256": "c517089beea176a244bd4041d4ecd470d0ccacb4c1ec3725799410abed47ddf3",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Separate data loader and pure projection seam has actual fixture callers; nested add has four purposes. Cross-model revalidation pending.",
+      "rule2": "Keep actual projection seam and reused callback boundaries; no blanket single-caller deletion",
+      "rule3": [
+        "D259",
+        "D263",
+        "D264"
+      ],
+      "evidence": "Full current source read with battle, enemy, candidate, shared reader and direct projection-test callers. Source unchanged; no product tests or window restart this documentation batch."
+    },
+    {
+      "file": "rouge/current_action_positions_view.py",
+      "sha256": "c596752a834f44417021e5fa7bfd5a762641871ac4c521a69fdc09838ab845c1",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Shared callbacks and selected label paths have actual callers; changed-reference clear followed by failed refresh clear remains pending.",
+      "rule2": "Keep actual projection seam and reused callback boundaries; no blanket single-caller deletion",
+      "rule3": [
+        "D265",
+        "D266"
+      ],
+      "evidence": "Full current source read with battle, enemy, candidate, shared reader and direct projection-test callers. Source unchanged; no product tests or window restart this documentation batch."
     }
   ]
 }
