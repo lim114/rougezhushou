@@ -1,0 +1,70 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "召唤物五入口仅缺省等级使用满级",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "951a5ae767bcc82a1864d115149435860afb88ff",
+  "changed_sources": [
+    "rouge/summons.py",
+    "rouge/token_counts.py",
+    "tests/test_token_level_contract.py"
+  ],
+  "source_sha256": {
+    "rouge/summons.py": "fddef03c318bc2db80b7f92f433bfb9813daf38f407257858e166d0d6659d947",
+    "rouge/token_counts.py": "61bccc2563e6e5f20b0e13e9d502c8e88eb2b80e2462097ad00a210eecded782",
+    "tests/test_token_level_contract.py": "b9c01844d5b3fbf28b9a176af67d3fe2b21923d2f5bf51ae07a5d3e0480e33b1"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D134"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 36,
+    "tests_passed": 36,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_token_level_contract tests.test_token_cultivation_reuse_review tests.test_token_duration_reference tests.test_summon_modules_038",
+    "local_evidence": ".local/code-constraints-review-238",
+    "old_source_regression": "15 cases across5 entries silently mapped0,False,empty string to maximum; now rejected",
+    "live_window": "No visual change; original test window update pending."
+  },
+  "review": {
+    "standards": "D134 approved default semantics. One cultivation resolver shared by5 independent entries; prepared cultivation bypasses redundant entry validation. Helper has actual repeated validation/normalization responsibility; no catch/retry.",
+    "requirements": "36 targeted tests pass. Missing/None equal explicit maximum; invalid levels refused; prepared path never repeats resolver. Original applicability gates, token cap and single-level interpolation unchanged."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": false,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/player_feature_426_acceptance.py": "042395419c988f19c222581b892f54a2e25ef3d7793bd34fd14917e30eb6fd56",
+    "rouge/player_feature_427_acceptance.py": "fb1cf322a589feacd00b1bc3070c7a37882bd8a0ebcf28fc119cde474a81e1a6",
+    "rouge/player_feature_428_acceptance.py": "e76cbdf44d0bc0f04e95bf347b12feb7065358809bafe400048dfb061dcfc99d",
+    "rouge/player_feature_430_acceptance.py": "0b016d48d4e96e24a8efaef76909003569a2fad20b5fe4c216d8d0394a127f71",
+    "rouge/player_feature_431_acceptance.py": "66f8a30a25856eeabeaa526a6aa611e8ce916bb59810b14a865e3febd5f3f7b9",
+    "rouge/player_feature_432_acceptance.py": "ec50be8b99ed38cde4c1dbb7623e78007c5f94d2cd426e66ae0e5a5803997cf8",
+    "rouge/player_feature_435_acceptance.py": "ac3e6fd03392bc0e8b104137e080bc799861aaaccfabf5ca16d838808c628203",
+    "rouge/player_feature_436_acceptance.py": "32eb07c6b7e07031ad7d030a7e90bf9fd928caf0b4f887aff662e6e602d33719",
+    "rouge/player_feature_437_acceptance.py": "c685cda89221c8506570ade6c0df0bf409c3326d99d2a77f3ad3f06f72dc91ec",
+    "rouge/player_feature_438_acceptance.py": "a0c521eaa10dfd7a9edcb4bb5b1241c98b81be8c40a1b1eec084f54ccbaf23d7",
+    "rouge/player_feature_439_acceptance.py": "14320cb563803963a9fab44ce3b6a103d26480af6772e81b0285feedf4242d87",
+    "rouge/player_feature_440_acceptance.py": "b3d97ed507968d79c37fffe062ff3f9a245739098278da46e79153b38a4a5650"
+  }
+}

@@ -5350,3 +5350,7 @@ D309/D310按已批准决定保留13处finally。4项定向测试通过，新增1
 ## 维护：历史解码收窄异常出口与浮点重复校验（2026-11-06）
 
 D314完成；递归解码移出字段名捕获，删除等价浮点长度复核。14定向通过、256浮点输出等价；循环、重复键及规范格式保留。回执：`verification/maintenance/code-constraints-history-codec-20261106/summary.json`。
+
+## 维护：召唤物五入口仅缺省等级使用满级（2026-11-06）
+
+D134完成；五入口复用等级解析，缺省/None默认、非法值拒绝；已准备培养不重复校验。36定向通过，旧版15组复现。回执：`verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json`。

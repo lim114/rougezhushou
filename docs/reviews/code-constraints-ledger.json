@@ -1465,13 +1465,20 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "d45b22b0f8408897aa04ddec9231a139136ee320f8526e7e9e652e87a38fd080",
+      "sha256": "fddef03c318bc2db80b7f92f433bfb9813daf38f407257858e166d0d6659d947",
       "rule1": "removed_two_single_product_manual_selectors",
       "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D128_D134_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "manual_token_stat_effects had one product caller in relics.finish; manual_token_effects served it and Combat but its token_id variant was otherwise only used by tests. Inline the final stat-only predicate once in the relic finalizer; Combat keeps its distinct all-unit/global-damage predicate and deepcopy. Removed both wrappers and updated tests to actual calculation/Combat paths. Remaining module membership and reference paths remain partial."
+      "evidence": "manual_token_stat_effects had one product caller in relics.finish; manual_token_effects served it and Combat but its token_id variant was otherwise only used by tests. Inline the final stat-only predicate once in the relic finalizer; Combat keeps its distinct all-unit/global-damage predicate and deepcopy. Removed both wrappers and updated tests to actual calculation/Combat paths. Remaining module membership and reference paths remain partial.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json",
+          "scope": "D134 token default contract",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/relics.py",
@@ -1531,13 +1538,20 @@
     },
     {
       "file": "rouge/token_counts.py",
-      "sha256": "0c0917d8da682cd5a1e6549c5a7d3c075f42a1d6d2a4dd200adb4f105a33393d",
+      "sha256": "61bccc2563e6e5f20b0e13e9d502c8e88eb2b80e2462097ad00a210eecded782",
       "rule1": "count_reference_accepts_resolved_operator_cultivation",
       "rule2": "no_new_helper_prepared_input_used_by_product_callers",
       "rule3": "D134_unchanged",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Prior ordinary review retained. Optional prepared cultivation has a real comparison caller, while direct ledger and standalone queries keep the existing entry. Identity/source applicability and all count predicates unchanged; D134 fallback preserved only on unresolved entry. Full module remains pending approval."
+      "evidence": "Prior ordinary review retained. Optional prepared cultivation has a real comparison caller, while direct ledger and standalone queries keep the existing entry. Identity/source applicability and all count predicates unchanged; D134 fallback preserved only on unresolved entry. Full module remains pending approval.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json",
+          "scope": "D134 token default contract",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/ammo_reference.py",

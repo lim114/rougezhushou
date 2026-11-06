@@ -9,6 +9,17 @@ from functools import lru_cache
 from pathlib import Path
 
 
+def resolve_token_cultivation(profile,scenario):
+    """Resolve an independent token query; prepared callers reuse this pair."""
+    elite=scenario.get('elite',2)
+    maximum=profile['phases'][elite]['max_level']
+    level=scenario.get('level')
+    if level is None:level=maximum
+    if type(level) is not int or not 1<=level<=maximum:
+        raise ValueError('干员等级需要为当前精英阶段范围内的整数。')
+    return elite,level
+
+
 @lru_cache(maxsize=1)
 def _duration_rules():
     return json.loads((Path(__file__).with_name('data')/'token-duration-reference.json').read_text(encoding='utf-8'))
@@ -29,8 +40,7 @@ def duration_reference(profile,scenario,token_id,*,cultivation=None):
         r['token_id']==token_id and token_id in profile.get('tokens',{})),None)
     if rule is None:return None
     if cultivation is None:
-        elite=scenario.get('elite',2)
-        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        elite,level=resolve_token_cultivation(profile,scenario)
     else:elite,level=cultivation
     potential=scenario.get('potential',1)-1
     def eligible(candidate):
@@ -88,8 +98,7 @@ def module_reference(profile,scenario,token_id,*,cultivation=None):
     if not rule or rule['operator']!=scenario['operator'] or rule['token_id']!=token_id:return None
     module=next((m for m in profile['modules'] if m['id']==module_id),None)
     if cultivation is None:
-        elite=scenario.get('elite',2)
-        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        elite,level=resolve_token_cultivation(profile,scenario)
     else:elite,level=cultivation
     stage=rule['stages'].get(str(scenario.get('module_level',0)))
     if not module or not stage or elite<module['unlock_elite'] or level<module['unlock_level']:return None
@@ -120,8 +129,7 @@ def token_cost_reference(profile,scenario,token_id,*,cultivation=None):
     if rule is None:return None
     module=next((m for m in profile['modules'] if m['id']==rule['module_id']),None)
     if cultivation is None:
-        elite=scenario.get('elite',2)
-        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        elite,level=resolve_token_cultivation(profile,scenario)
     else:elite,level=cultivation
     stage=next((s for s in rule['stages'] if s['module_level']==scenario.get('module_level',0)),None)
     if (not module or not stage or elite<rule['module_unlock_elite'] or
@@ -167,9 +175,8 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module
     """
     phases=profile['tokens'][token_id]['phases']
     if cultivation is None:
-        elite=scenario.get('elite',2)
-        operator_level=scenario.get('level') or profile['phases'][elite]['max_level']
-        cultivation=(elite,operator_level)
+        cultivation=resolve_token_cultivation(profile,scenario)
+        elite,operator_level=cultivation
     else:elite,operator_level=cultivation
     phase=phases[min(elite,len(phases)-1)]
     level=min(operator_level,phase['max_level'])

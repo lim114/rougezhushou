@@ -13,7 +13,8 @@ def token_count_reference(profile,scenario,token_id,*,cultivation=None):
     data=count_rules()
     if profile['id']!=data['operator_id'] or scenario['operator']!=data['operator_id'] or token_id!=data['token_id'] or token_id not in profile.get('tokens',{}):return None
     if cultivation is None:
-        elite=scenario.get('elite',2);level=scenario.get('level') or profile['phases'][elite]['max_level']
+        from .summons import resolve_token_cultivation
+        elite,level=resolve_token_cultivation(profile,scenario)
     else:elite,level=cultivation
     potential=scenario.get('potential',1)-1
     phase=next(p for p in data['phases'] if p['elite']==elite)

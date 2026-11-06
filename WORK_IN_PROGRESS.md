@@ -1,3 +1,7 @@
+## 当前断点：召唤物五入口仅缺省等级使用满级（2026-11-06）
+
+D134完成，36定向通过，旧版15组非法等级静默满级复现。原280组完成140、剩140；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json。
+
 ## 当前断点：历史解码收窄异常出口与浮点重复校验（2026-11-06）
 
 D314完成，14定向通过、256浮点输出等价；旧版复现内部异常误分类。原280组完成139、剩141；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-history-codec-20261106/summary.json。
