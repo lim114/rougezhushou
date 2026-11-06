@@ -1,3 +1,7 @@
+## 当前断点：事件作战选项与配置列表复用（2026-11-06）
+
+选项、文字、配置及配置名复用同次结果；14定向通过，27范围/71选项/202名称前后一致，窗口更新。183组待审不变。回执verification/maintenance/code-constraints-event-battle-selection-reuse-20261106/summary.json；下一批核对事件作战模型来源和其它路径。
+
 ## 当前断点：仪式沙地面板复用状态并删除重复关闭（2026-11-06）
 
 控件取值/按钮状态复用，清空材料窗只关闭一次；12定向通过，窗口更新。D218—D220待审，共183组；D219仍有待改重复，模块不销项。回执verification/maintenance/code-constraints-event-view-state-reuse-20261106/summary.json；继续其余普通冗余与模块审查。

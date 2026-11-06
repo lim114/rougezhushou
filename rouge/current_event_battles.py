@@ -62,21 +62,21 @@ def choice(result,cid):
     if type(cid)is not str:return None
     return next((deepcopy(c)for c in result['rows']if c['id']==cid),None)
 
-def stage_rows(result,cid):
-    c=choice(result,cid)
+def stage_rows(result,cid,*,prepared_choice=...):
+    c=choice(result,cid) if prepared_choice is ... else prepared_choice
     if c is None:return []
     ids=[s for s in c['stage_ids']if result['stage_id']is None or s==result['stage_id']]
     return [{'id':s,'name':result['data']['originals']['stages'][s]['name'],'emergency':bool(result['data']['originals']['stages'][s]['isElite']),'actual_stage_id':None}for s in ids]
 
-def stage_label(result,cid,sid):
-    rows=stage_rows(result,cid)
+def stage_label(result,cid,sid,*,prepared_rows=...):
+    rows=stage_rows(result,cid) if prepared_rows is ... else prepared_rows
     if sid not in{v['id']for v in rows}:return '未核对的配置'
     row=next(v for v in rows if v['id']==sid);same=[v for v in rows if v['name']==row['name']and v['emergency']==row['emergency']]
     suffix=' · 同名配置'+str(same.index(row)+1)if len(same)>1 else''
     return row['name']+' · '+('紧急作战'if row['emergency']else'非紧急配置')+suffix
 
-def player_text(result,cid=None):
-    c=choice(result,cid)
+def player_text(result,cid=None,*,prepared_choice=...):
+    c=choice(result,cid) if prepared_choice is ... else prepared_choice
     if c is None:return '请选择文献中的作战选项。这里只列具名作战链接，不是该事件的完整选项或本局可选清单；从情景进入只打开同名事件总览，不证明父子关系。'
     lines=['【来源事件】'+c['event_id'],'【文献中的选项】'+c['title'],version._plain(c['description']),'','【原表写明的作战】']
     for page in c['pages']:

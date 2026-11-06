@@ -1,3 +1,7 @@
+## 维护：事件作战选项复用（2026-11-06）
+
+同次多层查找改为复用，14定向及旧新对照通过。[回执](verification/maintenance/code-constraints-event-battle-selection-reuse-20261106/README.md)。
+
 ## 维护：事件视图状态与关闭复用（2026-11-06）
 
 三类普通重复已改，12定向和关闭一次计数通过。D219重复路径未销项。[回执](verification/maintenance/code-constraints-event-view-state-reuse-20261106/README.md)。

@@ -56,11 +56,12 @@ class CurrentEventBattlesPanel(QWidget):
         _,target=self._flow_target(cid)
         self.flow_button.setVisible(target is not None);self.flow_button.setEnabled(target is not None)
         if target is None:self._close_flow()
-        full_text=model.player_text(self.result,cid)
+        full_text=model.player_text(self.result,cid,prepared_choice=c)
         replace_text(self.player,mechanism_copy(full_text,'',extra_detail_headings=('【从固定关卡反查】','【重复记载】','【仍需区分】'))[0],preserve=keep);replace_text(self.reference_notes,full_text,preserve=keep)
         replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)
         b=self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('选择作战配置',None)
-        for row in model.stage_rows(self.result,cid):self.stages.addItem(model.stage_label(self.result,cid,row['id']),row['id'])
+        rows=model.stage_rows(self.result,cid,prepared_choice=c)
+        for row in rows:self.stages.addItem(model.stage_label(self.result,cid,row['id'],prepared_rows=rows),row['id'])
         self.stages.setCurrentIndex(max(0,self.stages.findData(sid)));self.stages.blockSignals(b);self.open_button.setEnabled(self.stages.currentData()is not None)
         if not keep:self.tabs.setCurrentIndex(0);self.scope.collapse(animate=False)
 
@@ -70,14 +71,15 @@ class CurrentEventBattlesPanel(QWidget):
         if self.result is None:return False
         if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
         sid=self.stages.currentData()
-        if sid not in{v['id']for v in model.stage_rows(self.result,self.choice_id)}:return False
+        rows=model.stage_rows(self.result,self.choice_id)
+        if sid not in{v['id']for v in rows}:return False
         from .player_reference_links import open_stage
         opened=open_stage(self,sid,context=lambda:None if self.result is None else(self.result['source_identity'],self.choice_id,self.stages.currentData()))
         if opened is not None:return opened
         from .player_map_reader import make_reader
         if self.battle_dialog is not None and self.battle_dialog.panel.stage_id!=sid:self._close_battle()
         if self.battle_dialog is None:
-            self.battle_dialog=make_reader('battle',{'id':sid,'title':model.stage_label(self.result,self.choice_id,sid)},self)
+            self.battle_dialog=make_reader('battle',{'id':sid,'title':model.stage_label(self.result,self.choice_id,sid,prepared_rows=rows)},self)
         elif self.battle_dialog.panel.refresh_reference()is False:self._close_battle()
         if self.battle_dialog is None:return False
         self.battle_dialog.show();self.battle_dialog.raise_();return True
