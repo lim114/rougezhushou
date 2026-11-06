@@ -1986,7 +1986,7 @@ class MainWindow(QMainWindow):
             return
         if op not in catalog()['operators']:
             state=self.current_operator_state() or {'id':op,'fields':{},'skill_ranks':{}}
-            text=format_operator_observation({**state,'id':op},self.training_conditions())
+            text=format_operator_observation({**state,'id':op})
             if not state.get('fields'):text+='\n未读取培养状态，以上为明确的档案预览条件。'
             self.show_damage_text(text+'\n\n此干员可读取培养档案；技能伤害规则尚未实现，不将未知伤害显示为零。')
             return

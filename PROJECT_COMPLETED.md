@@ -1,3 +1,7 @@
+## 维护：干员摘要无用参数清理（2026-11-06）
+
+operator_summary规则回顾完成，app调用移除无用培养读取；其余资料模块未整体销项。[回执](verification/maintenance/code-constraints-operator-summary-review-20261106/README.md)。
+
 ## 维护：七个小模块契约（2026-11-06）
 
 level_panel_view/software_pointer/offline_scope完成规则回顾；四文件冗余清理。其余四份待审。[回执](verification/maintenance/code-constraints-small-module-contracts-review-20261106/README.md)。

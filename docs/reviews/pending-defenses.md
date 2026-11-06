@@ -336,3 +336,7 @@
 | D312 | recruitment_recognition.recruitment_marker：denominator为0时score=0 | 模板/观察均无白像素时避免本次除零，但随后white/expected仍可能除零 | 建议核对模板尺寸支持范围后去掉无效局部保护或统一入口约束；替代原样。不得仅删除后宣布已解决；本批保留，未增加小尺寸防御 |
 | D313 | enemy_reference_construction.configuration_path：construction_reference缺失时按旧exact_requested_level_present生成database路径 | 支持旧内部标量调用，但固定资料理论上已有来源记录 | 建议完成旧调用迁移后删除兼容分支；替代保留有明确标签的旧契约。原样待审；source_path未知use_db与compiled_identity模式分支是来源语义，不合并删除 |
 | D314 | player_history_codec.encode循环引用拒绝与finally移除栈；decode整数/浮点规范格式、重复键拒绝以及对象赋值TypeError转ValueError | 避免非规范/循环快照或重复字段被无声改写；TypeError捕获还包含递归值解码 | 建议保留无损格式与循环/重复键约束，收窄TypeError范围；替代原样或取消相应格式拒绝。含binary长度与规范hex双重判断，需确认后合并；本批未动，未授权 |
+
+| D315 | drone_traits.selected_drone_trait：profile/operator/module身份、模组阶段解锁、part属于catalog_parts与非token/无作用域资格核对 | 拒绝陈旧或错归属part替换无人机参数 | 建议保留来源资格，普通候选筛选中的elite/level/potential重复读取另行清理；替代仅信任selected_talents输出但需明确调用契约。未改保护，待审 |
+| D316 | public_event_samples.samples格式/唯一键/总数核验；references捕获OSError/ValueError/KeyError/TypeError返回空 | 统计文件缺失、损坏或程序错误都隐藏统计；可能把内部缺陷混同无资料 | 建议保留数据入口核验，缩小读取捕获范围；替代原样。event_bindings唯一对应与楼层范围是统计口径，不能用标题代替。原样待审 |
+| D317 | player_exchange_sources.exchange_links全包validate，输入输出ID/name/描述精确匹配；exchange_label未知档位、exchange_text未知版本文案 | 非同源或未确认集合不作兑换关系，未知分类以通用文本展示 | 建议保留来源契约，待核对上游预验证再集中入口；未知档位兜底在本函数产出中不可达，建议审批后删。替代保留兼容外部构造link。原样待审 |

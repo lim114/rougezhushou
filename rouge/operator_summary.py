@@ -4,12 +4,12 @@ from .catalog import operator_profiles
 LABELS={'level':'等级','elite':'精英阶段','potential':'潜能','trust':'信赖',
         'module_id':'装备模组','module_level':'模组阶段','selected_skill':'所选技能'}
 
-def format_operator_observation(operator,cultivation=None, *, technical=False):
+def format_operator_observation(operator, *, technical=False):
     profile=operator_profiles()[operator['id']]
     invalid=set(operator.get('invalid_fields',[]))
     fields={key:value for key,value in operator.get('fields',{}).items() if key not in invalid}
     def value(key,fmt=str):return fmt(fields[key]) if key in fields else '未确认'
-    trust=value('trust_display',lambda n:f'{n}%') if 'trust_display' in fields else value('trust',lambda n:f'{n}%（加成进度）')
+    trust=f"{fields['trust_display']}%" if 'trust_display' in fields else value('trust',lambda n:f'{n}%（加成进度）')
     selected_number=fields.get('selected_skill')
     if not profile['skills']:selected='无技能'
     elif type(selected_number) is int and 1<=selected_number<=len(profile['skills']):
@@ -25,7 +25,8 @@ def format_operator_observation(operator,cultivation=None, *, technical=False):
            f'信赖：{trust}',f'装备模组：{module_text}', '', '【技能信息】', f'所选技能：{selected}']
     if operator.get('recruitment_kind')=='emergency_hire':lines.insert(1,'来源：应急雇佣（人形/时钟标识）；仅一次作战，离队后保留历史。')
     if 'advanced' in operator:lines.insert(1,'本局进阶：'+('已进阶' if operator['advanced'] else '未进阶'))
-    ranks={key:value for key,value in operator.get('skill_ranks',{}).items() if str(key) not in operator.get('invalid_skill_ranks',[])}
+    invalid_ranks=operator.get('invalid_skill_ranks',[])
+    ranks={key:value for key,value in operator.get('skill_ranks',{}).items() if str(key) not in invalid_ranks}
     for i,skill in enumerate(profile['skills'],1):
         rank=ranks.get(str(i),ranks.get(i))
         text='未确认' if rank is None else f'等级 {rank}' if rank<=7 else f'等级 7 · 专精 {rank-7}'

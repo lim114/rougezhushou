@@ -1,3 +1,7 @@
+## 当前断点：干员摘要删除无用培养参数并回顾三处资料契约（2026-11-06）
+
+删除摘要无用参数/调用方无用计算，复用字段；7项定向、16组输出/16处签名通过。operator_summary销项，D315—317待审；drone_traits培养读取仍需普通整改。回执verification/maintenance/code-constraints-operator-summary-review-20261106/summary.json。
+
 ## 当前断点：七个小模块契约回顾及识别和藏品范围冗余清理（2026-11-06）
 
 四文件普通冗余修改；17定向及319组旧新对照通过。七份完整阅读，三份规则销项，D311—314待审，共277组。回执verification/maintenance/code-constraints-small-module-contracts-review-20261106/summary.json。
