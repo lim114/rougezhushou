@@ -31,7 +31,9 @@ def compare_cultivation(scenario,preview):
         try:
             conditions['trust']=_amount(conditions['trust'],'信赖',100)
             mid=conditions['module_id'];ml=conditions['module_level']
-            if type(ml) is not int or (mid is None and ml!=0) or (mid is not None and type(mid) is not str):
+            # Equipped stage validation belongs to the attribute entry below.
+            if ((mid is not None and type(mid) is not str) or
+                    (not mid and (type(ml) is not int or (mid is None and ml!=0)))):
                 raise ValueError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
             attributes,_,row['module_applied']=_operator_attribute_reference(identity,**conditions)
             row['attributes']=attributes

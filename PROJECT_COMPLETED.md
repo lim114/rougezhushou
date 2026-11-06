@@ -1,3 +1,7 @@
+## 维护：培养比较阶段校验入口去重（2026-11-05）
+
+已装备模组类型/范围不再由比较层重复校验，无模组/零阶段约束保持。10定向通过；结果和提示差异分别记录，仅本路径销项。[回执](verification/maintenance/code-constraints-cultivation-stage-boundary-20261105/README.md)。
+
 ## 维护：培养比较复用装备状态（2026-11-05）
 
 比较层复用属性已解析的模组与生效状态，修正null等级的重复比较错误。18项定向通过；本路径销项，模块仍部分完成。[回执](verification/maintenance/code-constraints-cultivation-equipment-state-20261105/README.md)。

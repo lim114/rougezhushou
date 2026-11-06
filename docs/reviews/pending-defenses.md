@@ -87,7 +87,7 @@
 | D118 | `cultivation_comparison.compare_cultivation`第一处try包含培养输入检查、属性计算、档案查询及结果行更新，捕获ValueError/KeyError/TypeError后继续下一方案 | 坏方案可逐行提示，但档案/内部结果缺陷也会被归为方案不可测算 | 建议仅保留实际输入错误出口，界面行构造与内部结构错误暴露；替代保留整段隔离。本批捕获范围、类型和处理体未改，待审核 |
 | D119 | 同函数第二处try捕获技能准备/计算、补充技能和结果行更新的ValueError，保留属性并提示技能不可测算 | 未解锁或无效技能可保留属性比较；内部计算中的ValueError也可能被当作用户条件问题 | 建议明确输入错误边界后收窄，保留未解锁技能的逐行提示；替代保留当前隔离。本批只传递已有培养属性，既有捕获未改，待审核 |
 | D120 | `supplemental_cultivation.compare_cultivation`每方案run_skill_reference捕获ValueError/TypeError/KeyError并生成不可测算行 | 单方案失败不会中断其余方案，但内部缺键/类型缺陷也会变成输入提示 | 建议区分已知输入错误与内部异常后收窄；替代保留逐方案完整隔离。模块本批仅源码回顾，字节未改，待审核 |
-| D121 | `cultivation_comparison`先_amount校验信赖并转float，紧接operator_attributes再次校验同一信赖有限性与0–100范围 | 两个独立入口各有输入契约，组合路径重复；_amount对布尔值的拒绝不能删除，其他调用者仍需要培养入口校验 | 建议保留外部入口拒绝布尔/范围规则，以已验证培养条件共用内部计算；替代保留重复范围检查。本批未改信赖检查，待审核 |
+| D121 | `cultivation_comparison`先_amount校验信赖并转float，紧接共享入口_operator_attribute_reference再次校验同一信赖有限性与0–100范围 | 两个独立入口各有输入契约，组合路径重复；_amount对布尔值的拒绝不能删除，其他调用者仍需要培养入口校验 | 建议保留外部入口拒绝布尔/范围规则，以已验证培养条件共用内部计算；替代保留重复范围检查。本批未改信赖检查，待审核 |
 | D122 | `supplemental_run.run_skill_reference`无本局加成基准调用_skill_reference时捕获所有ValueError并返回baseline=None及错误说明 | 生命符文可能使声明缺口对加成后合法、对原生命不合法，必须保留这类可读缺项；其它内部ValueError也被隐藏为基准不可测算 | 建议限定为已知生命缺口校验错误，其它内部错误上报；替代保留当前所有ValueError隔离。现有捕获体/类型/范围未改，待审核 |
 | D123 | `supplemental_comparison.comparison_rows`在baseline为空时改用空字段表，所有差值未知 | 可支持无基准调用；当前等级/培养/敌人三个产品调用方均提供已生成的非空基准，可能掩盖内部漏传 | 建议确认无基准是否是正式契约后决定保留，或要求必有基准并直接投影；替代保留现有无基准模式。本批未改此分支，待审核 |
 | D124 | `supplemental_sp.sp_reference`对已声明bound_char_buffs的子记录使用get(id,{})、get(effects,[])，资料缺失时按空效果处理 | 固定资料15条关联当前均完整；若资料损坏或更新漏同步，可能把本应待确认的自然回技显示为已知 | 建议在资料入口核验已声明关联并上报缺失，消费处直接读取；替代保留当前空效果回退。未改这两处回退，不新增校验，待审核；可选bound_char_buffs不存在不在本项删除范围内 |
