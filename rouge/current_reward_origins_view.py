@@ -46,8 +46,8 @@ class CurrentRewardOriginsPanel(QWidget):
 
     def _render(self, key, preserve):
         self.open_button.setEnabled(key is not None)
-        replace_text(self.player, model.player_text(self.result, key), preserve=preserve)
         row = next((r for r in self.result['rows'] if r['key'] == key), None)
+        replace_text(self.player, model.player_text(self.result, key, row=row), preserve=preserve)
         replace_text(self.technical, json.dumps(row or {'scope': model.NOTICE}, ensure_ascii=False, indent=2), preserve=preserve)
 
     def _selected(self, item, *_):

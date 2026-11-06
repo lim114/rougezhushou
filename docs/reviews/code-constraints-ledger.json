@@ -1344,13 +1344,13 @@
     },
     {
       "file": "rouge/current_reward_origins_view.py",
-      "sha256": "cfdc004e613b2fb4bf366a654af0dd91070b057704a14afba3c775e1849307cb",
-      "rule1": "reuse_current_control_value_once",
-      "rule2": "render_clear_close_values_have_multiple_real_callers",
-      "rule3": "D155_D162_pending_unchanged",
+      "sha256": "f1a2cc39334516c527ea09331aaf32fc329fb58fc633a770c825fc0d2e928a25",
+      "rule1": "one_row_selection_per_render_and_one_DATA_read_per_packet",
+      "rule2": "no_new_helpers_existing_public_text_entry_supports_prepared_row",
+      "rule3": "D155_D159_and_D163_D172_pending_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Read both complete UI files and acquisition model/callers. Current item and nonnegative gold were each read twice; cached within the same synchronous operation, no new helper. Child source validation and null/error paths untouched. Gold hasattr selects a genuinely event-specific control; tests explicitly require its absence for other events. Remaining ordinary work: critical constructor reads the same source to choose controls and again to refresh; render/model selected-row scans; repeated close on failed child awaits decision on that protected path. Do not certify whole modules."
+      "evidence": "Rendering path reviewed with ordinary/named/critical dispatch and exact UI consumer. Keyword row accepts row already selected from same result; Ellipsis preserves key lookup API, None explicitly means no selected row. No new validation or error recovery. Both data packets now parse DATA content already verified in manifest loop, rather than reopen it. Existing condition/raise/catch AST retained; protected source paths pending. All 17 item/54 text cases unchanged, both complete packets equal, input objects unchanged. These path checks do not certify whole source-model/caller graph; remaining source preparation and pending cleanup still need review."
     },
     {
       "file": "rouge/current_critical_reward_origins_view.py",
@@ -1361,6 +1361,26 @@
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "evidence": "Whole UI file and real factory/parent consumers rechecked. Initial model call with None context equals all three generated default control contexts; tested full results. Constructor now uses that initial snapshot rather than a second full reference call. _display_reference is used by initialization and subsequent refresh, original body AST identical. Refresh remains the Qt signal entry and reads current context/source each time. Factory and open_flow AST unchanged; their pending defenses are not certified. Existing failed-first-read no longer immediately tries a second initialization read, unavailable display preserved until a later refresh. Model itself not certified. No additional ordinary duplication found in this UI module after this change; origins parent rendering remains separate unfinished work."
+    },
+    {
+      "file": "rouge/current_reward_origins.py",
+      "sha256": "ec93a8d95b536472c4a179674b195ab1dbdaf719fbdcc49c7d3eded903388a87",
+      "rule1": "one_row_selection_per_render_and_one_DATA_read_per_packet",
+      "rule2": "no_new_helpers_existing_public_text_entry_supports_prepared_row",
+      "rule3": "D155_D159_and_D163_D172_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Rendering path reviewed with ordinary/named/critical dispatch and exact UI consumer. Keyword row accepts row already selected from same result; Ellipsis preserves key lookup API, None explicitly means no selected row. No new validation or error recovery. Both data packets now parse DATA content already verified in manifest loop, rather than reopen it. Existing condition/raise/catch AST retained; protected source paths pending. All 17 item/54 text cases unchanged, both complete packets equal, input objects unchanged. These path checks do not certify whole source-model/caller graph; remaining source preparation and pending cleanup still need review."
+    },
+    {
+      "file": "rouge/current_named_reward_origins.py",
+      "sha256": "a28d45b2fc44bc8dcc35aea2b31f62fef43af94c526eda1316aa6788e4448bce",
+      "rule1": "one_row_selection_per_render_and_one_DATA_read_per_packet",
+      "rule2": "no_new_helpers_existing_public_text_entry_supports_prepared_row",
+      "rule3": "D155_D159_and_D163_D172_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Rendering path reviewed with ordinary/named/critical dispatch and exact UI consumer. Keyword row accepts row already selected from same result; Ellipsis preserves key lookup API, None explicitly means no selected row. No new validation or error recovery. Both data packets now parse DATA content already verified in manifest loop, rather than reopen it. Existing condition/raise/catch AST retained; protected source paths pending. All 17 item/54 text cases unchanged, both complete packets equal, input objects unchanged. These path checks do not certify whole source-model/caller graph; remaining source preparation and pending cleanup still need review."
     }
   ]
 }

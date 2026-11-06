@@ -1,3 +1,7 @@
+## 维护：奖励选行及DATA重复读取整改（2026-11-05）
+
+文字/来源共用选中行，解析已核对文件字节；45定向及54文字/2资料包对照通过，窗口更新。[回执](verification/maintenance/code-constraints-reward-row-and-bytes-reuse-20261105/README.md)。模块仍部分回顾。
+
 ## 维护：关键藏品初始化去掉重复资料读取（2026-11-05）
 
 同一初始快照用于控件与显示，7定向通过，窗口已更新；该模块保护待审，未整模块销项。[回执](verification/maintenance/code-constraints-critical-initial-reference-20261105/README.md)。

@@ -56,7 +56,8 @@ def packet():
             if any(p.is_symlink() for p in path.parents if p != ROOT and ROOT in p.parents): return None
             content = path.read_bytes()
             if len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
-        d = json.loads((ROOT / DATA).read_bytes())
+            if name == DATA: data_raw = content
+        d = json.loads(data_raw)
         packets = {k: p.packet() for k, p in PROVIDERS.items()}
         if any(v is None for v in packets.values()): return None
         if d['schema'] != 'current_reward_origins_338_v1' or d['game_commit'] != version.NEW_COMMIT: return None
@@ -85,16 +86,18 @@ def reference(category, item_id):
             'complete_acquisition_pool': False, 'actual_quantity': None}
 
 
-def player_text(result, key=None):
+def player_text(result, key=None, *, row=...):
+    """Render by key, or reuse a row already selected from this result (None for overview)."""
     if result.get('kind') == 'critical_acquisition_349':
         from .current_critical_reward_origins import player_text as critical_text
         return critical_text(result, key)
     if result.get('kind') == 'named_acquisition_347':
         from .current_named_reward_origins import player_text as named_text
-        return named_text(result, key)
+        return named_text(result, key, row=row)
     lines = ['【取得方式资料】' + result['item']['name'], NOTICE, '',
              '已核对 ' + str(len(result['rows'])) + ' 条选项；请逐条查看，互斥分支不会合并领取。']
-    row = next((r for r in result['rows'] if r['key'] == key), None)
+    if row is ...:
+        row = next((r for r in result['rows'] if r['key'] == key), None)
     if row:
         lines += ['', '【事件】' + row['event_title'], '【选项】' + row['choice']['title'],
                   '【代价与奖励原文】', version._plain(row['choice']['description']),

@@ -48,7 +48,8 @@ def packet():
             if any(a.is_symlink()for a in p.parents if a!=ROOT and ROOT in a.parents):return None
             content=p.read_bytes()
             if len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
-        d=json.loads((ROOT/DATA).read_bytes());packets={k:v.packet()for k,v in mods.items()};current=version.packet()
+            if name==DATA:data_raw=content
+        d=json.loads(data_raw);packets={k:v.packet()for k,v in mods.items()};current=version.packet()
         if current is None or any(p is None for p in packets.values()):return None
         if d['schema']!='current_named_rewards_347_v1'or d['game_commit']!=version.NEW_COMMIT or d['complete_acquisition_pool']is not False:return None
         if d['rows']!=source_rows(packets,current['current']['details'],mods):return None
@@ -61,9 +62,9 @@ def reference(category,item_id):
     rows=[deepcopy(r)for r in p['data']['rows']if r['item_id']==item_id];detail=version.detail(category,item_id)
     if not rows or detail is None or any(detail['row']['value']['item']!=r['item']for r in rows):return None
     return{**p,'kind':'named_acquisition_347','category':category,'item_id':item_id,'item':deepcopy(rows[0]['item']),'rows':rows,'complete_acquisition_pool':False,'actual_quantity':None}
-def player_text(result,key=None):
+def player_text(result,key=None,*,row=...):
     lines=['【取得方式资料】'+result['item']['name'],'这里只列已经逐条核对的具名领取选项，不是全部掉落方式；没有列出不等于不能获得。','','已核对'+str(len(result['rows']))+'条领取选项；不同选项、事件和阶段不合并领取。']
-    row=next((r for r in result['rows']if r['key']==key),None)
+    if row is ...:row=next((r for r in result['rows']if r['key']==key),None)
     if row:
         lines+=['','【相关事件资料】'+row['event_title'],'【查看的选项】'+row['choice']['title'],'【本项代价与奖励原文】',version._plain(row['choice']['description']),'','【数量与实际获得】原文没有独立写明件数，本局是否可选、实际扣除与领取尚未核对；不补成1件，也不写入本局。']
         reader=row['reader_key']
