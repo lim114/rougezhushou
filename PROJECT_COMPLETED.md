@@ -1,3 +1,7 @@
+## 维护：显示与资料五模块回顾（2026-11-05）
+
+整模块新增完成information_scope、wrapped_item_delegate、current_settlement_view；单次清空内联，9项定向及两类Qt布局核对通过。其余两模块保护待审。[回执](verification/maintenance/code-constraints-display-scope-review-20261105/README.md)。
+
 ## 维护：补充比较复用基准与培养（2026-11-05）
 
 三类比较共享各自基准字段，技能等级比较复用相同培养；27定向及168报告/15错误对照通过。补充等级比较普通约束回顾完成，D123仍待审核。[回执](verification/maintenance/code-constraints-supplemental-baseline-reuse-20261105/README.md)。

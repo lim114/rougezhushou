@@ -129,3 +129,8 @@
 | D149 | recipient_native_ratio._cultivation查不到已选固定模组时ValueError | 输入身份已通过，但本地固定培养目录缺项时报告明确错误 | 建议保留；替代移除会在后续访问时报内部异常。仅此位置，原样未改，待审核 |
 
 | D150 | RecipientNativeRatioPanel._append与calculate的ValueError/TypeError出口 | 正常格式/范围错误需要提示；TypeError还会把内部缺陷当输入问题，_append捕获范围也包含序列化与界面更新 | 建议保留正常ValueError提示、删除TypeError兜底并收窄_append到解析/验证；替代保留原范围。两处原样未改，待审核，不包含其它面板 |
+
+| D151 | stage_floor_reference.sixth_floor_reference 的固定标题/区域/icon/原关卡字段及可选传入关卡身份比对 | 固定资料被换版、字段错配或调用者传入其它变体时返回None，避免把其它关卡标为第VI层；正常非对应关卡的无资料返回不属本项 | 建议保留来源与关卡身份核对，逐字段核实是否已由资料入口保证后再精简；替代直接信任构建数据会少一层版本错配拦截。本批原样，待审核 |
+| D152 | current_named_reward_origins_view.make_event_dialog 首行row字典/item_id文字检查 | 错误内部调用返回None而不是暴露类型或缺键问题；当前唯一产品调用者从已刷新模型行中选择 | 建议在确认该调用契约后删这处类型兜底，内部缺陷直接暴露；替代保留独立原始输入入口。原样，待审核 |
+| D153 | 同函数重新model.reference并确认整行属于fresh.rows | 用户点击时来源变化或条目被改写便拒绝打开；父open_event同次操作已刷新整份来源，可能重复读取 | 建议核实同次操作的来源快照边界后复用父层已核对结果，保留一次身份核验；替代保留两处，覆盖两次读取之间发生变更。原样，待审核，不借用D95授权 |
+| D154 | 同函数七个已知reader分支之后return None | 模型新增或错误reader键时静默不打开；原模型实际输出固定七类 | 建议改为明确暴露不支持的内部reader，或在模型入口只接受已实现键；替代保留无窗口返回。原样，待审核，不包含七种正常分派 |
