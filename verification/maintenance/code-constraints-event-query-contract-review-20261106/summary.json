@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件作战查询统一参数校验",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "d1cda2fa465c10037a3c401e6e9aab394eaa6267",
+  "changed_sources": [
+    "rouge/current_event_battles.py",
+    "tests/test_event_battle_query_contract.py"
+  ],
+  "source_sha256": {
+    "rouge/current_event_battles.py": "7cd42eefdbb1c9d4fc7a0cdaf95721e9d3aced33921a612d761646b688d12e31",
+    "tests/test_event_battle_query_contract.py": "be4c82cfa88cc23d7db759c128c5d928884d1f74d517a4b2b71f9d67657c835f"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D224"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 16,
+    "tests_failed": 1,
+    "tests_run": 17,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_event_battle_query_contract tests.test_current_event_battles_326 tests.test_current_event_battles_view_326",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-202",
+    "old_source_regression": "New3 tests on original source:25 subtest failures; original view scrolling test reproduces same failure on HEAD.",
+    "existing_failure": "test_two_nonzero_readers_stage_and_nested_owned_reader_keep_refresh: scrollbar maximum 0; retained, not counted passed.",
+    "live_window": "Offscreen only; original window update remains pending."
+  },
+  "review": {
+    "standards": "D224 approved error contract; query validates types once, stage wrapper delegates; no new helper/catch. Supported-stage fast filter moved to reference.",
+    "requirements": "None selection, unsupported strings, category/prefix filtering and mutually exclusive query semantics retained; supported-stage reads once. No change to source identity guards."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

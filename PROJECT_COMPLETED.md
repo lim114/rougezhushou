@@ -64,7 +64,7 @@ D168–D170已落实；14项定向通过，仅证明本批加载路径，不代�
 
 - 2026-11-06：D90删除事件面板缺清理方法兜底，21种实际面板、11项定向通过。回执 `verification/maintenance/code-constraints-event-cleanup-review-20261106/summary.json`。
 
-- 2026-11-06：D94事件查询160字限制明确提示、不截断并支持恢复；26定向通过。回执 `verification/maintenance/code-constraints-event-query-review-20261106/summary.json`。
+- 2026-11-06：D94事件查询160字限制明确提示、不截断并支持恢复；26定向通过。回执 `verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json`。
 
 - 2026-11-06：player_map_find完整回顾及D79入口复用，6定向通过；回执 `verification/maintenance/code-constraints-node-finder-review-20261106/summary.json`。
 
@@ -5232,3 +5232,5 @@ D161完成，13项定向通过，D320另列待审。回执：verification/mainte
 ## 维护：奖励资料加载收窄异常与复用根路径（2026-11-06）
 
 D163整改、D164保留复核、D165保留并复用根路径完成，17项定向通过。回执：verification/maintenance/code-constraints-reward-packet-review-20261106/summary.json。不增加功能节数。
+
+- 2026-11-06：D224查询类型契约与重复校验整改完成；16项通过，1项原源码同现界面失败保留待办。回执 `verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json`。

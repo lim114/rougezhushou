@@ -1,3 +1,7 @@
+## 当前断点：事件作战查询统一参数校验（2026-11-06）
+
+D224完成；17定向16通过，1个旧滚动测试在原源码同样失败。原280组完成103、剩177；D319/D320待答复，旧窗口更新待补。回执verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json。
+
 ## 当前断点：行动奖励缺图状态明确提示（2026-11-06）
 
 D200完成，最终6项定向通过；首轮新增测试漏参数已修正并保留记录。原280组完成102组、剩178组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-startup-image-review-20261106/summary.json。
@@ -176,7 +180,7 @@ D90完成；21种接口核对、11项定向通过；原280组余263组，模块�
 
 ## 当前断点：事件查询长度提示（2026-11-06）
 
-D94完成；26定向通过，原280组余264组；模块覆盖保持68完整/200部分/40异常等价/250结构。回执verification/maintenance/code-constraints-event-query-review-20261106/summary.json。
+D94完成；26定向通过，原280组余264组；模块覆盖保持68完整/200部分/40异常等价/250结构。回执verification/maintenance/code-constraints-event-query-contract-review-20261106/summary.json。
 
 ## 当前断点：地图搜索模块完整回顾（2026-11-06）
 

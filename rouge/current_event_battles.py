@@ -35,9 +35,10 @@ def packet():
     return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
 
 def reference(event_id=None,stage_id=None):
-    if event_id is not None and type(event_id)is not str:return None
-    if stage_id is not None and type(stage_id)is not str:return None
+    if event_id is not None and type(event_id)is not str:raise TypeError('event_id must be str or None')
+    if stage_id is not None and type(stage_id)is not str:raise TypeError('stage_id must be str or None')
     if event_id is not None and stage_id is not None:return None
+    if stage_id is not None and stage_id not in SUPPORTED_STAGES:return None
     ref=packet()
     if ref is None:return None
     d=ref['data']
@@ -47,7 +48,8 @@ def reference(event_id=None,stage_id=None):
     return {**ref,'rows':rows,'event_id':event_id,'stage_id':stage_id,'actual_stage_id':None,'parent_scene_id':None}
 
 def locate(category,key):
-    if type(category)is not str or type(key)is not str or category not in('scenes','choices'):return None
+    if type(category)is not str or type(key)is not str:raise TypeError('category and key must be str')
+    if category not in('scenes','choices'):return None
     if category=='choices'and not key.startswith('choice_ro6_'):return None
     if category=='scenes'and not key.startswith('scene_ro6_'):return None
     ref=packet()
@@ -60,7 +62,8 @@ def locate(category,key):
     return None
 
 def choice(result,cid):
-    if type(cid)is not str:return None
+    if cid is None:return None
+    if type(cid)is not str:raise TypeError('cid must be str or None')
     return next((deepcopy(c)for c in result['rows']if c['id']==cid),None)
 
 def stage_rows(result,cid,*,prepared_choice=...):
@@ -95,4 +98,4 @@ def player_text(result,cid=None,*,prepared_choice=...):
 SUPPORTED_STAGES=frozenset(['ro6_c_5', 'ro6_c_6', 'ro6_c_7', 'ro6_duel_1', 'ro6_duel_2', 'ro6_e_t_3', 'ro6_e_t_4', 'ro6_e_t_5', 'ro6_s_1', 'ro6_t_1', 'ro6_t_13', 'ro6_t_14', 'ro6_t_15', 'ro6_t_2', 'ro6_t_3', 'ro6_t_4', 'ro6_t_5'])
 
 def stage_has_reference(stage_id):
-    return type(stage_id)is str and stage_id in SUPPORTED_STAGES and reference(stage_id=stage_id)is not None
+    return stage_id is not None and reference(stage_id=stage_id)is not None
