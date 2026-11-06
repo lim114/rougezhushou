@@ -5450,3 +5450,7 @@ D122完成：通过具体输入异常收窄基准捕获；28项定向通过，�
 ## 维护：培养结果组装移出输入错误捕获（2026-11-06）
 
 D118局部完成：结果行组装不再归入输入错误，12项定向通过；未关闭整组，未新增功能节。回执 `verification/maintenance/code-constraints-cultivation-result-20261106/summary.json`。
+
+## 维护：培养输入使用明确异常契约，内部属性缺陷直接上报（2026-11-06）
+
+D118完成，18项定向通过；明确区分培养输入错误与内部计算/结果缺陷，公式不变。未新增功能节。回执 `verification/maintenance/code-constraints-cultivation-input-20261106/summary.json`。

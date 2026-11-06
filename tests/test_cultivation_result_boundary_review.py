@@ -25,3 +25,27 @@ class CultivationResultBoundaryTests(TestCase):
         self.assertIsNotNone(result['rows'][0]['attributes'])
         self.assertEqual(result['rows'][1]['status'],'不可测算')
         self.assertIsNone(result['rows'][1]['attributes'])
+
+    def test_internal_attribute_errors_are_not_proposal_errors(self):
+        original=model._operator_attribute_reference
+        for error_type in (KeyError,TypeError,ValueError):
+            with self.subTest(error_type=error_type):
+                count=0
+                def attributes(*args,**kwargs):
+                    nonlocal count
+                    count+=1
+                    if count==2:raise error_type('internal defect')
+                    return original(*args,**kwargs)
+                with patch.object(model,'_operator_attribute_reference',side_effect=attributes):
+                    with self.assertRaisesRegex(error_type,'internal defect'):
+                        model.compare_cultivation({'operator':'char_208_melan','skill_rank':7},
+                            {'proposals':[proposal('基准'),proposal('其它')]})
+
+    def test_declared_cultivation_errors_still_have_row_messages(self):
+        invalid=({'elite':True},{'level':0},{'trust':True},{'potential':0},
+                 {'module_id':'missing','module_level':1},{'module_level':1})
+        result=model.compare_cultivation({'operator':'char_208_melan','skill_rank':7},
+            {'proposals':[proposal('基准')]+[proposal(str(i),**values) for i,values in enumerate(invalid)]})
+        for row in result['rows'][1:]:
+            self.assertEqual(row['status'],'不可测算')
+            self.assertTrue(row['error'])

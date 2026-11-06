@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "title": "培养输入使用明确异常契约，内部属性缺陷直接上报",
+  "base_commit": "2b6a6c104fbc946eab2e57f1b163032eb1bbe1df",
+  "changed_sources": [
+    "rouge/catalog.py",
+    "rouge/cultivation_comparison.py"
+  ],
+  "source_sha256": {
+    "rouge/catalog.py": "8515fd37eb6c1572848ad416e3d9ea73d4db025b5b84080d5273ef3d39ce466b",
+    "rouge/cultivation_comparison.py": "cd7c73869035ae5fa19bbd7c156bb2ea2f4146acda68a6d7a85f64cccecebb4b"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D118"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_cultivation_result_boundary_review tests.test_cultivation_comparison_140 tests.test_cultivation_proposal_reuse tests.test_cultivation_equipment_reuse_review tests.test_cultivation_stage_boundary_review tests.test_supplemental_skills_138",
+        "tests_run": 18,
+        "tests_passed": 18,
+        "seconds": 0.164
+      }
+    ],
+    "live_window": "Original test window update remains pending after prior automatic approval rejection; offscreen checks do not certify live UI."
+  },
+  "review": {
+    "standards": "Catalog explicit cultivation rejections now use a ValueError subclass; comparison catches only that type around attribute entry. Trust parsing retains ValueError only around _amount. Internal KeyError/TypeError/unrelated ValueError escape. No new validation or wrapper; formula unchanged. D118 category1 authorization applied.",
+    "requirements": "Invalid elite/level/trust/potential/module inputs retain per-proposal errors; mandatory result field failures and injected attribute defects propagate. Existing equipment, attribute reuse and supplemental skill cases pass. Other catalog callers catching ValueError remain compatible."
+  },
+  "partially_implemented": []
+}

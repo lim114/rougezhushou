@@ -1,7 +1,7 @@
 """Independent cultivation proposals; recompute attributes and supported skills."""
 import json
 from copy import deepcopy
-from .catalog import catalog,operator_profiles,_operator_attribute_reference
+from .catalog import catalog,operator_profiles,_operator_attribute_reference,CultivationInputError
 from .damage import _prepare_damage, _calculate_prepared
 from .healing_budget import _amount
 from .supplemental_skills import defaults,skill_reference,supplemental_profiles
@@ -30,13 +30,16 @@ def compare_cultivation(scenario,preview):
         conditions={k:v for k,v in proposal.items() if k!='name'}
         try:
             conditions['trust']=_amount(conditions['trust'],'信赖',100)
+        except ValueError as error:
+            row.update(status='不可测算',error=str(error));continue
+        try:
             mid=conditions['module_id'];ml=conditions['module_level']
             # Equipped stage validation belongs to the attribute entry below.
             if ((mid is not None and type(mid) is not str) or
                     (not mid and (type(ml) is not int or (mid is None and ml!=0)))):
-                raise ValueError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
+                raise CultivationInputError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
             attributes,_,row['module_applied']=_operator_attribute_reference(identity,**conditions)
-        except (ValueError,KeyError,TypeError) as error:
+        except CultivationInputError as error:
             row.update(status='不可测算',error=str(error));continue
         row['attributes']=attributes
         for key in ('attack','hp','defense'):row[key]=attributes[key]
