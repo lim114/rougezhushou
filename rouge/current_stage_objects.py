@@ -44,8 +44,8 @@ def _derive(current,reference):
                 selector=f'$.{container}.{field}[{i}]';kind='instance'if field.endswith('Insts')else'card'
                 inst=raw.get('inst')or{};entity=inst.get('characterKey')or raw.get('characterKey');character=reference['selected']['characters'].get(entity)
                 if character is None:raise ValueError('Every exact predefined entity requires its original record')
-                skills=[]
-                for s in character.get('skills')or[]:
+                skills=[];character_skills=character.get('skills')or[]
+                for s in character_skills:
                     key=s.get('skillId')
                     if key is None:continue
                     original=reference['selected']['skills'].get(key)
@@ -53,7 +53,7 @@ def _derive(current,reference):
                     levels=original['levels'];level=raw.get('mainSkillLvl')
                     exact=levels[level-1]if type(level)is int and 1<=level<=len(levels)else None
                     skills.append({'id':key,'original_skill':deepcopy(original),'selected_level':deepcopy(exact),
-                                   'selected_by_index':type(raw.get('skillIndex'))is int and 0<=raw['skillIndex']<len(character.get('skills')or[])and character['skills'][raw['skillIndex']].get('skillId')==key})
+                                   'selected_by_index':type(raw.get('skillIndex'))is int and 0<=raw['skillIndex']<len(character_skills)and character_skills[raw['skillIndex']].get('skillId')==key})
                 alias=raw.get('alias');actions=[deepcopy(a)for a in current['actions']if kind=='instance'and type(alias)is str and alias and a['raw'].get('actionType')=='ACTIVATE_PREDEFINED'and a['raw'].get('key')==alias and any(c['source_selector']==selector for c in a['predefined_candidates'])]
                 records.append({'key':selector,'source_selector':selector,'kind':kind,'container':container,'field':field,'ordinal':i+1,'entity_id':entity,'name':battle.plain(character['name']).strip(),'raw':deepcopy(raw),'character':deepcopy(character),'skills':skills,'activation_actions':actions,'actual_active':None,'actual_occurrence':None,'actual_reward':None,'actual_position':None})
     return{'stage_id':current['id'],'stage_name':current['name'],'entries':records,'level_key':current['level_key'],'original_level_source':deepcopy(current['source']),'source_identity':(reference['identity'],current['source_identity']),'battle_source_identity':current['source_identity'],'actual_active':None,'actual_server_verified':False,'run_updated':False}

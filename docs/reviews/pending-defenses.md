@@ -239,3 +239,9 @@
 | D238 | _derive精确候选绑定缺失抛错；resolve_action重新stage_reference并_same比较完整快照 | ID相同但绑定不同或快照被改时拒绝跳转 | 建议保留精确绑定校验；替代只比ID/身份会漏内容改动。原样待审，正常未找到成员不在此项 |
 | D239 | stage_reference/rows/resolve_action参数类型拒绝，以及resolve_action对stage_id/enemy_key用get | 内部错类型或缺字段转为无资料；下层stage_reference又验证参数 | 建议明确入口后合并类型/字段校验；替代保留各查询独立保护。原样待审，合法未知筛选仍是正常无匹配 |
 | D240 | position_reference先resolve_action重读关卡，再current_action_positions.reference重读并比较battle_source_identity | 确认动作与位置同源，但同次重复读取关卡 | 建议审批后共用已核对关卡并保留同源核对；替代原样双读。仍有普通重复未整改，不因登记销项 |
+
+| D241 | current_stage_objects.packet整段异常捕获及from_battle的_derive捕获 | 文件/解析错误和内部转换错误统一无资料 | 建议收窄实际入口错误；替代保留统一出口。原样待审 |
+| D242 | packet固定清单/schema/提交/成员/长度/摘要及from_battle的inventory身份、关卡、level_key、原来源核对 | 损坏/错版数据拒绝计算 | 建议保留来源职责并审查跨层重复；替代信任上游固定数据。原样待审 |
+| D243 | _derive缺实体/技能原件抛错；技能等级/索引类型及范围检查，无法确认时保留None/False | 不借用其它技能或等级；包含循环内重复索引验证 | 建议审批后同一声明只计算一次选择并保留未知语义；替代原样逐技能检查。仅技能列表读取已复用，检查未改 |
+| D244 | stage_reference/rows/resolve参数类型与get缺字段、resolve重新读取并same比较 | 坏输入或修改后的快照拒绝解析 | 建议确定边界后合并类型校验，保留快照归属职责；替代独立入口全部核对。原样待审 |
+| D245 | position_reference解析后再读地图、level_key比较、display_cell失败返回None | 不同源或不可映射位置拒绝显示，含同次底层关卡再读 | 建议审批后共享已核验关卡、保留格子有效性；替代原样复核。重复读取未整改，不销项 |

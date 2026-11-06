@@ -1,3 +1,7 @@
+## 维护：物件技能列表重复读取整改（2026-11-06）
+
+技能列表复用及模型审查已记录，3定向/555对照通过，模块不销项。[回执](verification/maintenance/code-constraints-object-skill-list-20261106/README.md)。
+
 ## 维护：出怪模型审查与断点清单纠正（2026-11-06）
 
 完整阅读记录已保存，纠正断点旧待审编号，模块仍未通过。[回执](verification/maintenance/code-constraints-enemy-model-contract-review-20261106/README.md)。

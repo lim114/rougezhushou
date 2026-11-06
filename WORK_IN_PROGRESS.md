@@ -1,3 +1,7 @@
+## 当前断点：物件技能列表复用与模型保护核对（2026-11-06）
+
+技能列表单次读取，3定向及555组旧新对照通过，窗口更新。D241—D245待审，共208组；断点/清单/回执同步。回执verification/maintenance/code-constraints-object-skill-list-20261106/summary.json。
+
 ## 当前断点：敌人出怪模型契约与断点待审清单核对（2026-11-06）
 
 模型完整阅读与调用证据已记录，D236—D240待审，共203组；断点pending_decisions由旧D194补齐D240。源码未改，沿用现有窗口。回执verification/maintenance/code-constraints-enemy-model-contract-review-20261106/summary.json；继续普通冗余，D239/D240不销项。
