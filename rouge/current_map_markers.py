@@ -41,4 +41,3 @@ def mapping_for(stage_id,current):
     for p in row['points']:
         if level['mapData']['tiles'][level['mapData']['map'][p['row']][p['col']]]['tileKey']!=p['tile_key']:return None
     return {'mapping':deepcopy(row),'source_identity':ref['source_identity'],'absolute_accuracy_verified':False,'actual_spawn_position':None}
-
