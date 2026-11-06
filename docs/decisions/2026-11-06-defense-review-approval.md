@@ -1,0 +1,406 @@
+# D38—D317统一审核决定（2026-11-06）
+
+用户已逐题明确答复14项，覆盖280组。D01—D37既有决定不变。审批已完成，实施和定向验证尚未完成；不能据此把模块销项。目标保持暂停，本次只保存审批与云端续接。
+
+仅授权以下编号和边界；未发现的代码不在授权内。要求先核实的契约或来源条件若不能成立，保留未决并列明原因，不自行扩大授权。
+
+机器可读编号映射见[审批登记](2026-11-06-defense-review-approval.json)。
+
+## 1. 错误出口收窄
+
+用户选择：按上述范围收窄。
+
+保留文件读取、输入格式错误的明确提示；捕获缩到实际读取/解析入口。已验证数据的内部类型、缺字段、错误枚举直接上报；删除无法证明的保存状态提示。具体异常契约未核实者仍待审。
+
+编号：D38、D39、D40、D45、D47、D48、D49、D54、D58、D62、D65、D66、D68、D70、D77、D79、D81、D82、D83、D84、D88、D89、D92、D98、D100、D105、D110、D112、D113、D118、D119、D120、D122、D131、D150、D152、D154、D158、D160、D163、D167、D168、D172、D173、D177、D178、D181、D183、D186、D188、D191、D205、D208、D210、D213、D214、D217、D220、D221、D224、D236、D239、D241、D244、D246、D248、D250、D253、D255、D267、D271、D273、D285、D287、D289、D290、D292、D295、D296、D316。
+
+## 2. 重复校验与读取合并
+
+用户选择：按上述边界合并。
+
+同次操作复用已验证来源、参数、实体、位置，合并重复关闭/清空。独立公开入口及用户交互、异步等待、来源刷新后的核对保留；不放宽身份、新鲜度、准确性。无法证明同一快照者仍待审。
+
+编号：D41、D53、D64、D73、D75、D95、D97、D99、D103、D109、D111、D115、D116、D117、D121、D125、D130、D153、D159、D161、D176、D182、D193、D199、D203、D219、D228、D230、D232、D240、D243、D245、D249、D252、D254、D258、D259、D263、D266、D269、D270、D274、D279、D280、D281、D283、D284、D286、D288、D291、D293、D300、D305、D306、D307、D317。
+
+## 3. 缺属性和必填字段兜底清理
+
+用户选择：核实契约后清理。
+
+核实构造和调用契约后初始化属性、直接读取必填键；删除不可达默认值、无效局部保护、已证重复拷贝或检查。正常None/未选择保留，证据不足者仍待审。
+
+编号：D50、D57、D69、D74、D78、D85、D87、D90、D102、D106、D124、D126、D132、D133、D137、D145、D147、D155、D157、D194、D209、D262、D297、D304。
+
+## 4. 来源身份与合法边界保留
+
+用户选择：保留这些准确性约束。
+
+保留版本、摘要、关卡/节点/敌人身份、唯一匹配、数值合法性、模组适用条件；不授权新阈值或放宽条件。重复执行仅按第2项边界处理。
+
+编号：D42、D43、D44、D51、D52、D55、D61、D71、D76、D93、D96、D139、D140、D142、D143、D146、D149、D151、D156、D162、D164、D166、D169、D171、D174、D179、D184、D187、D189、D192、D206、D211、D215、D222、D225、D237、D238、D242、D247、D251、D257、D264、D275、D311、D315。
+
+## 5. 文件路径保护
+
+用户选择：保留现有路径范围。
+
+保留相对路径、目录边界及文件/父目录符号链接拒绝；链接搬移资料不受支持。同次根目录解析可复用，读取范围不扩大。
+
+编号：D91、D165、D170、D175、D180、D185、D190、D207、D212、D216、D223、D256、D268、D272、D294。
+
+## 6. 图片缺失与失效展示
+
+用户选择：按上述方式保留并精简。
+
+缺图/解码失败显示暂无图片，资料失效撤下旧内容，不阻断仍有效文字。必需文件丢失明确提示；允许合并重复清理、内联单次显示，不新增自动重试或恢复。
+
+编号：D46、D80、D101、D141、D148、D195、D196、D197、D198、D200、D201、D202、D204、D218、D226、D227、D229、D231、D234、D235、D260、D261、D265、D278、D282。
+
+## 7. 私人状态与数值格式保护
+
+用户选择：保留数据保护并收窄冗余。
+
+保留损坏原件不覆盖、同局归属、外部修改冲突、原子保存、旧格式三态、循环/重复键拒绝及实际溢出处理。可合并等价格式检查、收窄内部TypeError；已保存但清理失败明确告知，不重试、不自动修复/覆盖。
+
+编号：D56、D59、D60、D63、D67、D136、D299、D301、D302、D303、D314。
+
+## 8. 正常清理与异常清理
+
+用户选择：保留finally，去除重复清理。
+
+保留finally信号恢复、批次释放及测试状态恢复，异常继续上报；可删除同一路径重复清理，不把finally本身视为滥用try/catch。
+
+编号：D233、D276、D277、D308、D309、D310。
+
+## 9. 数值与缺资料语义
+
+用户选择：采用明确未知与精度契约。
+
+未知不变0、1或难度4；未支持加成不标完整总量；无基准差值未知；精确区间必须有精确端点，先迁移生产者再删浮点兼容。可显示已证分项，不扩展计算能力。
+
+编号：D104、D107、D114、D123、D127、D129。
+
+## 10. 培养默认值
+
+用户选择：保留单等级阶段，收紧默认值。
+
+支持合法单等级阶段；仅缺省/None默认满级，0、False、空字符串等非法值由实际入口拒绝。
+
+编号：D108、D128、D134、D135、D138、D144。
+
+## 11. 三处兼容与局部保护
+
+用户选择：按上述三项处理。
+
+D298无效裁剪本次采样不可用，不改用整帧；D312空招募模板在识别入口明确拒绝，删除无法保护后续除零的局部分支；D313旧调用迁到显式来源记录后删隐式数据库回退。不改正常黑边探测或识别阈值。
+
+编号：D298、D312、D313。
+
+## 12. 统计筛选错误
+
+用户选择：明确显示筛选参数错误。
+
+非法难度或分队参数明确报错，不显示成无样本。
+
+编号：D72。
+
+## 13. 事件查询长度
+
+用户选择：保留160字并明确提示。
+
+保留160字限制并明确提示；参数类型与合法主题校验保留。
+
+编号：D94。
+
+## 14. 精确资料窗口失败
+
+用户选择：改为提示后手动打开目录。
+
+精确小窗无法创建时简短提示，并提供手动打开完整目录入口；不自动转大目录或打开主窗口。
+
+编号：D86。
+
+## 原待审条目快照
+
+以下保留位置、触发条件、影响及当时建议。里面的“未授权/待审/建议”是审批前原文，当前决定以上方14项为准；不作为实施完成证明。
+
+| 编号 | 位置与触发条件 | 影响 | 原建议与替代 |
+| --- | --- | --- | --- |
+| D38 | `player_enemy_search.py`：matches：非字典敌人/非字符串查询返回False；资料片段非字符串被忽略 | 坏数据静默当作不匹配，可能隐藏内部类型错误 | 核对当前读取入口契约后删除内部坏类型兜底，或保留并注明过滤范围 |
+| D39 | `credentials.py`：read_key捕获所有pywintypes.error并返回空密钥 | 系统访问失败与没有保存密钥混在一起 | 建议仅已确认的“未找到凭据”返回空，其它系统错误上报；具体系统错误码待核对 |
+| D40 | `player_file_messages.py`：file_issue未知非中文错误使用“原件和当前编辑均保留”通用提示 | 该函数本身无法证明调用者是否已经写入 | 建议保留中文提示但改为不声称保存状态的文案；替代为原样显示错误 |
+| D41 | `player_source_map.py`：targets对缺索引/池/坏行返回空；companion通过hasattr/getattr查找可选宿主 | 避免在没有对应资料或宿主时导航，但可能静默吞掉内部类型/属性契约破坏 | 需分别保留正常缺资料状态、核准可选宿主协议后删除多余坏结构兜底 |
+| D42 | `observed_map_symbols.py`：mapping_for文件读取失败、摘要/版本/关卡对照不符返回None | 避免错误地图标记；公开数据损坏或版本漂移时不显示补充点位 | 建议保留来源绑定；不能仅因字节摘要存在就删版本检查，代码版本也可能变化 |
+| D43 | `manual_scenario.py`：parse_preview_object拒绝重复JSON字段和非有限数值 | 避免编辑器接受歧义字段/无限数值；这些输入不能用于临时计算 | 建议保留；普通JSON语法/对象入口与框架解析回调不当作单次包装删除 |
+| D44 | `tomimi_reference.py`：target缺资料/无对应level或名称不符返回None | 避免跳错关卡；不同版本无法对应时网页入口不可用 | 建议保留身份对照，替代为允许仅按level匹配或暴露缺项 |
+| D45 | `node_statistics_source.py`：构造捕获OSError/ValueError/KeyError/TypeError后静默使用空索引 | 缓存/默认数据失败不阻止启动，也可能吞掉索引内部缺陷 | 建议把捕获收窄到读取/输入解析，内部构造缺陷暴露；model.load与FrequencyIndex重复验证已独立整改，捕获保持原样 |
+| D46 | `reference_image.py`：set_data缺图/PNG解析失败显示替代文字，_fit在无图时跳过 | 图片缺失时保持可读界面；不能把解码成功路径的检查与空窗口resize回调机械合并 | 建议保留缺图/解码失败展示；无图resize是正常生命周期状态 |
+| D47 | `player_map_reference.default_frequencies`：读取默认统计或构造索引发生ValueError/KeyError/TypeError/OSError时返回空索引 | 不阻止地图打开，也可能掩盖内部索引缺陷 | 建议仅保留读取/格式错误提示并暴露内部缺陷；替代为保持静默空索引。去留未批准，原捕获未改 |
+| D48 | `player_map_reference.historical_rows`：查询索引发生ValueError/KeyError/TypeError/OSError时返回空行 | 查询失败与确实无统计混为一类；可能吞掉内部错误 | 先明确无覆盖位置的正常返回，再收窄输入错误范围；替代为保持现状。去留未批准，原捕获未改 |
+| D49 | `rouge/player_context.py`：recent_content对非字符串title返回空文字 | 坏记录显示为没有最近内容，避免Qt收到错误类型 | 建议在本局记录入口统一校验后删除内部类型兜底；首次未读的正常空值路径保留。需先核对所有记录入口 |
+| D50 | `rouge/player_action_menu.py`：expose_original_controls以getattr默认False容忍diagnostic_controls_exposed尚不存在 | 重复调用恢复按钮时不重复迁移控件，但缺属性由默认值隐藏 | 建议构造时初始化False并直接读取，保留重复展示的正常幂等分支 |
+| D51 | `rouge/player_action_menu.py`：诊断恢复按钮前，菜单不在父布局时抛ValueError | 避免按负索引插入，暴露布局被外部改动 | 建议保留该调用时布局检查；替代是让Qt处理无效位置。未证实实际触发率 |
+| D52 | `rouge/player_spawn_filters.py`：group_key队列类型/分组整数无效返回None；action_rows未知focus返回空 | 拒绝把坏分组或未知筛选扩成全部出怪条目 | 建议分别保留有效筛选入口校验，核对上游资料契约后处理内部结构兜底；本批只删除调用方对同条记录的重复group_key |
+| D53 | `rouge/player_tile_information.py`：格子/地块类型及行列不合格返回提示，非文字或未收录标签显示未知 | 避免坏位置被显示成有效地形；新增游戏标签不会被猜成既有标签 | 建议保留未知标签展示；结构验证能否只留上游入口待逐调用确认，当前不删 |
+| D54 | `rouge/player_recorded_scene.py`：content_context及recorded_context对坏类型、空标题、无效索引/时间/身份字段返回None或跳过 | 异常历史记录不会导航到资料，内部损坏也会静默被过滤 | 建议核对历史加载契约后区分入口拒绝与内部重复检查；现在不把所有空值路径当作冗余删除 |
+| D55 | `rouge/player_recorded_scene.py`：确认记录须same_frame_selected_node来源；旧记录按时间/标题/位置匹配，仅一个唯一内容才返回 | 防止历史条目关联到另一节点或把歧义记录当唯一内容 | 建议保留来源及唯一身份对照；替代为允许选择候选，涉及产品行为，未授权 |
+| D56 | `rouge/player_resource_history.py`：numeric_read遇到巨大整数转换为浮点溢出时捕获OverflowError返回False；count调用方同样沿用此结果 | 避免异常资源读数使列表构建中断，但坏数值按未读显示 | 建议保留入口的有限非负数规则；溢出捕获是否保留单独确认，暂不改变 |
+| D57 | `rouge/player_resource_history.py`：ResourceHistoryPage.refresh通过getattr默认None读取未初始化的run_id | 首次刷新允许属性缺失，后续换局会清除旧选择 | 建议在构造时初始化run_id并直接访问；保留换局重置选择的正常行为，尚未授权 |
+| D58 | `rouge/player_resource_history.py`：resource_rows遇到非字典历史记录或非字符串resource时跳过 | 损坏历史记录不会阻断剩余列表，但内部类型错误被静默隐藏 | 建议核对历史加载入口契约后决定保留入口过滤或暴露内部错误；本批未改 |
+| D59 | `rouge/record_flags.py`：record_flag缺字段沿用True，已存在但不是精确bool则返回None | 保留旧格式语义，同时拒绝把文字/数字当作当前持有或在队 | 建议保留旧格式与三态区分；替代是要求全部记录显式迁移。涉及私人状态，未经批准不改 |
+| D60 | `rouge/record_flags.py`：metadata_mask无效名单屏蔽全部本局元信息；projected_run_metadata对坏qualified_char_buff_ids改为空投影 | 原件不写回；坏元数据不被当成已确认招募或强化事实 | 建议保留只读未知投影，核对入口后再决定内部重复校验；不自动修复私人记录 |
+| D61 | `rouge/relic_quantities.py`：confirmed_bar_counts与kettle_copies要求完整明确图标栏、唯一非水壶ID、数量及持有身份一致 | 不从大数字或部分图标推算重复水壶份数；缺证据返回None | 建议保留数量证据对照；与概况重复读取标记的跨调用优化仍待核对，不削弱这些条件 |
+| D62 | `rouge/relic_quantities.py`：kettle_copies在任一合并记录不是dict时直接返回None | 坏历史条目不会在数量判断中触发类型错误，整组水壶数量暂时未知 | 建议在记录读取边界统一处理后再决定此内部整表检查去留；本批保持原样 |
+| D63 | `rouge/run_metadata_view.py`：format_run_buff_status遇到未收录的强化ID时显示无法识别提示，不继续显示为已确认强化 | 避免给未知ID补名称或使混合名单看似完整；原始ID仍保留供计算入口拒绝 | 建议保留未知ID提示；若调整为只显示已知分项需明确展示口径。原分支未改 |
+| D64 | `rouge/player_team.py`：qualified_fields在只读副本中移除非整数、超范围、无对应模组或模组阶段矛盾的字段 | 坏保存/读取数据不作为有效培养展示；原记录不写回 | 建议保留范围条件；先确认是否可由上游入口保证结构，再决定内部类型过滤去留。重复invalid_fields读取已独立精简 |
+| D65 | `rouge/player_team.py`：crew_rows遇到非字典干员记录时跳过 | 损坏单条不会阻断整队展示，但内部错误被隐藏 | 建议在记录加载边界处理后再决定内部跳过是否保留；账号范围/已离队过滤是正常功能条件，不在本条删除范围 |
+| D66 | `rouge/player_personal_statistics.py`：unique_archives跳过坏记录/非字典state/空或非文字对局ID | 坏档案不混入统计；正常同局多版本去重另属功能规则 | 建议核对store入口后确定内部坏结构过滤是否还需保留；不删同局去重 |
+| D67 | `rouge/player_personal_statistics.py`：nonnegative_integer拒绝超过浮点显示上限的整数；complete_inventory拒绝坏集合、坏记录、未知持有身份或数量不符 | 不把不可核对归档放进完整清单分母 | 保留正常分母定义；巨大整数/内部坏结构检查需要单独确认。重复record_flag读取已移除，返回规则未改 |
+| D68 | `rouge/player_personal_statistics.py`：refresh捕获store.records的OSError/ValueError/TypeError/RecursionError，清空旧统计并提示 | 历史读取失败不展示旧结果，也可能吞内部类型/递归缺陷 | 建议保留真实文件/格式失败出口，并在store契约核对后收窄内部错误；目前原捕获不变 |
+| D69 | `rouge/player_personal_statistics.py`：statistics返回前深拷贝已新建的结果字典 | 现有正常资料中结果只含新建容器与标量，拷贝不增加隔离效果；可能为异常共享目录值保留隔离 | 建议删除这次拷贝；先作为既有保护登记，等待确认，不扩展到sample_rows中的原始字段复制 |
+| D70 | `rouge/player_statistics_samples.py`：numeric_value捕获AttributeError/TypeError，将坏嵌套资源结构当未读 | 坏记录不进入数值样本，内部结构错误也被隐藏 | 建议由档案入口统一处理结构，再决定这层捕获；本批未改 |
+| D71 | `rouge/player_statistics_samples.py`：sample_binding拒绝非字典/非文字ID/不满足64位十六进制的摘要 | 无可核对身份时不开放归档跳转 | 建议保留身份绑定，不以仅有对局ID替代；后续可只在明确入口解析一次 |
+| D72 | `rouge/player_statistics_cohorts.py`：select_cohort收到非法难度或分队类型返回空列表 | 错误筛选不会退化成全部归档，但可能显示成无样本 | 建议保留入口参数规则并决定是否改为明确错误；目前原分支不变 |
+| D73 | `rouge/player_floor_resources.py`：snapshots跳过坏事件、错来源、未知区域和不可核对数值/容量 | 历史层资源不借用当前值或猜测坏记录 | 来源/同帧规则为正常功能约束；坏结构容错建议待入口契约核对后决定，当前不删 |
+| D74 | `rouge/player_floor_resources.py`：FloorResourcesPage.refresh通过getattr默认None容忍未初始化identity | 首次刷新以缺属性代表未加载 | 建议构造时初始化identity并直接读取，正常未选条目判断保留；尚未授权 |
+| D75 | `rouge/player_shop_memory.py`：qualified对坏快照/坏商品行、名称身份不匹配、重复商品返回None | 防止不可靠记录作为已读商品；一个坏行使整个快照不用于展示 | 建议保留身份标准，核对入口后区分重复验证与坏结构兜底；本批未改 |
+| D76 | `rouge/player_shop_memory.py`：remember拒绝不同局、非数值时间或超过2秒的请求 | 旧悬停结果不会写进另一局；不重试也不修改原记录 | 建议保留写入归属和新鲜度边界；其阈值不因精简放宽 |
+| D77 | `rouge/player_shop_memory.py`：recorded_shops跳过坏历史事件/非有限或负时间，资料缺失时返回空 | 无法核对的商店记录不用于对比；不替原件补数据 | 建议保留缺资料状态并核对历史入口是否已覆盖类型过滤；当前不改 |
+| D78 | `rouge/player_shop_memory.py:ShopMemoryPanel.open_source`：先调用refresh（会reload_sources），随后无对话框或异步等待又reload_sources | 第二次文件状态检查可读到恰在两次调用间变化的公开资料；通常重复stat，资料变更时可能重读。未证明是有意防御，按用户要求先保留待审 | 建议删第二次调用，采用本次refresh取得的来源；外部资料若恰在调用间改变，下次操作再更新。不改reload_sources内的错误处理，不新增缓存或重试 |
+| D79 | `rouge/player_map_find.py:NodeFinder.__init__`：原rows中的非字典content/非文字title忽略逻辑原样迁入；仅登记异常内容结构的过滤 | 坏内容不会成为搜索标题，但也会隐藏历史结构缺陷；正常未读取内容和same_frame_selected_node归属要求另属功能规则 | 建议保留同帧绑定规则，异常结构过滤待历史入口契约核对后决定。当前只移动原表达式，未删校验或新增恢复 |
+| D80 | `rouge/player_map.py:node_sprite`：已声明图标的sprite缺失时返回空图；alpha裁剪无有效像素时沿用原图 | 缺素材仍能画未知节点，坏图可能被静默隐藏；不含正常未知类型 | 建议区分未知类型和已声明素材损坏；本批未改原分支，待确认是否保留静默处理 |
+| D81 | `rouge/player_map.py:PreviewMapView.paintEvent`：连线任一端不在节点坐标表时跳过该连线 | 不因坏边中断绘制，也可能漏显结构错误 | 建议核对地图入口契约后决定；当前原样保留，不补边或猜坐标 |
+| D82 | `rouge/player_map.py:MapPanel.open_hover_entry`：node_dossier的ValueError/KeyError/TypeError直接返回False | 坏资料阻止跳转且保留查询，内部类型或键错误也被吞掉 | 建议把真实资料失败与内部缺陷分开后收窄；本批不改捕获范围 |
+| D83 | `rouge/player_map.py:MapPanel.selected`：node_dossier的ValueError/KeyError/TypeError变成节点资料错误提示 | 本次不继续展示资料，也可能掩盖内部缺陷 | 建议只保留资料入口已定义的失败；先核对下游错误类型，当前保持 |
+| D84 | `rouge/player_map.py:MapPanel.remember_entry_reading`：reading_key元素不是非空文字或根分组标签不是文字时跳过保存 | 坏身份不写入阅读记忆；也可能让内部初始化问题表现为阅读状态丢失 | 正常未选节点分支保留；异常类型保护待确认，当前不变 |
+| D85 | `rouge/player_map.py:MapPanel.check_reference`：getattr默认None读取node_reference_binding/panel，hasattr容忍无refresh_reference方法 | 兼容不同资料窗口接口；也可能掩盖漏初始化的属性 | 建议逐类核对窗口契约后统一接口；不在本批擅自删除可选读取 |
+| D86 | `rouge/player_map.py:MapPanel.open_entry`：make_reader没有返回精确浮窗时转到原完整目录并激活主窗口 | 仍能查资料，但会改变打开位置且可能掩盖缺少精确入口 | 建议明确哪些类型仍需该备用路径后决定保留范围；本批未触发或改变它 |
+| D87 | `rouge/player_map_reader.py:readable`：dialog为None时不应用主题、直接返回None | 兼容未构造成功的可选窗口；也可能掩盖调用者漏创建窗口 | 建议先逐个核对调用方是否确实会传None，再决定保留范围。当前原函数未修改，prepare_reference_window等多调用入口仍保留 |
+| D88 | `rouge/player_map_reader.py:make_reader`：record非字典或id/title非文字时返回None | 不让坏资料进入事件/作战构造；调用方可能把坏输入当作无精确入口 | 建议与上游资料入口契约合并核对后决定；当前类型检查不动。正常未支持类型、资料暂不可用与这一坏输入保护分开 |
+| D89 | `rouge/current_event_directory_view.py:make_event_dialog`：target或target.event不是字典时直接返回None | 拒绝错误类型进入资料构造，但把错误调用表现为无法打开资料 | 建议核对model.resolve与外部调用契约后决定是否保留此入口保护；本批不动。真实来源身份、场景和选项对应核对另属资料准确性条件，不据此一并删除 |
+| D90 | `rouge/current_event_directory_view.py:CurrentEventDirectoryPanel._close_event`：hasattr(panel, clear_reference)为否时跳过清理，仅关闭窗口 | 兼容缺少清理方法的面板，也可能掩盖不完整接口并保留旧资料 | 建议逐类确认21个面板契约后改为直接清理；本批保留，等待审核 |
+| D91 | `current_event_directory._file`：拒绝非规范路径、链接、目录外路径及链接父目录 | 约束公开资料读取位置；主动使用链接迁移资料也会被拒绝 | 建议保留路径归属保护，核对类型校验先后；本批整个函数不变 |
+| D92 | `current_event_directory.packet`：捕获OSError/ValueError/KeyError/TypeError/AttributeError/StopIteration/RecursionError并返回None | 文件损坏与内部程序缺陷都变成来源不可用 | 建议保留文件/解析错误出口，逐路径核对后收窄内部缺陷兜底；本批捕获不动 |
+| D93 | `current_event_directory.packet`：清单摘要、schema/版本、字节数、来源身份、快照、重复ID及固定39行/38组不匹配即拒绝 | 绑定固定来源并防止混入错误资料；扩充资料需同步固定口径 | 建议保留来源绑定，分别评估固定数量与身份保护；不能单凭低概率整组删除。本批所有检查不变 |
+| D94 | `current_event_directory.reference`：query/event_id/node_type/topic类型、160字查询上限和已知topic检查 | 错误查询返回None；超长查询被拒绝而非截断 | 建议集中保留明确的公共入口契约，是否仍需160字上限待用户决定；本批不动 |
+| D95 | `current_event_directory.resolve`：坏result/entry_key返回None，并重新读取与比对整份结果 | 阻止失效或被改写的资料跳转，但与后续窗口入口可能重复读来源 | 建议先核对两个实际调用时间点，再明确保留哪处完整核对；无选择属于正常状态，不能一并删除。本批不动 |
+| D96 | `current_event_directory.derive/_snapshot`：缺绑定、缺来源、无对应事件、构建数量不符时抛ValueError | 资料构建停止，避免发布不完整目录；固定数量限制后续扩展 | 建议保留构建失败显露，固定数量约束与来源更新一起核对；_event仅内联，原有无事件失败分支保持 |
+| D97 | `current_event_directory.packet`：来源说明NOTES先读取并验摘要，随后在清单循环再次读同一文件并核验；不是玩家笔记 | 能发现两次读取间文件变化，但同次调用重复I/O和路径检查。定向模拟第二次字节变化已确认返回None，未改文件 | 建议复用首份已验证字节，在清单循环保留类型/摘要校验，使同次解析使用同一快照；代价是不再发现读取后立刻变化。替代保留二次读取。本批不修改，等审核 |
+| D98 | `player_reference_notes.note_for`：公开资料name不是非空文字时返回None | 坏标题被视为无资料，隐藏笔记入口；并不检查私人笔记正文 | 建议核准上游数据契约后在资料读取入口处理，内部不重复兜底；替代保留当前分支。未修改，待审 |
+| D99 | `player_reference_notes`：菜单request先note_for再open_note/reference_target/note_for；open_reference先核对身份，刷新选择后再note_for比较 | 同次导航重复读来源，但选择信号可同步更新页面，末次比较能拒绝中途变化；菜单展开和后来点击是不同时间点，不能合并 | 建议只对确证无交互/信号间隔的链路传递一次核准结果；保留跨交互及刷新后的核对。替代保留现状。本批只移动context定义，不改校验 |
+| D100 | `reference_dialog.ReferenceDialog.calculate`：解析和evaluator共同捕获ValueError/KeyError/TypeError | 输入错误有提示，计算器内部缺陷也变成输入提示；旧结果已被invalidate清空 | 建议逐个计算器明确输入错误出口后收窄到解析/输入校验，内部计算缺陷暴露；替代保留此出口。未修改，待审，不借D03授权扩大范围 |
+| D101 | `timing.profiles`：公开timing-profiles.json不存在时返回空operators并缓存 | 允许缺资料启动，但缺文件可能表现为所有时序资料未知；恢复文件后缓存仍可能保持空 | 建议明确安装包必需文件契约后取消缺文件静默默认，或保留并提供来源缺失状态；本批未改，等待审核 |
+| D102 | `amiya_continuous_reference.attach_result`：full缺amiya_continuous_reference时直接返回；当前唯一产品调用方已检查该项 | 允许绕过调用方单独调用时静默无操作；正常产品路径重复确认同一份结果 | 建议将被调用函数改为直接读取已确认项，保留调用方分派；替代保留可独立调用约定。本批未删，等待审核 |
+| D103 | `relic_damage_factors.parameter_factor`已逐条verified_rule后调用source_factor，后者重新筛选并再次逐条核验同一来源 | 独立source_factor仍需入口来源核对；当前连用路径重复核对不含异步、I/O或用户交互 | 建议提取供两入口共用的已核验来源算式，两个入口各核对一次；不取消独立入口核验、不放宽来源绑定。替代保留当前双重核对。本批未改，待审核 |
+| D104 | `shield_break_reference.finish_shield_break_reference`：ordinary(window_damage)为None时把已知窗口小计改成0 | 窗口小计不会空缺，但可能把尚不确定的来源当作零；需核对各生产路径是否可达 | 建议先核对可达生产者后保留未知或直接使用已证数值，勿把None自动视为零；替代保留并限定其前置条件。本批未改，待审核 |
+| D105 | `panel_native_bridge._bits/_raw/prepare.term_value`：浮点打包或名义定点转换遇到OverflowError、struct.error、ValueError时返回None | 超大或无法转换的数值显示为未知；也可能把内部转换缺陷隐藏为资料不足。普通None未知输入与这些异常出口应分开核对 | 建议逐处限定可达输入后只保留实际数值范围错误，内部类型/格式缺陷暴露；替代保留原出口。三处捕获未改，term_value仅移出逐字段循环，原捕获体和范围不变；待审核 |
+| D106 | `panel_native_bridge._record`：term缺省或空字典时以`term or _term(None)`补未知算式 | 支持缺项调用；当前prepare/finish三个产品调用点均传入算式，可能掩盖生产者漏传或空字典 | 建议确认独立调用契约后让term成为必传参数并直接使用，未知基础仍用明确_term(None)表达；替代保留缺省。未修改，待审核 |
+| D107 | `catalog.operator_attributes`：潜能属性不在mapping或formulaItem不是ADDITION时忽略；模组属性不在小写映射时也忽略 | 新字段/公式不会中断计算，但可能漏掉有效加成；当前已适配干员模组字段均在映射中，全干员资料另有cost/block_cnt字段 | 建议明确支持字段范围后，对未支持项保留显式未知或限定来源，而非静默给完整结果；替代保留当前筛选并标明支持范围。此项不授权扩展费用/阻挡计算，本批未修改，待审核 |
+| D108 | `catalog.operator_attributes`：阶段首尾等级相同则插值比例取0，避免分母为0 | 可表达只有一个等级点的阶段，结果取首帧；本批固定全干员资料中未出现此情形 | 建议按单等级资料的正式支持契约决定保留；替代在数据入口拒绝该结构并移除计算内分支。未修改，不以当前0例推断永远不可达，待审核 |
+| D109 | `calibration_experiment._panel_value`重复检查data对象/键集合、observation对象类型；唯一产品调用方同一轮已核对这些结构 | 单独绕过调用者使用私有函数时有定制错误；当前正常链重复核对，values类型和非空仍是该函数首次检查 | 建议保留调用入口检查和values检查，删除已确认结构的重复分支；替代保留独立私有调用支持。本批未删除，待审核 |
+| D110 | `calibration_experiment.calibration_experiment`每条记录的try涵盖结构检查、面板计算、条件比较和数值分析，捕获ValueError/TypeError/KeyError/IndexError/OverflowError并记为record_validation_error | 一条坏记录不会中断其他记录，但内部缺陷也可能显示成输入错误 | 建议划清输入解析/校验边界，收窄捕获范围并保留坏记录可见；替代保留现有隔离。捕获体、类型与覆盖阶段不变，本批仅复用阶段内已有面板；待审核 |
+| D111 | `calibration_experiment._timing_value`再次检查data是字典且仅含scenario/observation；唯一产品调用方已在同轮核对完全相同结构 | 支持绕过调用者直接调用私有函数时给定制错误，当前链重复检查；底层compare_bounded_timing自己的公开入口仍需有效输入校验 | 建议只删除此私有适配器的重复结构分支，保留调用入口与底层时刻数据校验；替代保留私有独立调用支持。本批未改，待审核 |
+| D112 | `timing_calibration._number`在数值入口捕获OverflowError及ValueError；本项只涉及其中ValueError | 内建int/float的有限性/非负检查已能按正常错误路径拒绝坏值；10**1000可实际触发OverflowError，需保留。ValueError在当前JSON基础数值输入中没有触发证据，可能容忍自定义数值子类错误 | 建议只删除ValueError捕获，保留OverflowError和原输入错误提示；替代明确支持自定义数值子类并保留该捕获。现有整处捕获未改，待审核；不将输入超大整数的OverflowError当作低概率兜底删除 |
+| D113 | `bounded_calibration._number`捕获ValueError/OverflowError；本项仅ValueError | 超大整数实际需要OverflowError转输入错误；当前JSON基础数值中未找到ValueError触发，可能容忍自定义数值子类错误 | 建议删除ValueError、保留OverflowError与0–1e12输入范围；替代明确支持自定义子类后保留。现有捕获未改，待审核；不沿用D112作跨模块授权 |
+| D114 | `bounded_calibration._bounds`缺少lower_exact/upper_exact时回退到浮点端点字符串 | 可兼容没有精确端点的旧结构；当前本模块与实验生产者均用_interval生成精确端点，正常链没有缺字段证据；回退也可能掩盖生产者丢失精度 | 建议先确认旧结构支持范围，再直接要求精确端点；替代保留兼容并注明精度来源。本批未改，待审核 |
+| D115 | `bounded_calibration`校验两个容差后下传至有界比较入口再次校验；`compare_bounded_panels`又向成对比较传入已核验容差 | 各公开入口独立调用需要校验，组合链重复检查；组合入口当前连未使用分组的容差也会检查，不能随意改变 | 建议共享已校验值的内部比较路径，保留每个公开入口及未使用容差原契约；替代保留重复检查。本批只将时刻预测与观察比较分离，以上现存检查均未删除，待审核 |
+| D116 | `bounded_calibration._panel_record`检查scenario/observation结构并只转换values，随后`paired_calibration._record`对相同记录结构再次检查 | 两个公开入口独立需要结构检查；转换后顶层键未变，组合路径的第二次检查保护内部传递契约 | 建议组合链使用已校验记录的内部入口，保留独立公开入口与全部观察字段验证；替代保留转换后复核。本批未改，待审核 |
+| D117 | `relic_panel_diagnostics`先_scenario校验并规范化，再仅改relic_ids交panel_layers；后者_scenario再次检查字典类型/内部前缀及已填默认值 | 独立面板入口需要校验；诊断内各组合未改变顶层结构或内部键，存在重复契约保护。最初仅首批三名的范围限制比面板支持范围更窄，必须保留；藏品本身各组合不同仍需各自准备 | 建议为已校验场景共享内部面板构造路径，保留诊断首批三名限制及所有逐组合藏品计算；替代保留嵌套复核。本批仅复用完全相同组合，没有删除这些检查，待审核 |
+| D118 | `cultivation_comparison.compare_cultivation`第一处try包含培养输入检查、属性计算、档案查询及结果行更新，捕获ValueError/KeyError/TypeError后继续下一方案 | 坏方案可逐行提示，但档案/内部结果缺陷也会被归为方案不可测算 | 建议仅保留实际输入错误出口，界面行构造与内部结构错误暴露；替代保留整段隔离。本批捕获范围、类型和处理体未改，待审核 |
+| D119 | 同函数第二处try捕获技能准备/计算、补充技能和结果行更新的ValueError，保留属性并提示技能不可测算 | 未解锁或无效技能可保留属性比较；内部计算中的ValueError也可能被当作用户条件问题 | 建议明确输入错误边界后收窄，保留未解锁技能的逐行提示；替代保留当前隔离。本批只传递已有培养属性，既有捕获未改，待审核 |
+| D120 | `supplemental_cultivation.compare_cultivation`每方案run_skill_reference捕获ValueError/TypeError/KeyError并生成不可测算行 | 单方案失败不会中断其余方案，但内部缺键/类型缺陷也会变成输入提示 | 建议区分已知输入错误与内部异常后收窄；替代保留逐方案完整隔离。模块本批仅源码回顾，字节未改，待审核 |
+| D121 | `cultivation_comparison`先_amount校验信赖并转float，紧接共享入口_operator_attribute_reference再次校验同一信赖有限性与0–100范围 | 两个独立入口各有输入契约，组合路径重复；_amount对布尔值的拒绝不能删除，其他调用者仍需要培养入口校验 | 建议保留外部入口拒绝布尔/范围规则，以已验证培养条件共用内部计算；替代保留重复范围检查。本批未改信赖检查，待审核 |
+| D122 | `supplemental_run.run_skill_reference`无本局加成基准调用_skill_reference时捕获所有ValueError并返回baseline=None及错误说明 | 生命符文可能使声明缺口对加成后合法、对原生命不合法，必须保留这类可读缺项；其它内部ValueError也被隐藏为基准不可测算 | 建议限定为已知生命缺口校验错误，其它内部错误上报；替代保留当前所有ValueError隔离。现有捕获体/类型/范围未改，待审核 |
+| D123 | `supplemental_comparison.comparison_rows`在baseline为空时改用空字段表，所有差值未知 | 可支持无基准调用；当前等级/培养/敌人三个产品调用方均提供已生成的非空基准及复用字段表，原报告入口仍保留，可能掩盖内部漏传 | 建议确认无基准是否是正式契约后决定保留，或要求必有基准并直接投影；替代保留现有无基准模式。本批未改此分支，待审核 |
+| D124 | `supplemental_sp.sp_reference`对已声明bound_char_buffs的子记录使用get(id,{})、get(effects,[])，资料缺失时按空效果处理 | 固定资料15条关联当前均完整；若资料损坏或更新漏同步，可能把本应待确认的自然回技显示为已知 | 建议在资料入口核验已声明关联并上报缺失，消费处直接读取；替代保留当前空效果回退。未改这两处回退，不新增校验，待审核；可选bound_char_buffs不存在不在本项删除范围内 |
+| D125 | `supplemental_skills._cultivated_stats`先验证精英/等级/潜能的整数类型和信赖范围，再调用operator_attributes重验同一字段 | 两个入口有各自输入契约，组合路径重复；补充入口还拒绝整数子类、布尔及信赖错误类型，不能简单删第一层 | 建议共用已验证培养计算，保留各外部入口的严格契约；替代保持重复。仅此补充技能入口，D121不覆盖此处；本批未改 |
+| D126 | `supplemental_skills._skill_reference`对已由bonuses字典初始化的atk/max_hp/def仍多次get(key,0) | 本函数不会删除这三键，缺键只会来自内部构造契约被破坏；默认0会掩盖缺陷 | 建议三种已初始化键改直接索引；替代保留0回退。本批未改；cost/prob/atk_scale等真正可选天赋键和battle_attributes可选来源不在本项范围 |
+| D127 | `supplemental_enemies.enemy_defaults`已有difficulty.value不是0–15整数时强制改为4 | 避免无效默认值进入表单，但可能把损坏/错误读取显示成真实难度4；初次无记录的正常默认另论 | 建议仅缺值采用正常默认，已有坏值显示待确认并提示；替代保留强制4。模块仅源码审查，原文件未改，待审核 |
+| D128 | `summons.token_attributes`阶段首尾等级相同则插值比例取0 | 支持单等级召唤物阶段，避免除零；不是D108干员培养函数的同一授权位置 | 建议确认单等级资料契约后决定保留，替代在资料入口拒绝该结构。本批未修改，待审核 |
+| D129 | `relics.finish`的regeneration_factor返回None时改用1继续展示已知回复小计 | 保留已知分项，但外部未核验组合也可能被当成无倍率；准备阶段正常会过滤未知组合 | 建议确认是否仅显示已证小计并标完整量未知，替代保留现有倍率1回退。本批未修改，待审核 |
+| D130 | `token_module_comparison._compare_token_module`在verified字段计算differences时再次检查base[k]和values[k]均非None | 当前固定32名干员/792份对照中的42个已确认差值字段均非空；若未来确认字段仍缺基准或结果，现分支会静默省略差值 | 建议确认verified是否保证两端数值后删除重复判空；替代保留允许已确认字段缺差值的契约。本批未改，需审核；其它未知字段、无规则、未解锁分支不在本项范围 |
+| D131 | `token_budget_view.TokenBudgetDialog.calculate`捕获ValueError/KeyError/TypeError，将计算异常改为界面提示 | ValueError包含正常输入错误，KeyError/TypeError也可能是内部结果或资料缺陷；缺陷被当作输入提示 | 建议核对入口错误契约后仅保留正常输入ValueError，删除其余内部类型/缺键兜底；替代保留原三类。尚未授权，原样保留 |
+| D132 | 同方法使用row.get("stock_within_reference")容忍结果缺字段 | token_budget每行都生成此键；字段缺失会静默省略库存提示 | 建议改为row["stock_within_reference"]，仍保留正常None/False含义；替代保持缺键不提示。尚未授权，原样保留 |
+| D133 | `token_budget.token_budget`以stage.get("count_reference")读取每个对照阶段必定生成的字段 | 缺键会被视为无数量参考，改变范围文字，掩盖上游结果缺字段；正常None仍是无资料 | 建议改直接索引，保留正常None含义；替代允许历史/自建结果缺键。本模块当前只接收即时对照结果，未发现历史结果入口。尚未授权，原样保留，暂不整模块销项 |
+| D134 | `summons.duration_reference/module_reference/token_cost_reference/token_attributes`及`token_counts.token_count_reference`共五处用scenario.get("level") or 满级处理输入 | 缺少等级/None正常使用默认，但0、False、空字符串也静默当满级；直调资料函数会得到满级参考，当前主计算入口通常先拒绝这些值 | 建议明确仅缺省/None使用默认，其余由实际外部入口拒绝，已验证调用直接传培养；替代保留现有假值默认。五处统一待审，本批复用解析结果但保留原or语义；本机4类输入新旧结果相同 |
+| D135 | `operator_engine.selected_talents`使用scenario.get("level") or 满级 | 未给等级是正常默认，但0/False/空字符串也会按满级选择天赋；深海色实际直调四种值均与70级相同 | 建议仅缺省/None使用默认，已验证培养从入口传入；替代保留假值默认。此项独立于D134五处，未改、待审核，不推定主计算入口允许这些值 |
+| D136 | ammo_reference.refill_parameters及refill_before_empty_is_safe的两处OverflowError捕获 | 超大整数经math.isfinite转浮点溢出，分别返回None/False；现有10**400测试覆盖 | 建议保留数值入口的这两处错误出口；替代先限定范围再转数值。未改，待审核，不授权其它捕获 |
+| D137 | partial_packet_reference使用get("partial_packet_rules",[]) | 固定资料缺该字段时静默作为无支持规则；当前资料有此字段 | 建议直接读取必填字段；替代保留旧格式缺字段兼容。未改，待审核 |
+| D138 | mei_module_reference.reference的level or 满级 | 0/False/空字符串也按满级参与模组条件 | 建议仅缺省/None默认；替代保留假值默认。独立于D134/135，未改，待审核 |
+| D139 | mei_module_reference.reference的part not in catalog_parts | 拒绝其它模组/培养来源的part被当成本模组资料；已有foreign_parts算例 | 建议保留来源核对；替代删除会允许外来条目进入候选。与后续index重复查找需一起考虑，未改，待审核 |
+| D140 | gnosis_module_reference.selected_reference的固定资料身份组合检查 | 原坚冰名/字段、特性resKey/标签/参数、二三级4个prefab及resKey/目标/隐藏/标签任一改变时不输出已核验资料；现有unreviewed prefab算例覆盖 | 建议保留，防止新资料错套原规则；替代直接接受变更会把未核验来源标成已核验。只登记，未改；普通培养/候选适用性判断不在本项 |
+| D141 | mei_module_reference共享参数入口查不到固定模组时返回无资料 | next默认None与module is None分支处理目录缺项；独立界面仍先严格next，缺项仍直接报错 | 建议保留参数入口无资料行为；替代删除后暴露固定源缺失。原分支不变，未扩大到界面，待审核 |
+| D142 | mei_module_static_reference._qualification的封存stage→resKey与TRAIT绑定检查 | 参数存在但原生资源身份不符时禁止使用封存单包公式 | 建议保留来源绑定；替代仅凭参数数值接受会误套规则。检查原样保留，待审核；技能1/2适用范围不在此项 |
+| D143 | relic_healing_factors.verified_flower_factor固定来源组合核对 | 多件叠加时核对藏品ID、原buff位置/key、数值、已核验标志及证据路径；不符返回未知 | 建议保留来源绑定；替代直接叠加会把未核验来源套用同一公式。未改，待审核 |
+| D144 | susuro_healing/guardian_healing.selected_trait两处level or 满级 | 0/False/空字符串也被当作满级 | 建议仅缺省/None默认；替代保留假值默认。未改，独立于D134/135/138，待审核 |
+| D145 | 上述两处candidate unlockCondition缺失/空值默认PHASE_0、等级1 | 缺少解锁资料时仍可能选中候选 | 建议改为必填读取或明确无资料；替代保留旧资料默认。未改，待审核 |
+| D146 | 苏苏洛与古米/黍固定resKey及1.15/0.5参数匹配 | 固定源变化时拒绝套用封存受疗比例公式 | 建议保留身份/参数绑定；替代直接接受变化会扩展未经核验公式。未改，待审核；职业/候选适用性检查不在此项 |
+| D147 | 两处attach_result对六个治疗字段及总治疗量使用get默认None | 结果缺字段时按未知继续而不暴露缺字段 | 建议确认结果契约后改必填读取；替代保留缺项兼容。本批只复用同一次读取，未删除缺项None行为，待审核 |
+| D148 | recipient_native_ratio._source的OSError捕获、固定SHA256不符返回None及诊断未知传播 | 固定原件派生包读不到/字节不符时不计算封存数值，仍返回声明与未知结果；lru_cache也会缓存None | 建议保留证据绑定和未知出口，缓存失效策略另议；替代直接抛出或取消绑定会改变可用性/来源口径。原样未改，待审核 |
+| D149 | recipient_native_ratio._cultivation查不到已选固定模组时ValueError | 输入身份已通过，但本地固定培养目录缺项时报告明确错误 | 建议保留；替代移除会在后续访问时报内部异常。仅此位置，原样未改，待审核 |
+| D150 | RecipientNativeRatioPanel._append与calculate的ValueError/TypeError出口 | 正常格式/范围错误需要提示；TypeError还会把内部缺陷当输入问题，_append捕获范围也包含序列化与界面更新 | 建议保留正常ValueError提示、删除TypeError兜底并收窄_append到解析/验证；替代保留原范围。两处原样未改，待审核，不包含其它面板 |
+| D151 | stage_floor_reference.sixth_floor_reference 的固定标题/区域/icon/原关卡字段及可选传入关卡身份比对 | 固定资料被换版、字段错配或调用者传入其它变体时返回None，避免把其它关卡标为第VI层；正常非对应关卡的无资料返回不属本项 | 建议保留来源与关卡身份核对，逐字段核实是否已由资料入口保证后再精简；替代直接信任构建数据会少一层版本错配拦截。本批原样，待审核 |
+| D152 | current_named_reward_origins_view.make_event_dialog 首行row字典/item_id文字检查 | 错误内部调用返回None而不是暴露类型或缺键问题；当前唯一产品调用者从已刷新模型行中选择 | 建议在确认该调用契约后删这处类型兜底，内部缺陷直接暴露；替代保留独立原始输入入口。原样，待审核 |
+| D153 | 同函数重新model.reference并确认整行属于fresh.rows | 用户点击时来源变化或条目被改写便拒绝打开；父open_event同次操作已刷新整份来源，可能重复读取 | 建议核实同次操作的来源快照边界后复用父层已核对结果，保留一次身份核验；替代保留两处，覆盖两次读取之间发生变更。原样，待审核，不借用D95授权 |
+| D154 | 同函数七个已知reader分支之后return None | 模型新增或错误reader键时静默不打开；原模型实际输出固定七类 | 建议改为明确暴露不支持的内部reader，或在模型入口只接受已实现键；替代保留无窗口返回。原样，待审核，不包含七种正常分派 |
+| D155 | CurrentRewardOriginsPanel._selected 的 result is None 提前返回 | 意外收到选择信号但模型为空时静默忽略；当前列表清空已阻断信号 | 建议核对所有程序化选择入口后删除无效状态兜底；替代保留以容忍外部调用顺序错误。本批原样待审 |
+| D156 | CurrentRewardOriginsPanel.open_event 的 fresh is None/fresh != old 后清空 | 点击前资料变更、损坏或内存行被改写时拒绝打开，避免旧条目跳转 | 建议保留点击边界一次复核；替代信任上次显示快照会漏掉显示到点击间的变更。与子工厂D153/D161的重复读取另核。本批原样待审 |
+| D157 | 同 open_event 的选中key未在fresh.rows找到时清空 | 界面选择键与模型不同步时拒绝打开 | 建议在列表构建契约确认后判断能否删除；替代保留失配处理。当前无触发率证据，原样待审 |
+| D158 | 同 open_event 的未知reader分支返回False | 新增/错误reader键时无提示地不打开资料 | 建议明确报告不支持的内部类型；替代保留不打开行为。原样待审 |
+| D159 | 同 open_event 的两个工厂返回None，以及child.panel.result为None时清空 | 子资料失效或工厂拒绝时撤掉子窗和旧信息；后一分支先_close_event再_clear，而_clear还会调用_close_event | 建议保留失效撤下，统一由_clear执行一次关闭，删除该分支重复关闭；替代保持原调用顺序。整个保护分支原样等待确认，重复关闭尚未算整改完成 |
+| D160 | current_critical_reward_origins_view.make_event_dialog 的row字典/item_id文字检查 | 错误内部输入返回None；当前产品调用者已选模型行 | 建议确认调用契约后删除内部类型兜底；替代保留原始输入边界。独立于D152，原样待审 |
+| D161 | 同关键藏品工厂的model.reference与整行成员复核 | 条目或来源改变时拒绝创建；父open_event同次点击已复核，构造函数又会读取 | 建议定义一次已核对快照并复用，保留一次身份复核；替代多次读来源覆盖期间变化。独立于D153，原样待审 |
+| D162 | CurrentCriticalRewardPanel.open_flow 的fresh与旧结果比较，以及子流程result/scene_id/choice_id核对 | 点击期间资料变化或打开目标不符时关闭，防止显示错误领取选项 | 建议保留点击来源及最终目标身份核对，核实各时间点职责后再精简；替代删除会信任旧结果或构造目标。本批原样待审 |
+| D163 | current_reward_origins.packet 的 OSError/ValueError/KeyError/TypeError/AttributeError 统一返回None | 文件损坏与内部类型/字段缺陷都显示资料不可用 | 建议缩小到文件读取/格式错误，内部缺陷暴露；替代保留整段捕获。原样待审 |
+| D164 | 同packet的清单摘要、成员集合、长度/摘要、schema/版本及重建rows比对 | 固定资料被替换或来源不同步便拒绝输出 | 建议保留固定来源身份并检查各层是否重复；替代信任资料会失去版本错配拦截。复用已验证DATA字节只减少重读，所有判断不变，原样待审 |
+| D165 | 同packet的文件/父目录符号链接与ROOT范围拒绝 | 防止读取清单路径指向外部或链接目标；链接安装也会被拒绝 | 建议保留或明确允许的部署方式；替代移除限制会扩大读取范围。原样待审，不借用笔记目录授权 |
+| D166 | current_reward_origins.source_rows 的奖励物品指向、事件成员、场景成员ValueError | 固定奖励行绑定错误时拒绝构建，避免把持有/消耗当领取 | 建议保留绑定核验，确认上游覆盖后再决定是否合并；替代信任上游会少一层关联检查。原样待审 |
+| D167 | current_reward_origins.reference 的输入类型、物品类型与version.detail原件比对 | 错误内部参数或物品记录错配时返回None | 建议分别核对输入入口与来源身份，内部类型缺陷可明确上报；替代原样返回无资料。正常无条目返回不在本项。原样待审 |
+| D168 | current_named_reward_origins.packet 的统一捕获，另含RecursionError/StopIteration | 文件错误及内部递归/查找缺陷统一返回None | 建议仅保留实际文件/格式错误出口，内部缺陷暴露；替代保留当前兜底。原样待审 |
+| D169 | 同具名packet的清单摘要、成员集合、版本、完整池标志和重建来源行比对 | 固定资料或绑定变化时关闭来源 | 建议保留有明确来源职责的核验并审查重复层；替代信任数据减少校验但可能显示错版资料。DATA重读已消除，全部判定不变，原样待审 |
+| D170 | 同具名packet的相对路径、越界和文件/父目录链接拒绝 | 清单路径异常时不读外部内容；链接部署受限 | 建议保留路径边界，部署需求另议；替代直接读取清单路径。原样待审 |
+| D171 | current_named_reward_origins.source_rows 的当前原件、完整奖励名/唯一同名、指向、locate目标、物品副本及11项数量比对 | 模板资料发生变化或名字/指向错配时拒绝构建 | 建议保留身份与唯一匹配，固定11数量是否必要单独判断；替代信任快照或放宽数量。原样待审，不改变缺指向时的唯一全名口径 |
+| D172 | current_named_reward_origins.reference 的类型/类别拒绝及version.detail物品一致性 | 错误调用或来源记录不一致时返回None | 建议分开正常不支持查询和内部错误，身份核对保留一次；替代保留当前统一无资料返回。正常无条目不在本项。原样待审 |
+| D173 | current_critical_reward_origins.packet 的OSError/ValueError/KeyError/TypeError/AttributeError/StopIteration统一返回None | 来源错误和内部查找/类型缺陷一起变成无资料 | 建议限制到明确文件/格式错误，内部缺陷暴露；替代保留原捕获。原样待审 |
+| D174 | 同packet的固定清单摘要、schema/版本/成员、每文件长度摘要及重建rows/完整池标志 | 文件被换版或来源绑定不同步时拒绝结果 | 建议保留来源职责并逐层查重复；替代信任构建快照会少版本错配拦截。DATA改用同次已验证字节，全部判定未变，原样待审 |
+| D175 | 同packet的相对路径、ROOT范围及文件/父目录链接拒绝 | 异常路径与链接不会被当作固定资料；链接部署也受限 | 建议保留读取边界，部署需求另定；替代允许链接/外部路径扩大读取范围。原样待审 |
+| D176 | current_critical_reward_origins.source_rows 对奖励指向/原文、事件场景成员、险路尽头定位及唯一目标/完整variant一致性核验 | 具名物品、文献目标或父场景错配时ValueError | 建议保留身份绑定并查清重复核验职责；替代信任上游。已复用传入exit_packet，定位与详情仍分别查目标，后续合并需核对该保护边界。原判断未变，待审 |
+| D177 | current_critical_reward_origins.reference 的类型/类别、唯一行、物品detail与条件record比对 | 错误输入或多来源记录不一致时返回None | 建议分开正常不支持查询与内部契约错误，身份核验保留一次；替代原统一无资料。原样待审 |
+| D178 | current_exit.packet 的OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError统一返回None | 文件问题和内部类型/递归缺陷都隐藏为资料不可用 | 建议收窄文件与解析出口，内部缺陷暴露；替代保留原范围。原样待审 |
+| D179 | 同exit.packet的清单摘要/版本/成员、各文件摘要、当前原件和难度16原件成员核验 | 固定文献或游戏原件不一致便拒绝提供 | 建议保留来源身份并审查重复层；替代直接信任固定数据。原样待审 |
+| D180 | 同exit.packet的相对路径、ROOT范围、文件和父目录链接拒绝 | 清单越界/链接时停止读取；链接部署受限 | 建议保留或另定部署范围；替代移除会扩大读取位置。原样待审 |
+| D181 | current_exit.reference/locate 的事件、资源/难度、类别/key类型与范围拒绝 | 错误内部参数返回None；现有正常UI默认值仍允许 | 建议核对原始/已准备调用边界后保留一次输入核验，内部错误可明确上报；替代保持当前返回。source参数只复用已核对包，各参数判断原样待审 |
+| D182 | current_exit.reference 的source_request形状、字段类型和目标为空拒绝；locate目标为空拒绝 | 原始条目格式或定位身份不符时不返回详情/入口 | 建议保留准确定位约束，查明两接口同操作的重复查找后再合并；替代接受任意请求会弱化身份。所有判定原样待审 |
+| D183 | current_peace.packet 的统一异常捕获 | 文件错误与内部类型/递归缺陷都返回无资料 | 建议收窄文件/解析出口，内部缺陷暴露；替代保留原捕获。未修改，待审 |
+| D184 | current_peace.packet 的固定清单、版本、文件摘要和当前原件比较 | 错版或损坏资料被拒绝 | 建议保留来源身份并核对重复层；替代信任固定数据会减少错配拦截。未修改，待审 |
+| D185 | current_peace.packet 的相对路径、ROOT范围及文件/父目录链接拒绝 | 越界和链接资料不读取，链接部署受限 | 建议保留边界或另定部署范围；替代扩大读取范围。未修改，待审 |
+| D186 | current_peace.icon_bytes 的路径/链接、PNG长度摘要及异常返回None | 图片损坏或字段错误不显示图片，内部错误也被隐藏 | 建议保留图片来源核验，收窄异常范围；替代保留当前整体无图返回。未修改，待审 |
+| D187 | current_peace.catalogue_binding 的固定目录id、摘要/场景及旧事件完整比对 | 目录版本或事件归属不一致时拒绝绑定 | 建议保留身份职责并审查是否重复；替代信任目录可减少比较但可能绑定错误。未修改，待审 |
+| D188 | current_resting.packet统一捕获 | 文件错误与内部类型/递归错误均返回无资料 | 建议收窄文件和解析出口，内部错误直接暴露；替代保留当前范围；未修改，待审 |
+| D189 | packet固定清单/版本/摘要及当前原件比较 | 资料错版或损坏时拒绝显示 | 建议保留来源身份，核对重复层；替代信任固定数据；未修改，待审 |
+| D190 | packet相对路径/ROOT/文件和父目录链接检查 | 越界不读取，也限制链接部署 | 建议保留或明确部署范围；替代扩大读取范围；未修改，待审 |
+| D191 | icon_bytes路径/链接/PNG摘要及异常返回None | 坏图不显示，内部错误也隐藏 | 建议保留图片身份并收窄捕获；替代保留整体无图返回；未修改，待审 |
+| D192 | catalogue_binding固定id/摘要/场景和旧事件比较 | 错归属拒绝绑定 | 建议保留身份职责并查重复；替代信任目录；未修改，待审 |
+| D193 | reference的source_request形状/类型/成员拒绝及冲突入口重新locate | 坏请求无资料，冲突按钮重读来源确认目标 | 建议确认入口和刷新时点后再合并；替代保留原检查；未修改，待审 |
+| D194 | reward_label的None返回；仅一个产品调用者 | 缺奖励返回None，调用处拼接仍可能TypeError | 建议确认删除None兜底并内联格式化；替代保留现函数。属于单次包装，但保护尚未授权删除；未修改，待审 |
+| D195 | current_agency_view.CurrentAgencyPanel._update_professions：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 职业资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D196 | current_peace_view.CurrentPeacePanel._update_specific：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 厄运火杆资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D197 | current_scout_view.CurrentScoutPanel._update_return_card：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 怦然信标资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D198 | current_shadow_view.CurrentShadowPanel._update_reward：已取得图片字节，但QPixmap.loadFromData返回False时转为图片暂缺文字 | 犬植浆资料仍可读，但实际解码失败被当作无图，缺陷不直接显露；raw=None是上游明确的无图接口状态，单独区分 | 建议保留解码失败的文字替代；替代为显式报告解码失败，不能只删判断后显示空图。本项仅覆盖此视图解码分支，不授权模型内路径/摘要/异常保护。未改，待统一审核 |
+| D199 | CurrentStartupPanel.__init__：传入target重新调用locate并比较完整对象，不符则忽略选中目标 | 可拦截过期或错误目标，但与上游已定位入口可能重复读取；未授权不得直接删除 | 建议核对构造期间来源变化职责后保留一次身份检查；替代直接信任上游目标。当前原样待审，普通分支复用不改变此处 |
+| D200 | CurrentStartupPanel._choice_changed：QPixmap文件加载后isNull时跳过setPixmap | 图片缺失或解码失败显示空图但保留名称；错误未明确提示 | 建议保留缺图处理并明确失败表现；替代显式报告加载错误。本项不授权模型图片摘要和文件保护，原样待审 |
+| D201 | CurrentReconstructionPanel._update_specific 的QPixmap.loadFromData失败转图片暂缺 | 有字节但不能解码时继续保留事件文字，图片失败不直接上报；raw=None单独作为接口无图状态 | 建议保留解码替代显示，或明确报告解码失败；本项不覆盖模型图片文件校验。原样待审 |
+| D202 | CurrentRestingPanel._update_specific 的QPixmap.loadFromData失败转图片暂缺 | 同上，源私钥图片失败仍保留文字 | 建议保留替代显示，或明确报告错误；与D191模型图源保护分开。原样待审 |
+| D203 | CurrentReconstructionPanel._update_specific/open_catalogue：先offers.packet预检，已有子窗再refresh_reference，或新建子窗再次packet；刷新失败关闭子窗 | 资料失效时撤下目录，事件正文仍可用；同次操作有重复读源；点击与此前显示检查是不同时间点 | 建议合并同次预检与子窗读取，保留点击时及刷新失效撤下职责；替代维持多次读取覆盖期间变化。涉及保护改动，暂不改，也不算普通重复已整改 |
+| D204 | CurrentRestingPanel._update_specific：已打开原件对照在refresh_reference失败时关闭；open_original的_recheck与target为空拒绝 | 原资料失效或冲突原项无法定位时撤下/拒绝对照，避免继续显示旧资料 | 建议保留失效撤下和点击复核；冲突定位重新读源已登记D193，需一并界定复用范围，勿当不同授权。allow_original_popup=False是正常单层对照功能，不属本项。原样待审 |
+| D205 | current_exchange_reference.packet捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError统一返回None | 文件错误和内部类型/字段/递归缺陷都被显示为资料不可用 | 建议收窄到实际文件与解析错误，内部缺陷暴露；替代保留整段兜底。原样待审 |
+| D206 | 同packet固定清单摘要/schema/版本/成员、每文件长度摘要、当前/旧物品及选项/场景完整比较 | 错版或漂移资料拒绝显示；已从校验后的blobs解析DATA，无同文件重复读 | 建议保留来源身份职责并逐层核对重复；替代信任快照减少核验但弱化错版拦截。原样待审 |
+| D207 | 同packet相对路径、ROOT范围及文件/父目录链接拒绝 | 不读取越界/链接资料，链接部署受限 | 建议保留边界或另定部署范围；替代扩大可读取路径。原样待审，不沿用笔记目录授权 |
+| D208 | current_exchange_reference.target_entry对category/key非字符串返回None | 错误内部调用静默变成无目标 | 建议明确入口契约后让内部类型错误暴露，或保留原始查询接口。合法但不支持的类别、无匹配、非唯一匹配属于正常无入口，不包含在此项。原样待审 |
+| D209 | CurrentExchangePanel.__init__的target.get('item_id')与target.get('group_id') | 目标缺字段时静默当作未选择；实际非None产品目标均由target_entry构建且总含两个键，键值本身允许None | 建议改为必填键读取，保留值为None的正常目录状态；替代保留缺字段兼容。两处原样待统一审核，不借用其它模块授权 |
+| D210 | current_sand_reference.packet统一捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 文件错误及内部类型、字段、递归缺陷都成为无资料 | 建议收窄实际文件/解析错误，内部缺陷暴露；替代保留整体兜底。原样待审 |
+| D211 | 同packet固定清单摘要/schema/版本/成员、文件摘要及当前原件对照 | 来源变化或错版时拒绝结果，已有values复用校验字节 | 建议保留来源身份职责并核对各层必要性；替代信任快照。原样待审 |
+| D212 | 同packet相对路径、ROOT范围、文件/父目录链接拒绝 | 阻止越界及链接资料，也限制链接部署 | 建议保留或另定部署范围；替代扩大路径读取。原样待审 |
+| D213 | current_sand_reference.reference/locate/choice_reference的非字符串参数返回None | 内部类型错误静默变成无资料/无选项 | 建议明确入口契约后使内部类型错误暴露；替代保留原始查询接口。合法None选择、非本事件/非本场景成员仍是正常无匹配，不包含在此项。原样待审 |
+| D214 | current_ritual_reference.packet统一捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 文件问题与内部缺陷统一显示无资料 | 建议收窄实际文件/解析错误，内部缺陷暴露；替代保持整段捕获。原样待审 |
+| D215 | 同packet固定清单摘要/schema/版本/成员、文件摘要及四类当前原件比较 | 错版/漂移资料拒绝返回；DATA已使用校验后的values字节 | 建议保留来源身份职责并核对重复层；替代信任固定资料。原样待审 |
+| D216 | 同packet相对路径、ROOT范围及文件/父目录符号链接拒绝 | 越界/链接资料不读，也限制链接部署 | 建议保留或另定部署范围；替代扩大读取路径。原样待审 |
+| D217 | current_ritual_reference.reference/locate/choice_reference非字符串参数返回None | 内部类型错误变成无资料或未选择 | 建议确认入口后使错误类型显露，或保留原始查询接口。合法None选择、材料多匹配和非本场景成员属于正常无匹配，不含在本项。原样待审 |
+| D218 | CurrentSandPanel.open_related固定scene_ro6_end2_enter定位不到时关闭关联窗并返回False | 固定来源缺失时拒绝打开，避免沿用旧窗 | 建议保留明确定位失败出口；替代直接使用固定目标会在后续访问失败或显示无资料。原样待审 |
+| D219 | CurrentRitualPanel._sync_extra/open_material交换目标预检失败隐藏按钮；事件/交换目标重新定位失败时清空/关闭，交换失败又_sync_extra | 来源变动时撤下入口，但失败路径再次定位并可能重复关闭 | 建议保留失效撤下并合并同次失败路径重读/关闭；替代原样多次核对。仍含待改普通重复，不能因已登记就销项。原样待审 |
+| D220 | CurrentRitualPanel.open_material来源kind不在event/exchange/battle时返回False | 未支持或错误内部类型静默不打开 | 建议明确来源枚举契约后暴露内部未知类型；替代保留可扩展类型无动作行为。原样待审，不影响三类正常入口 |
+| D221 | current_event_battles.packet整段捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 读取错误和内部缺陷统一返回无资料 | 建议收窄至文件与解析入口；替代保持整段捕获。原样待审 |
+| D222 | 同packet清单摘要/schema/版本/文件成员、大小/摘要以及当前choices/scenes/stages原件比对 | 来源漂移拒绝展示；DATA复用已核验values字节 | 建议保留来源一致性职责；替代信任固定资料，错版可能继续展示。原样待审 |
+| D223 | 同packet相对路径/ROOT范围/文件及父目录链接拒绝 | 拒绝越界和链接部署 | 建议保留或另定可加载范围；替代允许链接和外部路径。原样待审 |
+| D224 | current_event_battles.reference/locate/choice/stage_has_reference参数类型拒绝 | 内部错误类型返回无资料，部分包装与下层重复类型校验 | 建议确定边界后只在入口校验；替代保留公开查询接口保护。合法None、类别/前缀筛选、双查询互斥和无匹配返回不属于本项。原样待审 |
+| D225 | CurrentEventBattlesPanel.open_battle/open_full_flow点击时重新reference，变化则clear_reference并返回False | 页面展示后来源改变，撤下旧选项及子窗；两次核对发生于不同时间 | 建议保留点击时失效撤下；替代使用显示时快照，可能继续打开过期来源。原样待审 |
+| D226 | CurrentEventBattlesPanel.open_battle预览refresh_reference失败关闭、make_reader返回None不显示 | 作战资料无法核实时撤下或拒绝预览；正常无选择分支不含本项 | 建议保留创建/刷新失败出口；替代直接访问会抛错或保留失效窗口。原样待审，不扩大到共享工厂全部保护 |
+| D227 | CurrentEnemySpawnsPanel.refresh_reference头像raw缺失或Qt解码失败显示文字 | 精确引用无图/坏图时不显示旧头像 | 建议保留无图状态及解码失败提示；替代无图留空、解码异常直接显露。原样待审 |
+| D228 | CurrentEnemySpawnsPanel刷新来源失败、_resolve解析失败、follow_position位置复核失败清空 | 失效来源撤下并发失效信号；_resolve只有follow_action调用 | 建议确认失效行为后内联单次_resolve并保留已同意出口；替代原样保留。单次包装尚未整改，不计规则二完成 |
+| D229 | CurrentObjectPositionPanel刷新缺来源/原图或set_image失败清空；CurrentStageObjectsPanel刷新/resolve失败清空及子窗刷新失败关闭 | 来源/图像失效时不保留旧位置 | 建议保留来源失效撤下并分离实际输入错误；替代留旧结果或直接上报。原样待审，正常未选项不含此组 |
+| D230 | CurrentStageObjectsPanel.open_position先position_reference预检，后共享工厂或对话框再读取；新子窗result为空又关闭 | 前后两层确保目标有效，但有同次重复读取 | 建议审批保留失败出口后合并同次读取；替代原样双读。仍有普通重复未改，不因登记销项 |
+| D231 | CurrentRouteStepPositionPanel.refresh_reference来源/原图缺失或set_image失败清空；CurrentRouteItineraryPanel刷新/resolve失败清空、已有位置子窗刷新失败关闭 | 失效资料撤下，避免继续展示旧行程位置 | 建议保留来源失效职责并缩小内部错误混同范围；替代沿用旧值或直接报告异常。原样待审，正常无路线/无环节不含本项 |
+| D232 | CurrentRouteItineraryPanel.open_position先position_reference预检，再共享位置页或独立子窗重读，新子窗无result即关闭 | 确保当前位置可用但同次重复读取 | 建议确认失败行为后复用读取结果；替代原样双读。普通重复仍未整改，不因登记销项 |
+| D233 | CurrentSpawnCandidatesPanel._fill的try/finally恢复blockSignals | 控件更新异常仍恢复原信号状态，不捕获异常 | 建议保留恢复职责；替代普通顺序恢复，异常时控件可能持续阻断。原样待审 |
+| D234 | CurrentSpawnCandidatesPanel._show_portrait图片读取/解码失败文字提示；函数仅refresh调用 | 坏图不沿用旧图；成员非SPAWN、无候选或候选图不唯一是正常选择语义 | 建议确认失败行为后内联合理单次逻辑；替代保留独立显示函数。单次包装仍未整改，原样待审 |
+| D235 | CurrentSpawnCandidatesPanel刷新来源失败、_resolve_selected解析失败和follow_position位置失败清空 | 失效时撤下旧值并通知父页 | 建议保留失效出口并核对position重复复核；替代直接报告异常或沿用旧值。原样待审，_resolve_selected有两个真实调用，不因短函数删掉 |
+| D236 | current_enemy_spawns.evidence整段OSError/ValueError/TypeError/KeyError捕获；stage_reference包住_derive的KeyError/TypeError/ValueError/IndexError | 文件问题和内部转换缺陷均返回无资料 | 建议收窄入口异常，内部缺陷显露；替代保留统一无资料出口。原样待审 |
+| D237 | 同evidence清单摘要/schema/成员/文件长度类型与摘要；stage_reference核对scope来源身份/关卡成员/level_key/原来源 | 错版、损坏、错关卡资料不参与反查 | 建议保留身份职责并核对跨层重复；替代信任上游资料。原样待审，文件路径保护在expansion_reference._file，不重复声称本模块已审完该函数 |
+| D238 | _derive精确候选绑定缺失抛错；resolve_action重新stage_reference并_same比较完整快照 | ID相同但绑定不同或快照被改时拒绝跳转 | 建议保留精确绑定校验；替代只比ID/身份会漏内容改动。原样待审，正常未找到成员不在此项 |
+| D239 | stage_reference/rows/resolve_action参数类型拒绝，以及resolve_action对stage_id/enemy_key用get | 内部错类型或缺字段转为无资料；下层stage_reference又验证参数 | 建议明确入口后合并类型/字段校验；替代保留各查询独立保护。原样待审，合法未知筛选仍是正常无匹配 |
+| D240 | position_reference先resolve_action重读关卡，再current_action_positions.reference重读并比较battle_source_identity | 确认动作与位置同源，但同次重复读取关卡 | 建议审批后共用已核对关卡并保留同源核对；替代原样双读。仍有普通重复未整改，不因登记销项 |
+| D241 | current_stage_objects.packet整段异常捕获及from_battle的_derive捕获 | 文件/解析错误和内部转换错误统一无资料 | 建议收窄实际入口错误；替代保留统一出口。原样待审 |
+| D242 | packet固定清单/schema/提交/成员/长度/摘要及from_battle的inventory身份、关卡、level_key、原来源核对 | 损坏/错版数据拒绝计算 | 建议保留来源职责并审查跨层重复；替代信任上游固定数据。原样待审 |
+| D243 | _derive缺实体/技能原件抛错；技能等级/索引类型及范围检查，无法确认时保留None/False | 不借用其它技能或等级；包含循环内重复索引验证 | 建议审批后同一声明只计算一次选择并保留未知语义；替代原样逐技能检查。仅技能列表读取已复用，检查未改 |
+| D244 | stage_reference/rows/resolve参数类型与get缺字段、resolve重新读取并same比较 | 坏输入或修改后的快照拒绝解析 | 建议确定边界后合并类型校验，保留快照归属职责；替代独立入口全部核对。原样待审 |
+| D245 | position_reference解析后再读地图、level_key比较、display_cell失败返回None | 不同源或不可映射位置拒绝显示，含同次底层关卡再读 | 建议审批后共享已核验关卡、保留格子有效性；替代原样复核。重复读取未整改，不销项 |
+| D246 | current_route_itinerary.packet整段捕获及stage_reference包住_derive的捕获 | 文件/解析与内部转换错误均返回无资料 | 建议收窄入口异常，内部缺陷显露；替代保留统一出口。原样待审 |
+| D247 | packet清单摘要/schema/成员/长度类型/摘要及stage_reference来源身份、level_key、原来源比较 | 损坏/错版/错关卡资料拒绝展示 | 建议保留来源职责并核对跨层重复；替代信任上游。原样待审 |
+| D248 | stage_reference/routes/resolve参数类型和get缺字段；resolve重新读取并same比快照 | 错输入/被改快照拒绝解析，跨层存在类型核对 | 建议确定入口后合并校验，保留准确归属；替代独立查询均核对。原样待审，合法无路线但有未归属动作属于正常语义 |
+| D249 | position_reference解析动作后再读地图、level_key/校准点失败返回None | 保证格子与地图同源，但再次读取底层关卡 | 建议审批后复用已核验关卡，保留不可映射状态；替代原样双读。普通重复仍未整改 |
+| D250 | current_spawn_candidates._packet与stage_reference整段异常捕获 | 文件错误和内部类型/索引错误均返回无资料 | 建议收窄到资料入口；替代保留统一出口。原样待审 |
+| D251 | _packet清单摘要/版本/成员/长度/摘要与stage_reference关卡来源/完整关系比较 | 错版或资料投影漂移拒绝展示 | 建议保留来源职责并核对跨层重复；替代信任上游。原样待审 |
+| D252 | _build重复selector、原动作/queue一致、关系键类型及consumed覆盖检查 | 候选组和关联条目循环重复核对同批动作 | 建议将共同动作核对移至两种关系分组之前，仅核对一次；替代保留现有逐类核对。普通重复未整改，等批准后合并 |
+| D253 | stage_reference/resolve_member参数类型与get缺字段、fresh完整快照比较 | 错输入/变造或过期选择拒绝跳转 | 建议明确入口契约后归并跨层重复，保留刷新身份；替代每层独立验证。原样待审 |
+| D254 | position_reference再次resolve_member再读位置且核对关卡/动作/来源/原动作 | 调用方已resolve仍会重复查询，避免错源位置 | 建议批准后复用同次已核验成员，保留位置归属；替代双重查询。普通重复未整改 |
+| D255 | current_map_position.packet的OSError/ValueError/KeyError/TypeError整段捕获 | 文件及内部缺字段/类型错误都返回无资料 | 建议收窄输入边界，内部错误显露；替代统一无资料出口。原样待审 |
+| D256 | packet清单路径绝对/上级/分隔符/盘符、链接及resolve目录限制 | 拒绝清单越界或链接目标 | 建议保留路径边界；替代信任固定摘要清单。原样待审 |
+| D257 | packet地形证据、清单摘要/schema/version/文件摘要及关卡集合核对 | 缺证/错版/损坏拒绝生成地图资料 | 建议保留来源职责，核对上下游重复；替代信任上游。原样待审 |
+| D258 | stage_reference图片存在、矩形网格和索引类型范围、标记映射冲突及完整几何/图片绑定 | 错图/坏网格/歧义映射拒绝展示 | 建议保留有效映射条件；替代信任固定资料。图片随后界面还会读取，重复读取未整改 |
+| D259 | stage_reference/cell_reference/terrain_locations入口类型、空结果与范围检查 | 错调用不生成位置；display_cell之后cell_reference再次核对范围 | 建议确定各公开入口并复用已核验格子；替代各入口独立校验。原样待审，普通跨层重复未销项 |
+| D260 | CurrentMapPositionPanel.refresh_reference资料/图片缺失清空返回False；_render图片失败清空 | 刷新失败不沿用旧位置，正常无选择不属于此项 | 建议保留失效撤下行为；替代显示旧资料但须明确过期。本项不授权模型读取校验，原样待审 |
+| D261 | CurrentOriginalCenters.set_image中PNG解码失败时清空point/markers并返回False | 损坏字节不会留下旧标记；无图是正常生命周期 | 建议保留解码失败处理；替代显式抛出解码错误。原样待审 |
+| D262 | CurrentMapPositionPanel._render中的result非空保护与下游cell_text依赖非空的契约 | 三条内部调用均已有有效result，该局部判断不能独立支持无资料绘制 | 建议删除无效局部兜底、保留入口；替代明确完整支持无资料绘制。原样待审；select_cell与_render重复cell_reference仍归D259 |
+| D263 | current_action_positions.reference同时取得battle/grid后检查无资料及action_key类型；_reference缺动作返回None | 错输入与失效资料不输出位置，但两个模型分别加载同源关卡 | 建议确定入口契约并共用已核验资料；替代独立查询各自验证。原样待审；格子重复范围检查已归D259 |
+| D264 | _reference基础路线索引类型/范围、未定义motionMode与位置无效时不给标记 | 坏索引或不支持运动不能误借其它路线 | 建议保留明确无位置状态；替代将固定资料异常显式上报。分支实际路线未知、别名多义和等待占位属正常领域语义，不当低概率异常删除 |
+| D265 | CurrentActionPositionsPanel.refresh_reference无资料/无图与_selected解码失败清空返回 | 失效后撤下旧位置与文字 | 建议保留失效撤下；替代保留带过期标注的旧内容。本项不授权底层图片及来源保护，原样待审 |
+| D266 | CurrentActionPositionsPanel.set_reference换身份先clear_reference，再refresh失败会再次clear_reference | 换条目不遗留旧选择；失败路径重复清空 | 建议审批后按身份切换与刷新失败各自职责合并重复清理；替代维持现有双清空。普通重复未销项 |
+| D267 | current_map_markers与boss_map_markers的packet/mapping_for整段捕获 | 文件、解析及内部键/类型/索引错误均返回None | 建议分别收窄读取入口，内部错误显露；替代保留统一出口。两模块同类流程原样待审 |
+| D268 | 上述两模块packet清单路径语法、文件/父目录链接、resolve范围检查 | 拒绝路径越界与链接文件，ROOT.resolve逐成员重复 | 建议保留路径职责并确定是否可入口一次计算；替代信任固定清单。原样待审 |
+| D269 | 两模块清单摘要/schema/commit/成员集合/文件长度摘要与data/bindings核对、mapping_for入口类型/STAGES | 错包、错版或非支持关卡返回None；外层也筛选STAGES | 建议保留来源职责，确认公共入口后合并重复判断及并行清单流程；替代各模块独立验证。原样待审 |
+| D270 | 两模块mapping_for核对关卡、图片、完整几何及各点tileKey，上层current_map_position再次核对图片/几何 | 防止标记套错地图，但同次链路重复来源对照 | 建议确定唯一绑定入口后复用核验结果；替代保留逐层核对。原样待审，不以登记销项 |
+| D271 | current_terrain.evidence_identity整段OSError/ValueError/KeyError/TypeError捕获 | 文件及内部格式错误统一无证据返回 | 建议收窄到资料解析入口；替代保留统一出口。原样待审 |
+| D272 | evidence_identity清单/成员链接与根目录范围、摘要/schema/长度核对 | 错源或损坏证据不用于地形说明，重复ROOT.resolve | 建议保留证据职责并确认根路径是否可一次解析；替代信任清单。原样待审 |
+| D273 | _number精确int/float类型后isfinite仍捕获OverflowError、TypeError | 拒绝非有限值、超大整数；精确内建类型后的TypeError无已知触发 | 建议保留溢出处理，删除TypeError；替代完整保留。数值入口仅_parameters一处调用，是否内联随保护批准处理 |
+| D274 | _parameters黑板/条目/key类型、seen/invalid/重复值剔除及valueStr检查 | 异常或重复参数保持未知；重复key进入invalid后又判invalid | 建议保留歧义处理并合并同次重复判断；替代维持现有流程。普通重复未整改，原样待审 |
+| D275 | terrain_info未知输入降级、read缺值/非负及整数推力/区间顺序判断 | 异常数据不形成数值说明 | 建议保留明确未知与合法值边界；替代将坏资料作为输入错误上报。不授权猜测未知机制，原样待审 |
+| D276 | ui_state.calculation_batch的try/finally与complete标记 | 输入更新异常时仍减少批次深度并清除请求，不发布半成品计算；异常继续上抛 | 建议保留失败后的批次释放与不发布行为；替代普通顺序收尾，异常可能遗留批次深度/请求。不新增重试；原样待审 |
+| D277 | CurrentElbertPanel.clear_reference/refresh_reference/_entity_changed三处try/finally恢复blockSignals | 控件更新异常后仍恢复信号，异常继续上报 | 建议保留恢复；替代普通顺序恢复，异常可能留下禁用信号。原样待审 |
+| D278 | CurrentElbertPanel与CurrentBossDocumentsPanel刷新图标和选中头像缺字节/PNG失败分支 | 坏图不显示旧头像；列表无图保留条目，头像转文字 | 建议保留缺图及解码失败表现；替代显式报告坏图。两份视图各两处，原样待审 |
+| D279 | Elbert刷新/view_result/resolve_related失败清空；已选实体再次经related_entities、view_result、selected_card执行entity检查 | 失效选择不沿用旧资料，但同次重复实体解析 | 建议审批后共享已核验实体并保留新读取的归属验证；替代独立验证。原样待审，普通重复未销项 |
+| D280 | BossDocuments刷新/打开地图的map_reference、子窗口刷新及result比较；open_fixed_map返回None后独立窗口校验 | 失效/不同源地图关闭；多层重复读取与比较 | 建议明确单一来源核对入口并复用，保留独立窗口适用路径；替代维持多重核对。原样待审 |
+| D281 | BossDocuments刷新与resolve_entity失败清空，topics/related_entities/entity/player_text再次解析选择 | 来源失败不保留旧资料，但同次重复实体查询 | 建议审批后复用当前实体，保留跨刷新归属核对；替代各查询独立验证。原样待审 |
+| D282 | CurrentHankoPanel和CurrentSunBossPanel刷新图标及选中头像的缺字节/PNG失败分支 | 无图保留条目，坏头像不沿用旧图 | 建议保留缺图与解码失败展示；替代显式报错。各两处，原样待审 |
+| D283 | 两视图refresh及follow_related/follow_form失效清空；topics/cards/related/entity/player_text多次解析当前实体 | 错源或过期请求不跳转，但同次重复实体核对 | 建议审批后共用已核验实体并保留跨刷新验证；替代独立查询分别校验。原样待审，普通重复未销项 |
+| D284 | CurrentSunBossPanel地图刷新/打开中的map_reference、子窗口刷新/结果比较及共享入口后的独立回退 | 错关卡/失效地图关闭，重复读取与同源对照 | 建议明确一次核验边界并复用；替代保留各层核对。原样待审，不借其它视图授权 |
+| D285 | current_hanko/current_sun_boss.packet各一处OSError/ValueError/TypeError/KeyError/AttributeError/RecursionError捕获 | 文件或结构异常统一资料不可用，也可能掩盖内部错误 | 建议后续收窄到文件/解析入口；保留还是拆分待审，本批不改 |
+| D286 | 两packet的清单摘要、文件集合、字节类型/长度/摘要、schema/版本及原始表/绑定逐项对照 | 固定资料与原件身份一致，嵌套battle.packet再次核对底层 | 建议保留资料完整性入口，审批后明确共享核验结果的边界；原样待审 |
+| D287 | 两reference与target_available的类型/成员检查，packet后stage_reference重读；实体绑定及选中key核对 | 错关卡/错实体不返回；target_available与reference重复类型判断 | 建议入口统一参数校验并复用同次资料读取，跨入口仍核对；本批仅替换列表查找，不改保护 |
+| D288 | 两模型entity/topics/cards/player_text/resolve相关的坏输入/无实体/无主题分支与刷新后的完整相等检查 | 失效实体和旧入口不显示；当前实体多次解析及深复制 | 与D283衔接：保留跨刷新失效检查，同次查询重复待审批后收拢。Sun map保护见D284，不重复授权 |
+| D289 | current_boss_documents._legacy未知family抛ValueError | 拒绝未支持文献族，而不是选择任意旧阅读器 | 建议保留明确拒绝，替代由入口限定后直接分派；现有抛错原样待审 |
+| D290 | current_boss_documents.packet整体捕获OSError/ValueError/TypeError/KeyError/IndexError/AttributeError/RecursionError | 资料不可读取/损坏统一不可用，也吞掉内部程序错误 | 建议收窄文件与解析出口，内部缺陷显露；替代保留整体捕获。原样待审 |
+| D291 | packet清单/摘要/文件长度类型、版本/schema、原表/目标/允许差异逐项核对及_same严格类型递归 | 固定来源与旧新资料迁移的一致性保护；底层battle.packet再次核验 | 建议保留来源入口并审批共享核验边界；替代各层独立核验。本批仅去未使用循环变量 |
+| D292 | reference参数与target_available重复类型检查，packet后stage_reference来源重读，enemy和legacy结果类型/身份核对 | 错实体或旧资料失败不授权显示 | 建议入口校验与同次来源复用，保留旧文献授权边界；替代独立反复核对。刷新/实体/地图分别衔接D281/D280，不扩大授权 |
+| D293 | current_elbert_reference._undefined_override及source_rows的等级/useDb类型、唯一数据库原项、构造组合、身份包装与每关实体数检查 | 未核验覆盖配置或身份不明确时拒绝；prefab/name缺项先用空字典再拒绝 | 建议保留构造与身份入口核验，审批后合并重复形状检查；替代移至更上层统一验证。原样待审 |
+| D294 | _read_public相对路径、符号链接/父目录及ROOT边界检查 | 拒绝资料路径越界/链接，含ROOT.resolve重复调用 | 建议保留路径入口，审批后复用已解析ROOT；替代仅限定清单。原样待审，不借其它模块路径授权 |
+| D295 | packet整体捕获与清单/摘要/长度/schema/版本/source_rows/battle身份核对 | 资料损坏时不可用，内部TypeError等也被吞掉；battle原件再次读取 | 建议收窄文件/解析出口并明确同次来源核验边界；替代保留现有。原样待审 |
+| D296 | reference/entity/view_result/locate/resolve_related的空值、类型、成员与刷新来源检查 | 旧实体不显示、不跳错入口；view_result重复空值，resolve_related经reference后locate再次reference | 建议入口统一与同次已核验结果复用，保留跨刷新身份检查；替代每层独立验证。衔接D279，原样待审 |
+| D297 | elite_recognition.card_elite的denominator为零时返回0分 | 上游mask非零像素至少10，且actual/mask均为0/1；现有分支对当前契约不可达 | 建议删除零分母兜底；替代保留以容忍未来改变mask约定。保留原样待审，未以数学推导直接删除 |
+| D298 | viewport.prepare_frame无效/过小client_rect沿用整帧、去黑边后不足320×180回退全客户区 | 无效区域不裁剪为空或过小，可能把无效参数当正常整帧 | 建议由入口明确无效区域处理策略；替代保持当前回退。原样待审。正常全黑画面/内容边界探测不是异常恢复 |
+| D299 | ObservationTimeline.commit合并account.preserve_original保护标记 | 回放副本或原账户任一已禁止覆盖时，提交仍保留保护，AccountCache.save不覆盖私人原件 | 建议保留这处传递；替代仅沿用原账户标记会漏掉回放中新发现的问题。此前账户模块授权不自动扩展到此处，本批原样待审 |
+| D300 | technology.format_technology先technology_node后describe/view，TechnologyState.view再次technology_node；界面逐项view及重复状态读取 | 查询入口拒绝无效ID，但同次显示重复核验和复制 | 建议入口一次核验并复用记录，保留独立调用校验；替代维持各查询独立验证。原样待审，普通重复未销项 |
+| D301 | TechnologyState.__init__链接拒绝、读取/解析失败保护；FileNotFoundError后lstat区分不存在和不可读路径 | 防止损坏/不可读原件被默认新档覆盖 | 建议保留原件保护并审批读取边界，替代失败直接报错；未新增恢复/重试，原样待审 |
+| D302 | _timestamp的类型/时区/转换及ValueError/OverflowError；_validate的格式/唯一名称/记录校验、未来节点透传 | 拒绝不可展示时间与损坏记录，保留未来元数据 | 建议保留入口格式核验及透传，审批后区分输入与内部异常；读取和保存是不同时间点，原样待审 |
+| D303 | TechnologyState.save保护标记、链接/不存在路径核对、摘要冲突拒绝、临时文件fsync/replace、失败保护及finally清理失败忽略 | 不覆盖外部改动或损坏原件；清理错误被隐藏 | 建议保留原子发布/冲突保护，单列清理失败处理供审核；替代直接抛出错误。完整现有分支原样待审 |
+| D304 | squad_account_plan取account_state.view后，manual_status/manual_source/manual_updated_at三处空结果兜底 | 当前TechnologyState.view正常返回记录；空结果会显示未知而不是报错 | 建议明确账户查询契约后删除三处重复兜底；替代保留容忍其它调用实现。三处原判断保留，本批只合并正常可选科技/门槛分支 |
+| D305 | current_enemy_environment.qualify_current重读packet并核对关卡/难度/原表/敌人；environment类别、精确等级、四项类型有限非负核验 | 来源不同或属性不完整时拒绝套用环境数值；上游已核对来源仍再次核对 | 建议保留数值资格入口，审批后明确同次来源复用；替代各层独立核验。本批仅删除已证不可变数值deepcopy |
+| D306 | event_run_context对非法记录/时间/来源的忽略、冲突持有标记剔除、库存完整性与数量核对 | 旧局/坏记录或冲突不证明持有和缺失；仍留未知 | 建议保留证据资格与冲突处理，审批后明确归一化入口；替代直接上报损坏记录。原有分支不改，本批只复用读取与排序 |
+| D307 | choice_held_requirements._data两份来源摘要、choice_reference身份文字、original_reference原条目对照 | 来源变更或同ID不同条目拒绝；original_reference重复catalog._original，原字段对照仅检查仍存在的键 | 建议明确单一来源校验结果并复用，字段缺失策略一起审核；替代保留原规则。原样待审，不因当前固定摘要绕过 |
+| D308 | player_feature_418_acceptance.check的finally清空hover.card；422/423.check的finally恢复window.run.state，共3处 | 验收中途失败仍释放测试卡片/恢复隔离状态；418末尾正常路径也已清空一次 | 建议保留最终清理/恢复并审批后删418重复释放；替代仅成功路径清理。仅本三模块，原样待审；未执行这些历史验收 |
+| D309 | player_feature_426_acceptance.check_prices/check、427/428/430.check 的 finally 恢复 window.run.state，共5处 | 验收中途异常仍恢复此前隔离状态；成功路径也恢复 | 建议保留，避免失败后隔离窗口沿用构造状态；替代只成功时恢复，失败后由隔离会话退出清理。未获授权，原样保留；本批未运行这些历史验收 |
+| D310 | player_feature_431/432/435/436/437/438/439/440_acceptance.check 的8处finally；438还恢复map_view图和historical标记 | 隔离验收中途失败仍恢复测试前状态，成功也恢复 | 建议保留，避免失败后沿用构造状态或旧地图；替代仅成功时恢复，由隔离会话退出清理。未获授权，全部原样；本批未运行历史验收 |
+| D311 | player_calculation_target.open_target/create：open_full拒绝返回False；make_reader无资料时提示并返回None；目标身份不唯一时不自动选择 | 资料不可用或引用歧义时保留计算结果、不选错敌人；无选择时返回是正常交互，不算本项 | 建议保留来源/唯一身份处理；替代直接报错或只开关卡不自动选敌人。原样待审；context在导航前后和后续prepare读取不同时间点，不能直接缓存一次 |
+| D312 | recruitment_recognition.recruitment_marker：denominator为0时score=0 | 模板/观察均无白像素时避免本次除零，但随后white/expected仍可能除零 | 建议核对模板尺寸支持范围后去掉无效局部保护或统一入口约束；替代原样。不得仅删除后宣布已解决；本批保留，未增加小尺寸防御 |
+| D313 | enemy_reference_construction.configuration_path：construction_reference缺失时按旧exact_requested_level_present生成database路径 | 支持旧内部标量调用，但固定资料理论上已有来源记录 | 建议完成旧调用迁移后删除兼容分支；替代保留有明确标签的旧契约。原样待审；source_path未知use_db与compiled_identity模式分支是来源语义，不合并删除 |
+| D314 | player_history_codec.encode循环引用拒绝与finally移除栈；decode整数/浮点规范格式、重复键拒绝以及对象赋值TypeError转ValueError | 避免非规范/循环快照或重复字段被无声改写；TypeError捕获还包含递归值解码 | 建议保留无损格式与循环/重复键约束，收窄TypeError范围；替代原样或取消相应格式拒绝。含binary长度与规范hex双重判断，需确认后合并；本批未动，未授权 |
+| D315 | drone_traits.selected_drone_trait：profile/operator/module身份、模组阶段解锁、part属于catalog_parts与非token/无作用域资格核对 | 拒绝陈旧或错归属part替换无人机参数 | 建议保留来源资格，普通候选筛选中的elite/level/potential重复读取另行清理；替代仅信任selected_talents输出但需明确调用契约。未改保护，待审 |
+| D316 | public_event_samples.samples格式/唯一键/总数核验；references捕获OSError/ValueError/KeyError/TypeError返回空 | 统计文件缺失、损坏或程序错误都隐藏统计；可能把内部缺陷混同无资料 | 建议保留数据入口核验，缩小读取捕获范围；替代原样。event_bindings唯一对应与楼层范围是统计口径，不能用标题代替。原样待审 |
+| D317 | player_exchange_sources.exchange_links全包validate，输入输出ID/name/描述精确匹配；exchange_label未知档位、exchange_text未知版本文案 | 非同源或未确认集合不作兑换关系，未知分类以通用文本展示 | 建议保留来源契约，待核对上游预验证再集中入口；未知档位兜底在本函数产出中不可达，建议审批后删。替代保留兼容外部构造link。原样待审 |
