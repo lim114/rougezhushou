@@ -1,3 +1,7 @@
+## 当前断点：天赋候选键复用（2026-11-05）
+
+候选条件一次解析，克洛丝8→4次；33项定向、504培养技能/147本局报告一致。D125培养重验、D126已初始化键默认0、D127无效难度改4登记未改，共90组。窗口更新，覆盖340/75/107/36。回执verification/maintenance/code-constraints-talent-keys-20261105/summary.json。下一批继续supplemental_enemies候选重复扫描和预检完整计算的验证契约；后者仍普通未完成项，不能未经证据直接删除或归为仅待审保护。再继续shared deployment/剩余模块。D123投影依赖保持待审，不增节数。
+
 ## 当前断点：费用分类层传递（2026-11-05）
 
 费用来源一次查明层级，计算直接消费；无新增函数。31项定向、126费用/147通用报告/932来源组合一致；费用整模块通过。窗口更新，覆盖342/75/105/36。D38—D124仍87组。回执verification/maintenance/code-constraints-cost-layers-20261105/summary.json。下一批继续supplemental_skills培养/技能入口、共享deployment及剩余未审模块；D122/D124原保护保持，D123基准投影待审。旧supported_cost已改为cost_layer，费用输入为(layer,effect)对，不恢复无调用的兼容包装。不增节数。

@@ -1,3 +1,7 @@
+## 维护：天赋候选键复用（2026-11-05）
+
+天赋排序依据一次计算，返回隔离及同档顺序保留；33项定向、504培养技能/147本局报告一致，窗口更新。[回执](verification/maintenance/code-constraints-talent-keys-20261105/README.md)。模块其余审批不销项。
+
 ## 维护：费用分类层传递（2026-11-05）
 
 费用子类来源查询去重，费用模块完成三条审查；31项定向及126费用/147通用报告/932来源组合一致，窗口更新。[回执](verification/maintenance/code-constraints-cost-layers-20261105/README.md)。

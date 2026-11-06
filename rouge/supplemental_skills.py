@@ -50,11 +50,14 @@ def _skill_reference(preview,stats,battle_attributes=None):
     bonuses={key:battle_attributes.get(kind,0) for kind,key in
              (('attack_pct','atk'),('hp_pct','max_hp'),('defense_pct','def'))}
     for slot in profile['talents'] or []:
-        candidates=[t for t in slot['candidates'] if
-            (int(t['unlockCondition']['phase'].split('_')[-1]),t['unlockCondition']['level']) <=
-            (preview['elite'],preview['level']) and t['requiredPotentialRank']<=preview['potential']-1]
+        candidates=[]
+        for talent in slot['candidates']:
+            rank=(int(talent['unlockCondition']['phase'].split('_')[-1]),
+                  talent['unlockCondition']['level'],talent['requiredPotentialRank'])
+            if rank[:2]<=(preview['elite'],preview['level']) and rank[2]<=preview['potential']-1:
+                candidates.append((rank,talent))
         if candidates:
-            talent=max(candidates,key=lambda t:(int(t['unlockCondition']['phase'].split('_')[-1]),t['unlockCondition']['level'],t['requiredPotentialRank']))
+            _,talent=max(candidates,key=lambda candidate:candidate[0])
             talents.append(deepcopy(talent))
             for item in talent['blackboard']: bonuses[item['key']]=bonuses.get(item['key'],0)+item['value']
     skill=profile['levels'][preview['skill_rank']-1]; bb={item['key']:item['value'] for item in skill['blackboard']}

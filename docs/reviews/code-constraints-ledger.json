@@ -1098,6 +1098,26 @@
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "evidence": "Whole module reviewed: supported_damage called at sole production entry; damage_reference consumes its bucket. Pending source lookup once, local import once per calculation, unit mapping once per application. DEF/penetration/damage composition, physical-floor downstream multiplication and unknown rows preserved. Unsupported units are legitimate healing/DP rows, not error suppression. No catch or unnecessary forwarding helper. Full module rules review passed; downstream source_factor and enemy_environment review status not widened."
+    },
+    {
+      "file": "rouge/supplemental_skills.py",
+      "sha256": "ace287f12cebf636c9fe131d7ec188f6276c058b6735590b774494189bff0311",
+      "rule1": "candidate_unlock_rank_once",
+      "rule2": "no_new_helper_reused_row_builder_retained",
+      "rule3": "D125_D126_pending_unchanged",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Whole source and callers reviewed. Candidate phase/level/potential key computed once, reused for filtering and maximum; equal keys keep first candidate, copy isolation retained. skill_reference is actual standalone preview entry, _skill_reference is also used by run with separately prepared stats; add closure has many row consumers. Input guards and all capability/HP-gap raises unchanged. D125 nested cultivation guards and D126 initialized bonus-key fallbacks await approval. Optional battle attributes, absent talent slots and missing optional talent bonus keys remain normal supported cases."
+    },
+    {
+      "file": "rouge/supplemental_enemies.py",
+      "sha256": "2f487a111d31b1d7fb51d526fa2c81d80d09889a4289d20e8b88b3f4806eae17",
+      "rule1": "preflight_full_calculation_and_repeated_stage_lookup_remaining",
+      "rule2": "existing_three_functions_read_no_changes",
+      "rule3": "D127_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read entire module and source contracts only. enemy_defaults malformed supplied difficulty falls back to4: D127. compare_fixed_enemies runs one complete unbound calculation solely to validate original cultivation/environment, then recomputes bound cases; extracting equivalent validation remains ordinary unfinished work, not an approved deletion or pending-defense-only claim. Candidate source search repeated per selection also remains. No source edits or new runtime test claim."
     }
   ]
 }
