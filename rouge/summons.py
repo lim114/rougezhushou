@@ -82,10 +82,15 @@ def duration_reference(profile,scenario,token_id):
 
 def finish_duration_references(scenario,result):
     """Expose documented token parameters separately from relic stat panels."""
+    from copy import deepcopy
     from .catalog import catalog
     profile=catalog()['operators'][scenario['operator']]
-    references=[r for token_id in profile.get('tokens',{}) if
-        (r:=duration_reference(profile,scenario,token_id)) is not None]
+    panels={panel['id']:panel for panel in result['relic_token_stats']}
+    references=[]
+    for token_id in profile.get('tokens',{}):
+        reference=(deepcopy(panels[token_id].get('duration_reference')) if token_id in panels
+                   else duration_reference(profile,scenario,token_id))
+        if reference is not None:references.append(reference)
     if references:result['token_duration_references']=references
 
 
@@ -148,6 +153,11 @@ def token_concurrent_limit(profile,scenario,token_id):
     """
     from .token_counts import token_count_reference
     counts=token_count_reference(profile,scenario,token_id)
+    return _concurrent_limit(profile,scenario,token_id,counts)
+
+
+def _concurrent_limit(profile,scenario,token_id,counts):
+    """Resolve the cap using a count reference already read by the caller."""
     if counts is not None:return counts['concurrent_limit']
     rule=next((r for r in module_rules().values() if
         r['operator']==scenario['operator'] and r['token_id']==token_id and

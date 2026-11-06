@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 from .catalog import catalog,operator_attributes
-from .summons import (module_rules,module_reference,token_attributes,token_concurrent_limit,
+from .summons import (module_rules,module_reference,token_attributes,_concurrent_limit,
                       token_cost_reference)
 from .token_counts import token_count_reference
 
@@ -27,7 +27,7 @@ def compare_token_module(operator,cultivation,module_id=None):
         rule=next((r for r in module_rules().values() if r['operator']==operator and r['token_id']==identity),None)
         base_counts=token_count_reference(profile,base_scenario,identity)
         base['held_limit']=base_counts['held_limit'] if base_counts else rule['base_held_limit'] if rule else None
-        base['concurrent_limit']=token_concurrent_limit(profile,base_scenario,identity)
+        base['concurrent_limit']=_concurrent_limit(profile,base_scenario,identity,base_counts)
         stages=[{'module_level':0,'state':'base','values':base,'differences':{},'verified_fields':list(STAT_FIELDS),
             'source':None,'count_reference':deepcopy(base_counts)}]
         for level in range(1,len(module['levels'])+1) if module else ():

@@ -1123,13 +1123,13 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "df9fbadcce5664c6e3fa5976b41a1cf9362262f0a0265d489832cb2fa24d09b5",
-      "rule1": "caller_resolved_module_pair_consumed_without_rechecking",
-      "rule2": "existing_token_attributes_shared_no_helper_added",
-      "rule3": "pending_defenses_and_unknown_composition_unchanged",
+      "sha256": "c4b419b66f9ddb07d8a88327c1fee1ce7fe4239d5137353dae9795d9c2f75aa6",
+      "rule1": "reuse_existing_duration_snapshot_and_resolved_count_reference",
+      "rule2": "concurrent_limit_core_shared_by_two_real_entry_paths",
+      "rule3": "all_existing_protective_branches_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "relics.finish and module-upgrade comparison supply their resolved HP/cost module pair to token_attributes. None means ordinary standalone resolution; (None,None) is a resolved non-applicable pair and is not looked up again. This is an explicit two-caller calculation path, not an error fallback. Module dicts not mutated. No-effect/no-module panel omission unchanged. Standalone cost lookup moves before HP application, fixed-source valid outputs verified. Remaining ordinary work: duration reference recomputation, repeated base counts in module comparison, cultivation field parsing and discarded preflight report. D128/D129 and other protections untouched."
+      "evidence": "finish_duration_references sole product caller runs after relics.finish, which initializes relic_token_stats and resolves duration for every included panel. Reuse an isolated deep copy, including known absence; tokens without a panel still resolve normally. Concurrent-limit calculation body moved unchanged to _concurrent_limit shared by standalone API and module comparison with already-read counts. No extra defensive validation or exception handlers. Remaining cultivation/module parsing and broader source review not complete."
     },
     {
       "file": "rouge/relics.py",
@@ -1143,13 +1143,13 @@
     },
     {
       "file": "rouge/token_module_comparison.py",
-      "sha256": "2fb981f9d257db18ce7591414bc062436432a0ee0c24fb85089c1cf63453993c",
-      "rule1": "caller_resolved_module_pair_consumed_without_rechecking",
-      "rule2": "existing_token_attributes_shared_no_helper_added",
-      "rule3": "pending_defenses_and_unknown_composition_unchanged",
+      "sha256": "c0602f9bfc6ceee46715c0a229886fb51d3526842904c8ca01187da041d02877",
+      "rule1": "reuse_existing_duration_snapshot_and_resolved_count_reference",
+      "rule2": "concurrent_limit_core_shared_by_two_real_entry_paths",
+      "rule3": "all_existing_protective_branches_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "relics.finish and module-upgrade comparison supply their resolved HP/cost module pair to token_attributes. None means ordinary standalone resolution; (None,None) is a resolved non-applicable pair and is not looked up again. This is an explicit two-caller calculation path, not an error fallback. Module dicts not mutated. No-effect/no-module panel omission unchanged. Standalone cost lookup moves before HP application, fixed-source valid outputs verified. Remaining ordinary work: duration reference recomputation, repeated base counts in module comparison, cultivation field parsing and discarded preflight report. D128/D129 and other protections untouched."
+      "evidence": "finish_duration_references sole product caller runs after relics.finish, which initializes relic_token_stats and resolves duration for every included panel. Reuse an isolated deep copy, including known absence; tokens without a panel still resolve normally. Concurrent-limit calculation body moved unchanged to _concurrent_limit shared by standalone API and module comparison with already-read counts. No extra defensive validation or exception handlers. Remaining cultivation/module parsing and broader source review not complete."
     }
   ]
 }

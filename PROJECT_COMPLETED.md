@@ -1,3 +1,7 @@
+## 维护：持续时间与数量资料复用（2026-11-05）
+
+汇总复用独立持续时间副本，模组对照复用数量记录；39项定向、96计算/48模组对照一致，窗口更新。[回执](verification/maintenance/code-constraints-token-duration-count-reuse-20261105/README.md)。
+
 ## 维护：召唤物模组引用复用（2026-11-05）
 
 面板与升级对照使用已解析模组结果，减少重复规则查询；55项定向、96计算/48模组对照一致，窗口更新。[回执](verification/maintenance/code-constraints-token-module-reuse-20261105/README.md)。

@@ -1,3 +1,7 @@
+## 当前断点：持续时间与数量资料复用（2026-11-05）
+
+finish_duration_references复用relic_token_stats已读资料并深复制，无面板仍读取；数量上限主体由独立入口和模组对照共用，避免base_counts重读。39项定向、96计算/48模组对照一致。窗口正常重启，覆盖337/75/110/36，D38—D129仍92组。回执verification/maintenance/code-constraints-token-duration-count-reuse-20261105/summary.json。下一批继续summons模组/培养字段重复解析、token_module_comparison训练/基准准备的整模块审查，再推进完整前置报告与其余模块；保持已读资料独立副本。D128/129及D123等保护不改，不增节数。
+
 ## 当前断点：召唤物模组引用复用（2026-11-05）
 
 relics.finish和token_module_comparison传入已解析模组对，面板每引用2→1，望四阶段费用7→4；55项定向、96完整计算/48模组对照一致。窗口正常重启，覆盖337/75/110/36，D38—D129仍92组。回执verification/maintenance/code-constraints-token-module-reuse-20261105/summary.json。下一批继续summons.duration_reference在token_attributes与finish_duration_references重复生成、token_module_comparison的base_counts又经token_concurrent_limit重算；保留参考副本隔离、无面板和未知规则分支，再继续培养字段/完整前置报告验证职责。scripts/verify_calculation_replay_056的token_attributes替换仅用于它加载的旧源码，不要按当前签名误改历史oracle。D128/129不动，其余模块继续，不增节数。
