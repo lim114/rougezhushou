@@ -312,3 +312,5 @@
 
 | D297 | elite_recognition.card_elite的denominator为零时返回0分 | 上游mask非零像素至少10，且actual/mask均为0/1；现有分支对当前契约不可达 | 建议删除零分母兜底；替代保留以容忍未来改变mask约定。保留原样待审，未以数学推导直接删除 |
 | D298 | viewport.prepare_frame无效/过小client_rect沿用整帧、去黑边后不足320×180回退全客户区 | 无效区域不裁剪为空或过小，可能把无效参数当正常整帧 | 建议由入口明确无效区域处理策略；替代保持当前回退。原样待审。正常全黑画面/内容边界探测不是异常恢复 |
+
+| D299 | ObservationTimeline.commit合并account.preserve_original保护标记 | 回放副本或原账户任一已禁止覆盖时，提交仍保留保护，AccountCache.save不覆盖私人原件 | 建议保留这处传递；替代仅沿用原账户标记会漏掉回放中新发现的问题。此前账户模块授权不自动扩展到此处，本批原样待审 |

@@ -2170,6 +2170,28 @@
         "D298"
       ],
       "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery"
+    },
+    {
+      "file": "rouge/resource_recognition.py",
+      "sha256": "fe3dff37869c9d09d49cc8ac9e6d67214e2eb0c7a875a2958266900fbff3f79d",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "rule1": "Resource candidates/centers/scales/templates reused; timeline copies compacted base only at last eligible observation",
+      "rule2": "gold_template is cached asset loader; memory_model used across constructor/replay/baseline, retains IO-free domain reducer boundary",
+      "rule3": [],
+      "evidence": "Both full modules and reducers/callers checked; seven timeline tests pass; baseline snapshot/result equality and copy calls10to4; final12 resource equivalence cases"
+    },
+    {
+      "file": "rouge/observation_timeline.py",
+      "sha256": "5fa35e3e0a01723407e30a1cb4a7efec04e5c19275d506201d17c8abc6222453",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "rule1": "Resource candidates/centers/scales/templates reused; timeline copies compacted base only at last eligible observation",
+      "rule2": "gold_template is cached asset loader; memory_model used across constructor/replay/baseline, retains IO-free domain reducer boundary",
+      "rule3": [
+        "D299"
+      ],
+      "evidence": "Both full modules and reducers/callers checked; seven timeline tests pass; baseline snapshot/result equality and copy calls10to4; final12 resource equivalence cases"
     }
   ]
 }

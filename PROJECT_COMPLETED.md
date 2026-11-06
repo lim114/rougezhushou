@@ -1,3 +1,7 @@
+## 维护：资源读取与时间线精简（2026-11-06）
+
+resource_recognition整模块回顾完成；时间线普通冗余已整改，原件保护待审。[回执](verification/maintenance/code-constraints-resource-timeline-review-20261106/README.md)。
+
 ## 维护：识别缓存与几何复用（2026-11-06）
 
 recognition_cache、anchors整模块回顾完成；elite/viewport普通重复整改，保护待审。[回执](verification/maintenance/code-constraints-recognition-geometry-review-20261106/README.md)。

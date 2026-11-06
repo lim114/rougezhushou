@@ -26,10 +26,11 @@ class ObservationTimeline:
         if seq>self.committed_seq:
             candidate.pending[seq]=(deepcopy(observation.get('run')),deepcopy(observation.get('operator')),observation['captured_at'])
         run=memory_model(self.base_run,('state',));account=memory_model(self.base_account,('records','issues'))
+        commit_through=max((key for key in candidate.pending if oldest_pending is None or key<oldest_pending),default=None)
         for key,(run_read,operator_read,at)in sorted(candidate.pending.items()):
             if run_read:run.apply(run_read,at)
             if operator_read:account.observe(operator_read,at)
-            if oldest_pending is None or key<oldest_pending:
+            if key==commit_through:
                 candidate.base_run=memory_model(run,('state',))
                 candidate.base_account=memory_model(account,('records','issues'))
                 candidate.committed_seq=key

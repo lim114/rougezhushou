@@ -1,3 +1,7 @@
+## 当前断点：资源识别候选复用与时间线基线复制精简（2026-11-06）
+
+资源重复筛选/坐标/模板复用，时间线仅最后可合并处复制基线。7定向通过，12资源旧新一致，4记录合并复制10→4且状态一致。资源模块完整销项，D299待审，共262组。回执verification/maintenance/code-constraints-resource-timeline-review-20261106/summary.json。
+
 ## 当前断点：识别缓存与图像几何不变值复用（2026-11-06）
 
 四模块重复不变值整改，缓存/文字锚点新增完整销项；16定向通过，81旧新对照一致。D297—D298待审，共261组。回执verification/maintenance/code-constraints-recognition-geometry-review-20261106/summary.json。
