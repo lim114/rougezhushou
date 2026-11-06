@@ -1,3 +1,7 @@
+## 当前断点：行动奖励缺图状态明确提示（2026-11-06）
+
+D200完成，最终6项定向通过；首轮新增测试漏参数已修正并保留记录。原280组完成102组、剩178组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-startup-image-review-20261106/summary.json。
+
 ## 当前断点：敌人出怪条目合并单次解析包装（2026-11-06）
 
 D228完成，14项定向通过；原280组完成101组、剩179组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json。

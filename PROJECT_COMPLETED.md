@@ -1,3 +1,7 @@
+## 维护：行动奖励缺图状态明确提示（2026-11-06）
+
+D200完成，6项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-startup-image-review-20261106/summary.json`。
+
 ## 维护：敌人出怪条目合并单次解析包装（2026-11-06）
 
 D228完成，14项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json`。

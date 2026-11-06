@@ -1,0 +1,48 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "行动奖励缺图状态明确提示",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "37bd4292d801c35a829a739439e6763b29db871a",
+  "changed_sources": [
+    "rouge/current_startup_view.py",
+    "tests/test_startup_missing_image_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_startup_view.py": "a826e2e748dc7d6ce7aa9852358b677a6c5f14102604ac30c697ae703dfa661a",
+    "tests/test_startup_missing_image_review.py": "1a5494ce2feac3769bb631ad8f3a31cb99e8e1207be3b6da28617cb7e016e9ef"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D200"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 6,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_startup_missing_image_review tests.test_current_startup_view_350",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-201",
+    "first_round": "Six tests, three errors from new test calling _choice_changed without required item; test fixed and rerun all6 pass. No extra product fallback.",
+    "coverage": "Real Qt panel with redirected image paths: missing and corrupt image preserve name/text, valid image recovery removes placeholder. Existing12 selection/image checks and reading state retained.",
+    "live_window": "Offscreen panel tests only; original app update pending user exit."
+  },
+  "review": {
+    "standards": "D200 keeps existing isNull branch and adds explicit placeholder; no extra validation, catch or wrapper.",
+    "requirements": "Approved missing-image handling now says 图片暂缺 instead of empty square; existing name/explanation and recovery retained. Model image identity/path defenses outside scope."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": true
+}

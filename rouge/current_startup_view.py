@@ -46,6 +46,7 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
         if inherited:
             item=self.result['data']['originals']['items'][row['item_id']];path=model.ROOT/'rouge/data/relic-icons'/ (item['iconId']+'.png');pixmap=QPixmap(str(path))
             if not pixmap.isNull():self.reward_icon.setPixmap(pixmap.scaled(64,64,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+            else:self.reward_icon.setText('图片暂缺')
             self.reward_name.setText(item['name']+' · 只查阅原说明，是否生效未知')
 
     def clear_reference(self):
