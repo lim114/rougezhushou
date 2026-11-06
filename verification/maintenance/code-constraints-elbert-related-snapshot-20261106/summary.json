@@ -1,0 +1,53 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "关联跳转复用刚核验的资料",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "d2bfe7ab66a8a9d7cfcaaceae2354d894fb17b46",
+  "changed_sources": [
+    "rouge/current_elbert_reference.py",
+    "tests/test_elbert_related_snapshot.py"
+  ],
+  "source_sha256": {
+    "rouge/current_elbert_reference.py": "14d167b722f020f603dfced8e7a893d24e22ef1c59361d61a8164a30ef04d66a",
+    "tests/test_elbert_related_snapshot.py": "7cb08827c3de5ec38e9214d0ec12afd2568b609831936cc3bf0c74f3f8ec636c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 22,
+    "tests_passed": 22,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "Separate processes: unittest -v tests.test_elbert_related_snapshot tests.test_current_elbert_366; unittest -v tests.test_current_elbert_view_366",
+    "local_evidence": ".local/code-constraints-review-219",
+    "prior_attempt": "Combined run exited1 after18 dots without traceback; retained and unexplained. Not counted as passed.",
+    "old_source_regression": "New3 tests reproduce8 failing subcases on original source.",
+    "live_window": "Original test window update pending; isolated Qt only."
+  },
+  "review": {
+    "standards": "D296 partial: resolve_related validates request membership, refreshes once and compares source+stage, then projects target identity without calling locate for another refresh. No helper/catch/defense added.",
+    "requirements": "All4 stages and8 directed related jumps tested; changed source/stage, absent source and invalid request rejected. Separate public locate still validates independently. Remaining D296 query contracts not certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D296"
+  ]
+}

@@ -5274,3 +5274,7 @@ D281部分完成：分支、关联项、头像与调试内容复用当前实体�
 ## 维护：汉科与熄日文献读取异常边界收窄（2026-11-06）
 
 完成D285，两模型保留资料读取/路径/JSON错误出口，内部缺陷直接上报。25项定向检查通过；旧代码失败保留。回执：`verification/maintenance/code-constraints-hanko-sun-error-boundary-20261106/summary.json`。
+
+## 维护：关联跳转复用刚核验的资料（2026-11-06）
+
+D296仅resolve_related重复刷新完成，保留刷新后完整来源及关卡一致性。分进程22项通过；首轮组合异常退出未计通过。回执：`verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json`。

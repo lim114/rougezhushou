@@ -1,3 +1,7 @@
+## 当前断点：关联跳转复用刚核验的资料（2026-11-06）
+
+D296部分完成。模型13项、界面9项分别通过；首次组合检查18个通过标记后退出1，原因未确定、原证据保留。原280组完成124、剩156不变。D281/D296仍部分完成；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-elbert-related-snapshot-20261106/summary.json。
+
 ## 当前断点：汉科与熄日文献读取异常边界收窄（2026-11-06）
 
 D285完成，25项定向检查通过；旧代码4测试复现13个失败项/子项。原280组完成124、剩156。D281仍部分完成；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-hanko-sun-error-boundary-20261106/summary.json。
