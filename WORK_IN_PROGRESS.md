@@ -1,3 +1,7 @@
+## 当前断点：首领文献模型索引复用及旧资料边界回顾（2026-11-06）
+
+首领文献同次敌人索引复用，去未使用循环绑定；24定向通过。D289—D292待审，共255组。回执verification/maintenance/code-constraints-boss-documents-review-20261106/summary.json。
+
 ## 当前断点：两份首领模型敌人索引复用与完整源码回顾（2026-11-06）
 
 两模型同次敌人列表查找改为索引复用；21定向通过、8份公开关卡新旧返回值一致。D285—D288待审，共251组。回执verification/maintenance/code-constraints-boss-model-review-20261106/summary.json。

@@ -1,3 +1,7 @@
+## 维护：首领文献索引复用（2026-11-06）
+
+普通重复查找已整改；来源与重复校验待审，模块未完整销项。[回执](verification/maintenance/code-constraints-boss-documents-review-20261106/README.md)。
+
 ## 维护：两份首领模型索引复用（2026-11-06）
 
 列表重复查找已整改；保护及重复实体校验未销项。[回执](verification/maintenance/code-constraints-boss-model-review-20261106/README.md)。

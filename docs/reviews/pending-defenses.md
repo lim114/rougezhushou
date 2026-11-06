@@ -299,3 +299,8 @@
 | D286 | 两packet的清单摘要、文件集合、字节类型/长度/摘要、schema/版本及原始表/绑定逐项对照 | 固定资料与原件身份一致，嵌套battle.packet再次核对底层 | 建议保留资料完整性入口，审批后明确共享核验结果的边界；原样待审 |
 | D287 | 两reference与target_available的类型/成员检查，packet后stage_reference重读；实体绑定及选中key核对 | 错关卡/错实体不返回；target_available与reference重复类型判断 | 建议入口统一参数校验并复用同次资料读取，跨入口仍核对；本批仅替换列表查找，不改保护 |
 | D288 | 两模型entity/topics/cards/player_text/resolve相关的坏输入/无实体/无主题分支与刷新后的完整相等检查 | 失效实体和旧入口不显示；当前实体多次解析及深复制 | 与D283衔接：保留跨刷新失效检查，同次查询重复待审批后收拢。Sun map保护见D284，不重复授权 |
+
+| D289 | current_boss_documents._legacy未知family抛ValueError | 拒绝未支持文献族，而不是选择任意旧阅读器 | 建议保留明确拒绝，替代由入口限定后直接分派；现有抛错原样待审 |
+| D290 | current_boss_documents.packet整体捕获OSError/ValueError/TypeError/KeyError/IndexError/AttributeError/RecursionError | 资料不可读取/损坏统一不可用，也吞掉内部程序错误 | 建议收窄文件与解析出口，内部缺陷显露；替代保留整体捕获。原样待审 |
+| D291 | packet清单/摘要/文件长度类型、版本/schema、原表/目标/允许差异逐项核对及_same严格类型递归 | 固定来源与旧新资料迁移的一致性保护；底层battle.packet再次核验 | 建议保留来源入口并审批共享核验边界；替代各层独立核验。本批仅去未使用循环变量 |
+| D292 | reference参数与target_available重复类型检查，packet后stage_reference来源重读，enemy和legacy结果类型/身份核对 | 错实体或旧资料失败不授权显示 | 建议入口校验与同次来源复用，保留旧文献授权边界；替代独立反复核对。刷新/实体/地图分别衔接D281/D280，不扩大授权 |

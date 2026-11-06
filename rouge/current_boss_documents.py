@@ -86,7 +86,7 @@ def packet():
         if any(not _same(v, stages.get(k)) for k, v in data['originals']['stages'].items()): return None
         for table in ('levels', 'enemy_definitions', 'handbook'):
             if any(not _same(v, inputs[table].get(k)) for k, v in data['originals'][table].items()): return None
-        for family, spec in data['families'].items():
+        for spec in data['families'].values():
             for row in spec['level_qualification']:
                 old = data['old_levels'][row['stage_id']]; new = inputs['levels'][row['level_key']]
                 changed = sorted(k for k in set(old) | set(new) if not _same(old.get(k), new.get(k)))
@@ -120,9 +120,12 @@ def reference(stage_id, enemy_key=None):
             or not _same(stage['stage'], result['data']['originals']['stages'][stage_id])
             or not _same(stage['level'], result['data']['originals']['levels'][stage['level_key']])): return None
     targets = [r for r in result['data']['targets'] if r['stage_id'] == stage_id]
+    enemies = {}
+    for enemy in stage['enemies']:
+        enemies.setdefault(enemy['key'], enemy)
     rows = []
     for target in targets:
-        enemy = next((e for e in stage['enemies'] if e['key'] == target['enemy_key']), None)
+        enemy = enemies.get(target['enemy_key'])
         if (enemy is None or not _same(enemy['raw_binding'], target['raw_binding'])
                 or enemy['id'] != target['enemy_id'] or type(enemy['level']) is not int
                 or enemy['level'] != target['level']): return None
