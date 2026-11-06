@@ -1,7 +1,5 @@
 def check(window,gui,require):
  from copy import deepcopy
- from .map_recognition import map_data,predict_map
- from .player_floor_resources import snapshot_text
  before=deepcopy(window.run.state)
  try:
   from .player_map_acceptance import fixtures

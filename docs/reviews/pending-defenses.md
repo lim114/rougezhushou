@@ -325,3 +325,5 @@
 | D305 | current_enemy_environment.qualify_current重读packet并核对关卡/难度/原表/敌人；environment类别、精确等级、四项类型有限非负核验 | 来源不同或属性不完整时拒绝套用环境数值；上游已核对来源仍再次核对 | 建议保留数值资格入口，审批后明确同次来源复用；替代各层独立核验。本批仅删除已证不可变数值deepcopy |
 | D306 | event_run_context对非法记录/时间/来源的忽略、冲突持有标记剔除、库存完整性与数量核对 | 旧局/坏记录或冲突不证明持有和缺失；仍留未知 | 建议保留证据资格与冲突处理，审批后明确归一化入口；替代直接上报损坏记录。原有分支不改，本批只复用读取与排序 |
 | D307 | choice_held_requirements._data两份来源摘要、choice_reference身份文字、original_reference原条目对照 | 来源变更或同ID不同条目拒绝；original_reference重复catalog._original，原字段对照仅检查仍存在的键 | 建议明确单一来源校验结果并复用，字段缺失策略一起审核；替代保留原规则。原样待审，不因当前固定摘要绕过 |
+
+| D308 | player_feature_418_acceptance.check的finally清空hover.card；422/423.check的finally恢复window.run.state，共3处 | 验收中途失败仍释放测试卡片/恢复隔离状态；418末尾正常路径也已清空一次 | 建议保留最终清理/恢复并审批后删418重复释放；替代仅成功路径清理。仅本三模块，原样待审；未执行这些历史验收 |

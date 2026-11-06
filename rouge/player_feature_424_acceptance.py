@@ -1,6 +1,6 @@
 def check(window,gui,require):
  import win32gui,win32con
- from PySide6.QtCore import Qt,QRect
+ from PySide6.QtCore import QRect
  from .player_game_map import payload
  from tests.test_player_feature_424 import fixture
  window.show_compact();c=window.compact_window;overlay=c.game_overlay;overlay.timer.stop();a,b,s=fixture();s['logical_client']=QRect(100,200,800,450);data=payload(a,b,s,'one',100);require(data is not None,'isolated_pixel_geometry_payload_qualified')

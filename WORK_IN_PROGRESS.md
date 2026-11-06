@@ -1,3 +1,7 @@
+## 当前断点：七份历史验收模块入口回顾与无用导入清理（2026-11-06）
+
+七份验收源码全文回顾；421复用选中项，422/424清未用导入。七文件编译/入口检查通过，不执行历史验收。四模块代码规则销项，D308待审，共271组。回执verification/maintenance/code-constraints-acceptance-418-424-review-20261106/summary.json。
+
 ## 当前断点：计算条件不可变值与事件上下文读取复用（2026-11-06）
 
 去不可变数值deepcopy，复用gold读取和ID排序；首轮33通过1旧文案失败，旧源码复现，修正该项后通过。维什戴尔资格模块完整销项，D305—D307待审，共270组。回执verification/maintenance/code-constraints-condition-context-review-20261106/summary.json。
