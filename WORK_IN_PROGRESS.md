@@ -1,3 +1,7 @@
+## 当前断点：凭据读取区分系统失败与缺失并修正通用文件提示（2026-11-06）
+
+D39/D40完成，6项定向通过，微软CredRead文档已核对；不读取真实密钥。原280组完成162、剩118；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json`。
+
 ## 当前断点：精英标识匹配删除不可达零分母分支（2026-11-06）
 
 D297完成，3项合成图定向检查通过，不当作实机准确率验收。原280组完成160、剩120；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-elite-denominator-20261106/summary.json`。

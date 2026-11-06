@@ -1,0 +1,63 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "凭据读取区分系统失败与缺失并修正通用文件提示",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "3405e4d72d059d447e725066ed19378a9e927431",
+  "changed_sources": [
+    "rouge/credentials.py",
+    "rouge/player_file_messages.py",
+    "tests/test_credential_error_scope.py"
+  ],
+  "source_sha256": {
+    "rouge/credentials.py": "a7a71ece68e8a20ab01abfe4d2d0a47b11f07248346955081a9e814161c302c8",
+    "rouge/player_file_messages.py": "ea0c3e84278a93ef585ecf6bff59a0db9dd3018a924d2bc0902f262f30c5d8bb",
+    "tests/test_credential_error_scope.py": "1725ce25ba1c89df550872aafea25a9f55b8f6e386b0e6e2d5fc0ea22289f7c8"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D39",
+    "D40"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_credential_error_scope tests.test_code_constraints_boundaries.NativeBoundaryTests.test_missing_credential_keeps_empty_result tests.test_code_constraints_boundaries.NativeBoundaryTests.test_credential_programming_error_is_not_an_absent_key tests.test_code_constraints_boundaries.NativeBoundaryTests.test_credential_decode_remains_exact",
+    "tests_run": 6,
+    "tests_passed": 6,
+    "seconds": 0.067,
+    "live_window": "Mocks only, no actual credentials read/written, no chat; original test window update pending."
+  },
+  "review": {
+    "standards": "D39 catches CredRead only, returns empty only ERROR_NOT_FOUND; other native errors re-raised, decode outside catch. D40 generic fallback no longer promises save/editor retention. No new helper or recovery.",
+    "requirements": "Not-found and valid UTF16 still work; access denied/no logon/invalid flags preserve original exception; missing payload and invalid UTF16 surface; Chinese domain messages preserved. Existing specific file-error branches outside D40 unchanged."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [],
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/wincred/nf-wincred-credreadw",
+      "checked": "2026-11-06",
+      "finding": "ERROR_NOT_FOUND means target credential absent; other listed failures include NO_SUCH_LOGON_SESSION and INVALID_FLAGS. Constants taken from installed winerror."
+    }
+  ]
+}

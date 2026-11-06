@@ -124,25 +124,39 @@
     },
     {
       "file": "rouge/credentials.py",
-      "sha256": "0de6427a228cd3c74d21fe8d9a41e181c0a1d5a574651cd3d85ba067d289cfd6",
+      "sha256": "a7a71ece68e8a20ab01abfe4d2d0a47b11f07248346955081a9e814161c302c8",
       "rule1": "clear_except_pending_defense",
       "rule2": "reviewed_no_single_use_wrapper_found",
       "rule3": "pending_user_review",
       "decision": "D39",
       "trigger": "read_key捕获所有pywintypes.error并返回空密钥",
       "impact": "系统访问失败与没有保存密钥混在一起",
-      "recommendation": "建议仅已确认的“未找到凭据”返回空，其它系统错误上报；具体系统错误码待核对"
+      "recommendation": "建议仅已确认的“未找到凭据”返回空，其它系统错误上报；具体系统错误码待核对",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json",
+          "scope": "D39 native missing-only fallback; D40 truthful generic message",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_file_messages.py",
-      "sha256": "9f9324f141e03d8d0aedb54813b8b2eb8c07e8cfddc8ca9e0a2e794b45a034a1",
+      "sha256": "ea0c3e84278a93ef585ecf6bff59a0db9dd3018a924d2bc0902f262f30c5d8bb",
       "rule1": "clear_except_pending_defense",
       "rule2": "reviewed_no_single_use_wrapper_found",
       "rule3": "pending_user_review",
       "decision": "D40",
       "trigger": "file_issue未知非中文错误使用“原件和当前编辑均保留”通用提示",
       "impact": "该函数本身无法证明调用者是否已经写入",
-      "recommendation": "建议保留中文提示但改为不声称保存状态的文案；替代为原样显示错误"
+      "recommendation": "建议保留中文提示但改为不声称保存状态的文案；替代为原样显示错误",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json",
+          "scope": "D39 native missing-only fallback; D40 truthful generic message",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_source_map.py",

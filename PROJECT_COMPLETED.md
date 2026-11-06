@@ -5418,3 +5418,7 @@ D56/D57完成；初始化run_id，单次读取复用；保留超大整数拒绝�
 ## 维护：精英标识匹配删除不可达零分母分支（2026-11-06）
 
 D297完成；入口保证模板至少10个有效像素，二值分母至少10，移除零值回退。3项合成图检查通过，阈值不变。回执 `verification/maintenance/code-constraints-elite-denominator-20261106/summary.json`。
+
+## 维护：凭据读取区分系统失败与缺失并修正通用文件提示（2026-11-06）
+
+D39/D40完成；仅ERROR_NOT_FOUND返回空，系统错误上报；通用文案不保证保存状态。6项模拟凭据检查通过。回执 `verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json`。
