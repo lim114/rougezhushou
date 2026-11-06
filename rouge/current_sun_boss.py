@@ -118,9 +118,11 @@ def cards(result, enemy_key):
     return deepcopy(result['materials']['forms'][row['form']]['cards'])
 
 
-def card(result, enemy_key, index):
+def card(result, enemy_key, index, *, prepared_entity=...):
     if type(index) is not int: return None
-    return next((r for r in cards(result, enemy_key) if r['index'] == index), None)
+    row = entity(result, enemy_key) if prepared_entity is ... else prepared_entity
+    if row is None: return None
+    return next((deepcopy(r) for r in result['materials']['forms'][row['form']]['cards'] if r['index'] == index), None)
 
 
 def related_forms(result, enemy_key):
@@ -192,7 +194,7 @@ def player_text(result, enemy_key=None, topic='overview', card_index=None):
                   '文献要求伤害成功造成生命实际降低才增加对应受击信仰；不能按命中次数或弹道数量直接累计。',
                   '六种异常分别叠层与刷新，不能把某一种叠满推广为所有异常免疫；原数据库初始字段也不能代替动态状态。']
     elif topic == 'skills':
-        selected = card(result, enemy_key, card_index)
+        selected = card(result, enemy_key, card_index, prepared_entity=row)
         if selected is None:
             lines += ['', '请从本形态原项中选择一条招式或天赋；同名招式在不同形态仍保留为独立原项。']
         else:

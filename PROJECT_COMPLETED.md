@@ -5290,3 +5290,7 @@ D296仅resolve_related重复刷新完成，保留刷新后完整来源及关卡�
 ## 维护：汉科技能卡与正文复用实体解析（2026-11-06）
 
 D288部分完成，12定向通过，24组卡片与正文保持等价；整组未销项。回执：`verification/maintenance/code-constraints-hanko-card-reuse-20261106/summary.json`。
+
+## 维护：熄日卡片复用形态并只复制所选卡（2026-11-06）
+
+D288模型范围完成，13定向通过、30组输出等价；汉科证据见上一回执。视图属于D283，未销项。回执：`verification/maintenance/code-constraints-sun-card-reuse-20261106/summary.json`。

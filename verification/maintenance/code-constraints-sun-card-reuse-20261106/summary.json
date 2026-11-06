@@ -1,0 +1,54 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "熄日卡片复用形态并只复制所选卡",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5073a483c53be59ae7b4b6069bd1c7aba6feab49",
+  "changed_sources": [
+    "rouge/current_sun_boss.py",
+    "tests/test_sun_card_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/current_sun_boss.py": "2f68a5c723e927a7c81e75e8a16484a99191d807845f85ee56e807f3bc93ded3",
+    "tests/test_sun_card_reuse.py": "2cb06a8bcf65592cd0d1b2a208725e170982d471d0089913732d34601639e31a"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D288"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 13,
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_sun_card_reuse tests.test_current_sun_boss_368",
+    "local_evidence": ".local/code-constraints-review-223",
+    "old_source_regression": "New2 tests reproduce30 failing subcases on original source.",
+    "equivalence": "30 card and full-text outputs identical to original source across2 stages and3 forms.",
+    "reused_evidence": "verification/maintenance/code-constraints-hanko-card-reuse-20261106/summary.json (unchanged Hanko model:12 targeted passes,24 equivalent outputs)",
+    "live_window": "No UI change; original test window update pending."
+  },
+  "review": {
+    "standards": "D288 model scope complete: Hanko previous receipt; Sun player_text shares entity with card, which copies only selected card. Public cards/entity retain independent ownership. Related resolvers validate newly refreshed snapshot once before membership. No helper/catch added.",
+    "requirements": "Invalid index types including bool and missing entities still rejected. Returned cards independently mutable. Cross-refresh full equality retained. View selection reuse is D283 and remains pending, correcting previous broader D288 remainder wording."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

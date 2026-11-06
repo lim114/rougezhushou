@@ -1,3 +1,7 @@
+## 当前断点：熄日卡片复用形态并只复制所选卡（2026-11-06）
+
+D288模型范围完成；视图选择链属于D283继续待办。13项定向通过、30组输出等价，复用前批未变汉科12项/24组证据。原280组完成127、剩153。回执 verification/maintenance/code-constraints-sun-card-reuse-20261106/summary.json。原待审和窗口缺口保留。
+
 ## 当前断点：汉科技能卡与正文复用实体解析（2026-11-06）
 
 D288部分完成，12项定向通过，24组卡片/正文与旧版完全一致。原280组完成126、剩154不变；Sun及视图链路待改。回执 verification/maintenance/code-constraints-hanko-card-reuse-20261106/summary.json。原待审和窗口缺口保留。
