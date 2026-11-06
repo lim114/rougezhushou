@@ -1,0 +1,52 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "组合校准复用容差与记录结构",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "16f0ae5595b12b77b364337d917ee8bd176ad37b",
+  "changed_sources": [
+    "rouge/bounded_calibration.py",
+    "rouge/paired_calibration.py"
+  ],
+  "source_sha256": {
+    "rouge/bounded_calibration.py": "94da45151fca15960d41167a900e3a5806577620850e18f3935ffa421de1f37f",
+    "rouge/paired_calibration.py": "ad92fec86cee40a5a14c6451e1752ed8f0e468fa1289da38f1f11cb28e06ecc9"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D115",
+    "D116"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 76,
+    "commands": [
+      "python -m unittest tests.test_bounded_calibration tests.test_paired_calibration tests.test_calibration_experiment",
+      "python -m unittest tests.test_bounded_entry_reuse_review"
+    ],
+    "test_rounds": [
+      73,
+      3
+    ],
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-170",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Public entries retain validation; internal paired-record and bounded-panel comparison each shared by two callers. Reuse validated tolerance and converted record structure; no trusted boolean switches.",
+    "requirements": "D115/D116: unused tolerances still rejected; full observations and provenance remain validated. 73 regression plus 3 entry tests pass."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

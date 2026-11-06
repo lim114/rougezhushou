@@ -1,3 +1,7 @@
+## 当前断点：组合校准入口复用（2026-11-06）
+
+D115/D116完成，73+3项定向通过；原280组剩245组。原生来源摘要缺口及新版窗口仍待补。回执verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json。
+
 ## 当前断点：精确区间契约整改（2026-11-06）
 
 D114完成，56项定向通过；原280组剩247组。原生来源摘要缺口及测试窗口更新仍待补。回执verification/maintenance/code-constraints-exact-interval-review-20261106/summary.json。

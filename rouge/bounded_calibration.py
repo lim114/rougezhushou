@@ -99,11 +99,15 @@ def _panel_record(raw, name):
 
 def compare_bounded_panels(before, after, tolerance=0):
     """Reuse exact provenance checks; compare independently declared field bounds."""
-    from .paired_calibration import compare_paired_panels
     tolerance_value = _number(tolerance, '面板容差')
+    return _compare_bounded_panels(before, after, tolerance, tolerance_value)
+
+
+def _compare_bounded_panels(before, after, tolerance, tolerance_value):
+    from .paired_calibration import _compare_paired_records
     left, left_intervals = _panel_record(before, '前组')
     right, right_intervals = _panel_record(after, '后组')
-    exact = compare_paired_panels(left, right, tolerance)
+    exact = _compare_paired_records(left, right, tolerance)
     rows = []
     for row in exact['rows']:
         a, b = left_intervals[row['field']], right_intervals[row['field']]
@@ -445,11 +449,12 @@ def bounded_calibration(panel=None, timing=None, panel_tolerance=0, timing_toler
     for value, keys, label in ((panel, {'before', 'after'}, '面板'), (timing, {'scenario', 'observation'}, '时刻')):
         if value is not None and (not isinstance(value, dict) or set(value) != keys):
             raise ValueError(label + '记录结构不正确。')
-    _number(panel_tolerance, '明确面板容差')
-    _number(timing_tolerance_seconds, '明确秒数容差')
+    from .timing_calibration import timing_reference
+    panel_value = _number(panel_tolerance, '明确面板容差')
+    timing_value = _number(timing_tolerance_seconds, '明确秒数容差')
     return {'scope': 'explicit_reading_bounds_and_declared_clock_constraints',
-        'panel': None if panel is None else compare_bounded_panels(**deepcopy(panel), tolerance=panel_tolerance),
-        'timing': None if timing is None else compare_bounded_timing(**deepcopy(timing), tolerance_seconds=timing_tolerance_seconds),
+        'panel': None if panel is None else _compare_bounded_panels(**deepcopy(panel), tolerance=panel_tolerance, tolerance_value=panel_value),
+        'timing': None if timing is None else _compare_bounded_reference(timing_reference(deepcopy(timing['scenario'])), deepcopy(timing['observation']), timing_tolerance_seconds, timing_value),
         'native_verified': False, 'actual_causal_attribution': None,
         'notes': ['所有界限、来源与排序协议均由调用方明确声明，不猜测测量精度、视频误差或置信度。',
             '时间界限是连续覆盖范围；视频整帧只作为端点坐标，不表示事件必须位于离散整数帧。',

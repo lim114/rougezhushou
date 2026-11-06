@@ -1178,12 +1178,20 @@
     },
     {
       "file": "rouge/paired_calibration.py",
-      "sha256": "421c93cd35165973f5dca41d74f3b5f7f649317cfceff3cb3c6528bf5d87416c",
+      "sha256": "ad92fec86cee40a5a14c6451e1752ed8f0e468fa1289da38f1f11cb28e06ecc9",
       "rule1": "reviewed_clear",
       "rule2": "single_use_changes_inlined_other_helpers_substantive_or_multiple_use",
       "rule3": "reviewed_clear_no_low_probability_defense_identified",
       "full_module_review_complete": true,
-      "evidence": "Entire paired_calibration source and contracts reviewed. Reuses existing before/after panel predictions; tolerance once; full one-sided observations still validated independently before intersection. Removed one-use _changes wrapper. _record used twice, public record builder used twice, _relic_transition is a substantive distinct diagnostic operation, not a trivial wrapper. Relic list uniqueness is NOT redundant with relics.prepare, which deduplicates rather than rejects; retain paired input contract. Diagnostic scope/12-item limit and unknown model states are ordinary supported branches. No low-probability defense identified; complete module rules review."
+      "evidence": "Entire paired_calibration source and contracts reviewed. Reuses existing before/after panel predictions; tolerance once; full one-sided observations still validated independently before intersection. Removed one-use _changes wrapper. _record used twice, public record builder used twice, _relic_transition is a substantive distinct diagnostic operation, not a trivial wrapper. Relic list uniqueness is NOT redundant with relics.prepare, which deduplicates rather than rejects; retain paired input contract. Diagnostic scope/12-item limit and unknown model states are ordinary supported branches. No low-probability defense identified; complete module rules review.",
+      "bounded_entry_reuse_review": {
+        "decisions": [
+          "D115",
+          "D116"
+        ],
+        "evidence": "verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json",
+        "result": "73+3 targeted tests pass; full module certification unchanged."
+      }
     },
     {
       "file": "rouge/calibration_experiment.py",
@@ -1222,7 +1230,7 @@
     },
     {
       "file": "rouge/bounded_calibration.py",
-      "sha256": "c231e211ba5cbf05053d68838f084fcf1705cb09230927b858e332a5e559084a",
+      "sha256": "94da45151fca15960d41167a900e3a5806577620850e18f3935ffa421de1f37f",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
@@ -1238,6 +1246,14 @@
         "decision": "D114",
         "evidence": "verification/maintenance/code-constraints-exact-interval-review-20261106/summary.json",
         "result": "Current producers use exact endpoints; 56 targeted tests pass."
+      },
+      "bounded_entry_reuse_review": {
+        "decisions": [
+          "D115",
+          "D116"
+        ],
+        "evidence": "verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json",
+        "result": "73+3 targeted tests pass; full module certification unchanged."
       }
     },
     {

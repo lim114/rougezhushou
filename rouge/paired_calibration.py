@@ -59,6 +59,10 @@ def compare_paired_panels(before, after, tolerance=0):
     """
     _number(tolerance, 'tolerance')
     left, right = _record(before, '前组'), _record(after, '后组')
+    return _compare_paired_records(left, right, tolerance)
+
+
+def _compare_paired_records(left, right, tolerance):
     before_model = panel_layers(left['scenario'])
     after_model = panel_layers(right['scenario'])
     if before_model['context']['scenario']['operator'] != after_model['context']['scenario']['operator']:
