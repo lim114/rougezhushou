@@ -1,3 +1,7 @@
+## 维护：当前结算面板整模块回顾（2026-11-05）
+
+核实共用清理入口及单次刷新；3定向通过，未改产品源码。[回执](verification/maintenance/code-constraints-settlement-modes-review-20261105/README.md)。
+
 ## 维护：显示与资料五模块回顾（2026-11-05）
 
 整模块新增完成information_scope、wrapped_item_delegate、current_settlement_view；单次清空内联，9项定向及两类Qt布局核对通过。其余两模块保护待审。[回执](verification/maintenance/code-constraints-display-scope-review-20261105/README.md)。

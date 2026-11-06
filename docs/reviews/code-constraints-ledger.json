@@ -1331,6 +1331,16 @@
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "evidence": "Whole seven-reader dispatch and CurrentRewardOriginsPanel.open_event caller read. Parent already refreshes and matches current row, helper re-reads named model and exact row; contract/error protection pending D152 shape, D153 source revalidation, D154 unknown-reader return. All preserved, no new fallback. Reader-specific constructor argument shapes are distinct dispatch cases, not duplicated computation. No whole-module completion while pending."
+    },
+    {
+      "file": "rouge/current_settlement_modes_view.py",
+      "sha256": "8a0023a483b5b0a298d1fa1bebf0bde83cf528dc0ea877bd75b6ecb7776633f3",
+      "rule1": "one_model_read_per_refresh_no_duplicate_input_validation",
+      "rule2": "clear_reference_shared_by_refresh_and_battle_parent_invalidation_and_close",
+      "rule3": "no_new_or_changed_defense",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "evidence": "Read complete panel and actual parent construction, invalidation and close callers. load=False prevents constructor reading before parent refresh. clear_reference has external consumers and must remain shared. None is the normal no-reference model result; clearing stale displayed data is required behavior. Same compares source and stage across refresh times to preserve reading state. No catch or arbitrary one-use helper. Three existing offscreen tests pass. Model internals and parent as a whole are outside this module certification."
     }
   ]
 }

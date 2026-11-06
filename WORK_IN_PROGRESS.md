@@ -1,3 +1,7 @@
+## 当前断点：当前结算面板回顾（2026-11-05）
+
+当前模式面板clear_reference有父层失效/关闭调用，保留共用入口，不照搬旧面板内联。3定向通过，无产品源码修改、不重启应用。覆盖318/75/124/41，517运行模块未整模块完成；117组防御原样待审。回执verification/maintenance/code-constraints-settlement-modes-review-20261105/summary.json。按小批次继续三条约束，维护不增功能节数。
+
 ## 当前断点：显示与资料五模块回顾（2026-11-05）
 
 信息范围、Qt换行、旧奖励兼容面板整模块回顾完成；单次clear_reference内联，整体AST等价。6面板+3范围定向通过，树/列表布局核对通过。第VI层与具名奖励跳转保护新增D151—154原样待审，117组；覆盖319/75/124/40，剩余518运行模块另含脚本测试桥接。窗口更新；回执verification/maintenance/code-constraints-display-scope-review-20261105/summary.json。继续属性/天赋准备、一般培养补充技能重复路径及其他未审模块；不增加功能节数。
