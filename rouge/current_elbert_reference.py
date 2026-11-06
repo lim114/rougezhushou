@@ -86,7 +86,8 @@ def _read_public(name):
 
 def packet():
     try:
-        raw=_read_public(MANIFEST)
+        try: raw=_read_public(MANIFEST)
+        except ValueError:return None
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         manifest=json.loads(raw)
         expected={DATA,PACK+'/source-notes.json',PACK+'/complete-cards.json',
@@ -96,21 +97,25 @@ def packet():
         if manifest['schema']!='current_elbert_366_manifest_v1'or manifest['game_commit']!=battle.version.NEW_COMMIT or set(manifest['files'])!=expected:return None
         values={}
         for name,pin in manifest['files'].items():
-            content=_read_public(name)
+            try: content=_read_public(name)
+            except ValueError:return None
             if type(pin['bytes'])is not int or len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             values[name]=content
-        current=battle.packet();data=json.loads(values[DATA])
-        if current is None or data['schema']!='current_elbert_366_v1'or data['game_commit']!=battle.version.NEW_COMMIT:return None
-        if data['stages']!=source_rows(current['version']['current'],current['inputs']):return None
-        if data['battle_identity']!=current['identity']:return None
-        portraits={sid:{row['key']:deepcopy(row['portrait'])for row in battle.enemy_records(stage['complete_level'],current)}for sid,stage in data['stages'].items()}
-        return{'data':data,'source_identity':(MANIFEST_SHA256,current['identity']),
-               'battle_source_identity':current['identity'],'portraits':portraits,
-               'actual_present':None,'actual_phase':None,'actual_target':None,'actual_blink':None,
-               'actual_fire_direction':None,'actual_staff_position':None,'actual_damage':None,
-               'actual_clock':None,'actual_received_buff':None,'current_server_verified':False,
-               'run_updated':False,'numerical_model_applied':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
+        data=json.loads(values[DATA])
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    current=battle.packet()
+    if current is None or data['schema']!='current_elbert_366_v1'or data['game_commit']!=battle.version.NEW_COMMIT:return None
+    try: stages=source_rows(current['version']['current'],current['inputs'])
+    except ValueError:return None
+    if data['stages']!=stages:return None
+    if data['battle_identity']!=current['identity']:return None
+    portraits={sid:{row['key']:deepcopy(row['portrait'])for row in battle.enemy_records(stage['complete_level'],current)}for sid,stage in data['stages'].items()}
+    return{'data':data,'source_identity':(MANIFEST_SHA256,current['identity']),
+           'battle_source_identity':current['identity'],'portraits':portraits,
+           'actual_present':None,'actual_phase':None,'actual_target':None,'actual_blink':None,
+           'actual_fire_direction':None,'actual_staff_position':None,'actual_damage':None,
+           'actual_clock':None,'actual_received_buff':None,'current_server_verified':False,
+           'run_updated':False,'numerical_model_applied':False}
 
 
 def reference(stage_id,enemy_key=None,card=None):
