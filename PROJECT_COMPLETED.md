@@ -1,3 +1,7 @@
+## 维护：对照与藏品培养复用（2026-11-05）
+
+上层已准备培养向属性/数量资料透传，分队效果循环外筛选；75项定向、120/60报告及7920资料结果一致。[回执](verification/maintenance/code-constraints-prepared-token-callers-20261105/README.md)。
+
 ## 维护：召唤物资料培养复用（2026-11-05）
 
 干员培养读取复用且保留召唤物等级截断区别；不适用模组不查询。73项定向及96/48完整对照与7920资料结果一致。[回执](verification/maintenance/code-constraints-token-cultivation-reference-20261105/README.md)。

@@ -24,6 +24,7 @@ def _compare_token_module(operator,profile,training,module_id,module):
     """Build from owned, validated cultivation and already resolved equipment."""
     training.setdefault('elite',2)
     if training.get('level') is None:training['level']=profile['phases'][training['elite']]['max_level']
+    cultivation=(training['elite'],training['level'])
     base_scenario={'operator':operator,**training,'module_id':None,'module_level':0}
     upgrades=[]
     if module:
@@ -32,21 +33,21 @@ def _compare_token_module(operator,profile,training,module_id,module):
                   for level in range(1,len(module['levels'])+1)]
     tokens=[]
     for identity,token in profile.get('tokens',{}).items():
-        base_stats=token_attributes(profile,base_scenario,identity)
+        base_stats=token_attributes(profile,base_scenario,identity,cultivation=cultivation)
         base={k:base_stats[k] for k in STAT_FIELDS}
         rule=next((r for r in module_rules().values() if r['operator']==operator and r['token_id']==identity),None)
-        base_counts=token_count_reference(profile,base_scenario,identity)
+        base_counts=token_count_reference(profile,base_scenario,identity,cultivation=cultivation)
         base['held_limit']=base_counts['held_limit'] if base_counts else rule['base_held_limit'] if rule else None
         base['concurrent_limit']=_concurrent_limit(profile,base_scenario,identity,base_counts)
         stages=[{'module_level':0,'state':'base','values':base,'differences':{},'verified_fields':list(STAT_FIELDS),
             'source':None,'count_reference':deepcopy(base_counts)}]
         for level,scenario,unlocked in upgrades:
-            reference=module_reference(profile,scenario,identity)
-            cost_reference=token_cost_reference(profile,scenario,identity)
+            reference=module_reference(profile,scenario,identity,cultivation=cultivation)
+            cost_reference=token_cost_reference(profile,scenario,identity,cultivation=cultivation)
             stats=token_attributes(profile,scenario,identity,
-                                   module_references=(reference,cost_reference))
+                                   module_references=(reference,cost_reference),cultivation=cultivation)
             reference=stats.get('module_reference')
-            counts=token_count_reference(profile,scenario,identity) if unlocked else None
+            counts=token_count_reference(profile,scenario,identity,cultivation=cultivation) if unlocked else None
             # Known effects are a partial projection. Do not treat a missing
             # rule as zero effect or inherit an operator's equipment stats.
             verified=set()

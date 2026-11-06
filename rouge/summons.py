@@ -178,16 +178,21 @@ def _concurrent_limit(profile,scenario,token_id,counts):
     return reference['concurrent_limit'] if reference else base
 
 
-def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module_references=None):
+def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=(),module_references=None,cultivation=None):
     """Use selected runes and, when supplied, the caller's resolved module pair.
 
     A pair of (None, None) means both references were checked and do not apply.
     Standalone callers resolve the pair here; no module result is cached.
+    cultivation supplies an already resolved operator (elite, level), before
+    the separate token-level cap.
     """
-    phases=profile['tokens'][token_id]['phases'];elite=scenario.get('elite',2)
+    phases=profile['tokens'][token_id]['phases']
+    if cultivation is None:
+        elite=scenario.get('elite',2)
+        operator_level=scenario.get('level') or profile['phases'][elite]['max_level']
+        cultivation=(elite,operator_level)
+    else:elite,operator_level=cultivation
     phase=phases[min(elite,len(phases)-1)]
-    operator_level=scenario.get('level') or profile['phases'][elite]['max_level']
-    cultivation=(elite,operator_level)
     level=min(operator_level,phase['max_level'])
     first,last=phase['frames'][0],phase['frames'][-1]
     ratio=(level-first['level'])/(last['level']-first['level']) if last['level']!=first['level'] else 0

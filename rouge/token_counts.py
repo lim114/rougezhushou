@@ -8,10 +8,13 @@ from pathlib import Path
 def count_rules():
     return json.loads((Path(__file__).with_name('data')/'token-count-reference.json').read_text(encoding='utf8'))
 
-def token_count_reference(profile,scenario,token_id):
+def token_count_reference(profile,scenario,token_id,*,cultivation=None):
+    """Use resolved operator cultivation when the calling entry already has it."""
     data=count_rules()
     if profile['id']!=data['operator_id'] or scenario['operator']!=data['operator_id'] or token_id!=data['token_id'] or token_id not in profile.get('tokens',{}):return None
-    elite=scenario.get('elite',2);level=scenario.get('level') or profile['phases'][elite]['max_level']
+    if cultivation is None:
+        elite=scenario.get('elite',2);level=scenario.get('level') or profile['phases'][elite]['max_level']
+    else:elite,level=cultivation
     potential=scenario.get('potential',1)-1
     phase=next(p for p in data['phases'] if p['elite']==elite)
     eligible=[p for p in data['potential_candidates'] if p['elite']<=elite and

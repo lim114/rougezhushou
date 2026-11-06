@@ -454,12 +454,17 @@ def finish(result,resolution,attributes,scenario):
     profile=catalog()['operators'][scenario['operator']]
     result['relic_token_stats']=[]
     from .summons import module_reference,token_attributes,token_cost_reference
-    for tid,token in profile.get('tokens',{}).items():
-        applied=[e for e in resolution['token_effects'] if tid in e.get('token_ids',[])]
+    tokens=profile.get('tokens',{})
+    if tokens:
+        elite=scenario.get('elite',2)
+        level=scenario.get('level')
+        cultivation=(elite,profile['phases'][elite]['max_level'] if level is None else level)
         run_effects=[e for e in scenario.get('_attribute_runes',[])+scenario.get('effects',[])
                     if e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
-        module=module_reference(profile,scenario,tid)
-        cost_module=token_cost_reference(profile,scenario,tid)
+    for tid,token in tokens.items():
+        applied=[e for e in resolution['token_effects'] if tid in e.get('token_ids',[])]
+        module=module_reference(profile,scenario,tid,cultivation=cultivation)
+        cost_module=token_cost_reference(profile,scenario,tid,cultivation=cultivation)
         features=[r for r in rules if r.get('token_only') and tid in r.get('token_ids',[])]
         sources=(['模组'] if module or cost_module else [])+(['藏品'] if applied or cost_module and features else [])+(['分队'] if run_effects else [])
         applied+=run_effects
@@ -482,7 +487,7 @@ def finish(result,resolution,attributes,scenario):
                 ordinary[effect['kind']].append(effect['value'])
         totals={kind:sum(values) for kind,values in ordinary.items()}
         stats=token_attributes(profile,scenario,tid,totals['hp_pct'],rune_effects=runes,
-                               module_references=(module,cost_module))
+                               module_references=(module,cost_module),cultivation=cultivation)
         for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+totals[kind]
         stats['attack_speed']=effective_attack_speed(stats['attack_speed']+totals['attack_speed'])
         stats['resistance']=min(100,stats['resistance']+sum(e['value'] for e in manual_effects if e['kind']=='resistance_flat'))
