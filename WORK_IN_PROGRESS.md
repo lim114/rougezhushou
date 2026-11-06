@@ -1,3 +1,7 @@
+## 当前断点：补充技能加成读取整改（2026-11-06）
+
+D126完成，14项定向通过；原280组剩243组。其他模块继续核对；原生来源摘要缺口及新版窗口待补。回执verification/maintenance/code-constraints-supplemental-bonus-review-20261106/summary.json。
+
 ## 当前断点：藏品诊断入口复用（2026-11-06）
 
 D117完成，52项定向通过；原280组剩244组。其他模块继续核对；原生来源摘要缺口及新版窗口仍待补。回执verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json。

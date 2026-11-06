@@ -61,9 +61,9 @@ def _skill_reference(preview,stats,battle_attributes=None):
             talents.append(deepcopy(talent))
             for item in talent['blackboard']: bonuses[item['key']]=bonuses.get(item['key'],0)+item['value']
     skill=profile['levels'][preview['skill_rank']-1]; bb={item['key']:item['value'] for item in skill['blackboard']}
-    attack=stats['attack']*(1+bonuses.get('atk',0))
-    hp=stats['hp']*(1+bonuses.get('max_hp',0))
-    armor=stats['defense']*(1+bonuses.get('def',0))
+    attack=stats['attack']*(1+bonuses['atk'])
+    hp=stats['hp']*(1+bonuses['max_hp'])
+    armor=stats['defense']*(1+bonuses['def'])
     rows=[]
     def add(label,value,unit,countable=False):
         rows.append({'name':label,'value':value,'unit':unit,
@@ -71,7 +71,7 @@ def _skill_reference(preview,stats,battle_attributes=None):
                      'declared_total_applicable':countable})
     kind=profile['kind']
     if kind=='attack_boost':
-        skill_attack=stats['attack']*(1+bonuses.get('atk',0)+bb['atk'])
+        skill_attack=stats['attack']*(1+bonuses['atk']+bb['atk'])
         add('普通攻击力',attack,'攻击力'); add('技能期间攻击力',skill_attack,'攻击力')
         add('技能单次物理伤害',max(skill_attack-defense,skill_attack*.05),'物理伤害',True)
     elif kind=='dp':
@@ -95,13 +95,13 @@ def _skill_reference(preview,stats,battle_attributes=None):
         add('二连射含天赋组合',None if probability else hit*bb['times'],'物理伤害',not bool(probability))
     elif kind=='defense_boost':
         add('普通防御力',armor,'防御力')
-        add('技能期间防御力',stats['defense']*(1+bonuses.get('def',0)+bb['def']),'防御力')
+        add('技能期间防御力',stats['defense']*(1+bonuses['def']+bb['def']),'防御力')
     elif kind in ('self_heal','heal_boost'):
         if kind=='self_heal':
             if missing_hp>hp: raise ValueError('自身生命缺口不能超过计算的最大生命。')
             heal=hp*bb['heal_scale'];add('天赋后最大生命',hp,'最大生命')
         else:
-            heal=stats['attack']*(1+bonuses.get('atk',0)+bb['atk'])
+            heal=stats['attack']*(1+bonuses['atk']+bb['atk'])
             add('普通单次治疗',attack,'治疗量')
         add('技能单次治疗',heal,'治疗量',True)
         potential_heal=heal*preview['count'];effective=min(potential_heal,missing_hp)

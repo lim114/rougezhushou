@@ -1358,13 +1358,18 @@
     },
     {
       "file": "rouge/supplemental_skills.py",
-      "sha256": "ace287f12cebf636c9fe131d7ec188f6276c058b6735590b774494189bff0311",
+      "sha256": "4d2c522fe34f2478b1eb1e6fed27d97d37b28f047eb63110d856e4df8436a5f8",
       "rule1": "candidate_unlock_rank_once",
       "rule2": "no_new_helper_reused_row_builder_retained",
       "rule3": "D125_D126_pending_unchanged",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Whole source and callers reviewed. Candidate phase/level/potential key computed once, reused for filtering and maximum; equal keys keep first candidate, copy isolation retained. skill_reference is actual standalone preview entry, _skill_reference is also used by run with separately prepared stats; add closure has many row consumers. Input guards and all capability/HP-gap raises unchanged. D125 nested cultivation guards and D126 initialized bonus-key fallbacks await approval. Optional battle attributes, absent talent slots and missing optional talent bonus keys remain normal supported cases."
+      "evidence": "Whole source and callers reviewed. Candidate phase/level/potential key computed once, reused for filtering and maximum; equal keys keep first candidate, copy isolation retained. skill_reference is actual standalone preview entry, _skill_reference is also used by run with separately prepared stats; add closure has many row consumers. Input guards and all capability/HP-gap raises unchanged. D125 nested cultivation guards and D126 initialized bonus-key fallbacks await approval. Optional battle attributes, absent talent slots and missing optional talent bonus keys remain normal supported cases.",
+      "supplemental_bonus_review": {
+        "decision": "D126",
+        "evidence": "verification/maintenance/code-constraints-supplemental-bonus-review-20261106/summary.json",
+        "result": "Six initialized-field defaults removed; 14 targeted tests pass."
+      }
     },
     {
       "file": "rouge/supplemental_enemies.py",

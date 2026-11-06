@@ -1,0 +1,43 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "补充技能直接读取已初始化加成",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "1c7105c2e0d1e1a9358d694f655f9e2feba55a19",
+  "changed_sources": [
+    "rouge/supplemental_skills.py"
+  ],
+  "source_sha256": {
+    "rouge/supplemental_skills.py": "4d2c522fe34f2478b1eb1e6fed27d97d37b28f047eb63110d856e4df8436a5f8"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D126"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 14,
+    "command": "python -m unittest tests.test_supplemental_talent_keys_review tests.test_supplemental_skills_136 tests.test_supplemental_skills_137 tests.test_supplemental_skills_138",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-172",
+    "preflight_failure": "Expected seven replacements; actual six. Assertion before write; missing log directory prevented initial test evidence. Corrected run passed14.",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "atk/max_hp/def initialized before talent accumulation and never removed; six default-zero reads replaced. Optional talent keys retained.",
+    "requirements": "D126 only; no new guards/helpers. Existing profile/talent/skill coverage passes."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}
