@@ -1511,7 +1511,7 @@
     },
     {
       "file": "rouge/relics.py",
-      "sha256": "8b36faa2de2627f3016747597917b7bd893af43dce7e43f3d7d0343b1f8a2aff",
+      "sha256": "aa3e15ac7cc71b2e958db2ff4a8a5b326ebff8c08f39699fba35e3b60ca4c794",
       "rule1": "manual_stat_scope_filtered_once_then_per_token_ids",
       "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D129_unchanged",
@@ -1521,7 +1521,14 @@
       "bound_sp_source_review": {
         "receipt": "verification/maintenance/code-constraints-bound-sp-source-review-20261106/summary.json",
         "scope": "D124 declared bindings only; full module review incomplete."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json",
+          "scope": "D129 unknown regeneration semantics",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/token_module_comparison.py",
@@ -3950,5 +3957,14 @@
     ],
     "implementation_status": "pending_verification",
     "note": "Historical per-entry pending labels refer to source-review state; approval status resolves through this registry. No module completion flags changed."
-  }
+  },
+  "supplemental_scoped_reviews": [
+    {
+      "file": "rouge/reporting.py",
+      "sha256": "9667e7abacd072bb26a02b02a3f055d81e64851ef8403f4f0b483add5478a2ba",
+      "receipt": "verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json",
+      "scope": "D129 regeneration report only",
+      "full_module_review_complete": false
+    }
+  ]
 }

@@ -1,3 +1,7 @@
+## 当前断点：未知生命回复倍率保留分项并撤下完整量（2026-11-06）
+
+D129完成，29通过4历史跳过；未知倍率不再当1，报告区分分项/完整量。原280组完成146、剩134；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json。
+
 ## 当前断点：干员与召唤物单等级阶段支持复核（2026-11-06）
 
 D108/D128按批准保留，9相关检查通过；误带7科技资料检查通过但不计本批范围证据。原280组完成145、剩135。D307补充、D319/D320及原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-single-level-20261106/summary.json。

@@ -444,14 +444,19 @@ def finish(result,resolution,attributes,scenario):
             amiya['opening_healing_reference']*=factor
             amiya['window_reference']['opening_healing_reference']*=factor
     factor=regeneration_factor([r for r in rules if r['kind']=='regeneration_factor'])
-    # Unproved combinations are filtered by prepare and retain their warnings.
-    # This fallback preserves the known subtotal if an external rule remains.
-    if factor is None:factor=1
+    if factor is None:
+        warnings.append('生命回复倍率组合待核验；仅列未乘该倍率的已知小计。')
     result['relic_regeneration_multiplier']=factor
     for c in result.get('components',[]):
-        if c.get('damage_type')=='regeneration':c['total']*=factor;c['per_hit']*=factor
-    result['relic_regeneration_rate']=(sum(r['value'] for r in rules if r['kind']=='regeneration' and not r.get('token_only'))+
-        result['estimate']['base_stats']['hp']*sum(r['value'] for r in rules if r['kind']=='regeneration_hp_ratio' and not r.get('token_only')))*factor
+        if c.get('damage_type')=='regeneration':
+            if factor is None:
+                c['known_regeneration_subtotal']={'total':c['total'],'per_hit':c['per_hit']}
+                c['actual_total']=None
+            else:c['total']*=factor;c['per_hit']*=factor
+    known_regeneration_rate=(sum(r['value'] for r in rules if r['kind']=='regeneration' and not r.get('token_only'))+
+        result['estimate']['base_stats']['hp']*sum(r['value'] for r in rules if r['kind']=='regeneration_hp_ratio' and not r.get('token_only')))
+    result['relic_regeneration_rate']=None if factor is None else known_regeneration_rate*factor
+    if factor is None:result['known_relic_regeneration_rate']=known_regeneration_rate
     if any(r['kind']=='regeneration_hp_ratio' for r in rules):
         result['estimate']['notes'].append('百分比生命回复按当前常态最大生命参考，单独报告，不混入直接治疗HPS；技能期间最大生命变化未作动态积分。')
     result['relic_features']=[r for r in rules if r['kind'] in ('deployment_cost_add','block_add',
@@ -504,8 +509,10 @@ def finish(result,resolution,attributes,scenario):
         stats['deployment_cost']=max(0,stats['deployment_cost']+totals['deployment_cost_add'])
         stats['free_deployment_slot']=bool(totals['token_deploy_slot_free'])
         if totals['regeneration_hp_ratio'] or totals['regeneration']:
-            stats['regeneration_rate']=(None if stats['hp'] is None and totals['regeneration_hp_ratio'] else
-                ((stats['hp'] or 0)*totals['regeneration_hp_ratio']+totals['regeneration'])*factor)
+            known_rate=(None if stats['hp'] is None and totals['regeneration_hp_ratio'] else
+                (stats['hp'] or 0)*totals['regeneration_hp_ratio']+totals['regeneration'])
+            stats['regeneration_rate']=None if factor is None or known_rate is None else known_rate*factor
+            if factor is None:stats['known_regeneration_rate']=known_rate
         if stats.get('module_reference',{}).get('hp_composition_pending'):
             warnings.append('触手：模组生命与藏品/分队生命的叠加层尚未核验，复合生命及依赖该生命的回复未知；单项参考分别列出。')
         stats['protection']=protection(features,stats['hp'])

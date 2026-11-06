@@ -5362,3 +5362,7 @@ D135/D138/D144：共享培养解析移至catalog，天赋、梅、苏苏洛及�
 ## 维护：干员与召唤物单等级阶段支持复核（2026-11-06）
 
 D108/D128保留等等级端点分支；合成单等级算例、双点插值及召唤物封顶/干员解锁分离通过。9相关检查通过，不改产品。回执：`verification/maintenance/code-constraints-single-level-20261106/summary.json`。
+
+## 维护：未知生命回复倍率保留分项并撤下完整量（2026-11-06）
+
+D129完成；未知回复倍率保留有证分项，完整本体/召唤物回复及报告标未知。29通过4历史跳过，未知分支由故障注入验证，不推断新机制。回执：`verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json`。

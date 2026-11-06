@@ -200,13 +200,17 @@ def mechanism_sections(scenario,result,source,profile):
     if regeneration or (op=='char_110_deepcl' and number==1):
         if op=='char_110_deepcl':
             factor=result.get('relic_regeneration_multiplier',1)
-            rows=[metric('per_token_rate','每只触手生命回复速度',bb['hp_recovery_per_sec']*factor,'生命/秒'),
-                metric('all_tokens_rate','所选触手合计回复速度',bb['hp_recovery_per_sec']*factor*scenario.get('summon_count',1),'生命/秒')]
+            rows=[metric('per_token_rate','每只触手生命回复速度',None if factor is None else bb['hp_recovery_per_sec']*factor,'生命/秒'),
+                metric('all_tokens_rate','所选触手合计回复速度',None if factor is None else bb['hp_recovery_per_sec']*factor*scenario.get('summon_count',1),'生命/秒')]
         elif any('nominal_duration_reference_seconds' in c for c in regeneration):
             rows=[metric('nominal_regeneration','名义持续参数下生命回复条件参考',sum(c['total'] for c in regeneration),'生命'),
                 metric('window_regeneration','实际情景生命回复总量',
                     None if any(c.get('actual_total',0) is None for c in regeneration) else sum(c['total'] for c in regeneration),'生命')]
         else:rows=[metric('window_regeneration','当前情景生命回复总量',sum(c['total'] for c in regeneration),'生命')]
+        if result.get('relic_regeneration_multiplier',1) is None:
+            for row in rows:row['value']=None
+            if regeneration:
+                rows.append(metric('known_regeneration','未计待核倍率的回复小计',sum(c['total'] for c in regeneration),'生命'))
         notes=['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']
         if op=='char_110_deepcl' and number==1:
             notes.append('以上为所选触手持续在场且技能回复持续覆盖时的速度参考，包含本次采用的生命回复效果倍率；实际在场、回复首跳和结束尚未核验，实际回复总量未知。')
@@ -1197,10 +1201,12 @@ def build_report(scenario,result):
     if op=='char_151_myrtle':
         sections.append(section('flag','执旗手机制',[metric('skill_block','技能期间阻挡数',0)],['技能期间停止攻击；二技能另有治疗。' if number==2 else '技能期间停止攻击。']))
     sections.extend(mechanism_sections(scenario,result,source,p))
-    if result.get('relic_regeneration_rate'):
+    if result.get('relic_regeneration_rate') or result.get('known_relic_regeneration_rate'):
         sections.append(section('relic_regeneration','藏品生命回复',[
             metric('rate','本体藏品生命回复速度',result['relic_regeneration_rate'],'生命/秒')],
             ['潜在生命回复，未扣满血造成的无效回复；不合并为直接治疗 HPS。']))
+        if 'known_relic_regeneration_rate' in result:
+            sections[-1]['metrics'].append(metric('known_rate','未计待核倍率的回复速度小计',result['known_relic_regeneration_rate'],'生命/秒'))
     features=result.get('relic_features',[])
     refill=[r for r in result.get('relic_resolution',{}).get('rules',[]) if r['kind']=='ammo_refill']
     if refill:
@@ -1318,6 +1324,8 @@ def build_report(scenario,result):
             sections[-1]['notes'].append('仅修正已解锁模组对应棋子的培养费用参考；不扩大棋子数量、不推断库存、地块或真实部署。')
         if 'regeneration_rate' in token:
             sections[-1]['metrics'].append(metric('regeneration_rate','藏品常态生命回复',token['regeneration_rate'],'生命/秒'))
+            if 'known_regeneration_rate' in token:
+                sections[-1]['metrics'].append(metric('known_regeneration_rate','未计待核倍率的回复速度小计',token['known_regeneration_rate'],'生命/秒'))
     incoming=[r for r in features if r['kind']=='incoming_element_resistance']
     if incoming:
         sections.append(section('relic_element_resistance','藏品元素防护',[
