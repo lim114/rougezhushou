@@ -1,3 +1,7 @@
+## 维护：关键藏品DATA与险路尽头来源复用（2026-11-05）
+
+去除同操作重复文件读取及两次上游加载，28定向与结果对照通过，窗口已更新。[回执](verification/maintenance/code-constraints-critical-source-reuse-20261105/README.md)。两模块仍部分回顾。
+
 ## 维护：奖励选行及DATA重复读取整改（2026-11-05）
 
 文字/来源共用选中行，解析已核对文件字节；45定向及54文字/2资料包对照通过，窗口更新。[回执](verification/maintenance/code-constraints-reward-row-and-bytes-reuse-20261105/README.md)。模块仍部分回顾。

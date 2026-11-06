@@ -38,10 +38,10 @@ def source_rows(current, condition_packet, flow_packet, exit_packet):
         if event_id == 'entry':
             if exit_packet['data']['originals']['choices'][cid] != original:
                 raise ValueError('Exact exit grant required')
-            target = exit_flow.locate('choices', cid)
+            target = exit_flow.locate('choices', cid, source=exit_packet)
             if target != {'event_id': 'exit', 'source_request': {'category': 'choices', 'key': cid}}:
                 raise ValueError('Exact exit source entry required')
-            linked = exit_flow.reference('exit', source_request=target['source_request'])
+            linked = exit_flow.reference('exit', source_request=target['source_request'], source=exit_packet)
             if linked is None or len(linked['source_targets']) != 1:
                 raise ValueError('Unique existing document target required')
             sid, doc_cid = linked['source_targets'][0]
@@ -84,9 +84,10 @@ def packet():
             if any(p.is_symlink() for p in path.parents if p != ROOT and ROOT in p.parents): return None
             content = path.read_bytes()
             if len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
+            if name == DATA: data_raw = content
         upstream = [p.packet() for p in PROVIDERS]; current = version.packet()
         if current is None or any(p is None for p in upstream): return None
-        data = json.loads((ROOT / DATA).read_bytes())
+        data = json.loads(data_raw)
         if (data['schema'] != 'critical_reward_origins_349_v1' or data['game_commit'] != version.NEW_COMMIT
                 or data['complete_acquisition_pool'] is not False
                 or data['rows'] != source_rows(current['current']['details'], *upstream)): return None

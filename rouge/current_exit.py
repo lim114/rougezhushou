@@ -41,11 +41,12 @@ def _targets(data, category, key):
         return [(c['scene_id'], cid) for cid, c in data['choices'].items() if c['role'] == 'help']
     return []
 
-def reference(event_id='exit', action_points=None, gold=None, difficulty=None, source_request=None):
+def reference(event_id='exit', action_points=None, gold=None, difficulty=None, source_request=None, *, source=None):
+    """Use this operation's checked source packet when supplied; otherwise load it here."""
     if type(event_id) is not str or event_id != 'exit': return None
     if any(v is not None and (type(v) is not int or v < 0) for v in (action_points, gold)): return None
     if difficulty is not None and (type(difficulty) is not int or not 0 <= difficulty <= 16): return None
-    p = packet()
+    p = packet() if source is None else source
     if p is None: return None
     d = p['data']; targets = []
     if source_request is not None:
@@ -59,9 +60,9 @@ def reference(event_id='exit', action_points=None, gold=None, difficulty=None, s
             'source_request': deepcopy(source_request), 'source_targets': targets,
             'actual_received': None, 'actual_consumed': None, 'actual_transition': None, 'actual_recruited': None}
 
-def locate(category, key):
+def locate(category, key, *, source=None):
     if type(category) is not str or type(key) is not str: return None
-    p = packet()
+    p = packet() if source is None else source
     if p is None or not _targets(p['data'], category, key): return None
     return {'event_id': 'exit', 'source_request': {'category': category, 'key': key}}
 
