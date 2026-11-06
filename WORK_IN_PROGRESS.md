@@ -1,3 +1,7 @@
+## 当前断点：菜单恢复状态显式初始化与布局拒绝复核（2026-11-06）
+
+D50/D51完成，6项定向通过。原280组完成157、剩123；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-action-menu-state-20261106/summary.json`。
+
 ## 当前断点：历史查询暴露内部错误并区分缺失与零次（2026-11-06）
 
 D48完成；34项定向通过，上一批零次类别差异按已确认口径修复，606组原测试通过。原280组完成155、剩125；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json`。

@@ -1,0 +1,54 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "菜单恢复状态显式初始化与布局拒绝复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "c8fa677c98ccb4503eb2baf13e77baed4d27334e",
+  "changed_sources": [
+    "rouge/player_action_menu.py",
+    "tests/test_player_action_menu_384.py"
+  ],
+  "source_sha256": {
+    "rouge/player_action_menu.py": "109da2d5a3913c88b8418d2310caa4d055e582652b7137fcb5ef221930bda761",
+    "tests/test_player_action_menu_384.py": "92dd39d586e1f8c41a6d139fcd7b6fbcd4139d147738b53e8fbf2f8355901451"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D50",
+    "D51"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_player_action_menu_384",
+    "tests_run": 6,
+    "tests_passed": 6,
+    "seconds": 0.018,
+    "live_window": "Isolated Qt real button/menu interactions pass; original test window update pending."
+  },
+  "review": {
+    "standards": "D50 initializes flag in constructor and removes getattr fallback; normal repeated exposure is retained. D51 preserves approved missing-layout rejection before button mutation. All menu methods read; sync and visible_actions have separate callback/query roles. No new helper/catch/guard.",
+    "requirements": "Visible/hidden state, enabled actions, click forwarding and repeated exposure pass. Missing menu entry raises before reparenting original buttons. No change to player-facing layout."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

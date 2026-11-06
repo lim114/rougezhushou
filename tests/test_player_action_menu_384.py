@@ -18,4 +18,12 @@ class ActionMenuTests(unittest.TestCase):
   self.assertTrue(self.a.isVisible());self.assertFalse(self.b.isVisible());self.assertFalse(self.m.isVisible())
   self.assertIs(self.a.parentWidget(),self.w);self.assertIs(self.b.parentWidget(),self.w)
   self.m.expose_original_controls();self.assertEqual(self.w.layout().count(),2)
+ def test_diagnostic_flag_is_initialized_before_exposure(self):
+  self.assertIs(self.m.diagnostic_controls_exposed,False)
+  self.m.expose_original_controls();self.assertIs(self.m.diagnostic_controls_exposed,True)
+ def test_missing_menu_layout_entry_rejected_before_moving_buttons(self):
+  self.w.layout().removeWidget(self.m)
+  with self.assertRaisesRegex(ValueError,'原按钮布局无法核对'):self.m.expose_original_controls()
+  self.assertIs(self.a.parentWidget(),self.m.holder);self.assertIs(self.b.parentWidget(),self.m.holder)
+  self.assertFalse(self.m.diagnostic_controls_exposed)
 if __name__=='__main__':unittest.main()

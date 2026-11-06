@@ -5406,3 +5406,7 @@ D45/D47异常边界整改完成，构建缺陷不再变空索引；16项定向15
 ## 维护：历史查询暴露内部错误并区分缺失与零次（2026-11-06）
 
 D48完成；非法距离入口返回空，内部查询错误上报。修复直接查询将缺失样本补零的问题，原606组对照通过。34项定向通过；保留上一批失败历史。回执 `verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json`。
+
+## 维护：菜单恢复状态显式初始化与布局拒绝复核（2026-11-06）
+
+D50/D51完成；显式状态替代getattr，保留并验证按钮移动前的布局核对，重复恢复不重排。6项定向通过。回执 `verification/maintenance/code-constraints-action-menu-state-20261106/summary.json`。

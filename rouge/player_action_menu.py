@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QWidget,QHBoxLayout,QLabel,QToolButton,QMenu
 
 class ButtonMenu(QWidget):
     def __init__(self,owner,buttons,*,title='更多查询'):
-        super().__init__(owner);layout=owner.layout()
+        super().__init__(owner);self.diagnostic_controls_exposed=False;layout=owner.layout()
         positions=[index for button in buttons if (index:=layout.indexOf(button))>=0]
         index=min(positions)if positions else layout.count()
         self.holder=QWidget(owner);self.holder.hide();self.actions=[]
@@ -24,7 +24,7 @@ class ButtonMenu(QWidget):
 
     def expose_original_controls(self):
         """Real original controls, only for the explicit diagnostic layout."""
-        if getattr(self,'diagnostic_controls_exposed',False):return
+        if self.diagnostic_controls_exposed:return
         owner=self.parentWidget();layout=owner.layout();index=layout.indexOf(self)
         if index<0:raise ValueError('原按钮布局无法核对。')
         layout.removeWidget(self);self.hide()
