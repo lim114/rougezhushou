@@ -102,3 +102,5 @@
 
 | D131 | `token_budget_view.TokenBudgetDialog.calculate`捕获ValueError/KeyError/TypeError，将计算异常改为界面提示 | ValueError包含正常输入错误，KeyError/TypeError也可能是内部结果或资料缺陷；缺陷被当作输入提示 | 建议核对入口错误契约后仅保留正常输入ValueError，删除其余内部类型/缺键兜底；替代保留原三类。尚未授权，原样保留 |
 | D132 | 同方法使用row.get("stock_within_reference")容忍结果缺字段 | token_budget每行都生成此键；字段缺失会静默省略库存提示 | 建议改为row["stock_within_reference"]，仍保留正常None/False含义；替代保持缺键不提示。尚未授权，原样保留 |
+
+| D133 | `token_budget.token_budget`以stage.get("count_reference")读取每个对照阶段必定生成的字段 | 缺键会被视为无数量参考，改变范围文字，掩盖上游结果缺字段；正常None仍是无资料 | 建议改直接索引，保留正常None含义；替代允许历史/自建结果缺键。本模块当前只接收即时对照结果，未发现历史结果入口。尚未授权，原样保留，暂不整模块销项 |

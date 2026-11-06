@@ -1,3 +1,7 @@
+## 维护：预算复用已解析模组（2026-11-05）
+
+入口链身份扫描2→1，费用未知判断一次；token_budget.py普通冗余已审完，D133仍待授权，未整模块销项。54项定向、792对照/3219预算/3223属性及5/45/12错误结果一致。[回执](verification/maintenance/code-constraints-token-equipment-reference-20261105/README.md)。
+
 ## 维护：预算与对照培养验证复用（2026-11-05）
 
 培养验证2→1，保持完整装备验证和错误顺序；30项定向、792对照/3219预算及5/45错误结果一致。[回执](verification/maintenance/code-constraints-token-budget-validation-20261105/README.md)。

@@ -4,7 +4,8 @@ import unittest
 
 from rouge import token_budget as budget
 from rouge import token_module_comparison as comparison
-from rouge.catalog import catalog, operator_attributes
+from rouge import catalog as catalog_module
+from rouge.catalog import catalog
 
 
 class TokenBudgetValidationReviewTests(unittest.TestCase):
@@ -14,8 +15,8 @@ class TokenBudgetValidationReviewTests(unittest.TestCase):
         requests={key:{'additional':2,'present':None,'available_stock':None}
                   for key in catalog()['operators']['char_110_deepcl']['tokens']}
         saved=deepcopy((training,requests))
-        validate=Mock(wraps=operator_attributes)
-        with patch.object(budget,'operator_attributes',validate), patch.object(comparison,'operator_attributes',validate):
+        validate=Mock(wraps=catalog_module._operator_attribute_reference)
+        with patch.object(budget,'_operator_attribute_reference',validate), patch.object(catalog_module,'_operator_attribute_reference',validate):
             result=budget.token_budget('char_110_deepcl',training,requests,20)
         self.assertEqual(validate.call_count,1)
         self.assertEqual(validate.call_args.kwargs,training)

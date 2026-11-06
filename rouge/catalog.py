@@ -23,6 +23,11 @@ def stage_previews():
     return json.loads((Path(__file__).parent / 'data' / 'previews.json').read_text(encoding='utf-8'))['stages']
 
 def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
+    return _operator_attribute_reference(operator,elite,level,trust,potential,module_id,module_level)[0]
+
+
+def _operator_attribute_reference(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
+    """Return calculated attributes and the equipment resolved by this validation."""
     profile = operator_profiles()[operator]
     if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):
         raise ValueError('精英阶段需要为 0、1 或 2。')
@@ -43,6 +48,7 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
         for modifier in modifiers:
             field=mapping.get(modifier['attributeType'])
             if field and modifier['formulaItem']=='ADDITION':stats[field]+=modifier['value']
+    module=None
     if module_id:
         module=next((m for m in profile['modules'] if m['id']==module_id),None)
         if not module or not isinstance(module_level,int) or isinstance(module_level,bool) or not 1<=module_level<=len(module['levels']):
@@ -52,4 +58,4 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
                 field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed',
                        'respawn_time':'redeploy_seconds'}.get(attr)
                 if field:stats[field]+=value
-    return stats
+    return stats,module

@@ -1,7 +1,7 @@
 """Declared additional summons, currency and inventories; no deployment commands."""
 from copy import deepcopy
 from .token_module_comparison import _compare_token_module
-from .catalog import catalog, operator_attributes
+from .catalog import catalog, _operator_attribute_reference
 
 
 def count(value, label, *, unknown=False, maximum=100):
@@ -14,14 +14,17 @@ def count(value, label, *, unknown=False, maximum=100):
 def token_budget(operator, training, requests, budget):
     count(budget, '费用预算', maximum=9999)
     # Validate the complete current equipment before consuming a reference.
-    operator_attributes(operator, **{k:v for k,v in training.items() if k in
+    _,module = _operator_attribute_reference(operator, **{k:v for k,v in training.items() if k in
         ('elite','level','trust','potential','module_id','module_level')})
+    profile=catalog()['operators'][operator]
     cultivation={k:deepcopy(v) for k,v in training.items() if k in ('elite','level','trust','potential')}
-    comparison = _compare_token_module(operator, catalog()['operators'][operator], cultivation, training.get('module_id'))
+    module_id=training.get('module_id')
+    if module_id is not None and not module_id:raise ValueError('模组不属于当前干员。')
+    comparison = _compare_token_module(operator, profile, cultivation, module_id, module)
     identities = {t['token_id'] for t in comparison['tokens']}
     if not isinstance(requests, dict) or set(requests) != identities:
         raise ValueError('请逐项提供当前干员全部召唤物的配额条件。')
-    stage = training.get('module_level', 0) if training.get('module_id') else 0
+    stage = training.get('module_level', 0) if module_id else 0
     rows = []; subtotal = 0; all_costs_known = True
     for token in comparison['tokens']:
         request = requests[token['token_id']]
@@ -34,8 +37,8 @@ def token_budget(operator, training, requests, budget):
         count_reference=token['stages'][stage].get('count_reference')
         cost = values['deployment_cost']; cap = values['concurrent_limit']
         requested_cost = 0 if additional == 0 else cost * additional if cost is not None else None
-        all_costs_known = all_costs_known and requested_cost is not None
-        if requested_cost is not None: subtotal += requested_cost
+        if requested_cost is None: all_costs_known = False
+        else: subtotal += requested_cost
         rows.append({'token_id': token['token_id'], 'name': token['name'], **deepcopy(request),
             'cost_reference': cost, 'requested_cost_reference': requested_cost,
             'held_limit_reference': values['held_limit'], 'concurrent_limit_reference': cap,

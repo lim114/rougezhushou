@@ -15,15 +15,15 @@ def compare_token_module(operator,cultivation,module_id=None):
     allowed=('elite','level','trust','potential')
     training={k:deepcopy(v) for k,v in cultivation.items() if k in allowed}
     operator_attributes(operator,**training)
-    return _compare_token_module(operator,profile,training,module_id)
-
-
-def _compare_token_module(operator,profile,training,module_id):
-    """Build the comparison from an owned, validated cultivation dictionary."""
-    training.setdefault('elite',2)
-    if training.get('level') is None:training['level']=profile['phases'][training['elite']]['max_level']
     module=next((m for m in profile['modules'] if m['id']==module_id),None)
     if module_id is not None and module is None:raise ValueError('模组不属于当前干员。')
+    return _compare_token_module(operator,profile,training,module_id,module)
+
+
+def _compare_token_module(operator,profile,training,module_id,module):
+    """Build from owned, validated cultivation and already resolved equipment."""
+    training.setdefault('elite',2)
+    if training.get('level') is None:training['level']=profile['phases'][training['elite']]['max_level']
     base_scenario={'operator':operator,**training,'module_id':None,'module_level':0}
     upgrades=[]
     if module:
