@@ -42,6 +42,10 @@ def native_positive_ratio_division(numerator_raw, denominator_raw, *, trace=Fals
     if (type(numerator_raw) is not int or type(denominator_raw) is not int or
             not 0 <= numerator_raw <= denominator_raw <= MAX_RAW or denominator_raw == 0):
         raise ValueError('原生分商参考需要0≤当前原值≤正最大原值，均为有符号64位整数。')
+    return _positive_ratio_division(numerator_raw, denominator_raw, trace=trace)
+
+
+def _positive_ratio_division(numerator_raw, denominator_raw, *, trace=False):
     remainder, divisor, bit_position, quotient = numerator_raw, denominator_raw, 33, 0
     reduction = 0
     while divisor & 15 == 0 and bit_position >= 4:
@@ -114,21 +118,10 @@ def _cultivation(operator, value, source):
             from rouge.susuro_healing import selected_trait
         else:
             from rouge.guardian_healing import selected_trait
-        trait = selected_trait(profile, scenario)
+        trait = selected_trait(profile, scenario, cultivation=(module, elite, level, stage))
     return {'declaration': deepcopy(value), 'module_unlock_reference': eligible,
             'matching_source_trait_selected': trait is not None,
             'selected_trait': deepcopy(trait), 'actual_module_attachment_verified': False}
-
-
-def _last_true_value(maximum, scale, boundary):
-    low, high = 0, maximum
-    while low < high:
-        middle = (low + high + 1) // 2
-        if native_positive_ratio_division(middle * scale, maximum * scale) < boundary:
-            low = middle
-        else:
-            high = middle - 1
-    return low
 
 
 def recipient_native_ratio_diagnostic(payload):
@@ -145,8 +138,8 @@ def recipient_native_ratio_diagnostic(payload):
     info = source['operators'][operator] if source is not None else None
     boundary = None if info is None else source['threshold_raw'] + (source['epsilon_raw'] if info['comparison'] == 'LE' else -source['epsilon_raw'])
     rows, names, limits, previous = [], set(), {}, None
+    required = {'label', 'hp', 'max_hp', 'unit', 'post_clamp_ratio_raw', 'evidence'}
     for ordinal, observation in enumerate(observations, 1):
-        required = {'label', 'hp', 'max_hp', 'unit', 'post_clamp_ratio_raw', 'evidence'}
         if type(observation) is not dict or set(observation) != required:
             raise ValueError('每项需要label、hp、max_hp、unit、post_clamp_ratio_raw和evidence。')
         label = _label(observation['label'], '观察标签', 80)
@@ -168,7 +161,7 @@ def recipient_native_ratio_diagnostic(payload):
         if type(evidence['kind']) is not str or evidence['kind'] not in ('formula_reference', 'public_case', 'game_panel_declaration'):
             raise ValueError('证据kind需要formula_reference、public_case或game_panel_declaration。')
         _label(evidence['source'], '原值证据来源')
-        native = None if source is None else native_positive_ratio_division(hp * scale, maximum * scale, trace=True)
+        native = None if source is None else _positive_ratio_division(hp * scale, maximum * scale, trace=True)
         ratio = None if native is None else native['ratio_raw']
         exact_truncated = None if source is None else (hp * ONE) // maximum
         row = {'ordinal': ordinal, 'label': label, 'original_declaration': deepcopy(observation),
@@ -191,7 +184,14 @@ def recipient_native_ratio_diagnostic(payload):
         if boundary is not None:
             key = (unit, maximum)
             if key not in limits:
-                limits[key] = _last_true_value(maximum, scale, boundary)
+                low, high = 0, maximum
+                while low < high:
+                    middle = (low + high + 1) // 2
+                    if _positive_ratio_division(middle * scale, maximum * scale) < boundary:
+                        low = middle
+                    else:
+                        high = middle - 1
+                limits[key] = low
             row['last_hp_value_under_division_stage_gate'] = limits[key]
             row['first_hp_value_outside_division_stage_gate'] = limits[key] + 1
         if row['declared_post_clamp_gate_reference'] is not None and cultivation['matching_source_trait_selected']:
@@ -246,9 +246,9 @@ def public_recipient_ratio_payload(operator='char_196_sunbr'):
 def format_recipient_ratio_diagnostic(result):
     lines = [result['operator_name'] + ' · HP原值与受疗门诊断',
         f"固定比较{result['comparison']}；严格边界原值{result['comparison_boundary_raw']}；模组门满足：{result['cultivation']['module_unlock_reference']}"]
+    text = lambda value: '未知' if value is None else str(value)
     for row in result['rows']:
         original = row['original_declaration']
-        text = lambda value: '未知' if value is None else str(value)
         lines.append(f"{row['ordinal']}. {row['label']}：{original['hp']}/{original['max_hp']}（{original['unit']}）；来源：{original['evidence']['source']}")
         lines.append('除法阶段原值' + text(row['native_division_ratio_raw']) + '；精确截断原值' + text(row['exact_rational_truncated_ratio_raw']) +
             '；差' + text(row['native_minus_exact_truncation_raw']) + '；仅除法阶段门参考' + text(row['division_stage_gate_reference']))

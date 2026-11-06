@@ -8,13 +8,16 @@ FP_LARGE_EPS_RAW=42950
 EVIDENCE='research/p2-susuro-healing-composition-current/receipt.json'
 
 
-def selected_trait(profile,scenario):
+def selected_trait(profile,scenario,*,cultivation=None):
     if profile['id']!=OPERATOR or scenario.get('operator')!=OPERATOR:return None
-    module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==MODULE),None)
-    elite=scenario.get('elite',2)
-    level=scenario.get('level') or profile['phases'][elite]['max_level']
-    stage=scenario.get('module_level',0)
-    if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
+    if cultivation is None:
+        module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==MODULE),None)
+        elite=scenario.get('elite',2)
+        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        stage=scenario.get('module_level',0)
+        if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
+    else:
+        module,elite,level,stage=cultivation
     expected='susuro_equip_1_'+str(stage)+'_p1'
     for part in module['levels'][stage-1]['parts']:
         if part.get('isToken') or part.get('target')!='TRAIT' or part.get('resKey')!=expected:continue

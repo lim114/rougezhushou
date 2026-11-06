@@ -1,3 +1,7 @@
+## 维护：原值诊断培养与计算入口复用（2026-11-05）
+
+原值路径模组扫描2→1，删除重复数值校验与单调用二分包装；42项定向、504计算与183诊断及错误结果一致。原值模块普通回顾完成，保留防御待审。[回执](verification/maintenance/code-constraints-recipient-prepared-inputs-20261105/README.md)。
+
 ## 维护：受疗比例校验与治疗字段读取去重（2026-11-05）
 
 删除重复有限数校验，三名干员未知治疗收尾一次读取/判断字段。42项定向、504完整/33错误结果一致。三模块回顾仍保留待审与普通缺口。[回执](verification/maintenance/code-constraints-healing-field-reuse-20261105/README.md)。
