@@ -7,28 +7,29 @@ from . import current_battle_reference as battle
 ROOT=Path(__file__).resolve().parents[1];PACK='research/p3-current-map-position-319';DATA='rouge/data/current-map-position.json';MANIFEST=PACK+'/runtime-manifest.json';MANIFEST_SHA256='c84bd87d6b0825e5e5e296d4d32f0d2626d4b252122e54772cf3d9f46cb54b67'
 UNAVAILABLE='本版本地图位置资料无法核对，旧格子、原图与标记已清除；恢复后请重新选择。'
 def packet():
+    from .current_terrain import evidence_identity
+    terrain_identity=evidence_identity()
+    if terrain_identity is None:return None
     try:
-        from .current_terrain import evidence_identity
-        terrain_identity=evidence_identity()
-        if terrain_identity is None:return None
         raw=(ROOT/MANIFEST).read_bytes()
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(raw);objects={}
+        manifest=json.loads(raw);objects={};root=ROOT.resolve()
         if manifest['schema']!='current_map_position_319_manifest_v1'or manifest['game_commit']!=battle.version.NEW_COMMIT:return None
         for name,pin in manifest['files'].items():
             rel=PurePosixPath(name)
             if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name:return None
             p=ROOT.joinpath(*rel.parts)
-            if p.is_symlink()or not p.resolve().is_relative_to(ROOT.resolve()):return None
+            if p.is_symlink()or not p.resolve().is_relative_to(root):return None
             raw=p.read_bytes()
             if len(raw)!=pin['bytes']or sha256(raw).hexdigest()!=pin['sha256']:return None
             objects[name]=raw
-        current=battle.packet()
-        if current is None:return None
         data=json.loads(objects[DATA])
-        if set(data['all_current_stage_ids'])!=set(current['version']['current']['details']['stages']):return None
-        return {'data':data,'current':current,'source_identity':sha256((MANIFEST_SHA256+terrain_identity).encode()).hexdigest(),'terrain_source_identity':terrain_identity,'absolute_accuracy_verified':False}
-    except(OSError,ValueError,KeyError,TypeError):return None
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    current=battle.packet()
+    if current is None:return None
+    if set(data['all_current_stage_ids'])!=set(current['version']['current']['details']['stages']):return None
+    return {'data':data,'current':current,'source_identity':sha256((MANIFEST_SHA256+terrain_identity).encode()).hexdigest(),'terrain_source_identity':terrain_identity,'absolute_accuracy_verified':False}
+
 def stage_reference(stage_id):
     ref=packet()
     if ref is None or type(stage_id)is not str:return None

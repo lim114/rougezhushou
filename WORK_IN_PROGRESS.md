@@ -1,3 +1,7 @@
+## 当前断点：地图位置资料错误边界与根路径复用（2026-11-06）
+
+D255/D256完成，14定向通过；原280组完成110、剩170。D319/D320待审，旧窗口及既有缺口保留。回执verification/maintenance/code-constraints-map-packet-boundary-20261106/summary.json。
+
 ## 当前断点：敌人行程资料异常处理收窄（2026-11-06）
 
 D246完成，18定向通过；原280组完成108、剩172。D319/D320待审，原窗口及既有验证缺口保留。回执verification/maintenance/code-constraints-route-error-boundary-20261106/summary.json。

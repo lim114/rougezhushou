@@ -5242,3 +5242,5 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 - 2026-11-06：D236敌人出怪资料错误出口整改，15定向通过；回执 `verification/maintenance/code-constraints-enemy-error-boundary-20261106/summary.json`。
 
 - 2026-11-06：D246行程资料错误出口整改，18定向通过；回执 `verification/maintenance/code-constraints-route-error-boundary-20261106/summary.json`。
+
+- 2026-11-06：D255/D256地图资料错误出口与根路径复用，14定向通过；回执 `verification/maintenance/code-constraints-map-packet-boundary-20261106/summary.json`。

@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "地图位置资料错误边界与根路径复用",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "69002c891d030cca2fe767e03ba1d1780db87531",
+  "changed_sources": [
+    "rouge/current_map_position.py",
+    "tests/test_map_packet_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position.py": "43f3f3ed67fe7d7925b0915a2ec3208837d3f34b576c83b2bb4d041bcd9fa6b2",
+    "tests/test_map_packet_error_boundary.py": "51ec97c4e063f388121d6c31fc13d250f847195390a30f4290b6d35712072c7b"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D255",
+    "D256"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 14,
+    "tests_failed": 0,
+    "tests_run": 14,
+    "command": "python -m unittest tests.test_map_packet_error_boundary tests.test_current_map_position_319 tests.test_current_map_position_integration_319",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-207",
+    "old_source_regression": "4 new tests reproduce9 subtest failures on prior source. Final14 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D255 approved narrow file/JSON catch; terrain/battle upstream errors propagate. D256 approved root resolution reused once. No wrapper added.",
+    "requirements": "Own read failures and unavailable upstream remain unavailable; member link refusal and identity gates preserved. Root resolve count1 verified with upstream isolated."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

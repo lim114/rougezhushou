@@ -2342,13 +2342,21 @@
     },
     {
       "file": "rouge/current_map_position.py",
-      "sha256": "4f5f8b53c0c6dddb91597f87465b0cea4eeb81e8cab784dcfe82664c86479f14",
+      "sha256": "43f3f3ed67fe7d7925b0915a2ec3208837d3f34b576c83b2bb4d041bcd9fa6b2",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Map point membership computed once per query; validation boundaries pending D259",
       "rule2": "No redundant single-use wrappers found; other models read as caller context only",
       "rule3": "D255_D259_pending",
-      "evidence": "Entire model read; 5 final targeted tests pass; 113 fixed levels/1167 old-new directory queries equal; no name cache retained because decoder calls did not decrease."
+      "evidence": "Entire model read; 5 final targeted tests pass; 113 fixed levels/1167 old-new directory queries equal; no name cache retained because decoder calls did not decrease.",
+      "map_packet_boundary": {
+        "decisions": [
+          "D255",
+          "D256"
+        ],
+        "receipt": "verification/maintenance/code-constraints-map-packet-boundary-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_map_position_view.py",
