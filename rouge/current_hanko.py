@@ -25,7 +25,9 @@ def _same(a, b):
 
 def packet():
     try:
-        raw = battle.version._file(MANIFEST).read_bytes()
+        try: path = battle.version._file(MANIFEST)
+        except ValueError: return None
+        raw = path.read_bytes()
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw)
         expected = {PACK + '/' + name for name in ('reference-data.json', 'source-materials.json',
@@ -36,37 +38,39 @@ def packet():
                 or set(manifest['files']) != expected): return None
         blobs = {}
         for name, pin in manifest['files'].items():
-            content = battle.version._file(name).read_bytes()
+            try: path = battle.version._file(name)
+            except ValueError: return None
+            content = path.read_bytes()
             if (type(pin['bytes']) is not int or len(content) != pin['bytes']
                     or sha256(content).hexdigest() != pin['sha256']): return None
             blobs[name] = content
         data = json.loads(blobs[PACK + '/reference-data.json'])
         materials = json.loads(blobs[PACK + '/source-materials.json'])
-        current = battle.packet()
-        if current is None or data['schema'] != 'current_hanko_365_v1': return None
-        if tuple(data['bindings']) != STAGES or len(data['originals']['levels']) != 5: return None
-        stages = current['version']['current']['details']['stages']; inputs = current['inputs']
-        if any(not _same(row, stages.get(key)) for key, row in data['originals']['stages'].items()): return None
-        for table in ('levels', 'enemy_definitions', 'handbook'):
-            if any(not _same(row, inputs[table].get(key)) for key, row in data['originals'][table].items()): return None
-        if (set(data['originals']['enemy_definitions']) != set(ACTORS)
-                or set(materials['actors']) != {'hanko', 'president', 'smoke'}): return None
-        actual = {}
-        for sid, stage in stages.items():
-            level_key = 'levels/' + stage['levelId'].lower() + '.json'; level = inputs['levels'][level_key]
-            found = [{'key': str(i), 'reference_index': i, 'entity_id': row['id'],
-                      'level': row['level'], 'actor': ACTORS[row['id']], 'raw_binding': row,
-                      'source_selector': '$.enemyDbRefs[' + str(i) + ']'}
-                     for i, row in enumerate(level['enemyDbRefs']) if row['id'] in ACTORS]
-            if found: actual[sid] = {'level_key': level_key, 'rows': found}
-        if not _same(actual, data['bindings']): return None
-        return {'data': data, 'materials': materials, 'current': current,
-                'source_identity': (MANIFEST_SHA256, current['identity']),
-                'actual_present': None, 'actual_skill_time': None, 'actual_smoke_cells': None,
-                'actual_status_removed': None, 'current_server_verified': False,
-                'numeric_model_added': False, 'run_updated': False}
-    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
+    current = battle.packet()
+    if current is None or data['schema'] != 'current_hanko_365_v1': return None
+    if tuple(data['bindings']) != STAGES or len(data['originals']['levels']) != 5: return None
+    stages = current['version']['current']['details']['stages']; inputs = current['inputs']
+    if any(not _same(row, stages.get(key)) for key, row in data['originals']['stages'].items()): return None
+    for table in ('levels', 'enemy_definitions', 'handbook'):
+        if any(not _same(row, inputs[table].get(key)) for key, row in data['originals'][table].items()): return None
+    if (set(data['originals']['enemy_definitions']) != set(ACTORS)
+            or set(materials['actors']) != {'hanko', 'president', 'smoke'}): return None
+    actual = {}
+    for sid, stage in stages.items():
+        level_key = 'levels/' + stage['levelId'].lower() + '.json'; level = inputs['levels'][level_key]
+        found = [{'key': str(i), 'reference_index': i, 'entity_id': row['id'],
+                  'level': row['level'], 'actor': ACTORS[row['id']], 'raw_binding': row,
+                  'source_selector': '$.enemyDbRefs[' + str(i) + ']'}
+                 for i, row in enumerate(level['enemyDbRefs']) if row['id'] in ACTORS]
+        if found: actual[sid] = {'level_key': level_key, 'rows': found}
+    if not _same(actual, data['bindings']): return None
+    return {'data': data, 'materials': materials, 'current': current,
+            'source_identity': (MANIFEST_SHA256, current['identity']),
+            'actual_present': None, 'actual_skill_time': None, 'actual_smoke_cells': None,
+            'actual_status_removed': None, 'current_server_verified': False,
+            'numeric_model_added': False, 'run_updated': False}
 
 
 def reference(stage_id, enemy_key=None):

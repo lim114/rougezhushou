@@ -1,3 +1,7 @@
+## 当前断点：汉科与熄日文献读取异常边界收窄（2026-11-06）
+
+D285完成，25项定向检查通过；旧代码4测试复现13个失败项/子项。原280组完成124、剩156。D281仍部分完成；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-hanko-sun-error-boundary-20261106/summary.json。
+
 ## 当前断点：首领文献错误捕获限于读取入口（2026-11-06）
 
 D290完成，20项定向检查通过；旧代码4测试复现8个失败子项。原280组完成123、剩157。D281仍部分完成；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-boss-error-boundary-20261106/summary.json。

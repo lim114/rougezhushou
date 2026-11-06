@@ -1,0 +1,53 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "汉科与熄日文献读取异常边界收窄",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "250e071fd8ed375c66dd8030ab5860f1c75eff87",
+  "changed_sources": [
+    "rouge/current_hanko.py",
+    "rouge/current_sun_boss.py",
+    "tests/test_hanko_sun_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_hanko.py": "e964d763ec5f391c70eb2a2d0809ade56c6c8fa16b92e60eea99b85b84055e1f",
+    "rouge/current_sun_boss.py": "541d683ab2dfd7e2396dec104707aed2053e3398e8123b76c47b646b02019ef9",
+    "tests/test_hanko_sun_error_boundary.py": "974e13d89e95e43e63566712b5176d312a1c1634ac5c93a4460eeb4579460797"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D285"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 25,
+    "tests_passed": 25,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_hanko_sun_error_boundary tests.test_current_hanko_365 tests.test_current_sun_boss_368",
+    "local_evidence": ".local/code-constraints-review-218",
+    "old_source_regression": "New4 tests reproduce13 failures/subcases on original sources.",
+    "live_window": "No layout change; original test window update pending."
+  },
+  "review": {
+    "standards": "D285: path ValueError handled at _file calls; only file/JSON errors caught in read blocks. battle.packet and internal source comparisons outside catches. No new helper or recovery.",
+    "requirements": "Both source manifests, digest, stage membership, original tables and entity identity conditions retained. Missing sources remain unavailable; internal errors surface."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}
