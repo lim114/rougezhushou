@@ -49,7 +49,9 @@ def catalogue_rows(ref,*,can_offer=None,rarity=None,change=None,query=''):
 
 
 def target_entry(category,key):
-    if type(category)is not str or type(key)is not str or category not in('relics','scenes','choices'):return None
+    if type(category)is not str or type(key)is not str:
+        raise TypeError('Exchange category and key must be strings')
+    if category not in('relics','scenes','choices'):return None
     ref=packet()
     if ref is None:return None
     if category=='relics'and any(r['id']==key for r in ref['data']['catalogue']):return {'tab':'items','item_id':key,'group_id':None}

@@ -2082,23 +2082,33 @@
     },
     {
       "file": "rouge/current_exchange_reference.py",
-      "sha256": "c15cdcee92a2d68791c3c9506e35ee00c7e40e80dad6958ab950274c51cbbe9e",
+      "sha256": "98df339894861d304e14da1ec99b314f3cb97d6edde33448de2add04434b36f4",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "normalize_filter_query_once_after_entry_checks",
       "rule2": "public_model_functions_have_real_UI_and_model_callers_no_single_use_wrapper",
       "rule3": "D205_D208_pending",
-      "evidence": "Complete model read including packet, catalogue_rows, target_entry, item_text/document_text and current UI/test callers. DATA already parsed from validated blobs; no duplicate file read introduced. query.strip moved from per-record predicate to once per filter call. Fresh snapshots remain deepcopy owned results. Unsupported category/no match/ambiguous target are normal no-target outcomes; bad parameter types separately D208.2 targeted checks pass and288 filter combinations match old source. Sources and catches unchanged."
+      "evidence": "Complete model read including packet, catalogue_rows, target_entry, item_text/document_text and current UI/test callers. DATA already parsed from validated blobs; no duplicate file read introduced. query.strip moved from per-record predicate to once per filter call. Fresh snapshots remain deepcopy owned results. Unsupported category/no match/ambiguous target are normal no-target outcomes; bad parameter types separately D208.2 targeted checks pass and288 filter combinations match old source. Sources and catches unchanged.",
+      "exchange_target_review": {
+        "decision": "D208",
+        "receipt": "verification/maintenance/code-constraints-exchange-target-review-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_exchange_view.py",
-      "sha256": "3db3e108ffd44d22f77677efdac86757ed9068d28fd26531f9418a035fb00cd9",
+      "sha256": "0f6a7e291db2c817f029c72795c9ad2341843628f69b0f80bbe9b5a3a5d55539",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "selected_row_reuse_complete_optional_result_and_empty_selection_are_normal_states",
       "rule2": "select_used_in_constructor_and_both_refresh_paths_filter_callback_adapts_four_Qt_signals",
       "rule3": "D209_two_missing_target_field_defaults_pending",
-      "evidence": "Read full view and target factory, expansion open_current_exchange, reconstruction child creation, ritual material creation and shared reference page creation. All non-None product targets contain tab/item_id/group_id; constructor two get defaults hide missing-key internal failures and are registered pending. _select has four calls; filter callback supplies preserve=True to four signals; refresh uses actual source identity to preserve or reset reading. No source changes; hashes match batch104 and relevant filtering path validated batch105. Model/parent protections remain separately pending."
+      "evidence": "Read full view and target factory, expansion open_current_exchange, reconstruction child creation, ritual material creation and shared reference page creation. All non-None product targets contain tab/item_id/group_id; constructor two get defaults hide missing-key internal failures and are registered pending. _select has four calls; filter callback supplies preserve=True to four signals; refresh uses actual source identity to preserve or reset reading. No source changes; hashes match batch104 and relevant filtering path validated batch105. Model/parent protections remain separately pending.",
+      "exchange_target_review": {
+        "decision": "D209",
+        "receipt": "verification/maintenance/code-constraints-exchange-target-review-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_ritual_view.py",

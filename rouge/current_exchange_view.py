@@ -29,7 +29,7 @@ class CurrentExchangePanel(QWidget):
         self.refresh_reference()
         if target and self.result:
             if target['tab']=='document':self.tabs.setCurrentIndex(1)
-            self._select(self.items,target.get('item_id'));self._select(self.groups,target.get('group_id'))
+            self._select(self.items,target['item_id']);self._select(self.groups,target['group_id'])
 
     @staticmethod
     def _select(widget,key):

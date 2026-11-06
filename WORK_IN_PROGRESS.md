@@ -1,3 +1,7 @@
+## 当前断点：交换目录参数与必填目标字段整改（2026-11-06）
+
+D208/D209完成，17项定向通过；原280组完成86组、剩194组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-exchange-target-review-20261106/summary.json。
+
 ## 当前断点：四处图片解码失败展示复核（2026-11-06）
 
 D195–D198按授权保留，2项定向覆盖四处各4种状态，无产品源码改动；原280组完成84组、剩196组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-image-fallback-review-20261106/summary.json。
