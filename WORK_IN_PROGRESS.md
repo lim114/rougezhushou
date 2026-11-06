@@ -1,3 +1,7 @@
+## 当前断点：格子说明入口与历史节点唯一归属按授权复核（2026-11-06）
+
+D53/D55按授权保留并复核，10项定向通过；D323历史超大时间溢出已复现并提问，源码未改。原280组完成172、剩108。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-tile-history-retention-20261106/summary.json`。
+
 ## 当前断点：出怪分组边界按授权复核并登记配图异常待审（2026-11-06）
 
 D52按授权保留并完成复核，5项定向通过；D322已提问待答复，产品源码未改。原280组完成170、剩110。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-spawn-filter-retention-20261106/summary.json`。
