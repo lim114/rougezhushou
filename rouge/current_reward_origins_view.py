@@ -51,7 +51,6 @@ class CurrentRewardOriginsPanel(QWidget):
         replace_text(self.technical, json.dumps(row or {'scope': model.NOTICE}, ensure_ascii=False, indent=2), preserve=preserve)
 
     def _selected(self, item, *_):
-        if self.result is None: return
         self._close_event(); self._render(item.data(Qt.ItemDataRole.UserRole) if item else None, False)
 
     def open_event(self):

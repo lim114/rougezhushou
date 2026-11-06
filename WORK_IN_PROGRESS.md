@@ -1,3 +1,7 @@
+## 当前断点：奖励选择信号契约与点击来源复核（2026-11-06）
+
+D155/D156完成，12项定向通过；原280组剩228组。D153及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-selection-review-20261106/summary.json。
+
 ## 当前断点：奖励资料未知类型明确上报（2026-11-06）
 
 D154/D158完成，26项定向通过；原280组剩230组。D153/D155及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-reward-dispatch-review-20261106/summary.json。

@@ -1,0 +1,46 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "奖励选择信号契约与点击来源复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "a0d9007a31544106396a99987c38d1c89f7f922f",
+  "changed_sources": [
+    "rouge/current_reward_origins_view.py",
+    "tests/test_reward_selection_contract_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_reward_origins_view.py": "b83844a7a4a9ee96caf0ce8ffa838d744558ba2b52d6bfc8c6b8820ffaf0eb03",
+    "tests/test_reward_selection_contract_review.py": "7429a09a7f7c7f0898a6f9224d63cea11c344039f4be6aa28005079db0b77665"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D155",
+    "D156"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 12,
+    "command": "python -m unittest tests.test_reward_selection_contract_review tests.test_current_reward_origins_view_338",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-182",
+    "before": "Lifecycle test passed; broken direct selection order was silently ignored.",
+    "live_window": "Isolated Qt tests only; original app update pending."
+  },
+  "review": {
+    "standards": "D155 remove impossible absent-model selection fallback after checking all list mutations block signals. D156 approved source identity guard retained at user-click boundary. No extra validation/helper/catch.",
+    "requirements": "Initial/no selection, explicit deselection, same-source refresh, source loss/restore tested. Changed source and forged displayed row still clear and refuse open. D153 factory recheck not resolved."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

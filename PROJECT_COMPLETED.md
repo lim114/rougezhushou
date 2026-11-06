@@ -5152,3 +5152,7 @@ D152/D159完成，24项定向通过。回执：verification/maintenance/code-con
 ## 维护：奖励资料未知类型明确上报（2026-11-06）
 
 D154/D158完成，26项定向通过。回执：verification/maintenance/code-constraints-reward-dispatch-review-20261106/summary.json。不增加功能节数。
+
+## 维护：奖励选择信号契约与点击来源复核（2026-11-06）
+
+D155整改、D156保留复核完成，12项定向通过。回执：verification/maintenance/code-constraints-reward-selection-review-20261106/summary.json。不增加功能节数。
