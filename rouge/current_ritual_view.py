@@ -16,13 +16,12 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
-        self._sync_extra()
 
     def _close_material(self):
         if self.material_dialog is not None:self.material_dialog.close()
 
-    def _sync_extra(self):
-        source=model.acquisition_reference(self.result,self.scene_id,self.choice_id)if self.result else None
+    def _sync_extra(self,choice=...):
+        source=model.acquisition_reference(self.result,self.scene_id,self.choice_id,choice=choice)if self.result else None
         if source and source['kind']=='exchange':
             from .current_exchange_reference import target_entry
             if target_entry('choices',source['source_choice_id'])is None:source=None
@@ -31,15 +30,15 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
         if source is None:self._close_material()
 
     def clear_reference(self):
-        self._close_material();super().clear_reference();self._sync_extra()
+        self._close_material();super().clear_reference();self._sync_extra(None)
 
     def _choice_changed(self,item,*args,preserve=False):
         cid=item.data(Qt.ItemDataRole.UserRole)if item else None
         if not(preserve and cid==self.choice_id):self._close_material()
-        super()._choice_changed(item,*args,preserve=preserve);self._sync_extra()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._sync_extra(choice)
 
     def refresh_reference(self,*args,**kwargs):
-        ok=super().refresh_reference(*args,**kwargs);self._sync_extra()
+        ok=super().refresh_reference(*args,**kwargs)
         if ok and self.material_dialog is not None and self.material_dialog.isVisible():self.material_dialog.panel.refresh_reference()
         return ok
 

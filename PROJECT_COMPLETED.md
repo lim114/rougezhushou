@@ -1,3 +1,7 @@
+## 维护：仪式沙地同步复用（2026-11-06）
+
+四处重复同步删除，材料选项复用，18定向及22对照通过。[回执](verification/maintenance/code-constraints-ritual-sand-refresh-reuse-20261106/README.md)。
+
 ## 维护：交换视图调用契约核对（2026-11-06）
 
 完整阅读及入口核对已记录，D209待审，未将模块计作完成。[回执](verification/maintenance/code-constraints-exchange-view-contract-review-20261106/README.md)。

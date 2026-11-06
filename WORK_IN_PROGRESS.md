@@ -1,3 +1,7 @@
+## 当前断点：仪式与沙地面板去除重复同步并复用材料选项（2026-11-06）
+
+删除四处重复同步，仪式文字/控件复用选项；18定向通过，22对照一致，测试窗口更新。172组待审不变，整模块47。回执verification/maintenance/code-constraints-ritual-sand-refresh-reuse-20261106/summary.json；后续继续两面板剩余调用及模型审查。
+
 ## 当前断点：交换视图完整调用契约核对（2026-11-06）
 
 视图及四类入口核对完成，两处缺字段默认D209原样待审，共172组；整模块47不变。源码未改，复用104/105证据，不重启窗口。回执verification/maintenance/code-constraints-exchange-view-contract-review-20261106/summary.json。继续其它模块普通冗余审查。

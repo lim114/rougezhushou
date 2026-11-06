@@ -68,8 +68,8 @@ def choice_reference(result,sid,cid):
     s=result['scenes'].get(sid);c=result['choices'].get(cid)
     return deepcopy(c)if s and c and cid in s['choice_ids']and c['scene_id']==sid else None
 
-def acquisition_reference(result,sid,cid):
-    c=choice_reference(result,sid,cid)
+def acquisition_reference(result,sid,cid,*,choice=...):
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     return deepcopy(result['data']['acquisitions'].get(c['offered_item_id']))if c else None
 
 def player_text(result,sid,cid=None, *, prepared_choice=...):
@@ -82,7 +82,7 @@ def player_text(result,sid,cid=None, *, prepared_choice=...):
         if iid:
             effect=original['items'][c['effect_item_id']];alt=original['choices'][c['alternative_choice_id']]
             lines+=['','【削弱什么】',version._plain(effect['usage']),'保护危朽只明确适用于首次灾厄之口；降低伤害不等于伤害归零，也没有在这里补上减伤百分比。'if c['effect_item_id']!='rogue_6_relic_final_6'else'这里指灾厄之口不再封锁待部署区，不是取消首领的全部能力。','','【另一种交付方式】'+alt['title'],version._plain(alt['description']),'同一项削弱有两种交付方式，不重复相加。原文未明确交付件数，不默认每次消耗1件；也不能认定一把源私钥能完成全部三步。']
-            source=acquisition_reference(result,sid,cid)
+            source=acquisition_reference(result,sid,cid,choice=c)
             lines+=['','【材料从哪里来】',source['description']if source else'源私钥的完整获取条件与本局持有尚未核对；本页不替你选定三种用途。']
         if result['event']['id']=='tears'and cid=='choice_ro6_chimera2_1':lines+=['','【代价与获得】','原文写明消耗全部源石锭，关联击坠“神明”。具体领取件数及本局是否符合条件仍未知，不自动扣除资源。']
         if c['next_scene_id']:lines+=['','【明确的后续对话】',scene_label(result,c['next_scene_id']),'下方按钮只继续查阅，不会在游戏中选择。']
