@@ -37,7 +37,7 @@ def decode(value):
         return number
     if tag=='float64'and type(raw)is str and len(raw)==16:
         binary=bytes.fromhex(raw)
-        if len(binary)!=8 or binary.hex()!=raw:raise ValueError('历史数值格式无法核对。')
+        if binary.hex()!=raw:raise ValueError('历史数值格式无法核对。')
         return struct.unpack('>d',binary)[0]
     if tag=='text'and type(raw)is str and not any(0xd800<=ord(c)<=0xdfff for c in raw):return raw
     if tag=='codepoints'and type(raw)is list and all(type(n)is int and 0<=n<=0x10ffff for n in raw):
@@ -50,9 +50,10 @@ def decode(value):
             if type(pair)is not list or len(pair)!=2:raise ValueError('历史字段格式无法核对。')
             key=decode(pair[0])
             try:
-                if key in result:raise ValueError('历史字段重复，未覆盖。')
-                result[key]=decode(pair[1])
+                duplicate=key in result
             except TypeError as error:raise ValueError('历史字段名称无法核对。')from error
+            if duplicate:raise ValueError('历史字段重复，未覆盖。')
+            result[key]=decode(pair[1])
         return result
     raise ValueError('历史内容类型不受支持。')
 

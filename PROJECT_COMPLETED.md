@@ -5346,3 +5346,7 @@ D308完成；418删除正常路径重复清理，finally保留；422/423异常�
 ## 维护：隔离验收十三处异常状态恢复复核（2026-11-06）
 
 D309/D310按已批准决定保留13处finally。4项定向测试通过，新增13入口中断恢复场景；438地图/历史标记恢复通过。未运行历史全量验收，不改产品源码。回执：`verification/maintenance/code-constraints-acceptance-state-restoration-20261106/summary.json`。
+
+## 维护：历史解码收窄异常出口与浮点重复校验（2026-11-06）
+
+D314完成；递归解码移出字段名捕获，删除等价浮点长度复核。14定向通过、256浮点输出等价；循环、重复键及规范格式保留。回执：`verification/maintenance/code-constraints-history-codec-20261106/summary.json`。

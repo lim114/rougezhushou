@@ -1,3 +1,7 @@
+## 当前断点：历史解码收窄异常出口与浮点重复校验（2026-11-06）
+
+D314完成，14定向通过、256浮点输出等价；旧版复现内部异常误分类。原280组完成139、剩141；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-history-codec-20261106/summary.json。
+
 ## 当前断点：隔离验收十三处异常状态恢复复核（2026-11-06）
 
 D309/D310复核完成，4项定向测试通过，新增13入口中断恢复场景。原280组完成138、剩142；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-acceptance-state-restoration-20261106/summary.json。
