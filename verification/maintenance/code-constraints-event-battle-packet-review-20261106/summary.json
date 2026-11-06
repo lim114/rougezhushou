@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件作战资料加载入口整改",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "e139fe957d3f7f8fb0ff9fad6ea8d9d4bcebe389",
+  "changed_sources": [
+    "rouge/current_event_battles.py",
+    "tests/test_event_battle_packet_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_event_battles.py": "9321d61913ebd997805b856eee4fc46530b1d1bc565483edd971c10848ec588e",
+    "tests/test_event_battle_packet_boundary_review.py": "8cea82b1c7d23d8486b9a252b7bebb8deb46228e96821f65270bd81488cbe04a"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D221",
+    "D222",
+    "D223"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 12,
+    "command": "python -m unittest tests.test_event_battle_packet_boundary_review tests.test_current_event_battles_326",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-199",
+    "baseline": "Old committed module: six internal-error subcases fail; final12 pass.",
+    "link_check": "Simulated Path.is_symlink predicate, not real Windows links.",
+    "live_window": "Original app update pending user exit."
+  },
+  "review": {
+    "standards": "D221 captures filesystem/JSON loading only; internal/provider defects propagate. D223 root resolved once. No wrapper or defense added.",
+    "requirements": "D222 manifest/schema/version/membership/hash and choices/scenes/stages original comparisons unchanged. D223 path/root/link restrictions unchanged. Event-to-battle mappings unchanged."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": true
+}

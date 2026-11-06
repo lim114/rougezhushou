@@ -1,3 +1,7 @@
+## 当前断点：事件作战资料加载入口整改（2026-11-06）
+
+D221–D223完成，12项定向通过；原280组完成100组、剩180组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-battle-packet-review-20261106/summary.json。
+
 ## 当前断点：材料来源失败路径删除同次重复定位（2026-11-06）
 
 D219完成，8项定向通过；原280组完成97组、剩183组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-material-failure-review-20261106/summary.json。

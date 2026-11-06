@@ -1,3 +1,7 @@
+## 维护：事件作战资料加载入口整改（2026-11-06）
+
+D221–D223完成，12项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-event-battle-packet-review-20261106/summary.json`。
+
 ## 维护：材料来源失败路径删除同次重复定位（2026-11-06）
 
 D219完成，8项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-material-failure-review-20261106/summary.json`。

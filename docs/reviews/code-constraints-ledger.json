@@ -2177,13 +2177,22 @@
     },
     {
       "file": "rouge/current_event_battles.py",
-      "sha256": "4c531d8440939d67f836d32b0bde0c117152b4cc6541b2e4caf49b37f9002b81",
+      "sha256": "9321d61913ebd997805b856eee4fc46530b1d1bc565483edd971c10848ec588e",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "single_stage_lookup_and_result_entry_check; refresh_delegates_close_to_selection",
       "rule2": "no_new_helpers",
       "rule3": "D221_D224_unchanged",
-      "evidence": "stage_label retrieves matching row once and retains unknown label. _selected checks result once before choice. refresh always dispatches _selected with keep=False when source changes, so initial close removed; targetless retained selection still closes, changed selection already closed. 14 initial targeted tests pass; final view7 pass after close cleanup. Same27 scopes71 choices202 labels. Remaining lifecycle and pending defenses prevent whole-module certification."
+      "evidence": "stage_label retrieves matching row once and retains unknown label. _selected checks result once before choice. refresh always dispatches _selected with keep=False when source changes, so initial close removed; targetless retained selection still closes, changed selection already closed. 14 initial targeted tests pass; final view7 pass after close cleanup. Same27 scopes71 choices202 labels. Remaining lifecycle and pending defenses prevent whole-module certification.",
+      "event_battle_packet_review": {
+        "decisions": [
+          "D221",
+          "D222",
+          "D223"
+        ],
+        "receipt": "verification/maintenance/code-constraints-event-battle-packet-review-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_event_battles_view.py",
