@@ -5,7 +5,7 @@ from functools import lru_cache
 from pathlib import Path
 from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
-                                  supplemental_profiles,format_reference)
+                                  supplemental_profiles,format_reference,MissingHpExceedsMaximum)
 from .relic_attributes import is_attribute_rune,_apply_selected_runes
 from .supplemental_cost import COST_KINDS,cost_layer,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
@@ -133,7 +133,7 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
         row=next(r for r in result['rows'] if r['name'].startswith('部署费用'))
         row['value']=cost['estimated_cost']
     try:baseline=_skill_reference(baseline_preview,stats)
-    except ValueError as error:
+    except MissingHpExceedsMaximum as error:
         # A gap can be legal with an HP rune but exceed unmodified max HP.
         baseline=None;baseline_error=str(error)
     else:baseline_error=None

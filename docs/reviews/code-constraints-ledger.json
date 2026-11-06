@@ -1497,13 +1497,20 @@
     },
     {
       "file": "rouge/supplemental_run.py",
-      "sha256": "1647a2e194c7c6bf2ea81f5e5e2f78f85cb232268ea497ac0660c76b77d0b7f2",
+      "sha256": "e2734c992f7a9d740ddfc5fb464b10c3f700b3cab4b19e2ca638a048a2d8e67b",
       "rule1": "consume_classified_runes_once_and_sum_ordinary_token_effects_once",
       "rule2": "obsolete_filter_wrapper_removed_no_new_helper",
       "rule3": "existing_defenses_unchanged_D128_D129_registered",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Supplemental and token callers already classify rune inputs; reuse existing _apply_selected_runes. Token finish splits applied rules once and sums each ordinary kind once using original order and sum semantics. Raw filtering wrapper had no remaining product callers and was removed; two tests and six historical validation-script call sites adapted, no historical full suite run. Prior relic_attributes whole-module pass retained after examining remaining four functions; other modules only changed-path review. D128 equal-level interpolation and D129 unqualified regeneration factor fallback unchanged. Full preflight and other ordinary work remain."
+      "evidence": "Supplemental and token callers already classify rune inputs; reuse existing _apply_selected_runes. Token finish splits applied rules once and sums each ordinary kind once using original order and sum semantics. Raw filtering wrapper had no remaining product callers and was removed; two tests and six historical validation-script call sites adapted, no historical full suite run. Prior relic_attributes whole-module pass retained after examining remaining four functions; other modules only changed-path review. D128 equal-level interpolation and D129 unqualified regeneration factor fallback unchanged. Full preflight and other ordinary work remain.",
+      "scoped_reviews": [
+        {
+          "decision": "D122",
+          "receipt": "verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json",
+          "scope": "baseline HP deficit failure; remaining module not certified"
+        }
+      ]
     },
     {
       "file": "rouge/supplemental_cost.py",
@@ -1551,7 +1558,7 @@
     },
     {
       "file": "rouge/supplemental_skills.py",
-      "sha256": "4d2c522fe34f2478b1eb1e6fed27d97d37b28f047eb63110d856e4df8436a5f8",
+      "sha256": "0c7bf4dbc70a464d61616b1a9f701c406e5eeeb1fe9e8bc95d9aa96422dbdb9b",
       "rule1": "candidate_unlock_rank_once",
       "rule2": "no_new_helper_reused_row_builder_retained",
       "rule3": "D125_D126_pending_unchanged",
@@ -1562,7 +1569,14 @@
         "decision": "D126",
         "evidence": "verification/maintenance/code-constraints-supplemental-bonus-review-20261106/summary.json",
         "result": "Six initialized-field defaults removed; 14 targeted tests pass."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "decision": "D122",
+          "receipt": "verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json",
+          "scope": "baseline HP deficit failure; remaining module not certified"
+        }
+      ]
     },
     {
       "file": "rouge/supplemental_enemies.py",

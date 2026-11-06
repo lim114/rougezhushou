@@ -7,6 +7,10 @@ from .catalog import operator_attributes
 from .healing_budget import _amount
 
 
+class MissingHpExceedsMaximum(ValueError):
+    """The declared self-healing deficit exceeds this calculation's max HP."""
+
+
 @lru_cache(maxsize=1)
 def supplemental_profiles():
     return json.loads((Path(__file__).parent/'data/supplemental-skills.json').read_text(encoding='utf-8'))
@@ -98,7 +102,7 @@ def _skill_reference(preview,stats,battle_attributes=None):
         add('技能期间防御力',stats['defense']*(1+bonuses['def']+bb['def']),'防御力')
     elif kind in ('self_heal','heal_boost'):
         if kind=='self_heal':
-            if missing_hp>hp: raise ValueError('自身生命缺口不能超过计算的最大生命。')
+            if missing_hp>hp: raise MissingHpExceedsMaximum('自身生命缺口不能超过计算的最大生命。')
             heal=hp*bb['heal_scale'];add('天赋后最大生命',hp,'最大生命')
         else:
             heal=stats['attack']*(1+bonuses['atk']+bb['atk'])

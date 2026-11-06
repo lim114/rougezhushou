@@ -5442,3 +5442,7 @@ D85完成：必需panel直接读取，保留真实可选的事件绑定与刷新
 ## 维护：地图阅读分组复用内部文字标签契约（2026-11-06）
 
 删除内部固定分组标签的重复类型检查和字符串转换；10项定向通过。仅D84局部完成，不关闭整组。回执 `verification/maintenance/code-constraints-map-reading-groups-20261106/summary.json`。
+
+## 维护：无加成基准仅捕获明确的自身生命缺口超限（2026-11-06）
+
+D122完成：通过具体输入异常收窄基准捕获；28项定向通过，公式未改。原测试窗口未更新，不增加功能节。回执 `verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json`。
