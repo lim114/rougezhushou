@@ -43,9 +43,7 @@ def preserve_plan(scenario, components, duration):
 def attach_result(result, scenario, full, shown, normal, duration, cycle, *, rate, cost, attack_credit):
     from .timing import phase_totals
     from .uncertain_sources import mask_pending_damage
-    reference = full.get('amiya_continuous_reference')
-    if reference is None:
-        return
+    reference = full['amiya_continuous_reference']
     skill = result['estimate']['skill']
     clock_keys = ('initial_seconds', 'duration_seconds', 'recharge_seconds', 'cycle_seconds',
                   'total_damage', 'phase_damage', 'cycle_damage', 'cycle_dps',

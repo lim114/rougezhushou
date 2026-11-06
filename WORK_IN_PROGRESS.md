@@ -1,3 +1,7 @@
+## 当前断点：计算链重复校验整改（2026-11-06）
+
+D102/D103完成，32项定向通过；原280组剩253组。D100及其他模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-calculation-validation-review-20261106/summary.json。
+
 ## 当前断点：笔记资料入口整改（2026-11-06）
 
 D98/D99完成，9项定向通过；原280组剩255组。其他模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-reference-note-entry-review-20261106/summary.json。

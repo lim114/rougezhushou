@@ -1053,12 +1053,17 @@
     },
     {
       "file": "rouge/amiya_continuous_reference.py",
-      "sha256": "d893194613dd1d1eab1a97668d0e614aef3689b933022ef7cd5b17ceddc85c18",
+      "sha256": "3c502f95ea9cf9454d94f98b31b81a0de1cfec582a1d03e76c1c4787a2fc12a3",
       "rule1": "selected_consumers_deduplicated_remainder_pending",
       "rule2": "unused_wrapper_and_single_caller_state_helper_removed_where_reviewed",
       "rule3": "pending_remainder_D101_timing_D102_amiya",
       "full_module_review_complete": false,
-      "evidence": "Entire file read. source_state had exactly one caller preserve_plan and only encoded empty/unbound/None before caller decoded it; inlined into preserve_plan preserving numeric-zero early return and excluded/positive-source cases. attach_result unchanged; its optional-reference early return duplicates the currently sole caller guard and is D102 pending. Deep copies retain conditional components separately before damage mutations, not defensive recovery. Full certification withheld for D102."
+      "evidence": "Entire file read. source_state had exactly one caller preserve_plan and only encoded empty/unbound/None before caller decoded it; inlined into preserve_plan preserving numeric-zero early return and excluded/positive-source cases. attach_result unchanged; its optional-reference early return duplicates the currently sole caller guard and is D102 pending. Deep copies retain conditional components separately before damage mutations, not defensive recovery. Full certification withheld for D102.",
+      "calculation_validation_review": {
+        "decision": "D102",
+        "evidence": "verification/maintenance/code-constraints-calculation-validation-review-20261106/summary.json",
+        "result": "Same snapshot checks reused; 32 targeted tests pass."
+      }
     },
     {
       "file": "rouge/charge_reference.py",
@@ -1080,12 +1085,17 @@
     },
     {
       "file": "rouge/relic_damage_factors.py",
-      "sha256": "fc158e89e4cd6688b468b76f8e8f0f04ff3b823e37eaff2f6b3a0803dbdae42e",
+      "sha256": "a82cae1c50d014cc435e22fbeee577550b2b02b8d6ae30d204a4037113c0a478",
       "rule1": "selected_summary_paths_reviewed_remainder_pending",
       "rule2": "shared_helpers_have_multiple_real_consumers",
       "rule3": "pending_remainder_D101_timing_D103_relic_factors",
       "full_module_review_complete": false,
-      "evidence": "Entire module read. Source binding, exact supported constants and unresolved composition masks represent documented domain qualification. No arbitrary one-use wrapper/catch. parameter_factor verifies selected elemental rules then source_factor re-filters/re-verifies identical objects synchronously; D103 pending, unchanged. Standalone source_factor validation remains required. Module not fully certified until scoped duplicate-protection decision."
+      "evidence": "Entire module read. Source binding, exact supported constants and unresolved composition masks represent documented domain qualification. No arbitrary one-use wrapper/catch. parameter_factor verifies selected elemental rules then source_factor re-filters/re-verifies identical objects synchronously; D103 pending, unchanged. Standalone source_factor validation remains required. Module not fully certified until scoped duplicate-protection decision.",
+      "calculation_validation_review": {
+        "decision": "D103",
+        "evidence": "verification/maintenance/code-constraints-calculation-validation-review-20261106/summary.json",
+        "result": "Same snapshot checks reused; 32 targeted tests pass."
+      }
     },
     {
       "file": "rouge/branch_position_overview.py",

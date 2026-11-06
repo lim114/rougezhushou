@@ -1,0 +1,45 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "计算链复用已确认参考及藏品来源",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "505aa45f74089c9156093287d9a9436c3fa28966",
+  "changed_sources": [
+    "rouge/amiya_continuous_reference.py",
+    "rouge/relic_damage_factors.py"
+  ],
+  "source_sha256": {
+    "rouge/amiya_continuous_reference.py": "3c502f95ea9cf9454d94f98b31b81a0de1cfec582a1d03e76c1c4787a2fc12a3",
+    "rouge/relic_damage_factors.py": "a82cae1c50d014cc435e22fbeee577550b2b02b8d6ae30d204a4037113c0a478"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D102",
+    "D103"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 32,
+    "command": "python -m unittest tests.test_relic_factor_validation_review tests.test_relic_damage_composition tests.test_amiya_continuous_lifetime",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-166",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "D102 sole caller gates reference presence. D103 two public entries retain own source checks and share verified arithmetic; helper has two callers and avoids revalidation.",
+    "requirements": "Source-bound factor formulas, duplicate relic deduplication, unknown mixture and Amiya conditional clock semantics unchanged."
+  },
+  "remaining": [
+    "D100 calculator input exception contracts",
+    "Other modules",
+    "Test window update"
+  ]
+}

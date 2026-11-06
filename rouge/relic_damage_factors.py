@@ -24,21 +24,25 @@ def verified_rule(rule,dtype):
         rule.get('source_buff_index')==0 and rule.get('value')==source[1]-1 and rule.get('group')==group)
 
 
+def _verified_factor(selected,dtype):
+    distinct={r['relic_id']:r['value'] for r in selected}
+    return prod(1+v for v in distinct.values()) if dtype=='elemental' else 1+sum(distinct.values())
+
+
 def source_factor(rules,dtype):
     """Return parameter arithmetic only for source-bound combinations."""
     selected=[r for r in rules if r.get('kind')=='damage_taken' and r.get('damage_type')==dtype]
     if not selected:return 1
     if len(selected)==1:return 1+selected[0]['value']
     if not all(verified_rule(r,dtype) for r in selected):return None
-    distinct={r['relic_id']:r['value'] for r in selected}
-    return prod(1+v for v in distinct.values()) if dtype=='elemental' else 1+sum(distinct.values())
+    return _verified_factor(selected,dtype)
 
 
 def parameter_factor(effects,dtype):
     """Preserve existing manual-input convention outside the verified pair."""
     selected=[e for e in effects if e['kind']=='damage_taken' and e.get('damage_type')==dtype and float(e['value'])!=0]
     if dtype=='elemental' and len({r.get('relic_id') for r in selected})>1 and all(verified_rule(r,dtype) for r in selected):
-        return source_factor(selected,dtype)
+        return _verified_factor(selected,dtype)
     return 1+sum(float(e['value']) for e in selected)
 
 
