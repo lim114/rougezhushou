@@ -5434,3 +5434,7 @@ D43/D44按批准保留，16项定向通过；解析回调职责和准确关卡�
 ## 维护：精确资料不可用时改为玩家手动打开目录（2026-11-06）
 
 D86：精确资料缺失时提供明确手动目录按钮，取消不打开主窗，交互后重核节点身份；8项定向检查通过。未新增功能节，未完成原窗口实机更新。回执 `verification/maintenance/code-constraints-manual-catalog-20261106/summary.json`。
+
+## 维护：地图资料窗口按工厂契约直接读取必需面板（2026-11-06）
+
+D85完成：必需panel直接读取，保留真实可选的事件绑定与刷新接口；12项定向通过，窗口原生更新仍待完成。不增加功能节。回执 `verification/maintenance/code-constraints-reader-panel-20261106/summary.json`。

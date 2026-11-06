@@ -455,7 +455,7 @@ class MapPanel(QWidget):
         if node_binding is not None:
             from .current_node_readers import recheck
             if recheck(node_binding)is None:self.close_reference();return
-        panel=getattr(self.reference_popup,'panel',None)
-        if panel is not None and hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()
+        panel=self.reference_popup.panel
+        if hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()
         elif self.selected_reference[1]=='battle':
             panel.set_context({}if self.view.historical or self.selected_reference[0].startswith('已读历史')else self.owner.run.state.get('config',{}))

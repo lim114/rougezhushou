@@ -1,3 +1,7 @@
+## 当前断点：地图资料窗口按工厂契约直接读取必需面板（2026-11-06）
+
+D85完成；核对两类工厂和20个事件窗口构造，12项定向检查通过。原280组完成167、剩113。原测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-reader-panel-20261106/summary.json`。
+
 ## 当前断点：精确资料不可用时改为玩家手动打开目录（2026-11-06）
 
 D86完成，8项定向通过。原280组完成166、剩114；原测试窗口更新仍待完成，其他待审决定未改。回执 `verification/maintenance/code-constraints-manual-catalog-20261106/summary.json`。
