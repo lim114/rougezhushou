@@ -1,3 +1,7 @@
+## 当前断点：商店时间边界验收及D318整改（2026-11-06）
+
+D76/D78销项；D318另获授权已实施。初轮22、最终23定向通过；原280组余266组，新增待审0。回执verification/maintenance/code-constraints-shop-time-review-20261106/summary.json。
+
 ## 当前断点：历史资源与商店来源重复读取清理（2026-11-06）
 
 D73/D75完成；39定向通过，268组已批准待落实。模块整体数量不变。回执verification/maintenance/code-constraints-history-snapshot-review-20261106/summary.json。

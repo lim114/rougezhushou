@@ -1,6 +1,6 @@
 """Partial shop names observed in this run; never inventory or purchase claims."""
 import time
-import math
+import sys
 from copy import deepcopy
 from .player_shop_hover import canonical
 
@@ -27,7 +27,7 @@ def qualified(snapshot,*,items=None):
     return result
 
 def remember(run,snapshot,expected_run,at):
-    if run.state.get('id')!=expected_run or type(at)not in(int,float)or not 0<=time.time()-at<=2:return False
+    if run.state.get('id')!=expected_run or type(at)not in(int,float)or not -sys.float_info.max<=at<=sys.float_info.max or not 0<=time.time()-at<=2:return False
     return record_shop(run.state,snapshot,at)and run.save()
 
 def record_shop(state,snapshot,at):
@@ -44,7 +44,7 @@ def recorded_shops(state):
     for position,row in enumerate(state.get('history',[])):
         if not isinstance(row,dict)or row.get('kind')!='shop_items_read':continue
         at=row.get('at')
-        if type(at)not in(int,float)or not math.isfinite(at)or at<0:continue
+        if type(at)not in(int,float)or not 0<=at<=sys.float_info.max:continue
         candidates.append((position,row))
     if not candidates:return []
     from .expansion_reference import packet

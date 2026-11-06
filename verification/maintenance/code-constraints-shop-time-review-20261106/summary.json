@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "商店时间边界验收及超大时间入口整改",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "e9e9aab79542f9b1d7e175664fc3d25534e77a44",
+  "changed_sources": [
+    "rouge/player_shop_memory.py"
+  ],
+  "coverage": {
+    "full_modules_certified": 67,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D76",
+    "D78",
+    "D318"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 23,
+    "command": "python -m unittest tests.test_history_snapshot_entry_review tests.test_player_feature_423 tests.test_shop_prices_443",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-155",
+    "pre_change_tests_passed": 22,
+    "live_window": [
+      {
+        "pid": 34580,
+        "visible": true,
+        "responds": true
+      }
+    ]
+  },
+  "review": {
+    "standards": "D318 approved explicitly before adding two entry bounds; no new catch/helper/retry. D76 original run/time conditions retained.",
+    "requirements": "Huge integer times excluded; valid history retained; max finite history time allowed. D78 prior deletion closed with evidence."
+  },
+  "remaining": [
+    "D77 history parsing review",
+    "Cross-entry archive qualification"
+  ],
+  "source_sha256": {
+    "rouge/player_shop_memory.py": "9f642bce29ed6377d56f9ca337ed91dc83f2a608525ddbfb9b38fd38fcc84f52"
+  }
+}
