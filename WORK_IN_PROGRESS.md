@@ -1,3 +1,7 @@
+## 当前断点：科技资料读写保护复核与清理失败提示（2026-11-06）
+
+D301/D302/D303完成，23定向通过、旧版两项清理测试复现失败。原280组完成135、剩145；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-technology-persistence-20261106/summary.json。
+
 ## 当前断点：分队账户条件删除三处空记录兜底（2026-11-06）
 
 D304完成，19定向通过、48方案等价。原280组完成132、剩148；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-squad-account-contract-20261106/summary.json。

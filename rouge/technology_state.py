@@ -49,6 +49,7 @@ class TechnologyState:
         self._expected_hash = None
         self.preserve_original = False
         self.issue = None
+        self.cleanup_issue = None
         if self.path is None:
             return
         try:
@@ -157,10 +158,10 @@ class TechnologyState:
 
     def persistence_notice(self):
         if self.issue:
-            return self.issue + ' 新的手动记录仅在当前运行有效，本次不会覆盖原资料。'
+            return self.issue + ' 新的手动记录仅在当前运行有效，本次不会覆盖原资料。' + (self.cleanup_issue or '')
         if self.path is None:
             return '当前为临时资料窗口，关闭后不保留手动记录。'
-        return ''
+        return '科技资料已保存。' + self.cleanup_issue if self.cleanup_issue else ''
 
     def describe(self, node_id, *, prepared_record=None):
         record = self.view(node_id) if prepared_record is None else prepared_record
@@ -210,5 +211,5 @@ class TechnologyState:
             if temporary is not None:
                 try:
                     temporary.unlink(missing_ok=True)
-                except OSError:
-                    pass
+                except OSError as error:
+                    self.cleanup_issue = '临时文件清理未完成：' + str(error)

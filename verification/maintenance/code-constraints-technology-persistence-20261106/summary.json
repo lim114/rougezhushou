@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "科技资料读写保护复核与清理失败提示",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "02aecfe40f602b584a72ad78ef2c55d71a4401ac",
+  "changed_sources": [
+    "rouge/technology_state.py",
+    "tests/test_technology_cleanup.py"
+  ],
+  "source_sha256": {
+    "rouge/technology_state.py": "470d95540f140266dbca63b9b59fb0f6b78ef2f5d16407c381a48c92ccafd451",
+    "tests/test_technology_cleanup.py": "dc4db5dbe194563007514281f2be8bb56e4e1c1f785d48937e9a52ca2bdda2d7"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D301",
+    "D302",
+    "D303"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 23,
+    "tests_passed": 23,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_technology_cleanup tests.test_technology_state_128 tests.test_technology_snapshot_reuse",
+    "local_evidence": ".local/code-constraints-review-234",
+    "old_source_regression": "Both2 cleanup tests fail on old source; pass after correction",
+    "live_window": "No visual change; original test window update pending."
+  },
+  "review": {
+    "standards": "D301/D302/D303 authorized persistence protections reviewed. Existing cleanup catch now records warning under explicit category7 approval. No new catch/retry/wrapper. Independent load/save validation remains at different operation boundaries.",
+    "requirements": "23 tests cover original preservation, conflict/atomic failure, malformed and future metadata, usable timestamps, internalTypeError propagation, and cleanup warnings. Link/read failure paths use injection, not actual Windows symlink acceptance."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

@@ -5334,3 +5334,7 @@ D300：列表复用已读节点；正文状态只读一次，描述复用同一�
 ## 维护：分队账户条件删除三处空记录兜底（2026-11-06）
 
 D304完成；核对TechnologyState.view及生产调用，删除三处不可达空记录分支。19定向通过、48方案等价。回执：`verification/maintenance/code-constraints-squad-account-contract-20261106/summary.json`。
+
+## 维护：科技资料读写保护复核与清理失败提示（2026-11-06）
+
+D301/D302/D303按已授权保护复核；清理失败不再静默，明确区分已保存与未保存。23定向通过，旧源码两项复现失败。回执：`verification/maintenance/code-constraints-technology-persistence-20261106/summary.json`。
