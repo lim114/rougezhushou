@@ -1,3 +1,7 @@
+## 维护：出怪与物件选项读取整改（2026-11-06）
+
+局部重复控件读取和物件查找已改，定向检查通过，不计整模块完成。[回执](verification/maintenance/code-constraints-spawn-object-selection-20261106/README.md)。
+
 ## 维护：出怪与物件对话框关闭整改（2026-11-06）
 
 三处包装和父窗额外清空已删除；关闭、拒绝、接受均单次清理。失败及复测完整保留。[回执](verification/maintenance/code-constraints-spawn-object-close-20261106/README.md)。

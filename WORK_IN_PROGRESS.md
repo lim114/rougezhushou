@@ -1,3 +1,7 @@
+## 当前断点：出怪与物件选择读取只执行一次（2026-11-06）
+
+选择键读取一次、物件row复用，35定向通过，窗口更新；D227—D230待审，共193组。外部回调及单次包装/重复预检仍未完成。回执verification/maintenance/code-constraints-spawn-object-selection-20261106/summary.json。
+
 ## 当前断点：出怪与物件对话框统一单次清理（2026-11-06）
 
 三对话框关闭清理2次改1次，删除父窗额外清空；27项初轮26通过/1旧断言失败，基线同失败，修正断言单项通过，窗口已更新。189组待审未改。回执verification/maintenance/code-constraints-spawn-object-close-20261106/summary.json；继续选择读取和来源保护回顾。

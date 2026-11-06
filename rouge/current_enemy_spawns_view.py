@@ -37,7 +37,9 @@ class CurrentEnemySpawnsPanel(QWidget):
     def _filter_changed(self,*_):
         self._fill(self.entries,[]);return self.refresh_reference()
     def selected(self):
-        return next((r for r in self.result['entries']if r['key']==self.entries.currentData()),None)if self.result else None
+        if self.result is None:return None
+        key=self.entries.currentData()
+        return next((r for r in self.result['entries']if r['key']==key),None)
     def refresh_reference(self,*_):
         fresh=model.stage_reference(self.stage_id,self.enemy_key)
         if fresh is None:self.clear_reference();return False

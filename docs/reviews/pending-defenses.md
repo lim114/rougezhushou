@@ -221,3 +221,8 @@
 
 | D225 | CurrentEventBattlesPanel.open_battle/open_full_flow点击时重新reference，变化则clear_reference并返回False | 页面展示后来源改变，撤下旧选项及子窗；两次核对发生于不同时间 | 建议保留点击时失效撤下；替代使用显示时快照，可能继续打开过期来源。原样待审 |
 | D226 | CurrentEventBattlesPanel.open_battle预览refresh_reference失败关闭、make_reader返回None不显示 | 作战资料无法核实时撤下或拒绝预览；正常无选择分支不含本项 | 建议保留创建/刷新失败出口；替代直接访问会抛错或保留失效窗口。原样待审，不扩大到共享工厂全部保护 |
+
+| D227 | CurrentEnemySpawnsPanel.refresh_reference头像raw缺失或Qt解码失败显示文字 | 精确引用无图/坏图时不显示旧头像 | 建议保留无图状态及解码失败提示；替代无图留空、解码异常直接显露。原样待审 |
+| D228 | CurrentEnemySpawnsPanel刷新来源失败、_resolve解析失败、follow_position位置复核失败清空 | 失效来源撤下并发失效信号；_resolve只有follow_action调用 | 建议确认失效行为后内联单次_resolve并保留已同意出口；替代原样保留。单次包装尚未整改，不计规则二完成 |
+| D229 | CurrentObjectPositionPanel刷新缺来源/原图或set_image失败清空；CurrentStageObjectsPanel刷新/resolve失败清空及子窗刷新失败关闭 | 来源/图像失效时不保留旧位置 | 建议保留来源失效撤下并分离实际输入错误；替代留旧结果或直接上报。原样待审，正常未选项不含此组 |
+| D230 | CurrentStageObjectsPanel.open_position先position_reference预检，后共享工厂或对话框再读取；新子窗result为空又关闭 | 前后两层确保目标有效，但有同次重复读取 | 建议审批保留失败出口后合并同次读取；替代原样双读。仍有普通重复未改，不因登记销项 |

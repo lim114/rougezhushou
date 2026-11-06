@@ -62,15 +62,21 @@ class CurrentStageObjectsPanel(QWidget):
         if notify and had:self.sourceInvalidated.emit()
     def _filter_changed(self,*_):self.close_children();self._fill(self.entries,[]);self._fill(self.activations,[]);self.refresh_reference()
     def _entry_changed(self,*_):self.close_children();self._fill(self.activations,[]);self.refresh_reference()
-    def selected(self):return next((r for r in self.result['entries']if r['key']==self.entries.currentData()),None)if self.result else None
-    def selected_action(self):
-        row=self.selected();return next((a for a in row['activation_actions']if a['key']==self.activations.currentData()),None)if row else None
+    def selected(self):
+        if self.result is None:return None
+        key=self.entries.currentData()
+        return next((r for r in self.result['entries']if r['key']==key),None)
+    def selected_action(self,*,row=...):
+        if row is ...:row=self.selected()
+        if row is None:return None
+        key=self.activations.currentData()
+        return next((a for a in row['activation_actions']if a['key']==key),None)
     def refresh_reference(self,*_):
         fresh=model.stage_reference(self.stage_id)
         if fresh is None:self.clear_reference();return False
         keep=self.result is not None and fresh['source_identity']==self.result['source_identity']and fresh['stage_id']==self.result['stage_id'];key=self.entries.currentData()if keep else None;action_key=self.activations.currentData()if keep else None
         if not keep:self.close_children()
-        self.result=fresh;rows=model.rows(fresh,self.search.text(),self.kind.currentData(),self.link.currentData());self._fill(self.entries,[(model.label(r),r['key'])for r in rows],key,'请选择一份物件或卡片声明'if rows else'此范围未找到声明');self.entries.setEnabled(bool(rows));row=self.selected();actions=row['activation_actions']if row else[];self._fill(self.activations,[(model.battle.action_label(a),a['key'])for a in actions],action_key,'请选择一条启用记录'if actions else'未找到直接启用记录');self.activations.setEnabled(bool(actions));action=self.selected_action()
+        self.result=fresh;rows=model.rows(fresh,self.search.text(),self.kind.currentData(),self.link.currentData());self._fill(self.entries,[(model.label(r),r['key'])for r in rows],key,'请选择一份物件或卡片声明'if rows else'此范围未找到声明');self.entries.setEnabled(bool(rows));row=self.selected();actions=row['activation_actions']if row else[];self._fill(self.activations,[(model.battle.action_label(a),a['key'])for a in actions],action_key,'请选择一条启用记录'if actions else'未找到直接启用记录');self.activations.setEnabled(bool(actions));action=self.selected_action(row=row)
         view=(deepcopy(fresh['source_identity']),self.search.text(),self.kind.currentData(),self.link.currentData(),row['key']if row else None,action['key']if action else None);preserve=keep and view==self._view_key
         full_text=model.player_text(fresh,row,action);text=full_text.replace(f"资料中共{len(fresh['entries'])}条预置声明；这不是当前场上数量或本局实际持有数量。",f"预置物件与卡片：{len(fresh['entries'])}条。").replace('。这不证明当前可见或已经启用。','。').replace('；不据此绘制攻击或影响范围。','。');replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【使用提醒】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'reference':fresh,'selected':row,'activation':action,'actual_active':None,'actual_reward':None}),preserve=preserve);self.action_button.setEnabled(action is not None);self.position_button.setEnabled(bool(row and row['kind']=='instance'and isinstance(row['raw'].get('position'),dict)))
         if not preserve:self.tabs.setCurrentIndex(0)
@@ -78,7 +84,7 @@ class CurrentStageObjectsPanel(QWidget):
             if row is None or self.position_dialog.panel.key!=row['key']or not self.position_dialog.panel.refresh_reference():self.close_children()
         self._view_key=view;return True
     def follow_action(self):
-        row=self.selected();action=self.selected_action()
+        row=self.selected();action=self.selected_action(row=row)
         if row is None or action is None:return False
         resolved=model.resolve(self.result,row['key'],action['key'])
         if resolved is None:self.clear_reference();return False

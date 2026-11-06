@@ -1794,23 +1794,23 @@
     },
     {
       "file": "rouge/current_enemy_spawns_view.py",
-      "sha256": "23fd6c86b4de4ccbc0ce9f957bb22d4060988a163ba4aab53dbd54d9d0b3df5b",
+      "sha256": "8f14eb550d7c221f605638b4152a409125fb8598856d554d7adb1226f8c3e05f",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "single_done_cleanup_no_parent_preclear",
-      "rule2": "remove_three_redundant_closeEvent_wrappers",
-      "rule3": "no_protection_changes",
-      "evidence": "Read source; focused review of three dialog close/done chains and object parent close_children. Native probes close2->1, reject/accept remain1, all clear result and hide. Parent preclear removed since child close reaches done. Other refresh/resolve/image protections not certified by this lifecycle review. 27 targeted initially26pass1stale text failure, baseline same failure; corrected test assertion then single retest pass."
+      "rule1": "read_selection_key_once; object_refresh_and_action_reuse_selected_row",
+      "rule2": "existing_selected_action_accepts_prepared_row_no_new_helper",
+      "rule3": "D227_D230_pending_unchanged",
+      "evidence": "Read selected paths and real callers. Qt currentData moved before generator. selected_action keyword row reused locally; standalone and external calls retain lookup. Counter verified1 key read and0 reselects when prepared. External current_battle_view callback still repeats selection and awaits next batch; _resolve single-use helper held under D228. No module completion."
     },
     {
       "file": "rouge/current_stage_objects_view.py",
-      "sha256": "807b89cd760049fa16e7bb303530b42f1053a4dfb495d8caa48ab522c682486c",
+      "sha256": "3dc2f01757de564d023fe1fe1515bd776c2cd356f679e713ac8f7cdfee5801c6",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "single_done_cleanup_no_parent_preclear",
-      "rule2": "remove_three_redundant_closeEvent_wrappers",
-      "rule3": "no_protection_changes",
-      "evidence": "Read source; focused review of three dialog close/done chains and object parent close_children. Native probes close2->1, reject/accept remain1, all clear result and hide. Parent preclear removed since child close reaches done. Other refresh/resolve/image protections not certified by this lifecycle review. 27 targeted initially26pass1stale text failure, baseline same failure; corrected test assertion then single retest pass."
+      "rule1": "read_selection_key_once; object_refresh_and_action_reuse_selected_row",
+      "rule2": "existing_selected_action_accepts_prepared_row_no_new_helper",
+      "rule3": "D227_D230_pending_unchanged",
+      "evidence": "Read selected paths and real callers. Qt currentData moved before generator. selected_action keyword row reused locally; standalone and external calls retain lookup. Counter verified1 key read and0 reselects when prepared. External current_battle_view callback still repeats selection and awaits next batch; _resolve single-use helper held under D228. No module completion."
     }
   ]
 }
