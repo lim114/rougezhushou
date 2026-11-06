@@ -1,3 +1,7 @@
+## 当前断点：培养技能执行移出输入捕获并复用干员分类（2026-11-06）
+
+D119部分推进，两条技能执行/结果组装移出输入捕获；16项定向通过，干员分类同批复用。准备函数内部边界继续审查。原280组仍完成169、剩111，测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-cultivation-execution-20261106/summary.json`。
+
 ## 当前断点：培养输入使用明确异常契约，内部属性缺陷直接上报（2026-11-06）
 
 D118完成，18项定向通过，输入错误保留逐行提示，内部属性缺陷不再伪装输入错误。原280组完成169、剩111；测试窗口更新及待审决定仍保留。回执 `verification/maintenance/code-constraints-cultivation-input-20261106/summary.json`。

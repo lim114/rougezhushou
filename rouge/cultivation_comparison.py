@@ -4,7 +4,7 @@ from copy import deepcopy
 from .catalog import catalog,operator_profiles,_operator_attribute_reference,CultivationInputError
 from .damage import _prepare_damage, _calculate_prepared
 from .healing_budget import _amount
-from .supplemental_skills import defaults,skill_reference,supplemental_profiles
+from .supplemental_skills import defaults,_cultivated_stats,_skill_reference,supplemental_profiles
 
 
 def compare_cultivation(scenario,preview):
@@ -13,6 +13,8 @@ def compare_cultivation(scenario,preview):
     profiles=operator_profiles()
     if type(identity) is not str or identity not in profiles: raise ValueError('需要有效干员。')
     if type(proposals) is not list or not 1<=len(proposals)<=12: raise ValueError('培养方案需要1–12项，第一项作为差值基准。')
+    core_skill=identity in catalog()['operators']
+    supplemental_skill=not core_skill and identity in supplemental_profiles()['operators']
     seen=set();rows=[]
     required={'name','elite','level','trust','potential','module_id','module_level'}
     for proposal in proposals:
@@ -47,22 +49,25 @@ def compare_cultivation(scenario,preview):
         if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
         try:
-            if identity in catalog()['operators']:
+            if core_skill:
                 prepared=_prepare_damage(proposed,cultivated_attributes=attributes)
-                modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']
-                row.update(status='技能已计参考' if modeled['complete'] else '技能部分参考',
-                           window_damage=metrics.get('window_damage'),window_healing=metrics.get('window_healing'))
-                row['notes'].extend(modeled['estimate']['notes'])
-            elif identity in supplemental_profiles()['operators']:
+            elif supplemental_skill:
                 supplied=defaults(identity)
                 for key in supplied:
                     if key in proposed:supplied[key]=proposed[key]
                 # Supplemental budget is a one-event parameter comparison.
                 supplied.update(count=1,missing_hp=0)
-                row['skill_reference']=skill_reference(supplied);row['status']='单次技能参考'
-            else:row['notes'].append('该干员技能数值尚未接入，只比较基础培养属性。')
+                supplemental_stats=_cultivated_stats(supplied)
         except ValueError as error:
-            row['error']=str(error);row['status']='仅属性；技能不可测算'
+            row['error']=str(error);row['status']='仅属性；技能不可测算';continue
+        if core_skill:
+            modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']
+            row.update(status='技能已计参考' if modeled['complete'] else '技能部分参考',
+                       window_damage=metrics.get('window_damage'),window_healing=metrics.get('window_healing'))
+            row['notes'].extend(modeled['estimate']['notes'])
+        elif supplemental_skill:
+            row['skill_reference']=_skill_reference(supplied,supplemental_stats);row['status']='单次技能参考'
+        else:row['notes'].append('该干员技能数值尚未接入，只比较基础培养属性。')
     baseline=rows[0]
     if baseline['attributes'] is None:raise ValueError('基准培养方案不可测算：'+baseline['error'])
     base={r['name']:r['value'] for r in baseline['skill_reference']['rows']} if baseline['skill_reference'] else {}
