@@ -152,7 +152,7 @@ def related_entities(result,enemy_key,*,prepared_entity=...):
 
 
 def resolve_related(result,enemy_key,request):
-    if result is None or type(request)is not dict or request not in related_entities(result,enemy_key):return None
+    if type(request)is not dict or request not in related_entities(result,enemy_key):return None
     fresh=reference(result['stage_id'],enemy_key)
     if fresh is None or fresh['source_identity']!=result['source_identity']or fresh['stage']!=result['stage']:return None
     return {'stage_id':fresh['stage_id'],'enemy_key':request['enemy_key']}

@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "关联跳转复用实体空值判断并登记浮游单元等级问题",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "c9bc5bb3a9814c7348f3c43be784e4d081ed744f",
+  "changed_sources": [
+    "rouge/current_elbert_reference.py",
+    "tests/test_elbert_related_snapshot.py"
+  ],
+  "source_sha256": {
+    "rouge/current_elbert_reference.py": "b0b94f9b5fd9fe144f2cdcb9e2665dffe07406893db85e820e992c02b042e962",
+    "tests/test_elbert_related_snapshot.py": "d0c5329ed012ee4bfcec3929ced72d4540e92b5c26dc758926da1715c8817e97"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [
+    "D321"
+  ],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_elbert_related_snapshot tests.test_current_elbert_366",
+    "tests_run": 14,
+    "tests_passed": 14,
+    "seconds": 6.775,
+    "live_window": "Original test window update pending; no visual change."
+  },
+  "review": {
+    "standards": "D296 removes duplicate result None test: related_entities delegates to entity which returns no candidates for absent source. Request type remains checked before membership. No new helper/catch. D315 source inspected; level fallback issue D321 is pending, unmodified.",
+    "requirements": "Missing result/entity and malformed request do not refresh; valid related jumps and changed-source rejection pass. D296 other projection checks remain open. D321 and earlier pending decisions consolidated for user review."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D296"
+  ]
+}

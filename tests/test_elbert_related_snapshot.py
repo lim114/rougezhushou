@@ -33,3 +33,12 @@ class RelatedSnapshotTests(unittest.TestCase):
         with patch.object(model, 'reference') as read:
             self.assertIsNone(model.resolve_related(result, '0', request))
             read.assert_not_called()
+
+    def test_missing_source_or_entity_never_refreshes(self):
+        result = model.reference('ro6_b_3')
+        request = model.related_entities(result, '0')[0]
+        for source, key, query in ((None, '0', request), (None, '0', None),
+                                   (result, None, request), (result, 'missing', request)):
+            with self.subTest(key=key, missing=source is None), patch.object(model, 'reference') as read:
+                self.assertIsNone(model.resolve_related(source, key, query))
+                read.assert_not_called()

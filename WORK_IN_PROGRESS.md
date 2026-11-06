@@ -1,3 +1,7 @@
+## 当前断点：关联跳转复用实体空值判断并登记浮游单元等级问题（2026-11-06）
+
+D296部分推进，14项定向通过。D321已集中提问，未改动其默认规则。原280组完成152、剩128；原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-related-empty-entry-20261106/summary.json`。
+
 ## 当前断点：事件历史统计收窄读取异常出口（2026-11-06）
 
 D316完成，8项定向通过，旧逻辑3处吞错复现。原280组完成152、剩128；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-event-sample-errors-20261106/summary.json`。
