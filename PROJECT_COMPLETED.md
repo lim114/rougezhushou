@@ -1,5 +1,7 @@
 ## 维护：统计历史读取错误出口收窄（2026-11-06）
 
+- 2026-11-06：player_map_find完整回顾及D79入口复用，6定向通过；回执 `verification/maintenance/code-constraints-node-finder-review-20261106/summary.json`。
+
 - 2026-11-06：D76时间/归属、D78重复来源销项；D318超大时间整改另获授权，最终23定向通过。回执 `verification/maintenance/code-constraints-shop-time-review-20261106/summary.json`。
 
 - 2026-11-06：D73/D75字段资格复用及商店来源重复读取清理；39项定向通过。回执 `verification/maintenance/code-constraints-history-snapshot-review-20261106/summary.json`。

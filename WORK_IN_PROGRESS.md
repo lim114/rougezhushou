@@ -1,3 +1,7 @@
+## 当前断点：地图搜索模块完整回顾（2026-11-06）
+
+D79完成，6定向通过；68完整/200部分/40异常等价/250结构。原280组余265组，D318已另行完成，无新待审。回执verification/maintenance/code-constraints-node-finder-review-20261106/summary.json。
+
 ## 当前断点：商店时间边界验收及D318整改（2026-11-06）
 
 D76/D78销项；D318另获授权已实施。初轮22、最终23定向通过；原280组余266组，新增待审0。回执verification/maintenance/code-constraints-shop-time-review-20261106/summary.json。

@@ -508,14 +508,15 @@
     },
     {
       "file": "rouge/player_map_find.py",
-      "sha256": "3b53d266e100c17e74ae10b0fbbf6ac86888a33f5c7f364c30f618c6682ef5ea",
-      "rule1": "same_refresh_zone_info_and_geometry_reused_selection_signal_not_duplicated",
-      "rule2": "existing_shared_geometry_helper_takes_current_points_no_new_wrapper",
-      "rule3": "pending_user_review",
-      "evidence": "NodeFinder exposes its already sorted zones to current refresh; no second sort/zone_info for floor tabs. Next refresh builds a new finder. D79 unchanged; not whole-module certification.",
+      "sha256": "19a70277a34bdacfad66017a92747d47a7e1eff098dc0417b0f9186ed3ff0279",
+      "rule1": "all_module_entry_contracts_reviewed_title_read_once",
+      "rule2": "constructor_projection_and_find_have_distinct_responsibilities_no_wrappers",
+      "rule3": "D79_approved_entry_filter_retained",
+      "evidence": "Complete constructor/find and caller review; six targeted checks. See verification/maintenance/code-constraints-node-finder-review-20261106/summary.json",
       "decisions": [
         "D79"
-      ]
+      ],
+      "full_module_review_complete": true
     },
     {
       "file": "rouge/player_map.py",

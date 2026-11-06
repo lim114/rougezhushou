@@ -11,7 +11,9 @@ class NodeFinder:
                 kind,note,origin=node_style(n);category='read'if origin in('observed','history')else'fixed'if origin=='template'else'unknown';titles=[]
                 self.counts[category]+=1
                 for content in [n.get('content'),n.get('remembered_content'),*(n.get('content_history')or[])]:
-                    if isinstance(content,dict)and content.get('source')=='same_frame_selected_node'and isinstance(content.get('title'),str):titles.append(content['title'])
+                    if not isinstance(content,dict)or content.get('source')!='same_frame_selected_node':continue
+                    content_title=content.get('title')
+                    if isinstance(content_title,str):titles.append(content_title)
                 title='、'.join(dict.fromkeys(titles));label=(f'第{floor}层 · 'if floor else'')+name+' · '+location(n,g['grid']['rows'])+' · '+(kind or'类型未确认')+' · '+note+(' · '+title if title else'')
                 self.entries.append({'key':(zone,g.get('template_id'),n['id']),'label':label,'evidence':category})
 
