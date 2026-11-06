@@ -9,7 +9,7 @@ from .flow_layout import FlowLayout
 
 
 class CurrentExchangePanel(QWidget):
-    def __init__(self,target=None,parent=None):
+    def __init__(self,target=None,parent=None,*,initial_reference=...):
         super().__init__(parent);self.result=None;self.item_id=None;self.group_id=None
         layout=QVBoxLayout(self);notice=QLabel('回滚文明 · 查看可交出的藏品、交换奖励与消耗。');notice.setWordWrap(True);layout.addWidget(notice)
         self.refresh_button=QPushButton('刷新资料');self.refresh_button.setAutoDefault(False);layout.addWidget(self.refresh_button);self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
@@ -26,7 +26,7 @@ class CurrentExchangePanel(QWidget):
         for reader in(self.item_player,self.item_technical,self.doc_player,self.doc_technical):reader.setReadOnly(True)
         for widget in(self.offer,self.rarity,self.change):widget.currentIndexChanged.connect(self._filter_changed)
         self.search.textChanged.connect(self._filter_changed);self.items.currentItemChanged.connect(self._item_changed);self.groups.currentItemChanged.connect(self._group_changed);self.refresh_button.clicked.connect(self.refresh_reference)
-        self.refresh_reference()
+        self.refresh_reference(source=initial_reference)
         if target and self.result:
             if target['tab']=='document':self.tabs.setCurrentIndex(1)
             self._select(self.items,target['item_id']);self._select(self.groups,target['group_id'])
@@ -46,8 +46,8 @@ class CurrentExchangePanel(QWidget):
         for widget in(self.item_technical,self.doc_technical):replace_text(widget,'',preserve=False)
         for tabs in(self.tabs,self.item_tabs,self.doc_tabs):tabs.setCurrentIndex(0)
 
-    def refresh_reference(self,*_):
-        fresh=model.packet()
+    def refresh_reference(self,*_,source=...):
+        fresh=model.packet() if source is ... else source
         if fresh is None:self.clear_reference();return False
         keep=self.result is not None and self.result['source_identity']==fresh['source_identity'];selected=self.group_id if keep else None;self.result=fresh
         block=self.groups.blockSignals(True);self.groups.clear()
@@ -86,5 +86,5 @@ class CurrentExchangePanel(QWidget):
 
 
 class CurrentExchangeDialog(QDialog):
-    def __init__(self,target=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('当前回滚文明 · 提供物与奖励条文');self.resize(1050,810);layout=QVBoxLayout(self);self.panel=CurrentExchangePanel(target,self);layout.addWidget(self.panel)
+    def __init__(self,target=None,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.setWindowTitle('当前回滚文明 · 提供物与奖励条文');self.resize(1050,810);layout=QVBoxLayout(self);self.panel=CurrentExchangePanel(target,self,initial_reference=initial_reference);layout.addWidget(self.panel)

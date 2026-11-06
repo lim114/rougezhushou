@@ -1,0 +1,49 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "交换子目录复用同次已核验资料",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "ec0e45455a0b130a0eb6f9948c6655cb2284a346",
+  "changed_sources": [
+    "rouge/current_exchange_view.py",
+    "rouge/current_reconstruction_view.py",
+    "tests/test_exchange_source_reuse_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_exchange_view.py": "894aa7b35a8540f8617469b9c43909c144a2a7fe2408cf2cf651134f5144cc93",
+    "rouge/current_reconstruction_view.py": "7a80dae39c2452329d0012fcdc88d961885f229a2cd446e363cdbaacfb921967",
+    "tests/test_exchange_source_reuse_review.py": "8fee38fa4aa6c1c090edec05f1b15f7bdd19ce1bdf64f84b4e2cfb0e44da095d"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D203"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 19,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_exchange_source_reuse_review tests.test_current_exchange_view_323 tests.test_current_reconstruction_view_344",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-196",
+    "baseline": "Old committed views: one duplicate-read assertion fails; explicit-source test errors because old API does not support source keyword. Final19 pass.",
+    "live_window": "Isolated Qt panels; original app update pending user exit."
+  },
+  "review": {
+    "standards": "D203 supplies same-operation verified packet through existing constructor/refresh interfaces; no wrapper/new defense. Omitted source loads normally; explicit None clears without reloading.",
+    "requirements": "Parent click still rechecks event and reads offers afresh after closing old child. Parent update reads once and supplies identical object to child. Invalid source closes child; event text remains. Later refresh defaults to new read; not a persistent cache."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": true
+}

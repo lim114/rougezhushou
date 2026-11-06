@@ -34,14 +34,16 @@ class CurrentReconstructionPanel(DocumentedEventFlowPanel):
             raw=model.icon_bytes();pixmap=QPixmap()
             if raw is not None and pixmap.loadFromData(raw):self.reward_icon.setPixmap(pixmap.scaled(52,52,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
             else:self.reward_icon.setText('焚毁“文明”（图片暂缺）')
-        allowed=bool(self.result and model.catalogue_allowed(self.result,self.scene_id,self.choice_id,choice=c));available=allowed and offers.packet()is not None;self.catalogue_button.setVisible(available);self.catalogue_button.setEnabled(available)
+        allowed=bool(self.result and model.catalogue_allowed(self.result,self.scene_id,self.choice_id,choice=c));fresh=offers.packet()if allowed else None;available=fresh is not None;self.catalogue_button.setVisible(available);self.catalogue_button.setEnabled(available)
         if self.catalogue_dialog is not None:
-            if not available or not self.catalogue_dialog.panel.refresh_reference():self.catalogue_dialog.close();self.catalogue_dialog=None
+            if not available or not self.catalogue_dialog.panel.refresh_reference(source=fresh):self.catalogue_dialog.close();self.catalogue_dialog=None
     def open_catalogue(self):
-        if not self._recheck()or not model.catalogue_allowed(self.result,self.scene_id,self.choice_id)or offers.packet()is None:
+        if not self._recheck()or not model.catalogue_allowed(self.result,self.scene_id,self.choice_id):
             self._close_battle();return False
         from .current_exchange_view import CurrentExchangeDialog
-        self._close_battle();self.catalogue_dialog=CurrentExchangeDialog(parent=self);self.catalogue_dialog.show();return True
+        self._close_battle();fresh=offers.packet()
+        if fresh is None:return False
+        self.catalogue_dialog=CurrentExchangeDialog(parent=self,initial_reference=fresh);self.catalogue_dialog.show();return True
 
 class CurrentReconstructionDialog(QDialog):
     def __init__(self,target=None,parent=None):

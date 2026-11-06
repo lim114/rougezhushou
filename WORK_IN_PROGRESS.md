@@ -1,3 +1,7 @@
+## 当前断点：交换子目录复用同次已核验资料（2026-11-06）
+
+D203完成，19项定向通过；原280组完成90组、剩190组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-exchange-source-reuse-review-20261106/summary.json。
+
 ## 当前断点：交换资料加载异常边界与根路径复用（2026-11-06）
 
 D205–D207完成，13项定向通过；原280组完成89组、剩191组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-exchange-packet-review-20261106/summary.json。
