@@ -56,7 +56,7 @@ class SupplementalFangCostChainTests(unittest.TestCase):
     def test_unknown_cost_talent_is_not_generalized_from_key(self):
         talents=[{'name':'other','prefabKey':'1','blackboard':[{'key':'cost','value':-1,'valueStr':None}]}]
         rule={'kind':'deployment_cost_pct','relic_id':'rogue_6_relic_fight_11','value':-.5,'_verified_rule':True}
-        result=cost_reference({'deployment_cost':11},talents,[rule],[],[],operator='char_123_fang')
+        result=cost_reference({'deployment_cost':11},talents,[('rune_multipliers',rule)],[],[],operator='char_123_fang')
         self.assertTrue(result['talent_composition_pending'])
         self.assertIsNone(result['estimated_cost'])
 

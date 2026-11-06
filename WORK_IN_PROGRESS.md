@@ -1,3 +1,7 @@
+## 当前断点：费用分类层传递（2026-11-05）
+
+费用来源一次查明层级，计算直接消费；无新增函数。31项定向、126费用/147通用报告/932来源组合一致；费用整模块通过。窗口更新，覆盖342/75/105/36。D38—D124仍87组。回执verification/maintenance/code-constraints-cost-layers-20261105/summary.json。下一批继续supplemental_skills培养/技能入口、共享deployment及剩余未审模块；D122/D124原保护保持，D123基准投影待审。旧supported_cost已改为cost_layer，费用输入为(layer,effect)对，不恢复无调用的兼容包装。不增节数。
+
 ## 当前断点：效果入口一次分类（2026-11-05）
 
 本局四类效果入口一次核验，计算只接已分类桶；费用未支持桶独立保留，自然回技单次函数内联。未增加函数，临时兼容包装已删除。最终53+7项定向、147报告/244来源组合一致；治疗和伤害整模块通过。窗口更新。覆盖342/75/106/35；D38—D124仍87组。回执verification/maintenance/code-constraints-effect-boundary-20261105/summary.json。下一批继续费用细分类重复来源查询、supplemental_skills入口及剩余未审模块；D123基准投影待审批，D122/D124保持原保护。不增节数。

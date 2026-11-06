@@ -14,29 +14,35 @@ FANG_COST_SOURCE={
 }
 
 
-def supported_cost(rule):
-    if rule.get('token_only') or not rule.get('_verified_rule'):return False
-    if rule['kind']=='deployment_cost_add':return _rune_cost_add(rule) or _runtime_cost_delta(rule)
-    if rule['kind']=='deployment_cost_pct':return _rune_cost_mul(rule)
-    if rule['kind']=='first_deployment_cost_factor':return _first_card_factor(rule)
-    return (rule['kind']=='skill_start_dp' and rule.get('relic_id')=='rogue_6_relic_book_1'
-            and rule.get('source_buff_key')=='global_buff_normal' and rule.get('source_buff_index')==0)
+def cost_layer(rule):
+    if rule.get('token_only') or not rule.get('_verified_rule'):return None
+    if rule['kind']=='deployment_cost_add':
+        if _rune_cost_add(rule):return 'rune_additions'
+        if _runtime_cost_delta(rule):return 'runtime_deltas'
+    elif rule['kind']=='deployment_cost_pct':
+        if _rune_cost_mul(rule):return 'rune_multipliers'
+    elif rule['kind']=='first_deployment_cost_factor':
+        if _first_card_factor(rule):return 'card_factors'
+    elif (rule['kind']=='skill_start_dp' and rule.get('relic_id')=='rogue_6_relic_book_1'
+            and rule.get('source_buff_key')=='global_buff_normal' and rule.get('source_buff_index')==0):
+        return 'skill_start_dp'
+    return None
 
 
-def cost_reference(stats,talents,selected,unresolved,records,*,operator=None):
-    """Calculate from the caller's qualified cost and unresolved effect buckets."""
-    cost_inputs={
-        'rune_additions':[r['value'] for r in selected if r['kind']=='deployment_cost_add' and _rune_cost_add(r)],
-        'rune_multipliers':[r['value'] for r in selected if r['kind']=='deployment_cost_pct'],
-        'card_factors':[r['value'] for r in selected if r['kind']=='first_deployment_cost_factor'],
-        'runtime_deltas':[r['value'] for r in selected if _runtime_cost_delta(r)]}
+def cost_reference(stats,talents,classified,unresolved,records,*,operator=None):
+    """Calculate from (layer, effect) pairs qualified by cost_layer at entry."""
+    cost_inputs={'rune_additions':[],'rune_multipliers':[],'card_factors':[],'runtime_deltas':[]}
+    skill_start_dp=0
+    for layer,effect in classified:
+        if layer=='skill_start_dp':skill_start_dp+=effect['value']
+        else:cost_inputs[layer].append(effect['value'])
     native=native_deployment_cost(stats['deployment_cost'],**cost_inputs)
     talent=sum(b['value'] for t in talents for b in t['blackboard'] if b['key']=='cost')
     missing=sorted({c for record in records if any(
         e['kind'] in COST_KINDS for e in record['applied']) or record['id']=='rogue_6_relic_cargo_3'
         for c in record['missing_conditions']})
-    modified=any(r['kind'] in ('deployment_cost_add','deployment_cost_pct') and r['value']!=0 or
-                 r['kind']=='first_deployment_cost_factor' and r['value']!=1 for r in selected)
+    modified=(any(value!=0 for layer in ('rune_additions','rune_multipliers','runtime_deltas')
+                  for value in cost_inputs[layer]) or any(value!=1 for value in cost_inputs['card_factors']))
     # Only the prefab- and method-bound Fang talent may enter this new layer.
     # Do not classify another talent by a shared blackboard key.
     fang_verified=bool(operator=='char_123_fang' and talent==-1 and any(
@@ -52,6 +58,6 @@ def cost_reference(stats,talents,selected,unresolved,records,*,operator=None):
     return {'estimated_cost':cost,'native_without_talent':native,'talent_cost_parameter':talent,
         'native_with_talent':with_talent,'talent_source':dict(FANG_COST_SOURCE) if fang_verified else None,
         'talent_composition_pending':talent_pending,'missing_conditions':missing,
-        'first_card_only':any(r['kind']=='first_deployment_cost_factor' for r in selected),
+        'first_card_only':bool(cost_inputs['card_factors']),
         'actual_cost':None,'live_first_deployment_verified':False,
-        'skill_start_dp':sum(r['value'] for r in selected if r['kind']=='skill_start_dp')}
+        'skill_start_dp':skill_start_dp}

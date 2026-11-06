@@ -12,7 +12,8 @@ class SupplementalCostReuseReviewTests(unittest.TestCase):
                         'relic_id': 'rogue_6_relic_fight_11',
                         'value': -.5, '_verified_rule': verified}
                 original = deepcopy(rule)
-                selected = [rule] if subject.supported_cost(rule) else []
+                layer = subject.cost_layer(rule)
+                selected = [(layer,rule)] if layer is not None else []
                 unresolved = [] if selected else [rule]
                 result = subject.cost_reference({'deployment_cost': 11}, [], selected, unresolved, [])
                 self.assertEqual(result['estimated_cost'], 6 if verified else None)

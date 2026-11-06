@@ -13,7 +13,7 @@ class SupplementalClassificationBoundaryReviewTests(unittest.TestCase):
     def test_run_classifies_each_effect_once_across_public_and_calculation_boundaries(self):
         ids=['rogue_6_relic_legacy_2','rogue_6_relic_legacy_81',
              'rogue_6_relic_fight_11','rogue_6_relic_book_1']
-        for module,name in ((cost,'supported_cost'),(sp,'supported_sp'),
+        for module,name in ((cost,'cost_layer'),(sp,'supported_sp'),
                             (healing,'supported_healing'),(damage,'supported_damage')):
             with self.subTest(predicate=name):
                 with patch.object(run,name,wraps=getattr(module,name)) as qualify:

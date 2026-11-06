@@ -7,7 +7,7 @@ from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
                                   supplemental_profiles,format_reference)
 from .relic_attributes import is_attribute_rune,apply_attribute_runes
-from .supplemental_cost import COST_KINDS,supported_cost,cost_reference
+from .supplemental_cost import COST_KINDS,cost_layer,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
 from .supplemental_healing import supported_healing,apply_healing_reference
 from .supplemental_damage import supported_damage,damage_reference,apply_damage_reference
@@ -83,15 +83,17 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
         finish_run(summary,run_resolution)
     resolved=scenario.get('effects',[])+scenario.get('_relic_rules',[])
     runes=[];ordinary=[];costs=[];sp_rules=[];healing_rules=[];damage_rules=[];unsupported=[];unresolved_costs=[]
+    classified_costs=[]
     for effect in resolved:
         rune=is_attribute_rune(effect)
         source=ORDINARY_SOURCES.get(effect.get('relic_id'))
         ordinary_match=bool(source and effect.get('_verified_rule') is True and
             (effect.get('source_buff_key'),effect.get('source_buff_index'),effect.get('condition'))==source[:3]
             and effect['kind'] in source[3] and not rune and not effect.get('token_only'))
-        cost_match=supported_cost(effect);sp_match=supported_sp(effect)
+        layer=cost_layer(effect);cost_match=layer is not None;sp_match=supported_sp(effect)
         healing_match=supported_healing(effect,raw['kind']);damage_match=supported_damage(effect)
-        if not cost_match and effect['kind'] in COST_KINDS:unresolved_costs.append(effect)
+        if cost_match:classified_costs.append((layer,effect))
+        elif effect['kind'] in COST_KINDS:unresolved_costs.append(effect)
         for applies,bucket in ((rune and not effect.get('token_only'),runes),(ordinary_match,ordinary),
                                (cost_match,costs),(sp_match,sp_rules),(healing_match,healing_rules),
                                (damage_match,damage_rules)):
@@ -113,7 +115,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
     result['target_enemy']=deepcopy(run_resolution.get('enemy'))
     result['damage_reference']=damage
     apply_damage_reference(result,damage)
-    cost=cost_reference(stats,result['talents'],costs,unresolved_costs,relic_resolution['records'],operator=identity)
+    cost=cost_reference(stats,result['talents'],classified_costs,unresolved_costs,relic_resolution['records'],operator=identity)
     result['deployment_reference']=cost
     result['sp_reference']=sp_reference(result['skill_parameter'],sp_rules,relic_resolution['records'])
     result['healing_reference']=apply_healing_reference(result,healing_rules,relic_resolution['records'],raw['kind'])

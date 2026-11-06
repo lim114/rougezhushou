@@ -24,7 +24,7 @@ class SupplementalReuseReviewTests(unittest.TestCase):
         self.assertEqual((preview, env), original)
 
     def test_each_effect_is_classified_once_per_family(self):
-        names = ('is_attribute_rune', 'supported_cost',
+        names = ('is_attribute_rune', 'cost_layer',
                  'supported_sp', 'supported_healing', 'supported_damage')
         with ExitStack() as stack:
             checks = {name: stack.enter_context(patch.object(run, name, wraps=getattr(run, name))) for name in names}
