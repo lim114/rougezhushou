@@ -1,21 +1,24 @@
 """Mei MAR-X conditional parameters; no target or native formula inference."""
 
 
-def reference(profile, scenario, module_parts):
+def reference(profile, scenario, module_parts=Ellipsis, *, module=None):
+    """Return parameters and stage parts; omission selects catalog entries."""
     if profile.get('id') != 'char_133_mm' or scenario.get('operator') != 'char_133_mm':
-        return None
+        return None, ()
     module_id = 'uniequip_002_mm'
     if scenario.get('module_id') != module_id:
-        return None
-    module = next((m for m in profile['modules'] if m['id'] == module_id), None)
+        return None, ()
+    if module is None:
+        module = next((m for m in profile['modules'] if m['id'] == module_id), None)
     stage = scenario.get('module_level', 0)
     elite = scenario.get('elite', 2)
     level = scenario.get('level') or profile['phases'][elite]['max_level']
     if (module is None or type(stage) is not int or not 1 <= stage <= len(module['levels'])
             or elite < module['unlock_elite'] or level < module['unlock_level']):
-        return None
+        return None, ()
     catalog_parts = module['levels'][stage - 1]['parts']
-    for part in module_parts or ():
+    selected_parts = catalog_parts if module_parts is Ellipsis else module_parts or ()
+    for part in selected_parts:
         if (part not in catalog_parts or part.get('target') != 'TRAIT'
                 or part.get('isToken') or part.get('validInGameTag') is not None
                 or part.get('validInMapTag') is not None):
@@ -50,5 +53,5 @@ def reference(profile, scenario, module_parts):
                     'uniequip_table.equipDict.uniequip_002_mm',
                     'battle_equip_table.uniequip_002_mm.phases[' + str(stage - 1)
                     + '].parts[' + str(part_index) + '].overrideTraitDataBundle.candidates['
-                    + str(index) + ']']}
-    return None
+                    + str(index) + ']']}, catalog_parts
+    return None, catalog_parts

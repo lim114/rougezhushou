@@ -115,3 +115,6 @@
 | D139 | mei_module_reference.reference的part not in catalog_parts | 拒绝其它模组/培养来源的part被当成本模组资料；已有foreign_parts算例 | 建议保留来源核对；替代删除会允许外来条目进入候选。与后续index重复查找需一起考虑，未改，待审核 |
 
 | D140 | gnosis_module_reference.selected_reference的固定资料身份组合检查 | 原坚冰名/字段、特性resKey/标签/参数、二三级4个prefab及resKey/目标/隐藏/标签任一改变时不输出已核验资料；现有unreviewed prefab算例覆盖 | 建议保留，防止新资料错套原规则；替代直接接受变更会把未核验来源标成已核验。只登记，未改；普通培养/候选适用性判断不在本项 |
+
+| D141 | mei_module_reference共享参数入口查不到固定模组时返回无资料 | next默认None与module is None分支处理目录缺项；独立界面仍先严格next，缺项仍直接报错 | 建议保留参数入口无资料行为；替代删除后暴露固定源缺失。原分支不变，未扩大到界面，待审核 |
+| D142 | mei_module_static_reference._qualification的封存stage→resKey与TRAIT绑定检查 | 参数存在但原生资源身份不符时禁止使用封存单包公式 | 建议保留来源绑定；替代仅凭参数数值接受会误套规则。检查原样保留，待审核；技能1/2适用范围不在此项 |

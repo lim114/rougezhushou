@@ -1,3 +1,7 @@
+## 维护：梅独立查询阶段准备收拢（2026-11-05）
+
+模组查找2→1，公开参数与独立查询共享阶段准备。29项定向、110完整/4错误/378资格/840参数一致；两个模块普通规则审完，仍有防御待审。[回执](verification/maintenance/code-constraints-mei-qualification-boundary-20261105/README.md)。
+
 ## 维护：梅收尾复用模组参数（2026-11-05）
 
 主计算参数读取2→1，独立查询保持入口校验。42项定向，100完整/4错误/378查询结果一致。灵知资料回顾保留待审。[回执](verification/maintenance/code-constraints-mei-prepared-reference-20261105/README.md)。

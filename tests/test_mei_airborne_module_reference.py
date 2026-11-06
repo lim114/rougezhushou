@@ -95,8 +95,8 @@ class MeiAirborneModuleReferenceTests(unittest.TestCase):
         profile = catalog()['operators']['char_133_mm']
         args = scenario()
         foreign = catalog()['operators']['char_328_cammou']['modules'][0]['levels'][0]['parts']
-        self.assertIsNone(reference(profile, args, foreign))
-        self.assertIsNone(reference(profile, args, []))
+        self.assertIsNone(reference(profile, args, foreign)[0])
+        self.assertIsNone(reference(profile, args, [])[0])
 
     def test_empty_window_and_known_empty_enemy_scope_do_not_become_airborne_claims(self):
         for skill in (1, 2):
@@ -128,9 +128,9 @@ class MeiAirborneModuleReferenceTests(unittest.TestCase):
         self.assertEqual(json.dumps(catalog(), sort_keys=True, ensure_ascii=False), snapshot)
         profile = catalog()['operators']['char_133_mm']
         _, parts = selected_talents(profile, args)
-        ref = reference(profile, args, parts)
+        ref, _ = reference(profile, args, parts)
         ref['candidate_unlock_condition']['level'] = 999
-        self.assertEqual(reference(profile, args, parts)['candidate_unlock_condition']['level'], 40)
+        self.assertEqual(reference(profile, args, parts)[0]['candidate_unlock_condition']['level'], 40)
 
 
 if __name__ == '__main__':

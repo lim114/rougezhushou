@@ -855,12 +855,12 @@
     },
     {
       "file": "rouge/operator_engine.py",
-      "sha256": "9c0216fd3a71229e1c487543779c0ec7951fdeded749b6912203f4c698f757d4",
-      "rule1": "manual_effect_copy_at_owning_combat_entry",
-      "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
-      "rule3": "D135_selected_talents_false_level_default_recorded",
+      "sha256": "30473d46d1fccb5db5fa5f50f3cc0618bb885d3998c12bfb8944680aa65bb1f0",
+      "rule1": "mei_pair_contract_consumed_at_combat_output",
+      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
+      "rule3": "D135_unchanged",
       "full_module_review_complete": false,
-      "evidence": "Combat owns an isolated copy of manual token effects; actual per-token filtering remains in token_reference. Existing damage_taken global applicability, verified-rule exclusion, scope and profession/position checks preserved. Only constructor selection path edited. selected_talents original level-or-max coercion inspected and recorded D135 unchanged; this does not certify other talents or whole engine.",
+      "evidence": "Only Mei reference call unpacks the internal pair; output receives the same parameter dictionary. Prior whole-engine partial status remains; no other engine code edited.",
       "ordinary_rules_review_complete": false
     },
     {
@@ -1204,23 +1204,23 @@
     },
     {
       "file": "rouge/mei_module_reference.py",
-      "sha256": "79a193ad840400af2e8eb1b5a8e9ff87f573d4b946918f28962659c6479bf511",
-      "rule1": "module_parameter_and_source_ownership_paths_reviewed",
-      "rule2": "real_shared_functions_retained_no_new_single_use_wrapper",
-      "rule3": "D138_D139_pending",
-      "ordinary_rules_review_complete": false,
+      "sha256": "bc10d65435aee373521db219edee9daf07a5ed1ce455a5e51557277f36d220a7",
+      "rule1": "mei_parameter_boundary_review_complete_pending_defenses",
+      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
+      "rule3": "D138_D139_D141_pending",
+      "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Full source and static/operator-engine callers inspected. False level default and module-part provenance guard recorded unchanged. Shared equipment/stage qualification across callers remains ordinary unfinished work; membership/index reuse intersects pending provenance decision. Game tag and unlock checks remain domain applicability."
+      "evidence": "Reference preserves explicit empty/None parts; both real callers now unpack parameters and stage parts directly, with no adapter wrapper. Player report shape is unchanged. Optional prepared module avoids duplicate lookup; existing identity/membership/defaults preserved. D138 false-level default, D139 provenance and D141 missing catalog module remain unmodified. Candidate unlock, game tags and atk_scale applicability are distinct domain conditions. No ordinary unreviewed path remains in this module."
     },
     {
       "file": "rouge/mei_module_static_reference.py",
-      "sha256": "e465daf62f3d303e80d16128d917a15206d319f1168db1c6cc243f147a35fef3",
-      "rule1": "mei_finalizer_uses_prepared_parameter_result",
+      "sha256": "496b1f4fb91ebb3ed9ee587645607caef2d212cd4ff6b20a72344c7d1fc4fb6a",
+      "rule1": "mei_standalone_qualification_boundary_review_complete",
       "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
-      "rule3": "existing_defenses_unchanged",
-      "ordinary_rules_review_complete": false,
+      "rule3": "D142_pending",
+      "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Combat report already resolves Mei module parameters. Finalizer consumes that result or its normal absence, instead of rechecking cultivation and module qualification. Shared _qualification has two real product callers: standalone UI boundary and prepared finalizer. Native binding and skill scope remain checked. Standalone UI still resolves stage/parts before parameter boundary; that remaining duplication is not certified complete."
+      "evidence": "UI resolves the required catalog module once and passes it to the shared parameter boundary. Stage/cultivation/parts now prepared once; _qualification only binds native resource and skill scope. Complete source and both UI call sites reviewed. Fixed native binding guard unchanged pending D142. Shared core has two actual callers; unknown packet values are normal domain states."
     },
     {
       "file": "rouge/gnosis_module_reference.py",

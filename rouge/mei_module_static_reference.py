@@ -22,9 +22,7 @@ def rule():
 def qualification(scenario):
     profile = catalog()['operators']['char_133_mm']
     module = next(m for m in profile['modules'] if m['id'] == MODULE)
-    stage = scenario.get('module_level', 0)
-    parts = module['levels'][stage-1]['parts'] if type(stage) is int and 1 <= stage <= 3 else []
-    ref = parameter_reference(profile, scenario, parts) if scenario.get('module_id') == MODULE and parts else None
+    ref, parts = parameter_reference(profile, scenario, module=module)
     return _qualification(scenario, parts, ref)
 
 

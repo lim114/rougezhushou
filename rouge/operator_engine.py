@@ -1572,7 +1572,7 @@ class Combat:
             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
             'scenario_scope':result['scope']}
         from .mei_module_reference import reference as mei_module_reference
-        mei_reference=mei_module_reference(self.p,self.s,self.module_parts)
+        mei_reference,_=mei_module_reference(self.p,self.s,self.module_parts)
         if mei_reference is not None:result['mei_airborne_module_reference']=mei_reference
         if full['drone_trait_reference']:
             result['drone_trait_reference']=full['drone_trait_reference']
