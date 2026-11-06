@@ -6,7 +6,7 @@ never inferred from a character's name or from another operator's controls.
 import math
 from .condition_inputs import read_continuous_attacks
 from .attribute_limits import effective_attack_speed
-from .catalog import catalog
+from .catalog import catalog,resolve_cultivation
 from .enemy_environment import damage_factor
 from .timing import AttackTimeline,charge_seconds,mixed_charge_seconds,frame_time,FPS,finite,has_periodic_sp,periodic_charge_seconds
 
@@ -18,8 +18,7 @@ def selected_talents(profile, scenario):
 
 def _selected_talent_reference(profile, scenario):
     """Share the selected equipment and cultivation with Combat's trait consumers."""
-    elite=scenario.get('elite',2)
-    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    elite,level=resolve_cultivation(profile,scenario)
     potential=scenario.get('potential',1)-1
     def eligible(candidate):
         condition=candidate.get('unlockCondition')

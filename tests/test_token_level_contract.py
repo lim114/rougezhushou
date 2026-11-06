@@ -34,5 +34,5 @@ class TokenLevelContractTests(unittest.TestCase):
         for function, profile, scenario, token in self.cases():
             with self.subTest(function=function.__name__):
                 expected = function(profile, {**scenario, 'level': 60}, token)
-                with patch.object(summons, 'resolve_token_cultivation', side_effect=AssertionError('duplicate validation')):
+                with patch.object(summons, 'resolve_cultivation', side_effect=AssertionError('duplicate validation')):
                     self.assertEqual(function(profile, scenario, token, cultivation=(2, 60)), expected)

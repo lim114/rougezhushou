@@ -1,5 +1,6 @@
 """Distinct current GUA-X recipient gates, only for fixed offline references."""
 import math
+from .catalog import resolve_cultivation
 from .susuro_healing import FP_ONE,FP_LARGE_EPS_RAW
 
 BINDINGS={
@@ -14,8 +15,7 @@ def selected_trait(profile,scenario,*,cultivation=None):
     name,identity,prefix,comparison,template=binding
     if cultivation is None:
         module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==identity),None)
-        elite=scenario.get('elite',2)
-        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        elite,level=resolve_cultivation(profile,scenario)
         stage=scenario.get('module_level',0)
         if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
     else:

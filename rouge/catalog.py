@@ -22,6 +22,18 @@ def operator_profiles():
 def stage_previews():
     return json.loads((Path(__file__).parent / 'data' / 'previews.json').read_text(encoding='utf-8'))['stages']
 
+def resolve_cultivation(profile,scenario):
+    """Resolve operator level at a standalone reference entry."""
+    elite=scenario.get('elite',2)
+    maximum=profile['phases'][elite]['max_level']
+    level=scenario.get('level')
+    if level is None:level=maximum
+    if type(level) is not int or not 1<=level<=maximum:
+        raise ValueError('干员等级需要为当前精英阶段范围内的整数。')
+    return elite,level
+
+
+
 def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
     return _operator_attribute_reference(operator,elite,level,trust,potential,module_id,module_level)[0]
 

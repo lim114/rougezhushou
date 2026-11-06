@@ -1,0 +1,85 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "天赋与治疗模组入口统一等级默认规则",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "7bac43f70704108656c365b44a6cd88c7e1bd37c",
+  "changed_sources": [
+    "rouge/catalog.py",
+    "rouge/summons.py",
+    "rouge/token_counts.py",
+    "rouge/operator_engine.py",
+    "rouge/mei_module_reference.py",
+    "rouge/susuro_healing.py",
+    "rouge/guardian_healing.py",
+    "tests/test_reference_level_defaults.py",
+    "tests/test_token_level_contract.py"
+  ],
+  "source_sha256": {
+    "rouge/catalog.py": "2eaaca447e5b3cd8063c04343ad3a062c0693f3544f63c35b6373b685ae1088d",
+    "rouge/summons.py": "2dccffa6700574ddbff69690f876544935c4d063d17b0c3f1bf69863797a0870",
+    "rouge/token_counts.py": "57f994002f7c300b3d27251ac1caf9bcb4c1b5a1b07f7df895e1dd173ba2fe0b",
+    "rouge/operator_engine.py": "c4b5e1cc5077089450873051c447ff64afb6c48ae2ec08ad85491b081c18b7be",
+    "rouge/mei_module_reference.py": "f424f0bf30f7edc045d999f4d3be8b0c2325167cba750db6f516370e693db8c2",
+    "rouge/susuro_healing.py": "829ca213c667cdeeecbc57504dd212fd5c235fd9e26c69419ce2335e990f9679",
+    "rouge/guardian_healing.py": "bc149e7fc7256a2965b78a3ced7d8db258df09fcba947d150276d2fe39f0d466",
+    "tests/test_reference_level_defaults.py": "e3c9dea0705ca8e6f30835c84aa5b481663be092c53c966fac9e5a895f041b46",
+    "tests/test_token_level_contract.py": "aa562ab7373d66b9ae39b7ab255b46ddae82b64aa8fccc7b4c34c11a29140d56"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D135",
+    "D138",
+    "D144"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 47,
+    "tests_passed": 47,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_reference_level_defaults tests.test_token_level_contract tests.test_token_cultivation_reuse_review tests.test_mei_module_static_reference tests.test_susuro_module_healing tests.test_guardian_healing_gates",
+    "local_evidence": ".local/code-constraints-review-239",
+    "valid_outputs_equal": 30,
+    "old_invalid_defaults": 15,
+    "live_window": "No layout change; original test window update pending."
+  },
+  "review": {
+    "standards": "Approved D135/D138/D144 default semantics. Move existing common resolver to catalog, no wrapper retained in summons. Actual callers share validation responsibility; prepared trait/token calls unchanged. No catch/retry or unapproved defense.",
+    "requirements": "Missing/None defaults only; falsey and other invalid levels rejected.30 valid outputs equal old;47 targeted pass. Module applicability, healing thresholds and formulas unchanged."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": false,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/player_feature_426_acceptance.py": "042395419c988f19c222581b892f54a2e25ef3d7793bd34fd14917e30eb6fd56",
+    "rouge/player_feature_427_acceptance.py": "fb1cf322a589feacd00b1bc3070c7a37882bd8a0ebcf28fc119cde474a81e1a6",
+    "rouge/player_feature_428_acceptance.py": "e76cbdf44d0bc0f04e95bf347b12feb7065358809bafe400048dfb061dcfc99d",
+    "rouge/player_feature_430_acceptance.py": "0b016d48d4e96e24a8efaef76909003569a2fad20b5fe4c216d8d0394a127f71",
+    "rouge/player_feature_431_acceptance.py": "66f8a30a25856eeabeaa526a6aa611e8ce916bb59810b14a865e3febd5f3f7b9",
+    "rouge/player_feature_432_acceptance.py": "ec50be8b99ed38cde4c1dbb7623e78007c5f94d2cd426e66ae0e5a5803997cf8",
+    "rouge/player_feature_435_acceptance.py": "ac3e6fd03392bc0e8b104137e080bc799861aaaccfabf5ca16d838808c628203",
+    "rouge/player_feature_436_acceptance.py": "32eb07c6b7e07031ad7d030a7e90bf9fd928caf0b4f887aff662e6e602d33719",
+    "rouge/player_feature_437_acceptance.py": "c685cda89221c8506570ade6c0df0bf409c3326d99d2a77f3ad3f06f72dc91ec",
+    "rouge/player_feature_438_acceptance.py": "a0c521eaa10dfd7a9edcb4bb5b1241c98b81be8c40a1b1eec084f54ccbaf23d7",
+    "rouge/player_feature_439_acceptance.py": "14320cb563803963a9fab44ce3b6a103d26480af6772e81b0285feedf4242d87",
+    "rouge/player_feature_440_acceptance.py": "b3d97ed507968d79c37fffe062ff3f9a245739098278da46e79153b38a4a5650"
+  }
+}

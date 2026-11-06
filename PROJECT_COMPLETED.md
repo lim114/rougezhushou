@@ -5354,3 +5354,7 @@ D314完成；递归解码移出字段名捕获，删除等价浮点长度复核�
 ## 维护：召唤物五入口仅缺省等级使用满级（2026-11-06）
 
 D134完成；五入口复用等级解析，缺省/None默认、非法值拒绝；已准备培养不重复校验。36定向通过，旧版15组复现。回执：`verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json`。
+
+## 维护：天赋与治疗模组入口统一等级默认规则（2026-11-06）
+
+D135/D138/D144：共享培养解析移至catalog，天赋、梅、苏苏洛及守护者资料仅缺省/None使用满级。47定向通过，30合法结果等价；无新公式。回执：`verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json`。

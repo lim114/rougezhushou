@@ -1121,13 +1121,20 @@
     },
     {
       "file": "rouge/operator_engine.py",
-      "sha256": "17018ae23d12e7e83828e9735fb9d4847f002fa6440d1eacf682f6c9880c9fdd",
+      "sha256": "c4b5e1cc5077089450873051c447ff64afb6c48ae2ec08ad85491b081c18b7be",
       "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
       "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
       "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
       "full_module_review_complete": false,
       "evidence": "Combat and healing references share one equipment/cultivation selection. Public selected_talents keeps its two-result API; private core returns prepared cultivation too. Standalone trait queries retain their own entry. Prepared trait branch only selects applicable module identity; no repeated elite/level/unlock/stage validation. Public damage entry and prepared calibration/comparison callers obtain validated cultivation before Combat. Native ratio entry still supplies its validated tuple. Existing fallback defaults and source-identity defenses untouched. Whole engine not certified; outer attribute/talent preparation and independent trait stage-type contract remain for review.",
-      "ordinary_rules_review_complete": false
+      "ordinary_rules_review_complete": false,
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/amiya_continuous_reference.py",
@@ -1251,13 +1258,20 @@
     },
     {
       "file": "rouge/catalog.py",
-      "sha256": "dfa4e1af1fa77dcbd0c1667634ddb6b83581a361195733369b9f7fa41d7a9f0e",
+      "sha256": "2eaaca447e5b3cd8063c04343ad3a062c0693f3544f63c35b6373b685ae1088d",
       "rule1": "reuse_resolved_module_and_applied_state_from_attribute_entry",
       "rule2": "existing_attribute_core_shared_by_public_attributes_budget_and_cultivation_comparison",
       "rule3": "D107_D108_D118_D119_D121_D133_unchanged",
       "full_module_review_complete": false,
       "evidence": "Complete cultivation_comparison/catalog sources read and shared core callers checked. Attribute core returns applied state computed once using normalized level. Comparison removes second module search/unlock predicate, holds profiles and required field set once. Budget only adjusts private tuple unpacking; public stats/budget outputs unchanged. None level with equipped module now uses resolved max level instead of TypeError. No new helper/catch/raise. Previous ordinary-complete claim for cultivation comparison was too broad: module-stage type check still overlaps attribute entry, remains ordinary work; D121 trust overlap is separately pending existing approval. No full module certification added.",
-      "ordinary_rules_review_complete": false
+      "ordinary_rules_review_complete": false,
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/paired_calibration.py",
@@ -1465,7 +1479,7 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "fddef03c318bc2db80b7f92f433bfb9813daf38f407257858e166d0d6659d947",
+      "sha256": "2dccffa6700574ddbff69690f876544935c4d063d17b0c3f1bf69863797a0870",
       "rule1": "removed_two_single_product_manual_selectors",
       "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D128_D134_unchanged",
@@ -1476,6 +1490,11 @@
         {
           "receipt": "verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json",
           "scope": "D134 token default contract",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
           "full_module_review_complete": false
         }
       ]
@@ -1538,7 +1557,7 @@
     },
     {
       "file": "rouge/token_counts.py",
-      "sha256": "61bccc2563e6e5f20b0e13e9d502c8e88eb2b80e2462097ad00a210eecded782",
+      "sha256": "57f994002f7c300b3d27251ac1caf9bcb4c1b5a1b07f7df895e1dd173ba2fe0b",
       "rule1": "count_reference_accepts_resolved_operator_cultivation",
       "rule2": "no_new_helper_prepared_input_used_by_product_callers",
       "rule3": "D134_unchanged",
@@ -1549,6 +1568,11 @@
         {
           "receipt": "verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json",
           "scope": "D134 token default contract",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
           "full_module_review_complete": false
         }
       ]
@@ -1579,13 +1603,20 @@
     },
     {
       "file": "rouge/mei_module_reference.py",
-      "sha256": "bc10d65435aee373521db219edee9daf07a5ed1ce455a5e51557277f36d220a7",
+      "sha256": "f424f0bf30f7edc045d999f4d3be8b0c2325167cba750db6f516370e693db8c2",
       "rule1": "mei_parameter_boundary_review_complete_pending_defenses",
       "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
       "rule3": "D138_D139_D141_pending",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Reference preserves explicit empty/None parts; both real callers now unpack parameters and stage parts directly, with no adapter wrapper. Player report shape is unchanged. Optional prepared module avoids duplicate lookup; existing identity/membership/defaults preserved. D138 false-level default, D139 provenance and D141 missing catalog module remain unmodified. Candidate unlock, game tags and atk_scale applicability are distinct domain conditions. No ordinary unreviewed path remains in this module."
+      "evidence": "Reference preserves explicit empty/None parts; both real callers now unpack parameters and stage parts directly, with no adapter wrapper. Player report shape is unchanged. Optional prepared module avoids duplicate lookup; existing identity/membership/defaults preserved. D138 false-level default, D139 provenance and D141 missing catalog module remain unmodified. Candidate unlock, game tags and atk_scale applicability are distinct domain conditions. No ordinary unreviewed path remains in this module.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/mei_module_static_reference.py",
@@ -1609,7 +1640,7 @@
     },
     {
       "file": "rouge/susuro_healing.py",
-      "sha256": "1ceb6f92a7787c624f99fae598ac0edbe1d76366b464b602cc358b220fb0b001",
+      "sha256": "829ca213c667cdeeecbc57504dd212fd5c235fd9e26c69419ce2335e990f9679",
       "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
       "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
       "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
@@ -1623,11 +1654,18 @@
       "healing_result_review": {
         "receipt": "verification/maintenance/code-constraints-healing-result-review-20261106/summary.json",
         "scope": "D147 only; full module review incomplete."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/guardian_healing.py",
-      "sha256": "ecfc51a0da487c0861c749253c40aa6df02e53ab1bd11078b4896a11620d589a",
+      "sha256": "bc149e7fc7256a2965b78a3ced7d8db258df09fcba947d150276d2fe39f0d466",
       "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
       "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
       "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
@@ -1641,7 +1679,14 @@
       "healing_result_review": {
         "receipt": "verification/maintenance/code-constraints-healing-result-review-20261106/summary.json",
         "scope": "D147 only; full module review incomplete."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
+          "scope": "D135/D138/D144 level defaults and shared resolver relocation",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/relic_healing_factors.py",

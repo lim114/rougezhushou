@@ -1,4 +1,5 @@
 """Mei MAR-X conditional parameters; no target or native formula inference."""
+from .catalog import resolve_cultivation
 
 
 def reference(profile, scenario, module_parts=Ellipsis, *, module=None):
@@ -11,8 +12,7 @@ def reference(profile, scenario, module_parts=Ellipsis, *, module=None):
     if module is None:
         module = next((m for m in profile['modules'] if m['id'] == module_id), None)
     stage = scenario.get('module_level', 0)
-    elite = scenario.get('elite', 2)
-    level = scenario.get('level') or profile['phases'][elite]['max_level']
+    elite, level = resolve_cultivation(profile, scenario)
     if (module is None or type(stage) is not int or not 1 <= stage <= len(module['levels'])
             or elite < module['unlock_elite'] or level < module['unlock_level']):
         return None, ()

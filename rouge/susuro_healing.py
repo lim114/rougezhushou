@@ -1,5 +1,6 @@
 """Source-bound physician trait, using a declared recipient ratio only."""
 import math
+from .catalog import resolve_cultivation
 
 OPERATOR='char_298_susuro'
 MODULE='uniequip_002_susuro'
@@ -12,8 +13,7 @@ def selected_trait(profile,scenario,*,cultivation=None):
     if profile['id']!=OPERATOR or scenario.get('operator')!=OPERATOR:return None
     if cultivation is None:
         module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==MODULE),None)
-        elite=scenario.get('elite',2)
-        level=scenario.get('level') or profile['phases'][elite]['max_level']
+        elite,level=resolve_cultivation(profile,scenario)
         stage=scenario.get('module_level',0)
         if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
     else:

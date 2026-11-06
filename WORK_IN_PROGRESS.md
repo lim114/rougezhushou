@@ -1,3 +1,7 @@
+## 当前断点：天赋与治疗模组入口统一等级默认规则（2026-11-06）
+
+D135/D138/D144完成，47定向通过、30合法结果等价、旧版15组非法默认复现。原280组完成143、剩137。D307补充、D319/D320及原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json。
+
 ## 当前断点：召唤物五入口仅缺省等级使用满级（2026-11-06）
 
 D134完成，36定向通过，旧版15组非法等级静默满级复现。原280组完成140、剩140；D307缺字段补充决定、D319/D320和原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-token-level-defaults-20261106/summary.json。
