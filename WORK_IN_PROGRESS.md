@@ -1,3 +1,7 @@
+## 当前断点：行动奖励面板复用父类已选分支（2026-11-06）
+
+删除子类重复表查找，5项定向通过，测试窗口已更新。D199/D200原目标核对与图片失败分支待审，总163组；整模块47不变。回执verification/maintenance/code-constraints-startup-selection-reuse-20261106/summary.json。下一批继续其余事件模型、公共父类及剩余模块。
+
 ## 当前断点：溯源面板整模块核对与四处图片解码防御登记（2026-11-06）
 
 五个视图完整阅读；溯源新增整模块完成，总47。其余四个视图普通规则核对完成，解码失败替代显示登记D195—D198，待审共161组。产品源码未改，复用第95/96批相同源码证据，无需重启窗口。回执verification/maintenance/code-constraints-portal-image-panel-review-20261106/summary.json；后续继续模型、公共父类和其余模块。

@@ -38,8 +38,7 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
                                None if gold<0 else gold,self.inherited.currentData(),self.group.currentData())
 
     def _choice_changed(self,*args,**kwargs):
-        super()._choice_changed(*args,**kwargs)
-        row=self.result['choices'].get(self.choice_id)if self.result else None
+        row=super()._choice_changed(*args,**kwargs)
         inherited=bool(row and row['kind']=='inherited')
         for w in(self.cost_label,self.gold):w.setVisible(self.choice_id=='choice_ro6_startbuff_3')
         for w in(self.inheritance_label,self.inherited):w.setVisible(inherited)

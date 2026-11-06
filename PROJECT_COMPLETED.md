@@ -1,3 +1,7 @@
+## 维护：行动奖励分支复用（2026-11-06）
+
+子类复用父类返回分支，删除同次重复查找，5项定向通过。整模块仍待防御审核。[回执](verification/maintenance/code-constraints-startup-selection-reuse-20261106/README.md)。
+
 ## 维护：溯源视图整模块核对（2026-11-06）
 
 溯源完整源码及调用关系核对完成，整模块总47；另四个图片视图仅普通规则核对完成，未计整模块通过。[回执](verification/maintenance/code-constraints-portal-image-panel-review-20261106/README.md)。

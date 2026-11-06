@@ -1725,6 +1725,16 @@
       "rule2": "remove_lake_duplicate_constructor_sync_no_new_helpers",
       "rule3": "no_guard_or_catch_changed",
       "evidence": "Lake/encounters reuse base choice for outcomes/battle hints and battle_target; standalone battle_target unchanged by default. Lake duplicate constructor sync removed and per-button range condition computed once. Encounter condition callback retains close-then-refresh behavior (not a redundant forwarding wrapper). No guard/catch removed. First-selection old/new text/buttons equal, reads3to1 and2to1; whole-module review remains incomplete."
+    },
+    {
+      "file": "rouge/current_startup_view.py",
+      "sha256": "89365683a8478465b524123506277fe497a64046ddec3761936495a7e38ba95a",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "rule1": "reuse_parent_selected_choice_instead_of_second_result_dict_lookup",
+      "rule2": "Qt_callbacks_kept_no_new_helper",
+      "rule3": "D199_target_revalidation_D200_null_pixmap_pending",
+      "evidence": "Read complete startup view, reference/choice/locate model and actual documented reader factory. choice_reference deepcopies the same row, retaining kind/item_id, and adds condition fields; subclass only consumes kind/item_id. Reuse parent returned choice removes result/choice relookup. Clear remains separate visible-state reset. Five existing targeted checks pass including all12 choices/six images, group invalidation, reading persistence, source loss and actual source entry. Model packet defenses not certified by this view."
     }
   ]
 }
