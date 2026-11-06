@@ -1,5 +1,5 @@
 """A live view of the selected manual profile; all changes stay in its editor."""
-from PySide6.QtCore import Signal
+from PySide6.QtCore import Signal, QSignalBlocker
 from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel, QLineEdit,
     QPlainTextEdit, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 from .squad_account_plan import format_squad_plan, squad_account_plan
@@ -41,13 +41,14 @@ class SquadAccountPanel(QWidget):
         self.plan = squad_account_plan(self.account_state, self.grade.currentData())
         query = self.search.text().strip().casefold()
         self.rows = [r for r in self.plan['rows'] if query in (r['name'] + r['condition']).casefold()]
-        self.table.setRowCount(len(self.rows))
-        for index, row in enumerate(self.rows):
-            gate = row['gate_grade_parameter']
-            values = [row['name'], row['condition'],
-                      STATUS_LABELS[row['manual_status']] if row['technology_id'] else '需另核验账户培养',
-                      '无此门槛资料' if gate is None else f"{gate}：参数{'达到' if row['grade_parameter_met'] else '未达到'}"]
-            for column, value in enumerate(values): self.table.setItem(index, column, QTableWidgetItem(value))
+        with QSignalBlocker(self.table):
+            self.table.setRowCount(len(self.rows))
+            for index, row in enumerate(self.rows):
+                gate = row['gate_grade_parameter']
+                values = [row['name'], row['condition'],
+                          STATUS_LABELS[row['manual_status']] if row['technology_id'] else '需另核验账户培养',
+                          '无此门槛资料' if gate is None else f"{gate}：参数{'达到' if row['grade_parameter_met'] else '未达到'}"]
+                for column, value in enumerate(values): self.table.setItem(index, column, QTableWidgetItem(value))
         self.table.resizeColumnsToContents()
         self.notice.setPlainText('资料档案：' + self.plan['profile_name'] + '\n' + '\n'.join(self.plan['notes']))
         self.selection_changed()

@@ -1,3 +1,7 @@
+## 当前断点：分队条件分支精简与表格刷新合并（2026-11-06）
+
+合并可选科技/门槛判断、移除独占资料额外复制、表格选择通知合并。13定向及最终4复验通过，48旧新清单一致；分队参考/界面完整销项，D304待审，共267组。回执verification/maintenance/code-constraints-squad-plan-review-20261106/summary.json。
+
 ## 当前断点：科技资料只读复用与跳转刷新合并（2026-11-06）
 
 只读标签/门槛避免整表复制，筛选读取一次，跳转合并刷新。26定向通过、228旧新文字一致；科技界面完整销项，D300—D303待审，共266组。回执verification/maintenance/code-constraints-technology-review-20261106/summary.json。

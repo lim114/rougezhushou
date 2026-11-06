@@ -1,3 +1,7 @@
+## 维护：分队资料与界面精简（2026-11-06）
+
+squad_unlock_reference和squad_account_view整模块回顾完成；清单空结果兜底待审。[回执](verification/maintenance/code-constraints-squad-plan-review-20261106/README.md)。
+
 ## 维护：科技资料与跳转精简（2026-11-06）
 
 technology_view整模块回顾完成；资料/存档边界仍待审。[回执](verification/maintenance/code-constraints-technology-review-20261106/README.md)。

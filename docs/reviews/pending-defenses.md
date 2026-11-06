@@ -319,3 +319,5 @@
 | D301 | TechnologyState.__init__链接拒绝、读取/解析失败保护；FileNotFoundError后lstat区分不存在和不可读路径 | 防止损坏/不可读原件被默认新档覆盖 | 建议保留原件保护并审批读取边界，替代失败直接报错；未新增恢复/重试，原样待审 |
 | D302 | _timestamp的类型/时区/转换及ValueError/OverflowError；_validate的格式/唯一名称/记录校验、未来节点透传 | 拒绝不可展示时间与损坏记录，保留未来元数据 | 建议保留入口格式核验及透传，审批后区分输入与内部异常；读取和保存是不同时间点，原样待审 |
 | D303 | TechnologyState.save保护标记、链接/不存在路径核对、摘要冲突拒绝、临时文件fsync/replace、失败保护及finally清理失败忽略 | 不覆盖外部改动或损坏原件；清理错误被隐藏 | 建议保留原子发布/冲突保护，单列清理失败处理供审核；替代直接抛出错误。完整现有分支原样待审 |
+
+| D304 | squad_account_plan取account_state.view后，manual_status/manual_source/manual_updated_at三处空结果兜底 | 当前TechnologyState.view正常返回记录；空结果会显示未知而不是报错 | 建议明确账户查询契约后删除三处重复兜底；替代保留容忍其它调用实现。三处原判断保留，本批只合并正常可选科技/门槛分支 |

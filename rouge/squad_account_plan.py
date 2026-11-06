@@ -1,5 +1,4 @@
 """Manual account references joined to pinned squad conditions, without activation."""
-from copy import deepcopy
 
 from .run_config import config_data
 from .squad_unlock_reference import squad_unlock_reference
@@ -14,20 +13,24 @@ def squad_account_plan(account_state, grade):
         reference = squad_unlock_reference(identity)
         if reference is None:
             continue
+        row = {'squad_id': identity, 'name': record['name'],
+               'condition': reference['unlock_condition_reference'],
+               'technology_id': None, 'technology_name': None,
+               'manual_status': 'unknown', 'manual_source': None, 'manual_updated_at': None,
+               'gate_grade_parameter': None, 'grade_parameter_met': None,
+               'account_unlocked': None, 'actual_activation': None, 'reference': reference}
         node = reference['technology_node_reference']
-        manual = account_state.view(node['id']) if node else None
-        gate = node['gate_reference'] if node else None
-        rows.append({'squad_id': identity, 'name': record['name'],
-                     'condition': reference['unlock_condition_reference'],
-                     'technology_id': node['id'] if node else None,
-                     'technology_name': node['name'] if node else None,
-                     'manual_status': manual['status'] if manual else 'unknown',
-                     'manual_source': manual['source'] if manual else None,
-                     'manual_updated_at': manual['updated_at'] if manual else None,
-                     'gate_grade_parameter': gate['enable_grade_parameter'] if gate else None,
-                     'grade_parameter_met': grade >= gate['enable_grade_parameter'] if gate else None,
-                     'account_unlocked': None, 'actual_activation': None,
-                     'reference': deepcopy(reference)})
+        if node:
+            row['technology_id'] = node['id']; row['technology_name'] = node['name']
+            manual = account_state.view(node['id'])
+            row.update(manual_status=manual['status'] if manual else 'unknown',
+                       manual_source=manual['source'] if manual else None,
+                       manual_updated_at=manual['updated_at'] if manual else None)
+            gate = node['gate_reference']
+            if gate:
+                row.update(gate_grade_parameter=gate['enable_grade_parameter'],
+                           grade_parameter_met=grade >= gate['enable_grade_parameter'])
+        rows.append(row)
     return {'profile_id': account_state.selected_profile, 'profile_name': account_state.profile_name,
             'grade_reference': grade, 'rows': rows,
             'notes': ['科技状态来自当前资料档案的手动记录；解锁记录不证明条件已实际激活。',
