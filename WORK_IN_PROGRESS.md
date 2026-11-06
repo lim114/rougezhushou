@@ -1,3 +1,7 @@
+## 当前断点：敌人对照准备复用（2026-11-05）
+
+候选扫描3→1、两敌人两难度环境复制5→3；9项定向、27报告/243结果旧新一致，来源歧义与副本隔离保留。窗口更新，覆盖340/75/107/36不变，D38—D127仍90组。回执verification/maintenance/code-constraints-enemy-preparation-20261105/summary.json。前置完整计算不能直接删除：原difficulty.value=True或16原应拒绝，跳过后被对照4覆盖通过。下一批沿run_modifiers.prepare_run和supplemental_run入口抽取等价的原输入验证，预检仍普通待整改，不能改记为待审批；D123基准投影/D127默认回退保持待审。继续其余模块，不增节数。
+
 ## 当前断点：天赋候选键复用（2026-11-05）
 
 候选条件一次解析，克洛丝8→4次；33项定向、504培养技能/147本局报告一致。D125培养重验、D126已初始化键默认0、D127无效难度改4登记未改，共90组。窗口更新，覆盖340/75/107/36。回执verification/maintenance/code-constraints-talent-keys-20261105/summary.json。下一批继续supplemental_enemies候选重复扫描和预检完整计算的验证契约；后者仍普通未完成项，不能未经证据直接删除或归为仅待审保护。再继续shared deployment/剩余模块。D123投影依赖保持待审，不增节数。

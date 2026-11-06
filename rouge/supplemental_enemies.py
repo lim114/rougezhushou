@@ -26,27 +26,33 @@ def compare_fixed_enemies(operator_preview,environment,preview):
     if type(mode) is not str or mode not in ('unknown','active_same_column','active_other_column'):
         raise ValueError('源阶方情景仅支持未知、行动同列或行动异列。')
     if type(selections) is not list or not 1<=len(selections)<=20:raise ValueError('需要1–20个固定候选目标。')
+    candidates={}
+    for record in stage_previews()[sid]['possible_enemies']:
+        candidates.setdefault((record['id'],record['level']),[]).append(record)
     records=[];seen=set()
     for selection in selections:
         if (type(selection) is not dict or set(selection)!={'enemy_id','level'} or
             type(selection['enemy_id']) is not str or type(selection['level']) is not int):
             raise ValueError('每个目标需原表enemy_id与整数level。')
         key=(selection['enemy_id'],selection['level'])
-        matches=[e for e in stage_previews()[sid]['possible_enemies'] if (e['id'],e['level'])==key]
+        matches=candidates.get(key,[])
         if len(matches)!=1 or key in seen:raise ValueError('目标需唯一匹配关卡引用且不能重复。')
         records.append(matches[0]);seen.add(key)
     original=deepcopy(operator_preview);environment=deepcopy(environment)
     run_skill_reference(original,environment) # Validate cultivation and raw run input first.
+    conditions=[]
+    for grade in grades:
+        env=deepcopy(environment)
+        config=env['run_config']
+        if config is None:config=env['run_config']={}
+        difficulty=deepcopy(config.get('difficulty') or {})
+        difficulty.update(value=grade,source='手动局外候选目标对照');difficulty.pop('captured_at',None)
+        config['difficulty']=difficulty
+        conditions.append((grade,env))
     rows=[];variants=[]
     for record in records:
         baseline=None
-        for grade in grades:
-            env=deepcopy(environment)
-            config=env['run_config']
-            if config is None:config=env['run_config']={}
-            difficulty=deepcopy(config.get('difficulty') or {})
-            difficulty.update(value=grade,source='手动局外候选目标对照');difficulty.pop('captured_at',None)
-            config['difficulty']=difficulty
+        for grade,env in conditions:
             target={'stage_id':sid,'enemy_id':record['id'],'level':record['level']}
             if record['id']=='enemy_2148_shorbb':target['orb_mode']=mode
             result=run_skill_reference(original,env,target_enemy=target)

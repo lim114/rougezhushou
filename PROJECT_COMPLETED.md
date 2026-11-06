@@ -1,3 +1,7 @@
+## 维护：敌人对照准备复用（2026-11-05）
+
+候选索引与同难度环境复用，保留歧义拒绝及结果隔离；9项定向、27报告/243结果一致，窗口更新。[回执](verification/maintenance/code-constraints-enemy-preparation-20261105/README.md)。预检完整计算尚未销项。
+
 ## 维护：天赋候选键复用（2026-11-05）
 
 天赋排序依据一次计算，返回隔离及同档顺序保留；33项定向、504培养技能/147本局报告一致，窗口更新。[回执](verification/maintenance/code-constraints-talent-keys-20261105/README.md)。模块其余审批不销项。
