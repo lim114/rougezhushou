@@ -2381,13 +2381,23 @@
     },
     {
       "file": "rouge/current_map_position_view.py",
-      "sha256": "10c0e744f670e6faa920bb16532063803aed2e38c46ebe32389e062ca2a33fb3",
+      "sha256": "6e49c58fcf8f24a6349c0a45c57a507af5784e09750c5b73c47aa36e76ece307",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
       "rule2": "Two identical combo callbacks merged into one shared handler",
       "rule3": "D260_D262_pending",
-      "evidence": "Entire module read. 13 map/terrain view tests plus 2 marker tests pass. Fixed map old/new selected output equal and terrain decoder calls7to2; not general latency proof."
+      "evidence": "Entire module read. 13 map/terrain view tests plus 2 marker tests pass. Fixed map old/new selected output equal and terrain decoder calls7to2; not general latency proof.",
+      "map_selection_once": {
+        "decisions": [
+          "D262"
+        ],
+        "partial": [
+          "D259"
+        ],
+        "receipt": "verification/maintenance/code-constraints-map-selection-once-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_action_positions.py",

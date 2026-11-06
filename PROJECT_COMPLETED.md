@@ -5250,3 +5250,5 @@ D163整改、D164保留复核、D165保留并复用根路径完成，17项定向
 - 2026-11-06：D250候选资料异常边界收窄，16定向通过；回执 `verification/maintenance/code-constraints-candidate-error-boundary-20261106/summary.json`。
 
 - 2026-11-06：D243物件技能声明单次核验，20定向通过；回执 `verification/maintenance/code-constraints-object-skill-once-20261106/summary.json`。
+
+- 2026-11-06：D262与D259的面板解析路径完成，9定向通过；D259整体仍待办。回执 `verification/maintenance/code-constraints-map-selection-once-20261106/summary.json`。

@@ -135,7 +135,7 @@ class CurrentMapPositionPanel(QWidget):
         blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.addItem('选择位置，或点击原图编号',None)
         for i,p in enumerate(fresh['points'],1):self.combo.addItem(str(i)+' · '+(p['label']+' · 'if p.get('kind')=='visible_map_symbol'else'')+f"第{p['row']+1}行 · 第{p['col']+1}列",str(p['row'])+':'+str(p['col']))
         self.combo.setEnabled(bool(fresh['points']));self.combo.blockSignals(blocked)
-        if selected is None:self.selected=None;self._render(preserve=keep)
+        if selected is None:self.selected=None;self._render(None,preserve=keep)
         else:self.select_cell(*selected,preserve=keep)
         return self.result is not None
     def _combo_selected(self,combo):
@@ -148,21 +148,20 @@ class CurrentMapPositionPanel(QWidget):
         self.terrain_cells.setEnabled(bool(locations));self.terrain_cells.blockSignals(blocked);self.grid.highlight_cells={(p['row'],p['col'])for p in locations};self.grid.update()
     def _terrain_changed(self,*_):
         if self.result is None:return
-        self._populate_terrain_cells();self.selected=None;self._render(preserve=False)
+        self._populate_terrain_cells();self.selected=None;self._render(None,preserve=False)
     def select_cell(self,row,col,*,preserve=False):
         cell=model.cell_reference(self.result,row,col)
         if cell is None:return False
         kind=self.terrain_kind.currentData()
         if kind is not None and kind!=cell['tile'].get('tileKey'):
             blocked=self.terrain_kind.blockSignals(True);self.terrain_kind.setCurrentIndex(max(0,self.terrain_kind.findData(cell['tile'].get('tileKey'))));self.terrain_kind.blockSignals(blocked);self._populate_terrain_cells()
-        keep=preserve and self.selected==(row,col);self.selected=(row,col);self._render(preserve=keep);return self.result is not None
-    def _render(self,*,preserve=False):
-        cell=model.cell_reference(self.result,*self.selected)if self.selected is not None else None;self.grid.set_result(self.result,self.selected)
+        keep=preserve and self.selected==(row,col);self.selected=(row,col);self._render(cell,preserve=keep);return self.result is not None
+    def _render(self,cell,*,preserve=False):
+        self.grid.set_result(self.result,self.selected)
         markers=[]
-        if self.result is not None:
-            for i,p in enumerate(self.result['points'],1):
-                name=p['label']if p.get('kind')=='visible_map_symbol'else self.grid.tile_infos[self.result['map'][p['row']][p['col']]]['name']
-                markers.append({'key':str(p['row'])+':'+str(p['col']),'point':p,'number':i,'label':f"{i} · {name} · 第{p['row']+1}行 第{p['col']+1}列"})
+        for i,p in enumerate(self.result['points'],1):
+            name=p['label']if p.get('kind')=='visible_map_symbol'else self.grid.tile_infos[self.result['map'][p['row']][p['col']]]['name']
+            markers.append({'key':str(p['row'])+':'+str(p['col']),'point':p,'number':i,'label':f"{i} · {name} · 第{p['row']+1}行 第{p['col']+1}列"})
         if not self.original.set_image(self.image_raw,cell['point']if cell else None,markers=markers):self.clear_reference();return
         value=str(self.selected[0])+':'+str(self.selected[1])if self.selected is not None else None
         for combo in(self.combo,self.terrain_cells):
