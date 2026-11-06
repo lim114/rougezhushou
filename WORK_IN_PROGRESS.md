@@ -1,3 +1,7 @@
+## 当前断点：符文分类结果复用与召唤物汇总（2026-11-05）
+
+补充/召唤物已分类符文不重筛，汇总每属性一次sum；删除无产品调用的包装，2份测试与6份历史脚本适配（未运行历史全量）。75项最终定向、96召唤物报告及21补充报告旧新一致。窗口正常重启，覆盖338/75/109/36，D38—D129共92组。回执verification/maintenance/code-constraints-selected-runes-20261105/summary.json。D128召唤物单等级默认0、D129回复倍率未知改1仅登记。下一批继续完整前置报告的验证职责、operator_engine.token_stats/effects_for_token重复分类及summons模组/培养参数重复解析；只按真实调用契约整改。D123基准投影等待审核。其余模块继续，不增节数。
+
 ## 当前断点：敌人对照培养边界复用（2026-11-05）
 
 两敌人两难度培养计算5→1，计算主体原样共享，26项定向、63报告/567结果及15错误输入旧新一致。测试窗口正常重启可见响应，覆盖340/75/107/36不变，D38—D127仍90组。回执verification/maintenance/code-constraints-enemy-cultivation-20261105/summary.json。前置完整报告仍未销项，不能仅prepare_run替换，后续继续验证职责拆分。下一独立普通冗余：supplemental_run已分类runes再交apply_attribute_runes重复资格筛选，已有_apply_selected_runes可复用；核实调用与未知/代币过滤后整改。D123基准投影/D122基准异常/D125培养重复字段校验/D127默认难度均未动。其余模块持续回顾，不增节数。

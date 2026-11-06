@@ -14,12 +14,6 @@ def is_attribute_rune(effect):
             and effect.get('formula_item') in ('ADDITION', 'MULTIPLIER', 'FINAL_SCALER'))
 
 
-def apply_attribute_runes(attributes, effects):
-    """Return an independent snapshot; never fold runes into talent multipliers."""
-    runes = [effect for effect in effects if is_attribute_rune(effect)]
-    return _apply_selected_runes(attributes, runes)[0]
-
-
 def _apply_selected_runes(attributes, runes, preview_attack=None):
     """Apply classified runes once, including an optional explicit ATK preview."""
     attributes = dict(attributes)

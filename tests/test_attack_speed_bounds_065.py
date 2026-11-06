@@ -4,7 +4,7 @@ These fixtures are not assertions that an invented relic exists in the game.
 """
 import unittest
 from rouge.damage import _prepare_damage, _evaluate_damage
-from rouge.relic_attributes import apply_attribute_runes
+from rouge.relic_attributes import _apply_selected_runes
 from rouge.timing import AttackTimeline, charge_seconds, mixed_charge_seconds, periodic_charge_seconds
 
 
@@ -12,8 +12,8 @@ def prepared(operator='kaltsit', skill=2, ordinary=-100, rune=None, mode='contin
     result = _prepare_damage({'operator': operator, 'skill': skill, 'timing_mode': mode})
     scenario, attributes, _, _ = result
     if rune is not None:
-        attributes.update(apply_attribute_runes(attributes, [
-            {'kind': 'attack_speed', 'value': rune, 'attribute_layer': 'relic_rune', 'formula_item': 'ADDITION'}]))
+        attributes.update(_apply_selected_runes(attributes, [
+            {'kind': 'attack_speed', 'value': rune, 'attribute_layer': 'relic_rune', 'formula_item': 'ADDITION'}])[0])
         scenario['_attribute_attack_speed'] = attributes['attack_speed']
     scenario['effects'].append({'kind': 'attack_speed', 'value': ordinary, '_verified_rule': True})
     if temporary:
@@ -29,7 +29,7 @@ class AttackSpeedBounds(unittest.TestCase):
         self.assertEqual(r['base_attack_speed'], 50)
 
     def test_default_raw_attribute_is_bounded_even_without_runes(self):
-        self.assertEqual(apply_attribute_runes({'attack_speed': 0}, [])['attack_speed'], 20)
+        self.assertEqual(_apply_selected_runes({'attack_speed': 0}, [])[0]['attack_speed'], 20)
 
     def test_default_ordinary_floor_in_both_engines(self):
         for operator, skill in [('kaltsit', 2), ('silverash', 3), ('mechanist', 1), ('char_1041_angel2', 3)]:

@@ -92,7 +92,7 @@ def main():
             checks.append({'scope':'unheld_river_reference_absent'})
             from unittest.mock import patch
             from rouge.damage import _prepare_damage, _evaluate_damage
-            from rouge.relic_attributes import apply_attribute_runes
+            from rouge.relic_attributes import _apply_selected_runes
             for op,skill,ordinary,rune,ids,base,active in (
                 ('kaltsit',1,-100,None,set(),20,50),
                 ('kaltsit',2,30,-200,set(),50,50),
@@ -102,8 +102,8 @@ def main():
                     prepared=_prepare_damage(scenario)
                     current,attributes,_,_=prepared
                     if rune is not None:
-                        attributes.update(apply_attribute_runes(attributes,[{'kind':'attack_speed','value':rune,
-                            'attribute_layer':'relic_rune','formula_item':'ADDITION'}]))
+                        attributes.update(_apply_selected_runes(attributes,[{'kind':'attack_speed','value':rune,
+                            'attribute_layer':'relic_rune','formula_item':'ADDITION'}])[0])
                         current['_attribute_attack_speed']=attributes['attack_speed']
                     current['effects'].append({'kind':'attack_speed','value':ordinary,'_verified_rule':True})
                     return _evaluate_damage(prepared)

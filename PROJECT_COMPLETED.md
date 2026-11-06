@@ -1,3 +1,7 @@
+## 维护：符文分类结果复用与召唤物汇总（2026-11-05）
+
+已分类符文直接计算、普通属性每类一次sum、移除无产品调用包装；75项定向与117份报告对比一致，窗口更新。[回执](verification/maintenance/code-constraints-selected-runes-20261105/README.md)。
+
 ## 维护：敌人对照培养边界复用（2026-11-05）
 
 固定培养入口一次验证/计算，两个真实入口共享计算主体；26项定向、63报告/567结果和15错误输入一致，窗口更新。[回执](verification/maintenance/code-constraints-enemy-cultivation-20261105/README.md)。完整预检仍未销项。

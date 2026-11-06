@@ -470,17 +470,26 @@ def finish(result,resolution,attributes,scenario):
             sources.append('手动输入')
         if not applied and not features and not module and not cost_module:continue
         from .relic_attributes import is_attribute_rune
-        runes=[e for e in applied if is_attribute_rune(e)]
-        def total(kind):return sum(e['value'] for e in applied+features if e['kind']==kind and not is_attribute_rune(e))
-        stats=token_attributes(profile,scenario,tid,total('hp_pct'),rune_effects=runes)
-        for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+total(kind)
-        stats['attack_speed']=effective_attack_speed(stats['attack_speed']+total('attack_speed'))
+        runes=[]
+        ordinary={kind:[] for kind in ('hp_pct','attack_pct','defense_pct','attack_speed',
+                                       'deployment_cost_add','token_deploy_slot_free',
+                                       'regeneration_hp_ratio','regeneration')}
+        for effect in applied:
+            if is_attribute_rune(effect):runes.append(effect)
+            elif effect['kind'] in ordinary:ordinary[effect['kind']].append(effect['value'])
+        for effect in features:
+            if effect['kind'] in ordinary and not is_attribute_rune(effect):
+                ordinary[effect['kind']].append(effect['value'])
+        totals={kind:sum(values) for kind,values in ordinary.items()}
+        stats=token_attributes(profile,scenario,tid,totals['hp_pct'],rune_effects=runes)
+        for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+totals[kind]
+        stats['attack_speed']=effective_attack_speed(stats['attack_speed']+totals['attack_speed'])
         stats['resistance']=min(100,stats['resistance']+sum(e['value'] for e in manual_effects if e['kind']=='resistance_flat'))
-        stats['deployment_cost']=max(0,stats['deployment_cost']+total('deployment_cost_add'))
-        stats['free_deployment_slot']=bool(total('token_deploy_slot_free'))
-        if total('regeneration_hp_ratio') or total('regeneration'):
-            stats['regeneration_rate']=(None if stats['hp'] is None and total('regeneration_hp_ratio') else
-                ((stats['hp'] or 0)*total('regeneration_hp_ratio')+total('regeneration'))*factor)
+        stats['deployment_cost']=max(0,stats['deployment_cost']+totals['deployment_cost_add'])
+        stats['free_deployment_slot']=bool(totals['token_deploy_slot_free'])
+        if totals['regeneration_hp_ratio'] or totals['regeneration']:
+            stats['regeneration_rate']=(None if stats['hp'] is None and totals['regeneration_hp_ratio'] else
+                ((stats['hp'] or 0)*totals['regeneration_hp_ratio']+totals['regeneration'])*factor)
         if stats.get('module_reference',{}).get('hp_composition_pending'):
             warnings.append('触手：模组生命与藏品/分队生命的叠加层尚未核验，复合生命及依赖该生命的回复未知；单项参考分别列出。')
         stats['protection']=protection(features,stats['hp'])

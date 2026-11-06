@@ -159,6 +159,7 @@ def token_concurrent_limit(profile,scenario,token_id):
 
 
 def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
+    """Calculate token cultivation from runes already selected by the caller."""
     phases=profile['tokens'][token_id]['phases'];elite=scenario.get('elite',2)
     phase=phases[min(elite,len(phases)-1)]
     level=min(scenario.get('level') or profile['phases'][elite]['max_level'],phase['max_level'])
@@ -167,8 +168,8 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
     stats={k:first[k]+ratio*(v-first[k]) for k,v in last.items() if k!='level'}
     for k in ('hp','attack','defense'):stats[k]=math.floor(stats[k]+.5)
     base_hp=stats['hp']
-    from .relic_attributes import apply_attribute_runes
-    stats=apply_attribute_runes(stats,rune_effects)
+    from .relic_attributes import _apply_selected_runes
+    stats=_apply_selected_runes(stats,rune_effects)[0]
     rune_hp=stats['hp']!=base_hp
     ordinary_base_hp=stats['hp']
     stats['hp']*=1+hp_pct

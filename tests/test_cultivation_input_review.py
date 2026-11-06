@@ -29,7 +29,8 @@ class CultivationInputReviewTests(unittest.TestCase):
         before = deepcopy((attributes, effects))
         with patch.object(relic_attributes, 'is_attribute_rune',
                           wraps=relic_attributes.is_attribute_rune) as classify:
-            result = relic_attributes.apply_attribute_runes(attributes, effects)
+            _, result = relic_attributes.prepare_attribute_runes(
+                {'base_attack': attributes['attack'], 'effects': effects}, attributes)
         self.assertEqual(classify.call_count, len(effects))
         self.assertEqual((attributes, effects), before)
         self.assertEqual(result['attack'], 120)

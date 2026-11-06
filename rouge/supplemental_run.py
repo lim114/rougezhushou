@@ -6,7 +6,7 @@ from pathlib import Path
 from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
                                   supplemental_profiles,format_reference)
-from .relic_attributes import is_attribute_rune,apply_attribute_runes
+from .relic_attributes import is_attribute_rune,_apply_selected_runes
 from .supplemental_cost import COST_KINDS,cost_layer,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
 from .supplemental_healing import supported_healing,apply_healing_reference
@@ -113,7 +113,7 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
             unsupported.append(effect)
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
-    modified=apply_attribute_runes(stats,runes)
+    modified=_apply_selected_runes(stats,runes)[0]
     damage=damage_reference(scenario,damage_rules,relic_resolution['records'])
     effective_preview={**preview,'enemy_defense':damage['effective_target_defense']
         if damage['effective_target_defense'] is not None else scenario['enemy_defense'],
