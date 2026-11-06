@@ -14,21 +14,18 @@ class CurrentAgencyPanel(DocumentedEventFlowPanel):
         row.addWidget(self.offer);self.pair_icons=[]
         for _ in range(2):
             label=QLabel();label.setMinimumWidth(32);row.addWidget(label);self.pair_icons.append(label)
-        self.pair_label=QLabel();row.addWidget(self.pair_label);row.addStretch(1);self.layout().insertWidget(1,self.offer_controls);self.offer.currentIndexChanged.connect(self._conditions_changed)
+        self.pair_label=QLabel();row.addWidget(self.pair_label);row.addStretch(1);self.layout().insertWidget(1,self.offer_controls);self.offer.currentIndexChanged.connect(self.refresh_reference)
         self.refresh_reference(initial_scene=scene_id, initial=True)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
-        self._update_professions()
     def _fresh_reference(self):
         return model.reference('agency', self.offer.currentData())
-    def _conditions_changed(self,*_):self.refresh_reference()
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_professions()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_professions(choice)
     def clear_reference(self):
-        super().clear_reference();self._update_professions()
-    def _update_professions(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None
+        super().clear_reference();self._update_professions(None)
+    def _update_professions(self,c):
         promoted=bool(c and c['role']=='promoted');self.offer_controls.setVisible(promoted)
         for label in self.pair_icons:label.clear()
         self.pair_label.clear()

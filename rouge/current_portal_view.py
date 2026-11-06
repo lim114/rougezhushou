@@ -9,19 +9,17 @@ class CurrentPortalPanel(DocumentedEventFlowPanel):
         self.source_request=target['source_request']if target else None
         initial=('source-scene'if self.source_request['category']=='scenes'else'source-choice')if self.source_request else None
         super().__init__('portal',initial,parent,reference_model=model, defer_initial_refresh=True)
-        self.part_controls=QWidget();row=QHBoxLayout(self.part_controls);row.setContentsMargins(0,0,0,0);row.addWidget(QLabel('仅本页加工品件数（不等于零件总数）：'));self.parts=QSpinBox();self.parts.setRange(-1,99999);self.parts.setSpecialValueText('尚未确认');self.parts.setValue(-1);self.parts.setAccessibleName('仅本页加工品件数');row.addWidget(self.parts);self.layout().insertWidget(1,self.part_controls);self.parts.valueChanged.connect(self._conditions_changed)
+        self.part_controls=QWidget();row=QHBoxLayout(self.part_controls);row.setContentsMargins(0,0,0,0);row.addWidget(QLabel('仅本页加工品件数（不等于零件总数）：'));self.parts=QSpinBox();self.parts.setRange(-1,99999);self.parts.setSpecialValueText('尚未确认');self.parts.setValue(-1);self.parts.setAccessibleName('仅本页加工品件数');row.addWidget(self.parts);self.layout().insertWidget(1,self.part_controls);self.parts.valueChanged.connect(self.refresh_reference)
         self.refresh_reference(initial_scene=initial, initial=True)
         if self.source_request and self.source_request['category']=='choices':self.choices.setCurrentRow(0)
-        self._update_controls()
     def _fresh_reference(self):
         count=self.parts.value()
         return model.reference('portal', None if count<0 else count, self.source_request)
-    def _conditions_changed(self,*_):self.refresh_reference()
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_controls()
-    def clear_reference(self):super().clear_reference();self._update_controls()
-    def _update_controls(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;self.part_controls.setVisible(bool(c and c['inventory_rule']))
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_controls(choice)
+    def clear_reference(self):super().clear_reference();self._update_controls(None)
+    def _update_controls(self,c):
+        self.part_controls.setVisible(bool(c and c['inventory_rule']))
 
 class CurrentPortalDialog(QDialog):
     def __init__(self,target=None,parent=None):

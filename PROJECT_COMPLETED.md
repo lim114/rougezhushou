@@ -1,3 +1,7 @@
+## 维护：中介溯源探索面板分支复用与刷新包装删除（2026-11-06）
+
+4模块相关路径去重，24定向与3类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-agency-portal-scout-reuse-20261106/README.md)。
+
 ## 维护：四类事件专属控件与嵌套奖励复用分支（2026-11-06）
 
 7模块相关路径去重，37定向与4类调用/显示对照通过。仅路径完成。[回执](verification/maintenance/code-constraints-event-specific-choice-20261106/README.md)。

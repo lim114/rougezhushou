@@ -15,13 +15,12 @@ class CurrentScoutPanel(DocumentedEventFlowPanel):
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
-        self._update_return_card()
     def _choice_changed(self,item,*args,preserve=False):
-        super()._choice_changed(item,*args,preserve=preserve);self._update_return_card()
+        choice=super()._choice_changed(item,*args,preserve=preserve);self._update_return_card(choice)
     def clear_reference(self):
-        super().clear_reference();self._update_return_card()
-    def _update_return_card(self):
-        show=bool(self.result and model.shows_return_item(self.result,self.scene_id,self.choice_id));self.return_card.setVisible(show);self.return_icon.clear()
+        super().clear_reference();self._update_return_card(None)
+    def _update_return_card(self,c):
+        show=bool(self.result and model.shows_return_item(self.result,self.scene_id,self.choice_id,choice=c));self.return_card.setVisible(show);self.return_icon.clear()
         if show:
             raw=model.icon_bytes();pixmap=QPixmap()
             if raw is not None and pixmap.loadFromData(raw):self.return_icon.setPixmap(pixmap.scaled(52,52,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))

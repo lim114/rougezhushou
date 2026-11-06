@@ -62,9 +62,9 @@ def choice_reference(result,sid,cid):
     if not(s and c and c['scene_id']==sid and cid in s['choice_ids']):return None
     return deepcopy(c)
 
-def shows_return_item(result,sid,cid=None):
+def shows_return_item(result,sid,cid=None,*,choice=...):
     if sid not in result['scenes']:return False
-    c=choice_reference(result,sid,cid)
+    c=choice_reference(result,sid,cid) if choice is ... else choice
     return bool(c and c['role']in('origin','confirm'))
 
 def player_text(result,sid,cid=None, *, prepared_choice=...):
