@@ -75,5 +75,4 @@ class CurrentEnemySpawnsDialog(PlayerDialog):
         super().__init__(parent);self.setWindowTitle('这个敌人的出怪条目与条件');layout=QVBoxLayout(self);self.panel=CurrentEnemySpawnsPanel(stage_id,enemy_key,self);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,760,600)
-    def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)

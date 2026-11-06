@@ -33,7 +33,6 @@ class CurrentObjectPositionDialog(PlayerDialog):
         super().__init__(parent);self.setWindowTitle('物件与机关 · 固定位置参考');layout=QVBoxLayout(self);self.panel=CurrentObjectPositionPanel(stage_id,key,self);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,960,640)
-    def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)
 
 class CurrentStageObjectsPanel(QWidget):
@@ -56,7 +55,7 @@ class CurrentStageObjectsPanel(QWidget):
         for label,key in rows:widget.addItem(label,key)
         widget.setCurrentIndex(max(0,widget.findData(selected)));widget.blockSignals(blocked)
     def close_children(self):
-        if self.position_dialog is not None:self.position_dialog.panel.clear_reference();self.position_dialog.close()
+        if self.position_dialog is not None:self.position_dialog.close()
         self.position_dialog=None
     def clear_reference(self,*,notify=True):
         had=self.result is not None;self.close_children();self.result=None;self._view_key=None;self._fill(self.entries,[]);self._fill(self.activations,[]);self.entries.setEnabled(False);self.activations.setEnabled(False);self.action_button.setEnabled(False);self.position_button.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
@@ -101,5 +100,4 @@ class CurrentStageObjectsDialog(PlayerDialog):
         super().__init__(parent);self.setWindowTitle('本关物件与机关');layout=QVBoxLayout(self);self.panel=CurrentStageObjectsPanel(stage_id,self);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,760,600)
-    def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)

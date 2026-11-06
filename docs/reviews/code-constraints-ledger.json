@@ -1791,6 +1791,26 @@
       "rule2": "removed_redundant_closeEvent_override",
       "rule3": "D225_D226_pending",
       "evidence": "Native Qt probe: close previously called each panel close method twice; reject once. Removed dialog closeEvent wrapper, after both paths call each once. Panel closeEvent remains for independent panel use; ToolPage finished wiring separately inspected. Seven view tests and exact titlebar close/destroy test pass. Shared navigation fallback is normal host selection; packet freshness and failed reader behavior listed D225 D226. Remaining lifecycle not certified."
+    },
+    {
+      "file": "rouge/current_enemy_spawns_view.py",
+      "sha256": "23fd6c86b4de4ccbc0ce9f957bb22d4060988a163ba4aab53dbd54d9d0b3df5b",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "single_done_cleanup_no_parent_preclear",
+      "rule2": "remove_three_redundant_closeEvent_wrappers",
+      "rule3": "no_protection_changes",
+      "evidence": "Read source; focused review of three dialog close/done chains and object parent close_children. Native probes close2->1, reject/accept remain1, all clear result and hide. Parent preclear removed since child close reaches done. Other refresh/resolve/image protections not certified by this lifecycle review. 27 targeted initially26pass1stale text failure, baseline same failure; corrected test assertion then single retest pass."
+    },
+    {
+      "file": "rouge/current_stage_objects_view.py",
+      "sha256": "807b89cd760049fa16e7bb303530b42f1053a4dfb495d8caa48ab522c682486c",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "single_done_cleanup_no_parent_preclear",
+      "rule2": "remove_three_redundant_closeEvent_wrappers",
+      "rule3": "no_protection_changes",
+      "evidence": "Read source; focused review of three dialog close/done chains and object parent close_children. Native probes close2->1, reject/accept remain1, all clear result and hide. Parent preclear removed since child close reaches done. Other refresh/resolve/image protections not certified by this lifecycle review. 27 targeted initially26pass1stale text failure, baseline same failure; corrected test assertion then single retest pass."
     }
   ]
 }

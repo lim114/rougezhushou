@@ -1,3 +1,7 @@
+## 维护：出怪与物件对话框关闭整改（2026-11-06）
+
+三处包装和父窗额外清空已删除；关闭、拒绝、接受均单次清理。失败及复测完整保留。[回执](verification/maintenance/code-constraints-spawn-object-close-20261106/README.md)。
+
 ## 维护：事件作战对话框重复关闭修正（2026-11-06）
 
 移除重复closeEvent包装，保留reject统一清理，定向检查通过。[回执](verification/maintenance/code-constraints-event-battle-dialog-close-20261106/README.md)。

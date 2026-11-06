@@ -31,7 +31,7 @@ class BattleReferenceChainReview(unittest.TestCase):
   for v in(p.quick_table,p.enemy_overview.tree):self.assertEqual([i for i in range(7)if not v.isColumnHidden(i)],[0,2,4,5,6])
   p.enemy_forecasts={};p._sync_enemy_grid()
   for v in(p.quick_table,p.enemy_overview.tree):self.assertEqual([i for i in range(7)if not v.isColumnHidden(i)],[0,5,6])
-  self.assertEqual(p.result,old);self.assertIn('完整',p.enemy_overview.notice.text());self.assertIn('尚未核验',p.enemy_overview.notice.text())
+  self.assertEqual(p.result,old);self.assertIn('完整',p.enemy_overview.notice.text());self.assertIn('待补齐本局修正',p.enemy_overview.notice.text())
  def test_spawns_close_clears_original_reference_and_refresh_keeps_manual_size(self):
   d=self.dialog(CurrentEnemySpawnsDialog,'ro6_n_1_1','5');p=d.panel;p.entries.setCurrentIndex(1);before=deepcopy(p.result);d.resize(800,650);self.assertTrue(p.refresh_reference());self.assertEqual(p.result,before);self.assertEqual((d.width(),d.height()),(800,650));QTest.mouseClick(d.titleBar.closeBtn,Qt.MouseButton.LeftButton);self.qt.processEvents();self.assertFalse(d.isVisible());self.assertIsNone(p.result);self.assertEqual(p.technical.toPlainText(),'')
  def test_objects_normal_close_clears_owned_position_source(self):
