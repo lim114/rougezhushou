@@ -1,0 +1,11 @@
+# 维护：敌人配置显式来源
+
+D313已落实。enemy_skill_reference生产入口在调用两个编译器之前已经用source_path写入construction_reference。旧标量调用仅在两组测试的reference工厂，现已显式声明数据库来源，并保持精确等级的真假条件。
+
+删除configuration_path及缺来源时按exact_requested_level_present猜数据库路径的兼容。两个消费者直接deepcopy必填来源记录；副本隔离保留。缺来源记录直接KeyError，不新增校验、捕获或恢复。source_path的未知模式、数据库与关卡构造分支，以及compiled_identity的别名语义均保持原样。历史冻结research源码不迁移、不改写。
+
+43项定向通过；固定来源1087个绑定的技能/技力配置共2174份新旧返回值一致。新增行为测试验证两个消费者缺来源拒绝、结果副本不修改输入。不是实战时钟或游戏机制准确性新增验收，未运行全量。
+
+需求审查：符合D313批准范围。代码规则：来源模块完整核对；两个消费者只标已审路径，未将其全部源码计入完成。原280组累计4组落实、276组待实施，无新增待用户审核项。详细模块计数见summary.json。
+
+保留用户AGENTS.md与.agents/修改；云端索引AGENTS摘要绑定已提交版本。

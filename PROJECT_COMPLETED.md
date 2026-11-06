@@ -1,3 +1,7 @@
+## 维护：敌人配置显式来源迁移与隐式回退删除（2026-11-06）
+
+D313完成，来源模块销项，消费者仅核对改动路径。[回执](verification/maintenance/code-constraints-enemy-source-contract-review-20261106/README.md)。
+
 ## 维护：无效裁剪与招募模板统一入口处理（2026-11-06）
 
 D298、D312完成，两模块规则销项。[回执](verification/maintenance/code-constraints-recognition-entry-review-20261106/README.md)。

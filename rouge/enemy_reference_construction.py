@@ -25,16 +25,6 @@ def source_path(binding,exact):
             compiled_result_available=present)
     return result
 
-def configuration_path(reference):
-    # Legacy internal scalar tests retain their explicit exact-level contract.
-    # Real fixed queries always supply the source-bound construction record.
-    path=reference.get('construction_reference')
-    if path is not None:return deepcopy(path)
-    exact=reference['exact_requested_level_present']
-    return {'mode':'database','state':'exact_database_level_available' if exact else 'unavailable_exact_database_level',
-        'compiled_result_available':exact,'database_records_used':exact,
-        'constructor_pointer_baseline_verified':False}
-
 def compiled_identity(binding,path):
     if path['mode']!='stage_constructor' or not path['compiled_result_available']:return None
     writes=binding.get('identity_overrides',{})

@@ -51,8 +51,7 @@ def compiled_configuration(reference):
         'complete_cycle_seconds':None,'effective_skill_damage':None,
         'native_evidence':deepcopy(rules['native_evidence']),
         'limits':list(rules['limits'])}
-    from .enemy_reference_construction import configuration_path
-    path=configuration_path(reference);result['construction_reference']=path
+    path=deepcopy(reference['construction_reference']);result['construction_reference']=path
     if not path['compiled_result_available']:return result
     if path['mode']=='stage_constructor':
         result.update(state='constructor_configuration_baseline_unknown',configuration=None,

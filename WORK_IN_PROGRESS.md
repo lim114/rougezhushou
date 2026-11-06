@@ -1,3 +1,7 @@
+## 当前断点：敌人配置显式来源迁移与隐式回退删除（2026-11-06）
+
+D313完成；43定向、1087绑定/2174结果对照通过。模块覆盖{'full_modules_certified': 67, 'structural_only': 250, 'selected_paths_only': 201, 'exception_equivalence_only': 40, 'total_runtime_modules': 558}；276组已批准待落实，无新增待审。回执verification/maintenance/code-constraints-enemy-source-contract-review-20261106/summary.json。用户明确继续后恢复本批。
+
 ## 当前断点：无效裁剪与招募模板统一入口处理（2026-11-06）
 
 D298/D312完成；10定向、27标记及18裁剪对照通过。66完整/200部分/40异常/252结构，277组已批准待落实，无新增待审。回执verification/maintenance/code-constraints-recognition-entry-review-20261106/summary.json。目标继续。

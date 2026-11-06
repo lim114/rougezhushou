@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "敌人配置显式来源迁移与隐式回退删除",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "2b17f39f66eb1174ad9349cd1c213c7b0eeb14cc",
+  "changed_sources": [
+    "rouge/enemy_reference_construction.py",
+    "rouge/enemy_configuration.py",
+    "rouge/enemy_sp_reference.py"
+  ],
+  "source_sha256": {
+    "rouge/enemy_reference_construction.py": "1319b25f31351bf40c6a313280c843163bac93a06573944cc8e7a085ee54d029",
+    "rouge/enemy_configuration.py": "d05bfd2318f190c7b0a8faf65d15fb873745aaef0d248eaf2a94d2231ddb7758",
+    "rouge/enemy_sp_reference.py": "abd7ab956e460afe6417e49003ff2f15dba3b3cba9efda456b1bf57932781f57"
+  },
+  "coverage": {
+    "full_modules_certified": 67,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D313"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 43,
+    "command": "python -m unittest tests.test_enemy_configuration tests.test_enemy_sp_inheritance_reference tests.test_enemy_default_alias",
+    "equivalence": {
+      "fixed_source_bindings": 1087,
+      "config_and_sp_results_equal": 2174
+    },
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-149",
+    "live_window": [
+      {
+        "pid": 33880,
+        "visible": true,
+        "responds": true
+      }
+    ]
+  },
+  "review": {
+    "standards": "Source module fully reviewed; consumers reviewed only changed paths. No new catch, checks or wrapper.",
+    "requirements": "D313 legacy test calls migrated first; explicit production source metadata and result isolation preserved."
+  }
+}

@@ -5,12 +5,14 @@ from rouge.enemy_skills import enemy_skill_reference,enemy_skill_text,skill_data
 from rouge.enemy_panel import enemy_panel_reference
 from rouge.battle_preview import enemy_preview,enemy_text,battle_data
 from rouge.battle_planning import mechanism_provenance
+from rouge.enemy_reference_construction import source_path
 
 BASE={'spType':'INCREASE_WHEN_ATTACK','maxSp':3,'initSp':0,'increment':1.}
 def reference(**extra):
     return {'requested_level':1,'exact_requested_level_present':True,
         'definitions':[{'level':0,'spData':copy.deepcopy(BASE)},{'level':1,'spData':None}],
-        'stage_overrides':{},**extra}
+        'stage_overrides':{},
+        'construction_reference':source_path({'use_db':True},extra.get('exact_requested_level_present',True)),**extra}
 
 class EnemySpInheritanceReferenceTests(unittest.TestCase):
     def test_null_higher_level_does_not_clear_previous_whole_sp_object(self):

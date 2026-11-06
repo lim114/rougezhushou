@@ -22,8 +22,7 @@ def compiled_sp_reference(reference):
         'limits':['只解析固定来源中的基包技力配置整记录继承，不合并技能或天赋黑板。',
             'null不覆盖前项；非null技力配置整体替换，不按字段拼接。',
             '已证无热更新钩子的默认/显式初始化来源及引用构造分支；实际默认控制器、生成/资源绑定、触发、首次发动、技能回转和当前热更新仍待核验。']}
-    from .enemy_reference_construction import configuration_path
-    path=configuration_path(reference);result['construction_reference']=path
+    path=deepcopy(reference['construction_reference']);result['construction_reference']=path
     if not path['compiled_result_available']:return result
     if path['mode']=='stage_constructor':
         records=[]

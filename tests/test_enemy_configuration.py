@@ -8,6 +8,7 @@ from rouge.catalog import stage_previews
 from rouge.damage import calculate_damage
 from rouge.battle_preview import enemy_preview,enemy_text
 from rouge.battle_planning import mechanism_provenance
+from rouge.enemy_reference_construction import source_path
 
 def pair(key,value=1,text=None):return {'key':key,'value':value,'valueStr':text}
 def skill(key='s',board=None,**changes):
@@ -15,9 +16,22 @@ def skill(key='s',board=None,**changes):
 def reference(*records,override=None,exact=True):
     return {'definitions':[{'level':i,**r} for i,r in enumerate(records)],
         'requested_level':max(0,len(records)-1),'stage_overrides':override or {},
-        'exact_requested_level_present':exact}
+        'exact_requested_level_present':exact,
+        'construction_reference':source_path({'use_db':True},exact)}
 
 class EnemyConfigurationTests(unittest.TestCase):
+    def test_consumers_require_explicit_source_and_keep_its_result_isolated(self):
+        from rouge.enemy_sp_reference import compiled_sp_reference
+        for compile_reference in (compiled_configuration,compiled_sp_reference):
+            with self.subTest(consumer=compile_reference.__name__):
+                source=reference()
+                result=compile_reference(source)
+                result['construction_reference']['mode']='changed'
+                self.assertEqual(source['construction_reference']['mode'],'database')
+                del source['construction_reference']
+                with self.assertRaisesRegex(KeyError,'construction_reference'):
+                    compile_reference(source)
+
     def test_talents_null_empty_do_not_clear_existing_and_same_key_reorders(self):
         source=reference({'talentBlackboard':[pair('a'),pair('b',2)]},
             {'talentBlackboard':None},{'talentBlackboard':[]},
