@@ -31,7 +31,8 @@ class CurrentRewardOriginsPanel(QWidget):
         fresh = model.reference(self.category, self.item_id)
         if fresh is None: self._clear(); return False
         same = self.result is not None and self.result['source_identity'] == fresh['source_identity']
-        selected = self.entries.currentItem().data(Qt.ItemDataRole.UserRole) if same and self.entries.currentItem() else None
+        current = self.entries.currentItem() if same else None
+        selected = current.data(Qt.ItemDataRole.UserRole) if current is not None else None
         if not same: self._close_event()
         self.result = fresh; blocked = self.entries.blockSignals(True); self.entries.clear()
         for row in fresh['rows']:

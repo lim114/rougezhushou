@@ -43,7 +43,9 @@ class CurrentCriticalRewardPanel(QWidget):
 
     def values(self):
         values = {k: c.currentData() for k, c in self.controls.items()}
-        if hasattr(self, 'gold'): values['gold'] = self.gold.value() if self.gold.value() >= 0 else None
+        if hasattr(self, 'gold'):
+            gold = self.gold.value()
+            values['gold'] = gold if gold >= 0 else None
         return values
 
     def _close_flow(self):

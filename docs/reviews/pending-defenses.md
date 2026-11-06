@@ -134,3 +134,12 @@
 | D152 | current_named_reward_origins_view.make_event_dialog 首行row字典/item_id文字检查 | 错误内部调用返回None而不是暴露类型或缺键问题；当前唯一产品调用者从已刷新模型行中选择 | 建议在确认该调用契约后删这处类型兜底，内部缺陷直接暴露；替代保留独立原始输入入口。原样，待审核 |
 | D153 | 同函数重新model.reference并确认整行属于fresh.rows | 用户点击时来源变化或条目被改写便拒绝打开；父open_event同次操作已刷新整份来源，可能重复读取 | 建议核实同次操作的来源快照边界后复用父层已核对结果，保留一次身份核验；替代保留两处，覆盖两次读取之间发生变更。原样，待审核，不借用D95授权 |
 | D154 | 同函数七个已知reader分支之后return None | 模型新增或错误reader键时静默不打开；原模型实际输出固定七类 | 建议改为明确暴露不支持的内部reader，或在模型入口只接受已实现键；替代保留无窗口返回。原样，待审核，不包含七种正常分派 |
+
+| D155 | CurrentRewardOriginsPanel._selected 的 result is None 提前返回 | 意外收到选择信号但模型为空时静默忽略；当前列表清空已阻断信号 | 建议核对所有程序化选择入口后删除无效状态兜底；替代保留以容忍外部调用顺序错误。本批原样待审 |
+| D156 | CurrentRewardOriginsPanel.open_event 的 fresh is None/fresh != old 后清空 | 点击前资料变更、损坏或内存行被改写时拒绝打开，避免旧条目跳转 | 建议保留点击边界一次复核；替代信任上次显示快照会漏掉显示到点击间的变更。与子工厂D153/D161的重复读取另核。本批原样待审 |
+| D157 | 同 open_event 的选中key未在fresh.rows找到时清空 | 界面选择键与模型不同步时拒绝打开 | 建议在列表构建契约确认后判断能否删除；替代保留失配处理。当前无触发率证据，原样待审 |
+| D158 | 同 open_event 的未知reader分支返回False | 新增/错误reader键时无提示地不打开资料 | 建议明确报告不支持的内部类型；替代保留不打开行为。原样待审 |
+| D159 | 同 open_event 的两个工厂返回None，以及child.panel.result为None时清空 | 子资料失效或工厂拒绝时撤掉子窗和旧信息；后一分支先_close_event再_clear，而_clear还会调用_close_event | 建议保留失效撤下，统一由_clear执行一次关闭，删除该分支重复关闭；替代保持原调用顺序。整个保护分支原样等待确认，重复关闭尚未算整改完成 |
+| D160 | current_critical_reward_origins_view.make_event_dialog 的row字典/item_id文字检查 | 错误内部输入返回None；当前产品调用者已选模型行 | 建议确认调用契约后删除内部类型兜底；替代保留原始输入边界。独立于D152，原样待审 |
+| D161 | 同关键藏品工厂的model.reference与整行成员复核 | 条目或来源改变时拒绝创建；父open_event同次点击已复核，构造函数又会读取 | 建议定义一次已核对快照并复用，保留一次身份复核；替代多次读来源覆盖期间变化。独立于D153，原样待审 |
+| D162 | CurrentCriticalRewardPanel.open_flow 的fresh与旧结果比较，以及子流程result/scene_id/choice_id核对 | 点击期间资料变化或打开目标不符时关闭，防止显示错误领取选项 | 建议保留点击来源及最终目标身份核对，核实各时间点职责后再精简；替代删除会信任旧结果或构造目标。本批原样待审 |

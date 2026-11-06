@@ -1341,6 +1341,26 @@
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "evidence": "Read complete panel and actual parent construction, invalidation and close callers. load=False prevents constructor reading before parent refresh. clear_reference has external consumers and must remain shared. None is the normal no-reference model result; clearing stale displayed data is required behavior. Same compares source and stage across refresh times to preserve reading state. No catch or arbitrary one-use helper. Three existing offscreen tests pass. Model internals and parent as a whole are outside this module certification."
+    },
+    {
+      "file": "rouge/current_reward_origins_view.py",
+      "sha256": "cfdc004e613b2fb4bf366a654af0dd91070b057704a14afba3c775e1849307cb",
+      "rule1": "reuse_current_control_value_once",
+      "rule2": "render_clear_close_values_have_multiple_real_callers",
+      "rule3": "D155_D162_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read both complete UI files and acquisition model/callers. Current item and nonnegative gold were each read twice; cached within the same synchronous operation, no new helper. Child source validation and null/error paths untouched. Gold hasattr selects a genuinely event-specific control; tests explicitly require its absence for other events. Remaining ordinary work: critical constructor reads the same source to choose controls and again to refresh; render/model selected-row scans; repeated close on failed child awaits decision on that protected path. Do not certify whole modules."
+    },
+    {
+      "file": "rouge/current_critical_reward_origins_view.py",
+      "sha256": "286d091078f5196c5e65f7ccf819bbe580c4b2079ee7c1189663ec2ca4962364",
+      "rule1": "reuse_current_control_value_once",
+      "rule2": "render_clear_close_values_have_multiple_real_callers",
+      "rule3": "D155_D162_pending_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read both complete UI files and acquisition model/callers. Current item and nonnegative gold were each read twice; cached within the same synchronous operation, no new helper. Child source validation and null/error paths untouched. Gold hasattr selects a genuinely event-specific control; tests explicitly require its absence for other events. Remaining ordinary work: critical constructor reads the same source to choose controls and again to refresh; render/model selected-row scans; repeated close on failed child awaits decision on that protected path. Do not certify whole modules."
     }
   ]
 }
