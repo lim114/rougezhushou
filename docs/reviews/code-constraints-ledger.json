@@ -1214,13 +1214,23 @@
     },
     {
       "file": "rouge/mei_module_static_reference.py",
-      "sha256": "b090ed13fd71e61ab81279526afca2ec22a57c91c2ce22c62fbefd23099d6f03",
-      "rule1": "static_reference_qualification_reused_once",
-      "rule2": "real_shared_functions_retained_no_new_single_use_wrapper",
+      "sha256": "e465daf62f3d303e80d16128d917a15206d319f1168db1c6cc243f147a35fef3",
+      "rule1": "mei_finalizer_uses_prepared_parameter_result",
+      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
       "rule3": "existing_defenses_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Qualification is called once by enabled finalizer and reused in output; skill validity and selected skill record are computed once. UI has two real qualification callers, so public function remains. Underlying parameter/equipment boundary still needs work; no whole-module certification."
+      "evidence": "Combat report already resolves Mei module parameters. Finalizer consumes that result or its normal absence, instead of rechecking cultivation and module qualification. Shared _qualification has two real product callers: standalone UI boundary and prepared finalizer. Native binding and skill scope remain checked. Standalone UI still resolves stage/parts before parameter boundary; that remaining duplication is not certified complete."
+    },
+    {
+      "file": "rouge/gnosis_module_reference.py",
+      "sha256": "b45d7a79563d832cc6e21ac33924e5399a3a564aae7e0196088555972b6cd40d",
+      "rule1": "gnosis_reference_full_source_review_pending_source_guards",
+      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
+      "rule3": "D140_pending",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "evidence": "Entire module plus selected_talents, plan and result call contracts reviewed. selected_reference performs domain candidate selection; preserve_plan and attach_result are substantive ordered transformations, not single-line wrappers. Optional normal plan and zero windows are real product states. Fixed original talent/trait/ability identity guards remain unchanged pending D140. No source edit or whole-module certification."
     }
   ]
 }

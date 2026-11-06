@@ -113,3 +113,5 @@
 | D137 | partial_packet_reference使用get("partial_packet_rules",[]) | 固定资料缺该字段时静默作为无支持规则；当前资料有此字段 | 建议直接读取必填字段；替代保留旧格式缺字段兼容。未改，待审核 |
 | D138 | mei_module_reference.reference的level or 满级 | 0/False/空字符串也按满级参与模组条件 | 建议仅缺省/None默认；替代保留假值默认。独立于D134/135，未改，待审核 |
 | D139 | mei_module_reference.reference的part not in catalog_parts | 拒绝其它模组/培养来源的part被当成本模组资料；已有foreign_parts算例 | 建议保留来源核对；替代删除会允许外来条目进入候选。与后续index重复查找需一起考虑，未改，待审核 |
+
+| D140 | gnosis_module_reference.selected_reference的固定资料身份组合检查 | 原坚冰名/字段、特性resKey/标签/参数、二三级4个prefab及resKey/目标/隐藏/标签任一改变时不输出已核验资料；现有unreviewed prefab算例覆盖 | 建议保留，防止新资料错套原规则；替代直接接受变更会把未核验来源标成已核验。只登记，未改；普通培养/候选适用性判断不在本项 |

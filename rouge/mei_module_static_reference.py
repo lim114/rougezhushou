@@ -23,9 +23,14 @@ def qualification(scenario):
     profile = catalog()['operators']['char_133_mm']
     module = next(m for m in profile['modules'] if m['id'] == MODULE)
     stage = scenario.get('module_level', 0)
-    skill = scenario.get('skill')
     parts = module['levels'][stage-1]['parts'] if type(stage) is int and 1 <= stage <= 3 else []
     ref = parameter_reference(profile, scenario, parts) if scenario.get('module_id') == MODULE and parts else None
+    return _qualification(scenario, parts, ref)
+
+
+def _qualification(scenario, parts, ref):
+    stage = scenario.get('module_level', 0)
+    skill = scenario.get('skill')
     reskey = rule()['stages'].get(str(stage))
     bound = bool(ref and any(p.get('resKey') == reskey and p.get('target') == 'TRAIT' for p in parts))
     valid_skill = type(skill) is int and skill in (1, 2)
@@ -45,17 +50,21 @@ def finish(scenario, result):
         raise ValueError(FLAG+' 需要明确的布尔值。')
     if not enabled:
         return
-    qualified = qualification(scenario)
+    old = result.get('mei_airborne_module_reference')
+    if old is None:
+        return
+    profile = catalog()['operators']['char_133_mm']
+    module = next(m for m in profile['modules'] if m['id'] == old['module_id'])
+    parts = module['levels'][old['module_level']-1]['parts']
+    qualified = _qualification(scenario, parts, old)
     if not qualified['qualified']:
         return
     motion = (scenario.get('relic_context') or {}).get(MOTION)
     if motion is not None and (type(motion) is not str or motion not in MOTIONS):
         raise ValueError(MOTION+' 需要 fly、not_fly 或 unknown；基础敌人分类不能代替当前原生条件。')
-    old = result['mei_airborne_module_reference']
     multiplier = old['attack_scale_parameter']
     factor = None if motion in (None, 'unknown') else multiplier if motion == 'fly' else 1.0
     skill = scenario['skill']
-    profile = catalog()['operators']['char_133_mm']
     selected_skill = profile['skills'][skill-1]['levels'][scenario.get('skill_rank', 10)-1]
     bb = selected_skill['values']
     defense = scenario.get('enemy_defense', 0) * max(0, 1-sum(
