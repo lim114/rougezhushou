@@ -5358,3 +5358,7 @@ D134完成；五入口复用等级解析，缺省/None默认、非法值拒绝�
 ## 维护：天赋与治疗模组入口统一等级默认规则（2026-11-06）
 
 D135/D138/D144：共享培养解析移至catalog，天赋、梅、苏苏洛及守护者资料仅缺省/None使用满级。47定向通过，30合法结果等价；无新公式。回执：`verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json`。
+
+## 维护：干员与召唤物单等级阶段支持复核（2026-11-06）
+
+D108/D128保留等等级端点分支；合成单等级算例、双点插值及召唤物封顶/干员解锁分离通过。9相关检查通过，不改产品。回执：`verification/maintenance/code-constraints-single-level-20261106/summary.json`。

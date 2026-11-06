@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "干员与召唤物单等级阶段支持复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "038d580974b0ce55eb2a508612fda8be3cf4637f",
+  "changed_sources": [
+    "tests/test_single_level_cultivation.py"
+  ],
+  "source_sha256": {
+    "tests/test_single_level_cultivation.py": "48fa4f284aaf961ff032651795792029ffc55f7bde401d0249204cca0b85490c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D108",
+    "D128"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 16,
+    "tests_passed": 16,
+    "tests_failed": 0,
+    "relevant_tests": 9,
+    "unnecessary_extra_tests": 7,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_single_level_cultivation tests.test_token_level_contract tests.test_token_cultivation_reuse_review tests.test_technology_reference",
+    "local_evidence": ".local/code-constraints-review-240",
+    "scope_note": "TechnologyReference7 tests accidentally included; not used as evidence for this scope.9 relevant checks passed.",
+    "live_window": "Test-only change; no restart. Original product window update remains pending."
+  },
+  "review": {
+    "standards": "D108/D128 explicitly approved single-level phase contract retained. Equal-endpoint branches are necessary behavior, not redundant check. No product change, helper or defense added.",
+    "requirements": "Synthetic single-point operator and token data produce fixed expected stats; token cap does not lower operator unlock level. Ordinary two-point midpoint correct; illegal explicit levels still rejected. Does not claim real gameplay accuracy."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice"
+  ],
+  "product_source_changed": false,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/catalog.py": "2eaaca447e5b3cd8063c04343ad3a062c0693f3544f63c35b6373b685ae1088d",
+    "rouge/summons.py": "2dccffa6700574ddbff69690f876544935c4d063d17b0c3f1bf69863797a0870"
+  }
+}

@@ -1,3 +1,7 @@
+## 当前断点：干员与召唤物单等级阶段支持复核（2026-11-06）
+
+D108/D128按批准保留，9相关检查通过；误带7科技资料检查通过但不计本批范围证据。原280组完成145、剩135。D307补充、D319/D320及原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-single-level-20261106/summary.json。
+
 ## 当前断点：天赋与治疗模组入口统一等级默认规则（2026-11-06）
 
 D135/D138/D144完成，47定向通过、30合法结果等价、旧版15组非法默认复现。原280组完成143、剩137。D307补充、D319/D320及原测试窗口更新仍待处理。回执 verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json。
