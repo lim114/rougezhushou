@@ -1,5 +1,4 @@
 """Statistics of qualified archived observations, never of unobserved outcomes."""
-from copy import deepcopy
 from .record_flags import active_record, record_flag
 import sys
 
@@ -67,7 +66,7 @@ def statistics(records, relic_id=None):
                            'sample_count': len(eligible), 'held_count': held,
                            'excluded_incomplete_count': len(records) - len(eligible),
                            'fraction': held / len(eligible) if eligible else None}
-    return deepcopy(result)
+    return result
 
 def statistics_text(result):
     lines = [f'本机已归档{result["archive_count"]}局读取记录',
@@ -158,7 +157,16 @@ class PersonalStatisticsPage(QWidget):
             self.samples.install(None,relic_id)
             return
         from .player_cohort_ui import selected_records
-        selected=selected_records(self)
+        from .player_statistics_cohorts import InvalidCohortFilter
+        try:
+            selected=selected_records(self)
+        except InvalidCohortFilter as error:
+            self.result=None
+            self.card_controls.sync()
+            self.detail_key=None
+            self.detail.setPlainText(str(error))
+            self.samples.install(None,relic_id)
+            return
         self.result = statistics(selected, relic_id)
         self.samples.install(selected,relic_id)
         self.card_controls.sync()

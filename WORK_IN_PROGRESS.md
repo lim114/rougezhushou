@@ -1,3 +1,7 @@
+## 当前断点：统计筛选错误明确显示与结果重复拷贝清理（2026-11-06）
+
+D69/D72完成；14定向通过，模块仍部分核验。274组已批准待落实；跨入口重复归档资格仍待处理。用户已取消本次额度收尾限制，见docs/decisions/2026-11-06-quota-wrapup-exception.md。回执verification/maintenance/code-constraints-statistics-filter-review-20261106/summary.json。
+
 ## 当前断点：敌人配置显式来源迁移与隐式回退删除（2026-11-06）
 
 D313完成；43定向、1087绑定/2174结果对照通过。模块覆盖{'full_modules_certified': 67, 'structural_only': 250, 'selected_paths_only': 201, 'exception_equivalence_only': 40, 'total_runtime_modules': 558}；276组已批准待落实，无新增待审。回执verification/maintenance/code-constraints-enemy-source-contract-review-20261106/summary.json。用户明确继续后恢复本批。

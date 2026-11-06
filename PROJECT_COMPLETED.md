@@ -1,3 +1,7 @@
+## 维护：统计筛选错误明确显示与结果重复拷贝清理（2026-11-06）
+
+D69、D72销项，两模块仍保留其他缺口。[回执](verification/maintenance/code-constraints-statistics-filter-review-20261106/README.md)。
+
 ## 维护：敌人配置显式来源迁移与隐式回退删除（2026-11-06）
 
 D313完成，来源模块销项，消费者仅核对改动路径。[回执](verification/maintenance/code-constraints-enemy-source-contract-review-20261106/README.md)。

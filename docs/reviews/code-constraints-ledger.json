@@ -434,17 +434,18 @@
     },
     {
       "file": "rouge/player_personal_statistics.py",
-      "sha256": "c9236ce5810dfed99c123a3d9c03c304577eecb19e0f315ab2eb71f35bfff938",
-      "rule1": "selected_paths_fixed_cross_entry_followup_remaining",
-      "rule2": "one_use_wrappers_removed_shared_domain_helpers_retained",
-      "rule3": "pending_user_review",
-      "evidence": "complete_inventory reuses one record_flag result; render reuses selected relic and filter label. One-use filter_notes and fixed-literal cohort_note removed. D66-D69 unchanged; select_cohort -> statistics -> samples repeated archive qualification still needs a shared-entry design.",
+      "sha256": "78bd7a51141cffaaff3345f3446c63414327dba3d3ffc40c5355fc997e16514a",
+      "rule1": "D72 invalid selector errors are distinct from archive/internal errors; render catches only InvalidCohortFilter. Downstream repeated qualification remains open.",
+      "rule2": "D69 freshly built result returned directly, mutable container isolation tested. Existing shared domain helpers retained.",
+      "rule3": "D69/D72 implemented within approval; other listed module decisions not certified",
+      "evidence": "14 targeted checks;invalid selectors remove old output, recovery works,internal ValueError propagates;result mutation does not alter source or later results.",
       "decisions": [
         "D66",
         "D67",
         "D68",
         "D69"
-      ]
+      ],
+      "full_module_review_complete": false
     },
     {
       "file": "rouge/player_cohort_ui.py",
@@ -456,14 +457,15 @@
     },
     {
       "file": "rouge/player_statistics_cohorts.py",
-      "sha256": "75372f700776d4c77a9ab6a7f1086c812deb45aa3dbe1a6c4ec0e8c4aa2bd7fc",
-      "rule1": "selected_paths_fixed_cross_entry_followup_remaining",
-      "rule2": "one_use_wrappers_removed_shared_domain_helpers_retained",
-      "rule3": "pending_user_review",
-      "evidence": "Fixed text with two unused arguments converted to COHORT_NOTE; current callers/tests updated. Domain cohort/options shared, invalid filter guards D72 untouched. Downstream repeated archive qualification remains followup.",
+      "sha256": "ac1bba8723b9d16b8fc2e5df656379e9b4fc7006ffbe4742eba90255dc45541d",
+      "rule1": "D72 invalid selector errors are distinct from archive/internal errors; render catches only InvalidCohortFilter. Downstream repeated qualification remains open.",
+      "rule2": "D69 freshly built result returned directly, mutable container isolation tested. Existing shared domain helpers retained.",
+      "rule3": "D69/D72 implemented within approval; other listed module decisions not certified",
+      "evidence": "14 targeted checks;invalid selectors remove old output, recovery works,internal ValueError propagates;result mutation does not alter source or later results.",
       "decisions": [
         "D72"
-      ]
+      ],
+      "full_module_review_complete": false
     },
     {
       "file": "rouge/player_statistics_samples.py",

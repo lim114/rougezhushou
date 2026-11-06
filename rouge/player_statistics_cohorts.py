@@ -4,6 +4,10 @@ from .player_personal_statistics import unique_archives
 
 UNREAD = '__unread__'
 
+
+class InvalidCohortFilter(ValueError):
+    """An invalid selector, distinct from errors while reading archive contents."""
+
 def cohort(record):
     state = record.get('state', {})
     observed = confirmed_config({'run_id': state.get('id'), 'config': state.get('config', {})})
@@ -27,9 +31,9 @@ def cohort_options(records):
 
 def select_cohort(records, *, difficulty=None, squad=None):
     if difficulty is not None and type(difficulty) is not int and difficulty != UNREAD:
-        return []
+        raise InvalidCohortFilter('筛选参数错误：保密等级需为整数或“未读到”。')
     if squad is not None and not isinstance(squad, str):
-        return []
+        raise InvalidCohortFilter('筛选参数错误：分队标识需为文字。')
     result = []
     for record in unique_archives(records):
         group = cohort(record)

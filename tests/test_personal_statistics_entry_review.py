@@ -3,12 +3,42 @@ from unittest.mock import patch
 import unittest
 from PySide6.QtWidgets import QApplication
 from rouge import player_cohort_ui as ui
-from rouge.player_personal_statistics import PersonalStatisticsPage,complete_inventory
+from rouge.player_personal_statistics import PersonalStatisticsPage,complete_inventory,statistics
 from rouge.catalog import catalog
 
 class PersonalStatisticsEntryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
+
+    def test_invalid_filter_clears_results_and_shows_parameter_error(self):
+        page=PersonalStatisticsPage(SimpleNamespace(records=lambda:([],[])));self.addCleanup(page.close)
+        self.assertEqual(page.result['archive_count'],0)
+        page.grade_filter.addItem('错误值','15')
+        page.grade_filter.setCurrentIndex(page.grade_filter.count()-1)
+        self.assertIsNone(page.result)
+        self.assertIn('筛选参数错误',page.detail.toPlainText())
+        self.assertIsNone(page.card_controls.card)
+        self.assertFalse(page.card_controls.generate())
+        page.grade_filter.setCurrentIndex(0)
+        self.assertEqual(page.result['archive_count'],0)
+        self.assertNotIn('筛选参数错误',page.detail.toPlainText())
+
+    def test_internal_value_error_is_not_a_filter_error(self):
+        page=PersonalStatisticsPage(SimpleNamespace(records=lambda:([],[])));self.addCleanup(page.close)
+        with patch.object(ui,'select_cohort',side_effect=ValueError('internal defect')):
+            with self.assertRaisesRegex(ValueError,'internal defect'):page.render()
+
+    def test_statistics_results_own_their_mutable_containers(self):
+        rows=[{'state':{'id':'sample','resources':{'gold':{'value':12}}}}]
+        relic_id=next(iter(catalog()['relics']))
+        name=catalog()['relics'][relic_id]['name']
+        first=statistics(rows,relic_id)
+        first['measures']['gold']['mean']=99
+        first['relic']['name']='changed'
+        second=statistics(rows,relic_id)
+        self.assertEqual(second['measures']['gold']['mean'],12)
+        self.assertEqual(second['relic']['name'],name)
+        self.assertEqual(rows[0]['state']['resources']['gold']['value'],12)
 
     def test_complete_inventory_reads_each_presence_once(self):
         class Record(dict):

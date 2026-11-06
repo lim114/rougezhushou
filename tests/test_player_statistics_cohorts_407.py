@@ -1,7 +1,7 @@
 from copy import deepcopy
 import unittest
 from rouge.run_config import config_data
-from rouge.player_statistics_cohorts import cohort,cohort_options,select_cohort,COHORT_NOTE,UNREAD
+from rouge.player_statistics_cohorts import cohort,cohort_options,select_cohort,COHORT_NOTE,UNREAD,InvalidCohortFilter
 
 def record(identity,grade=None,squad=None):
     config={}
@@ -18,11 +18,13 @@ class CohortTests(unittest.TestCase):
         rows=[record('zero',0),record('missing'),record('invalid',True),record('outside',17)]
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=0)],['zero'])
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=UNREAD)],['missing','invalid','outside'])
-        self.assertEqual(select_cohort(rows,difficulty=True),[])
+        with self.assertRaises(InvalidCohortFilter):select_cohort(rows,difficulty=True)
     def test_combined_filters_and_unknown_ids_do_not_silently_show_all(self):
         rows=[record('a',15,'rogue_6_band_1'),record('b',0,'rogue_6_band_1'),record('c',15,'rogue_6_band_3')]
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=15,squad='rogue_6_band_1')],['a'])
-        self.assertEqual(select_cohort(rows,squad='unknown'),[]);self.assertEqual(select_cohort(rows,difficulty='15'),[])
+        self.assertEqual(select_cohort(rows,squad='unknown'),[])
+        with self.assertRaises(InvalidCohortFilter):select_cohort(rows,difficulty='15')
+        with self.assertRaises(InvalidCohortFilter):select_cohort(rows,squad=3)
     def test_unverified_name_and_missing_capture_do_not_create_known_squad(self):
         row=record('a',15,'rogue_6_band_1');row['state']['config']['squad']['name']='其他名称';self.assertEqual(cohort(row)['squad'],UNREAD)
         row=record('b',15,'rogue_6_band_1');row['state']['config']['squad'].pop('captured_at');self.assertEqual(cohort(row)['squad'],UNREAD)
