@@ -1,3 +1,7 @@
+## 当前断点：出怪候选组与成员选择复用（2026-11-06）
+
+候选组复用、控件单次读取、删除二次来源拷贝；10定向通过，窗口更新。D233—D235待审，共198组。回执verification/maintenance/code-constraints-candidate-selection-reuse-20261106/summary.json；继续模型和剩余普通冗余，单次头像函数不销项。
+
 ## 当前断点：行程选择复用与对话框单次清理（2026-11-06）
 
 行程复用route与筛选、父子清理2→1，13定向通过，窗口更新。D231—D232待审，共195组；位置step_label已同批复用，最终11视图通过。回执verification/maintenance/code-constraints-itinerary-selection-close-20261106/summary.json。

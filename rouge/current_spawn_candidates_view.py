@@ -103,12 +103,15 @@ class CurrentSpawnCandidatesPanel(QWidget):
         self._fill(self.member_combo, [], None, '请选择一条成员记录')
         return self.refresh_reference()
 
-    def _selected(self):
+    def _selected(self, *, relation=...):
         if self.result is None:
             return None, None
-        rows = self.result['groups'] if self.relation_kind.currentData() == 'group' else self.result['packages']
-        relation = next((r for r in rows if r['key'] == self.relation_combo.currentData()), None)
-        member = next((m for m in relation['members'] if m['action_key'] == self.member_combo.currentData()), None) if relation else None
+        if relation is ...:
+            rows = self.result['groups'] if self.relation_kind.currentData() == 'group' else self.result['packages']
+            relation_key = self.relation_combo.currentData()
+            relation = next((r for r in rows if r['key'] == relation_key), None)
+        member_key = self.member_combo.currentData()
+        member = next((m for m in relation['members'] if m['action_key'] == member_key), None) if relation else None
         return relation, member
 
     def _show_portrait(self, member):
@@ -144,12 +147,13 @@ class CurrentSpawnCandidatesPanel(QWidget):
         relations = [r for r in relations if queue is None or r['queue']['kind'] == queue]
         self._fill(self.relation_combo, [(r['name'], r['key']) for r in relations], relation_key,
                    '请选择一份关系资料' if relations else '此范围没有这类固定记录')
-        relation = next((r for r in relations if r['key'] == self.relation_combo.currentData()), None)
+        relation_key = self.relation_combo.currentData()
+        relation = next((r for r in relations if r['key'] == relation_key), None)
         members = relation['members'] if relation else []
         self._fill(self.member_combo, [(f"成员{i} · {m['type_label']} · {m['name']}", m['action_key'])
                                      for i, m in enumerate(members, 1)], member_key, '请选择一条成员记录')
         self.relation_combo.setEnabled(bool(relations)); self.member_combo.setEnabled(bool(members))
-        relation, member = self._selected()
+        relation, member = self._selected(relation=relation)
         key = (deepcopy(fresh['source_identity']), kind, queue,
                relation['key'] if relation else None, member['action_key'] if member else None)
         preserve = keep and key == self._view_key
@@ -171,7 +175,7 @@ class CurrentSpawnCandidatesPanel(QWidget):
         self.position_button.setEnabled(bool(member and member['can_request_position']))
         if not preserve:
             self.tabs.setCurrentIndex(0)
-        self._view_key = deepcopy(key)
+        self._view_key = key
         return True
 
     def _resolve_selected(self):

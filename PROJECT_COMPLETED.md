@@ -1,3 +1,7 @@
+## 维护：候选选择与状态拷贝整改（2026-11-06）
+
+局部普通重复已修，10定向通过，模块未销项。[回执](verification/maintenance/code-constraints-candidate-selection-reuse-20261106/README.md)。
+
 ## 维护：行程选择与关闭整改（2026-11-06）
 
 已复用路线、筛选，删除重复关闭；13定向通过，模块未销项。[回执](verification/maintenance/code-constraints-itinerary-selection-close-20261106/README.md)。

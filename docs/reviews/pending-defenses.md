@@ -229,3 +229,7 @@
 
 | D231 | CurrentRouteStepPositionPanel.refresh_reference来源/原图缺失或set_image失败清空；CurrentRouteItineraryPanel刷新/resolve失败清空、已有位置子窗刷新失败关闭 | 失效资料撤下，避免继续展示旧行程位置 | 建议保留来源失效职责并缩小内部错误混同范围；替代沿用旧值或直接报告异常。原样待审，正常无路线/无环节不含本项 |
 | D232 | CurrentRouteItineraryPanel.open_position先position_reference预检，再共享位置页或独立子窗重读，新子窗无result即关闭 | 确保当前位置可用但同次重复读取 | 建议确认失败行为后复用读取结果；替代原样双读。普通重复仍未整改，不因登记销项 |
+
+| D233 | CurrentSpawnCandidatesPanel._fill的try/finally恢复blockSignals | 控件更新异常仍恢复原信号状态，不捕获异常 | 建议保留恢复职责；替代普通顺序恢复，异常时控件可能持续阻断。原样待审 |
+| D234 | CurrentSpawnCandidatesPanel._show_portrait图片读取/解码失败文字提示；函数仅refresh调用 | 坏图不沿用旧图；成员非SPAWN、无候选或候选图不唯一是正常选择语义 | 建议确认失败行为后内联合理单次逻辑；替代保留独立显示函数。单次包装仍未整改，原样待审 |
+| D235 | CurrentSpawnCandidatesPanel刷新来源失败、_resolve_selected解析失败和follow_position位置失败清空 | 失效时撤下旧值并通知父页 | 建议保留失效出口并核对position重复复核；替代直接报告异常或沿用旧值。原样待审，_resolve_selected有两个真实调用，不因短函数删掉 |

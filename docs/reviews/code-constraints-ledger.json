@@ -1823,6 +1823,16 @@
       "rule2": "remove_two_closeEvent_wrappers_no_new_helper",
       "rule3": "D231_D232_pending_unchanged",
       "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. step_label computed once after final cleanup; final11 view checks pass. Remaining preflight under D232; no full certification."
+    },
+    {
+      "file": "rouge/current_spawn_candidates_view.py",
+      "sha256": "e83703eb922400677aea5046faae931b6393cc28a73e0f0e465d9637421d2351",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "reuse_relation_and_copy_source_identity_once; keys_outside_iteration",
+      "rule2": "no_new_helper; portrait_single_use_pending_D234",
+      "rule3": "D233_D235_pending",
+      "evidence": "Full view read; selected/refresh/callback paths inspected. relation prepared once passed to member lookup; raw path retained. key is fresh tuple containing already-deepcopied source identity, removing second deepcopy does not share mutable source.10 targeted passed; raw key reads1 each, prepared relation reads0. _resolve_selected has2 callers, not single use. Portrait helper1 caller with protection pending, no full certification."
     }
   ]
 }
