@@ -31,8 +31,9 @@ def packet():
     return {'data':data,'current':current,'source_identity':sha256((MANIFEST_SHA256+terrain_identity).encode()).hexdigest(),'terrain_source_identity':terrain_identity,'absolute_accuracy_verified':False}
 
 def stage_reference(stage_id):
+    if type(stage_id)is not str:return None
     ref=packet()
-    if ref is None or type(stage_id)is not str:return None
+    if ref is None:return None
     stage=ref['current']['version']['current']['details']['stages'].get(stage_id)
     if stage is None:return None
     key='levels/'+stage['levelId'].lower()+'.json';level=ref['current']['inputs']['levels'][key];image=ref['current']['version']['images']['images'][stage_id]

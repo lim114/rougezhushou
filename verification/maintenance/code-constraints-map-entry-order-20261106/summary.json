@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "固定地图先校验关卡身份再读取来源",
+  "base_commit": "90bd6d88f9c9370fa212c579f7674a4438dcd68e",
+  "changed_sources": [
+    "rouge/current_map_position.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position.py": "4d4f2542bb1d1ed63c2fe6fca6a2ab6d10e12e4c52550143f4c9e414b201d236"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_map_position_entry_order_review tests.test_current_map_position_319",
+        "tests_run": 11,
+        "tests_passed": 11,
+        "seconds": 7.563
+      }
+    ],
+    "live_window": "Original test window update pending after earlier automatic approval rejection; model checks do not certify live UI."
+  },
+  "review": {
+    "standards": "Existing stage-id type rejection moved ahead of packet loading. Same independent public entry validates once; valid requests retain all source/geometry checks. No new defensive policy, catch or helper. D259 remains partial for other position call paths.",
+    "requirements": "Invalid None/bool/int/list/dict never loads packet. Valid string still requires current source. Existing map source, cell bounds and mapping cases pass. No new positions, projections, inverse mapping or game operations."
+  },
+  "partially_implemented": [
+    "D259"
+  ]
+}

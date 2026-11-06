@@ -2658,7 +2658,7 @@
     },
     {
       "file": "rouge/current_map_position.py",
-      "sha256": "43f3f3ed67fe7d7925b0915a2ec3208837d3f34b576c83b2bb4d041bcd9fa6b2",
+      "sha256": "4d4f2542bb1d1ed63c2fe6fca6a2ab6d10e12e4c52550143f4c9e414b201d236",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Map point membership computed once per query; validation boundaries pending D259",
@@ -2672,7 +2672,14 @@
         ],
         "receipt": "verification/maintenance/code-constraints-map-packet-boundary-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "decision": "D259 partial",
+          "receipt": "verification/maintenance/code-constraints-map-entry-order-20261106/summary.json",
+          "scope": "invalid stage id rejected before packet loading"
+        }
+      ]
     },
     {
       "file": "rouge/current_map_position_view.py",

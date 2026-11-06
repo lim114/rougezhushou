@@ -1,3 +1,7 @@
+## 当前断点：固定地图先校验关卡身份再读取来源（2026-11-06）
+
+D259部分推进，无效关卡ID不再触发来源读取；11项定向通过，合法请求完整核验保留。原280组仍完成175、剩105；原窗口更新缺口保留。回执 `verification/maintenance/code-constraints-map-entry-order-20261106/summary.json`。
+
 ## 当前断点：灵知模组与花类治疗来源约束按授权复核（2026-11-06）
 
 D140/D143按授权保留并复核，22项定向通过，产品源码未改。原280组完成175、剩105；待审决定和原测试窗口更新仍保留。回执 `verification/maintenance/code-constraints-module-healing-retention-20261106/summary.json`。
