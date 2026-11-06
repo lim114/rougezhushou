@@ -5398,3 +5398,7 @@ D316完成；仅samples读取/校验错误转无资料，内部类型、缺键�
 ## 维护：敌人环境预测复用本次难度与区域配置（2026-11-06）
 
 难度/区域复用一次配置读取，无新增防御。13项定向通过。回执 `verification/maintenance/code-constraints-forecast-config-reuse-20261106/summary.json`。
+
+## 维护：统计索引构建移出文件输入异常捕获（2026-11-06）
+
+D45/D47异常边界整改完成，构建缺陷不再变空索引；16项定向15通过，既有统计类别对照失败单列待办。回执 `verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json`。

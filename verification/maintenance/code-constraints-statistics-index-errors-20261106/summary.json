@@ -1,0 +1,64 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "统计索引构建移出文件输入异常捕获",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "68f6e204bdb9894183535be823e0a8b9efdad0a9",
+  "changed_sources": [
+    "rouge/node_statistics_source.py",
+    "rouge/player_map_reference.py",
+    "tests/test_statistics_construction_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/node_statistics_source.py": "ebe6b6cc357f387ee9eb6f86fe3e808af1e55dc8035f4d0b7a09990c4f9aed91",
+    "rouge/player_map_reference.py": "6b7abe5c4bc8c5eaeda15925a1c12f8911e56685551d715298a807fc42c5e9ec",
+    "tests/test_statistics_construction_boundary.py": "940f1b854a1f9cac23121c7c15bb886997c0e1706323f3877b7711c48deb8cea"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D45",
+    "D47"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_statistics_construction_boundary tests.test_statistics_entry_review tests.test_node_card_source_review",
+    "tests_run": 16,
+    "tests_passed": 15,
+    "tests_failed": 1,
+    "seconds": 0.503,
+    "initial_run": {
+      "tests": 16,
+      "failure_reports": 5,
+      "reason": "CRLF replacement assertion failed before product edit. Four injected constructor error subcases were swallowed; zero-category equivalence test also failed."
+    },
+    "remaining_failure": "test_all_606_queries_match_existing_count_and_denominator_semantics: index omits absent zero-count categories while frequency_rows includes them; same failure before product edits. Statistical semantics unchanged.",
+    "live_window": "Isolated source/card tests run; original test window update pending."
+  },
+  "review": {
+    "standards": "D45/D47 read/parse/input validation catch retained; from_validated outside catch, internal constructor OSError/ValueError/KeyError/TypeError surface. No new helper or defense.",
+    "requirements": "Missing/corrupt source still empty; one-validation entry and accepted snapshot semantics preserved. Existing zero-category mismatch explicitly not counted as passed; not altered because outside error-boundary change."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "test_all_606_queries_match_existing_count_and_denominator_semantics: index omits absent zero-count categories while frequency_rows includes them; same failure before product edits. Statistical semantics unchanged."
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

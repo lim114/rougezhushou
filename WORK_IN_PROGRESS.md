@@ -1,3 +1,7 @@
+## 当前断点：统计索引构建移出文件输入异常捕获（2026-11-06）
+
+D45/D47完成；16项定向15通过，1项既有零次类别对照失败保留。原280组完成154、剩126。待审项、原测试窗口更新不变。回执 `verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json`。
+
 ## 当前断点：敌人环境预测复用本次难度与区域配置（2026-11-06）
 
 13项定向通过；普通重复读取整改，不关闭D305。原280组完成152、剩128；D321及此前待审决定未动，原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-forecast-config-reuse-20261106/summary.json`。

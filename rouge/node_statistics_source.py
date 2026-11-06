@@ -13,8 +13,8 @@ class NodeStatisticsSource(QObject):
         super().__init__(parent);self.cache=Path(cache);self.data=None;self.index=model.FrequencyIndex()
         try:
             data=model.load(self.cache if self.cache.is_file()else model.DEFAULT)
-            self.index=model.FrequencyIndex.from_validated(data);self.data=data
-        except(OSError,ValueError,KeyError,TypeError):pass
+        except(OSError,ValueError,KeyError,TypeError):return
+        self.index=model.FrequencyIndex.from_validated(data);self.data=data
 
     def accept(self,data):
         model.validate(data)

@@ -6,8 +6,9 @@ from . import public_node_statistics as statistics
 
 @lru_cache(maxsize=1)
 def default_frequencies():
-    try:return statistics.FrequencyIndex.from_validated(statistics.load())
+    try:data=statistics.load()
     except(ValueError,KeyError,TypeError,OSError):return statistics.FrequencyIndex()
+    return statistics.FrequencyIndex.from_validated(data)
 
 def historical_rows(zone_id,distance,frequencies=None):
     floor={'zone_1':'0','zone_2':'1','zone_3':'2','zone_4':'3','zone_5':'4'}.get(zone_id)

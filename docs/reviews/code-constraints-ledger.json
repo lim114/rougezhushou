@@ -197,7 +197,7 @@
     },
     {
       "file": "rouge/node_statistics_source.py",
-      "sha256": "8232ccae4bd1d34a6d334ec5b8eb40d392cd030977d32a4156d42e3587cc19b2",
+      "sha256": "ebe6b6cc357f387ee9eb6f86fe3e808af1e55dc8035f4d0b7a09990c4f9aed91",
       "rule1": "startup_and_accept_validate_once_catch_pending_D45",
       "rule2": "reviewed_no_single_use_wrapper_found",
       "rule3": "pending_user_review",
@@ -205,7 +205,14 @@
       "trigger": "构造捕获OSError/ValueError/KeyError/TypeError后静默使用空索引",
       "impact": "缓存/默认数据失败不阻止启动，也可能吞掉索引内部缺陷",
       "recommendation": "读取/输入解析与索引构造的捕获边界仍待D45确认；本批已单独删除重复完整验证。",
-      "evidence": "load validates before from_validated; accept validates raw input once. All invalid input rejects before cache/state publication."
+      "evidence": "load validates before from_validated; accept validates raw input once. All invalid input rejects before cache/state publication.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json",
+          "scope": "D45/D47 internal index construction outside input catch",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/reference_image.py",
@@ -237,7 +244,7 @@
     },
     {
       "file": "rouge/player_map_reference.py",
-      "sha256": "a47ed7efa97f08f6ecc953206fd42b9616f23e3708ca0d38a676cefe426d9c21",
+      "sha256": "6b7abe5c4bc8c5eaeda15925a1c12f8911e56685551d715298a807fc42c5e9ec",
       "rule1": "default_cache_fixed_other_query_boundaries_need_followup",
       "rule2": "single_use_public_counts_wrapper_and_duplicate_cache_removed",
       "rule3": "pending_user_review",
@@ -245,7 +252,14 @@
         "D47",
         "D48"
       ],
-      "evidence": "Only default_frequencies owns cached default source. Existing exception clauses unchanged; event art/dossier paths are not certified by this batch."
+      "evidence": "Only default_frequencies owns cached default source. Existing exception clauses unchanged; event art/dossier paths are not certified by this batch.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json",
+          "scope": "D45/D47 internal index construction outside input catch",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_action_menu.py",
