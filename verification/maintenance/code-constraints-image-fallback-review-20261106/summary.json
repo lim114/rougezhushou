@@ -1,0 +1,52 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "四处图片解码失败展示复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "58da4ab243464a937ff2522ca030b4f1d2f22c54",
+  "changed_sources": [
+    "tests/test_event_image_fallback_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_agency_view.py": "61d14ff4b8645b7092dd82a442dee85e5e32488a72cdeec699754406dbbd09f6",
+    "rouge/current_peace_view.py": "9f2320226df1d6ef222e50b5244f12ac4ddc566f4bbdb3cd1552a80cb6cfb9c6",
+    "rouge/current_scout_view.py": "f1ceb19c797089d8e05b54e1a1f491bfa2a9e90393704c8102a4eab360297d90",
+    "rouge/current_shadow_view.py": "73944aa1c74e6371e3138e13a3d33368c75b6569eaa2eb6fdbd69660b34dbe54",
+    "tests/test_event_image_fallback_review.py": "c903109d3d56064a4b1a273141610d8e433ed7a98c13af79a2a22aedaf706e6b"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D195",
+    "D196",
+    "D197",
+    "D198"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 2,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_event_image_fallback_review",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-193",
+    "coverage": "Four rendering methods, each valid PNG / corrupt bytes / None / hidden. Real QLabel/QPixmap decoder with isolated owner and mocked model outputs. Checks stale image cleared, labels readable, hidden image not loaded.",
+    "live_window": "No full panel or live game acceptance. Original app update still pending user exit."
+  },
+  "review": {
+    "standards": "No repeated source reads inside these methods; existing clear removes previous pixmap/text across transitions. Rendering methods have distinct UI-update responsibility. No product edit needed.",
+    "requirements": "D195-D198 explicitly approved keeping decode-failure text alternatives. Real decoder tests confirm corrupted image and None handled without stale pixmap; hidden states clear controls without reads. Model path/digest defenses outside this scope."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": false
+}

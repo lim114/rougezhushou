@@ -1,3 +1,7 @@
+## 维护：四处图片解码失败展示复核（2026-11-06）
+
+D195–D198复核完成并按批准保留；2项定向覆盖四处各4种图片状态。无产品源码修改，不代表整模块完成。回执 `verification/maintenance/code-constraints-image-fallback-review-20261106/summary.json`。
+
 ## 维护：安眠一隅加载入口与奖励文字包装整改（2026-11-06）
 
 D188–D190、D194完成，20项定向通过，49个显示案例与旧源码相等；整模块未销项。回执 `verification/maintenance/code-constraints-resting-review-20261106/summary.json`。
