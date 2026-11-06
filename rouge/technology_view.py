@@ -103,7 +103,7 @@ class TechnologyReferencePanel(QWidget):
         status_filter = self.status_filter.currentData()
         self.nodes.blockSignals(True); self.nodes.clear()
         for node in technology_nodes(self.search.text()):
-            state = self.account_state.view(node['buffId'])['status']
+            state = self.account_state.view(node['buffId'], prepared_node=node)['status']
             if status_filter is not None and state != status_filter:
                 continue
             label = labels[node['buffId']]

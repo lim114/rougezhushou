@@ -1,3 +1,7 @@
+## 当前断点：科技资料同次显示复用节点与账户状态（2026-11-06）
+
+D300完成，25定向通过、342输出等价；隔离科技列表筛选通过。初轮UI计数混入分队独立查询已修正测试范围。原280组完成131、剩149。原测试窗口更新及D319/D320待确认不变。回执 verification/maintenance/code-constraints-technology-snapshot-20261106/summary.json。
+
 ## 当前断点：独立地图首开复用父级核验结果（2026-11-06）
 
 D280/D284完成，31定向通过，旧父模块2子项复现双读。原280组完成130、剩150；原待审/测试窗口和既有验收缺口保留。回执 verification/maintenance/code-constraints-standalone-map-initial-20261106/summary.json。

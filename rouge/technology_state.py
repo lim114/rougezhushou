@@ -113,8 +113,9 @@ class TechnologyState:
     def snapshot(self):
         return deepcopy(self._state)
 
-    def view(self, node_id):
-        technology_node(node_id)
+    def view(self, node_id, *, prepared_node=None):
+        node = technology_node(node_id) if prepared_node is None else prepared_node
+        node_id = node['buffId']
         record = self._state['profiles'][self.selected_profile]['nodes'].get(node_id, {})
         return {'node_id': node_id, 'status': record.get('status', 'unknown'),
                 'source': record.get('source'), 'updated_at': record.get('updated_at'),
@@ -161,8 +162,8 @@ class TechnologyState:
             return '当前为临时资料窗口，关闭后不保留手动记录。'
         return ''
 
-    def describe(self, node_id):
-        record = self.view(node_id)
+    def describe(self, node_id, *, prepared_record=None):
+        record = self.view(node_id) if prepared_record is None else prepared_record
         label = STATUS_LABELS[record['status']]
         lines = ['资料档案：' + self.profile_name,
                  '本档案手动记录：' + label + ('（用户记录）' if record['source'] == 'manual' else '（尚未记录）')]

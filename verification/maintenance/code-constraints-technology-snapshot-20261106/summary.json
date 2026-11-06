@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "科技资料同次显示复用节点与账户状态",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "793fdddbe2944d3dc648d559a39ebda590ecdbd2",
+  "changed_sources": [
+    "rouge/technology.py",
+    "rouge/technology_state.py",
+    "rouge/technology_view.py",
+    "tests/test_technology_snapshot_reuse.py"
+  ],
+  "source_sha256": {
+    "rouge/technology.py": "4f8b409cce7338c8076aab5280a5b7a9d8b8027dd35c4ca814102492cb584b9e",
+    "rouge/technology_state.py": "d0ae5309a3b9cab27e46e2bcd64f4759b22d2bbf44a711fb6beb42fb15487133",
+    "rouge/technology_view.py": "5cc2e1e1673722ec25e2078ccfbac398f8192e469da1c054143c45026499756c",
+    "tests/test_technology_snapshot_reuse.py": "f202b0ec7f87cd9f9a8b9abf4839f412219582e0f39a3b613f2168f391253d12"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D300"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 25,
+    "tests_passed": 25,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_technology_snapshot_reuse tests.test_technology_reference tests.test_technology_state_128",
+    "local_evidence": ".local/code-constraints-review-231",
+    "equivalent_outputs": 342,
+    "isolated_ui": "57 rows, search2, reset57; technology list and detail no duplicate catalog calls. Squad planner independent refresh isolated.",
+    "initial_failure": "UI spy initially counted24 calls from adjacent squad planner; corrected scope, initial AssertionError24 retained here.",
+    "live_window": "Original test window update pending; isolated Qt only."
+  },
+  "review": {
+    "standards": "D300 approved same-operation reuse. No catch, retry or wrapper added. Independent view/describe entries still validate; known node and state only reused within synchronous rendering.",
+    "requirements": "All342 outputs equal old source; independent invalidID refusal and next-render changed status pass. Save protection and calculation unaffected."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}
