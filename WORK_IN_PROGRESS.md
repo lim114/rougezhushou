@@ -1,3 +1,7 @@
+## 当前断点：动作位置切换删除重复清空（2026-11-06）
+
+D266完成，9定向通过；原280组完成115、剩165。D319/D320待审，D259仍部分完成，原窗口和既有缺口保留。回执verification/maintenance/code-constraints-action-clear-once-20261106/summary.json。
+
 ## 当前断点：地图面板复用格子解析并移除无效局部判断（2026-11-06）
 
 D262完成，D259仅select_cell→_render部分；9定向通过。原280组完成114、剩166。D319/D320待审，原窗口待补。回执verification/maintenance/code-constraints-map-selection-once-20261106/summary.json。

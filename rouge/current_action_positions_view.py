@@ -34,8 +34,6 @@ class CurrentActionPositionsPanel(QWidget):
         replace_text(self.player, model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
 
     def set_reference(self, stage_id, action_key):
-        if (stage_id, action_key) != (self.stage_id, self.action_key):
-            self.clear_reference()
         self.stage_id = stage_id; self.action_key = action_key
         return self.refresh_reference()
 

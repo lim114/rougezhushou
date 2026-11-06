@@ -1,0 +1,51 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "动作位置切换删除重复清空",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "ecc57dc9aaa7e71008be16ef6656fc6722e2c688",
+  "changed_sources": [
+    "rouge/current_action_positions_view.py",
+    "tests/test_action_position_clear_once.py"
+  ],
+  "source_sha256": {
+    "rouge/current_action_positions_view.py": "319ebb8d9c7492b6748ec536477b912deaf099581ba319bfc78c0aa57bdc8f6b",
+    "tests/test_action_position_clear_once.py": "f0b94dfdf49a268aa2ccd19e834976fa75ece8e96319b87e3c83577877915c40"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D266"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 9,
+    "tests_failed": 0,
+    "tests_run": 9,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_action_position_clear_once tests.test_current_action_positions_view_320",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-212",
+    "old_source_regression": "2 new tests both fail on original source; final9 pass.",
+    "live_window": "Offscreen Qt only; original window update pending."
+  },
+  "review": {
+    "standards": "D266 approved duplicate clear removal. refresh handles expected failure once and identity comparison resets selection on changed success. No helper/catch/flag introduced.",
+    "requirements": "Failure clears result/selection/text; success has no intermediate clear; existing same-target reading state and image failure tests pass. Unexpected internal exceptions still propagate, no recovery added."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}
