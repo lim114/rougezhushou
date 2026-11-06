@@ -1,3 +1,7 @@
+## 当前断点：线人与仪式资料加载入口整改（2026-11-06）
+
+本批6组完成，22项定向通过；原280组完成96组、剩184组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-sand-ritual-packets-review-20261106/summary.json。
+
 ## 当前断点：交换子目录复用同次已核验资料（2026-11-06）
 
 D203完成，19项定向通过；原280组完成90组、剩190组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-exchange-source-reuse-review-20261106/summary.json。
