@@ -93,7 +93,8 @@ def _frequency_rows(values):
 
 def frequency_rows(data,floor,distance):
     validate(data);_selection(floor,distance)
-    return _frequency_rows([(name,buckets.get(floor,{}).get(str(distance),0))for name,buckets in data['counts'].items()])
+    return _frequency_rows([(name,count)for name,buckets in data['counts'].items()
+                            if (count:=buckets.get(floor,{}).get(str(distance))) is not None])
 
 class FrequencyIndex:
     """Project one accepted public dataset once; readers cannot mutate its rows."""

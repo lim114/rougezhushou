@@ -1,0 +1,60 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "历史查询暴露内部错误并区分缺失与零次",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "761aaa3dafa3136f70a701d65f97659e690004c8",
+  "changed_sources": [
+    "rouge/player_map_reference.py",
+    "rouge/public_node_statistics.py",
+    "tests/test_historical_query_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map_reference.py": "9048fabf746426ea4aae42fee8c346c9885b053a0d2f9112ac445d8338b73d97",
+    "rouge/public_node_statistics.py": "c35ce4d0fbad769e77e1948698b134cb0e8b3abd1880d269aecd58ff76ae28c4",
+    "tests/test_historical_query_boundary.py": "0cb29900afcb289ee327e4d8725b9fb396c83dc2345d19e780adc335c23689dc"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D48"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_historical_query_boundary tests.test_node_card_source_review tests.test_statistics_entry_review tests.test_player_map_interaction_392.MapReferenceTests",
+    "tests_run": 34,
+    "tests_passed": 34,
+    "seconds": 0.665,
+    "initial_run": {
+      "tests": 34,
+      "failure_reports": 7,
+      "reason": "Line-ending-specific replacement assertion stopped before edits; old behavior reproduced missing-as-zero, swallowed errors and previous equivalence failure."
+    },
+    "live_window": "Isolated map/source checks pass; original test window update pending."
+  },
+  "review": {
+    "standards": "D48 query error catch removed. Existing supported distance bound 0..100 moved before query so unsupported inputs still return empty; independent FrequencyIndex.rows retains public validation. No new helper or recovery.",
+    "requirements": "Explicit zero retained, absent record omitted per docs/decisions/2026-11-03-overlay-video-controls.md. Original 606-query equivalence test passes without changing test expectations. Commit c3c50b5d2 added explicit zero support but old direct helper still filled missing zero; corrected helper only, not index dataset."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": []
+}

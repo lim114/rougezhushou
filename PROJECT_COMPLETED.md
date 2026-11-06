@@ -5402,3 +5402,7 @@ D316完成；仅samples读取/校验错误转无资料，内部类型、缺键�
 ## 维护：统计索引构建移出文件输入异常捕获（2026-11-06）
 
 D45/D47异常边界整改完成，构建缺陷不再变空索引；16项定向15通过，既有统计类别对照失败单列待办。回执 `verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json`。
+
+## 维护：历史查询暴露内部错误并区分缺失与零次（2026-11-06）
+
+D48完成；非法距离入口返回空，内部查询错误上报。修复直接查询将缺失样本补零的问题，原606组对照通过。34项定向通过；保留上一批失败历史。回执 `verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json`。

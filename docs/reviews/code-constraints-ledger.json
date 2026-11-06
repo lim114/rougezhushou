@@ -236,15 +236,22 @@
     },
     {
       "file": "rouge/public_node_statistics.py",
-      "sha256": "ca11bf9072692dad91115ddd791aa2fc8d712d25daf10ab2a87c5654072ad441",
+      "sha256": "c35ce4d0fbad769e77e1948698b134cb0e8b3abd1880d269aecd58ff76ae28c4",
       "rule1": "selected_index_construction_paths_reviewed",
       "rule2": "shared_projection_has_two_callers_validated_factory_has_three_product_callers",
       "rule3": "remaining_parser_network_and_domain_guards_not_certified",
-      "evidence": "Raw constructor still validates once; empty constructors unchanged. Shared projection reused by raw constructor and factory; callers invoke factory only immediately after validation. Network/parser guards unchanged and outside this batch."
+      "evidence": "Raw constructor still validates once; empty constructors unchanged. Shared projection reused by raw constructor and factory; callers invoke factory only immediately after validation. Network/parser guards unchanged and outside this batch.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json",
+          "scope": "D48 query boundary and established absent-versus-zero contract",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_map_reference.py",
-      "sha256": "6b7abe5c4bc8c5eaeda15925a1c12f8911e56685551d715298a807fc42c5e9ec",
+      "sha256": "9048fabf746426ea4aae42fee8c346c9885b053a0d2f9112ac445d8338b73d97",
       "rule1": "default_cache_fixed_other_query_boundaries_need_followup",
       "rule2": "single_use_public_counts_wrapper_and_duplicate_cache_removed",
       "rule3": "pending_user_review",
@@ -257,6 +264,11 @@
         {
           "receipt": "verification/maintenance/code-constraints-statistics-index-errors-20261106/summary.json",
           "scope": "D45/D47 internal index construction outside input catch",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json",
+          "scope": "D48 query boundary and established absent-versus-zero contract",
           "full_module_review_complete": false
         }
       ]

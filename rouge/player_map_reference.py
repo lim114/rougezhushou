@@ -12,9 +12,8 @@ def default_frequencies():
 
 def historical_rows(zone_id,distance,frequencies=None):
     floor={'zone_1':'0','zone_2':'1','zone_3':'2','zone_4':'3','zone_5':'4'}.get(zone_id)
-    if floor is None or type(distance)is not int or distance<0:return ()
-    try:return tuple((default_frequencies()if frequencies is None else frequencies).rows(floor,distance))
-    except(ValueError,KeyError,TypeError,OSError):return ()
+    if floor is None or type(distance)is not int or not 0<=distance<=100:return ()
+    return tuple((default_frequencies()if frequencies is None else frequencies).rows(floor,distance))
 
 def candidate_types(node):
     observed=node.get('observed_type')
