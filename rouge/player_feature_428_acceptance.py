@@ -1,6 +1,5 @@
 def check(window,gui,require):
  from copy import deepcopy
- from PySide6.QtCore import Qt
  from .player_replay_archive import reload_history
  from tests.test_player_feature_426 import observations
  before=deepcopy(window.run.state)

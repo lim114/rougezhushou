@@ -327,3 +327,5 @@
 | D307 | choice_held_requirements._data两份来源摘要、choice_reference身份文字、original_reference原条目对照 | 来源变更或同ID不同条目拒绝；original_reference重复catalog._original，原字段对照仅检查仍存在的键 | 建议明确单一来源校验结果并复用，字段缺失策略一起审核；替代保留原规则。原样待审，不因当前固定摘要绕过 |
 
 | D308 | player_feature_418_acceptance.check的finally清空hover.card；422/423.check的finally恢复window.run.state，共3处 | 验收中途失败仍释放测试卡片/恢复隔离状态；418末尾正常路径也已清空一次 | 建议保留最终清理/恢复并审批后删418重复释放；替代仅成功路径清理。仅本三模块，原样待审；未执行这些历史验收 |
+
+| D309 | player_feature_426_acceptance.check_prices/check、427/428/430.check 的 finally 恢复 window.run.state，共5处 | 验收中途异常仍恢复此前隔离状态；成功路径也恢复 | 建议保留，避免失败后隔离窗口沿用构造状态；替代只成功时恢复，失败后由隔离会话退出清理。未获授权，原样保留；本批未运行这些历史验收 |

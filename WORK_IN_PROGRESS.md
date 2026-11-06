@@ -1,3 +1,7 @@
+## 当前断点：五份商店与历史资料验收源码回顾和重复读取清理（2026-11-06）
+
+426读取复用、426/428清未用导入；五份源码回顾，五编译/六入口及清理AST核对通过。429规则销项，五处状态恢复D309待审，共272组。回执verification/maintenance/code-constraints-acceptance-426-430-review-20261106/summary.json。
+
 ## 当前断点：七份历史验收模块入口回顾与无用导入清理（2026-11-06）
 
 七份验收源码全文回顾；421复用选中项，422/424清未用导入。七文件编译/入口检查通过，不执行历史验收。四模块代码规则销项，D308待审，共271组。回执verification/maintenance/code-constraints-acceptance-418-424-review-20261106/summary.json。

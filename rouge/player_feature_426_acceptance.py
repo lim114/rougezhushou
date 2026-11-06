@@ -4,7 +4,7 @@ def check_prices(window,gui,require):
  from copy import deepcopy
  from pathlib import Path
  import json
- from PySide6.QtCore import Qt,QTimer
+ from PySide6.QtCore import QTimer
  from .player_shop_hover import shop_snapshot
  from .player_shop_memory import recorded_shops
  before=deepcopy(window.run.state)
@@ -54,7 +54,7 @@ def check(window,gui,require):
   require(panel.snapshots.count()==2,'two_observed_shop_lists_available_after_leaving_page')
   require('前次读到、本次未读到'in panel.comparison.text()and first['items'][0]['name']in panel.comparison.text(),'partial_list_comparison_retains_unread_item_name')
   require('不同商店'in panel.comparison.text()and '变化不证明刷新'in panel.comparison.text(),'comparison_does_not_claim_transaction_or_same_shop')
-  panel.entries.setCurrentRow(0);identity=panel.entries.currentItem().data(Qt.ItemDataRole.UserRole);panel.search.setText(panel.entries.currentItem().text());gui.processEvents()
+  panel.entries.setCurrentRow(0);item=panel.entries.currentItem();identity=item.data(Qt.ItemDataRole.UserRole);panel.search.setText(item.text());gui.processEvents()
   require(panel.entries.count()==1,'shop_snapshot_name_search_filters_exact_read_list')
   panel.entries.setCurrentRow(0);panel.source_button.click();gui.processEvents()
   require(panel.source_card.isVisible()and panel.source_card.identity==identity,'shop_item_directly_opens_exact_source_card')
