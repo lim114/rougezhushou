@@ -28,26 +28,22 @@ def sp_reference(skill,rules,records):
     selected=[r for r in rules if supported_sp(r)]
     scenario={'_relic_rules':selected}
     adjusted=effective_skill({'sp_cost':skill['spData']['spCost'],'initial_sp':skill['spData']['initSp']},scenario)
-    cost_pending=[];initial_pending=[];end_pending=[]
+    cost_pending=[];initial_pending=[];end_pending=[];recovery_pending=[]
     for record in records:
-        entry=mechanics()['relics'].get(record['id']) or mechanics()['char_buffs'].get(record['id'])
+        data=mechanics()
+        entry=data['relics'].get(record['id']) or data['char_buffs'].get(record['id'])
         if not entry or not (record['pending'] or record['missing_conditions']):continue
+        kinds={e['kind'] for e in entry['effects']}
         for key,kind in ((cost_pending,'sp_cost_factor'),(initial_pending,'initial_sp'),(end_pending,'end_sp')):
-            if any(e['kind']==kind for e in entry['effects']):key.append(record['name'])
+            if kind in kinds:key.append(record['name'])
+        if record['missing_conditions']:
+            kinds.update(e['kind'] for binding in entry.get('bound_char_buffs',[])
+                for e in data['char_buffs'].get(binding['id'],{}).get('effects',[]))
+        if 'sp_recovery' in kinds:recovery_pending.append(record['name'])
     cost=None if cost_pending else adjusted['sp_cost']
     initial=None if initial_pending else adjusted['initial_sp']
     end=None if end_pending else sum(r['value'] for r in selected if r['kind']=='end_sp')
     natural=[r for r in selected if supported_natural_sp(r)]
-    recovery_pending=[]
-    for record in records:
-        entry=mechanics()['relics'].get(record['id']) or mechanics()['char_buffs'].get(record['id'])
-        effects=entry['effects'] if entry else []
-        if entry and record['missing_conditions']:
-            effects=effects+[e for binding in entry.get('bound_char_buffs',[])
-                for e in mechanics()['char_buffs'].get(binding['id'],{}).get('effects',[])]
-        if entry and (record['pending'] or record['missing_conditions']) and any(
-                e['kind']=='sp_recovery' for e in effects):
-            recovery_pending.append(record['name'])
     natural_applicable=skill['spData']['spType']=='INCREASE_WITH_TIME'
     bonus=sum(r['value'] for r in natural) if natural_applicable else 0
     rate=(None if recovery_pending else skill['spData']['increment']+bonus) if natural_applicable else None

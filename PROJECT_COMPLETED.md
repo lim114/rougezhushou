@@ -1,3 +1,7 @@
+## 维护：技力与治疗来源整理（2026-11-05）
+
+两轮记录合一、效果类型一次投影；32项定向及147情景/128组合/42通用报告旧新一致，测试窗口更新。[回执](verification/maintenance/code-constraints-recovery-records-20261105/README.md)。仍属局部整改，D124待审未改。
+
 ## 维护：费用输入复用（2026-11-05）
 
 同条费用效果一次分类，芬天赋与无天赋共用加成参数；26项定向通过、126费用条件及42通用报告/文字旧新一致，原测试窗口已更新。[回执](verification/maintenance/code-constraints-cost-input-reuse-20261105/README.md)。范围为局部整改，未销项全模块。

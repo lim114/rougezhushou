@@ -17,10 +17,12 @@ def apply_healing_reference(result,rules,records,kind):
     regeneration=[r for r in selected if r['kind']=='regeneration_factor']
     pending_healing=[];pending_regen=[]
     for record in records:
-        entry=mechanics()['relics'].get(record['id']) or mechanics()['char_buffs'].get(record['id'])
+        data=mechanics()
+        entry=data['relics'].get(record['id']) or data['char_buffs'].get(record['id'])
         if not entry or not (record['pending'] or record['missing_conditions']):continue
-        if kind in HEAL_KINDS and any(e['kind']=='healing_factor' for e in entry['effects']):pending_healing.append(record['name'])
-        if any(e['kind'] in REGEN_KINDS for e in entry['effects']):pending_regen.append(record['name'])
+        kinds={e['kind'] for e in entry['effects']}
+        if kind in HEAL_KINDS and 'healing_factor' in kinds:pending_healing.append(record['name'])
+        if kinds & REGEN_KINDS:pending_regen.append(record['name'])
     factor=None if pending_healing else healing_factor(healing)
     regen_factor=None if pending_regen else regeneration_factor(regeneration)
     flat=sum(r['value'] for r in selected if r['kind']=='regeneration')
