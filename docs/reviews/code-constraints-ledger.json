@@ -2539,7 +2539,7 @@
     },
     {
       "file": "rouge/current_elbert_view.py",
-      "sha256": "b92e7435fe1812f7cd4aa144fee721c2bdd8ccb121fabbf5672df83bbf1d7817",
+      "sha256": "0ef24911a989393de885996120880af947d4cf2f8436383e3800281d3babec70",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Elbert topic read once; repeated entity and map checks remain pending",
@@ -2549,7 +2549,16 @@
         "D278",
         "D279"
       ],
-      "evidence": "Both view modules fully read with model entry/selection callers.9 Elbert targeted checks pass; fixed old-new topic getter3to1, rendered outputs and view identity equal. Boss view unchanged."
+      "evidence": "Both view modules fully read with model entry/selection callers.9 Elbert targeted checks pass; fixed old-new topic getter3to1, rendered outputs and view identity equal. Boss view unchanged.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-elbert-selection-reuse-20261106/summary.json",
+          "rule1": "Same selection reuses resolved entity; independent calls still resolve.",
+          "rule2": "No new wrapper.",
+          "rule3": "Approved D279 only; no new defense.",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/current_boss_documents_view.py",
@@ -2644,7 +2653,7 @@
     },
     {
       "file": "rouge/current_elbert_reference.py",
-      "sha256": "d489b995dea8ab4f8fcf9e052305e935dc40f98c44d2a69fe15b4450e700aff2",
+      "sha256": "4d40968138fa5132c82cda5503668a5f5ec05391944f7e68bf57bd31b76bdd37",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Removed equality to same assigned database object; guard/source/entity duplication pending",
@@ -2656,7 +2665,16 @@
         "D295",
         "D296"
       ],
-      "evidence": "Full model read; nine UI passes and ten model passes; wrong test module import retained; all four public stage/eight entity outputs equal to baseline"
+      "evidence": "Full model read; nine UI passes and ten model passes; wrong test module import retained; all four public stage/eight entity outputs equal to baseline",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-elbert-selection-reuse-20261106/summary.json",
+          "rule1": "Same selection reuses resolved entity; independent calls still resolve.",
+          "rule2": "No new wrapper.",
+          "rule3": "Approved D279 only; no new defense.",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/recognition_cache.py",

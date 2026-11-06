@@ -1,3 +1,7 @@
+## 当前断点：实体选择复用本次解析结果（2026-11-06）
+
+D279完成，20项定向检查通过；原代码对照复现重复查找。原280组完成122、剩158。D296仍待整改；D319/D320及原测试窗口待补。回执 verification/maintenance/code-constraints-elbert-selection-reuse-20261106/summary.json。
+
 ## 当前断点：地形证据与参数入口精简（2026-11-06）
 
 D271–D274完成，33定向通过，500组参数值/提示等价；原280组完成121、剩159。D319/D320及原窗口待补。回执verification/maintenance/code-constraints-terrain-boundaries-20261106/summary.json。

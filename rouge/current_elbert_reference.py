@@ -137,8 +137,8 @@ def entity(result,enemy_key):
     return next((row for row in result['entities']if row['key']==enemy_key),None)
 
 
-def related_entities(result,enemy_key):
-    row=entity(result,enemy_key)
+def related_entities(result,enemy_key,*,prepared_entity=...):
+    row=entity(result,enemy_key) if prepared_entity is ... else prepared_entity
     if row is None:return[]
     return[{'stage_id':result['stage_id'],'enemy_key':other['key'],
             'enemy_id':other['enemy_id'],'level':other['level'],'name':other['name']}
@@ -152,15 +152,15 @@ def resolve_related(result,enemy_key,request):
     return locate(result['stage_id'],request['enemy_key'])
 
 
-def selected_card(result,enemy_key):
-    row=entity(result,enemy_key)
+def selected_card(result,enemy_key,*,prepared_entity=...):
+    row=entity(result,enemy_key) if prepared_entity is ... else prepared_entity
     return deepcopy(result['data']['complete_cards'][row['profile']])if row else None
 
 
-def view_result(result,enemy_key,card=None):
+def view_result(result,enemy_key,card=None,*,prepared_entity=...):
     """A local read projection; it does not silently refresh or choose an entity."""
     if card is not None and type(card)is not str:return None
-    row=entity(result,enemy_key)
+    row=entity(result,enemy_key) if prepared_entity is ... else prepared_entity
     if result is None or(enemy_key is not None and row is None):return None
     if card is not None and(row is None or card not in dict(CARDS[row['kind']])):return None
     return{**result,'selected':deepcopy(row),'card':card}

@@ -81,7 +81,7 @@ class CurrentElbertPanel(QWidget):
             if old_topic is not None:self.topic.setCurrentIndex(max(0,self.topic.findData(old_topic)))
         finally:self.topic.blockSignals(blocked)
         self.topic.setVisible(row is not None)
-        related=model.related_entities(self.base,key);self.related_request=related[0]if len(related)==1 else None
+        related=model.related_entities(self.base,key,prepared_entity=row);self.related_request=related[0]if len(related)==1 else None
         self.related_button.setVisible(self.related_request is not None);self.related_button.setEnabled(self.related_request is not None)
         if self.related_request:self.related_button.setText('查看本关的'+self.related_request['name'])
         self.portrait.clear();self.portrait.setVisible(row is not None)
@@ -89,19 +89,19 @@ class CurrentElbertPanel(QWidget):
             pix=QPixmap();raw=model.battle.picture_bytes(self.base['portraits'][self.stage_id].get(row['key']))
             if raw and pix.loadFromData(raw,'PNG'):self.portrait.setPixmap(pix.scaled(70,70,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
             else:self.portrait.setText('本关这只敌人的独立图片尚未取得；不借用同名敌人或其它图标。')
-        self.status.clear();self._topic_changed()
+        self.status.clear();self._topic_changed(prepared_entity=row)
 
-    def _topic_changed(self,*_):
+    def _topic_changed(self,*_,prepared_entity=...):
         if self.base is None:return
         topic=self.topic.currentData()
-        self.result=model.view_result(self.base,self.selected_key,topic)
+        self.result=model.view_result(self.base,self.selected_key,topic,prepared_entity=prepared_entity)
         if self.result is None:self.clear_reference();return
         identity=(self.source_identity,self.stage_id,self.selected_key,topic);keep=identity==self._view_key
         heading = {'summon': '火种从哪里来', 'blink': '闪现', 'staff': '退场后留下的法杖',
                    'collision': '碰撞与爆炸', 'configuration': '默认文献如何变化'}.get(topic)
         replace_mechanism_text(self.player, model.player_text(self.result), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【' + heading + '】' if heading else None)
-        row=self.result['selected'];card=model.selected_card(self.result,self.selected_key)
+        row=self.result['selected'];card=model.selected_card(self.result,self.selected_key,prepared_entity=row)
         original={'source_identity':self.source_identity,'battle_source_identity':self.result['battle_source_identity'],
                   'exact_stage':self.result['stage'],'exact_selected_entity':row,
                   'complete_selected_mechanism_card':card,
