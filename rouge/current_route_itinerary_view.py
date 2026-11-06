@@ -17,13 +17,13 @@ class CurrentRouteStepPositionPanel(QWidget):
         if fresh is None or raw is None:self.clear_reference();return False
         keep=self.result is not None and model.same(fresh,self.result);self.result=fresh;self.image_raw=raw;cell=fresh['cell'];self.grid.set_result(fresh['grid'],(cell['row'],cell['col']))
         if not self.original.set_image(raw,fresh['center']):self.clear_reference();return False
-        text=model.step_label(fresh['step'])+'\n这里只查看所选环节的名义格；不与前后格连接，不代表实际脚点、偏移或传送配对。\n'+('此格有既有原图近似参考；绝对误差与其它位置仍需核验。'if fresh['center']else'此格没有可用的原图校准；左侧保留格子，右侧不猜标记。');replace_text(self.details,text,preserve=keep);replace_text(self.player,model.step_label(fresh['step'])+'\n原图标记：'+('参考位置。'if fresh['center']else'待校准。'),preserve=keep)
+        label=model.step_label(fresh['step'])
+        text=label+'\n这里只查看所选环节的名义格；不与前后格连接，不代表实际脚点、偏移或传送配对。\n'+('此格有既有原图近似参考；绝对误差与其它位置仍需核验。'if fresh['center']else'此格没有可用的原图校准；左侧保留格子，右侧不猜标记。');replace_text(self.details,text,preserve=keep);replace_text(self.player,label+'\n原图标记：'+('参考位置。'if fresh['center']else'待校准。'),preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         return True
 class CurrentRouteStepPositionDialog(QDialog):
     def __init__(self,stage_id,route_key,step_key,parent=None):
         super().__init__(parent);self.setWindowTitle('行程环节 · 固定位置参考');self.resize(1150,760);layout=QVBoxLayout(self);self.panel=CurrentRouteStepPositionPanel(stage_id,route_key,step_key,self);layout.addWidget(self.panel)
-    def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)
 class CurrentRouteItineraryPanel(QWidget):
     actionSelected=Signal(str)
@@ -49,7 +49,7 @@ class CurrentRouteItineraryPanel(QWidget):
         for label,key in rows:widget.addItem(label,key)
         widget.setCurrentIndex(max(0,widget.findData(selected)));widget.blockSignals(blocked)
     def close_children(self):
-        if self.position_dialog is not None:self.position_dialog.panel.clear_reference();self.position_dialog.close()
+        if self.position_dialog is not None:self.position_dialog.close()
         self.position_dialog=None
     def clear_reference(self,*,notify=True):
         had=self.result is not None;self.close_children();self.result=None;self._view_key=None
@@ -70,33 +70,44 @@ class CurrentRouteItineraryPanel(QWidget):
         if self.unassigned.currentData()is not None:
             for w in(self.entries,self.steps,self.actions):self._fill(w,[])
         self.refresh_reference()
-    def selected_route(self):return next((r for r in self.result['entries']if r['key']==self.entries.currentData()),None)if self.result else None
-    def selected_step(self):
-        route=self.selected_route();return next((s for s in route['steps']if s['key']==self.steps.currentData()),None)if route else None
-    def selected_action(self):
-        route=self.selected_route()
-        if route is not None:return next((a for a in route['actions']if a['key']==self.actions.currentData()),None)
-        return next((a['action']for a in self.result['unassigned_actions']if a['action']['key']==self.unassigned.currentData()),None)if self.result else None
+    def selected_route(self):
+        if self.result is None:return None
+        key=self.entries.currentData()
+        return next((r for r in self.result['entries']if r['key']==key),None)
+    def selected_step(self,*,route=...):
+        if route is ...:route=self.selected_route()
+        if route is None:return None
+        key=self.steps.currentData()
+        return next((s for s in route['steps']if s['key']==key),None)
+    def selected_action(self,*,route=...):
+        if route is ...:route=self.selected_route()
+        if route is not None:
+            key=self.actions.currentData()
+            return next((a for a in route['actions']if a['key']==key),None)
+        if self.result is None:return None
+        key=self.unassigned.currentData()
+        return next((a['action']for a in self.result['unassigned_actions']if a['action']['key']==key),None)
     def refresh_reference(self,*_):
         fresh=model.stage_reference(self.stage_id)
         if fresh is None:self.clear_reference();return False
         keep=self.result is not None and self.result['source_identity']==fresh['source_identity']and self.result['stage_id']==fresh['stage_id'];keys=[w.currentData()if keep else None for w in(self.entries,self.steps,self.actions,self.unassigned)]
         if not keep:self.close_children()
-        self.result=fresh;routes=model.routes(fresh,self.search.text(),self.scope.currentData());self._fill(self.entries,[(r['label']+(' · '+' / '.join(r['enemy_names'])if r['enemy_names']else''),r['key'])for r in routes],keys[0],'请选择原路线'if routes else'此范围未找到原路线');self.entries.setEnabled(bool(routes));route=self.selected_route();steps=route['steps']if route else[];actions=route['actions']if route else[];self._fill(self.steps,[(model.step_label(s),s['key'])for s in steps],keys[1],'请选择一处行程环节');self.steps.setEnabled(bool(steps));self._fill(self.actions,[(model.battle.action_label(a),a['key'])for a in actions],keys[2],'请选择准确引用此基础路线的主波次出怪'if actions else'未取得准确绑定的主波次出怪');self.actions.setEnabled(bool(actions));self._fill(self.unassigned,[(model.battle.action_label(a['action'])+' · '+a['reason'],a['action']['key'])for a in fresh['unassigned_actions']],keys[3]if route is None else None,'请选择路线未确认的出怪');self.unassigned.setEnabled(bool(fresh['unassigned_actions']));step=self.selected_step();action=self.selected_action();unbound=route is None and action is not None
-        view=(deepcopy(fresh['source_identity']),self.search.text(),self.scope.currentData(),route['key']if route else None,step['key']if step else None,action['key']if action else None,unbound);preserve=keep and view==self._view_key;full_text=model.player_text(fresh,route,step,action,unbound);text=full_text.replace(f"本关保留{len(fresh['entries'])}条原路线；不是实际采用条数。",f"行程资料：{len(fresh['entries'])}条。");replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【重要边界】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'stage_id':fresh['stage_id'],'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'selected_route':route,'selected_step':step,'selected_action':action,'unbound_action_selected':unbound,'route_count':len(fresh['entries']),'unassigned_action_count':len(fresh['unassigned_actions']),'actual_route':None,'actual_path':None,'absolute_time':None}),preserve=preserve);self.action_button.setEnabled(action is not None);self.position_button.setEnabled(bool(step and step['spatial_reference_permitted']))
+        query=self.search.text();scope=self.scope.currentData()
+        self.result=fresh;routes=model.routes(fresh,query,scope);self._fill(self.entries,[(r['label']+(' · '+' / '.join(r['enemy_names'])if r['enemy_names']else''),r['key'])for r in routes],keys[0],'请选择原路线'if routes else'此范围未找到原路线');self.entries.setEnabled(bool(routes));route=self.selected_route();steps=route['steps']if route else[];actions=route['actions']if route else[];self._fill(self.steps,[(model.step_label(s),s['key'])for s in steps],keys[1],'请选择一处行程环节');self.steps.setEnabled(bool(steps));self._fill(self.actions,[(model.battle.action_label(a),a['key'])for a in actions],keys[2],'请选择准确引用此基础路线的主波次出怪'if actions else'未取得准确绑定的主波次出怪');self.actions.setEnabled(bool(actions));self._fill(self.unassigned,[(model.battle.action_label(a['action'])+' · '+a['reason'],a['action']['key'])for a in fresh['unassigned_actions']],keys[3]if route is None else None,'请选择路线未确认的出怪');self.unassigned.setEnabled(bool(fresh['unassigned_actions']));step=self.selected_step(route=route);action=self.selected_action(route=route);unbound=route is None and action is not None
+        view=(deepcopy(fresh['source_identity']),query,scope,route['key']if route else None,step['key']if step else None,action['key']if action else None,unbound);preserve=keep and view==self._view_key;full_text=model.player_text(fresh,route,step,action,unbound);text=full_text.replace(f"本关保留{len(fresh['entries'])}条原路线；不是实际采用条数。",f"行程资料：{len(fresh['entries'])}条。");replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【重要边界】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'stage_id':fresh['stage_id'],'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'selected_route':route,'selected_step':step,'selected_action':action,'unbound_action_selected':unbound,'route_count':len(fresh['entries']),'unassigned_action_count':len(fresh['unassigned_actions']),'actual_route':None,'actual_path':None,'absolute_time':None}),preserve=preserve);self.action_button.setEnabled(action is not None);self.position_button.setEnabled(bool(step and step['spatial_reference_permitted']))
         if not preserve:self.tabs.setCurrentIndex(0)
         if self.position_dialog is not None and self.position_dialog.isVisible():
             p=self.position_dialog.panel
             if route is None or step is None or(p.route_key,p.step_key)!=(route['key'],step['key'])or not p.refresh_reference():self.close_children()
         self._view_key=view;return True
     def follow_action(self):
-        route=self.selected_route();action=self.selected_action()
+        route=self.selected_route();action=self.selected_action(route=route)
         if action is None:return False
         selected=model.resolve(self.result,route['key']if route else None,action_key=action['key'])
         if selected is None:self.clear_reference();return False
         self.actionSelected.emit(action['key']);return True
     def open_position(self):
-        route=self.selected_route();step=self.selected_step()
+        route=self.selected_route();step=self.selected_step(route=route)
         if route is None or step is None or not step['spatial_reference_permitted']:return False
         ref=model.position_reference(self.result,route['key'],step['key'])
         if ref is None:self.clear_reference();return False
@@ -109,5 +120,4 @@ class CurrentRouteItineraryPanel(QWidget):
 class CurrentRouteItineraryDialog(QDialog):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.setWindowTitle('完整敌人行程与停留条件');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentRouteItineraryPanel(stage_id,self);layout.addWidget(self.panel)
-    def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)

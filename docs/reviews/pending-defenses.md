@@ -226,3 +226,6 @@
 | D228 | CurrentEnemySpawnsPanel刷新来源失败、_resolve解析失败、follow_position位置复核失败清空 | 失效来源撤下并发失效信号；_resolve只有follow_action调用 | 建议确认失效行为后内联单次_resolve并保留已同意出口；替代原样保留。单次包装尚未整改，不计规则二完成 |
 | D229 | CurrentObjectPositionPanel刷新缺来源/原图或set_image失败清空；CurrentStageObjectsPanel刷新/resolve失败清空及子窗刷新失败关闭 | 来源/图像失效时不保留旧位置 | 建议保留来源失效撤下并分离实际输入错误；替代留旧结果或直接上报。原样待审，正常未选项不含此组 |
 | D230 | CurrentStageObjectsPanel.open_position先position_reference预检，后共享工厂或对话框再读取；新子窗result为空又关闭 | 前后两层确保目标有效，但有同次重复读取 | 建议审批保留失败出口后合并同次读取；替代原样双读。仍有普通重复未改，不因登记销项 |
+
+| D231 | CurrentRouteStepPositionPanel.refresh_reference来源/原图缺失或set_image失败清空；CurrentRouteItineraryPanel刷新/resolve失败清空、已有位置子窗刷新失败关闭 | 失效资料撤下，避免继续展示旧行程位置 | 建议保留来源失效职责并缩小内部错误混同范围；替代沿用旧值或直接报告异常。原样待审，正常无路线/无环节不含本项 |
+| D232 | CurrentRouteItineraryPanel.open_position先position_reference预检，再共享位置页或独立子窗重读，新子窗无result即关闭 | 确保当前位置可用但同次重复读取 | 建议确认失败行为后复用读取结果；替代原样双读。普通重复仍未整改，不因登记销项 |

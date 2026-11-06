@@ -1,3 +1,7 @@
+## 当前断点：行程选择复用与对话框单次清理（2026-11-06）
+
+行程复用route与筛选、父子清理2→1，13定向通过，窗口更新。D231—D232待审，共195组；位置step_label已同批复用，最终11视图通过。回执verification/maintenance/code-constraints-itinerary-selection-close-20261106/summary.json。
+
 ## 当前断点：资料筛选状态与物件返回入口复用（2026-11-06）
 
 筛选值单次读取、物件返回回调复用row；24定向通过，窗口更新，193组待审不变。回执verification/maintenance/code-constraints-tool-filter-context-20261106/summary.json。继续剩余模块，D228/D230未销项。

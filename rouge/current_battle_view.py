@@ -931,7 +931,7 @@ class CurrentBattlePanel(QWidget):
         if reader.result['battle_source_identity']!=self.result['source_identity']:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_route_itinerary import resolve
-        route=reader.selected_route();action=reader.selected_action()
+        route=reader.selected_route();action=reader.selected_action(route=route)
         if action is None or action['key']!=key or resolve(reader.result,route['key']if route else None,action_key=key)is None:reader.clear_reference();return False
         return self.focus_action(action)
     def open_route_itinerary(self):

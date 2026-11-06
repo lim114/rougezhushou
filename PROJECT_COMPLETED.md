@@ -1,3 +1,7 @@
+## 维护：行程选择与关闭整改（2026-11-06）
+
+已复用路线、筛选，删除重复关闭；13定向通过，模块未销项。[回执](verification/maintenance/code-constraints-itinerary-selection-close-20261106/README.md)。
+
 ## 维护：筛选与物件返回重复读取整改（2026-11-06）
 
 同次筛选和外部回调复用已完成，24定向通过，不计全模块完成。[回执](verification/maintenance/code-constraints-tool-filter-context-20261106/README.md)。

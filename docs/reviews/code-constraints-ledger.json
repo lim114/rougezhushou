@@ -273,11 +273,11 @@
     },
     {
       "file": "rouge/current_battle_view.py",
-      "sha256": "0102759ec85a4dc65e6445204a6a32c0c0e80b6fbec6cb60107b180489f88290",
-      "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
-      "rule2": "no_new_helpers",
-      "rule3": "pending_defenses_unchanged",
-      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified.",
+      "sha256": "de9f7860de1d429f311de7fbbc30fa426d3a6eee0860695a968cd1bb37a0abff",
+      "rule1": "reuse_route_and_filter_state; keys_read_before_search; dialog_cleanup_once",
+      "rule2": "remove_two_closeEvent_wrappers_no_new_helper",
+      "rule3": "D231_D232_pending_unchanged",
+      "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. Remaining step_label repeated formatting and preflight under D232; no full certification.",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false
     },
@@ -1813,6 +1813,16 @@
       "rule2": "no_new_helpers",
       "rule3": "pending_defenses_unchanged",
       "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified."
+    },
+    {
+      "file": "rouge/current_route_itinerary_view.py",
+      "sha256": "5b13245ed16999159ececbbcbc2312c38cb5fe31562a41ad47912b8bf07f002f",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "reuse_route_and_filter_state; keys_read_before_search; dialog_cleanup_once",
+      "rule2": "remove_two_closeEvent_wrappers_no_new_helper",
+      "rule3": "D231_D232_pending_unchanged",
+      "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. step_label computed once after final cleanup; final11 view checks pass. Remaining preflight under D232; no full certification."
     }
   ]
 }
