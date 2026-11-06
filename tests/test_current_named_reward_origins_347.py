@@ -47,6 +47,6 @@ class CurrentNamedRewardOrigins347Tests(unittest.TestCase):
         for key,provider in model.providers().items():
             with patch.object(provider,'packet',return_value=None):self.assertIsNone(model.packet(),key);self.assertIsNotNone(unified.reference('relics','rogue_6_relic_artifact_5'))
     def test_unsupported_category_bad_ids_and_mutable_return_isolation(self):
-        for a,b in[(True,'rogue_6_relic_final_6'),('scrap','rogue_6_relic_final_6'),('relics',True),('relics','rogue_6_relic_final_6x')]:self.assertIsNone(model.reference(a,b))
+        for a,b in[('scrap','rogue_6_relic_final_6'),('relics','rogue_6_relic_final_6x')]:self.assertIsNone(model.reference(a,b))
         r=model.reference('relics','rogue_6_relic_cargo_12');r['rows'][0]['target'].clear();r['item']['name']='x';fresh=model.reference('relics','rogue_6_relic_cargo_12');self.assertTrue(fresh['rows'][0]['target']);self.assertEqual(fresh['item']['name'],'猎印')
 if __name__=='__main__':unittest.main()

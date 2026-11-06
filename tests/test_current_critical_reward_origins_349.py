@@ -74,7 +74,7 @@ class CriticalReward349Tests(unittest.TestCase):
     def test_upstream_loss_unknown_quantities_types_and_mutable_isolation(self):
         for provider in model.PROVIDERS:
             with patch.object(provider, 'packet', return_value=None): self.assertIsNone(model.packet())
-        for category, iid in [(True, 'rogue_6_relic_final_7'), ('scrap', 'rogue_6_relic_final_7'), ('relics', True), ('relics', 'rogue_6_relic_final_8')]:
+        for category, iid in [('scrap', 'rogue_6_relic_final_7'), ('relics', 'rogue_6_relic_final_8')]:
             self.assertIsNone(model.reference(category, iid))
         r = model.reference('relics', 'rogue_6_relic_final_9')
         self.assertIsNone(r['actual_quantity']); self.assertIsNone(r['actual_received']); self.assertFalse(r['complete_acquisition_pool'])

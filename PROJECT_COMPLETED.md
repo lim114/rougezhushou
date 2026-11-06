@@ -1,3 +1,7 @@
+## 维护：奖励查询区分错误参数与正常无条目（2026-11-06）
+
+D167/D172/D177完成，29项定向通过，未完成整模块审查。回执 `verification/maintenance/code-constraints-reward-query-review-20261106/summary.json`。
+
 ## 维护：险路尽头与和平守卫者加载入口整改（2026-11-06）
 
 D178–D180、D183–D185完成，最终30项定向通过，首轮错误保留；不代表整模块完成。回执 `verification/maintenance/code-constraints-event-packets-review-20261106/summary.json`。

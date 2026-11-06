@@ -54,7 +54,7 @@ class CurrentRewardOrigins338Tests(unittest.TestCase):
             self.assertEqual(c, row['choice']); self.assertIn(row['choice_id'], p['scenes'][row['scene_id']]['choice_ids'])
 
     def test_unknown_wrong_category_and_bad_inputs_have_no_entry(self):
-        for category, key in [('scrap', ITEMS[0][1]), ('relics', ITEMS[2][1]), ('scenes', ITEMS[0][1]), ('relics', '追忆'), ('relics', ITEMS[0][1] + '_2'), (True, ITEMS[0][1]), ('relics', None)]:
+        for category, key in [('scrap', ITEMS[0][1]), ('relics', ITEMS[2][1]), ('scenes', ITEMS[0][1]), ('relics', '追忆'), ('relics', ITEMS[0][1] + '_2')]:
             self.assertIsNone(model.reference(category, key))
 
     def test_isolated_results_do_not_mutate_later_queries(self):

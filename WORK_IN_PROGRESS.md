@@ -1,3 +1,7 @@
+## 当前断点：奖励查询区分错误参数与正常无条目（2026-11-06）
+
+D167/D172/D177完成，29项定向通过；原280组完成74组、剩206组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-reward-query-review-20261106/summary.json。
+
 ## 当前断点：险路尽头与和平守卫者加载入口整改（2026-11-06）
 
 本批6组完成，最终30项定向通过，首轮1错误已修复并保留记录；原280组完成71组、剩209组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-packets-review-20261106/summary.json。

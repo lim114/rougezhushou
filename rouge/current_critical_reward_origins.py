@@ -103,7 +103,9 @@ def packet():
 
 
 def reference(category, item_id, values=None):
-    if type(category) is not str or type(item_id) is not str or category != 'relics' or item_id not in ITEM_IDS:
+    if type(category) is not str or type(item_id) is not str:
+        raise TypeError('Reward category and item_id must be strings')
+    if category != 'relics' or item_id not in ITEM_IDS:
         return None
     packet_value = packet()
     if packet_value is None: return None

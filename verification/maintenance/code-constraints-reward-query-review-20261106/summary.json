@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "奖励查询区分错误参数与正常无条目",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5ac5d5e71ee47cb5213ff59fda265408803d7082",
+  "changed_sources": [
+    "rouge/current_reward_origins.py",
+    "rouge/current_named_reward_origins.py",
+    "rouge/current_critical_reward_origins.py",
+    "tests/test_current_reward_origins_338.py",
+    "tests/test_current_named_reward_origins_347.py",
+    "tests/test_current_critical_reward_origins_349.py",
+    "tests/test_reward_query_input_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_reward_origins.py": "23eb9486623e3d4b3c303c4e963fdb1f4615a862429f0d895376edf1a4fbb7d6",
+    "rouge/current_named_reward_origins.py": "1f7b12e3d9f2da84b782a5ceafa4ff3bd82c7b2afc8ea951554688e71f9d50d1",
+    "rouge/current_critical_reward_origins.py": "84b225e0092e7ff6a476f7ab93ae75e5d5d130c9166f5051a49b39839336a5ea",
+    "tests/test_current_reward_origins_338.py": "c88e0ad7de25d77b36717d1b87c0dbcd1bb65bf503e45c1ed058e6212d34074a",
+    "tests/test_current_named_reward_origins_347.py": "a0c25ea693bfa37b19d66f5f0f0efa42782fc23cef5447795977ea1937f510c7",
+    "tests/test_current_critical_reward_origins_349.py": "c071fa038f4a9b05c71f2e34c94d8f123a3d15ef39ce4e363d35698a37481ecc",
+    "tests/test_reward_query_input_review.py": "402a7769eb501a4ed8eebb2ec8b6eba84f4a4360e050c3c90f98855da4d1855a"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D167",
+    "D172",
+    "D177"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 29,
+    "command": "python -m unittest tests.test_reward_query_input_review tests.test_current_reward_origins_338 tests.test_current_named_reward_origins_347 tests.test_current_critical_reward_origins_349",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-190",
+    "baseline": "Old committed modules: twelve invalid-type subcases fail. Final source all29 tests pass. Existing invalid-type assertions migrated to explicit new test; legitimate absence cases retained.",
+    "live_window": "Pending user exit of old assistant; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "D167/D172/D177 public entry rejects wrong parameter types explicitly before load; independent public entry validation retained. No catch or wrapper introduced.",
+    "requirements": "Unsupported string category and absent items remain None. Item-kind, unique-row, version.detail identity and condition-record comparisons unchanged. Callers inspected in expansion_view/current_event_item_uses pass string fields from source-checked records."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ]
+}

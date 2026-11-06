@@ -64,7 +64,9 @@ def packet():
     return {'data':d,'source_identity':(MANIFEST_SHA256,tuple((k,p['source_identity'])for k,p in packets.items())),'actual_received':None,'actual_eligible':None,'run_updated':False}
 
 def reference(category,item_id):
-    if type(category)is not str or type(item_id)is not str or category!='relics'or item_id not in ITEM_IDS:return None
+    if type(category)is not str or type(item_id)is not str:
+        raise TypeError('Reward category and item_id must be strings')
+    if category!='relics'or item_id not in ITEM_IDS:return None
     p=packet()
     if p is None:return None
     rows=[deepcopy(r)for r in p['data']['rows']if r['item_id']==item_id];detail=version.detail(category,item_id)

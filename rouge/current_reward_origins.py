@@ -74,7 +74,9 @@ def packet():
 
 
 def reference(category, item_id):
-    if type(category) is not str or type(item_id) is not str or category not in ('relics', 'scrap'): return None
+    if type(category) is not str or type(item_id) is not str:
+        raise TypeError('Reward category and item_id must be strings')
+    if category not in ('relics', 'scrap'): return None
     from . import current_critical_reward_origins as critical
     if item_id in critical.ITEM_IDS: return critical.reference(category, item_id)
     from . import current_named_reward_origins as named
