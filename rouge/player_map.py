@@ -6,7 +6,7 @@ import json
 from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
 from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
-    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit,QFormLayout)
+    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit,QFormLayout,QMessageBox)
 from .map_view import MapView
 from .run_config import config_data
 
@@ -415,9 +415,16 @@ class MapPanel(QWidget):
             popup.setWindowFlag(Qt.WindowType.Tool,True);popup.show()
             area=self.screen().availableGeometry();popup.move(max(area.left(),min(self.mapToGlobal(QPoint(20,20)).x(),area.right()-popup.width()+1)),max(area.top(),min(self.mapToGlobal(QPoint(20,20)).y(),area.bottom()-popup.height()+1)))
             return True
-        # Retain the existing full-directory route when no exact floating
-        # reader is available; never substitute another same-name instance.
-        self.detail.appendPlainText('\n这份资料暂时没有可核对的完整浮窗入口，将在助手原目录继续查阅。')
+        notice=QMessageBox(self)
+        notice.setWindowTitle('资料入口')
+        notice.setText('暂时无法打开这份精确资料，可手动查看完整目录。')
+        open_catalog=notice.addButton('打开完整目录',QMessageBox.ButtonRole.AcceptRole)
+        notice.addButton('取消',QMessageBox.ButtonRole.RejectRole)
+        notice.exec()
+        if notice.clickedButton() is not open_catalog:return False
+        # The user may have changed the selected node while the dialog was open.
+        self.refresh()
+        if binding!=self.reader_binding():return False
         if key[1]=='battle':self.owner.show_catalog_battle(row['id'])
         elif key[1]=='event':self.owner.show_source_catalog_event(row['id'])
         else:return False

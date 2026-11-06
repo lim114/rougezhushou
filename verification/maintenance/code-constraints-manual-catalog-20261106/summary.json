@@ -1,0 +1,53 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "title": "精确资料不可用时改为玩家手动打开目录",
+  "base_commit": "c704a0723cb9a8f54b3983b44f3c6ab2ef68b6b8",
+  "changed_sources": [
+    "rouge/player_map.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map.py": "3d1aedead78100c4acfdcfdad0199bfbe1aff9018a160e0f1fb5bb733c05cc58"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D86"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_map_manual_catalog_review tests.test_map_reader_contract_review",
+        "tests_run": 8,
+        "tests_passed": 8,
+        "seconds": 0.774
+      }
+    ],
+    "live_window": "Original test window update remains pending after prior automatic approval rejection; offscreen checks do not certify live UI."
+  },
+  "review": {
+    "standards": "Same-snapshot entry checks unchanged; after user dialog refresh and binding recheck follows approved interaction boundary. No new catch or wrapper. Qt built-in QMessageBox reused; no dependency added.",
+    "requirements": "No automatic catalog activation. Explicit button routes original battle/event id; cancel and changed binding do not activate owner. Existing exact reader path unchanged."
+  }
+}

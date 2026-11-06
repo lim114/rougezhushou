@@ -1,3 +1,7 @@
+## 当前断点：精确资料不可用时改为玩家手动打开目录（2026-11-06）
+
+D86完成，8项定向通过。原280组完成166、剩114；原测试窗口更新仍待完成，其他待审决定未改。回执 `verification/maintenance/code-constraints-manual-catalog-20261106/summary.json`。
+
 ## 当前断点：编辑输入与公开关卡跳转保护按授权复核（2026-11-06）
 
 D43/D44按批准保留并完成复核，16项定向通过，产品源码未改。D41上游未保证nodeBindings结构，仍待审查。原280组完成165、剩115。回执 `verification/maintenance/code-constraints-input-link-retention-20261106/summary.json`。

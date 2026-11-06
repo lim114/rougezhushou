@@ -5430,3 +5430,7 @@ D38完成；内部坏数据不再伪装成不匹配，来源已提供字符串�
 ## 维护：编辑输入与公开关卡跳转保护按授权复核（2026-11-06）
 
 D43/D44按批准保留，16项定向通过；解析回调职责和准确关卡跳转条件核对，未为修改而改写。回执 `verification/maintenance/code-constraints-input-link-retention-20261106/summary.json`。
+
+## 维护：精确资料不可用时改为玩家手动打开目录（2026-11-06）
+
+D86：精确资料缺失时提供明确手动目录按钮，取消不打开主窗，交互后重核节点身份；8项定向检查通过。未新增功能节，未完成原窗口实机更新。回执 `verification/maintenance/code-constraints-manual-catalog-20261106/summary.json`。
