@@ -273,11 +273,13 @@
     },
     {
       "file": "rouge/current_battle_view.py",
-      "sha256": "54b01edc621db88e47ad1a53af3aae749456e7e2bc466572a70ba125d4e026c4",
-      "rule1": "selected_paths_reviewed_followup_remaining",
-      "rule2": "callbacks_and_shared_domain_helpers_retained",
-      "rule3": "see_pending_decisions_or_remaining_scope",
-      "evidence": "Only _actions_changed grouping reviewed: group_key once per action while building group choices. Later filtering uses separate selected criteria. Rest of large module not certified."
+      "sha256": "0102759ec85a4dc65e6445204a6a32c0c0e80b6fbec6cb60107b180489f88290",
+      "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
+      "rule2": "no_new_helpers",
+      "rule3": "pending_defenses_unchanged",
+      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified.",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false
     },
     {
       "file": "rouge/player_note_style.py",
@@ -1794,23 +1796,23 @@
     },
     {
       "file": "rouge/current_enemy_spawns_view.py",
-      "sha256": "8f14eb550d7c221f605638b4152a409125fb8598856d554d7adb1226f8c3e05f",
+      "sha256": "7763c797da787cf08c4066a715555632df2c351c8118c893bdace1e50e3f89b0",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "read_selection_key_once; object_refresh_and_action_reuse_selected_row",
-      "rule2": "existing_selected_action_accepts_prepared_row_no_new_helper",
-      "rule3": "D227_D230_pending_unchanged",
-      "evidence": "Read selected paths and real callers. Qt currentData moved before generator. selected_action keyword row reused locally; standalone and external calls retain lookup. Counter verified1 key read and0 reselects when prepared. External current_battle_view callback still repeats selection and awaits next batch; _resolve single-use helper held under D228. No module completion."
+      "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
+      "rule2": "no_new_helpers",
+      "rule3": "pending_defenses_unchanged",
+      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified."
     },
     {
       "file": "rouge/current_stage_objects_view.py",
-      "sha256": "3dc2f01757de564d023fe1fe1515bd776c2cd356f679e713ac8f7cdfee5801c6",
+      "sha256": "e29c45bd63a517129007e8ee70af89e6f5edc8b3870537af1d019b7704bc8198",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "rule1": "read_selection_key_once; object_refresh_and_action_reuse_selected_row",
-      "rule2": "existing_selected_action_accepts_prepared_row_no_new_helper",
-      "rule3": "D227_D230_pending_unchanged",
-      "evidence": "Read selected paths and real callers. Qt currentData moved before generator. selected_action keyword row reused locally; standalone and external calls retain lookup. Counter verified1 key read and0 reselects when prepared. External current_battle_view callback still repeats selection and awaits next batch; _resolve single-use helper held under D228. No module completion."
+      "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
+      "rule2": "no_new_helpers",
+      "rule3": "pending_defenses_unchanged",
+      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified."
     }
   ]
 }

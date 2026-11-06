@@ -1,3 +1,7 @@
+## 维护：筛选与物件返回重复读取整改（2026-11-06）
+
+同次筛选和外部回调复用已完成，24定向通过，不计全模块完成。[回执](verification/maintenance/code-constraints-tool-filter-context-20261106/README.md)。
+
 ## 维护：出怪与物件选项读取整改（2026-11-06）
 
 局部重复控件读取和物件查找已改，定向检查通过，不计整模块完成。[回执](verification/maintenance/code-constraints-spawn-object-selection-20261106/README.md)。

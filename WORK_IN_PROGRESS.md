@@ -1,3 +1,7 @@
+## 当前断点：资料筛选状态与物件返回入口复用（2026-11-06）
+
+筛选值单次读取、物件返回回调复用row；24定向通过，窗口更新，193组待审不变。回执verification/maintenance/code-constraints-tool-filter-context-20261106/summary.json。继续剩余模块，D228/D230未销项。
+
 ## 当前断点：出怪与物件选择读取只执行一次（2026-11-06）
 
 选择键读取一次、物件row复用，35定向通过，窗口更新；D227—D230待审，共193组。外部回调及单次包装/重复预检仍未完成。回执verification/maintenance/code-constraints-spawn-object-selection-20261106/summary.json。
