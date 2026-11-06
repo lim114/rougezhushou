@@ -58,6 +58,6 @@ class TokenBudgetDialog(QDialog):
         for row in result['rows']:
             if row['stock_sufficient_declared'] is False: warnings.append(row['name']+'：声明库存不足。')
             if row['concurrent_within_reference'] is False: warnings.append(row['name']+'：超出每类在场参考上限。')
-            if row.get('stock_within_reference') is False: warnings.append(row['name']+'：声明库存超出默认培养参考；不据此否定未核验的技能库存修改。')
+            if row['stock_within_reference'] is False: warnings.append(row['name']+'：声明库存超出默认培养参考；不据此否定未核验的技能库存修改。')
         self.notice.setPlainText(format_token_budget(result)+'\n'+'\n'.join(warnings))
         self.copy_button.setEnabled(True)

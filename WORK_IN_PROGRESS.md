@@ -1,3 +1,7 @@
+## 当前断点：召唤物配额直接读取已生成字段（2026-11-06）
+
+D132/D133完成，10项定向及3种隔离Qt状态通过；原280组剩241组。D131和其他模块继续核对。原生来源摘要缺口、新版窗口待补。回执verification/maintenance/code-constraints-token-budget-fields-review-20261106/summary.json。
+
 ## 当前断点：补充技能加成读取整改（2026-11-06）
 
 D126完成，14项定向通过；原280组剩243组。其他模块继续核对；原生来源摘要缺口及新版窗口待补。回执verification/maintenance/code-constraints-supplemental-bonus-review-20261106/summary.json。

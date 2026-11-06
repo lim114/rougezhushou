@@ -5116,3 +5116,7 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 - 2026-11-06 D117：藏品诊断复用规范化场景，52项通过；回执 verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json。
 
 - 2026-11-06 D126：补充技能直接读取三类已初始化加成，14项通过；回执 verification/maintenance/code-constraints-supplemental-bonus-review-20261106/summary.json。
+
+## 维护：召唤物配额直接读取已生成字段（2026-11-06）
+
+仅D132/D133完成；10项定向与3种隔离Qt状态通过。回执：verification/maintenance/code-constraints-token-budget-fields-review-20261106/summary.json。不增加功能节数，不代表全程序整改完成。

@@ -1,0 +1,46 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "召唤物配额直接读取已生成字段",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "193d139c5f1a0930fb1941f13696916d09928a9c",
+  "changed_sources": [
+    "rouge/token_budget.py",
+    "rouge/token_budget_view.py"
+  ],
+  "source_sha256": {
+    "rouge/token_budget.py": "c95296c47c29981b589efc9f91e8b979cb66d445f763db149c212b6b8ace169d",
+    "rouge/token_budget_view.py": "fd5bb7a3c84c59981e7efa53790b0d09b65d9d564b8917630e0417b5db912a85"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D132",
+    "D133"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 10,
+    "command": "python -m unittest tests.test_token_budget_validation_review tests.test_token_budget_module_identity_review tests.test_token_budget_130",
+    "isolated_qt_states_passed": 3,
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-173",
+    "live_window": "Pending user closure of old app after restart policy rejection."
+  },
+  "review": {
+    "standards": "Two required fields read directly. No new validation, exception handling, or helper. D131 exception boundary remains pending.",
+    "requirements": "Both comparison stage producers always emit count_reference; token_budget always emits stock_within_reference. None/False/True retained."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

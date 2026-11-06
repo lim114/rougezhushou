@@ -34,7 +34,7 @@ def token_budget(operator, training, requests, budget):
         present = count(request['present'], '声明在场数量', unknown=True)
         stock = count(request['available_stock'], '声明剩余库存', unknown=True)
         values = token['stages'][stage]['values']
-        count_reference=token['stages'][stage].get('count_reference')
+        count_reference=token['stages'][stage]['count_reference']
         cost = values['deployment_cost']; cap = values['concurrent_limit']
         requested_cost = 0 if additional == 0 else cost * additional if cost is not None else None
         if requested_cost is None: all_costs_known = False
