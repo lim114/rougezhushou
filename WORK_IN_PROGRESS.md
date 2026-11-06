@@ -1,3 +1,7 @@
+## 当前断点：资源历史页显式初始化对局身份并复用读取（2026-11-06）
+
+D56/D57完成，6项定向通过。原280组完成159、剩121；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-resource-history-state-20261106/summary.json`。
+
 ## 当前断点：菜单恢复状态显式初始化与布局拒绝复核（2026-11-06）
 
 D50/D51完成，6项定向通过。原280组完成157、剩123；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-action-menu-state-20261106/summary.json`。

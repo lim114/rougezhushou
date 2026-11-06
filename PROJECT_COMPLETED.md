@@ -5410,3 +5410,7 @@ D48完成；非法距离入口返回空，内部查询错误上报。修复直�
 ## 维护：菜单恢复状态显式初始化与布局拒绝复核（2026-11-06）
 
 D50/D51完成；显式状态替代getattr，保留并验证按钮移动前的布局核对，重复恢复不重排。6项定向通过。回执 `verification/maintenance/code-constraints-action-menu-state-20261106/summary.json`。
+
+## 维护：资源历史页显式初始化对局身份并复用读取（2026-11-06）
+
+D56/D57完成；初始化run_id，单次读取复用；保留超大整数拒绝与未知断链。同局选择、换局清理及数值测试6项通过。回执 `verification/maintenance/code-constraints-resource-history-state-20261106/summary.json`。

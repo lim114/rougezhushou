@@ -15,7 +15,7 @@ class ResourceHistoryTests(unittest.TestCase):
         self.assertIn('源石锭',resource_text(rows[2]));self.assertNotIn('resource_updated',resource_text(rows[2]))
 
     def test_invalid_intermediate_breaks_delta_chain_without_changing_evidence(self):
-        for invalid in(True,'20',None,float('inf'),float('nan'),-1):
+        for invalid in(True,'20',None,float('inf'),float('nan'),-1,10**1000):
             state=reads([('gold',2),('gold',invalid),('gold',5)]);before=deepcopy(state);rows=resource_rows(state)
             self.assertIsNone(rows[1]['value']);self.assertIsNone(rows[2]['delta'])
             self.assertEqual(state['history'][0],before['history'][0])

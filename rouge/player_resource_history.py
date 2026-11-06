@@ -68,6 +68,7 @@ class ResourceHistoryPage(QWidget):
         super().__init__(parent)
         self.rows = []
         self.key = None
+        self.run_id = None
         body = QVBoxLayout(self)
         self.notice = QLabel('资源变化来自已读数值；首次读到不是从0增加，不归因到相邻节点。')
         self.notice.setWordWrap(True)
@@ -84,11 +85,12 @@ class ResourceHistoryPage(QWidget):
 
     def refresh(self, state):
         rows = resource_rows(state)
-        key = repr((state.get('id'), rows))
+        run_id = state.get('id')
+        key = repr((run_id, rows))
         if key == self.key:
             return
-        changed_run = getattr(self, 'run_id', None) != state.get('id')
-        self.run_id = state.get('id')
+        changed_run = self.run_id != run_id
+        self.run_id = run_id
         self.key, self.rows = key, rows
         if changed_run:
             self.entries.clear()
