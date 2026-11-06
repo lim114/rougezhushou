@@ -990,12 +990,20 @@
     },
     {
       "file": "rouge/player_reference_notes.py",
-      "sha256": "8332607f1c79e4444b2982beb0841b22858a883d674789936e37aa3801dc962d",
+      "sha256": "c9f1965ff6ca19ad8b819471159076d5cd79fae95c274ccec89ce981439ef829",
       "rule1": "ordinary_cleanup_complete_scoped_defenses_pending",
       "rule2": "reviewed_clear",
       "rule3": "pending_user_review_D98_D99",
       "full_module_review_complete": false,
-      "evidence": "Entire file read. Context has two actual deferred consumers (menu show and action trigger); defined once per install, not per panel. Panel/action default bindings preserved. Qt imported once on standalone fallback entry, not on each row. Four entry functions unchanged; all conditions equal after explicit Qt alias normalization. Menu-to-click source revalidation crosses a user interaction boundary and stays. D98 malformed public title and D99 synchronous repeated canonicalization remain pending."
+      "evidence": "Entire file read. Context has two actual deferred consumers (menu show and action trigger); defined once per install, not per panel. Panel/action default bindings preserved. Qt imported once on standalone fallback entry, not on each row. Four entry functions unchanged; all conditions equal after explicit Qt alias normalization. Menu-to-click source revalidation crosses a user interaction boundary and stays. D98 malformed public title and D99 synchronous repeated canonicalization remain pending.",
+      "reference_note_entry_review": {
+        "decisions": [
+          "D98",
+          "D99"
+        ],
+        "evidence": "verification/maintenance/code-constraints-reference-note-entry-review-20261106/summary.json",
+        "result": "Title contract verified; same-click reads merged; cross-interaction rechecks retained; 9 tests pass."
+      }
     },
     {
       "file": "rouge/reference_dialog.py",

@@ -1,3 +1,7 @@
+## 当前断点：笔记资料入口整改（2026-11-06）
+
+D98/D99完成，9项定向通过；原280组剩255组。其他模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-reference-note-entry-review-20261106/summary.json。
+
 ## 当前断点：事件资料路径入口整改（2026-11-06）
 
 D91完成，8项定向通过；原280组剩257组。D95及其他模块继续核对；测试窗口更新待补。回执verification/maintenance/code-constraints-event-path-contract-review-20261106/summary.json。

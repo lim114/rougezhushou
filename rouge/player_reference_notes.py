@@ -8,8 +8,7 @@ def note_for(category,identity):
     if not isinstance(category,str)or category not in KINDS or not isinstance(identity,str)or not identity:return None
     result=model.detail(category,identity)
     if result is None:return None
-    row=result['row'];title=row.get('name')
-    if not isinstance(title,str)or not title.strip():return None
+    title=result['row']['name']
     key=json.dumps([result['source_identity'],identity],ensure_ascii=True,sort_keys=True,separators=(',',':'))
     return {'kind':KINDS[category],'title':title,'event_id':identity,'variant_id':key}
 
@@ -61,6 +60,7 @@ def install(window):
         def sync(reader=panel,entry=action):entry.setVisible(context(reader)is not None)
         def request(_checked=False,reader=panel):
             content=context(reader)
-            if content is not None:open_note(window,content)
+            if content is not None:
+                window.show_compact();window.compact_window.open_saved_note(content)
         panel.query_menu.menu.aboutToShow.connect(sync);action.triggered.connect(request)
 
