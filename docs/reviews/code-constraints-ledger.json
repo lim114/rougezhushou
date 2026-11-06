@@ -1738,13 +1738,13 @@
     },
     {
       "file": "rouge/current_exchange_reference.py",
-      "sha256": "c3c523bed3649beedf5d3a04f361479a5d0fe5d79770872eff8f9950a27a6588",
-      "ordinary_rules_review_complete": false,
+      "sha256": "c15cdcee92a2d68791c3c9506e35ee00c7e40e80dad6958ab950274c51cbbe9e",
+      "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "rule1": "UI_selected_item_and_group_rows_reused_by_text_functions",
-      "rule2": "no_new_helpers_prepared_row_keyword_preserves_standalone_calls",
-      "rule3": "no_existing_defense_changed",
-      "evidence": "Read item_text/document_text and current UI callers; each UI had identical list lookup to formatter. Optional prepared_row uses Ellipsis to distinguish absent from explicitly no selection. Existing raw API and null/unknown behavior retained. 14 targeted model/view checks pass;295 old/raw/prepared outputs plus2 None-ref cases equal. No entire module certification; packet and other paths still require review."
+      "rule1": "normalize_filter_query_once_after_entry_checks",
+      "rule2": "public_model_functions_have_real_UI_and_model_callers_no_single_use_wrapper",
+      "rule3": "D205_D208_pending",
+      "evidence": "Complete model read including packet, catalogue_rows, target_entry, item_text/document_text and current UI/test callers. DATA already parsed from validated blobs; no duplicate file read introduced. query.strip moved from per-record predicate to once per filter call. Fresh snapshots remain deepcopy owned results. Unsupported category/no match/ambiguous target are normal no-target outcomes; bad parameter types separately D208.2 targeted checks pass and288 filter combinations match old source. Sources and catches unchanged."
     },
     {
       "file": "rouge/current_exchange_view.py",

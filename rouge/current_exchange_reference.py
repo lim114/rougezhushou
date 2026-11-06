@@ -44,7 +44,8 @@ def catalogue_rows(ref,*,can_offer=None,rarity=None,change=None,query=''):
     if can_offer is not None and type(can_offer)is not bool:raise ValueError('能否交出请选择全部、可交出或不可交出。')
     if rarity not in(None,*RARITIES)or change not in(None,'added','changed','unchanged')or type(query)is not str:raise ValueError('请选择已有的稀有度、更新范围并使用文字检索。')
     if ref is None:return []
-    return [deepcopy(r)for r in ref['data']['catalogue']if(can_offer is None or r['can_offer']is can_offer)and(rarity is None or r['rarity']==rarity)and(change is None or r['change']==change)and(not query.strip()or query.strip()in r['name'])]
+    query=query.strip()
+    return [deepcopy(r)for r in ref['data']['catalogue']if(can_offer is None or r['can_offer']is can_offer)and(rarity is None or r['rarity']==rarity)and(change is None or r['change']==change)and(not query or query in r['name'])]
 
 
 def target_entry(category,key):

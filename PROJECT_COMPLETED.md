@@ -1,3 +1,7 @@
+## 维护：交换模型查询整理（2026-11-06）
+
+过滤循环中的重复strip移到入口一次；2定向和288组合对照通过。模型仍待防御审核。[回执](verification/maintenance/code-constraints-exchange-filter-review-20261106/README.md)。
+
 ## 维护：交换目录行复用（2026-11-06）
 
 两处重复扫描消除，14定向通过，295项文字对照一致。[回执](verification/maintenance/code-constraints-exchange-row-reuse-20261106/README.md)。

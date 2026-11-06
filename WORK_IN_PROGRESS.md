@@ -1,3 +1,7 @@
+## 当前断点：交换模型完整核对与搜索文字单次整理（2026-11-06）
+
+搜索文字仅整理一次；2定向通过，288过滤组合前后一致。测试窗口已更新。交换模型保护D205—D208待审，共171组；整模块47不变。回执verification/maintenance/code-constraints-exchange-filter-review-20261106/summary.json。继续其它普通冗余及完整模块回顾。
+
 ## 当前断点：交换目录与条文复用已选资料行（2026-11-06）
 
 两处重复行扫描改为复用，14项定向通过、295项三路输出及2空ref一致；测试窗口已更新。167组待审不变。回执verification/maintenance/code-constraints-exchange-row-reuse-20261106/summary.json；后续继续交换模型其余路径及全程序普通冗余审查，未称整模块完成。

@@ -192,3 +192,8 @@
 | D202 | CurrentRestingPanel._update_specific 的QPixmap.loadFromData失败转图片暂缺 | 同上，源私钥图片失败仍保留文字 | 建议保留替代显示，或明确报告错误；与D191模型图源保护分开。原样待审 |
 | D203 | CurrentReconstructionPanel._update_specific/open_catalogue：先offers.packet预检，已有子窗再refresh_reference，或新建子窗再次packet；刷新失败关闭子窗 | 资料失效时撤下目录，事件正文仍可用；同次操作有重复读源；点击与此前显示检查是不同时间点 | 建议合并同次预检与子窗读取，保留点击时及刷新失效撤下职责；替代维持多次读取覆盖期间变化。涉及保护改动，暂不改，也不算普通重复已整改 |
 | D204 | CurrentRestingPanel._update_specific：已打开原件对照在refresh_reference失败时关闭；open_original的_recheck与target为空拒绝 | 原资料失效或冲突原项无法定位时撤下/拒绝对照，避免继续显示旧资料 | 建议保留失效撤下和点击复核；冲突定位重新读源已登记D193，需一并界定复用范围，勿当不同授权。allow_original_popup=False是正常单层对照功能，不属本项。原样待审 |
+
+| D205 | current_exchange_reference.packet捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError统一返回None | 文件错误和内部类型/字段/递归缺陷都被显示为资料不可用 | 建议收窄到实际文件与解析错误，内部缺陷暴露；替代保留整段兜底。原样待审 |
+| D206 | 同packet固定清单摘要/schema/版本/成员、每文件长度摘要、当前/旧物品及选项/场景完整比较 | 错版或漂移资料拒绝显示；已从校验后的blobs解析DATA，无同文件重复读 | 建议保留来源身份职责并逐层核对重复；替代信任快照减少核验但弱化错版拦截。原样待审 |
+| D207 | 同packet相对路径、ROOT范围及文件/父目录链接拒绝 | 不读取越界/链接资料，链接部署受限 | 建议保留边界或另定部署范围；替代扩大可读取路径。原样待审，不沿用笔记目录授权 |
+| D208 | current_exchange_reference.target_entry对category/key非字符串返回None | 错误内部调用静默变成无目标 | 建议明确入口契约后让内部类型错误暴露，或保留原始查询接口。合法但不支持的类别、无匹配、非唯一匹配属于正常无入口，不包含在此项。原样待审 |
