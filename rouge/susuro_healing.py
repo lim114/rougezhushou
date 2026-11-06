@@ -33,7 +33,7 @@ def reference(profile,scenario):
     trait=selected_trait(profile,scenario)
     if trait is None:return None
     ratio=scenario.get('healing_target_hp_ratio')
-    if ratio is not None and (type(ratio) not in (int,float) or not 0<=ratio<=1 or not math.isfinite(ratio)):
+    if ratio is not None and (type(ratio) not in (int,float) or not 0<=ratio<=1):
         raise ValueError('受疗者生命比例需要0–1的有限数值；未指定时保持未知，不能使用自身生命或缺失生命代替。')
     # Explicit ratio reference uses the native double->Q32.32 conversion:
     # multiply by2**32, then truncation toward zero. Actual hp/maxHp uses
@@ -60,9 +60,14 @@ def attach_result(result,ref):
     skill=result['estimate']['skill']
     fields=('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps')
     result['known_healing_subtotals']={key:skill.get(key) for key in fields}
-    affected=any(skill.get(key) not in (None,0) for key in fields) or result.get('total_healing') not in (None,0)
-    for key in fields:
-        if skill.get(key) not in (None,0):skill[key]=None
-    if result.get('total_healing') not in (None,0):result['total_healing']=None
+    affected=False
+    for key,value in result['known_healing_subtotals'].items():
+        if value not in (None,0):
+            skill[key]=None
+            affected=True
+    total=result.get('total_healing')
+    if total not in (None,0):
+        result['total_healing']=None
+        affected=True
     if affected:result['complete']=result['estimate']['complete']=False
     notes.append('未指定受疗者生命比例；已证治疗小计不含该模组的条件15%增强，完整治疗总量与周期HPS保持未知。自然生命回复沿独立属性路径，未乘该治疗倍率。')
