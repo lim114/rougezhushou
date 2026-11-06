@@ -108,7 +108,6 @@ class CurrentCriticalRewardDialog(QDialog):
 
 
 def make_event_dialog(row, parent=None):
-    if type(row) is not dict or type(row.get('item_id')) is not str: return None
     fresh = model.reference('relics', row['item_id'])
     if fresh is None or not any(row == r for r in fresh['rows']): return None
     return CurrentCriticalRewardDialog(row['item_id'], parent)

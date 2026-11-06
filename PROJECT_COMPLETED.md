@@ -5160,3 +5160,7 @@ D155整改、D156保留复核完成，12项定向通过。回执：verification/
 ## 维护：具名奖励复用点击时已核验来源（2026-11-06）
 
 D153完成，31项定向通过；D319另列待审。回执：verification/maintenance/code-constraints-named-source-reuse-review-20261106/summary.json。不增加功能节数。
+
+## 维护：关键奖励工厂契约与目标身份复核（2026-11-06）
+
+D160整改、D162保留复核完成，7项定向通过。回执：verification/maintenance/code-constraints-critical-factory-review-20261106/summary.json。不增加功能节数。

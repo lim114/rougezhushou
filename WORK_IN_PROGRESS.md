@@ -1,3 +1,7 @@
+## 当前断点：关键奖励工厂契约与目标身份复核（2026-11-06）
+
+D160/D162完成，7项定向通过；原280组剩225组。D319仍待答复；D161、其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-critical-factory-review-20261106/summary.json。
+
 ## 当前断点：具名奖励复用点击时已核验来源（2026-11-06）
 
 D153完成，31项定向通过；原280组剩227组。D319已提问等待答复，未删除其分支。其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-named-source-reuse-review-20261106/summary.json。
