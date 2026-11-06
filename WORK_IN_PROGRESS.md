@@ -1,3 +1,7 @@
+## 当前断点：仪式模型完整调用契约与来源保护核对（2026-11-06）
+
+模型完整阅读及实际入口核对，D214—D217待审，共180组；无新普通冗余，源码未改。复用第107批相同源码证据，不重启窗口。回执verification/maintenance/code-constraints-ritual-model-contract-review-20261106/summary.json；继续视图层及其它模块。
+
 ## 当前断点：沙地模型复用条件清单并内联单次判断（2026-11-06）
 
 条件清单复用、单次_any内联；17定向通过、2592对照一致，窗口更新。D210—D213待审，共176组；整模块47不变。回执verification/maintenance/code-constraints-sand-condition-reuse-20261106/summary.json；继续仪式模型和其它模块。

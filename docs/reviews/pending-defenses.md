@@ -204,3 +204,8 @@
 | D211 | 同packet固定清单摘要/schema/版本/成员、文件摘要及当前原件对照 | 来源变化或错版时拒绝结果，已有values复用校验字节 | 建议保留来源身份职责并核对各层必要性；替代信任快照。原样待审 |
 | D212 | 同packet相对路径、ROOT范围、文件/父目录链接拒绝 | 阻止越界及链接资料，也限制链接部署 | 建议保留或另定部署范围；替代扩大路径读取。原样待审 |
 | D213 | current_sand_reference.reference/locate/choice_reference的非字符串参数返回None | 内部类型错误静默变成无资料/无选项 | 建议明确入口契约后使内部类型错误暴露；替代保留原始查询接口。合法None选择、非本事件/非本场景成员仍是正常无匹配，不包含在此项。原样待审 |
+
+| D214 | current_ritual_reference.packet统一捕获OSError/ValueError/KeyError/TypeError/AttributeError/RecursionError | 文件问题与内部缺陷统一显示无资料 | 建议收窄实际文件/解析错误，内部缺陷暴露；替代保持整段捕获。原样待审 |
+| D215 | 同packet固定清单摘要/schema/版本/成员、文件摘要及四类当前原件比较 | 错版/漂移资料拒绝返回；DATA已使用校验后的values字节 | 建议保留来源身份职责并核对重复层；替代信任固定资料。原样待审 |
+| D216 | 同packet相对路径、ROOT范围及文件/父目录符号链接拒绝 | 越界/链接资料不读，也限制链接部署 | 建议保留或另定部署范围；替代扩大读取路径。原样待审 |
+| D217 | current_ritual_reference.reference/locate/choice_reference非字符串参数返回None | 内部类型错误变成无资料或未选择 | 建议确认入口后使错误类型显露，或保留原始查询接口。合法None选择、材料多匹配和非本场景成员属于正常无匹配，不含在本项。原样待审 |

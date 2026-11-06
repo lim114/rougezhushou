@@ -1,3 +1,7 @@
+## 维护：仪式模型审查记录（2026-11-06）
+
+模型及入口核对已记录，保护仍待审核，未计整模块完成。[回执](verification/maintenance/code-constraints-ritual-model-contract-review-20261106/README.md)。
+
 ## 维护：沙地条件复用（2026-11-06）
 
 重复条件计算消除，单次三态判断内联，17定向与2592对照通过；模型仍待保护审核。[回执](verification/maintenance/code-constraints-sand-condition-reuse-20261106/README.md)。
