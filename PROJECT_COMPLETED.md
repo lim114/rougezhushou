@@ -1,3 +1,7 @@
+## 维护：主计算共享受疗培养（2026-11-05）
+
+主计算向受疗资料传递已选择模组及培养，扫描2→1；原查询接口保持。43项定向，513结果/54错误/1608天赋选择对照一致；仅本路径完成。[回执](verification/maintenance/code-constraints-combat-recipient-preparation-20261105/README.md)。
+
 ## 维护：追加观察一次验证并取消无用计算（2026-11-05）
 
 输入一次验证，成功才更新声明，不执行丢弃的数值诊断。19项定向、75追加及183普通报告对照；界面普通规则审完，异常出口待审。[回执](verification/maintenance/code-constraints-recipient-append-validation-20261105/README.md)。

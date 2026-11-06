@@ -20,6 +20,7 @@ def selected_trait(profile,scenario,*,cultivation=None):
         if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
     else:
         module,elite,level,stage=cultivation
+        if module is None or module['id']!=identity:return None
     expected=prefix+'_equip_1_'+str(stage)+'_p1'
     for part in module['levels'][stage-1]['parts']:
         if part.get('isToken') or part.get('target')!='TRAIT' or part.get('resKey')!=expected:continue
@@ -34,8 +35,8 @@ def selected_trait(profile,scenario,*,cultivation=None):
                     'comparison':comparison,'template':template}
     return None
 
-def reference(profile,scenario):
-    trait=selected_trait(profile,scenario)
+def reference(profile,scenario,*,cultivation=None):
+    trait=selected_trait(profile,scenario,cultivation=cultivation)
     if trait is None:return None
     ratio=scenario.get(FIELD)
     if ratio is not None and (type(ratio) not in (int,float) or not 0<=ratio<=1):

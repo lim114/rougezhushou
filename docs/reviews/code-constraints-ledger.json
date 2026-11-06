@@ -855,12 +855,12 @@
     },
     {
       "file": "rouge/operator_engine.py",
-      "sha256": "30473d46d1fccb5db5fa5f50f3cc0618bb885d3998c12bfb8944680aa65bb1f0",
-      "rule1": "mei_pair_contract_consumed_at_combat_output",
-      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
-      "rule3": "D135_unchanged",
+      "sha256": "17018ae23d12e7e83828e9735fb9d4847f002fa6440d1eacf682f6c9880c9fdd",
+      "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
+      "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
+      "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
       "full_module_review_complete": false,
-      "evidence": "Only Mei reference call unpacks the internal pair; output receives the same parameter dictionary. Prior whole-engine partial status remains; no other engine code edited.",
+      "evidence": "Combat and healing references share one equipment/cultivation selection. Public selected_talents keeps its two-result API; private core returns prepared cultivation too. Standalone trait queries retain their own entry. Prepared trait branch only selects applicable module identity; no repeated elite/level/unlock/stage validation. Public damage entry and prepared calibration/comparison callers obtain validated cultivation before Combat. Native ratio entry still supplies its validated tuple. Existing fallback defaults and source-identity defenses untouched. Whole engine not certified; outer attribute/talent preparation and independent trait stage-type contract remain for review.",
       "ordinary_rules_review_complete": false
     },
     {
@@ -1234,23 +1234,23 @@
     },
     {
       "file": "rouge/susuro_healing.py",
-      "sha256": "d6c36bafbd416855428cb795b3be15e71743f3e8947bb4c43ed4219d18d88350",
-      "rule1": "susuro_native_cultivation_reuse_reviewed",
-      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
-      "rule3": "D144_D145_D146_D147_unchanged",
+      "sha256": "f9c12fd8e3a5dce00c6159b903f7eca748ce22e5a9886ecbae631116db8cbdc6",
+      "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
+      "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
+      "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "selected_trait accepts already validated module/elite/level/stage from native-ratio entry. Its independent path retains prior defaults and gates; source/candidate checks remain unchanged. Native entry avoids second lookup/unlock check. Combat selected_talents and independent stage type contract still need review."
+      "evidence": "Combat and healing references share one equipment/cultivation selection. Public selected_talents keeps its two-result API; private core returns prepared cultivation too. Standalone trait queries retain their own entry. Prepared trait branch only selects applicable module identity; no repeated elite/level/unlock/stage validation. Public damage entry and prepared calibration/comparison callers obtain validated cultivation before Combat. Native ratio entry still supplies its validated tuple. Existing fallback defaults and source-identity defenses untouched. Whole engine not certified; outer attribute/talent preparation and independent trait stage-type contract remain for review."
     },
     {
       "file": "rouge/guardian_healing.py",
-      "sha256": "7ddc60cd3a88cfb839aafb25a0b973137abdf12c86951e37e3aae5987b748eda",
-      "rule1": "guardian_native_cultivation_reuse_reviewed",
-      "rule2": "shared_prepared_core_has_two_product_callers_no_single_use_wrapper",
-      "rule3": "D144_D145_D146_D147_unchanged",
+      "sha256": "b1c3f99ca4f55c751baccb87b2658f5ef37a236a4831ec9a4e6bfe77f0c716d1",
+      "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
+      "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
+      "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Gumi/Shu same prepared cultivation path; binding selection and LT/LE source checks untouched. Independent UI and Combat paths remain available. Ordinary cross-Combat preparation and stage type behavior not certified complete."
+      "evidence": "Combat and healing references share one equipment/cultivation selection. Public selected_talents keeps its two-result API; private core returns prepared cultivation too. Standalone trait queries retain their own entry. Prepared trait branch only selects applicable module identity; no repeated elite/level/unlock/stage validation. Public damage entry and prepared calibration/comparison callers obtain validated cultivation before Combat. Native ratio entry still supplies its validated tuple. Existing fallback defaults and source-identity defenses untouched. Whole engine not certified; outer attribute/talent preparation and independent trait stage-type contract remain for review."
     },
     {
       "file": "rouge/relic_healing_factors.py",

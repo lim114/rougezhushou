@@ -12,6 +12,12 @@ from .timing import AttackTimeline,charge_seconds,mixed_charge_seconds,frame_tim
 
 
 def selected_talents(profile, scenario):
+    talents,parts,_=_selected_talent_reference(profile,scenario)
+    return talents,parts
+
+
+def _selected_talent_reference(profile, scenario):
+    """Share the selected equipment and cultivation with Combat's trait consumers."""
     elite=scenario.get('elite',2)
     level=scenario.get('level') or profile['phases'][elite]['max_level']
     potential=scenario.get('potential',1)-1
@@ -27,7 +33,9 @@ def selected_talents(profile, scenario):
         if candidates:talents[i]=candidates[-1]
     module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')),None)
     parts=[]
+    equipped=None
     if module and elite>=module['unlock_elite'] and level>=module['unlock_level']:
+        equipped=module
         parts=module['levels'][scenario['module_level']-1]['parts']
         from .gnosis_module_reference import selected_reference
         gnosis_reference=selected_reference(profile,module,scenario['module_level'],parts,talents.get(0),eligible)
@@ -69,7 +77,7 @@ def selected_talents(profile, scenario):
                     name=talents.get(index,{}).get('name')
                 talents[index]={'name':name,'description':talent.get('upgradeDescription'),
                     'values':{b['key']:b['value'] for b in talent['blackboard']}}
-    return list(talents.values()),parts
+    return list(talents.values()),parts,(equipped,elite,level,scenario.get('module_level',0))
 
 
 class Combat:
@@ -82,12 +90,12 @@ class Combat:
         from .relics import effective_skill
         self.skill=effective_skill(self.skill,scenario)
         self.bb=self.skill['values']
-        self.talents,self.module_parts=selected_talents(self.p,scenario)
+        self.talents,self.module_parts,cultivation=_selected_talent_reference(self.p,scenario)
         self.tv={t['name']:t['values'] for t in self.talents}
         from .susuro_healing import reference as susuro_healing_reference
-        self.susuro_module_healing_reference=susuro_healing_reference(self.p,scenario)
+        self.susuro_module_healing_reference=susuro_healing_reference(self.p,scenario,cultivation=cultivation)
         from .guardian_healing import reference as guardian_healing_reference
-        self.guardian_module_healing_reference=guardian_healing_reference(self.p,scenario)
+        self.guardian_module_healing_reference=guardian_healing_reference(self.p,scenario,cultivation=cultivation)
         self.gnosis_isw_a_reference=next((t['gnosis_isw_a_reference'] for t in self.talents
             if t.get('gnosis_isw_a_reference')),None)
         self.mizuki_amb_y_reference=next((t for t in self.talents
