@@ -10,7 +10,7 @@ class CurrentUnattendedShopPanel(DocumentedEventFlowPanel):
         super().__init__('shop',target.get('scene_id')if target else None,parent,reference_model=model, defer_initial_refresh=True)
         row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：源石锭'));self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);row.addWidget(self.gold);row.addWidget(QLabel('四叶草化石'));self.fossil=QComboBox()
         for label,value in(('尚未确认',None),('持有',True),('未持有',False)):self.fossil.addItem(label,value)
-        row.addWidget(self.fossil);self.layout().insertLayout(1,row);self.gold.valueChanged.connect(self._condition_changed);self.fossil.currentIndexChanged.connect(self._condition_changed)
+        row.addWidget(self.fossil);self.layout().insertLayout(1,row);self.gold.valueChanged.connect(self.refresh_reference);self.fossil.currentIndexChanged.connect(self.refresh_reference)
         self.gold.setAccessibleName('本页开桶源石锭对照');self.fossil.setAccessibleName('本页四叶草化石持有对照');row=QHBoxLayout();self.followup_buttons=[QPushButton(),QPushButton()]
         for button in self.followup_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_documented_followup(b.property('sceneId')))
         self.layout().insertLayout(4,row)
@@ -18,18 +18,16 @@ class CurrentUnattendedShopPanel(DocumentedEventFlowPanel):
         if target and target.get('choice_id'):
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==target['choice_id']:self.choices.setCurrentRow(i);break
-        self._sync_followups()
     def _fresh_reference(self):
         gold=self.gold.value()
         return model.reference('shop', None if gold<0 else gold, self.fossil.currentData(), self.requested_original_id)
-    def _condition_changed(self,*_):self.refresh_reference()
-    def _sync_followups(self):
-        c=model.choice_reference(self.result,self.scene_id,self.choice_id)if self.result else None;ids=c['next_scene_ids']if c and len(c['next_scene_ids'])>1 else[]
+    def _sync_followups(self,c):
+        ids=c['next_scene_ids']if c and len(c['next_scene_ids'])>1 else[]
         for i,button in enumerate(self.followup_buttons):
             active=i<len(ids);button.setVisible(active);button.setEnabled(active and c['listed_condition_match']is not False);button.setProperty('sceneId',ids[i]if active else None)
             if active:button.setText('查看'+model.scene_label(self.result,ids[i]))
-    def _choice_changed(self,item,*args,preserve=False):super()._choice_changed(item,*args,preserve=preserve);self._sync_followups()
-    def clear_reference(self):self.requested_original_id=None;super().clear_reference();self._sync_followups()
+    def _choice_changed(self,item,*args,preserve=False):choice=super()._choice_changed(item,*args,preserve=preserve);self._sync_followups(choice)
+    def clear_reference(self):self.requested_original_id=None;super().clear_reference();self._sync_followups(None)
     def open_documented_followup(self,sid):
         if not self._recheck()or not model.followup_allowed(self.result,self.scene_id,self.choice_id,sid):return False
         self.scene.setCurrentIndex(self.scene.findData(sid));return True
