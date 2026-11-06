@@ -1883,6 +1883,16 @@
       "rule2": "No redundant single-use wrappers found; other models read as caller context only",
       "rule3": "D255_D259_pending",
       "evidence": "Entire model read; 5 final targeted tests pass; 113 fixed levels/1167 old-new directory queries equal; no name cache retained because decoder calls did not decrease."
+    },
+    {
+      "file": "rouge/current_map_position_view.py",
+      "sha256": "10c0e744f670e6faa920bb16532063803aed2e38c46ebe32389e062ca2a33fb3",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
+      "rule2": "Two identical combo callbacks merged into one shared handler",
+      "rule3": "D260_D262_pending",
+      "evidence": "Entire module read. 13 map/terrain view tests plus 2 marker tests pass. Fixed map old/new selected output equal and terrain decoder calls7to2; not general latency proof."
     }
   ]
 }

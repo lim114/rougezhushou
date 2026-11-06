@@ -1,3 +1,7 @@
+## 维护：地图选择与地形复用（2026-11-06）
+
+三处普通重复已整改，15定向通过；模块未销项。[回执](verification/maintenance/code-constraints-map-selection-review-20261106/README.md)。
+
 ## 维护：地图目录标记查询复用（2026-11-06）
 
 已整改重复扫描，更新旧文案检查并保留完整说明断言；模块未销项。[回执](verification/maintenance/code-constraints-map-membership-review-20261106/README.md)。

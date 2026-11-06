@@ -262,3 +262,7 @@
 | D257 | packet地形证据、清单摘要/schema/version/文件摘要及关卡集合核对 | 缺证/错版/损坏拒绝生成地图资料 | 建议保留来源职责，核对上下游重复；替代信任上游。原样待审 |
 | D258 | stage_reference图片存在、矩形网格和索引类型范围、标记映射冲突及完整几何/图片绑定 | 错图/坏网格/歧义映射拒绝展示 | 建议保留有效映射条件；替代信任固定资料。图片随后界面还会读取，重复读取未整改 |
 | D259 | stage_reference/cell_reference/terrain_locations入口类型、空结果与范围检查 | 错调用不生成位置；display_cell之后cell_reference再次核对范围 | 建议确定各公开入口并复用已核验格子；替代各入口独立校验。原样待审，普通跨层重复未销项 |
+
+| D260 | CurrentMapPositionPanel.refresh_reference资料/图片缺失清空返回False；_render图片失败清空 | 刷新失败不沿用旧位置，正常无选择不属于此项 | 建议保留失效撤下行为；替代显示旧资料但须明确过期。本项不授权模型读取校验，原样待审 |
+| D261 | CurrentOriginalCenters.set_image中PNG解码失败时清空point/markers并返回False | 损坏字节不会留下旧标记；无图是正常生命周期 | 建议保留解码失败处理；替代显式抛出解码错误。原样待审 |
+| D262 | CurrentMapPositionPanel._render中的result非空保护与下游cell_text依赖非空的契约 | 三条内部调用均已有有效result，该局部判断不能独立支持无资料绘制 | 建议删除无效局部兜底、保留入口；替代明确完整支持无资料绘制。原样待审；select_cell与_render重复cell_reference仍归D259 |

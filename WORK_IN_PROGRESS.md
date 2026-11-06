@@ -1,3 +1,7 @@
+## 当前断点：地图选择入口合并与已解析地形复用（2026-11-06）
+
+共享选择入口、复用格子地形和坐标键；15定向通过，单次选格解析算例7→2。D260—D262待审，共225组；D259重复格子解析仍未处理。回执verification/maintenance/code-constraints-map-selection-review-20261106/summary.json。
+
 ## 当前断点：地图位置模型回顾与标记归属查询复用（2026-11-06）
 
 去除逐格重复标记扫描；最终5定向通过，113份关卡/1167查询一致。保留初轮旧文案失败证据。D255—D259待审，共222组。回执verification/maintenance/code-constraints-map-membership-review-20261106/summary.json。

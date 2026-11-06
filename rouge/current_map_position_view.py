@@ -111,9 +111,9 @@ class CurrentMapPositionPanel(QWidget):
         terrain_bar=QHBoxLayout();self.terrain_kind=QComboBox();self.terrain_kind.setAccessibleName('本图地形类型');self.terrain_cells=QComboBox();self.terrain_cells.setAccessibleName('按地形定位格子');terrain_bar.addWidget(QLabel('查找地形'));terrain_bar.addWidget(self.terrain_kind);terrain_bar.addWidget(self.terrain_cells,1);layout.addLayout(terrain_bar)
         split=self.map_split=QSplitter();self._map_sizes={};self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);split.setSizes([500,650]);layout.addWidget(split,2)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'格子与位置说明');self.tabs.addTab(self.technical,'地形与核对依据');layout.addWidget(self.tabs,1)
-        self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(self._combo_selected);self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference()
+        self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(lambda _:self._combo_selected(self.combo));self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference()
         self.original.markerSelected.connect(lambda key:self.combo.setCurrentIndex(self.combo.findData(key)));self.marker_toggle.toggled.connect(self.original.set_markers_visible)
-        self.terrain_kind.currentIndexChanged.connect(self._terrain_changed);self.terrain_cells.currentIndexChanged.connect(self._terrain_cell_selected)
+        self.terrain_kind.currentIndexChanged.connect(self._terrain_changed);self.terrain_cells.currentIndexChanged.connect(lambda _:self._combo_selected(self.terrain_cells))
     def clear_reference(self):
         for combo in(self.terrain_kind,self.terrain_cells):
             blocked=combo.blockSignals(True);combo.clear();combo.setEnabled(False);combo.blockSignals(blocked)
@@ -138,8 +138,8 @@ class CurrentMapPositionPanel(QWidget):
         if selected is None:self.selected=None;self._render(preserve=keep)
         else:self.select_cell(*selected,preserve=keep)
         return self.result is not None
-    def _combo_selected(self,*_):
-        value=self.combo.currentData()
+    def _combo_selected(self,combo):
+        value=combo.currentData()
         if value is not None:self.select_cell(*(int(x)for x in value.split(':')))
     def _populate_terrain_cells(self):
         key=self.terrain_kind.currentData();locations=model.terrain_locations(self.result,key)if key is not None else[]
@@ -149,9 +149,6 @@ class CurrentMapPositionPanel(QWidget):
     def _terrain_changed(self,*_):
         if self.result is None:return
         self._populate_terrain_cells();self.selected=None;self._render(preserve=False)
-    def _terrain_cell_selected(self,*_):
-        value=self.terrain_cells.currentData()
-        if value is not None:self.select_cell(*(int(part)for part in value.split(':')))
     def select_cell(self,row,col,*,preserve=False):
         cell=model.cell_reference(self.result,row,col)
         if cell is None:return False
@@ -163,13 +160,13 @@ class CurrentMapPositionPanel(QWidget):
         cell=model.cell_reference(self.result,*self.selected)if self.selected is not None else None;self.grid.set_result(self.result,self.selected)
         markers=[]
         if self.result is not None:
-            from .current_terrain import terrain_info
             for i,p in enumerate(self.result['points'],1):
-                name=p['label']if p.get('kind')=='visible_map_symbol'else terrain_info(self.result['tiles'][self.result['map'][p['row']][p['col']]])['name']
+                name=p['label']if p.get('kind')=='visible_map_symbol'else self.grid.tile_infos[self.result['map'][p['row']][p['col']]]['name']
                 markers.append({'key':str(p['row'])+':'+str(p['col']),'point':p,'number':i,'label':f"{i} · {name} · 第{p['row']+1}行 第{p['col']+1}列"})
         if not self.original.set_image(self.image_raw,cell['point']if cell else None,markers=markers):self.clear_reference();return
-        blocked=self.combo.blockSignals(True);self.combo.setCurrentIndex(max(0,self.combo.findData(str(self.selected[0])+':'+str(self.selected[1])if self.selected is not None else None)));self.combo.blockSignals(blocked)
-        blocked=self.terrain_cells.blockSignals(True);value=str(self.selected[0])+':'+str(self.selected[1])if self.selected is not None else None;self.terrain_cells.setCurrentIndex(max(0,self.terrain_cells.findData(value)));self.terrain_cells.blockSignals(blocked)
+        value=str(self.selected[0])+':'+str(self.selected[1])if self.selected is not None else None
+        for combo in(self.combo,self.terrain_cells):
+            blocked=combo.blockSignals(True);combo.setCurrentIndex(max(0,combo.findData(value)));combo.blockSignals(blocked)
         full_text=model.cell_text(self.result,cell)
         replace_text(self.player,mechanism_copy(full_text,'')[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'reference':self.result,'selected_cell':cell}),preserve=preserve)
         if not preserve:self.tabs.setCurrentIndex(0)
