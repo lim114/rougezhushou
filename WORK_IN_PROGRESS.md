@@ -1,3 +1,7 @@
+## 当前断点：出怪候选两类关系共用动作核验（2026-11-06）
+
+D252完成，13定向通过；原280组完成111、剩169。D319/D320待审核及原窗口、既有缺口保留。回执verification/maintenance/code-constraints-candidate-queue-once-20261106/summary.json。
+
 ## 当前断点：地图位置资料错误边界与根路径复用（2026-11-06）
 
 D255/D256完成，14定向通过；原280组完成110、剩170。D319/D320待审，旧窗口及既有缺口保留。回执verification/maintenance/code-constraints-map-packet-boundary-20261106/summary.json。

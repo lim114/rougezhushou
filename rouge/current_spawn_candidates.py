@@ -110,14 +110,18 @@ def _build(current, characters):
                          f"条件分支{queue['branch_index']} · 第{queue['phase']}段"),
                  'kind': queue['kind'], 'queue': queue}
         scopes.append(scope)
+        verified_actions = []
+        for index, raw in enumerate(raw_queue['actions']):
+            selector = queue['source_selector'] + f'.actions[{index}]'
+            action = by_selector.get(selector)
+            if action is None or not _same(action['raw'], raw) or not _same(action['queue'], queue):
+                raise ValueError('Current action does not match original queue')
+            consumed.add(selector)
+            verified_actions.append(action)
         for kind, field in FIELDS.items():
             grouped = defaultdict(list)
-            for index, raw in enumerate(raw_queue['actions']):
-                selector = queue['source_selector'] + f'.actions[{index}]'
-                action = by_selector.get(selector)
-                if action is None or not _same(action['raw'], raw) or not _same(action['queue'], queue):
-                    raise ValueError('Current action does not match original queue')
-                consumed.add(selector)
+            for action in verified_actions:
+                raw = action['raw']
                 key = raw.get(field)
                 if type(key) is str and key:
                     grouped[key].append(action)

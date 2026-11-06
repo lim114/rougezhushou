@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "出怪候选两类关系共用动作核验",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "89bcd36416433eaa89187ab66967dba653bb72eb",
+  "changed_sources": [
+    "rouge/current_spawn_candidates.py",
+    "tests/test_candidate_queue_validation_once.py"
+  ],
+  "source_sha256": {
+    "rouge/current_spawn_candidates.py": "3d4a5fa3752f87e251395e29df713b0d8607827e9f8f29de8e0f776eb2bbaffb",
+    "tests/test_candidate_queue_validation_once.py": "c3c994bdff2f68f702adad044b8cbc8869ee66376280cee13231f1b03b61c2ed"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D252"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 13,
+    "tests_failed": 0,
+    "tests_run": 13,
+    "command": "python -m unittest tests.test_candidate_queue_validation_once tests.test_current_spawn_candidates_355",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-208",
+    "old_source_regression": "2 new tests:1 failure on original source (raw/queue each compared twice); final13 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D252 approved reuse of same snapshot. Actions and queue verified once before group/package loops, no helper/catch added.",
+    "requirements": "Group/package ordering and members unchanged; duplicate selectors, raw/queue mismatch, key types and consumed coverage retained. Existing module scope test compares184 fixed configurations."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}
