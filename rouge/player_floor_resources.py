@@ -14,8 +14,9 @@ def record_snapshot(state,observed,at,*,history_start=None):
     from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
     values={};capacities={}
     raw=observed.get('resources');raw=raw if isinstance(raw,dict)else{}
+    accepted_resources=state.get('resources',{})
     for key,record in raw.items():
-        accepted=state.get('resources',{}).get(key)or{}
+        accepted=accepted_resources.get(key)or{}
         if isinstance(record,dict)and numeric_read(record.get('value'))and accepted.get('value')==record['value']and accepted.get('captured_at')==at:
             values[key]=record['value']
             capacity=read_capacity(record.get('capacity'),record['value'])
@@ -39,12 +40,14 @@ def snapshots(state):
     result=[]
     for index,event in enumerate(state.get('history',[])):
         if not isinstance(event,dict)or event.get('kind')!='floor_resources_read'or event.get('source')!='same_frame_zone_and_resources':continue
-        if not isinstance(event.get('zone_id'),str)or event.get('zone_id')not in config_data()['zones']or not isinstance(event.get('values'),dict):continue
-        values={k:v for k,v in event['values'].items()if isinstance(k,str)and numeric_read(v)}
+        zone_id=event.get('zone_id');raw_values=event.get('values')
+        if not isinstance(zone_id,str)or zone_id not in config_data()['zones']or not isinstance(raw_values,dict):continue
+        values={k:v for k,v in raw_values.items()if isinstance(k,str)and numeric_read(v)}
         if values:
             row={**deepcopy(event),'values':values,'index':index}
             if 'capacities'in event:
-                raw=event['capacities']if isinstance(event['capacities'],dict)else{}
+                raw=event['capacities']
+                if not isinstance(raw,dict):raw={}
                 row['capacities']={k:c for k,v in values.items()if k in RESOURCE_CAPACITY_LABELS and (c:=read_capacity(raw.get(k),v))is not None}
             result.append(row)
     return result

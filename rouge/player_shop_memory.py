@@ -15,11 +15,14 @@ def qualified(snapshot,*,items=None):
     if not isinstance(rows,list)or not rows:return None
     result=[];seen=set()
     for row in rows:
-        if not isinstance(row,dict)or not isinstance(row.get('id'),str)or not isinstance(row.get('name'),str):return None
-        item=items.get(row['id'])
-        if not item or canonical(item['name'])!=canonical(row['name'])or row['id']in seen:return None
-        seen.add(row['id']);record={'id':row['id'],'name':item['name']}
-        if type(row.get('price'))is int and row['price']>=0:record['price']=row['price']
+        if not isinstance(row,dict):return None
+        identity=row.get('id');name=row.get('name')
+        if not isinstance(identity,str)or not isinstance(name,str):return None
+        item=items.get(identity)
+        if not item or canonical(item['name'])!=canonical(name)or identity in seen:return None
+        seen.add(identity);record={'id':identity,'name':item['name']}
+        price=row.get('price')
+        if type(price)is int and price>=0:record['price']=price
         result.append(record)
     return result
 
@@ -142,7 +145,6 @@ class ShopMemoryPanel(QWidget):
         public=packet();item=public['current']['details']['items'].get(identity)if public else None
         if item is None:return
         source=self.source_panel
-        if source is not None:source.reload_sources()
         self.source_card.dismiss()
         self.source_card.install({'id':identity,'name':item['name'],'icon':item.get('iconId')},source.version.currentData()if source else None,source.source_index if source else None,source.source_signature if source else None)
         self.source_card.show()

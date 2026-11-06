@@ -481,11 +481,11 @@
     },
     {
       "file": "rouge/player_floor_resources.py",
-      "sha256": "3c14fe09e96e351dd213fc603c9275ab6ce9cc242cd1c699b764047ed75601b1",
-      "rule1": "selected_paths_fixed_cross_entry_followup_remaining",
+      "sha256": "00d2ed62a7d95ad0b0d2e6701cdf236514f709ca926f50f13c669f7317b27b29",
+      "rule1": "snapshot_fields_reused_remaining_paths_pending",
       "rule2": "shared_domain_helpers_and_callbacks_identified",
       "rule3": "approved_scope_partially_implemented",
-      "evidence": "D70 resource parsing / D74 initialization completed; 23 targeted tests. Remaining cross-entry qualification and identity work not certified.",
+      "evidence": "D73/D75 qualification preserved and same-call values reused; duplicate shop source reload removed. 39 targeted tests; whole-module review not certified.",
       "decisions": [
         "D73",
         "D74"
@@ -493,11 +493,11 @@
     },
     {
       "file": "rouge/player_shop_memory.py",
-      "sha256": "d745185a6a31a6a1bd8591f432e8997d54daaf4d69fb1948bf3d3d8139ebc4be",
-      "rule1": "selected_snapshot_and_tooltip_read_once_qualified_keys_accessed_directly",
+      "sha256": "de85fbe61fbd0d769d6855db884548f040b5dca9dc3cfaf4f13c0151edfd3acf",
+      "rule1": "snapshot_fields_reused_remaining_paths_pending",
       "rule2": "shared_domain_operations_and_qt_callbacks_retained_no_new_wrapper",
-      "rule3": "pending_user_review",
-      "evidence": "Reused one selected snapshot in show_snapshot and one tooltip in selected. qualified retains its entry field validation; established id/name keys use direct access. All predicates/catches unchanged. Traced open_source -> refresh -> InventoryPanel.reload_sources: second reload retained as D78 pending. Helpers have shared callers or Qt signal/lifecycle roles. Not full-module certification.",
+      "rule3": "approved_scope_partially_implemented",
+      "evidence": "D73/D75 qualification preserved and same-call values reused; duplicate shop source reload removed. 39 targeted tests; whole-module review not certified.",
       "decisions": [
         "D75",
         "D76",

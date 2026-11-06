@@ -1,3 +1,7 @@
+## 当前断点：历史资源与商店来源重复读取清理（2026-11-06）
+
+D73/D75完成；39定向通过，268组已批准待落实。模块整体数量不变。回执verification/maintenance/code-constraints-history-snapshot-review-20261106/summary.json。
+
 ## 当前断点：统计明细身份入口复用（2026-11-06）
 
 D71完成；24定向通过，270组已批准待落实。跨入口归档资格核对继续。回执verification/maintenance/code-constraints-sample-binding-review-20261106/summary.json。
