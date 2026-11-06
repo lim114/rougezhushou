@@ -1,3 +1,7 @@
+## 当前断点：共享地图首次显示只加载一次（2026-11-06）
+
+D280/D284部分推进，最终11项通过；旧共享入口新测试2项失败。现有窗口尺寸850/776断言旧源码同样失败，未计通过。原280组完成128、剩152不变。父级预读/verify链仍待整改。回执 verification/maintenance/code-constraints-shared-map-initial-load-20261106/summary.json。
+
 ## 当前断点：地图子窗口刷新复用已核验地图（2026-11-06）
 
 D280/D284部分推进，31项定向通过；独立刷新正常，父级异源结果对照保留。共享打开入口仍待整改。原280组完成128、剩152不变。回执 verification/maintenance/code-constraints-map-child-reuse-20261106/summary.json。

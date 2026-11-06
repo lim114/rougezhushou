@@ -999,7 +999,7 @@
     },
     {
       "file": "rouge/player_reference_links.py",
-      "sha256": "57e0fc2f259d55921e625a9e4407c164ce386e01bbc2c84734b2546fa992cc5c",
+      "sha256": "87cbf1a5f363403daf4012c6c4cc3cdf7f3c18c87e7ba17f43ccd946d0fe5ce0",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "reviewed_clear_no_low_probability_defense_identified",
@@ -1011,7 +1011,16 @@
         ],
         "receipt": "verification/maintenance/code-constraints-material-failure-review-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-shared-map-initial-load-20261106/summary.json",
+          "rule1": "Shared map defers initial load to prepare; no constructor plus prepare duplicate.",
+          "rule2": "Existing factory/refresh responsibilities retained.",
+          "rule3": "D280/D284 approved partial; failure rejection retained at final prepare boundary.",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_cannot_links.py",
@@ -2381,7 +2390,7 @@
     },
     {
       "file": "rouge/current_map_position_view.py",
-      "sha256": "bb6453c65773850a1af5f7106d6f80b637afe685cd110ef06038d4b948cb935b",
+      "sha256": "5d87eb4a39098e72e8e3701466922629923cdc94434c69b8b6ae61adf0307d2a",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
@@ -2404,6 +2413,13 @@
           "rule1": "Child refresh reuses parent validated map; independent refresh reads.",
           "rule2": "Existing refresh owns UI rendering.",
           "rule3": "Approved D280/D284 partial; full parent result comparison retained.",
+          "full_module_review_complete": false
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-shared-map-initial-load-20261106/summary.json",
+          "rule1": "Shared map defers initial load to prepare; no constructor plus prepare duplicate.",
+          "rule2": "Existing factory/refresh responsibilities retained.",
+          "rule3": "D280/D284 approved partial; failure rejection retained at final prepare boundary.",
           "full_module_review_complete": false
         }
       ]

@@ -104,14 +104,15 @@ class CurrentOriginalCenters(QWidget):
             p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setPen(QPen(QColor('#ffb4ee'),3));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(center,8,8);p.drawLine(center+QPointF(-13,0),center+QPointF(13,0));p.drawLine(center+QPointF(0,-13),center+QPointF(0,13))
 
 class CurrentMapPositionPanel(QWidget):
-    def __init__(self,stage_id,parent=None):
+    def __init__(self,stage_id,parent=None,*,defer_load=False):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None
         layout=QVBoxLayout(self);self.notice=QLabel('点选原图编号或格子，查看对应位置。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         bar=QHBoxLayout();self.combo=QComboBox();self.combo.setAccessibleName('已核对的格子中心');self.refresh_button=QPushButton('刷新位置');self.marker_toggle=QCheckBox('位置标记');self.marker_toggle.setChecked(True);bar.addWidget(self.combo,1);bar.addWidget(self.marker_toggle);bar.addWidget(self.refresh_button);layout.addLayout(bar)
         terrain_bar=QHBoxLayout();self.terrain_kind=QComboBox();self.terrain_kind.setAccessibleName('本图地形类型');self.terrain_cells=QComboBox();self.terrain_cells.setAccessibleName('按地形定位格子');terrain_bar.addWidget(QLabel('查找地形'));terrain_bar.addWidget(self.terrain_kind);terrain_bar.addWidget(self.terrain_cells,1);layout.addLayout(terrain_bar)
         split=self.map_split=QSplitter();self._map_sizes={};self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);split.setSizes([500,650]);layout.addWidget(split,2)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'格子与位置说明');self.tabs.addTab(self.technical,'地形与核对依据');layout.addWidget(self.tabs,1)
-        self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(lambda _:self._combo_selected(self.combo));self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference()
+        self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(lambda _:self._combo_selected(self.combo));self.refresh_button.clicked.connect(self.refresh_reference)
+        if not defer_load:self.refresh_reference()
         self.original.markerSelected.connect(lambda key:self.combo.setCurrentIndex(self.combo.findData(key)));self.marker_toggle.toggled.connect(self.original.set_markers_visible)
         self.terrain_kind.currentIndexChanged.connect(self._terrain_changed);self.terrain_cells.currentIndexChanged.connect(lambda _:self._combo_selected(self.terrain_cells))
     def clear_reference(self):

@@ -125,10 +125,7 @@ def open_fixed_map(panel, stage_id, *, context, verify):
     def create(owner):
         from .current_map_position_view import CurrentMapPositionPanel
         from .player_map_reader import REFERENCE_STYLE
-        reader = CurrentMapPositionPanel(stage_id)
-        if reader.result is None:
-            reader.deleteLater()
-            return None
+        reader = CurrentMapPositionPanel(stage_id, defer_load=True)
         page = ToolPage('固定地图 · 地形与格子', reader, owner,
                         object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
         page.panel = reader

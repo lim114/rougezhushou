@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "共享地图首次显示只加载一次",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "610ec8942bf0e0e12bebe84b468dea0415c2ad7c",
+  "changed_sources": [
+    "rouge/current_map_position_view.py",
+    "rouge/player_reference_links.py",
+    "tests/test_shared_map_initial_load.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position_view.py": "5d87eb4a39098e72e8e3701466922629923cdc94434c69b8b6ae61adf0307d2a",
+    "rouge/player_reference_links.py": "87cbf1a5f363403daf4012c6c4cc3cdf7f3c18c87e7ba17f43ccd946d0fe5ce0",
+    "tests/test_shared_map_initial_load.py": "3e26b0ab2b74280fff4e73659ad55a14e1b19570347c58fddfb7c14d4b824a29"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 11,
+    "tests_passed": 11,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_shared_map_initial_load tests.test_current_map_position_view_319",
+    "local_evidence": ".local/code-constraints-review-227",
+    "old_source_regression": "Old shared entry reproduces2 failures among new3 tests.",
+    "prior_attempt": "17 checks:13 passed,3 new fixture errors (missing owner.reference_window, corrected),1 window width failure (776 vs850).",
+    "existing_failure": "Unchanged original ReferenceWindow reproduces same width failure in isolated screen. Not counted passed.",
+    "reused_evidence": "Five other unchanged ReferenceWindow tests passed in initial run.",
+    "live_window": "Isolated Qt only; original test window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 partial: shared map factory defers loading to existing prepare, removing constructor read and early unavailable check duplicated by final refresh failure branch. Independent constructor keeps eager loading. No new catch/helper.",
+    "requirements": "Source.prepare precedes loading; failed refresh discards unshown linked page; first open and later reopen each load once. Independent map tests pass. Parent preflight/verify duplication still pending."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D280",
+    "D284"
+  ]
+}
