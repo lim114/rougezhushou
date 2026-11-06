@@ -1,3 +1,7 @@
+## 当前断点：埃尔伯特构造分支统一布尔类型拒绝（2026-11-06）
+
+D293完成，14项定向通过。原280组完成151、剩129；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-elbert-constructor-check-20261106/summary.json`。
+
 ## 当前断点：三类文献目标入口统一类型校验（2026-11-06）
 
 D287/D292完成，40项定向通过。原280组完成150、剩130；待审项及原测试窗口更新继续保留。回执 `verification/maintenance/code-constraints-document-target-entry-20261106/summary.json`。

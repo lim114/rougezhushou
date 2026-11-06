@@ -45,7 +45,7 @@ def source_rows(snapshot,inputs):
         for index,raw in enumerate(level['enemyDbRefs']):
             eid=raw['id']
             if eid not in PROFILES:continue
-            if type(raw['level'])is not int or raw['level']!=0 or type(raw['useDb'])is not bool:
+            if type(raw['level'])is not int or raw['level']!=0:
                 raise ValueError('Exact grade0 current binding required')
             definitions=inputs['enemy_definitions'][eid]
             exact=[r for r in definitions if r['level']==raw['level']]

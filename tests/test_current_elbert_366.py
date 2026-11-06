@@ -52,7 +52,7 @@ class CurrentElbert366Tests(unittest.TestCase):
         with self.assertRaises(ValueError):model.source_rows(self.current['version']['current'],changed)
 
     def test_unreviewed_constructor_or_boolean_grade_is_rejected(self):
-        for field,value in(('level',False),('useDb',1)):
+        for field,value in(('level',False),('useDb',1),('useDb',0),('useDb',None),('useDb','true'),('useDb',[]),('useDb',{})):
             changed=deepcopy(self.current['inputs']);key=self.reference('ro6_b_3')['stage']['level_key']
             changed['levels'][key]['enemyDbRefs'][0][field]=value
             with self.assertRaises(ValueError):model.source_rows(self.current['version']['current'],changed)
