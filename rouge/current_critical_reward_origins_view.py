@@ -39,7 +39,7 @@ class CurrentCriticalRewardPanel(QWidget):
             reader.setReadOnly(True); self.tabs.addTab(reader, label)
         layout.addWidget(self.tabs, 1)
         self.flow_button = QPushButton('查看准确领取选项的流程原文'); layout.addWidget(self.flow_button)
-        self.flow_button.clicked.connect(self.open_flow); self.refresh_reference()
+        self.flow_button.clicked.connect(self.open_flow); self._display_reference(initial)
 
     def values(self):
         values = {k: c.currentData() for k, c in self.controls.items()}
@@ -59,6 +59,9 @@ class CurrentCriticalRewardPanel(QWidget):
 
     def refresh_reference(self, *_):
         fresh = model.reference('relics', self.item_id, self.values())
+        return self._display_reference(fresh)
+
+    def _display_reference(self, fresh):
         if fresh is None: self._clear(); return False
         same = self.result is not None and self.result['source_identity'] == fresh['source_identity']
         if not same: self._close_flow()

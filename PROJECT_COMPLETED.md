@@ -1,3 +1,7 @@
+## 维护：关键藏品初始化去掉重复资料读取（2026-11-05）
+
+同一初始快照用于控件与显示，7定向通过，窗口已更新；该模块保护待审，未整模块销项。[回执](verification/maintenance/code-constraints-critical-initial-reference-20261105/README.md)。
+
 ## 维护：奖励资料两处控件读取去重（2026-11-05）
 
 列表选中项与源石锭重复读取已删，22项首轮及4项最终定向通过，测试窗口更新；模块尚未销项。[回执](verification/maintenance/code-constraints-reward-ui-read-review-20261105/README.md)。

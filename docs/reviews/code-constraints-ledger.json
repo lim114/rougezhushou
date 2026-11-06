@@ -1354,13 +1354,13 @@
     },
     {
       "file": "rouge/current_critical_reward_origins_view.py",
-      "sha256": "286d091078f5196c5e65f7ccf819bbe580c4b2079ee7c1189663ec2ca4962364",
-      "rule1": "reuse_current_control_value_once",
-      "rule2": "render_clear_close_values_have_multiple_real_callers",
-      "rule3": "D155_D162_pending_unchanged",
-      "ordinary_rules_review_complete": false,
+      "sha256": "c7b3241e8ffc517a85ae4fb7467e3fbe76a5949c88b23f8c2a217011a8e306ea",
+      "rule1": "one_initial_reference_for_layout_and_default_result_later_refresh_reads_current",
+      "rule2": "display_reference_shared_by_constructor_and_signal_refresh",
+      "rule3": "D160_D161_D162_pending_unchanged",
+      "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "Read both complete UI files and acquisition model/callers. Current item and nonnegative gold were each read twice; cached within the same synchronous operation, no new helper. Child source validation and null/error paths untouched. Gold hasattr selects a genuinely event-specific control; tests explicitly require its absence for other events. Remaining ordinary work: critical constructor reads the same source to choose controls and again to refresh; render/model selected-row scans; repeated close on failed child awaits decision on that protected path. Do not certify whole modules."
+      "evidence": "Whole UI file and real factory/parent consumers rechecked. Initial model call with None context equals all three generated default control contexts; tested full results. Constructor now uses that initial snapshot rather than a second full reference call. _display_reference is used by initialization and subsequent refresh, original body AST identical. Refresh remains the Qt signal entry and reads current context/source each time. Factory and open_flow AST unchanged; their pending defenses are not certified. Existing failed-first-read no longer immediately tries a second initialization read, unavailable display preserved until a later refresh. Model itself not certified. No additional ordinary duplication found in this UI module after this change; origins parent rendering remains separate unfinished work."
     }
   ]
 }
