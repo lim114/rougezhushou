@@ -106,3 +106,5 @@
 | D133 | `token_budget.token_budget`以stage.get("count_reference")读取每个对照阶段必定生成的字段 | 缺键会被视为无数量参考，改变范围文字，掩盖上游结果缺字段；正常None仍是无资料 | 建议改直接索引，保留正常None含义；替代允许历史/自建结果缺键。本模块当前只接收即时对照结果，未发现历史结果入口。尚未授权，原样保留，暂不整模块销项 |
 
 | D134 | `summons.duration_reference/module_reference/token_cost_reference/token_attributes`及`token_counts.token_count_reference`共五处用scenario.get("level") or 满级处理输入 | 缺少等级/None正常使用默认，但0、False、空字符串也静默当满级；直调资料函数会得到满级参考，当前主计算入口通常先拒绝这些值 | 建议明确仅缺省/None使用默认，其余由实际外部入口拒绝，已验证调用直接传培养；替代保留现有假值默认。五处统一待审，本批复用解析结果但保留原or语义；本机4类输入新旧结果相同 |
+
+| D135 | `operator_engine.selected_talents`使用scenario.get("level") or 满级 | 未给等级是正常默认，但0/False/空字符串也会按满级选择天赋；深海色实际直调四种值均与70级相同 | 建议仅缺省/None使用默认，已验证培养从入口传入；替代保留假值默认。此项独立于D134五处，未改、待审核，不推定主计算入口允许这些值 |

@@ -1,3 +1,7 @@
+## 维护：手动召唤物效果筛选收拢（2026-11-05）
+
+面板一次筛选，删除两处单次包装并保留Combat独立副本。76项定向、210完整/60对照一致。[回执](verification/maintenance/code-constraints-manual-token-selection-20261105/README.md)。
+
 ## 维护：对照与藏品培养复用（2026-11-05）
 
 上层已准备培养向属性/数量资料透传，分队效果循环外筛选；75项定向、120/60报告及7920资料结果一致。[回执](verification/maintenance/code-constraints-prepared-token-callers-20261105/README.md)。

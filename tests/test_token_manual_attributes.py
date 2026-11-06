@@ -2,8 +2,9 @@ import copy
 import unittest
 from unittest.mock import patch
 
-from rouge.damage import calculate_damage
-from rouge.summons import manual_token_effects,manual_token_stat_effects,module_rules
+from rouge.damage import calculate_damage, _prepare_damage
+from rouge.operator_engine import Combat
+from rouge.summons import module_rules
 
 OP='char_110_deepcl';TOKEN='token_10001_deepcl_tentac';MODULE='uniequip_002_deepcl'
 PERFUME='rogue_6_relic_legacy_91';POEM='rogue_6_relic_legacy_134'
@@ -85,10 +86,10 @@ class TokenManualAttributesTests(unittest.TestCase):
         damage={'kind':'damage_taken','value':.2,'damage_type':'physical'}
         blocked={**damage,'profession':'caster'}
         scope=effect('attack_pct',.5,token_ids=[TOKEN])
-        args={'effects':[damage,blocked,scope]}
-        self.assertEqual(manual_token_effects(args,TOKEN),[damage,scope])
-        self.assertEqual(manual_token_stat_effects(args,TOKEN),[scope])
-        self.assertEqual(manual_token_effects(args,'other'),[damage])
+        prepared=_prepare_damage(scenario(effects=[damage,blocked,scope]))
+        self.assertEqual(Combat(prepared[0],prepared[1]).token_effects,[damage,scope])
+        combined=calculate_damage(scenario(effects=[damage,scope]))
+        self.assertEqual(self.token(combined)['attack'],693)
         result=calculate_damage(scenario(effects=[damage]))
         base=calculate_damage(scenario())
         self.assertAlmostEqual(self.component(result)['per_hit'],self.component(base)['per_hit']*1.2)
@@ -113,8 +114,8 @@ class TokenManualAttributesTests(unittest.TestCase):
     def test_run_squad_or_rune_markers_are_not_counted_as_manual_ordinary_stats(self):
         rune=effect('hp_pct',.3,attribute_layer='relic_rune',formula_item='MULTIPLIER')
         squad=effect('hp_pct',.3,origin='run_squad')
-        self.assertEqual(manual_token_stat_effects({'effects':[rune,squad]},TOKEN),[])
-        self.assertEqual(len(manual_token_effects({'effects':[rune,squad]},TOKEN)),2)
+        result=calculate_damage(scenario(effects=[rune,squad]))
+        self.assertNotIn('手动输入',self.token(result)['modifier_sources'])
 
     def test_unverified_module_hp_layer_stays_unknown_in_panel_and_regeneration(self):
         rules=copy.deepcopy(module_rules());rules[MODULE]['hp_composition_verified']=False
@@ -142,7 +143,9 @@ class TokenManualAttributesTests(unittest.TestCase):
         args=scenario(effects=[effect('hp_pct',.5,token_ids=[TOKEN])],relic_ids=[PERFUME])
         original=copy.deepcopy(args);rules=copy.deepcopy(module_rules())
         a=calculate_damage(args);a['relic_token_stats'][0]['module_reference']['hp_pct']=99
-        selected=manual_token_effects(args,TOKEN);selected[0]['token_ids'].append('changed')
+        prepared=_prepare_damage(args)
+        selected=Combat(prepared[0],prepared[1]).token_effects;selected[0]['token_ids'].append('changed')
+        self.assertEqual(prepared[0]['effects'][0]['token_ids'],[TOKEN])
         self.assertEqual(args,original)
         self.assertEqual(module_rules(),rules)
         self.assertAlmostEqual(self.token(calculate_damage(args))['hp'],3326.4)

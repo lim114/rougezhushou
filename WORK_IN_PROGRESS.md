@@ -1,3 +1,7 @@
+## 当前断点：手动召唤物效果一次筛选（2026-11-05）
+
+删除manual_token_effects/manual_token_stat_effects两包装，真实Combat构造保留副本及全局增伤规则；藏品面板一次筛属性候选后按token_ids分配。76项定向，210完整/60对照与旧版一致，输入隔离保持；当前源码/测试/脚本无旧符号，窗口更新。D135天赋假值等级默认未改，98组待审；覆盖334/75/113/36不变。回执verification/maintenance/code-constraints-manual-token-selection-20261105/summary.json。下一批继续召唤物模块成员查询及其余计算链边界、完整前置报告；D128/129/130/134/135不动，普通未完成不转待审。维护不增节数。
+
 ## 当前断点：对照与藏品培养准备复用（2026-11-05）
 
 对照各阶段/各召唤物复用一份培养，藏品面板预读培养与分队效果；原独立入口及干员/召唤物等级区别保留，不复制假值等级默认。75项定向，120完整/60对照及1584条件7920资料一致，窗口更新。覆盖334/75/113/36、97组待审均不变。回执verification/maintenance/code-constraints-prepared-token-callers-20261105/summary.json。下一批处理summons下游模组成员查询、manual_token_effects重复过滤和其余调用边界，再继续完整前置报告；D128/129/130/134不动，普通未完成不转待审。维护不增节数。

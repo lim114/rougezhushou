@@ -855,12 +855,12 @@
     },
     {
       "file": "rouge/operator_engine.py",
-      "sha256": "cc41bced3e4ee2d7c9904018c3b69b6b5849a233db8bde4838f4ef9da06be330",
-      "rule1": "token_effects_classified_and_scoped_once_per_plan",
-      "rule2": "two_real_callers_share_one_token_reference_instead_of_two_overlapping_methods",
-      "rule3": "no_defense_changed_raise_and_exception_AST_unchanged",
+      "sha256": "9c0216fd3a71229e1c487543779c0ec7951fdeded749b6912203f4c698f757d4",
+      "rule1": "manual_effect_copy_at_owning_combat_entry",
+      "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
+      "rule3": "D135_selected_talents_false_level_default_recorded",
       "full_module_review_complete": false,
-      "evidence": "Only Combat token helper paths and their Deepcolor/Wisadel callers reviewed. All runtime/test/script usages searched. One partition supplies runes for token attributes and ordinary effects for HP/damage/speed. Original ordering, token selector, squad rune condition and result references preserved. No persistent cache or new helper layer. Whole operator engine remains unreviewed; pending defense list unchanged.",
+      "evidence": "Combat owns an isolated copy of manual token effects; actual per-token filtering remains in token_reference. Existing damage_taken global applicability, verified-rule exclusion, scope and profession/position checks preserved. Only constructor selection path edited. selected_talents original level-or-max coercion inspected and recorded D135 unchanged; this does not certify other talents or whole engine.",
       "ordinary_rules_review_complete": false
     },
     {
@@ -1124,23 +1124,23 @@
     },
     {
       "file": "rouge/summons.py",
-      "sha256": "60e335af42be27e91dba3e6ce3fba906fc13c4065b5dcdf51b15301cb0f39a5b",
-      "rule1": "token_attributes_accepts_resolved_operator_cultivation",
-      "rule2": "no_new_helper_prepared_input_used_by_product_callers",
+      "sha256": "d45b22b0f8408897aa04ddec9231a139136ee320f8526e7e9e652e87a38fd080",
+      "rule1": "removed_two_single_product_manual_selectors",
+      "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D128_D134_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Comparison and relic finalizer now provide the resolved operator pair to token attributes. Standalone path retains prior false-level fallback; prepared path uses the supplied pair and still caps only token interpolation level. No helper/catch added. Other module membership/manual effect caller boundaries remain partial."
+      "evidence": "manual_token_stat_effects had one product caller in relics.finish; manual_token_effects served it and Combat but its token_id variant was otherwise only used by tests. Inline the final stat-only predicate once in the relic finalizer; Combat keeps its distinct all-unit/global-damage predicate and deepcopy. Removed both wrappers and updated tests to actual calculation/Combat paths. Remaining module membership and reference paths remain partial."
     },
     {
       "file": "rouge/relics.py",
-      "sha256": "8c934d6c336a3faa4d9df452755072cc625c2db99e6bb483bbdd254ad73c6092",
-      "rule1": "token_finalizer_prepares_cultivation_and_squad_effects_once",
-      "rule2": "no_new_helper_prepared_input_used_by_product_callers",
+      "sha256": "21496795ae91e257cc7546ae3712df541d8d369694130bff72a3b6e0e8641723",
+      "rule1": "manual_stat_scope_filtered_once_then_per_token_ids",
+      "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D129_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Only token finalizer portion reviewed this batch. Nonempty token collection prepares one cultivation pair and invariant all-unit squad effects outside loop. Damage entry already validates cultivation; only missing/None level defaults here, not copied D134 false-level coercion. Per-token source filtering and result lists remain independent. Wider relic finalizer not certified."
+      "evidence": "Token finalizer selects ordinary manual attribute candidates once outside token loop, then filters actual token IDs. It no longer copies global damage/rune/squad effects merely to discard them. Selected input dictionaries are read only and do not escape into output; actual numeric panels are independent. Existing ordinary/rune layering and source labels unchanged. Wider relic logic remains partial."
     },
     {
       "file": "rouge/token_module_comparison.py",

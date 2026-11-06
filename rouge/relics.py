@@ -456,11 +456,15 @@ def finish(result,resolution,attributes,scenario):
     from .summons import module_reference,token_attributes,token_cost_reference
     tokens=profile.get('tokens',{})
     if tokens:
+        from .relic_attributes import is_attribute_rune
         elite=scenario.get('elite',2)
         level=scenario.get('level')
         cultivation=(elite,profile['phases'][elite]['max_level'] if level is None else level)
         run_effects=[e for e in scenario.get('_attribute_runes',[])+scenario.get('effects',[])
                     if e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
+        manual_stats=[e for e in scenario.get('effects',[]) if not e.get('_verified_rule') and
+            e.get('target_scope')=='all_units' and e.get('origin')!='run_squad' and
+            not is_attribute_rune(e) and e['kind'] in ('hp_pct','attack_pct','defense_pct','resistance_flat','attack_speed')]
     for tid,token in tokens.items():
         applied=[e for e in resolution['token_effects'] if tid in e.get('token_ids',[])]
         module=module_reference(profile,scenario,tid,cultivation=cultivation)
@@ -468,13 +472,11 @@ def finish(result,resolution,attributes,scenario):
         features=[r for r in rules if r.get('token_only') and tid in r.get('token_ids',[])]
         sources=(['模组'] if module or cost_module else [])+(['藏品'] if applied or cost_module and features else [])+(['分队'] if run_effects else [])
         applied+=run_effects
-        from .summons import manual_token_stat_effects
-        manual_effects=manual_token_stat_effects(scenario,tid)
+        manual_effects=[e for e in manual_stats if not e.get('token_ids') or tid in e['token_ids']]
         if manual_effects:
             applied+=manual_effects
             sources.append('手动输入')
         if not applied and not features and not module and not cost_module:continue
-        from .relic_attributes import is_attribute_rune
         runes=[]
         ordinary={kind:[] for kind in ('hp_pct','attack_pct','defense_pct','attack_speed',
                                        'deployment_cost_add','token_deploy_slot_free',

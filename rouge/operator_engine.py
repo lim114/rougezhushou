@@ -94,8 +94,10 @@ class Combat:
             if t.get('unresolved_module_ability')),None)
         self.effects=list(scenario.get('effects',[]))
         # Manual stat effects belong to the operator unless their unit scope is explicit.
-        from .summons import manual_token_effects
-        self.token_effects=manual_token_effects(scenario)
+        from copy import deepcopy
+        self.token_effects=[deepcopy(e) for e in scenario.get('effects',[]) if not e.get('_verified_rule') and
+            (e.get('target_scope')=='all_units' or
+             (e['kind']=='damage_taken' and not e.get('profession') and not e.get('position')))]
         self.token_effects.extend(scenario.get('_token_relic_effects',[]))
         self.warnings=[];self.notes=[];self.inapplicable=[]
         for rid in scenario.get('relic_ids',[]):
