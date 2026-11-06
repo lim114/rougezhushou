@@ -5108,3 +5108,5 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 - 2026-11-06 D106/D109：显式算式与同轮校准结构复用，26项通过；原生来源验收未通过，见 verification/maintenance/code-constraints-calculation-contract-review-20261106/summary.json。
 
 - 2026-11-06 D111/D112/D113：校准时刻结构复用与数值异常收窄，78项通过；回执 verification/maintenance/code-constraints-calibration-boundaries-review-20261106/summary.json。
+
+- 2026-11-06 D114：区间计算移除浮点端点回退，56项通过；回执 verification/maintenance/code-constraints-exact-interval-review-20261106/summary.json。

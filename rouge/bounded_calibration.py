@@ -43,7 +43,7 @@ def _interval(lo, hi, lo_closed=True, hi_closed=True):
 
 
 def _bounds(value):
-    return Fraction(value.get('lower_exact', str(value['lower']))), Fraction(value.get('upper_exact', str(value['upper'])))
+    return Fraction(value['lower_exact']), Fraction(value['upper_exact'])
 
 
 def _subtract(left, right):
