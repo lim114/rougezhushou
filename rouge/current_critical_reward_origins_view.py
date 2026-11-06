@@ -8,13 +8,13 @@ from .ui_state import replace_text
 
 
 class CurrentCriticalRewardPanel(QWidget):
-    def __init__(self, item_id, parent=None):
+    def __init__(self, item_id, parent=None, *, initial_reference=...):
         super().__init__(parent)
         self.item_id = item_id; self.result = None; self.flow_dialog = None; self.controls = {}
         layout = QVBoxLayout(self)
         notice = QLabel('以下只用于对照本物品的取得条件；默认未知，不表示本局已读到，也不会写入本局。')
         notice.setWordWrap(True); layout.addWidget(notice)
-        initial = model.reference('relics', item_id)
+        initial = model.reference('relics', item_id) if initial_reference is ... else initial_reference
         self.event_id = initial['rows'][0]['event_id'] if initial else None
         specifications = []
         if self.event_id == 'entry':
@@ -101,13 +101,15 @@ class CurrentCriticalRewardPanel(QWidget):
 
 
 class CurrentCriticalRewardDialog(QDialog):
-    def __init__(self, item_id, parent=None):
+    def __init__(self, item_id, parent=None, *, initial_reference=...):
         super().__init__(parent); self.setWindowTitle('关键藏品 · 取得条件与准确原文'); self.resize(1020, 780)
-        layout = QVBoxLayout(self); self.panel = CurrentCriticalRewardPanel(item_id, self); layout.addWidget(self.panel)
+        layout = QVBoxLayout(self); self.panel = CurrentCriticalRewardPanel(item_id, self, initial_reference=initial_reference); layout.addWidget(self.panel)
     def closeEvent(self, event): self.panel._close_flow(); super().closeEvent(event)
 
 
-def make_event_dialog(row, parent=None):
-    fresh = model.reference('relics', row['item_id'])
-    if fresh is None or not any(row == r for r in fresh['rows']): return None
-    return CurrentCriticalRewardDialog(row['item_id'], parent)
+def make_event_dialog(row, parent=None, *, verified_reference=...):
+    """Reuse the caller's verified row snapshot, or validate an independent call."""
+    if verified_reference is ...:
+        verified_reference = model.reference('relics', row['item_id'])
+        if verified_reference is None or not any(row == r for r in verified_reference['rows']): return None
+    return CurrentCriticalRewardDialog(row['item_id'], parent, initial_reference=verified_reference)
