@@ -1,3 +1,7 @@
+## 维护：敌人出怪条目合并单次解析包装（2026-11-06）
+
+D228完成，14项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json`。
+
 ## 维护：事件作战资料加载入口整改（2026-11-06）
 
 D221–D223完成，12项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-event-battle-packet-review-20261106/summary.json`。

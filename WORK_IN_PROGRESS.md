@@ -1,3 +1,7 @@
+## 当前断点：敌人出怪条目合并单次解析包装（2026-11-06）
+
+D228完成，14项定向通过；原280组完成101组、剩179组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json。
+
 ## 当前断点：事件作战资料加载入口整改（2026-11-06）
 
 D221–D223完成，12项定向通过；原280组完成100组、剩180组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-battle-packet-review-20261106/summary.json。

@@ -2206,13 +2206,20 @@
     },
     {
       "file": "rouge/current_enemy_spawns_view.py",
-      "sha256": "7763c797da787cf08c4066a715555632df2c351c8118c893bdace1e50e3f89b0",
+      "sha256": "73d5ca88238bbb704314df87da8ee73ee9a6bb1eb3fa86f99054e2b8ac7fcf5c",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
       "rule2": "no_new_helpers",
       "rule3": "pending_defenses_unchanged",
-      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified."
+      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified.",
+      "enemy_action_review": {
+        "decisions": [
+          "D228"
+        ],
+        "receipt": "verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_stage_objects_view.py",

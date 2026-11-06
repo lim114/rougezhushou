@@ -52,15 +52,11 @@ class CurrentEnemySpawnsPanel(QWidget):
         self.action_button.setEnabled(row is not None);self.position_button.setEnabled(row is not None)
         if not preserve:self.tabs.setCurrentIndex(0)
         self._view_key=view;return True
-    def _resolve(self):
-        row=self.selected()
-        if row is None:return None
-        resolved=model.resolve_action(self.result,row['key'])
-        if resolved is None:self.clear_reference();return None
-        return resolved
     def follow_action(self):
-        selected=self._resolve()
-        if selected is None:return False
+        row=self.selected()
+        if row is None:return False
+        selected=model.resolve_action(self.result,row['key'])
+        if selected is None:self.clear_reference();return False
         self.actionSelected.emit(selected['action_key']);return True
     def follow_position(self):
         row=self.selected()

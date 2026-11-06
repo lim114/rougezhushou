@@ -1,0 +1,47 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "敌人出怪条目合并单次解析包装",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "673d69da91b728484cc7913ff11c115a6eb62862",
+  "changed_sources": [
+    "rouge/current_enemy_spawns_view.py",
+    "tests/test_enemy_action_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_enemy_spawns_view.py": "73d5ca88238bbb704314df87da8ee73ee9a6bb1eb3fa86f99054e2b8ac7fcf5c",
+    "tests/test_enemy_action_boundary_review.py": "c2b33e0a70c643369812db1b66276da7ae4f5e45baddd65eca5ab6a98a21df4d"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D228"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 14,
+    "command": "QT_QPA_PLATFORM=offscreen python -m unittest tests.test_enemy_action_boundary_review tests.test_current_enemy_spawns_view_371",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-200",
+    "coverage": "No selection avoids resolve; selection resolves once; invalid source clears once/no signal; existing Qt tests verify action/position signals, invalidation, recovery, reading state and dialog closure.",
+    "live_window": "Isolated Qt only; original app update pending user exit."
+  },
+  "review": {
+    "standards": "D228 inline sole _resolve caller into follow_action; removes forwarding and second None check. No wrapper or defense added.",
+    "requirements": "Unselected remains False without clear; failed resolve clears and returns False; successful exact action emits once. Existing refresh/position invalidation behaviors preserved and tested."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ],
+  "product_source_changed": true
+}
