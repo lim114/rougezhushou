@@ -1,0 +1,49 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "关键奖励加载收窄异常与复用根路径",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "456b24653b1082db52e32ddecda6da74840a3e0c",
+  "changed_sources": [
+    "rouge/current_critical_reward_origins.py",
+    "tests/test_critical_reward_packet_boundary_review.py"
+  ],
+  "source_sha256": {
+    "rouge/current_critical_reward_origins.py": "df22500bd9a8e297a7e7e2bd116fb40101d5e933adb2eca300599656c12554e9",
+    "tests/test_critical_reward_packet_boundary_review.py": "1a901866ba2e2e421d17a31c5d391f248ca6e5cddeac5072d508469f944f17b3"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D173",
+    "D174",
+    "D175"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 11,
+    "command": "python -m unittest tests.test_critical_reward_packet_boundary_review tests.test_current_critical_reward_origins_349",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-188",
+    "baseline": "Previous committed module in isolated Python namespace: five internal-error subcases failed; worktree unchanged.",
+    "link_check": "Path.is_symlink predicate simulated; not real Windows symlink creation.",
+    "live_window": "Original app update pending; no UI change/live acceptance claimed."
+  },
+  "review": {
+    "standards": "D173 limits catches to filesystem/JSON boundary and explicit source_rows identity ValueError. D175 resolves root once per load. No wrapper or new defense.",
+    "requirements": "D174 all original manifest/hash/member/version/incomplete-pool/reconstructed-row checks retained. D175 link/root restrictions retained. Internal and provider errors propagate. D176/D177 not certified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update"
+  ]
+}

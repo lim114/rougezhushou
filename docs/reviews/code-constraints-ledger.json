@@ -1740,13 +1740,22 @@
     },
     {
       "file": "rouge/current_critical_reward_origins.py",
-      "sha256": "311625ddaf9aa8685eca73736fbc5e2c8f0017795755a5ca501d004faa9e1fe2",
+      "sha256": "df22500bd9a8e297a7e7e2bd116fb40101d5e933adb2eca300599656c12554e9",
       "rule1": "reuse_checked_DATA_bytes_and_same_operation_exit_packet",
       "rule2": "no_new_helpers_locate_and_reference_keep_distinct_public_results",
       "rule3": "D173_D182_pending_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Critical packet now parses verified DATA bytes and passes supplied exit packet to locate/reference. Actual packet and build script callers prepare all provider packets first; source_rows no longer reloads exit twice. Optional source keyword is a normal prepared-input path, not error recovery. Existing If conditions, raises and catches unchanged. Tested DATA 2 to 1, exit packet 3 to 1; old/new raw/prepared 18 locate cases,68 reference cases,12 critical result/text cases equal, source unmodified. Whole-model completion not claimed; remaining target selection/data preparation and other consumers need review. Adjacent settlement loaders already reuse captured bytes, so not edited."
+      "evidence": "Critical packet now parses verified DATA bytes and passes supplied exit packet to locate/reference. Actual packet and build script callers prepare all provider packets first; source_rows no longer reloads exit twice. Optional source keyword is a normal prepared-input path, not error recovery. Existing If conditions, raises and catches unchanged. Tested DATA 2 to 1, exit packet 3 to 1; old/new raw/prepared 18 locate cases,68 reference cases,12 critical result/text cases equal, source unmodified. Whole-model completion not claimed; remaining target selection/data preparation and other consumers need review. Adjacent settlement loaders already reuse captured bytes, so not edited.",
+      "critical_packet_review": {
+        "decisions": [
+          "D173",
+          "D174",
+          "D175"
+        ],
+        "receipt": "verification/maintenance/code-constraints-critical-packet-review-20261106/summary.json",
+        "full_module_review_complete": false
+      }
     },
     {
       "file": "rouge/current_exit.py",

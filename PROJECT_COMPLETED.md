@@ -1,3 +1,7 @@
+## 维护：关键奖励加载收窄异常与复用根路径（2026-11-06）
+
+D173–D175完成，11项定向通过，仅证明本批加载路径，未完成整模块审查。回执 `verification/maintenance/code-constraints-critical-packet-review-20261106/summary.json`。
+
 ## 维护：具名奖励加载收窄异常与复用根路径（2026-11-06）
 
 D168–D170已落实；14项定向通过，仅证明本批加载路径，不代表整个模块或程序完成。回执 `verification/maintenance/code-constraints-named-packet-review-20261106/summary.json`。

@@ -76,25 +76,30 @@ def packet():
         expected = {DATA, PACK + '/source-notes.json'} | {p.DATA for p in PROVIDERS} | {p.MANIFEST for p in PROVIDERS}
         if (manifest['schema'] != 'critical_reward_origins_349_manifest_v1'
                 or manifest['game_commit'] != version.NEW_COMMIT or set(manifest['files']) != expected): return None
+        root = ROOT.resolve()
         for name, pin in manifest['files'].items():
             rel = PurePosixPath(name)
             if rel.is_absolute() or '..' in rel.parts or '\\' in name or ':' in name: return None
             path = ROOT.joinpath(*rel.parts)
-            if path.is_symlink() or not path.resolve().is_relative_to(ROOT.resolve()): return None
+            if path.is_symlink() or not path.resolve().is_relative_to(root): return None
             if any(p.is_symlink() for p in path.parents if p != ROOT and ROOT in p.parents): return None
             content = path.read_bytes()
             if len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
             if name == DATA: data_raw = content
-        upstream = [p.packet() for p in PROVIDERS]; current = version.packet()
-        if current is None or any(p is None for p in upstream): return None
         data = json.loads(data_raw)
-        if (data['schema'] != 'critical_reward_origins_349_v1' or data['game_commit'] != version.NEW_COMMIT
-                or data['complete_acquisition_pool'] is not False
-                or data['rows'] != source_rows(current['current']['details'], *upstream)): return None
-        return {'data': data, 'source_identity': (MANIFEST_SHA256, current['source_identity']),
-                'actual_received': None, 'actual_eligible': None, 'run_updated': False}
-    except (OSError,ValueError,KeyError,TypeError,AttributeError,StopIteration):
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
+    upstream = [p.packet() for p in PROVIDERS]; current = version.packet()
+    if current is None or any(p is None for p in upstream): return None
+    if (data['schema'] != 'critical_reward_origins_349_v1' or data['game_commit'] != version.NEW_COMMIT
+            or data['complete_acquisition_pool'] is not False): return None
+    try:
+        rows = source_rows(current['current']['details'], *upstream)
+    except ValueError:
+        return None
+    if data['rows'] != rows: return None
+    return {'data': data, 'source_identity': (MANIFEST_SHA256, current['source_identity']),
+            'actual_received': None, 'actual_eligible': None, 'run_updated': False}
 
 
 def reference(category, item_id, values=None):
