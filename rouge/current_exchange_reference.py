@@ -59,16 +59,16 @@ def target_entry(category,key):
     return None
 
 
-def item_text(ref,item_id):
-    row=next((r for r in ref['data']['catalogue']if r['id']==item_id),None)if ref else None
+def item_text(ref,item_id,*,prepared_row=...):
+    row=(next((r for r in ref['data']['catalogue']if r['id']==item_id),None)if ref else None)if prepared_row is ... else prepared_row
     if row is None:return '请选择收藏品。这里显示资料中能否交出，不列可能换到的奖励池。'
     item=row['item'];status='标记为可以交出'if row['can_offer']else'标记为不可交出';change={'added':'本次内容更新新增','changed':'相对旧基准已有改动','unchanged':'相对旧基准未改动'}[row['change']]
     lines=['【收藏品】'+item['name'],'【能否作为提供物】当前资料'+status,'本局是否持有、本次是否会列入选择、实际是否消耗仍未确认。','这项判断只用于交出去，不能说明能否换到它，也不是指定交付或领取。','','【稀有度】'+RARITIES[row['rarity']],'【版本对照】'+change,'','【作用说明】',version._plain(item.get('usage'))or'原表没有独立说明。','','【物品说明】',version._plain(item.get('description'))or'原表没有独立说明。','','【范围与未知】','当前版本资料共284件收藏品：259件可交出、25件不可交出。','资料更新到10月16日。后续游戏调整、本局库存及完整交换奖励池尚未核验；这里不会改变本局记录。']
     return '\n'.join(lines)
 
 
-def document_text(ref,group_id):
-    row=next((r for r in ref['data']['document_groups']if r['id']==group_id),None)if ref else None
+def document_text(ref,group_id,*,prepared_row=...):
+    row=(next((r for r in ref['data']['document_groups']if r['id']==group_id),None)if ref else None)if prepared_row is ... else prepared_row
     if row is None:return '请选择交换条文，查看已写明的奖励和消耗。部分选项在不同对话中使用相同文案，当前无法据此判断本局会出现哪一种。'
     lines=['【交换条文】'+row['title'],'','【原文说明】',version._plain(row['description'])]
     if row['explicit_reward_quantity']is not None:lines+=['','【明确记载的数量】',str(row['explicit_reward_quantity'])+'件'+row['reward_resource'],'数量来自选项原文；具体物品、档次和完整候选池仍未在此核验，不按提供物稀有度补造。']

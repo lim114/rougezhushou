@@ -1,3 +1,7 @@
+## 维护：交换目录行复用（2026-11-06）
+
+两处重复扫描消除，14定向通过，295项文字对照一致。[回执](verification/maintenance/code-constraints-exchange-row-reuse-20261106/README.md)。
+
 ## 维护：子窗生命周期审查记录（2026-11-06）
 
 完成两个视图及相关调用链的检查和保护登记；未把待审重复读源算整改完成，整模块数不变。[回执](verification/maintenance/code-constraints-owned-event-children-review-20261106/README.md)。

@@ -71,7 +71,7 @@ class CurrentExchangePanel(QWidget):
         key=item.data(Qt.ItemDataRole.UserRole)if item else None;keep=preserve and key==self.item_id;self.item_id=key
         if self.result is None:return
         row=next((r for r in self.result['data']['catalogue']if r['id']==key),None)
-        text,notes=mechanism_copy(model.item_text(self.result,key),'',extra_detail_headings=('【范围与未知】',))
+        text,notes=mechanism_copy(model.item_text(self.result,key,prepared_row=row),'',extra_detail_headings=('【范围与未知】',))
         replace_text(self.item_player,text,preserve=keep);replace_text(self.item_technical,_technical_json({'资料说明':notes,'selected_item':row,'scope':self.result['data']['scope'],'source_identity':self.result['source_identity'],'source':self.result['data']['source']})if row else'',preserve=keep)
         if not keep:self.item_tabs.setCurrentIndex(0)
 
@@ -80,7 +80,7 @@ class CurrentExchangePanel(QWidget):
         if self.result is None:return
         row=next((r for r in self.result['data']['document_groups']if r['id']==key),None)
         originals={k:self.result['data']['original_choices'][k]for k in row['primary_candidate_ids']}if row else{}
-        text,notes=mechanism_copy(model.document_text(self.result,key),'',extra_detail_headings=('【相同文案仍需分清】','【本局与奖励仍未知】'))
+        text,notes=mechanism_copy(model.document_text(self.result,key,prepared_row=row),'',extra_detail_headings=('【相同文案仍需分清】','【本局与奖励仍未知】'))
         replace_text(self.doc_player,text,preserve=keep);replace_text(self.doc_technical,_technical_json({'资料说明':notes,'document_group':row,'complete_candidates':originals,'source_identity':self.result['source_identity'],'source':self.result['data']['source']})if row else'',preserve=keep)
         if not keep:self.doc_tabs.setCurrentIndex(0)
 

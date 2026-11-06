@@ -1,3 +1,7 @@
+## 当前断点：交换目录与条文复用已选资料行（2026-11-06）
+
+两处重复行扫描改为复用，14项定向通过、295项三路输出及2空ref一致；测试窗口已更新。167组待审不变。回执verification/maintenance/code-constraints-exchange-row-reuse-20261106/summary.json；后续继续交换模型其余路径及全程序普通冗余审查，未称整模块完成。
+
 ## 当前断点：回滚文明与安眠一隅子窗口核对（2026-11-06）
 
 子窗和图片保护D201—D204登记待审，共167组；同次目录预检与子窗重读仍待整改，两个视图不销项。源码未改，复用第95批证据，不重启窗口。回执verification/maintenance/code-constraints-owned-event-children-review-20261106/summary.json；下一批核对交换目录行重复查找及其它普通冗余。
