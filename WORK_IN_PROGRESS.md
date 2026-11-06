@@ -1,3 +1,7 @@
+## 当前断点：和平守卫者剩余路径回顾（2026-11-05）
+
+已定位普通重复：player_text/shows_reward重复分支准备，catalogue_binding重复来源标识转换；未实施，下一批继续。D183—187原样待审，共150组；覆盖不变。纯审查记录，不重启窗口、不重复测试。回执verification/maintenance/code-constraints-peace-remaining-review-20261105/summary.json。
+
 ## 当前断点：具名奖励七类来源复用（2026-11-05）
 
 7类locate及peace.reference接受同操作source；具名构建来源加载18→7，标识转换11→7且每行独立。旧3测试失败留证，最终20定向通过；589定位/6详情/11完整行新旧一致。窗口更新；145组防御未改，覆盖316/64/137/41。回执verification/maintenance/code-constraints-named-provider-reuse-20261105/summary.json。8模块仅相关路径推进，下一批继续剩余准备与调用链；维护不增节数。
