@@ -1833,6 +1833,16 @@
       "rule2": "no_new_helper; portrait_single_use_pending_D234",
       "rule3": "D233_D235_pending",
       "evidence": "Full view read; selected/refresh/callback paths inspected. relation prepared once passed to member lookup; raw path retained. key is fresh tuple containing already-deepcopied source identity, removing second deepcopy does not share mutable source.10 targeted passed; raw key reads1 each, prepared relation reads0. _resolve_selected has2 callers, not single use. Portrait helper1 caller with protection pending, no full certification."
+    },
+    {
+      "file": "rouge/current_enemy_spawns.py",
+      "sha256": "cea370caf2b0184c3c7528bb4669a7df022ccb34c5fbab77c958352bb4b082ce",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "rule1": "position_reloads_battle_under_D240; exact_binding_not_same_as_enemy_id",
+      "rule2": "derive_is_coherent_transform; same_recursive_and_resolve_multiple_callers",
+      "rule3": "D236_D240_pending",
+      "evidence": "Entire model read plus view follow_action/position, battle callback, dynamic tool factory, source file resolver and targeted tests. Evidence JSON read once per file; selected notes file still parsed to verify valid JSON. _same compares bool/int distinctly; no replacement with loose equality. position requires action permission then position source identity, repeated stage load needs contract approval D240. No product source edits."
     }
   ]
 }

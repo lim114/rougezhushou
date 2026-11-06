@@ -1,3 +1,7 @@
+## 维护：出怪模型审查与断点清单纠正（2026-11-06）
+
+完整阅读记录已保存，纠正断点旧待审编号，模块仍未通过。[回执](verification/maintenance/code-constraints-enemy-model-contract-review-20261106/README.md)。
+
 ## 维护：候选选择与状态拷贝整改（2026-11-06）
 
 局部普通重复已修，10定向通过，模块未销项。[回执](verification/maintenance/code-constraints-candidate-selection-reuse-20261106/README.md)。

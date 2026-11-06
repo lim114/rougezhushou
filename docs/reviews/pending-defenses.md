@@ -233,3 +233,9 @@
 | D233 | CurrentSpawnCandidatesPanel._fill的try/finally恢复blockSignals | 控件更新异常仍恢复原信号状态，不捕获异常 | 建议保留恢复职责；替代普通顺序恢复，异常时控件可能持续阻断。原样待审 |
 | D234 | CurrentSpawnCandidatesPanel._show_portrait图片读取/解码失败文字提示；函数仅refresh调用 | 坏图不沿用旧图；成员非SPAWN、无候选或候选图不唯一是正常选择语义 | 建议确认失败行为后内联合理单次逻辑；替代保留独立显示函数。单次包装仍未整改，原样待审 |
 | D235 | CurrentSpawnCandidatesPanel刷新来源失败、_resolve_selected解析失败和follow_position位置失败清空 | 失效时撤下旧值并通知父页 | 建议保留失效出口并核对position重复复核；替代直接报告异常或沿用旧值。原样待审，_resolve_selected有两个真实调用，不因短函数删掉 |
+
+| D236 | current_enemy_spawns.evidence整段OSError/ValueError/TypeError/KeyError捕获；stage_reference包住_derive的KeyError/TypeError/ValueError/IndexError | 文件问题和内部转换缺陷均返回无资料 | 建议收窄入口异常，内部缺陷显露；替代保留统一无资料出口。原样待审 |
+| D237 | 同evidence清单摘要/schema/成员/文件长度类型与摘要；stage_reference核对scope来源身份/关卡成员/level_key/原来源 | 错版、损坏、错关卡资料不参与反查 | 建议保留身份职责并核对跨层重复；替代信任上游资料。原样待审，文件路径保护在expansion_reference._file，不重复声称本模块已审完该函数 |
+| D238 | _derive精确候选绑定缺失抛错；resolve_action重新stage_reference并_same比较完整快照 | ID相同但绑定不同或快照被改时拒绝跳转 | 建议保留精确绑定校验；替代只比ID/身份会漏内容改动。原样待审，正常未找到成员不在此项 |
+| D239 | stage_reference/rows/resolve_action参数类型拒绝，以及resolve_action对stage_id/enemy_key用get | 内部错类型或缺字段转为无资料；下层stage_reference又验证参数 | 建议明确入口后合并类型/字段校验；替代保留各查询独立保护。原样待审，合法未知筛选仍是正常无匹配 |
+| D240 | position_reference先resolve_action重读关卡，再current_action_positions.reference重读并比较battle_source_identity | 确认动作与位置同源，但同次重复读取关卡 | 建议审批后共用已核对关卡并保留同源核对；替代原样双读。仍有普通重复未整改，不因登记销项 |

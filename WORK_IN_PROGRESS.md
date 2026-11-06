@@ -1,3 +1,7 @@
+## 当前断点：敌人出怪模型契约与断点待审清单核对（2026-11-06）
+
+模型完整阅读与调用证据已记录，D236—D240待审，共203组；断点pending_decisions由旧D194补齐D240。源码未改，沿用现有窗口。回执verification/maintenance/code-constraints-enemy-model-contract-review-20261106/summary.json；继续普通冗余，D239/D240不销项。
+
 ## 当前断点：出怪候选组与成员选择复用（2026-11-06）
 
 候选组复用、控件单次读取、删除二次来源拷贝；10定向通过，窗口更新。D233—D235待审，共198组。回执verification/maintenance/code-constraints-candidate-selection-reuse-20261106/summary.json；继续模型和剩余普通冗余，单次头像函数不销项。
