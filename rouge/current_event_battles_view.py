@@ -36,7 +36,6 @@ class CurrentEventBattlesPanel(QWidget):
         fresh=model.reference(self.event_id,self.stage_id)
         if fresh is None:self.clear_reference();return False
         keep=self.result is not None and self.result['source_identity']==fresh['source_identity'];selected=self.choice_id if keep else initial_choice
-        if not keep:self._close_battle();self._close_flow()
         self.result=fresh;b=self.choices.blockSignals(True);self.choices.clear()
         for c in fresh['rows']:
             item=QListWidgetItem(c['event_id']+' · '+c['title']);item.setData(Qt.ItemDataRole.UserRole,c['id']);self.choices.addItem(item)
@@ -51,11 +50,12 @@ class CurrentEventBattlesPanel(QWidget):
     def _selected(self,item,*_,preserve=False):
         cid=item.data(Qt.ItemDataRole.UserRole)if item else None;keep=preserve and cid==self.choice_id;sid=self.stages.currentData()if keep else None
         if not keep:self._close_battle();self._close_flow()
-        self.choice_id=cid;c=model.choice(self.result,cid)if self.result else None
+        self.choice_id=cid
         if self.result is None:return
+        c=model.choice(self.result,cid)
         _,target=self._flow_target(cid)
         self.flow_button.setVisible(target is not None);self.flow_button.setEnabled(target is not None)
-        if target is None:self._close_flow()
+        if keep and target is None:self._close_flow()
         full_text=model.player_text(self.result,cid,prepared_choice=c)
         replace_text(self.player,mechanism_copy(full_text,'',extra_detail_headings=('【从固定关卡反查】','【重复记载】','【仍需区分】'))[0],preserve=keep);replace_text(self.reference_notes,full_text,preserve=keep)
         replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)

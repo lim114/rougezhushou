@@ -1,3 +1,7 @@
+## 维护：事件作战查找与关闭整改（2026-11-06）
+
+已修本批普通冗余并通过定向检查，未计模块整体完成。[回执](verification/maintenance/code-constraints-event-battle-lookup-close-20261106/README.md)。
+
 ## 维护：事件作战调用契约审查记录（2026-11-06）
 
 完整模型阅读及调用证据已登记；普通冗余和防御审批仍未完成，不计模块通过。[回执](verification/maintenance/code-constraints-event-battle-contract-review-20261106/README.md)。

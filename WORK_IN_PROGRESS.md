@@ -1,3 +1,7 @@
+## 当前断点：事件作战单次查找与重复关闭整改（2026-11-06）
+
+单次查找、result入口判断和刷新重复关闭已修；14初轮/7最终视图通过，窗口已更新。187组待审未改，整模块数47不变。回执verification/maintenance/code-constraints-event-battle-lookup-close-20261106/summary.json；继续剩余生命周期及其它模块。
+
 ## 当前断点：事件作战模型与调用契约核对（2026-11-06）
 
 模型与实际入口已读；D221—D224待审，共187组。配置名称重复查找及视图result重复判断尚待修正，模块不销项；源码未改，沿用第111批测试窗口。回执verification/maintenance/code-constraints-event-battle-contract-review-20261106/summary.json。

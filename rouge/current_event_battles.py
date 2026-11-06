@@ -70,8 +70,9 @@ def stage_rows(result,cid,*,prepared_choice=...):
 
 def stage_label(result,cid,sid,*,prepared_rows=...):
     rows=stage_rows(result,cid) if prepared_rows is ... else prepared_rows
-    if sid not in{v['id']for v in rows}:return '未核对的配置'
-    row=next(v for v in rows if v['id']==sid);same=[v for v in rows if v['name']==row['name']and v['emergency']==row['emergency']]
+    row=next((v for v in rows if v['id']==sid),None)
+    if row is None:return '未核对的配置'
+    same=[v for v in rows if v['name']==row['name']and v['emergency']==row['emergency']]
     suffix=' · 同名配置'+str(same.index(row)+1)if len(same)>1 else''
     return row['name']+' · '+('紧急作战'if row['emergency']else'非紧急配置')+suffix
 
