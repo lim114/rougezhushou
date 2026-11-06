@@ -1,3 +1,7 @@
+## 维护：安眠一隅加载入口与奖励文字包装整改（2026-11-06）
+
+D188–D190、D194完成，20项定向通过，49个显示案例与旧源码相等；整模块未销项。回执 `verification/maintenance/code-constraints-resting-review-20261106/summary.json`。
+
 ## 维护：事件藏品图片读取收窄错误出口（2026-11-06）
 
 D186/D191完成，25项定向通过，限定两处图片读取路径。回执 `verification/maintenance/code-constraints-event-icons-review-20261106/summary.json`。

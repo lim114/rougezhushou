@@ -15,24 +15,25 @@ def packet():
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
         m=json.loads(raw);expected={DATA,PACK+'/source-receipt.json',PACK+'/documented-section.html',PACK+'/source-notes.json','research/p3-expansion-313/current-topic.json','research/p3-expansion-313/baseline-topic.json','rouge/data/node-catalog.json','rouge/data/relic-icon-receipt.json',*OLD_FILES}
         if m['schema']!='current_resting_345_manifest_v1'or m['game_commit']!=version.NEW_COMMIT or set(m['files'])!=expected:return None
-        values={}
+        values={};root=ROOT.resolve()
         for name,pin in m['files'].items():
             rel=PurePosixPath(name)
             if rel.is_absolute()or'..'in rel.parts or'\\'in name or':'in name:return None
             path=ROOT.joinpath(*rel.parts)
-            if path.is_symlink()or not path.resolve().is_relative_to(ROOT.resolve()):return None
+            if path.is_symlink()or not path.resolve().is_relative_to(root):return None
             for parent in path.parents:
                 if parent==ROOT:break
                 if parent.is_symlink():return None
             content=path.read_bytes()
             if len(content)!=pin['bytes']or sha256(content).hexdigest()!=pin['sha256']:return None
             values[name]=content
-        data=json.loads(values[DATA]);current=version.packet()
-        if current is None or data['schema']!='current_resting_345_v1':return None
-        for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
-            if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
-        return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
-    except(OSError,ValueError,KeyError,TypeError,AttributeError,RecursionError):return None
+        data=json.loads(values[DATA])
+    except(OSError,UnicodeError,json.JSONDecodeError):return None
+    current=version.packet()
+    if current is None or data['schema']!='current_resting_345_v1':return None
+    for group,table in(('choices','choices'),('scenes','choiceScenes'),('items','items'),('stages','stages')):
+        if any(current['current']['details'][table].get(k)!=v for k,v in data['originals'][group].items()):return None
+    return {'data':data,'source_identity':(MANIFEST_SHA256,current['source_identity']),'actual_eligible':None,'actual_entered':None,'run_updated':False}
 
 def reference(event_id='resting',source_request=None):
     if type(event_id)is not str or event_id!='resting':return None
@@ -77,10 +78,6 @@ def conflicting_original_target(result,sid,cid,*,choice=...):
 def shows_reward(result,sid,cid,*,choice=...):
     c=choice_reference(result,sid,cid) if choice is ... else choice;return bool(c and c['role']=='named_item')
 
-def reward_label(ref):
-    if ref is None:return None
-    return str(ref['quantity'])+{'hope':'希望','shield':'护盾','gold':'源石锭','precious_processed_part':'件珍贵的加工品'}[ref['kind']]
-
 def player_text(result,sid,cid=None, *, prepared_choice=...):
     lines=['【正在查阅】安眠一隅','分开查阅不同情况的结果；不代表本局已经进入、出现或领取，不把不同情况奖励相加。']
     s=result['scenes'].get(sid)
@@ -109,7 +106,9 @@ def player_text(result,sid,cid=None, *, prepared_choice=...):
                 '原选项只写出物品名称，没有给出物品编号；这里按当前唯一同名收藏品显示资料，不代表已领取、已持有或已计入资源。']
         elif role in('look','touch'):lines+=['','【继续查阅】各情况和结果按资料分组；原随机候选未给下一段，不恢复随机选择规则或完整结果池。']
         elif role in('resource','gold99'):
-            lines+=['','【本次按钮的奖励参考】'+reward_label(c['reward_reference']),
+            reward=c['reward_reference']
+            label=str(reward['quantity'])+{'hope':'希望','shield':'护盾','gold':'源石锭','precious_processed_part':'件珍贵的加工品'}[reward['kind']]
+            lines+=['','【本次按钮的奖励参考】'+label,
                     '只解释这一按钮；其它情况、前后不同领取步骤及同文记录不在此重复合计。']
             if c['reward_reference']['kind']=='precious_processed_part':lines+=['这是1件珍贵加工品；具体物品及完整候选池仍未知，不与自然物或概念体混作同类。']
         if role in('named_item','gold99'):

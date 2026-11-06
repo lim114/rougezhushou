@@ -1,3 +1,7 @@
+## 当前断点：安眠一隅加载入口与奖励文字包装整改（2026-11-06）
+
+本批4组完成，20项定向通过，49个显示文字对照相等；原280组完成80组、剩200组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-resting-review-20261106/summary.json。
+
 ## 当前断点：事件藏品图片读取收窄错误出口（2026-11-06）
 
 D186/D191完成，25项定向通过；原280组完成76组、剩204组。D319/D320待答复；原生来源摘要与新版窗口待补。回执verification/maintenance/code-constraints-event-icons-review-20261106/summary.json。
