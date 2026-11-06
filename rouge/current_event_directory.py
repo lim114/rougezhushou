@@ -153,14 +153,15 @@ def packet():
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw); notes_raw = _file(NOTES).read_bytes()
         notes_pin = manifest['files'][NOTES]
-        if len(notes_raw) != notes_pin['bytes'] or sha256(notes_raw).hexdigest() != notes_pin['sha256']: return None
+        if type(notes_pin['bytes']) is not int or len(notes_raw) != notes_pin['bytes'] or sha256(notes_raw).hexdigest() != notes_pin['sha256']: return None
         notes = json.loads(notes_raw)
         expected = {DATA, NOTES, 'rouge/data/node-catalog.json', *notes['original_sources']}
         if (manifest['schema'] != 'current_event_directory_runtime_manifest_v2'
                 or notes['schema'] != 'current_event_directory_runtime_notes_v2'
                 or manifest['game_commit'] != version.NEW_COMMIT or set(manifest['files']) != expected): return None
-        blobs = {}
+        blobs = {NOTES: notes_raw}
         for name, pin in manifest['files'].items():
+            if name == NOTES: continue
             content = _file(name).read_bytes()
             if type(pin['bytes']) is not int or len(content) != pin['bytes'] or sha256(content).hexdigest() != pin['sha256']: return None
             blobs[name] = content

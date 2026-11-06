@@ -922,7 +922,7 @@
     },
     {
       "file": "rouge/current_event_directory.py",
-      "sha256": "b92a8f7ab647ceaf61d48a46e5ccab48d6a4b9d138107b3badbd604d1b0c3ca4",
+      "sha256": "1460ab22c0d14914ce7d66443f36b982c7a67e7eb48eb2fd75e513d2e988da24",
       "directory_entry_review": {
         "rule1": "shared_20_reader_specs_and_argument_policy; empty_query_does_not_build_search_text",
         "rule2": "single_use_filters_and_event_lookup_inlined_at_only_callers",
@@ -943,6 +943,11 @@
         "rule3": "approved160 length preserved; other defenses untouched",
         "evidence": "verification/maintenance/code-constraints-event-query-review-20261106/summary.json",
         "full_module_review_complete": false
+      },
+      "notes_snapshot_review": {
+        "decision": "D97",
+        "evidence": "verification/maintenance/code-constraints-event-source-snapshot-review-20261106/summary.json",
+        "result": "Same load reads once; next load revalidates; 15 tests pass. D92 pending."
       }
     },
     {

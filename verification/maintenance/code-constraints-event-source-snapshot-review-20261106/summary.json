@@ -1,0 +1,42 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "事件目录来源说明复用同次读取快照",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "59766c24a5976e54d1f383490bf93a2486fd7dfc",
+  "changed_sources": [
+    "rouge/current_event_directory.py"
+  ],
+  "source_sha256": {
+    "rouge/current_event_directory.py": "1460ab22c0d14914ce7d66443f36b982c7a67e7eb48eb2fd75e513d2e988da24"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D97"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 15,
+    "command": "python -m unittest tests.test_event_directory_snapshot_review tests.test_current_event_directory_372",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-160",
+    "live_window": "Not updated: earlier restart policy rejection remains; no new runtime acceptance claimed."
+  },
+  "review": {
+    "standards": "Reuse notes bytes within one synchronous packet load; move existing integer type check to first read; no new wrapper or catch.",
+    "requirements": "Approved D97; per-call reads unique, subsequent call reloads and rejects changed notes. Source identity conditions preserved."
+  },
+  "remaining": [
+    "D92 exception scope",
+    "Other directory entry contracts",
+    "Test window update"
+  ]
+}
