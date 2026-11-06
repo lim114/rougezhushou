@@ -142,7 +142,7 @@ class CurrentBossDocumentsPanel(QWidget):
         from .player_reference_links import open_fixed_map
         opened=open_fixed_map(self,self.stage_id,
             context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.result['level_key']),
-            verify=lambda reader:(fresh:=model.map_reference(self.result))is not None and reader.result==fresh['map'])
+            reference_loader=lambda _stage_id:None if (fresh:=model.map_reference(self.result)) is None else fresh['map'])
         if opened is not None:return opened
         mapped = model.map_reference(self.result)
         if mapped is None:

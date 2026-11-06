@@ -104,8 +104,9 @@ class CurrentOriginalCenters(QWidget):
             p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setPen(QPen(QColor('#ffb4ee'),3));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(center,8,8);p.drawLine(center+QPointF(-13,0),center+QPointF(13,0));p.drawLine(center+QPointF(0,-13),center+QPointF(0,13))
 
 class CurrentMapPositionPanel(QWidget):
-    def __init__(self,stage_id,parent=None,*,defer_load=False):
+    def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None
+        self.reference_loader=reference_loader
         layout=QVBoxLayout(self);self.notice=QLabel('点选原图编号或格子，查看对应位置。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         bar=QHBoxLayout();self.combo=QComboBox();self.combo.setAccessibleName('已核对的格子中心');self.refresh_button=QPushButton('刷新位置');self.marker_toggle=QCheckBox('位置标记');self.marker_toggle.setChecked(True);bar.addWidget(self.combo,1);bar.addWidget(self.marker_toggle);bar.addWidget(self.refresh_button);layout.addLayout(bar)
         terrain_bar=QHBoxLayout();self.terrain_kind=QComboBox();self.terrain_kind.setAccessibleName('本图地形类型');self.terrain_cells=QComboBox();self.terrain_cells.setAccessibleName('按地形定位格子');terrain_bar.addWidget(QLabel('查找地形'));terrain_bar.addWidget(self.terrain_kind);terrain_bar.addWidget(self.terrain_cells,1);layout.addLayout(terrain_bar)
@@ -121,7 +122,11 @@ class CurrentMapPositionPanel(QWidget):
         self.grid.highlight_cells=set()
         self.result=None;self.selected=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.blockSignals(blocked);self.combo.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
     def refresh_reference(self, *, prepared_reference=...):
-        fresh=model.stage_reference(self.stage_id) if prepared_reference is ... else prepared_reference
+        if prepared_reference is ...:
+            loader=model.stage_reference if self.reference_loader is None else self.reference_loader
+            fresh=loader(self.stage_id)
+        else:
+            fresh=prepared_reference
         if fresh is None:self.clear_reference();return False
         raw=model.battle.version.image_bytes(fresh['image'])
         if raw is None:self.clear_reference();return False

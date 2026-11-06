@@ -1,0 +1,60 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "共享地图核验结果直接交给读取器",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "16226fb747d1ebb8880e6fffb2a5397a8f9fa750",
+  "changed_sources": [
+    "rouge/current_map_position_view.py",
+    "rouge/player_reference_links.py",
+    "rouge/current_sun_boss_view.py",
+    "rouge/current_boss_documents_view.py",
+    "tests/test_document_shared_map_preflight.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position_view.py": "bcd8e901070974454b2f5c33f0ba4df9eb4bdbb723f83a4e1ddfac44770d2346",
+    "rouge/player_reference_links.py": "6b3783ecb5c2bf90c61d47a3594d80d80ecb37cb2c7e0b8eff7acbdc1814da65",
+    "rouge/current_sun_boss_view.py": "713cfc95559af2908e3d7b7f88d9eba37d572d4ac9bbb3005d4760a0aaed9b61",
+    "rouge/current_boss_documents_view.py": "f2f9941714a10b1cabe99b33c2866f75ce539b7fda1b5e3a4193e57197205dab",
+    "tests/test_document_shared_map_preflight.py": "60ec8b8e397c424ccbc420522747d921b8d5ec8b266bfacd7e67fb8de337c11c"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_run": 35,
+    "tests_passed": 35,
+    "tests_failed": 0,
+    "full_suite_run": false,
+    "command": "python -m unittest tests.test_document_shared_map_preflight tests.test_shared_map_initial_load tests.test_document_map_child_reuse tests.test_current_map_position_view_319 tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369",
+    "local_evidence": ".local/code-constraints-review-229",
+    "old_source_regression": "Original parent modules reproduce2 subcase failures: maps.stage_reference called twice.",
+    "live_window": "Isolated Qt only; original test window update pending."
+  },
+  "review": {
+    "standards": "D280/D284 partial: shared reader uses a real injected documentary-map loader; loaded map already passed source+geometry checks. Removes second map query and equality with separately recomputed identical map. No wrapper function, catch or speculative recovery.",
+    "requirements": "One map query in actual shared entry, source failure discards page. Independent default loader and visitor verify path unchanged. Standalone dialog initial preflight/constructor duplication still pending."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776"
+  ],
+  "product_source_changed": true,
+  "partially_implemented": [
+    "D280",
+    "D284"
+  ]
+}

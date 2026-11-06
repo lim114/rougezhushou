@@ -1,3 +1,7 @@
+## 当前断点：共享地图核验结果直接交给读取器（2026-11-06）
+
+D280/D284共享读取链完成，35定向通过；独立对话框首开仍有预读/构造重复，整组待完成。原280组完成128、剩152不变。回执 verification/maintenance/code-constraints-shared-map-loader-20261106/summary.json。原待审及验收缺口保留。
+
 ## 当前断点：共享地图删除父页面重复预读（2026-11-06）
 
 D280/D284部分推进，25定向通过；独立窗口预读保留，共享路径仅文献地图verify一次。地图reader/verify重复仍待整改。原280组完成128、剩152不变。回执 verification/maintenance/code-constraints-shared-map-preflight-20261106/summary.json。

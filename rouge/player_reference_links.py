@@ -118,14 +118,14 @@ def open_full_event(panel, kind, target):
         panel.result['source_identity'], panel.choice_id, panel._flow_target(panel.choice_id)), create)
 
 
-def open_fixed_map(panel, stage_id, *, context, verify):
+def open_fixed_map(panel, stage_id, *, context, verify=None, reference_loader=None):
     host = panel.window()
     if not isinstance(host, ReferenceWindow):
         return None
     def create(owner):
         from .current_map_position_view import CurrentMapPositionPanel
         from .player_map_reader import REFERENCE_STYLE
-        reader = CurrentMapPositionPanel(stage_id, defer_load=True)
+        reader = CurrentMapPositionPanel(stage_id, defer_load=True, reference_loader=reference_loader)
         page = ToolPage('固定地图 · 地形与格子', reader, owner,
                         object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
         page.panel = reader
