@@ -1,6 +1,6 @@
 """Condition-aware current box-event reader; conditions stay local to this panel."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QComboBox,QDialog,QVBoxLayout,QHBoxLayout,QLabel
+from PySide6.QtWidgets import QComboBox,QVBoxLayout,QHBoxLayout,QLabel
 from . import box_event_reference as model
 from .documented_event_flow_view import DocumentedEventFlowPanel
 

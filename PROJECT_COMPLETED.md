@@ -1,3 +1,7 @@
+## 维护：三个事件面板核对（2026-11-06）
+
+险路、藤蔓、窥视整模块核对；新增3，总46。两处刷新包装删除，5定向通过。[回执](verification/maintenance/code-constraints-exit-vine-box-closure-20261106/README.md)。
+
 ## 维护：四个小型事件面板核对（2026-11-06）
 
 愈创、独活、休整旅行、资源事件整模块核对；新增2，总43。资源刷新包装删除，7定向通过。[回执](verification/maintenance/code-constraints-four-event-panel-closure-20261106/README.md)。
