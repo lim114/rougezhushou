@@ -1,0 +1,50 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "出怪候选内部错误不再伪装无资料",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "5b40a59a50686a85fe51682722a3b8dc459fa57c",
+  "changed_sources": [
+    "rouge/current_spawn_candidates.py",
+    "tests/test_spawn_candidate_error_boundary.py"
+  ],
+  "source_sha256": {
+    "rouge/current_spawn_candidates.py": "829c843d0d5223f0d23a2d02c996c65d40d426b198be404e0e18aa680cb4dfd7",
+    "tests/test_spawn_candidate_error_boundary.py": "9632c7511a9690a78a0c4724c463c3100256b82a8dd6931c12dfd2df5f8fc7cf"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D250"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 16,
+    "tests_failed": 0,
+    "tests_run": 16,
+    "command": "python -m unittest tests.test_spawn_candidate_error_boundary tests.test_current_spawn_candidates_355 tests.test_candidate_queue_validation_once",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-209",
+    "old_source_regression": "3 new tests reproduce8 subtest failures on prior source. Final16 pass.",
+    "live_window": "No UI change; original window update pending."
+  },
+  "review": {
+    "standards": "D250 approved:only file/path and JSON failures caught at actual operations; _build and verified contract errors propagate. No helper/duplicate validation added.",
+    "requirements": "Source identity, complete relations and unknown member behavior retained; D252 single validation regression passes."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure"
+  ],
+  "product_source_changed": true
+}

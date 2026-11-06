@@ -31,35 +31,44 @@ def _same(left, right):
 def _packet():
     try:
         manifest_raw = battle.version._file(MANIFEST).read_bytes()
-        if sha256(manifest_raw).hexdigest() != MANIFEST_SHA256:
-            return None
-        manifest = json.loads(manifest_raw)
-        expected = {PACK + '/scope-inventory.json', PACK + '/source-notes.json',
-                    'research/p3-current-rewards-315/selected-originals.json',
-                    'research/p3-current-rewards-315/source-selection.json'}
-        if (manifest['schema'] != 'current_spawn_candidates_355_manifest_v1'
-                or manifest['game_commit'] != battle.version.NEW_COMMIT
-                or set(manifest['files']) != expected):
-            return None
-        objects = {}
-        for name, pin in manifest['files'].items():
-            raw = battle.version._file(name).read_bytes()
-            if type(pin['bytes']) is not int or len(raw) != pin['bytes'] or sha256(raw).hexdigest() != pin['sha256']:
-                return None
-            objects[name] = json.loads(raw)
-        inventory = objects[PACK + '/scope-inventory.json']
-        notes = objects[PACK + '/source-notes.json']
-        characters = objects['research/p3-current-rewards-315/selected-originals.json']['characters']
-        character_source = objects['research/p3-current-rewards-315/source-selection.json']
-        if (inventory['schema'] != 'current_spawn_candidates_355_scope_v1'
-                or inventory['game_commit'] != battle.version.NEW_COMMIT
-                or character_source['commit'] != battle.version.NEW_COMMIT
-                or notes['game_commit'] != battle.version.NEW_COMMIT):
-            return None
-        return {'inventory': inventory, 'notes': notes, 'characters': characters,
-                'character_source': character_source, 'source_identity': MANIFEST_SHA256}
-    except (OSError,ValueError,TypeError,KeyError,AttributeError,RecursionError):
+    except (OSError, ValueError):
         return None
+    if sha256(manifest_raw).hexdigest() != MANIFEST_SHA256:
+        return None
+    try:
+        manifest = json.loads(manifest_raw)
+    except (UnicodeError, json.JSONDecodeError):
+        return None
+    expected = {PACK + '/scope-inventory.json', PACK + '/source-notes.json',
+                'research/p3-current-rewards-315/selected-originals.json',
+                'research/p3-current-rewards-315/source-selection.json'}
+    if (manifest['schema'] != 'current_spawn_candidates_355_manifest_v1'
+            or manifest['game_commit'] != battle.version.NEW_COMMIT
+            or set(manifest['files']) != expected):
+        return None
+    objects = {}
+    for name, pin in manifest['files'].items():
+        try:
+            raw = battle.version._file(name).read_bytes()
+        except (OSError, ValueError):
+            return None
+        if type(pin['bytes']) is not int or len(raw) != pin['bytes'] or sha256(raw).hexdigest() != pin['sha256']:
+            return None
+        try:
+            objects[name] = json.loads(raw)
+        except (UnicodeError, json.JSONDecodeError):
+            return None
+    inventory = objects[PACK + '/scope-inventory.json']
+    notes = objects[PACK + '/source-notes.json']
+    characters = objects['research/p3-current-rewards-315/selected-originals.json']['characters']
+    character_source = objects['research/p3-current-rewards-315/source-selection.json']
+    if (inventory['schema'] != 'current_spawn_candidates_355_scope_v1'
+            or inventory['game_commit'] != battle.version.NEW_COMMIT
+            or character_source['commit'] != battle.version.NEW_COMMIT
+            or notes['game_commit'] != battle.version.NEW_COMMIT):
+        return None
+    return {'inventory': inventory, 'notes': notes, 'characters': characters,
+            'character_source': character_source, 'source_identity': MANIFEST_SHA256}
 
 
 def _member(action, characters):
@@ -153,41 +162,38 @@ def stage_reference(stage_id, origin_action_key=None):
     current = battle.stage_reference(stage_id)
     if current is None:
         return None
-    try:
-        if (not _same(current['stage'], selected['complete_stage'])
-                or current['level_key'] != selected['level_key']
-                or not _same(current['source'], selected['original_level_source'])
-                or sha256(json.dumps(current['level'], ensure_ascii=False, sort_keys=True,
-                                     separators=(',', ':'), allow_nan=False).encode('utf8')).hexdigest()
-                   != selected['parsed_level_sha256']):
-            return None
-        relations, scopes = _build(current, packet['characters'])
-        scope_rows = []
-        for kind in ('group', 'package'):
-            for row in relations[kind]:
-                scope_rows.append({'kind': kind, 'queue_selector': row['scope_key'],
-                    'raw_relation_key': row['raw_relation_key'],
-                    'members': [m['source_selector'] for m in row['members']]})
-        if not _same(scope_rows, selected['relations']):
-            return None
-        origin = next((a for a in current['actions'] if a['key'] == origin_action_key), None)
-        if origin_action_key is not None and origin is None:
-            return None
-        if origin is not None:
-            relations = {kind: [row for row in rows if any(
-                m['action_key'] == origin_action_key for m in row['members'])]
-                for kind, rows in relations.items()}
-        return {'stage_id': stage_id, 'stage_name': current['name'],
-                'origin_action_key': origin_action_key, 'origin_action': deepcopy(origin),
-                'groups': relations['group'], 'packages': relations['package'],
-                'scopes': scopes, 'source_identity': (MANIFEST_SHA256, current['source_identity'],
-                                                     current['source']['sha256']),
-                'battle_source_identity': current['source_identity'],
-                'source': deepcopy(current['source']), 'level_key': current['level_key'],
-                'actual_selection': None, 'actual_count': None, 'absolute_time': None,
-                'actual_path': None, 'probabilities': None, 'run_updated': False}
-    except (ValueError, TypeError, KeyError, AttributeError, IndexError, RecursionError):
+    if (not _same(current['stage'], selected['complete_stage'])
+            or current['level_key'] != selected['level_key']
+            or not _same(current['source'], selected['original_level_source'])
+            or sha256(json.dumps(current['level'], ensure_ascii=False, sort_keys=True,
+                                 separators=(',', ':'), allow_nan=False).encode('utf8')).hexdigest()
+               != selected['parsed_level_sha256']):
         return None
+    relations, scopes = _build(current, packet['characters'])
+    scope_rows = []
+    for kind in ('group', 'package'):
+        for row in relations[kind]:
+            scope_rows.append({'kind': kind, 'queue_selector': row['scope_key'],
+                'raw_relation_key': row['raw_relation_key'],
+                'members': [m['source_selector'] for m in row['members']]})
+    if not _same(scope_rows, selected['relations']):
+        return None
+    origin = next((a for a in current['actions'] if a['key'] == origin_action_key), None)
+    if origin_action_key is not None and origin is None:
+        return None
+    if origin is not None:
+        relations = {kind: [row for row in rows if any(
+            m['action_key'] == origin_action_key for m in row['members'])]
+            for kind, rows in relations.items()}
+    return {'stage_id': stage_id, 'stage_name': current['name'],
+            'origin_action_key': origin_action_key, 'origin_action': deepcopy(origin),
+            'groups': relations['group'], 'packages': relations['package'],
+            'scopes': scopes, 'source_identity': (MANIFEST_SHA256, current['source_identity'],
+                                                 current['source']['sha256']),
+            'battle_source_identity': current['source_identity'],
+            'source': deepcopy(current['source']), 'level_key': current['level_key'],
+            'actual_selection': None, 'actual_count': None, 'absolute_time': None,
+            'actual_path': None, 'probabilities': None, 'run_updated': False}
 
 
 def resolve_member(result, relation_key, action_key):

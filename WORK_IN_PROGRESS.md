@@ -1,3 +1,7 @@
+## 当前断点：出怪候选内部错误不再伪装无资料（2026-11-06）
+
+D250完成，16定向通过；原280组完成112、剩168。D319/D320待审核，原窗口和既有验证缺口保留。回执verification/maintenance/code-constraints-candidate-error-boundary-20261106/summary.json。
+
 ## 当前断点：出怪候选两类关系共用动作核验（2026-11-06）
 
 D252完成，13定向通过；原280组完成111、剩169。D319/D320待审核及原窗口、既有缺口保留。回执verification/maintenance/code-constraints-candidate-queue-once-20261106/summary.json。
