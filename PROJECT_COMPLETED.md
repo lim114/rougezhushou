@@ -5482,3 +5482,7 @@ D140/D143按授权保留并复核，22项定向通过；产品源码未改，不
 ## 维护：固定地图先校验关卡身份再读取来源（2026-11-06）
 
 D259局部完成，11项定向通过；非法类型不读资料包，合法请求核验不变。未新增功能节。回执 `verification/maintenance/code-constraints-map-entry-order-20261106/summary.json`。
+
+
+### 维护：位置中心查询复用（2026-11-06）
+动作与预置物件在display_cell验证后直接匹配中心点，省去重复范围核验和未使用地形查询。6项定向通过；未扩大投影范围，未完成全程序整改。回执 `verification/maintenance/code-constraints-position-center-reuse-20261106/summary.json`。

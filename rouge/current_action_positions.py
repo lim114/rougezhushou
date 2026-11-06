@@ -26,10 +26,10 @@ def _reference(current, grid, action_key):
     def add(label, position, selector, *, offset=None, random_range=None):
         # Source positions use bottom-up rows; mapData/landmark rows are top-down.
         cell = display_cell(position, grid['rows'], grid['cols'])
-        point = positions.cell_reference(grid, **cell) if cell else None
+        point = next((p for p in grid['points'] if p['row'] == cell['row'] and p['col'] == cell['col']), None) if cell else None
         entries.append({'key': str(len(entries)), 'label': label, 'source_selector': selector,
                         'raw_position': deepcopy(position), 'cell': cell,
-                        'center': deepcopy(point['point']) if point else None,
+                        'center': deepcopy(point),
                         'offset': deepcopy(offset), 'random_range': deepcopy(random_range),
                         'actual_position': None, 'actual_time': None})
 

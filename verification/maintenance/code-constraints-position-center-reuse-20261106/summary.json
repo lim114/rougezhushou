@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "位置查询复用已核验格子，省去完整地形重读",
+  "base_commit": "581302a4f63348c2fa6ddbea3493fd97f2aae7c2",
+  "changed_sources": [
+    "rouge/current_action_positions.py",
+    "rouge/current_stage_objects.py"
+  ],
+  "source_sha256": {
+    "rouge/current_action_positions.py": "dbbbe9296e91c77c90d7bb53da2533801ee154fe802db25e60f9726784e03c68",
+    "rouge/current_stage_objects.py": "3c87d1145e2778449c9303f5e59e549e47c5cd71977d80d8bd3dae3b2d8a7de7"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "Selected action-position bounds/offset/ambiguity and object-position checks plus tests.test_position_center_reuse_review",
+        "tests_run": 6,
+        "tests_passed": 6,
+        "seconds": 1.203
+      }
+    ],
+    "live_window": "Original test window update pending after earlier automatic approval rejection; model checks do not certify live UI."
+  },
+  "review": {
+    "standards": "D259 authorized same-snapshot reuse: display_cell validates source coordinates and bounds once; both consumers find only the mapped point from the same grid. No new wrapper, catch, threshold or defense. Public cell_reference keeps its independent-entry validation.",
+    "requirements": "Bottom-up conversion, invalid coordinate rejection, absent center and independent returned copies remain. Offset/random-range and ambiguous aliases remain unchanged. Targeted six tests pass; no native UI acceptance."
+  },
+  "partially_implemented": [
+    "D259"
+  ]
+}

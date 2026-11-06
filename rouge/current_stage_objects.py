@@ -97,8 +97,8 @@ def position_reference(result,key):
     if grid is None or grid['current_level_key']!=result['level_key']:return None
     cell=display_cell(chosen['row']['raw'].get('position'),grid['rows'],grid['cols'])
     if cell is None:return None
-    point=positions.cell_reference(grid,**cell)
-    return{'stage_id':result['stage_id'],'key':key,'row':chosen['row'],'grid':grid,'cell':cell,'center':deepcopy(point['point'])if point else None,'source_identity':(result['source_identity'],grid['source_identity']),'actual_position':None,'actual_active':None,'actual_path':None,'run_updated':False}
+    point=next((p for p in grid['points']if p['row']==cell['row']and p['col']==cell['col']),None)
+    return{'stage_id':result['stage_id'],'key':key,'row':chosen['row'],'grid':grid,'cell':cell,'center':deepcopy(point),'source_identity':(result['source_identity'],grid['source_identity']),'actual_position':None,'actual_active':None,'actual_path':None,'run_updated':False}
 def label(row):return row['name']+' · '+('物件'if row['kind']=='instance'else'卡片')+str(row['ordinal'])
 def player_text(result,row=None,action=None):
     lines=[result['stage_name'],'','【本关物件】',f"资料中共{len(result['entries'])}条预置声明；这不是当前场上数量或本局实际持有数量。",'地图物件与预置可用卡片分开列出，同名不同声明不合并。']

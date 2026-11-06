@@ -1,3 +1,7 @@
+## 当前断点：位置查询复用已核验格子（2026-11-06）
+
+动作与预置物件的中心查询不再重复调用完整格子查询；6项定向通过。D259继续按路径收尾，原280组仍完成175、剩105。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-position-center-reuse-20261106/summary.json`。
+
 ## 当前断点：固定地图先校验关卡身份再读取来源（2026-11-06）
 
 D259部分推进，无效关卡ID不再触发来源读取；11项定向通过，合法请求完整核验保留。原280组仍完成175、剩105；原窗口更新缺口保留。回执 `verification/maintenance/code-constraints-map-entry-order-20261106/summary.json`。
