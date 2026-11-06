@@ -1,3 +1,7 @@
+## 维护：费用输入复用（2026-11-05）
+
+同条费用效果一次分类，芬天赋与无天赋共用加成参数；26项定向通过、126费用条件及42通用报告/文字旧新一致，原测试窗口已更新。[回执](verification/maintenance/code-constraints-cost-input-reuse-20261105/README.md)。范围为局部整改，未销项全模块。
+
 ## 维护：补充技能复用与分类（2026-11-05）
 
 基准预测复用、效果分类一次、单次包装内联。50项不同定向及最终2项复验通过，42报告/文本一致，窗口更新。[回执](verification/maintenance/code-constraints-supplemental-reuse-20261105/README.md)。基准字段投影仍待处理，审批项不销项。

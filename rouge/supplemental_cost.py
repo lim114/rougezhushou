@@ -24,17 +24,20 @@ def supported_cost(rule):
 
 
 def cost_reference(stats,talents,rules,records,*,operator=None):
-    selected=[r for r in rules if supported_cost(r)]
-    native=native_deployment_cost(stats['deployment_cost'],
-        rune_additions=[r['value'] for r in selected if r['kind']=='deployment_cost_add' and _rune_cost_add(r)],
-        rune_multipliers=[r['value'] for r in selected if r['kind']=='deployment_cost_pct'],
-        card_factors=[r['value'] for r in selected if r['kind']=='first_deployment_cost_factor'],
-        runtime_deltas=[r['value'] for r in selected if _runtime_cost_delta(r)])
+    selected=[];unresolved=[]
+    for rule in rules:
+        if supported_cost(rule):selected.append(rule)
+        elif rule['kind'] in COST_KINDS:unresolved.append(rule)
+    cost_inputs={
+        'rune_additions':[r['value'] for r in selected if r['kind']=='deployment_cost_add' and _rune_cost_add(r)],
+        'rune_multipliers':[r['value'] for r in selected if r['kind']=='deployment_cost_pct'],
+        'card_factors':[r['value'] for r in selected if r['kind']=='first_deployment_cost_factor'],
+        'runtime_deltas':[r['value'] for r in selected if _runtime_cost_delta(r)]}
+    native=native_deployment_cost(stats['deployment_cost'],**cost_inputs)
     talent=sum(b['value'] for t in talents for b in t['blackboard'] if b['key']=='cost')
     missing=sorted({c for record in records if any(
         e['kind'] in COST_KINDS for e in record['applied']) or record['id']=='rogue_6_relic_cargo_3'
         for c in record['missing_conditions']})
-    unresolved=[r for r in rules if r['kind'] in COST_KINDS and not supported_cost(r)]
     modified=any(r['kind'] in ('deployment_cost_add','deployment_cost_pct') and r['value']!=0 or
                  r['kind']=='first_deployment_cost_factor' and r['value']!=1 for r in selected)
     # Only the prefab- and method-bound Fang talent may enter this new layer.
@@ -44,11 +47,7 @@ def cost_reference(stats,talents,rules,records,*,operator=None):
         and t.get('name')=='轻量化' and t.get('blackboard')==[
             {'key':'cost','value':-1.0,'valueStr':None}] for t in talents))
     with_talent=native_deployment_cost(stats['deployment_cost'],
-        rune_additions=[r['value'] for r in selected if r['kind']=='deployment_cost_add' and _rune_cost_add(r)],
-        rune_multipliers=[r['value'] for r in selected if r['kind']=='deployment_cost_pct'],
-        deck_base_deltas=[talent],
-        card_factors=[r['value'] for r in selected if r['kind']=='first_deployment_cost_factor'],
-        runtime_deltas=[r['value'] for r in selected if _runtime_cost_delta(r)]) if fang_verified else None
+        deck_base_deltas=[talent],**cost_inputs) if fang_verified else None
     talent_pending=bool(talent and modified and not fang_verified)
     cost=None if missing or unresolved or talent_pending else (
         with_talent['estimated_cost'] if with_talent else
