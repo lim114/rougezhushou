@@ -5120,3 +5120,7 @@ Windows原生客户端的局外计算、资料预览与建议工具。支持一�
 ## 维护：召唤物配额直接读取已生成字段（2026-11-06）
 
 仅D132/D133完成；10项定向与3种隔离Qt状态通过。回执：verification/maintenance/code-constraints-token-budget-fields-review-20261106/summary.json。不增加功能节数，不代表全程序整改完成。
+
+## 维护：召唤物配额窗口收窄输入错误捕获（2026-11-06）
+
+D131完成，13项定向通过。回执：verification/maintenance/code-constraints-token-budget-errors-review-20261106/summary.json。不增加功能节数。

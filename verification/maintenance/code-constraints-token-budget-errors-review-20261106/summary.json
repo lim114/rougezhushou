@@ -1,0 +1,45 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "召唤物配额窗口收窄输入错误捕获",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "7d973202461ab42da16dd2e4e66210c472aaa52d",
+  "changed_sources": [
+    "rouge/token_budget_view.py",
+    "tests/test_token_budget_errors_review.py"
+  ],
+  "source_sha256": {
+    "rouge/token_budget_view.py": "266674a14e102f3c0debf371b4bcc57d4ffa19dfca47394eb8263aa90f17f41b",
+    "tests/test_token_budget_errors_review.py": "245e2d0b01d6a3b28b9f87fae132403aa4ec72f2c1421a05615925760478bc31"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D131"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 13,
+    "command": "python -m unittest tests.test_token_budget_errors_review tests.test_token_budget_validation_review tests.test_token_budget_module_identity_review tests.test_token_budget_130",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-174",
+    "before": "3 tests: 2 subtest failures demonstrated swallowed KeyError/TypeError.",
+    "live_window": "Pending user closure of old app after restart policy rejection; Qt checks isolated."
+  },
+  "review": {
+    "standards": "Only ValueError remains at existing computation boundary; no redundant validation or new helper/defense.",
+    "requirements": "D131 approved narrowing. Actual invalid cultivation still prompts; missing internal fields/types propagate. Rendering remains outside catch."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

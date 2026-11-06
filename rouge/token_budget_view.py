@@ -48,7 +48,7 @@ class TokenBudgetDialog(QDialog):
         requests = {identity:{key:(None if control.value()<0 else control.value()) for key,control in controls.items()}
                     for identity,controls in self.inputs.items()}
         try: result = token_budget(self.operator,self.training,requests,self.budget.value())
-        except (ValueError,KeyError,TypeError) as error: self.notice.setPlainText(str(error)); return
+        except ValueError as error: self.notice.setPlainText(str(error)); return
         self.result = result
         for index,row in enumerate(result['rows']):
             for column,key in enumerate(('cost_reference','requested_cost_reference','held_limit_reference','concurrent_limit_reference'),4):
