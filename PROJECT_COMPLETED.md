@@ -1,3 +1,7 @@
+## 维护：行程范围重复判断整改（2026-11-06）
+
+已修循环内不变判断并保存模型回顾，4定向通过，模块未销项。[回执](verification/maintenance/code-constraints-route-scope-review-20261106/README.md)。
+
 ## 维护：物件技能列表重复读取整改（2026-11-06）
 
 技能列表复用及模型审查已记录，3定向/555对照通过，模块不销项。[回执](verification/maintenance/code-constraints-object-skill-list-20261106/README.md)。

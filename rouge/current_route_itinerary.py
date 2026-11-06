@@ -1,7 +1,7 @@
 """Every fixed route, in original checkpoint order, without runtime selection."""
 from copy import deepcopy
 from hashlib import sha256
-import json,math
+import json
 from . import current_battle_reference as battle
 from .battle_preview import display_cell
 PACK='research/p3-current-route-itinerary-375'
@@ -40,7 +40,7 @@ def _derive(current,source_identity):
             add('START',{'position':raw.get('startPosition'),'spawnOffset':raw.get('spawnOffset'),'spawnRandomRange':raw.get('spawnRandomRange')},key+'.startPosition')
             for j,point in enumerate(raw.get('checkpoints')or[]):add(point.get('type'),point,key+f'.checkpoints[{j}]')
             add('END',{'position':raw.get('endPosition')},key+'.endPosition')
-            actions=[deepcopy(a)for a in current['actions']if scope=='base'and a['queue']['kind']=='main'and a['raw'].get('actionType')=='SPAWN'and type(a['raw'].get('routeIndex'))is int and a['raw']['routeIndex']==i]
+            actions=[deepcopy(a)for a in current['actions']if a['queue']['kind']=='main'and a['raw'].get('actionType')=='SPAWN'and type(a['raw'].get('routeIndex'))is int and a['raw']['routeIndex']==i]if scope=='base'else[]
             bound.update(a['key']for a in actions);names=list(dict.fromkeys(e['name']for a in actions for e in a['enemy_candidates']))
             entries.append({'key':key,'scope':scope,'ordinal':i+1,'label':('基础路线'if scope=='base'else'额外候选路线')+str(i+1),'raw':deepcopy(raw),'motion_mode':motion,'steps':steps,'actions':actions,'enemy_names':names,'actual_selection':None,'actual_count':None,'actual_path':None,'absolute_time':None})
     for a in current['actions']:

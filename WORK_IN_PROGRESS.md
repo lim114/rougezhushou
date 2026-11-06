@@ -1,3 +1,7 @@
+## 当前断点：行程基础范围判断移出循环与模型核对（2026-11-06）
+
+范围判断移出动作循环，删除无用导入；4定向/155路线对照通过，窗口更新。D246—D249待审，共212组。回执verification/maintenance/code-constraints-route-scope-review-20261106/summary.json。
+
 ## 当前断点：物件技能列表复用与模型保护核对（2026-11-06）
 
 技能列表单次读取，3定向及555组旧新对照通过，窗口更新。D241—D245待审，共208组；断点/清单/回执同步。回执verification/maintenance/code-constraints-object-skill-list-20261106/summary.json。
