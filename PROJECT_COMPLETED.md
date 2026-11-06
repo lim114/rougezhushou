@@ -5132,3 +5132,7 @@ D131完成，13项定向通过。回执：verification/maintenance/code-constrai
 ## 维护：弹药规则必填读取与已授权数值出口复核（2026-11-06）
 
 D136保留复核、D137整改完成，31项定向通过。回执：verification/maintenance/code-constraints-ammo-source-review-20261106/summary.json。不增加功能节数。
+
+## 维护：治疗模组直接读取候选解锁条件（2026-11-06）
+
+D145完成，26项定向通过。回执：verification/maintenance/code-constraints-healing-unlock-review-20261106/summary.json。不增加功能节数。

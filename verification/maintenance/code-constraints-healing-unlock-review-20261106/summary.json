@@ -1,0 +1,47 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "治疗模组直接读取候选解锁条件",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "989b2ef5cc35eaa846589cb02f9627ca7b6b3226",
+  "changed_sources": [
+    "rouge/susuro_healing.py",
+    "rouge/guardian_healing.py",
+    "tests/test_healing_unlock_contract_review.py"
+  ],
+  "source_sha256": {
+    "rouge/susuro_healing.py": "f50e58c350a24a0a94dd570bfa501972f39235b5c3f3c2935bc1aeb000d88e2e",
+    "rouge/guardian_healing.py": "8adac077bd970b6420546d632ad392a31b7e4b12131f184f672337f2c7e93f4a",
+    "tests/test_healing_unlock_contract_review.py": "876fe39f99a700c401380e08eff56cfb7965ec2c2358e89c56cfba4b7a88e8b9"
+  },
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D145"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "tests_passed": 26,
+    "command": "python -m unittest tests.test_healing_unlock_contract_review tests.test_susuro_module_healing tests.test_guardian_healing_gates",
+    "full_suite_run": false,
+    "local_evidence": ".local/code-constraints-review-177",
+    "before": "Two tests; six missing/null gate subcases failed to raise. All three operators and three stages already selected correctly.",
+    "live_window": "Pending closure of old app after policy rejection; no live acceptance claimed."
+  },
+  "review": {
+    "standards": "Two required unlockCondition reads; no new validation/helper/catch. D145 approval covers removing missing/empty phase0 fallback.",
+    "requirements": "Missing/null gate cannot silently qualify a candidate. Actual three operator sources and stages retained; existing healing, tolerance, qualification and unknown-result cases pass. D144/D147 unchanged."
+  },
+  "remaining": [
+    "Native panel source acceptance catalog.py digest mismatch from prior batch",
+    "Other modules",
+    "Test window update"
+  ]
+}

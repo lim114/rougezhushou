@@ -1,3 +1,7 @@
+## 当前断点：治疗模组直接读取候选解锁条件（2026-11-06）
+
+D145完成，26项定向通过；原280组剩236组。D144/D147及其他模块、原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-healing-unlock-review-20261106/summary.json。
+
 ## 当前断点：弹药规则必填读取与已授权数值出口复核（2026-11-06）
 
 D136/D137完成，31项定向通过；原280组剩237组。培养默认值、其他模块及原生来源摘要、新版窗口待补。回执verification/maintenance/code-constraints-ammo-source-review-20261106/summary.json。

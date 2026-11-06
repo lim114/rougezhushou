@@ -23,7 +23,7 @@ def selected_trait(profile,scenario,*,cultivation=None):
     for part in module['levels'][stage-1]['parts']:
         if part.get('isToken') or part.get('target')!='TRAIT' or part.get('resKey')!=expected:continue
         for candidate in (part.get('overrideTraitDataBundle') or {}).get('candidates') or []:
-            gate=candidate.get('unlockCondition') or {'phase':'PHASE_0','level':1}
+            gate=candidate['unlockCondition']
             phase=int(gate['phase'][-1])
             if phase>elite or phase==elite and gate['level']>level or candidate.get('requiredPotentialRank',0)>scenario.get('potential',1)-1:continue
             board={x['key']:x['value'] for x in candidate.get('blackboard') or []}
