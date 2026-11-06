@@ -30,9 +30,9 @@ def packet():
     if set(data['all_current_stage_ids'])!=set(current['version']['current']['details']['stages']):return None
     return {'data':data,'current':current,'source_identity':sha256((MANIFEST_SHA256+terrain_identity).encode()).hexdigest(),'terrain_source_identity':terrain_identity,'absolute_accuracy_verified':False}
 
-def stage_reference(stage_id):
+def stage_reference(stage_id, *, prepared_packet=...):
     if type(stage_id)is not str:return None
-    ref=packet()
+    ref=packet() if prepared_packet is ... else prepared_packet
     if ref is None:return None
     stage=ref['current']['version']['current']['details']['stages'].get(stage_id)
     if stage is None:return None

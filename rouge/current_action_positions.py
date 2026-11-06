@@ -9,9 +9,16 @@ UNAVAILABLE = '当前条目与地图位置无法核对，旧内容已清除；�
 
 
 def reference(stage_id, action_key):
-    current = battle.stage_reference(stage_id)
-    grid = positions.stage_reference(stage_id)
-    if current is None or grid is None or type(action_key) is not str:
+    if type(action_key) is not str:
+        return None
+    packet = positions.packet()
+    if packet is None:
+        return None
+    current = battle.stage_reference(stage_id, prepared_packet=packet['current'])
+    if current is None:
+        return None
+    grid = positions.stage_reference(stage_id, prepared_packet=packet)
+    if grid is None:
         return None
     return _reference(current, grid, action_key)
 

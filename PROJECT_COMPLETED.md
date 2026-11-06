@@ -5490,3 +5490,7 @@ D259局部完成，11项定向通过；非法类型不读资料包，合法请�
 
 ### 维护：地图入口与失效撤下核对（2026-11-06）
 D259/D260/D261完成。明确独立入口和跨来源重读边界，复用先前两处重复查询整改；资料损坏与PNG解码失败清空行为按授权保留。5项定向通过（含Qt离屏），不表示实机验收。回执 `verification/maintenance/code-constraints-map-boundaries-20261106/summary.json`。
+
+
+### 维护：动作地图共用资料包（2026-11-06）
+D263完成：一次核验资料供动作和地图使用，独立地图入口继续自行读取；7项定向通过，缺资料不自动改读其它来源。回执 `verification/maintenance/code-constraints-action-map-packet-20261106/summary.json`。
