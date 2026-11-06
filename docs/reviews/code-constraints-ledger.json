@@ -201,7 +201,14 @@
       "decision": "D43",
       "trigger": "parse_preview_object拒绝重复JSON字段和非有限数值",
       "impact": "避免编辑器接受歧义字段/无限数值；这些输入不能用于临时计算",
-      "recommendation": "建议保留；普通JSON语法/对象入口与框架解析回调不当作单次包装删除"
+      "recommendation": "建议保留；普通JSON语法/对象入口与框架解析回调不当作单次包装删除",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-input-link-retention-20261106/summary.json",
+          "scope": "D43/D44 approved input/identity protections retained and verified",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/tomimi_reference.py",
@@ -214,7 +221,14 @@
       "impact": "避免跳错关卡；不同版本无法对应时网页入口不可用",
       "recommendation": "建议保留身份对照，替代为允许仅按level匹配或暴露缺项",
       "full_module_review_complete": false,
-      "evidence": "Both functions read: cached fixed public stage table and pure target builder; no ordinary duplicate validation or one-use wrapper. Optional missing reference is normal availability state. Existing D44 stage name/identity gate remains pending, so this module is not fully certified."
+      "evidence": "Both functions read: cached fixed public stage table and pure target builder; no ordinary duplicate validation or one-use wrapper. Optional missing reference is normal availability state. Existing D44 stage name/identity gate remains pending, so this module is not fully certified.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-input-link-retention-20261106/summary.json",
+          "scope": "D43/D44 approved input/identity protections retained and verified",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/node_statistics_source.py",

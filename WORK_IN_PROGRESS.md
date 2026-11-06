@@ -1,3 +1,7 @@
+## 当前断点：编辑输入与公开关卡跳转保护按授权复核（2026-11-06）
+
+D43/D44按批准保留并完成复核，16项定向通过，产品源码未改。D41上游未保证nodeBindings结构，仍待审查。原280组完成165、剩115。回执 `verification/maintenance/code-constraints-input-link-retention-20261106/summary.json`。
+
 ## 当前断点：敌人搜索使用已归一化资料契约（2026-11-06）
 
 D38完成，5项定向通过；三份固定关卡的生成记录核对。原280组完成163、剩117；待审项与原测试窗口更新不变。回执 `verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json`。

@@ -5426,3 +5426,7 @@ D39/D40完成；仅ERROR_NOT_FOUND返回空，系统错误上报；通用文案�
 ## 维护：敌人搜索使用已归一化资料契约（2026-11-06）
 
 D38完成；内部坏数据不再伪装成不匹配，来源已提供字符串文本，5项定向通过。回执 `verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json`。
+
+## 维护：编辑输入与公开关卡跳转保护按授权复核（2026-11-06）
+
+D43/D44按批准保留，16项定向通过；解析回调职责和准确关卡跳转条件核对，未为修改而改写。回执 `verification/maintenance/code-constraints-input-link-retention-20261106/summary.json`。

@@ -1,0 +1,62 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "title": "编辑输入与公开关卡跳转保护按授权复核",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "base_commit": "c7880ca5a36f3477d8c0508d0689806529d5b0da",
+  "changed_sources": [],
+  "source_sha256": {},
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "module_delta": "module-delta.json",
+  "resolved_decisions": [
+    "D43",
+    "D44"
+  ],
+  "new_pending_decisions": [],
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_manual_scenario_120",
+        "tests_run": 12,
+        "tests_passed": 12,
+        "seconds": 0.001
+      },
+      {
+        "command": "python -m unittest tests.test_tomimi_456.PublicLinkTests",
+        "tests_run": 4,
+        "tests_passed": 4,
+        "seconds": 1.09
+      }
+    ],
+    "live_window": "Documentation/review only; no restart required. Previous native window update gap remains."
+  },
+  "review": {
+    "standards": "D43 json callbacks are framework parsing boundaries, not unnecessary wrappers; duplicate/nonfinite checks retained as approved, syntax catch only JSONDecodeError. D44 missing-reference/unknown-level/name mismatch checks retained per exact-source requirement; one stage registry read. No source edits justified.",
+    "requirements": "Nested/escaped duplicate keys, special constants, float overflow, normal number types and malformed object tests pass. Tomimi exact public vectors, pinned registry, mismatch/no source and exclusion of private fields pass. D41 not closed: public_archive.validate does not guarantee nodeBindings row shape; deleting filter not justified."
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision"
+  ],
+  "product_source_changed": false,
+  "partially_implemented": [],
+  "reviewed_unchanged_sources": {
+    "rouge/manual_scenario.py": "1a15f179950e1cb0856e303d06fc02562b825f4ca730fd41489456b3d9c5f603",
+    "rouge/tomimi_reference.py": "e2c5fa5217ea70fd058a9c831d4367b850edda31d052084314da9510411549d2"
+  }
+}
