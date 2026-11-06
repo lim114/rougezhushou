@@ -1,7 +1,7 @@
 """Independent cultivation and recruitment scenarios, not account mutations."""
 from copy import deepcopy
 from .supplemental_run import run_skill_reference
-from .supplemental_comparison import comparison_rows,format_comparison
+from .supplemental_comparison import comparison_rows,format_comparison,metrics
 
 
 def cultivation_defaults(operator_preview,environment):
@@ -34,6 +34,7 @@ def compare_cultivation(operator_preview,environment,preview):
         names.add(name)
     original=deepcopy(operator_preview);environment=deepcopy(environment)
     baseline=run_skill_reference(original,environment);rows=[];variants=[]
+    baseline_values={r['key']:r['value'] for r in metrics(baseline)}
     for proposal in proposals:
         proposed={**original,**{k:proposal[k] for k in ('elite','level','trust','potential')}}
         env=deepcopy(environment)
@@ -45,7 +46,7 @@ def compare_cultivation(operator_preview,environment,preview):
             variant['error']=proposal['name']+'：'+str(error)
             rows.append({'proposal':proposal['name'],'key':'invalid','name':'方案不可测算',
                          'value':None,'base_value':None,'delta':None,'unit':'—'})
-        else:rows.extend(comparison_rows(variant['result'],baseline,proposal=proposal['name']))
+        else:rows.extend(comparison_rows(variant['result'],baseline,baseline_values=baseline_values,proposal=proposal['name']))
         variants.append(variant)
     return {'operator_preview':original,'environment':environment,'preview':deepcopy(preview),
             'baseline':baseline,'variants':variants,'rows':rows,

@@ -3,7 +3,7 @@ from copy import deepcopy
 from .catalog import catalog,stage_previews
 from .supplemental_run import _run_skill_reference
 from .supplemental_skills import _cultivated_stats
-from .supplemental_comparison import comparison_rows,format_comparison
+from .supplemental_comparison import comparison_rows,format_comparison,metrics
 
 
 def enemy_defaults(environment):
@@ -58,9 +58,11 @@ def compare_fixed_enemies(operator_preview,environment,preview):
             target={'stage_id':sid,'enemy_id':record['id'],'level':record['level']}
             if record['id']=='enemy_2148_shorbb':target['orb_mode']=mode
             result=_run_skill_reference(original,env,stats,target_enemy=target)
-            if baseline is None:baseline=result
+            if baseline is None:
+                baseline=result
+                baseline_values={r['key']:r['value'] for r in metrics(baseline)}
             labels={'enemy_name':record['name'],'grade':grade,'enemy_id':record['id'],'level':record['level']}
-            rows.extend(comparison_rows(result,baseline,**labels))
+            rows.extend(comparison_rows(result,baseline,baseline_values=baseline_values,**labels))
             for key,name,unit in [('maxHp','候选生命参考','生命'),('atk','候选攻击参考','攻击力'),
                                   ('def','候选防御参考','防御力'),('magicResistance','候选法抗参考','法抗')]:
                 value=result['target_enemy']['stats'][key];base=baseline['target_enemy']['stats'][key]

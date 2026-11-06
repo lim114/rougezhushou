@@ -1,7 +1,8 @@
 """Frozen-run comparisons; each row is a separate metric, never a summed cast."""
 import json
 from copy import deepcopy
-from .supplemental_run import run_skill_reference
+from .supplemental_run import _run_skill_reference
+from .supplemental_skills import _cultivated_stats
 
 
 def metrics(result):
@@ -23,8 +24,10 @@ def metrics(result):
     return rows
 
 
-def comparison_rows(result,baseline,**labels):
-    previous={r['key']:r['value'] for r in metrics(baseline)} if baseline else {}
+def comparison_rows(result,baseline,*,baseline_values=None,**labels):
+    previous=baseline_values
+    if previous is None:
+        previous={r['key']:r['value'] for r in metrics(baseline)} if baseline else {}
     rows=[]
     for metric in metrics(result):
         base=previous.get(metric['key']);value=metric['value']
@@ -41,13 +44,15 @@ def compare_ranks(operator_preview,environment,preview):
         any(type(r) is not int or not 1<=r<=7 for r in ranks) or len(set(ranks))!=len(ranks)):
         raise ValueError('ranks需要1–7个不重复的1–7整数。')
     original=deepcopy(operator_preview);environment=deepcopy(environment)
-    baseline=run_skill_reference(original,environment)
+    stats=_cultivated_stats(original)
+    baseline=_run_skill_reference(original,environment,stats)
+    baseline_values={r['key']:r['value'] for r in metrics(baseline)}
     variants=[];rows=[]
     for rank in ranks:
         result=(deepcopy(baseline) if rank==original['skill_rank'] else
-                run_skill_reference({**original,'skill_rank':rank},environment))
+                _run_skill_reference({**original,'skill_rank':rank},environment,stats))
         variants.append({'rank':rank,'result':result})
-        rows.extend(comparison_rows(result,baseline,rank=rank))
+        rows.extend(comparison_rows(result,baseline,baseline_values=baseline_values,rank=rank))
     return {'operator_preview':original,'environment':environment,'preview':deepcopy(preview),
             'baseline':baseline,'variants':variants,'rows':rows,
             'notes':['每个分项独立比较，不能将不同伤害分支、期望、治疗和面板相加。',

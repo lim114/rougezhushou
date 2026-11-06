@@ -89,7 +89,7 @@
 | D120 | `supplemental_cultivation.compare_cultivation`每方案run_skill_reference捕获ValueError/TypeError/KeyError并生成不可测算行 | 单方案失败不会中断其余方案，但内部缺键/类型缺陷也会变成输入提示 | 建议区分已知输入错误与内部异常后收窄；替代保留逐方案完整隔离。模块本批仅源码回顾，字节未改，待审核 |
 | D121 | `cultivation_comparison`先_amount校验信赖并转float，紧接共享入口_operator_attribute_reference再次校验同一信赖有限性与0–100范围 | 两个独立入口各有输入契约，组合路径重复；_amount对布尔值的拒绝不能删除，其他调用者仍需要培养入口校验 | 建议保留外部入口拒绝布尔/范围规则，以已验证培养条件共用内部计算；替代保留重复范围检查。本批未改信赖检查，待审核 |
 | D122 | `supplemental_run.run_skill_reference`无本局加成基准调用_skill_reference时捕获所有ValueError并返回baseline=None及错误说明 | 生命符文可能使声明缺口对加成后合法、对原生命不合法，必须保留这类可读缺项；其它内部ValueError也被隐藏为基准不可测算 | 建议限定为已知生命缺口校验错误，其它内部错误上报；替代保留当前所有ValueError隔离。现有捕获体/类型/范围未改，待审核 |
-| D123 | `supplemental_comparison.comparison_rows`在baseline为空时改用空字段表，所有差值未知 | 可支持无基准调用；当前等级/培养/敌人三个产品调用方均提供已生成的非空基准，可能掩盖内部漏传 | 建议确认无基准是否是正式契约后决定保留，或要求必有基准并直接投影；替代保留现有无基准模式。本批未改此分支，待审核 |
+| D123 | `supplemental_comparison.comparison_rows`在baseline为空时改用空字段表，所有差值未知 | 可支持无基准调用；当前等级/培养/敌人三个产品调用方均提供已生成的非空基准及复用字段表，原报告入口仍保留，可能掩盖内部漏传 | 建议确认无基准是否是正式契约后决定保留，或要求必有基准并直接投影；替代保留现有无基准模式。本批未改此分支，待审核 |
 | D124 | `supplemental_sp.sp_reference`对已声明bound_char_buffs的子记录使用get(id,{})、get(effects,[])，资料缺失时按空效果处理 | 固定资料15条关联当前均完整；若资料损坏或更新漏同步，可能把本应待确认的自然回技显示为已知 | 建议在资料入口核验已声明关联并上报缺失，消费处直接读取；替代保留当前空效果回退。未改这两处回退，不新增校验，待审核；可选bound_char_buffs不存在不在本项删除范围内 |
 | D125 | `supplemental_skills._cultivated_stats`先验证精英/等级/潜能的整数类型和信赖范围，再调用operator_attributes重验同一字段 | 两个入口有各自输入契约，组合路径重复；补充入口还拒绝整数子类、布尔及信赖错误类型，不能简单删第一层 | 建议共用已验证培养计算，保留各外部入口的严格契约；替代保持重复。仅此补充技能入口，D121不覆盖此处；本批未改 |
 | D126 | `supplemental_skills._skill_reference`对已由bonuses字典初始化的atk/max_hp/def仍多次get(key,0) | 本函数不会删除这三键，缺键只会来自内部构造契约被破坏；默认0会掩盖缺陷 | 建议三种已初始化键改直接索引；替代保留0回退。本批未改；cost/prob/atk_scale等真正可选天赋键和battle_attributes可选来源不在本项范围 |

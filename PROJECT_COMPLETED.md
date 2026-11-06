@@ -1,3 +1,7 @@
+## 维护：补充比较复用基准与培养（2026-11-05）
+
+三类比较共享各自基准字段，技能等级比较复用相同培养；27定向及168报告/15错误对照通过。补充等级比较普通约束回顾完成，D123仍待审核。[回执](verification/maintenance/code-constraints-supplemental-baseline-reuse-20261105/README.md)。
+
 ## 维护：培养比较阶段校验入口去重（2026-11-05）
 
 已装备模组类型/范围不再由比较层重复校验，无模组/零阶段约束保持。10定向通过；结果和提示差异分别记录，仅本路径销项。[回执](verification/maintenance/code-constraints-cultivation-stage-boundary-20261105/README.md)。
