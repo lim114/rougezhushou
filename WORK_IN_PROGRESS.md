@@ -1,3 +1,7 @@
+## 当前断点：出怪候选模型回顾与单次队列名称内联（2026-11-06）
+
+单次名称包装已内联，4项定向检查通过；D250—D254待审，共217组。重复身份检查与位置查询留待批准，模块未销项。回执verification/maintenance/code-constraints-candidate-model-review-20261106/summary.json。
+
 ## 当前断点：行程基础范围判断移出循环与模型核对（2026-11-06）
 
 范围判断移出动作循环，删除无用导入；4定向/155路线对照通过，窗口更新。D246—D249待审，共212组。回执verification/maintenance/code-constraints-route-scope-review-20261106/summary.json。

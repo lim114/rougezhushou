@@ -62,12 +62,6 @@ def _packet():
         return None
 
 
-def _queue_name(queue):
-    if queue['kind'] == 'main':
-        return f"第{queue['wave']}波 · 第{queue['fragment']}组"
-    return f"条件分支{queue['branch_index']} · 第{queue['phase']}段"
-
-
 def _member(action, characters):
     raw = action['raw']; typ = raw.get('actionType')
     refs = deepcopy(action['enemy_candidates'])
@@ -111,7 +105,9 @@ def _build(current, characters):
     scopes = []; consumed = set()
     for raw_queue in battle.queues(current['level']):
         queue = {k: deepcopy(v) for k, v in raw_queue.items() if k != 'actions'}
-        scope = {'key': queue['source_selector'], 'name': _queue_name(queue),
+        scope = {'key': queue['source_selector'], 'name': (f"第{queue['wave']}波 · 第{queue['fragment']}组"
+                         if queue['kind'] == 'main' else
+                         f"条件分支{queue['branch_index']} · 第{queue['phase']}段"),
                  'kind': queue['kind'], 'queue': queue}
         scopes.append(scope)
         for kind, field in FIELDS.items():
