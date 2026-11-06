@@ -1,7 +1,7 @@
 """Declared additional summons, currency and inventories; no deployment commands."""
 from copy import deepcopy
-from .token_module_comparison import compare_token_module
-from .catalog import operator_attributes
+from .token_module_comparison import _compare_token_module
+from .catalog import catalog, operator_attributes
 
 
 def count(value, label, *, unknown=False, maximum=100):
@@ -16,7 +16,8 @@ def token_budget(operator, training, requests, budget):
     # Validate the complete current equipment before consuming a reference.
     operator_attributes(operator, **{k:v for k,v in training.items() if k in
         ('elite','level','trust','potential','module_id','module_level')})
-    comparison = compare_token_module(operator, training, training.get('module_id'))
+    cultivation={k:deepcopy(v) for k,v in training.items() if k in ('elite','level','trust','potential')}
+    comparison = _compare_token_module(operator, catalog()['operators'][operator], cultivation, training.get('module_id'))
     identities = {t['token_id'] for t in comparison['tokens']}
     if not isinstance(requests, dict) or set(requests) != identities:
         raise ValueError('请逐项提供当前干员全部召唤物的配额条件。')

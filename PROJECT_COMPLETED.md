@@ -1,3 +1,7 @@
+## 维护：预算与对照培养验证复用（2026-11-05）
+
+培养验证2→1，保持完整装备验证和错误顺序；30项定向、792对照/3219预算及5/45错误结果一致。[回执](verification/maintenance/code-constraints-token-budget-validation-20261105/README.md)。
+
 ## 维护：模组对照条件一次准备（2026-11-05）
 
 基础与升级条件复用，保持各召唤物输出独立；27项定向、792模块报告/5错误输入一致，窗口更新。[回执](verification/maintenance/code-constraints-token-comparison-preparation-20261105/README.md)。

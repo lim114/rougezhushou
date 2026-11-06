@@ -98,4 +98,7 @@
 | D128 | `summons.token_attributes`阶段首尾等级相同则插值比例取0 | 支持单等级召唤物阶段，避免除零；不是D108干员培养函数的同一授权位置 | 建议确认单等级资料契约后决定保留，替代在资料入口拒绝该结构。本批未修改，待审核 |
 | D129 | `relics.finish`的regeneration_factor返回None时改用1继续展示已知回复小计 | 保留已知分项，但外部未核验组合也可能被当成无倍率；准备阶段正常会过滤未知组合 | 建议确认是否仅显示已证小计并标完整量未知，替代保留现有倍率1回退。本批未修改，待审核 |
 
-| D130 | `token_module_comparison.compare_token_module`在verified字段计算differences时再次检查base[k]和values[k]均非None | 当前固定32名干员/792份对照中的42个已确认差值字段均非空；若未来确认字段仍缺基准或结果，现分支会静默省略差值 | 建议确认verified是否保证两端数值后删除重复判空；替代保留允许已确认字段缺差值的契约。本批未改，需审核；其它未知字段、无规则、未解锁分支不在本项范围 |
+| D130 | `token_module_comparison._compare_token_module`在verified字段计算differences时再次检查base[k]和values[k]均非None | 当前固定32名干员/792份对照中的42个已确认差值字段均非空；若未来确认字段仍缺基准或结果，现分支会静默省略差值 | 建议确认verified是否保证两端数值后删除重复判空；替代保留允许已确认字段缺差值的契约。本批未改，需审核；其它未知字段、无规则、未解锁分支不在本项范围 |
+
+| D131 | `token_budget_view.TokenBudgetDialog.calculate`捕获ValueError/KeyError/TypeError，将计算异常改为界面提示 | ValueError包含正常输入错误，KeyError/TypeError也可能是内部结果或资料缺陷；缺陷被当作输入提示 | 建议核对入口错误契约后仅保留正常输入ValueError，删除其余内部类型/缺键兜底；替代保留原三类。尚未授权，原样保留 |
+| D132 | 同方法使用row.get("stock_within_reference")容忍结果缺字段 | token_budget每行都生成此键；字段缺失会静默省略库存提示 | 建议改为row["stock_within_reference"]，仍保留正常None/False含义；替代保持缺键不提示。尚未授权，原样保留 |

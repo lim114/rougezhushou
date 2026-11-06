@@ -1143,13 +1143,33 @@
     },
     {
       "file": "rouge/token_module_comparison.py",
-      "sha256": "582c365cddf9d5a2522a4a959ac1027c67dd7cdc8ebe43561eb0a2ed62d5d4b7",
-      "rule1": "base_and_upgrade_conditions_and_unlock_evaluated_once",
-      "rule2": "single_existing_entry_no_helper_added",
-      "rule3": "D130_verified_difference_null_guards_recorded_unchanged",
+      "sha256": "8ce84ad0e42a5120229e8523a1d95c116d63df5ba2b1f98866dd806433475baf",
+      "rule1": "prepared_cultivation_core_has_two_product_callers",
+      "rule2": "prepared_comparison_shared_by_two_real_entry_paths",
+      "rule3": "D130_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "Whole 64-line module and its app/token_budget callers inspected. Base and stage conditions do not depend on token identity, and summoned-attribute/module/count consumers read them without mutation; build once for each request. Every token still owns its result dictionaries. Existing optional module, unknown-rule and locked-upgrade branches are product applicability states. D130 concerns only null checks after fields are already verified. Remaining ordinary cross-call work: token_budget validates complete cultivation/equipment then comparison validates the overlapping cultivation again; distinct equipment validation must be retained. No whole-module certification yet."
+      "evidence": "Public comparison validates its own cultivation, then uses the same prepared core as budget. The core owns its cultivation dictionary and preserves output and defaulting. Budget no longer repeats cultivation validation. Catalog equipment validation still resolves and checks module identity before the core resolves and checks the same identity; ordinary remaining work, not a pending defense. D130 null guards unchanged."
+    },
+    {
+      "file": "rouge/token_budget.py",
+      "sha256": "8cfc2e1a8879d7d2f568a1f853a9c2480767a8851ae3967f8a9fe970ff6b1ac4",
+      "rule1": "complete_equipment_validation_once_before_prepared_comparison",
+      "rule2": "prepared_comparison_shared_by_two_real_entry_paths",
+      "rule3": "existing_guards_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read complete budget and formatter plus dialog and app callers. count has real multiple uses; formatter value helper also has multiple real calls. Budget, full equipment, token set and each quota remain entry validations in original order. Prepared comparison receives a separate cultivation dictionary. Unknown costs/stocks and missing count references are product states. Remaining overlap is catalog module identity validation followed by comparison module identity validation; do not certify whole module."
+    },
+    {
+      "file": "rouge/token_budget_view.py",
+      "sha256": "22506b18554b0c92134d4e8649b3b4cb88e3da66272b1281ad99fa87fe640814",
+      "rule1": "full_body_read_no_ordinary_edit_in_this_batch",
+      "rule2": "existing_event_and_display_methods_unchanged",
+      "rule3": "D131_D132_recorded_unchanged",
+      "ordinary_rules_review_complete": false,
+      "full_module_review_complete": false,
+      "evidence": "Read complete dialog. No module edits. Existing result-not-yet-calculated states, invalidate and explicit recalculate are normal UI flow. D131 captures ValueError/KeyError/TypeError around calculation; D132 optional get on required stock_within_reference result. No approval inferred. Caller/callee boundary audit is partial; no whole-module certification."
     }
   ]
 }
