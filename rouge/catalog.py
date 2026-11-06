@@ -27,7 +27,7 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
 
 
 def _operator_attribute_reference(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
-    """Return calculated attributes and the equipment resolved by this validation."""
+    """Return attributes, resolved equipment and its applied/unlocked state."""
     profile = operator_profiles()[operator]
     if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):
         raise ValueError('精英阶段需要为 0、1 或 2。')
@@ -49,13 +49,15 @@ def _operator_attribute_reference(operator, elite=2, level=None, trust=100, pote
             field=mapping.get(modifier['attributeType'])
             if field and modifier['formulaItem']=='ADDITION':stats[field]+=modifier['value']
     module=None
+    module_applied=False
     if module_id:
         module=next((m for m in profile['modules'] if m['id']==module_id),None)
         if not module or not isinstance(module_level,int) or isinstance(module_level,bool) or not 1<=module_level<=len(module['levels']):
             raise ValueError('模组身份或等级尚无可用规则。')
-        if elite>=module['unlock_elite'] and level>=module['unlock_level']:
+        module_applied=elite>=module['unlock_elite'] and level>=module['unlock_level']
+        if module_applied:
             for attr,value in module['levels'][module_level-1]['attributes'].items():
                 field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed',
                        'respawn_time':'redeploy_seconds'}.get(attr)
                 if field:stats[field]+=value
-    return stats,module
+    return stats,module,module_applied

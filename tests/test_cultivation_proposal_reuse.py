@@ -15,8 +15,8 @@ class CultivationProposalReuseTests(unittest.TestCase):
         preview = {'proposals': [proposal('低培养', elite=2, level=1, trust=0),
                                  proposal('满培养', elite=2, level=90)]}
         original = deepcopy((scenario, preview))
-        with patch.object(catalog, 'operator_attributes', wraps=catalog.operator_attributes) as attributes:
-            with patch.object(comparison, 'operator_attributes', new=attributes):
+        with patch.object(catalog, '_operator_attribute_reference', wraps=catalog._operator_attribute_reference) as attributes:
+            with patch.object(comparison, '_operator_attribute_reference', new=attributes):
                 report = comparison.compare_cultivation(scenario, preview)
         self.assertEqual(attributes.call_count, 2)
         self.assertEqual((scenario, preview), original)

@@ -1,3 +1,7 @@
+## 维护：培养比较复用装备状态（2026-11-05）
+
+比较层复用属性已解析的模组与生效状态，修正null等级的重复比较错误。18项定向通过；本路径销项，模块仍部分完成。[回执](verification/maintenance/code-constraints-cultivation-equipment-state-20261105/README.md)。
+
 ## 维护：主计算共享受疗培养（2026-11-05）
 
 主计算向受疗资料传递已选择模组及培养，扫描2→1；原查询接口保持。43项定向，513结果/54错误/1608天赋选择对照一致；仅本路径完成。[回执](verification/maintenance/code-constraints-combat-recipient-preparation-20261105/README.md)。

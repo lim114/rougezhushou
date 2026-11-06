@@ -14,7 +14,7 @@ def count(value, label, *, unknown=False, maximum=100):
 def token_budget(operator, training, requests, budget):
     count(budget, '费用预算', maximum=9999)
     # Validate the complete current equipment before consuming a reference.
-    _,module = _operator_attribute_reference(operator, **{k:v for k,v in training.items() if k in
+    _,module,_ = _operator_attribute_reference(operator, **{k:v for k,v in training.items() if k in
         ('elite','level','trust','potential','module_id','module_level')})
     profile=catalog()['operators'][operator]
     cultivation={k:deepcopy(v) for k,v in training.items() if k in ('elite','level','trust','potential')}

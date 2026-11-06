@@ -1,7 +1,7 @@
 """Independent cultivation proposals; recompute attributes and supported skills."""
 import json
 from copy import deepcopy
-from .catalog import catalog,operator_profiles,operator_attributes
+from .catalog import catalog,operator_profiles,_operator_attribute_reference
 from .damage import _prepare_damage, _calculate_prepared
 from .healing_budget import _amount
 from .supplemental_skills import defaults,skill_reference,supplemental_profiles
@@ -10,11 +10,13 @@ from .supplemental_skills import defaults,skill_reference,supplemental_profiles
 def compare_cultivation(scenario,preview):
     if type(preview) is not dict or set(preview)!={'proposals'}: raise ValueError('需要proposals培养方案列表。')
     proposals=preview['proposals'];identity=scenario.get('operator')
-    if type(identity) is not str or identity not in operator_profiles(): raise ValueError('需要有效干员。')
+    profiles=operator_profiles()
+    if type(identity) is not str or identity not in profiles: raise ValueError('需要有效干员。')
     if type(proposals) is not list or not 1<=len(proposals)<=12: raise ValueError('培养方案需要1–12项，第一项作为差值基准。')
     seen=set();rows=[]
+    required={'name','elite','level','trust','potential','module_id','module_level'}
     for proposal in proposals:
-        if type(proposal) is not dict or set(proposal)!={'name','elite','level','trust','potential','module_id','module_level'}:
+        if type(proposal) is not dict or set(proposal)!=required:
             raise ValueError('每个方案需要name、elite、level、trust、potential、module_id、module_level。')
         name=proposal['name']
         if (type(name) is not str or not 1<=len(name)<=60 or name in seen or
@@ -31,9 +33,7 @@ def compare_cultivation(scenario,preview):
             mid=conditions['module_id'];ml=conditions['module_level']
             if type(ml) is not int or (mid is None and ml!=0) or (mid is not None and type(mid) is not str):
                 raise ValueError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
-            attributes=operator_attributes(identity,**conditions)
-            module=next((m for m in operator_profiles()[identity]['modules'] if m['id']==mid),None)
-            row['module_applied']=bool(module and conditions['elite']>=module['unlock_elite'] and conditions['level']>=module['unlock_level'])
+            attributes,_,row['module_applied']=_operator_attribute_reference(identity,**conditions)
             row['attributes']=attributes
             for key in ('attack','hp','defense'):row[key]=attributes[key]
             row['status']='基础属性参考'
@@ -67,7 +67,7 @@ def compare_cultivation(scenario,preview):
         if row['skill_reference'] and baseline['skill_reference']:
             row['skill_differences']={r['name']:r['value']-base[r['name']] if r['value'] is not None and base.get(r['name']) is not None else None for r in row['skill_reference']['rows']}
     return {'scenario':deepcopy(scenario),'preview':deepcopy(preview),'rows':rows,'baseline_name':baseline['name'],
-            'operator_name':operator_profiles()[identity]['name'],
+            'operator_name':profiles[identity]['name'],
             'notes':['第一方案为差值基准；每行只替换培养及模组条件，技能、目标与其他计算条件沿用打开时预览。',
                      '基础属性列未叠加天赋/技能；已接入技能另行重算天赋门和模组门，未知输出或差值保留未知。',
                      '补充技能只比较单次分项；未接入的干员仍可比较培养属性。未提供材料成本或自动培养建议。',
