@@ -42,7 +42,7 @@ def exchange_links(data, version, identity):
     return result
 
 def exchange_label(link):
-    rarity={'N':'低稀有度','R':'中稀有度','SR':'高稀有度'}.get(link['rarity'],'来源未分档')
+    rarity={'N':'低稀有度','R':'中稀有度','SR':'高稀有度'}[link['rarity']]
     return '交出'+rarity+('收藏品'if link['kind']=='藏品'else'零件')+' → 查看换入候选'
 
 def exchange_text(link):

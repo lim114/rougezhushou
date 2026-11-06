@@ -1,3 +1,7 @@
+## 维护：兑换资料稀有度契约清理及D317落实（2026-11-06）
+
+D317实施与定向复核完成，兑换资料模块销项。[回执](verification/maintenance/code-constraints-exchange-contract-review-20261106/README.md)。
+
 ## 已完成的审批记录：保存280组审核决定（2026-11-06）
 
 14项全部答复，目标保持暂停。代码未改；280组待实施/核实，不增加完整模块。恢复先读docs/decisions/2026-11-06-defense-review-approval.md及编号登记，按授权条件分批推进；D94保留160字提示，D86手动打开目录。回执verification/maintenance/code-constraints-defense-approval-20261106/summary.json。
