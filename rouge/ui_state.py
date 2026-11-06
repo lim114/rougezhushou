@@ -27,8 +27,9 @@ def calculation_batch(window):
 def _reading_state(widget):
     cursor = widget.textCursor()
     vertical = widget.verticalScrollBar()
-    return (cursor.anchor(), cursor.position(), vertical.value(),
-            widget.horizontalScrollBar().value(), vertical.value() >= vertical.maximum())
+    value = vertical.value()
+    return (cursor.anchor(), cursor.position(), value,
+            widget.horizontalScrollBar().value(), value >= vertical.maximum())
 
 
 def _restore_reading(widget, state, follow_tail):

@@ -17,11 +17,12 @@ class MechanismTextBrowser(QTextBrowser):
         while block.isValid():
             cursor = QTextCursor(block)
             cursor.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.KeepAnchor)
+            number = block.blockNumber()
             style = QTextCharFormat()
             style.setAnchor(True)
-            style.setAnchorNames(['mechanism-block-' + str(block.blockNumber())])
+            style.setAnchorNames(['mechanism-block-' + str(number)])
             style.setFontUnderline(False)
-            style.setFontWeight(QFont.Weight.Bold if block.blockNumber() == 0 or block.text().startswith('【')
+            style.setFontWeight(QFont.Weight.Bold if number == 0 or block.text().startswith('【')
                                 else QFont.Weight.Normal)
             cursor.mergeCharFormat(style)
             block = block.next()
@@ -32,10 +33,10 @@ def replace_mechanism_text(widget, text, *, preserve, follow_change, heading=Non
     if details is not None:
         from .reference_copy import mechanism_copy
         widget.reference_details = details
-        text, notes = mechanism_copy(text, details.property('referenceBaseText'))
+        base = details.property('referenceBaseText')
+        text, notes = mechanism_copy(text, base)
     changed = replace_text(widget, text, preserve=preserve)
     if details is not None:
-        base = details.property('referenceBaseText')
         details.setText(base + ('\n\n' + notes if notes else ''))
     if follow_change and not preserve and heading:
         target = widget.document().find(heading)

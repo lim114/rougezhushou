@@ -1,3 +1,7 @@
+## 维护：说明阅读器与标题模块完成整改（2026-11-06）
+
+mechanism_reading新增完整销项，mechanism_reader_header复核维持完成；ui_state普通规则完成，D276待审。33定向通过。[回执](verification/maintenance/code-constraints-reading-state-review-20261106/README.md)。
+
 ## 维护：说明文字模块完成整改（2026-11-06）
 
 reference_copy三条约束核对完成，重复查表已改；地形模块仅登记待审，不销项。[回执](verification/maintenance/code-constraints-reference-copy-terrain-review-20261106/README.md)。

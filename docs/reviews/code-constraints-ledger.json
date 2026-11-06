@@ -79,10 +79,12 @@
     {
       "file": "rouge/mechanism_reader_header.py",
       "sha256": "e093ead7069afc43061f514b2d7901062ffa2a6a03cc72dcf54981b426f8850a",
-      "rule1": "reviewed_clear",
-      "rule2": "reviewed_clear",
-      "rule3": "no_unapproved_low_probability_defense_found",
-      "evidence": "Constructor lays out supplied controls; no input guards, catches, or single-use wrappers."
+      "rule1": "Repeated block number/base property/scroll value reused; optional details, missing heading and shortened text are normal semantics",
+      "rule2": "Reading snapshot/restore each used by replace and append; no arbitrary single-use wrappers",
+      "rule3": [],
+      "evidence": "Full source and callers read. referenceBaseText only assigned by header construction.33 final targeted tests pass; batch finally behavior unchanged and pending D276.",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true
     },
     {
       "file": "rouge/susuro_healing_view.py",
@@ -1981,6 +1983,28 @@
         "D275"
       ],
       "evidence": "Full source and dedicated numerical edge tests read; no terrain source modification; no new mechanism or value claims."
+    },
+    {
+      "file": "rouge/mechanism_reading.py",
+      "sha256": "0b34bfcda06f9c58181c39468d98ab2095deef53f35a722a6a2cef8282e913b7",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "rule1": "Repeated block number/base property/scroll value reused; optional details, missing heading and shortened text are normal semantics",
+      "rule2": "Reading snapshot/restore each used by replace and append; no arbitrary single-use wrappers",
+      "rule3": [],
+      "evidence": "Full source and callers read. referenceBaseText only assigned by header construction.33 final targeted tests pass; batch finally behavior unchanged and pending D276."
+    },
+    {
+      "file": "rouge/ui_state.py",
+      "sha256": "fc3b99bdf85728db58819c90d1cb75014dcb232236dd9b0cbddf55396b9c0b9e",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": false,
+      "rule1": "Repeated block number/base property/scroll value reused; optional details, missing heading and shortened text are normal semantics",
+      "rule2": "Reading snapshot/restore each used by replace and append; no arbitrary single-use wrappers",
+      "rule3": [
+        "D276"
+      ],
+      "evidence": "Full source and callers read. referenceBaseText only assigned by header construction.33 final targeted tests pass; batch finally behavior unchanged and pending D276."
     }
   ]
 }

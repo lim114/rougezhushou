@@ -282,3 +282,5 @@
 | D273 | _number精确int/float类型后isfinite仍捕获OverflowError、TypeError | 拒绝非有限值、超大整数；精确内建类型后的TypeError无已知触发 | 建议保留溢出处理，删除TypeError；替代完整保留。数值入口仅_parameters一处调用，是否内联随保护批准处理 |
 | D274 | _parameters黑板/条目/key类型、seen/invalid/重复值剔除及valueStr检查 | 异常或重复参数保持未知；重复key进入invalid后又判invalid | 建议保留歧义处理并合并同次重复判断；替代维持现有流程。普通重复未整改，原样待审 |
 | D275 | terrain_info未知输入降级、read缺值/非负及整数推力/区间顺序判断 | 异常数据不形成数值说明 | 建议保留明确未知与合法值边界；替代将坏资料作为输入错误上报。不授权猜测未知机制，原样待审 |
+
+| D276 | ui_state.calculation_batch的try/finally与complete标记 | 输入更新异常时仍减少批次深度并清除请求，不发布半成品计算；异常继续上抛 | 建议保留失败后的批次释放与不发布行为；替代普通顺序收尾，异常可能遗留批次深度/请求。不新增重试；原样待审 |
