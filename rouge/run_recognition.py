@@ -32,27 +32,23 @@ def verified_zero(crop,anchor_height,engine,*,recognizer_only=False):
     """
     gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
     mask=cv2.threshold(gray,205,255,cv2.THRESH_BINARY)[1]
-    count,labels,stats,_=cv2.connectedComponentsWithStats(mask)
-    significant=[s for s in stats[1:] if .4*anchor_height<=s[3]<=1.5*anchor_height
+    _,labels,stats,_=cv2.connectedComponentsWithStats(mask)
+    significant=[(i,s) for i,s in enumerate(stats[1:],1) if .4*anchor_height<=s[3]<=1.5*anchor_height
                  and s[4]>=20]
     if len(significant)!=1:return False
-    candidates=[]
-    for i,(x,y,w,h,area) in enumerate(stats[1:],1):
-        if not (.4*anchor_height<=h<=1.5*anchor_height and .55<=w/h<=1.05 and area>=20):continue
-        if x<=0 or y<=0 or x+w>=crop.shape[1] or y+h>=crop.shape[0]:continue
-        glyph=(labels[y:y+h,x:x+w]==i).astype(np.uint8)
-        _,hierarchy=cv2.findContours(glyph,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
-        if hierarchy is None or sum(c[3]>=0 for c in hierarchy[0])!=1:continue
-        ref=cv2.resize(zero_reference().astype(np.uint8),(w,h),interpolation=cv2.INTER_NEAREST)
-        # One-pixel tolerance handles antialiasing after continuous resize;
-        # topology, component dimensions and independent OCR still must agree.
-        kernel=np.ones((3,3),np.uint8)
-        score=(np.count_nonzero(glyph&cv2.dilate(ref,kernel))+
-               np.count_nonzero(ref&cv2.dilate(glyph,kernel)))/(np.count_nonzero(glyph)+np.count_nonzero(ref))
-        if score>=.99:candidates.append(glyph*255)
-    if len(candidates)!=1:return False
+    i,(x,y,w,h,_)=significant[0]
+    if not .55<=w/h<=1.05 or x<=0 or y<=0 or x+w>=crop.shape[1] or y+h>=crop.shape[0]:return False
+    glyph=(labels[y:y+h,x:x+w]==i).astype(np.uint8)
+    _,hierarchy=cv2.findContours(glyph,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
+    if hierarchy is None or sum(c[3]>=0 for c in hierarchy[0])!=1:return False
+    ref=cv2.resize(zero_reference().astype(np.uint8),(w,h),interpolation=cv2.INTER_NEAREST)
+    # One-pixel tolerance handles antialiasing after continuous resize.
+    kernel=np.ones((3,3),np.uint8)
+    score=(np.count_nonzero(glyph&cv2.dilate(ref,kernel))+
+           np.count_nonzero(ref&cv2.dilate(glyph,kernel)))/(np.count_nonzero(glyph)+np.count_nonzero(ref))
+    if score<.99:return False
     # Recognition is checked on the isolated glyph, with surrounding pattern removed.
-    glyph=candidates[0]
+    glyph*=255
     # Detection used to locate this isolated shape again. A tight line image
     # with a small blank margin is what the recognizer expects; a large square
     # border can change its output from 0 to a letter even at high confidence.
@@ -67,11 +63,14 @@ def verified_zero(crop,anchor_height,engine,*,recognizer_only=False):
 
 def near_number(image,texts,anchor,engine,*,side='above'):
     x,y=center(anchor);ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 35.2)
-    def valid(t):
-        dx,dy=center(t)[0]-x,center(t)[1]-y
-        return t['confidence']>=.9 and re.fullmatch(r'\d{1,3}',t['text']) and (
-            abs(dx)<.035*ux and -.065*uy<dy<-.012*uy if side=='above' else .02*ux<dx<.09*ux and abs(dy)<.045*uy)
-    values={int(t['text']) for t in texts if valid(t)}
+    values=set()
+    for record in texts:
+        if record['confidence']>=.9 and re.fullmatch(r'\d{1,3}',record['text']):
+            tx,ty=center(record)
+            dx,dy=tx-x,ty-y
+            nearby=(abs(dx)<.035*ux and -.065*uy<dy<-.012*uy if side=='above'
+                    else .02*ux<dx<.09*ux and abs(dy)<.045*uy)
+            if nearby:values.add(int(record['text']))
     if len(values)==1:return next(iter(values))
     h,w=image.shape[:2]
     bounds=(x-.035*ux,y-.065*uy,x+.035*ux,y-.012*uy) if side=='above' else (x+.025*ux,y-.04*uy,x+.074*ux,y+.015*uy)
@@ -314,10 +313,11 @@ def roster_member(image,key,x,y,value,space=(1,1)):
 
 
 def read_card_masteries(image,x,y,count,space=(1,1)):
-    ux,uy=space
     """Accept three independently bright mastery dots; unclear/partial pips stay unknown."""
+    ux,uy=space
     h,w=image.shape[:2];gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY);ranks={}
     radius=max(1,round(h*.0015*uy))
+    search=max(1,round(h*uy*.0035))
     for i in range(count):
         cx=x+.083*ux+i*.0377*ux
         background=gray[max(0,round((y-.084*uy)*h)):round((y-.062*uy)*h),
@@ -325,16 +325,19 @@ def read_card_masteries(image,x,y,count,space=(1,1)):
         if not background.size:continue
         dark=float(np.percentile(background,20))
         # Small OCR/grid rounding changes must not move a pip outside its core.
-        search=max(1,round(h*uy*.0035))
+        centers=[(round((cx+dx*ux)*w),round((y+dy*uy)*h))
+                 for dx,dy in ((0,-.077),(-.0023,-.069),(.0023,-.069))]
         found=False
         for ox in range(-search,search+1):
             for oy in range(-search,search+1):
-                cores=[]
-                for dx,dy in ((0,-.077),(-.0023,-.069),(.0023,-.069)):
-                    px=round((cx+dx*ux)*w)+ox;py=round((y+dy*uy)*h)+oy
+                for dot_x,dot_y in centers:
+                    px=dot_x+ox;py=dot_y+oy
                     roi=gray[max(0,py-radius):py+radius+1,max(0,px-radius):px+radius+1]
-                    cores.append(float(np.median(roi)) if roi.size else 0)
-                if all(value>=120 and value-dark>=70 for value in cores):found=True;break
+                    value=float(np.median(roi)) if roi.size else 0
+                    if not (value>=120 and value-dark>=70):break
+                else:
+                    found=True
+                    break
             if found:break
         if found:ranks[i+1]=10
     return ranks
@@ -343,43 +346,55 @@ def read_card_masteries(image,x,y,count,space=(1,1)):
 def read_selected_member(image,texts,engine):
     panel=next((t for t in texts if t['text']=='技能' and t['confidence']>=.9),None)
     if panel is None:return None
-    names=[t for t in texts if t['confidence']>=.9 and center(t)[1]<center(panel)[1]
-           and center(t)[0]<center(panel)[0]+.5*(max(p[0] for p in panel['box'])-min(p[0] for p in panel['box']))
-           and len(identity_index().get(normalized_name(t['text']),set()))==1]
-    identities={next(iter(identity_index()[normalized_name(t['text'])])) for t in names}
-    if len(identities)!=1:return None
-    name=max(names,key=lambda t:max(p[1] for p in t['box'])-min(p[1] for p in t['box']));key=next(iter(identity_index()[normalized_name(name['text'])]));profile=operator_profiles()[key]
-    h,w=image.shape[:2];nx,ny=center(name)
-    uy=(center(panel)[1]-ny)/(.436121-.162684);ux=uy*h/w*2052/1127
+    panel_x,panel_y=center(panel)
+    name_right=panel_x+.5*(max(p[0] for p in panel['box'])-min(p[0] for p in panel['box']))
+    positions=[(t,*center(t)) for t in texts if t['confidence']>=.9]
+    index=identity_index()
+    names={}
+    for record,x,y in positions:
+        if y<panel_y and x<name_right:
+            matches=index.get(normalized_name(record['text']),())
+            if len(matches)==1:
+                names.setdefault(next(iter(matches)),[]).append((record,x,y))
+    if len(names)!=1:return None
+    key,rows=next(iter(names.items()))
+    name,nx,ny=max(rows,key=lambda row:max(p[1] for p in row[0]['box'])-min(p[1] for p in row[0]['box']))
+    left=min(p[0] for p in name['box'])
+    profile=operator_profiles()[key]
+    h,w=image.shape[:2]
+    uy=(panel_y-ny)/(.436121-.162684);ux=uy*h/w*2052/1127
     fields={};sources={};ranks={}
-    values={int(m.group(1)) for t in texts if t['confidence']>=.9
-            and -.04*ux<center(t)[0]-nx<.08*ux and .015*uy<center(t)[1]-ny<.12*uy
+    values={int(m.group(1)) for t,x,y in positions
+            if -.04*ux<x-nx<.08*ux and .015*uy<y-ny<.12*uy
             and (m:=re.fullmatch(r'(\d{1,2})/?',t['text']))}
-    caps={int(t['text'][1:]) for t in texts if t['confidence']>=.9
-          and .07*ux<center(t)[0]-nx<.18*ux and .015*uy<center(t)[1]-ny<.12*uy
+    caps={int(t['text'][1:]) for t,x,y in positions
+          if .07*ux<x-nx<.18*ux and .015*uy<y-ny<.12*uy
           and re.fullmatch(r'/\d{2}',t['text'])}
     if len(caps)==1:
-        phases=[i for i,p in enumerate(profile['phases']) if p['max_level']==next(iter(caps))]
+        cap=next(iter(caps))
+        phases=[i for i,p in enumerate(profile['phases']) if p['max_level']==cap]
         if len(phases)==1:fields['elite']=phases[0];sources['elite']='本局当前面板精英上限与档案唯一匹配'
-    if len(values)==1 and 'elite' in fields and 1<=next(iter(values))<=profile['phases'][fields['elite']]['max_level']:
-        fields['level']=next(iter(values));sources['level']='本局左侧当前等级；排除右侧账号卡片等级'
+    if len(values)==1 and 'elite' in fields:
+        level=next(iter(values))
+        if 1<=level<=profile['phases'][fields['elite']]['max_level']:
+            fields['level']=level;sources['level']='本局左侧当前等级；排除右侧账号卡片等级'
     if not profile['modules'] or ('elite' in fields and all(fields['elite']<m['unlock_elite'] for m in profile['modules'])):
         fields.update(module_id=None,module_level=0);sources['module_id']='本局精英阶段未开放模组'
     required_titles={skill['levels'][-1]['name'] for skill in profile['skills']}
-    if not required_titles<={t['text'] for t in texts if t['confidence']>=.9}:
-        left=min(p[0] for p in name['box'])
+    if not required_titles<={t['text'] for t,_,_ in positions}:
         x0=max(0,round((left-.01*ux)*w));x1=min(w,round((left+.26*ux)*w))
-        y0=max(0,round((center(panel)[1]+.025*uy)*h));y1=min(h,round((center(panel)[1]+.52*uy)*h))
+        y0=max(0,round((panel_y+.025*uy)*h));y1=min(h,round((panel_y+.52*uy)*h))
         roi=image[y0:y1,x0:x1]
         if roi.size:
             raw,_=engine(cv2.resize(roi,None,fx=2,fy=2))
-            texts=texts+[{'text':t.replace(' ',''),'confidence':float(score),'box':[[(px/2+x0)/w,(py/2+y0)/h] for px,py in box]} for box,t,score in raw or [] if score>=.85]
+            for box,t,score in raw or []:
+                if float(score)>=.9:
+                    record={'text':t.replace(' ',''),'box':[[(px/2+x0)/w,(py/2+y0)/h] for px,py in box]}
+                    positions.append((record,*center(record)))
     for i,skill in enumerate(profile['skills'],1):
-        anchor=next((t for t in texts if t['text']==skill['levels'][-1]['name'] and t['confidence']>=.9 and
-                     center(t)[0]<center(panel)[0]+.025*ux and center(t)[1]>center(panel)[1]),None)
-        if anchor is None:continue
-        _,y=center(anchor)
-        left=min(p[0] for p in name['box'])
+        y=next((ty for t,tx,ty in positions if t['text']==skill['levels'][-1]['name']
+                and tx<panel_x+.025*ux and ty>panel_y),None)
+        if y is None:continue
         crop=image[max(0,int((y-.12*uy)*h)):min(h,int((y-.083*uy)*h)),max(0,int((left-.007*ux)*w)):min(w,int((left+.012*ux)*w))]
         if not crop.size:continue
         raw,_=engine(cv2.resize(crop,None,fx=4,fy=4),use_cls=False)

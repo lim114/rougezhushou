@@ -4,27 +4,25 @@ import cv2
 from .operator_recognition import identity_index,normalized_name,center
 
 
-def _near_name(text,names):
-    # A one-character OCR substitution is a reason to inspect this actual line,
-    # not an identity result. Short names cannot use this broad locator.
-    return len(text)>=3 and any(len(name)==len(text) and
-        sum(a!=b for a,b in zip(name,text))<=1 for name in names)
-
-
 def recheck_run_names(image,texts,engine):
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
     if not all(k in anchors for k in ('技能','分支+','收藏品增益')):
         return texts
     index=identity_index();names={n for n,ids in index.items() if len(ids)==1}
+    by_length={}
+    for name in names:
+        by_length.setdefault(len(name),[]).append(name)
+    footer_y=center(anchors['收起'])[1] if '收起' in anchors else None
     h,w=image.shape[:2];out=deepcopy(texts);cross_checks=[]
     for position,record in enumerate(texts):
         name=normalized_name(record['text'])
         if name in names and record['confidence']>=.9:continue
-        if record['confidence']<.7 or not _near_name(name,names):continue
+        if record['confidence']<.7 or len(name)<3:continue
+        # One substituted character locates a line for OCR; only an exact reread can name it.
+        if not any(sum(a!=b for a,b in zip(other,name))<=1 for other in by_length.get(len(name),())):continue
         # Work is bounded to observed rows on this roster. No previous run,
         # selected UI value, fixed screenshot coordinates or fuzzy identity.
-        x,y=center(record)
-        if '收起' in anchors and y>=center(anchors['收起'])[1]:continue
+        if footer_y is not None and center(record)[1]>=footer_y:continue
         xs=[p[0]*w for p in record['box']];ys=[p[1]*h for p in record['box']]
         height=max(ys)-min(ys)
         if height<=0:continue
@@ -54,12 +52,12 @@ def recheck_run_names(image,texts,engine):
         # not constitute corroboration, nor does a previous roster record.
         cx,cy=center(revised)
         height=max(p[1] for p in revised['box'])-min(p[1] for p in revised['box'])
-        peers=[t for i,t in enumerate(out) if i!=position and
-            normalized_name(t['text'])==revised['text'] and t['confidence']>=.95 and
-            abs(center(t)[0]-cx)+abs(center(t)[1]-cy)>height*2]
-        if not peers:continue
+        peer=next((t for i,t in enumerate(out) if i!=position and t['confidence']>=.95 and
+            normalized_name(t['text'])==revised['text'] and
+            abs((pos:=center(t))[0]-cx)+abs(pos[1]-cy)>height*2),None)
+        if peer is None:continue
         revised['name_recheck']['corroborating_evidence']={
-            'box':deepcopy(peers[0]['box']),'confidence':peers[0]['confidence'],
+            'box':deepcopy(peer['box']),'confidence':peer['confidence'],
             'source':'second_exact_current_frame_name_location'}
         out[position]=revised
     return out

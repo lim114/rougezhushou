@@ -1,0 +1,112 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 249,
+    "selected_paths_only": 189,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "队伍页复用姓名与等级读数位置，专精点按需读取",
+  "base_commit": "9399c0b9a8775bff24ba42eae88abd81430fc035",
+  "changed_sources": [
+    "rouge/run_recognition.py",
+    "rouge/operator_name_recheck.py"
+  ],
+  "source_sha256": {
+    "rouge/run_recognition.py": "36b4c7b76f92629f7c2f13206e349a49a171c3d7f80748c92e967b7408f4d2aa",
+    "rouge/operator_name_recheck.py": "6e779d39ffef9f2a1a10f27a54725779a3737687a9436681beb7bfe9630adc42"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 43,
+    "seconds": 127.058,
+    "modules": [
+      "test_name_recheck_055",
+      "test_numeric_recognition_024",
+      "test_adaptive_recognition",
+      "test_recipient_integration_054",
+      "test_held_integration_054",
+      "test_run_badges"
+    ],
+    "full_suite_run": false,
+    "roster_and_counts": {
+      "roster_cases": 18,
+      "counter_cases": 72,
+      "center_calls_base_then_changed": {
+        "run-roster": [
+          50,
+          20
+        ],
+        "run-mechanist-selected": [
+          269,
+          46
+        ],
+        "run-emergency-mechanist": [
+          286,
+          50
+        ]
+      }
+    },
+    "mastery": {
+      "stored_card_positions": 11,
+      "constructed_cases": 12,
+      "cases_with_mastery": 6,
+      "median_calls": [
+        11649,
+        4260
+      ],
+      "batch_median_ms": [
+        136.56,
+        62.71
+      ],
+      "timed_rounds_per_version": 5
+    },
+    "name_corroboration_comparisons": 300,
+    "live_window": "Original instance still running; previous automatic approval refused combined stop/restart. No user-facing Exit control available in current Windows UI snapshot, no second instance started. No live gameplay timing."
+  },
+  "review": {
+    "standards": "Roster identity lookup, panel geometry and OCR confidence eligibility are reused. A unique qualifying connected component is checked once, and numeric counts no longer call the same coordinate helper twice. Mastery: short-circuit the three-dot predicate without changing search order. Full read of operator_name_recheck: inline the single-call locator, search names of equal length, stop at the first independent corroborating row; preserve deep-copy ownership. D360 left intact for user review.",
+    "requirements": "Ordinary call chain ScreenReader.read -> read_run returns immediately without a held/collapse anchor. Therefore the unanchored squad search used in the prior benchmark is unreachable from that path, including when a page lacks anchors. Stored Gate 0 events lack queue entry/dequeue timestamps, so pure queue time cannot be isolated. Existing thresholds, geometry, OCR fallback ordering and unique owner evidence remain in effect."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D360"
+  ]
+}
