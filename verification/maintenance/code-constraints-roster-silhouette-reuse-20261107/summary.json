@@ -1,0 +1,103 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 250,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "干员卡片的精英标识只读取一次，再与三个阶段比对",
+  "base_commit": "409c0532fdf9068922baaf923b138903b6dc5f37",
+  "changed_sources": [
+    "rouge/elite_recognition.py",
+    "rouge/run_recognition.py"
+  ],
+  "source_sha256": {
+    "rouge/elite_recognition.py": "43a85d47c5809afbc94fc1e61eda143ab0f4aad7a20e2094823321c2d419c9a5",
+    "rouge/run_recognition.py": "bb79a9df32b5d6d9b03de8e5bf8620c9b78f06e14bc888fa875a0ec468e8a7ab"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 35,
+    "full_suite_run": false,
+    "seconds": 31.907,
+    "modules": [
+      "elite_denominator",
+      "recruitment_marker_contract",
+      "recognition.RecognitionTests.test_run_roster_reads_members_without_reusing_account_levels",
+      "recognition.RecognitionTests.test_selected_run_operator_uses_current_panel_not_account_card",
+      "page_features_056",
+      "sampling_flow"
+    ],
+    "comparison": {
+      "cards": 24,
+      "frames": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "elite_ms_median": {
+        "old": 4.466,
+        "new": 1.384
+      }
+    },
+    "scale_factors": [
+      0.65,
+      1,
+      1.25
+    ],
+    "synthetic_geometry_cases": 120,
+    "live_window": "Targeted offscreen sampling and stored roster fixtures only; original window not updated. Timing is only for elite-marker scoring; not live recognition latency."
+  },
+  "review": {
+    "standards": {
+      "rouge/elite_recognition.py": [
+        "D297",
+        "Read complete reference loader and card_elite with roster_member consumer. Preserve lru_cache for static reference assets. Unique physical sizes and locations scored once, each actual mask and count shared among valid reference masks. Retain the approved minimum reference area and confidence/margin gates, partial-window exclusion and deterministic tie order. No new exception or defensive fallback."
+      ]
+    },
+    "requirements": "read_roster now resolves names once, gathers numeric centers once for reuse across cards, preserves input order, proximity and OCR fallback. Badge types remain distinct; no change to promotion/recruitment evidence. Differential comparison of whole recruited member records at three scales in two captured fixtures. Targeted ScreenReader tests also use the actual OCR backend. D353 not changed."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": []
+}

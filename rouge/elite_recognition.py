@@ -13,27 +13,37 @@ def references():
 def card_elite(image,x,y,space=(1,1)):
     ux,uy=space
     h,w=image.shape[:2]
-    scores=[]
-    for elite,original in references().items():
-        best=0
-        for scale in np.arange(.034,.051,.002):
-            size=round(h*scale*uy)
-            template=cv2.resize(original,(size,size),interpolation=cv2.INTER_AREA)
-            mask=((cv2.cvtColor(template[:,:,:3],cv2.COLOR_BGR2GRAY)>150)&(template[:,:,3]>150)).astype(np.uint8)
-            if np.count_nonzero(mask)<10:continue
-            mask_pixels=np.sum(mask)
-            for dx in (-.003,0,.003):
-                cx=round((x+.016*ux+dx*ux)*w)
-                for dy in (-.003,0,.003):
-                    cy=round((y-.052*uy+dy*uy)*h)
-                    roi=image[cy-size//2:cy-size//2+size,cx-size//2:cx-size//2+size]
-                    if roi.shape[:2]!=(size,size):continue
-                    actual=(cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)>180).astype(np.uint8)
-                    # Compare the entire silhouette: elite 1's blades are a subset of elite 2's.
-                    denominator=float(np.sum(actual)+mask_pixels)
-                    score=2*float(np.sum(actual&mask))/denominator
-                    best=max(best,score)
-        scores.append((best,elite))
-    scores.sort(reverse=True)
-    if scores[0][0]<.70 or scores[0][0]-scores[1][0]<.085:return None
-    return {'value':scores[0][1],'score':scores[0][0],'margin':scores[0][0]-scores[1][0]}
+    originals = references()
+    best = dict.fromkeys(originals, 0)
+    xs = dict.fromkeys(round((x+.016*ux+dx*ux)*w) for dx in (-.003,0,.003))
+    ys = dict.fromkeys(round((y-.052*uy+dy*uy)*h) for dy in (-.003,0,.003))
+    sizes = dict.fromkeys(round(h*scale*uy) for scale in np.arange(.034,.051,.002))
+    for size in sizes:
+        masks = []
+        for elite, original in originals.items():
+            template = cv2.resize(original, (size,size), interpolation=cv2.INTER_AREA)
+            mask = (cv2.cvtColor(template[:,:,:3], cv2.COLOR_BGR2GRAY)>150) & (template[:,:,3]>150)
+            mask_pixels = np.count_nonzero(mask)
+            if mask_pixels >= 10:
+                masks.append((elite, mask, mask_pixels))
+        if not masks:
+            continue
+        for cx in xs:
+            for cy in ys:
+                roi = image[cy-size//2:cy-size//2+size, cx-size//2:cx-size//2+size]
+                if roi.shape[:2] != (size,size):
+                    continue
+                actual = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)>180
+                actual_pixels = np.count_nonzero(actual)
+                # Each candidate compares its entire silhouette with the same current pixels.
+                for elite, mask, mask_pixels in masks:
+                    score = 2 * np.count_nonzero(actual & mask) / (actual_pixels + mask_pixels)
+                    best[elite] = max(best[elite], score)
+    scores = sorted(((score, elite) for elite, score in best.items()), reverse=True)
+    score, elite = scores[0]
+    if score < .70:
+        return None
+    margin = score - scores[1][0]
+    if margin < .085:
+        return None
+    return {'value':elite,'score':score,'margin':margin}

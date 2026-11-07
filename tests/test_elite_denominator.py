@@ -24,6 +24,20 @@ class EliteDenominatorTests(unittest.TestCase):
         with patch.object(model, 'references', return_value=self.templates()):
             self.assertIsNone(model.card_elite(np.zeros((1000, 1000, 3), dtype=np.uint8), .5, .5))
 
+    def test_card_region_is_read_once_per_size_and_offset(self):
+        image = np.zeros((1000, 1000, 3), dtype=np.uint8)
+        original = cv2.cvtColor
+        regions = []
+        def capture(pixels, code):
+            if np.shares_memory(pixels, image):
+                regions.append((pixels.shape, pixels.ctypes.data))
+            return original(pixels, code)
+        with patch.object(model, 'references', return_value=self.templates()), \
+                patch.object(cv2, 'cvtColor', side_effect=capture):
+            model.card_elite(image, .5, .5)
+        self.assertGreater(len(regions), 0)
+        self.assertEqual(len(regions), len(set(regions)))
+
     def test_empty_masks_skip_scoring(self):
         icons = {i: np.zeros((32, 32, 4), dtype=np.uint8) for i in range(3)}
         with patch.object(model, 'references', return_value=icons):

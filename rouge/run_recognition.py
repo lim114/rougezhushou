@@ -246,22 +246,30 @@ def read_roster(image,texts,engine):
     members=[];h,w=image.shape[:2]
     branch=next((t for t in texts if t['text']=='分支+' and t['confidence']>=.9),None)
     if branch is None:return members
-    names=[t for t in texts if t['confidence']>=.9 and center(t)[0]>center(branch)[0]
-           and len(identity_index().get(normalized_name(t['text']),set()))==1]
     skill_panel=next((t for t in texts if t['text']=='技能' and t['confidence']>=.9),None)
     if skill_panel is None:return members
+    branch_x = center(branch)[0]
     # Two observed controls establish the UI scale; glyph size can vary by name.
-    panel_ux=(center(branch)[0]-center(skill_panel)[0])/(.1762-.0595)
-    panel_uy=panel_ux*w/h*1127/2052
-    for name in names:
-        key=next(iter(identity_index()[normalized_name(name['text'])]))
-        x,y=center(name);ux,uy=panel_ux,panel_uy
-        levels=[t for t in texts if t['confidence']>=.9 and re.fullmatch(r'\d{1,2}',t['text'])
-                and .055*ux<x-center(t)[0]<.20*ux and abs(center(t)[1]-y)<.025*uy]
-        badge=min(levels,key=lambda t:x-center(t)[0]) if levels else None
-        value=int(badge['text']) if badge else None
-        bx,by=center(badge) if badge else (min(p[0] for p in name['box'])-.075*ux,y)
+    ux = (branch_x-center(skill_panel)[0])/(.1762-.0595)
+    uy = ux*w/h*1127/2052
+    identities = identity_index()
+    names, levels = [], []
+    for text in texts:
+        if not (text['confidence'] >= .9):
+            continue
+        x,y = center(text)
+        if re.fullmatch(r'\d{1,2}', text['text']):
+            levels.append((int(text['text']),x,y))
+        if x > branch_x:
+            matches = identities.get(normalized_name(text['text']), ())
+            if len(matches) == 1:
+                names.append((text,next(iter(matches)),x,y))
+    for name,key,x,y in names:
+        nearby = (level for level in levels if .055*ux < x-level[1] < .20*ux and abs(level[2]-y) < .025*uy)
+        badge = min(nearby, key=lambda level:x-level[1], default=None)
         if badge is None:
+            value = None
+            bx,by = min(p[0] for p in name['box'])-.075*ux,y
             x0=max(0,round((bx-.035*ux)*w));x1=min(w,round((bx+.035*ux)*w))
             y0=max(0,round((y-.025*uy)*h));y1=min(h,round((y+.025*uy)*h))
             roi=image[y0:y1,x0:x1]
@@ -269,6 +277,8 @@ def read_roster(image,texts,engine):
                 raw,_=engine(cv2.resize(roi,None,fx=4,fy=4),use_cls=False)
                 values={int(v) for _,v,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,2}',v)}
                 value=next(iter(values)) if len(values)==1 else None
+        else:
+            value,bx,by = badge
         member=roster_member(image,key,bx,by,value,space=(ux,uy))
         member['card_scale']=[ux,uy]
         members.append(member)

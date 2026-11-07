@@ -4383,22 +4383,26 @@
     },
     {
       "file": "rouge/elite_recognition.py",
-      "sha256": "db7e73fa0b9027c3c4631a74152c39eea0b183000091e631e33887cf2a15c3b6",
+      "sha256": "43a85d47c5809afbc94fc1e61eda143ab0f4aad7a20e2094823321c2d419c9a5",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
-      "rule1": "Repeated immutable size/bounds/mask/viewport geometry computed once; ordinary OCR empty results, cache budget and thresholds preserved",
-      "rule2": "Cache adapter is public callable; crop shared; viewport edges twice/point twice/visit recursive; elite references cached resource loader",
-      "rule3": [
-        "D297"
-      ],
-      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery",
+      "full_module_review_complete": true,
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D297",
+      "evidence": "Read complete reference loader and card_elite with roster_member consumer. Preserve lru_cache for static reference assets. Unique physical sizes and locations scored once, each actual mask and count shared among valid reference masks. Retain the approved minimum reference area and confidence/margin gates, partial-window exclusion and deterministic tie order. No new exception or defensive fallback.",
       "scoped_reviews": [
         {
           "receipt": "verification/maintenance/code-constraints-elite-denominator-20261106/summary.json",
           "scope": "D297 proven positive denominator branch removal",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-roster-silhouette-reuse-20261107/summary.json",
+          "scope": "Whole elite_recognition module and the read_roster card association path."
         }
-      ]
+      ],
+      "full_review_receipt": "verification/maintenance/code-constraints-roster-silhouette-reuse-20261107/summary.json"
     },
     {
       "file": "rouge/viewport.py",
@@ -6119,6 +6123,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-viewport-hud-20261107/summary.json",
       "scope": "Capture viewport dark mask, coordinate projection extents, HUD counter and life-header geometry. Anchors.crop D353 pending, untouched."
+    },
+    {
+      "file": "rouge/run_recognition.py",
+      "sha256": "bb79a9df32b5d6d9b03de8e5bf8620c9b78f06e14bc888fa875a0ec468e8a7ab",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-roster-silhouette-reuse-20261107/summary.json",
+      "scope": "Whole elite_recognition module and the read_roster card association path."
     }
   ]
 }
