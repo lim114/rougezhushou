@@ -2388,8 +2388,9 @@ class MainWindow(QMainWindow):
     def save_settings(self):
         try:
             profile = self.profile.text().strip()
-            if self.key.text():
-                save_key(profile,self.key.text())
+            key = self.key.text()
+            if key:
+                save_key(profile, key)
                 self.key.clear()
             data = {'profile':profile,'base_url':self.base_url.text().strip(),
                     'model':self.model.text().strip(),'protocol':self.protocol.currentData()}

@@ -114,9 +114,9 @@
     {
       "file": "rouge/player_enemy_search.py",
       "sha256": "7cf14421ae3c4d4e5eec3001f3fdb842b4faa7cdb75f01c593627470adcd3a6b",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D38",
       "decision": "D38",
       "trigger": "matches：非字典敌人/非字符串查询返回False；资料片段非字符串被忽略",
       "impact": "坏数据静默当作不匹配，可能隐藏内部类型错误",
@@ -126,15 +126,23 @@
           "receipt": "verification/maintenance/code-constraints-enemy-search-contract-20261106/summary.json",
           "scope": "D38 producer-backed string contract; invalid internals surface",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json",
+          "scope": "Three complete modules and the save_settings key field read; D338 pending."
         }
-      ]
+      ],
+      "evidence": "Normalized battle enemy fields used directly, input search normalized once per match. No extra helper or exception handler.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/credentials.py",
       "sha256": "a7a71ece68e8a20ab01abfe4d2d0a47b11f07248346955081a9e814161c302c8",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D39",
       "decision": "D39",
       "trigger": "read_key捕获所有pywintypes.error并返回空密钥",
       "impact": "系统访问失败与没有保存密钥混在一起",
@@ -144,15 +152,23 @@
           "receipt": "verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json",
           "scope": "D39 native missing-only fallback; D40 truthful generic message",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json",
+          "scope": "Three complete modules and the save_settings key field read; D338 pending."
         }
-      ]
+      ],
+      "evidence": "One save input boundary. Read catches native credential errors, returning empty only on documented missing entry. No wrapper or implicit retry.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/player_file_messages.py",
-      "sha256": "ea0c3e84278a93ef585ecf6bff59a0db9dd3018a924d2bc0902f262f30c5d8bb",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "sha256": "4216bcba05d656baa6afb248b0082599cbe9d37192d53fa533d47636d5ead8f5",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D40",
       "decision": "D40",
       "trigger": "file_issue未知非中文错误使用“原件和当前编辑均保留”通用提示",
       "impact": "该函数本身无法证明调用者是否已经写入",
@@ -162,8 +178,16 @@
           "receipt": "verification/maintenance/code-constraints-credential-file-errors-20261106/summary.json",
           "scope": "D39 native missing-only fallback; D40 truthful generic message",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json",
+          "scope": "Three complete modules and the save_settings key field read; D338 pending."
         }
-      ]
+      ],
+      "evidence": "Single exception-to-text dispatcher, no catch, preserves Chinese detail. Decode/parse messages no longer infer original file state.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/player_source_map.py",
@@ -4814,7 +4838,7 @@
     },
     {
       "file": "rouge/app.py",
-      "sha256": "9606e488a4eda68cf78f44e6a3453490a0144f9d98a2c699f2ae3dbc082036b8",
+      "sha256": "71131976dc5e364cc99b0139afef97ecb7afbe3576ea1c36bd5ff2094a694bd9",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Summary removes ignored cultivation parameter and caller computation; reuse invalid rank list and direct already-present trust value; drone qualification context repetition still open",
@@ -4850,6 +4874,11 @@
           "decision": "D107 partial",
           "receipt": "verification/maintenance/code-constraints-unsupported-training-fields-20261106/summary.json",
           "scope": "Cultivation attribute totals, unknown modifier projection and comparison display. Future modeled skill dependency policy D333 pending."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json",
+          "scope": "Three complete modules and the save_settings key field read; D338 pending."
         }
       ]
     },

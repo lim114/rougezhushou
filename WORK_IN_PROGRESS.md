@@ -1,3 +1,7 @@
+## 当前断点 · 完成敌人搜索、凭据和文件错误提示三个模块回顾（2026-11-06）
+
+三个模块逐函数核对；整模块进度由68增至71/559。修正两条格式错误提示，保存设置只取一次密钥输入。D338待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json)。
+
 ## 当前断点 · 节点条件在查询入口校验一次，功能节点沿用当前资料行（2026-11-06）
 
 两个入口各校验一次楼层和保密等级，功能节点复用当前资料行。96组完整输出或错误与旧版一致，33项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-node-requirement-inputs-20261106/summary.json)。

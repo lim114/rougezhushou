@@ -60,3 +60,7 @@ documented_choice_items._validated_packet 把资料读取、JSON 解析和内部
 ## D337 · 具名奖励资料的异常出口
 
 named_reward_items._verified_packet 捕获普通 ValueError、TypeError、KeyError、AttributeError、IndexError、StopIteration 和 RecursionError 等。建议保留实际非法公开路径、读取或解析失败以及有定义的来源不匹配；内部缺陷上报。已询问，未改捕获范围。
+
+## D338 · 聊天设置分步保存
+
+MainWindow.save_settings 捕获所有异常。凭据写入成功后，配置写入失败也会显示相同提示。建议仅在各自保存入口处理已知的输入、凭据及文件错误，明确已完成的步骤，界面错误直接上报。已询问，等待决定。
