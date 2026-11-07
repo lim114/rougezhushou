@@ -124,3 +124,7 @@ held_cards._observed_lines 捕获 float 转换的 TypeError、ValueError，随�
 ## D356 · 藏品页脚置信度解析
 
 held_cards.held_card_regions 捕获“收起”按钮置信度转换的 TypeError、ValueError，返回空卡片列表。建议保留这一入口处理；替代为上报本次识别失败。实机触发率未知，等候决定。
+
+## D357 · 页面控件图缺少校验摘要
+
+PageFeatureRouter 初始化时仅在 patch_sha256 有值时校验控件图。当前五组资料共20个控件均有摘要，三份构建脚本也均写入摘要。在隔离副本删除其中一项后，五组资料仍全部加载。建议缺失时报告资料错误并使用已有整帧识别；代价是缺少摘要的旧包无法再用于快速定位。替代为保留兼容。实机发生率未知，待决定。

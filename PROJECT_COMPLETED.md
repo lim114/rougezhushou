@@ -1,3 +1,7 @@
+## 维护 · 页面定位只解析已核对的特征文件，先核对两侧控件再对齐画面（2026-11-07）
+
+28次路由对照的页面、区域、证据和回退结果完全一致。72项定向通过。缺摘要旧资料兼容项D357已登记。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-page-feature-evidence-20261107/summary.json)。
+
 ## 维护 · 排队画面仅比较一次相邻差异，复用同一参考图的校验（2026-11-07）
 
 4000步逐步对照保留状态、出队像素及最新画面一致，相邻差异计算4343降至2828次。44项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-frame-neighbour-reuse-20261107/summary.json)。

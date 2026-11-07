@@ -175,6 +175,24 @@ class PageFeatureTests(unittest.TestCase):
                       np.zeros((800, 1200, 3), np.float32)):
             self.assertEqual(self.router.classify(image)['fallback_reason'], 'invalid_frame')
 
+    def test_reference_arrays_come_from_the_checked_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)/'features'
+            shutil.copytree(ROOT/'rouge/data/page-features', directory)
+            manifest = json.loads((directory/'manifest.json').read_text(encoding='utf8'))
+            target = directory/manifest['pages'][0]['features']
+            original_read = Path.read_bytes
+            def read_then_replace(path):
+                data = original_read(path)
+                if path == target:
+                    target.write_bytes(b'replacement')
+                return data
+            with patch.object(Path, 'read_bytes', read_then_replace):
+                loaded = PageFeatureRouter(directory=directory)
+            np.testing.assert_array_equal(loaded.pages[0]['points'], self.router.pages[0]['points'])
+            with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                PageFeatureRouter(directory=directory)
+
     def test_invalid_decoded_patch_is_explicit_value_error(self):
         with patch('rouge.page_features.cv2.imdecode', return_value=None):
             with self.assertRaisesRegex(ValueError, 'Invalid static-control patch'):

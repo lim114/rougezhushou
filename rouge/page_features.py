@@ -9,7 +9,9 @@ full discovery. No operator or run values come from these visual plans.
 """
 from __future__ import annotations
 
+from collections import Counter
 from copy import deepcopy
+from io import BytesIO
 import hashlib
 import json
 from pathlib import Path
@@ -58,11 +60,12 @@ class PageFeatureRouter:
         self.pages = []
         for page in manifest['pages']:
             path = self.directory / page['features']
-            if hashlib.sha256(path.read_bytes()).hexdigest() != page['features_sha256']:
+            encoded = path.read_bytes()
+            if hashlib.sha256(encoded).hexdigest() != page['features_sha256']:
                 raise ValueError('Static-control feature checksum mismatch')
-            with np.load(path, allow_pickle=False) as arrays:
-                record = dict(page, points=arrays['points'].copy(), descriptors=arrays['descriptors'].copy(),
-                              groups=arrays['groups'].copy())
+            with np.load(BytesIO(encoded), allow_pickle=False) as arrays:
+                record = dict(page, points=arrays['points'], descriptors=arrays['descriptors'],
+                              groups=arrays['groups'])
             patches = []
             for anchor in page['anchors']:
                 encoded = (self.directory / anchor['patch']).read_bytes()
@@ -83,7 +86,7 @@ class PageFeatureRouter:
         cache = self._plan_cache
         if cache is None or image.shape != cache['shape'] or image.dtype.str != cache['dtype']:
             return None
-        for region, previous in zip(cache['regions'], cache['pixels']):
+        for region, previous in zip(cache['plan']['candidates'][0]['control_regions'], cache['pixels']):
             x0,y0,x1,y1=region
             if not np.array_equal(image[y0:y1,x0:x1],previous):return None
         return deepcopy(cache['plan'])
@@ -96,7 +99,7 @@ class PageFeatureRouter:
         if not regions or any(not (0<=x0<x1<=w and 0<=y0<y1<=h)
                               for x0,y0,x1,y1 in regions):return
         self._plan_cache={'shape':image.shape,'dtype':image.dtype.str,
-            'regions':deepcopy(regions),'pixels':[image[y0:y1,x0:x1].copy() for x0,y0,x1,y1 in regions],
+            'pixels':[image[y0:y1,x0:x1].copy() for x0,y0,x1,y1 in regions],
             'plan':deepcopy(result)}
 
     def classify(self, image):
@@ -145,15 +148,17 @@ class PageFeatureRouter:
 
     def _match(self, page, gray, points, desc, scale, w, h):
         pairs = self.matcher.knnMatch(page['descriptors'], desc, k=2)
-        good = [a for pair in pairs if len(pair) == 2 for a, b in [pair]
-                if a.distance <= 65 and a.distance < .84*b.distance]
-        # Derived-scale descriptors are alternative views of the same source.
-        # One observed scene feature counts only once as geometric evidence.
+        # Different reference scales may match the same scene point. Keep
+        # its closest qualified descriptor in original insertion order.
         unique = {}
-        for match in good:
-            old = unique.get(match.trainIdx)
-            if old is None or match.distance < old.distance:
-                unique[match.trainIdx] = match
+        for pair in pairs:
+            if len(pair) != 2:
+                continue
+            match, runner_up = pair
+            if match.distance <= 65 and match.distance < .84*runner_up.distance:
+                previous = unique.get(match.trainIdx)
+                if previous is None or match.distance < previous.distance:
+                    unique[match.trainIdx] = match
         good = list(unique.values())
         if len(good) < 8:
             return None
@@ -165,7 +170,8 @@ class PageFeatureRouter:
         if matrix is None or inliers is None:
             return None
         chosen = inliers.ravel().astype(bool)
-        if int(chosen.sum()) < 8 or chosen.mean() < .25:
+        inlier_count = np.count_nonzero(chosen)
+        if inlier_count < 8 or inlier_count < .25 * len(chosen):
             return None
         # The client layout preserves scale and upright geometry. A shear or
         # perspective fit is not permitted to force unrelated controls together.
@@ -173,16 +179,19 @@ class PageFeatureRouter:
         ratio = float(np.hypot(a, b))
         if not .45 <= ratio <= 2.1 or abs(np.degrees(np.arctan2(b, a))) > 1.2:
             return None
+        # A single glyph/texture cannot fit a page. Geometric features must
+        # independently locate both sides, and all four control images must
+        # agree at that shared transform in this frame.
+        counts = Counter(page['groups'][match.queryIdx] for match, inlier in zip(good, chosen) if inlier)
+        sides = {anchor['side'] for group, anchor in enumerate(page['anchors']) if counts[group] >= 2}
+        if sides != {'left', 'right'}:
+            return None
         evidence = []
         inverse = cv2.invertAffineTransform(matrix)
         reference_w, reference_h = page['reference_size']
         aligned = cv2.warpAffine(gray, inverse, (reference_w, reference_h), flags=cv2.INTER_LINEAR,
                                  borderMode=cv2.BORDER_CONSTANT, borderValue=0)
-        supported_sides = set()
         for group, (anchor, patch) in enumerate(zip(page['anchors'], page['patches'])):
-            indices = [i for i, m in enumerate(good) if chosen[i] and page['groups'][m.queryIdx] == group]
-            if len(indices) >= 2:
-                supported_sides.add(anchor['side'])
             x0, y0, x1, y1 = anchor['box']
             search = aligned[y0-2:y1+2, x0-2:x1+2]
             if search.shape[0] < patch.shape[0] or search.shape[1] < patch.shape[1]:
@@ -191,22 +200,18 @@ class PageFeatureRouter:
             _, correlation, _, location = cv2.minMaxLoc(values)
             ox, oy = location
             current = search[oy:oy+patch.shape[0], ox:ox+patch.shape[1]]
-            contrast_ratio = float(np.std(current)/max(1., np.std(patch)))
+            contrast = np.std(current)
+            contrast_ratio = float(contrast/max(1., np.std(patch)))
             # Correlation alone would accept a dimmed underlying page beneath
             # an unsupported overlay. Require current control contrast too.
-            if (np.std(current) < 12 or not .72 <= contrast_ratio <= 1.3 or
+            if (contrast < 12 or not .72 <= contrast_ratio <= 1.3 or
                     abs(float(np.mean(current))-float(np.mean(patch))) > 30):
                 return None
             if not np.isfinite(correlation) or correlation < .85:
                 return None
             evidence.append({'control': anchor['key'], 'side': anchor['side'],
-                             'inliers': len(indices), 'visual_correlation': round(correlation, 5),
+                             'inliers': counts[group], 'visual_correlation': round(correlation, 5),
                              'local_offset': [ox-2, oy-2], 'contrast_ratio': round(contrast_ratio, 5)})
-        # A single glyph/texture cannot fit a page. Geometric features must
-        # independently locate both sides, and all four control images must
-        # agree at that shared transform in this frame.
-        if supported_sides != {'left', 'right'}:
-            return None
         corners = cv2.transform(np.array([[[0, 0], [reference_w, 0],
                                           [reference_w, reference_h], [0, reference_h]]], np.float32), matrix)[0]
         # Complete required regions must be visible. A cropped page remains a
@@ -217,14 +222,14 @@ class PageFeatureRouter:
                 corners[:, 1].max() > gray.shape[0]+tolerance):
             return None
         regions = []
+        padding = max(4, round(6*ratio/scale))
         for x0, y0, x1, y1 in page['regions']:
             pts = cv2.transform(np.array([[[x0, y0], [x1, y0], [x1, y1], [x0, y1]]], np.float32), matrix)[0]/scale
             left, top = np.floor(pts.min(axis=0)).astype(int)
             right, bottom = np.ceil(pts.max(axis=0)).astype(int)
-            padding = max(4, round(6*ratio/scale))
             regions.append([max(0, int(left)-padding), max(0, int(top)-padding),
                             min(w, int(right)+padding), min(h, int(bottom)+padding)])
-        exposed = matrix.copy()/scale
+        exposed = matrix/scale
         control_regions=[]
         for anchor in page['anchors']:
             x0,y0,x1,y1=anchor['box']
