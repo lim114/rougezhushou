@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "地图资料来源边界按授权复核",
+  "base_commit": "ae85c0de0183f8cb00a78e6869bb28ffd54f08fe",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/current_map_position.py": "c99fb3853c493606f53a72f419ea7e0901090752cf332ddc96c4573b5dbc2ec3",
+    "rouge/current_terrain.py": "b8d7023c07cb9b512d5b42a9bd9a0bae9db3c01935eb5bf01e47c36cecc9267e"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D257"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "Selected CurrentMapPosition319Tests: actual_source_corruption_and_image_loss_clear_warm_reference; image_identity_change_blocks_even_when_grid_and_id_same; complete_map_properties_and_camera_changes_block_transfer",
+        "tests_run": 3,
+        "tests_passed": 3,
+        "seconds": 4.987
+      }
+    ],
+    "live_window": "Product source unchanged; no restart. Prior original-window update remains pending."
+  },
+  "review": {
+    "standards": "D257 retained: terrain evidence, map compatibility manifest and current battle bundle are distinct sources. Root resolved once in map member loop. Parsing catches only IO/Unicode/JSON decoding; internal schema errors not swallowed. D263 already reuses this prepared packet across action and map. No redundant source gate removed by unsupported assumption.",
+    "requirements": "Source corruption and image loss reject warm reference; fixed-image or complete-camera/map metadata changes block compatibility transfer. No runtime code changed. D270 pending exact geometry/hash contract reconciliation: four geometry key lists match, but content equality and digest must be reconciled before consolidation."
+  },
+  "reviewed_unchanged_sources": [
+    "rouge/current_map_position.py",
+    "rouge/current_terrain.py"
+  ]
+}

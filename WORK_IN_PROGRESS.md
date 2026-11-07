@@ -1,3 +1,7 @@
+## 当前断点：地图来源边界核对（2026-11-06）
+
+D257按授权保留，3项资料损坏/图片/几何定向通过；产品源码未改。原280组完成182、剩98。D270四类几何字段列表一致，完整内容与摘要约定仍需核对后合并，未删除核验。回执 `verification/maintenance/code-constraints-map-source-retention-20261106/summary.json`。
+
 ## 当前断点：动作位置边界与失效撤下核对（2026-11-06）
 
 D264/D265按授权保留并复核，5项定向通过；产品源码未改。原280组完成181、剩99。原测试窗口更新及待审项继续保留。回执 `verification/maintenance/code-constraints-action-boundary-retention-20261106/summary.json`。
