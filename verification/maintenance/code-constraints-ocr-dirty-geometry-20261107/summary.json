@@ -1,0 +1,91 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 250,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "动态OCR复用文字边界，变化范围稳定后结束扩张",
+  "base_commit": "779f83ef512ee4054c666c869681dd03869287eb",
+  "changed_sources": [
+    "rouge/dynamic_ocr.py"
+  ],
+  "source_sha256": {
+    "rouge/dynamic_ocr.py": "48db2a57c001885670400cd45145aa9ba0f9b8a95be36de01a57acc02ba0846d"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 92,
+    "seconds": 1.245,
+    "full_suite_run": false,
+    "modules": [
+      "page_ocr_056",
+      "hybrid_safety_058",
+      "ocr_text_row_reuse",
+      "page_ocr_seed_bridge",
+      "recognition_057",
+      "recognition_059"
+    ],
+    "synthetic": {
+      "cases": 540,
+      "ms": {
+        "old": 26.347,
+        "new": 11.405
+      }
+    },
+    "queue_wait_ms": [
+      12.33,
+      120.57,
+      10203.48,
+      12498.6
+    ],
+    "queue_frames_equal": 4,
+    "live_window": "Local recording replay only; original Windows test window not updated."
+  },
+  "review": {
+    "standards": "Reuse each retained text bounding rectangle for complete-line expansion, domain containment and removal. Expansion stops on an unchanged ordered rectangle list, retaining the cap of three for chains. Covered area computed once for threshold and metrics. Native byte RGB/RGBA difference masks preserve any-channel and one-pixel changes; other supported input retains NumPy semantics. No new exception recovery.",
+    "requirements": "Before change the new regression measured two bounds calls for the same record; after change one. Differential compared ordered OCR, domain metrics and age across 540 transitions; checks also cover external popup detection and replay. Timing uses a synthetic deterministic reader, not OCR model inference. D358 unchanged pending decision."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D358"
+  ]
+}

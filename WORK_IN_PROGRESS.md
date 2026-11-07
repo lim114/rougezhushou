@@ -1,3 +1,7 @@
+## 当前断点 · 动态OCR复用文字边界，变化范围稳定后结束扩张（2026-11-07）
+
+540步不同通道、数据类型和OCR模式对照结果一致。1080p受控小变化路径中位26.35→11.41毫秒，四帧录屏结果相同；92项定向通过。D358待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-ocr-dirty-geometry-20261107/summary.json)。
+
 ## 当前断点 · 页面定位只解析已核对的特征文件，先核对两侧控件再对齐画面（2026-11-07）
 
 28次路由对照的页面、区域、证据和回退结果完全一致。72项定向通过。缺摘要旧资料兼容项D357已登记。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-page-feature-evidence-20261107/summary.json)。

@@ -16,6 +16,18 @@ class PageOCRTests(unittest.TestCase):
             return [[[[4,4],[12,4],[12,12],[4,12]],str(value),.99]],None
         return read,calls
 
+    def test_dirty_read_computes_previous_line_bounds_once(self):
+        from rouge import dynamic_ocr
+        engine, _ = self.engine()
+        reader = DynamicOCR(engine)
+        frame = np.zeros((480,800,3), np.uint8)
+        reader(frame)
+        frame[240,400] = 1
+        with patch.object(dynamic_ocr, 'bounds', wraps=dynamic_ocr.bounds) as measured:
+            reader(frame)
+        measured.assert_called_once()
+        self.assertEqual(reader.metrics['mode'], 'dirty_regions')
+
     def test_first_specialized_call_maps_current_crop_coordinates(self):
         engine,calls=self.engine();reader=DynamicOCR(engine)
         image=np.full((120,240,3),17,np.uint8)

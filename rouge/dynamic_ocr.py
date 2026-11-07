@@ -36,7 +36,12 @@ class DynamicOCR:
         full_seed=(seed_from_full and domain is not None and self.regions is None)
         if (not force_discovery and self.image is not None and self.image.shape==image.shape
                 and self.image.dtype==image.dtype and (self.regions==domain or full_seed) and self.age<8):
-            dirty=np.any(image!=self.image,axis=2)
+            if image.dtype == np.uint8 and image.ndim == 3 and image.shape[2] in (3,4) and image.size:
+                difference = cv2.absdiff(image, self.image)
+                zero = (0, 0, 0, 0)
+                dirty = cv2.inRange(difference, zero, zero) == 0
+            else:
+                dirty = np.any(image != self.image, axis=2)
             if domain is not None:
                 relevant=np.zeros((h,w),bool)
                 for x0,y0,x1,y1 in domain:relevant[y0:y1,x0:x1]=True
@@ -46,6 +51,8 @@ class DynamicOCR:
                     # Discover it on this frame, rather than after the age limit.
                     domain=None
                 else:dirty &= relevant
+            boxes = (bounds(record[0]) for record in self.raw)
+            covered_pixels = 0
             if not outside_changed and not np.any(dirty):rects=[]
             elif not outside_changed:
                 # Max pooling, rather than subsampling, preserves one-pixel changes.
@@ -57,19 +64,24 @@ class DynamicOCR:
                         min(w,int((x+rw)*block)+48),min(h,int((y+rh)*block)+48)]
                        for x,y,rw,rh,_ in stats[1:]]
                 # Include complete previous text lines touched by any dirty area.
-                boxes=[bounds(record[0]) for record in self.raw]
+                boxes = list(boxes)
                 for _ in range(3):
+                    expanded = []
                     for rect in rects:
                         for box in boxes:
                             if intersects(rect,box):
-                                rect[:]=[max(0,min(rect[0],int(box[0])-12)),max(0,min(rect[1],int(box[1])-12)),
+                                rect=[max(0,min(rect[0],int(box[0])-12)),max(0,min(rect[1],int(box[1])-12)),
                                          min(w,max(rect[2],int(box[2])+12)),min(h,max(rect[3],int(box[3])+12))]
-                    rects=merge(rects)
+                        expanded.append(rect)
+                    merged = merge(expanded)
+                    if merged == rects:
+                        break
+                    rects = merged
                 if domain is not None:
                     rects=merge_rectangular([intersection(rect,area) for rect in rects for area in domain
                                  if positive_overlap(rect,area)])
                 area=int(np.count_nonzero(relevant)) if domain else h*w
-                if len(rects)>12 or union_area(rects)>area*.45:rects=None
+                if len(rects)>12 or (covered_pixels := union_area(rects))>area*.45:rects=None
         if rects is None:
             # A verified full seed is useful only for genuinely small changes.
             # Large changes are cheaper and more complete as one whole-frame
@@ -93,16 +105,19 @@ class DynamicOCR:
                     'pixels':sum((r[2]-r[0])*(r[3]-r[1]) for r in domain),'regions':len(domain)}
             self.age=0
         else:
-            raw=[deepcopy(r) for r in self.raw
-                 if (domain is None or any(contains(area,bounds(r[0])) for area in domain))
-                 and not any(intersects(bounds(r[0]),b) for b in rects)]
+            retained = self.raw
+            if domain is not None or rects:
+                retained = (record for record, box in zip(self.raw, boxes)
+                            if (domain is None or any(contains(area, box) for area in domain))
+                            and not any(intersects(box, rect) for rect in rects))
+            raw = [deepcopy(record) for record in retained]
             for x0,y0,x1,y1 in rects:
                 local,_=self.engine(image[y0:y1,x0:x1])
                 for box,text,score in local or []:
                     raw.append([[[float(x)+x0,float(y)+y0] for x,y in box],text,score])
             self.age+=1
             self.metrics={'mode':'page_dirty_regions' if domain is not None else 'dirty_regions',
-                          'pixels':union_area(rects),
+                          'pixels':covered_pixels,
                           'requested_pixels':sum((r[2]-r[0])*(r[3]-r[1]) for r in rects),
                           'regions':len(rects)}
         if outside_changed:self.metrics['outside_page_regions_changed']=True
