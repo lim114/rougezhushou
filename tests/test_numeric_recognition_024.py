@@ -1,5 +1,6 @@
 """Numeric fast paths keep pixel proof and the observed upright UI orientation."""
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 import cv2
 import numpy as np
@@ -58,6 +59,19 @@ class NumericRecognition024Tests(unittest.TestCase):
             return [[[[0,0],[1,0],[1,1],[0,1]],'3',.95]],None
         self.assertEqual(near_number(image,[],anchor,engine),3)
         self.assertEqual(calls,[{'use_det':False,'use_cls':False},{'use_cls':False}])
+
+    def test_final_zero_read_uses_the_same_isolated_glyph(self):
+        image,anchor=self.counter()
+        calls=[]
+        def engine(crop,**kwargs):
+            calls.append(kwargs)
+            if len(calls)==1:return [['0',.49]],None
+            if len(calls)==4:return [[None,'0',.5]],None
+            return [],None
+        with patch.object(cv2,'connectedComponentsWithStats',wraps=cv2.connectedComponentsWithStats) as components:
+            self.assertEqual(near_number(image,[],anchor,engine),0)
+        self.assertEqual(calls,[{'use_det':False,'use_cls':False}]+[{'use_cls':False}]*3)
+        components.assert_called_once()
 
     def test_live_capture_has_zero_items_and_six_upright_operators(self):
         image=cv2.imdecode(np.fromfile(ROOT/'samples/native-client/live-0.23.png',dtype=np.uint8),1)

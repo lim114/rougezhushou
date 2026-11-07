@@ -42,6 +42,16 @@ class NameRecheck055Tests(unittest.TestCase):
         result=recheck_run_names(self.image,[self.texts[-1]],lambda *a,**k:called.append(1))
         self.assertFalse(called);self.assertEqual(result,[self.texts[-1]])
 
+    def test_zero_height_name_keeps_the_observed_text_without_ocr(self):
+        for point in self.texts[-1]['box']:
+            point[1]=.2
+        before=copy.deepcopy(self.texts)
+        calls=[]
+        with patch('rouge.operator_name_recheck.identity_index',return_value=self.names):
+            result=recheck_run_names(self.image,self.texts,lambda *a,**kw:calls.append(kw))
+        self.assertEqual(result,before)
+        self.assertEqual(calls,[])
+
     def test_high_confidence_exact_name_does_not_spend_another_ocr_call(self):
         self.texts[-1]=record('司霆惊蛰',.99)
         called=[]

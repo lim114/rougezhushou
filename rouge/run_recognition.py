@@ -23,32 +23,29 @@ from .operator_name_recheck import recheck_run_names
 def zero_reference():
     return cv2.imdecode(np.fromfile(Path(__file__).with_name('data')/'ui-icons/collection-counter-zero.png',dtype=np.uint8),0)>0
 
-def verified_zero(crop,anchor_height,engine,*,recognizer_only=False):
-    """The observed upright glyph needs both topology and independent OCR.
-
-    A recognizer-only pass is safe only after finding a unique isolated zero.
-    Other glyphs (including the 1 in 10) preclude this fast path. No old numeric
-    result or screen coordinate serves as evidence for the current frame.
-    """
+def _isolated_zero(crop,anchor_height):
+    """Return the unique matching glyph from these pixels, including the check for a leading 1 in 10."""
     gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
     mask=cv2.threshold(gray,205,255,cv2.THRESH_BINARY)[1]
     _,labels,stats,_=cv2.connectedComponentsWithStats(mask)
     significant=[(i,s) for i,s in enumerate(stats[1:],1) if .4*anchor_height<=s[3]<=1.5*anchor_height
                  and s[4]>=20]
-    if len(significant)!=1:return False
+    if len(significant)!=1:return None
     i,(x,y,w,h,_)=significant[0]
-    if not .55<=w/h<=1.05 or x<=0 or y<=0 or x+w>=crop.shape[1] or y+h>=crop.shape[0]:return False
+    if not .55<=w/h<=1.05 or x<=0 or y<=0 or x+w>=crop.shape[1] or y+h>=crop.shape[0]:return None
     glyph=(labels[y:y+h,x:x+w]==i).astype(np.uint8)
     _,hierarchy=cv2.findContours(glyph,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
-    if hierarchy is None or sum(c[3]>=0 for c in hierarchy[0])!=1:return False
+    if hierarchy is None or sum(c[3]>=0 for c in hierarchy[0])!=1:return None
     ref=cv2.resize(zero_reference().astype(np.uint8),(w,h),interpolation=cv2.INTER_NEAREST)
     # One-pixel tolerance handles antialiasing after continuous resize.
     kernel=np.ones((3,3),np.uint8)
     score=(np.count_nonzero(glyph&cv2.dilate(ref,kernel))+
            np.count_nonzero(ref&cv2.dilate(glyph,kernel)))/(np.count_nonzero(glyph)+np.count_nonzero(ref))
-    if score<.99:return False
-    # Recognition is checked on the isolated glyph, with surrounding pattern removed.
-    glyph*=255
+    return glyph*255 if score>=.99 else None
+
+
+def _read_zero(glyph,engine,*,recognizer_only):
+    if glyph is None:return False
     # Detection used to locate this isolated shape again. A tight line image
     # with a small blank margin is what the recognizer expects; a large square
     # border can change its output from 0 to a letter even at high confidence.
@@ -63,35 +60,40 @@ def verified_zero(crop,anchor_height,engine,*,recognizer_only=False):
 
 def near_number(image,texts,anchor,engine,*,side='above'):
     x,y=center(anchor);ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 35.2)
-    values=set()
+    text_values=set()
     for record in texts:
         if record['confidence']>=.9 and re.fullmatch(r'\d{1,3}',record['text']):
             tx,ty=center(record)
             dx,dy=tx-x,ty-y
             nearby=(abs(dx)<.035*ux and -.065*uy<dy<-.012*uy if side=='above'
                     else .02*ux<dx<.09*ux and abs(dy)<.045*uy)
-            if nearby:values.add(int(record['text']))
-    if len(values)==1:return next(iter(values))
+            if nearby:text_values.add(int(record['text']))
+    if len(text_values)==1:return next(iter(text_values))
     h,w=image.shape[:2]
     bounds=(x-.035*ux,y-.065*uy,x+.035*ux,y-.012*uy) if side=='above' else (x+.025*ux,y-.04*uy,x+.074*ux,y+.015*uy)
     x0,y0,x1,y1=bounds
     x0=max(0,int(x0*w));x1=min(w,int(x1*w));y0=max(0,int(y0*h));y1=min(h,int(y1*h))
     crop=image[y0:y1,x0:x1]
     if not crop.size:return None
-    height=(max(p[1] for p in anchor['box'])-min(p[1] for p in anchor['box']))*h
-    if not values and side=='above' and verified_zero(crop,height,engine,recognizer_only=True):return 0
+    if side=='above':
+        height=(max(p[1] for p in anchor['box'])-min(p[1] for p in anchor['box']))*h
+        if not text_values:
+            glyph=_isolated_zero(crop,height)
+            if _read_zero(glyph,engine,recognizer_only=True):return 0
     # Numeric controls are upright relative to their observed label. Applying
     # the generic orientation classifier can rotate a real 6 into a confident 9.
-    raw,_=engine(cv2.resize(crop,None,fx=4,fy=4),use_cls=False)
-    values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,3}',text)}
-    if not values:
-        gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
-        normalized=cv2.normalize(gray,None,0,255,cv2.NORM_MINMAX)
-        raw,_=engine(cv2.resize(normalized,None,fx=4,fy=4),use_cls=False)
-        values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,3}',text)}
-    if len(values)==1:return next(iter(values))
-    if not values and side=='above':
-        if verified_zero(crop,height,engine):return 0
+    for normalize in (False,True):
+        digits=crop
+        if normalize:
+            gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
+            digits=cv2.normalize(gray,None,0,255,cv2.NORM_MINMAX)
+        raw,_=engine(cv2.resize(digits,None,fx=4,fy=4),use_cls=False)
+        readings={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,3}',text)}
+        if readings:return next(iter(readings)) if len(readings)==1 else None
+    if side=='above':
+        # Conflicting initial text skips the fast zero pass. Check its pixels here instead.
+        if text_values:glyph=_isolated_zero(crop,height)
+        if _read_zero(glyph,engine,recognizer_only=False):return 0
     return None
 
 
@@ -173,14 +175,14 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
             if tuple(tuple(p) for p in b['marker_box']) not in used]
     limitations=['只确认持有栏与本局队伍；不可见藏品、数量和培养字段保持未知。']
     resources.update(counter_resources(counters))
-    red=[c for c in counters if c['id']=='rogue_6_relic_cargo_2']
+    red=next((c for c in counters if c['id']=='rogue_6_relic_cargo_2'),None)
     parts=resources.get('parts_count')
     if red and parts:
         # Existing documented rule caps the applied part count at 99. A badge
         # alone is not proof of the uncapped resource quantity or its capacity.
-        if red[0]['value']==min(99,parts['value']):
-            parts['counter_crosscheck']={'relic_id':red[0]['id'],'value':red[0]['value'],
-                'score':red[0]['score'],'source':red[0]['source']}
+        if red['value']==min(99,parts['value']):
+            parts['counter_crosscheck']={'relic_id':red['id'],'value':red['value'],
+                'score':red['score'],'source':red['source']}
         else:
             resources.pop('parts_count')
             limitations.append('悲伤的红计数与零件箱数值冲突；本帧不更新零件数，保留最近确认记录。')

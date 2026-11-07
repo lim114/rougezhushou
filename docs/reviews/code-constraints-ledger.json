@@ -5150,13 +5150,21 @@
       "file": "rouge/operator_name_recheck.py",
       "sha256": "6e779d39ffef9f2a1a10f27a54725779a3737687a9436681beb7bfe9630adc42",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
+      "full_module_review_complete": true,
       "rule1": "Same-frame footer, matching name lengths and corroborating location are read once. Independent strong evidence and writable output geometry are preserved.",
       "rule2": "Inlined sole single-use spelling locator; public entry performs current-line OCR.",
       "rule3": [
-        "D360"
+        "D360 approved: keep zero-height skip"
       ],
-      "evidence": "verification/maintenance/code-constraints-roster-recognition-20261107/summary.json"
+      "evidence": "verification/maintenance/code-constraints-zero-reread-20261107/summary.json",
+      "scoped_reviews": [
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-zero-reread-20261107/summary.json",
+          "scope": "near_number, same-frame zero shape and OCR inputs, and red counter crosscheck. Name recheck module complete after D360 explicit approval and added regression."
+        }
+      ],
+      "full_review_receipt": "verification/maintenance/code-constraints-zero-reread-20261107/summary.json"
     },
     {
       "file": "rouge/hud_resources.py",
@@ -6259,6 +6267,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-hud-numeric-evidence-20261107/summary.json",
       "scope": "Full module review of HUD field reads and gold/parts reads at read_run -> read_resources; ordinary OCR absence, ambiguous numbers, clipped components, zero and capacity are distinct domain outcomes."
+    },
+    {
+      "file": "rouge/run_recognition.py",
+      "sha256": "ef96c3a60599c4868e27ead255ab485fc46986bf8b84392d5599202a9b658adf",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-zero-reread-20261107/summary.json",
+      "scope": "near_number, same-frame zero shape and OCR inputs, and red counter crosscheck. Name recheck module complete after D360 explicit approval and added regression."
     }
   ]
 }

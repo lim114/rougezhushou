@@ -136,7 +136,3 @@ dynamic_ocr.normalize_regions 将坐标解析的 ValueError、TypeError、Overfl
 ## D359 · 纯视觉整帧缓存标识的异常范围
 
 VisualReader.read 的 TypeError、ValueError、AttributeError 捕获目前覆盖上下文取值、confirmed_config、ORB 设置与 JSON 序列化。隔离样本在额外记录含集合时连续两帧都跳过整帧缓存。建议仅处理 JSON 序列化的 TypeError/ValueError，配置提取或设置读取错误正常上报。替代为保留原范围。实机触发率未知，尚未改动这处异常处理。
-
-## D360 · 队伍页干员姓名文字框高度为零
-
-operator_name_recheck.recheck_run_names 遇到高度非正的疑似姓名框跳过该行。隔离复现中四个点的纵坐标相同，保留原文字、OCR 调用零次。建议保留，避免上下留白进入独立姓名复核。替代是删除这处判断，仅依赖后续裁图非空和识别置信度。实机发生率未知，待用户决定。
