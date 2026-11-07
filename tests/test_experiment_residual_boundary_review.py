@@ -22,3 +22,23 @@ class ExperimentResidualBoundaryTests(TestCase):
         for row in result['records']:
             self.assertIn('record_validation_error',row['blocking_reasons'])
             self.assertIsNone(row['residual_interval'])
+
+    def test_missing_model_context_is_an_internal_failure(self):
+        from rouge import calibration
+        payload=model.public_experiment_payload()
+        real=calibration.panel_layers;count=0
+        def panel(scenario):
+            nonlocal count
+            count+=1
+            result=real(scenario)
+            if count==2:result.pop('context')
+            return result
+        with patch.object(calibration,'panel_layers',side_effect=panel):
+            with self.assertRaises(KeyError):model.calibration_experiment(**payload)
+
+    def test_bad_scenario_stays_a_record_error_without_losing_other_records(self):
+        payload=model.public_experiment_payload()
+        payload['experiment']['records'][0]['data']['scenario']=None
+        report=model.calibration_experiment(**payload)
+        self.assertIn('record_validation_error',report['records'][0]['blocking_reasons'])
+        self.assertEqual(report['records'][1]['state'],'evaluable')

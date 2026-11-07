@@ -152,24 +152,30 @@ def calibration_experiment(experiment):
                 model = panel_layers(data['scenario'])
             else:
                 model, calculation = _panel_calculation(data['scenario'])
-            current = model['context']['scenario']
-            result['declared_scenario'] = deepcopy(current)
-            result['model_source'] = deepcopy(model['source'])
-            differences = [
-                {'field': key, 'control_present': key in base, 'record_present': key in current,
-                 'control': deepcopy(base.get(key)), 'record': deepcopy(current.get(key)),
-                 'allowed_to_vary': key in varying}
-                for key in sorted(set(base) | set(current))
-                if key not in base or key not in current or base[key] != current[key]]
-            result['changed_controls'] = differences
-            if current['operator'] != operator:
-                result['blocking_reasons'].append('operator_identity_mismatch')
-            if any(not difference['allowed_to_vary'] for difference in differences):
-                result['blocking_reasons'].append('undeclared_control_change')
-            if observation.get('evidence_kind') != kind:
-                result['blocking_reasons'].append('evidence_kind_mismatch')
-            if raw['evidence_version'] != version:
-                result['blocking_reasons'].append('caller_evidence_version_mismatch')
+        except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+            result['blocking_reasons'].append('record_validation_error')
+            result['validation_error'] = str(error)
+            rows.append(result)
+            continue
+        current = model['context']['scenario']
+        result['declared_scenario'] = deepcopy(current)
+        result['model_source'] = deepcopy(model['source'])
+        differences = [
+            {'field': key, 'control_present': key in base, 'record_present': key in current,
+             'control': deepcopy(base.get(key)), 'record': deepcopy(current.get(key)),
+             'allowed_to_vary': key in varying}
+            for key in sorted(set(base) | set(current))
+            if key not in base or key not in current or base[key] != current[key]]
+        result['changed_controls'] = differences
+        if current['operator'] != operator:
+            result['blocking_reasons'].append('operator_identity_mismatch')
+        if any(not difference['allowed_to_vary'] for difference in differences):
+            result['blocking_reasons'].append('undeclared_control_change')
+        if observation.get('evidence_kind') != kind:
+            result['blocking_reasons'].append('evidence_kind_mismatch')
+        if raw['evidence_version'] != version:
+            result['blocking_reasons'].append('caller_evidence_version_mismatch')
+        try:
             reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel, model, calculation))
         except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
             result['blocking_reasons'].append('record_validation_error')

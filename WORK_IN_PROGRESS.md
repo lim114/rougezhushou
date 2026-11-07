@@ -1,3 +1,7 @@
+## 当前断点：实验内部条件比较（2026-11-06）
+
+D110部分推进：内部模型字段与控制条件比较移出输入错误捕获；29项定向通过。模型准备/观察解析仍待收窄，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-experiment-context-errors-20261106/summary.json`。
+
 ## 当前断点：实验残差异常出口（2026-11-06）
 
 D110部分推进：残差计算及结果更新移出输入错误捕获；27项定向通过。模型准备/观察解析仍待拆清，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json`。

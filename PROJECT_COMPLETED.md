@@ -5559,3 +5559,8 @@ D239/D242/D244/D247/D248完成：来源摘要、当前关卡归属、公开入�
 ## 维护：培养实验残差出口（2026-11-06）
 
 完成D110中的残差与结果组装部分：内部异常直接上报；坏读数仍逐条提示，27项定向通过。D110整体未销项。回执 `verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json`。
+
+
+## 维护：培养实验内部条件比较（2026-11-06）
+
+D110部分完成：内部模型字段及控制条件比较不再被捕获为输入错误；坏条件记录仍独立阻断。29项定向通过，D110未整体销项。回执 `verification/maintenance/code-constraints-experiment-context-errors-20261106/summary.json`。
