@@ -1,3 +1,7 @@
+## 维护 · 区分未知节点和缺图，超大面板数值单字段标未知（2026-11-06）
+
+D80、另行批准的D328完成。23种已登记节点正常图像逐像素一致；未知类型不读图集，缺图保留类型。面板超大整数仅该字段未知。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-node-sprite-panel-number-20261106/summary.json)。
+
 ## 维护 · 两类首领地图复用核验图片，打开与刷新各读一次（2026-11-06）
 
 D258完成。两类首领资料打开地图及父页刷新均从同图读两次降为一次；共享资料页也复用当次核验字节。无字节的独立资料仍重新核验。66项定向通过。 原280组完成271、余9。 [回执](verification/maintenance/code-constraints-fixed-map-image-reuse-20261106/summary.json)。

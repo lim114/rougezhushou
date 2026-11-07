@@ -16,7 +16,13 @@ LABELS = {'hp':'生命值', 'attack':'攻击力', 'defense':'防御力',
 
 
 def _number(value):
-    return value if type(value) in (int, float) and math.isfinite(value) else None
+    if type(value) not in (int, float):
+        return None
+    try:
+        finite = math.isfinite(value)
+    except OverflowError:
+        return None
+    return value if finite else None
 
 
 def _bits(value):

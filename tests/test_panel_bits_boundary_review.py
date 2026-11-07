@@ -11,6 +11,20 @@ class PanelBitsBoundaryTests(TestCase):
         for value in (1e300,-1e300,None,True,float('inf'),float('nan')):
             self.assertIsNone(bridge._bits(value))
 
+    def test_oversized_basis_only_marks_that_snapshot_field_unknown(self):
+        huge = 10**1000
+        for value in (huge, -huge):
+            scenario = {}
+            stats = {'hp': value, 'attack': 123}
+            bridge.prepare(scenario, stats, stats, [])
+            for row in scenario['_panel_native_prepared']['fields']:
+                if row['field'] == 'hp':
+                    self.assertIsNone(row['model_value'])
+                    self.assertIsNone(row['basis_single_bits'])
+                else:
+                    self.assertEqual(row['model_value'], 123)
+                    self.assertEqual(row['basis_single_bits'], 0x42f60000)
+
     def test_structural_packing_error_is_exposed(self):
         with patch.object(bridge.struct,'pack',side_effect=struct.error('internal format defect')):
             with self.assertRaisesRegex(struct.error,'internal format defect'):bridge._bits(1)

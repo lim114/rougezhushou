@@ -5,6 +5,28 @@ from pathlib import Path
 from rouge import player_map_reference as m
 
 class MapReferenceTests(unittest.TestCase):
+ def test_node_sprite_distinguishes_unknown_and_missing_art(self):
+  from unittest.mock import patch
+  from PySide6.QtGui import QImage
+  from rouge import player_map as maps
+  get_image = maps.node_sprite.__wrapped__
+  with patch.object(maps, 'art_manifest') as manifest:
+   self.assertTrue(get_image('未登记的类型').isNull())
+   manifest.assert_not_called()
+  missing = QImage(str(maps.ART.parent / 'ui-icons' / 'missing-node-image.png'))
+  self.assertFalse(missing.isNull())
+  with patch.object(maps, 'art_manifest', return_value={'sprites': {}}):
+   self.assertEqual(get_image('作战'), missing)
+  transparent = QImage(4, 4, QImage.Format.Format_RGBA8888)
+  transparent.fill(0)
+  sprite = {'x': 0, 'y': 0, 'width': 4, 'height': 4}
+  with patch.object(maps, 'art_manifest', return_value={'sprites': {'combat': sprite}}):
+   for atlas in (QImage(), transparent):
+    with patch.object(maps, 'node_atlas', return_value=atlas):
+     self.assertEqual(get_image('作战'), missing)
+  self.assertFalse(get_image('作战').isNull())
+  self.assertNotEqual(get_image('作战'), missing)
+
  def test_observation_overrides_template_and_prediction(self):
   n={'observed_type':'林间空地','template_type':'作战','prediction':{'candidates':['诡意行商']}}
   self.assertEqual(m.candidate_types(n),('林间空地',));self.assertEqual(m.type_match(n,'诡意行商'),'excluded')

@@ -44,12 +44,20 @@ def node_atlas():return QImage(str(ART/'nodes.png'))
 @lru_cache(maxsize=len(ICONS))
 def node_sprite(kind):
     """One original atlas crop for map painting and exact source-node cards."""
-    key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
-    if not sprite:return QImage()
-    import numpy as np
-    icon=node_atlas().copy(sprite['x'],sprite['y'],sprite['width'],sprite['height']).convertToFormat(QImage.Format.Format_RGBA8888)
-    alpha=np.frombuffer(icon.bits(),np.uint8).reshape(icon.height(),icon.width(),4)[:,:,3];ys,xs=np.where(alpha>16)
-    return icon.copy(int(xs.min()),int(ys.min()),int(xs.max()-xs.min()+1),int(ys.max()-ys.min()+1))if len(xs)else icon
+    key = ICONS.get(kind)
+    if key is None:
+        return QImage()
+    sprite = art_manifest()['sprites'].get(key)
+    if sprite:
+        import numpy as np
+        icon = node_atlas().copy(sprite['x'], sprite['y'], sprite['width'], sprite['height'])
+        if not icon.isNull():
+            icon = icon.convertToFormat(QImage.Format.Format_RGBA8888)
+            alpha = np.frombuffer(icon.bits(), np.uint8).reshape(icon.height(), icon.width(), 4)[:, :, 3]
+            ys, xs = np.where(alpha > 16)
+            if len(xs):
+                return icon.copy(int(xs.min()), int(ys.min()), int(xs.max()-xs.min()+1), int(ys.max()-ys.min()+1))
+    return QImage(str(ART.parent / 'ui-icons' / 'missing-node-image.png'))
 
 class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
