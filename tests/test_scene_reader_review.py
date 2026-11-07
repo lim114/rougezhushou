@@ -24,6 +24,20 @@ class SceneReaderReviewTests(unittest.TestCase):
         run=SimpleNamespace(state={'id':'public-reader-fixture','last_node_content':{'kind':'battle','stage_id':'ro6_n_2_6','title':'旧标题仅用于对照'}})
         p=SceneBattlePanel(run);p.show();p.stages.setCurrentIndex(1);self.qt.processEvents();self.addCleanup(p.close);return run,p
 
+    def test_refresh_reuses_version_and_battle_packet_then_click_rechecks(self):
+        run, panel = self.scene()
+        before = deepcopy(panel.result)
+        run.state['last_node_content']['title'] = '更新后的已读标题'
+        with patch.object(model.version, 'packet', wraps=model.version.packet) as version, \
+             patch.object(model, 'packet', wraps=model.packet) as battle:
+            panel.refresh()
+            self.assertEqual((version.call_count, battle.call_count), (1, 1))
+            self.assertEqual(panel.result, before)
+            panel.stages.setCurrentIndex(0)
+            panel.stages.setCurrentIndex(1)
+            self.assertEqual((version.call_count, battle.call_count), (2, 2))
+            self.assertEqual(panel.result, before)
+
     def test_shared_factory_verifies_the_stage_once_instead_of_twice_without_changing_packets(self):
         raw=(ROOT/'research/scene-reader-review-20261031/before-player-map-reader.py').read_bytes()
         self.assertEqual(sha256(raw).hexdigest(),'8d09e8720836faf59f314907d8482cb530446a577509f18a04c9148cd33c4e61')

@@ -1,0 +1,69 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 76,
+    "structural_only": 250,
+    "selected_paths_only": 193,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision"
+  ],
+  "title": "最近关卡刷新共享本次版本与作战资料",
+  "base_commit": "52c61bc8ef8e520550e5b96391ec4112b6e9d06a",
+  "changed_sources": [
+    "rouge/player_scene_battle.py",
+    "rouge/current_battle_reference.py"
+  ],
+  "source_sha256": {
+    "rouge/player_scene_battle.py": "cc99f6ef07e1c41d2b3a086e0298f1aa5175483e395cb3e6651fb0be2d4129dc",
+    "rouge/current_battle_reference.py": "3f2f453d23fff933ac5734f3e630045437e796096d485fe1a0309897c5f7dba6"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 30,
+    "seconds": 25.876,
+    "modules": [
+      "tests.test_scene_reader_review",
+      "tests.test_player_scene_battle_395",
+      "tests.test_current_battle_reference_314"
+    ],
+    "live_window": "Isolated Qt; desktop window not updated."
+  },
+  "review": {
+    "standards": "Qualify battle ID or title before source access, reuse the candidate version for the battle packet, pass that same packet to the immediate selection refresh. Standalone candidate and click entry points still read fresh sources. No new retry, fallback or persistent cache.",
+    "requirements": "Explicit invalid IDs never guessed by title, ambiguous variants remain unselected. Regression counts both source readers during refresh and later user selection, compares complete stage payload. Damaged live fixture invalidates and restores by existing rules."
+  },
+  "partially_implemented_decisions": []
+}

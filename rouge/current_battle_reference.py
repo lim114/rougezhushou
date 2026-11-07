@@ -63,7 +63,7 @@ def original_rows_match(originals, stages, inputs):
     return True
 
 
-def packet():
+def packet(*, prepared_version=...):
     try:
         manifest_raw=(ROOT/MANIFEST).read_bytes()
         if sha256(manifest_raw).hexdigest()!=MANIFEST_SHA256:return None
@@ -78,7 +78,7 @@ def packet():
             raw=p.read_bytes()
             if len(raw)!=pin['bytes']or sha256(raw).hexdigest()!=pin['sha256']:return None
             objects[name]=json.loads(raw)
-        base=version.packet()
+        base = version.packet() if prepared_version is ... else prepared_version
         if base is None:return None
         return {'inputs':objects[PACK+'/source-inputs.json'],'selection':objects[PACK+'/source-selection.json'],
                 'portraits':objects[PACK+'/enemy-images.json'],'version':base,'identity':MANIFEST_SHA256,

@@ -4,19 +4,34 @@ from . import expansion_reference
 from collections import Counter
 
 def stage_candidates(content):
-    if not isinstance(content,dict)or content.get('kind')!='battle':return []
-    packet=expansion_reference.packet()
-    if packet is None:return []
-    rows=packet['current']['details']['stages'];identity=None
-    for field in('stage_id','variant_id'):
-        if field in content and content[field]is not None:
-            if not isinstance(content[field],str)or not content[field].strip():return []
-            identity=content[field];break
-    if identity is not None:
-        ids=[identity]if identity in rows else[]
+    candidates, _ = _read_candidates(content)
+    return candidates
+
+
+def _read_candidates(content):
+    if not isinstance(content, dict) or content.get('kind') != 'battle':
+        return [], None
+    identity = content.get('stage_id')
+    if identity is None:
+        identity = content.get('variant_id')
+    title = content.get('title')
+    lookup = identity if identity is not None else title
+    if not isinstance(lookup, str) or not lookup.strip():
+        return [], None
+    version = expansion_reference.packet()
+    if version is None:
+        return [], None
+    stages = version['current']['details']['stages']
+    if identity is None:
+        matches = ((sid, stage) for sid, stage in stages.items() if stage.get('name') == title)
     else:
-        title=content.get('title');ids=[k for k,v in rows.items()if v.get('name')==title]if isinstance(title,str)and title.strip()else[]
-    return [{'id':k,'name':rows[k]['name'],'label':rows[k]['name']+' · '+('紧急'if rows[k]['isElite']else'领袖'if rows[k]['isBoss']else'普通')+' · 候选'+str(i+1)}for i,k in enumerate(ids)]
+        matches = [(identity, stages[identity])] if identity in stages else []
+    candidates = []
+    for number, (sid, stage) in enumerate(matches, 1):
+        mode = '紧急' if stage['isElite'] else '领袖' if stage['isBoss'] else '普通'
+        candidates.append({'id': sid, 'name': stage['name'], 'label': f"{stage['name']} · {mode} · 候选{number}"})
+    return candidates, version
+
 
 from PySide6.QtCore import Qt,QSize,Signal
 from PySide6.QtGui import QIcon,QPixmap
@@ -48,17 +63,18 @@ class SceneBattlePanel(QWidget):
             self.dialog.panel.set_context({}if self.historical_reading else self.run.state.get('config',{}))
         content=self.run.state.get('last_node_content')
         if not isinstance(content,dict):content=None
-        rows=stage_candidates(content);reference=model.packet()if rows else None
+        rows, version = _read_candidates(content)
+        reference = model.packet(prepared_version=version) if rows else None
         if reference is None:rows=[]
         key=(repr({k:(content or{}).get(k)for k in('kind','title','stage_id','variant_id')}),repr(rows),reference['identity']if reference else None)
         if key==self.context_key:return
         self.context_key=key;old=self.stages.currentData();self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('请选择准确关卡版本',None)
         for row in rows:self.stages.addItem(row['label'],row['id'])
-        index=self.stages.findData(old)if old else-1;self.stages.setCurrentIndex(max(0,index));self.stages.blockSignals(False);self.select_stage()
+        index=self.stages.findData(old)if old else-1;self.stages.setCurrentIndex(max(0,index));self.stages.blockSignals(False);self.select_stage(prepared_packet=reference)
         if not rows:self.notice.setText('暂无关卡资料，可从地图节点打开作战预览。')
         else:self.notice.setText('最近读取：'+str(content.get('title')or'已记录关卡')+' · 选择版本查看')
-    def select_stage(self,*_):
-        identity=self.stages.currentData();self.identity=identity;self.result=model.stage_reference(identity)if identity else None;self.enemies={};self.detail.clear();self.open_button.setEnabled(self.result is not None)
+    def select_stage(self, *_, prepared_packet=...):
+        identity=self.stages.currentData();self.identity=identity;self.result=model.stage_reference(identity, prepared_packet=prepared_packet) if identity else None;self.enemies={};self.detail.clear();self.open_button.setEnabled(self.result is not None)
         self.note_button.setVisible(self.result is not None)
         for widget in self.lists.values():widget.clear()
         if self.dialog is not None:self.dialog.close();self.dialog=None
