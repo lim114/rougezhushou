@@ -27,6 +27,8 @@ def refine_map_texts(image,texts,nodes,engine):
     x0=max(0,round(min(xs)-font*14));x1=min(w,round(max(xs)+font*14))
     y0=max(0,round(min(ys)-font*6));y1=min(h,round(max(ys)+font*4))
     extra=[]
+    centers_by_text = {}
+    x_tolerance, y_tolerance = font / w, font / h
     # Tiles cover the discovered area; their positions are not field coordinates.
     for left in range(x0,x1,1000):
         right=min(x1,left+1100);roi=image[y0:y1,left:right]
@@ -36,8 +38,10 @@ def refine_map_texts(image,texts,nodes,engine):
             record={'text':text.replace(' ',''),'confidence':float(score),
                     'box':[[(float(x)+left)/w,(float(y)+y0)/h] for x,y in box]}
             cx=sum(p[0] for p in record['box'])/4;cy=sum(p[1] for p in record['box'])/4
-            if any(t['text']==record['text'] and abs(sum(p[0] for p in t['box'])/4-cx)<font/w
-                   and abs(sum(p[1] for p in t['box'])/4-cy)<font/h for t in extra):continue
+            centers = centers_by_text.setdefault(record['text'], [])
+            if any(abs(x-cx) < x_tolerance and abs(y-cy) < y_tolerance for x,y in centers):
+                continue
+            centers.append((cx,cy))
             extra.append(record)
     kept=[t for t in texts if not (x0/w<sum(p[0] for p in t['box'])/4<x1/w
                                    and y0/h<sum(p[1] for p in t['box'])/4<y1/h)]

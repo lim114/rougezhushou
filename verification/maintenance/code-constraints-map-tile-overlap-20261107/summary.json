@@ -1,0 +1,128 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 79,
+    "structural_only": 250,
+    "selected_paths_only": 190,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "地图文字补读按名称复用已读中心，实测两种OCR路径",
+  "base_commit": "e3d81540ae90272a9673ac0ebbbc9d70a4b420e0",
+  "changed_sources": [
+    "rouge/recognition.py"
+  ],
+  "source_sha256": {
+    "rouge/recognition.py": "5b7afd717ac981fc02ee8b0e916d2e8e9270bdf1c88233bdec4eb92500a30961"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 55,
+    "full_suite_run": false,
+    "modules": [
+      "map_ocr_tile_overlap",
+      "interpret_lookup_review",
+      "ocr_cache_review",
+      "recognition_059",
+      "frame_buffer",
+      "page_ocr_058"
+    ],
+    "six_tile_ms": {
+      "old": [
+        631,
+        1218,
+        494,
+        1824,
+        241,
+        594
+      ],
+      "candidate": [
+        649,
+        1246,
+        495,
+        1793,
+        255,
+        605
+      ],
+      "new": [
+        642,
+        1223,
+        478,
+        1846,
+        250,
+        596
+      ],
+      "final": [
+        648,
+        1235,
+        490,
+        1779,
+        252,
+        570
+      ]
+    },
+    "trials": "old = baseline, candidate = separate experiment with existing PageOCR in the real pipeline, new = overlap change plus contiguous copy, final = overlap change without copy. Timings are individual observations, not confidence intervals.",
+    "tile_sizes_hw": [
+      [
+        941,
+        1100
+      ],
+      [
+        941,
+        924
+      ]
+    ],
+    "direct_cache_hit_ms_median_30": [
+      1.82,
+      2.57
+    ],
+    "queue_ms": [
+      11.23,
+      41.07,
+      10664.48,
+      13719.35
+    ],
+    "live_window": "Original Windows test window not updated. Offline only."
+  },
+  "review": {
+    "standards": "Each accepted text center is calculated once and reused by same-name candidates. Preserve strict per-axis tolerance against every earlier accepted center, including two same-name nodes at distinct positions; first accepted record and source order retained. No new helper or defense.",
+    "requirements": "Baseline and final exact hashes compared over all six tile OCR outputs and four complete semantic results. Also compared by capture identity after queue reordering. Real-capture inputs replayed locally; no native window acceptance."
+  },
+  "partially_implemented_decisions": []
+}
