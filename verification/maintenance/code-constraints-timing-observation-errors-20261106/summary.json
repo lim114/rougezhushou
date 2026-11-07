@@ -1,0 +1,65 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary"
+  ],
+  "title": "时序观察只捕获明确界限和协议错误",
+  "base_commit": "9182b52164d2aaddd93670abc1b9ffc4b603ef8b",
+  "changed_sources": [
+    "rouge/bounded_calibration.py",
+    "rouge/calibration_experiment.py"
+  ],
+  "source_sha256": {
+    "rouge/bounded_calibration.py": "7032384ccaf3f972e78c72e1ec62300abf45998d7e5e2f51ca5358744072f2db",
+    "rouge/calibration_experiment.py": "36dfe6871b90e13527f7955a997c02c6d6b384d7622f70b1ae38e63691ab7f2c"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_experiment_residual_boundary_review tests.test_calibration_experiment tests.test_experiment_timing_prediction_review tests.test_bounded_calibration",
+        "tests_run": 61,
+        "tests_passed": 61,
+        "seconds": 3.578
+      },
+      {
+        "tests_run": 2,
+        "tests_passed": 2,
+        "seconds": 0.175,
+        "scope": "after removing redundant panel bound translation: bad bounds and three-operator panel/timing cases"
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior automatic approval rejection; no native acceptance claimed."
+  },
+  "review": {
+    "standards": "D110 partial: explicit bounded reading/clock/order checks use BoundedObservationError, preserving ValueError API inheritance. Experiment catches only PanelObservationError/BoundedObservationError. Malformed order endpoint is rejected at existing order entry instead of incidental TypeError. No new condition threshold or recovery. Shared bounds error removes now redundant panel read catch/translation.",
+    "requirements": "All prior bounded calibration cases pass; deliberate interval implementation ValueError/TypeError/KeyError/IndexError/OverflowError escape. Malformed order endpoint blocks only its record; subsequent records still evaluated. Removing panel wrapper preserves invalid bounds and all three operator cases. Model preparation remains unresolved."
+  },
+  "partially_implemented_decisions": [
+    "D110"
+  ]
+}

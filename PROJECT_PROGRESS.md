@@ -137,4 +137,4 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 - D321：浮游单元非法等级被默认满级，待用户决定后实施；见 `docs/reviews/pending-defenses.md`。
 
 
-D110剩余：模型准备和时序观察仍有宽捕获，继续划清输入异常契约。回执 `verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json`。
+D110剩余：模型准备仍有宽捕获，继续划清输入异常契约。回执 `verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json`。

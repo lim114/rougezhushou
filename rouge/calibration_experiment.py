@@ -6,7 +6,7 @@ mechanism, causal conclusion, fitted coefficient, or native certification.
 from copy import deepcopy
 from fractions import Fraction
 from .calibration import PanelObservationError
-from .bounded_calibration import _reading, _interval, _bounds, _residual, _compare_bounded_reference
+from .bounded_calibration import BoundedObservationError, _reading, _interval, _bounds, _residual, _compare_bounded_reference
 
 
 def _text(value, name):
@@ -47,13 +47,7 @@ def _panel_value(data, channel, model):
     observation = deepcopy(data['observation'])
     if not isinstance(observation.get('values'), dict) or not observation['values']:
         raise PanelObservationError('面板样本需有非空界限记录。')
-    intervals = {}
-    for key, value in observation['values'].items():
-        try:
-            bounds = _reading(value, '独立面板界限/' + str(key))
-        except (ValueError, OverflowError) as error:
-            raise PanelObservationError(str(error)) from error
-        intervals[key] = _interval(*bounds)
+    intervals = {key: _interval(*_reading(value, '独立面板界限/' + str(key))) for key, value in observation['values'].items()}
     observation['values'] = {key: interval['lower'] for key, interval in intervals.items()}
     comparison = _compare_prediction(model, observation, 0)
     if comparison['panel'] != channel['panel']:
@@ -142,8 +136,6 @@ def calibration_experiment(experiment):
         _text(raw['evidence_version'], '记录来源版本声明')
     if roles.count('training') < 2:
         raise ValueError('共同残差假设至少需两个明确训练记录。')
-    observation_errors = ((PanelObservationError,) if channel['kind'] == 'panel' else
-                          (ValueError, TypeError, KeyError, IndexError, OverflowError))
     rows = []
     for raw in records:
         result = {'id': raw['id'], 'role': raw['role'], 'evidence_version': raw['evidence_version'],
@@ -186,7 +178,7 @@ def calibration_experiment(experiment):
             result['blocking_reasons'].append('caller_evidence_version_mismatch')
         try:
             reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel, model, calculation))
-        except observation_errors as error:
+        except (PanelObservationError, BoundedObservationError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
         else:

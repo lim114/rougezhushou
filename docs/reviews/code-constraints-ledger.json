@@ -1430,7 +1430,7 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "d7f4b6a3d4aae9244325375929e78150b6e9af5426a28e8bb5efa4032be0b60d",
+      "sha256": "36dfe6871b90e13527f7955a997c02c6d6b384d7622f70b1ae38e63691ab7f2c",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
@@ -1465,6 +1465,12 @@
           "receipt": "verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json",
           "scope": "D110 partial panel input errors separated; model/timing pending",
           "sha256": "d7f4b6a3d4aae9244325375929e78150b6e9af5426a28e8bb5efa4032be0b60d"
+        },
+        {
+          "file": "rouge/calibration_experiment.py",
+          "receipt": "verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json",
+          "scope": "D110 partial timing input errors separated; model preparation pending",
+          "sha256": "36dfe6871b90e13527f7955a997c02c6d6b384d7622f70b1ae38e63691ab7f2c"
         }
       ]
     },
@@ -1485,7 +1491,7 @@
     },
     {
       "file": "rouge/bounded_calibration.py",
-      "sha256": "94da45151fca15960d41167a900e3a5806577620850e18f3935ffa421de1f37f",
+      "sha256": "7032384ccaf3f972e78c72e1ec62300abf45998d7e5e2f51ca5358744072f2db",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
@@ -1509,7 +1515,15 @@
         ],
         "evidence": "verification/maintenance/code-constraints-bounded-entry-reuse-review-20261106/summary.json",
         "result": "73+3 targeted tests pass; full module certification unchanged."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "file": "rouge/bounded_calibration.py",
+          "receipt": "verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json",
+          "scope": "D110 partial timing input errors separated; model preparation pending",
+          "sha256": "7032384ccaf3f972e78c72e1ec62300abf45998d7e5e2f51ca5358744072f2db"
+        }
+      ]
     },
     {
       "file": "rouge/relic_panel_diagnostics.py",

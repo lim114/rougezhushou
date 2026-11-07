@@ -1,3 +1,7 @@
+## 当前断点：时序观察异常契约（2026-11-06）
+
+D110时序观察部分完成：只捕获明确界限/时钟/协议错误，内部区间错误上报；61项定向通过，删面板重复异常转译后2项复验通过。模型准备仍待收窄，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json`。
+
 ## 当前断点：面板观察异常契约（2026-11-06）
 
 D110部分推进：面板观察仅捕获明确输入错误，比较内部异常直接上报；31+5项定向通过。模型准备/时序观察仍待收窄，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json`。

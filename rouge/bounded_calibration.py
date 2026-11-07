@@ -12,22 +12,26 @@ import math
 STATES = ('all_compatible', 'possible_overlap', 'no_overlap', 'model_unknown', 'measurement_unknown')
 
 
+class BoundedObservationError(ValueError):
+    """Declared observation bounds, clocks or ordering constraints are invalid."""
+
+
 def _number(value, name):
     try:
         good = not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(value) and 0 <= value <= 1e12
     except OverflowError:
         good = False
     if not good:
-        raise ValueError(name + '需要0–1e12范围内的有限数；界限由调用方声明。')
+        raise BoundedObservationError(name + '需要0–1e12范围内的有限数；界限由调用方声明。')
     return Fraction(str(value))
 
 
 def _reading(value, name):
     if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(name + '需明确填写[下界,上界]；不自动猜测读数精度。')
+        raise BoundedObservationError(name + '需明确填写[下界,上界]；不自动猜测读数精度。')
     lo, hi = (_number(v, name) for v in value)
     if lo > hi:
-        raise ValueError(name + '下界不能大于上界。')
+        raise BoundedObservationError(name + '下界不能大于上界。')
     return lo, hi
 
 
@@ -163,17 +167,17 @@ class _OrderBounds:
         lo, hi = self.original[name]
         new_lo, new_hi = max(lo, reading[0]), min(hi, reading[1])
         if new_lo > new_hi:
-            raise ValueError('同一声明时刻的首末/列表界限没有共同值；与已声明记录协议冲突。')
+            raise BoundedObservationError('同一声明时刻的首末/列表界限没有共同值；与已声明记录协议冲突。')
         self.original[name] = (new_lo, new_hi)
 
     def order(self, before, after, strict=False):
-        if before not in self.aliases or after not in self.aliases:
-            raise ValueError('排序约束引用了未录入界限的时刻。')
+        if not isinstance(before,str) or not isinstance(after,str) or before not in self.aliases or after not in self.aliases:
+            raise BoundedObservationError('排序约束引用了未录入界限的时刻。')
         self.edges.append((self.aliases[before], self.aliases[after], strict))
 
     def solve(self):
         if len(self.original) > 256:
-            raise ValueError('联合界限最多256个已录入时刻。')
+            raise BoundedObservationError('联合界限最多256个已录入时刻。')
         adjacency = {name: [] for name in self.original}
         for before, after, strict in self.edges:
             adjacency[before].append((after, strict))
@@ -187,7 +191,7 @@ class _OrderBounds:
                 found[target] = strict or found.get(target, False)
                 pending.extend((nxt, strict or edge_strict) for nxt, edge_strict in adjacency[target])
             if found.get(origin):
-                raise ValueError('联合时刻与已声明排序协议冲突：严格先后形成闭环。不能据此判断游戏行为。')
+                raise BoundedObservationError('联合时刻与已声明排序协议冲突：严格先后形成闭环。不能据此判断游戏行为。')
             self.reach[origin] = found
         for name, (own_lo, own_hi) in self.original.items():
             lo, hi, lc, hc = own_lo, own_hi, True, True
@@ -207,7 +211,7 @@ class _OrderBounds:
                 elif candidate == hi:
                     hc = hc and not strict
             if lo > hi or (lo == hi and not (lc and hc)):
-                raise ValueError('联合界限与调用方已声明的排序协议冲突；不代表游戏行为不可能。')
+                raise BoundedObservationError('联合界限与调用方已声明的排序协议冲突；不代表游戏行为不可能。')
             self.feasible[name] = (lo, hi, lc, hc)
 
     def difference(self, before, after):
@@ -236,26 +240,26 @@ class _OrderBounds:
 
 def _clock(raw):
     if not isinstance(raw, dict) or set(raw) - {'id', 'unit', 'fps', 'origin_event', 'origin_stamp'}:
-        raise ValueError('clock需为明确单位、FPS及部署原点界限的对象。')
+        raise BoundedObservationError('clock需为明确单位、FPS及部署原点界限的对象。')
     identity = raw.get('id')
     if not isinstance(identity, str) or not identity.strip() or raw.get('origin_event') != 'deployment':
-        raise ValueError('时钟需有非空id和明确deployment原点。')
+        raise BoundedObservationError('时钟需有非空id和明确deployment原点。')
     if raw.get('unit') not in ('seconds', 'frames'):
-        raise ValueError('单位仅支持seconds或frames。')
+        raise BoundedObservationError('单位仅支持seconds或frames。')
     origin = _reading(raw.get('origin_stamp'), '部署原点界限')
     if raw['unit'] == 'frames':
         if any(not isinstance(value, int) or isinstance(value, bool) for value in raw['origin_stamp']):
-            raise ValueError('视频帧界限需为整数。')
+            raise BoundedObservationError('视频帧界限需为整数。')
         fps = _number(raw.get('fps'), '声明视频FPS')
         if not 0 < fps <= 1000:
-            raise ValueError('视频FPS需大于0且不超过1000；不自动套30Hz。')
+            raise BoundedObservationError('视频FPS需大于0且不超过1000；不自动套30Hz。')
     else:
         if raw.get('fps') is not None:
-            raise ValueError('秒记录不能混用FPS。')
+            raise BoundedObservationError('秒记录不能混用FPS。')
         fps = Fraction(1)
     converted = (origin[0] / fps, origin[1] / fps)
     if any(value > Fraction(10 ** 12) for value in converted):
-        raise ValueError('声明FPS换算后的部署秒坐标超出支持范围。')
+        raise BoundedObservationError('声明FPS换算后的部署秒坐标超出支持范围。')
     return {'id': identity, 'unit': raw['unit'], 'fps': raw.get('fps'),
             'origin_event': 'deployment', 'origin_stamp': deepcopy(raw['origin_stamp'])}, converted, fps
 
@@ -264,13 +268,13 @@ def _stamp(raw, clock, fps, name):
     if raw is None:
         return None
     if not isinstance(raw, dict) or set(raw) != {'clock_id', 'bounds'} or raw['clock_id'] != clock['id']:
-        raise ValueError(name + '需有匹配clock_id与显式bounds；不同钟不能相减。')
+        raise BoundedObservationError(name + '需有匹配clock_id与显式bounds；不同钟不能相减。')
     bounds = _reading(raw['bounds'], name)
     if clock['unit'] == 'frames' and any(not isinstance(v, int) or isinstance(v, bool) for v in raw['bounds']):
-        raise ValueError(name + '视频帧界限需为整数。')
+        raise BoundedObservationError(name + '视频帧界限需为整数。')
     result = (bounds[0] / fps, bounds[1] / fps)
     if any(value > Fraction(10 ** 12) for value in result):
-        raise ValueError('换算后秒坐标超出支持范围。')
+        raise BoundedObservationError('换算后秒坐标超出支持范围。')
     return result
 
 
@@ -287,46 +291,46 @@ def _compare_bounded_reference(reference, observation, tolerance_seconds, tolera
     allowed = {'context_token', 'operator', 'skill_id', 'evidence_kind', 'source', 'clock',
         'first_cycle_is_initial', 'release_kind', 'cycles', 'attack_speed_attribute', 'ordering_protocol', 'ordering_constraints'}
     if not isinstance(observation, dict) or set(observation) - allowed:
-        raise ValueError('有界时刻记录需为支持的独立来源对象。')
+        raise BoundedObservationError('有界时刻记录需为支持的独立来源对象。')
     if observation.get('context_token') != reference['context_token']:
-        raise ValueError('界限记录与当前声明条件标识不一致。')
+        raise BoundedObservationError('界限记录与当前声明条件标识不一致。')
     if (observation.get('operator') != reference['skill_identity']['operator'] or
             observation.get('skill_id') != reference['skill_identity']['skill_id']):
-        raise ValueError('有界记录的干员/技能身份不一致。')
+        raise BoundedObservationError('有界记录的干员/技能身份不一致。')
     if observation.get('evidence_kind') not in KINDS:
-        raise ValueError('需区分game_timing/public_case/formula_reference。')
+        raise BoundedObservationError('需区分game_timing/public_case/formula_reference。')
     if not isinstance(observation.get('source'), str) or not observation['source'].strip():
-        raise ValueError('界限记录必须独立注明来源。')
+        raise BoundedObservationError('界限记录必须独立注明来源。')
     if not isinstance(observation.get('first_cycle_is_initial'), bool):
-        raise ValueError('需明确是否为部署后的首次就绪。')
+        raise BoundedObservationError('需明确是否为部署后的首次就绪。')
     kind = observation.get('release_kind', 'unknown')
     if kind not in RELEASE_KINDS:
-        raise ValueError('释放/命中来源类别不明确。')
+        raise BoundedObservationError('释放/命中来源类别不明确。')
     protocol = observation.get('ordering_protocol')
     if protocol not in ('declared_normal_chain', 'explicit_constraints'):
-        raise ValueError('需明确选择调用方声明的正常链协议或显式排序约束。')
+        raise BoundedObservationError('需明确选择调用方声明的正常链协议或显式排序约束。')
     constraints = observation.get('ordering_constraints', [])
     if not isinstance(constraints, list) or len(constraints) > 512 or (protocol == 'declared_normal_chain' and constraints):
-        raise ValueError('显式约束最多512条，不能与正常链预设混合。')
+        raise BoundedObservationError('显式约束最多512条，不能与正常链预设混合。')
     clock, origin_bounds, fps = _clock(observation.get('clock'))
     graph = _OrderBounds()
     graph.add('deployment', origin_bounds)
     raw_cycles = observation.get('cycles')
     if not isinstance(raw_cycles, list) or not 1 <= len(raw_cycles) <= 20:
-        raise ValueError('cycles需为1–20组界限记录。')
+        raise BoundedObservationError('cycles需为1–20组界限记录。')
     cycles, ids = [], set()
     for raw in raw_cycles:
         allowed_cycle = {'id', *EVENTS, 'release_stamps', 'release_recording', 'recharge_basis'}
         if not isinstance(raw, dict) or set(raw) - allowed_cycle:
-            raise ValueError('周期包含未支持字段。')
+            raise BoundedObservationError('周期包含未支持字段。')
         identity = raw.get('id')
         if not isinstance(identity, str) or not identity.strip() or identity in ids or '.' in identity:
-            raise ValueError('周期ID需唯一非空且不能包含点号。')
+            raise BoundedObservationError('周期ID需唯一非空且不能包含点号。')
         ids.add(identity)
         recording = raw.get('release_recording', 'unknown')
         basis = raw.get('recharge_basis', 'unknown')
         if recording not in ('all_consecutive', 'selected', 'unknown') or basis not in ('model_depleted_requirement', 'precharged_or_partial', 'unknown'):
-            raise ValueError('记录完整度或充值需求类别不明确。')
+            raise BoundedObservationError('记录完整度或充值需求类别不明确。')
         event_nodes = {}
         for event in EVENTS:
             reading = _stamp(raw.get(event), clock, fps, identity + '.' + event)
@@ -338,13 +342,13 @@ def _compare_bounded_reference(reference, observation, tolerance_seconds, tolera
                 event_nodes[event] = None
         releases = raw.get('release_stamps', [])
         if not isinstance(releases, list) or len(releases) > 200:
-            raise ValueError('释放界限列表最多200项。')
+            raise BoundedObservationError('释放界限列表最多200项。')
         release_nodes = []
         for index, value in enumerate(releases):
             node = identity + '.release.' + str(index)
             reading = _stamp(value, clock, fps, node)
             if reading is None:
-                raise ValueError('释放列表内不填null；未知时刻使用独立事件null。')
+                raise BoundedObservationError('释放列表内不填null；未知时刻使用独立事件null。')
             graph.add(node, reading)
             release_nodes.append(node)
         if release_nodes:
@@ -355,7 +359,7 @@ def _compare_bounded_reference(reference, observation, tolerance_seconds, tolera
                 graph.aliases[identity + '.' + event] = node
                 event_nodes[event] = node
         if not any(event_nodes.values()) and not release_nodes:
-            raise ValueError('每周期至少有一个独立录入的界限。')
+            raise BoundedObservationError('每周期至少有一个独立录入的界限。')
         cycles.append({'id': identity, 'event_nodes': event_nodes, 'release_nodes': release_nodes,
                        'release_recording': recording, 'recharge_basis': basis})
     if protocol == 'declared_normal_chain':
@@ -383,7 +387,7 @@ def _compare_bounded_reference(reference, observation, tolerance_seconds, tolera
     else:
         for row in constraints:
             if not isinstance(row, dict) or set(row) != {'before', 'after', 'strict'} or not isinstance(row['strict'], bool):
-                raise ValueError('显式约束需为before/after/strict对象。')
+                raise BoundedObservationError('显式约束需为before/after/strict对象。')
             graph.order(row['before'], row['after'], row['strict'])
     graph.solve()
     rows, repeats, intervals = [], [], []
