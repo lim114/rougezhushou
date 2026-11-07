@@ -109,21 +109,27 @@ def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=Non
     if not isinstance(target,dict):raise EnemyReferenceError('目标敌人需要关卡、敌人ID及引用等级。')
     sid=target.get('stage_id');stage=catalog()['stages'].get(sid);preview=stage_previews().get(sid)
     if not stage or not preview:raise EnemyReferenceError('目标关卡没有固定敌人档案。')
-    if isinstance(target.get('level'),bool):
+    level = target.get('level')
+    enemy_id = target.get('enemy_id')
+    if isinstance(level, bool):
         raise EnemyReferenceError('目标敌人身份/等级必须与关卡引用唯一匹配。')
-    candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]
+    candidates=[e for e in preview['possible_enemies'] if e['id']==enemy_id and e['level']==level]
     if len(candidates)!=1:raise EnemyReferenceError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     from .enemy_panel import enemy_panel_reference
     # The unique fixed record has an integer lookup key. Preserve the caller's
     # historical integral float in the returned identity, never mutate it.
-    panel=enemy_panel_reference(sid,target['enemy_id'],int(candidates[0]['level']))
+    record = candidates[0]
+    panel = enemy_panel_reference(sid, enemy_id, int(record['level']))
     if not panel['compiled_database_result_available']:
         raise EnemyReferenceError('固定敌人构造来源不可用；useDb=true缺少精确等级或独立构造缺少覆盖，不允许用原字段投影进行伤害计算。')
-    record=candidates[0];stats=dict(panel['attributes'])
+    stats = dict(panel['attributes'])
     missing=[]
     for key in ('maxHp','atk','def','magicResistance'):
-        if stats.get(key) is None and panel_only:missing.append(key);continue
-        if type(stats.get(key)) not in (int,float) or not math.isfinite(stats[key]) or stats[key]<0:
+        value = stats.get(key)
+        if value is None and panel_only:
+            missing.append(key)
+            continue
+        if type(value) not in (int,float) or not math.isfinite(value) or value < 0:
             raise EnemyReferenceError('目标敌人属性不完整；未闭合字段不能填零。')
     enemy={**target,'name':record['name'],'stage_name':stage['name'],'stage_difficulty':stage['difficulty'],
         'level_type':record['level_type'],'reference_stats':dict(stats),'stats':stats,'steps':[],

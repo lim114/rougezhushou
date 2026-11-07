@@ -1,3 +1,7 @@
+## 当前断点 · 固定敌人面板复用字段来源，目标匹配只取一次身份（2026-11-06）
+
+1087个固定绑定与旧版完整结果一致，含1028个数据库引用和59个独立构造；59项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-enemy-panel-writes-20261106/summary.json)。
+
 ## 当前断点 · 关卡属性修正在每次预计面板查询中只解析一次（2026-11-06）
 
 184个关卡、4120个敌人及难度组合的环境输出与旧版一致。定向37项通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-stage-modifier-reuse-20261106/summary.json)。

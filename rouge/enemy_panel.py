@@ -20,11 +20,13 @@ def enemy_panel_reference(stage_id,enemy_id,level):
         fields.update({group+'.'+key:{'state':'undefined','value':None,
             'source_selector':None,'source_level':None} for key in keys})
     definitions=data['definitions'].get(enemy_id,{})
-    for n,record in sorted(definitions.items(),key=lambda item:int(item[0])):
-        if int(n)>level:continue
+    levels = ((int(number), record) for number, record in definitions.items())
+    for source_level, record in sorted(levels, key=lambda pair: pair[0]):
+        if source_level > level:
+            continue
         for path,value in record['fields'].items():
             fields[path]={'state':'database_definition','value':deepcopy(value),
-                'source_level':int(n),
+                'source_level':source_level,
                 'source_selector':record['source_selector']+'.'+
                     (path if path.startswith('attributes.') else path.split('.',1)[1])+'.m_value'}
     for path,value in binding['overrides'].items():
@@ -41,16 +43,10 @@ def enemy_panel_reference(stage_id,enemy_id,level):
         for key,value in construction_data()['defaults'].items():
             if key in compiled:compiled[key]={'state':'constructor_explicit_default','value':deepcopy(value),
                 'source_selector':'current native EnemyData/AttributesData constructor explicit assignment', 'source_level':None}
-        if path['database_records_used']:
-            for n,record in sorted(definitions.items(),key=lambda item:int(item[0])):
-                if int(n)>level:continue
-                for key,value in record['fields'].items():
-                    compiled[key]={'state':'database_definition','value':deepcopy(value),'source_level':int(n),
-                        'source_selector':record['source_selector']+'.'+(key if key.startswith('attributes.') else key.split('.',1)[1])+'.m_value'}
-        for key,value in binding['overrides'].items():
-            compiled[key]={'state':'stage_override','value':deepcopy(value),'source_level':level,
-                'source_selector':'$.enemyDbRefs['+str(binding['source_index'])+'].overwrittenData.'+
-                    (key if key.startswith('attributes.') else key.split('.',1)[1])+'.m_value'}
+        for key, declaration in fields.items():
+            if (declaration['state'] == 'stage_override' or
+                    declaration['state'] == 'database_definition' and path['database_records_used']):
+                compiled[key] = deepcopy(declaration)
     return {'stage_id':stage_id,'enemy_id':enemy_id,'requested_level':level,'scope':data['scope'],
         'attributes':{key:compiled['attributes.'+key]['value'] for key in data['attribute_fields']},
         'metadata':{key:compiled['metadata.'+key]['value'] for key in data['metadata_fields']},
