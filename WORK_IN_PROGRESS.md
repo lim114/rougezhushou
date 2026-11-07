@@ -1,3 +1,7 @@
+## 当前断点：地图阅读记录复用与保存身份边界核验（2026-11-06）
+
+D84完成：保存入口保留未被上游完整验证的阅读身份检查；节点展示复用已取得的展开状态。6项定向通过。原280组完成222、剩58；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-map-reading-boundary-20261106/summary.json`。
+
 ## 当前断点：已有无效保密等级不再替换为4级（2026-11-06）
 
 D127完成：已有无效难度留空待确认，不再变成4；缺设置时保留明确标为局外方案的原默认。16项定向通过，界面文案未做原生验收。原280组完成221、剩59。回执 `verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json`。

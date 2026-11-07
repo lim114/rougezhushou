@@ -29,7 +29,7 @@ class ReadingGroupTests(TestCase):
         self.assertEqual(stored['selected'],owner.selected_reference)
 
     def test_unselected_or_incomplete_identity_does_not_save(self):
-        for key in (None,('zone_1',None,None)):
+        for key in (None,('zone_1',None,None),('', 'template','node'),('zone_1',False,'node'),('zone_1','template',42)):
             with self.subTest(key=key):
                 owner=self.owner(key);MapPanel.remember_entry_reading(owner)
                 self.assertEqual(owner.entry_readings,{})

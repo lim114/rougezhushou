@@ -364,7 +364,7 @@ class MapPanel(QWidget):
                 if key==keep:chosen=item
         self.entries.blockSignals(False);self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
         if chosen:self.entries.setCurrentItem(chosen)
-        expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
+        expanded=reading.get('expanded',{})
         for i in range(self.entries.topLevelItemCount()):
             root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not label.startswith('已列条件排除')))
         self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen or keep is None else 0)
