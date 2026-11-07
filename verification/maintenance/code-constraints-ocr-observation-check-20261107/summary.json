@@ -1,0 +1,176 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 79,
+    "structural_only": 250,
+    "selected_paths_only": 190,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "同一份识别结果只核对一次，量测线程数对整帧识别的影响",
+  "base_commit": "f30f3e2e1a59e5e2b77c2b00be7c6cd86804e6cf",
+  "changed_sources": [
+    "rouge/recognition.py"
+  ],
+  "source_sha256": {
+    "rouge/recognition.py": "cd6f0f3f3f1cc8e59472b5f206df37189f3f44d651d3df0a9954815725389747"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 109,
+    "modules": [
+      "interpret_lookup_review",
+      "page_ocr_056",
+      "hybrid_safety_058",
+      "page_ocr_058",
+      "page_ocr_seed_bridge",
+      "ocr_text_row_reuse",
+      "recognition_059",
+      "frame_buffer"
+    ],
+    "frozen_recognizer_seconds_and_exact_outputs": {
+      "4": [
+        [
+          3.049,
+          13
+        ],
+        [
+          3.271,
+          13
+        ]
+      ],
+      "6": [
+        [
+          2.787,
+          13
+        ],
+        [
+          2.989,
+          13
+        ]
+      ],
+      "8": [
+        [
+          2.579,
+          13
+        ],
+        [
+          2.602,
+          13
+        ]
+      ]
+    },
+    "offline_reader_runs": [
+      {
+        "threads": 4,
+        "ms": [
+          6247,
+          5608,
+          6168,
+          3879
+        ],
+        "equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "threads": 8,
+        "ms": [
+          6101,
+          6271,
+          6665,
+          4753
+        ],
+        "equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "threads": 8,
+        "ms": [
+          6618,
+          6710,
+          6549,
+          4630
+        ],
+        "equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "threads": 4,
+        "ms": [
+          6089,
+          5964,
+          6990,
+          3915
+        ],
+        "equal": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "timing_conditions": "Local playback with fresh reader per pass and same four private frames. Four rounds used a constructor patch that preserves provider class identity. Initial replacement of provider class invalidated the split-provider contract and was discarded. Times include cold initialization and ordinary machine load.",
+    "final_queue_ms": [
+      12.75,
+      102.34,
+      9862.24,
+      12356.09
+    ],
+    "live_window": "Original test window not updated. Evidence is offline playback."
+  },
+  "review": {
+    "standards": "Compute page qualification once per distinct observation. Coverage remains a separate condition for accepting a batched hint. Retry validation uses the new full-frame result. Distinct training labels collected in one pass and skill count reused for crop reading. No new recovery or guards.",
+    "requirements": "New test demonstrated two checks of one result on the baseline; now one check per distinct crop/full observation. Preserve selection and prior identity behavior. Final queue results compared by capture sequence."
+  },
+  "partially_implemented_decisions": []
+}

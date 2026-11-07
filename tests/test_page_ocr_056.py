@@ -169,6 +169,20 @@ class SemanticRoutingTests(unittest.TestCase):
             reader._read(image);calls.clear();image[450:500,475:525]=25
         return reader,image,calls
 
+    def test_semantics_checked_once_for_each_observation(self):
+        for complete in (True, False):
+            with self.subTest(complete=complete):
+                reader, image, calls = self.reader(self.observation(complete=complete), warm=True)
+                with patch('rouge.recognition.specialized_observation_valid',
+                           wraps=specialized_observation_valid) as validate:
+                    result = reader._read(image)
+                expected_calls = ['crop'] if complete else ['crop', 'full']
+                self.assertEqual(calls, expected_calls)
+                checked = [call.args[0] for call in validate.call_args_list]
+                self.assertEqual(len(checked), len(expected_calls))
+                self.assertIs(checked[-1], result)
+                self.assertEqual(len({id(observation) for observation in checked}), len(checked))
+
     def test_first_visual_candidate_must_be_confirmed_by_whole_current_frame(self):
         reader,image,calls=self.reader(self.observation())
         result=reader._read(image)

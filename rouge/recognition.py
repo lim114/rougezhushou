@@ -203,10 +203,11 @@ class ScreenReader:
             routing.update(strategy='full_discovery',fallback_reason=reason)
         elapsed('full_ocr')
         result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context)
+        page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
             result['performance']['ocr']=dict(self._page_ocr.metrics)
             coverage_verified=self._page_ocr.metrics.get('complete_current_texts') is True
-            routing['semantic_verified']=coverage_verified and specialized_observation_valid(result,routing['candidates'][0])
+            routing['semantic_verified']=coverage_verified and page_matches
             # Every current detector box has already been read. Rejecting an
             # incomplete/conflicting page hint must not repeat that same OCR.
             if not coverage_verified:
@@ -216,8 +217,7 @@ class ScreenReader:
                 routing.update(strategy='full_discovery',
                     fallback_reason='semantic_validation_failed_complete_text')
                 self._page_route_retry_after=2
-            regions=None
-        if regions is not None and not specialized_observation_valid(result,routing['candidates'][0]):
+        elif regions is not None and not page_matches:
             # Never accept a guessed page or an incomplete specialized read.
             # Start fresh over the whole current frame, not prior-page values.
             routing.update(strategy='full_discovery',fallback_reason='semantic_validation_failed')
@@ -226,9 +226,9 @@ class ScreenReader:
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
             result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context)
+            page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
-        self._page_verified_identity=(page_identity if page_identity is not None and
-            specialized_observation_valid(result,page_identity[0]) else None)
+        self._page_verified_identity = page_identity if page_matches else None
         result['performance']['routing']=routing
         return result
 
@@ -275,12 +275,15 @@ class ScreenReader:
                     stage['variant_source']='节点详情标题的'+labels[0]['text']+'标签'
         page = 'node_detail' if detail and stage else 'exploration' if nodes else 'unknown'
         elapsed('visible_labels')
-        if sum(any(t['text']==name for t in texts) for name in ('信赖值','潜能','精英化'))>=2:
+        training_labels = {'信赖值','潜能','精英化'}.intersection(t['text'] for t in texts)
+        if len(training_labels) >= 2:
             texts=refine_training_texts(image,texts,self._engine)
         operator=read_operator(image,texts,icon_cache=self._icon_cache)
-        if operator and len(operator['skill_ranks'])<len(operator_profiles()[operator['id']]['skills']):
-            local_sp=read_skill_crops(image,texts,self._engine,len(operator_profiles()[operator['id']]['skills']))
-            if local_sp:operator=read_operator(image,texts,local_sp,icon_cache=self._icon_cache)
+        if operator:
+            skill_count = len(operator_profiles()[operator['id']]['skills'])
+            if len(operator['skill_ranks']) < skill_count:
+                local_sp = read_skill_crops(image, texts, self._engine, skill_count)
+                if local_sp:operator=read_operator(image,texts,local_sp,icon_cache=self._icon_cache)
         if operator:page='operator_detail'
         else:
             operator=read_module_page(image,texts)
