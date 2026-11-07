@@ -82,21 +82,36 @@ class ExperimentResidualBoundaryTests(TestCase):
     def test_run_resolution_source_defects_escape_but_bad_conditions_only_block_one_row(self):
         from rouge import run_modifiers
         payload = model.public_experiment_payload()
-        original = run_modifiers.prepare_run
-        for fault in (KeyError, IndexError):
-            def broken(scenario, **options):
+        original = run_modifiers._run_settings
+        for fault in (KeyError, IndexError, ValueError, OverflowError):
+            def broken(scenario, difficulty_reference):
                 if scenario.get('level') == 75:
                     raise fault('missing run source')
-                return original(scenario, **options)
-            with self.subTest(fault=fault), patch.object(run_modifiers, 'prepare_run', side_effect=broken):
+                return original(scenario, difficulty_reference)
+            with self.subTest(fault=fault), patch.object(run_modifiers, '_run_settings', side_effect=broken):
                 with self.assertRaisesRegex(fault, 'missing run source'):
                     model.calibration_experiment(**payload)
+        squad = next(iter(run_modifiers.config_data()['squads']))
         for change in ({'run_config': {'squad': []}},
+                       {'effects': None, 'run_config': {'squad': {'id': squad, 'effect_verified': True}}},
                        {'target_enemy': {'stage_id': [], 'enemy_id': 'unknown', 'level': 0}}):
             payload['experiment']['records'][0]['data']['scenario'] = {'operator': 'mechanist', **change}
             report = model.calibration_experiment(**payload)
             self.assertIn('record_validation_error', report['records'][0]['blocking_reasons'])
             self.assertEqual(report['records'][1]['state'], 'evaluable')
+
+    def test_enemy_resolution_structure_errors_still_reach_the_caller(self):
+        from rouge import enemy_environment
+        payload = model.public_experiment_payload()
+        original = enemy_environment.resolve_enemy
+        for fault in (KeyError, IndexError):
+            def broken(scenario, resolution, **options):
+                if scenario.get('level') == 75:
+                    raise fault('invalid enemy source')
+                return original(scenario, resolution, **options)
+            with self.subTest(fault=fault), patch.object(enemy_environment, 'resolve_enemy', side_effect=broken):
+                with self.assertRaisesRegex(fault, 'invalid enemy source'):
+                    model.calibration_experiment(**payload)
 
     def test_bad_trust_blocks_only_its_own_record(self):
         for trust in ('100', None, {}, 10**1000, -1):

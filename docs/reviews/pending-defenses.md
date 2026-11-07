@@ -108,3 +108,7 @@ preview_environment 沿用原 enemy_preview 的 ValueError、KeyError 捕获，�
 ## D349 · 培养入口的信赖错误类型
 
 旧公共入口用 math.isfinite(trust) 读取信赖，文字或空值产生 TypeError，浮点范围外的整数产生 OverflowError。D110 已将培养步骤与后续计算拆开，内部普通 ValueError、KeyError、IndexError 直接上报。是否在数值转换处将两种非法信赖异常归为 CultivationInputError，待用户决定；涉及直接调用者的异常类型。
+
+## D350 · 分队效果列表输入错误
+
+已确认分队合并效果时，effects 为 null 会在 list 转换处产生 TypeError。建议仅在转换点归为 RunConditionError，以取消实验对整段设置的 TypeError 捕获。直接调用者的异常类型会变化；已询问，待决定。

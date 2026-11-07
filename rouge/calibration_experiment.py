@@ -79,7 +79,8 @@ def _timing_value(data, channel, model, calculation):
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
     from .calibration import panel_layers, _cultivated, _calculate_prepared, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
-    from .run_modifiers import prepare_run
+    from .run_modifiers import _run_settings
+    from .enemy_environment import resolve_enemy
     from .damage import _damage_selection, _prepare_effects, SkillSelectionError
     from .condition_inputs import RunConditionError
     from .catalog import CultivationInputError
@@ -161,7 +162,11 @@ def calibration_experiment(experiment):
                 raise CalibrationScenarioError(str(error)) from error
             selected, profile, attributes = _damage_selection(deepcopy(scenario), cult)
             try:
-                resolved, run_resolution = prepare_run(selected)
+                resolved, run_resolution = _run_settings(selected, None)
+            except TypeError as error:
+                raise CalibrationScenarioError(str(error)) from error
+            try:
+                resolve_enemy(resolved, run_resolution)
             except (ValueError, TypeError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
             try:

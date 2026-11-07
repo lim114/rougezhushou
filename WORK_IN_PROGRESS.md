@@ -1,3 +1,7 @@
+## 当前断点 · 校准实验区分分队难度与目标敌人错误（2026-11-07）
+
+分队及难度资料的普通数值和溢出缺陷直接上报，目标敌人结构缺陷仍上报。78项定向通过，18份完整报告一致。D350待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-run-settings-20261107/summary.json)。
+
 ## 当前断点 · 校准实验的本局条件解析独立于藏品与伤害计算（2026-11-07）
 
 本局条件解析时缺键和索引错误直接上报；错误分队和不可查询的目标仍只影响本行。57项定向通过，18份完整报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-run-resolution-20261107/summary.json)。
