@@ -1,6 +1,6 @@
 """Source-qualified environment subtotals from legacy or current snapshots."""
 from copy import deepcopy
-from .battle_preview import battle_data, enemy_preview
+from .battle_preview import battle_data, preview_environment
 from .enemy_panel import enemy_panel_reference, panel_data
 from .run_config import config_data, difficulty_value
 
@@ -43,6 +43,10 @@ def _forecasts(result, config, current_environment):
     difficulty_reference=({'profiles':result['difficulty_reference'],'source':result['difficulty_source']}
                           if current is not None and old_profile is None else None)
     conditions = {key: config[key] for key in ('difficulty', 'zone') if key in config}
+    legacy_enemies = {}
+    if legacy is not None and reason is None and current_reference is None:
+        for row in legacy['enemies']:
+            legacy_enemies.setdefault((row['id'], row['level']), []).append(row)
     output={}
     for enemy in result['enemies']:
         item={'environment_component':None,'complete_current_total':None,'pending':[reason]if reason else[],
@@ -66,7 +70,7 @@ def _forecasts(result, config, current_environment):
                     'known_tier':True,'shared_documented_environment_rules':True}
                 item['difficulty_profile_source']=dict(result['difficulty_source'])
             continue
-        matches=[row for row in legacy['enemies']if row['id']==enemy['id']and row['level']==enemy['level']]
+        matches = legacy_enemies.get((enemy['id'], enemy['level']), [])
         if len(matches)!=1 or matches[0]['level_type']!=enemy['tier']:
             item['pending'].append('该敌人的精确引用或类别尚不能与原计算对应。');continue
         prior=enemy_panel_reference(result['id'],enemy['id'],enemy['level'])
@@ -79,12 +83,12 @@ def _forecasts(result, config, current_environment):
         # Operator squad benefits are not enemy attributes, and relic effects
         # remain a separately unfinished component of the complete total.
 
-        prediction=enemy_preview(result['id'],enemy['id'],enemy['level'],conditions,difficulty_reference=difficulty_reference)
-        environment=prediction['environment']
+        environment, pending = preview_environment(result['id'], enemy['id'], enemy['level'],
+                                                   prior, conditions, difficulty_reference)
         if environment is not None:
             item['environment_component']={key:environment['stats'][key]for key in('maxHp','atk','def','magicResistance')}
             item['steps']=deepcopy(environment['steps'])
-        item['pending']=list(prediction['context_pending'])
+        item['pending']=list(pending)
         item['qualified_inputs']={'whole_stage_bytes_equal':True,'four_explicit_core_attributes_equal':True,
                                   'constructor_mode_and_tier_equal':True,'difficulty_fields_equal':old_profile is not None}
         if difficulty_reference is not None:item['difficulty_profile_source']=dict(difficulty_reference['source'])

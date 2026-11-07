@@ -11,7 +11,7 @@
 
 最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `CODE_CONSTRAINTS_REVIEW_IN_PROGRESS`。已采集1场，完成录像对照0场。
 
-当前实现维护：敌人特性复用等级与属性读取，免疫说明一次分类；回执 `verification/maintenance/code-constraints-trait-declarations-20261106/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+当前实现维护：敌人环境分项直接复用固定面板，按编号及等级核对引用；回执 `verification/maintenance/code-constraints-forecast-environment-only-20261106/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
