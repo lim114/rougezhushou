@@ -45,6 +45,10 @@ class FloorMapSymbolTests(unittest.TestCase):
                 fresh=model.stage_reference(extra.STAGES[0]);self.assertEqual(fresh['points'],[]);self.assertEqual(fresh['image'],original['image']);self.assertNotEqual(fresh['source_identity'],original['source_identity'])
                 p.unlink();self.assertEqual(model.stage_reference(extra.STAGES[0])['points'],[])
 
+    def test_pinned_bytes_do_not_authorize_a_different_game_version(self):
+        with patch.object(extra, 'NEW_COMMIT', 'different-game-version'):
+            self.assertIsNone(extra.mapping_for(extra.STAGES[0], self.base['current']))
+
     def test_changed_stage_identity_or_geometry_cannot_keep_old_positions(self):
         sid=extra.STAGES[0];fresh=deepcopy(self.base);fresh['current']['version']['current']['details']['stages'][sid]['name']='synthetic changed name'
         with patch.object(model,'packet',return_value=fresh):self.assertEqual(model.stage_reference(sid)['points'],[])

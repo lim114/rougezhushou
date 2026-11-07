@@ -2,24 +2,30 @@
 from .catalog import operator_profiles,catalog
 from .record_flags import active_record,projected_run_metadata
 from .view_catalog import PROFESSIONS,portrait_icon,profession_icon,skill_icon
-import math
 
 def qualified_fields(record, profile):
     invalid=record.get('invalid_fields',[])
     fields={k:v for k,v in record.get('fields',{}).items()if k not in invalid}
     phases=profile.get('phases',[])
     elite=fields.get('elite')
-    if type(elite)is not int or not 0<=elite<len(phases):fields.pop('elite',None)
-    cap=phases[elite]['max_level']if 'elite'in fields else max((p['max_level']for p in phases),default=0)
+    if type(elite) is int and 0 <= elite < len(phases):
+        cap = phases[elite]['max_level']
+    else:
+        fields.pop('elite', None)
+        cap = max((phase['max_level'] for phase in phases), default=0)
     for key,low,high in [('level',1,cap),('potential',1,6),('selected_skill',1,len(profile.get('skills',[]))),('module_level',0,3)]:
         value=fields.get(key)
         if type(value)is not int or not low<=value<=high:fields.pop(key,None)
     trust=fields.get('trust')
     if type(trust)not in(int,float)or not 0<=trust<=100:fields.pop('trust',None)
-    if fields.get('module_id')is not None and not any(m['id']==fields['module_id']for m in profile.get('modules',[])):
-        fields.pop('module_id',None);fields.pop('module_level',None)
-    if fields.get('module_id')is None and fields.get('module_level',0)>0:
-        fields.pop('module_id',None);fields.pop('module_level',None)
+    module_id = fields.get('module_id')
+    if module_id is None:
+        invalid_module = fields.get('module_level', 0) > 0
+    else:
+        invalid_module = all(module['id'] != module_id for module in profile.get('modules', []))
+    if invalid_module:
+        fields.pop('module_id', None)
+        fields.pop('module_level', None)
     return fields
 
 def crew_rows(state):
@@ -34,7 +40,7 @@ def crew_rows(state):
 def crew_text(row):
     f=row['fields'];r=row['record'];p=row['profile']
     def value(key,suffix=''):
-        x=f.get(key);return str(x)+suffix if type(x)in(int,float)else'未读到'
+        return str(f[key]) + suffix if key in f else '未读到'
     labels=[row['name']+' · '+PROFESSIONS.get(row['profession'],'职业未确认'),'本局培养（只读）','精英阶段：'+value('elite'),'等级：'+value('level'),'潜能：'+value('potential'),'信赖加成进度：'+value('trust','%')]
     advanced=r.get('advanced');labels+=['本局进阶：'+('已进阶'if advanced is True else'未进阶'if advanced is False else'未确认')]
     labels+=['招募来源：'+{'emergency_hire':'应急雇佣（已读标记）','non_emergency':'非应急雇佣（已读标记）'}.get(r.get('recruitment_kind'),'未确认')]

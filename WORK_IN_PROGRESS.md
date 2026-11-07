@@ -1,3 +1,7 @@
+## 当前断点 · 队伍培养数值只在入口校验，核实强化名称与地图标记来源（2026-11-06）
+
+D42、D63、D64完成。培养字段在结合干员资料后校验，显示复用结果。缺图、损坏、版本偏差、关卡偏差和未知强化身份保留对应处理。 原280组完成231、余49。 [回执](verification/maintenance/code-constraints-training-and-source-boundaries-20261106/summary.json)。
+
 ## 当前断点 · 事件跳转复用本次核验，统一目录构建（2026-11-06）
 
 D93/D95/D96完成。一次目录点击核验一次，独立打开时重核，21类阅读器准确跳转。39份目录与固定资料相同，38个来源分组保留。最终32项定向通过。 原280组完成228、余52。 [回执](verification/maintenance/code-constraints-event-directory-navigation-20261106/summary.json)。

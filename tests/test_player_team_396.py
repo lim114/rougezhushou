@@ -30,6 +30,13 @@ class TeamTests(unittest.TestCase):
         self.assertIn('招募来源：未确认',text)
         self.assertNotIn('等级：90',text)
 
+    def test_qualified_zero_values_display_while_invalid_values_stay_unread(self):
+        fields = {'elite':0, 'level':1, 'trust':0, 'module_level':0, 'potential':False}
+        row, = crew_rows({'operators':{'mechanist':{'fields':fields}}})
+        text = crew_text(row)
+        for label in ('精英阶段：0', '等级：1', '信赖加成进度：0%', '阶段：0', '潜能：未读到'):
+            self.assertIn(label, text)
+
     def test_all_skill_names_rank_and_selected_skill(self):
         row=crew_rows({'operators':{'mechanist':{'fields':{'selected_skill':2},'skill_ranks':{'1':7,'2':10,'3':9}}}})[0]
         text=crew_text(row)
