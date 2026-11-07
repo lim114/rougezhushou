@@ -33,11 +33,7 @@ def complete_inventory(state):
 def unique_archives(records):
     result = {}
     for record in records:
-        if not isinstance(record, dict) or not isinstance(record.get('state'), dict):
-            continue
-        identity = record['state'].get('id')
-        if not isinstance(identity, str) or not identity:
-            continue
+        identity = record['state']['id']
         # The store returns newest first. Never count two versions of one run twice.
         result.setdefault(identity, record)
     return list(result.values())

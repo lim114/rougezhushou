@@ -1,3 +1,7 @@
+## 维护：统计去重复用归档身份入口契约（2026-11-06）
+
+D66完成：统计去重删除归档已验证的记录/状态/身份重复判断，同局去重保持。8+6项定向通过；布局测试组合和单独运行均异常退出，保留未验证。原280组完成218、剩62。回执 `verification/maintenance/code-constraints-statistics-archive-entry-20261106/summary.json`。
+
 ## 维护：地图标记分派后不再重复校验关卡（2026-11-06）
 
 D269完成：地图已分派关卡直接绑定，独立公开入口仍自行校验；复用上批加载器整理。7项定向通过。原280组完成217、剩63；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-marker-dispatch-20261106/summary.json`。

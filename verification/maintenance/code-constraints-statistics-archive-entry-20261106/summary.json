@@ -1,0 +1,76 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained"
+  ],
+  "title": "统计去重复用归档身份入口契约",
+  "base_commit": "dfce5200dcdc6e362bdbbb5e91bff7c5b7e00bf1",
+  "changed_sources": [
+    "rouge/player_personal_statistics.py"
+  ],
+  "source_sha256": {
+    "rouge/player_personal_statistics.py": "4dedf67d9ad1fdbc25ab1233231314b27e9e35bbab3f4e495735943b57f6d659"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D66"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_statistics_archive_contract_review tests.test_personal_statistics_entry_review tests.test_player_statistics_cohorts_407 tests.test_history_statistics_layout_review",
+        "exit_code": 1,
+        "result": "Abnormal exit after 14 dots, no unittest summary or traceback; not counted passed."
+      },
+      {
+        "command": "python -m unittest tests.test_statistics_archive_contract_review tests.test_player_statistics_cohorts_407",
+        "tests_run": 8,
+        "tests_passed": 8,
+        "seconds": 0.002
+      },
+      {
+        "command": "python -m unittest tests.test_personal_statistics_entry_review",
+        "tests_run": 6,
+        "tests_passed": 6,
+        "seconds": 0.08
+      },
+      {
+        "command": "python -m unittest tests.test_history_statistics_layout_review",
+        "exit_code": 1,
+        "result": "Standalone abnormal exit without output; unverified."
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior approval rejection."
+  },
+  "review": {
+    "standards": "D66 approved entry contract review. RunHistoryStore.read/canonical_state establish state and nonempty string identity; records returns dictionaries, all production statistics consumers receive these records. Remove repeated skips, retain newest-first deduplication. No new helper/catch/guard.",
+    "requirements": "Invalid external states rejected by store; internal missing required fields now surface; valid latest-run identity and sample/cohort operations pass. Layout test abnormal exits preserved, not claimed passed."
+  },
+  "partially_implemented_decisions": []
+}

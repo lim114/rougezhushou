@@ -570,7 +570,7 @@
     },
     {
       "file": "rouge/player_personal_statistics.py",
-      "sha256": "def85bfe7dccebce3a92932ae41ff0310e0e03160d2a6f216427df9ec16944ea",
+      "sha256": "4dedf67d9ad1fdbc25ab1233231314b27e9e35bbab3f4e495735943b57f6d659",
       "rule1": "D68 outer store.records catch narrowed to OSError/ValueError; internal TypeError/RecursionError propagate. D72 dedicated filter error unchanged; cross-entry qualification remains open.",
       "rule2": "D69 freshly built result returned directly, mutable container isolation tested. Existing shared domain helpers retained.",
       "rule3": "D68/D69 implemented; D66/D67 and remaining ordinary paths still require review",
@@ -581,7 +581,14 @@
         "D68",
         "D69"
       ],
-      "full_module_review_complete": false
+      "full_module_review_complete": false,
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-statistics-archive-entry-20261106/summary.json",
+          "scope": "D66 archive identity contract",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/player_cohort_ui.py",
