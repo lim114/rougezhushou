@@ -1,0 +1,74 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained"
+  ],
+  "title": "首领文献刷新复用已核验资料，后续操作独立重核",
+  "base_commit": "5d13c168f7ddc1cee1bac2c4aefd3abb9f8aafb2",
+  "changed_sources": [
+    "rouge/current_boss_documents.py",
+    "rouge/current_boss_documents_view.py"
+  ],
+  "source_sha256": {
+    "rouge/current_boss_documents.py": "8c3fdfe6cab646f097af587fd703823ed8912ac93b876f57f8117b33811b73d1",
+    "rouge/current_boss_documents_view.py": "e132e27a7cb9c2d2d399a46fcad57d66c8758f5a5060e215300fcabb22a764d4"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D289"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "before",
+        "command": "python -m unittest tests.test_boss_refresh_snapshot_review",
+        "tests_run": 2,
+        "tests_passed": 1,
+        "tests_failed": 1,
+        "seconds": 1.655,
+        "failure": "Refresh reference called twice; expected once."
+      },
+      {
+        "phase": "after",
+        "command": "python -m unittest tests.test_boss_refresh_snapshot_review tests.test_current_boss_documents_369 tests.test_current_boss_documents_view_369",
+        "tests_run": 26,
+        "tests_passed": 26,
+        "seconds": 41.546
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior approval rejection; isolated Qt checks are not native game acceptance."
+  },
+  "review": {
+    "standards": "D291 approved same-operation reuse: refresh_reference passes its verified reference through synchronous enemy/render calls, using existing prepared-reference convention. No added function/catch/retry/defense. Later user-triggered render defaults to fresh validation. D289 four-family dispatch raises ValueError on unknown internal enum as approved.",
+    "requirements": "Reference calls reduced from two to one during construction and refresh, text unchanged. Later source failure displays UNAVAILABLE. Existing complete source mutations, stale/forged result, source failure/recovery and reading positions pass. Other D291 packet paths remain under review."
+  },
+  "partially_implemented_decisions": [
+    "D291"
+  ]
+}

@@ -80,7 +80,7 @@ class CurrentBossDocumentsPanel(QWidget):
         self.enemies.set_groups([(model.LABELS[fresh['family']], entries)], emit=False)
         if selected is not None: self.enemies.select_value(selected, emit=False)
         else: self.enemy_combo.setCurrentIndex(0)
-        self.enemy_combo.blockSignals(block); self._enemy_changed(preserve=keep)
+        self.enemy_combo.blockSignals(block); self._enemy_changed(preserve=keep, prepared_reference=fresh)
         if self.map_dialog is not None:
             mapped = model.map_reference(fresh, prepared_reference=fresh)
             if mapped is None: self._close_map(); self.status.setText('这关固定地图无法重新核对，旧地图已关闭；文献仍可阅读。')
@@ -89,7 +89,7 @@ class CurrentBossDocumentsPanel(QWidget):
                 self._close_map(); self.status.setText('地图重新读取的资料与本关不一致，旧地图已清除；完整文献仍可阅读。')
         return True
 
-    def _enemy_changed(self, *_, preserve=False):
+    def _enemy_changed(self, *_, preserve=False, prepared_reference=...):
         key = self.enemy_combo.currentData(); keep = preserve and key == self.selected_key
         old_topic = self.topic.currentData() if keep else None
         old_related = self.related.currentData() if keep else None
@@ -113,14 +113,14 @@ class CurrentBossDocumentsPanel(QWidget):
             if raw and picture.loadFromData(raw, 'PNG'):
                 self.portrait.setPixmap(picture.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
             else: self.portrait.setText('这份准确敌人条目没有可核对图片，不替换成同名图。')
-        self.status.clear(); self._render(prepared_entity=row)
+        self.status.clear(); self._render(prepared_entity=row, prepared_reference=prepared_reference)
 
-    def _render(self, *_, prepared_entity=...):
+    def _render(self, *_, prepared_entity=..., prepared_reference=...):
         topic = self.topic.currentData()
         row = model.entity(self.result, self.selected_key) if prepared_entity is ... else prepared_entity
         identity = (self.result['source_identity'], self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, prepared_entity=row), preserve=keep,
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, prepared_entity=row, prepared_reference=prepared_reference), preserve=keep,
             details=self.notice, follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'current_source_identity': self.result['source_identity'],
             'selected_current_reference_and_authentic_legacy_document': row,

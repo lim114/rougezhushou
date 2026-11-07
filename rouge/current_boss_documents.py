@@ -207,8 +207,8 @@ def map_reference(result, *, prepared_reference=...):
             'map': mapped, 'actual_phase': None, 'actual_entity_position': None, 'run_updated': False}
 
 
-def player_text(result, enemy_key=None, topic_id=None, *, prepared_entity=...):
-    fresh = _fresh(result)
+def player_text(result, enemy_key=None, topic_id=None, *, prepared_entity=..., prepared_reference=...):
+    fresh = _fresh(result) if prepared_reference is ... else prepared_reference
     if fresh is None: return UNAVAILABLE
     if topic_id is not None and type(topic_id) is not str: return UNAVAILABLE
     row = entity(fresh, enemy_key) if prepared_entity is ... else prepared_entity

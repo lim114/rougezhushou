@@ -1,3 +1,7 @@
+## 当前断点：首领文献刷新复用已核验资料，后续操作独立重核（2026-11-06）
+
+D289明确分派出口核验完成；D291部分推进：同次刷新完整来源核验从两次减为一次，后续交互仍重核。原复现1失败保留，最终26项定向通过。原280组完成223、剩57；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-boss-refresh-snapshot-20261106/summary.json`。
+
 ## 当前断点：地图阅读记录复用与保存身份边界核验（2026-11-06）
 
 D84完成：保存入口保留未被上游完整验证的阅读身份检查；节点展示复用已取得的展开状态。6项定向通过。原280组完成222、剩58；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-map-reading-boundary-20261106/summary.json`。
