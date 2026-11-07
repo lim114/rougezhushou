@@ -1,3 +1,7 @@
+## 维护 · 校准部署时钟的结果错误直接上报（2026-11-07）
+
+缩小记录错误处理到单次引擎执行，部署初动读取和二次计算后的整理移出。68项定向通过，18份实验报告及9个酒类情景与前版一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-deployment-clock-20261107/summary.json)。
+
 ## 维护 · 校准实验的相位结果汇总错误直接上报（2026-11-07）
 
 单条记录的旧捕获仅覆盖效果准备和逐次计算，已移出相位结果汇总。67项最终定向通过，18份报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-phase-aggregation-20261107/summary.json)。

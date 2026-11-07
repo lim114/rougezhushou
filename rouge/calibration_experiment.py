@@ -76,11 +76,11 @@ def _timing_value(data, channel, model, calculation):
     return reading, expected, reason, result
 
 
-def _evaluate_record(prepared, phase=None):
+def _evaluate_record_once(prepared, phase=None):
     from .calibration import CalibrationScenarioError
-    from .damage import _evaluate_damage
+    from .damage import _evaluate_damage_once
     try:
-        return _evaluate_damage(prepared, phase)
+        return _evaluate_damage_once(prepared, phase)
     except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
         raise CalibrationScenarioError(str(error)) from error
 
@@ -186,7 +186,7 @@ def calibration_experiment(experiment):
                 prepared = _prepare_effects(resolved, profile, attributes, run_resolution)
             except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
-            calculation = _calculate_prepared(scenario, deepcopy(prepared), evaluate=_evaluate_record)
+            calculation = _calculate_prepared(scenario, deepcopy(prepared), evaluate_once=_evaluate_record_once)
         except (CalibrationScenarioError, CultivationInputError, SkillSelectionError, RunConditionError, EnemyReferenceError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)

@@ -165,9 +165,28 @@ class ExperimentResidualBoundaryTests(TestCase):
             if phase is not None:
                 return {'estimate': {'skill': {}}}
             return evaluate(prepared)
-        evaluate = damage._evaluate_damage
+        evaluate = damage._evaluate_damage_once
         with patch.object(damage, '_prepare_effects', side_effect=unknown_clock), \
-             patch.object(damage, '_evaluate_damage', side_effect=incomplete):
+             patch.object(damage, '_evaluate_damage_once', side_effect=incomplete):
+            with self.assertRaisesRegex(KeyError, 'initial_seconds'):
+                model.calibration_experiment(**payload)
+
+    def test_deployment_clock_requires_initial_time_from_engine_output(self):
+        from rouge import damage
+        payload = model.public_experiment_payload()
+        prepare = damage._prepare_effects
+        evaluate = damage._evaluate_damage_once
+        def deployment_clock(scenario, *args):
+            prepared = prepare(scenario, *args)
+            if scenario.get('level') == 75:
+                prepared[0]['_relic_rules'] = [{'kind': 'deployment_attack_speed'}]
+            return prepared
+        def incomplete(prepared, phase=None):
+            if prepared[0].get('level') == 75:
+                return {'estimate': {'skill': {}}}
+            return evaluate(prepared, phase)
+        with patch.object(damage, '_prepare_effects', side_effect=deployment_clock), \
+             patch.object(damage, '_evaluate_damage_once', side_effect=incomplete):
             with self.assertRaisesRegex(KeyError, 'initial_seconds'):
                 model.calibration_experiment(**payload)
 

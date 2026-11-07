@@ -376,15 +376,17 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
             raise ValueError(field+' 不接受文本条件；请使用布尔值。')
     return result
 
-def _evaluate_damage(prepared,wine_phase=None) -> dict:
+def _evaluate_damage(prepared, wine_phase=None, *, evaluate_once=None) -> dict:
     """Resolve deployment readiness before placing finite buffs or wine pulses."""
     from copy import deepcopy
     from .reporting import build_report
+    if evaluate_once is None:
+        evaluate_once = _evaluate_damage_once
     rules=prepared[0].get('_relic_rules',[])
     finite_speed=any(r['kind']=='deployment_attack_speed' for r in rules)
     deployment_clock=finite_speed or any(r['kind']=='periodic_sp' and r.get('clock')=='deployment' for r in rules)
-    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
-    first_result=_evaluate_damage_once(deepcopy(prepared),wine_phase)
+    if not deployment_clock:return evaluate_once(prepared,wine_phase)
+    first_result=evaluate_once(deepcopy(prepared),wine_phase)
     first=first_result['estimate']['skill']['initial_seconds']
     if first is None:
         result=first_result
@@ -399,7 +401,7 @@ def _evaluate_damage(prepared,wine_phase=None) -> dict:
         return result
     pristine=deepcopy(prepared)
     pristine[0]['_deployment_skill_start_seconds']=first
-    result=_evaluate_damage_once(pristine,wine_phase)
+    result=evaluate_once(pristine,wine_phase)
     result['deployment_clock_reference']={'first_skill_start_seconds':first,
         'origin':'deployment','owner_tick_boundary_frames':1,'live_state_verified':False}
     result['estimate']['notes'].append('限时藏品与酒类共享部署时钟；技能在预计初动时开启，充能期沿用原计时，不按每轮重新获得部署加成。部署挂载与首个owner逻辑帧存在至多一帧边界。')
@@ -426,13 +428,12 @@ def calculate_damage(scenario: dict) -> dict:
     return _calculate_prepared(scenario,_prepare_damage(scenario))
 
 
-def _calculate_prepared(scenario, prepared, *, evaluate=None) -> dict:
+def _calculate_prepared(scenario, prepared, *, evaluate_once=None) -> dict:
     """Consume one qualified preparation; callers keep display snapshots separate."""
     from copy import deepcopy
-    if evaluate is None:
-        evaluate = _evaluate_damage
     wines=[r for r in prepared[2]['rules'] if r['kind']=='periodic_sp']
-    if len(wines)!=1 or wines[0].get('clock')=='deployment':return evaluate(prepared)
+    if len(wines)!=1 or wines[0].get('clock')=='deployment':
+        return _evaluate_damage(prepared, evaluate_once=evaluate_once)
     from .timing import frame_time
     from .reporting import build_report
     # Each possible 30-Hz phase, including immediate and full-period first tick.
@@ -444,7 +445,7 @@ def _calculate_prepared(scenario, prepared, *, evaluate=None) -> dict:
     for phase in range(phases):
         # Copy together to preserve aliases between rules and resolution records.
         # Never share a finisher's mutations with another phase or request.
-        result=evaluate(deepcopy(prepared),phase)
+        result = _evaluate_damage(deepcopy(prepared), phase, evaluate_once=evaluate_once)
         skill = result['estimate']['skill']
         for key,bounds in skill_bounds.items():bounds.include(skill[key])
         metrics={(b['id'],m['key']):m['value'] for b in result['report']['sections'] for m in b['metrics']}
