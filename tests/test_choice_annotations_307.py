@@ -124,10 +124,9 @@ class ChoiceAnnotation307Tests(unittest.TestCase):
             self.assertIs(check['matches'],expected)
 
     def test_09_old_recruitment_and_movement_source_failure_is_not_masked_by_roles(self):
-        for identity,module,name in((model.IDENTITIES[7],event_planning.choice_recruitment_results,'choice_reference'),
-                                     (model.IDENTITIES[8],event_planning.peace_guardian_results,'choice_result_reference')):
-            unavailable={'status':'source_unavailable','source_valid':False,'annotation_role':None}
-            with patch.object(module,name,return_value=unavailable):
+        for identity,module in ((model.IDENTITIES[7],event_planning.choice_recruitment_results),
+                                (model.IDENTITIES[8],event_planning.peace_guardian_results)):
+            with patch.object(module,'_validated_packet',return_value=None):
                 row=next(r for r in model.classified_choice_eligibility(*identity[:2])['rows']if r['choice_key']==identity[2])
                 self.assertEqual(row['annotation_role'],'selection_result')
                 self.assertEqual(row['unparsed_condition_text'],row['conditional_text'])

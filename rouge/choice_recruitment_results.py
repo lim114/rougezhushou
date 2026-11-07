@@ -1,6 +1,6 @@
 """Four fixed recruitment results, separate from eligibility and actual grants."""
 from copy import deepcopy
-import hashlib
+from .choice_annotations import choice_document_payload, same_choice_json
 import json
 from pathlib import Path
 from . import node_catalog as catalog
@@ -17,46 +17,27 @@ _CACHE={}
 
 def _validated_packet():
     try:
-        raw_manifest=(ROOT/MANIFEST).read_bytes()
-        if hashlib.sha256(raw_manifest).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(raw_manifest)
-        blobs={}
-        for relative,expected in manifest['files'].items():
-            path=ROOT/relative
-            if not path.resolve().is_relative_to(ROOT.resolve()) or not path.is_file():return None
-            raw=path.read_bytes()
-            if len(raw)!=expected['bytes'] or hashlib.sha256(raw).hexdigest()!=expected['sha256']:return None
-            blobs[relative]=raw
-        raw=blobs[DATA]
-        key=(MANIFEST_SHA256,hashlib.sha256(raw).hexdigest())
-        if key not in _CACHE:
-            data=json.loads(raw)
-            if (data['schema_version']!=1 or data['event_id']!=EVENT or data['scene_key']!=SCENE
-                    or data['choice_key']!=CHOICE or len(data['variants'])!=4
-                    or data['original_entry_scene_verified'] is not False
-                    or data['full_recruitment_pool_known'] is not False
-                    or data['actual_result_variant'] is not None):return None
-            _CACHE.clear()
-            _CACHE[key]=data
-        return _CACHE[key]
-    except (OSError,ValueError,KeyError,TypeError):
+        payload = choice_document_payload(ROOT, MANIFEST, MANIFEST_SHA256, DATA)
+        if payload is None:return None
+        if MANIFEST_SHA256 in _CACHE:
+            return _CACHE[MANIFEST_SHA256]
+        data = json.loads(payload)
+    except (OSError, UnicodeError, json.JSONDecodeError):
         return None
+    if (data['schema_version']!=1 or data['event_id']!=EVENT or data['scene_key']!=SCENE
+            or data['choice_key']!=CHOICE or len(data['variants'])!=4
+            or data['original_entry_scene_verified'] is not False
+            or data['full_recruitment_pool_known'] is not False
+            or data['actual_result_variant'] is not None):return None
+    _CACHE.clear()
+    _CACHE[MANIFEST_SHA256] = data
+    return data
 
 
 def source_data():
     """Return a defensive copy only after fresh verification of all public files."""
     data=_validated_packet()
     return deepcopy(data) if data is not None else None
-
-
-def _same_json(value,expected):
-    if type(value) is not type(expected):return False
-    if type(expected) is dict:
-        return (value.keys()==expected.keys() and all(type(k) is str for k in value)
-                and all(_same_json(value[k],expected[k]) for k in expected))
-    if type(expected) is list:
-        return len(value)==len(expected) and all(_same_json(v,e) for v,e in zip(value,expected))
-    return value==expected
 
 
 def choice_reference(event_id,choice,*,scene_key=None):
@@ -66,6 +47,10 @@ def choice_reference(event_id,choice,*,scene_key=None):
     Only ``annotation_role == 'selection_result'`` permits the caller to replace
     its unparsed annotation warning. Unknown results retain that warning/text.
     """
+    return _choice_reference(event_id, choice, scene_key)
+
+
+def _choice_reference(event_id, choice, scene_key, *, prepared=None):
     if (type(event_id) is not str or event_id!=EVENT or type(choice) is not dict
             or type(choice.get('key')) is not str or choice['key']!=CHOICE
             or scene_key is not None and (type(scene_key) is not str or scene_key!=SCENE)):
@@ -86,13 +71,16 @@ def choice_reference(event_id,choice,*,scene_key=None):
         return result
     result['source_valid']=True
     result['source']=deepcopy(data['source'])
-    try:
-        event=catalog._event(event_id)
-        scene=catalog._scene(event_id,SCENE)
-    except (ValueError,KeyError,TypeError):
-        event=scene=None
-    if (not _same_json(event,data['expected_event']) or not _same_json(scene,data['expected_scene'])
-            or not _same_json(choice,data['expected_choice'])):
+    if prepared is None:
+        try:
+            event = catalog._event(event_id)
+            scene = catalog._event_scene(event, SCENE)
+        except catalog.NodeQueryError:
+            event = scene = None
+    else:
+        event, scene = prepared
+    if (not same_choice_json(data['expected_event'], event) or not same_choice_json(data['expected_scene'], scene)
+            or not same_choice_json(data['expected_choice'], choice)):
         result.update(notice='招募结果资料与当前完整事件、场景或选项未能核对；保留原说明。',
                       reason_codes=['catalog_content_mismatch'])
         return result

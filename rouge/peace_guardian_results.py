@@ -1,6 +1,6 @@
 """CACHE CANDIDATE: a documented one-way result, never actual run completion."""
 from copy import deepcopy
-import hashlib
+from .choice_annotations import choice_document_payload, same_choice_json
 import json
 from pathlib import Path
 
@@ -16,44 +16,26 @@ _CACHE={}
 
 def _validated_packet():
     try:
-        manifest_raw=(ROOT/MANIFEST).read_bytes()
-        if hashlib.sha256(manifest_raw).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(manifest_raw)
-        blobs={}
-        for relative,expected in manifest['files'].items():
-            path=ROOT/relative
-            if not path.resolve().is_relative_to(ROOT.resolve()) or not path.is_file():return None
-            raw=path.read_bytes()
-            if len(raw)!=expected['bytes'] or hashlib.sha256(raw).hexdigest()!=expected['sha256']:return None
-            blobs[relative]=raw
-        payload=blobs[DATA]
-        key=(MANIFEST_SHA256,hashlib.sha256(payload).hexdigest())
-        if key not in _CACHE:
-            data=json.loads(payload)
-            if (data['schema_version']!=1 or data['event_id']!=EVENT or data['scene_key']!=SCENE
-                    or data['choice_key']!=CHOICE or data['source_scene_link_verified'] is not False
-                    or data['complete_movement_result_known'] is not False
-                    or data['actual_current_floor_completion'] is not None
-                    or data['actual_target_node_id'] is not None or data['actual_moved'] is not None):return None
-            _CACHE.clear()
-            _CACHE[key]=data
-        return _CACHE[key]
-    except (OSError,ValueError,KeyError,TypeError):return None
+        payload = choice_document_payload(ROOT, MANIFEST, MANIFEST_SHA256, DATA)
+        if payload is None:return None
+        if MANIFEST_SHA256 in _CACHE:
+            return _CACHE[MANIFEST_SHA256]
+        data = json.loads(payload)
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return None
+    if (data['schema_version']!=1 or data['event_id']!=EVENT or data['scene_key']!=SCENE
+            or data['choice_key']!=CHOICE or data['source_scene_link_verified'] is not False
+            or data['complete_movement_result_known'] is not False
+            or data['actual_current_floor_completion'] is not None
+            or data['actual_target_node_id'] is not None or data['actual_moved'] is not None):return None
+    _CACHE.clear()
+    _CACHE[MANIFEST_SHA256] = data
+    return data
 
 
 def source_data():
     data=_validated_packet()
     return deepcopy(data) if data is not None else None
-
-
-def _same_json(value,expected):
-    if type(value) is not type(expected):return False
-    if type(expected) is dict:
-        return (value.keys()==expected.keys() and all(type(k) is str for k in value)
-                and all(_same_json(value[k],expected[k]) for k in expected))
-    if type(expected) is list:
-        return len(value)==len(expected) and all(_same_json(v,e) for v,e in zip(value,expected))
-    return value==expected
 
 
 def choice_result_reference(event,scene,choice):
@@ -81,8 +63,8 @@ def choice_result_reference(event,scene,choice):
         return result
     result['source_valid']=True
     result['source']=deepcopy(data['source'])
-    if (not _same_json(event,data['expected_event']) or not _same_json(scene,data['expected_scene'])
-            or not _same_json(choice,data['expected_choice'])):
+    if (not same_choice_json(data['expected_event'], event) or not same_choice_json(data['expected_scene'], scene)
+            or not same_choice_json(data['expected_choice'], choice)):
         result.update(reason_codes=['catalog_content_mismatch'],
             notice='移动结果资料与完整事件、场景或选项未能核对；保留原说明。')
         return result

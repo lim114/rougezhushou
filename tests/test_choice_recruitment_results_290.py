@@ -157,11 +157,26 @@ class ChoiceRecruitmentResultTests(unittest.TestCase):
     def test_mutated_current_scene_cannot_be_hidden_by_unchanged_event(self):
         scene=deepcopy(self.scene)
         scene['key']='other:scene'
-        with patch.object(model.catalog,'_scene',return_value=scene):
+        with patch.object(model.catalog,'_event_scene',return_value=scene):
             self.assertEqual(self.call()['status'],'unknown')
 
+    def test_unexpected_catalog_errors_propagate(self):
+        for error in (ValueError, KeyError, TypeError):
+            with self.subTest(error=error.__name__), patch.object(model.catalog, '_event', side_effect=error('internal')):
+                with self.assertRaises(error):
+                    self.call()
+
+    def test_both_document_readers_expose_internal_structure_errors(self):
+        from rouge import peace_guardian_results
+        for reader in (model, peace_guardian_results):
+            for error in (ValueError, KeyError, TypeError):
+                with self.subTest(reader=reader.__name__, error=error.__name__), patch.object(
+                        reader, 'choice_document_payload', side_effect=error('internal')):
+                    with self.assertRaises(error):
+                        reader.source_data()
+
     def test_current_catalog_lookup_failure_preserves_unknown_result(self):
-        with patch.object(model.catalog,'_event',side_effect=ValueError('unknown current event')):
+        with patch.object(model.catalog,'_event',side_effect=model.catalog.NodeQueryError('unknown current event')):
             result=self.call()
         self.assertIsNone(result['annotation_role'])
         self.assertEqual(result['reason_codes'],['catalog_content_mismatch'])

@@ -253,7 +253,7 @@ def _choice_rows(event, scene, context, reference):
                                      'source':deepcopy(current_observation()['source']),
                                      'reason':current_observation()['delta'],
                                      'query':'scene-outcomes','actual_server_rule_verified':False})
-        recruitment=choice_recruitment_results.choice_reference(event_id,choice,scene_key=scene_key)
+        recruitment=choice_recruitment_results._choice_reference(event_id, choice, scene_key, prepared=(event, scene))
         movement=peace_guardian_results.choice_result_reference(event,scene,choice)
         result_annotation=bool((recruitment and recruitment['status']=='documented_reference'
                                and recruitment['annotation_role']=='selection_result')

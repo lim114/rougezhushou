@@ -354,7 +354,7 @@ class PeaceGuardianAppGuard291Tests(unittest.TestCase):
             select_node=lambda node_id, **_kwargs:selected.append(node_id))
         holder = types.SimpleNamespace(map_view=map_view, run=types.SimpleNamespace(state={'id': 'public-run'}),
             node_catalog=types.SimpleNamespace(status=types.SimpleNamespace(setText=status.append)),
-            exploration_map_tab='assistant-map-tab', centralWidget=lambda: types.SimpleNamespace(setCurrentWidget=tabs.append))
+            exploration_map_tab='assistant-map-tab', workspace=types.SimpleNamespace(setCurrentWidget=tabs.append))
         return holder, selected, status, tabs
 
     def test_latest_App_map_rejects_duplicates_changed_roles_and_grid_even_if_old_six_fields_match(self):

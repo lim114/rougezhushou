@@ -18,11 +18,36 @@ IDENTITIES=tuple((f'community_group_{g:03d}',f'community_group_{g:03d}:scene:{s}
   (19,1,0),(23,1,0),(23,6,0),(23,9,1),(23,11,0),(25,0,2),(30,0,0),(31,0,1)))
 NEW_RESULT_IDENTITIES=tuple(IDENTITIES[i]for i in(1,2,4,5,6,9,10,11,12,15))
 
-def _same(a,b):
- if type(a)is not type(b):return False
- if type(a)is dict:return a.keys()==b.keys()and all(type(k)is str and _same(a[k],b[k])for k in b)
- if type(a)is list:return len(a)==len(b)and all(_same(x,y)for x,y in zip(a,b))
- return a==b
+def same_choice_json(expected, value):
+    if type(expected) is not type(value):
+        return False
+    if type(value) is dict:
+        return expected.keys() == value.keys() and all(
+            type(key) is str and same_choice_json(expected[key], value[key]) for key in value)
+    if type(value) is list:
+        return len(expected) == len(value) and all(same_choice_json(a, b) for a, b in zip(expected, value))
+    return expected == value
+
+
+def choice_document_payload(root, manifest_name, manifest_hash, data_name):
+    """Verify every pinned document before returning the requested payload."""
+    root = root.resolve()
+    manifest_bytes = (root / manifest_name).read_bytes()
+    if sha256(manifest_bytes).hexdigest() != manifest_hash:
+        return None
+    manifest = json.loads(manifest_bytes)
+    payload = None
+    for relative, expected in manifest['files'].items():
+        path = root / relative
+        if not path.resolve().is_relative_to(root) or not path.is_file():
+            return None
+        raw = path.read_bytes()
+        if len(raw) != expected['bytes'] or sha256(raw).hexdigest() != expected['sha256']:
+            return None
+        if relative == data_name:
+            payload = raw
+    return payload
+
 
 def _file(name):
  if type(name)is not str:raise ValueError('Public relative path required')
@@ -50,18 +75,18 @@ def _packet():
   if sha256(blobs[DATA]).hexdigest()!=DATA_SHA256:return None
   d=json.loads(blobs[DATA]);a=json.loads(blobs[AUTHORITY]);catalog=json.loads(blobs[CATALOG])
   if(d['schema']!='choice_annotation_roles_v1'or a['schema']!='choice_annotation_selected_authority_v1'
-   or not _same(d['rows'],a['rows'])or not _same(d['expected_events'],a['complete_expected_events'])):return None
+   or not same_choice_json(d['rows'],a['rows'])or not same_choice_json(d['expected_events'],a['complete_expected_events'])):return None
   from . import node_catalog
   for eid,expected in d['expected_events'].items():
    current=next(e for e in catalog['events']if e['id']==eid)
-   if not _same(expected,current)or not _same(expected,node_catalog._event(eid)):return None
+   if not same_choice_json(expected,current)or not same_choice_json(expected,node_catalog._event(eid)):return None
   if tuple((r['event_id'],r['scene_key'],r['choice_key'])for r in d['rows'])!=IDENTITIES:return None
   if sum(r['role']=='preselection_requirement'for r in d['rows'])!=4:return None
   if sum(r['role']=='selection_result'for r in d['rows'])!=12:return None
   for row in d['rows']:
    e=d['expected_events'][row['event_id']];s=next(s for s in e['scenes']if s['key']==row['scene_key'])
    ch=next(c for c in s['choices']if c['key']==row['choice_key'])
-   if not _same(row['catalog_choice'],ch)or row['text']!=ch['conditional']:return None
+   if not same_choice_json(row['catalog_choice'],ch)or row['text']!=ch['conditional']:return None
   return deepcopy(d)
  except(OSError,ValueError,KeyError,TypeError,StopIteration,AttributeError,IndexError,RecursionError):return None
 
@@ -75,7 +100,7 @@ def _choice(d,event_id,scene_key,choice_key,*,event=None,scene=None,choice=None)
  if d is None:return result
  expected=d['expected_events'][event_id];expected_scene=next(s for s in expected['scenes']if s['key']==scene_key)
  expected_choice=next(c for c in expected_scene['choices']if c['key']==choice_key)
- if any(given is not None and not _same(given,wanted)for given,wanted in
+ if any(given is not None and not same_choice_json(given,wanted)for given,wanted in
   ((event,expected),(scene,expected_scene),(choice,expected_choice))):return result
  row=next(r for r in d['rows']if(r['event_id'],r['scene_key'],r['choice_key'])==(event_id,scene_key,choice_key))
  result.update(status='documented_reference',source_valid=True,role=row['role'],reference=row,

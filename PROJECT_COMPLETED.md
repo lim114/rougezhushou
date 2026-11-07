@@ -1,3 +1,7 @@
+## 维护 · 招募与移动结果复用原件核验，区分来源失效和内部错误（2026-11-06）
+
+D334、D335按批准实施。两读取器共用逐文件核验，匹配事件的招募分支复用已定位场景。85项定向通过，两份完整结果与旧版一致。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-choice-document-readers-20261106/summary.json)。
+
 ## 维护 · 同场景选项复用持有条件资料，作战链接共用本次事件查询（2026-11-06）
 
 D307部分推进。同场景各选项共用已核验的持有条件资料，独立查询仍核对来源。作战链接不再重复解析整个事件和上下文。70项定向通过，10个有链接事件完整结果一致。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-event-choice-source-reuse-20261106/summary.json)。
