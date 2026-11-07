@@ -1371,7 +1371,9 @@ class MainWindow(QMainWindow):
 
     def show_damage_budget(self):
         if not self.damage_result:return
-        from .damage_budget import damage_sources,damage_budget,format_damage_budget
+        from .damage_budget import DamageBudgetInputError, damage_sources, damage_budget, format_damage_budget
+        from .healing_budget import AmountInputError
+        from .charge_timeline import DeclaredTimeError
         from .reference_dialog import ReferenceDialog
         from copy import deepcopy
         scenario=deepcopy(self.damage_result['scenario']);sources=damage_sources(self.damage_result['result'])
@@ -1384,7 +1386,7 @@ class MainWindow(QMainWindow):
              'events':[{'at_seconds':0,'target':'目标甲','source':sources[0]['id']}]},
             lambda preview:damage_budget(scenario,preview),format_damage_budget,
             [('at_seconds','声明秒数'),('target','目标'),('source','分项'),('per_hit','潜在伤害'),
-             ('effective_damage','有效伤害'),('overkill','溢出'),('hp_after','剩余预算')],self)
+             ('effective_damage','有效伤害'),('overkill','溢出'),('hp_after','剩余预算')],self,input_errors=(DamageBudgetInputError, AmountInputError, DeclaredTimeError))
         self.damage_budget_dialog.show()
 
     def show_supplemental_skills(self):

@@ -1,0 +1,78 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "同防御法抗目标共用单次伤害，区分来源无效和内部错误",
+  "base_commit": "9195a182efc78a148a97304525fa5c74a837848a",
+  "changed_sources": [
+    "rouge/app.py",
+    "rouge/damage_budget.py",
+    "rouge/healing_budget.py"
+  ],
+  "source_sha256": {
+    "rouge/app.py": "c750b897dbeb86e214ea293eee7ff07181533d28621e73920d3806b4034aa01a",
+    "rouge/damage_budget.py": "c03462cca7c734d47e895966a9c03f242ec9e6dbc37ee05b8fce5f4594d3eb65",
+    "rouge/healing_budget.py": "b57d85ffc0170de380ea54687e4136eae805f9eccbb5db046ecc87e43f6d414d"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D329",
+    "D330"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_passed": 13,
+        "seconds": 0.226
+      },
+      {
+        "phase": "main calculator",
+        "tests_passed": 22,
+        "seconds": 0.639
+      },
+      {
+        "phase": "approved source handling",
+        "tests_passed": 23,
+        "seconds": 0.555,
+        "command": "python -m unittest tests.test_damage_budget_139 tests.test_supplemental_budget_150 tests.test_healing_budget_132"
+      }
+    ],
+    "live_window": "Qt offscreen. Original desktop window restart remains pending after earlier automatic approval rejection."
+  },
+  "review": {
+    "standards": "Per-call mitigation table after numeric validation; independent mutable public references; source amounts indexed once and reused by events. Events keep immutable declared fields without copying the event object. Runtime evaluator catches only declared input error classes. Approved D329+D330 narrow modern and legacy numeric-source exceptions.",
+    "requirements": "Counted one model call for two equal mitigation targets; changing resistance and rerunning yields two fresh calculations. Mutating a result reference does not affect another target. MainWindow ordinary dialog shows invalid resistance and propagates internal errors. Source tests exercise invalid and zero amounts and injected plain ValueError on all four paths."
+  },
+  "partially_implemented_decisions": [
+    "D100"
+  ]
+}

@@ -26,11 +26,11 @@ def healing_sources(result):
     for index, component in enumerate(result.get('components',[])):
         if component.get('damage_type') == 'healing' and type(component.get('per_hit')) in (int,float):
             try: amount = _amount(component['per_hit'],'单次治疗参考')
-            except ValueError: continue
+            except AmountInputError: continue
             sources.append({'id':f'healing_{index}','name':component['name'],'per_heal_reference':amount})
     if not sources and type(result.get('per_heal')) in (int,float):
         try: amount = _amount(result['per_heal'],'单次治疗参考')
-        except ValueError: return sources
+        except AmountInputError: return sources
         sources.append({'id':'legacy_heal','name':'既有单次技能治疗','per_heal_reference':amount})
     return sources
 
