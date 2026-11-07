@@ -4,7 +4,7 @@ from pathlib import Path
 from PySide6.QtCore import Qt,QSize,Signal,QTimer,QEvent
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QFormLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
 from . import expansion_reference as reference
-from .record_flags import active_record
+from .player_resource_facts import relic_flags, inventory_reading
 
 RARITIES={'NORMAL':'低稀有度 · N','RARE':'中稀有度 · R','SUPER_RARE':'高稀有度 · SR','NONE':'未分档'}
 
@@ -21,7 +21,9 @@ def source_nodes(public_data,version):
 def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,public_data=None,version=None,category=None,access=None,source_node=None,packet=...):
     packet=reference.packet() if packet is ... else packet
     result = _catalog_rows(public_data, version, packet)
-    return _filter_rows(result,state,query,held_only,rarity=rarity,exchange=exchange,kind=kind,category=category,access=access,source_node=source_node)
+    if result is None:
+        return None
+    return _filter_rows(result,relic_flags(state),query,held_only,rarity=rarity,exchange=exchange,kind=kind,category=category,access=access,source_node=source_node)
 
 
 def _catalog_rows(public_data, version, packet):
@@ -41,14 +43,13 @@ def _catalog_rows(public_data, version, packet):
     return result
 
 
-def _filter_rows(rows,state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,category=None,access=None,source_node=None):
-    if rows is None:return None
-    held={key for key,row in state.get('relics',{}).items()if active_record(row,'held')}
+def _filter_rows(rows,flags,query='',held_only=True,*,rarity=None,exchange=None,kind=None,category=None,access=None,source_node=None):
     result=[];q=query.strip().casefold()
     for row in rows:
         doc=row['compendium']
         if category is not None and row['category']!=category:continue
-        if held_only and row['id']not in held:continue
+        held = flags.get(row['id']) is True
+        if held_only and not held:continue
         if q:
             search_text = row['name'] + ' ' + row['usage']
             if doc:
@@ -62,7 +63,7 @@ def _filter_rows(rows,state,query='',held_only=True,*,rarity=None,exchange=None,
         if rarity is not None and row['rarity']!=rarity:continue
         if exchange is not None and row['exchange']is not exchange:continue
         if kind is not None and row['kind']!=kind:continue
-        result.append({**row,'held':row['id']in held})
+        result.append({**row,'held':held})
     return result
 
 class InventoryPanel(QWidget):
@@ -170,9 +171,9 @@ class InventoryPanel(QWidget):
             if prior is not None and index<0:self.category.addItem('原类别在此范围无资料',prior);index=self.category.count()-1
             self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
-        rows=_filter_rows(available,self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
-        from .player_resource_facts import inventory_reading
-        inventory, self.kettle_quantity = inventory_reading(self.run.state)
+        flags = relic_flags(self.run.state)
+        rows=None if available is None else _filter_rows(available,flags,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
+        inventory, self.kettle_quantity = inventory_reading(self.run.state, held_flags=flags)
         self.merge_kettles.setVisible(self.held.isChecked())
         render_key=repr((rows,self.kettle_quantity,self.merge_kettles.isChecked(),self.held.isChecked()))
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key

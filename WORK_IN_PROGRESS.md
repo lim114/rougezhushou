@@ -1,3 +1,7 @@
+## 当前断点 · 藏品筛选与数量概况共用本次持有标记（2026-11-06）
+
+单次刷新只读取一次藏品持有标记，下一次刷新重读。160组状态的数量与资源显示与旧版相同，35项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-inventory-held-snapshot-20261106/summary.json)。
+
 ## 当前断点 · 藏品目录一次构建与筛选，公开图鉴同次读取只核验一次（2026-11-06）
 
 移除建索引前的重复整包验证以及同次刷新中的额外筛选。新版包图鉴核验一次；旧版补充摘要仍独立核验。51项定向通过。D344待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-inventory-decode-refresh-20261106/summary.json)。

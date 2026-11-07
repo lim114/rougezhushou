@@ -13,16 +13,21 @@ def inventory_summary(state, *, kettle_quantity=...):
     return summary
 
 
-def inventory_reading(state, *, kettle_quantity=...):
+def relic_flags(state):
+    return {rid: record_flag(row, 'held') for rid, row in state.get('relics', {}).items()}
+
+
+def inventory_reading(state, *, kettle_quantity=..., held_flags=None):
     from .relic_quantities import kettle_copies
-    relic_flags = {rid: record_flag(row, 'held') for rid, row in state.get('relics', {}).items()}
+    if held_flags is None:
+        held_flags = relic_flags(state)
     tool_flags = {tid: record_flag(row, 'held') for tid, row in state.get('tactical_tools', {}).items()}
-    relics = sum(flag is True for flag in relic_flags.values())
-    copies = kettle_copies(state, held_by_kind=(relic_flags, tool_flags)) if kettle_quantity is ... else kettle_quantity
+    relics = sum(flag is True for flag in held_flags.values())
+    copies = kettle_copies(state, held_by_kind=(held_flags, tool_flags)) if kettle_quantity is ... else kettle_quantity
     if copies is not None:relics+=copies-1
     tools = sum(flag is True for flag in tool_flags.values())
     total = count(state.get('relic_count'))
-    unknown = None in relic_flags.values() or None in tool_flags.values()
+    unknown = None in held_flags.values() or None in tool_flags.values()
     complete = (state.get('inventory_verified') is True and total is not None
                 and relics + tools == total and not unknown)
     # The game badge includes tools. Subtract them only after a full match.
@@ -69,10 +74,12 @@ def resource_rows(state, *, inventory=None):
         amount = record.get('value')
         known = numeric_read(amount)
         value = f'{amount:g}' if known else '未读'
-        capacity = read_capacity(record.get('capacity'), amount if known else None)
-        if key in ('life', 'hope') and known and capacity is not None:
-            value += '/' + str(capacity)
-        meaning = '当前值/上限。' if key in ('life', 'hope') and known and capacity is not None else ''
+        meaning = ''
+        if key in ('life', 'hope') and known:
+            capacity = read_capacity(record.get('capacity'), amount)
+            if capacity is not None:
+                value += '/' + str(capacity)
+                meaning = '当前值/上限。'
         rows.append({'key': key, 'name': RESOURCE_LABELS[key], 'value': value,
             'note': meaning + '本局最近读到的数值。' + observation_time(record.get('captured_at'))
                     + '；未读不代表零，不使用分队或藏品推算，也不是所选历史层当时数值。'})

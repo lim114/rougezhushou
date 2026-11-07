@@ -43,6 +43,19 @@ class CatalogRefreshReviewTests(unittest.TestCase):
         self.assertEqual(panel.entries.count(), 0)
         self.assertEqual(panel.detail.toPlainText(), '')
 
+    def test_inventory_filter_and_summary_share_the_current_held_flags(self):
+        from rouge import player_resource_facts as facts
+        identity = 'rogue_6_relic_legacy_1'
+        record = {'held': True}
+        panel = inventory.InventoryPanel(SimpleNamespace(state={'relics': {identity: record}}))
+        self.addCleanup(panel.close)
+        for value in (True, False, None):
+            record['held'] = value
+            with patch.object(facts, 'record_flag', wraps=facts.record_flag) as read:
+                panel.refresh()
+            read.assert_called_once_with(record, 'held')
+            self.assertEqual(identity in panel.rows, value is True)
+
     def test_all_catalog_icons_really_render_at_normal_and_higher_density_sizes(self):
         selections = [(kind, identity) for kind, group in (
             ('operator', 'operators'), ('enemy', 'enemies'))
