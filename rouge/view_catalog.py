@@ -117,17 +117,24 @@ def add_groups(combo,groups,placeholder=None):
 
 
 def operator_groups(profiles,implemented):
-    counts=Counter(p['name']for p in profiles.values())
-    groups=[]
-    for profession,label in PROFESSIONS.items():
-        entries=sorted(((key,p) for key,p in profiles.items() if p['profession']==profession),
-                       key=lambda v:(v[0] not in implemented,v[1]['name'],v[0]))
-        items=[]
-        for key,p in entries:
-            title=p['name']+(' · '+p['subprofession'] if counts[p['name']]>1 else '')
-            title+='（培养档案）' if key not in implemented else ''
-            items.append((title,key,portrait_icon('operator',key)))
-        groups.append((label,items))
+    counts = Counter()
+    by_profession = {key: [] for key in PROFESSIONS}
+    for key, profile in profiles.items():
+        counts[profile['name']] += 1
+        group = by_profession.get(profile['profession'])
+        if group is not None:
+            group.append((key not in implemented, profile['name'], key, profile))
+    groups = []
+    for profession, label in PROFESSIONS.items():
+        items = []
+        for training_only, name, key, profile in sorted(by_profession[profession]):
+            title = name
+            if counts[name] > 1:
+                title += ' · ' + profile['subprofession']
+            if training_only:
+                title += '（培养档案）'
+            items.append((title, key, portrait_icon('operator', key)))
+        groups.append((label, items))
     return groups
 
 
@@ -180,11 +187,14 @@ def stage_groups(stages):
 
 
 def enemy_groups(enemies,data_for):
-    groups=[]
-    for tier in (*ENEMY_TIERS,None):
-        entries=[e for e in enemies if (e['level_type'] if e['level_type'] in ENEMY_TIERS else None)==tier]
-        items=[(e['name']+' · 引用等级'+str(e['level']),data_for(e),portrait_icon('enemy',e['id'])) for e in entries]
-        groups.append((ENEMY_TIERS.get(tier,'类别未确认'),items))
+    by_tier = {tier: [] for tier in (*ENEMY_TIERS, None)}
+    for enemy in enemies:
+        tier = enemy['level_type']
+        by_tier[tier if tier in ENEMY_TIERS else None].append(enemy)
+    groups = []
+    for tier, entries in by_tier.items():
+        items = [(e['name']+' · 引用等级'+str(e['level']), data_for(e), portrait_icon('enemy',e['id'])) for e in entries]
+        groups.append((ENEMY_TIERS.get(tier,'类别未确认'), items))
     return groups
 
 

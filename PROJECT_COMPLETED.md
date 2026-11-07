@@ -1,3 +1,7 @@
+## 维护 · 干员与敌人列表一次分组，搜索词按次处理（2026-11-06）
+
+431名干员和105关敌人分组与前版逐项比较，标签、次序、引用和28像素图标一致。25项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-roster-tier-grouping-20261106/summary.json)。
+
 ## 维护 · 关卡分类一次遍历，藏品原图一次路径检查（2026-11-06）
 
 105关目录遍历由15次降为1次，原图存在样例文件检查由3次降为1次。45项定向通过；D345待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-stage-group-artwork-20261106/summary.json)。

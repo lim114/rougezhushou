@@ -464,21 +464,24 @@ class CurrentBattlePanel(QWidget):
         return self.focus_action(action)
 
     def install_enemy_choices(self,preferred=None):
-        from .player_enemy_search import matches
-        query=self.enemy_search.text();rows=[e for e in(self.result or{}).get('enemies',[])if matches(e,query)];groups=[]
-        for tier,label in [*model.TIERS.items(),(None,'类别未确认')]:
-            items=[]
-            for enemy in rows:
-                if enemy['tier']!=tier:continue
-                items.append((enemy['name']+' · 引用资料'+str(enemy['reference_index']+1),enemy['key'],self._enemy_icons[enemy['key']]))
-            groups.append((label,items))
-        self.enemy_choices.keep_empty_groups=bool(query.strip())
+        from .player_enemy_search import matches_normalized
+        query = self.enemy_search.text().strip().casefold()
+        by_tier = {tier: [] for tier in (*model.TIERS, None)}
+        count = 0
+        for enemy in (self.result or {}).get('enemies', []):
+            if not matches_normalized(enemy, query):
+                continue
+            count += 1
+            by_tier[enemy['tier']].append((enemy['name']+' · 引用资料'+str(enemy['reference_index']+1),
+                                         enemy['key'], self._enemy_icons[enemy['key']]))
+        groups = [(model.TIERS.get(tier, '类别未确认'), items) for tier, items in by_tier.items()]
+        self.enemy_choices.keep_empty_groups = bool(query)
         blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
         if preferred is not None:self.enemy_choices.select_value(preferred,emit=False)
         self.enemy_combo.blockSignals(blocked)
         self._sync_enemy_grid()
-        self.enemy_search_notice.setText(f'找到{len(rows)}条敌人资料。'if query.strip()else'可搜索敌人名称或图鉴描述。')
-        self.enemy_search_notice.setVisible(bool(query.strip()))
+        self.enemy_search_notice.setText(f'找到{count}条敌人资料。' if query else '可搜索敌人名称或图鉴描述。')
+        self.enemy_search_notice.setVisible(bool(query))
 
     def _show_enemy_grid(self, checked):
         self.enemy_grid.setVisible(checked)

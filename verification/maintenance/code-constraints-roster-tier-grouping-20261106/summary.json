@@ -1,0 +1,77 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 76,
+    "structural_only": 250,
+    "selected_paths_only": 193,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision"
+  ],
+  "title": "干员与敌人列表一次分组，搜索词按次处理",
+  "base_commit": "5f0e0a3da0e66cf26f901455db899d936529bc9d",
+  "changed_sources": [
+    "rouge/view_catalog.py",
+    "rouge/current_battle_view.py",
+    "rouge/player_enemy_search.py"
+  ],
+  "source_sha256": {
+    "rouge/view_catalog.py": "62043d74d918076939665f734d00ba39e1350cbc512fc5aa801ba6c3ce190ec0",
+    "rouge/current_battle_view.py": "1869b7ab42ba185770a9112202c18670164afca3ed029a0ade97b771f359b27a",
+    "rouge/player_enemy_search.py": "78d474febaaeeddc3ce9651acd3e172129148eb612932d1fee14eb6eaa26a46d"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 25,
+    "seconds": 8.837,
+    "initial": "First launch caught a conditional-expression syntax error before tests ran; corrected before final run.",
+    "modules": [
+      "tests.test_view_catalog_045",
+      "tests.test_enemy_reading_469",
+      "tests.test_enemy_search_contract",
+      "tests.test_catalog_refresh_review"
+    ],
+    "comparison": {
+      "operator_profiles": 431,
+      "stage_lists": 105,
+      "icon_px": 28
+    },
+    "live_window": "Isolated Qt only; original desktop window not updated."
+  },
+  "review": {
+    "standards": "One input traversal per roster or enemy group query; count duplicate operator names including omitted professions; group enemy rows before invoking callbacks to preserve callback order. Current battle lookup consumes the normalized tier produced by the reference reader. Normalize the current query once and retain the standalone raw query API.",
+    "requirements": "Compared groups, labels, IDs and 28px artwork against previous implementation. Current battle Qt search and unknown-tier contract covered by targeted tests. No extra exception path or cache introduced."
+  },
+  "partially_implemented_decisions": []
+}

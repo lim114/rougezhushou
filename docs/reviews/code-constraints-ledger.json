@@ -113,7 +113,7 @@
     },
     {
       "file": "rouge/player_enemy_search.py",
-      "sha256": "7cf14421ae3c4d4e5eec3001f3fdb842b4faa7cdb75f01c593627470adcd3a6b",
+      "sha256": "78d474febaaeeddc3ce9651acd3e172129148eb612932d1fee14eb6eaa26a46d",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "approved_scope_D38",
@@ -131,11 +131,16 @@
           "decision": "",
           "receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json",
           "scope": "Three complete modules and the save_settings key field read; D338 pending."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-roster-tier-grouping-20261106/summary.json",
+          "scope": "Operator and enemy grouping in catalog and current battle search; complete normalized matcher module."
         }
       ],
       "evidence": "Normalized battle enemy fields used directly, input search normalized once per match. No extra helper or exception handler.",
       "full_module_review_complete": true,
-      "full_review_receipt": "verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json"
+      "full_review_receipt": "verification/maintenance/code-constraints-roster-tier-grouping-20261106/summary.json"
     },
     {
       "file": "rouge/credentials.py",
@@ -463,7 +468,7 @@
     },
     {
       "file": "rouge/current_battle_view.py",
-      "sha256": "f3438b7740c0376acc9c2b430960d1d0b23ee84922717a1b814dd139257a9aa6",
+      "sha256": "1869b7ab42ba185770a9112202c18670164afca3ed029a0ade97b771f359b27a",
       "rule1": "Caller filters kind once, then applies group/focus to the same rows; source validators under D52 unchanged",
       "rule2": "Shared grouping/filter functions retained; record_text owns domain formatting; no new wrapper",
       "rule3": "D231_D232_pending_unchanged",
@@ -475,6 +480,11 @@
           "decision": "D296, D305, D311",
           "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
           "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-roster-tier-grouping-20261106/summary.json",
+          "scope": "Operator and enemy grouping in catalog and current battle search; complete normalized matcher module."
         }
       ]
     },
@@ -5771,6 +5781,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-stage-group-artwork-20261106/summary.json",
       "scope": "Stage directory bucketing, portrait record resolution and relic image fallback order."
+    },
+    {
+      "file": "rouge/view_catalog.py",
+      "sha256": "62043d74d918076939665f734d00ba39e1350cbc512fc5aa801ba6c3ce190ec0",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-roster-tier-grouping-20261106/summary.json",
+      "scope": "Operator and enemy grouping in catalog and current battle search; complete normalized matcher module."
     }
   ]
 }
