@@ -160,8 +160,8 @@ def event_details(event_id):
                    unclassified_original_query={'command':'original','input':{'query':e['title']}},
                    server_scene_reachability_verified=False)
 COMMANDS.update(detail=event_details,original=original_references)
-def _choice_navigation(event,choice):
-    keys={s['key'] for s in event['scenes']};branches=[]
+def _choice_navigation(scene_keys, choice):
+    branches = []
     for i,target in enumerate(choice['destination_keys']):
         branches.append({'branch_id':choice['key']+':main:'+str(i),'to':target,'subchoice':None})
     for i,sub in enumerate(choice.get('subchoices',[])):
@@ -169,14 +169,15 @@ def _choice_navigation(event,choice):
         branches.append({'branch_id':choice['key']+':sub:'+str(i),
                          'to':sub.get('community_destination_scene_id'),'subchoice':deepcopy(sub)})
     if not branches:branches=[{'branch_id':choice['key']+':unknown','to':None,'subchoice':None}]
-    if any(b['to'] is not None and b['to'] not in keys for b in branches):
+    if any(b['to'] is not None and b['to'] not in scene_keys for b in branches):
         raise ValueError('来源导航边指向组外，拒绝跨事件拼接。')
     return branches
 def choice_graph(event_id):
     e=_event(event_id);edges=[];unresolved=[]
+    scene_keys = {scene['key'] for scene in e['scenes']}
     for s in e['scenes']:
         for ch in s['choices']:
-            for b in _choice_navigation(e,ch):
+            for b in _choice_navigation(scene_keys, ch):
                 row={'from':s['key'],'scene':s['key'],'choice_id':ch['key'],'choice':ch['key'],
                      'title':ch['title'],'role':ch['presentation_role'],'game_choice_ids':deepcopy(ch['game_choice_ids']),
                      'branch_id':b['branch_id'],'subchoice':b['subchoice'],
@@ -360,11 +361,12 @@ COMMANDS['search']=search_events
 def scene_choices(event_id,scene_key):
     e = _event(event_id)
     s = _event_scene(e, scene_key)
+    scene_keys = {scene['key'] for scene in e['scenes']}
     original = _original()['choices']
     rows = []
     for ch in s['choices']:
         raw=[{'id':cid,**deepcopy(original[cid])} for cid in ch['game_choice_ids'] if cid in original]
-        navigation=_choice_navigation(e,ch)
+        navigation=_choice_navigation(scene_keys, ch)
         rows.append({'id':ch['key'],'title':ch['title'],'description':ch['description'],
             'conditional_text':ch['conditional'],'role':ch['presentation_role'],'source_type':ch['source_type'],
             'button_identity_status':'多个原表候选' if len(raw)>1 else '单个原表候选' if raw else '仅社区展示',
@@ -469,14 +471,21 @@ def _node_dossier(graph, node, floor, special_region, difficulty):
         history_functions=[{**f,'historical_read_reference':True,'reading_sources':['remembered_type']}
             for f in function_nodes(previous_type)['rows']]
     # Explicit observed variant survives directory floor/context filtering.
-    if current and current.get('kind')=='battle' and isinstance(current.get('variant_id'),str):
-        explicit=next((s for s in battle_candidates(context='all')['rows'] if s['id']==current['variant_id'] and s['title']==current.get('title')),None)
-        if explicit:battles[explicit['id']]={**explicit,'observed_variant_reference':True,'floor_filter_applied':False}
-    generic_battles=deepcopy(list(battles.values()))
-    if current and current.get('kind')=='battle' and isinstance(current.get('title'),str) and not pass_through:
-        visible=[s for s in battle_candidates(context='all')['rows'] if s['title']==current['title'] and
-                 (not current.get('variant_id') or s['id']==current['variant_id'])]
-        if visible:battles={s['id']:{**s,'observed_title_reference':True,'floor_filter_applied':False} for s in visible}
+    is_battle = current and current.get('kind') == 'battle'
+    has_variant = is_battle and isinstance(current.get('variant_id'), str)
+    show_title = is_battle and isinstance(current.get('title'), str) and not pass_through
+    if has_variant or show_title:
+        visible = [stage for stage in battle_candidates(context='all')['rows']
+                   if stage['title'] == current.get('title') and
+                   (not current.get('variant_id') or stage['id'] == current['variant_id'])]
+        if has_variant:
+            explicit = next((stage for stage in visible if stage['id'] == current['variant_id']), None)
+            if explicit:
+                battles[explicit['id']] = {**explicit, 'observed_variant_reference': True, 'floor_filter_applied': False}
+    generic_battles = deepcopy(list(battles.values()))
+    if show_title and visible:
+        battles = {stage['id']: {**stage, 'observed_title_reference': True, 'floor_filter_applied': False}
+                   for stage in visible}
     functions=[f for t in types for f in function_nodes(t,floor,difficulty,special_region)['rows']]
     return _result(list(by_id.values()),history_events=list(past.values()),battle_rows=list(battles.values()),function_rows=functions,
         position={'node_id':node_id,'row':node.get('row'),'col':node.get('col'),'template_id':graph.get('template_id'),'zone_id':graph.get('zone_id')},
