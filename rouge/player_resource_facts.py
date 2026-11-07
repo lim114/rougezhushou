@@ -9,21 +9,26 @@ def count(value):
 
 
 def inventory_summary(state, *, kettle_quantity=...):
-    relic_flags = [record_flag(r, 'held') for r in state.get('relics', {}).values()]
-    tool_flags = [record_flag(r, 'held') for r in state.get('tactical_tools', {}).values()]
-    relics = sum(flag is True for flag in relic_flags)
+    summary, _ = inventory_reading(state, kettle_quantity=kettle_quantity)
+    return summary
+
+
+def inventory_reading(state, *, kettle_quantity=...):
     from .relic_quantities import kettle_copies
-    copies = kettle_copies(state) if kettle_quantity is ... else kettle_quantity
+    relic_flags = {rid: record_flag(row, 'held') for rid, row in state.get('relics', {}).items()}
+    tool_flags = {tid: record_flag(row, 'held') for tid, row in state.get('tactical_tools', {}).items()}
+    relics = sum(flag is True for flag in relic_flags.values())
+    copies = kettle_copies(state, held_by_kind=(relic_flags, tool_flags)) if kettle_quantity is ... else kettle_quantity
     if copies is not None:relics+=copies-1
-    tools = sum(flag is True for flag in tool_flags)
+    tools = sum(flag is True for flag in tool_flags.values())
     total = count(state.get('relic_count'))
-    unknown = any(flag is None for flag in (*relic_flags, *tool_flags))
+    unknown = None in relic_flags.values() or None in tool_flags.values()
     complete = (state.get('inventory_verified') is True and total is not None
                 and relics + tools == total and not unknown)
     # The game badge includes tools. Subtract them only after a full match.
     expected_relics = total - tools if complete else total if tools == 0 and not unknown else None
     return {'relics': relics, 'tools': tools, 'total': total,
-            'complete': complete, 'expected_relics': expected_relics}
+            'complete': complete, 'expected_relics': expected_relics}, copies
 
 
 def resource_rows(state, *, inventory=None):

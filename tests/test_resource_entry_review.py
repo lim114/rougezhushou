@@ -16,7 +16,8 @@ class ResourceEntryTests(unittest.TestCase):
                 return super().__getitem__(key)
         records=[Record(held=x)for x in (True,False,None)]
         for record in records:record.reads=0
-        state={'relics':{'a':records[0],'b':records[1]},'tactical_tools':{'c':records[2]},
+        from rouge.relic_quantities import KETTLE
+        state={'relics':{KETTLE:records[0],'b':records[1]},'tactical_tools':{'c':records[2]},
                'relic_count':1,'inventory_verified':True}
         result=inventory_summary(state)
         self.assertEqual(result,{'relics':1,'tools':0,'total':1,'complete':False,'expected_relics':None})

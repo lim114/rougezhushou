@@ -1,3 +1,7 @@
+## 维护 · 水壶数量与库存摘要共用持有标记（2026-11-06）
+
+D61完成。库存摘要、合并显示和水壶计算复用同次读取的持有标记。24项定向通过，3840组模拟状态逐项与旧实现相同。 原280组完成232、余48。 [回执](verification/maintenance/code-constraints-kettle-held-flags-20261106/summary.json)。
+
 ## 维护 · 库存窗口复用本次的水壶数量和库存摘要（2026-11-06）
 
 D61部分完成。刷新概况、库存页签和资源栏复用库存摘要，藏品列表与完整性提示共用水壶数量。水壶计算内部的持有标记重复扫描仍待处理。原失败保留，最终20项定向通过。 原280组完成231、余49。 [回执](verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json)。

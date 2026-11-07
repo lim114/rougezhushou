@@ -36,6 +36,14 @@ class KettleCopies446(unittest.TestCase):
   r=self.run_state();observe(r,[KETTLE]*3);self.assertNotIn('hope',r.state['resources']);self.assertNotIn('life',r.state['resources'])
  def test_healthy_legacy_complete_record_proves_one_but_large_badge_does_not(self):
   state={'inventory_verified':True,'relic_count':2,'relics':{KETTLE:{},OTHER:{}}};self.assertEqual(kettle_copies(state),1);state['relic_count']=5;self.assertIsNone(kettle_copies(state))
+ def test_overlapping_item_id_keeps_both_original_flags_for_legacy_count(self):
+  state={'inventory_verified':True,'relic_count':2,'relics':{KETTLE:{},OTHER:{'held':None}},'tactical_tools':{OTHER:{'held':True}}}
+  self.assertIsNone(kettle_copies(state))
+  self.assertFalse(inventory_summary(state)['complete'])
+  state['relics'][OTHER]['held']=False
+  self.assertEqual(kettle_copies(state),1)
+  self.assertTrue(inventory_summary(state)['complete'])
+
  def test_hundred_copy_boundary_and_manual_temporary_reset(self):
   r=self.run_state();observe(r,[KETTLE]*100);self.assertEqual(kettle_copies(r.state),100);self.assertEqual(r.inventory_status()['recognized'],100);old=r.state['id'];r.reset();self.assertNotEqual(r.state['id'],old);self.assertIsNone(kettle_copies(r.state));self.assertFalse(r.state['relics'])
 

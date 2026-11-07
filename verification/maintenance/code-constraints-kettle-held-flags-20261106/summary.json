@@ -1,0 +1,77 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "水壶数量与库存摘要共用持有标记",
+  "base_commit": "506cb692643bbde7b2efb6e42332f847519627ad",
+  "changed_sources": [
+    "rouge/relic_quantities.py",
+    "rouge/player_resource_facts.py",
+    "rouge/player_inventory.py"
+  ],
+  "source_sha256": {
+    "rouge/relic_quantities.py": "17179f0077a5a2e1ef072e885196657589f117f2adabb6825e14b60226084a33",
+    "rouge/player_resource_facts.py": "8964a575c9c0e6e4693302c708ee22f74f8a5d3b7b4ffe55751470c24a7d3728",
+    "rouge/player_inventory.py": "1addaeb9396b767511d5bb3600cf76967d011d5eae667cc0cfa486fc4e9c818e"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D61"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "tests_passed": 23,
+        "seconds": 1.16,
+        "phase": "existing focused checks"
+      },
+      {
+        "tests_run": 24,
+        "tests_passed": 24,
+        "seconds": 1.163,
+        "command": "python -m unittest tests.test_inventory_modes_446 tests.test_resource_entry_review tests.test_run_and_archive_boundaries_review tests.test_statistics_inventory_contract_review"
+      },
+      {
+        "phase": "synthetic differential",
+        "baseline": "506cb692643bbde7b2efb6e42332f847519627ad",
+        "cases": 3840,
+        "mismatches": 0,
+        "scope": "old direct result vs new direct and inventory_reading; verified and unverified inventory, badge types, overlap, held flags and icon slots, input unchanged"
+      }
+    ],
+    "live_window": "Isolated Qt. Original window restart remains pending after earlier automatic approval rejection."
+  },
+  "review": {
+    "standards": "Raw held flags read once per original entry during inventory reading. Independent kettle_copies qualifies merged records at entry and keeps shadowed relic unknowns in the legacy completeness check. The picker and summary share the one reading. Existing inventory_summary return shape and optional known quantity retained. No new catch or recovery rule.",
+    "requirements": "Complete positive slots, exact expected count and uniquely held non-kettle identities remain required for icon evidence. Legacy default/missing, unknown and false flags preserve separate meanings. Relic/tool ID collisions preserve tool precedence for counting and both original flags for legacy completeness. No private records modified."
+  },
+  "partially_implemented_decisions": []
+}
