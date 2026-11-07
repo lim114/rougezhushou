@@ -2,7 +2,7 @@
 from . import current_named_reward_origins as model
 def make_event_dialog(row,parent=None):
     fresh=model.reference('relics',row['item_id'])
-    if fresh is None or not any(model_row==row for model_row in fresh['rows']):return None
+    if fresh is None or row not in fresh['rows']:return None
     return _dialog_from_verified_row(row,parent)
 
 def _dialog_from_verified_row(row,parent=None):

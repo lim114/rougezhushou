@@ -1,3 +1,7 @@
+## 当前断点 · 完成灵知模组、治疗藏品与奖励详情入口三模块回顾（2026-11-07）
+
+三模块完成回顾，累计79/559。灵知整次技能和观察窗口各读取一次可生效标记，奖励详情入口用已核验资料直接匹配完整条目。51项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-healing-gnosis-reward-closeout-20261107/summary.json)。
+
 ## 当前断点 · 攻击回复条件在同一次技能估算中只读取一次（2026-11-07）
 
 攻击回复的初动、回转与充能期普攻共用当次条件；酒类单独供技力时仍可回转。108项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-attack-charge-condition-20261107/summary.json)。

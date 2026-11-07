@@ -84,12 +84,12 @@ def preserve_plan(components, reference, *, window, target_lifetime, per_tick):
         component.pop('times_seconds', None)
         component.pop('instant_event', None)
         component['timing_reference'] = 'original talent conditional reference; ISW-A attachment/state clock unverified'
-        if possible and component['hits']:
-            component['actual_total'] = None
-        elif not possible:
+        if not possible:
             component.pop('actual_total', None)
             component['hits'] = 0
             component['total'] = 0
+        elif component['hits']:
+            component['actual_total'] = None
     dot = {'name': DOT_NAME, 'damage_type': 'magic', 'hits': 0,
            'per_hit': per_tick, 'total': 0,
            'attack_scale_parameter': reference['dot_parameters']['atk_scale'],
@@ -104,19 +104,20 @@ def attach_result(result, reference, full, shown, normal, duration, cycle):
     from .uncertain_sources import mask_pending_damage
     dot = next(c for c in full['components'] if c['name'] == DOT_NAME)
     observed = next(c for c in shown['components'] if c['name'] == DOT_NAME)
+    cast_possible = 'actual_total' in dot
+    window_possible = 'actual_total' in observed
     result['gnosis_isw_a_reference'] = {
         **reference, 'per_tick_damage_reference': dot['per_hit'],
         'window_per_tick_damage_reference': observed['per_hit'],
         'actual_first_tick_seconds': None, 'actual_tick_times_seconds': None,
         'actual_tick_count': None,
-        'actual_dot_damage': None if 'actual_total' in observed else 0,
-        'actual_cast_dot_damage': None if 'actual_total' in dot else 0,
+        'actual_dot_damage': None if window_possible else 0,
+        'actual_cast_dot_damage': None if cast_possible else 0,
         'cold_coverage_windows_seconds': None,
         'attack_snapshot_binding_verified': False,
         'post_skill_dot_lifecycle_verified': False,
         'events_scheduled': False,
-        'source_possible': {'cast': 'actual_total' in dot,
-                            'window': 'actual_total' in observed},
+        'source_possible': {'cast': cast_possible, 'window': window_possible},
     }
     mask_pending_damage(result, full, shown, normal, duration, cycle)
     result['timing']['phase_clock_unbound'] = True
