@@ -51,9 +51,10 @@ class CurrentSandPanel(DocumentedEventFlowPanel):
         if not self._recheck():return False
         from .box_event_reference import locate
         target=locate('scenes','scene_ro6_end2_enter')
-        if target is None:self._close_related();return False
+        self._close_related()
+        if target is None:return False
         from .box_event_view import BoxEventDialog
-        self._close_related();self.related_dialog=BoxEventDialog(target['scene_id'],None,self);self.related_dialog.show();return True
+        self.related_dialog=BoxEventDialog(target['scene_id'],None,self);self.related_dialog.show();return True
 
     def closeEvent(self,event):self._close_related();super().closeEvent(event)
 

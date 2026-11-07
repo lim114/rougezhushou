@@ -174,7 +174,14 @@
       "decision": "D41",
       "trigger": "targets对缺索引/池/坏行返回空；companion通过hasattr/getattr查找可选宿主",
       "impact": "避免在没有对应资料或宿主时导航，但可能静默吞掉内部类型/属性契约破坏",
-      "recommendation": "需分别保留正常缺资料状态、核准可选宿主协议后删除多余坏结构兜底"
+      "recommendation": "需分别保留正常缺资料状态、核准可选宿主协议后删除多余坏结构兜底",
+      "scoped_reviews": [
+        {
+          "decision": "D41 / D218",
+          "receipt": "verification/maintenance/code-constraints-source-navigation-20261106/summary.json",
+          "scope": "D41 retained optional host protocol and binding row filter: public_archive.validate does not validate nodeBindings; genuine optional QWidget hosts include standalone viewers and parent-host traversal. D218 shares existing close operation before two outcome branches; keeps approved missing-target rejection. No new helper/catch/defense."
+        }
+      ]
     },
     {
       "file": "rouge/observed_map_symbols.py",
@@ -1161,7 +1168,7 @@
     },
     {
       "file": "rouge/current_sand_view.py",
-      "sha256": "3cdff07571c531d7cd8a3fce85afe2430c355f6ec49b88231a8f591a4ec33a68",
+      "sha256": "cececc830258f6fd19ad58bb0b921098f2b729370d43a9074454f3f09b310e65",
       "event_theme_ownership_review": {
         "rule1": "constructor_owns_final_theme_no_factory_reapplication",
         "rule2": "removed_duplicate_styling_without_new_wrapper_or_flag",
@@ -1174,7 +1181,14 @@
       "rule1": "gold_widget_read_once_related_visibility_condition_once_clear_material_once",
       "rule2": "Qt_callbacks_and_multi_caller_update_methods_retained",
       "rule3": "D218_pending",
-      "evidence": "Full view source read and factory/material paths inspected; removed repeated gold read and duplicated related predicate. Ritual clear previously closes material before super then again via sync(None); now latter closes once.12 targeted view checks pass; isolated close-count1. Failed-target sync branch may itself repeat lookup/close, D219 explicitly pending, not ordinary-complete. No unapproved guard changes."
+      "evidence": "Full view source read and factory/material paths inspected; removed repeated gold read and duplicated related predicate. Ritual clear previously closes material before super then again via sync(None); now latter closes once.12 targeted view checks pass; isolated close-count1. Failed-target sync branch may itself repeat lookup/close, D219 explicitly pending, not ordinary-complete. No unapproved guard changes.",
+      "scoped_reviews": [
+        {
+          "decision": "D41 / D218",
+          "receipt": "verification/maintenance/code-constraints-source-navigation-20261106/summary.json",
+          "scope": "D41 retained optional host protocol and binding row filter: public_archive.validate does not validate nodeBindings; genuine optional QWidget hosts include standalone viewers and parent-host traversal. D218 shares existing close operation before two outcome branches; keeps approved missing-target rejection. No new helper/catch/defense."
+        }
+      ]
     },
     {
       "file": "rouge/current_event_directory.py",
