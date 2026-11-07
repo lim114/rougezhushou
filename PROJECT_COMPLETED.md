@@ -1,3 +1,7 @@
+## 维护：资源历史复用入口类型契约（2026-11-06）
+
+D58完成：历史条目字典类型由存档入口保证，显示层删除重复判断；资源名称过滤保留。7项定向通过。原280组完成206、剩74；D81端点策略等待答复，原测试窗口更新仍待补。回执 `verification/maintenance/code-constraints-resource-history-entry-20261106/summary.json`。
+
 ## 维护：行动奖励缺图状态明确提示（2026-11-06）
 
 D200完成，6项定向通过，整模块未完成。回执 `verification/maintenance/code-constraints-startup-image-review-20261106/summary.json`。

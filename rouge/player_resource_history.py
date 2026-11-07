@@ -23,7 +23,7 @@ def resource_rows(state):
     prior_capacities = {}
     rows = []
     for index, event in enumerate(state.get('history', [])):
-        if not isinstance(event, dict) or event.get('kind') != 'resource_updated':
+        if event.get('kind') != 'resource_updated':
             continue
         key = event.get('resource')
         if not isinstance(key, str):

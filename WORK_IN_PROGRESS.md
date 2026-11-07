@@ -1,3 +1,7 @@
+## 当前断点：资源历史复用入口类型契约（2026-11-06）
+
+D58完成：历史条目字典类型由存档入口保证，显示层删除重复判断；资源名称过滤保留。7项定向通过。原280组完成206、剩74；D81端点策略等待答复，原测试窗口更新仍待补。回执 `verification/maintenance/code-constraints-resource-history-entry-20261106/summary.json`。
+
 ## 当前断点：材料来源类型出口（2026-11-06）
 
 D220完成：独立/共享窗口未知材料来源直接上报，三类正常来源保持；8项定向通过。原280组完成205、剩75。D110模型准备仍依赖计算内延迟输入校验，继续待处理；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-material-kind-errors-20261106/summary.json`。

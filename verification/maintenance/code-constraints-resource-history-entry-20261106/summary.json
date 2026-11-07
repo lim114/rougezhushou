@@ -1,0 +1,59 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision"
+  ],
+  "title": "资源历史复用入口类型契约",
+  "base_commit": "0fbcae64e7f38d69a508e8846aff7a9820cc07a8",
+  "changed_sources": [
+    "rouge/player_resource_history.py"
+  ],
+  "source_sha256": {
+    "rouge/player_resource_history.py": "eb120a8b0b15f55ef2bf2986635d3c780f3eafa820bf1405a15753ea2eb41286"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D58"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_resource_history_entry_contract_review tests.test_player_resource_history_404",
+        "tests_run": 7,
+        "tests_passed": 7,
+        "seconds": 0.055,
+        "environment": "Qt offscreen"
+      }
+    ],
+    "live_window": "Original test window update still pending after earlier automatic approval rejection; no native verification claimed."
+  },
+  "review": {
+    "standards": "D58 approved contract review: saved history validates dictionary items once; live producer creates dictionary events. Remove only repeated item shape guard. No helper, catch, retry or new defense.",
+    "requirements": "Malformed archive history rejected before installation; internal history defect exposed; resource key still qualified because archive schema does not validate it. Valid zero and broken reading chains preserved."
+  },
+  "partially_implemented_decisions": []
+}
