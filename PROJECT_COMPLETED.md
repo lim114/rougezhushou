@@ -1,3 +1,7 @@
+## 维护 · 节点条件在查询入口校验一次，功能节点沿用当前资料行（2026-11-06）
+
+两个入口各校验一次楼层和保密等级，功能节点复用当前资料行。96组完整输出或错误与旧版一致，33项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-node-requirement-inputs-20261106/summary.json)。
+
 ## 维护 · 事件导航复用场景键，作战节点复用同一目录查询（2026-11-06）
 
 38份事件图、190个场景与10种作战节点输入和改前输出一致；42项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-choice-navigation-dossier-20261106/summary.json)。

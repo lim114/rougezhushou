@@ -1,0 +1,63 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "节点条件在查询入口校验一次，功能节点沿用当前资料行",
+  "base_commit": "1b04b9964d43e2daa75a3af94407423ecb22a5f7",
+  "changed_sources": [
+    "rouge/node_catalog.py"
+  ],
+  "source_sha256": {
+    "rouge/node_catalog.py": "97f21d4efdd9c911b138b9e6133644f400add3ac4527ca8e5524b1e6ed36f084"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 33,
+    "seconds": 0.55,
+    "modules": [
+      "tests.test_node_catalog"
+    ],
+    "baseline_comparison": {
+      "queries_compared": 96,
+      "checks_per_entry": {
+        "floor": 1,
+        "difficulty": 1
+      }
+    },
+    "live_window": "Original desktop restart previously rejected; no live window validation in this batch."
+  },
+  "review": {
+    "standards": "Moved difficulty validation to battle query, retained public function query validation; both callers pass the source row. Compute unknown-node candidate basis in the same branch as candidates.",
+    "requirements": "Verified node function types unique in fixed pool. Compared valid data and invalid input errors against previous commit."
+  },
+  "partially_implemented_decisions": []
+}

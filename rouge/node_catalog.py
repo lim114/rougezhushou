@@ -116,9 +116,12 @@ def _node_events(node, floor, special_region):
     if observed and not observed.startswith(('未知','类型未确认')):
         types=[observed];basis='当前已读类型'
     else:
-        types=(node.get('prediction') or {}).get('candidates') or []
-        if not types:types=_all_node_types()
-        basis='模板类型候选' if (node.get('prediction') or {}).get('candidates') else '类型未确认，全部已证节点类别联合'
+        types = (node.get('prediction') or {}).get('candidates')
+        if types:
+            basis = '模板类型候选'
+        else:
+            types = _all_node_types()
+            basis = '类型未确认，全部已证节点类别联合'
     by_id={};excluded={}
     for t in types:
         candidates=event_candidates(t,floor,special_region)
@@ -260,12 +263,10 @@ def _battle_pools():
 def _difficulty(difficulty):
     if difficulty is not None and (type(difficulty) is not int or difficulty not in _data()['valid_difficulties']):
         raise NodeQueryError('保密等级需要固定资料中的普通模式整数或留空。')
-def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region=False):
-    _floor(floor,special_region);_difficulty(difficulty)
+def _node_requirement_checks(node_type, floor, difficulty, special_region, reference):
     rules={'“居民”据点':{'excluded_main_floors':[1,6],'minimum_difficulty':4},
            '曲折密道':{'excluded_main_floors':[1,2,6]},'应急助力':{'excluded_main_floors':[1,6]}}
     rule=rules.get(node_type,{})
-    reference=next((f for f in _battle_pools()['node_functions'] if f['node_type']==node_type),None)
     return {'excluded_main_floors':deepcopy(rule.get('excluded_main_floors',[])),
             'minimum_difficulty':rule.get('minimum_difficulty'),
             'known_floor_requirement_matches':None if not rule.get('excluded_main_floors') or floor is None or special_region else floor not in rule['excluded_main_floors'],
@@ -281,7 +282,10 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
     effective_entry_mode=entry_mode or ('content' if context=='content' else 'natural')
     pool=_battle_pools();rows=[];excluded=[]
     # Explicit content/forced entries cannot inherit natural node generation gates.
-    checks=_node_requirement_checks(node_type if effective_entry_mode=='natural' else None,floor,difficulty,special_region)
+    _difficulty(difficulty)
+    natural_type = node_type if effective_entry_mode == 'natural' else None
+    reference = next((row for row in pool['node_functions'] if row['node_type'] == natural_type), None)
+    checks = _node_requirement_checks(natural_type, floor, difficulty, special_region, reference)
     if node_type is not None and node_type not in _all_node_types():raise NodeQueryError('节点类型不在已证目录中。')
     meta=json.loads((Path(__file__).with_name('data')/'view-catalog.json').read_text(encoding='utf-8'))['stages']
     stage_catalog = catalog()
@@ -379,10 +383,11 @@ def function_nodes(node_type=None,floor=None,difficulty=None,special_region=Fals
     _text(node_type,'节点类型',True)
     if node_type is not None and node_type not in _all_node_types():raise NodeQueryError('节点类型不在已证目录中。')
     _floor(floor,special_region);_difficulty(difficulty)
+    pool = _battle_pools()
     rows=[{**deepcopy(f),'current_eligibility':None,'inventory_or_state_updated':False,'reference_only':True,
-           'known_requirement_checks':_node_requirement_checks(f['node_type'],floor,difficulty,special_region)}
-          for f in _battle_pools()['node_functions'] if node_type is None or f['node_type']==node_type]
-    return _result(rows,function_sources=deepcopy(_battle_pools()['sources']),
+           'known_requirement_checks':_node_requirement_checks(f['node_type'], floor, difficulty, special_region, f)}
+          for f in pool['node_functions'] if node_type is None or f['node_type']==node_type]
+    return _result(rows,function_sources=deepcopy(pool['sources']),
                    condition_text_is_reference_only=True)
 def _graph_nodes(graph):
     if not isinstance(graph,dict):raise NodeQueryError('地图需要对象。')
