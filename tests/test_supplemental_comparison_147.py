@@ -52,9 +52,25 @@ class RankComparison147Tests(unittest.TestCase):
         except ImportError:self.skipTest('Qt unavailable')
         app=QApplication.instance() or QApplication([])
         e=environment();p=defaults('char_210_stward');d=SupplementalRunDialog(p,lambda:e)
-        d.show_ranks();child=d.children_dialogs[-1]
+        from unittest.mock import patch
+        from rouge import supplemental_comparison as comparison
+        with patch.object(comparison, '_run_inputs', wraps=comparison._run_inputs) as inputs, patch.object(
+                comparison, '_calculate_run_skill', wraps=comparison._calculate_run_skill) as calculate:
+            d.show_ranks()
+            inputs.assert_called_once()
+            self.assertEqual([call.args[0]['skill_rank'] for call in calculate.call_args_list],
+                             [rank for rank in range(1, 8) if rank != p['skill_rank']])
+        child = d.children_dialogs[-1]
         self.assertIsNotNone(child.result);self.assertEqual(len(child.result['variants']),7)
         e['relic_ids'].append('rogue_6_relic_legacy_8');d.refresh_environment()
         self.assertEqual(d.result['preview']['operator'],p['operator'])
         self.assertEqual(child.result['environment']['relic_ids'],[])
+        child.editor.setPlainText('{"ranks":[8]}')
+        child.calculate()
+        self.assertIsNone(child.result)
+        self.assertIn('整数', child.notice.toPlainText())
+        child.editor.setPlainText('{"ranks":[1,2]}')
+        with patch.object(comparison, '_calculate_run_skill', side_effect=ValueError('internal rank defect')):
+            with self.assertRaisesRegex(ValueError, 'internal rank defect'):
+                child.calculate()
         child.close();d.close();app.processEvents()

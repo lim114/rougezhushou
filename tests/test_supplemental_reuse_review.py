@@ -14,7 +14,7 @@ class SupplementalReuseReviewTests(unittest.TestCase):
         preview = defaults('char_123_fang')
         env = environment(['rogue_6_relic_book_1'])
         original = deepcopy((preview, env))
-        with patch.object(comparison, 'run_skill_reference', wraps=comparison.run_skill_reference) as calculate:
+        with patch.object(comparison, '_calculate_run_skill', wraps=comparison._calculate_run_skill) as calculate:
             report = comparison.compare_ranks(preview, env, {'ranks': [7, 1]})
         self.assertEqual(calculate.call_count, 2)
         self.assertEqual(report['baseline'], report['variants'][0]['result'])

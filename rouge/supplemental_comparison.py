@@ -1,7 +1,8 @@
 """Frozen-run comparisons; each row is a separate metric, never a summed cast."""
 import json
 from copy import deepcopy
-from .supplemental_run import _run_skill_reference
+from .supplemental_run import _run_inputs, _calculate_run_skill
+from .skill_upgrade_comparison import RankListError
 from .supplemental_skills import _cultivated_stats
 
 
@@ -37,20 +38,28 @@ def comparison_rows(result,baseline,*,baseline_values=None,**labels):
 
 
 def compare_ranks(operator_preview,environment,preview):
+    return _compare_ranks(operator_preview, environment, preview, baseline=None)
+
+
+def _compare_ranks(operator_preview, environment, preview, *, baseline):
     if type(preview) is not dict or set(preview)!={'ranks'}:
-        raise ValueError('技能等级对照需要ranks列表。')
+        raise RankListError('技能等级对照需要ranks列表。')
     ranks=preview['ranks']
     if (type(ranks) is not list or not 1<=len(ranks)<=7 or
         any(type(r) is not int or not 1<=r<=7 for r in ranks) or len(set(ranks))!=len(ranks)):
-        raise ValueError('ranks需要1–7个不重复的1–7整数。')
+        raise RankListError('ranks需要1–7个不重复的1–7整数。')
     original=deepcopy(operator_preview);environment=deepcopy(environment)
     stats=_cultivated_stats(original)
-    baseline=_run_skill_reference(original,environment,stats)
+    inputs = _run_inputs(original['operator'], environment)
+    if baseline is None:
+        baseline = _calculate_run_skill(original, environment, stats, inputs)
+    else:
+        baseline = deepcopy(baseline)
     baseline_values={r['key']:r['value'] for r in metrics(baseline)}
     variants=[];rows=[]
     for rank in ranks:
         result=(deepcopy(baseline) if rank==original['skill_rank'] else
-                _run_skill_reference({**original,'skill_rank':rank},environment,stats))
+                _calculate_run_skill({**original,'skill_rank':rank},environment,stats,inputs))
         variants.append({'rank':rank,'result':result})
         rows.extend(comparison_rows(result,baseline,baseline_values=baseline_values,rank=rank))
     return {'operator_preview':original,'environment':environment,'preview':deepcopy(preview),

@@ -42,9 +42,13 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
     Each run still owns its environment snapshot and target-specific resolution.
     The shared cultivation basis is read-only throughout calculation.
     """
+    inputs = _run_inputs(preview['operator'], environment)
+    return _calculate_run_skill(preview, environment, stats, inputs, target_enemy=target_enemy)
+
+
+def _run_inputs(identity, environment):
     if type(environment) is not dict or set(environment)!=ENVIRONMENT_KEYS:
         raise ValueError('本局条件需要relic_ids、run_config、relic_context、inventory_status、operator_metadata；不能传入已处理的属性或效果。')
-    environment=deepcopy(environment)
     ids=environment['relic_ids'];metadata=environment['operator_metadata']
     if type(ids) is not list or not all(type(rid) is str for rid in ids):
         raise ValueError('藏品需要ID列表。')
@@ -53,7 +57,7 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
     complete=environment['inventory_status'].get('complete')
     if complete is not None and type(complete) is not bool:
         raise ValueError('藏品读取完整性需要布尔值。')
-    identity=preview['operator'];member=metadata.get(identity,{})
+    member=metadata.get(identity,{})
     if type(member) is not dict:raise ValueError('当前干员的本局强化条件需要对象。')
     # The adapter supplies original selectors and original skill type fields.
     # Account archive labels alone do not identify a branch selector.
@@ -63,9 +67,16 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
         {'duration_type':s['durationType'],'sp_type':s['spData']['spType'],
          'values':{item['key']:item['value'] for item in s['blackboard']}}
         for s in raw['levels']]}]
+    return profile, raw, member, complete
+
+
+def _calculate_run_skill(preview, environment, stats, inputs, *, target_enemy=None):
+    profile, raw, member, complete = inputs
+    identity = preview['operator']
+    environment = deepcopy(environment)
     scenario={'operator':identity,'skill':1,'skill_rank':preview['skill_rank'],
               'base_attack':stats['attack'],'enemy_defense':preview['enemy_defense'],
-              'enemy_resistance':preview['enemy_resistance'],'relic_ids':ids,
+              'enemy_resistance':preview['enemy_resistance'],'relic_ids':environment['relic_ids'],
               'run_config':environment['run_config'],'relic_context':environment['relic_context']}
     if target_enemy is not None:
         if (type(target_enemy) is not dict or

@@ -4,7 +4,9 @@ from PySide6.QtWidgets import QPushButton,QGridLayout
 from .reference_dialog import ReferenceDialog
 from .supplemental_skills import supplemental_profiles
 from .supplemental_run import run_skill_reference,format_run_reference
-from .supplemental_comparison import compare_ranks,format_comparison
+from .supplemental_comparison import _compare_ranks, format_comparison
+from .skill_upgrade_comparison import RankListError
+from .supplemental_skills import MissingHpExceedsMaximum
 from .supplemental_cultivation import compare_cultivation,cultivation_defaults,format_cultivation_comparison
 from .supplemental_enemies import compare_fixed_enemies,enemy_defaults,format_fixed_enemies
 from .supplemental_budget import (budget_reference,damage_defaults,healing_defaults,
@@ -124,9 +126,9 @@ class SupplementalRunDialog(ReferenceDialog):
         dialog=ReferenceDialog('补充干员 · 本局技能等级收益对照',
             '冻结打开时的干员与本局条件；各分项独立显示，差值相对当前技能等级。',
             {'ranks':list(range(1,8))},
-            lambda p:compare_ranks(result['preview'],result['environment'],p),format_comparison,
+            lambda p:_compare_ranks(result['preview'],result['environment'],p,baseline=result),format_comparison,
             [('rank','技能等级'),('name','分项'),('value','预计结果'),
-             ('base_value','当前等级基准'),('delta','差值'),('unit','单位')],self)
+             ('base_value','当前等级基准'),('delta','差值'),('unit','单位')],self,input_errors=(RankListError, MissingHpExceedsMaximum))
         self.children_dialogs.append(dialog);dialog.show()
 
     def refresh_environment(self):

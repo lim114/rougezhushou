@@ -1,3 +1,7 @@
+## 当前断点 · 补充干员等级对照复用打开时的基准和固定资料（2026-11-06）
+
+D100补充干员等级对照窗口已验证。同次对照共用已核验的固定输入，每个变化等级独立计算，打开时基准沿用。7名干员各7级完整报告与旧版相同。27项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-rank-inputs-20261106/summary.json)。
+
 ## 当前断点 · 技能等级对照复用基准和训练资料，按批准范围提示逐行错误（2026-11-06）
 
 D331完成，D100普通技能等级对照已验证。基准等级不重复计算；每次对照只绑定一次训练资料。53项定向通过，8组完整结果与旧实现一致。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-skill-rank-comparison-20261106/summary.json)。
