@@ -5514,3 +5514,7 @@ D230/D232完成，物件与行程位置的独立/共享页面初次创建复用�
 
 ### 维护：finally清理职责核对（2026-11-06）
 D233/D276/D277完成：出怪列表与首领页信号恢复、计算批次释放按授权保留；4项异常注入通过，异常继续上报，不增加恢复策略。回执 `verification/maintenance/code-constraints-finally-retention-20261106/summary.json`。
+
+
+### 维护：出怪证据读取顺序（2026-11-06）
+关卡不可用时停止后续证据读取，6项定向通过；D239仅部分推进、D240未销项。回执 `verification/maintenance/code-constraints-enemy-source-order-20261106/summary.json`。

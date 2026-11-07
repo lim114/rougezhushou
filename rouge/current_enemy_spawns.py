@@ -63,8 +63,9 @@ def _derive(current,enemy_key):
 def stage_reference(stage_id,enemy_key):
     if type(stage_id)is not str or type(enemy_key)is not str:return None
     current=battle.stage_reference(stage_id)
+    if current is None:return None
     scope=evidence()
-    if current is None or scope is None or scope['source_identity']!=current['source_identity']or stage_id not in scope['stages']:return None
+    if scope is None or scope['source_identity']!=current['source_identity']or stage_id not in scope['stages']:return None
     declared=scope['stages'][stage_id]
     if declared['level_key']!=current['level_key']or declared['original_source']!=current['source']:return None
     return _derive(current,enemy_key)

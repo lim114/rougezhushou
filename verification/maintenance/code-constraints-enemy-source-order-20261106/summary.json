@@ -1,0 +1,56 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "关卡不可用时停止后续出怪证据读取",
+  "base_commit": "1fa95dc578ba77c300e403de7b853e9d6501efe0",
+  "changed_sources": [
+    "rouge/current_enemy_spawns.py"
+  ],
+  "source_sha256": {
+    "rouge/current_enemy_spawns.py": "5cd5ce3226d2a5ac41f66fde153f4e6a4c0b0eb40f627a01bedc7a0f3a7227a3"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_enemy_spawn_entry_order_review plus CurrentEnemySpawns371Tests bad_inputs_and_source_loss, exact_action_resolve_and_stale_result, position_uses_existing_exact_action_guard",
+        "tests_run": 6,
+        "tests_passed": 6,
+        "seconds": 2.593
+      }
+    ],
+    "live_window": "Original test-window update remains pending after earlier approval rejection; no native game acceptance."
+  },
+  "review": {
+    "standards": "Existing current-is-None gate moved before evidence IO, same entry and no additional predicate/catch/helper. D239 remains partial for other entry contracts. D240 shared battle read remains open.",
+    "requirements": "Missing stage and invalid inputs perform no evidence load; a valid stage still requires evidence. Source loss, stale selection and exact action-position behavior pass. No identity/freshness threshold change."
+  },
+  "partially_implemented": [
+    "D239"
+  ]
+}

@@ -1,3 +1,7 @@
+## 当前断点：敌人出怪来源读取顺序（2026-11-06）
+
+D239部分推进：关卡不可用即返回，不再读出怪证据；6项定向通过。D240重复关卡读取仍未解决。原280组仍完成188、剩92，未新增销项。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-enemy-source-order-20261106/summary.json`。
+
 ## 当前断点：finally清理职责核对（2026-11-06）
 
 D233/D276/D277按授权保留，4项异常注入检查通过：原信号状态恢复、批次深度释放、异常不吞掉。产品源码未改。原280组完成188、剩92；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-finally-retention-20261106/summary.json`。
