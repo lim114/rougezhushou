@@ -52,7 +52,7 @@ def open_tool(parent, name):
     return host.open_reference(parent, ('battle-tool', name), context, create, verify=qualified)
 
 
-def open_position(parent, kind, args, *, context=None):
+def open_position(parent, kind, args, *, context=None, initial_reference=...):
     host = parent.window()
     if not isinstance(host, ReferenceWindow):
         return None
@@ -60,7 +60,8 @@ def open_position(parent, kind, args, *, context=None):
     def selected_context():
         return (parent.result['source_identity'], parent._view_key) if parent.result else None
     def create(owner):
-        reader = getattr(import_module('.'+module, __package__), panel_name)(*args)
+        options={} if initial_reference is ... else {'initial_reference':initial_reference}
+        reader = getattr(import_module('.'+module, __package__), panel_name)(*args,**options)
         if reader.result is None:
             reader.deleteLater()
             return None

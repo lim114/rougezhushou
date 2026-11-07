@@ -5506,3 +5506,7 @@ D257完成：地形证据、地图兼容清单和当前关卡来源独立核验�
 
 ### 维护：地图标记绑定复用（2026-11-06）
 D270完成：固定完整几何与摘要约定核实后合并两层重复绑定；关卡文件检查下移，旧映射及首层补充仍完整核验。25项定向通过，无新位置。回执 `verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json`。
+
+
+### 维护：位置页面首次核验结果复用（2026-11-06）
+D230/D232完成，物件与行程位置的独立/共享页面初次创建复用结果；刷新保留重读。最终37项定向通过，原失败保留，不计实机。回执 `verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json`。

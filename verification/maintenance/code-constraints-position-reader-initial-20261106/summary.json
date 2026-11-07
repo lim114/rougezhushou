@@ -1,0 +1,73 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "物件与行程位置页面复用首次核验结果",
+  "base_commit": "4472f9dfa699e1d0f66c3fe87cede289135034b5",
+  "changed_sources": [
+    "rouge/current_stage_objects_view.py",
+    "rouge/current_route_itinerary_view.py",
+    "rouge/battle_tool_readers.py"
+  ],
+  "source_sha256": {
+    "rouge/current_stage_objects_view.py": "77780bde5a2a835a200d0dfc44095f3ad8601f6ccaed51845c9821494e540778",
+    "rouge/current_route_itinerary_view.py": "72f8759e45efce91e580bc84cc22833a8c46479b9edfc20a8063e398318af98e",
+    "rouge/battle_tool_readers.py": "917f306f8d5f3c6b8d4ef7d7e14c4fdc598a52587435f34dc7156fb54c86e50d"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D230",
+    "D232"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_current_stage_objects_view_373 tests.test_current_route_itinerary_view_375 tests.test_battle_tool_readers_464",
+        "tests_run": 35,
+        "tests_passed": 35,
+        "seconds": 101.307
+      },
+      {
+        "command": "python -m unittest tests.test_position_initial_reference_review (first run)",
+        "tests_run": 2,
+        "tests_passed": 1,
+        "seconds": 2.271,
+        "failure": "Test chose first route, which had no spatially permitted step; replaced test selection with declared permitted step."
+      },
+      {
+        "command": "python -m unittest tests.test_position_initial_reference_review (corrected fixture)",
+        "tests_run": 2,
+        "tests_passed": 2,
+        "seconds": 3.229
+      }
+    ],
+    "live_window": "Original test window update pending after earlier automatic approval rejection; no native game acceptance."
+  },
+  "review": {
+    "standards": "D230/D232: parent preflight result supplied to standalone dialog or shared factory constructor; first render does not repeat model query. Refresh without prepared reference remains fresh. Shared host source.prepare can reload parent, so subsequent refresh retains cross-source validation. New optional input follows existing map-panel prepared-result convention; no catches or new defensive policy.",
+    "requirements": "37 final targeted Qt offscreen checks pass. One lookup for standalone first open, another on refresh; unavailable prepared result does not reload. Existing exact object/step selection, forged source refusal, source loss, child close and shared history covered. Original test-window update remains pending; no native game claim."
+  }
+}

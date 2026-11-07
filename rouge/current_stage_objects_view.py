@@ -9,12 +9,14 @@ from .ui_state import replace_text
 from .reference_copy import mechanism_copy
 
 class CurrentObjectPositionPanel(QWidget):
-    def __init__(self,stage_id,key,parent=None):
-        super().__init__(parent);self.stage_id=stage_id;self.key=key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference()
+    def __init__(self,stage_id,key,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.stage_id=stage_id;self.key=key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference(prepared_reference=initial_reference)
     def clear_reference(self):
         self.result=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.details,'',preserve=False)
-    def refresh_reference(self):
-        reference=model.stage_reference(self.stage_id);fresh=model.position_reference(reference,self.key)if reference else None
+    def refresh_reference(self,*,prepared_reference=...):
+        if prepared_reference is ...:
+            reference=model.stage_reference(self.stage_id);fresh=model.position_reference(reference,self.key)if reference else None
+        else:fresh=prepared_reference
         raw=model.battle.version.image_bytes(fresh['grid']['image'])if fresh else None
         if fresh is None or raw is None:self.clear_reference();return False
         keep=self.result is not None and model.same(self.result,fresh);self.result=fresh;self.image_raw=raw;cell=fresh['cell'];self.grid.set_result(fresh['grid'],(cell['row'],cell['col']))
@@ -29,8 +31,8 @@ from .player_window_frame import PlayerDialog
 
 
 class CurrentObjectPositionDialog(PlayerDialog):
-    def __init__(self,stage_id,key,parent=None):
-        super().__init__(parent);self.setWindowTitle('物件与机关 · 固定位置参考');layout=QVBoxLayout(self);self.panel=CurrentObjectPositionPanel(stage_id,key,self);layout.addWidget(self.panel)
+    def __init__(self,stage_id,key,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.setWindowTitle('物件与机关 · 固定位置参考');layout=QVBoxLayout(self);self.panel=CurrentObjectPositionPanel(stage_id,key,self,initial_reference=initial_reference);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,960,640)
     def done(self,result):self.panel.clear_reference();super().done(result)
@@ -96,9 +98,9 @@ class CurrentStageObjectsPanel(QWidget):
         result=model.position_reference(self.result,row['key'])
         if result is None:self.clear_reference();return False
         from .battle_tool_readers import open_position
-        opened=open_position(self,'object',(self.stage_id,row['key']))
+        opened=open_position(self,'object',(self.stage_id,row['key']),initial_reference=result)
         if opened is not None:return opened
-        self.close_children();self.position_dialog=CurrentObjectPositionDialog(self.stage_id,row['key'],self)
+        self.close_children();self.position_dialog=CurrentObjectPositionDialog(self.stage_id,row['key'],self,initial_reference=result)
         if self.position_dialog.panel.result is None:self.close_children();return False
         self.position_dialog.show();return True
 

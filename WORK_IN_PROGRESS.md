@@ -1,3 +1,7 @@
+## 当前断点：位置页面首次结果复用（2026-11-06）
+
+D230/D232完成：物件和行程位置初次创建复用父页核验结果，后续刷新及共享父页重读后的核对保留。最终37项定向通过，首轮测试选错非空间行程已记录。原280组完成185、剩95；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json`。
+
 ## 当前断点：地图标记绑定复用（2026-11-06）
 
 D270完成：两个标记模块统一完成关卡/图片/文件/几何摘要绑定，父层复用；其它路径原核验保留。25项定向通过；原280组完成183、剩97。原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json`。

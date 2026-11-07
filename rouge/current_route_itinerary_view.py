@@ -9,11 +9,14 @@ from .ui_state import replace_text
 from .reference_copy import mechanism_copy
 from .collapsible_section import QCollapsible
 class CurrentRouteStepPositionPanel(QWidget):
-    def __init__(self,stage_id,route_key,step_key,parent=None):
-        super().__init__(parent);self.stage_id=stage_id;self.route_key=route_key;self.step_key=step_key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference()
+    def __init__(self,stage_id,route_key,step_key,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.stage_id=stage_id;self.route_key=route_key;self.step_key=step_key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference(prepared_reference=initial_reference)
     def clear_reference(self):self.result=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.details,'',preserve=False)
-    def refresh_reference(self):
-        ref=model.stage_reference(self.stage_id);fresh=model.position_reference(ref,self.route_key,self.step_key)if ref else None;raw=model.battle.version.image_bytes(fresh['grid']['image'])if fresh else None
+    def refresh_reference(self,*,prepared_reference=...):
+        if prepared_reference is ...:
+            ref=model.stage_reference(self.stage_id);fresh=model.position_reference(ref,self.route_key,self.step_key)if ref else None
+        else:fresh=prepared_reference
+        raw=model.battle.version.image_bytes(fresh['grid']['image'])if fresh else None
         if fresh is None or raw is None:self.clear_reference();return False
         keep=self.result is not None and model.same(fresh,self.result);self.result=fresh;self.image_raw=raw;cell=fresh['cell'];self.grid.set_result(fresh['grid'],(cell['row'],cell['col']))
         if not self.original.set_image(raw,fresh['center']):self.clear_reference();return False
@@ -22,8 +25,8 @@ class CurrentRouteStepPositionPanel(QWidget):
         if not keep:self.tabs.setCurrentIndex(0)
         return True
 class CurrentRouteStepPositionDialog(QDialog):
-    def __init__(self,stage_id,route_key,step_key,parent=None):
-        super().__init__(parent);self.setWindowTitle('行程环节 · 固定位置参考');self.resize(1150,760);layout=QVBoxLayout(self);self.panel=CurrentRouteStepPositionPanel(stage_id,route_key,step_key,self);layout.addWidget(self.panel)
+    def __init__(self,stage_id,route_key,step_key,parent=None,*,initial_reference=...):
+        super().__init__(parent);self.setWindowTitle('行程环节 · 固定位置参考');self.resize(1150,760);layout=QVBoxLayout(self);self.panel=CurrentRouteStepPositionPanel(stage_id,route_key,step_key,self,initial_reference=initial_reference);layout.addWidget(self.panel)
     def done(self,result):self.panel.clear_reference();super().done(result)
 class CurrentRouteItineraryPanel(QWidget):
     actionSelected=Signal(str)
@@ -112,9 +115,9 @@ class CurrentRouteItineraryPanel(QWidget):
         ref=model.position_reference(self.result,route['key'],step['key'])
         if ref is None:self.clear_reference();return False
         from .battle_tool_readers import open_position
-        opened=open_position(self,'route',(self.stage_id,route['key'],step['key']))
+        opened=open_position(self,'route',(self.stage_id,route['key'],step['key']),initial_reference=ref)
         if opened is not None:return opened
-        self.close_children();self.position_dialog=CurrentRouteStepPositionDialog(self.stage_id,route['key'],step['key'],self)
+        self.close_children();self.position_dialog=CurrentRouteStepPositionDialog(self.stage_id,route['key'],step['key'],self,initial_reference=ref)
         if self.position_dialog.panel.result is None:self.close_children();return False
         self.position_dialog.show();return True
 class CurrentRouteItineraryDialog(QDialog):

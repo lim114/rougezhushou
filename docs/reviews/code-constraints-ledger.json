@@ -2546,23 +2546,39 @@
     },
     {
       "file": "rouge/current_stage_objects_view.py",
-      "sha256": "e29c45bd63a517129007e8ee70af89e6f5edc8b3870537af1d019b7704bc8198",
+      "sha256": "77780bde5a2a835a200d0dfc44095f3ad8601f6ccaed51845c9821494e540778",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
       "rule2": "no_new_helpers",
       "rule3": "pending_defenses_unchanged",
-      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified."
+      "evidence": "Read object callback and dynamic battle tool reader wiring. Existing selected_action(row=...) applies to exact CurrentStageObjectsPanel, route callback unchanged. Search/kind/link snapshot reused by model rows and view identity; no signal sources changed.24 focused tests pass; probes show each filter read once. Other module paths not certified.",
+      "scoped_reviews": [
+        {
+          "file": "rouge/current_stage_objects_view.py",
+          "receipt": "verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json",
+          "scope": "D230/D232 initial result reuse; not full module certification",
+          "sha256": "77780bde5a2a835a200d0dfc44095f3ad8601f6ccaed51845c9821494e540778"
+        }
+      ]
     },
     {
       "file": "rouge/current_route_itinerary_view.py",
-      "sha256": "5b13245ed16999159ececbbcbc2312c38cb5fe31562a41ad47912b8bf07f002f",
+      "sha256": "72f8759e45efce91e580bc84cc22833a8c46479b9edfc20a8063e398318af98e",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_route_and_filter_state; keys_read_before_search; dialog_cleanup_once",
       "rule2": "remove_two_closeEvent_wrappers_no_new_helper",
       "rule3": "D231_D232_pending_unchanged",
-      "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. step_label computed once after final cleanup; final11 view checks pass. Remaining preflight under D232; no full certification."
+      "evidence": "Read itinerary view and battle return callback. Existing selected_step/action accept prepared route; None route still handles unassigned actions. refresh/follow/open_position and battle callback reuse route. QDialog close calls done: before child/parent clear2 each, after1 each; parent preclear removed.13 targeted passed. step_label computed once after final cleanup; final11 view checks pass. Remaining preflight under D232; no full certification.",
+      "scoped_reviews": [
+        {
+          "file": "rouge/current_route_itinerary_view.py",
+          "receipt": "verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json",
+          "scope": "D230/D232 initial result reuse; not full module certification",
+          "sha256": "72f8759e45efce91e580bc84cc22833a8c46479b9edfc20a8063e398318af98e"
+        }
+      ]
     },
     {
       "file": "rouge/current_spawn_candidates_view.py",
@@ -4308,6 +4324,12 @@
       "receipt": "verification/maintenance/code-constraints-forecast-config-reuse-20261106/summary.json",
       "scope": "Reuse config_data for difficulty and zone within forecasts",
       "full_module_review_complete": false
+    },
+    {
+      "file": "rouge/battle_tool_readers.py",
+      "receipt": "verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json",
+      "scope": "D230/D232 initial result reuse; not full module certification",
+      "sha256": "917f306f8d5f3c6b8d4ef7d7e14c4fdc598a52587435f34dc7156fb54c86e50d"
     }
   ]
 }
