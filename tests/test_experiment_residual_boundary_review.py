@@ -103,15 +103,26 @@ class ExperimentResidualBoundaryTests(TestCase):
     def test_enemy_resolution_structure_errors_still_reach_the_caller(self):
         from rouge import enemy_environment
         payload = model.public_experiment_payload()
-        original = enemy_environment.resolve_enemy
-        for fault in (KeyError, IndexError):
-            def broken(scenario, resolution, **options):
+        payload['experiment']['records'][1]['data']['scenario']['target_enemy'] = {'stage_id': 'ro6_n_1_1'}
+        original = enemy_environment._resolve_target
+        for fault in (KeyError, IndexError, ValueError, OverflowError):
+            def broken(scenario, resolution, target, **options):
                 if scenario.get('level') == 75:
                     raise fault('invalid enemy source')
-                return original(scenario, resolution, **options)
-            with self.subTest(fault=fault), patch.object(enemy_environment, 'resolve_enemy', side_effect=broken):
+                return original(scenario, resolution, target, **options)
+            with self.subTest(fault=fault), patch.object(enemy_environment, '_resolve_target', side_effect=broken):
                 with self.assertRaisesRegex(fault, 'invalid enemy source'):
                     model.calibration_experiment(**payload)
+
+    def test_damaged_fixed_enemy_panel_is_not_an_invalid_experiment_record(self):
+        from rouge import enemy_panel
+        payload = model.public_experiment_payload()
+        target = {'stage_id':'ro6_n_1_1', 'enemy_id':'enemy_2001_duckmi', 'level':0}
+        payload['experiment']['records'][0]['data']['scenario']['target_enemy'] = target
+        with patch.object(enemy_panel, 'enemy_panel_reference', side_effect=ValueError('bad fixed panel')) as read:
+            with self.assertRaisesRegex(ValueError, 'bad fixed panel'):
+                model.calibration_experiment(**payload)
+            read.assert_called_once_with(target['stage_id'], target['enemy_id'], target['level'])
 
     def test_bad_trust_blocks_only_its_own_record(self):
         for trust in ('100', None, {}, 10**1000, -1):

@@ -1,3 +1,7 @@
+## 当前断点 · 校准实验将手动重量与已选目标资料错误分开（2026-11-07）
+
+已选目标的固定面板普通数值和溢出错误直接上报；真实输入错误仍只影响本行。87项定向通过，18份完整实验报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-target-source-20261107/summary.json)。
+
 ## 当前断点 · 校准实验区分分队难度与目标敌人错误（2026-11-07）
 
 分队及难度资料的普通数值和溢出缺陷直接上报，目标敌人结构缺陷仍上报。78项定向通过，18份完整报告一致。D350待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-run-settings-20261107/summary.json)。

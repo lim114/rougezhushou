@@ -95,15 +95,23 @@ def apply_fixed_environment(enemy,stage,preview,difficulty,zone,*,difficulty_pro
 def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=None):
     if type(panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     target=scenario.get('target_enemy')
-    if not target:
-        if scenario.get('operator')=='char_1015_aglna2' and 'enemy_weight' in scenario:
-            weight=scenario['enemy_weight']
-            if (not isinstance(weight,(int,float)) or isinstance(weight,bool)
-                    or not math.isfinite(weight) or not 0<=weight<=100 or weight!=int(weight)):
-                raise ValueError('手动敌人重量必须是0到100之间的整数。')
-            scenario['enemy_weight']=int(weight)
-        else:scenario.pop('enemy_weight',None)
-        return
+    if target:
+        _resolve_target(scenario, resolution, target, panel_only=panel_only, difficulty_profiles=difficulty_profiles)
+    else:
+        _manual_enemy_weight(scenario)
+
+
+def _manual_enemy_weight(scenario):
+    if scenario.get('operator')=='char_1015_aglna2' and 'enemy_weight' in scenario:
+        weight=scenario['enemy_weight']
+        if (not isinstance(weight,(int,float)) or isinstance(weight,bool)
+                or not math.isfinite(weight) or not 0<=weight<=100 or weight!=int(weight)):
+            raise ValueError('手动敌人重量必须是0到100之间的整数。')
+        scenario['enemy_weight']=int(weight)
+    else:scenario.pop('enemy_weight',None)
+
+
+def _resolve_target(scenario, resolution, target, *, panel_only=False, difficulty_profiles=None):
     # Selected identity overrides the separate manual operator reference.
     scenario.pop('enemy_weight',None)
     if not isinstance(target,dict):raise EnemyReferenceError('目标敌人需要关卡、敌人ID及引用等级。')

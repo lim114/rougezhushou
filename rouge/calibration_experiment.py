@@ -80,7 +80,7 @@ def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
     from .calibration import panel_layers, _cultivated, _calculate_prepared, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
     from .run_modifiers import _run_settings
-    from .enemy_environment import resolve_enemy
+    from .enemy_environment import EnemyReferenceError, _manual_enemy_weight, _resolve_target
     from .damage import _damage_selection, _prepare_effects, SkillSelectionError
     from .condition_inputs import RunConditionError
     from .catalog import CultivationInputError
@@ -165,16 +165,23 @@ def calibration_experiment(experiment):
                 resolved, run_resolution = _run_settings(selected, None)
             except TypeError as error:
                 raise CalibrationScenarioError(str(error)) from error
-            try:
-                resolve_enemy(resolved, run_resolution)
-            except (ValueError, TypeError, OverflowError) as error:
-                raise CalibrationScenarioError(str(error)) from error
+            target = resolved.get('target_enemy')
+            if target:
+                try:
+                    _resolve_target(resolved, run_resolution, target)
+                except TypeError as error:
+                    raise CalibrationScenarioError(str(error)) from error
+            else:
+                try:
+                    _manual_enemy_weight(resolved)
+                except (ValueError, OverflowError) as error:
+                    raise CalibrationScenarioError(str(error)) from error
             try:
                 prepared = _prepare_effects(resolved, profile, attributes, run_resolution)
                 calculation = _calculate_prepared(scenario, deepcopy(prepared))
             except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
-        except (CalibrationScenarioError, CultivationInputError, SkillSelectionError, RunConditionError) as error:
+        except (CalibrationScenarioError, CultivationInputError, SkillSelectionError, RunConditionError, EnemyReferenceError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
             rows.append(result)
