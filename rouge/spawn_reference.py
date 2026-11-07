@@ -85,8 +85,10 @@ def movement_reference(stage,base_speed):
     return result
 
 def sequence_text(row):
-    seq=local_sequence(row,limit=32)
-    anchor='所选分支阶段动作队列开始' if row.get('branch') else '本波本片段动作队列开始'
+    return format_sequence(local_sequence(row,limit=32))
+
+def format_sequence(seq):
+    anchor='所选分支阶段动作队列开始' if seq['anchor']=='branch_phase_action_queue_start' else '本波本片段动作队列开始'
     lines=['局部生成计划（以'+anchor+'为0秒）：']
     if seq['pending']:return '\n'.join(lines+[s.replace('条目count','条目生成数量') for s in seq['pending']])
     if not seq['count']:return '\n'.join(lines+['本条目生成数量为0，无计划生成项。'])

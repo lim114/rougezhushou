@@ -1,0 +1,106 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 243,
+    "selected_paths_only": 191,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision",
+    "Section 286 frozen non-rendering battle preview AST differs from both base and current source; historical assertion preserved."
+  ],
+  "title": "选择出怪格时只更新一次敌人面板，共用出场时间序列",
+  "base_commit": "240c8e42c5fe247873c1963b63dd7f9a4bb88644",
+  "changed_sources": [
+    "rouge/battle_preview.py",
+    "rouge/battle_view.py",
+    "rouge/spawn_reference.py"
+  ],
+  "source_sha256": {
+    "rouge/battle_preview.py": "d8eaa736b689f1d5695320cdd086324309ffba6bab9ab15ee97dec67b54a5df7",
+    "rouge/battle_view.py": "fa25bc55da7f2b6a60555c0937fcdb5ef80c0c38f05b386b576637d890aad44e",
+    "rouge/spawn_reference.py": "cfabf623c0d87c6d7672a361418f447ef3659ab40bfc1239458de79ea8f8b976"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_run": 102,
+    "tests_passed": 101,
+    "tests_failed": 1,
+    "seconds": 12.997,
+    "full_suite_run": false,
+    "modules": [
+      "test_battle_preview_039",
+      "test_spawn_reference_040",
+      "test_readable_battle_047",
+      "test_ui_refresh_045.BattleRefreshTests",
+      "test_spawn_candidates_integration_299",
+      "test_player_battle_information_286"
+    ],
+    "failure": {
+      "test": "test_01_original_nonrendering_scope_except_evidenced_287_reward_rule_is_unchanged",
+      "expected": "f94464de55ab66219b09258bcb91c1c74516274635398c409ebf2922cf8bdb20",
+      "base_ast": "8219b9ed13c92495507452554cb1402d1a7537f9cf8e8c4e0731976e53b86526",
+      "current_ast": "fa7504a2dd8a645bfc21b5a6319889414edf8f8d95a5faf8f3773bbd452b2774",
+      "scope": "Recomputed baseline with identical AST filter. Historical hash is not updated."
+    },
+    "comparison": {
+      "stages": 105,
+      "spawn_rows": 3938,
+      "report_pairs": 7876,
+      "enemy_render_for_new_and_repeated_cell": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "live_window": "Previous original instance closed normally, new project pythonw -m rouge.app toolbar observed on-screen and responsive. No gameplay actions."
+  },
+  "review": {
+    "standards": "New row selection relies on the normal Qt selection signal, with same-row manual selection repeating the requested action exactly once. Only render an additional candidate enemy level when its identity differs. Current occurrence count, first local offset and report share one validated sequence. Keep independent direct and user-changed ordinal entry. Detect discontinuous checkpoints while reading routes; hidden-rule match short-circuits on the correct difficulty. Raw enemy stats already owned by the detached entry, and the displayed panel stays separate. Time conversion exception decisions left for approval.",
+    "requirements": "All current wave and branch rows, ordinary and technical report text, and their full sequence objects compared to baseline. Valid cell selection updates enemy and detail, a second click refreshes the same cell once. Different stages, filters, local occurrence and reading preservation covered by behavioral tests. Historical section 286 freeze left untouched; verify separate from behavioral equivalence."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D369",
+    "D370"
+  ]
+}

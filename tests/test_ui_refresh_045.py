@@ -113,6 +113,23 @@ class TextRefreshTests(unittest.TestCase):
 
 
 class BattleRefreshTests(unittest.TestCase):
+    def test_cell_selects_first_spawn_and_renders_enemy_once_even_on_repeat(self):
+        p=self.panel
+        first={}
+        for index,row in enumerate(p.rows):
+            cell=row['route']['start']
+            if cell:first.setdefault((cell['row'],cell['col']),index)
+        index=next(i for i in first.values() if i!=p.spawn_list.currentRow())
+        cell=p.rows[index]['route']['start']
+        with patch.object(p,'_render_enemy',wraps=p._render_enemy) as render:
+            for _ in range(2):
+                render.reset_mock()
+                p._cell_selected(cell)
+                self.assertEqual(p.spawn_list.currentRow(),index)
+                self.assertEqual(p.grid.selected['id'],p.rows[index]['id'])
+                self.assertIn('本格共有',p.spawn_detail.toPlainText())
+                render.assert_called_once()
+
     def setUp(self):
         self.panel = BattlePreviewPanel()
         self.panel.resize(1000, 730); self.panel.show()

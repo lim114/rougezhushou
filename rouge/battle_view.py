@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt,QRectF,QPointF,Signal
 from PySide6.QtGui import QColor,QPainter,QPen,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,
     QListWidget,QListWidgetItem,QPlainTextEdit,QSplitter,QCheckBox,QSpinBox,QPushButton)
-from .battle_preview import (DATA,battle_data,spawn_rows,enemy_preview,enemy_text,spawn_text)
+from .battle_preview import (DATA,battle_data,spawn_rows,enemy_preview,enemy_text,spawn_text,spawn_details)
 from .spawn_reference import local_sequence,ordinal_offset
 from .map_projection import projection_for,projection_data
 from .ui_state import replace_text
@@ -482,8 +482,9 @@ class BattlePreviewPanel(QWidget):
         index=next((i for i,row in enumerate(preview.rows) if row['id']==reference['action_id']),None)
         if index is None:
             preview.close();preview.deleteLater();return False
-        preview.spawn_list.setCurrentRow(index);preview._spawn_selected(preview.spawn_list.currentItem())
-        preview._render_enemy(reference['enemy_id'],reference['level'])
+        preview._select_spawn_row(index)
+        if preview._shown_enemy!=(self.current_stage,reference['enemy_id'],reference['level']):
+            preview._render_enemy(reference['enemy_id'],reference['level'])
         self.candidate_preview_window=preview;self._candidate_preview_token=copy.deepcopy(token)
         preview.show();preview.raise_();preview.activateWindow();return True
 
@@ -865,14 +866,15 @@ class BattlePreviewPanel(QWidget):
         self._branch_marker=None
         self._clear_reward_selection()
         self._tile_cell=None
-        row=item.data(Qt.ItemDataRole.UserRole);self.grid.selected=row;self.grid.update()
-        self.original.selected=row;self.original.update()
-        seq=local_sequence(row,limit=0);valid=not seq['pending'] and bool(seq['count'])
+        row=item.data(Qt.ItemDataRole.UserRole);self.grid.selected=row;self.original.selected=row
+        text,seq=spawn_details(row,self.current_stage,technical=self.technical.isChecked())
+        valid=bool(seq['occurrences'])
         self.occurrence.blockSignals(True);self.occurrence.setRange(1,seq['count'] if valid else 1)
         self.occurrence.setValue(1);self.occurrence.blockSignals(False)
-        self.occurrence_bar.setVisible(valid);self._occurrence_changed(1)
+        self.occurrence_bar.setVisible(valid)
+        self._show_occurrence(row,1,seq['occurrences'][0]['offset_seconds'] if valid else None)
         key=(self.current_stage,'row',row['id'])
-        replace_text(self.spawn_detail,spawn_text(row,self.current_stage,technical=self.technical.isChecked()),preserve=preserve and self._detail_key==key)
+        replace_text(self.spawn_detail,text,preserve=preserve and self._detail_key==key)
         self._detail_key=key
         selected=self.enemy_combo.currentData()
         self._render_enemy(row['action']['key'],selected[1] if selected else None,preserve=preserve)
@@ -880,23 +882,30 @@ class BattlePreviewPanel(QWidget):
 
     def _occurrence_changed(self,ordinal):
         row=self.grid.selected
-        if not row:return
+        if row:self._show_occurrence(row,ordinal,ordinal_offset(row,ordinal))
+
+    def _show_occurrence(self,row,ordinal,offset):
         self.grid.selected_ordinal=ordinal;self.grid.update()
         self.original.selected_ordinal=ordinal;self.original.update()
-        offset=ordinal_offset(row,ordinal)
         anchor='本分支阶段的出场计划启动' if row.get('branch') else '本段出场计划启动'
         self.occurrence_label.setText('以'+anchor+'为0秒：+'+format(offset,'g')+'秒；绝对时刻/可见入场未核验。'
             if offset is not None else '此条目局部时间无法确认。')
 
+    def _select_spawn_row(self,index):
+        if self.spawn_list.currentRow()==index:
+            self._spawn_selected(self.spawn_list.currentItem())
+        else:
+            self.spawn_list.setCurrentRow(index)
+
     def _cell_selected(self,cell,*,preserve=False):
-        self._branch_marker=None
-        self._clear_reward_selection()
         matching=[i for i,row in enumerate(self.rows) if row['route']['start']==cell]
         if matching:
             # The list preserves every same-cell action for independent selection.
-            self.spawn_list.setCurrentRow(matching[0]);self._spawn_selected(self.spawn_list.currentItem())
+            self._select_spawn_row(matching[0])
             self.spawn_detail.appendPlainText('\n本格共有'+str(len(matching))+'个资料条目，详细选择请用左侧列表。')
             return
+        self._branch_marker=None
+        self._clear_reward_selection()
         stage=battle_data()['stages'].get(self.current_stage)
         if not stage:return
         tile=stage['tiles'][stage['map'][cell['row']][cell['col']]]

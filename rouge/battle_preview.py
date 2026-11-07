@@ -3,7 +3,7 @@ import copy,json,math
 from functools import lru_cache
 from pathlib import Path
 from .run_modifiers import prepare_run
-from .spawn_reference import movement_reference,sequence_text
+from .spawn_reference import movement_reference,local_sequence,format_sequence
 
 DATA=Path(__file__).with_name('data')
 
@@ -22,34 +22,38 @@ def route_reference(stage,index):
     routes=stage['routes'];rows=len(stage['map']);cols=len(stage['map'][0])
     if isinstance(index,bool) or not isinstance(index,int) or not 0<=index<len(routes):
         return {'start':None,'end':None,'points':[],'checkpoints':[],'pending':['基础路线引用缺失或越界。']}
-    route=routes[index];start=display_cell(route.get('startPosition'),rows,cols)
-    if route.get('motionMode') not in ('WALK','FLY'):
+    route=routes[index];motion=route.get('motionMode')
+    if motion not in ('WALK','FLY'):
         return {'start':None,'end':None,'points':[],'checkpoints':[],
             'pending':['路线移动类型未定义，不能将序列化占位坐标当出生格。']}
+    start=display_cell(route.get('startPosition'),rows,cols)
     end=display_cell(route.get('endPosition'),rows,cols)
     points=[];checkpoints=[];pending=[]
+    continuous=True
     if start:points.append({'kind':'start',**start})
     for cp in route.get('checkpoints') or []:
         # WAIT positions can be serialized placeholders; only spatial types map.
-        cell=display_cell(cp.get('position'),rows,cols) if cp['type'] in ('MOVE','APPEAR_AT_POS') else None
-        checkpoints.append({'type':cp['type'],'time':cp.get('time'),'cell':cell})
-        if cell:points.append({'kind':cp['type'],**cell})
+        kind=cp['type']
+        if kind in ('DISAPPEAR','APPEAR_AT_POS'):continuous=False
+        cell=display_cell(cp.get('position'),rows,cols) if kind in ('MOVE','APPEAR_AT_POS') else None
+        checkpoints.append({'type':kind,'time':cp.get('time'),'cell':cell})
+        if cell:points.append({'kind':kind,**cell})
     if end:points.append({'kind':'end',**end})
     if not start or not end:pending.append('路线存在地图外端点；不裁剪为地图内出生格。')
     offset=route.get('spawnOffset') or {};random_range=route.get('spawnRandomRange') or {}
     if any(v for d in (offset,random_range) for v in d.values()):pending.append('存在出生偏移/随机范围，图上标记仅为名义格。')
-    if any(c['type'] in ('DISAPPEAR','APPEAR_AT_POS') for c in checkpoints):
+    if not continuous:
         pending.append('包含消失/再出现检查点；不连接为连续寻路轨迹。')
     return {'start':start,'end':end,'points':points,'checkpoints':checkpoints,
-        'motion':route.get('motionMode'),'offset':copy.deepcopy(offset),
+        'motion':motion,'offset':copy.deepcopy(offset),
         'random_range':copy.deepcopy(random_range),'pending':pending,
-        'path_is_actual':False,'continuous_reference':not any(c['type'] in ('DISAPPEAR','APPEAR_AT_POS') for c in checkpoints)}
+        'path_is_actual':False,'continuous_reference':continuous}
 
 def hidden_group_reference(stage,group):
     if not group:return {'group':None,'enabled_by_stage_rune':False,'status':'no_hidden_group'}
-    rules=[r for r in stage['runes'] if r['key']=='level_hidden_group_enable' and
-        any(b.get('key')=='key' and b.get('valueStr')==group for b in r.get('blackboard') or [])]
-    enabled=any(r.get('difficultyMask') in (stage['difficulty'],'ALL') for r in rules)
+    enabled=any(r['key']=='level_hidden_group_enable' and r.get('difficultyMask') in (stage['difficulty'],'ALL')
+        and any(b.get('key')=='key' and b.get('valueStr')==group for b in r.get('blackboard') or [])
+        for r in stage['runes'])
     return {'group':group,'enabled_by_stage_rune':enabled,
         'status':'stage_rune_enabled' if enabled else 'activation_unknown'}
 
@@ -104,7 +108,7 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None,*,difficulty_reference
     entry['skill_reference']=enemy_skill_reference(stage_id,enemy_id,level)
     from .enemy_panel import enemy_panel_reference
     entry['fixed_panel_reference']=enemy_panel_reference(stage_id,enemy_id,level)
-    entry['raw_reference_stats']=copy.deepcopy(entry['reference_stats'])
+    entry['raw_reference_stats']=entry['reference_stats']
     entry['reference_stats']=copy.deepcopy(entry['fixed_panel_reference']['attributes'])
     entry['movement_reference']=movement_reference(stage,entry['reference_stats'].get('moveSpeed'))
     entry['environment'], entry['context_pending'] = preview_environment(
@@ -270,8 +274,13 @@ def enemy_text(entry,technical=False):
     return '\n'.join(lines)
 
 def spawn_text(row,stage_id,technical=False):
+    return spawn_details(row,stage_id,technical)[0]
+
+def spawn_details(row,stage_id,technical=False):
+    """Return the report and the local timing sequence used to render it."""
     a=row['action'];route=row['route'];cell=route['start']
-    names={entry['id']:entry['name'] for entry in battle_data()['stages'][stage_id]['enemies']}
+    data=battle_data();stage=data['stages'][stage_id]
+    names={entry['id']:entry['name'] for entry in stage['enemies']}
     lines=['【出场条目】',names.get(a.get('key'),'敌人名称未确认'),('第'+str(row['wave'])+'波 · 第'+str(row['fragment'])+'片段' if row['wave'] else
         '条件分支 · 第'+str(row['phase'])+'阶段'),
         '出生位置：'+(f"格图自上第{cell['row']+1}行、第{cell['col']+1}列" if cell else '未知/未映射'),
@@ -288,7 +297,8 @@ def spawn_text(row,stage_id,technical=False):
         if technical:lines.append('此条目属于随机候选；原始权重：'+value_text(a.get('weight'))+'（非概率）。')
         else:lines.append('随机候选：本条目不保证出现；候选不能相加为实际敌人数，也不提供生成概率。')
     lines.append('资料条目不保证实际出场；生成数量不跨随机候选相加。')
-    lines.extend(['','【局部时间计划】',sequence_text(row)])
+    sequence=local_sequence(row,limit=32)
+    lines.extend(['','【局部时间计划】',format_sequence(sequence)])
     lines.extend(['','【调度参考】','以下是配置参数，不直接相加为全局时间。'])
     if row['wave']:
         lines.extend(label+'：'+value_text(row.get(key))+'秒' for key,label in
@@ -319,8 +329,8 @@ def spawn_text(row,stage_id,technical=False):
                 ('wave_pre_delay','wave_post_delay','wave_max_wait','fragment_pre_delay','phase_pre_delay')},ensure_ascii=False),
             '原始生成动作：'+json.dumps(a,ensure_ascii=False),
             '路线引用结构（显示行列；非完整原始路径）：'+json.dumps(route,ensure_ascii=False),
-            '来源：'+battle_data()['stages'][stage_id]['level_source']['url']])
-        reference=battle_data()['source'].get('scheduling_reference')
+            '来源：'+stage['level_source']['url']])
+        reference=data['source'].get('scheduling_reference')
         if reference:lines.append('局部调度资料：'+reference['url'])
     text='\n'.join(lines)
     if not technical:
@@ -353,4 +363,4 @@ def spawn_text(row,stage_id,technical=False):
             '路线移动类型未定义，不能将序列化占位坐标当出生格。':'移动方式尚未确认，不能使用占位坐标标出生位置。',
         }
         for old,new in replacements.items():text=text.replace(old,new)
-    return text
+    return text,sequence
