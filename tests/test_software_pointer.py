@@ -8,6 +8,19 @@ from tests.test_overlay_display import labelled
 
 
 class SoftwarePointerTests(unittest.TestCase):
+    def test_fast_crossing_recovers_only_one_confirmed_frozen_pointer(self):
+        seed = self.image()
+        scene = np.zeros((400, 800, 3), np.uint8)
+        scene[160:310, 420:620] = seed[40:190, 60:260]
+        tracker = SoftwarePointer()
+        tracker.locate(seed, (100, 80))
+        self.assertEqual(tracker.locate(scene, (750, 350), may_learn=False),
+                         [458, 198, 513, 262])
+        other = SoftwarePointer()
+        other.locate(seed, (100, 80))
+        scene[160:310, 200:400] = seed[40:190, 60:260]
+        self.assertIsNone(other.locate(scene, (750, 350), may_learn=False))
+
     def image(self):
         image=np.zeros((250,350,3),np.uint8)
         cv2.fillPoly(image,[np.array([[100,80],[118,100],[126,95],[150,125],[145,139],[117,127],[111,108]])],(220,220,220))

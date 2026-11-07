@@ -130,6 +130,21 @@ class ControllerTests(unittest.TestCase):
         QTest.mouseClick(self.overlay.interaction,Qt.MouseButton.LeftButton,pos=rect.center());self.qt.processEvents()
         self.assertTrue(self.overlay.card.isVisible());self.assertEqual(self.overlay.card.binding[-1],node['id'])
 
+    def test_drawn_percentage_without_ocr_box_has_a_click_target(self):
+        self.overlay.set_kind('诡意行商')
+        identity = next(k for k, row in self.overlay.surface.rows.items()
+                        if row['match'] == 'candidate' and row['frequency'] is not None)
+        node = next(n for n in self.reference['observation']['map']['nodes'] if n['id'] == identity)
+        del node['label_box']
+        self.overlay.tick()
+        self.assertIn(identity, self.overlay.current['label_rects'])
+        center = self.overlay.current['label_rects'][identity].center()
+        self.assertTrue(self.overlay.interaction.mask().contains(center))
+        QTest.mouseClick(self.overlay.interaction, Qt.MouseButton.LeftButton, pos=center)
+        self.assertEqual(self.overlay.card.binding[-1], identity)
+        self.overlay.set_kind(None)
+        self.assertNotIn(identity, self.overlay.current['label_rects'])
+
     def test_press_on_card_body_cannot_open_caption_hidden_under_it(self):
         a,b=[n['id']for n in self.reference['observation']['map']['nodes']if n['id']in self.overlay.current['label_rects']][:2]
         self.overlay.open_node(a);self.qt.processEvents();hidden=self.overlay.current['label_rects'][b].center()

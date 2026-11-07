@@ -1,0 +1,27 @@
+{
+  "title": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域",
+  "binding": "enclosing_commit",
+  "base_commit": "571bd46b41fdc5a0bab0d847ec5199945b648254",
+  "source_sha256": {
+    "rouge/software_pointer.py": "2178d75b7967696c021adacc13ad556217e6ee810a04f0886131fc2d3fb5c728",
+    "rouge/player_game_map.py": "bc5cc7b63d561c2234925d7c113340015a122b34a8dfa66db2821fd0e57d5927"
+  },
+  "acceptance_complete": false,
+  "replay": {
+    "source": "archived G round, seven native game frames, forced distant OS position and seeded prior box",
+    "old_missed_known_unique_frame": 7,
+    "first_candidate_strategy": "6 of 7 agreed with exhaustive masked matching; one joined component wider than the pointer",
+    "final_positions_matching_unique_exhaustive_result": "7/7",
+    "timed_calls": 35,
+    "median_ms": 37.38,
+    "p95_ms": 66.88,
+    "scope": "replay of capture-layout pixels, not live click latency"
+  },
+  "input_regression": "Visible candidate percentage without an OCR caption box now shares geometry with the native interaction mask. Regression failed before fix and passed after; toggling the type off removes the synthetic target.",
+  "checks": {
+    "targeted_tests_passed": 64,
+    "native_Qt_percentage_case": "passed separately",
+    "full_suite": false
+  },
+  "remaining": "Live rapid movement back to node name and percentage; ordinary clicks on game icon; missed or ambiguous candidates outside archive; cost during continuous capture."
+}

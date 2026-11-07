@@ -20,7 +20,7 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section:commit and ordinary push origin main.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
     "stop_after_section": null,
     "each_section_requires_functional_progress": true,
@@ -3288,7 +3288,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "CODE_CONSTRAINTS_REVIEW_IN_PROGRESS",
+  "batch_status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3500,14 +3500,14 @@
     "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "CODE_CONSTRAINTS_REVIEW_IN_PROGRESS",
+    "status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
     "completed_sections": 472,
     "next_section": 473,
-    "next_section_started": false,
+    "next_section_started": true,
     "batch_closed": false,
     "next_full_validation_after": null,
     "receipt": "verification/sections/472.json",
-    "scope": "叠加开关、文字结构核对与参考更新完成；44项最终定向检查通过，大窗口静止/切页与缩放恢复已记录。800x600连续性、缩放恢复速度、撤下延迟和过载短页仍待改进，472保持。"
+    "scope": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域；等待真实连续点击复测。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10407,7 +10407,7 @@
   "execution_track": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "CODE_CONSTRAINTS_REVIEW_IN_PROGRESS",
+    "status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -10426,6 +10426,48 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance_save": {
+    "title": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域",
+    "receipt": "verification/maintenance/overlay473-pointer-caption-20261107/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "acceptance_complete": false,
+    "previous_implementation_receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json"
+  },
+  "branch_transition": {
+    "active_branch": "main",
+    "retired_branch": "codex/p2-development",
+    "merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
+    "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
+    "historical_publication_branch_preserved": true,
+    "resume_script": "scripts/resume_development.sh",
+    "scope": "User explicitly switched ongoing development to main. Existing unfinished work and cancelled full checks remain."
+  },
+  "previous_hidden_view_maintenance_save": {
+    "title": "隐藏目录合并刷新，真实连续采样仍待验",
+    "receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
+    "tools_verified_publication": {
+      "commit": "83d90344f54c4fa75de53f99a6b20323a95a9795",
+      "proof": "verification/maintenance/gate0-publication.json",
+      "proof_sha256": "f933f1d51e17436b5bf0a0cd2e470a091431a916620b0ded02f007e47c28f4c1"
+    },
+    "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
+    "previous_urgent_receipt": "verification/maintenance/player-urgent-20261103/summary.json",
+    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
+    "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
+    "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json"
+  },
+  "previous_overlay473_maintenance_save": {
+    "title": "第473节PRTS正文对照截图已补齐，保留光标与间歇名称穿透缺口",
+    "receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "acceptance_complete": false,
+    "previous_implementation_receipt": "verification/maintenance/map-overlay-video-20261103/summary.json"
+  },
+  "previous_code_constraints_maintenance_save": {
     "title": "删除队列缩略图重复尺寸判断，确认两处 Windows 采样保护",
     "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
     "binding": "enclosing_commit",
@@ -10762,7 +10804,7 @@
       "D307"
     ],
     "approval_registry": "docs/decisions/2026-11-06-defense-review-approval.json",
-    "goal_status": "paused",
+    "goal_status": "ended_by_user",
     "quota_wrapup_exception": "docs/decisions/2026-11-06-quota-wrapup-exception.md",
     "additional_approval_registry": "docs/decisions/2026-11-06-shop-time-range-approval.md",
     "mei_resource_approval": "docs/decisions/2026-11-06-mei-stage-resource-approval.md",
@@ -10771,49 +10813,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "按用户要求暂停；恢复时从未完成的模块和待审清单续接。"
-  },
-  "branch_transition": {
-    "active_branch": "main",
-    "retired_branch": "codex/p2-development",
-    "merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
-    "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
-    "historical_publication_branch_preserved": true,
-    "resume_script": "scripts/resume_development.sh",
-    "scope": "User explicitly switched ongoing development to main. Existing unfinished work and cancelled full checks remain."
-  },
-  "previous_hidden_view_maintenance_save": {
-    "title": "隐藏目录合并刷新，真实连续采样仍待验",
-    "receipt": "verification/maintenance/hidden-view-sync-20261103/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_incremented": false,
-    "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
-    "tools_verified_publication": {
-      "commit": "83d90344f54c4fa75de53f99a6b20323a95a9795",
-      "proof": "verification/maintenance/gate0-publication.json",
-      "proof_sha256": "f933f1d51e17436b5bf0a0cd2e470a091431a916620b0ded02f007e47c28f4c1"
-    },
-    "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
-    "previous_urgent_receipt": "verification/maintenance/player-urgent-20261103/summary.json",
-    "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
-    "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
-    "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json"
-  },
-  "previous_overlay473_maintenance_save": {
-    "title": "第473节PRTS正文对照截图已补齐，保留光标与间歇名称穿透缺口",
-    "receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_incremented": false,
-    "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/map-overlay-video-20261103/summary.json"
-  },
-  "previous_code_constraints_maintenance_save": {
-    "title": "存量代码约束整改首批，剩余逐模块审查继续",
-    "receipt": "verification/maintenance/code-constraints-review-20261104/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_incremented": false,
-    "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json"
+    "next_batch_focus": "代码审查已结束，留档。"
   },
   "previous_initialization_maintenance_save": {
     "title": "存量代码整改：24模块初始化调用链与过时测试修正",

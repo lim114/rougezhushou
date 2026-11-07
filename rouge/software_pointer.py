@@ -51,4 +51,31 @@ class SoftwarePointer:
             if not np.isfinite(score)or score>.001:continue
             x+=where[0];y+=where[1];self.box=(x,y,x+w,y+h)
             return [max(0,x-2),max(0,y-2),min(width,x+w+2),min(height,y+h+2)]
+        if point is None or may_learn:
+            return None
+        # With the system cursor visible the last game cursor can be anywhere
+        # between consecutive samples. A bright label may join one edge of the
+        # cursor. Test corner-aligned placements using the original pixel mask.
+        blue, green, red = cv2.split(image)
+        low = cv2.min(cv2.min(blue, green), red)
+        high = cv2.max(cv2.max(blue, green), red)
+        white = cv2.bitwise_and(cv2.compare(low, 120, cv2.CMP_GT),
+                                cv2.compare(cv2.subtract(high, low), 45, cv2.CMP_LT))
+        _, _, stats, _ = cv2.connectedComponentsWithStats(white)
+        components = stats[1:]
+        placements = set()
+        for left, top, cw, ch, _ in components[(components[:, 2] >= w) & (components[:, 3] >= h)]:
+            for x in (int(left), int(left + cw - w)):
+                for y in (int(top), int(top + ch - h)):
+                    placements.add((x, y))
+        matches = []
+        for x, y in placements:
+            score = cv2.matchTemplate(image[y:y+h, x:x+w], self.template,
+                                      cv2.TM_SQDIFF_NORMED, mask=self.mask)[0, 0]
+            if score <= .001:
+                matches.append((x, y))
+        if len(matches) == 1:
+            x, y = matches[0]
+            self.box = (x, y, x+w, y+h)
+            return [max(0, x-2), max(0, y-2), min(width, x+w+2), min(height, y+h+2)]
         return None

@@ -3,7 +3,7 @@ import time,math
 import cv2
 import numpy as np
 from PySide6.QtCore import QObject,QTimer,Qt,QPointF,QPoint,QRect,QSize,QEvent,Signal
-from PySide6.QtGui import QPainter,QColor,QPen,QRegion,QPixmap,QIcon
+from PySide6.QtGui import QPainter,QColor,QPen,QRegion,QPixmap,QIcon,QFontMetrics
 from PySide6.QtWidgets import QWidget,QApplication,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QToolButton,QPushButton,QScrollArea
 
 def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
@@ -117,14 +117,14 @@ class OverlaySurface(QWidget):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         label_font=self.font();label_font.setPixelSize(11);p.setFont(label_font);p.setPen(QColor('#e5eeee'));strip=self.controller.interaction.strip.geometry()
         p.drawText(QRect(strip.left()-4,strip.top()-22,strip.width()+8,18),Qt.AlignmentFlag.AlignCenter,'历史频率')
-        font=self.font();font.setBold(True);font.setPointSizeF(12);p.setFont(font);count=0
+        p.setFont(self.frequency_font);count=0
         for identity,x,y in self.data['points']:
             row=self.rows.get(identity)
             if not row or row['match']!='candidate' or row['frequency']is None:continue
             size=max(24,min(44,self.height()*.055));icon=node_sprite(self.kind)
             if not icon.isNull():
                 p.setOpacity(.85);p.drawImage(QRect(round(x-size/2),round(y-size/2),round(size),round(size)),icon);p.setOpacity(1)
-            text=frequency_text(row['frequency']);caption=self.data['label_rects'].get(identity,QRect(round(x-max(80,p.fontMetrics().horizontalAdvance(text)+12)/2),round(y+size/2+3),max(80,p.fontMetrics().horizontalAdvance(text)+12),p.fontMetrics().height()+4))
+            text=frequency_text(row['frequency']);caption=self.data['label_rects'][identity]
             p.setPen(Qt.PenStyle.NoPen);p.setBrush(QColor(13,22,25,245));p.drawRoundedRect(caption.adjusted(-4,-2,4,2),8,8)
             tx=caption.center().x()-p.fontMetrics().horizontalAdvance(text)/2;ty=caption.center().y()+(p.fontMetrics().ascent()-p.fontMetrics().descent())/2
             p.setPen(QColor(0,0,0,190));p.drawText(QPointF(tx+1.5,ty+1.5),text)
@@ -284,6 +284,18 @@ class GameMapOverlay(QObject):
                     u=round((max(p[0]for p in box)*w-x0)*area.width()/(x1-x0));v=round((max(p[1]for p in box)*h-y0)*area.height()/(y1-y0));labels[node['id']]=QRect(x,y,u-x,v-y)
             self.current['label_rects']=labels;self.surface.data=self.current;self.surface.kind=self.kind
             self.surface.rows=registered_rows(graph,self.kind,self.frequencies)if self.kind else{}
+            font = self.surface.font()
+            font.setBold(True)
+            font.setPointSizeF(12)
+            self.surface.frequency_font = font
+            metrics = QFontMetrics(font, self.surface)
+            icon_size = max(24, min(44, area.height() * .055))
+            for identity, x, y in self.current['points']:
+                row = self.surface.rows.get(identity)
+                if identity in labels or not row or row['match'] != 'candidate' or row['frequency'] is None:
+                    continue
+                width = max(80, metrics.horizontalAdvance(frequency_text(row['frequency'])) + 12)
+                labels[identity] = QRect(round(x-width/2), round(y+icon_size/2+3), width, metrics.height()+4)
             self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
             if self.card_node:
                 key=(self.owner.run.state['id'],graph['zone_id'],graph['template_id'],self.card_node)
