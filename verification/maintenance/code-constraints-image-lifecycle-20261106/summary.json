@@ -1,0 +1,74 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases"
+  ],
+  "title": "固定图与事件奖励缺图生命周期核验",
+  "base_commit": "5a029db752a59ecddb157530647540f17e032ced",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/reference_image.py": "96fe588622cd6da8b0dc1856616dace8dddf59f657d56de2dcf8225c57e6ec1b",
+    "rouge/current_reconstruction_view.py": "7a80dae39c2452329d0012fcdc88d961885f229a2cd446e363cdbaacfb921967",
+    "rouge/current_resting_view.py": "45bf47cf4c675ecc074fb3dbbc1ad878276b1e97d90204c58a94c72dc3870f9f"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D46",
+    "D201",
+    "D202"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_event_image_fallback_review",
+        "tests_run": 3,
+        "tests_passed": 3,
+        "seconds": 0.058
+      },
+      {
+        "command": "tests.test_battle_reader_review.BattleReaderReviewTests (three selected methods)",
+        "tests_run": 3,
+        "tests_passed": 0,
+        "seconds": 0.001,
+        "error": "Wrong test class name; loader errors only, no product tests executed."
+      },
+      {
+        "command": "python -m unittest tests.test_battle_reader_review.ReaderReviewTests.test_full_map_edges_and_aspect_survive_narrow_then_wide_resize tests.test_battle_reader_review.ReaderReviewTests.test_pixel_ratio_event_refits_from_full_source_at_actual_window_density tests.test_battle_reader_review.ReaderReviewTests.test_source_loss_or_invalid_image_does_not_return_after_resize",
+        "tests_run": 3,
+        "tests_passed": 3,
+        "seconds": 0.092
+      }
+    ],
+    "live_window": "No product code changed; Qt offscreen lifecycle checks only. Prior native window update gap unchanged."
+  },
+  "review": {
+    "standards": "Approved category6 retained missing/decode failure paths. _fit serves resize and device-pixel-ratio events without an image, so null check is a distinct lifecycle boundary. Event reward image is read once per visible update and zero times when hidden. No wrapper/catch/defense added.",
+    "requirements": "Valid image followed by malformed/missing bytes removes old pixmap and supplies readable text; hidden state clears label. Resizing never revives stale image. Aspect and density event tests pass; no native acceptance claimed."
+  },
+  "partially_implemented_decisions": []
+}

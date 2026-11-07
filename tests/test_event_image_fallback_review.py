@@ -64,3 +64,34 @@ class ImageFallbackReviewTests(unittest.TestCase):
             self.assertTrue(panel.offer_controls.isHidden())
             self.assertEqual(panel.pair_label.text(), '')
             self.assertTrue(all(label.text() == '' for label in panel.pair_icons))
+
+    def test_reconstruction_and_resting_reward_images_follow_visibility(self):
+        from PySide6.QtWidgets import QPushButton
+        from rouge import current_reconstruction_view as reconstruction, current_resting_view as resting
+        for module, cls, gate in ((reconstruction, reconstruction.CurrentReconstructionPanel, 'catalogue_allowed'),
+                                  (resting, resting.CurrentRestingPanel, 'conflicting_original_target')):
+            panel = SimpleNamespace(result={'fixture': True}, scene_id='scene', choice_id='choice',
+                natural_controls=QWidget(), reward_icon=QLabel(), reward_card=QWidget(),
+                catalogue_button=QPushButton(), catalogue_dialog=None,
+                allow_original_popup=True, original_button=QPushButton(), original_dialog=None,
+                next_button=QPushButton())
+            choice = {'role': 'restore', 'explicit_next_conflict': False}
+            with patch.object(module.model, gate, return_value=False):
+                for raw in (self.png, b'broken image', None):
+                    with self.subTest(module=module.__name__, missing=raw is None), \
+                         patch.object(module.model, 'shows_reward', return_value=True), \
+                         patch.object(module.model, 'icon_bytes', return_value=raw) as read:
+                        cls._update_specific(panel, choice)
+                        read.assert_called_once_with()
+                        self.assertFalse(panel.reward_card.isHidden())
+                        if raw == self.png:
+                            self.assertFalse(panel.reward_icon.pixmap().isNull())
+                        else:
+                            self.assertIn('图片暂缺', panel.reward_icon.text())
+                            self.assertTrue(panel.reward_icon.pixmap().isNull())
+                with patch.object(module.model, 'shows_reward', return_value=False), \
+                     patch.object(module.model, 'icon_bytes') as read:
+                    cls._update_specific(panel, None)
+                    read.assert_not_called()
+                    self.assertTrue(panel.reward_card.isHidden())
+                    self.assertEqual(panel.reward_icon.text(), '')

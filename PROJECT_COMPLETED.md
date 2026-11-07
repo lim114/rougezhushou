@@ -1,3 +1,7 @@
+## 维护：固定图与事件奖励缺图生命周期核验（2026-11-06）
+
+D46/D201/D202按授权保留并完成生命周期核验：缺图清旧图、显示文字，无图缩放正常。6项定向通过；首次误写测试类名的3项加载错误保留。未改产品代码。原280组完成216、剩64。回执 `verification/maintenance/code-constraints-image-lifecycle-20261106/summary.json`。
+
 ## 维护：最近节点复用标题契约与旧记录投影核验（2026-11-06）
 
 D49删除最近节点标题的内部类型兜底；D59/D60按批准保留旧格式三态及只读未知投影，核验不修改原件。7+2项定向通过。原280组完成213、剩67；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-content-projection-20261106/summary.json`。
