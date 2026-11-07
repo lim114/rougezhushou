@@ -1,3 +1,7 @@
+## 当前断点 · 修正局部裁图越界，模组选择与潜能模板复用当帧信息（2026-11-07）
+
+D353已按用户决定实施并销项。800个裁图交集对照相同，完全越界不进入资源数字OCR。4种缩放的模组页、12种潜能样本及292种文字变体与基准一致。65项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-module-arrows-and-local-crop-20261107/summary.json)。
+
 ## 当前断点 · 干员技能补读只更新等级，复用已识别培养信息（2026-11-07）
 
 技能数字补读复用本人身份、图标和几何，只重算技能等级与冲突。5份截图业务结果、12组受控补读及裁图与旧版一致，19项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-operator-skill-reread-20261107/summary.json)。

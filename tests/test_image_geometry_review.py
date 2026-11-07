@@ -2,9 +2,32 @@
 from copy import deepcopy
 import unittest
 import numpy as np
+from rouge.anchors import crop
 from rouge.viewport import map_evidence, prepare_frame
 
 class ImageGeometryReviewTests(unittest.TestCase):
+    def test_local_crop_intersects_the_image_on_all_four_sides(self):
+        image = np.arange(600*800, dtype=np.int32).reshape(600,800)
+        for bounds in [(-.1,.12,-.02,.18), (.1,-.2,.2,-.1),
+                       (1.01,.1,1.2,.2), (.1,1.01,.2,1.2),
+                       (-.1,.1,0,.2), (.1,-.1,.2,0)]:
+            with self.subTest(bounds=bounds):
+                self.assertEqual(crop(image,bounds).size,0)
+        for bounds, expected in [
+                ((-.1,-.1,.2,.2), image[:120,:160]),
+                ((.8,.8,1.1,1.1), image[480:,640:]),
+                ((.1,.2,.4,.5), image[120:300,80:320])]:
+            with self.subTest(bounds=bounds):
+                np.testing.assert_array_equal(crop(image,bounds), expected)
+
+    def test_fully_offscreen_resource_does_not_call_ocr(self):
+        from unittest.mock import Mock
+        from rouge.hud_resources import _number
+        engine = Mock()
+        value = _number(np.zeros((600,800,3), np.uint8), [], (-.10,.12,-.02,.18), engine)
+        self.assertIsNone(value)
+        engine.assert_not_called()
+
     def test_invalid_client_rect_is_not_replaced_by_full_frame(self):
         image=np.full((900,1400,3),30,np.uint8)
         for rect in ((-1,0,800,600),(0,0,1500,600),(100,50,100,850),

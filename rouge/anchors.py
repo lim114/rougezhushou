@@ -32,5 +32,6 @@ def units(image, anchor, reference_font):
 def crop(image, bounds):
     h, w = image.shape[:2]
     x0, y0, x1, y1 = bounds
-    return image[max(0, round(y0*h)):min(h, round(y1*h)),
-                 max(0, round(x0*w)):min(w, round(x1*w))]
+    # NumPy clips positive endpoints to the image; negative endpoints would wrap.
+    return image[max(0, round(y0*h)):max(0, round(y1*h)),
+                 max(0, round(x0*w)):max(0, round(x1*w))]

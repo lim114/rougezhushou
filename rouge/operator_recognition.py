@@ -121,48 +121,55 @@ def read_skill_markers(image,anchor,count,space=None):
 
 def selected_module_row(image,anchor):
     """The selected module card has a white arrow at its right edge."""
-    x,y=center(anchor);h,w=image.shape[:2]
-    ux,uy=units(image,anchor,36.3)
+    _,y=center(anchor);h=image.shape[0]
+    _,uy=units(image,anchor,36.3)
     right=max(p[0] for p in anchor['box'])
     roi=anchor_crop(image,(right,y-.01*uy,1,y+.18*uy))
     if not roi.size:return False
     reference=cv2.imdecode(np.fromfile(Path(__file__).parent/'data/ui-icons/module-selected-arrow.png',dtype=np.uint8),0)
     gray=cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
-    best=0
     for factor in np.arange(.65,1.41,.05):
         scale=h*uy/1127*factor
         ref=cv2.resize(reference,None,fx=scale,fy=scale)
         if ref.shape[0]>=gray.shape[0] or ref.shape[1]>=gray.shape[1]:continue
         scores=cv2.matchTemplate(gray,ref,cv2.TM_CCOEFF_NORMED)
-        best=max(best,float(scores.max()))
-    return best>=.85
+        if float(scores.max()) >= .85:
+            return True
+    return False
 
 
 def read_module_page(image,texts):
     labels={t['text'] for t in texts if t['confidence']>=.85}
     if '基础数值' not in labels or 'ORIGINAL' not in labels:return None
-    matches=[]
-    for key,profile in operator_profiles().items():
-        for module in profile['modules']:
-            for t in texts:
-                if t['text']==module['name'] and t['confidence']>=.9:
-                    matches.append((key,module,t))
+    names = {}
+    for text in texts:
+        if text['confidence'] >= .9:
+            names.setdefault(text['text'], []).append(text)
+    profiles = operator_profiles()
+    matches = [(key, module, text) for key, profile in profiles.items()
+               for module in profile['modules'] for text in names.get(module['name'], ())]
     owners={key for key,_,_ in matches}
     if len(owners)!=1:return None
-    key=owners.pop();profile=operator_profiles()[key]
+    key=owners.pop();profile=profiles[key]
     fields={};sources={};viewed=[]
-    attribute_labels={'atk':('攻击',),'def':('防御',),'max_hp':('生命上限',),'magic_resistance':('法术抗性',)}
-    changes={}
-    for attr,names in attribute_labels.items():
-        anchors=[t for t in texts if t['confidence']>=.8 and
-                 any(name in t['text'] for name in names) and '速度' not in t['text']]
-        for anchor in anchors:
-            _,y=center(anchor)
-            for t in texts:
-                m=re.fullmatch(r'\d+(?:\.\d+)?\(\+(\d+(?:\.\d+)?)\)',t['text'])
-                if m and t['confidence']>=.9 and center(t)[0]>center(anchor)[0] and abs(center(t)[1]-y)<.65*(max(p[1] for p in anchor['box'])-min(p[1] for p in anchor['box'])):
-                    changes[attr]=float(m.group(1))
-    for owner,module,anchor in matches:
+    attribute_labels={'atk':'攻击','def':'防御','max_hp':'生命上限','magic_resistance':'法术抗性'}
+    values = []
+    for text in texts:
+        match = re.fullmatch(r'\d+(?:\.\d+)?\(\+(\d+(?:\.\d+)?)\)', text['text'])
+        if match and text['confidence'] >= .9:
+            values.append((*center(text), float(match.group(1))))
+    changes = {}
+    for attr, label in attribute_labels.items():
+        for anchor in texts:
+            if not (anchor['confidence'] >= .8 and '速度' not in anchor['text']
+                    and label in anchor['text']):
+                continue
+            x, y = center(anchor)
+            tolerance = .65 * (max(p[1] for p in anchor['box']) - min(p[1] for p in anchor['box']))
+            for vx, vy, value in values:
+                if vx > x and abs(vy-y) < tolerance:
+                    changes[attr] = value
+    for _,module,anchor in matches:
         equipped=selected_module_row(image,anchor)
         stages=[phase['level'] for phase in module['levels'] if changes and
                 all(phase['attributes'].get(attr)==value for attr,value in changes.items())]
@@ -173,8 +180,8 @@ def read_module_page(image,texts):
             sources['module_id']='模组面板名称与当前选中卡右侧白色箭头'
             sources['module_level']='模组属性增量与档案阶段唯一对应'
     for name in profile.get('initial_modules',[]):
-        anchor=next((t for t in texts if t['text']==name and t['confidence']>=.9),None)
-        if anchor and selected_module_row(image,anchor):
+        anchors = names.get(name)
+        if anchors and selected_module_row(image,anchors[0]):
             fields.update(module_id=None,module_level=0);sources['module_id']='当前选中基础证章'
     missing=[field for field in ('level','elite','potential','trust','module_id','module_level') if field not in fields]
     missing+=['skill_rank_'+str(i+1) for i in range(len(profile['skills']))]
@@ -206,16 +213,17 @@ def match_potential(image,anchor,*,cache=None):
 
 
 def _match_potential_roi(roi,label_height):
+    limit = min(roi.shape[:2])
+    sizes = dict.fromkeys(size for ratio in np.arange(2.3,4.6,.1)
+                          if 12 <= (size := round(label_height*ratio)) < limit)
     scores=[]
     for rank,original in potential_icons().items():
         best=0
-        for ratio in np.arange(2.3,4.6,.1):
-            size=round(label_height*ratio)
-            if size<12 or size>=min(roi.shape[:2]):continue
+        for size in sizes:
             template=cv2.resize(original,(size,size),interpolation=cv2.INTER_AREA)
             mask=(template[:,:,3]>200).astype(np.uint8)*255
             differences=cv2.matchTemplate(roi,template[:,:,:3],cv2.TM_SQDIFF_NORMED,mask=mask)
-            differences=np.nan_to_num(differences,nan=100,posinf=100,neginf=100)
+            np.nan_to_num(differences,copy=False,nan=100,posinf=100,neginf=100)
             best=max(best,1-float(differences.min()))
         scores.append((best,rank))
     scores.sort(reverse=True)

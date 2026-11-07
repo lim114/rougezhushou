@@ -100,6 +100,26 @@ class RecognitionTests(unittest.TestCase):
         self.assertEqual(closed['crew_count'],6)
         self.assertEqual(closed['relics']['ids'],['rogue_6_relic_legacy_52'])
 
+    def test_shared_module_name_does_not_assign_an_owner(self):
+        from unittest.mock import patch
+        from rouge import operator_recognition as model
+        profiles = {key: {'modules': [{'name': '同名模组'}]} for key in ('first', 'second')}
+        texts = [{'text': label, 'confidence': .95} for label in ('基础数值', 'ORIGINAL', '同名模组')]
+        with patch.object(model, 'operator_profiles', return_value=profiles), \
+                patch.object(model, 'selected_module_row') as locate:
+            self.assertIsNone(model.read_module_page(None, texts))
+            locate.assert_not_called()
+
+    def test_selected_module_stops_at_first_qualified_arrow(self):
+        from unittest.mock import patch
+        from rouge import operator_recognition as model
+        image = np.zeros((600, 1000, 3), dtype=np.uint8)
+        anchor = {'text': '模组', 'box': [[.2,.4],[.3,.4],[.3,.44],[.2,.44]]}
+        with patch.object(cv2, 'matchTemplate', side_effect=[
+                np.array([[.84]]), np.array([[.86]])]) as score:
+            self.assertTrue(model.selected_module_row(image, anchor))
+            self.assertEqual(score.call_count, 2)
+
     def test_module_page_identifies_its_owner_and_equipped_stage_without_inventing_training(self):
         image=cv2.imdecode(np.fromfile(ROOT/'samples/native-client/module-mechanist.png',dtype=np.uint8),cv2.IMREAD_COLOR)
         observed=ScreenReader().read(image)

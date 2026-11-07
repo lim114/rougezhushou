@@ -4373,13 +4373,20 @@
     },
     {
       "file": "rouge/anchors.py",
-      "sha256": "e099930ba7789e03b8f46d880e75ce3e6c27019ad54f8e82076a613abfb52dee",
+      "sha256": "59e0961fd9cd0668565e7d6fcacc6c3dda94c4381709a573428f0bde66e031e9",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "rule1": "Repeated immutable size/bounds/mask/viewport geometry computed once; ordinary OCR empty results, cache budget and thresholds preserved",
       "rule2": "Cache adapter is public callable; crop shared; viewport edges twice/point twice/visit recursive; elite references cached resource loader",
       "rule3": [],
-      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery"
+      "evidence": "All four modules read in full plus consumers; 16 targeted tests and 81 old/new geometry comparisons; ordinary empty OCR and cache eviction are normal operation, not exceptional recovery",
+      "scoped_reviews": [
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-module-arrows-and-local-crop-20261107/summary.json",
+          "scope": "D353 local crop intersection, module ownership and equipped-row matching plus potential icon scale scoring."
+        }
+      ]
     },
     {
       "file": "rouge/elite_recognition.py",
@@ -6144,6 +6151,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-operator-skill-reread-20261107/summary.json",
       "scope": "Training refinement, operator identity, mastery marker sampling and conditional skill SP reread in the normal recognition path."
+    },
+    {
+      "file": "rouge/operator_recognition.py",
+      "sha256": "422ab919742d322e5a3b3e30973c3038a306a0e5b89ffef486ce9d1830ba4676",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-module-arrows-and-local-crop-20261107/summary.json",
+      "scope": "D353 local crop intersection, module ownership and equipped-row matching plus potential icon scale scoring."
     }
   ]
 }
