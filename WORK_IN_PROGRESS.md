@@ -1,3 +1,7 @@
+## 当前断点：敌人位置同快照复用（2026-11-06）
+
+D240完成：一份资料包、一次关卡构建，动作归属和位置共用；11项定向通过。D239其它入口仍待审查。原280组完成189、剩91；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-enemy-position-snapshot-20261106/summary.json`。
+
 ## 当前断点：敌人出怪来源读取顺序（2026-11-06）
 
 D239部分推进：关卡不可用即返回，不再读出怪证据；6项定向通过。D240重复关卡读取仍未解决。原280组仍完成188、剩92，未新增销项。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-enemy-source-order-20261106/summary.json`。

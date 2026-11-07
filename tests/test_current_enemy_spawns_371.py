@@ -49,6 +49,6 @@ class CurrentEnemySpawns371Tests(unittest.TestCase):
         self.assertFalse(r['run_updated']);self.assertFalse(r['actual_server_verified'])
     def test_position_uses_existing_exact_action_guard(self):
         r=model.stage_reference('ro6_n_1_1','0');key=r['entries'][0]['key'];p=model.position_reference(r,key);self.assertIsNotNone(p);self.assertEqual(p['action_key'],key)
-        with patch('rouge.current_action_positions.reference',return_value=None):self.assertIsNone(model.position_reference(r,key))
+        with patch('rouge.current_map_position.stage_reference',return_value=None):self.assertIsNone(model.position_reference(r,key))
     def test_player_text_keeps_seconds_unknown_global_clock_and_count_scope(self):
         r=model._derive(self.stage,'0');text=model.player_text(r,r['entries'][0]);self.assertIn('不是实际出场数量',text);self.assertIn('准确时刻：未知',text);self.assertIn('秒',text);self.assertIn('条件',text)

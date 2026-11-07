@@ -60,9 +60,9 @@ def _derive(current,enemy_key):
             'actual_occurrence':None,'actual_count':None,'absolute_time':None,'actual_path':None,
             'expected_stats':None,'actual_server_verified':False,'run_updated':False}
 
-def stage_reference(stage_id,enemy_key):
+def stage_reference(stage_id,enemy_key,*,prepared_current=...):
     if type(stage_id)is not str or type(enemy_key)is not str:return None
-    current=battle.stage_reference(stage_id)
+    current=battle.stage_reference(stage_id) if prepared_current is ... else prepared_current
     if current is None:return None
     scope=evidence()
     if scope is None or scope['source_identity']!=current['source_identity']or stage_id not in scope['stages']:return None
@@ -76,7 +76,10 @@ def rows(result,kind=None):
 
 def resolve_action(result,key):
     if type(result)is not dict or type(key)is not str:return None
-    fresh=stage_reference(result.get('stage_id'),result.get('enemy_key'))
+    return _resolve_action(result,key)
+
+def _resolve_action(result,key,*,prepared_current=...):
+    fresh=stage_reference(result.get('stage_id'),result.get('enemy_key'),prepared_current=prepared_current)
     if fresh is None or not _same(fresh,result):return None
     row=next((r for r in fresh['entries']if r['key']==key),None)
     if row is None:return None
@@ -84,12 +87,18 @@ def resolve_action(result,key):
             'row':deepcopy(row),'source_identity':deepcopy(fresh['source_identity']),'run_updated':False}
 
 def position_reference(result,key):
-    selected=resolve_action(result,key)
+    if type(result)is not dict or type(key)is not str:return None
+    from . import current_action_positions, current_map_position as positions
+    packet=positions.packet()
+    if packet is None:return None
+    current=battle.stage_reference(result.get('stage_id'),prepared_packet=packet['current'])
+    if current is None:return None
+    selected=_resolve_action(result,key,prepared_current=current)
     if selected is None:return None
-    from . import current_action_positions
-    position=current_action_positions.reference(result['stage_id'],key)
-    if position is None or position['battle_source_identity']!=result['battle_source_identity']:return None
-    return position
+    grid=positions.stage_reference(selected['stage_id'],prepared_packet=packet)
+    if grid is None:return None
+    return current_action_positions._reference(current,grid,key)
+
 
 def player_text(result,entry=None):
     lines=[result['enemy']['name']+' · '+result['stage_name'],'',

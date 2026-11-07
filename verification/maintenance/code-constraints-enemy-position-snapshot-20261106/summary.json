@@ -1,0 +1,55 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "敌人动作与位置复用同一关卡快照",
+  "base_commit": "67001c44f03d7357093ebbe86f243c9e18d658cd",
+  "changed_sources": [
+    "rouge/current_enemy_spawns.py"
+  ],
+  "source_sha256": {
+    "rouge/current_enemy_spawns.py": "5f672770bcf0caa54014e0ad82bfbc55c9b9d5f0f502c1e5e1ae37caea63b87f"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D240"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_enemy_position_snapshot_reuse_review tests.test_enemy_spawn_entry_order_review tests.test_current_enemy_spawns_371.CurrentEnemySpawns371Tests.test_position_uses_existing_exact_action_guard tests.test_current_enemy_spawns_371.CurrentEnemySpawns371Tests.test_exact_action_resolve_and_stale_result_refused tests.test_enemy_spawns_error_boundary",
+        "tests_run": 11,
+        "tests_passed": 11,
+        "seconds": 3.922
+      }
+    ],
+    "live_window": "Original test-window update remains pending after earlier approval rejection; no native game acceptance."
+  },
+  "review": {
+    "standards": "D240 one map/battle packet and one battle-stage derivation. Internal _resolve_action serves both public action and position queries, keeping exact fresh snapshot comparison and row selection in one place; each public result/key boundary checks once. stage_reference accepts trusted prepared current using existing project convention. No extra defense/catch. D239 other entry contracts remain pending.",
+    "requirements": "Position equals existing independent action output; instrumented one packet read and one stage derivation. Forged snapshot and missing action do not build position. Invalid inputs do not read packet. Map unavailable still rejected; legacy test mock updated from replaced composition entry to actual map availability boundary. Exact full snapshot validates battle identity before position, so no second same-identity check after building from same current."
+  }
+}
