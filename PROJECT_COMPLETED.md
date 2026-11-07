@@ -1,3 +1,7 @@
+## 维护 · 完成四个资料与展示模块回顾，合并地图标记来源处理（2026-11-06）
+
+四个模块完成三条准则回顾，整模块进度75/559。地图标记复用来源处理和整份几何字段。50项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json)。
+
 ## 维护 · 完成敌人搜索、凭据和文件错误提示三个模块回顾（2026-11-06）
 
 三个模块逐函数核对；整模块进度由68增至71/559。修正两条格式错误提示，保存设置只取一次密钥输入。D338待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-three-module-closeout-20261106/summary.json)。

@@ -210,32 +210,36 @@
     {
       "file": "rouge/observed_map_symbols.py",
       "sha256": "3743a427326d74548dd963045e284131092292141a13a6dcfc33c6774a439b98",
-      "rule1": "No additional ordinary redundancy found; D42 remains",
-      "rule2": "Packet loader and mapping consumer each have coherent responsibilities; no one-line wrapper added or removed",
-      "rule3": [
-        "D42"
-      ],
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D42",
       "decision": "D42",
       "trigger": "mapping_for文件读取失败、摘要/版本/关卡对照不符返回None",
       "impact": "避免错误地图标记；公开数据损坏或版本漂移时不显示补充点位",
       "recommendation": "建议保留来源绑定；不能仅因字节摘要存在就删版本检查，代码版本也可能变化",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
-      "evidence": "Entire source read against current_map_position caller and dedicated marker tests. No source changes; no new runtime validation claimed.",
+      "full_module_review_complete": true,
+      "evidence": "Single mapping_for entry. Reader checks digest, version and qualified stage; caller limits stage membership and validates geometry. Read error scoped to file operation.",
       "scoped_reviews": [
         {
           "decision": "D42, D63, D64",
           "receipt": "verification/maintenance/code-constraints-training-and-source-boundaries-20261106/summary.json",
           "scope": "Roster field qualification and display, unknown buff display, observed map symbols file/version/stage binding."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json",
+          "scope": "Four complete modules; fixed-map stage projection and marker source selection."
         }
-      ]
+      ],
+      "full_review_receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/manual_scenario.py",
       "sha256": "1a15f179950e1cb0856e303d06fc02562b825f4ca730fd41489456b3d9c5f603",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D43",
       "decision": "D43",
       "trigger": "parse_preview_object拒绝重复JSON字段和非有限数值",
       "impact": "避免编辑器接受歧义字段/无限数值；这些输入不能用于临时计算",
@@ -245,28 +249,42 @@
           "receipt": "verification/maintenance/code-constraints-input-link-retention-20261106/summary.json",
           "scope": "D43/D44 approved input/identity protections retained and verified",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json",
+          "scope": "Four complete modules; fixed-map stage projection and marker source selection."
         }
-      ]
+      ],
+      "evidence": "JSON callbacks each enforce a distinct parser contract: named nonfinite constants, floating overflow and duplicate object keys. Parser syntax and root shape checked separately.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/tomimi_reference.py",
       "sha256": "e2c5fa5217ea70fd058a9c831d4367b850edda31d052084314da9510411549d2",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
-      "rule3": "pending_user_review_D44",
+      "rule3": "approved_scope_D44",
       "decision": "D44",
       "trigger": "target缺资料/无对应level或名称不符返回None",
       "impact": "避免跳错关卡；不同版本无法对应时网页入口不可用",
       "recommendation": "建议保留身份对照，替代为允许仅按level匹配或暴露缺项",
-      "full_module_review_complete": false,
-      "evidence": "Both functions read: cached fixed public stage table and pure target builder; no ordinary duplicate validation or one-use wrapper. Optional missing reference is normal availability state. Existing D44 stage name/identity gate remains pending, so this module is not fully certified.",
+      "full_module_review_complete": true,
+      "evidence": "Read both functions, public stage declaration with cached registry; target checks level and title before encoding public variant. Confirmed independent refresh versus later click.",
       "scoped_reviews": [
         {
           "receipt": "verification/maintenance/code-constraints-input-link-retention-20261106/summary.json",
           "scope": "D43/D44 approved input/identity protections retained and verified",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json",
+          "scope": "Four complete modules; fixed-map stage projection and marker source selection."
         }
-      ]
+      ],
+      "full_review_receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/node_statistics_source.py",
@@ -290,9 +308,9 @@
     {
       "file": "rouge/reference_image.py",
       "sha256": "96fe588622cd6da8b0dc1856616dace8dddf59f657d56de2dcf8225c57e6ec1b",
-      "rule1": "clear_except_pending_defense",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D46",
       "decision": "D46",
       "trigger": "set_data缺图/PNG解析失败显示替代文字，_fit在无图时跳过",
       "impact": "图片缺失时保持可读界面；不能把解码成功路径的检查与空窗口resize回调机械合并",
@@ -302,8 +320,16 @@
           "receipt": "verification/maintenance/code-constraints-image-lifecycle-20261106/summary.json",
           "scope": "D46 D201 D202 retained image lifecycle",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json",
+          "scope": "Four complete modules; fixed-map stage projection and marker source selection."
         }
-      ]
+      ],
+      "evidence": "Inspected all methods and render/resize/DPI callers. Retain original image, one decode on set, clear on source loss, resize and DPI refit use the same implementation.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json"
     },
     {
       "file": "rouge/condition_inputs.py",
@@ -3375,7 +3401,7 @@
     },
     {
       "file": "rouge/current_map_position.py",
-      "sha256": "19ea3c82c8b967695ad3dd99ec34df83dbc8a6152407dc044bee77bc839b8488",
+      "sha256": "00cc316b4312e7d531ded1fdd84c5527c396ed310b6ae8ca9e9d63787c617853",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Map point membership computed once per query; validation boundaries pending D259",
@@ -3421,6 +3447,11 @@
           "decision": "D199, D258 partial",
           "receipt": "verification/maintenance/code-constraints-map-image-startup-20261106/summary.json",
           "scope": "Startup initial target qualification and default fixed map display. Custom loader and prepared JSON paths still qualify display bytes independently."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json",
+          "scope": "Four complete modules; fixed-map stage projection and marker source selection."
         }
       ]
     },
