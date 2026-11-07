@@ -16,6 +16,17 @@ class CurrentStartupView350Tests(unittest.TestCase):
         d=CurrentStartupDialog(m.locate('choices',cid)if cid else None);d.show();self.qt.processEvents();self.addCleanup(d.close);return d
     def select(self,p,cid):
         p.choices.setCurrentRow(next(i for i in range(p.choices.count())if p.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid));self.qt.processEvents()
+    def test_constructor_checks_exact_target_using_its_current_packet_once(self):
+        target = m.locate('choices', 'choice_ro6_startbuff_3')
+        for request, expected in ((target, target['choice_id']),
+                                  (dict(target, scene_id='foreign'), None),
+                                  (m.locate('scenes', m.SCENE), None)):
+            with self.subTest(request=request), patch.object(m, 'packet', wraps=m.packet) as read:
+                dialog = CurrentStartupDialog(request)
+                self.addCleanup(dialog.close)
+                self.assertEqual(dialog.panel.choice_id, expected)
+                self.assertEqual(read.call_count, 1)
+
     def test_all_twelve_exact_selections_related_inputs_only_and_six_images(self):
         for cid in m.reference()['choices']:
             p=self.dialog(cid).panel;self.assertEqual(p.choice_id,cid);inherited=p.result['choices'][cid]['kind']=='inherited'

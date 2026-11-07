@@ -51,9 +51,9 @@ def reference(event_id='startup',previous_regions=None,mode=None,gold=None,inher
             'declared':{'previous_regions':previous_regions,'mode':mode,'gold':gold,'inherited':inherited,'group':group},
             'actual_displayed_choice_ids':None,'actual_original_parent_script_restored':False}
 
-def locate(category,key):
-    if type(category)is not str or type(key)is not str:return None
-    p=packet()
+def locate(category, key, *, source=None):
+    if type(category) is not str or type(key) is not str: return None
+    p = packet() if source is None else source
     if p is None:return None
     if category=='scenes'and key==SCENE:return {'event_id':'startup','scene_id':SCENE,'choice_id':None}
     if category=='choices'and key in p['data']['choices']:return {'event_id':'startup','scene_id':SCENE,'choice_id':key}

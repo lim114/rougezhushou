@@ -1,3 +1,7 @@
+## 当前断点 · 开局奖励复用当次资料，固定地图复用已核验图片（2026-11-06）
+
+D199完成。D258默认窗口每次刷新读取一次图片；预载资料和自定义加载路径仍待核对。 原280组完成263、余17。 [回执](verification/maintenance/code-constraints-map-image-startup-20261106/summary.json)。
+
 ## 当前断点 · 敌人环境复用本次关卡来源，关联跳转核对当前实体（2026-11-06）
 
 D296、D305、D311完成。刷新当次使用已核验的关卡，之后改变难度重新核对。埃尔伯特关联跳转拒绝伪造编号，计算页保留唯一敌人身份选择。36项定向通过。新增D326待审。 原280组完成262、余18。 [回执](verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json)。

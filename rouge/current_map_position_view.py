@@ -169,14 +169,14 @@ class CurrentMapPositionPanel(QWidget):
         self.grid.highlight_cells=set()
         self.result=None;self.selected=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.blockSignals(blocked);self.combo.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
     def refresh_reference(self, *, prepared_reference=...):
-        if prepared_reference is ...:
-            loader=model.stage_reference if self.reference_loader is None else self.reference_loader
-            fresh=loader(self.stage_id)
+        if prepared_reference is ... and self.reference_loader is None:
+            fresh, raw = model.stage_reference_with_image(self.stage_id)
         else:
-            fresh=prepared_reference
-        if fresh is None:self.clear_reference();return False
-        raw=model.battle.version.image_bytes(fresh['image'])
-        if raw is None:self.clear_reference();return False
+            fresh = self.reference_loader(self.stage_id) if prepared_reference is ... else prepared_reference
+            raw = model.battle.version.image_bytes(fresh['image']) if fresh is not None else None
+        if raw is None:
+            self.clear_reference()
+            return False
         keep=self.result is not None and self.result['source_identity']==fresh['source_identity']and self.result['stage_id']==fresh['stage_id'];selected=self.selected if keep else None;kind=self.terrain_kind.currentData()if keep else None;self.result=fresh;self.image_raw=raw
         from .current_terrain import terrain_info
         blocked=self.terrain_kind.blockSignals(True);self.terrain_kind.clear();self.terrain_kind.addItem('总览（全部地形）',None);seen=set()

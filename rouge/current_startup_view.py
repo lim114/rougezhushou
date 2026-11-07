@@ -18,19 +18,23 @@ class CurrentStartupPanel(DocumentedEventFlowPanel):
         self.cost_row=QHBoxLayout();self.cost_label=QLabel('仅本页源石锭');self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1)
         self.cost_row.addWidget(self.cost_label);self.cost_row.addWidget(self.gold);self.layout().insertLayout(2,self.cost_row)
         self.inheritance_row=QHBoxLayout();self.inheritance_label=QLabel('上一局明确继承的额外支援');self.inherited=QComboBox();self.inherited.addItem('未知（当前持有不作证明）',None);self.inherited.addItem('明确未继承','none')
-        fresh=model.packet()
-        for cid in fresh['data']['inherited_ids']if fresh else[]:self.inherited.addItem(fresh['data']['choices'][cid]['title'],cid)
         self.inheritance_row.addWidget(self.inheritance_label);self.inheritance_row.addWidget(self.inherited);self.layout().insertLayout(3,self.inheritance_row)
         self.reward_icon=QLabel();self.reward_icon.setFixedSize(64,64);self.reward_name=QLabel();self.reward_card=QHBoxLayout();self.reward_card.addWidget(self.reward_icon);self.reward_card.addWidget(self.reward_name,1);self.layout().insertLayout(4,self.reward_card)
         for widget in(self.group,self.mode,self.inherited):widget.currentIndexChanged.connect(self.refresh_reference)
         self.previous.valueChanged.connect(self.refresh_reference);self.gold.valueChanged.connect(self.refresh_reference)
-        self.refresh_reference(initial_scene=model.SCENE, initial=True)
+        if not self.refresh_reference(initial_scene=model.SCENE, initial=True):
+            return
+        data = self.result['data']
+        for cid in data['inherited_ids']:
+            self.inherited.addItem(data['choices'][cid]['title'], cid)
         if target:
-            if target==model.locate('choices',target.get('choice_id'))or target==model.locate('scenes',target.get('scene_id')):
-                self.scene.setCurrentIndex(self.scene.findData(model.SCENE))
-                cid=target.get('choice_id')
+            cid = target.get('choice_id')
+            category, key = ('scenes', target.get('scene_id')) if cid is None else ('choices', cid)
+            if model.locate(category, key, source=self.result) == target and cid is not None:
                 for i in range(self.choices.count()):
-                    if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid:self.choices.setCurrentRow(i);break
+                    if self.choices.item(i).data(Qt.ItemDataRole.UserRole) == cid:
+                        self.choices.setCurrentRow(i)
+                        break
 
     def _fresh_reference(self):
         previous,gold=self.previous.value(),self.gold.value()

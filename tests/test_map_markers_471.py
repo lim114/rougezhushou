@@ -50,7 +50,7 @@ class MapMarkerTests(unittest.TestCase):
     def test_source_loss_clears_old_markers_and_full_prose_remains_in_details(self):
         p=self.panel();p.combo.setCurrentIndex(1);full=model.cell_text(p.result,model.cell_reference(p.result,*p.selected))
         self.assertEqual(json.loads(p.technical.toPlainText())['完整说明'],full)
-        with patch.object(model,'stage_reference',return_value=None):self.assertFalse(p.refresh_reference())
+        with patch.object(model,'stage_reference_with_image',return_value=(None,None)):self.assertFalse(p.refresh_reference())
         self.assertEqual(p.original.markers,());self.assertTrue(p.original.pixmap.isNull());self.assertIsNone(p.selected)
         self.assertTrue(p.refresh_reference());self.assertIsNone(p.selected)
 

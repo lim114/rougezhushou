@@ -2709,13 +2709,20 @@
     },
     {
       "file": "rouge/current_startup.py",
-      "sha256": "602d3dc50117aa5c8762a267f650e21b7a4b2efe6a69012eaa2a4b6de2409821",
+      "sha256": "56383f9ec10b407696aa864783f686f9c68870ad5e1e6f9e2eeb03ac4b1b2c32",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "base_passes_existing_choice_to_22_player_text_models",
       "rule2": "no_new_helpers_public_standalone_calls_preserved",
       "rule3": "no_guard_or_catch_removed",
-      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain."
+      "evidence": "22 providers identified from actual reference_model imports including default. Added prepared_choice keyword; omitted calls original choice_reference once, supplied value reused. Existing guard branches retained. 943 old/raw/prepared text cases equal; other model functions AST identical. Full-module review not certified; specialized panel and nested reward helper repeats remain.",
+      "scoped_reviews": [
+        {
+          "decision": "D199, D258 partial",
+          "receipt": "verification/maintenance/code-constraints-map-image-startup-20261106/summary.json",
+          "scope": "Startup initial target qualification and default fixed map display. Custom loader and prepared JSON paths still qualify display bytes independently."
+        }
+      ]
     },
     {
       "file": "rouge/current_unattended_shop.py",
@@ -2769,7 +2776,7 @@
     },
     {
       "file": "rouge/current_startup_view.py",
-      "sha256": "a826e2e748dc7d6ce7aa9852358b677a6c5f14102604ac30c697ae703dfa661a",
+      "sha256": "d79aa9ab503155aad53308e04a410508e5622235501dc0d5d7756c4e66b3179d",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "reuse_parent_selected_choice_instead_of_second_result_dict_lookup",
@@ -2782,7 +2789,14 @@
         ],
         "receipt": "verification/maintenance/code-constraints-startup-image-review-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "decision": "D199, D258 partial",
+          "receipt": "verification/maintenance/code-constraints-map-image-startup-20261106/summary.json",
+          "scope": "Startup initial target qualification and default fixed map display. Custom loader and prepared JSON paths still qualify display bytes independently."
+        }
+      ]
     },
     {
       "file": "rouge/current_exchange_reference.py",
@@ -3152,7 +3166,7 @@
     },
     {
       "file": "rouge/current_map_position.py",
-      "sha256": "36299f7a080244f5f2cc5fb381acfb7fd6c2e8a3710e0338aaff645a81187e9a",
+      "sha256": "19ea3c82c8b967695ad3dd99ec34df83dbc8a6152407dc044bee77bc839b8488",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Map point membership computed once per query; validation boundaries pending D259",
@@ -3193,12 +3207,17 @@
           "receipt": "verification/maintenance/code-constraints-marker-dispatch-20261106/summary.json",
           "scope": "D269 dispatched entry gate reused",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D199, D258 partial",
+          "receipt": "verification/maintenance/code-constraints-map-image-startup-20261106/summary.json",
+          "scope": "Startup initial target qualification and default fixed map display. Custom loader and prepared JSON paths still qualify display bytes independently."
         }
       ]
     },
     {
       "file": "rouge/current_map_position_view.py",
-      "sha256": "ebfb7bc8e7b2ae6dc3731cf6416761692af94f374d67a6f8806b162a6b6b53fd",
+      "sha256": "88dd0bb4525c6bf8eb7cd6fe2cd2a8862eb83e8c4b76bb0f542dbfa9391398b2",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
@@ -3252,6 +3271,11 @@
           "decision": "D225, D226, D227, D229, D231",
           "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
           "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
+        },
+        {
+          "decision": "D199, D258 partial",
+          "receipt": "verification/maintenance/code-constraints-map-image-startup-20261106/summary.json",
+          "scope": "Startup initial target qualification and default fixed map display. Custom loader and prepared JSON paths still qualify display bytes independently."
         }
       ]
     },

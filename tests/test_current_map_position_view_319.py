@@ -17,6 +17,26 @@ class CurrentMapPositionView319Tests(unittest.TestCase):
     def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
     def panel(self,sid='ro6_n_6_2'):
         p=CurrentMapPositionPanel(sid);p.resize(1000,560);p.show();self.addCleanup(p.close);self.qt.processEvents();return p
+    def test_default_map_displays_the_bytes_from_its_single_image_read(self):
+        real = model.battle.version.image_bytes
+        reads = []
+        def read(image):
+            raw = real(image)
+            reads.append(raw)
+            return raw
+        with patch.object(model.battle.version, 'image_bytes', side_effect=read):
+            panel = self.panel()
+            self.assertEqual(len(reads), 1)
+            self.assertIs(panel.image_raw, reads[0])
+            self.assertTrue(panel.refresh_reference())
+            self.assertEqual(len(reads), 2)
+            self.assertIs(panel.image_raw, reads[1])
+        with patch.object(model.battle.version, 'image_bytes', return_value=None):
+            self.assertFalse(panel.refresh_reference())
+        self.assertIsNone(panel.result)
+        self.assertIsNone(panel.image_raw)
+        self.assertTrue(panel.original.pixmap.isNull())
+
     def test_original_png_and_whole_grid_initially_have_no_selected_marker(self):
         p=self.panel();self.assertIsNotNone(p.result);self.assertIsNone(p.selected);self.assertIsNone(p.original.point_center());self.assertFalse(p.original.pixmap.isNull());self.assertEqual(p.combo.count(),len(p.result['points'])+1);self.assertEqual(p.image_raw,model.battle.version.image_bytes(p.result['image']))
     def test_real_grid_click_selects_observed_center_and_scales_on_original(self):
