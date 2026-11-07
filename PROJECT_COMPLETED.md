@@ -5510,3 +5510,7 @@ D270完成：固定完整几何与摘要约定核实后合并两层重复绑定�
 
 ### 维护：位置页面首次核验结果复用（2026-11-06）
 D230/D232完成，物件与行程位置的独立/共享页面初次创建复用结果；刷新保留重读。最终37项定向通过，原失败保留，不计实机。回执 `verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json`。
+
+
+### 维护：finally清理职责核对（2026-11-06）
+D233/D276/D277完成：出怪列表与首领页信号恢复、计算批次释放按授权保留；4项异常注入通过，异常继续上报，不增加恢复策略。回执 `verification/maintenance/code-constraints-finally-retention-20261106/summary.json`。

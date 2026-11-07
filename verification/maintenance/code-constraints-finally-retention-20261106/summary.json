@@ -1,0 +1,63 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "信号恢复与计算批次释放按授权复核",
+  "base_commit": "fee788d18cf67cf65d3f91c6be6b2049a7722500",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/ui_state.py": "fc3b99bdf85728db58819c90d1cb75014dcb232236dd9b0cbddf55396b9c0b9e",
+    "rouge/current_spawn_candidates_view.py": "e83703eb922400677aea5046faae931b6393cc28a73e0f0e465d9637421d2351",
+    "rouge/current_elbert_view.py": "0ef24911a989393de885996120880af947d4cf2f8436383e3800281d3babec70"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D233",
+    "D276",
+    "D277"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_approved_finally_review",
+        "tests_run": 4,
+        "tests_passed": 4,
+        "seconds": 2.629,
+        "environment": "Qt offscreen; injected internal failures"
+      }
+    ],
+    "live_window": "No product change; no restart required. Prior original-window update remains pending."
+  },
+  "review": {
+    "standards": "Approved category8: finally restores original signal states or batch depth/request without catching exceptions. No duplicate cleanup along tested success/failure paths. Spawn _fill reused across controls; calculation_batch owns nested transaction state. Elbert finally blocks belong to three separate GUI operations, not repeated same-path validation.",
+    "requirements": "Tests cover nested propagated input failure with no calculation and subsequent successful batch; calculation callback failure releases state; spawn fill and all three Elbert paths restore both initially blocked/unblocked states while raising original error. No new cleanup, retry or policy added."
+  },
+  "reviewed_unchanged_sources": [
+    "rouge/ui_state.py",
+    "rouge/current_spawn_candidates_view.py",
+    "rouge/current_elbert_view.py"
+  ]
+}

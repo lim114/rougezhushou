@@ -2588,7 +2588,15 @@
       "rule1": "reuse_relation_and_copy_source_identity_once; keys_outside_iteration",
       "rule2": "no_new_helper; portrait_single_use_pending_D234",
       "rule3": "D233_D235_pending",
-      "evidence": "Full view read; selected/refresh/callback paths inspected. relation prepared once passed to member lookup; raw path retained. key is fresh tuple containing already-deepcopied source identity, removing second deepcopy does not share mutable source.10 targeted passed; raw key reads1 each, prepared relation reads0. _resolve_selected has2 callers, not single use. Portrait helper1 caller with protection pending, no full certification."
+      "evidence": "Full view read; selected/refresh/callback paths inspected. relation prepared once passed to member lookup; raw path retained. key is fresh tuple containing already-deepcopied source identity, removing second deepcopy does not share mutable source.10 targeted passed; raw key reads1 each, prepared relation reads0. _resolve_selected has2 callers, not single use. Portrait helper1 caller with protection pending, no full certification.",
+      "scoped_reviews": [
+        {
+          "file": "rouge/current_spawn_candidates_view.py",
+          "receipt": "verification/maintenance/code-constraints-finally-retention-20261106/summary.json",
+          "scope": "Approved finally retained after fault injection; not full module certification",
+          "sha256": "e83703eb922400677aea5046faae931b6393cc28a73e0f0e465d9637421d2351"
+        }
+      ]
     },
     {
       "file": "rouge/current_enemy_spawns.py",
@@ -2961,7 +2969,15 @@
       "rule3": [
         "D276"
       ],
-      "evidence": "Full source and callers read. referenceBaseText only assigned by header construction.33 final targeted tests pass; batch finally behavior unchanged and pending D276."
+      "evidence": "Full source and callers read. referenceBaseText only assigned by header construction.33 final targeted tests pass; batch finally behavior unchanged and pending D276.",
+      "scoped_reviews": [
+        {
+          "file": "rouge/ui_state.py",
+          "receipt": "verification/maintenance/code-constraints-finally-retention-20261106/summary.json",
+          "scope": "Approved finally retained after fault injection; not full module certification",
+          "sha256": "fc3b99bdf85728db58819c90d1cb75014dcb232236dd9b0cbddf55396b9c0b9e"
+        }
+      ]
     },
     {
       "file": "rouge/current_elbert_view.py",
@@ -2983,6 +2999,12 @@
           "rule2": "No new wrapper.",
           "rule3": "Approved D279 only; no new defense.",
           "full_module_review_complete": false
+        },
+        {
+          "file": "rouge/current_elbert_view.py",
+          "receipt": "verification/maintenance/code-constraints-finally-retention-20261106/summary.json",
+          "scope": "Approved finally retained after fault injection; not full module certification",
+          "sha256": "0ef24911a989393de885996120880af947d4cf2f8436383e3800281d3babec70"
         }
       ]
     },

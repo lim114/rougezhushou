@@ -1,3 +1,7 @@
+## 当前断点：finally清理职责核对（2026-11-06）
+
+D233/D276/D277按授权保留，4项异常注入检查通过：原信号状态恢复、批次深度释放、异常不吞掉。产品源码未改。原280组完成188、剩92；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-finally-retention-20261106/summary.json`。
+
 ## 当前断点：位置页面首次结果复用（2026-11-06）
 
 D230/D232完成：物件和行程位置初次创建复用父页核验结果，后续刷新及共享父页重读后的核对保留。最终37项定向通过，首轮测试选错非空间行程已记录。原280组完成185、剩95；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json`。
