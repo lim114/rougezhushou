@@ -1,0 +1,79 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "藏品数量换算共用同一操作数，面板转换区分数值错误",
+  "base_commit": "e1339cf8f6fc1c1c8f711c3c02744243b76616dc",
+  "changed_sources": [
+    "rouge/deployment.py",
+    "rouge/panel_native_bridge.py",
+    "rouge/relic_attributes.py"
+  ],
+  "source_sha256": {
+    "rouge/deployment.py": "65281aa49996dbc73643b3f136732e4ba57a59bbd41fabbfb5353a18a6bc40aa",
+    "rouge/panel_native_bridge.py": "a39309da1f5e49e4e3249d078af1ec1ab1624e38ca5d9450366a4dc258453014",
+    "rouge/relic_attributes.py": "56398ba6a79daa2469aa8e87452fa73cd4e39339ce233591d64f90e7450f7988"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D105"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial panel and bits",
+        "tests_run": 13,
+        "failures": 7,
+        "errors": 1
+      },
+      {
+        "phase": "baseline via HEAD implementations for three changed modules, panel groups without bits",
+        "tests_run": 10,
+        "failures": 7,
+        "errors": 1
+      },
+      {
+        "phase": "focused numeric and native cost",
+        "tests_run": 49,
+        "tests_passed": 41,
+        "skipped": 8,
+        "seconds": 0.645,
+        "command": "python -m unittest tests.test_panel_bits_boundary_review tests.test_deployment_native_054 tests.test_deployment_independent_sources tests.test_deployment_relics_027"
+      }
+    ],
+    "live_window": "Original desktop test window update outstanding after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Retains genuine representability/overflow exits, distinguishes declared numeric ValueError subclass from internal ValueError, no redundant _number check in _raw. Both consumers round the two operands before multiplying and _fp rounds the product, preserving existing ordinary final-scaler semantics. Low-probability change at _number withheld for D328.",
+    "requirements": "Verified 16777217 rounds before multiplication. Numeric out-of-range maps to unknown, internal ValueError propagates. Main panel source binding is still invalid: the pinned catalog.py digest already differs in the base commit, and its bytes are unchanged this batch. Frozen hashes were not edited."
+  },
+  "partially_implemented_decisions": []
+}

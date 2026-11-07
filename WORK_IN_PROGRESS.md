@@ -1,3 +1,7 @@
+## 当前断点 · 藏品数量换算共用同一操作数，面板转换区分数值错误（2026-11-06）
+
+D105完成。名义面板和藏品累计共用数量乘积，内部普通ValueError直接上报。独立转换与部署费用用例41通过、8跳过；旧面板来源校验基线7失败1错误仍在。D328待审。 原280组完成270、余10。 [回执](verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json)。
+
 ## 当前断点 · 节点查询区分输入错误，路线复用已核验节点（2026-11-06）
 
 D82、D83完成。地图节点与路线复用当次输入，查询失效可见，内部错误不再伪装成读不到资料。81项定向检查通过。悬停卡绘制的另一处异常出口单列D327待审。 原280组完成269、余11。 [回执](verification/maintenance/code-constraints-map-dossier-entry-20261106/summary.json)。

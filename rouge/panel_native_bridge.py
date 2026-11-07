@@ -34,10 +34,12 @@ def _bits(value):
 def _raw(value):
     # This conversion specifies the legacy model's nominal Single input. It
     # does not identify runtime Blackboard bits or the actual rounding mode.
-    from .deployment import _fp
+    from .deployment import NativeNumberError, _fp
+    if type(value) not in (float, int):
+        return None
     try:
-        return _fp(value) if _number(value) is not None else None
-    except (ValueError, OverflowError):
+        return _fp(value)
+    except (NativeNumberError, OverflowError):
         return None
 
 
@@ -73,20 +75,19 @@ def _record(phase, field, value, term):
 
 def prepare(scenario, cultivated, rune_attributes, runes):
     """Consume the same resolved rune objects used by the main calculation."""
-    from .relic_attributes import FIELDS as RUNE_FIELDS
+    from .deployment import NativeNumberError
+    from .relic_attributes import FIELDS as RUNE_FIELDS, rune_operand
     from .mechanist_explosion_math import add
     rows=[]
     grouped={}
     for effect in runes:
         grouped.setdefault(RUNE_FIELDS[effect['kind']],[]).append(effect)
     def term_value(effect):
-        if effect.get('native_count_scale')=='float32_before_fp':
-            from .deployment import _single
-            try:
-                return _raw(_single(_single(effect['native_rune_base'])*_single(effect['native_rune_factor'])))
-            except (ValueError, OverflowError):
-                return None
-        return _raw(effect['value'])
+        try:
+            operand = rune_operand(effect)
+        except (NativeNumberError, OverflowError):
+            return None
+        return _raw(operand)
     for field in FIELDS:
         if field not in cultivated:
             continue

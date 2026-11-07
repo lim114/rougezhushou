@@ -1551,17 +1551,24 @@
     },
     {
       "file": "rouge/relic_attributes.py",
-      "sha256": "02b0b1ff410093b60c43db46c0809a2db0f56222f727c96148bab57b4f3411a8",
+      "sha256": "56398ba6a79daa2469aa8e87452fa73cd4e39339ce233591d64f90e7450f7988",
       "rule1": "consume_classified_runes_once_and_sum_ordinary_token_effects_once",
       "rule2": "obsolete_filter_wrapper_removed_no_new_helper",
       "rule3": "existing_defenses_unchanged_D128_D129_registered",
       "full_module_review_complete": true,
       "evidence": "Supplemental and token callers already classify rune inputs; reuse existing _apply_selected_runes. Token finish splits applied rules once and sums each ordinary kind once using original order and sum semantics. Raw filtering wrapper had no remaining product callers and was removed; two tests and six historical validation-script call sites adapted, no historical full suite run. Prior relic_attributes whole-module pass retained after examining remaining four functions; other modules only changed-path review. D128 equal-level interpolation and D129 unqualified regeneration factor fallback unchanged. Full preflight and other ordinary work remain.",
-      "ordinary_rules_review_complete": true
+      "ordinary_rules_review_complete": true,
+      "scoped_reviews": [
+        {
+          "decision": "D105",
+          "receipt": "verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json",
+          "scope": "Native number conversion and shared count-scaled rune operand only. D328 and frozen source manifest mismatch remain open."
+        }
+      ]
     },
     {
       "file": "rouge/panel_native_bridge.py",
-      "sha256": "5f9d674bb7e8f17e75da267e1123139de7e45cc5b4a366d102675b7cb4c37fbb",
+      "sha256": "a39309da1f5e49e4e3249d078af1ec1ab1624e38ca5d9450366a4dc258453014",
       "rule1": "selected_repeated_preparation_prediction_and_rune_scan_removed",
       "rule2": "two_single_use_functions_inlined_two_aliases_removed_shared_comparison_two_callers",
       "rule3": "try_raise_bodies_unchanged_D105_D106_pending_bridge",
@@ -1577,6 +1584,11 @@
           "decision": "D105 partial",
           "receipt": "verification/maintenance/code-constraints-panel-bits-20261106/summary.json",
           "scope": "_bits only; other conversions pending"
+        },
+        {
+          "decision": "D105",
+          "receipt": "verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json",
+          "scope": "Native number conversion and shared count-scaled rune operand only. D328 and frozen source manifest mismatch remain open."
         }
       ]
     },
@@ -5081,6 +5093,13 @@
       "decision": "D82, D83",
       "receipt": "verification/maintenance/code-constraints-map-dossier-entry-20261106/summary.json",
       "scope": "Map selection, hover-entry navigation, node directory graph and route validation. Hover card rendering D327 pending."
+    },
+    {
+      "file": "rouge/deployment.py",
+      "sha256": "65281aa49996dbc73643b3f136732e4ba57a59bbd41fabbfb5353a18a6bc40aa",
+      "decision": "D105",
+      "receipt": "verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json",
+      "scope": "Native number conversion and shared count-scaled rune operand only. D328 and frozen source manifest mismatch remain open."
     }
   ]
 }

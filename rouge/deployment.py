@@ -17,17 +17,21 @@ _EMPTY_BED_SOURCE={**_NATIVE_SOURCE,'evidence':'empty-bed-cost-057/verification.
     'lifecycle':'ALL_THE_TIME; condition checked from inventory limit minus count on initialization'}
 
 
+class NativeNumberError(ValueError):
+    """The input cannot be represented by the native numeric format."""
+
+
 def _single(value):
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):
-        raise ValueError('费用计算参数需要有限数值。')
+        raise NativeNumberError('费用计算参数需要有限数值。')
     try:return struct.unpack('<f',struct.pack('<f',value))[0]
-    except (OverflowError,struct.error) as exc:raise ValueError('费用计算参数超出原生数值范围。') from exc
+    except (OverflowError,struct.error) as exc:raise NativeNumberError('费用计算参数超出原生数值范围。') from exc
 
 
 def _fp(value):
     scaled=_single(_single(value)*_Q32)
     if not math.isfinite(scaled) or not -(1<<63)<=scaled<(1<<63):
-        raise ValueError('费用计算参数超出原生FP范围。')
+        raise NativeNumberError('费用计算参数超出原生FP范围。')
     return int(scaled)
 
 

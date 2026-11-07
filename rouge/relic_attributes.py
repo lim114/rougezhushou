@@ -14,6 +14,13 @@ def is_attribute_rune(effect):
             and effect.get('formula_item') in ('ADDITION', 'MULTIPLIER', 'FINAL_SCALER'))
 
 
+def rune_operand(effect):
+    if effect.get('native_count_scale') == 'float32_before_fp':
+        from .deployment import _single
+        return _single(effect['native_rune_base']) * _single(effect['native_rune_factor'])
+    return effect['value']
+
+
 def _apply_selected_runes(attributes, runes, preview_attack=None):
     """Apply classified runes once, including an optional explicit ATK preview."""
     attributes = dict(attributes)
@@ -24,15 +31,11 @@ def _apply_selected_runes(attributes, runes, preview_attack=None):
     # are ObscuredInt: FP -> float32 -> ties-to-even happens before talents.
     # Reuse the previously sealed pure numeric conversion, not card costs.
     from .deployment import _fp, _fp_product, _single, _Q32
-    def term(effect):
-        if effect.get('native_count_scale') == 'float32_before_fp':
-            return _fp(_single(_single(effect['native_rune_base']) * _single(effect['native_rune_factor'])))
-        return _fp(effect['value'])
     for field, rules in grouped.items():
         if not rules:
             continue
-        addition = sum(term(e) for e in rules if e['formula_item'] == 'ADDITION')
-        multiplier = _Q32 + sum(term(e) for e in rules if e['formula_item'] == 'MULTIPLIER')
+        addition = sum(_fp(rune_operand(e)) for e in rules if e['formula_item'] == 'ADDITION')
+        multiplier = _Q32 + sum(_fp(rune_operand(e)) for e in rules if e['formula_item'] == 'MULTIPLIER')
         scalers = []
         for effect in rules:
             if effect['formula_item'] == 'FINAL_SCALER':
