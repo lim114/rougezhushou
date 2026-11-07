@@ -1,0 +1,80 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "补充预算复用打开时的单次来源，区分无来源和内部错误",
+  "base_commit": "86e6ae27f96f787d7c19a4272269db9223936f53",
+  "changed_sources": [
+    "rouge/supplemental_budget.py",
+    "rouge/supplemental_run_view.py"
+  ],
+  "source_sha256": {
+    "rouge/supplemental_budget.py": "a177ff852a83943152e74ab274fd46b1fc7083d33f13d7ca29171f551e6b982c",
+    "rouge/supplemental_run_view.py": "2abb84217375dec20d2784fbe96000f23b113bcba3f496a6dfcfbcdf5803ac0c"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D332"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial budget checks",
+        "tests_passed": 23,
+        "seconds": 0.631
+      },
+      {
+        "phase": "target recalculation",
+        "tests_passed": 8,
+        "seconds": 0.182
+      },
+      {
+        "phase": "new Qt coverage",
+        "tests_passed": 36,
+        "seconds": 0.584
+      },
+      {
+        "phase": "final including D332",
+        "tests_passed": 36,
+        "seconds": 0.587,
+        "command": "python -m unittest tests.test_supplemental_budget_150 tests.test_healing_budget_132 tests.test_damage_budget_139 tests.test_supplemental_run_141"
+      }
+    ],
+    "live_window": "Qt offscreen. Original desktop test window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "One projection from skill result used for budget visibility and opening. The current opening uses its source list for both defaults and labels. Frozen healing result used for all budget edits. Damage recalculates distinct mitigation conditions only when they differ from the captured source. Independent public functions still compute their own reference. Only the dedicated no-source error is caught during opening.",
+    "requirements": "Qt player entry verifies zero repeat calculations on opening, none on HP-only healing edits, one on a changed enemy defense. Invalid self-healing recipient shown, missing budget source stays on parent, internal default generation ValueError propagates. Existing unknown source and per-target tests retained."
+  },
+  "partially_implemented_decisions": [
+    "D100"
+  ]
+}

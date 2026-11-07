@@ -90,10 +90,42 @@ class Budget150Tests(unittest.TestCase):
             ('char_209_ardign',False,True),('char_120_hibisc',False,True)]:
             d=SupplementalRunDialog(defaults(identity),environment)
             self.assertEqual(d.damage_button.isHidden(),not damage);self.assertEqual(d.healing_button.isHidden(),not healing)
-            if damage:d.show_damage_budget()
-            if healing:d.show_healing_budget()
             if damage or healing:
-                child=d.children_dialogs[-1];self.assertIsNotNone(child.result);self.assertEqual(child.table.rowCount(),1);child.close()
+                import json
+                from unittest.mock import patch
+                from rouge import supplemental_budget as model
+                with patch.object(model, 'run_skill_reference', wraps=model.run_skill_reference) as calculate:
+                    if damage: d.show_damage_budget()
+                    else: d.show_healing_budget()
+                    child=d.children_dialogs[-1]
+                    self.assertIsNotNone(child.result)
+                    self.assertEqual(child.table.rowCount(),1)
+                    calculate.assert_not_called()
+                    data = deepcopy(child.result['preview'])
+                    if damage:
+                        data['targets'][0]['defense'] += 100
+                    else:
+                        data['recipients'][0]['hp'] = 0
+                    child.editor.setPlainText(json.dumps(data))
+                    child.calculate()
+                    self.assertIsNotNone(child.result)
+                    self.assertEqual(calculate.call_count, int(damage))
+                    if identity == 'char_209_ardign':
+                        data['recipients'][0]['id'] = '其他干员'
+                        child.editor.setPlainText(json.dumps(data))
+                        child.calculate()
+                        self.assertIsNone(child.result)
+                        self.assertIn('自身', child.notice.toPlainText())
+                child.close()
+            if not damage and not healing:
+                from unittest.mock import patch
+                from rouge import supplemental_run_view as view
+                d.show_damage_budget()
+                self.assertFalse(d.children_dialogs)
+                self.assertIn('没有已知的单次伤害', d.notice.toPlainText())
+                with patch.object(view, '_budget_defaults', side_effect=ValueError('internal default defect')):
+                    with self.assertRaisesRegex(ValueError, 'internal default defect'):
+                        d.show_damage_budget()
             if identity=='char_209_ardign':self.assertEqual(d.healing_button.text(),'自身声明治疗预算')
             d.editor.setPlainText('{}');self.assertTrue(d.damage_button.isHidden());self.assertTrue(d.healing_button.isHidden())
             d.close();app.processEvents()

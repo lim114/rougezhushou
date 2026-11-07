@@ -2,19 +2,21 @@
 from copy import deepcopy
 from PySide6.QtWidgets import QPushButton,QGridLayout
 from .reference_dialog import ReferenceDialog
-from .supplemental_skills import supplemental_profiles
+from .supplemental_skills import supplemental_profiles, MissingHpExceedsMaximum
 from .supplemental_run import run_skill_reference,format_run_reference
 from .supplemental_comparison import _compare_ranks, format_comparison
 from .skill_upgrade_comparison import RankListError
-from .supplemental_skills import MissingHpExceedsMaximum
 from .supplemental_cultivation import _compare_cultivation,ProposalInputError,cultivation_defaults,format_cultivation_comparison
 from .supplemental_enemies import _compare_fixed_enemies, enemy_defaults, format_fixed_enemies, EnemySelectionError
 from .enemy_environment import EnemyReferenceError
-from .supplemental_budget import (budget_reference,damage_defaults,healing_defaults,
-    declared_damage_budget,declared_healing_budget,format_supplemental_damage_budget,
+from .supplemental_budget import (NoBudgetSource, _budget_reference, _budget_defaults, _declared_healing_budget,
+    _declared_damage_budget,format_supplemental_damage_budget,
     format_supplemental_healing_budget)
-from .damage_budget import damage_sources
-from .healing_budget import healing_sources
+from .damage_budget import DamageBudgetInputError, damage_sources
+from .healing_budget import HealingBudgetInputError, healing_sources
+
+
+from .charge_timeline import DeclaredTimeError
 
 
 class SupplementalRunDialog(ReferenceDialog):
@@ -59,13 +61,7 @@ class SupplementalRunDialog(ReferenceDialog):
 
     def update_budget_entries(self):
         if self.result is None:return
-        # Reuse the already calculated rows, without rereading or preparing the run.
-        components=[]
-        for row in self.result['rows']:
-            dtype={'物理伤害':'physical','法术伤害':'magic'}.get(row['unit'])
-            if row['name'] in ('普通单次治疗','技能单次治疗'):dtype='healing'
-            components.append({'name':row['name'],'per_hit':row['value'],'damage_type':dtype})
-        reference={'components':components}
+        reference = _budget_reference(self.result)
         self.damage_button.setVisible(bool(damage_sources(reference)))
         self.healing_button.setVisible(bool(healing_sources(reference)))
         kind=supplemental_profiles()['operators'][self.result['preview']['operator']]['kind']
@@ -81,19 +77,23 @@ class SupplementalRunDialog(ReferenceDialog):
         if self.result is None:
             self.notice.setPlainText('请先计算当前干员条件，再打开预算工具。');return
         result=deepcopy(self.result);p=result['preview'];environment=result['environment']
-        try:initial=healing_defaults(p,environment) if healing else damage_defaults(p,environment)
-        except ValueError as error:self.notice.setPlainText(str(error));return
+        reference = _budget_reference(result)
+        sources = healing_sources(reference) if healing else damage_sources(reference)
+        try:
+            initial = _budget_defaults(p, reference, sources, healing=healing)
+        except NoBudgetSource as error:
+            self.notice.setPlainText(str(error))
+            return
         columns=([('at_seconds','声明秒数'),('recipient','接收者'),('kind','事件'),
                   ('amount_reference','单次参考'),('effective_healing','有效治疗'),('overhealing','过量'),('hp_after','剩余预算生命')]
                  if healing else [('at_seconds','声明秒数'),('target','目标'),('source','来源'),
                   ('per_hit','单次参考'),('effective_damage','有效伤害'),('overkill','溢出'),('hp_after','剩余预算生命')])
-        reference=budget_reference(p,environment)
-        sources=healing_sources(reference) if healing else damage_sources(reference)
         labels='；'.join(s['id']+'：'+s['name'] for s in sources)
         dialog=ReferenceDialog('补充干员 · '+('声明治疗预算' if healing else '逐目标声明伤害预算'),
             '时刻与对象由用户声明，不能视为原生时钟。可用来源：'+labels,initial,
-            lambda q:declared_healing_budget(p,environment,q) if healing else declared_damage_budget(p,environment,q),
-            format_supplemental_healing_budget if healing else format_supplemental_damage_budget,columns,self)
+            lambda q:_declared_healing_budget(p,environment,q,reference,sources) if healing else _declared_damage_budget(p,environment,q,opened_reference=reference),
+            format_supplemental_healing_budget if healing else format_supplemental_damage_budget,columns,self,
+            input_errors=(HealingBudgetInputError, DamageBudgetInputError, DeclaredTimeError, MissingHpExceedsMaximum))
         self.children_dialogs.append(dialog);dialog.show()
 
     def show_enemies(self):

@@ -4,11 +4,18 @@ from copy import deepcopy
 from .supplemental_run import run_skill_reference
 from .supplemental_skills import supplemental_profiles
 from .damage_budget import _damage_budget,damage_sources,format_damage_budget
-from .healing_budget import _healing_budget,healing_sources,format_healing_budget
+from .healing_budget import _healing_budget,healing_sources,format_healing_budget,HealingBudgetInputError
+
+
+class NoBudgetSource(ValueError):
+    """The selected operator has no single-hit source for this budget."""
 
 
 def budget_reference(operator_preview,environment):
-    result=run_skill_reference(operator_preview,environment)
+    return _budget_reference(run_skill_reference(operator_preview, environment))
+
+
+def _budget_reference(result):
     components=[]
     for row in result['rows']:
         dtype={'物理伤害':'physical','法术伤害':'magic'}.get(row['unit'])
@@ -19,16 +26,23 @@ def budget_reference(operator_preview,environment):
 
 
 def damage_defaults(operator_preview,environment):
-    sources=damage_sources(budget_reference(operator_preview,environment))
-    if not sources:raise ValueError('当前干员没有已知的单次伤害预算来源。')
-    return {'targets':[{'id':'目标甲','hp':3000,'defense':operator_preview['enemy_defense'],
-                       'resistance':operator_preview['enemy_resistance']}],
-            'events':[{'at_seconds':0,'target':'目标甲','source':sources[0]['id']}]}
+    reference = budget_reference(operator_preview, environment)
+    return _budget_defaults(operator_preview, reference, damage_sources(reference), healing=False)
 
 
 def healing_defaults(operator_preview,environment):
-    reference=budget_reference(operator_preview,environment);sources=healing_sources(reference)
-    if not sources:raise ValueError('当前干员没有已知的单次治疗预算来源。')
+    reference = budget_reference(operator_preview, environment)
+    return _budget_defaults(operator_preview, reference, healing_sources(reference), healing=True)
+
+
+def _budget_defaults(operator_preview, reference, sources, *, healing):
+    if not sources:
+        kind = '治疗' if healing else '伤害'
+        raise NoBudgetSource('当前干员没有已知的单次' + kind + '预算来源。')
+    if not healing:
+        return {'targets':[{'id':'目标甲','hp':3000,'defense':operator_preview['enemy_defense'],
+                           'resistance':operator_preview['enemy_resistance']}],
+                'events':[{'at_seconds':0,'target':'目标甲','source':sources[0]['id']}]}
     self_heal=supplemental_profiles()['operators'][operator_preview['operator']]['kind']=='self_heal'
     maximum=reference['supplemental']['attributes']['hp'] if self_heal else 3000
     recipient='自身' if self_heal else '友方甲'
@@ -37,8 +51,18 @@ def healing_defaults(operator_preview,environment):
 
 
 def declared_damage_budget(operator_preview,environment,preview):
-    frozen=deepcopy(environment)
-    result=_damage_budget(deepcopy(operator_preview),preview,lambda p:budget_reference(p,frozen))
+    return _declared_damage_budget(operator_preview, environment, preview, opened_reference=None)
+
+
+def _declared_damage_budget(operator_preview, environment, preview, *, opened_reference):
+    frozen = deepcopy(environment)
+    def target_reference(target):
+        if (opened_reference is not None
+                and target['enemy_defense'] == operator_preview['enemy_defense']
+                and target['enemy_resistance'] == operator_preview['enemy_resistance']):
+            return opened_reference
+        return budget_reference(target, frozen)
+    result = _damage_budget(operator_preview, preview, target_reference)
     result['environment']=frozen
     result['notes'].extend(['期望伤害与未知天赋组合不提供预算来源；克洛丝已知分支仅为用户声明的条件，未抽取随机序列。',
                             '来源名称和每目标单次数值在报告中列出；同一条事件只记一个来源，不能重复叠加普通攻击与其期望。'])
@@ -46,16 +70,20 @@ def declared_damage_budget(operator_preview,environment,preview):
 
 
 def declared_healing_budget(operator_preview,environment,preview):
-    frozen=deepcopy(environment);reference=budget_reference(operator_preview,frozen)
+    reference = budget_reference(operator_preview, environment)
+    return _declared_healing_budget(operator_preview, environment, preview, reference, healing_sources(reference))
+
+
+def _declared_healing_budget(operator_preview, environment, preview, reference, sources):
     if supplemental_profiles()['operators'][operator_preview['operator']]['kind']=='self_heal':
         recipients=preview.get('recipients') if type(preview) is dict else None
         maximum=reference['supplemental']['attributes']['hp']
         if (type(recipients) is not list or len(recipients)!=1 or type(recipients[0]) is not dict or
             recipients[0].get('id')!='自身' or type(recipients[0].get('max_hp')) not in (int,float) or
             recipients[0]['max_hp']!=maximum):
-            raise ValueError('卡缇仅可对自身建立预算，id需为自身，max_hp需为本次计算的最大生命。')
-    result=_healing_budget(operator_preview, preview, snapshot=(healing_sources(reference), reference['estimate']['notes']))
-    result['environment']=frozen
+            raise HealingBudgetInputError('卡缇仅可对自身建立预算，id需为自身，max_hp需为本次计算的最大生命。')
+    result=_healing_budget(operator_preview, preview, snapshot=(sources, reference['estimate']['notes']))
+    result['environment']=deepcopy(environment)
     result['notes'].append('持续生命回复不当作单次治疗；卡缇仅对自身，芙蓉友方生命为局外声明，不判断真实受疗资格。')
     return result
 

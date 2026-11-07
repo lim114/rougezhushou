@@ -1,3 +1,7 @@
+## 当前断点 · 补充预算复用打开时的单次来源，区分无来源和内部错误（2026-11-06）
+
+D332已实施。补充干员伤害和治疗预算复用打开时来源；生命变化不重算治疗，目标防御变化单独重算。36项定向通过。D100仍有其他入口。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-budget-snapshot-20261106/summary.json)。
+
 ## 当前断点 · 培养与招募来源对照复用相同培养和已打开的基准（2026-11-06）
 
 D100补充培养及招募来源对照入口已验证。精确同培养复用属性，原始来源明确且相同时可复用基准；来源变化重新计算。31项定向通过，14份完整报告与旧实现相同。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-cultivation-inputs-20261106/summary.json)。
