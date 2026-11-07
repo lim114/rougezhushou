@@ -1,3 +1,7 @@
+## 当前断点 · 敌人特性复用等级与属性读取，免疫说明一次分类（2026-11-06）
+
+113份关卡配置的1207条敌人引用，其完整声明及逐行文字与前版一致。24项定向通过。D347待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-trait-declarations-20261106/summary.json)。
+
 ## 当前断点 · 出怪记录按敌人编号查候选，名称和特性共享来源核验（2026-11-06）
 
 184份关卡完整输出逐项一致，涉及7696条出怪动作；公开数据未出现多候选，另以构造例验证其顺序和修改隔离。24项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-enemy-bindings-spawn-index-20261106/summary.json)。

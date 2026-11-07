@@ -1,5 +1,4 @@
 """Explain explicit current enemy declarations without guessing live state."""
-from copy import deepcopy
 
 IMMUNITIES = {
     'stunImmune': '晕眩', 'silenceImmune': '沉默', 'sleepImmune': '沉睡',
@@ -20,13 +19,15 @@ DAMAGE = {'PHYSIC': '物理伤害', 'MAGIC': '法术伤害', 'HEAL': '治疗',
 def binding_sources(binding, reference):
     definitions = reference['inputs']['enemy_definitions'].get(binding['id'], [])
     level = binding['level']
-    exact = any(row['level'] == level for row in definitions)
     inherited = []
     handbook = {}
     if binding['useDb'] is True:
         inherited = sorted((row for row in definitions if row['level'] <= level),
                            key=lambda row: row['level'])
+        exact = bool(inherited) and inherited[-1]['level'] == level
         handbook = reference['inputs']['handbook'].get(binding['id']) or {}
+    else:
+        exact = any(row['level'] == level for row in definitions)
     return exact, inherited, handbook
 
 
@@ -40,24 +41,26 @@ def declarations_from_sources(binding, exact, inherited, handbook):
     sources.append(('本关明确覆盖', binding.get('overwrittenData') or {}))
     values, provenance, core = {}, {}, {}
     for label, data in sources:
+        attributes = data.get('attributes') or {}
         for key in CORE_ATTRIBUTES:
-            wrapper = (data.get('attributes') or {}).get(key)
+            wrapper = attributes.get(key)
             if wrapper is not None and wrapper['m_defined'] is True:
                 core[key] = wrapper['m_value']
         for key in (*FIELDS, *IMMUNITIES):
-            container = (data.get('attributes') or {}) if key in IMMUNITIES else data
+            immunity = key in IMMUNITIES
+            container = attributes if immunity else data
             wrapper = container.get(key)
             if (not isinstance(wrapper, dict) or wrapper.get('m_defined') is not True
                     or 'm_value' not in wrapper):
                 continue
             value = wrapper['m_value']
-            valid = (type(value) is bool if key in IMMUNITIES or key == 'notCountInTotal'
+            valid = (type(value) is bool if immunity or key == 'notCountInTotal'
                      else type(value) is int and value >= 0 if key == 'lifePointReduce'
                      else type(value) is str)
             if valid:
-                values[key] = deepcopy(value)
+                values[key] = value
                 provenance[key] = {'source': label, 'path':
-                                   ('attributes.' if key in IMMUNITIES else '') + key}
+                                   ('attributes.' if immunity else '') + key}
     # A handbook entry describes its database identity, never an independent constructor.
     raw_damage = handbook.get('damageType') if exact else None
     damage = list(raw_damage) if isinstance(raw_damage, list) and all(
@@ -86,8 +89,13 @@ def player_lines(traits):
     count = values.get('notCountInTotal')
     if type(count) is bool:
         lines.append('敌人数统计原设置：' + ('不计入' if count else '计入') + '总数；不据此推算本关实际总敌人数。')
-    positive = [name for key, name in IMMUNITIES.items() if values.get(key) is True]
-    negative = [name for key, name in IMMUNITIES.items() if values.get(key) is False]
+    positive, negative = [], []
+    for key, name in IMMUNITIES.items():
+        setting = values.get(key)
+        if setting is True:
+            positive.append(name)
+        elif setting is False:
+            negative.append(name)
     if positive or negative:
         lines += ['', '【控制效果的原始设置】']
         if positive:
