@@ -7,7 +7,7 @@ from .supplemental_run import run_skill_reference,format_run_reference
 from .supplemental_comparison import _compare_ranks, format_comparison
 from .skill_upgrade_comparison import RankListError
 from .supplemental_skills import MissingHpExceedsMaximum
-from .supplemental_cultivation import compare_cultivation,cultivation_defaults,format_cultivation_comparison
+from .supplemental_cultivation import _compare_cultivation,ProposalInputError,cultivation_defaults,format_cultivation_comparison
 from .supplemental_enemies import _compare_fixed_enemies, enemy_defaults, format_fixed_enemies, EnemySelectionError
 from .enemy_environment import EnemyReferenceError
 from .supplemental_budget import (budget_reference,damage_defaults,healing_defaults,
@@ -116,9 +116,9 @@ class SupplementalRunDialog(ReferenceDialog):
         dialog=ReferenceDialog('补充干员 · 本局培养与招募来源对照',
             '方案仅用于局外比较；来源null为未知，non_emergency为非应急，emergency_hire为应急助力。',
             cultivation_defaults(result['preview'],result['environment']),
-            lambda p:compare_cultivation(result['preview'],result['environment'],p),format_cultivation_comparison,
+            lambda p:_compare_cultivation(result['preview'],result['environment'],p,baseline=result),format_cultivation_comparison,
             [('proposal','培养方案'),('name','分项'),('value','预计结果'),
-             ('base_value','当前培养基准'),('delta','差值'),('unit','单位')],self)
+             ('base_value','当前培养基准'),('delta','差值'),('unit','单位')],self,input_errors=(ProposalInputError,))
         self.children_dialogs.append(dialog);dialog.show()
 
     def show_ranks(self):

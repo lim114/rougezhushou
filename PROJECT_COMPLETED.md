@@ -1,3 +1,7 @@
+## 维护 · 培养与招募来源对照复用相同培养和已打开的基准（2026-11-06）
+
+D100补充培养及招募来源对照入口已验证。精确同培养复用属性，原始来源明确且相同时可复用基准；来源变化重新计算。31项定向通过，14份完整报告与旧实现相同。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-cultivation-inputs-20261106/summary.json)。
+
 ## 维护 · 固定敌人对照复用干员和本局资料，移除窗口的无目标重复计算（2026-11-06）
 
 D100补充干员固定敌人对照已验证。固定输入每次绑定一次，窗口只计算请求的目标与难度；独立入口仍核对原始难度。25项定向通过，28个组合与旧版相同。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-enemy-inputs-20261106/summary.json)。

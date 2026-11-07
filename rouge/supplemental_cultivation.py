@@ -1,13 +1,20 @@
 """Independent cultivation and recruitment scenarios, not account mutations."""
 from copy import deepcopy
-from .supplemental_run import run_skill_reference
+from .supplemental_run import _calculate_run_skill, _run_inputs
 from .catalog import CultivationInputError
-from .supplemental_skills import MissingHpExceedsMaximum
+from .supplemental_skills import MissingHpExceedsMaximum, _cultivated_stats
 from .supplemental_comparison import comparison_rows,format_comparison,metrics
 
 
+TRAINING_FIELDS = ('elite', 'level', 'trust', 'potential')
+
+
+class ProposalInputError(ValueError):
+    """Invalid structure or recruitment choice in the declared proposals."""
+
+
 def cultivation_defaults(operator_preview,environment):
-    base={k:operator_preview[k] for k in ('elite','level','trust','potential')}
+    base={k:operator_preview[k] for k in TRAINING_FIELDS}
     kind=environment['operator_metadata'].get(operator_preview['operator'],{}).get('recruitment_kind')
     return {'proposals':[
         {'name':'当前培养及来源',**base,'recruitment_kind':kind},
@@ -17,33 +24,54 @@ def cultivation_defaults(operator_preview,environment):
 
 
 def compare_cultivation(operator_preview,environment,preview):
+    return _compare_cultivation(operator_preview, environment, preview, baseline=None)
+
+
+def _compare_cultivation(operator_preview, environment, preview, *, baseline):
     required={'name','elite','level','trust','potential','recruitment_kind'}
     if type(preview) is not dict or set(preview)!={'proposals'}:
-        raise ValueError('培养对照需要proposals列表。')
+        raise ProposalInputError('培养对照需要proposals列表。')
     proposals=preview['proposals']
     if type(proposals) is not list or not 1<=len(proposals)<=12:
-        raise ValueError('需要1–12个培养方案。')
+        raise ProposalInputError('需要1–12个培养方案。')
     names=set()
     for proposal in proposals:
         if type(proposal) is not dict or set(proposal)!=required:
-            raise ValueError('每个方案需要name、elite、level、trust、potential、recruitment_kind。')
+            raise ProposalInputError('每个方案需要name、elite、level、trust、potential、recruitment_kind。')
         name=proposal['name'];kind=proposal['recruitment_kind']
         if (type(name) is not str or not name.strip() or len(name)>80 or name in names or
             any(ord(c)<32 or 0xD800<=ord(c)<=0xDFFF for c in name)):
-            raise ValueError('方案名需为唯一、非空的可显示短文本。')
+            raise ProposalInputError('方案名需为唯一、非空的可显示短文本。')
         if kind is not None and (type(kind) is not str or kind not in ('non_emergency','emergency_hire')):
-            raise ValueError('招募来源仅支持non_emergency、emergency_hire或null（未知）。')
+            raise ProposalInputError('招募来源仅支持non_emergency、emergency_hire或null（未知）。')
         names.add(name)
     original=deepcopy(operator_preview);environment=deepcopy(environment)
-    baseline=run_skill_reference(original,environment);rows=[];variants=[]
+    identity = original['operator']
+    base_stats = _cultivated_stats(original)
+    base_inputs = _run_inputs(identity, environment)
+    if baseline is None:
+        baseline = _calculate_run_skill(original, environment, base_stats, base_inputs)
+    else:
+        baseline = deepcopy(baseline)
+    rows=[];variants=[]
     baseline_values={r['key']:r['value'] for r in metrics(baseline)}
+    profile, raw_skill, member, complete = base_inputs
     for proposal in proposals:
-        proposed={**original,**{k:proposal[k] for k in ('elite','level','trust','potential')}}
+        proposed={**original,**{k:proposal[k] for k in TRAINING_FIELDS}}
+        same_training = all(type(proposed[k]) is type(original[k]) and proposed[k] == original[k]
+                            for k in TRAINING_FIELDS)
+        kind = proposal['recruitment_kind']
         env=deepcopy(environment)
-        member=env['operator_metadata'].setdefault(original['operator'],{})
-        member['recruitment_kind']=proposal['recruitment_kind']
+        proposed_member = env['operator_metadata'].setdefault(identity, {})
+        proposed_member['recruitment_kind'] = kind
         variant={'proposal':proposal['name'],'operator_preview':proposed,'environment':env,'result':None,'error':None}
-        try:variant['result']=run_skill_reference(proposed,env)
+        try:
+            if same_training and 'recruitment_kind' in member and kind == member['recruitment_kind']:
+                variant['result'] = deepcopy(baseline)
+            else:
+                stats = base_stats if same_training else _cultivated_stats(proposed)
+                inputs = profile, raw_skill, proposed_member, complete
+                variant['result'] = _calculate_run_skill(proposed, env, stats, inputs)
         except (CultivationInputError,MissingHpExceedsMaximum) as error:
             variant['error']=proposal['name']+'：'+str(error)
             rows.append({'proposal':proposal['name'],'key':'invalid','name':'方案不可测算',
