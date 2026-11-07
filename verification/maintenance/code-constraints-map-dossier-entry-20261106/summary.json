@@ -1,0 +1,71 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "节点查询区分输入错误，路线复用已核验节点",
+  "base_commit": "3d5aac837e223abb9cdc414a452c789b41da3750",
+  "changed_sources": [
+    "rouge/node_catalog.py",
+    "rouge/player_map.py",
+    "rouge/player_map_reference.py"
+  ],
+  "source_sha256": {
+    "rouge/node_catalog.py": "89881de5b09bdbc3cda98b94bafe8525ba184c7abc0e7a8774bfd9a16df39d8e",
+    "rouge/player_map.py": "ad9274415526a20fafdc2ea394925532d4a94ee42331b537bfbae475c940b94d",
+    "rouge/player_map_reference.py": "180c6dfb56923253abd76bc0fb0c91a9603af1af1b125bec34306173cecb2455"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D82",
+    "D83"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_passed": 70,
+        "seconds": 5.536
+      },
+      {
+        "phase": "final",
+        "tests_passed": 81,
+        "seconds": 8.197,
+        "command": "python -m unittest tests.test_node_catalog tests.test_node_catalog_view tests.test_player_map_interaction_392 tests.test_player_reference_391 tests.test_map_reading_state_review tests.test_player_map_workspace_383"
+      }
+    ],
+    "live_window": "Qt offscreen. Original desktop window refresh still pending following prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Public query entries retain graph checks. The dossier projection receives validated graph nodes from both standalone and route paths. Fixed template projection touches only the selected node. Public node events and internal assembly share one implementation. Kept separate errors for public source reads and invalid map queries. No new fallback in hover rendering.",
+    "requirements": "A two-node route validates each node once. Invalid input and missing files preserve selection error handling. Both click paths propagate internal TypeError, ValueError and KeyError. Stored maps and reading position remain intact."
+  },
+  "partially_implemented_decisions": []
+}

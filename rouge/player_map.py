@@ -7,6 +7,7 @@ from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
 from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
     QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit,QFormLayout,QMessageBox)
+from .node_catalog import NodeQueryError
 from .map_view import MapView
 from .run_config import config_data
 
@@ -33,15 +34,6 @@ def node_style(node):
     if node.get('template_type'):return node['template_type'],'模板固定','template'
     if observed in ICONS:return observed,'尚未揭示','unknown'
     return None,'类型未确认','unknown'
-
-def dossier_graph(graph):
-    """Constrain reference candidates by fixed template facts without asserting a read."""
-    query=deepcopy(graph)
-    for node in query['nodes']:
-        observed=node.get('observed_type')
-        if node.get('template_type') and (not observed or observed.startswith(('未知','类型未确认'))):
-            node['prediction']={**(node.get('prediction')or{}),'candidates':[node['template_type']]}
-    return query
 
 @lru_cache(maxsize=1)
 def art_manifest():return json.loads((ART/'sources.json').read_text('utf8'))
@@ -223,7 +215,7 @@ class MapPanel(QWidget):
     def open_hover_entry(self,node_id,kind,identity):
         from .player_map_reference import node_dossier
         try:dossier=node_dossier(self.view.graph,node_id,self.owner.run.state.get('config',{}))or{}
-        except(ValueError,KeyError,TypeError):return False
+        except (NodeQueryError, OSError, UnicodeError, json.JSONDecodeError):return False
         names=('rows','history_observed_event_rows')if kind=='event'else('battle_rows','history_observed_battle_rows')if kind=='battle'else()
         if not any(row.get('id')==identity for name in names for row in dossier.get(name,[])):return False
         self.hover_card.dismiss();self.view.select_node(node_id)
@@ -340,18 +332,18 @@ class MapPanel(QWidget):
         reading=self.entry_readings.get(self.reading_key,{})
         blocked=self.entry_search.blockSignals(True);self.entry_search.setText(reading.get('query',''));self.entry_search.blockSignals(blocked)
         keep=reading.get('selected');query=self.entry_search.text().strip().casefold()
-        self.entries.blockSignals(True);self.entries.clear();self.rows={};self.selected_reference=None;self.open_button.setEnabled(False)
+        self.entries.blockSignals(True);self.entries.clear();self.entries.blockSignals(False);self.rows={};self.selected_reference=None;self.open_button.setEnabled(False)
         self.entry_count.setText('选择节点查看资料。')
         if not graph or not node_id:
-            self.title.setText('请选择地图节点');self.detail.setPlainText('点击图标查看事件、奖励与作战；可切换已记录楼层。');self.entries.blockSignals(False);return
+            self.title.setText('请选择地图节点');self.detail.setPlainText('点击图标查看事件、奖励与作战；可切换已记录楼层。');return
         node=next(n for n in graph['nodes']if n['id']==node_id);kind,note,basis=node_style(node)
         self.title.setText(location(node,graph['grid']['rows'])+' · '+(kind or'类型未确认')+(' · '+note if basis=='history'else''))
         try:dossier=model.node_dossier(graph,node_id,self.owner.run.state.get('config',{}))
-        except(ValueError,KeyError,TypeError)as error:
-            self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
+        except (NodeQueryError, OSError, UnicodeError, json.JSONDecodeError) as error:
+            self.detail.setPlainText('节点资料尚不能读取：'+str(error));return
         if dossier is None:
             self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n节点类型：待确认。')
-            self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if keep is None else 0);self.entries.blockSignals(False);return
+            self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if keep is None else 0);return
         groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows']),('已列条件排除的事件（不是候选）','event',dossier.get('excluded_event_candidates',[]))]
         chosen=None
         total=sum(len(rows)for _,_,rows in groups);shown=0
@@ -362,7 +354,7 @@ class MapPanel(QWidget):
             for row in rows:
                 key=(label,kind,row.get('id')or row.get('node_type'));item=QTreeWidgetItem([row.get('title')or row.get('node_type')or'功能节点']);item.setToolTip(0,item.text(0));item.setData(0,Qt.ItemDataRole.UserRole,key);root.addChild(item);self.rows[key]=row
                 if key==keep:chosen=item
-        self.entries.blockSignals(False);self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
+        self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
         if chosen:self.entries.setCurrentItem(chosen)
         expanded=reading.get('expanded',{})
         for i in range(self.entries.topLevelItemCount()):

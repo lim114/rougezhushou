@@ -7,6 +7,10 @@ from . import event_node_requirements as natural_requirements
 import json,re
 
 NOTICE='固定资料候选与原文引用；未知资格仍保留，不表示必然出现，不提供生成概率。'
+class NodeQueryError(ValueError):
+    """An invalid map or query supplied to the node directory."""
+
+
 @lru_cache(maxsize=1)
 def _data():
     return json.loads((Path(__file__).with_name('data')/'node-catalog.json').read_text(encoding='utf-8'))
@@ -18,10 +22,10 @@ def _original_entries():
     return json.loads((Path(__file__).with_name('data')/'original-entry-reference.json').read_text(encoding='utf-8'))
 def _text(value,label,optional=False):
     if optional and value is None:return
-    if not isinstance(value,str) or not value.strip():raise ValueError(label+'需要非空文字。')
+    if not isinstance(value,str) or not value.strip():raise NodeQueryError(label+'需要非空文字。')
 def _floor(floor,special_region=False):
-    if floor is not None and (type(floor) is not int or floor not in range(1,7)):raise ValueError('主层需要1–6的整数。')
-    if type(special_region) is not bool:raise ValueError('special_region需要布尔值。')
+    if floor is not None and (type(floor) is not int or floor not in range(1,7)):raise NodeQueryError('主层需要1–6的整数。')
+    if type(special_region) is not bool:raise NodeQueryError('special_region需要布尔值。')
 def _event(event_id):
     _text(event_id,'事件引用')
     e=next((e for e in _data()['events'] if e['id']==event_id),None)
@@ -82,21 +86,24 @@ def event_candidates(node_type=None,floor=None,special_region=False,include_indi
                    indirect_included=include_indirect)
 COMMANDS['candidates']=event_candidates
 def _validate_node(node):
-    if not isinstance(node,dict):raise ValueError('节点需要对象。')
+    if not isinstance(node,dict):raise NodeQueryError('节点需要对象。')
     for key in ('observed_type','remembered_type'):_text(node.get(key),key,True)
     prediction=node.get('prediction')
-    if prediction is not None and not isinstance(prediction,dict):raise ValueError('类型预测需要对象。')
+    if prediction is not None and not isinstance(prediction,dict):raise NodeQueryError('类型预测需要对象。')
     types=(prediction or {}).get('candidates')
     if types is not None and (not isinstance(types,list) or any(not isinstance(t,str) or not t for t in types)):
-        raise ValueError('类型候选需要非空文字列表。')
+        raise NodeQueryError('类型候选需要非空文字列表。')
     for key in ('content','remembered_content'):
         value=node.get(key)
-        if value is not None and not isinstance(value,dict):raise ValueError(key+'需要对象。')
+        if value is not None and not isinstance(value,dict):raise NodeQueryError(key+'需要对象。')
     history=node.get('content_history')
     if history is not None and (not isinstance(history,list) or any(not isinstance(v,dict) for v in history)):
-        raise ValueError('历史内容需要对象列表。')
+        raise NodeQueryError('历史内容需要对象列表。')
 def node_events(node,floor=None,special_region=False):
     _validate_node(node);_floor(floor,special_region)
+    return _node_events(node, floor, special_region)
+
+def _node_events(node, floor, special_region):
     observed=node.get('observed_type');remembered=node.get('remembered_type')
     # A current floor filter cannot discard the identity of an earlier read.
     history=all_events(remembered,include_indirect=True)['rows'] if remembered and remembered!=observed else []
@@ -248,7 +255,7 @@ def _battle_pools():
     return json.loads((Path(__file__).with_name('data')/'battle-node-pools.json').read_text(encoding='utf-8'))
 def _difficulty(difficulty):
     if difficulty is not None and (type(difficulty) is not int or difficulty not in _data()['valid_difficulties']):
-        raise ValueError('保密等级需要固定资料中的普通模式整数或留空。')
+        raise NodeQueryError('保密等级需要固定资料中的普通模式整数或留空。')
 def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region=False):
     _floor(floor,special_region);_difficulty(difficulty)
     rules={'“居民”据点':{'excluded_main_floors':[1,6],'minimum_difficulty':4},
@@ -271,7 +278,7 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
     pool=_battle_pools();rows=[];excluded=[]
     # Explicit content/forced entries cannot inherit natural node generation gates.
     checks=_node_requirement_checks(node_type if effective_entry_mode=='natural' else None,floor,difficulty,special_region)
-    if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
+    if node_type is not None and node_type not in _all_node_types():raise NodeQueryError('节点类型不在已证目录中。')
     meta=json.loads((Path(__file__).with_name('data')/'view-catalog.json').read_text(encoding='utf-8'))['stages']
     stage_catalog = catalog()
     sources = None
@@ -362,7 +369,7 @@ def scene_choices(event_id,scene_key):
 COMMANDS['choices']=scene_choices
 def function_nodes(node_type=None,floor=None,difficulty=None,special_region=False):
     _text(node_type,'节点类型',True)
-    if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
+    if node_type is not None and node_type not in _all_node_types():raise NodeQueryError('节点类型不在已证目录中。')
     _floor(floor,special_region);_difficulty(difficulty)
     rows=[{**deepcopy(f),'current_eligibility':None,'inventory_or_state_updated':False,'reference_only':True,
            'known_requirement_checks':_node_requirement_checks(f['node_type'],floor,difficulty,special_region)}
@@ -370,17 +377,18 @@ def function_nodes(node_type=None,floor=None,difficulty=None,special_region=Fals
     return _result(rows,function_sources=deepcopy(_battle_pools()['sources']),
                    condition_text_is_reference_only=True)
 def _graph_nodes(graph):
-    if not isinstance(graph,dict):raise ValueError('地图需要对象。')
+    if not isinstance(graph,dict):raise NodeQueryError('地图需要对象。')
     nodes=graph.get('nodes')
-    if not isinstance(nodes,list):raise ValueError('地图节点需要列表。')
+    if not isinstance(nodes,list):raise NodeQueryError('地图节点需要列表。')
     for node in nodes:
         _validate_node(node);_text(node.get('id'),'节点引用')
-    if len({n['id'] for n in nodes})!=len(nodes):raise ValueError('地图节点引用必须唯一。')
-    return nodes
+    by_id = {node['id']: node for node in nodes}
+    if len(by_id)!=len(nodes):raise NodeQueryError('地图节点引用必须唯一。')
+    return by_id
 def _content_event_rows(content):
     if not content or content.get('kind')!='event' or not isinstance(content.get('title'),str):return []
     rows=[];ids=content.get('scene_candidates') or []
-    if not isinstance(ids,list) or any(not isinstance(i,str) for i in ids):raise ValueError('场景候选需要文字列表。')
+    if not isinstance(ids,list) or any(not isinstance(i,str) for i in ids):raise NodeQueryError('场景候选需要文字列表。')
     for e in _data()['events']:
         if e['title']!=content['title']:continue
         linked={i for s in e['scenes'] for i in s['game_scene_ids']}
@@ -422,15 +430,22 @@ def _history_read_rows(node):
     return {'history_observed_event_rows':list(events.values()),'history_observed_battle_rows':list(battles.values())}
 
 def node_history(graph,node_id):
-    nodes=_graph_nodes(graph);_text(node_id,'节点引用');matches=[n for n in nodes if n['id']==node_id]
-    if len(matches)!=1:raise ValueError('节点引用必须在当前地图唯一。')
-    return _history_read_rows(matches[0])
+    nodes = _graph_nodes(graph)
+    _text(node_id, '节点引用')
+    if node_id not in nodes: raise NodeQueryError('节点引用必须在当前地图唯一。')
+    return _history_read_rows(nodes[node_id])
 
 def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
-    nodes=_graph_nodes(graph);_text(node_id,'节点引用');_floor(floor,special_region);_difficulty(difficulty)
-    matches=[n for n in nodes if n['id']==node_id]
-    if len(matches)!=1:raise ValueError('节点引用必须在当前地图唯一。')
-    node=matches[0];events=node_events(node,floor,special_region);battles={};types=events['type_candidates']
+    nodes = _graph_nodes(graph)
+    _text(node_id, '节点引用')
+    _floor(floor,special_region)
+    _difficulty(difficulty)
+    if node_id not in nodes: raise NodeQueryError('节点引用必须在当前地图唯一。')
+    return _node_dossier(graph, nodes[node_id], floor, special_region, difficulty)
+
+def _node_dossier(graph, node, floor, special_region, difficulty):
+    node_id = node['id']
+    events=_node_events(node,floor,special_region);battles={};types=events['type_candidates']
     for t in types:
         for s in battle_candidates(t,floor,context='all',special_region=special_region,difficulty=difficulty)['rows']:battles[s['id']]=s
     current=deepcopy(node.get('content'));history=deepcopy(node.get('remembered_content'))
@@ -441,7 +456,7 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
     by_id={e['id']:e for e in active_events}
     past={e['id']:e for e in events['history_candidates']}
     for e in history_refs:past[e['id']]=e
-    identity=_content_identity_status(current,node.get('observed_type') in ('林间空地','曲折密道'))
+    identity=_content_identity_status(current,pass_through)
     history_rows=_history_read_rows(node)
     history_functions=[];previous_type=node.get('remembered_type')
     if previous_type and previous_type!=node.get('observed_type'):
@@ -474,7 +489,7 @@ def route_events(graph,path,floor=None,special_region=False,difficulty=None):
     nodes=_graph_nodes(graph);_floor(floor,special_region);_difficulty(difficulty)
     if not isinstance(path,list) or not path or any(not isinstance(k,str) or not k for k in path):raise ValueError('路线需要非空节点引用列表。')
     if len(set(path))!=len(path):raise ValueError('内容路线对照不接受重复节点。')
-    known={n['id'] for n in nodes}
+    known=nodes.keys()
     if not set(path)<=known:raise ValueError('路线引用包含图外节点。')
     raw_edges=graph.get('edges',[])
     if not isinstance(raw_edges,list):raise ValueError('地图连接需要列表。')
@@ -485,7 +500,7 @@ def route_events(graph,path,floor=None,special_region=False,difficulty=None):
     if any(frozenset([a,b]) not in edges for a,b in zip(path,path[1:])):raise ValueError('路线步骤不符合所给模板连接。')
     rows=[];union={};shared=None
     for key in path:
-        dossier=node_dossier(graph,key,floor,special_region,difficulty);ids={e['id'] for e in dossier['rows']}
+        dossier=_node_dossier(graph,nodes[key],floor,special_region,difficulty);ids={e['id'] for e in dossier['rows']}
         for e in dossier['rows']:union[e['id']]=e
         shared=ids if shared is None else shared&ids
         rows.append({'node_id':key,'position':dossier['position'],'events':dossier['rows'],'battle_rows':dossier['battle_rows'],

@@ -57,13 +57,13 @@ class MapPresentationTests(unittest.TestCase):
    self.assertGreater(row['width'],0);self.assertLessEqual(row['x']+row['width'],row['atlasWidth']);self.assertLessEqual(row['y']+row['height'],row['atlasHeight'])
 
  def test_fixed_battle_does_not_list_unrelated_events(self):
-  from rouge.player_map import dossier_graph
-  from rouge.node_catalog import node_dossier
+  from rouge.player_map_reference import node_dossier
   g={'nodes':[{'id':'a','row':0,'col':0,'template_type':'作战'}]};copy=deepcopy(g)
-  query=dossier_graph(g);d=node_dossier(query,'a',floor=1)
+  d=node_dossier(g,'a',{})
   self.assertEqual(g,copy);self.assertEqual(d['type_candidates'],['作战']);self.assertEqual(d['rows'],[]);self.assertTrue(d['battle_rows'])
-  self.assertNotIn('observed_type',query['nodes'][0])
+  self.assertNotIn('observed_type',g['nodes'][0])
  def test_observed_change_overrides_original_template(self):
-  from rouge.player_map import dossier_graph
-  g={'nodes':[{'observed_type':'林间空地','template_type':'作战'}]}
-  self.assertNotIn('prediction',dossier_graph(g)['nodes'][0])
+  from rouge.player_map_reference import node_dossier
+  g={'nodes':[{'id':'a','observed_type':'林间空地','template_type':'作战'}]}
+  self.assertEqual(node_dossier(g,'a',{})['type_candidates'], ['林间空地'])
+  self.assertNotIn('prediction',g['nodes'][0])

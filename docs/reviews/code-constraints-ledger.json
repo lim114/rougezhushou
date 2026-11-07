@@ -307,7 +307,7 @@
     },
     {
       "file": "rouge/player_map_reference.py",
-      "sha256": "9048fabf746426ea4aae42fee8c346c9885b053a0d2f9112ac445d8338b73d97",
+      "sha256": "180c6dfb56923253abd76bc0fb0c91a9603af1af1b125bec34306173cecb2455",
       "rule1": "default_cache_fixed_other_query_boundaries_need_followup",
       "rule2": "single_use_public_counts_wrapper_and_duplicate_cache_removed",
       "rule3": "pending_user_review",
@@ -326,6 +326,11 @@
           "receipt": "verification/maintenance/code-constraints-historical-query-errors-20261106/summary.json",
           "scope": "D48 query boundary and established absent-versus-zero contract",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D82, D83",
+          "receipt": "verification/maintenance/code-constraints-map-dossier-entry-20261106/summary.json",
+          "scope": "Map selection, hover-entry navigation, node directory graph and route validation. Hover card rendering D327 pending."
         }
       ]
     },
@@ -732,7 +737,7 @@
     },
     {
       "file": "rouge/player_map.py",
-      "sha256": "971ad29d33d3847fc3c5f8c0f0c9821a4156e216ef8c909d78d536df74a5e0fd",
+      "sha256": "ad9274415526a20fafdc2ea394925532d4a94ee42331b537bfbae475c940b94d",
       "rule1": "per_node_reading_state_has_one_restoration_owner",
       "rule2": "redundant_restoration_passes_and_single_remaining_wrapper_removed",
       "rule3": "pending_user_review",
@@ -766,6 +771,11 @@
           "decision": "D84",
           "receipt": "verification/maintenance/code-constraints-map-reading-boundary-20261106/summary.json",
           "scope": "Reuses selected() reading snapshot for expansion restoration; no helper, catch or defense added. D84 generated labels already directly consumed. Identity qualification retained at remember_entry_reading boundary because run_state permits opaque partial graphs and does not establish nonempty zone/template/node identity for every projection."
+        },
+        {
+          "decision": "D82, D83",
+          "receipt": "verification/maintenance/code-constraints-map-dossier-entry-20261106/summary.json",
+          "scope": "Map selection, hover-entry navigation, node directory graph and route validation. Hover card rendering D327 pending."
         }
       ]
     },
@@ -5064,6 +5074,13 @@
       "decision": "D286, D291",
       "receipt": "verification/maintenance/code-constraints-boss-document-packets-20261106/summary.json",
       "scope": "Document manifest verification, strict row equality, four original tables, underlying battle packet reuse for the three documentary readers."
+    },
+    {
+      "file": "rouge/node_catalog.py",
+      "sha256": "89881de5b09bdbc3cda98b94bafe8525ba184c7abc0e7a8774bfd9a16df39d8e",
+      "decision": "D82, D83",
+      "receipt": "verification/maintenance/code-constraints-map-dossier-entry-20261106/summary.json",
+      "scope": "Map selection, hover-entry navigation, node directory graph and route validation. Hover card rendering D327 pending."
     }
   ]
 }

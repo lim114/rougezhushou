@@ -65,11 +65,14 @@ def event_picture(event_id):
 def node_dossier(graph,node_id,config):
     from . import node_catalog
     from .node_catalog_view import map_conditions
-    from .player_map import dossier_graph
-    node=next((n for n in(graph or{}).get('nodes',[])if n['id']==node_id),None)
-    if node is None:return None
+    if not graph: return None
+    node = node_catalog._graph_nodes(graph).get(node_id)
+    if node is None: return None
     if not candidate_types(node):
-        history=node_catalog.node_history(graph,node_id)
+        history=node_catalog._history_read_rows(node)
         if not any(history.values()):return None
         return {'rows':[],'battle_rows':[],'function_rows':[],**history}
-    return node_catalog.node_dossier(dossier_graph(graph),node_id,**map_conditions(graph,config))
+    observed = node.get('observed_type')
+    if node.get('template_type') and (not observed or observed.startswith(('未知','类型未确认'))):
+        node = {**node, 'prediction': {**(node.get('prediction') or {}), 'candidates': [node['template_type']]}}
+    return node_catalog._node_dossier(graph, node, **map_conditions(graph,config))

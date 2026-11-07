@@ -3,6 +3,15 @@ from copy import deepcopy
 from rouge import node_catalog as c
 
 class NodeCatalogTests(unittest.TestCase):
+    def test_route_checks_each_input_node_once(self):
+        from unittest.mock import patch
+        graph = {'nodes': [{'id': key, 'observed_type': '作战'} for key in ('a', 'b')],
+                 'edges': [['a', 'b']]}
+        with patch.object(c, '_validate_node', wraps=c._validate_node) as check:
+            result = c.route_events(graph, ['a', 'b'], floor=1)
+        self.assertEqual([row['node_id'] for row in result['rows']], ['a', 'b'])
+        self.assertEqual(check.call_count, 2)
+
     def test_171(self):
         r=c.all_events();self.assertEqual(len(r['rows']),37)
         self.assertEqual(sum(e['title']=='三重身' for e in r['rows']),3)

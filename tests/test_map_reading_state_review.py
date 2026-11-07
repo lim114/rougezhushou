@@ -17,6 +17,23 @@ class MapReadingStateReview(unittest.TestCase):
         self.window.show_compact();self.window.compact_window.open_map();self.p=self.window.compact_window.map_popup.panel
         self.p.view.select_node(self.node);self.p.detail.setFixedSize(400,60);self.qt.processEvents()
 
+    def test_node_lookup_reports_invalid_inputs_and_exposes_internal_errors(self):
+        from rouge.node_catalog import NodeQueryError
+        p = self.p
+        for error in (NodeQueryError('invalid node'), FileNotFoundError('catalog missing')):
+            with patch.object(player_map_reference, 'node_dossier', side_effect=error):
+                self.assertFalse(p.open_hover_entry(self.node, 'event', 'unused'))
+                p.selected(self.node)
+                self.assertIn(str(error), p.detail.toPlainText())
+                self.assertFalse(p.entries.signalsBlocked())
+        for error in (TypeError, KeyError, ValueError):
+            with patch.object(player_map_reference, 'node_dossier', side_effect=error('internal')):
+                with self.assertRaises(error):
+                    p.open_hover_entry(self.node, 'event', 'unused')
+                with self.assertRaises(error):
+                    p.selected(self.node)
+                self.assertFalse(p.entries.signalsBlocked())
+
     def test_refresh_restores_each_group_once_and_keeps_collapsed_selection(self):
         p=self.p;p.entry_search.setText('桑尼');root=p.entries.topLevelItem(0);p.entries.setCurrentItem(root.child(0));key=p.selected_reference;root.setExpanded(False)
         calls=[]
