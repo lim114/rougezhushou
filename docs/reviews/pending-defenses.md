@@ -72,3 +72,7 @@ MainWindow.save_settings 捕获所有异常。凭据写入成功后，配置写�
 ## D340 · 来源更新时间的解析与展示
 
 ItemSourceIndex.describe_pool 对解析、时区换算及文字展示合并捕获 ValueError、TypeError、AttributeError。建议仅在来源字段无效或缺时区时显示时间未知；其余内部错误上报。已询问，等待决定。
+
+## D341 · 公开频率超大整数
+
+public_archive.members 收到 occurrenceRate=10**1000 时，math.isfinite 抛出 OverflowError。隔离样例已复现；本次公开数据逐池比对均可完成。建议在该频率入口先拒绝范围外数值，保留原始次数、分母和其他成员。已询问，待决定。

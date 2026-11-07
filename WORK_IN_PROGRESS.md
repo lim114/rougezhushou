@@ -1,3 +1,7 @@
+## 当前断点 · 藏品池检索按物品编号复用文字，成员频率只计算一次（2026-11-06）
+
+16组搜索和427组成员输出与改前一致，两个版本非空查询的物品读取分别从4884降至339、5312降至359。45项定向通过；D341待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-archive-search-members-20261106/summary.json)。
+
 ## 当前断点 · 藏品条件和地图入口共用一次选中池查询（2026-11-06）
 
 选择池时只查找一次，条件和地图类型取自同一记录。37项定向通过。D340待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json)。

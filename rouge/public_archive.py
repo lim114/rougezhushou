@@ -61,8 +61,24 @@ def load(path=DEFAULT):
 
 def pool_rows(data,version,query=''):
     from .public_compendium import resolve,item
-    q=query.strip().casefold();docs=resolve(data,version) if q else {}
-    return [r for r in data['versions'].get(version,[])if not q or q in(r['name']+' '+(r.get('description')or'')+' '+' '.join(item(data,k,docs).get('name',k)+' '+item(data,k,docs).get('effect','')for k in r['collectibles'])).casefold()]
+    needle = query.strip().casefold()
+    pools = data['versions'].get(version, [])
+    if not needle:
+        return list(pools)
+    docs = resolve(data, version)
+    member_text = {}
+    matches = []
+    for pool in pools:
+        parts = []
+        for identity in pool['collectibles']:
+            if identity not in member_text:
+                record = item(data, identity, docs)
+                member_text[identity] = record.get('name', identity) + ' ' + record.get('effect', '')
+            parts.append(member_text[identity])
+        text = ' '.join((pool['name'], pool.get('description') or '', ' '.join(parts)))
+        if needle in text.casefold():
+            matches.append(pool)
+    return matches
 
 def distributions(pool):
     # Separate overlapping observations; do not add counts or mix denominators.
@@ -75,14 +91,18 @@ def distributions(pool):
 def members(data,pool,distribution=None,*,version=None):
     from .public_compendium import resolve,item as described_item,effect_text
     docs=resolve(data,version) if version is not None else {}
-    observed={r.get('itemId'):r for r in(distribution or{}).get('members',[])}
+    distribution = distribution or {}
+    observed = {row.get('itemId'): row for row in distribution.get('members', [])}
+    source_total = distribution.get('totalOccurrenceCount')
+    is_frequency = distribution.get('interpretation') == 'observedFrequencyOnly'
     result=[]
     for identity in pool['collectibles']:
         item=described_item(data,identity,docs);row=observed.get(identity,{})
-        n=row.get('occurrenceCount');total=row.get('totalOccurrenceCount',(distribution or{}).get('totalOccurrenceCount'));rate=None
-        if (distribution or{}).get('interpretation')=='observedFrequencyOnly'and type(n)is int and type(total)is int and 0<=n<=total and total>0:
-            reported=row.get('occurrenceRate',n/total)
-            if isinstance(reported,(int,float))and math.isfinite(reported)and math.isclose(reported,n/total,rel_tol=1e-6,abs_tol=1e-6):rate=n/total
+        n=row.get('occurrenceCount');total=row.get('totalOccurrenceCount',source_total);rate=None
+        if is_frequency and type(n)is int and type(total)is int and 0<=n<=total and total>0:
+            observed_rate = n / total
+            reported=row.get('occurrenceRate', observed_rate)
+            if isinstance(reported,(int,float))and math.isfinite(reported)and math.isclose(reported,observed_rate,rel_tol=1e-6,abs_tol=1e-6):rate=observed_rate
         result.append({'id':identity,'name':item['name'],'effect':effect_text(item['effect']),'icon':item.get('icon'),'count':n,'total':total,'rate':rate})
     return result
 
