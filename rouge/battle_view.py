@@ -146,7 +146,9 @@ class MapOriginal(QWidget):
         if not self.projection:return None
         point=self.projection.project(cell)
         if point is None:return None
-        rect=self.image_rect()
+        return self._widget_point(point,self.image_rect())
+
+    def _widget_point(self,point,rect):
         return QPointF(rect.left()+point[0]*rect.width()/self.pixmap.width(),
             rect.top()+point[1]*rect.height()/self.pixmap.height())
 
@@ -157,13 +159,20 @@ class MapOriginal(QWidget):
             (point.y()-rect.top())*self.pixmap.height()/rect.height())
 
     def marker_cells(self):
-        cells={}
-        if not self.projection:return cells
+        if not self.projection:return {}
+        return {cell:waves for cell,(_,waves) in self._wave_markers().items()}
+
+    def _wave_markers(self):
+        markers={}
         for row in self.rows:
             start=row['route']['start']
-            if start and self.cell_center(start) is not None:
-                cells.setdefault((start['row'],start['col']),set()).add(row['wave'])
-        return cells
+            if start:
+                point=self.projection.project(start)
+                if point is not None:
+                    key=(start['row'],start['col'])
+                    if key not in markers:markers[key]=(point,set())
+                    markers[key][1].add(row['wave'])
+        return markers
 
     def projected_branch_positions(self):
         if not self.stage or not self.projection:return []
@@ -178,8 +187,9 @@ class MapOriginal(QWidget):
     def _paint_branch_positions(self,painter,radius):
         for marker,center in self.projected_branch_positions():
             painter.setPen(QPen(QColor('#f0a2ef'),2));painter.setBrush(QColor('#34213b'))
-            painter.drawRect(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6))
-            painter.drawText(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6),Qt.AlignmentFlag.AlignCenter,'P'+str(marker['ordinal']))
+            box=QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6)
+            painter.drawRect(box)
+            painter.drawText(box,Qt.AlignmentFlag.AlignCenter,'P'+str(marker['ordinal']))
 
     def paintEvent(self,event):
         painter=QPainter(self);painter.fillRect(self.rect(),QColor('#262528'))
@@ -189,8 +199,8 @@ class MapOriginal(QWidget):
         if not self.projection:return
         painter.setClipRect(rect);painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         radius=max(4,min(9,rect.width()/60))
-        for (r,c),waves in self.marker_cells().items():
-            center=self.cell_center({'row':r,'col':c})
+        for point,waves in self._wave_markers().values():
+            center=self._widget_point(point,rect)
             painter.setPen(QPen(QColor('#fff3a0'),2));painter.setBrush(QColor('#282410'))
             painter.drawEllipse(center,radius,radius)
             painter.setPen(QColor('#fff3a0'))

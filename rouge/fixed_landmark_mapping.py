@@ -3,14 +3,10 @@ import json
 import math
 from dataclasses import dataclass
 from functools import lru_cache
-from numbers import Real
 from pathlib import Path
+from .map_projection import finite_coordinate as finite, matches_ground_source
 
 DATA = Path(__file__).parent / 'data'
-
-
-def finite(value):
-    return isinstance(value, Real) and not isinstance(value, bool) and math.isfinite(value)
 
 
 @lru_cache(maxsize=1)
@@ -47,26 +43,12 @@ class FixedLandmarkReference:
 
 
 def direct_reference_for(stage, image_sha256, image_size):
-    from .map_projection import grid_digest
     data = landmark_data()
     binding = data['stages'].get(stage['id'])
     if not binding:
         return None
     record = data['references'][binding['reference']]
-    image = stage['image']
-    if binding['level_sha256'] != stage['level_source']['sha256']:
-        return None
-    if binding['image_file'] != image['file']:
-        return None
-    if image_sha256 != image['sha256'] or image_sha256 != record['bitmap_sha256']:
-        return None
-    if tuple(image_size) != (record['width'], record['height']):
-        return None
-    if (image['width'], image['height']) != tuple(image_size):
-        return None
-    if (len(stage['map']), len(stage['map'][0])) != (record['rows'], record['cols']):
-        return None
-    if grid_digest(stage) != record['grid_sha256'] or record['agreement_tolerance_px'] != 4:
+    if not matches_ground_source(stage,binding,record,image_sha256,image_size) or record['agreement_tolerance_px'] != 4:
         return None
     points, seen = [], set()
     for point in record['points']:

@@ -5247,6 +5247,28 @@
         "D366 pending: missing neighbor endpoint report"
       ],
       "evidence": "verification/maintenance/code-constraints-map-report-selection-20261107/summary.json"
+    },
+    {
+      "file": "rouge/map_projection.py",
+      "sha256": "9c73c22d10b7021e15c029327346a29067ba6de6e2f8d7cb2d33dc648fac345a",
+      "full_module_review_complete": false,
+      "rule1": "Ground source checks deduplicated. Remaining review boundary documented in pending decision.",
+      "rule2": "Cached source loaders, projection/inverse methods and shared grid/source predicates have distinct callers.",
+      "rule3": [
+        "D367 private input and result checks"
+      ],
+      "evidence": "verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json"
+    },
+    {
+      "file": "rouge/fixed_landmark_mapping.py",
+      "sha256": "c222bc7018590539a3ffe08acbd7c26c23de1123999086f037bef21f63a8d6e3",
+      "full_module_review_complete": false,
+      "rule1": "Ground source checks deduplicated. Remaining review boundary documented in pending decision.",
+      "rule2": "Cached source loaders, projection/inverse methods and shared grid/source predicates have distinct callers.",
+      "rule3": [
+        "D368 integer-valued source coordinates"
+      ],
+      "evidence": "verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json"
     }
   ],
   "approval_registry": {
@@ -6386,6 +6408,27 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-map-report-selection-20261107/summary.json",
       "scope": "Map report rendering and MainWindow.map_node_selected. Complete ordinary review of report module, D366 remains pending; main window callback guard D365 pending."
+    },
+    {
+      "file": "rouge/battle_view.py",
+      "sha256": "d1bf65b7b44437bd27c8cb482c0a9a2ec15d9ca64f86ee0362e9f8c68302829b",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json",
+      "scope": "Complete read of planar ground and independently verified landmark source modules, and wave-marker projection/drawing in MapOriginal. Pending decisions documented, no full module closure."
+    },
+    {
+      "file": "rouge/map_projection.py",
+      "sha256": "9c73c22d10b7021e15c029327346a29067ba6de6e2f8d7cb2d33dc648fac345a",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json",
+      "scope": "Complete read of planar ground and independently verified landmark source modules, and wave-marker projection/drawing in MapOriginal. Pending decisions documented, no full module closure."
+    },
+    {
+      "file": "rouge/fixed_landmark_mapping.py",
+      "sha256": "c222bc7018590539a3ffe08acbd7c26c23de1123999086f037bef21f63a8d6e3",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json",
+      "scope": "Complete read of planar ground and independently verified landmark source modules, and wave-marker projection/drawing in MapOriginal. Pending decisions documented, no full module closure."
     }
   ]
 }

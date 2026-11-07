@@ -1,3 +1,7 @@
+## 当前断点 · 固定战斗地图复用来源核验和出怪点投影（2026-11-07）
+
+105关卡数据、49个已绑定地图，4252次格点投影、2175次反查和6张渲染与旧版一致。绘图投影360→312次。76项定向通过；D367/D368待审，原窗口已更新。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-bitmap-ground-projections-20261107/summary.json)。
+
 ## 当前断点 · 地图节点摘要与详情共用相邻连线文字（2026-11-07）
 
 608组报告逐字相同，普通选点的连线文字从生成2次减至1次。87项定向通过，原测试窗口已更新；D365、D366进入统一待审清单。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-report-selection-20261107/summary.json)。

@@ -76,6 +76,17 @@ class DirectLandmarkWidgetTests(unittest.TestCase):
  def setUpClass(cls):
   from PySide6.QtWidgets import QApplication
   cls.app=QApplication.instance() or QApplication([])
+ def test_paint_reuses_verified_wave_start_pixels(self):
+  from rouge.battle_view import MapOriginal
+  stage=battle_data()['stages'][STAGES[0]]
+  view=MapOriginal();self.addCleanup(view.close)
+  view.set_file(DATA/stage['image']['file'])
+  view.set_reference(stage,spawn_rows(STAGES[0]))
+  self.assertTrue(view.marker_cells())
+  project=type(view.projection).project
+  with patch.object(type(view.projection),'project',autospec=True,side_effect=project) as calls:
+   self.assertFalse(view.grab().isNull())
+  self.assertEqual(calls.call_count,sum(bool(row['route']['start']) for row in view.rows))
  def test_all_four_originals_only_registered_points_scale_at_three_aspect_ratios(self):
   from rouge.battle_view import MapOriginal
   for sid in STAGES:

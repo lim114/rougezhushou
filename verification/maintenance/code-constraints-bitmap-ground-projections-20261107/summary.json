@@ -1,0 +1,94 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 243,
+    "selected_paths_only": 191,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "固定战斗地图复用来源核验和出怪点投影",
+  "base_commit": "55b050f1180b6beee82547e7ef0cb27c9bae3061",
+  "changed_sources": [
+    "rouge/battle_view.py",
+    "rouge/map_projection.py",
+    "rouge/fixed_landmark_mapping.py"
+  ],
+  "source_sha256": {
+    "rouge/battle_view.py": "d1bf65b7b44437bd27c8cb482c0a9a2ec15d9ca64f86ee0362e9f8c68302829b",
+    "rouge/map_projection.py": "9c73c22d10b7021e15c029327346a29067ba6de6e2f8d7cb2d33dc648fac345a",
+    "rouge/fixed_landmark_mapping.py": "c222bc7018590539a3ffe08acbd7c26c23de1123999086f037bef21f63a8d6e3"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 76,
+    "seconds": 31.385,
+    "full_suite_run": false,
+    "modules": [
+      "test_map_projection_044",
+      "test_direct_landmark_mapping",
+      "test_map_ground_extension",
+      "test_highland_top_reference",
+      "test_current_battle_reference_314",
+      "test_branch_position_overview",
+      "test_current_map_position_319",
+      "test_current_map_markers_337"
+    ],
+    "comparison": {
+      "stages": 105,
+      "bound": 49,
+      "cells": 4252,
+      "inverses": 2175,
+      "matching_renderings": 6,
+      "project_calls_in_render": [
+        360,
+        312
+      ]
+    },
+    "live_window": "Original assistant closed through normal WM_CLOSE. Verified new project pythonw instance with on-screen, visible responsive toolbar. No live gameplay or latency measurement."
+  },
+  "review": {
+    "standards": "Single source-binding routine for the two ground mapping strategies checks level hash, file, both image hashes, declared/actual dimensions, grid shape and digest. Grid digest still uses the same canonical JSON but extracts tile semantics once per referenced type. Coordinate finite-value predicate shared. Matrix input duplication retained for D367. Read direct landmark record type issue under D368. Wave markers retain the verified source pixel and each wave set through drawing; endpoint cell projection no longer repeated just to get its pixel. Marker lookup API still returns a fresh map of wave sets.",
+    "requirements": "Full fixed stage corpus bind/unbind results match; forward coordinates, available inverse results and per-stage grid digests match. Representative direct and planar wave rendering compared byte-exact at three widget sizes. Direct landmarks remain noninvertible, highland retains separate rules. 28 source points omit tile_key; existing floor-only convention retained. No freshness or recognition threshold change."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D367",
+    "D368"
+  ]
+}
