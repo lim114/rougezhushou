@@ -28,7 +28,7 @@ class VisualReader:
         for entry in json.loads((folder/'manifest.json').read_text(encoding='utf8'))['entries']:
             im=cv2.imdecode(np.fromfile(folder/entry['file'],np.uint8),0)
             kp,des=self.orb.detectAndCompute(im,None)
-            self.references.append((entry,im.shape,kp,des))
+            self.references.append((entry, np.asarray(cv2.KeyPoint_convert(kp), np.float32).reshape(-1,2), des))
 
     def read(self,image,*,client_rect=None,run_context=None):
         start=time.perf_counter()
@@ -88,7 +88,7 @@ class VisualReader:
             points,descriptors=self.orb.detectAndCompute(gray,None)
             # cv2.KeyPoint cannot be deep-copied. Exact float32 coordinates and
             # descriptor bytes preserve the old target-point conversion/order.
-            return np.asarray([point.pt for point in points],np.float32).reshape(-1,2),descriptors
+            return np.asarray(cv2.KeyPoint_convert(points), np.float32).reshape(-1,2), descriptors
         if self.cache_enabled and self.feature_cache:
             return self.feature_cache.call(gray,self._orb_settings(),compute)
         return compute()
@@ -98,15 +98,17 @@ class VisualReader:
         icon_cache=self.icon_cache if self.cache_enabled else None
         # This is feature discovery over the complete frame, not a screen crop.
         scale=min(1,1600/w,1200/h)
-        gray=cv2.resize(cv2.cvtColor(im,cv2.COLOR_BGR2GRAY),None,fx=scale,fy=scale)
+        gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        if scale < 1:
+            gray = cv2.resize(gray, None, fx=scale, fy=scale)
         points,des=self._current_features(gray);matches=[]
         if des is not None:
-            for entry,shape,rkp,rdes in self.references:
+            for entry, reference_points, rdes in self.references:
                 if rdes is None:continue
                 good=[a for pair in self.matcher.knnMatch(rdes,des,k=2) if len(pair)==2
                       for a,b in [pair] if a.distance<.7*b.distance]
                 if len(good)<12:continue
-                source=np.float32([rkp[m.queryIdx].pt for m in good])
+                source=reference_points[[m.queryIdx for m in good]]
                 target=points[[m.trainIdx for m in good]]/scale
                 transform,mask=cv2.estimateAffinePartial2D(source,target,method=cv2.RANSAC,ransacReprojThreshold=3)
                 if transform is None:continue
@@ -114,12 +116,13 @@ class VisualReader:
                 factor=float(np.linalg.norm(transform[0,:2]))
                 if count<12 or fraction<.65 or not .25<factor<3:continue
                 matches.append({'entry':entry,'matrix':transform,'inliers':count,'fraction':fraction,'scale':factor})
-        training=next(iter(sorted([m for m in matches if m['entry']['kind']=='training'],key=lambda m:m['inliers'],reverse=True)),None)
-        names=[m for m in matches if m['entry']['kind']=='identity' and training
-               and .7<training['scale']/m['scale']<1.4]
+        training = max((m for m in matches if m['entry']['kind']=='training'),
+                       key=lambda m:m['inliers'], default=None)
+        owners = {m['entry']['id'] for m in matches if training and m['entry']['kind']=='identity'
+                  and .7 < training['scale']/m['scale'] < 1.4}
         operator=None;page='unknown';run=None
-        if len({m['entry']['id'] for m in names})==1:
-            key=names[0]['entry']['id'];profile=operator_profiles()[key]
+        if len(owners)==1:
+            key=owners.pop();profile=operator_profiles()[key]
             anchor={'box':mapped(training,training['entry']['potential_box'],w,h),'text':'潜能'}
             potential=match_potential(im,anchor,cache=icon_cache);fields={};sources={}
             if potential:fields['potential']=potential['value'];sources['potential']=potential
@@ -128,7 +131,8 @@ class VisualReader:
                 ['skill_rank_'+str(i+1) for i in range(len(profile['skills']))]+([] if potential else ['potential']),
                 'limitations':['纯视觉实验只覆盖三个参考干员的身份和潜能；培养数字不由旧参考图补值。']}
             page='operator_detail'
-        footer=next(iter(sorted([m for m in matches if m['entry']['kind']=='footer'],key=lambda m:m['inliers'],reverse=True)),None)
+        footer = max((m for m in matches if m['entry']['kind']=='footer'),
+                     key=lambda m:m['inliers'], default=None)
         if footer:
             anchor={'box':mapped(footer,footer['entry']['held_box'],w,h),'text':'收藏品'}
             from .run_config import confirmed_config

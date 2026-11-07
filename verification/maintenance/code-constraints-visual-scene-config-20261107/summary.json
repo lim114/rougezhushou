@@ -1,0 +1,89 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 250,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "视觉识别复用参考点坐标，本局信息匹配复用名称与条件",
+  "base_commit": "24527485a4ceaaeaf6e6ac1ada9a51f224abe025",
+  "changed_sources": [
+    "rouge/visual_recognition.py",
+    "rouge/run_config.py"
+  ],
+  "source_sha256": {
+    "rouge/visual_recognition.py": "b1cfefa184d78437519d8ee02ba3f7a033fd49d10d2621d470b86344605205b6",
+    "rouge/run_config.py": "c73ea87fc28b3c9bfa647626ed608b05d568858cfa1f71629f3bd2f5541ca9ff"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 44,
+    "seconds": 13.383,
+    "full_suite_run": false,
+    "modules": [
+      "run_config",
+      "run_config_validation",
+      "run_reuse_guards_032",
+      "visual_recognition_057",
+      "recognition_057"
+    ],
+    "comparison": {
+      "frames": 28,
+      "configs": 2860
+    },
+    "coordinate_extraction": {
+      "points": 4000,
+      "median_ms": {
+        "new": 0.0198,
+        "old": 0.7565
+      }
+    },
+    "live_window": "Stored screenshots and isolated inputs only. Original test window not updated; end-to-end latency not measured."
+  },
+  "review": {
+    "standards": "Use native OpenCV keypoint coordinate conversion for references and observed frames. Whole frame feature extraction was already shared across candidate landmarks. Keep original order, Hamming matching and scaling. Select highest-support footer/training landmark directly and keep unique owner requirement. read_config indexes zone and squad names locally; position and effect text computed once per applicable line. Separate eligibility checks for badge fields reused after fresh label reads.",
+    "requirements": "Original image-only business results and non-time cache metrics match across independent readers; equal gray and different context, cache invalidation, source/rect snapshot mutation covered by targeted tests. Synthetic config variants preserve ambiguous zones, duplicate titles, name-only/confirmed effects. D359 unchanged pending approval."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D359"
+  ]
+}

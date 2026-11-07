@@ -1,3 +1,7 @@
+## 维护 · 视觉识别复用参考点坐标，本局信息匹配复用名称与条件（2026-11-07）
+
+28次图像读取及2860组配置文字对照一致，44项定向通过。纯视觉缓存异常范围D359待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-visual-scene-config-20261107/summary.json)。
+
 ## 维护 · 动态OCR复用文字边界，变化范围稳定后结束扩张（2026-11-07）
 
 540步不同通道、数据类型和OCR模式对照结果一致。1080p受控小变化路径中位26.35→11.41毫秒，四帧录屏结果相同；92项定向通过。D358待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-ocr-dirty-geometry-20261107/summary.json)。

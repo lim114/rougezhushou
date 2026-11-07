@@ -43,10 +43,12 @@ def confirmed_config(run_context):
 def read_config(image,texts,held,*,engine=None,known_config=None):
     data=config_data();result={}
     known=known_config or {}
-    zones=[t for t in texts if t['confidence']>=.95
-        and any(z['name']==t['text'] for z in data['zones'].values())]
+    zone_ids = {}
+    for key, zone in data['zones'].items():
+        zone_ids.setdefault(zone['name'], []).append(key)
+    zones = [t for t in texts if t['confidence'] >= .95 and t['text'] in zone_ids]
     if len(zones)==1:
-        ids=[key for key,z in data['zones'].items() if z['name']==zones[0]['text']]
+        ids = zone_ids[zones[0]['text']]
         # Hidden-zone artwork names are shared; keep candidates, not a fabricated ID.
         if len(ids)==1 or set(ids)=={'zone_4','zone_4_1'}:
             result['zone']={'id':ids[0],'name':zones[0]['text'],'candidates':ids,'source':'地图顶部完整区域名'}
@@ -58,43 +60,52 @@ def read_config(image,texts,held,*,engine=None,known_config=None):
     if label:
         x,y=center(label);ux,uy=units(image,label,35.2)
         grade_labels={str(grade)for grade in NORMAL_GRADES}
-        candidates=[t for t in texts if t['confidence']>=.95 and re.fullmatch(r'\d{1,2}',t['text'])
-                    and .025*ux<center(t)[0]-x<.16*ux and abs(center(t)[1]-y)<.065*uy
-                    and t['text'] in grade_labels]
+        candidates=[t for t in texts if t['confidence']>=.95 and t['text'] in grade_labels
+                    and .025*ux<(pos:=center(t))[0]-x<.16*ux and abs(pos[1]-y)<.065*uy]
     if len(candidates)==1:
         result['difficulty']={'value':int(candidates[0]['text']),'source':'本局信息面板保密等级标签及相邻数字'}
-    names={s['name'] for s in data['squads'].values()}
-    titles=[t for t in texts if t['confidence']>=.95 and t['text'] in names]
+    squads = {}
+    for key, squad in data['squads'].items():
+        squads.setdefault(squad['name'], []).append((key, squad))
+    titles=[t for t in texts if t['confidence']>=.95 and t['text'] in squads]
     # A settings tooltip has one current squad, unlike a multi-choice menu.
     if len(titles)==1 and label:
         title=titles[0];x,y=center(title);ux,uy=units(image,title,35.2)
         divider=next((t for t in texts if t['text']=='DIFFICULTY' and t['confidence']>=.9),label)
         bottom=min(p[1] for p in divider['box'])
-        description=''.join(t['text'] for t in sorted(texts,key=lambda t:(round(center(t)[1],2),center(t)[0]))
-            if t['confidence']>=.9 and y+.015*uy<center(t)[1]<bottom
-            and min(p[0] for p in title['box'])-.03*ux<min(p[0] for p in t['box'])<x+.35*ux)
+        left = min(p[0] for p in title['box']) - .03*ux
+        lines = []
+        for record in texts:
+            if record['confidence'] >= .9:
+                tx,ty = center(record)
+                if y+.015*uy < ty < bottom and left < min(p[0] for p in record['box']) < x+.35*ux:
+                    lines.append(((round(ty,2),tx),record['text']))
+        description = ''.join(text for _,text in sorted(lines,key=lambda line:line[0]))
         def plain(value):
             return re.sub(r'[\s，,。；;：:“”"（）()【】]','',re.sub(r'<[^>]*>','',value))
-        options={key:s for key,s in data['squads'].items() if s['name']==title['text']}
-        matched=[(key,s) for key,s in options.items() if plain(s['usage'])==plain(description)]
+        options = squads[title['text']]
+        description = plain(description)
+        matched=[(key,s) for key,s in options if plain(s['usage'])==description]
         if len(matched)==1:
             key,s=matched[0]
             result['squad']={'id':key,'name':s['name'],'level':s['bandLevel'],'usage':s['usage'],
                 'source':'本局分队提示的完整名称及效果','effect_verified':True}
         else:
-            bases={s['normalBandId'] for s in options.values()}
+            bases={s['normalBandId'] for _,s in options}
             if len(bases)==1:
                 result['squad']={'id':next(iter(bases)),'name':title['text'],'level':None,
                     'source':'本局分队提示名称；强化阶段/效果未完整确认','effect_verified':False}
-    if ('squad' not in result and 'squad' not in known) or ('difficulty' not in result and 'difficulty' not in known):
+    need_squad = 'squad' not in result and 'squad' not in known
+    need_difficulty = 'difficulty' not in result and 'difficulty' not in known
+    if need_squad or need_difficulty:
         from .run_badges import find_squad_badge,read_badge_grade
         badge=find_squad_badge(image,held)
         if badge:
-            if 'squad' not in result and 'squad' not in known:
+            if need_squad:
                 result['squad']={'id':badge['id'],'name':badge['name'],'level':None,
                     'source':'探索界面分队图标；基础与强化共用图案，效果未确认','effect_verified':False,
                     'badge':badge}
-            if 'difficulty' not in result and 'difficulty' not in known:
+            if need_difficulty:
                 grade=read_badge_grade(image,badge,texts,engine)
                 if grade is not None:
                     result['difficulty']={'value':grade,'source':'动态定位分队图标旁的保密等级徽标数字',

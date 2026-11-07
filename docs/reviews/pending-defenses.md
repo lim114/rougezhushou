@@ -132,3 +132,7 @@ PageFeatureRouter 初始化时仅在 patch_sha256 有值时校验控件图。当
 ## D358 · 动态 OCR 局部区域解析失败
 
 dynamic_ocr.normalize_regions 将坐标解析的 ValueError、TypeError、OverflowError 转成 None，取消该组区域限制。已复现含不可解析字符串坐标时返回 None。建议保留此解析出口，识别器继续使用当前整帧范围；代价是调用方传错参数时可能只表现为识别变慢。替代为上报参数错误。实机触发率未知，待用户决定。
+
+## D359 · 纯视觉整帧缓存标识的异常范围
+
+VisualReader.read 的 TypeError、ValueError、AttributeError 捕获目前覆盖上下文取值、confirmed_config、ORB 设置与 JSON 序列化。隔离样本在额外记录含集合时连续两帧都跳过整帧缓存。建议仅处理 JSON 序列化的 TypeError/ValueError，配置提取或设置读取错误正常上报。替代为保留原范围。实机触发率未知，尚未改动这处异常处理。
