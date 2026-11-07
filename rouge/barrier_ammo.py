@@ -14,7 +14,6 @@ class BarrierAmmoProjection:
     inactive_breaks: int = field(default=0, init=False)
 
     def __post_init__(self):
-        _integer(self.maximum, '屏障共享弹匣', minimum=1)
         self.counter = AmmoCounter(self.maximum)
         self.consumption = AmmoConsumption(self.counter, 7, 1,
             ignore_trigger_once=True, reset_when_attack_finished=False)

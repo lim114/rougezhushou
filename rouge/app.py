@@ -1485,7 +1485,8 @@ class MainWindow(QMainWindow):
         if not self.damage_result:return
         from copy import deepcopy
         from .reference_dialog import ReferenceDialog
-        from .shield_timeline import compare_shield_windows,format_shield_windows
+        from .shield_timeline import compare_shield_windows, format_shield_windows, ShieldTimelineInputError
+        from .charge_timeline import DeclaredTimeError
         scenario=deepcopy(self.damage_result['scenario'])
         if scenario['operator']!='mechanist' or scenario['skill']!=2:return
         previous=getattr(self,'shield_timeline_dialog',None)
@@ -1495,7 +1496,7 @@ class MainWindow(QMainWindow):
             {'events':[],'windows_seconds':[0,5,20]},lambda preview:compare_shield_windows(scenario,preview),
             format_shield_windows,[('window_seconds','窗口/秒'),('declared_breaks','破屏'),('owner_hits','本体命中'),
                 ('structure_hits','结构命中'),('explosion_damage_reference','爆炸条件伤害'),
-                ('ordinary_damage_reference','普通攻击参考'),('conditional_damage_subtotal','条件小计')],self)
+                ('ordinary_damage_reference','普通攻击参考'),('conditional_damage_subtotal','条件小计')],self,input_errors=(ShieldTimelineInputError, DeclaredTimeError))
         self.shield_timeline_dialog.show()
 
     def show_token_budget(self):

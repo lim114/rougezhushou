@@ -1,3 +1,7 @@
+## 当前断点 · 破屏时序按窗口复用弹药累计，区分声明和计算错误（2026-11-06）
+
+D100机械师S2破屏对照窗口已整改。每个不同窗口各算一次普通伤害，每次破屏只累计一次；按声明顺序输出独立行。12组完整结果与改前相同，38项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-shield-window-projection-20261106/summary.json)。
+
 ## 当前断点 · 同防御法抗目标共用单次伤害，区分来源无效和内部错误（2026-11-06）
 
 D100普通伤害预算窗口已整改，其他入口继续核对。D329与D330按本次决定完成。同防御法抗仅算一次，各目标生命独立，来源缺失与有效零值分开。23项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-damage-budget-mitigation-20261106/summary.json)。

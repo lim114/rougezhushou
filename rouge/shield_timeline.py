@@ -1,51 +1,68 @@
 """Declared breaks and collisions remain separate from ammunition/end clocks."""
 import json
+from bisect import bisect_left
 from copy import deepcopy
 from .charge_timeline import _seconds, event_seconds
 from .damage import calculate_damage
 from .barrier_ammo import BarrierAmmoProjection
 
 
+class ShieldTimelineInputError(ValueError):
+    """Declared shield sources, times or skill selection cannot form a timeline."""
+
+
 def compare_shield_windows(scenario, preview):
     if scenario.get('operator') != 'mechanist' or type(scenario.get('skill')) is not int or scenario['skill'] != 2:
-        raise ValueError('破屏时刻对照仅用于机械师S2。')
-    if set(preview) != {'events','windows_seconds'}: raise ValueError('需要events和windows_seconds。')
+        raise ShieldTimelineInputError('破屏时刻对照仅用于机械师S2。')
+    if set(preview) != {'events','windows_seconds'}: raise ShieldTimelineInputError('需要events和windows_seconds。')
     events = preview['events']
-    if not isinstance(events,list) or len(events)>100: raise ValueError('破屏声明最多100项。')
+    if not isinstance(events,list) or len(events)>100: raise ShieldTimelineInputError('破屏声明最多100项。')
     validated = []
     for event in events:
         if not isinstance(event,dict) or set(event) != {'source','break_seconds','hit_seconds'}:
-            raise ValueError('每项需要source、break_seconds、hit_seconds；未命中可将hit_seconds设为null。')
+            raise ShieldTimelineInputError('每项需要source、break_seconds、hit_seconds；未命中可将hit_seconds设为null。')
         if type(event['source']) is not str or event['source'] not in ('owner','structure'):
-            raise ValueError('source需要owner或structure。')
+            raise ShieldTimelineInputError('source需要owner或structure。')
         broke = event_seconds(event['break_seconds'],'破屏时刻')
         hit = None if event['hit_seconds'] is None else event_seconds(event['hit_seconds'],'爆炸命中时刻')
-        if hit is not None and hit < broke: raise ValueError('声明命中不能早于本次破屏。')
+        if hit is not None and hit < broke: raise ShieldTimelineInputError('声明命中不能早于本次破屏。')
         validated.append({'source':event['source'],'break_seconds':broke,'hit_seconds':hit})
     windows = _seconds(preview['windows_seconds'],'观察窗口',12)
-    if not windows: raise ValueError('至少填写一个观察窗口。')
+    if not windows: raise ShieldTimelineInputError('至少填写一个观察窗口。')
     base = deepcopy(scenario); base.pop('window_seconds',None); base['shield_break_count'] = 0
     reference = calculate_damage(base); per_hit = reference['shield_break_reference']['per_hit_damage_reference']
     if per_hit is None:
-        raise ValueError('破屏单包仍未知；先明确已选模组参考的目标阻挡身份。')
-    rows = []
-    for window in windows:
-        modeled = calculate_damage({**deepcopy(base),'window_seconds':window})
-        included = [e for e in validated if e['hit_seconds'] is not None and e['hit_seconds'] < window]
-        owner = sum(e['source']=='owner' for e in included); structure = len(included)-owner
-        budget = BarrierAmmoProjection(int(reference['shield_break_reference']['nominal_ammunition_parameter']))
-        for event in validated:
-            if event['break_seconds'] < window:budget.barrier_break(event['source'])
+        raise ShieldTimelineInputError('破屏单包仍未知；先明确已选模组参考的目标阻挡身份。')
+    breaks = sorted(validated, key=lambda event: event['break_seconds'])
+    hits = {'owner': [], 'structure': []}
+    for event in validated:
+        if event['hit_seconds'] is not None:
+            hits[event['source']].append(event['hit_seconds'])
+    for times in hits.values():
+        times.sort()
+
+    ammunition = reference['shield_break_reference']['nominal_ammunition_parameter']
+    budget = BarrierAmmoProjection(int(ammunition))
+    break_index = 0
+    by_window = {}
+    for window in sorted(set(windows)):
+        modeled = calculate_damage({**deepcopy(base), 'window_seconds': window})
+        while break_index < len(breaks) and breaks[break_index]['break_seconds'] < window:
+            budget.barrier_break(breaks[break_index]['source'])
+            break_index += 1
+        owner = bisect_left(hits['owner'], window)
+        structure = bisect_left(hits['structure'], window)
         ordinary = modeled['estimate']['skill']['window_damage']
-        explosion = per_hit*len(included)
+        explosion = per_hit*(owner+structure)
         subtotal = ordinary + explosion if ordinary is not None else None
-        rows.append({'window_seconds':window,'owner_hits':owner,'structure_hits':structure,
-            'declared_breaks':sum(e['break_seconds']<window for e in validated),
+        by_window[window] = {'window_seconds':window,'owner_hits':owner,'structure_hits':structure,
+            'declared_breaks':break_index,
             'ammunition_budget_reference':budget.output(),
             'explosion_damage_reference':explosion,'ordinary_damage_reference':ordinary,
-            'conditional_damage_subtotal':subtotal,'conditional_dps':subtotal/window if subtotal is not None and window else None})
+            'conditional_damage_subtotal':subtotal,'conditional_dps':subtotal/window if subtotal is not None and window else None}
+    rows = [deepcopy(by_window[window]) for window in windows]
     return {'scenario':deepcopy(scenario),'events':validated,'rows':rows,'per_hit_damage_reference':per_hit,
-        'nominal_ammunition_parameter':reference['shield_break_reference']['nominal_ammunition_parameter'],
+        'nominal_ammunition_parameter':ammunition,
         'actual_ammunition_consumption':None,'actual_end_seconds':None,'full_cast_damage':None,'cycle_damage':None,
         'notes':['破屏来源与破屏/命中时刻均为用户声明，0秒为技能开启；null表示此事件未声明命中当前目标。',
                  '按原始秒数计入[0,窗口)，同刻多次保留；破屏计数和命中计数分开。',
