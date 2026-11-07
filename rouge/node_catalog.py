@@ -358,7 +358,10 @@ def search_events(query,node_type=None,floor=None,include_indirect=True):
                    indirect_included=include_indirect,original_matches_have_unclassified_context=True)
 COMMANDS['search']=search_events
 def scene_choices(event_id,scene_key):
-    e=_event(event_id);s=_scene(event_id,scene_key);original=_original()['choices'];rows=[]
+    e = _event(event_id)
+    s = _event_scene(e, scene_key)
+    original = _original()['choices']
+    rows = []
     for ch in s['choices']:
         raw=[{'id':cid,**deepcopy(original[cid])} for cid in ch['game_choice_ids'] if cid in original]
         navigation=_choice_navigation(e,ch)

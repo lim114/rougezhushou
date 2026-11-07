@@ -1,3 +1,7 @@
+## 当前断点 · 场景选项查询复用已定位的事件（2026-11-06）
+
+38个事件、190个场景与改前输出逐项一致；每场景只定位一次事件。88项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-scene-choice-event-20261106/summary.json)。
+
 ## 当前断点 · 具名奖励资料合并重复读取与校验，恢复历史构建回放（2026-11-06）
 
 具名物品共用逐文件核验与严格类型比较；具名奖励首次读取仅核对一次资料内容。历史奖励构建脚本使用已有精确归档，冻结证据未改。105项定向通过。D336、D337待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-named-reward-documents-20261106/summary.json)。
