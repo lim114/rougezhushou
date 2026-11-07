@@ -1,0 +1,117 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 79,
+    "structural_only": 250,
+    "selected_paths_only": 190,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "文字识别共用批次输入，实测缩小分组对文字的影响",
+  "base_commit": "0d6f1869c0132d4b20241e40c541846809e73cd5",
+  "changed_sources": [
+    "rouge/page_ocr.py"
+  ],
+  "source_sha256": {
+    "rouge/page_ocr.py": "a303e9f6d9f4f3eed4ebfffa2b20e314758b36457f52f07c5eff871b792d2386"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 73,
+    "modules": [
+      "page_ocr_058",
+      "page_ocr_seed_bridge",
+      "ocr_text_row_reuse",
+      "ocr_cache_review",
+      "map_ocr_tile_overlap",
+      "recognition_059",
+      "frame_buffer"
+    ],
+    "recognizer_crop_replay": {
+      "6": [
+        {
+          "seconds": 3.183,
+          "padding_fraction": 0.5207,
+          "total": 60,
+          "changed_text": 0,
+          "changed_record": 0
+        },
+        {
+          "seconds": 3.157,
+          "padding_fraction": 0.5207,
+          "total": 60,
+          "changed_text": 0,
+          "changed_record": 0
+        }
+      ],
+      "3": [
+        {
+          "seconds": 2.319,
+          "padding_fraction": 0.4522,
+          "total": 60,
+          "changed_text": 2,
+          "changed_record": 6
+        }
+      ],
+      "1": [
+        {
+          "seconds": 2.087,
+          "padding_fraction": 0.388,
+          "total": 60,
+          "changed_text": 2,
+          "changed_record": 14
+        }
+      ]
+    },
+    "all_four_queue_outputs_equal": true,
+    "queue_wait_ms": [
+      11.16,
+      70.86,
+      10243.65,
+      12741.92
+    ],
+    "live_window": "Offline replay only; original desktop window not updated."
+  },
+  "review": {
+    "standards": "One shared preparation for the original crop order, maximum aspect ratio, float32 tensor and decoder ratios in both row- and batch-caching paths. Full misses can use the prepared tensor directly; partial misses select only their rows. No new validation, exception capture or speculative recovery.",
+    "requirements": "Output hashes equal for six tile OCR results and four entire frame records. Queued replay also exact by frame identity. Smaller group trials have different widths and different recognition; not adopted. Padding fraction is the proportion of input columns occupied by explicit right padding, not a measurement of time spent padding."
+  },
+  "partially_implemented_decisions": []
+}

@@ -35,6 +35,15 @@ def _callable_identity(value):
     return id(value)
 
 
+def _batch_input(recognizer, crops):
+    """Normalize one original RapidOCR batch at its shared padded width."""
+    ratios = [crop.shape[1] / float(crop.shape[0]) for crop in crops]
+    height, width = recognizer.rec_image_shape[1:]
+    max_ratio = max(width / height, *ratios)
+    tensor = np.stack([recognizer.resize_norm_img(crop, max_ratio) for crop in crops])
+    return tensor.astype(np.float32, copy=False), ratios, max_ratio
+
+
 class PageOCR:
     """Use the original engine when its split-inference contract is unknown.
 
@@ -99,10 +108,7 @@ class PageOCR:
         # These are precisely the original globally sorted RapidOCR batches.
         # Splitting into arbitrary page/crop groups would change padding and
         # can change confidence; retain the original maximum width and order.
-        ratios = [a.shape[1] / float(a.shape[0]) for a in crops]
-        max_ratio = max(r.rec_image_shape[2] / r.rec_image_shape[1], *ratios)
-        tensor = np.concatenate([r.resize_norm_img(a, max_ratio)[np.newaxis, :]
-                                 for a in crops]).astype(np.float32)
+        tensor, ratios, max_ratio = _batch_input(r, crops)
         started = time.perf_counter()
         predictions = r.session(tensor)[0]
         elapsed = time.perf_counter() - started
@@ -128,9 +134,7 @@ class PageOCR:
         current detector boxes and classifier transforms are never cached here.
         """
         r=self.provider.text_rec
-        ratios=[a.shape[1]/float(a.shape[0]) for a in crops]
-        maximum=max(r.rec_image_shape[2]/r.rec_image_shape[1],*ratios)
-        tensor=np.concatenate([r.resize_norm_img(a,maximum)[None] for a in crops]).astype(np.float32)
+        tensor, ratios, maximum = _batch_input(r, crops)
         keys=[('normalized_row',row.shape,row.dtype.str,ratios[i],maximum,row.tobytes())
               for i,row in enumerate(tensor)]
         records=[self._cache.get(key) if self.cache_enabled and not force_discovery else None
@@ -140,7 +144,8 @@ class PageOCR:
         elapsed=0.
         if missing:
             started=time.perf_counter()
-            predictions=r.session(tensor[missing])[0]
+            inputs = tensor if len(missing) == len(crops) else tensor[missing]
+            predictions=r.session(inputs)[0]
             elapsed=time.perf_counter()-started
             values=r.postprocess_op(predictions,False,wh_ratio_list=[ratios[i] for i in missing],
                                    max_wh_ratio=maximum)
