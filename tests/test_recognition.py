@@ -147,6 +147,24 @@ class RecognitionTests(unittest.TestCase):
         self.assertEqual(observed['operator']['fields']['level'],90)
         self.assertEqual(observed['operator']['skill_ranks'],{1:7,2:10,3:10})
 
+    def test_skill_crop_fallback_reuses_the_current_operator_and_markers(self):
+        from unittest.mock import patch
+        from rouge import operator_recognition as model
+        folder = ROOT/'samples/native-client'
+        image = cv2.imdecode(np.fromfile(folder/'operator-kaltsit.png', dtype=np.uint8), 1)
+        texts = json.loads((folder/'operator-kaltsit-ocr.json').read_text('utf8'))['texts']
+        texts = [t for t in texts if not (t['text'].isdigit() and len(t['text']) >= 3)]
+        crops = [{'text': value} for value in ('2035','2835','3550')]
+        with patch.object(model, 'read_skill_markers', return_value=({}, 1)) as markers:
+            expected = model.read_operator(image, texts, crops)
+            markers.reset_mock()
+            with patch.object(model, '_read_skill_crops_at', return_value=crops) as reread:
+                actual = model.read_operator(image, texts, engine=object())
+            self.assertEqual(actual, expected)
+            self.assertEqual(actual['skill_ranks'], {1:7, 2:10, 3:10})
+            reread.assert_called_once()
+            markers.assert_called_once()
+
     def test_native_operator_page_reads_training_and_matches_the_potential_icon(self):
         image=cv2.imdecode(np.fromfile(ROOT/'samples/native-client/operator-kaltsit.png',dtype=np.uint8),cv2.IMREAD_COLOR)
         observed=ScreenReader().read(image)

@@ -1,3 +1,7 @@
+## 当前断点 · 干员技能补读只更新等级，复用已识别培养信息（2026-11-07）
+
+技能数字补读复用本人身份、图标和几何，只重算技能等级与冲突。5份截图业务结果、12组受控补读及裁图与旧版一致，19项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-operator-skill-reread-20261107/summary.json)。
+
 ## 当前断点 · 干员卡片的精英标识只读取一次，再与三个阶段比对（2026-11-07）
 
 24张卡片对照、120组边缘和缩放输入相同，35项定向通过。精英标识单卡中位耗时4.47→1.38毫秒。完整模块81/559。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-roster-silhouette-reuse-20261107/summary.json)。

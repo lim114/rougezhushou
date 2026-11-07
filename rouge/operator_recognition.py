@@ -34,7 +34,6 @@ def identity_index():
 def match_identity(texts):
     matches=None
     for record in texts:
-        x,y=center(record)
         if record['confidence']<.85:continue
         candidates=identity_index().get(normalized_name(record['text']),set())
         if candidates:matches=candidates if matches is None else matches&candidates
@@ -50,8 +49,8 @@ def match_identity(texts):
 def refine_training_texts(image,texts,engine):
     """Recover small labels from current semantic anchors, never a screen slot."""
     h,w=image.shape[:2]
-    def reread(anchor,font,bounds,scale=2):
-        x,y=center(anchor);ux,uy=units(image,anchor,font)
+    def reread(position,space,bounds,scale=2):
+        x,y=position;ux,uy=space
         a,b,c,d=bounds
         x0=max(0,round((x+a*ux)*w));y0=max(0,round((y+b*uy)*h))
         x1=min(w,round((x+c*ux)*w));y1=min(h,round((y+d*uy)*h))
@@ -63,23 +62,24 @@ def refine_training_texts(image,texts,engine):
             for box,text,score in raw or [] if score>=.8]
     if not any(t['text'].upper() in ('LV','EXP') for t in texts):
         elite=[t for t in texts if t['text']=='精英化' and t['confidence']>=.9]
-        if len(elite)==1:texts=texts+reread(elite[0],36.3,(-.16,-.30,.14,-.07))
+        if len(elite)==1:texts=texts+reread(center(elite[0]),units(image,elite[0],36.3),(-.16,-.30,.14,-.07))
     exp=[t for t in texts if t['text']=='EXP' and t['confidence']>=.9]
     level=[t for t in texts if re.fullmatch(r'[IV]?LV',t['text'].upper()) and t['confidence']>=.65]
     if not level and len(exp)==1:
-        texts+=reread(exp[0],18.6,(-.10,-.065,-.005,.025),3)
-    level=[t for t in texts if re.fullmatch(r'[IV]?LV',t['text'].upper()) and t['confidence']>=.65]
+        extra = reread(center(exp[0]),units(image,exp[0],18.6),(-.10,-.065,-.005,.025),3)
+        texts += extra
+        level = [t for t in extra if re.fullmatch(r'[IV]?LV',t['text'].upper()) and t['confidence']>=.65]
     if len(level)==1:
         a=level[0];x,y=center(a);ux,uy=units(image,a,23.8)
         if not any(re.fullmatch(r'/\d{2}',t['text']) and t['confidence']>=.9
             and abs(center(t)[0]-x)<.10*ux and 0<center(t)[1]-y<.16*uy for t in texts):
-            texts+=reread(a,23.8,(.005,.04,.10,.15),3)
+            texts+=reread((x,y),(ux,uy),(.005,.04,.10,.15),3)
     trust=[t for t in texts if t['text']=='信赖值' and t['confidence']>=.9]
     if len(trust)==1:
         a=trust[0];x,y=center(a);ux,uy=units(image,a,35.2)
         if not any(re.fullmatch(r'\d{1,3}%',t['text']) and t['confidence']>=.9
             and 0<center(t)[0]-x<.35*ux and abs(center(t)[1]-y)<.035*uy for t in texts):
-            texts+=reread(a,35.2,(.08,-.04,.36,.04),2)
+            texts+=reread((x,y),(ux,uy),(.08,-.04,.36,.04),2)
     return texts
 
 def read_skill_markers(image,anchor,count,space=None):
@@ -90,24 +90,25 @@ def read_skill_markers(image,anchor,count,space=None):
     """
     ux,uy=space or units(image,anchor,24.9)
     h,w=image.shape[:2];x,y=center(anchor)
-    gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    marker_top=max(0,int((y-.045*uy)*h))
+    radius=max(1,round(h*.0023*uy))
     masteries={};blue_scores=[]
     for i in range(count):
         base=x-.207*ux+i*.058*ux
-        roi=gray[max(0,int((y-.045*uy)*h)):min(h,int((y-.022*uy)*h)),
+        roi=image[marker_top:min(h,int((y-.022*uy)*h)),
                  max(0,int(base*w)):min(w,int((base+.014*ux)*w))]
         if roi.size:
-            background=float(np.percentile(roi,15))
+            background=float(np.percentile(cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY),15))
             dots=[]
             for dx,dy in ((.008,-.0353),(.0053,-.027),(.0106,-.027)):
-                cx=round((base+dx*ux)*w);cy=round((y+dy*uy)*h);radius=max(1,round(h*.0023*uy))
-                core=gray[max(0,cy-radius):cy+radius+1,max(0,cx-radius):cx+radius+1]
-                value=float(np.median(core)) if core.size else 0
+                cx=round((base+dx*ux)*w);cy=round((y+dy*uy)*h)
+                core=image[max(0,cy-radius):cy+radius+1,max(0,cx-radius):cx+radius+1]
+                value=float(np.median(cv2.cvtColor(core,cv2.COLOR_BGR2GRAY))) if core.size else 0
                 if value>=205 and background<100:dots.append(1)
                 elif 35<=value<=105 and value-background>=10:dots.append(0)
                 else:dots.append(None)
             if None not in dots:masteries[i+1]=sum(dots)
-        corner=image[max(0,int((y-.045*uy)*h)):min(h,int((y-.015*uy)*h)),
+        corner=image[marker_top:min(h,int((y-.015*uy)*h)),
                      max(0,int((x-.167*ux+i*.058*ux)*w)):min(w,int((x-.146*ux+i*.058*ux)*w))]
         if corner.size:
             hsv=cv2.cvtColor(corner,cv2.COLOR_BGR2HSV)
@@ -229,8 +230,13 @@ def read_skill_crops(image,texts,engine,count=3):
     """
     anchors=[t for t in texts if t['confidence']>=.90 and re.fullmatch(r'RANK[1-7]',t['text'].upper())]
     if len(anchors)!=1:return None
-    ux,uy=training_units(image,texts,anchors[0],24.9)
-    x,y=center(anchors[0]);h,w=image.shape[:2]
+    return _read_skill_crops_at(image, engine, count, center(anchors[0]),
+                                training_units(image,texts,anchors[0],24.9))
+
+def _read_skill_crops_at(image, engine, count, position, space):
+    x,y = position
+    ux,uy = space
+    h,w = image.shape[:2]
     records=[]
     for index in range(count):
         x0=max(0,int((x-.204*ux+index*.058*ux)*w));x1=min(w,int((x-.146*ux+index*.058*ux)*w))
@@ -245,7 +251,26 @@ def read_skill_crops(image,texts,engine,count=3):
         records.append({'text':digits,'confidence':min(r[2] for r in candidates)})
     return records
 
-def read_operator(image,texts,skill_sp_texts=None,*,icon_cache=None):
+def _mastery_ranks(skills, sp_records, mastery):
+    skill_ranks, conflicts = {}, []
+    if len(sp_records)==len(skills):
+        for i,record in enumerate(sp_records):
+            if record is None:continue
+            digits=record['text'];matches=[]
+            for rank,level in enumerate(skills[i]['levels'],1):
+                initial=str(level['initial_sp']);cost=str(level['sp_cost'])
+                if rank>=7 and digits.startswith(initial) and digits.endswith(cost) and 0<=len(digits)-len(initial)-len(cost)<=1:
+                    matches.append(rank)
+            if len(matches)==1:skill_ranks[i+1]=matches[0]
+    for skill,stage in mastery.items():
+        rank=7+stage
+        if skill in skill_ranks and skill_ranks[skill]!=rank:
+            skill_ranks.pop(skill)
+            conflicts.append(f'S{skill} 图标与技力等级冲突')
+        else:skill_ranks[skill]=rank
+    return skill_ranks, conflicts
+
+def read_operator(image,texts,skill_sp_texts=None,*,icon_cache=None,engine=None):
     identity=match_identity(texts)
     if not identity:return None
     key,profile=identity
@@ -325,21 +350,14 @@ def read_operator(image,texts,skill_sp_texts=None,*,icon_cache=None):
                         and x-.25*ux<center(t)[0]<x-.04*ux and .015*uy<center(t)[1]-y<.09*uy]
             sp_records.sort(key=lambda t:center(t)[0])
             if skill_sp_texts is not None:sp_records=skill_sp_texts
-            if len(sp_records)==len(profile['skills']):
-                for i,record in enumerate(sp_records):
-                    if record is None:continue
-                    digits=record['text'];matches=[]
-                    for rank,level in enumerate(profile['skills'][i]['levels'],1):
-                        initial=str(level['initial_sp']);cost=str(level['sp_cost'])
-                        if rank>=common_rank and digits.startswith(initial) and digits.endswith(cost) and 0<=len(digits)-len(initial)-len(cost)<=1:
-                            matches.append(rank)
-                    if len(matches)==1:skill_ranks[i+1]=matches[0]
-            for skill,stage in mastery.items():
-                rank=7+stage
-                if skill in skill_ranks and skill_ranks[skill]!=rank:
-                    skill_ranks.pop(skill)
-                    sources.setdefault('conflicts',[]).append(f'S{skill} 图标与技力等级冲突')
-                else:skill_ranks[skill]=rank
+            skills = profile['skills']
+            skill_ranks, conflicts = _mastery_ranks(skills, sp_records, mastery)
+            if engine is not None and skill_sp_texts is None and len(skill_ranks) < len(skills):
+                local_sp = _read_skill_crops_at(image, engine, len(skills), (x,y), (ux,uy))
+                if local_sp:
+                    skill_ranks, conflicts = _mastery_ranks(skills, local_sp, mastery)
+            if conflicts:
+                sources['conflicts'] = conflicts
             sources['mastery_markers']=mastery
     required=['level','elite','potential','trust','module_id','module_level']
     missing=[field for field in required if field not in fields]
