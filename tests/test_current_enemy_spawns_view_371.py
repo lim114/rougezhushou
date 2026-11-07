@@ -28,6 +28,19 @@ class CurrentEnemySpawnsView371Tests(unittest.TestCase):
         for reader in(self.panel.player,self.panel.technical):
             self.panel.tabs.setCurrentWidget(reader);c=reader.textCursor();c.setPosition(10);c.setPosition(25,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);before=(c.anchor(),c.position(),c.selectedText());tab=self.panel.tabs.currentIndex();self.assertTrue(self.panel.refresh_reference());now=reader.textCursor();self.assertEqual((now.anchor(),now.position(),now.selectedText()),before);self.assertEqual(self.panel.tabs.currentIndex(),tab)
         self.assertEqual(self.panel.entries.currentData(),key);self.assertEqual(self.panel.kind.currentData(),'main')
+    def test_missing_and_undecodable_portraits_replace_old_pixels_but_keep_enemy_data(self):
+        from PySide6.QtGui import QPixmap
+        for raw in (None, b'invalid PNG'):
+            with self.subTest(raw=raw):
+                image = QPixmap(4, 4)
+                image.fill()
+                self.panel.portrait.setPixmap(image)
+                with patch.object(model.battle, 'picture_for_enemy', return_value=raw):
+                    self.assertTrue(self.panel.refresh_reference())
+                self.assertTrue(self.panel.portrait.pixmap().isNull())
+                self.assertIn('未取得图片', self.panel.portrait.text())
+                self.assertEqual(self.panel.result['enemy_key'], '5')
+
     def test_bad_source_clears_both_readers_portrait_and_actions(self):
         self.select();received=[];self.panel.sourceInvalidated.connect(lambda:received.append(True))
         with patch.object(model,'evidence',return_value=None):self.assertFalse(self.panel.refresh_reference())

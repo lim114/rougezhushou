@@ -1,3 +1,7 @@
+## 维护 · 事件跳转共用点击复核，物件与行程位置共用原图刷新（2026-11-06）
+
+D225、D226、D227、D229、D231完成。作战和对话点击共用事件复核，固定位置页共用图像与格子生命周期。旧滚动测试前提已修复并复验。 原280组完成254、余26。 [回执](verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json)。
+
 ## 维护 · 梅模组缺资源编号时停用公式，事件入口复用已核验资料（2026-11-06）
 
 梅模组按D325授权修复，D142销项。事件请求格式先校验，两个目录共用来源比对，已核验父页复用定位结果，原件子窗独立核验。梅相关35项和事件相关51项通过。 原280组完成249、余31。 [回执](verification/maintenance/code-constraints-event-entries-mei-binding-20261106/summary.json)。

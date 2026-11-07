@@ -12,6 +12,21 @@ class CurrentRouteItineraryView375Tests(unittest.TestCase):
     def setUp(self):self.panel=CurrentRouteItineraryPanel('ro6_n_1_3');self.panel.resize(1050,560);self.panel.show();self.app.processEvents()
     def tearDown(self):self.panel.close();self.panel.deleteLater();self.app.processEvents()
     def select(self):self.panel.entries.setCurrentIndex(self.panel.entries.findData('$.routes[10]'));self.app.processEvents();self.assertIsNotNone(self.panel.selected_route())
+    def test_image_failure_after_success_withdraws_child_and_preserves_parent(self):
+        self.select()
+        self.panel.steps.setCurrentIndex(1)
+        self.assertTrue(self.panel.open_position())
+        child = self.panel.position_dialog
+        self.assertFalse(child.panel.original.pixmap.isNull())
+        with patch.object(model.battle.version, 'image_bytes', return_value=b'bad PNG'):
+            self.assertTrue(self.panel.refresh_reference())
+        self.assertIsNotNone(self.panel.result)
+        self.assertIsNone(self.panel.position_dialog)
+        self.assertFalse(child.isVisible())
+        self.assertIsNone(child.panel.result)
+        self.assertIsNone(child.panel.grid.result)
+        self.assertTrue(child.panel.original.pixmap.isNull())
+
     def test_all_routes_unselected_and_no_auto_action_or_map(self):self.assertIsNotNone(self.panel.result);self.assertIsNone(self.panel.selected_route());self.assertIsNone(self.panel.selected_step());self.assertFalse(self.panel.action_button.isEnabled());self.assertFalse(self.panel.position_button.isEnabled())
     def test_scopes_are_actual_branches_and_changed_filter_clears_selection(self):
         self.select();self.panel.scope.setCurrentIndex(self.panel.scope.findData('extra'));self.assertIsNone(self.panel.selected_route());self.assertTrue(all(self.panel.entries.itemData(i).startswith('$.extraRoutes[')for i in range(1,self.panel.entries.count())))

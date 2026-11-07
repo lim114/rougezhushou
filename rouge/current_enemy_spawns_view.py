@@ -48,7 +48,7 @@ class CurrentEnemySpawnsPanel(QWidget):
         full_text=model.player_text(fresh,row);text=full_text.replace(f"本关资料中找到{len(fresh['entries'])}条直接出怪记录；这是条目数，不是实际出场数量。",f"出怪记录：{len(fresh['entries'])}条。");replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【适用范围】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'stage_id':fresh['stage_id'],'enemy_key':fresh['enemy_key'],'selected':row,'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'exact_enemy':fresh['enemy'],'all_corresponding_actions':fresh['entries'],'actual_occurrence':None,'actual_count':None,'absolute_time':None}),preserve=preserve)
         pix=QPixmap();raw=model.battle.picture_for_enemy(fresh['enemy']);self.portrait.show()
         if raw and pix.loadFromData(raw,'PNG'):self.portrait.setPixmap(pix.scaled(74,74,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
-        else:self.portrait.clear();self.portrait.setText('此精确引用未取得图片；不借用同名单位。')
+        else:self.portrait.setText('此精确引用未取得图片；不借用同名单位。')
         self.action_button.setEnabled(row is not None);self.position_button.setEnabled(row is not None)
         if not preserve:self.tabs.setCurrentIndex(0)
         self._view_key=view;return True

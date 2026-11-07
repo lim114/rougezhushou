@@ -67,9 +67,17 @@ class CurrentEventBattlesPanel(QWidget):
 
     def _stage_changed(self,*_):self._close_battle();self.open_button.setEnabled(self.stages.currentData()is not None)
 
+    def _recheck_event(self):
+        if self.result is None:
+            return False
+        if model.reference(self.event_id, self.stage_id) != self.result:
+            self.clear_reference()
+            return False
+        return True
+
     def open_battle(self):
-        if self.result is None:return False
-        if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
+        if not self._recheck_event():
+            return False
         sid=self.stages.currentData()
         rows=model.stage_rows(self.result,self.choice_id)
         if sid not in{v['id']for v in rows}:return False
@@ -79,9 +87,12 @@ class CurrentEventBattlesPanel(QWidget):
         from .player_map_reader import make_reader
         if self.battle_dialog is not None and self.battle_dialog.panel.stage_id!=sid:self._close_battle()
         if self.battle_dialog is None:
-            self.battle_dialog=make_reader('battle',{'id':sid,'title':model.stage_label(self.result,self.choice_id,sid,prepared_rows=rows)},self)
-        elif self.battle_dialog.panel.refresh_reference()is False:self._close_battle()
-        if self.battle_dialog is None:return False
+            self.battle_dialog = make_reader('battle', {'id': sid}, self)
+            if self.battle_dialog is None:
+                return False
+        elif self.battle_dialog.panel.refresh_reference() is False:
+            self._close_battle()
+            return False
         self.battle_dialog.show();self.battle_dialog.raise_();return True
 
     def _close_flow(self):
@@ -97,8 +108,8 @@ class CurrentEventBattlesPanel(QWidget):
         return 'lake',lake_locate('choices',cid)
 
     def open_full_flow(self):
-        if self.result is None:return False
-        if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
+        if not self._recheck_event():
+            return False
         kind,target=self._flow_target(self.choice_id)
         if target is None:self._close_flow();self.flow_button.hide();return False
         from .player_reference_links import open_full_event

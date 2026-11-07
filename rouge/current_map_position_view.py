@@ -103,6 +103,53 @@ class CurrentOriginalCenters(QWidget):
         if center is not None:
             p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setPen(QPen(QColor('#ffb4ee'),3));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(center,8,8);p.drawLine(center+QPointF(-13,0),center+QPointF(13,0));p.drawLine(center+QPointF(0,-13),center+QPointF(0,13))
 
+class FixedPositionPanel(QWidget):
+    """Shared map, reading state and image lifecycle for one selected position."""
+
+    def __init__(self, stage_id, source_model, parent=None):
+        super().__init__(parent)
+        self.stage_id = stage_id
+        self.source_model = source_model
+        self.result = self.image_raw = None
+        layout = QVBoxLayout(self)
+        split = QSplitter()
+        self.grid = CurrentTileGrid()
+        self.original = CurrentOriginalCenters()
+        split.addWidget(self.grid)
+        split.addWidget(self.original)
+        layout.addWidget(split, 2)
+        self.player = QPlainTextEdit()
+        self.details = QPlainTextEdit()
+        self.tabs = QTabWidget()
+        for reader, label in ((self.player, '位置'), (self.details, '资料说明')):
+            reader.setReadOnly(True)
+            self.tabs.addTab(reader, label)
+        self.tabs.setMaximumHeight(150)
+        layout.addWidget(self.tabs)
+
+    def clear_reference(self):
+        self.result = self.image_raw = None
+        self.grid.set_result(None)
+        self.original.set_image(None)
+        replace_text(self.player, self.source_model.UNAVAILABLE, preserve=False)
+        replace_text(self.details, '', preserve=False)
+
+    def refresh_reference(self, *, prepared_reference=...):
+        fresh = self._read_position() if prepared_reference is ... else prepared_reference
+        raw = self.source_model.battle.version.image_bytes(fresh['grid']['image']) if fresh else None
+        if raw is None or not self.original.set_image(raw, fresh['center']):
+            self.clear_reference()
+            return False
+        keep = self.result is not None and self.source_model.same(self.result, fresh)
+        self.result, self.image_raw = fresh, raw
+        cell = fresh['cell']
+        self.grid.set_result(fresh['grid'], (cell['row'], cell['col']))
+        self._render_position(fresh, keep)
+        if not keep:
+            self.tabs.setCurrentIndex(0)
+        return True
+
+
 class CurrentMapPositionPanel(QWidget):
     def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None,initial_reference=...):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None

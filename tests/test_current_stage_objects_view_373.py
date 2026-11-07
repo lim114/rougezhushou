@@ -12,6 +12,20 @@ class CurrentStageObjectsView373Tests(unittest.TestCase):
     def setUp(self):self.panel=CurrentStageObjectsPanel('ro6_n_1_1');self.panel.resize(1000,440);self.panel.show();self.app.processEvents()
     def tearDown(self):self.panel.close();self.panel.deleteLater();self.app.processEvents()
     def select(self):self.panel.entries.setCurrentIndex(1);self.app.processEvents();self.assertIsNotNone(self.panel.selected())
+    def test_image_failure_after_success_withdraws_child_and_preserves_parent(self):
+        self.select()
+        self.assertTrue(self.panel.open_position())
+        child = self.panel.position_dialog
+        self.assertFalse(child.panel.original.pixmap.isNull())
+        with patch.object(model.battle.version, 'image_bytes', return_value=None):
+            self.assertTrue(self.panel.refresh_reference())
+        self.assertIsNotNone(self.panel.result)
+        self.assertIsNone(self.panel.position_dialog)
+        self.assertFalse(child.isVisible())
+        self.assertIsNone(child.panel.result)
+        self.assertIsNone(child.panel.grid.result)
+        self.assertTrue(child.panel.original.pixmap.isNull())
+
     def test_initial_scope_unselected_and_actual_activation_unselected(self):self.assertIsNotNone(self.panel.result);self.assertIsNone(self.panel.selected());self.assertFalse(self.panel.action_button.isEnabled());self.assertFalse(self.panel.position_button.isEnabled())
     def test_search_and_link_filters_are_real_separate_choices(self):
         self.panel.search.setText('祭坛');self.app.processEvents();self.assertEqual(self.panel.entries.count(),2);self.panel.link.setCurrentIndex(self.panel.link.findData('linked'));self.assertEqual(self.panel.entries.count(),1);self.assertIsNone(self.panel.selected())

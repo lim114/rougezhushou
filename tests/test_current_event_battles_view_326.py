@@ -19,6 +19,33 @@ class CurrentEventBattlesView326Tests(unittest.TestCase):
         for i in range(p.choices.count()):
             if p.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid:p.choices.setCurrentRow(i);return
         self.fail('Missing '+cid)
+    def test_both_clicks_recheck_current_event_once_and_withdraw_stale_selection(self):
+        for method in ('open_battle', 'open_full_flow'):
+            with self.subTest(method=method):
+                panel = self.panel('黑诞', 'choice_ro6_normal2_2')
+                panel.stages.setCurrentIndex(1)
+                with patch.object(model, 'reference', return_value=None) as read:
+                    self.assertFalse(getattr(panel, method)())
+                    read.assert_called_once_with(panel.event_id, panel.stage_id)
+                self.assertIsNone(panel.result)
+                self.assertEqual(panel.stages.count(), 0)
+                self.assertFalse(panel.open_button.isEnabled())
+
+    def test_failed_preview_build_or_recheck_leaves_no_open_child(self):
+        panel = self.panel('黑诞', 'choice_ro6_normal2_2')
+        panel.stages.setCurrentIndex(1)
+        with patch('rouge.player_map_reader.make_reader', return_value=None) as build:
+            self.assertFalse(panel.open_battle())
+            build.assert_called_once_with('battle', {'id':panel.stages.currentData()}, panel)
+        self.assertIsNone(panel.battle_dialog)
+        self.assertTrue(panel.open_battle())
+        child = panel.battle_dialog
+        with patch.object(child.panel, 'refresh_reference', return_value=False) as refresh:
+            self.assertFalse(panel.open_battle())
+            refresh.assert_called_once_with()
+        self.assertIsNone(panel.battle_dialog)
+        self.assertFalse(child.isVisible())
+
     def test_all_twelve_options_no_default_version_and_all_twenty_exact_previews(self):
         p=self.panel();self.assertEqual(p.choices.count(),12);self.assertIsNone(p.choice_id);self.assertFalse(p.open_battle())
         for c in p.result['rows']:
@@ -34,6 +61,7 @@ class CurrentEventBattlesView326Tests(unittest.TestCase):
     def test_two_nonzero_readers_stage_and_nested_owned_reader_keep_refresh(self):
         p=self.panel('鸭托邦','choice_ro6_bat3_3');p.resize(850,360);p.stages.setCurrentIndex(p.stages.findData('ro6_t_3'));p.open_battle();child=p.battle_dialog;child.panel.open_event_origins();grandchild=child.panel.event_origins_dialog
         for reader in(p.player,p.technical):
+            reader.setFixedHeight(reader.fontMetrics().lineSpacing() * 2)
             p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(3);c.setPosition(15,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));before=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id,p.stages.currentData());self.assertTrue(p.refresh_reference());self.qt.processEvents();c=reader.textCursor();self.assertEqual(before,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.choice_id,p.stages.currentData()));self.assertTrue(child.isVisible());self.assertTrue(grandchild.isVisible())
         self.select(p,'choice_ro6_bat3_5');self.assertFalse(child.isVisible());self.assertFalse(grandchild.isVisible())
     def test_actual_source_damage_clear_all_old_children_recovery_manual(self):

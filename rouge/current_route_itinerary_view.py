@@ -1,29 +1,27 @@
 """Original fixed enemy itineraries, with separate unbound spawn references."""
 from copy import deepcopy
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit,QLineEdit,QSplitter
+from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit,QLineEdit
 from . import current_route_itinerary as model
-from .current_map_position_view import CurrentTileGrid,CurrentOriginalCenters
+from .current_map_position_view import FixedPositionPanel
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
 from .reference_copy import mechanism_copy
 from .collapsible_section import QCollapsible
-class CurrentRouteStepPositionPanel(QWidget):
-    def __init__(self,stage_id,route_key,step_key,parent=None,*,initial_reference=...):
-        super().__init__(parent);self.stage_id=stage_id;self.route_key=route_key;self.step_key=step_key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference(prepared_reference=initial_reference)
-    def clear_reference(self):self.result=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.details,'',preserve=False)
-    def refresh_reference(self,*,prepared_reference=...):
-        if prepared_reference is ...:
-            ref=model.stage_reference(self.stage_id);fresh=model.position_reference(ref,self.route_key,self.step_key)if ref else None
-        else:fresh=prepared_reference
-        raw=model.battle.version.image_bytes(fresh['grid']['image'])if fresh else None
-        if fresh is None or raw is None:self.clear_reference();return False
-        keep=self.result is not None and model.same(fresh,self.result);self.result=fresh;self.image_raw=raw;cell=fresh['cell'];self.grid.set_result(fresh['grid'],(cell['row'],cell['col']))
-        if not self.original.set_image(raw,fresh['center']):self.clear_reference();return False
+class CurrentRouteStepPositionPanel(FixedPositionPanel):
+    def __init__(self, stage_id, route_key, step_key, parent=None, *, initial_reference=...):
+        super().__init__(stage_id, model, parent)
+        self.route_key = route_key
+        self.step_key = step_key
+        self.refresh_reference(prepared_reference=initial_reference)
+
+    def _read_position(self):
+        reference = model.stage_reference(self.stage_id)
+        return model.position_reference(reference, self.route_key, self.step_key) if reference else None
+
+    def _render_position(self, fresh, keep):
         label=model.step_label(fresh['step'])
         text=label+'\n这里只查看所选环节的名义格；不与前后格连接，不代表实际脚点、偏移或传送配对。\n'+('此格有既有原图近似参考；绝对误差与其它位置仍需核验。'if fresh['center']else'此格没有可用的原图校准；左侧保留格子，右侧不猜标记。');replace_text(self.details,text,preserve=keep);replace_text(self.player,label+'\n原图标记：'+('参考位置。'if fresh['center']else'待校准。'),preserve=keep)
-        if not keep:self.tabs.setCurrentIndex(0)
-        return True
 class CurrentRouteStepPositionDialog(QDialog):
     def __init__(self,stage_id,route_key,step_key,parent=None,*,initial_reference=...):
         super().__init__(parent);self.setWindowTitle('行程环节 · 固定位置参考');self.resize(1150,760);layout=QVBoxLayout(self);self.panel=CurrentRouteStepPositionPanel(stage_id,route_key,step_key,self,initial_reference=initial_reference);layout.addWidget(self.panel)

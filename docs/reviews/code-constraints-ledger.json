@@ -2861,17 +2861,24 @@
     },
     {
       "file": "rouge/current_event_battles_view.py",
-      "sha256": "c3d86b424e57908448ac991d0bf795b39bb912f8bffdaa6243abc190faa36d7c",
+      "sha256": "e9839ab448df1f59c0ccd0c006c2fd1fee0bc0adb2bc693e7398b88ca46c99ac",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "dialog_close_delegates_to_reject_once",
       "rule2": "removed_redundant_closeEvent_override",
       "rule3": "D225_D226_pending",
-      "evidence": "Native Qt probe: close previously called each panel close method twice; reject once. Removed dialog closeEvent wrapper, after both paths call each once. Panel closeEvent remains for independent panel use; ToolPage finished wiring separately inspected. Seven view tests and exact titlebar close/destroy test pass. Shared navigation fallback is normal host selection; packet freshness and failed reader behavior listed D225 D226. Remaining lifecycle not certified."
+      "evidence": "Native Qt probe: close previously called each panel close method twice; reject once. Removed dialog closeEvent wrapper, after both paths call each once. Panel closeEvent remains for independent panel use; ToolPage finished wiring separately inspected. Seven view tests and exact titlebar close/destroy test pass. Shared navigation fallback is normal host selection; packet freshness and failed reader behavior listed D225 D226. Remaining lifecycle not certified.",
+      "scoped_reviews": [
+        {
+          "decision": "D225, D226, D227, D229, D231",
+          "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
+          "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
+        }
+      ]
     },
     {
       "file": "rouge/current_enemy_spawns_view.py",
-      "sha256": "73d5ca88238bbb704314df87da8ee73ee9a6bb1eb3fa86f99054e2b8ac7fcf5c",
+      "sha256": "0f6e30e31860c4e85b4851e9ee1d2f9939a35ce537091e1adafac806a146a91a",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
@@ -2884,11 +2891,18 @@
         ],
         "receipt": "verification/maintenance/code-constraints-enemy-action-review-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "decision": "D225, D226, D227, D229, D231",
+          "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
+          "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
+        }
+      ]
     },
     {
       "file": "rouge/current_stage_objects_view.py",
-      "sha256": "77780bde5a2a835a200d0dfc44095f3ad8601f6ccaed51845c9821494e540778",
+      "sha256": "88661a3aad54b484981dc5fd201ec01430de502c3e8f718d0697d8be33815ed9",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_filter_values_in_same_refresh_and_object_row_in_battle_callback",
@@ -2901,12 +2915,17 @@
           "receipt": "verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json",
           "scope": "D230/D232 initial result reuse; not full module certification",
           "sha256": "77780bde5a2a835a200d0dfc44095f3ad8601f6ccaed51845c9821494e540778"
+        },
+        {
+          "decision": "D225, D226, D227, D229, D231",
+          "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
+          "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
         }
       ]
     },
     {
       "file": "rouge/current_route_itinerary_view.py",
-      "sha256": "72f8759e45efce91e580bc84cc22833a8c46479b9edfc20a8063e398318af98e",
+      "sha256": "798650f3560681450400f5ff4b8fca2b3c17e37d76d390a117ac3853cc085412",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "reuse_route_and_filter_state; keys_read_before_search; dialog_cleanup_once",
@@ -2919,6 +2938,11 @@
           "receipt": "verification/maintenance/code-constraints-position-reader-initial-20261106/summary.json",
           "scope": "D230/D232 initial result reuse; not full module certification",
           "sha256": "72f8759e45efce91e580bc84cc22833a8c46479b9edfc20a8063e398318af98e"
+        },
+        {
+          "decision": "D225, D226, D227, D229, D231",
+          "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
+          "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
         }
       ]
     },
@@ -3152,7 +3176,7 @@
     },
     {
       "file": "rouge/current_map_position_view.py",
-      "sha256": "c2200c27a69f494eab9690693be14b731ab436ad8fe0bca44190fc8386d25c24",
+      "sha256": "ebfb7bc8e7b2ae6dc3731cf6416761692af94f374d67a6f8806b162a6b6b53fd",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Reuse grid tile infos and one selected coordinate key; repeated cell_reference pending D259",
@@ -3201,6 +3225,11 @@
         {
           "receipt": "verification/maintenance/code-constraints-map-boundaries-20261106/summary.json",
           "scope": "D259/D260/D261 approved boundaries verified; no full module certification"
+        },
+        {
+          "decision": "D225, D226, D227, D229, D231",
+          "receipt": "verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json",
+          "scope": "Event panel click revalidation and failed preview, enemy portrait replacement, fixed object/route map installation and stale-child withdrawal."
         }
       ]
     },
