@@ -31,6 +31,16 @@ class ImageGeometryReviewTests(unittest.TestCase):
             'nested':{'label_box':[[.3,.7]],'card_position':[.1,.9]}})
         self.assertEqual(result['items'][1],{'score':.9,'text':'untouched','center':[1,2,3]})
 
+    def test_black_cutoff_uses_color_channels_and_ignores_alpha(self):
+        for dtype in (np.uint8, np.float32):
+            for channel in range(3):
+                with self.subTest(dtype=dtype, channel=channel):
+                    image = np.full((240, 380, 4), 3, dtype=dtype)
+                    image[:, :, 3] = 255
+                    image[12:224, 21:354, channel] = 4
+                    _, view = prepare_frame(image)
+                    self.assertEqual(view['content_rect'], [21, 12, 354, 224])
+
     def test_black_padding_is_removed_but_dark_interior_is_preserved(self):
         image=np.zeros((800,1200,3),np.uint8);image[20:780,30:1170]=10
         image[200:500,300:700]=0

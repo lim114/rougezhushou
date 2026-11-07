@@ -13,9 +13,12 @@ def prepare_frame(image,client_rect=None):
     ch,cw=image.shape[:2]
     # Only contiguous, almost entirely black outer padding is removed. Dark
     # interior panels are not candidates. Thin game borders remain untouched.
-    dark = image[:, :, 0] <= 3
-    for channel in range(1, min(3, image.shape[2])):
-        dark &= image[:, :, channel] <= 3
+    if image.dtype == np.uint8 and image.size:
+        dark = cv2.inRange(image[:, :, :3], (0, 0, 0, 0), (3, 3, 3, 3)) != 0
+    else:
+        dark = image[:, :, 0] <= 3
+        for channel in range(1, min(3, image.shape[2])):
+            dark &= image[:, :, channel] <= 3
     rows=np.mean(dark,axis=1)>=.999
     cols=np.mean(dark,axis=0)>=.999
     def edges(mask,length):
@@ -40,7 +43,8 @@ def prepare_frame(image,client_rect=None):
 def map_evidence(value,viewport):
     """Keep externally exposed evidence coordinates on the original capture."""
     w,h=viewport['source_size'];left,top,right,bottom=viewport['content_rect']
-    def point(p):return [(left+p[0]*(right-left))/w,(top+p[1]*(bottom-top))/h]
+    width, height = right-left, bottom-top
+    def point(p):return [(left+p[0]*width)/w,(top+p[1]*height)/h]
     def visit(value):
         if isinstance(value,dict):
             for key,item in value.items():

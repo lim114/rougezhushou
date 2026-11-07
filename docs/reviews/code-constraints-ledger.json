@@ -4402,7 +4402,7 @@
     },
     {
       "file": "rouge/viewport.py",
-      "sha256": "daad6650d11f4e909d2496a18027a2a731c0e29c95480864082bae3f36d7e8de",
+      "sha256": "255d8e8143ffc816fe48429678576f79be179f3117ac119c8c8671c854e967b4",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "rule1": "Reject invalid client rectangle and undersized detected content at frame entry. Normal edge discovery preserved; coordinate mapping reuses established viewport.",
@@ -4416,6 +4416,11 @@
           "decision": "",
           "receipt": "verification/maintenance/code-constraints-vision-viewport-replay-20261107/summary.json",
           "scope": "Current frame black-border mask and per-frame refined node title geometry."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-viewport-hud-20261107/summary.json",
+          "scope": "Capture viewport dark mask, coordinate projection extents, HUD counter and life-header geometry. Anchors.crop D353 pending, untouched."
         }
       ]
     },
@@ -6107,6 +6112,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-run-map-roster-snapshot-20261107/summary.json",
       "scope": "RunState.apply roster completion, apply_map same-layout merge, and summary roster projection."
+    },
+    {
+      "file": "rouge/hud_resources.py",
+      "sha256": "b917db008d8f7f5f1f35b71900890a61329dd7ab015370445fb0afafa18f88dc",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-viewport-hud-20261107/summary.json",
+      "scope": "Capture viewport dark mask, coordinate projection extents, HUD counter and life-header geometry. Anchors.crop D353 pending, untouched."
     }
   ]
 }

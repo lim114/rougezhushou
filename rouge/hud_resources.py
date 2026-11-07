@@ -11,7 +11,7 @@ from .operator_recognition import center
 def _number(image, texts, box, engine, *, ratio=False, segmented=False):
     pattern = r'(\d+)/(\d+)' if ratio else r'\d+'
     values = {t['text'] for t in texts if t['confidence'] >= .9
-              and box[0] <= center(t)[0] <= box[2] and box[1] <= center(t)[1] <= box[3]
+              and box[0] <= (position := center(t))[0] <= box[2] and box[1] <= position[1] <= box[3]
               and re.fullmatch(pattern, t['text'])}
     if not values:
         current = crop(image, box)
@@ -19,8 +19,8 @@ def _number(image, texts, box, engine, *, ratio=False, segmented=False):
             return None
         current = cv2.copyMakeBorder(current, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value=0)
         raw, _ = engine(cv2.resize(current, None, fx=2, fy=2), use_cls=False, use_det=not segmented)
-        values = {row[-2].replace(' ', '') for row in raw or []
-                  if row[-1] >= .9 and re.fullmatch(pattern, row[-2].replace(' ', ''))}
+        values = {digits for row in raw or []
+                  if row[-1] >= .9 and re.fullmatch(pattern, digits := row[-2].replace(' ', ''))}
     if len(values) != 1:
         return None
     value = next(iter(values))
@@ -41,6 +41,7 @@ def read_hud_resources(image, texts, engine):
     h, w = image.shape[:2]
     resources = {}
     labels = {t['text']: t for t in texts if t['confidence'] >= .9}
+    life_bounds = None
     for key, label in (('life', '目标生命值'), ('command', '指挥等级'),
                        ('action', '行动力'), ('valuation', '总估价')):
         anchor = labels.get(label)
@@ -51,6 +52,7 @@ def read_hud_resources(image, texts, engine):
         dy = y1 - y0
         dx = dy * h / w
         if key == 'life':
+            life_bounds = y0, y1
             box = (x0 - .1*dx, y1, x1, y1 + 1.6*dy)
         elif key == 'command':
             box = (x0 - 2.2*dx, y0 + .6*dy, x0 - .2*dx, y1 + 1.2*dy)
@@ -61,13 +63,11 @@ def read_hud_resources(image, texts, engine):
         value = _number(image, texts, box, engine, ratio=key == 'life')
         if value is not None:
             resources[key] = {**value, 'source': label + '当前标签对应数值'}
-    life = labels.get('目标生命值')
-    if life is None:
+    if life_bounds is None:
         return resources
     # Locate icons anywhere along the CURRENT header's vertical span, not a
     # remembered screen quadrant. Their own bounds locate their counter.
-    x0, y0 = np.min(life['box'], axis=0)
-    x1, y1 = np.max(life['box'], axis=0)
+    y0, y1 = life_bounds
     font = (y1-y0)*h
     top, bottom = max(0, int(y0*h-font)), min(h, int(y1*h+2*font))
     gray = cv2.cvtColor(image[top:bottom], cv2.COLOR_BGR2GRAY)
