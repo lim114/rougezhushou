@@ -176,11 +176,14 @@ class InventoryPanel(QWidget):
         inventory, self.kettle_quantity = inventory_reading(self.run.state, held_flags=flags)
         self.merge_kettles.setVisible(self.held.isChecked())
         render_key=repr((rows,self.kettle_quantity,self.merge_kettles.isChecked(),self.held.isChecked()))
-        if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
+        if render_key != self.render_key:
+            self.render_rows(rows, selected)
+            self.render_key = render_key
+        else:
+            from .player_exchange_view import update_inventory_button
+            update_inventory_button(self)
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
-        from .player_exchange_view import update_inventory_button
-        update_inventory_button(self)
         complete=inventory['complete']
         self.summary.setText('暂无收藏品资料'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单待核对'))
         from .relic_quantities import KETTLE
@@ -197,17 +200,34 @@ class InventoryPanel(QWidget):
         current=self.entries.currentItem();selected_copy=current.data(Qt.ItemDataRole.UserRole+1)or 0 if current else 0
         offset=self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True);self.entries.clear()
-        for row in rows or[]:
-            quantity=self.kettle_quantity if row['id']==KETTLE and self.held.isChecked()else None
-            copies=quantity if quantity is not None and not self.merge_kettles.isChecked()else 1
+        held_only = self.held.isChecked()
+        merged = self.merge_kettles.isChecked()
+        for row in rows or []:
+            is_held_kettle = held_only and row['id'] == KETTLE
+            quantity = self.kettle_quantity if is_held_kettle else None
+            copies = quantity if quantity is not None and not merged else 1
+            label = row['name']
+            if is_held_kettle and quantity is None:
+                label += '\n件数未确认'
+            elif quantity is not None and quantity > 1 and merged:
+                label += ' ×' + str(quantity)
+            icon_id = row['icon'] or ''
+            icon = relic_icon(icon_id)
+            note = relic_icon_note(icon_id)
+            status = '本局已确认' if row['held'] else '资料条目'
+            tooltip = row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+' · '+status+'\n'+row['usage']
+            if note:
+                tooltip += '\n' + note
+            selected_index = min(selected_copy, copies - 1) if row['id'] == selected else None
             for copy_index in range(copies):
-                label=row['name']+(' ×'+str(quantity)if quantity is not None and quantity>1 and self.merge_kettles.isChecked()else'')
-                if row['id']==KETTLE and self.held.isChecked()and quantity is None:label+='\n件数未确认'
-                item=QListWidgetItem(relic_icon(row['icon']or''),label)
-                item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目')+'\n'+row['usage']);item.setData(Qt.ItemDataRole.UserRole,row['id']);item.setData(Qt.ItemDataRole.UserRole+1,copy_index);item.setData(Qt.ItemDataRole.UserRole+2,row['usage']);self.entries.addItem(item)
-                note=relic_icon_note(row['icon']or'')
-                if note:item.setToolTip(item.toolTip()+'\n'+note)
-                if row['id']==selected and copy_index==min(selected_copy,copies-1):self.entries.setCurrentItem(item)
+                item = QListWidgetItem(icon, label)
+                item.setToolTip(tooltip)
+                item.setData(Qt.ItemDataRole.UserRole, row['id'])
+                item.setData(Qt.ItemDataRole.UserRole+1, copy_index)
+                item.setData(Qt.ItemDataRole.UserRole+2, row['usage'])
+                self.entries.addItem(item)
+                if copy_index == selected_index:
+                    self.entries.setCurrentItem(item)
         if selected not in self.rows:self.entries.setCurrentRow(-1)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
@@ -251,8 +271,13 @@ class InventoryPanel(QWidget):
         if row is None or not self.isVisible():return
         if not self.hover_card.install(row,self.version.currentData(),self.source_index,self.source_signature):return
         self.hover_card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,bool(self.window().windowFlags()&Qt.WindowType.WindowStaysOnTopHint));self.hover_card.show()
-        copies=[self.entries.item(i)for i in range(self.entries.count())if self.entries.item(i).data(Qt.ItemDataRole.UserRole)==row['id']]
-        rect=self.entries.visualItemRect(copies[min(self.hover_copy,len(copies)-1)])
+        for i in range(self.entries.count()):
+            entry = self.entries.item(i)
+            if entry.data(Qt.ItemDataRole.UserRole) == row['id']:
+                anchor = entry
+                if entry.data(Qt.ItemDataRole.UserRole+1) == self.hover_copy:
+                    break
+        rect = self.entries.visualItemRect(anchor)
         point=self.entries.viewport().mapToGlobal(rect.topRight());area=self.screen().availableGeometry()
         self.hover_card.move(max(area.left(),min(point.x()+10,area.right()-self.hover_card.width()+1)),max(area.top(),min(point.y(),area.bottom()-self.hover_card.height()+1)))
     def leave_hover(self):

@@ -3,6 +3,7 @@ from tempfile import TemporaryDirectory
 from copy import deepcopy
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 from rouge.relic_quantities import KETTLE,confirmed_bar_counts,kettle_copies
@@ -52,6 +53,36 @@ class InventoryModes446(unittest.TestCase):
  def setUpClass(cls):cls.gui=QApplication.instance()or QApplication([])
  def panel(self):
   folder=TemporaryDirectory();self.addCleanup(folder.cleanup);r=RunState(Path(folder.name)/'run.json');observe(r,[KETTLE]*3+[OTHER]);p=InventoryPanel(r);self.addCleanup(p.close);p.resize(1100,540);p.show();self.gui.processEvents();return p,r
+ def test_redraw_reads_one_icon_per_identity_and_preserves_selected_copy(self):
+  from rouge import view_catalog, player_exchange_view
+  panel, run = self.panel()
+  panel.entries.setCurrentRow(2)
+  selected = panel.entries.currentItem()
+  self.assertEqual(selected.data(Qt.ItemDataRole.UserRole+1), 2)
+  observe(run, [KETTLE]*4+[OTHER], at=2)
+  with patch.object(view_catalog, 'relic_icon', wraps=view_catalog.relic_icon) as icon, \
+       patch.object(player_exchange_view, 'update_inventory_button', wraps=player_exchange_view.update_inventory_button) as button:
+   panel.refresh()
+   self.assertEqual(icon.call_count, len(panel.rows))
+   button.assert_called_once_with(panel)
+  self.assertEqual(panel.entries.currentItem().data(Qt.ItemDataRole.UserRole+1), 2)
+  observe(run, [KETTLE]*2+[OTHER], at=3)
+  panel.refresh()
+  self.assertEqual(panel.entries.currentItem().data(Qt.ItemDataRole.UserRole), KETTLE)
+  self.assertEqual(panel.entries.currentItem().data(Qt.ItemDataRole.UserRole+1), 1)
+
+ def test_hover_anchors_to_requested_copy_or_last_remaining_copy(self):
+  panel, run = self.panel()
+  panel.hover_pending = KETTLE
+  panel.hover_copy = 2
+  with patch.object(panel.entries, 'visualItemRect', wraps=panel.entries.visualItemRect) as rectangle:
+   panel.show_hover()
+   self.assertEqual(rectangle.call_args.args[0].data(Qt.ItemDataRole.UserRole+1), 2)
+   observe(run, [KETTLE]*2+[OTHER], at=2)
+   panel.refresh()
+   panel.show_hover()
+   self.assertEqual(rectangle.call_args.args[0].data(Qt.ItemDataRole.UserRole+1), 1)
+
  def test_merge_only_kettles_preserves_exact_identity_and_source_actions(self):
   p,r=self.panel();self.assertEqual(p.entries.count(),4);self.assertEqual(len(p.rows),2);p.entries.setCurrentRow(2);p.merge_kettles.click();self.assertEqual(p.entries.count(),2);self.assertEqual(p.entries.currentItem().data(Qt.ItemDataRole.UserRole),KETTLE);self.assertIn('×3',p.entries.currentItem().text());calls=[];p.openReference.connect(calls.append);p.open_selected();self.assertEqual(calls,[KETTLE]);self.assertIn('3件',p.detail.toPlainText());p.merge_kettles.click();self.assertEqual(p.entries.count(),4)
  def test_mode_changes_preserve_identity_description_and_selection(self):
