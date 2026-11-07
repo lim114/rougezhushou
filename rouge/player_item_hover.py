@@ -1,7 +1,7 @@
 """Pinnable local item reference; all navigation carries exact version and pool IDs."""
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit
-from .player_item_sources import VERSION_LABELS
+from .player_item_sources import VERSION_LABELS, selected_pool
 from .view_catalog import relic_icon,relic_icon_note
 
 class ItemHoverCard(QDialog):
@@ -59,12 +59,18 @@ class ItemHoverCard(QDialog):
         return True
     def read_pool(self,*_):
         pool=self.pools.currentData();self.open_button.setEnabled(pool is not None and self.index is not None)
-        text=self.index.describe(self.version,self.identity,pool)if self.index and pool else'当前资料暂无来源记录。'if self.index else'请先更新公开资料。'
+        selected = selected_pool(self.index, self.version, self.identity, pool)
+        if self.index is None:
+            text = '请先更新公开资料。'
+        elif pool:
+            text = self.index.describe_pool(self.version, self.identity, selected)
+        else:
+            text = '当前资料暂无来源记录。'
         self.cards.select(pool)
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
-        from .player_source_map import targets,companion
+        from .player_source_map import pool_targets, companion
         self.map_targets.clear()
-        for kind in targets(self.index,self.version,self.identity,pool):self.map_targets.addItem(kind,kind)
+        for kind in pool_targets(selected):self.map_targets.addItem(kind,kind)
         visible=self.map_targets.count()>0
         self.map_targets.setVisible(visible);self.map_button.setVisible(visible);self.map_button.setEnabled(visible and companion(self)is not None)
         self.map_button.setToolTip('在地图中标出对应类型的节点。')

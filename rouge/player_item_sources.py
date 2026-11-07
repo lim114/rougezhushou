@@ -9,6 +9,12 @@ def pool_label(pool):
     nodes = list(dict.fromkeys(b['nodeName'] for b in pool.get('nodeBindings', []) if b.get('nodeName')))
     return pool['name'] + (' · ' + '、'.join(nodes) if nodes else '')
 
+def selected_pool(index, version, identity, pool_id):
+    if index is None:
+        return None
+    return next((pool for pool in index.pools(version, identity) if pool['id'] == pool_id), None)
+
+
 class ItemSourceIndex:
     def __init__(self, data):
         self.data = archive.validate(data)
@@ -22,7 +28,9 @@ class ItemSourceIndex:
         return list(self.by_item.get((version, identity), []))
 
     def describe(self, version, identity, pool_id):
-        pool = next((p for p in self.pools(version, identity) if p['id'] == pool_id), None)
+        return self.describe_pool(version, identity, selected_pool(self, version, identity, pool_id))
+
+    def describe_pool(self, version, identity, pool):
         if pool is None:
             return '所选资料已不可用；没有沿用其他同名物品或其他资料范围。'
         lines = [pool_label(pool), '资料范围：' + VERSION_LABELS.get(version, '来源范围 ' + version)]
@@ -35,8 +43,8 @@ class ItemSourceIndex:
             if ref.get('description'):lines.append(_plain(ref['description']).replace('drop_extra_pool','额外收藏品掉落'))
         channels = list(dict.fromkeys(c['sourceName'] for c in pool.get('usageChannels', []) if c.get('sourceName')))
         if channels:lines.append('关联来源：' + '、'.join(channels))
-        found = False
-        for number, (_, label, distribution) in enumerate(archive.distributions(pool),1):
+        distributions = archive.distributions(pool)
+        for number, (_, label, distribution) in enumerate(distributions,1):
             if label.startswith('自动战斗'):label='自动战斗样本 ' + str(number)
             member = next(r for r in archive.members(self.data, pool, distribution,version=version) if r['id'] == identity)
             scope = _plain(distribution.get('scopeLabel') or '来源未说明统计条件')
@@ -49,7 +57,6 @@ class ItemSourceIndex:
                     time=updated.astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M（北京时间）')
                 except(ValueError,TypeError,AttributeError):time='来源未提供可核对的时间'
                 lines.append('来源更新时间：' + time)
-            found = True
-        if not found:lines += ['', '候选出现频率：暂无可核对的统计。']
+        if not distributions:lines += ['', '候选出现频率：暂无可核对的统计。']
         lines += ['', '以上频率不是抽取权重，也不是本局最终获得概率；不同来源可能重叠，不相加。', '当前版本是否完整适用仍待核验；藏品池成员不代表本局已解锁、可选或必掉。']
         return '\n'.join(lines)

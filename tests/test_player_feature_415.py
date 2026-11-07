@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from copy import deepcopy
 from PySide6.QtWidgets import QApplication,QWidget
 from rouge.player_source_cards import source_cards
@@ -36,3 +37,23 @@ class SourceCardTests(unittest.TestCase):
    seen=[];card.poolRequested.connect(lambda v,i:seen.append((v,i)));card.cards.buttons[0].click();card.open_button.click()
    self.assertEqual(seen,[('base','pool1')]);self.assertTrue(card.show_conditions.isChecked())
   finally:card.close();owner.close()
+
+ def test_one_pool_lookup_per_selection_and_a_fresh_lookup_after_switch(self):
+  data = fixture()
+  second = deepcopy(data['versions']['base'][0])
+  second.update(id='second', name='第二个池', nodeBindings=[{'nodeType':'BATTLE_ELITE', 'nodeName':'紧急作战'}])
+  data['versions']['base'].append(second)
+  index = ItemSourceIndex(data)
+  owner = QWidget()
+  card = ItemHoverCard(owner)
+  self.addCleanup(owner.close)
+  self.addCleanup(card.close)
+  card.install({'id':'a','name':'同名'}, 'base', index, 'fixture')
+  with patch.object(index, 'pools', wraps=index.pools) as lookup:
+   card.read_pool()
+   lookup.assert_called_once_with('base', 'a')
+   lookup.reset_mock()
+   card.pools.setCurrentIndex(card.pools.findData('second'))
+   lookup.assert_called_once_with('base', 'a')
+  self.assertIn('第二个池', card.detail.toPlainText())
+  self.assertEqual(card.map_targets.currentData(), '紧急作战')

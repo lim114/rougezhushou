@@ -191,7 +191,7 @@
     },
     {
       "file": "rouge/player_source_map.py",
-      "sha256": "bc712373e36db11ff3f1a5208dbc57315b413e58a5250eaa982d3cc6c421c6cd",
+      "sha256": "a7d4d04446d2dfcddde0f773e43e82146e407e0d1587742c86b87ddf5837d53e",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "approved_scope_D41",
@@ -209,11 +209,16 @@
           "decision": "",
           "receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json",
           "scope": "Complete source map module; hover install and open_pool call paths."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json",
+          "scope": "One selected-pool lookup per hover refresh and independent exact lookup at navigation; reverified both public functions and the pool-level function in player_source_map."
         }
       ],
       "evidence": "Reviewed all callers and both functions. Pool identity and optional host ancestry have distinct contracts. Missing pool exits once; opaque non-object bindings skipped as previously approved. Exact enum/name agreement required.",
       "full_module_review_complete": true,
-      "full_review_receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json"
+      "full_review_receipt": "verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json"
     },
     {
       "file": "rouge/observed_map_symbols.py",
@@ -5656,6 +5661,20 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json",
       "scope": "Complete source map module; hover install and open_pool call paths."
+    },
+    {
+      "file": "rouge/player_item_hover.py",
+      "sha256": "e629e7ffbbf4bef665327b6b2c57da065cc9b6b8a802cd3058b992c1adf70e3e",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json",
+      "scope": "One selected-pool lookup per hover refresh and independent exact lookup at navigation; reverified both public functions and the pool-level function in player_source_map."
+    },
+    {
+      "file": "rouge/player_item_sources.py",
+      "sha256": "9d24b784e4eb5ac239ca44ffde24046539f293a160f31cbdab9e74579b840620",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json",
+      "scope": "One selected-pool lookup per hover refresh and independent exact lookup at navigation; reverified both public functions and the pool-level function in player_source_map."
     }
   ]
 }

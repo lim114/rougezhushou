@@ -1,3 +1,7 @@
+## 当前断点 · 藏品条件和地图入口共用一次选中池查询（2026-11-06）
+
+选择池时只查找一次，条件和地图类型取自同一记录。37项定向通过。D340待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-selected-pool-snapshot-20261106/summary.json)。
+
 ## 当前断点 · 藏品来源卡与选择框复用来源清单，核对地图入口（2026-11-06）
 
 藏品池选择框直接使用卡片的同一份名称与编号，刷新保留原选择。整模块进度76/559。21项定向通过；D339待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json)。

@@ -2,7 +2,11 @@
 PAIRS={'BATTLE_NORMAL':'作战','BATTLE_ELITE':'紧急作战','BATTLE_BOSS':'险路恶敌','BATTLE_SAVAGE':'“居民”据点','EVACUATE':'险路小径','FINAL':'险路尽头','SCRAP_SHOP':'秘境行商'}
 
 def targets(index,version,identity,pool_id):
-    pool=next((p for p in index.pools(version,identity)if p['id']==pool_id),None)if index else None
+    from .player_item_sources import selected_pool
+    return pool_targets(selected_pool(index, version, identity, pool_id))
+
+
+def pool_targets(pool):
     if pool is None:
         return []
     result=[]
