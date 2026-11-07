@@ -25,7 +25,7 @@ def qualified_fields(record, profile):
 def crew_rows(state):
     profiles=operator_profiles();rows=[]
     for identity,raw in state.get('operators',{}).items():
-        if not isinstance(raw,dict)or raw.get('scope')=='account'or not active_record(raw,'present'):continue
+        if raw.get('scope')=='account'or not active_record(raw,'present'):continue
         record=projected_run_metadata(raw);profile=profiles.get(identity,{})
         fields=qualified_fields(record,profile)
         rows.append({'id':identity,'name':profile.get('name')or record.get('name')or'姓名待核对','profession':profile.get('profession'),'profile':profile,'record':record,'fields':fields,'calculable':identity in catalog()['operators']})

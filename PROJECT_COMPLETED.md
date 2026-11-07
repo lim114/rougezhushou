@@ -1,3 +1,7 @@
+## 维护：区分本局与归档入口并删除队伍重复检查（2026-11-06）
+
+D65删除队伍重复字典检查；D62/D77归档入口过滤按授权保留并验证。19项定向18通过、1项旧文案断言失败；本局/归档与队伍8项通过。原280组完成209、剩71；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-run-archive-boundaries-20261106/summary.json`。
+
 ## 维护：资源历史复用入口类型契约（2026-11-06）
 
 D58完成：历史条目字典类型由存档入口保证，显示层删除重复判断；资源名称过滤保留。7项定向通过。原280组完成206、剩74；D81端点策略等待答复，原测试窗口更新仍待补。回执 `verification/maintenance/code-constraints-resource-history-entry-20261106/summary.json`。
