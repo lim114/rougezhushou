@@ -15,6 +15,21 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_dedup_tracks_source_shape_across_sizes_and_color_modes(self):
+        # The first two sizes produce the same resized width and height.
+        buffer = FrameBuffer(settle_seconds=0)
+        shapes = [(321, 641), (322, 643), (322, 643, 3), (17, 29, 3), (17, 29)]
+        for index, shape in enumerate(shapes):
+            pixels = np.full(shape, 80, dtype=np.uint8)
+            buffer.offer(pixels, 2 * index)
+            buffer.offer(pixels.copy(), 2 * index + 1)
+        self.assertEqual(buffer.stats()['deduplicated'], len(shapes))
+        for index, shape in enumerate(shapes):
+            frame = buffer.take()
+            self.assertEqual(frame['image'].shape, shape)
+            self.assertEqual(frame['captured_at'], 2 * index + 1)
+        self.assertIsNone(buffer.take())
+
     def test_take_transfers_only_the_popped_older_image(self):
         copies=[]
         class TrackedImage(np.ndarray):

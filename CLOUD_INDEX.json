@@ -2844,10 +2844,10 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "10be248f0da81ee95a0a64a75333b5f4292244de449d4b7af67c1f1351618685",
+    "DEVELOPMENT_CHECKPOINT.json": "a3f605a202782d519ee56b975c35bf93e0d1a8262d9af8741968149551696140",
     "PROJECT_PROGRESS.md": "580bf41d804893d1b1ef0af2b714d0b08163c037cda9533234eb45f959369727",
-    "WORK_IN_PROGRESS.md": "bb250f4e6a77f0d9a81d9a74f4988b6ab2c6d29a470d25d36354dd198e015895",
-    "PROJECT_COMPLETED.md": "1107ad23584445711cb9749a298d4edb7a1d0b3d3ef3eb920567f335ceb925af",
+    "WORK_IN_PROGRESS.md": "1ce5341a8d3ddfc716b88f04dda23df43648267d4eb0b5356231de2806f2db82",
+    "PROJECT_COMPLETED.md": "e8383e6c5e4d111a0be46e7273f7e5c52c06e81f978cd64623087199fcd6f45f",
     "AGENTS.md": "2a954dbc42df5a29c844c7dc831b12096465b912af962fad595a567bfc800f86",
     "PROJECT_REQUIREMENTS.md": "75f55769f3cbafa6a33fb284e9c2db70934693524c35d3c246f9b1f765f1013f",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
@@ -2876,12 +2876,12 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance": {
-    "title": "采样队列转交已出队图像，窗口与光标共用当帧几何",
-    "receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
+    "title": "删除队列缩略图重复尺寸判断，确认两处 Windows 采样保护",
+    "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
+    "previous_implementation_receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
     "defense_decisions": "docs/decisions/2026-11-04-existing-defense-review.md",
     "pending_decisions": [
       "D319",
@@ -2903,10 +2903,7 @@
       "D368",
       "D369",
       "D370",
-      "D371",
-      "D372",
-      "D373",
-      "D374"
+      "D371"
     ],
     "resolved_decisions": [
       "D317",
@@ -3199,7 +3196,10 @@
       "D361",
       "D362",
       "D363",
-      "D364"
+      "D364",
+      "D372",
+      "D373",
+      "D374"
     ],
     "unified_review_queue": "docs/reviews/pending-defenses.md",
     "review_ledger": "docs/reviews/code-constraints-ledger.json",
@@ -3212,7 +3212,7 @@
       "D307"
     ],
     "approval_registry": "docs/decisions/2026-11-06-defense-review-approval.json",
-    "goal_status": "active",
+    "goal_status": "paused",
     "quota_wrapup_exception": "docs/decisions/2026-11-06-quota-wrapup-exception.md",
     "additional_approval_registry": "docs/decisions/2026-11-06-shop-time-range-approval.md",
     "mei_resource_approval": "docs/decisions/2026-11-06-mei-stage-resource-approval.md",
@@ -3221,7 +3221,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "继续独立模块回顾；D372–D374与其余未决防御集中保留。",
-    "receipt_sha256": "292925e539ce0b69341627b2c90798118d45eaa676653cd4e420dc63505cd9bf"
+    "next_batch_focus": "按用户要求暂停；恢复时从未完成的模块和待审清单续接。",
+    "receipt_sha256": "6ce196edb22088ed06e3e6ab2b8cf853451514633ad2fbaceb383a08acee9c35"
   }
 }

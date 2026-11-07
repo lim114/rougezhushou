@@ -64,8 +64,6 @@ class FrameBuffer:
         if left['key'] != right['key']:
             return False
         a, b = left['thumb'], right['thumb']
-        if a.shape != b.shape:
-            return False
         if np.array_equal(a, b):
             return True
         # A cheap necessary condition for the exact local difference below.

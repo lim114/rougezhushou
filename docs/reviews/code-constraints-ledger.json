@@ -6492,6 +6492,27 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
       "scope": "FrameBuffer ownership, retained-byte accounting and overflow novelty; Windows capture callback geometry and shared DPI scope. D372-D374 policy decisions pending."
+    },
+    {
+      "file": "rouge/frame_buffer.py",
+      "sha256": "477a67ccefcd6ce2c0e287101c7f49f6ea3eabee0302dfe0d8ce6f80381eab69",
+      "decision": "D372",
+      "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
+      "scope": "通过原图形状、窗口和客户区身份核对后直接比较像素。"
+    },
+    {
+      "file": "rouge/capture.py",
+      "sha256": "1cedf5322833c5beb5c2b1720b6c360ad981bc556f6a8681060e461a0d5b11bb",
+      "decision": "D373",
+      "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
+      "scope": "几何读取遇到 OSError 或 win32gui.error 时，该帧客户区未知。"
+    },
+    {
+      "file": "rouge/windows_dpi.py",
+      "sha256": "ace4a6286d39856520a4b2d5ac2696c68f1b0a125900f81962dca9a556a6a37d",
+      "decision": "D374",
+      "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
+      "scope": "旧 DPI 模式为空时跳过恢复；有效旧模式在正常或异常退出时恢复。"
     }
   ]
 }

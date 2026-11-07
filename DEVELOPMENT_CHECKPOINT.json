@@ -20,7 +20,7 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section:commit and ordinary push origin main.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
     "stop_after_section": null,
     "each_section_requires_functional_progress": true,
@@ -10426,12 +10426,12 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance_save": {
-    "title": "采样队列转交已出队图像，窗口与光标共用当帧几何",
-    "receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
+    "title": "删除队列缩略图重复尺寸判断，确认两处 Windows 采样保护",
+    "receipt": "verification/maintenance/code-constraints-frame-shape-20261107/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
+    "previous_implementation_receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
     "defense_decisions": "docs/decisions/2026-11-04-existing-defense-review.md",
     "pending_decisions": [
       "D319",
@@ -10453,10 +10453,7 @@
       "D368",
       "D369",
       "D370",
-      "D371",
-      "D372",
-      "D373",
-      "D374"
+      "D371"
     ],
     "resolved_decisions": [
       "D317",
@@ -10749,7 +10746,10 @@
       "D361",
       "D362",
       "D363",
-      "D364"
+      "D364",
+      "D372",
+      "D373",
+      "D374"
     ],
     "unified_review_queue": "docs/reviews/pending-defenses.md",
     "review_ledger": "docs/reviews/code-constraints-ledger.json",
@@ -10762,7 +10762,7 @@
       "D307"
     ],
     "approval_registry": "docs/decisions/2026-11-06-defense-review-approval.json",
-    "goal_status": "active",
+    "goal_status": "paused",
     "quota_wrapup_exception": "docs/decisions/2026-11-06-quota-wrapup-exception.md",
     "additional_approval_registry": "docs/decisions/2026-11-06-shop-time-range-approval.md",
     "mei_resource_approval": "docs/decisions/2026-11-06-mei-stage-resource-approval.md",
@@ -10771,7 +10771,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "继续独立模块回顾；D372–D374与其余未决防御集中保留。"
+    "next_batch_focus": "按用户要求暂停；恢复时从未完成的模块和待审清单续接。"
   },
   "branch_transition": {
     "active_branch": "main",

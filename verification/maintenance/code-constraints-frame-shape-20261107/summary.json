@@ -1,0 +1,41 @@
+{
+  "title": "删除队列缩略图重复尺寸判断，确认两处 Windows 采样保护",
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "base_commit": "ef9965d93157791a06eae59953d870acba6be253",
+  "previous_receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 243,
+    "selected_paths_only": 192,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 560
+  },
+  "implemented_decisions": [
+    "D372",
+    "D373",
+    "D374"
+  ],
+  "decisions": {
+    "D372": "通过原图形状、窗口和客户区身份核对后直接比较像素。",
+    "D373": "几何读取遇到 OSError 或 win32gui.error 时，该帧客户区未知。",
+    "D374": "旧 DPI 模式为空时跳过恢复；有效旧模式在正常或异常退出时恢复。"
+  },
+  "source_sha256": {
+    "rouge/frame_buffer.py": "477a67ccefcd6ce2c0e287101c7f49f6ea3eabee0302dfe0d8ce6f80381eab69",
+    "rouge/capture.py": "1cedf5322833c5beb5c2b1720b6c360ad981bc556f6a8681060e461a0d5b11bb",
+    "rouge/windows_dpi.py": "ace4a6286d39856520a4b2d5ac2696c68f1b0a125900f81962dca9a556a6a37d",
+    "tests/test_frame_buffer.py": "4fde0a1903d112fc56d928ab807c1ee3d9f1509e2b0a2a68355887b81df712d7"
+  },
+  "validation": {
+    "before_edit": "D372 public offer/take regression passed",
+    "after_edit": "28 targeted tests passed in tests.test_frame_buffer, tests.test_capture_queue, tests.test_player_feature_416.BindingTests",
+    "geometry_error_cases_passed": 2,
+    "dpi_scope_cases_passed": 4,
+    "full_suite_run": false,
+    "real_game_timing_measured": false,
+    "windows_test_window_visible_and_responsive": true
+  }
+}

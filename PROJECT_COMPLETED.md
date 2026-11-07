@@ -1,3 +1,7 @@
+## 维护 · 删除队列缩略图重复尺寸判断，确认两处 Windows 采样保护（2026-11-07）
+
+D372–D374 已销项。28 项定向检查通过，另验证 2 类窗口读取异常与 4 种 DPI 退出情形。新版测试窗口已运行，本批暂停。[决定与回执](verification/maintenance/code-constraints-frame-shape-20261107/summary.json)。
+
 ## 维护 · 采样队列转交已出队图像，窗口与光标共用当帧几何（2026-11-07）
 
 4组容量、1600次队列操作和407个导出帧与旧版完全一致。图像复制136782000→128628000字节，过载比较小图1037→283次。60项定向检查覆盖Windows原生窗口。抽取共享DPI模块，审查分母559→560。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-frame-ownership-20261107/summary.json)。
