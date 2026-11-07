@@ -1,3 +1,7 @@
+## 维护 · 排队画面仅比较一次相邻差异，复用同一参考图的校验（2026-11-07）
+
+4000步逐步对照保留状态、出队像素及最新画面一致，相邻差异计算4343降至2828次。44项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-frame-neighbour-reuse-20261107/summary.json)。
+
 ## 维护 · 队伍人数只补读最终页脚，合并已确认藏品身份（2026-11-07）
 
 同帧出现两个人数入口时只读最终选定的一个。5张原生客户端截图结果相同，74项定向通过。D354–D356 待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-held-summary-single-read-20261107/summary.json)。

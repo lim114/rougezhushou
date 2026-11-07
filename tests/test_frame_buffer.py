@@ -99,6 +99,32 @@ class FrameBufferTests(unittest.TestCase):
         self.assertEqual([buffer.take()['captured_at'] for _ in range(2)], [6, 7])
         self.assertEqual(buffer.stats()['overflow'], 5)
 
+    def test_eviction_compares_each_adjacent_pair_once(self):
+        buffer = FrameBuffer(max_frames=3, settle_seconds=0)
+        for index, value in enumerate((30, 90, 150)):
+            buffer.offer(page(value), index)
+        with patch.object(buffer, '_distance', wraps=buffer._distance) as distance:
+            buffer.offer(page(210), 3)
+        pairs = [(call.args[0]['seq'], call.args[1]['seq']) for call in distance.call_args_list]
+        self.assertEqual(pairs, [(1,2),(2,3),(3,4)])
+
+    def test_same_reference_and_representative_need_one_similarity_check(self):
+        buffer = FrameBuffer(settle_seconds=0)
+        image = page(90)
+        buffer.offer(image, 1)
+        with patch.object(buffer, '_similar', wraps=buffer._similar) as compare:
+            buffer.offer(image.copy(), 2)
+        compare.assert_called_once()
+        self.assertEqual(buffer.take()['captured_at'], 2)
+
+    def test_replaced_representative_still_needs_its_own_comparison(self):
+        buffer = FrameBuffer(settle_seconds=0)
+        for timestamp, shade in enumerate((100, 101, 99), 1):
+            buffer.offer(np.full((80, 80, 3), shade, dtype=np.uint8), timestamp)
+        # Both later frames are near 100, but 99 is too far from 101 to replace it.
+        self.assertEqual(buffer.take()['captured_at'], 2)
+        self.assertEqual(buffer.latest()['captured_at'], 3)
+
     def test_short_distinct_page_survives_later_local_animation_overload(self):
         buffer = FrameBuffer(max_frames=4, settle_seconds=0)
         buffer.offer(page(30, label='OPERATOR'), 1)

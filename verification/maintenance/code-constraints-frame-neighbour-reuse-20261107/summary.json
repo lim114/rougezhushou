@@ -1,0 +1,110 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 250,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "排队画面仅比较一次相邻差异，复用同一参考图的校验",
+  "base_commit": "cdc196656dd14cb85600acbebf2f57fc8918884a",
+  "changed_sources": [
+    "rouge/frame_buffer.py"
+  ],
+  "source_sha256": {
+    "rouge/frame_buffer.py": "249dd0f987b0a3d1f59b5d204a7fb91c1d073db07c93575a51863a678239128a"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 44,
+    "seconds": 10.864,
+    "modules": [
+      "frame_buffer",
+      "sampling_flow",
+      "observation_timeline",
+      "sampling_view_refresh"
+    ],
+    "trace": {
+      "steps": 4000,
+      "distances": [
+        4343,
+        2828
+      ]
+    },
+    "isolated_qt": [
+      {
+        "seq": 1,
+        "age_at_read_ms": 240,
+        "ui_ms": 37,
+        "fold_ms": 4.4,
+        "reason": "applied"
+      },
+      {
+        "seq": 4,
+        "age_at_read_ms": 577,
+        "ui_ms": 285,
+        "fold_ms": 0.53,
+        "reason": "applied"
+      },
+      {
+        "seq": 2,
+        "age_at_read_ms": 11148,
+        "ui_ms": 24,
+        "fold_ms": 1.13,
+        "reason": "historical_backfill"
+      },
+      {
+        "seq": 3,
+        "age_at_read_ms": 13688,
+        "ui_ms": 10,
+        "fold_ms": 1.04,
+        "reason": "historical_backfill"
+      }
+    ],
+    "live_window": "Offscreen Qt with local recorded inputs; original test window not updated."
+  },
+  "review": {
+    "standards": "Reuse symmetric adjacent distances in traversal order and choose the eviction candidate once. Reuse the reference comparison only when the pending representative has the very same thumbnail object; changed representatives still need their own match and lower-quality candidates cannot replace them. Pop directly from the requested end after settle checks. No new fallback or changed threshold.",
+    "requirements": "Two call-count tests failed before cleanup. Explicitly check the nontransitive near-match case 100,101,99. Deterministic mixed offer/take/manual/latest/reset traces compare every queue statistic and image identity. Offscreen four-frame feed includes both current view and older observations; this batch does not certify the whole module or live latency."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": []
+}

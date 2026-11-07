@@ -121,22 +121,17 @@ class FrameBuffer:
                 # different pages instead of repeatedly throwing away the
                 # earliest short page. This is an overload preference, never a
                 # hard filter: small text changes are still ordinary candidates.
-                neighbours = frames
-                if not neighbours or neighbours[-1] is not self._latest:
-                    neighbours = neighbours + [self._latest]
+                neighbours = frames if frames[-1] is self._latest else [*frames, self._latest]
                 choices = []
-                for index, candidate in enumerate(frames):
-                    if candidate is self._latest:
-                        continue
-                    adjacent = []
-                    if index > 0:
-                        adjacent.append(self._distance(candidate, neighbours[index - 1]))
-                    if index + 1 < len(neighbours):
-                        adjacent.append(self._distance(candidate, neighbours[index + 1]))
-                    if adjacent:
-                        choices.append((max(adjacent), index))
-                if choices and min(choices)[0] <= .04:
-                    del self._pending[min(choices)[1]]
+                previous_distance = 0.
+                for index, (left, right) in enumerate(zip(neighbours, neighbours[1:])):
+                    # The final (latest) frame is never an eviction candidate.
+                    distance = self._distance(left, right)
+                    choices.append((max(previous_distance, distance), index))
+                    previous_distance = distance
+                choice = min(choices) if choices else None
+                if choice is not None and choice[0] <= .04:
+                    del self._pending[choice[1]]
                     self._counts['overflow_low_novelty'] += 1
                 else:
                     self._pending.popleft()
@@ -200,9 +195,10 @@ class FrameBuffer:
             self._latest = frame
             if self._reference is not None and self._similar(self._reference, frame):
                 self._counts['deduplicated'] += 1
-                if self._pending and self._similar(self._pending[-1], frame):
+                if self._pending:
                     previous = self._pending[-1]
-                    if quality >= previous['quality'] * .98:
+                    if quality >= previous['quality'] * .98 and (
+                            previous['thumb'] is self._reference['thumb'] or self._similar(previous, frame)):
                         frame['ready_at'] = previous['ready_at']
                         self._pending[-1] = frame
                 # The reference thumbnail stays fixed so a series of tiny
@@ -222,13 +218,12 @@ class FrameBuffer:
         """
         with self._lock:
             if self._pending:
-                frame = self._pending[-1] if prefer_latest else self._pending[0]
                 # Once a different page follows, preserve the preceding page
                 # immediately, including pages visible for only one frame.
                 if (not force and len(self._pending) == 1 and
-                        time.monotonic() < frame['ready_at']):
+                        time.monotonic() < self._pending[0]['ready_at']):
                     return None
-                self._pending.pop() if prefer_latest else self._pending.popleft()
+                frame = self._pending.pop() if prefer_latest else self._pending.popleft()
                 self._counts['taken'] += 1
             elif force and self._latest is not None:
                 frame = self._latest
