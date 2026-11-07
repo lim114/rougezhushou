@@ -47,6 +47,18 @@ class CriticalReward349Tests(unittest.TestCase):
         self.assertEqual(result['condition_reference']['listed_conditions_status'], 'unknown')
         self.assertIn('不能把每个不期而遇', model.player_text(result))
 
+    def test_exit_grant_resolves_once_and_rejects_missing_or_multiple_targets(self):
+        current = model.version.packet()['current']['details']
+        packets = [provider.packet() for provider in model.PROVIDERS]
+        with patch.object(model.exit_flow, '_targets', wraps=model.exit_flow._targets) as lookup:
+            rows = model.source_rows(current, *packets)
+            lookup.assert_called_once_with(packets[-1]['data'], 'choices', 'choice_ro6_final1_8')
+        self.assertEqual(rows, model.packet()['data']['rows'])
+        for targets in ([], [('scene', 'choice-a'), ('scene', 'choice-b')]):
+            with self.subTest(targets=targets), patch.object(model.exit_flow, '_targets', return_value=targets):
+                with self.assertRaises(ValueError):
+                    model.source_rows(current, *packets)
+
     def test_tampered_source_pointer_role_and_parent_rejected(self):
         current = model.version.packet()['current']['details']; packets = [p.packet() for p in model.PROVIDERS]
         cid = 'choice_ro6_revive_1'

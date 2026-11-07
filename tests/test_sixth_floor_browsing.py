@@ -29,6 +29,15 @@ class SixthFloorBrowsingTests(unittest.TestCase):
             self.assertIsNone(r['documented_floors']);self.assertFalse(r['map_connections_known'])
             self.assertIsNone(r['actual_server_eligibility']);self.assertIsNone(r['actual_occurrence'])
 
+    def test_one_source_check_per_directory_query_and_new_check_on_next_query(self):
+        with patch('rouge.stage_floor_reference._data', wraps=_data) as source:
+            stage_groups(battle_data()['stages'])
+            self.assertEqual(source.call_count, 1)
+            battle_candidates()
+            self.assertEqual(source.call_count, 2)
+            sixth_floor_reference('ro6_n_6_1')
+            self.assertEqual(source.call_count, 3)
+
     def test_changed_reference_source_and_identity_do_not_borrow_sixth_floor(self):
         for change in ('source_floor','zone','heading','name'):
             data=copy.deepcopy(_data());r=data['stages']['ro6_n_6_1']
@@ -41,6 +50,17 @@ class SixthFloorBrowsingTests(unittest.TestCase):
         stage=copy.deepcopy(battle_data()['stages']['ro6_n_6_1']);stage['difficulty']='FOUR_STAR'
         self.assertIsNone(sixth_floor_reference('ro6_n_6_1',stage))
         self.assertIsNone(sixth_floor_reference('invented_6_1'))
+
+    def test_each_area_and_original_stage_field_is_a_separate_binding(self):
+        sid = 'ro6_n_6_1'
+        for section, fields in (
+                ('floor_zero_binding', ('original_icon', 'original_name')),
+                ('original', ('id', 'name', 'code', 'difficulty', 'isBoss', 'isElite', 'levelId'))):
+            for field in fields:
+                data = copy.deepcopy(_data())
+                data['stages'][sid][section][field] = 'changed'
+                with self.subTest(section=section, field=field), patch('rouge.stage_floor_reference._data', return_value=data):
+                    self.assertIsNone(sixth_floor_reference(sid))
 
     def test_group_has_exact_five_and_every_variant_once_without_source_mutation(self):
         before=copy.deepcopy(view_catalog());groups=stage_groups(battle_data()['stages'])

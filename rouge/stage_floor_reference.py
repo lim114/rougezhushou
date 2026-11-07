@@ -4,10 +4,14 @@ from .base_settlement_planning import _data
 from .catalog import catalog
 
 
-def sixth_floor_reference(stage_id, stage=None):
-    data = _data()
+def sixth_floor_sources(stages=None):
+    return _data(), catalog()['stages'] if stages is None else stages
+
+
+def sixth_floor_reference(stage_id, stage=None, *, sources=None):
+    data, stages = sixth_floor_sources() if sources is None else sources
     record = data['stages'].get(stage_id)
-    actual = catalog()['stages'].get(stage_id)
+    actual = stages.get(stage_id)
     if not record or not actual:
         return None
     original = record['original']

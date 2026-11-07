@@ -38,12 +38,13 @@ def source_rows(current, condition_packet, flow_packet, exit_packet):
         if event_id == 'entry':
             if exit_packet['data']['originals']['choices'][cid] != original:
                 raise ValueError('Exact exit grant required')
-            target = exit_flow.locate('choices', cid, source=exit_packet)
-            if target != {'event_id': 'exit', 'source_request': {'category': 'choices', 'key': cid}}:
+            request = {'category': 'choices', 'key': cid}
+            linked = exit_flow.reference('exit', source_request=request, source=exit_packet)
+            if linked is None:
                 raise ValueError('Exact exit source entry required')
-            linked = exit_flow.reference('exit', source_request=target['source_request'], source=exit_packet)
-            if linked is None or len(linked['source_targets']) != 1:
+            if len(linked['source_targets']) != 1:
                 raise ValueError('Unique existing document target required')
+            target = {'event_id': 'exit', 'source_request': linked['source_request']}
             sid, doc_cid = linked['source_targets'][0]
             doc_choice = linked['choices'][doc_cid]
             if (doc_choice['variant_ids'] != [cid] or doc_choice['title'] != original['title']

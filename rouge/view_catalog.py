@@ -127,11 +127,12 @@ def operator_groups(profiles,implemented):
 
 
 def stage_groups(stages):
-    from .stage_floor_reference import sixth_floor_reference
+    from .stage_floor_reference import sixth_floor_reference, sixth_floor_sources
     metadata=view_catalog()['stages'];groups=[]
     metadata={sid:dict(record) for sid,record in metadata.items()}
+    sources = sixth_floor_sources() if stages else None
     for sid,stage in stages.items():
-        reference=sixth_floor_reference(sid,stage)
+        reference = sixth_floor_reference(sid, stage, sources=sources)
         if reference:metadata[sid].update(group='floor_6',label=reference['label'],floor=6)
     order=[(group,None) for group in STAGE_GROUPS if group!='unconfirmed']
     order.insert(5,('floor_6',None))

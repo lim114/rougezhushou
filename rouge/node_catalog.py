@@ -262,7 +262,7 @@ def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region
             'condition_sources':deepcopy(reference['references']) if rule and reference else [],
             'full_server_eligibility_verified':False}
 def battle_candidates(node_type=None,floor=None,context='natural',special_region=False,difficulty=None,entry_mode=None):
-    from .stage_floor_reference import sixth_floor_reference
+    from .stage_floor_reference import sixth_floor_reference, sixth_floor_sources
     from .catalog import catalog
     _text(node_type,'节点类型',True);_floor(floor,special_region)
     if context not in ('natural','content','all'):raise ValueError('战斗来源需要natural、content或all。')
@@ -273,12 +273,17 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
     checks=_node_requirement_checks(node_type if effective_entry_mode=='natural' else None,floor,difficulty,special_region)
     if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
     meta=json.loads((Path(__file__).with_name('data')/'view-catalog.json').read_text(encoding='utf-8'))['stages']
+    stage_catalog = catalog()
+    sources = None
     for sid,p in pool['stages'].items():
         membership=p['natural_node_types'] if context=='natural' else p['content_node_types'] if context=='content' else list(dict.fromkeys(p['natural_node_types']+p['content_node_types']))
         if node_type is not None and node_type not in membership:continue
         # An unfiltered query is the complete fixed stage directory, not a node pool.
-        s=catalog()['stages'][sid];m=meta.get(sid,{})
-        floor_source=sixth_floor_reference(sid,s)
+        if sources is None:
+            sources = sixth_floor_sources(stage_catalog['stages'])
+        s = stage_catalog['stages'][sid]
+        m = meta.get(sid, {})
+        floor_source = sixth_floor_reference(sid, s, sources=sources)
         reference_floors=[6] if floor_source else p['floors']
         r={'id':sid,'title':s['name'],'difficulty':s['difficulty'],'boss_parameter':s['isBoss'],
            'floor':6 if floor_source else m.get('floor'),
@@ -305,7 +310,7 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
             excluded.append({**r,'exclusion_reason':'具名自然节点池的固定目录主层不符'});continue
         rows.append(r)
     return _result(rows,excluded=excluded,node_type=node_type,floor=floor,context=context,special_region=special_region,difficulty=difficulty,known_requirement_checks=checks,
-                   stage_source=deepcopy(catalog()['source']),pool_sources=deepcopy(pool['sources']),
+                   stage_source=deepcopy(stage_catalog['source']),pool_sources=deepcopy(pool['sources']),
                    pool_limits=deepcopy(pool['limitations']),unfiltered_is_directory=node_type is None,entry_mode=effective_entry_mode)
 COMMANDS['battles']=battle_candidates
 def indirect_events(floor=None):
