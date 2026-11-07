@@ -114,10 +114,12 @@ def _axis(values, count):
         else: groups.append([value])
     if len(groups)<count or len(groups)>count+3:return None
     candidates=[]
+    group_centers = [np.median(group) for group in groups]
+    axis_positions = np.arange(count)
     for indices in combinations(range(len(groups)),count):
-        centers=np.array([np.median(groups[i]) for i in indices])
-        pitch,origin=np.polyfit(np.arange(count),centers,1)
-        residual=float(np.max(np.abs(origin+pitch*np.arange(count)-centers)))
+        centers=np.array([group_centers[i] for i in indices])
+        pitch,origin=np.polyfit(axis_positions,centers,1)
+        residual=float(np.max(np.abs(origin+pitch*axis_positions-centers)))
         if pitch>tolerance*3 and residual<=pitch*.12:
             candidates.append((sum(len(groups[i]) for i in indices),residual,float(origin),float(pitch)))
     if not candidates:return None
@@ -158,22 +160,25 @@ def _rings(image, labels):
         # instead of assuming the detected radius is the dark annulus itself.
         bands = [(q, np.median(patch[(radial>q)&(radial<q+.12)])) for q in (.5,.6,.7,.8,.9,1.)]
         q, rim = min(bands, key=lambda pair: pair[1])
+        if not inner-rim >= 20:
+            continue
         outer = np.median(patch[(radial>q+.18)&(radial<q+.32)])
         # Empty graph nodes have a dark ring between lighter center and route.
         # Sprite decorations and letters may be circular but lack this profile.
-        if inner-rim >= 20 and outer-rim >= 15 and np.mean(patch[radial<.5]>200)<.15:
+        if outer-rim >= 15 and np.mean(patch[radial<.5]>200)<.15:
             points.append({'center': [(x/scale+x0)/w, (y/scale+y0)/h], 'source': '可见空白圆环'})
     return points
 
 
 def read_map(image, texts, labels, run):
-    zone = (run or {}).get('config', {}).get('zone', {})
-    zid = zone.get('id')
-    templates = [t for t in map_data()['templates'] if t['zone_id'] == zid]
+    config = (run or {}).get('config', {})
+    zid = config.get('zone', {}).get('id')
+    data = map_data()
+    templates = [t for t in data['templates'] if t['zone_id'] == zid]
     base = {'status': 'unavailable', 'zone_id': zid, 'template_id': None,
-        'difficulty_value':(run or {}).get('config',{}).get('difficulty',{}).get('value'),
+        'difficulty_value':config.get('difficulty',{}).get('value'),
         'candidate_templates': [], 'nodes': [], 'edges': [], 'current_node': None,
-        'source': map_data()['source'], 'limitations': [
+        'source': data['source'], 'limitations': [
             '布局及生成约束来自社区采集，尚非官方隐藏生成脚本；候选不是概率。',
             '仅当前帧充分匹配才输出布局；局部遮挡或滚动裁剪不强行认定。']}
     if not templates:
@@ -181,10 +186,15 @@ def read_map(image, texts, labels, run):
         return base
     labels=[n for n in labels if not n.get('detail_panel_label')]
     points = _rings(image,labels)
-    points = [p for p in points if not any(
-        min(v[0] for v in t['box'])-.005 <= p['center'][0] <= max(v[0] for v in t['box'])+.005 and
-        min(v[1] for v in t['box'])-.005 <= p['center'][1] <= max(v[1] for v in t['box'])+.005
-        for t in texts if t['confidence']>=.7)]
+    if points:
+        text_bounds = []
+        for text in texts:
+            if text['confidence'] >= .7:
+                xs, ys = zip(*text['box'])
+                text_bounds.append((min(xs)-.005, max(xs)+.005, min(ys)-.005, max(ys)+.005))
+        points = [p for p in points if not any(
+            left <= p['center'][0] <= right and top <= p['center'][1] <= bottom
+            for left, right, top, bottom in text_bounds)]
     for label in labels:
         box = label['box']; x = float(np.mean([p[0] for p in box])); y = float(np.mean([p[1] for p in box]))
         height = max(p[1] for p in box)-min(p[1] for p in box)
@@ -208,7 +218,7 @@ def read_map(image, texts, labels, run):
     scored = []
     for template in templates:
         cells = {n['id'] for n in template['nodes']}
-        if not set(observed).issubset(cells): continue
+        if not observed.keys() <= cells: continue
         if any(p.get('type')=='险路尽头' and key not in template['ends'] for key,p in observed.items()): continue
         if any(p.get('type')=='险路恶敌' and key != template['boss'] for key,p in observed.items()): continue
         coverage = len(observed)/len(cells)
@@ -220,14 +230,12 @@ def read_map(image, texts, labels, run):
     if not scored:
         base['status'] = 'insufficient'; base['reason'] = '可见节点不足或与已收录模板冲突。'
         return base
-    best = scored[0][0]
     # Missing nodes may be occluded, so a smaller layout's higher coverage
     # alone cannot rule out another compatible layout.
-    tied = [t for _, t in scored]
-    if len(tied) != 1:
+    if len(scored) != 1:
         base['status'] = 'ambiguous'; base['reason'] = '多个布局同分，保留候选，不输出确定连线。'
         return base
-    template = tied[0]
+    best, template = scored[0]
     base.update(status='matched', template_id=template['id'], edges=template['edges'],
         visible_fraction=best, reason='当前区域与网格节点占位匹配；连线取自来源模板。')
     for node in template['nodes']:
