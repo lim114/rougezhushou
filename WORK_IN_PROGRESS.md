@@ -1,3 +1,7 @@
+## 当前断点：库存统计分母边界核验及布局退出定位（2026-11-06）
+
+D67保留并核验库存分母边界，6项定向通过，未改产品代码。布局异常定位到offscreen下ToolPopover加入内容时的FlowLayout原生访问冲突；普通QWidget容器通过，根因待查。原280组完成219、剩61。回执 `verification/maintenance/code-constraints-statistics-inventory-20261106/summary.json`。
+
 ## 当前断点：统计去重复用归档身份入口契约（2026-11-06）
 
 D66完成：统计去重删除归档已验证的记录/状态/身份重复判断，同局去重保持。8+6项定向通过；布局测试组合和单独运行均异常退出，保留未验证。原280组完成218、剩62。回执 `verification/maintenance/code-constraints-statistics-archive-entry-20261106/summary.json`。
