@@ -1527,13 +1527,21 @@
     },
     {
       "file": "rouge/supplemental_cultivation.py",
-      "sha256": "48ca049148cac79019766adf5e10f269d1e33c9fd8f57a05a11022758d7d2cbc",
+      "sha256": "9902574eb7b651ae16927c9f682d7730b91cdbf8410d66d9d498b174fbf02ff4",
       "rule1": "baseline_metrics_once_per_scope_rank_cultivation_once",
       "rule2": "reuse_existing_metrics_and_prepared_run_no_new_helper",
       "rule3": "D120_D123_D125_D127_unchanged",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
-      "evidence": "All three complete sources and actual consumers reviewed. Rank and cultivation comparisons project baseline once; enemy comparison projects independently once per enemy. Existing comparison_rows accepts prepared baseline_values and keeps raw/absent-baseline branch unchanged for D123. Rank list owns rank validation; one original _cultivated_stats validates cultivation, reused read-only by each _run_skill_reference with independent environment and skill resolution. Original-rank deep copy unchanged. No new function or rare defense; D125 function unchanged. supplemental_comparison ordinary rules now complete, D123 still pending. Cultivation proposals really change cultivation/recruitment so each calculation stays independent, D120 pending. Enemy discarded full preflight remains ordinary unfinished; no full module certification."
+      "evidence": "All three complete sources and actual consumers reviewed. Rank and cultivation comparisons project baseline once; enemy comparison projects independently once per enemy. Existing comparison_rows accepts prepared baseline_values and keeps raw/absent-baseline branch unchanged for D123. Rank list owns rank validation; one original _cultivated_stats validates cultivation, reused read-only by each _run_skill_reference with independent environment and skill resolution. Original-rank deep copy unchanged. No new function or rare defense; D125 function unchanged. supplemental_comparison ordinary rules now complete, D123 still pending. Cultivation proposals really change cultivation/recruitment so each calculation stays independent, D120 pending. Enemy discarded full preflight remains ordinary unfinished; no full module certification.",
+      "scoped_reviews": [
+        {
+          "file": "rouge/supplemental_cultivation.py",
+          "receipt": "verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json",
+          "scope": "D120 typed errors for existing input boundary; full module review incomplete",
+          "sha256": "9902574eb7b651ae16927c9f682d7730b91cdbf8410d66d9d498b174fbf02ff4"
+        }
+      ]
     },
     {
       "file": "rouge/supplemental_comparison.py",
@@ -1608,7 +1616,7 @@
     },
     {
       "file": "rouge/supplemental_skills.py",
-      "sha256": "0c7bf4dbc70a464d61616b1a9f701c406e5eeeb1fe9e8bc95d9aa96422dbdb9b",
+      "sha256": "309bf5fe99d6e01d8995cf4df1dea62c1bd23fdb7b210a299546d29868609010",
       "rule1": "candidate_unlock_rank_once",
       "rule2": "no_new_helper_reused_row_builder_retained",
       "rule3": "D125_D126_pending_unchanged",
@@ -1625,6 +1633,12 @@
           "decision": "D122",
           "receipt": "verification/maintenance/code-constraints-baseline-hp-error-20261106/summary.json",
           "scope": "baseline HP deficit failure; remaining module not certified"
+        },
+        {
+          "file": "rouge/supplemental_skills.py",
+          "receipt": "verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json",
+          "scope": "D120 typed errors for existing input boundary; full module review incomplete",
+          "sha256": "309bf5fe99d6e01d8995cf4df1dea62c1bd23fdb7b210a299546d29868609010"
         }
       ]
     },

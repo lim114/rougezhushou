@@ -5544,3 +5544,8 @@ D254完成：候选成员和地图使用同一关卡快照，删除界面的重�
 ## 维护：候选来源与失效展示（2026-11-06）
 
 D234/D235/D251/D253按授权核验：摘要与关系投影分别保护来源和转换，独立入口与点击后的选择复核保留；头像是独立显示职责，坏图不清有效文字；位置失败只通知一次并撤下旧选择。9项定向通过，未改产品源码、未作实机声明。回执 `verification/maintenance/code-constraints-candidate-boundaries-20261106/summary.json`。
+
+
+## 维护：补充培养异常出口（2026-11-06）
+
+D120完成：复用既有错误类型区分非法培养及已知生命缺口，删除每方案通用ValueError/TypeError/KeyError兜底；数字解析之外的内部错误直接上报。11项定向通过，含七名无藏品原结果及方案隔离、Qt入口。回执 `verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json`。

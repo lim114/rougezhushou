@@ -1,3 +1,7 @@
+## 当前断点：补充培养异常出口（2026-11-06）
+
+D120完成：仅明确培养输入错误及生命缺口超限形成不可测算行，内部计算异常直接上报；11项定向通过。原280组完成199、剩81。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json`。
+
 ## 当前断点：候选来源与展示边界（2026-11-06）
 
 D234/D235/D251/D253按授权保留并核验，9项定向通过；未改产品源码。头像为独立显示职责，来源与选择检查为不同边界；D254已消除同次重读。原280组完成198、剩82。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-candidate-boundaries-20261106/summary.json`。

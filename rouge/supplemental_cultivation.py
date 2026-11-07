@@ -1,6 +1,8 @@
 """Independent cultivation and recruitment scenarios, not account mutations."""
 from copy import deepcopy
 from .supplemental_run import run_skill_reference
+from .catalog import CultivationInputError
+from .supplemental_skills import MissingHpExceedsMaximum
 from .supplemental_comparison import comparison_rows,format_comparison,metrics
 
 
@@ -42,7 +44,7 @@ def compare_cultivation(operator_preview,environment,preview):
         member['recruitment_kind']=proposal['recruitment_kind']
         variant={'proposal':proposal['name'],'operator_preview':proposed,'environment':env,'result':None,'error':None}
         try:variant['result']=run_skill_reference(proposed,env)
-        except (ValueError,TypeError,KeyError) as error:
+        except (CultivationInputError,MissingHpExceedsMaximum) as error:
             variant['error']=proposal['name']+'：'+str(error)
             rows.append({'proposal':proposal['name'],'key':'invalid','name':'方案不可测算',
                          'value':None,'base_value':None,'delta':None,'unit':'—'})

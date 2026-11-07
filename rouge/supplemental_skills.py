@@ -3,7 +3,7 @@ import json
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
-from .catalog import operator_attributes
+from .catalog import operator_attributes,CultivationInputError
 from .healing_budget import _amount
 
 
@@ -23,17 +23,20 @@ def defaults(operator='char_208_melan'):
 
 def _cultivated_stats(preview):
     if type(preview) is not dict or set(preview)!=set(defaults()):
-        raise ValueError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count、missing_hp。')
+        raise CultivationInputError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count、missing_hp。')
     data=supplemental_profiles(); identity=preview['operator']
-    if type(identity) is not str or identity not in data['operators']: raise ValueError('干员未接入补充技能参考。')
+    if type(identity) is not str or identity not in data['operators']: raise CultivationInputError('干员未接入补充技能参考。')
     for key in ('elite','level','potential','skill_rank','count'):
-        if type(preview[key]) is not int: raise ValueError(key+'需要整数。')
-    if not 1<=preview['skill_rank']<=7: raise ValueError('技能参数等级需要1–7。')
-    if not 0<=preview['count']<=1000: raise ValueError('声明次数需要0–1000。')
-    trust=_amount(preview['trust'],'信赖',100)
-    _amount(preview['enemy_defense'],'敌人防御')
-    _amount(preview['enemy_resistance'],'敌人抗性',100)
-    _amount(preview['missing_hp'],'声明生命缺口')
+        if type(preview[key]) is not int: raise CultivationInputError(key+'需要整数。')
+    if not 1<=preview['skill_rank']<=7: raise CultivationInputError('技能参数等级需要1–7。')
+    if not 0<=preview['count']<=1000: raise CultivationInputError('声明次数需要0–1000。')
+    try:
+        trust=_amount(preview['trust'],'信赖',100)
+        _amount(preview['enemy_defense'],'敌人防御')
+        _amount(preview['enemy_resistance'],'敌人抗性',100)
+        _amount(preview['missing_hp'],'声明生命缺口')
+    except ValueError as error:
+        raise CultivationInputError(str(error)) from error
     return operator_attributes(identity,preview['elite'],preview['level'],trust,preview['potential'])
 
 
