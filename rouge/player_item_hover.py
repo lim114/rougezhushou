@@ -1,7 +1,7 @@
 """Pinnable local item reference; all navigation carries exact version and pool IDs."""
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit
-from .player_item_sources import pool_label,VERSION_LABELS
+from .player_item_sources import VERSION_LABELS
 from .view_catalog import relic_icon,relic_icon_note
 
 class ItemHoverCard(QDialog):
@@ -37,16 +37,26 @@ class ItemHoverCard(QDialog):
         old=self.pools.currentData()if self.identity==row['id']and self.version==version else None
         self.signature=key;self.identity=row['id'];self.version=version;self.index=index
         self.title.setText(row['name']);self.picture.clear()
-        self.picture.setPixmap(relic_icon(row.get('icon')or'').pixmap(46,46))
-        self.notice.setText(VERSION_LABELS.get(version,'资料版本待选择')+' · 藏品来源')
-        note=relic_icon_note(row.get('icon')or'')
-        if note:self.notice.setText(note+'\n'+self.notice.text())
-        self.pools.blockSignals(True);self.pools.clear()
-        for pool in index.pools(version,row['id'])if index else[]:self.pools.addItem(pool_label(pool),pool['id'])
-        if old is not None and self.pools.findData(old)>=0:self.pools.setCurrentIndex(self.pools.findData(old))
-        self.pools.blockSignals(False)
+        icon = row.get('icon') or ''
+        self.picture.setPixmap(relic_icon(icon).pixmap(46,46))
+        notice = VERSION_LABELS.get(version,'资料版本待选择') + ' · 藏品来源'
+        note = relic_icon_note(icon)
+        self.notice.setText(note + '\n' + notice if note else notice)
+
         from .player_source_cards import source_cards
-        self.cards.install(source_cards(index,version,row['id']));self.read_pool();return True
+        groups = source_cards(index, version, self.identity)
+        self.pools.blockSignals(True)
+        self.pools.clear()
+        for pool in groups['pools']:
+            self.pools.addItem(pool['title'], pool['id'])
+        if old is not None:
+            position = self.pools.findData(old)
+            if position >= 0:
+                self.pools.setCurrentIndex(position)
+        self.pools.blockSignals(False)
+        self.cards.install(groups)
+        self.read_pool()
+        return True
     def read_pool(self,*_):
         pool=self.pools.currentData();self.open_button.setEnabled(pool is not None and self.index is not None)
         text=self.index.describe(self.version,self.identity,pool)if self.index and pool else'当前资料暂无来源记录。'if self.index else'请先更新公开资料。'
@@ -71,4 +81,6 @@ class ItemHoverCard(QDialog):
         index=self.pools.findData(identity)
         if index>=0:self.pools.setCurrentIndex(index);self.show_conditions.setChecked(True)
     def open_pool(self):
-        if self.index and self.pools.currentData()is not None:self.poolRequested.emit(self.version,self.pools.currentData())
+        pool = self.pools.currentData()
+        if self.index and pool is not None:
+            self.poolRequested.emit(self.version, pool)

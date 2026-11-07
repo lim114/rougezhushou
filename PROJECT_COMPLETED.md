@@ -1,3 +1,7 @@
+## 维护 · 藏品来源卡与选择框复用来源清单，核对地图入口（2026-11-06）
+
+藏品池选择框直接使用卡片的同一份名称与编号，刷新保留原选择。整模块进度76/559。21项定向通过；D339待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json)。
+
 ## 维护 · 完成四个资料与展示模块回顾，合并地图标记来源处理（2026-11-06）
 
 四个模块完成三条准则回顾，整模块进度75/559。地图标记复用来源处理和整份几何字段。50项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-symbol-reader-closeout-20261106/summary.json)。

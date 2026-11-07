@@ -191,10 +191,10 @@
     },
     {
       "file": "rouge/player_source_map.py",
-      "sha256": "44652a7eb8d621b630b9e20ae4fa17f44cd97f67ab5438f1930dad43867bd08e",
-      "rule1": "followup_required",
-      "rule2": "reviewed_no_single_use_wrapper_found",
-      "rule3": "pending_user_review",
+      "sha256": "bc712373e36db11ff3f1a5208dbc57315b413e58a5250eaa982d3cc6c421c6cd",
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D41",
       "decision": "D41",
       "trigger": "targets对缺索引/池/坏行返回空；companion通过hasattr/getattr查找可选宿主",
       "impact": "避免在没有对应资料或宿主时导航，但可能静默吞掉内部类型/属性契约破坏",
@@ -204,8 +204,16 @@
           "decision": "D41 / D218",
           "receipt": "verification/maintenance/code-constraints-source-navigation-20261106/summary.json",
           "scope": "D41 retained optional host protocol and binding row filter: public_archive.validate does not validate nodeBindings; genuine optional QWidget hosts include standalone viewers and parent-host traversal. D218 shares existing close operation before two outcome branches; keeps approved missing-target rejection. No new helper/catch/defense."
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json",
+          "scope": "Complete source map module; hover install and open_pool call paths."
         }
-      ]
+      ],
+      "evidence": "Reviewed all callers and both functions. Pool identity and optional host ancestry have distinct contracts. Missing pool exits once; opaque non-object bindings skipped as previously approved. Exact enum/name agreement required.",
+      "full_module_review_complete": true,
+      "full_review_receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json"
     },
     {
       "file": "rouge/observed_map_symbols.py",
@@ -5641,6 +5649,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-node-requirement-inputs-20261106/summary.json",
       "scope": "battle_candidates, function_nodes, _node_requirement_checks and type basis in _node_events"
+    },
+    {
+      "file": "rouge/player_item_hover.py",
+      "sha256": "170db4ede9b8e8977eaed75166dde520b68c2fed1be3e465b7135fc5ee914273",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-item-hover-pool-refresh-20261106/summary.json",
+      "scope": "Complete source map module; hover install and open_pool call paths."
     }
   ]
 }

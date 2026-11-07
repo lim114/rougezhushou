@@ -3,8 +3,10 @@ PAIRS={'BATTLE_NORMAL':'作战','BATTLE_ELITE':'紧急作战','BATTLE_BOSS':'险
 
 def targets(index,version,identity,pool_id):
     pool=next((p for p in index.pools(version,identity)if p['id']==pool_id),None)if index else None
+    if pool is None:
+        return []
     result=[]
-    for row in (pool or{}).get('nodeBindings',[])or[]:
+    for row in pool.get('nodeBindings') or []:
         if not isinstance(row,dict):continue
         kind=PAIRS.get(row.get('nodeType'))
         if kind and row.get('nodeName')==kind and kind not in result:result.append(kind)

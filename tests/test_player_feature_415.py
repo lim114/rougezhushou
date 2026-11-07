@@ -21,7 +21,12 @@ class SourceCardTests(unittest.TestCase):
   owner=QWidget();card=ItemHoverCard(owner)
   try:
    row={'id':'a','name':'同名藏品'};card.install(row,'base',ItemSourceIndex(fixture()),'1');self.assertTrue(card.cards.buttons)
-   card.install(row,'base',None,'2');self.assertEqual(card.cards.buttons,[]);self.assertFalse(card.open_button.isEnabled());self.assertIn('旧池与统计已清除',card.detail.toPlainText())
+   card.install(row,'base',None,'2')
+   self.assertEqual(card.cards.buttons,[])
+   self.assertEqual(card.pools.count(),0)
+   self.assertEqual(card.map_targets.count(),0)
+   self.assertFalse(card.open_button.isEnabled())
+   self.assertEqual(card.detail.toPlainText(),'请先更新公开资料。')
   finally:card.close();owner.close()
  def test_pinned_different_identity_and_exact_navigation(self):
   owner=QWidget();card=ItemHoverCard(owner)
