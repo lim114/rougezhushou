@@ -28,12 +28,13 @@ def _choice_reference(data, event_id, choice):
     if row is None:return None
     if (row['event_id']!=event_id or row['choice_title']!=choice['title'] or row['description']!=choice['description']):
         raise ValueError('持有门参考与所选原目录条目不相符，不能仅按组编号复用。')
-    return {**deepcopy(row),'sources':deepcopy(data['sources'])}
+    return deepcopy({**row,'sources':data['sources']})
 
 def original_reference(record_id):
-    (data,original_data)=_data();row=data['original_choices'].get(record_id)
+    data,original_data=_data()
+    row=data['original_choices'].get(record_id)
     if row is None:return None
     original=original_data['choices'].get(record_id)
     if original is None or any(original[k]!=v for k,v in row['raw_record'].items() if k in original):
         raise ValueError('原选择持有门已变化，不能仅按ID复用。')
-    return {**deepcopy(row),'sources':deepcopy(data['sources'])}
+    return deepcopy({**row,'sources':data['sources']})

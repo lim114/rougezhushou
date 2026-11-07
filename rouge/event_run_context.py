@@ -26,7 +26,7 @@ def observed_event_context(run):
     if not _time(start) or not _time(last) or last<start:return result
     allowed=set(catalog()['relics'])|set(tactical_tools())
     presence = result['item_presence']
-    sources={};conflicts=set();unqualified=False
+    sources={};unqualified=False
     for group in ('relics','tactical_tools'):
         records=state.get(group,{})
         if not isinstance(records,dict):unqualified=True;continue
@@ -37,15 +37,15 @@ def observed_event_context(run):
                     or not isinstance(source,str) or not source.strip()):unqualified=True;continue
             previous = presence.get(identity)
             if previous is not None and previous is not held:
-                conflicts.add(identity);continue
+                # The relic and tool tables disagree on this ID. Neither can prove possession.
+                del presence[identity], sources[identity]
+                unqualified=True
+                continue
             presence[identity]=held
             sources[identity]={'scope':'last_confirmed_held_flag','captured_at':at,'source':source}
-    for identity in conflicts:
-        del presence[identity], sources[identity]
     status=run.inventory_status()
-    expected=status.get('recognized',0)+status.get('recognized_tools',0)
-    result['inventory_complete']=bool(status.get('complete') is True and not conflicts and not unqualified
-        and sum(presence.values())==expected)
+    result['inventory_complete']=(status.get('complete') is True and not unqualified
+        and sum(presence.values())==status.get('recognized',0)+status.get('recognized_tools',0))
     allowed_ids=sorted(allowed)
     result['inventory_complete_item_ids']=allowed_ids
     result['condition_sources']['item_presence']=sources

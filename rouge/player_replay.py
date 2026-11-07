@@ -60,18 +60,23 @@ def history_rows(state):
     raw = state.get('history', [])
     if not isinstance(raw, list):
         return []
-    return [{'index': i, 'event': deepcopy(event),
-             'label': EVENT_LABELS.get(event.get('kind'), '其他读取记录')if isinstance(event.get('kind'),str)else'其他读取记录',
-             'time': observation_time(event.get('at'))}
-            for i, event in enumerate(raw) if isinstance(event, dict)]
+    rows = []
+    for index,event in enumerate(raw):
+        if isinstance(event, dict):
+            kind = event.get('kind')
+            label = EVENT_LABELS.get(kind, '其他读取记录') if isinstance(kind, str) else '其他读取记录'
+            rows.append({'index':index,'event':deepcopy(event),'label':label,'time':observation_time(event.get('at'))})
+    return rows
 
 def event_text(row):
     from .catalog import catalog, operator_profiles, tactical_tools
     event = row['event']
-    kind=event.get('kind')if isinstance(event.get('kind'),str)else''
+    kind = event.get('kind')
+    if not isinstance(kind,str):kind=''
     lines = [row['label'], row['time']]
-    if isinstance(event.get('title'), str):
-        lines.append('读到的名称：' + event['title'])
+    title = event.get('title')
+    if isinstance(title, str):
+        lines.append('读到的名称：' + title)
     identity = event.get('id')
     if isinstance(identity, str):
         source = (operator_profiles() if kind.startswith(('operator_', 'recruitment_', 'char_buffs_', 'classification_'))
@@ -79,15 +84,18 @@ def event_text(row):
                   else catalog()['relics'])
         name = source.get(identity, {}).get('name')
         lines.append('对应条目：' + (name or '固定资料未找到对应名称'))
-    if event.get('kind') == 'config_updated':
-        field_key=event.get('field') if isinstance(event.get('field'),str) else None
+    if kind == 'config_updated':
+        field_key=event.get('field')
+        if not isinstance(field_key,str):field_key=None
         field = {'difficulty': '保密等级', 'squad': '分队', 'zone': '所在区域'}.get(field_key, '对局信息')
         current = event.get('current')
         if isinstance(current, dict):
             if field_key=='difficulty':
                 from .run_config import difficulty_value
                 value=difficulty_value(current)
-            else:value=current.get('name')if isinstance(current.get('name'),str)else None
+            else:
+                value=current.get('name')
+                if not isinstance(value,str):value=None
             lines.append(field + '：' + (str(value) if value is not None else '尚未核验'))
             if field_key=='difficulty' and value is None and type(current.get('value'))is int:
                 lines.append(f'这条记录写有{current["value"]}；超出固定资料或模式尚未核对，不按已核验等级使用。')
@@ -191,7 +199,8 @@ class ReplayPanel(QWidget):
         item = self.entries.currentItem()
         row = self.rows.get(item.data(Qt.ItemDataRole.UserRole)) if item else None
         from .player_shop_memory import recorded_shops
-        self.shop_button.setVisible(bool(row and any(index==row['index']for index,_ in recorded_shops(self.snapshot or{}))))
+        self.shop_button.setVisible(bool(row and row['event'].get('kind')=='shop_items_read'
+            and any(index==row['index'] for index,_ in recorded_shops(self.snapshot or {}))))
         context = self.sync_scene_button(row['index'] if row else None)
         text = event_text(row) if row else '选择一条记录查看；读取时间不等于游戏动作发生时间。'
         if self.detail.toPlainText() != text:

@@ -14,6 +14,18 @@ from tests import test_history_reader_review as old
 
 
 class ReplayLayoutReviewTests(unittest.TestCase):
+    def test_selecting_a_node_does_not_scan_shop_history(self):
+        from tests.test_player_feature_430 import scene_state
+        state=scene_state()
+        self.run.state.update(history=state['history'],node_contents=state['node_contents'])
+        self.panel.refresh()
+        with patch('rouge.player_shop_memory.recorded_shops') as shops:
+            self.panel.entries.setCurrentRow(0)
+            self.panel.selected()
+        shops.assert_not_called()
+        self.assertTrue(self.panel.shop_button.isHidden())
+        self.assertFalse(self.panel.scene_button.isHidden())
+
     @classmethod
     def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
     def setUp(self):
