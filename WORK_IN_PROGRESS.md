@@ -1,3 +1,7 @@
+## 当前断点 · 库存窗口复用本次的水壶数量和库存摘要（2026-11-06）
+
+D61部分完成。刷新概况、库存页签和资源栏复用库存摘要，藏品列表与完整性提示共用水壶数量。水壶计算内部的持有标记重复扫描仍待处理。原失败保留，最终20项定向通过。 原280组完成231、余49。 [回执](verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json)。
+
 ## 当前断点 · 队伍培养数值只在入口校验，核实强化名称与地图标记来源（2026-11-06）
 
 D42、D63、D64完成。培养字段在结合干员资料后校验，显示复用结果。缺图、损坏、版本偏差、关卡偏差和未知强化身份保留对应处理。 原280组完成231、余49。 [回执](verification/maintenance/code-constraints-training-and-source-boundaries-20261106/summary.json)。

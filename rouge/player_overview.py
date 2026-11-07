@@ -4,11 +4,13 @@ from .record_flags import active_record
 from .run_config import difficulty_value
 from .player_resource_facts import inventory_summary
 
-def overview_facts(state):
+def overview_facts(state, *, inventory=None):
     config=state.get('config',{});grade=difficulty_value(config.get('difficulty'))
     squad=config.get('squad',{});zone=config.get('zone',{})
     crew=sum(active_record(row,'present') for row in state.get('operators',{}).values())
-    inventory=inventory_summary(state);relics=inventory['relics']
+    if inventory is None:
+        inventory = inventory_summary(state)
+    relics = inventory['relics']
     total=inventory['expected_relics'];complete=inventory['complete']
     return {'保密等级':str(grade)if grade is not None else'尚未确认',
         '分队':squad.get('name')or'尚未确认','当前区域':zone.get('name')or'尚未确认',

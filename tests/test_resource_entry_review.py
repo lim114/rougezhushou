@@ -22,6 +22,19 @@ class ResourceEntryTests(unittest.TestCase):
         self.assertEqual(result,{'relics':1,'tools':0,'total':1,'complete':False,'expected_relics':None})
         self.assertEqual([r.reads for r in records],[1,1,1])
 
+    def test_same_refresh_shares_quantity_and_summary_including_unknown(self):
+        from rouge import player_resource_facts as facts, player_overview as overview
+        from rouge.relic_quantities import KETTLE
+        state = {'relics':{KETTLE:{}}, 'inventory_verified':True, 'relic_count':3}
+        with patch('rouge.relic_quantities.kettle_copies', side_effect=AssertionError('second quantity read')):
+            unknown = inventory_summary(state, kettle_quantity=None)
+            known = inventory_summary(state, kettle_quantity=3)
+        self.assertFalse(unknown['complete'])
+        self.assertTrue(known['complete'])
+        with patch.object(facts, 'inventory_summary', side_effect=AssertionError('second summary')), patch.object(overview, 'inventory_summary', side_effect=AssertionError('second summary')):
+            self.assertEqual(facts.resource_rows(state, inventory=known)[0]['value'], '3')
+            self.assertIn('3件', overview.overview_facts(state, inventory=known)['已读收藏品'])
+
     def test_history_filter_is_read_once_for_the_current_list(self):
         page=ResourceHistoryPage();self.addCleanup(page.close)
         events=[{'kind':'resource_updated','resource':key,'value':i,'at':i+1}

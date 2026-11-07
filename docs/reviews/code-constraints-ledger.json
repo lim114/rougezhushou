@@ -368,11 +368,18 @@
     },
     {
       "file": "rouge/player_overview.py",
-      "sha256": "4424b1e56cc367275382b307ac70dcb3802a6c9456aa7ef0da0ee66129645ff9",
+      "sha256": "c31a091eb236d662f70f264faa14d049dcda628e8b1fc7b3f39ca7868e4f3602",
       "rule1": "reviewed_clear",
       "rule2": "reviewed_clear",
       "rule3": "no_unapproved_low_probability_defense_found",
-      "evidence": "One initial overview_facts snapshot now supplies both card names and values; refresh is the later update entry. Domain counters remain in their existing shared providers. No low-probability fallback or one-use helper inside this module."
+      "evidence": "One initial overview_facts snapshot now supplies both card names and values; refresh is the later update entry. Domain counters remain in their existing shared providers. No low-probability fallback or one-use helper inside this module.",
+      "scoped_reviews": [
+        {
+          "decision": "D61 partial",
+          "receipt": "verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json",
+          "scope": "D61 partial. Compact refresh shares overview/strip summary and tab labels. Inventory panel shares qualified kettle count with completeness calculation. Remaining per-record qualification inside kettle_copies pending."
+        }
+      ]
     },
     {
       "file": "rouge/current_battle_view.py",
@@ -459,11 +466,18 @@
     },
     {
       "file": "rouge/player_resource_facts.py",
-      "sha256": "9f4d47f598922a772476c96887c54add90d8ec77461a3eb598c397d5c0ab00fb",
+      "sha256": "b36926c3103f3e534bf4f3986033cddbdcdf95ce8231f96e0b786e58d22f28e8",
       "rule1": "selected_paths_fixed_cross_call_or_guard_followup",
       "rule2": "framework_callbacks_and_shared_domain_operations_confirmed",
       "rule3": "pending_user_review_or_remaining_contracts",
-      "evidence": "inventory_summary classifies held flags once for counting and unknown presence, instead of a second sorted-ID scan; kettle_copies has a separate evidence domain and its cross-call repeat remains followup. count/numeric guards not changed."
+      "evidence": "inventory_summary classifies held flags once for counting and unknown presence, instead of a second sorted-ID scan; kettle_copies has a separate evidence domain and its cross-call repeat remains followup. count/numeric guards not changed.",
+      "scoped_reviews": [
+        {
+          "decision": "D61 partial",
+          "receipt": "verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json",
+          "scope": "D61 partial. Compact refresh shares overview/strip summary and tab labels. Inventory panel shares qualified kettle count with completeness calculation. Remaining per-record qualification inside kettle_copies pending."
+        }
+      ]
     },
     {
       "file": "rouge/player_resource_history.py",
@@ -4717,6 +4731,20 @@
       "receipt": "verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json",
       "scope": "D127 invalid grade remains unconfirmed",
       "full_module_review_complete": false
+    },
+    {
+      "file": "rouge/player_inventory.py",
+      "sha256": "19e19b20c63a17b858dfe593dee518985b7753feddb93c6dc19646dc318ace2c",
+      "decision": "D61 partial",
+      "receipt": "verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json",
+      "scope": "D61 partial. Compact refresh shares overview/strip summary and tab labels. Inventory panel shares qualified kettle count with completeness calculation. Remaining per-record qualification inside kettle_copies pending."
+    },
+    {
+      "file": "rouge/player_compact.py",
+      "sha256": "8d1c995dc66f50ee9bfefde728dccf4b869f88cd62f8da18b1f4dc766428c813",
+      "decision": "D61 partial",
+      "receipt": "verification/maintenance/code-constraints-inventory-refresh-reuse-20261106/summary.json",
+      "scope": "D61 partial. Compact refresh shares overview/strip summary and tab labels. Inventory panel shares qualified kettle count with completeness calculation. Remaining per-record qualification inside kettle_copies pending."
     }
   ]
 }

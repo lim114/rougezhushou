@@ -195,12 +195,16 @@ class CompactAssistant(QDialog):
         return True
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
-        for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
+        from .player_resource_facts import inventory_summary, resource_rows
+        state = self.owner.run.state
+        inventory = inventory_summary(state)
+        for key,value in overview_facts(state, inventory=inventory).items():self.cards[key].setText(value)
         self.buttons['场景笔记'].setEnabled(True);self.setToolTip(self.context.text())
         if self.recent_notes_popup and self.recent_notes_popup.isVisible():self.recent_notes_popup.panel.refresh()
         if self.inventory_popup and self.inventory_popup.isVisible():
-            from .player_resource_facts import resource_rows,inventory_summary
-            rows=resource_rows(self.owner.run.state);facts={r['key']:r for r in rows};inventory=inventory_summary(self.owner.run.state);popup=self.inventory_popup
+            rows = resource_rows(state, inventory=inventory)
+            facts = {r['key']: r for r in rows}
+            popup = self.inventory_popup
             popup.resources.set_rows([r for r in rows if r['key']not in('items','parts','crew')])
             popup.navigation.setTabText(0,'收藏品 '+(''if inventory['complete']else'已读')+str(inventory['relics']))
             popup.navigation.setTabToolTip(0,facts['items']['note']);popup.navigation.setTabText(1,'道具 '+str(inventory['tools']))

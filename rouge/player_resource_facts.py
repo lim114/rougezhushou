@@ -8,12 +8,12 @@ def count(value):
     return value if type(value) is int and numeric_read(value) else None
 
 
-def inventory_summary(state):
+def inventory_summary(state, *, kettle_quantity=...):
     relic_flags = [record_flag(r, 'held') for r in state.get('relics', {}).values()]
     tool_flags = [record_flag(r, 'held') for r in state.get('tactical_tools', {}).values()]
     relics = sum(flag is True for flag in relic_flags)
     from .relic_quantities import kettle_copies
-    copies=kettle_copies(state)
+    copies = kettle_copies(state) if kettle_quantity is ... else kettle_quantity
     if copies is not None:relics+=copies-1
     tools = sum(flag is True for flag in tool_flags)
     total = count(state.get('relic_count'))
@@ -26,8 +26,9 @@ def inventory_summary(state):
             'complete': complete, 'expected_relics': expected_relics}
 
 
-def resource_rows(state):
-    inventory = inventory_summary(state)
+def resource_rows(state, *, inventory=None):
+    if inventory is None:
+        inventory = inventory_summary(state)
     known = inventory['relics'] + inventory['tools']
     total = inventory['total']
     visible = (str(total) if inventory['complete'] else '待核对' if total is not None and known > total

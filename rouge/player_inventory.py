@@ -161,16 +161,18 @@ class InventoryPanel(QWidget):
             self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
         rows=_filter_rows(available,self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
+        from .player_resource_facts import inventory_summary
         from .relic_quantities import kettle_copies
-        self.kettle_quantity=kettle_copies(self.run.state);self.merge_kettles.setVisible(self.held.isChecked())
+        self.kettle_quantity = kettle_copies(self.run.state)
+        inventory = inventory_summary(self.run.state, kettle_quantity=self.kettle_quantity)
+        self.merge_kettles.setVisible(self.held.isChecked())
         render_key=repr((rows,self.kettle_quantity,self.merge_kettles.isChecked(),self.held.isChecked()))
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
         from .player_exchange_view import update_inventory_button
         update_inventory_button(self)
-        from .player_resource_facts import inventory_summary
-        complete=inventory_summary(self.run.state)['complete']
+        complete=inventory['complete']
         self.summary.setText('暂无收藏品资料'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单待核对'))
         from .relic_quantities import KETTLE
         if rows is not None and self.held.isChecked()and KETTLE in self.rows:
