@@ -38,6 +38,7 @@ class RewardRenderSelectionTests(unittest.TestCase):
                         counted.iterations = 0
                         panel._render(key, False)
                         self.assertEqual(counted.iterations, 1)
+                        self.assertEqual(panel.open_button.isEnabled(), key not in (None, 'missing-key'))
                         self.assertEqual(panel.player.toPlainText(), expected[key])
 
     def test_packet_parses_the_data_bytes_it_has_already_verified(self):

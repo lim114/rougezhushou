@@ -20,6 +20,25 @@ class CurrentRewardOrigins338Tests(unittest.TestCase):
         result = subprocess.run([sys.executable, '-B', 'scripts/build_current_reward_origins_338.py', '--check'], cwd=model.ROOT, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr); self.assertEqual(len(model.packet()['data']['rows']), 6)
 
+    def test_missing_grant_or_wrong_event_or_scene_membership_stops_build(self):
+        packets = {key: provider.packet() for key, provider in model.PROVIDERS.items()}
+        _, cid, _ = model.SELECTIONS[0]
+        for field in ('reward_item_id', 'event_choices', 'event_scenes', 'scene_choices'):
+            with self.subTest(field=field):
+                changed = deepcopy(packets)
+                data = changed['memory']['data']
+                choice = data['choices'][cid]
+                if field == 'reward_item_id':
+                    choice[field] = None
+                elif field == 'event_choices':
+                    data['event']['choice_ids'].remove(cid)
+                elif field == 'event_scenes':
+                    data['event']['scene_ids'].remove(choice['scene_id'])
+                else:
+                    data['scenes'][choice['scene_id']]['choice_ids'].remove(cid)
+                with self.assertRaises(ValueError):
+                    model.source_rows(changed)
+
     def test_three_named_items_counts_types_and_exact_current_record(self):
         for category, key, count in ITEMS:
             with self.subTest(item=key):

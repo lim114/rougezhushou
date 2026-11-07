@@ -13,6 +13,7 @@ MANIFEST_SHA256 = '2039483b9665ca4c025c96622a3b85d2b43d4f65e666580ae9ffb67fb6d21
 NOTICE = '这里只列本版本已逐条核对的取得资料，不是完整获取池；不表示本局会遇到、能够选择或已经领取。'
 UNAVAILABLE = '取得方式的来源暂时无法核对，旧清单与事件窗口已清除；恢复后请重新选择物品。'
 PROVIDERS = {'memory': memory, 'dog': dog, 'vine': vine}
+REWARD_FIELD = {'memory': 'reward_item_id', 'dog': 'item_id', 'vine': 'named_part_item_id'}
 SELECTIONS = (
     ('memory', 'choice_ro6_normal5_1', 'rogue_6_relic_artifact_5'),
     ('memory', 'choice_ro6_normal5_2', 'rogue_6_relic_artifact_5'),
@@ -28,8 +29,7 @@ def source_rows(packets):
     rows = []
     for reader, cid, item_id in SELECTIONS:
         d = packets[reader]['data']; c = d['choices'][cid]
-        field = {'memory': 'reward_item_id', 'dog': 'item_id', 'vine': 'named_part_item_id'}[reader]
-        if c[field] != item_id: raise ValueError('Named reward identity differs')
+        if c[REWARD_FIELD[reader]] != item_id: raise ValueError('Named reward identity differs')
         event = d['event'] if 'event' in d else d['events'][c['event_id']]
         if cid not in event['choice_ids'] or c['scene_id'] not in event['scene_ids']:
             raise ValueError('Event membership differs')

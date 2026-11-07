@@ -33,6 +33,14 @@ class CurrentNamedRewardOrigins347Tests(unittest.TestCase):
             else:v['description']='持有笼控器，获得收藏品<@ro6.get>猎影</>'
             p['encounters']['data']['originals']['choices'][cid]=deepcopy(v)
             with self.assertRaises(ValueError):model.source_rows(p,c,mods)
+    def test_missing_pointer_rejects_second_item_with_same_full_name(self):
+        mods = model.providers()
+        packets = {key: provider.packet() for key, provider in mods.items()}
+        current = deepcopy(model.version.packet()['current']['details'])
+        current['items']['second-relic'] = deepcopy(current['items']['rogue_6_relic_cargo_13'])
+        with self.assertRaisesRegex(ValueError, 'Unique full literal name'):
+            model.source_rows(packets, current, mods)
+
     def test_quantities_and_actual_state_unknown_not_complete_pool_or_auto_apply(self):
         r=model.reference('relics','rogue_6_relic_final_6');self.assertIsNone(r['actual_quantity']);self.assertFalse(r['run_updated']);self.assertFalse(r['complete_acquisition_pool']);self.assertIsNone(r['actual_received']);self.assertIsNone(r['actual_eligible']);text=model.player_text(r,r['rows'][0]['key']);self.assertIn('不能在本项再扣一次',text);self.assertIn('不补成1件',text)
         for iid in('rogue_6_relic_cargo_13','rogue_6_relic_cargo_11','rogue_6_relic_final_4','rogue_6_relic_artifact_4'):

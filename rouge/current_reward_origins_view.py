@@ -45,8 +45,8 @@ class CurrentRewardOriginsPanel(QWidget):
         return True
 
     def _render(self, key, preserve):
-        self.open_button.setEnabled(key is not None)
         row = next((r for r in self.result['rows'] if r['key'] == key), None)
+        self.open_button.setEnabled(row is not None)
         replace_text(self.player, model.player_text(self.result, key, row=row), preserve=preserve)
         replace_text(self.technical, json.dumps(row or {'scope': model.NOTICE}, ensure_ascii=False, indent=2), preserve=preserve)
 
@@ -54,14 +54,13 @@ class CurrentRewardOriginsPanel(QWidget):
         self._close_event(); self._render(item.data(Qt.ItemDataRole.UserRole) if item else None, False)
 
     def open_event(self):
-        old = self.result; selected = self.entries.currentItem()
-        if old is None or selected is None: return False
-        key = selected.data(Qt.ItemDataRole.UserRole)
+        old = self.result
+        index = self.entries.currentRow()
+        if old is None or index < 0: return False
         self._close_event()
         fresh = model.reference(self.category, self.item_id)
         if fresh is None or fresh != old: self._clear(); return False
-        row = next((r for r in fresh['rows'] if r['key'] == key), None)
-        if row is None: self._clear(); return False
+        row = fresh['rows'][index]
         if row['reader'] == 'memory':
             from .current_memory_tree_view import CurrentMemoryTreeDialog
             self.event_dialog = CurrentMemoryTreeDialog(row['scene_id'], row['choice_id'], self)
