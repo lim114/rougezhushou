@@ -167,10 +167,7 @@ def calibration_experiment(experiment):
                 raise CalibrationScenarioError(str(error)) from error
             target = resolved.get('target_enemy')
             if target:
-                try:
-                    _resolve_target(resolved, run_resolution, target)
-                except TypeError as error:
-                    raise CalibrationScenarioError(str(error)) from error
+                _resolve_target(resolved, run_resolution, target)
             else:
                 try:
                     _manual_enemy_weight(resolved)

@@ -97,6 +97,15 @@ def prepare(scenario,profile):
         if data['required_profession'] and profile['profession'] not in data['required_profession'].split('|'):
             raise RunConditionError(data['name']+'与当前干员职业不符，请核对强化归属。')
         inputs.append((bid,data,True))
+    target = scenario.get('target_enemy')
+    selected_skill = None
+
+    def skill_record():
+        nonlocal selected_skill
+        if selected_skill is None:
+            selected_skill = profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
+        return selected_skill
+
     for rid,data,is_bound in inputs:
         if data is None:
             warnings.append('未知藏品 '+rid+'，效果未计算。');continue
@@ -130,28 +139,24 @@ def prepare(scenario,profile):
             token=bool(token_ids)
             if not own and not token:continue
             if e.get('skill_sp_type'):
-                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
-                if selected_skill['sp_type']!=e['skill_sp_type']:continue
+                if skill_record()['sp_type']!=e['skill_sp_type']:continue
             if e['kind'] in ('received_sp','event_sp'):
-                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
-                if selected_skill['sp_type'] not in ('INCREASE_WITH_TIME','INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):continue
-            if e.get('eligible_stage_ids'):
-                target=scenario.get('target_enemy')
-                if not target:
-                    eligible=True;missing.append('target_enemy');continue
-                if target['stage_id'] not in e['eligible_stage_ids']:continue
-            if e['kind']=='enemy_weight_delta':
-                if not scenario.get('target_enemy'):
-                    eligible=True;missing.append('target_enemy');continue
-                if 'enemy_weight' not in scenario:
-                    eligible=True;missing.append('enemy_weight');continue
-            if e['kind']=='enemy_spawn_hp_branch' and not scenario.get('target_enemy'):
-                eligible=True;missing.append('target_enemy');continue
-            if e.get('target_enemy_id'):
-                target=scenario.get('target_enemy')
-                if not target:
-                    eligible=True;missing.append('target_enemy');continue
-                if target['enemy_id']!=e['target_enemy_id']:continue
+                if skill_record()['sp_type'] not in ('INCREASE_WITH_TIME','INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):continue
+            stages = e.get('eligible_stage_ids')
+            target_id = e.get('target_enemy_id')
+            kind = e['kind']
+            if not target and (stages or target_id or kind in ('enemy_weight_delta', 'enemy_spawn_hp_branch')):
+                eligible = True
+                missing.append('target_enemy')
+                continue
+            if stages and target['stage_id'] not in stages:
+                continue
+            if kind == 'enemy_weight_delta' and 'enemy_weight' not in scenario:
+                eligible = True
+                missing.append('enemy_weight')
+                continue
+            if target_id and target['enemy_id'] != target_id:
+                continue
             eligible=True
             if e['kind'] not in SUPPORTED:
                 pending.append('计算尚未接入:'+e['kind']);continue
@@ -171,8 +176,7 @@ def prepare(scenario,profile):
             if e['kind']=='skill_forbidden':
                 raise RunConditionError(data['name']+'禁止开启技能（含自动技能）；当前技能输出、初动和回转不可用。')
             if e['kind']=='periodic_sp':
-                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
-                if selected_skill['sp_type'] not in ('INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):
+                if skill_record()['sp_type'] not in ('INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):
                     pending=[p for p in pending if p!='周期回复计时相位/阻回行为待确认'];continue
                 if e.get('clock')!='deployment':
                     timing_unresolved=True
@@ -187,8 +191,7 @@ def prepare(scenario,profile):
                 if scenario['operator']=='mechanist' and scenario.get('charge_count',0):
                     pending.append('未排程冲锋未套用短时攻击增益')
             if e['kind']=='temporary_ammo_speed':
-                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
-                if selected_skill['duration_type']!='AMMO':continue
+                if skill_record()['duration_type']!='AMMO':continue
                 regular_ammo=(profile['id']=='char_1052_kalts2' and scenario['skill']==2 or
                     profile['id']=='char_4230_mcnist' and scenario['skill']==1 or
                     profile['id'] in ('char_1041_angel2','char_1035_wisdel') and scenario['skill'] in (1,3))
@@ -196,11 +199,10 @@ def prepare(scenario,profile):
                     pending.append('弹药限时攻速需要已接入的逐帧攻击弹药路径');continue
             if e['kind']=='ammo_refill':
                 from .ammo_reference import refill_parameters,partial_packet_reference
-                selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
                 pending=[p for p in pending if p!='未支持的特殊弹药计数器与不安全轮询窗口待接入']
-                if selected_skill['duration_type']!='AMMO':continue
+                if skill_record()['duration_type']!='AMMO':continue
                 ammo_sources.add(rid)
-                maximum=selected_skill['values'].get('attack@trigger_time')
+                maximum=skill_record()['values'].get('attack@trigger_time')
                 ordinary=(profile['id']=='char_1052_kalts2' and scenario['skill']==2 or
                     profile['id']=='char_4230_mcnist' and scenario['skill']==1 or
                     profile['id']=='char_1041_angel2' and scenario['skill'] in (1,3) or
@@ -232,7 +234,8 @@ def prepare(scenario,profile):
             if factor is None:
                 missing.append(e['condition']);continue
             if e['kind']=='deployment_hp_loss' and loss_unused is None:continue
-            value=e['value']*factor if e.get('scale_by_condition') or e.get('hp_curve_min') or e['kind']=='caster_end_sp' else e['value']*factor if e.get('condition')=='emergency_hire' else e['value']
+            scaled = e.get('scale_by_condition') or e.get('hp_curve_min') or kind == 'caster_end_sp' or e.get('condition') == 'emergency_hire'
+            value = e['value'] * factor if scaled else e['value']
             if 'factor_offset' in e:value+=e['factor_offset']
             rule={**e,'value':value,'relic_id':rid,'_verified_rule':True}
             if e.get('native_count_scale')=='float32_before_fp':

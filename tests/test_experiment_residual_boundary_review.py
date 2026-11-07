@@ -105,7 +105,7 @@ class ExperimentResidualBoundaryTests(TestCase):
         payload = model.public_experiment_payload()
         payload['experiment']['records'][1]['data']['scenario']['target_enemy'] = {'stage_id': 'ro6_n_1_1'}
         original = enemy_environment._resolve_target
-        for fault in (KeyError, IndexError, ValueError, OverflowError):
+        for fault in (KeyError, IndexError, TypeError, ValueError, OverflowError):
             def broken(scenario, resolution, target, **options):
                 if scenario.get('level') == 75:
                     raise fault('invalid enemy source')
@@ -123,6 +123,21 @@ class ExperimentResidualBoundaryTests(TestCase):
             with self.assertRaisesRegex(ValueError, 'bad fixed panel'):
                 model.calibration_experiment(**payload)
             read.assert_called_once_with(target['stage_id'], target['enemy_id'], target['level'])
+
+    def test_invalid_stage_id_and_orb_mode_only_block_their_record(self):
+        from rouge.enemy_environment import EnemyReferenceError
+        from rouge.run_modifiers import prepare_run
+        for field in ('stage_id', 'orb_mode'):
+            for invalid in ([], {}):
+                target = {'stage_id': 'ro6_b_5', 'enemy_id': 'enemy_2148_shorbb', 'level': 0, field: invalid}
+                with self.subTest(field=field, value=invalid):
+                    with self.assertRaises(EnemyReferenceError) as caught:
+                        prepare_run({'target_enemy': target})
+                    payload = model.public_experiment_payload()
+                    payload['experiment']['records'][0]['data']['scenario']['target_enemy'] = target
+                    result = model.calibration_experiment(**payload)
+                    self.assertEqual(result['records'][0]['validation_error'], str(caught.exception))
+                    self.assertEqual(result['records'][1]['state'], 'evaluable')
 
     def test_bad_trust_blocks_only_its_own_record(self):
         for trust in ('100', None, {}, 10**1000, -1):

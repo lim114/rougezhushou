@@ -1,3 +1,7 @@
+## 当前断点 · 完成D351目标输入整改，藏品技能资料按需读取一次（2026-11-07）
+
+D351已批准实施，已选目标的内部类型缺陷直接上报。272种藏品的4896组准备输出与前版一致。137项定向通过。D110仍待继续。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-target-selectors-relic-skill-20261107/summary.json)。
+
 ## 当前断点 · 藏品强化归属复用本次机制表和领取记录（2026-11-07）
 
 15种定向强化、75组归属输入与前版一致，97项定向通过。另复现 D110 的两种目标查询类型错误，D351待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-recipient-mechanics-lookup-20261107/summary.json)。

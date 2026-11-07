@@ -112,7 +112,3 @@ preview_environment 沿用原 enemy_preview 的 ValueError、KeyError 捕获，�
 ## D350 · 分队效果列表输入错误
 
 已确认分队合并效果时，effects 为 null 会在 list 转换处产生 TypeError。建议仅在转换点归为 RunConditionError，以取消实验对整段设置的 TypeError 捕获。直接调用者的异常类型会变化；已询问，待决定。
-
-## D351 · 关卡编号和源阶方模式的输入错误
-
-已分别以列表作为 stage_id 和源阶方 orb_mode 复现普通 TypeError。是否在这两处查询入口归为 EnemyReferenceError，让实验其余目标计算的内部 TypeError 直接上报，待用户决定；会改变直接调用者收到的异常类型。

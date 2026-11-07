@@ -115,7 +115,11 @@ def _resolve_target(scenario, resolution, target, *, panel_only=False, difficult
     # Selected identity overrides the separate manual operator reference.
     scenario.pop('enemy_weight',None)
     if not isinstance(target,dict):raise EnemyReferenceError('目标敌人需要关卡、敌人ID及引用等级。')
-    sid=target.get('stage_id');stage=catalog()['stages'].get(sid);preview=stage_previews().get(sid)
+    sid = target.get('stage_id')
+    if not isinstance(sid, str):
+        raise EnemyReferenceError('目标关卡没有固定敌人档案。')
+    stage = catalog()['stages'].get(sid)
+    preview = stage_previews().get(sid)
     if not stage or not preview:raise EnemyReferenceError('目标关卡没有固定敌人档案。')
     level = target.get('level')
     enemy_id = target.get('enemy_id')
@@ -161,7 +165,7 @@ def _resolve_target(scenario, resolution, target, *, panel_only=False, difficult
         (scenario.get('run_config')or{}).get('zone'),difficulty_profiles=difficulty_profiles)
     if record['id']=='enemy_2148_shorbb':
         rule=difficulty_rules()['orb_active'];mode=target.get('orb_mode','unknown')
-        if mode in rule['modes']:
+        if isinstance(mode, str) and mode in rule['modes']:
             factor=rule['modes'][mode]
             enemy['type_factors']={'physical':factor,'magic':factor}
             scenario['_enemy_type_factors']=enemy['type_factors']
