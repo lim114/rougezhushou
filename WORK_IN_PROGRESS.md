@@ -1,3 +1,7 @@
+## 当前断点：材料来源类型出口（2026-11-06）
+
+D220完成：独立/共享窗口未知材料来源直接上报，三类正常来源保持；8项定向通过。原280组完成205、剩75。D110模型准备仍依赖计算内延迟输入校验，继续待处理；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-material-kind-errors-20261106/summary.json`。
+
 ## 当前断点：时序观察异常契约（2026-11-06）
 
 D110时序观察部分完成：只捕获明确界限/时钟/协议错误，内部区间错误上报；61项定向通过，删面板重复异常转译后2项复验通过。模型准备仍待收窄，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json`。

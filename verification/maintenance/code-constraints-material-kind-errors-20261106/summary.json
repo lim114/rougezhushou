@@ -1,0 +1,60 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary"
+  ],
+  "title": "材料来源未知类型直接上报",
+  "base_commit": "0d90ab139292e4839ed8c2192d175b885d1d8ecc",
+  "changed_sources": [
+    "rouge/current_ritual_view.py",
+    "rouge/player_reference_links.py"
+  ],
+  "source_sha256": {
+    "rouge/current_ritual_view.py": "aad161231db0d3d44549e8274e466fe149d6edb286993f7dacaad01990ae774c",
+    "rouge/player_reference_links.py": "c228e5f841c414f4bc21beb5d95cda5978b5ae251fb96c1f17745401970a155b"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D220"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_material_kind_boundary_review tests.test_current_ritual_view_324.CurrentRitualView324Tests.test_three_exact_source_windows_alternatives_no_source_and_owned_closure tests.test_material_failure_review tests.test_reference_host_entry_review",
+        "tests_run": 8,
+        "tests_passed": 8,
+        "seconds": 2.174,
+        "environment": "Qt offscreen"
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior automatic approval rejection; no native acceptance claimed."
+  },
+  "review": {
+    "standards": "D220 approved internal enum defect exposure. Both mutually exclusive standalone/shared-host dispatch paths raise explicit ValueError rather than silently returning False. No additional guard, helper, catch or retry. Shared dispatcher has exactly one production caller, the reviewed ritual panel; change covers actual current call chain.",
+    "requirements": "Pinned acquisition sources contain only event/exchange/battle. Fault injected unknown kinds raise on both hosts. Three valid routes, no-source behavior, owned child closure, unavailable optional exchange and host reuse pass. D110 preparation remains pending after identifying late validation inside damage evaluation; not counted complete."
+  },
+  "partially_implemented_decisions": []
+}

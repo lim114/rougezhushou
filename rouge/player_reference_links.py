@@ -163,7 +163,7 @@ def open_material_source(panel, source):
             panel.material_button.setEnabled(False)
             return False
     else:
-        return False
+        raise ValueError('未支持的材料来源类型：'+str(source['kind']))
     def create(owner):
         from .player_map_reader import REFERENCE_STYLE
         if source['kind'] == 'event':

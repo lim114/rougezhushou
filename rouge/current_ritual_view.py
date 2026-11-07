@@ -63,7 +63,7 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
         elif source['kind']=='battle':
             from .current_battle_view import CurrentBattleDialog
             new=CurrentBattleDialog(source['stage_id'],self)
-        else:return False
+        else:raise ValueError('未支持的材料来源类型：'+str(source['kind']))
         self._close_material();self.material_dialog=new;new.show();return True
 
     def open_related(self):

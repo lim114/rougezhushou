@@ -5574,3 +5574,8 @@ D110面板观察部分完成：输入格式/来源/条件错误使用明确类�
 ## 维护：时序观察错误契约（2026-11-06）
 
 D110时序观察部分完成：界限/时钟/协议错误使用明确类型，内部区间异常上报；面板重复异常转译删除。61项定向及2项复验通过；模型准备未完成。回执 `verification/maintenance/code-constraints-timing-observation-errors-20261106/summary.json`。
+
+
+## 维护：材料来源类型出口（2026-11-06）
+
+D220完成：固定资料仅事件/兑换/作战三类，独立及共享窗口不再将未知内部枚举静默变成False；8项定向检查通过，Qt为离屏。回执 `verification/maintenance/code-constraints-material-kind-errors-20261106/summary.json`。
