@@ -1985,7 +1985,7 @@
     },
     {
       "file": "rouge/supplemental_enemies.py",
-      "sha256": "085bcd05a3885aab123cbdc3e7241715fec3a79d876635a78ab8183527fa507b",
+      "sha256": "3f571f9351edcf5c17d35cb36a04064e2ef2c4e74c4bc3e11e026139ca27245a",
       "rule1": "baseline_metrics_once_per_scope_rank_cultivation_once",
       "rule2": "reuse_existing_metrics_and_prepared_run_no_new_helper",
       "rule3": "D120_D123_D125_D127_unchanged",
@@ -1997,6 +1997,11 @@
           "receipt": "verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json",
           "scope": "D127 invalid grade remains unconfirmed",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D100 partial",
+          "receipt": "verification/maintenance/code-constraints-supplemental-enemy-inputs-20261106/summary.json",
+          "scope": "Supplemental fixed enemy comparison and dialog; enemy input/source errors."
         }
       ]
     },
@@ -5302,6 +5307,20 @@
       "decision": "D100 partial",
       "receipt": "verification/maintenance/code-constraints-supplemental-rank-inputs-20261106/summary.json",
       "scope": "Supplemental rank comparison dialog, frozen baseline and same-comparison fixed profile/environment checks."
+    },
+    {
+      "file": "rouge/enemy_environment.py",
+      "sha256": "2880265dd0cc3a9aca452afe7f116fda89a6dba1739a95e2c0daa21665889f20",
+      "decision": "D100 partial",
+      "receipt": "verification/maintenance/code-constraints-supplemental-enemy-inputs-20261106/summary.json",
+      "scope": "Supplemental fixed enemy comparison and dialog; enemy input/source errors."
+    },
+    {
+      "file": "rouge/supplemental_run_view.py",
+      "sha256": "84f14487d3df712ce71111de201e954ec07c98f9e5e3b1a4f7172b16de29491f",
+      "decision": "D100 partial",
+      "receipt": "verification/maintenance/code-constraints-supplemental-enemy-inputs-20261106/summary.json",
+      "scope": "Supplemental fixed enemy comparison and dialog; enemy input/source errors."
     }
   ]
 }

@@ -8,7 +8,8 @@ from .supplemental_comparison import _compare_ranks, format_comparison
 from .skill_upgrade_comparison import RankListError
 from .supplemental_skills import MissingHpExceedsMaximum
 from .supplemental_cultivation import compare_cultivation,cultivation_defaults,format_cultivation_comparison
-from .supplemental_enemies import compare_fixed_enemies,enemy_defaults,format_fixed_enemies
+from .supplemental_enemies import _compare_fixed_enemies, enemy_defaults, format_fixed_enemies, EnemySelectionError
+from .enemy_environment import EnemyReferenceError
 from .supplemental_budget import (budget_reference,damage_defaults,healing_defaults,
     declared_damage_budget,declared_healing_budget,format_supplemental_damage_budget,
     format_supplemental_healing_budget)
@@ -98,13 +99,14 @@ class SupplementalRunDialog(ReferenceDialog):
     def show_enemies(self):
         if self.result is None:
             self.notice.setPlainText('请先计算当前干员条件，再打开对照工具。');return
-        result=deepcopy(self.result)
+        operator_preview = deepcopy(self.result['preview'])
+        environment = deepcopy(self.result['environment'])
         dialog=ReferenceDialog('补充干员 · 固定关卡敌人与保密等级对照',
             '每名敌人以所选第一个保密等级为基准。未提供等级时，4级只是局外默认方案；grades为空表示原记录待确认，请填写0–15。',
-            enemy_defaults(result['environment']),
-            lambda p:compare_fixed_enemies(result['preview'],result['environment'],p),format_fixed_enemies,
+            enemy_defaults(environment),
+            lambda p:_compare_fixed_enemies(operator_preview, environment, p, opened_result=True),format_fixed_enemies,
             [('enemy_name','候选敌人'),('grade','保密等级'),('name','分项'),('value','预计参考'),
-             ('base_value','首选难度基准'),('delta','差值'),('unit','单位')],self)
+             ('base_value','首选难度基准'),('delta','差值'),('unit','单位')],self,input_errors=(EnemySelectionError, EnemyReferenceError, MissingHpExceedsMaximum))
         self.children_dialogs.append(dialog);dialog.show()
 
     def show_cultivation(self):

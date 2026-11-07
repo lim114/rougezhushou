@@ -1,9 +1,13 @@
 """Low-star single-hit references bound to fixed stage candidates and grades."""
 from copy import deepcopy
 from .catalog import catalog,stage_previews
-from .supplemental_run import _run_skill_reference
+from .supplemental_run import _calculate_run_skill, _run_inputs
 from .supplemental_skills import _cultivated_stats
 from .supplemental_comparison import comparison_rows,format_comparison,metrics
+
+
+class EnemySelectionError(ValueError):
+    """The selected stage, enemy list or grade cannot be used for comparison."""
 
 
 def enemy_defaults(environment):
@@ -15,38 +19,46 @@ def enemy_defaults(environment):
 
 
 def compare_fixed_enemies(operator_preview,environment,preview):
+    return _compare_fixed_enemies(operator_preview, environment, preview, opened_result=False)
+
+
+def _compare_fixed_enemies(operator_preview, environment, preview, *, opened_result):
     if type(preview) is not dict or set(preview)!={'stage_id','enemies','grades','orb_mode'}:
-        raise ValueError('需要stage_id、enemies、grades、orb_mode。')
+        raise EnemySelectionError('需要stage_id、enemies、grades、orb_mode。')
     sid=preview['stage_id'];grades=preview['grades'];selections=preview['enemies']
-    if type(sid) is not str or sid not in stage_previews():raise ValueError('需要固定关卡敌人档案。')
+    stage = stage_previews().get(sid) if type(sid) is str else None
+    if stage is None:raise EnemySelectionError('需要固定关卡敌人档案。')
     if (type(grades) is not list or not 1<=len(grades)<=6 or
         any(type(g) is not int or not 0<=g<=15 for g in grades) or len(set(grades))!=len(grades)):
-        raise ValueError('grades需要1–6个不重复的0–15整数。')
+        raise EnemySelectionError('grades需要1–6个不重复的0–15整数。')
     mode=preview['orb_mode']
     if type(mode) is not str or mode not in ('unknown','active_same_column','active_other_column'):
-        raise ValueError('源阶方情景仅支持未知、行动同列或行动异列。')
-    if type(selections) is not list or not 1<=len(selections)<=20:raise ValueError('需要1–20个固定候选目标。')
+        raise EnemySelectionError('源阶方情景仅支持未知、行动同列或行动异列。')
+    if type(selections) is not list or not 1<=len(selections)<=20:raise EnemySelectionError('需要1–20个固定候选目标。')
     candidates={}
-    for record in stage_previews()[sid]['possible_enemies']:
+    for record in stage['possible_enemies']:
         candidates.setdefault((record['id'],record['level']),[]).append(record)
     records=[];seen=set()
     for selection in selections:
         if (type(selection) is not dict or set(selection)!={'enemy_id','level'} or
             type(selection['enemy_id']) is not str or type(selection['level']) is not int):
-            raise ValueError('每个目标需原表enemy_id与整数level。')
+            raise EnemySelectionError('每个目标需原表enemy_id与整数level。')
         key=(selection['enemy_id'],selection['level'])
         matches=candidates.get(key,[])
-        if len(matches)!=1 or key in seen:raise ValueError('目标需唯一匹配关卡引用且不能重复。')
+        if len(matches)!=1 or key in seen:raise EnemySelectionError('目标需唯一匹配关卡引用且不能重复。')
         records.append(matches[0]);seen.add(key)
     original=deepcopy(operator_preview);environment=deepcopy(environment)
     stats=_cultivated_stats(original)
-    _run_skill_reference(original,environment,stats) # Validate raw run input before overriding the grade.
+    inputs = _run_inputs(original['operator'], environment)
+    if not opened_result:
+        # Standalone queries must qualify the original difficulty before replacing it.
+        _calculate_run_skill(original, environment, stats, inputs)
     conditions=[]
     for grade in grades:
         env=deepcopy(environment)
         config=env['run_config']
         if config is None:config=env['run_config']={}
-        difficulty=deepcopy(config.get('difficulty') or {})
+        difficulty=config.get('difficulty') or {}
         difficulty.update(value=grade,source='手动局外候选目标对照');difficulty.pop('captured_at',None)
         config['difficulty']=difficulty
         conditions.append((grade,env))
@@ -56,7 +68,7 @@ def compare_fixed_enemies(operator_preview,environment,preview):
         for grade,env in conditions:
             target={'stage_id':sid,'enemy_id':record['id'],'level':record['level']}
             if record['id']=='enemy_2148_shorbb':target['orb_mode']=mode
-            result=_run_skill_reference(original,env,stats,target_enemy=target)
+            result=_calculate_run_skill(original,env,stats,inputs,target_enemy=target)
             if baseline is None:
                 baseline=result
                 baseline_values={r['key']:r['value'] for r in metrics(baseline)}

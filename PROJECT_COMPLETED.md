@@ -1,3 +1,7 @@
+## 维护 · 固定敌人对照复用干员和本局资料，移除窗口的无目标重复计算（2026-11-06）
+
+D100补充干员固定敌人对照已验证。固定输入每次绑定一次，窗口只计算请求的目标与难度；独立入口仍核对原始难度。25项定向通过，28个组合与旧版相同。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-enemy-inputs-20261106/summary.json)。
+
 ## 维护 · 补充干员等级对照复用打开时的基准和固定资料（2026-11-06）
 
 D100补充干员等级对照窗口已验证。同次对照共用已核验的固定输入，每个变化等级独立计算，打开时基准沿用。7名干员各7级完整报告与旧版相同。27项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-rank-inputs-20261106/summary.json)。

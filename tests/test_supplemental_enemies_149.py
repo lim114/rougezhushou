@@ -78,6 +78,27 @@ class Enemy149Tests(unittest.TestCase):
         except ImportError:self.skipTest('Qt unavailable')
         app=QApplication.instance() or QApplication([])
         d=SupplementalRunDialog(defaults('char_210_stward'),environment)
-        d.show_enemies();child=d.children_dialogs[-1]
+        import json
+        from unittest.mock import patch
+        from rouge import supplemental_enemies as model
+        with patch.object(model, '_run_inputs', wraps=model._run_inputs) as qualify, patch.object(
+                model, '_calculate_run_skill', wraps=model._calculate_run_skill) as calculate:
+            d.show_enemies()
+            child = d.children_dialogs[-1]
+            qualify.assert_called_once()
+            self.assertEqual(calculate.call_count, len(child.result['variants']))
+            self.assertTrue(all(call.kwargs['target_enemy'] for call in calculate.call_args_list))
         self.assertIsNotNone(child.result);self.assertIn('候选',child.notice.toPlainText())
-        self.assertGreater(child.table.rowCount(),0);child.close();d.close();app.processEvents()
+        self.assertGreater(child.table.rowCount(),0)
+        selection = deepcopy(child.result['preview'])
+        selection['grades'] = [16]
+        child.editor.setPlainText(json.dumps(selection))
+        child.calculate()
+        self.assertIsNone(child.result)
+        self.assertIn('0–15', child.notice.toPlainText())
+        selection['grades'] = [0]
+        child.editor.setPlainText(json.dumps(selection))
+        with patch.object(model, '_calculate_run_skill', side_effect=ValueError('internal target defect')):
+            with self.assertRaisesRegex(ValueError, 'internal target defect'):
+                child.calculate()
+        child.close();d.close();app.processEvents()

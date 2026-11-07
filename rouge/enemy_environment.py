@@ -5,6 +5,10 @@ from functools import lru_cache
 from .catalog import catalog,stage_previews
 from .run_config import config_data
 
+class EnemyReferenceError(ValueError):
+    """The declared enemy, region or fixed source cannot support this reference."""
+
+
 @lru_cache(maxsize=1)
 def difficulty_rules():
     return json.loads((Path(__file__).with_name('data')/'enemy-difficulty-rules.json').read_text(encoding='utf-8'))
@@ -58,12 +62,12 @@ def apply_fixed_environment(enemy,stage,preview,difficulty,zone,*,difficulty_pro
         profiles=config_data()['difficulties']if difficulty_profiles is None else difficulty_profiles
         rate=profiles[str(grade)]['bossValue']/100
         if zone and not isinstance(zone,dict):
-            raise ValueError('本局区域配置需要对象。')
+            raise EnemyReferenceError('本局区域配置需要对象。')
         main=(zone or {}).get('main_zone_index')
         try:
             known_zone=bool(zone) and zone.get('id') in config_data()['zones']
         except TypeError:
-            raise ValueError('本局区域ID不能用于固定区域查询。') from None
+            raise EnemyReferenceError('本局区域ID不能用于固定区域查询。') from None
         if known_zone and zone['id'].split('_')[1].isdigit():
             # zone_4 and zone_4_1 are the same main-region depth.
             main=int(zone['id'].split('_')[1])
@@ -86,25 +90,25 @@ def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=Non
         return
     # Selected identity overrides the separate manual operator reference.
     scenario.pop('enemy_weight',None)
-    if not isinstance(target,dict):raise ValueError('目标敌人需要关卡、敌人ID及引用等级。')
+    if not isinstance(target,dict):raise EnemyReferenceError('目标敌人需要关卡、敌人ID及引用等级。')
     sid=target.get('stage_id');stage=catalog()['stages'].get(sid);preview=stage_previews().get(sid)
-    if not stage or not preview:raise ValueError('目标关卡没有固定敌人档案。')
+    if not stage or not preview:raise EnemyReferenceError('目标关卡没有固定敌人档案。')
     if isinstance(target.get('level'),bool):
-        raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
+        raise EnemyReferenceError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]
-    if len(candidates)!=1:raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
+    if len(candidates)!=1:raise EnemyReferenceError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     from .enemy_panel import enemy_panel_reference
     # The unique fixed record has an integer lookup key. Preserve the caller's
     # historical integral float in the returned identity, never mutate it.
     panel=enemy_panel_reference(sid,target['enemy_id'],int(candidates[0]['level']))
     if not panel['compiled_database_result_available']:
-        raise ValueError('固定敌人构造来源不可用；useDb=true缺少精确等级或独立构造缺少覆盖，不允许用原字段投影进行伤害计算。')
+        raise EnemyReferenceError('固定敌人构造来源不可用；useDb=true缺少精确等级或独立构造缺少覆盖，不允许用原字段投影进行伤害计算。')
     record=candidates[0];stats=dict(panel['attributes'])
     missing=[]
     for key in ('maxHp','atk','def','magicResistance'):
         if stats.get(key) is None and panel_only:missing.append(key);continue
         if type(stats.get(key)) not in (int,float) or not math.isfinite(stats[key]) or stats[key]<0:
-            raise ValueError('目标敌人属性不完整；未闭合字段不能填零。')
+            raise EnemyReferenceError('目标敌人属性不完整；未闭合字段不能填零。')
     enemy={**target,'name':record['name'],'stage_name':stage['name'],'stage_difficulty':stage['difficulty'],
         'level_type':record['level_type'],'reference_stats':dict(stats),'stats':stats,'steps':[],
         'damage_factor':1,'pending':[],'unknown_panel_fields':missing,'panel_only':panel_only,
@@ -136,14 +140,14 @@ def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=Non
             resolution['notes'].append('源阶方使用明确选择的固定行动模式与统一来源列情景；未自动读取站位，不模拟激活、无敌、模式切换或混合来源列。')
         elif mode=='unknown':
             enemy['pending'].append('源阶方阶段和来源列未确认；当前数值仅为未套用自身减伤的参考，不是实际承伤估计。')
-        else:raise ValueError('源阶方行动情景无效。')
+        else:raise EnemyReferenceError('源阶方行动情景无效。')
     # Identity-derived state wins over stale manual relic or operator options.
     scenario['enemy_defense']=stats['def'];scenario['enemy_resistance']=stats['magicResistance']
     weight=stats.get('massLevel')
     if isinstance(weight,(int,float)) and not isinstance(weight,bool) and math.isfinite(weight):
         scenario['enemy_weight']=weight
     elif scenario.get('operator')=='char_1015_aglna2':
-        raise ValueError('固定敌人重量档案缺失，无法选择重量天赋分支。')
+        raise EnemyReferenceError('固定敌人重量档案缺失，无法选择重量天赋分支。')
     scenario['enemy_is_boss']=record['level_type']=='BOSS';scenario['enemy_level_type']=record['level_type']
     scenario['_run_damage_factor']=enemy['damage_factor']
     if missing:enemy['pending'].append('有证面板分项可显示；构造器未闭合字段仍未知，完整目标计算不可用。')
