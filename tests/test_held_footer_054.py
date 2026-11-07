@@ -38,6 +38,25 @@ class HeldFooterReconfirmTests(unittest.TestCase):
                                      self.cards if cards is None else cards,
                                      self.engine if engine is None else engine)
 
+    def test_invalid_images_stop_before_ocr(self):
+        for image in (None, np.empty((0, 8, 3), np.uint8), np.zeros((8, 8), np.uint8)):
+            result, info = reconfirm_held_footer(image, self.texts, self.held, self.cards, self.must_not_ocr)
+            self.assertIsNone(result)
+            self.assertEqual(info["reason"], "invalid_image")
+            self.assertEqual(info["local_ocr_calls"], 0)
+
+    def test_malformed_candidate_evidence_stops_before_ocr(self):
+        for field, bad, reason in (
+                ("confidence", "unknown", "label_invalid_or_already_confirmed"),
+                ("box", [[0], [0], [0], [0]], "invalid_observed_geometry")):
+            with self.subTest(field=field):
+                texts = copy.deepcopy(self.texts)
+                next(r for r in texts if r["text"] == "零件箱")[field] = bad
+                result, info = self.call(texts=texts, engine=self.must_not_ocr)
+                self.assertIsNone(result)
+                self.assertEqual(info["reason"], reason)
+                self.assertEqual(info["local_ocr_calls"], 0)
+
     @staticmethod
     def must_not_ocr(*args, **kwargs):
         raise AssertionError("unverified context must never trigger OCR")

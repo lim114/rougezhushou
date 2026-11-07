@@ -34,9 +34,9 @@ def _bounds(record):
     return result if result[2] > result[0] and result[3] > result[1] else None
 
 
-def _confidence(record):
+def _confidence(raw):
     try:
-        value = float(record.get("confidence", 0))
+        value = float(raw)
     except (TypeError, ValueError):
         return None
     return value if math.isfinite(value) and 0 <= value <= 1 else None
@@ -63,23 +63,28 @@ def reconfirm_held_footer(image, texts, held, cards, engine):
     if image is None or image.ndim != 3 or not image.size:
         return finish("invalid_image")
     if (not held or held.get("text") != "收起"
-            or (_confidence(held) or 0) < MINIMUM_CONFIDENCE
+            or (_confidence(held.get("confidence", 0)) or 0) < MINIMUM_CONFIDENCE
             or not any(card.get("confirmed") is True
                        and card.get("source") == "held_name_and_usage"
                        and card.get("id") and len(card.get("candidates", [])) == 1
                        for card in cards)):
         return finish("held_identity_context_missing")
-    candidates = [record for record in texts if record.get("text") == LABEL]
+    footer_labels = {LABEL: [], "干员": [], "编队": []}
+    for record in texts:
+        name = record.get("text")
+        if name in (LABEL, "干员", "编队"):
+            footer_labels[name].append(record)
+    candidates = footer_labels[LABEL]
     if len(candidates) != 1:
         return finish("label_missing_or_ambiguous")
     candidate = candidates[0]
-    confidence = _confidence(candidate)
+    confidence = _confidence(candidate.get("confidence", 0))
     if confidence is None or confidence >= MINIMUM_CONFIDENCE:
         return finish("label_invalid_or_already_confirmed")
     controls = []
     for name in ("干员", "编队"):
-        records = [record for record in texts if record.get("text") == name
-                   and (_confidence(record) or 0) >= MINIMUM_CONFIDENCE]
+        records = [record for record in footer_labels[name]
+                   if (_confidence(record.get("confidence", 0)) or 0) >= MINIMUM_CONFIDENCE]
         if len(records) != 1:
             return finish("strong_controls_missing_or_ambiguous")
         controls.append(records[0])
@@ -116,7 +121,7 @@ def reconfirm_held_footer(image, texts, held, cards, engine):
     if not raw or len(raw) != 1 or len(raw[0]) != 2:
         return finish("local_label_ambiguous")
     name, score = raw[0]
-    verified = _confidence({"confidence": score})
+    verified = _confidence(score)
     if name != LABEL or verified is None or verified < MINIMUM_CONFIDENCE:
         return finish("local_label_unconfirmed")
     record = deepcopy(candidate)

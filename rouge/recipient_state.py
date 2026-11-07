@@ -29,19 +29,18 @@ def absent_buffs(member):
 
 def merge_recipient_evidence(previous, observed, merged, new_recruitment, captured_at):
     """A full popup replaces negatives; partial popups cannot renew absences."""
-    if metadata_mask(merged).intersection(RECIPIENT_KEYS) and 'char_buff_ids' not in observed:
+    has_popup = 'char_buff_ids' in observed
+    if not has_popup and metadata_mask(merged).intersection(RECIPIENT_KEYS):
         return  # Retain raw popup evidence; identity-only reads cannot renew it.
-    absent = set() if new_recruitment or not previous else absent_buffs(previous)
-    pending = set() if new_recruitment else set(previous.get('char_buff_pending_ids', []))
     positives = set(merged.get('char_buff_ids', []))
-    if 'char_buff_ids' in observed and observed.get('char_buffs_complete') is True:
-        absent = compatible_buffs(merged['id']) - positives
-        pending.clear()
+    if has_popup and observed.get('char_buffs_complete') is True:
+        absent = compatible_buffs(merged['id'])
+        pending = set()
         merged['char_buff_absence_observed_at'] = captured_at
-    elif 'char_buff_ids' in observed:
-        # An explicitly incomplete current popup supersedes an older full
-        # list. Ordinary pages without a popup still reuse scoped negatives.
-        absent.clear()
+    else:
+        # A partial popup supersedes old absences; ordinary pages retain them.
+        absent = absent_buffs(previous) if previous and not has_popup and not new_recruitment else set()
+        pending = set() if new_recruitment else set(previous.get('char_buff_pending_ids', []))
     merged['char_buff_absent_ids'] = sorted(absent - positives)
     merged['char_buff_pending_ids'] = sorted(pending - positives)
     if new_recruitment and not observed.get('char_buffs_complete'):
@@ -55,9 +54,19 @@ def invalidate_recipient_absence(state, observations, gained_relic_ids, promoted
     The old negative therefore becomes uncertain; no recipient is inferred.
     A complete popup in this same observation is newer direct evidence.
     """
+    if not gained_relic_ids and not promoted_ids:
+        return
+    triggers = []
+    for rid, rule in lifecycle_rules().items():
+        trigger = rule['trigger']
+        gained = rid in gained_relic_ids and trigger in ('gain_random', 'upgrade_ticket')
+        on_promotion = (bool(promoted_ids) and trigger in ('next_recruit_or_upgrade', 'upgrade_ticket')
+                        and rid in state['relics'] and active_record(state['relics'][rid], 'held'))
+        if gained or on_promotion:
+            triggers.append((rid, rule, gained, on_promotion))
+    if not triggers:
+        return
     observed = {m['id']: m for m in observations}
-    held = {rid for rid, record in state['relics'].items() if active_record(record, 'held')}
-    rules = lifecycle_rules()
     for oid, member in state['operators'].items():
         current = observed.get(oid, {})
         if (member.get('scope') != 'run' or not active_record(member, 'present')
@@ -66,9 +75,8 @@ def invalidate_recipient_absence(state, observations, gained_relic_ids, promoted
         if 'char_buff_ids' in current and current.get('char_buffs_complete') is True:
             continue
         eligible = []
-        for rid, rule in rules.items():
-            gained = rid in gained_relic_ids and rule['trigger'] in ('gain_random', 'upgrade_ticket')
-            promoted = oid in promoted_ids and rid in held and rule['trigger'] in ('next_recruit_or_upgrade', 'upgrade_ticket')
+        for rid, rule, gained, on_promotion in triggers:
+            promoted = on_promotion and oid in promoted_ids
             if not gained and not promoted:
                 continue
             # Historical icon resolution must not supersede a later popup.

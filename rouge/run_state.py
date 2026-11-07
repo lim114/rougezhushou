@@ -8,7 +8,7 @@ import re
 from collections import Counter
 from pathlib import Path
 from .catalog import catalog,operator_profiles,tactical_tools
-from .record_flags import (record_flag,active_record,unconfirmed_record_ids,unconfirmed_item_ids,
+from .record_flags import (record_flag,active_record,unconfirmed_item_ids,
     memory_has_unconfirmed_items,metadata_mask,RUN_METADATA_KEYS,RECIPIENT_KEYS)
 from .relic_recognition import resolve_owned_icons,resolve_difficulty_icons,difficulty_families
 
@@ -422,7 +422,7 @@ class RunState:
         expected=count if count is not None else state['relic_count']
         retained_memory=state.get('relic_icon_memory')
         suspended=memory_has_unconfirmed_items(state,retained_memory)
-        memory=None if suspended else copy.deepcopy(retained_memory)
+        memory=None if suspended else retained_memory
         if count is not None and (count==0 or count!=state['relic_count']):memory=None
         # Exact owned tool cards are positive inventory evidence even when
         # their small icons are outside the current crop. A contradicted bar
@@ -433,13 +433,17 @@ class RunState:
         original_derived={i['id'] for i in icons if i.get('source')=='held_icon_and_run_difficulty'}
         current_ids=set(relics.get('ids',[]))-original_derived
         cards=relics.get('cards',[])
+        if not icons and current_ids and memory and not current_ids<={i['id'] for i in memory['icons'] if i.get('confirmed')}:
+            memory=None
+        if memory:memory=copy.deepcopy(memory)
         if icons:
             for icon in icons:icon['observed_at']=captured_at
-            signature=lambda rows:sorted(tuple(sorted(i['candidates'])) for i in rows)
+            def signature_counts(rows):
+                return Counter(tuple(sorted(i['candidates'])) for i in rows)
             previous=memory['icons'] if memory else []
             # A current partial bar can strengthen matching slots. New artwork
             # invalidates a full historical bar; it cannot prove removals.
-            covered=bool(previous) and Counter(signature(icons))<=Counter(signature(previous))
+            covered=bool(previous) and signature_counts(icons)<=signature_counts(previous)
             carried=[]
             if covered:
                 carried=[{'id':i['id'],'candidates':[i['id']],'confirmed':True,'source':'held_name_and_usage'}
@@ -454,8 +458,6 @@ class RunState:
                 memory['icons']=previous
             else:
                 memory={'icons':icons,'count':expected,'complete_bar':full,'captured_at':captured_at,'source':'held_bar'}
-        elif current_ids and memory and not current_ids<=set(i['id'] for i in memory['icons'] if i.get('confirmed')):
-            memory=None
         if memory:
             resolved=resolve_difficulty_icons(resolve_owned_icons(memory['icons'],cards),state['config'].get('difficulty'))
             if resolved!=memory['icons']:
@@ -484,13 +486,14 @@ class RunState:
         return relics
 
     def confirm_record_flag(self,kind,identity,record,key,value,captured_at):
-        """Retain an unknown raw flag when fresh direct evidence qualifies it.
+        """Return the prior flag and retain its raw evidence when it was unknown.
 
         Qualification is not an acquisition, departure or recruitment event.
         The caller supplies the already established observation's bool; this
         method cannot infer a game lifecycle from an invalid old JSON value.
         """
-        if record_flag(record,key) is None:
+        prior=record_flag(record,key)
+        if prior is None:
             self.state['history'].append({'at':captured_at,'kind':'state_flag_reconfirmed',
                 'record_kind':kind,'id':identity,'field':key,
                 'previous_value':copy.deepcopy(record[key]),'value':value,
@@ -498,6 +501,7 @@ class RunState:
             if kind=='operator' and key=='present':
                 record['unconfirmed_run_metadata']=sorted(metadata_mask(record)|set(RUN_METADATA_KEYS))
                 record['qualified_char_buff_ids']=[]
+        return prior
 
     def apply(self,observed,captured_at):
         if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
@@ -574,10 +578,11 @@ class RunState:
             state['last_node_content']=record
         prior_icons=state.get('relic_icon_memory')
         prior_inventory_verified=_inventory_confirmation_flag(state['inventory_verified'])
-        prior_held=set(self.held_relic_ids())
-        prior_unknown_held=set(unconfirmed_record_ids(state['relics'],'held'))
+        previously_held_or_unknown={rid for rid,record in state['relics'].items()
+                                    if record_flag(record,'held') is not False}
+        observed_tools=observed.get('tactical_tools',{})
         relics=self.reconcile_relic_icons(relics,captured_at,
-            observed_tool_ids=observed.get('tactical_tools',{}).get('ids',[]))
+            observed_tool_ids=observed_tools.get('ids',[]))
         current_icons=state.get('relic_icon_memory')
         displaced_full_inventory=bool(prior_inventory_verified and prior_icons and prior_icons.get('complete_bar')
             and (not current_icons or not current_icons.get('complete_bar')))
@@ -615,16 +620,23 @@ class RunState:
         previous=state['bar_signature']
         old_count=state['relic_count']
         incoming=set(relics.get('ids',[]))
-        incoming_tools=set(observed.get('tactical_tools',{}).get('ids',[])) & set(tactical_tools())
-        incoming.update(i['id'] for i in relics['icons'] if i.get('confirmed') and i['id'] in catalog()['relics'])
-        incoming_tools.update(i['id'] for i in relics['icons'] if i.get('confirmed') and i['id'] in tactical_tools())
+        tools=tactical_tools()
+        incoming_tools=set(observed_tools.get('ids',[])) & set(tools)
+        confirmed_icons={}
+        for icon in relics['icons']:
+            if icon.get('confirmed'):
+                confirmed_icons.setdefault(icon['id'],icon)
+        if confirmed_icons:
+            relic_catalog=catalog()['relics']
+            incoming.update(rid for rid in confirmed_icons if rid in relic_catalog)
+            incoming_tools.update(tid for tid in confirmed_icons if tid in tools)
         incoming_items=incoming|incoming_tools
         expected=count if count is not None else old_count
         full_bar=expected is not None and len(signature)==expected
         # An unread or partially visible bar is absence of evidence, not a removal.
         changed=displaced_full_inventory or (full_bar and previous is not None and signature!=previous) or (
             count is not None and old_count is not None and count!=old_count) or (
-            _inventory_confirmation_flag(state['inventory_verified']) and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))
+            prior_inventory_verified and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))
         if changed:
             state['inventory_verified']=False
             state['notice']='持有信息变化，保留本局历史并实时核对当前清单；不会因缺失一帧而遗忘。'
@@ -633,41 +645,37 @@ class RunState:
         if count is not None:state['relic_count']=count
         for rid in incoming:
             prior=state['relics'].get(rid,{})
-            if rid not in state['relics'] or record_flag(prior,'held') is False:
+            previous_flag=self.confirm_record_flag('relic',rid,prior,'held',True,captured_at)
+            if rid not in state['relics'] or previous_flag is False:
                 state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})
-            self.confirm_record_flag('relic',rid,prior,'held',True,captured_at)
-            evidence=next((i for i in relics['icons'] if i.get('confirmed') and i['id']==rid),{})
-            state['relics'][rid]={**state['relics'].get(rid,{}),
+            evidence=confirmed_icons.get(rid,{})
+            state['relics'][rid]={**prior,
                 'captured_at':evidence.get('observed_at',captured_at),'resolved_at':captured_at,
                 'source':evidence.get('source',relics['source']),'held':True,
                 'icon_evidence':{k:v for k,v in evidence.items() if k in ('candidates','score','difficulty','difficulty_group',
                     'difficulty_tier','tier_label','difficulty_source','name_usage_confirmed','difficulty_conflict')}}
         for tid in incoming_tools:
             prior=state['tactical_tools'].get(tid,{})
-            if tid not in state['tactical_tools'] or record_flag(prior,'held') is False:
+            previous_flag=self.confirm_record_flag('tactical_tool',tid,prior,'held',True,captured_at)
+            if tid not in state['tactical_tools'] or previous_flag is False:
                 state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})
-            self.confirm_record_flag('tactical_tool',tid,prior,'held',True,captured_at)
-            state['tactical_tools'][tid]={**state['tactical_tools'].get(tid,{}),
-                'captured_at':captured_at,'source':observed.get('tactical_tools',{}).get('source',relics['source']),'held':True}
+            state['tactical_tools'][tid]={**prior,
+                'captured_at':captured_at,'source':observed_tools.get('source',relics['source']),'held':True}
         # Fully identified current/valid historical slots (or explicit zero)
         # prove removals. A partial observation cannot erase unrelated records.
         from .relic_quantities import confirmed_bar_counts
         current_counts=confirmed_bar_counts(relics['icons'],expected)
         if (count==0 and not incoming_items and not relics['icons']) or (current_counts is not None and current_counts.keys()==incoming_items):
-            for rid,record in state['relics'].items():
-                if rid not in incoming and record_flag(record,'held') is not False:
-                    prior=record_flag(record,'held')
-                    self.confirm_record_flag('relic',rid,record,'held',False,captured_at)
+            for kind,records,current,loss_event in (
+                    ('relic',state['relics'],incoming,'relic_no_longer_held'),
+                    ('tactical_tool',state['tactical_tools'],incoming_tools,'tool_no_longer_held')):
+                for identity,record in records.items():
+                    if identity in current:continue
+                    prior=self.confirm_record_flag(kind,identity,record,'held',False,captured_at)
+                    if prior is False:continue
                     record['held']=False
                     if prior is True:
-                        state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})
-            for tid,record in state['tactical_tools'].items():
-                if tid not in incoming_tools and record_flag(record,'held') is not False:
-                    prior=record_flag(record,'held')
-                    self.confirm_record_flag('tactical_tool',tid,record,'held',False,captured_at)
-                    record['held']=False
-                    if prior is True:
-                        state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})
+                        state['history'].append({'at':captured_at,'kind':loss_event,'id':identity})
             state['inventory_verified']=True
             state['inventory_confirmed_at']=(state['relic_icon_memory'] or {}).get('captured_at') if relics.get('memory_replay') else captured_at
         crew=observed.get('crew_count')
@@ -677,8 +685,8 @@ class RunState:
             state['crew_count']=crew
         for member in observed.get('operators',[]):
             previous=state['operators'].get(member['id'],{})
-            prior_presence=record_flag(previous,'present')
             prior_metadata_mask=metadata_mask(previous)
+            prior_presence=self.confirm_record_flag('operator',member['id'],previous,'present',True,captured_at)
             fields={**previous.get('fields',{}),**member['fields']}
             ranks={**previous.get('skill_ranks',{}),**{str(k):v for k,v in member.get('skill_ranks',{}).items()}}
             invalid=set(previous.get('invalid_fields',[]))
@@ -691,7 +699,6 @@ class RunState:
                 # the historical cultivation hidden by an unknown presence.
                 invalid.update(previous.get('fields',{}))
                 invalid_ranks.update(previous.get('skill_ranks',{}))
-            self.confirm_record_flag('operator',member['id'],previous,'present',True,captured_at)
             prior_elite=previous.get('fields',{}).get('elite')
             current_elite=member['fields'].get('elite')
             elite_qualified=not ('unconfirmed_run_metadata' in previous and 'elite' in previous.get('invalid_fields',[]))
@@ -768,15 +775,14 @@ class RunState:
             for key,member in state['operators'].items():
                 if key in current:
                     continue
-                prior = record_flag(member, 'present')
+                prior=self.confirm_record_flag('operator',key,member,'present',False,captured_at)
                 if prior is False:
                     continue
-                self.confirm_record_flag('operator',key,member,'present',False,captured_at)
                 member['present']=False
                 if prior is True:
                     state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
         from .recipient_state import invalidate_recipient_absence
-        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)
+        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-previously_held_or_unknown,promoted_ids,captured_at)
         from .player_floor_resources import record_snapshot
         record_snapshot(state,observed,captured_at,history_start=history_start)
         state['last_read']=captured_at
