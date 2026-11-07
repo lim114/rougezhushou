@@ -1,0 +1,119 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 81,
+    "structural_only": 250,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "分队图标精匹配复用同帧已测尺寸",
+  "base_commit": "4001738b4ccfa1caa1f958d16adb785ff96624d7",
+  "changed_sources": [
+    "rouge/run_badges.py"
+  ],
+  "source_sha256": {
+    "rouge/run_badges.py": "86022dad71a3a50f318589c013fcc73b164ac16cb7b0e8c223f4fb1ebcff6649"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 33,
+    "test_runs": [
+      {
+        "modules": [
+          "test_run_badges",
+          "test_run_config",
+          "test_relic_grade_sync_032"
+        ],
+        "tests": 31,
+        "seconds": 60.805
+      },
+      {
+        "module": "test_image_geometry_review",
+        "tests": [
+          "test_local_crop_intersects_the_image_on_all_four_sides",
+          "test_fully_offscreen_resource_does_not_call_ocr"
+        ],
+        "seconds": 0.157
+      }
+    ],
+    "full_suite_run": false,
+    "comparison": {
+      "image": "samples/native-client/run-map-closed.png",
+      "order": "base then changed in each count/median pair; timings warm, alternating run order",
+      "paths": [
+        {
+          "path": "anchored",
+          "template_calls": [
+            203,
+            198
+          ],
+          "median_ms": [
+            60.86,
+            57.5
+          ],
+          "rounds": 6,
+          "grade_from_existing_text": null,
+          "squad": "rogue_6_band_3"
+        },
+        {
+          "path": "whole_frame",
+          "template_calls": [
+            177,
+            172
+          ],
+          "median_ms": [
+            768.05,
+            747.62
+          ],
+          "rounds": 6,
+          "grade_from_existing_text": null,
+          "squad": "rogue_6_band_3"
+        }
+      ]
+    },
+    "live_window": "Original window not restarted. Prior automatic approval rejection for the stop/relaunch operation; this batch used stored frames, not live gameplay."
+  },
+  "review": {
+    "standards": "Reuse the best same-frame coarse match; finer search evaluates previously untested widths only. Preserve earliest width on score ties, with no new validation or exceptions. Convert accepted digits once per record.",
+    "requirements": "Same squad, score, margin and normalized bounding box on the paired reference frame. Public reader checks cover two squads, difficulty, hidden values and size changes. D353 approved scope already present at 0c0ba3f81 and rechecked."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": []
+}

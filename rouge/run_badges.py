@@ -34,15 +34,15 @@ def scaled_reference(identity, width):
                       interpolation=cv2.INTER_AREA)
 
 
-def _match(gray, identity, sizes):
-    best = None
+def _match(gray, identity, sizes, best=None):
     for size in sizes:
         template = scaled_reference(identity, int(size))
         if template.shape[0] > gray.shape[0] or template.shape[1] > gray.shape[1]:
             continue
         scores = cv2.matchTemplate(gray, template, cv2.TM_CCOEFF_NORMED)
         _, score, _, at = cv2.minMaxLoc(scores)
-        if np.isfinite(score) and (best is None or score > best['score']):
+        if np.isfinite(score) and (best is None or score > best['score']
+                                   or (score == best['score'] and size < best['width'])):
             best = {'id': identity, 'score': float(score), 'at': at,
                     'width': template.shape[1], 'height': template.shape[0]}
     return best
@@ -87,9 +87,9 @@ def find_squad_badge(image, anchor=None):
     for candidate in candidates[:3]:
         center = candidate['width']
         radius = max(3, round(center * .12))
-        item = _match(gray, candidate['id'], range(max(12, center - radius), center + radius + 1))
-        if item:
-            refined.append(item)
+        # The coarse winner is inside this interval. Only untested widths can improve it.
+        widths = range(max(12, center - radius), center + radius + 1)
+        refined.append(_match(gray, candidate['id'], (w for w in widths if w not in sizes), candidate))
     refined.sort(key=lambda item: item['score'], reverse=True)
     best = refined[0]
     runner_up = max([item['score'] for item in refined[1:]] + [item['score'] for item in candidates[3:]] + [0])
@@ -120,8 +120,10 @@ def read_badge_grade(image, badge, texts, engine=None):
             continue
         xx = np.mean([point[0] for point in record['box']]) * width
         yy = np.mean([point[1] for point in record['box']]) * height
-        if left < xx < right and top < yy < bottom and int(record['text']) in NORMAL_GRADES:
-            valid.add(int(record['text']))
+        if left < xx < right and top < yy < bottom:
+            grade = int(record['text'])
+            if grade in NORMAL_GRADES:
+                valid.add(grade)
     if len(valid) == 1:
         return next(iter(valid))
     if engine is None or valid or right <= left or bottom <= top:
@@ -130,6 +132,8 @@ def read_badge_grade(image, badge, texts, engine=None):
     enlarged = cv2.resize(crop, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC)
     raw, _ = engine(enlarged)
     for _, text, confidence in raw or []:
-        if confidence >= .94 and re.fullmatch(r'\d{1,2}', text) and int(text) in NORMAL_GRADES:
-            valid.add(int(text))
+        if confidence >= .94 and re.fullmatch(r'\d{1,2}', text):
+            grade = int(text)
+            if grade in NORMAL_GRADES:
+                valid.add(grade)
     return next(iter(valid)) if len(valid) == 1 else None

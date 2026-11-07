@@ -1,3 +1,7 @@
+## 维护 · 分队图标精匹配复用同帧已测尺寸（2026-11-07）
+
+同图定位及整图搜索各少5次模板匹配，31项分队与配置检查及2项D353复核通过。整图搜索中位747.62毫秒，在线触发频率待测。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-squad-badge-refinement-20261107/summary.json)。
+
 ## 维护 · 视觉识别复用参考点坐标，本局信息匹配复用名称与条件（2026-11-07）
 
 28次图像读取及2860组配置文字对照一致，44项定向通过。纯视觉缓存异常范围D359待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-visual-scene-config-20261107/summary.json)。
