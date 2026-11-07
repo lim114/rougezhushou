@@ -584,9 +584,15 @@ class RunState:
         resource_reads=observed.get('resources',{})
         if not isinstance(resource_reads,dict):resource_reads={}
         from .relic_counter_semantics import HUD_RESOURCE_LABELS,RESOURCE_CAPACITY_LABELS,valid_counter_resource
-        capacity_keys=tuple(RESOURCE_CAPACITY_LABELS)
-        last_capacities={e['resource']:e.get('capacity') for e in state['history']
-            if e.get('kind')=='resource_updated' and e.get('resource') in capacity_keys}
+        capacity_keys=[key for key in RESOURCE_CAPACITY_LABELS if key in resource_reads]
+        last_capacities={}
+        if capacity_keys:
+            for event in reversed(state['history']):
+                resource=event.get('resource')
+                if event.get('kind')=='resource_updated' and resource in capacity_keys:
+                    last_capacities[resource]=event.get('capacity')
+                    capacity_keys.remove(resource)
+                    if not capacity_keys:break
         for key,record in resource_reads.items():
             # An incomplete field is unread; keep its previous fact and time.
             if not isinstance(record,dict) or 'value' not in record:continue
@@ -595,12 +601,14 @@ class RunState:
             elif key not in ('gold','parts_count'):
                 if not valid_counter_resource(key,record):continue
             previous=state['resources'].get(key,{})
-            capacity_changed=key in RESOURCE_CAPACITY_LABELS and (
+            tracks_capacity=key in RESOURCE_CAPACITY_LABELS
+            has_capacity=tracks_capacity and 'capacity' in record
+            capacity_changed=tracks_capacity and (
                 record.get('capacity')!=previous.get('capacity') or
-                ('capacity'in record and record['capacity']!=last_capacities.get(key)))
+                (has_capacity and record['capacity']!=last_capacities.get(key)))
             if record['value']!=previous.get('value') or capacity_changed:
                 event={'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']}
-                if key in RESOURCE_CAPACITY_LABELS and 'capacity'in record:event['capacity']=record['capacity']
+                if has_capacity:event['capacity']=record['capacity']
                 state['history'].append(event)
             state['resources'][key]={**record,'captured_at':captured_at}
         signature=sorted([sorted(icon['candidates']) for icon in relics.get('icons',[])])

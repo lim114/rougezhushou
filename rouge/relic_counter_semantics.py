@@ -28,8 +28,9 @@ RESOURCE_LABELS = {**HUD_RESOURCE_LABELS,'gold':'源石锭','parts_count':'零�
 @lru_cache(maxsize=1)
 def _verified_bindings():
     result={}
+    relics=mechanics()['relics']
     for rid,(condition,rune,maximum) in COUNTER_BINDINGS.items():
-        item=mechanics()['relics'][rid]
+        item=relics[rid]
         layers=[b for b in item['raw_buffs'] if b['key']==rune]
         if len(layers)!=1:continue
         board={b['key']:b['valueStr'] if b.get('valueStr') is not None else b['value']
@@ -43,23 +44,30 @@ def _verified_bindings():
     return result
 
 
+def _counter_record(rid, proof, binding):
+    value=proof.get('value')
+    if (type(value) is not int or not 0<=value<=binding['maximum']
+            or proof.get('title')!=binding['name']
+            or not proof.get('source','').startswith('held_full_name_usage_and_')):
+        return None
+    return {'value':value,'relic_id':rid,'source':'held_card_counter','counter_evidence':proof,
+            'counter_rune':binding['rune'],'mechanism_source':binding['mechanism_source']}
+
+
 def counter_resources(counters):
     """Map a unique complete held-card proof; missing/contradicting reads give none."""
-    counts={}
-    for record in counters:
-        rid=record.get('id');counts[rid]=counts.get(rid,0)+1
+    unique={}
+    for proof in counters:
+        rid=proof.get('id')
+        unique[rid]=None if rid in unique else proof
     result={}
-    for record in counters:
-        binding=_verified_bindings().get(record.get('id'))
-        if not binding or counts[record['id']]!=1:continue
-        value=record.get('value')
-        if (type(value) is not int or not 0<=value<=binding['maximum']
-                or record.get('title')!=binding['name']
-                or not record.get('source','').startswith('held_full_name_usage_and_')):
-            continue
-        result[binding['condition']]={'value':value,'relic_id':record['id'],
-            'source':'held_card_counter','counter_evidence':deepcopy(record),
-            'counter_rune':binding['rune'],'mechanism_source':binding['mechanism_source']}
+    for rid,proof in unique.items():
+        binding=_verified_bindings().get(rid)
+        if proof is not None and binding:
+            record=_counter_record(rid,proof,binding)
+            if record is not None:
+                record['counter_evidence']=deepcopy(proof)
+                result[binding['condition']]=record
     return result
 
 
@@ -68,8 +76,14 @@ def valid_counter_resource(key,record):
     if not isinstance(record,dict) or record.get('source')!='held_card_counter':return False
     proof=record.get('counter_evidence')
     if not isinstance(proof,dict):return False
-    if not isinstance(proof.get('id'),str) or not isinstance(proof.get('source',''),str):return False
-    return counter_resources([proof]).get(key)==record
+    rid=proof.get('id')
+    if not isinstance(rid,str) or not isinstance(proof.get('source',''),str):return False
+    binding=_verified_bindings().get(rid)
+    return bool(binding and binding['condition']==key and _counter_record(rid,proof,binding)==record)
+
+
+def _valid_time(value):
+    return type(value) is int or (type(value) is float and math.isfinite(value))
 
 
 def reusable_resources(state):
@@ -82,16 +96,20 @@ def reusable_resources(state):
     """
     losses={};qualification_cutoffs={}
     for event in state.get('history',[]):
-        rid=(event.get('id') if event.get('kind')=='relic_no_longer_held'
-             else event.get('previous_id') if event.get('kind')=='relic_variant_corrected' else None)
-        at=event.get('at')
-        if (event.get('kind')=='state_flag_reconfirmed' and event.get('record_kind')=='relic'
+        kind=event.get('kind')
+        if kind in ('relic_no_longer_held','relic_variant_corrected'):
+            rid=event.get('id' if kind=='relic_no_longer_held' else 'previous_id')
+            if not rid:continue
+            cutoffs=losses
+        elif (kind=='state_flag_reconfirmed' and event.get('record_kind')=='relic'
                 and event.get('field')=='held' and type(event.get('value')) is bool
-                and isinstance(event.get('id'),str) and type(at) in (int,float) and math.isfinite(at)):
-            identity=event['id']
-            qualification_cutoffs[identity]=max(qualification_cutoffs.get(identity,float('-inf')),at)
-        if rid and type(at) in (int,float) and math.isfinite(at):
-            losses[rid]=max(losses.get(rid,float('-inf')),at)
+                and isinstance(event.get('id'),str)):
+            rid=event['id']
+            cutoffs=qualification_cutoffs
+        else:continue
+        at=event.get('at')
+        if _valid_time(at):
+            cutoffs[rid]=max(cutoffs.get(rid,float('-inf')),at)
     result={}
     for key,record in state.get('resources',{}).items():
         if key in ('gold','parts_count'):
@@ -100,7 +118,7 @@ def reusable_resources(state):
         source={k:v for k,v in record.items() if k!='captured_at'}
         if not valid_counter_resource(key,source):continue
         rid=record['relic_id'];at=record.get('captured_at')
-        if (type(at) not in (int,float) or not math.isfinite(at)
+        if (not _valid_time(at)
                 or at<state['started_at'] or at>(state.get('last_read') or at)
                 or rid not in state.get('relics',{})
                 or not active_record(state['relics'][rid],'held')

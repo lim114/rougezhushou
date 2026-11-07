@@ -5177,6 +5177,19 @@
         "D353: only read nonempty clipped pixels"
       ],
       "evidence": "verification/maintenance/code-constraints-hud-numeric-evidence-20261107/summary.json"
+    },
+    {
+      "file": "rouge/relic_counter_semantics.py",
+      "sha256": "aa0c5f7a3ee6ebdb74767192d4e25a252b90eb586d4b8cfe1c138243f03deec1",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "rule1": "Single checked projection; ephemeral validation avoids copying the saved payload; current-run and historical timestamps checked at their respective boundaries.",
+      "rule2": "Cached fixed-catalog binding, shared proof construction and shared numeric time policy. Both public live and saved-resource paths have separate callers.",
+      "rule3": [
+        "D361 integer timestamp comparison",
+        "D362 persisted evidence identity/source types"
+      ],
+      "evidence": "verification/maintenance/code-constraints-counter-resource-reuse-20261107/summary.json"
     }
   ],
   "approval_registry": {
@@ -6274,6 +6287,20 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-zero-reread-20261107/summary.json",
       "scope": "near_number, same-frame zero shape and OCR inputs, and red counter crosscheck. Name recheck module complete after D360 explicit approval and added regression."
+    },
+    {
+      "file": "rouge/relic_counter_semantics.py",
+      "sha256": "aa0c5f7a3ee6ebdb74767192d4e25a252b90eb586d4b8cfe1c138243f03deec1",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-counter-resource-reuse-20261107/summary.json",
+      "scope": "Entire relic_counter_semantics module; only resource capacity history in RunState.apply."
+    },
+    {
+      "file": "rouge/run_state.py",
+      "sha256": "a9a9cefab14f4a49f590e94ffe066b6516389babb32291717d986fbb36a9f275",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-counter-resource-reuse-20261107/summary.json",
+      "scope": "Entire relic_counter_semantics module; only resource capacity history in RunState.apply."
     }
   ]
 }

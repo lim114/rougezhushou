@@ -143,6 +143,25 @@ class CounterLifecycle064Tests(unittest.TestCase):
                 self.run.state['resources']['altar_stacks']['captured_at']=at
                 self.assertNotIn('altar_stacks',self.context())
 
+    def test_extreme_integer_times_only_affect_the_corresponding_counter(self):
+        self.apply(observed(ALTAR,2))
+        self.run.state['resources']['gold']={'value':25}
+        resource=self.run.state['resources']['altar_stacks']
+        original_at=resource['captured_at']
+        for at in (10**1000,-10**1000):
+            resource['captured_at']=at
+            self.assertEqual(self.context(),{'gold':25})
+        resource['captured_at']=original_at
+        for event in ({'kind':'relic_no_longer_held','id':ALTAR},
+                      {'kind':'relic_variant_corrected','previous_id':ALTAR},
+                      {'kind':'state_flag_reconfirmed','id':ALTAR,'record_kind':'relic','field':'held','value':True}):
+            with self.subTest(kind=event['kind']):
+                self.run.state['history'].append(dict(event,at=-10**1000))
+                self.assertEqual(self.context(),{'altar_stacks':2,'gold':25})
+                self.run.state['history'][-1]['at']=10**1000
+                self.assertEqual(self.context(),{'gold':25})
+                self.run.state['history'].pop()
+
     def test_gold_parts_and_unrelated_counter_survive_other_relic_loss(self):
         fire='rogue_6_relic_cargo_11';data=observed(ALTAR,2)
         data['resources'].update(counter_resources([counter_fixtures.CounterSemanticsTests().proof(fire,3)]))
@@ -151,6 +170,18 @@ class CounterLifecycle064Tests(unittest.TestCase):
         self.assertEqual(self.context(),{'fire_rod_stacks':3,'gold':25,'parts_count':3})
         result=self.run.calculation_resources();result['parts_count']['value']=9
         self.assertEqual(self.run.state['resources']['parts_count']['value'],3)
+
+    def test_invalid_stored_counter_proof_does_not_hide_other_resources(self):
+        self.apply(observed(ALTAR,2))
+        self.run.state['resources']['gold']={'value':25}
+        proof=self.run.state['resources']['altar_stacks']['counter_evidence']
+        for field,invalid in (('id',[]),('source',123)):
+            with self.subTest(field=field):
+                original=proof[field]
+                proof[field]=invalid
+                self.assertEqual(self.context(),{'gold':25})
+                self.assertEqual(proof[field],invalid)
+                proof[field]=original
 
     def test_manual_new_run_clears_only_temporary_run_and_no_counter_leaks(self):
         self.apply(observed(ALTAR,10));old=self.run.state['id'];self.run.reset()
