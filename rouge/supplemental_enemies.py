@@ -10,9 +10,8 @@ def enemy_defaults(environment):
     sid='ro6_n_1_1';records=stage_previews()[sid]['possible_enemies']
     grade=(environment.get('run_config') or {}).get('difficulty') or {}
     value=grade.get('value',4)
-    if type(value) is not int or not 0<=value<=15:value=4
     return {'stage_id':sid,'enemies':[{'enemy_id':e['id'],'level':e['level']} for e in records[:3]],
-            'grades':[value], 'orb_mode':'unknown'}
+            'grades':[value] if type(value) is int and 0<=value<=15 else [], 'orb_mode':'unknown'}
 
 
 def compare_fixed_enemies(operator_preview,environment,preview):

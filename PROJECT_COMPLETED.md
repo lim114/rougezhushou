@@ -1,3 +1,7 @@
+## 维护：已有无效保密等级不再替换为4级（2026-11-06）
+
+D127完成：已有无效难度留空待确认，不再变成4；缺设置时保留明确标为局外方案的原默认。16项定向通过，界面文案未做原生验收。原280组完成221、剩59。回执 `verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json`。
+
 ## 维护：无基准差值语义与基准字段复用核验（2026-11-06）
 
 D123完成：按已批准语义保留无基准差值未知，三类实际比较均复用基准字段；13项定向通过，未改产品代码。原280组完成220、剩60。回执 `verification/maintenance/code-constraints-comparison-baseline-20261106/summary.json`。

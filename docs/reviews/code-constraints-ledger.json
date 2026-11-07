@@ -1779,13 +1779,20 @@
     },
     {
       "file": "rouge/supplemental_enemies.py",
-      "sha256": "3c7e2e472d38afb31f2be206ecd6634b45d7319b5abeb2cc92e61f53670a0d19",
+      "sha256": "085bcd05a3885aab123cbdc3e7241715fec3a79d876635a78ab8183527fa507b",
       "rule1": "baseline_metrics_once_per_scope_rank_cultivation_once",
       "rule2": "reuse_existing_metrics_and_prepared_run_no_new_helper",
       "rule3": "D120_D123_D125_D127_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "All three complete sources and actual consumers reviewed. Rank and cultivation comparisons project baseline once; enemy comparison projects independently once per enemy. Existing comparison_rows accepts prepared baseline_values and keeps raw/absent-baseline branch unchanged for D123. Rank list owns rank validation; one original _cultivated_stats validates cultivation, reused read-only by each _run_skill_reference with independent environment and skill resolution. Original-rank deep copy unchanged. No new function or rare defense; D125 function unchanged. supplemental_comparison ordinary rules now complete, D123 still pending. Cultivation proposals really change cultivation/recruitment so each calculation stays independent, D120 pending. Enemy discarded full preflight remains ordinary unfinished; no full module certification."
+      "evidence": "All three complete sources and actual consumers reviewed. Rank and cultivation comparisons project baseline once; enemy comparison projects independently once per enemy. Existing comparison_rows accepts prepared baseline_values and keeps raw/absent-baseline branch unchanged for D123. Rank list owns rank validation; one original _cultivated_stats validates cultivation, reused read-only by each _run_skill_reference with independent environment and skill resolution. Original-rank deep copy unchanged. No new function or rare defense; D125 function unchanged. supplemental_comparison ordinary rules now complete, D123 still pending. Cultivation proposals really change cultivation/recruitment so each calculation stays independent, D120 pending. Enemy discarded full preflight remains ordinary unfinished; no full module certification.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json",
+          "scope": "D127 invalid grade remains unconfirmed",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/summons.py",
@@ -4640,6 +4647,13 @@
       "file": "rouge/player_history_store.py",
       "receipt": "verification/maintenance/code-constraints-statistics-inventory-20261106/summary.json",
       "scope": "D67 inventory denominator retention",
+      "full_module_review_complete": false
+    },
+    {
+      "file": "rouge/supplemental_run_view.py",
+      "sha256": "326d57f33ce0064c2e24f275fd41fc19ce4a68bf74cbb323dc774b019bf26236",
+      "receipt": "verification/maintenance/code-constraints-enemy-grade-default-20261106/summary.json",
+      "scope": "D127 invalid grade remains unconfirmed",
       "full_module_review_complete": false
     }
   ]

@@ -98,7 +98,7 @@ class SupplementalRunDialog(ReferenceDialog):
             self.notice.setPlainText('请先计算当前干员条件，再打开对照工具。');return
         result=deepcopy(self.result)
         dialog=ReferenceDialog('补充干员 · 固定关卡敌人与保密等级对照',
-            '固定候选目标不会保证出场；每名敌人以所选第一个难度为比较基准。脚本缺口保留。',
+            '每名敌人以所选第一个保密等级为基准。未提供等级时，4级只是局外默认方案；grades为空表示原记录待确认，请填写0–15。',
             enemy_defaults(result['environment']),
             lambda p:compare_fixed_enemies(result['preview'],result['environment'],p),format_fixed_enemies,
             [('enemy_name','候选敌人'),('grade','保密等级'),('name','分项'),('value','预计参考'),
