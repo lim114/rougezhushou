@@ -1,3 +1,7 @@
+## 维护 · 校准实验的本局条件解析独立于藏品与伤害计算（2026-11-07）
+
+本局条件解析时缺键和索引错误直接上报；错误分队和不可查询的目标仍只影响本行。57项定向通过，18份完整报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-run-resolution-20261107/summary.json)。
+
 ## 维护 · 校准实验的技能选择只接收明确输入错误（2026-11-07）
 
 技能选择移出宽异常处理，非法输入只阻止本行，5类内部错误直接上报。44项定向通过，18份实验完整结果一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-skill-selection-20261107/summary.json)。

@@ -232,7 +232,10 @@ def _skill_damage_base(scenario: dict) -> dict:
 
 
 def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
-    return _prepare_effects(*_damage_selection(scenario, cultivated_attributes))
+    from .run_modifiers import prepare_run
+    selected, profile, attributes = _damage_selection(scenario, cultivated_attributes)
+    resolved, run_resolution = prepare_run(selected)
+    return _prepare_effects(resolved, profile, attributes, run_resolution)
 
 
 def _damage_selection(scenario, cultivated_attributes):
@@ -277,10 +280,8 @@ def _damage_selection(scenario, cultivated_attributes):
     return scenario, profile, attributes
 
 
-def _prepare_effects(scenario, profile, attributes):
+def _prepare_effects(scenario, profile, attributes, run_resolution):
     from .relics import prepare
-    from .run_modifiers import prepare_run
-    scenario,run_resolution=prepare_run(scenario)
     numeric_bool_fields=[field for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds')
                          if isinstance(scenario.get(field),bool)]
     scenario,resolution=prepare(scenario,profile)
