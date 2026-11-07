@@ -6,6 +6,17 @@ from rouge.anchors import crop
 from rouge.viewport import map_evidence, prepare_frame
 
 class ImageGeometryReviewTests(unittest.TestCase):
+    def test_gold_search_needs_both_life_label_and_numeric_candidate(self):
+        from unittest.mock import patch
+        from rouge.resource_recognition import read_resources
+
+        image = np.zeros((600, 800, 3), dtype=np.uint8)
+        box = [[.1, .1], [.2, .1], [.2, .15], [.1, .15]]
+        for text in ('目标生命值', '12'):
+            with self.subTest(text=text), patch('rouge.resource_recognition.cv2.cvtColor') as convert:
+                self.assertEqual(read_resources(image, [{'text': text, 'confidence': .99, 'box': box}]), {})
+                convert.assert_not_called()
+
     def test_local_crop_intersects_the_image_on_all_four_sides(self):
         image = np.arange(600*800, dtype=np.int32).reshape(600,800)
         for bounds in [(-.1,.12,-.02,.18), (.1,-.2,.2,-.1),

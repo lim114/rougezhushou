@@ -4437,13 +4437,20 @@
     },
     {
       "file": "rouge/resource_recognition.py",
-      "sha256": "fe3dff37869c9d09d49cc8ac9e6d67214e2eb0c7a875a2958266900fbff3f79d",
+      "sha256": "0aba6952fd73d135c130c8065858e90083ad8c59f0950eab3343d7d3086616a8",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "rule1": "Resource candidates/centers/scales/templates reused; timeline copies compacted base only at last eligible observation",
       "rule2": "gold_template is cached asset loader; memory_model used across constructor/replay/baseline, retains IO-free domain reducer boundary",
       "rule3": [],
-      "evidence": "Both full modules and reducers/callers checked; seven timeline tests pass; baseline snapshot/result equality and copy calls10to4; final12 resource equivalence cases"
+      "evidence": "Both full modules and reducers/callers checked; seven timeline tests pass; baseline snapshot/result equality and copy calls10to4; final12 resource equivalence cases",
+      "scoped_reviews": [
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-hud-numeric-evidence-20261107/summary.json",
+          "scope": "Full module review of HUD field reads and gold/parts reads at read_run -> read_resources; ordinary OCR absence, ambiguous numbers, clipped components, zero and capacity are distinct domain outcomes."
+        }
+      ]
     },
     {
       "file": "rouge/observation_timeline.py",
@@ -5150,6 +5157,18 @@
         "D360"
       ],
       "evidence": "verification/maintenance/code-constraints-roster-recognition-20261107/summary.json"
+    },
+    {
+      "file": "rouge/hud_resources.py",
+      "sha256": "2214a42eac1679ff22094f195ece702bc0dc6e4a458eae032a045c524681395d",
+      "ordinary_rules_review_complete": true,
+      "full_module_review_complete": true,
+      "rule1": "Prepare confident numeric candidates once; share the OCR fallback and component-derived glyph bounds. Independent colour evidence for the current and maximum hope.",
+      "rule2": "_number shared by labels, shield, and segmented hope; _icons is the cached asset loader. No single-use wrapper.",
+      "rule3": [
+        "D353: only read nonempty clipped pixels"
+      ],
+      "evidence": "verification/maintenance/code-constraints-hud-numeric-evidence-20261107/summary.json"
     }
   ],
   "approval_registry": {
@@ -6233,6 +6252,13 @@
       "decision": "",
       "receipt": "verification/maintenance/code-constraints-roster-recognition-20261107/summary.json",
       "scope": "Read selected roster member and skill ranks, mastery pip geometry, nearby counts, isolated zero glyph. Full ordinary-rule audit of the name recheck module; D360 pending."
+    },
+    {
+      "file": "rouge/hud_resources.py",
+      "sha256": "2214a42eac1679ff22094f195ece702bc0dc6e4a458eae032a045c524681395d",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-hud-numeric-evidence-20261107/summary.json",
+      "scope": "Full module review of HUD field reads and gold/parts reads at read_run -> read_resources; ordinary OCR absence, ambiguous numbers, clipped components, zero and capacity are distinct domain outcomes."
     }
   ]
 }

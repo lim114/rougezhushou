@@ -8,17 +8,15 @@ from .anchors import crop
 from .operator_recognition import center
 
 
-def _number(image, texts, box, engine, *, ratio=False, segmented=False):
-    pattern = r'(\d+)/(\d+)' if ratio else r'\d+'
-    values = {t['text'] for t in texts if t['confidence'] >= .9
-              and box[0] <= (position := center(t))[0] <= box[2] and box[1] <= position[1] <= box[3]
-              and re.fullmatch(pattern, t['text'])}
+def _number(image, candidates, box, engine, *, ratio=False, segmented=False):
+    values = {text for text,x,y in candidates if box[0] <= x <= box[2] and box[1] <= y <= box[3]}
     if not values:
         current = crop(image, box)
         if not current.size:
             return None
         current = cv2.copyMakeBorder(current, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value=0)
         raw, _ = engine(cv2.resize(current, None, fx=2, fy=2), use_cls=False, use_det=not segmented)
+        pattern = r'\d+/\d+' if ratio else r'\d+'
         values = {digits for row in raw or []
                   if row[-1] >= .9 and re.fullmatch(pattern, digits := row[-2].replace(' ', ''))}
     if len(values) != 1:
@@ -40,7 +38,14 @@ def _icons():
 def read_hud_resources(image, texts, engine):
     h, w = image.shape[:2]
     resources = {}
-    labels = {t['text']: t for t in texts if t['confidence'] >= .9}
+    labels = {}
+    counts, ratios = [], []
+    for record in texts:
+        if record['confidence'] >= .9:
+            text = record['text']
+            labels[text] = record
+            if re.fullmatch(r'\d+(?:/\d+)?', text):
+                (ratios if '/' in text else counts).append((text, *center(record)))
     life_bounds = None
     for key, label in (('life', '目标生命值'), ('command', '指挥等级'),
                        ('action', '行动力'), ('valuation', '总估价')):
@@ -60,7 +65,7 @@ def read_hud_resources(image, texts, engine):
             box = (x0 - .5*dx, y1, x1 + .8*dx, y1 + 4.5*dy)
         else:
             box = (x0 - .5*dx, y1, x1 + 1.2*dx, y1 + 2.4*dy)
-        value = _number(image, texts, box, engine, ratio=key == 'life')
+        value = _number(image, ratios if key == 'life' else counts, box, engine, ratio=key == 'life')
         if value is not None:
             resources[key] = {**value, 'source': label + '当前标签对应数值'}
     if life_bounds is None:
@@ -88,7 +93,7 @@ def read_hud_resources(image, texts, engine):
         yy += top
         if key == 'shield':
             box = ((left+iw*1.15)/w, (yy-ih*.1)/h, (left+iw*4)/w, (yy+ih*1.1)/h)
-            value = _number(image, texts, box, engine)
+            value = _number(image, counts, box, engine)
         else:
             # The available hope is yellow; the grey neighbouring number is
             # its limit. Remove the short arrow and solid progress-bar strip.
@@ -101,9 +106,9 @@ def read_hud_resources(image, texts, engine):
             available = None
             for field, lower, upper in (('value', (18, 90, 100), (40, 255, 255)),
                                          ('capacity', (0, 0, 70), (179, 65, 255))):
-                if field == 'capacity' and value is None:
-                    break
                 if field == 'capacity':
+                    if value is None:
+                        break
                     right = box[0] + (available[0]+available[2]+4*font)/w
                     if right > 1 or box[3] > 1:
                         continue
@@ -111,23 +116,24 @@ def read_hud_resources(image, texts, engine):
                     hsv = cv2.cvtColor(current, cv2.COLOR_BGR2HSV)
                 mask = cv2.inRange(hsv, lower, upper)
                 _, groups, stats, _ = cv2.connectedComponentsWithStats(mask)
-                eligible = [(i, xx, width) for i, (xx, yy2, width, height, _) in enumerate(stats[1:], 1)
-                       if font*.55 <= height <= font*1.6
-                       and (field == 'value' or (xx > available[0]+available[2]
-                           and abs(yy2+height/2-available[1]-available[3]/2) < font*.35))]
-                if field == 'capacity' and any(xx+width >= mask.shape[1] for _, xx, width in eligible):
+                eligible = [(i, x, y, x+width, y+height)
+                            for i, (x, y, width, height, _) in enumerate(stats[1:], 1)
+                            if font*.55 <= height <= font*1.6
+                            and (field == 'value' or (x > available[0]+available[2]
+                                 and abs(y+height/2-available[1]-available[3]/2) < font*.35))]
+                if field == 'capacity' and any(right >= mask.shape[1] for _,_,_,right,_ in eligible):
                     continue
-                ids = [i for i, xx, width in eligible if xx > 0 and xx+width < mask.shape[1]]
-                glyphs = (np.isin(groups, ids)*255).astype(np.uint8)
-                points = cv2.findNonZero(glyphs)
-                if points is None:
+                selected = [row for row in eligible if row[1] > 0 and row[3] < mask.shape[1]]
+                if not selected:
                     continue
-                gx, gy, gw, gh = cv2.boundingRect(points)
-                digits = cv2.cvtColor(glyphs[gy:gy+gh, gx:gx+gw], cv2.COLOR_GRAY2BGR)
+                ids, lefts, tops, rights, bottoms = zip(*selected)
+                gx, gy, right, bottom = min(lefts), min(tops), max(rights), max(bottoms)
+                glyphs = np.isin(groups[gy:bottom, gx:right], ids).astype(np.uint8)*255
+                digits = cv2.cvtColor(glyphs, cv2.COLOR_GRAY2BGR)
                 reading = _number(digits, [], (0., 0., 1., 1.), engine, segmented=True)
                 if field == 'value':
                     value = reading
-                    available = (gx, gy, gw, gh)
+                    available = (gx, gy, right-gx, bottom-gy)
                 elif reading is not None and reading['value'] >= value['value']:
                     value['capacity'] = reading['value']
         if value is not None:

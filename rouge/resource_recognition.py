@@ -20,22 +20,23 @@ def read_resources(image,texts,engine=None):
     if parts:
         x,y=center(parts);ux,uy=units(image,parts,29)
         ratios={tuple(map(int,m.groups())) for t in texts if t['confidence']>=.9 and
-            abs((position:=center(t))[0]-x)<.04*ux and 0<position[1]-y<.055*uy and
-            (m:=re.fullmatch(r'(\d{1,3})/(\d{1,3})',t['text']))}
+            (m:=re.fullmatch(r'(\d{1,3})/(\d{1,3})',t['text'])) and
+            abs((position:=center(t))[0]-x)<.04*ux and 0<position[1]-y<.055*uy}
         if len(ratios)==1:
             count,capacity=next(iter(ratios))
             if count<=capacity:
                 resources['parts_count']={'value':count,'capacity':capacity,'source':'零件箱数量/容量，取左值'}
     # Reject the appraisal number, hope and action-points counters even if OCR is confident.
-    template=gold_template();gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
     anchor=next((t for t in texts if t['text']=='目标生命值' and t['confidence']>=.9),None)
     if anchor is None:return resources
-    ux,uy=units(image,anchor,27.9678)
-    matches=[]
     numbers=[(int(t['text']),*center(t)) for t in texts if t['confidence']>=.95 and re.fullmatch(r'\d{1,4}',t['text'])]
+    if not numbers:return resources
+    ux,uy=units(image,anchor,27.9678)
+    template=gold_template();gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    matches=[]
     icon_scale=h*uy/1127
     scales=(icon_scale*.85,icon_scale,icon_scale*1.15)
-    templates=[cv2.resize(template,None,fx=scale,fy=scale) for scale in scales] if numbers else []
+    templates=[cv2.resize(template,None,fx=scale,fy=scale) for scale in scales]
     for _,nx,ny in numbers:
         x0=max(0,round((nx-.18*ux)*w));x1=min(w,round((nx-.02*ux)*w))
         y0=max(0,round((ny-.05*uy)*h));y1=min(h,round((ny+.05*uy)*h))
