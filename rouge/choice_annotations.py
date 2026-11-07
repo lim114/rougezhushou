@@ -29,14 +29,14 @@ def same_choice_json(expected, value):
     return expected == value
 
 
-def choice_document_payload(root, manifest_name, manifest_hash, data_name):
-    """Verify every pinned document before returning the requested payload."""
+def choice_document_files(root, manifest_name, manifest_hash, names):
+    """Verify every pinned document before returning the requested files."""
     root = root.resolve()
     manifest_bytes = (root / manifest_name).read_bytes()
     if sha256(manifest_bytes).hexdigest() != manifest_hash:
         return None
     manifest = json.loads(manifest_bytes)
-    payload = None
+    selected = {}
     for relative, expected in manifest['files'].items():
         path = root / relative
         if not path.resolve().is_relative_to(root) or not path.is_file():
@@ -44,9 +44,9 @@ def choice_document_payload(root, manifest_name, manifest_hash, data_name):
         raw = path.read_bytes()
         if len(raw) != expected['bytes'] or sha256(raw).hexdigest() != expected['sha256']:
             return None
-        if relative == data_name:
-            payload = raw
-    return payload
+        if relative in names:
+            selected[relative] = raw
+    return selected if len(selected) == len(names) else None
 
 
 def _file(name):

@@ -1,3 +1,7 @@
+## 维护 · 具名奖励资料合并重复读取与校验，恢复历史构建回放（2026-11-06）
+
+具名物品共用逐文件核验与严格类型比较；具名奖励首次读取仅核对一次资料内容。历史奖励构建脚本使用已有精确归档，冻结证据未改。105项定向通过。D336、D337待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-named-reward-documents-20261106/summary.json)。
+
 ## 维护 · 招募与移动结果复用原件核验，区分来源失效和内部错误（2026-11-06）
 
 D334、D335按批准实施。两读取器共用逐文件核验，匹配事件的招募分支复用已定位场景。85项定向通过，两份完整结果与旧版一致。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-choice-document-readers-20261106/summary.json)。

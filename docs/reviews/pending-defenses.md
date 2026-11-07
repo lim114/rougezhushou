@@ -52,3 +52,11 @@ player_map_hover.py 绘制卡片时把 ValueError、TypeError、KeyError 全部�
 ## D333 · 可计算技能遇到未核验培养字段
 
 固定资料的32名可计算干员均未使用本次发现的费用或阻挡模组字段。若未来其资料出现未支持字段，需要决定保留可独立证明的技能分项，还是暂缓整项技能计算。已询问。此次仅实施属性读取和展示，不新增技能级拦截。
+
+## D336 · 具名选项物品的异常出口
+
+documented_choice_items._validated_packet 把资料读取、JSON 解析和内部结构异常均转成不可用。建议仅保留文件/解析错误与原有身份、清单核验失败的提示，内部缺陷直接上报。已询问，未改捕获范围。
+
+## D337 · 具名奖励资料的异常出口
+
+named_reward_items._verified_packet 捕获普通 ValueError、TypeError、KeyError、AttributeError、IndexError、StopIteration 和 RecursionError 等。建议保留实际非法公开路径、读取或解析失败以及有定义的来源不匹配；内部缺陷上报。已询问，未改捕获范围。

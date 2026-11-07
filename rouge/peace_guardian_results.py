@@ -1,6 +1,6 @@
 """CACHE CANDIDATE: a documented one-way result, never actual run completion."""
 from copy import deepcopy
-from .choice_annotations import choice_document_payload, same_choice_json
+from .choice_annotations import choice_document_files, same_choice_json
 import json
 from pathlib import Path
 
@@ -16,11 +16,11 @@ _CACHE={}
 
 def _validated_packet():
     try:
-        payload = choice_document_payload(ROOT, MANIFEST, MANIFEST_SHA256, DATA)
-        if payload is None:return None
+        files = choice_document_files(ROOT, MANIFEST, MANIFEST_SHA256, (DATA,))
+        if files is None:return None
         if MANIFEST_SHA256 in _CACHE:
             return _CACHE[MANIFEST_SHA256]
-        data = json.loads(payload)
+        data = json.loads(files[DATA])
     except (OSError, UnicodeError, json.JSONDecodeError):
         return None
     if (data['schema_version']!=1 or data['event_id']!=EVENT or data['scene_key']!=SCENE

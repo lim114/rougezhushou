@@ -24,11 +24,15 @@ def replay(recipe):
             relative=Path(name)
             if relative.is_absolute()or '..'in relative.parts or relative.parts[0]not in ('rouge','research','scripts','verification'):raise ValueError('Public recipe path required.')
             raw=(ROOT/name).read_bytes();expected=manifest['files'].get(name)
-            if expected and sha256(raw).hexdigest()!=expected['sha256']:
-                archived=ROOT/'research/runtime-reference-loaders-20261031/baseline/historical-299'/name
+            digest = sha256(raw).hexdigest() if expected else None
+            if expected and digest!=expected['sha256']:
+                if name == 'rouge/event_named_reward_links.py':
+                    archived = ROOT/'research/remaining-runtime-guards-20261031/baseline/event_named_reward_links.py'
+                else:
+                    archived = ROOT/'research/runtime-reference-loaders-20261031/baseline/historical-299'/name
                 if not name.endswith('.py')or not archived.is_file():raise ValueError('Historical input unavailable: '+name)
-                raw=archived.read_bytes();historical.append(name)
-            if expected:assert len(raw)==expected['bytes']and sha256(raw).hexdigest()==expected['sha256'],name
+                raw=archived.read_bytes();digest=sha256(raw).hexdigest();historical.append(name)
+            if expected:assert len(raw)==expected['bytes']and digest==expected['sha256'],name
             target=target_root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw)
         context['ROOT']=target_root
         before_argv=sys.argv;stream=io.StringIO()

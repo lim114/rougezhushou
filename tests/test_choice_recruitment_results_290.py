@@ -171,7 +171,7 @@ class ChoiceRecruitmentResultTests(unittest.TestCase):
         for reader in (model, peace_guardian_results):
             for error in (ValueError, KeyError, TypeError):
                 with self.subTest(reader=reader.__name__, error=error.__name__), patch.object(
-                        reader, 'choice_document_payload', side_effect=error('internal')):
+                        reader, 'choice_document_files', side_effect=error('internal')):
                     with self.assertRaises(error):
                         reader.source_data()
 

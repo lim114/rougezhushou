@@ -251,6 +251,14 @@ class NamedRewardItemsTests(unittest.TestCase):
         after={event:node_catalog.event_reward_options(event)for event in baseline['queries']}
         self.assertEqual(before,baseline['queries']);self.assertEqual(after,before)
 
+    def test_cold_and_warm_reads_validate_packet_once_each(self):
+        self.subject._parsed_packet = None
+        with patch.object(self.subject, '_valid_packet', wraps=self.subject._valid_packet) as validate:
+            self.assertTrue(self.event()['source_valid'])
+            self.assertEqual(validate.call_count, 1)
+            self.assertTrue(self.event()['source_valid'])
+            self.assertEqual(validate.call_count, 2)
+
     def test_default_readonly_builder_recreates_all_three_outputs_without_modification(self):
         root=self.subject.ROOT;paths=[root/self.subject.DATA,root/self.subject.MANIFEST,root/self.subject.SELECTED_AUTHORITY]
         before=[p.read_bytes()for p in paths]

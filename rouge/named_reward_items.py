@@ -1,5 +1,6 @@
 """Manual exact-choice item references; never a grant, eligibility or run update."""
 from copy import deepcopy
+from .choice_annotations import same_choice_json
 import hashlib
 import json
 from pathlib import Path,PurePosixPath
@@ -30,14 +31,6 @@ def _sha(raw):return hashlib.sha256(raw).hexdigest()
 def _canonical(value):return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf8')
 
 
-def _same_json(value,expected):
-    if type(value)is not type(expected):return False
-    if type(expected)is dict:
-        return value.keys()==expected.keys()and all(type(k)is str and _same_json(value[k],expected[k])for k in value)
-    if type(expected)is list:return len(value)==len(expected)and all(_same_json(a,b)for a,b in zip(value,expected))
-    return value==expected
-
-
 def _source_path(relative):
     if type(relative)is not str:raise ValueError('Source path must be text.')
     path=PurePosixPath(relative)
@@ -50,12 +43,12 @@ def _source_path(relative):
 
 def _valid_packet(packet,authority,current_catalog,current_rewards):
     if packet['schema']!='named_reward_items_v1'or authority['schema']!='named_reward_selected_authority_v1':return False
-    if not all(_same_json(packet[k],authority[k])for k in('expected_events','expected_original_rewards','expected_reward_queries','icons','source')):return False
-    if not _same_json(packet['items'],authority['complete_items'])or not _same_json(packet['relics'],authority['complete_relics']):return False
+    if not all(same_choice_json(authority[k], packet[k])for k in('expected_events','expected_original_rewards','expected_reward_queries','icons','source')):return False
+    if not same_choice_json(authority['complete_items'], packet['items'])or not same_choice_json(authority['complete_relics'], packet['relics']):return False
     if set(packet['expected_events'])!=set(EVENT_IDS)or len(packet['choices'])!=16 or len(packet['items'])!=13 or len(packet['relics'])!=12:return False
-    if len(packet['expected_original_rewards'])!=17 or not _same_json(packet['expected_original_rewards'],current_rewards['event_rewards']):return False
+    if len(packet['expected_original_rewards'])!=17 or not same_choice_json(current_rewards['event_rewards'], packet['expected_original_rewards']):return False
     current_events={e['id']:e for e in current_catalog['events']if e['id']in EVENT_IDS}
-    if not _same_json(packet['expected_events'],current_events):return False
+    if not same_choice_json(current_events, packet['expected_events']):return False
     if packet['inventory_updated']is not False or packet['current_server_verified']is not False or packet['original_entry_restored']is not False:return False
     keys={(r['event_id'],r['scene_key'],r['choice_key'])for r in packet['choices']}
     expected={(event,key.rsplit(':choice:',1)[0],key)for event,choices in CHOICE_KEYS.items()for key in choices}
@@ -66,11 +59,11 @@ def _valid_packet(packet,authority,current_catalog,current_rewards):
         item=packet['items'][row['item_id']]
         if row['item_kind']!=item['type']or row['item_kind']not in('RELIC','SCRAP'):return False
         if row['original_choice_id']=='choice_ro6_rest_4':return False
-        if not _same_json(row['original_choice'],authority['complete_original_choices'][row['original_choice_id']]):return False
+        if not same_choice_json(authority['complete_original_choices'][row['original_choice_id']], row['original_choice']):return False
         event=packet['expected_events'][row['event_id']]
         scene=next(s for s in event['scenes']if s['key']==row['scene_key'])
         choice=next(c for c in scene['choices']if c['key']==row['choice_key'])
-        if not _same_json(row['catalog_choice'],choice):return False
+        if not same_choice_json(choice, row['catalog_choice']):return False
     return True
 
 
@@ -87,11 +80,11 @@ def _verified_packet(event_id):
             or manifest['all_package_runtime_members_required_for_each_target_query']is not True):return None
         selected={}
         for name,pin in manifest['runtime_files'].items():
-            if not _same_json(pin,manifest['files'][name]):return None
+            if not same_choice_json(manifest['files'][name], pin):return None
             raw=_source_path(name).read_bytes()
             if type(pin['bytes'])is not int or len(raw)!=pin['bytes']or _sha(raw)!=pin['sha256']:return None
             if name in(DATA,SELECTED_AUTHORITY,'rouge/data/node-catalog.json','rouge/data/node-reward-reference.json'):selected[name]=raw
-        if _sha(selected[DATA])!=DATA_SHA256:return None
+        if manifest['runtime_files'][DATA]['sha256']!=DATA_SHA256:return None
         authority=json.loads(selected[SELECTED_AUTHORITY]);catalog=json.loads(selected['rouge/data/node-catalog.json'])
         reward_data=json.loads(selected['rouge/data/node-reward-reference.json'])
         key=(DATA_SHA256,MANIFEST_SHA256)
@@ -99,13 +92,13 @@ def _verified_packet(event_id):
             packet=json.loads(selected[DATA])
             if not _valid_packet(packet,authority,catalog,reward_data):return None
             _parsed_packet=(key,_sha(_canonical(packet)),packet)
-        elif _sha(_canonical(_parsed_packet[2]))!=_parsed_packet[1]:return None
-        packet=_parsed_packet[2]
-        if not _valid_packet(packet,authority,catalog,reward_data):return None
+        else:
+            _, parsed_hash, packet = _parsed_packet
+            if _sha(_canonical(packet))!=parsed_hash or not _valid_packet(packet,authority,catalog,reward_data):return None
         from . import node_catalog,node_rewards
-        if not _same_json(node_catalog._event(event_id),packet['expected_events'][event_id]):return None
-        if not _same_json(node_rewards._reference()['event_rewards'],packet['expected_original_rewards']):return None
-        if not _same_json(node_catalog.event_reward_options(event_id),packet['expected_reward_queries'][event_id]):return None
+        if not same_choice_json(packet['expected_events'][event_id], node_catalog._event(event_id)):return None
+        if not same_choice_json(packet['expected_original_rewards'], node_rewards._reference()['event_rewards']):return None
+        if not same_choice_json(packet['expected_reward_queries'][event_id], node_catalog.event_reward_options(event_id)):return None
         return deepcopy(packet)
     except(OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,StopIteration,RecursionError):return None
 

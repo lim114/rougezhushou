@@ -1,6 +1,6 @@
 """Documented named-item reading, separate from typed grant and actual state."""
 from copy import deepcopy
-import hashlib
+from .choice_annotations import same_choice_json, choice_document_files
 import json
 from pathlib import Path
 
@@ -13,16 +13,6 @@ DATA='rouge/data/documented-choice-items.json'
 MANIFEST='research/p3-documented-choice-items-295/source-manifest.json'
 MANIFEST_SHA256='e98f48e0629307f9fdbc98c8e6cb8ca4b6ffbe93e3939c3cf4d489ef476853e9'
 _CACHE={}
-
-
-def _same_json(value,expected):
-    if type(value) is not type(expected):return False
-    if type(expected) is dict:
-        return (value.keys()==expected.keys() and all(type(key) is str for key in value)
-                and all(_same_json(value[key],expected[key]) for key in expected))
-    if type(expected) is list:
-        return len(value)==len(expected) and all(_same_json(a,b) for a,b in zip(value,expected))
-    return value==expected
 
 
 def _valid_schema(data):
@@ -52,24 +42,18 @@ def _valid_schema(data):
 def _validated_packet():
     """Rehash all bound bytes every time; only unchanged parsing is cached."""
     try:
-        raw=(ROOT/MANIFEST).read_bytes()
-        if hashlib.sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
-        manifest=json.loads(raw);blobs={}
-        for relative,expected in manifest['files'].items():
-            path=ROOT/relative
-            if not path.resolve().is_relative_to(ROOT.resolve()) or not path.is_file():return None
-            blob=path.read_bytes()
-            if len(blob)!=expected['bytes'] or hashlib.sha256(blob).hexdigest()!=expected['sha256']:return None
-            blobs[relative]=blob
-        payload=blobs[DATA];key=(MANIFEST_SHA256,hashlib.sha256(payload).hexdigest())
+        catalog_name = 'rouge/data/node-catalog.json'
+        blobs = choice_document_files(ROOT, MANIFEST, MANIFEST_SHA256, (DATA, catalog_name))
+        if blobs is None:return None
+        key = MANIFEST_SHA256
         if key not in _CACHE:
-            data=json.loads(payload)
+            data=json.loads(blobs[DATA])
             if not _valid_schema(data):return None
             _CACHE.clear();_CACHE[key]=data
         data=_CACHE[key]
-        current=json.loads(blobs['rouge/data/node-catalog.json'])
+        current=json.loads(blobs[catalog_name])
         event=next((row for row in current['events'] if row.get('id')==EVENT),None)
-        if not _same_json(event,data['expected_event']):return None
+        if not same_choice_json(data['expected_event'], event):return None
         return data
     except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):return None
 
