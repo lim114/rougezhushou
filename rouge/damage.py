@@ -1,6 +1,6 @@
 """Deterministic, inspectable damage calculations; no model-generated numbers."""
 import math
-from .condition_inputs import validate_continuous_attacks
+from .condition_inputs import RunConditionError, validate_continuous_attacks
 from .attribute_limits import effective_attack_speed
 from .catalog import catalog
 from .timing import AttackTimeline
@@ -250,9 +250,9 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
         raise SkillSelectionError('当前精英阶段尚未开放所选技能或专精。')
     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
-        raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
+        raise RunConditionError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('cooperative'),str):
-        raise ValueError('cooperative不接受字符串，请提供明确的布尔条件。')
+        raise RunConditionError('cooperative不接受字符串，请提供明确的布尔条件。')
     # Preserve raw count types before either engine converts them to numbers.
     from .reporting import has_healing
     active_counts=[]
@@ -263,13 +263,13 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     if scenario['operator']=='char_4087_ines':
         active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
     for field,error in active_counts:
-        if isinstance(scenario.get(field),bool):raise ValueError(error)
+        if isinstance(scenario.get(field),bool):raise RunConditionError(error)
     declared_counts={('mechanist',2):('shield_break_count',),
                      ('mechanist',3):('charge_count',),
                      ('silverash',2):('activation_count','deployment_stacks')}
     for field in declared_counts.get((scenario['operator'],skill),()):
         if isinstance(scenario.get(field),bool):
-            raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+            raise RunConditionError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
@@ -279,14 +279,11 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     from .relic_attributes import prepare_attribute_runes
     scenario,attributes=prepare_attribute_runes(scenario,attributes)
     if numeric_bool_fields:
-        raise ValueError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')
+        raise RunConditionError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')
     # Reuse the existing numeric-zero gates after validating the raw timing.
     timing=scenario.get('timing',{})
     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
-        from .timing import finite
-        AttackTimeline(scenario)
-        if finite(timing['target_disappears_seconds'],'target_disappears_seconds',3600)==0:
-            scenario['timing']={**timing,'target_disappears_seconds':0}
+        scenario['timing'] = AttackTimeline(scenario).options
     return scenario,attributes,resolution,run_resolution
 
 

@@ -38,7 +38,7 @@ def _fp(value):
 def _fp_product(left,right):
     raw=(left*right)>>32
     if not -(1<<63)<=raw<(1<<63):
-        raise ValueError('费用叠加超出原生FP范围。')
+        raise NativeNumberError('费用叠加超出原生FP范围。')
     return raw
 
 

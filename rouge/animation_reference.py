@@ -124,11 +124,12 @@ def label(record):
 
 
 def descriptor(operator,skill,options,*,normal=False):
+    from .condition_inputs import TimingInputError
     field='normal_animation_reference' if normal else 'animation_reference'
     identity=options.get(field)
     if identity is None:return None
     record=next((r for r in choices(operator,skill,normal=normal) if r['id']==identity),None)
-    if record is None:raise ValueError('原版动画参考与当前干员/技能不符，或该动作不适合常规逐击参考。')
+    if record is None:raise TimingInputError('原版动画参考与当前干员/技能不符，或该动作不适合常规逐击参考。')
     result={**record['preview'],'animation':record['animation'],'source':record['source']['url'],
         'reference_id':identity,'reference_label':label(record),
         'original_orientation':record['orientation'],'skin':'original',

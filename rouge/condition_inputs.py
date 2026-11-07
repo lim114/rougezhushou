@@ -7,6 +7,10 @@ class RunConditionError(ValueError):
     """Declared run settings, relics or recipient conditions cannot be applied."""
 
 
+class TimingInputError(ValueError):
+    """A declared timing setting or animation selection is invalid."""
+
+
 _pending = ContextVar('continuous_attacks_text_pending', default=None)
 
 

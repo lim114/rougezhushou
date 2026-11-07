@@ -2,7 +2,7 @@
 from functools import lru_cache
 import json
 import math
-from .condition_inputs import read_continuous_attacks
+from .condition_inputs import TimingInputError, read_continuous_attacks
 from pathlib import Path
 
 from .attribute_limits import effective_attack_speed
@@ -10,10 +10,10 @@ from .attribute_limits import effective_attack_speed
 FPS=30
 
 def finite(value,label,maximum=108000):
-    if isinstance(value,bool):raise ValueError(label+'不能是布尔值。')
+    if isinstance(value,bool):raise TimingInputError(label+'不能是布尔值。')
     try:value=float(value)
-    except (TypeError,ValueError,OverflowError):raise ValueError(label+'需要有限非负数。') from None
-    if not math.isfinite(value) or not 0<=value<=maximum:raise ValueError(label+'需要范围内有限非负数。')
+    except (TypeError,ValueError,OverflowError):raise TimingInputError(label+'需要有限非负数。') from None
+    if not math.isfinite(value) or not 0<=value<=maximum:raise TimingInputError(label+'需要范围内有限非负数。')
     return value
 
 def frame_time(seconds):return math.ceil(finite(seconds,'时间',3600)*FPS-1e-9)
@@ -163,21 +163,20 @@ class AttackTimeline:
         self.target_scope=target_scope
         self.s=scenario;self.normal=normal;self.offset=frame_time(offset)
         self.mode=scenario.get('timing_mode','frames')
-        if self.mode not in ('frames','continuous'):raise ValueError('时序模式需要为frames或continuous。')
+        if self.mode not in ('frames','continuous'):raise TimingInputError('时序模式需要为frames或continuous。')
         self.options=scenario.get('timing',{})
-        if not isinstance(self.options,dict):raise ValueError('时序情景需要是对象。')
+        if not isinstance(self.options,dict):raise TimingInputError('时序情景需要是对象。')
         from .animation_reference import descriptor
         for normal_reference in (False,True):
             descriptor(scenario['operator'],scenario['skill'],self.options,normal=normal_reference)
         for key in ('windup_frames','recovery_frames','start_delay_frames','post_skill_lock_frames'):
             if key in self.options:finite(self.options[key],key)
         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
-            if key in self.options:finite(self.options[key],key,3600)
-        # Unit previews pass through here too. Keep the public input untouched,
-        # but make all accepted zero spellings use the same empty-target gate.
-        lifetime=self.options.get('target_disappears_seconds')
-        if isinstance(lifetime,str) and finite(lifetime,'target_disappears_seconds',3600)==0:
-            self.options={**self.options,'target_disappears_seconds':0}
+            if key in self.options:
+                raw = self.options[key]
+                value = finite(raw, key, 3600)
+                if key == 'target_disappears_seconds' and isinstance(raw, str) and value == 0:
+                    self.options = {**self.options, key: 0}
         self.streams=[];self.notes=[];self.target_scope_notes=[];self.unit_scenarios=[]
         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
         self.windows=self.ranges('target_windows')
@@ -186,12 +185,12 @@ class AttackTimeline:
     def ranges(self,key):
         if key not in self.options:return []
         value=self.options[key]
-        if not isinstance(value,list) or len(value)>100:raise ValueError(key+'需要最多100组秒数区间。')
+        if not isinstance(value,list) or len(value)>100:raise TimingInputError(key+'需要最多100组秒数区间。')
         found=[]
         for pair in value:
-            if not isinstance(pair,(list,tuple)) or len(pair)!=2:raise ValueError(key+'每组需要开始和结束秒数。')
+            if not isinstance(pair,(list,tuple)) or len(pair)!=2:raise TimingInputError(key+'每组需要开始和结束秒数。')
             start,end=map(frame_time,pair)
-            if end<=start:raise ValueError(key+'结束时间必须晚于开始时间。')
+            if end<=start:raise TimingInputError(key+'结束时间必须晚于开始时间。')
             found.append((start,end))
         return sorted(found)
 

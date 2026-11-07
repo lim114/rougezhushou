@@ -1,3 +1,7 @@
+## 当前断点 · 培养方案区分技能条件与准备缺陷，消失时刻只解析一次（2026-11-06）
+
+D119完成。已知未解锁、数值、时序及本局条件错误仍保留培养属性；内部普通ValueError从准备阶段直接上报。文本消失时刻不再重复解析。43项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-core-skill-preparation-20261106/summary.json)。
+
 ## 当前断点 · 计算对照窗口只处理明确输入错误，补充干员主入口完成（2026-11-06）
 
 D100完成。9处直接构造及唯一派生主窗口均采用明确输入错误，默认不捕获计算异常。补充窗口验证坏培养、难度、强化数据、修正恢复以及内部错误传播。两组定向检查60及35项通过。 原280组完成273、余7。 [回执](verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json)。

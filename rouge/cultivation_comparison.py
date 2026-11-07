@@ -2,7 +2,10 @@
 import json
 from copy import deepcopy
 from .catalog import catalog,operator_profiles,_attribute_level,_attribute_values,CultivationInputError
-from .damage import _prepare_damage, _calculate_prepared
+from .damage import SkillSelectionError, _prepare_damage, _calculate_prepared
+from .condition_inputs import RunConditionError, TimingInputError
+from .deployment import NativeNumberError
+from .enemy_environment import EnemyReferenceError
 from .healing_budget import AmountInputError, _amount
 from .supplemental_skills import defaults,_skill_conditions,_skill_reference,supplemental_profiles
 
@@ -55,7 +58,7 @@ def compare_cultivation(scenario,preview):
         if core_skill:
             try:
                 prepared = _prepare_damage(proposed, cultivated_attributes=attributes)
-            except ValueError as error:
+            except (SkillSelectionError, RunConditionError, TimingInputError, NativeNumberError, EnemyReferenceError) as error:
                 row['error']=str(error);row['status']='仅属性；技能不可测算';continue
             modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']
             row.update(status='技能已计参考' if modeled['complete'] else '技能部分参考',
