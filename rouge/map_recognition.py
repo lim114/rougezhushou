@@ -28,7 +28,14 @@ def predict_map(graph):
     remembered = {n['id']: n['remembered_type'] for n in graph['nodes'] if n.get('remembered_type')}
     remembered.update(revealed)
     # Fixed generation slots contribute once; repeated frames/labels do not.
-    counted = {n['id']: n['template_type'] for n in graph['nodes'] if n.get('template_type')}
+    counted = {}
+    fixed = Counter()
+    for node in graph['nodes']:
+        fixed_type = node.get('template_type')
+        if fixed_type:
+            counted[node['id']] = fixed_type
+            fixed[fixed_type] += 1
+    additional = Counter(name for key, name in remembered.items() if key not in counted)
     counted.update(remembered)
     counts = Counter(counted.values())
     generation=generation_data();fixed_only=generation['fixed_only'].get(zid,[])
@@ -38,42 +45,52 @@ def predict_map(graph):
         if name in always_visible:return False
         if name=='险路尽头' and difficulty is not None and difficulty<3:return False
         return True
-    fixed=Counter(n['template_type'] for n in graph['nodes'] if n.get('template_type'))
-    graph['generation_budget']={name:{'fixed':fixed[name], 'known_total':counts[name],
-        'revealed_additional':sum(t==name and key not in {n['id'] for n in graph['nodes'] if n.get('template_type')}
-                                  for key,t in remembered.items()),
-        'source_max':rule['zones'][zid]['max_count'],
-        'remaining_capacity':max(0,rule['zones'][zid]['max_count']-counts[name]) if rule['zones'][zid]['max_count'] is not None else None,
-        'random_eligible':name not in fixed_only,'hidden_eligible':hidden_eligible(name)}
-        for name,rule in rules.items() if zid in rule['zones']}
+    budget = {}
+    eligible_by_category = {}
+    disabled = generation.get('ordinary_generation_disabled', {})
+    for name, rule in rules.items():
+        if zid not in rule['zones']:
+            continue
+        limits = rule['zones'][zid]
+        maximum = limits['max_count']
+        remaining = None if maximum is None else max(0, maximum - counts[name])
+        random_slot = name not in fixed_only
+        hidden_slot = hidden_eligible(name)
+        budget[name] = {'fixed': fixed[name], 'known_total': counts[name],
+            'revealed_additional': additional[name], 'source_max': maximum,
+            'remaining_capacity': remaining, 'random_eligible': random_slot,
+            'hidden_eligible': hidden_slot}
+        if random_slot and hidden_slot and remaining != 0 and zid not in disabled.get(name, []):
+            eligible_by_category.setdefault(rule['category'], []).append((name, limits))
+    graph['generation_budget'] = budget
     graph['generation_evidence']=generation['source']
     graph['generation_limitations']=generation['limitations']
     conflicts = [n['id'] for n in graph['nodes'] if n.get('template_type') and
                  n['id'] in remembered and remembered[n['id']] != n['template_type']]
-    visibility_conflicts=[n['id'] for n in graph['nodes'] if n.get('observed_type','') and
-        n['observed_type'].startswith('未知') and n.get('template_type') and not hidden_eligible(n['template_type'])]
+    hidden_nodes = [n for n in graph['nodes'] if (n.get('observed_type') or '').startswith('未知')]
+    visibility_conflicts = [n['id'] for n in hidden_nodes
+                            if n.get('template_type') and not hidden_eligible(n['template_type'])]
     visits=set(graph.get('vantage_confirmed_visits',[]))
     vantage_nodes=[n for n in graph['nodes'] if remembered.get(n['id'])=='羽瞰点']
-    if graph.get('current_node') in {n['id'] for n in vantage_nodes}:visits.add(graph['current_node'])
+    current = graph.get('current_node')
+    if remembered.get(current) == '羽瞰点':
+        visits.add(current)
     graph['vantage_confirmed_visits']=sorted(visits)
     graph['reveal_ranges']=[{'node_id':n['id'],'row':n['row'],'col':n['col'],
         'minimum_radius':2 if n['id'] in visits else 1,'metric':'grid_manhattan',
         'notice':'只使用已知基础最小揭示范围；未确认长期科技不增加半径。'} for n in vantage_nodes]
-    range_conflicts=[n['id'] for n in graph['nodes'] if (n.get('observed_type') or '').startswith('未知')
-        and any(abs(n['row']-v['row'])+abs(n['col']-v['col'])<=v['minimum_radius'] for v in graph['reveal_ranges'])]
+    range_conflicts=[n['id'] for n in hidden_nodes if any(abs(n['row']-v['row'])+abs(n['col']-v['col'])<=v['minimum_radius'] for v in graph['reveal_ranges'])]
     graph['reveal_range_conflicts']=range_conflicts
     visibility_conflicts.extend(range_conflicts)
-    hidden_exits=[n['id'] for n in graph['nodes'] if n.get('observed_type','') and
-        n['observed_type'].startswith('未知') and n.get('template_type')=='险路尽头']
+    hidden_exits=[n['id'] for n in hidden_nodes if n.get('template_type')=='险路尽头']
     if len(hidden_exits)>1:visibility_conflicts.extend(hidden_exits)
     graph['visibility_conflicts']=sorted(set(visibility_conflicts))
     graph['capacity_conflicts']=[name for name,record in graph['generation_budget'].items()
         if record['source_max'] is not None and record['known_total']>record['source_max']]
     conflicts=sorted(set(conflicts+visibility_conflicts))
     graph['constraint_conflicts'] = conflicts
-    for node in graph['nodes']:
-        label = node.get('observed_type')
-        if not label or not label.startswith('未知'): continue
+    for node in hidden_nodes:
+        label = node['observed_type']
         if node['id'] in remembered:
             node['prediction'] = {'status': 'remembered', 'candidates': [remembered[node['id']]],
                 'probability': None, 'evidence': 'visible_history', 'reason': '本局该网格先前已揭示，保留原记录。'}
@@ -88,13 +105,9 @@ def predict_map(graph):
             candidates = [node['template_type']]; reason = '来源模板的固定生成位置；并非本帧直接揭示'
         else:
             category = 'battle' if label=='未知的凶戾' else 'other'
-            for name, rule in rules.items():
-                limits = rule['zones'].get(zid)
-                if (rule['category'] != category or not limits or name in fixed_only or not hidden_eligible(name)
-                        or zid in generation.get('ordinary_generation_disabled',{}).get(name,[])): continue
+            for name, limits in eligible_by_category.get(category, ()):
                 if limits['min'] is not None and node['distance'] < limits['min']: continue
                 if limits['max'] is not None and node['distance'] > limits['max']: continue
-                if limits['max_count'] is not None and counts[name] >= limits['max_count']: continue
                 candidates.append(name)
         node['prediction'] = {'status': 'candidates' if candidates else 'unresolved',
             'candidates': candidates, 'probability': None, 'evidence': 'community_constraints',
