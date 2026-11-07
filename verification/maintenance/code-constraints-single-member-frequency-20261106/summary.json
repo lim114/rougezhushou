@@ -1,0 +1,71 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 76,
+    "structural_only": 250,
+    "selected_paths_only": 193,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision"
+  ],
+  "title": "单件藏品来源统计按编号读取，省去整池成员渲染",
+  "base_commit": "496964b48dea03e3bb922fbe40396ff423064110",
+  "changed_sources": [
+    "rouge/public_archive.py",
+    "rouge/player_item_sources.py",
+    "rouge/player_source_cards.py"
+  ],
+  "source_sha256": {
+    "rouge/public_archive.py": "ff76cb33a76b6ffb19ee2e8a57319032cf8303c33e5f9e7f6c5f8eaca8caaef6",
+    "rouge/player_item_sources.py": "c00bc5cac03e8609eb4103c8b2484627561823030087bdf99986c2b52d82074a",
+    "rouge/player_source_cards.py": "f670cb49f2125905c4893bba61f5b336993490abe0e3931d2efcc5c5399a915a"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 47,
+    "seconds": 19.203,
+    "modules": [
+      "tests.test_player_reference_391.PublicReferenceTests",
+      "tests.test_player_item_sources_394",
+      "tests.test_player_feature_415",
+      "tests.test_source_nodes_445"
+    ],
+    "baseline_comparison": {
+      "member_lists": 427,
+      "individual_statistics": 9849
+    },
+    "live_window": "Offscreen only; original desktop window not updated."
+  },
+  "review": {
+    "standards": "Both source detail consumers read only the selected item observation. Shared frequency rule reused by full directory and individual item. Full list builds lookup once; single lookup matches last occurrence, preserves missing count and zero.",
+    "requirements": "Pinned public outputs compared with prior source. No compendium resolve or list rendering on single-item statistics. D339/D340/D341 decisions pending and their handlers unchanged."
+  },
+  "partially_implemented_decisions": []
+}

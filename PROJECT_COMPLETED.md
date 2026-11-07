@@ -1,3 +1,7 @@
+## 维护 · 单件藏品来源统计按编号读取，省去整池成员渲染（2026-11-06）
+
+公开资料427组完整成员列表与旧版一致，9849个单件统计逐项一致。47项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-single-member-frequency-20261106/summary.json)。
+
 ## 维护 · 藏品池检索按物品编号复用文字，成员频率只计算一次（2026-11-06）
 
 16组搜索和427组成员输出与改前一致，两个版本非空查询的物品读取分别从4884降至339、5312降至359。45项定向通过；D341待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-archive-search-members-20261106/summary.json)。

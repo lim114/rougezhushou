@@ -46,7 +46,7 @@ class ItemSourceIndex:
         distributions = archive.distributions(pool)
         for number, (_, label, distribution) in enumerate(distributions,1):
             if label.startswith('自动战斗'):label='自动战斗样本 ' + str(number)
-            member = next(r for r in archive.members(self.data, pool, distribution,version=version) if r['id'] == identity)
+            member = archive.member_frequency(pool, distribution, identity)
             scope = _plain(distribution.get('scopeLabel') or '来源未说明统计条件')
             rate = f"{member['rate']:.2%}（{member['count']} / {member['total']}次候选出现）" if member['rate'] is not None else '未知（没有可核对的次数与分母）'
             lines += ['', label + '：' + rate, '统计条件：' + scope]

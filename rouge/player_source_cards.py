@@ -10,7 +10,7 @@ def source_cards(index,version,identity):
         summary=next((d for key,_,d in observations if key=='summary'),None)
         frequency='暂无可核对统计';counts=''
         if summary:
-            row=next((r for r in public_archive.members(index.data,pool,summary,version=version)if r['id']==identity),None)
+            row=public_archive.member_frequency(pool, summary, identity)
             if row and row['rate']is not None:frequency=f"历史候选频率 {row['rate']:.2%}";counts=f"来源汇总：{row['count']}／{row['total']}次候选出现"
         elif observations:frequency='有分组统计，展开查看'
         if pool['name'].startswith('失与得：')and pool['name'].endswith('输入'):

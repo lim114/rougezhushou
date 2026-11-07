@@ -57,3 +57,12 @@ class SourceCardTests(unittest.TestCase):
    lookup.assert_called_once_with('base', 'a')
   self.assertIn('第二个池', card.detail.toPlainText())
   self.assertEqual(card.map_targets.currentData(), '紧急作战')
+
+ def test_single_item_statistics_do_not_render_other_members(self):
+  index = ItemSourceIndex(fixture())
+  with patch('rouge.public_archive.members', side_effect=AssertionError('whole pool rendered')), \
+       patch('rouge.public_compendium.resolve', side_effect=AssertionError('unneeded descriptions')):
+   cards = source_cards(index, 'base', 'a')
+   description = index.describe('base', 'a', 'pool1')
+  self.assertIn('20.00%', cards['pools'][0]['frequency'])
+  self.assertIn('20.00%', description)

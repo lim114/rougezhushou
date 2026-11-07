@@ -88,6 +88,29 @@ def distributions(pool):
         if row.get('status')=='observed'and row.get('observedDistribution'):rows.append((key,{'autobattle':'自动战斗样本','blackflow-archive-cumulative':'归档累计样本'}.get(key,key if any('\u4e00'<=c<='\u9fff'for c in key)else'其他来源样本 '+str(len(rows)+1)),row['observedDistribution']))
     return rows
 
+def _frequency_fields(row, source_total, is_frequency):
+    count = row.get('occurrenceCount')
+    total = row.get('totalOccurrenceCount', source_total)
+    rate = None
+    if (is_frequency and
+            type(count) is int and type(total) is int and 0 <= count <= total and total > 0):
+        observed_rate = count / total
+        reported = row.get('occurrenceRate', observed_rate)
+        if isinstance(reported, (int, float)) and math.isfinite(reported) and math.isclose(
+                reported, observed_rate, rel_tol=1e-6, abs_tol=1e-6):
+            rate = observed_rate
+    return {'count': count, 'total': total, 'rate': rate}
+
+
+def member_frequency(pool, distribution, identity):
+    if identity not in pool['collectibles']:
+        return None
+    # Like the full list's index, use the last observation for a repeated ID.
+    row = next((r for r in reversed(distribution.get('members', [])) if r.get('itemId') == identity), {})
+    return _frequency_fields(row, distribution.get('totalOccurrenceCount'),
+                             distribution.get('interpretation') == 'observedFrequencyOnly')
+
+
 def members(data,pool,distribution=None,*,version=None):
     from .public_compendium import resolve,item as described_item,effect_text
     docs=resolve(data,version) if version is not None else {}
@@ -97,13 +120,10 @@ def members(data,pool,distribution=None,*,version=None):
     is_frequency = distribution.get('interpretation') == 'observedFrequencyOnly'
     result=[]
     for identity in pool['collectibles']:
-        item=described_item(data,identity,docs);row=observed.get(identity,{})
-        n=row.get('occurrenceCount');total=row.get('totalOccurrenceCount',source_total);rate=None
-        if is_frequency and type(n)is int and type(total)is int and 0<=n<=total and total>0:
-            observed_rate = n / total
-            reported=row.get('occurrenceRate', observed_rate)
-            if isinstance(reported,(int,float))and math.isfinite(reported)and math.isclose(reported,observed_rate,rel_tol=1e-6,abs_tol=1e-6):rate=observed_rate
-        result.append({'id':identity,'name':item['name'],'effect':effect_text(item['effect']),'icon':item.get('icon'),'count':n,'total':total,'rate':rate})
+        item = described_item(data, identity, docs)
+        frequency = _frequency_fields(observed.get(identity, {}), source_total, is_frequency)
+        result.append({'id':identity,'name':item['name'],'effect':effect_text(item['effect']),
+                       'icon':item.get('icon'), **frequency})
     return result
 
 def event_rows(data,floor,treehole=False,query='',node_type=None):
