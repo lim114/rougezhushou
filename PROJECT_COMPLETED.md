@@ -5564,3 +5564,8 @@ D239/D242/D244/D247/D248完成：来源摘要、当前关卡归属、公开入�
 ## 维护：培养实验内部条件比较（2026-11-06）
 
 D110部分完成：内部模型字段及控制条件比较不再被捕获为输入错误；坏条件记录仍独立阻断。29项定向通过，D110未整体销项。回执 `verification/maintenance/code-constraints-experiment-context-errors-20261106/summary.json`。
+
+
+## 维护：面板观察错误契约（2026-11-06）
+
+D110面板观察部分完成：输入格式/来源/条件错误使用明确类型，内部比较异常直接上报。31项实验及5项面板/界限检查通过；模型准备和时序观察未完成。回执 `verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json`。

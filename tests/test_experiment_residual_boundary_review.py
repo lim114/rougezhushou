@@ -42,3 +42,18 @@ class ExperimentResidualBoundaryTests(TestCase):
         report=model.calibration_experiment(**payload)
         self.assertIn('record_validation_error',report['records'][0]['blocking_reasons'])
         self.assertEqual(report['records'][1]['state'],'evaluable')
+
+    def test_panel_comparison_internal_errors_are_not_record_errors(self):
+        from rouge import calibration
+        payload=model.public_experiment_payload()
+        for error in (ValueError('comparison defect'),TypeError('comparison defect'),KeyError('comparison defect')):
+            with self.subTest(error=type(error).__name__),patch.object(calibration,'_compare_prediction',side_effect=error):
+                with self.assertRaises(type(error)):model.calibration_experiment(**payload)
+
+    def test_bad_panel_identity_and_number_remain_record_errors(self):
+        payload=model.public_experiment_payload()
+        observation=payload['experiment']['records'][0]['data']['observation']
+        observation['panel']=[]
+        result=model.calibration_experiment(**payload)
+        self.assertIn('record_validation_error',result['records'][0]['blocking_reasons'])
+        self.assertEqual(result['records'][1]['state'],'evaluable')

@@ -19,6 +19,10 @@ LABELS = {'hp':'生命上限','attack':'攻击力','defense':'防御力',
           'sp_recovery':'自然技力恢复速度'}
 BOUNDARY = '局外声明条件下的计算对照；不证明当前客户端面板或原生时钟。'
 
+class PanelObservationError(ValueError):
+    """The caller's panel observation does not match its declared input contract."""
+
+
 def _number(value, name, maximum=None):
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<0:
         raise ValueError(name+'需要有限非负数。')
@@ -104,22 +108,26 @@ def compare_panel(scenario, observation, tolerance=0):
 
 def _compare_prediction(predicted, observation, tolerance):
     """Compare an existing panel using a caller-validated tolerance."""
-    if not isinstance(observation,dict):raise ValueError('observation需要JSON对象。')
+    if not isinstance(observation,dict):raise PanelObservationError('observation需要JSON对象。')
     if observation.get('context_token')!=predicted['context_token']:
-        raise ValueError('观察值与预测条件不一致；请先用panel导出相同条件标识。')
+        raise PanelObservationError('观察值与预测条件不一致；请先用panel导出相同条件标识。')
     panel=observation.get('panel')
-    if panel not in predicted['panels']:raise ValueError('观察面板类型不明确。')
+    if not isinstance(panel,str) or panel not in predicted['panels']:raise PanelObservationError('观察面板类型不明确。')
     kind=observation.get('evidence_kind')
     if kind not in ('game_panel','public_case','formula_reference'):
-        raise ValueError('必须区分游戏面板、公开算例与公式参考。')
+        raise PanelObservationError('必须区分游戏面板、公开算例与公式参考。')
     source=observation.get('source')
-    if not isinstance(source,str) or not source.strip():raise ValueError('观察值必须注明来源。')
+    if not isinstance(source,str) or not source.strip():raise PanelObservationError('观察值必须注明来源。')
     values=observation.get('values')
-    if not isinstance(values,dict) or not values:raise ValueError('观察值不能为空。')
+    if not isinstance(values,dict) or not values:raise PanelObservationError('观察值不能为空。')
     rows=[]
     for field,actual in values.items():
-        if field not in LABELS:raise ValueError('未支持的面板字段：'+str(field))
-        _number(actual,field);expect=predicted['panels'][panel].get(field)
+        if field not in LABELS:raise PanelObservationError('未支持的面板字段：'+str(field))
+        try:
+            _number(actual,field)
+        except (ValueError,OverflowError) as error:
+            raise PanelObservationError(str(error)) from error
+        expect=predicted['panels'][panel].get(field)
         delta=None if expect is None else actual-expect
         rows.append({'field':field,'label':LABELS[field],'predicted':expect,'observed':actual,
                      'difference':delta,'relative_difference':None if not expect else delta/abs(expect),

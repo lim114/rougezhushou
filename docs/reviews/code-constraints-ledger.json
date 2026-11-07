@@ -1306,7 +1306,7 @@
     },
     {
       "file": "rouge/calibration.py",
-      "sha256": "f1c03ec2fba362a3d62d0bf324e32027de5c4ff71057064554f994efdf8714ba",
+      "sha256": "c0b05bdfb7f56064a2ca43073b5cb3a46cb8e69ae345826bb3d9e892ba0d5f72",
       "rule1": "shared_calculation_no_second_normalization_or_execution_summary_once",
       "rule2": "shared_substantive_calculation_two_consumers_existing_domain_helpers_retained",
       "rule3": "no_protection_changed_this_path_other_paths_partial",
@@ -1316,7 +1316,15 @@
         "decision": "D117",
         "evidence": "verification/maintenance/code-constraints-relic-diagnostic-entry-review-20261106/summary.json",
         "result": "52 targeted tests pass; no whole-module certification."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "file": "rouge/calibration.py",
+          "receipt": "verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json",
+          "scope": "D110 partial panel input errors separated; model/timing pending",
+          "sha256": "c0b05bdfb7f56064a2ca43073b5cb3a46cb8e69ae345826bb3d9e892ba0d5f72"
+        }
+      ]
     },
     {
       "file": "rouge/damage.py",
@@ -1422,7 +1430,7 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "5107c72f8385d7f1e85796e23d22a53644f4570b1ad74c1ded094f92392ce45b",
+      "sha256": "d7f4b6a3d4aae9244325375929e78150b6e9af5426a28e8bb5efa4032be0b60d",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
@@ -1451,6 +1459,12 @@
           "receipt": "verification/maintenance/code-constraints-experiment-context-errors-20261106/summary.json",
           "scope": "D110 partial context comparison errors propagate; preparation/parsing pending",
           "sha256": "5107c72f8385d7f1e85796e23d22a53644f4570b1ad74c1ded094f92392ce45b"
+        },
+        {
+          "file": "rouge/calibration_experiment.py",
+          "receipt": "verification/maintenance/code-constraints-panel-observation-errors-20261106/summary.json",
+          "scope": "D110 partial panel input errors separated; model/timing pending",
+          "sha256": "d7f4b6a3d4aae9244325375929e78150b6e9af5426a28e8bb5efa4032be0b60d"
         }
       ]
     },
