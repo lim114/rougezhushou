@@ -1,3 +1,7 @@
+## 当前断点：候选位置同快照复用（2026-11-06）
+
+D254完成，候选与地图共用关卡资料；界面不再预先重复解析成员，单次选择包装已内联。7项定向通过，补强界面单次解析断言后1项复验通过。原280组完成194、剩86；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-candidate-position-snapshot-20261106/summary.json`。
+
 ## 当前断点：行程位置同快照复用（2026-11-06）
 
 D249完成，行程与地图同包同关卡，复用已核验环节格子；7项定向通过。旧跨重读测试调整为独立入口边界检查，历史回执保留。原280组完成193、剩87；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-itinerary-snapshot-20261106/summary.json`。

@@ -149,7 +149,7 @@ def _build(current, characters):
     return relations, scopes
 
 
-def stage_reference(stage_id, origin_action_key=None):
+def stage_reference(stage_id, origin_action_key=None, *, prepared_current=...):
     """All exact memberships, optionally only relations containing one action."""
     if type(stage_id) is not str or (origin_action_key is not None and type(origin_action_key) is not str):
         return None
@@ -159,7 +159,7 @@ def stage_reference(stage_id, origin_action_key=None):
     selected = packet['inventory']['stages'].get(stage_id)
     if selected is None:
         return None
-    current = battle.stage_reference(stage_id)
+    current = battle.stage_reference(stage_id) if prepared_current is ... else prepared_current
     if current is None:
         return None
     if (not _same(current['stage'], selected['complete_stage'])
@@ -200,7 +200,12 @@ def resolve_member(result, relation_key, action_key):
     """Freshly resolve a manual choice; stale/mutated snapshots never authorize a jump."""
     if type(result) is not dict or type(relation_key) is not str or type(action_key) is not str:
         return None
-    fresh = stage_reference(result.get('stage_id'), result.get('origin_action_key'))
+    return _resolve_member(result, relation_key, action_key)
+
+
+def _resolve_member(result, relation_key, action_key, *, prepared_current=...):
+    fresh = stage_reference(result.get('stage_id'), result.get('origin_action_key'),
+                            prepared_current=prepared_current)
     if fresh is None or not _same(fresh, result):
         return None
     row = next((r for r in fresh['groups'] + fresh['packages'] if r['key'] == relation_key), None)
@@ -211,17 +216,22 @@ def resolve_member(result, relation_key, action_key):
 
 
 def position_reference(result, relation_key, action_key):
-    selected = resolve_member(result, relation_key, action_key)
+    if type(result) is not dict or type(relation_key) is not str or type(action_key) is not str:
+        return None
+    from . import current_action_positions, current_map_position as positions
+    packet = positions.packet()
+    if packet is None:
+        return None
+    current = battle.stage_reference(result.get('stage_id'), prepared_packet=packet['current'])
+    if current is None:
+        return None
+    selected = _resolve_member(result, relation_key, action_key, prepared_current=current)
     if selected is None or not selected['member']['can_request_position']:
         return None
-    from . import current_action_positions
-    position = current_action_positions.reference(result['stage_id'], action_key)
-    if (position is None or position['stage_id'] != result['stage_id']
-            or position['action_key'] != action_key
-            or position['battle_source_identity'] != result['battle_source_identity']
-            or not _same(position['action'], selected['member']['action'])):
+    grid = positions.stage_reference(current['id'], prepared_packet=packet)
+    if grid is None:
         return None
-    return position
+    return current_action_positions._reference(current, grid, action_key)
 
 
 def player_text(result, relation=None, member=None):

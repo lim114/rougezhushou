@@ -5534,3 +5534,8 @@ D245完成，复用既有from_battle，移除两次关卡读取，精确物件�
 
 ### 维护：行程位置同快照复用（2026-11-06）
 D249完成，移除重复关卡读取及已核验格子的再次完整查询；7项定向通过，等待/伪造拒绝保留。回执 `verification/maintenance/code-constraints-itinerary-snapshot-20261106/summary.json`。
+
+
+## 维护：出怪候选位置同快照（2026-11-06）
+
+D254完成：候选成员和地图使用同一关卡快照，删除界面的重复解析与单次选择包装；完整身份拒绝仍保留。7项定向及补强后1项复验通过，Qt为离屏验证。回执 `verification/maintenance/code-constraints-candidate-position-snapshot-20261106/summary.json`。不增加功能节数。

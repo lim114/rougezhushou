@@ -181,24 +181,17 @@ class CurrentSpawnCandidates355Tests(unittest.TestCase):
             changed = deepcopy(result); changed['actual_count'] = 0
             self.assertIsNone(model.resolve_member(changed, relation['key'], member['action_key']))
 
-    def test_position_reference_delegates_to_existing_reader_and_rejects_cross_binding(self):
+    def test_position_reference_uses_exact_member_and_rejects_forged_binding(self):
         from rouge import current_action_positions
         result = model.stage_reference('ro6_n_1_1')
-        relation = next(r for r in result['groups'] if any(m['can_request_position'] for m in r['members']))
-        member = next(m for m in relation['members'] if m['can_request_position'])
-        declared = {'stage_id': result['stage_id'], 'action_key': member['action_key'],
-                    'battle_source_identity': result['battle_source_identity'],
-                    'action': deepcopy(member['action']), 'entries': [],
-                    'notes': ['Position remains unknown, no invented coordinates.']}
-        with patch.object(model, 'stage_reference', return_value=deepcopy(result)):
-            with patch.object(current_action_positions, 'reference', return_value=declared) as existing:
-                self.assertIs(model.position_reference(result, relation['key'], member['action_key']), declared)
-                existing.assert_called_once_with(result['stage_id'], member['action_key'])
-            for key, value in [('stage_id', 'foreign'), ('action_key', 'foreign'),
-                               ('battle_source_identity', 'foreign')]:
-                wrong = deepcopy(declared); wrong[key] = value
-                with patch.object(current_action_positions, 'reference', return_value=wrong):
-                    self.assertIsNone(model.position_reference(result, relation['key'], member['action_key']))
+        relation = result['groups'][0]; member = relation['members'][0]
+        expected = current_action_positions.reference(result['stage_id'], member['action_key'])
+        self.assertEqual(model.position_reference(result, relation['key'], member['action_key']), expected)
+        for field in ('stage_id', 'battle_source_identity'):
+            wrong = deepcopy(result); wrong[field] = 'foreign'
+            self.assertIsNone(model.position_reference(wrong, relation['key'], member['action_key']))
+        wrong = deepcopy(result); wrong['groups'][0]['members'][0]['action']['raw']['count'] = False
+        self.assertIsNone(model.position_reference(wrong, relation['key'], member['action_key']))
 
     def test_player_text_keeps_records_not_actual_totals_and_raw_keys_technical(self):
         result = model.stage_reference('ro6_n_1_1')

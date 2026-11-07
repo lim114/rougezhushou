@@ -178,31 +178,24 @@ class CurrentSpawnCandidatesPanel(QWidget):
         self._view_key = key
         return True
 
-    def _resolve_selected(self):
+    def follow_action(self):
         relation, member = self._selected()
         if relation is None or member is None:
-            return None
+            return False
         resolved = model.resolve_member(self.result, relation['key'], member['action_key'])
         if resolved is None:
-            self.clear_reference(); return None
-        return resolved
-
-    def follow_action(self):
-        resolved = self._resolve_selected()
-        if resolved is None:
-            return False
+            self.clear_reference(); return False
         self.actionSelected.emit(resolved['member']['action_key'])
         return True
 
     def follow_position(self):
-        resolved = self._resolve_selected()
-        if resolved is None or not resolved['member']['can_request_position']:
+        relation, member = self._selected()
+        if relation is None or member is None or not member['can_request_position']:
             return False
-        position = model.position_reference(self.result, resolved['relation']['key'],
-                                            resolved['member']['action_key'])
+        position = model.position_reference(self.result, relation['key'], member['action_key'])
         if position is None:
             self.clear_reference(); return False
-        self.actionPositionRequested.emit(resolved['member']['action_key'])
+        self.actionPositionRequested.emit(position['action_key'])
         return True
 
 

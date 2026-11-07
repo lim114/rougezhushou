@@ -63,11 +63,11 @@ class CurrentSpawnCandidatesView355Tests(unittest.TestCase):
         relation, member = self.select_member(lambda m: m['can_request_position'])
         before = set(self.app.topLevelWidgets())
         received = []; self.widget.actionPositionRequested.connect(received.append)
-        resolved = {'reference': deepcopy(self.reference), 'relation': deepcopy(relation), 'member': deepcopy(member)}
-        with patch.object(model, 'resolve_member', return_value=resolved), patch.object(
+        with patch.object(model, 'resolve_member') as repeated, patch.object(
                 model, 'position_reference', return_value={'action_key': member['action_key']}) as positions:
             self.assertTrue(self.widget.follow_position())
             positions.assert_called_once_with(self.widget.result, relation['key'], member['action_key'])
+            repeated.assert_not_called()
         self.assertEqual(received, [member['action_key']])
         self.assertEqual(set(self.app.topLevelWidgets()), before)
 

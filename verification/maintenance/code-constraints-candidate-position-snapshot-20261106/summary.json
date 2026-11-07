@@ -1,0 +1,65 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "出怪候选与地图跳转复用同一快照",
+  "base_commit": "eccf55d9cfe12ab51908dd6616167a7e8db96186",
+  "changed_sources": [
+    "rouge/current_spawn_candidates.py",
+    "rouge/current_spawn_candidates_view.py"
+  ],
+  "source_sha256": {
+    "rouge/current_spawn_candidates.py": "84e120b8c5be36ca4a1f0e994c0a997bc0771f5459bd9e080ba2adfa0eab249e",
+    "rouge/current_spawn_candidates_view.py": "9aec21de91d9cd858d211f2ec9a28923cd3317009f2b73bc4f2df9a55411f694"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D254"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "tests_run": 7,
+        "tests_passed": 7,
+        "seconds": 3.384,
+        "scope": "candidate position snapshot tests, exact binding/source drift and three Qt navigation cases",
+        "environment": "Qt offscreen"
+      },
+      {
+        "tests_run": 1,
+        "tests_passed": 1,
+        "seconds": 0.207,
+        "scope": "updated UI test proves no duplicate resolve_member call",
+        "environment": "Qt offscreen"
+      }
+    ],
+    "live_window": "Original test-window update pending after earlier approval rejection; no native game acceptance."
+  },
+  "review": {
+    "standards": "D254 approved same-snapshot reuse. Public resolve and position validate inputs; shared _resolve_member checks fresh candidate snapshot. Single map packet/battle derivation for candidate and position. UI removes redundant pre-resolution; former single-use selection wrapper inlined. No new catch or defense.",
+    "requirements": "Exact output equals independent action-position reader; forged snapshot, invalid relation and source drift rejected. UI emits exact action and clears stale selection. Old cross-reload mocked return test replaced because second load no longer exists; original receipt preserved. No native acceptance claimed."
+  }
+}
