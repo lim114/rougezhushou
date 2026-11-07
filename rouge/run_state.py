@@ -753,17 +753,20 @@ class RunState:
             merge_recipient_evidence(previous,member,state['operators'][member['id']],
                                      changed_origin or returned,captured_at)
         members=observed.get('operators',[])
-        if observed.get('selected_operator') in {m['id'] for m in members}:
+        current = {m['id'] for m in members}
+        if observed.get('selected_operator') in current:
             state['selected_operator']=observed['selected_operator']
-        if crew is not None and len({m['id'] for m in members})==crew:
-            current={m['id'] for m in members}
+        if crew is not None and len(current)==crew:
             for key,member in state['operators'].items():
-                if key not in current and record_flag(member,'present') is not False:
-                    prior=record_flag(member,'present')
-                    self.confirm_record_flag('operator',key,member,'present',False,captured_at)
-                    member['present']=False
-                    if prior is True:
-                        state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
+                if key in current:
+                    continue
+                prior = record_flag(member, 'present')
+                if prior is False:
+                    continue
+                self.confirm_record_flag('operator',key,member,'present',False,captured_at)
+                member['present']=False
+                if prior is True:
+                    state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
         from .recipient_state import invalidate_recipient_absence
         invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)
         from .player_floor_resources import record_snapshot
@@ -778,25 +781,28 @@ class RunState:
         from .map_recognition import map_data, predict_map
         template = next((t for t in map_data()['templates'] if t['id']==graph.get('template_id')
                          and t['zone_id']==graph.get('zone_id')), None)
-        if not template or {n['id'] for n in graph.get('nodes', [])}!={n['id'] for n in template['nodes']}: return
+        if not template: return
+        template_nodes = {n['id'] for n in template['nodes']}
+        if {n['id'] for n in graph.get('nodes', [])} != template_nodes: return
         zid = graph['zone_id']; maps = self.state['maps']; previous = maps.get(zid)
         if previous and captured_at < previous.get('captured_at', 0): return
-        if previous and previous['template_id'] != graph['template_id']:
+        same_layout = bool(previous) and previous['template_id'] == graph['template_id']
+        if previous and not same_layout:
             self.state['history'].append({'at':captured_at,'kind':'map_layout_changed','zone_id':zid,
                                           'previous':copy.deepcopy(previous),'current_template':graph['template_id']})
         elif not previous:
             self.state['history'].append({'at':captured_at,'kind':'map_confirmed','zone_id':zid,'template_id':graph['template_id']})
-        old = {n['id']:n for n in previous['nodes']} if previous and previous['template_id']==graph['template_id'] else {}
+        old = {n['id']:n for n in previous['nodes']} if same_layout else {}
         current = copy.deepcopy(graph)
         difficulty=self.state['config'].get('difficulty',{}).get('value')
         if difficulty is not None:
             current['difficulty_value']=difficulty
             current['difficulty_source']='same_run_confirmed_config'
         for key in ('last_confirmed_current_node','current_node_confirmed_at','vantage_confirmed_visits'):
-            if previous and previous['template_id']==graph['template_id'] and key in previous:
+            if same_layout and key in previous:
                 current[key]=previous[key]
         position=current.get('current_node')
-        if position and position in {n['id'] for n in template['nodes']}:
+        if position and position in template_nodes:
             old_position=current.get('last_confirmed_current_node')
             if old_position!=position:
                 self.state['history'].append({'at':captured_at,'kind':'map_position_updated','zone_id':zid,
@@ -804,6 +810,7 @@ class RunState:
             current['last_confirmed_current_node']=position
             current['current_node_confirmed_at']=captured_at
         else:current['current_node']=None
+        prior_position = previous.get('last_confirmed_current_node') if same_layout else None
         for node in current['nodes']:
             saved = old.get(node['id'], {})
             for key in ('remembered_type','revealed_at','remembered_content','content_confirmed_at','content_history','visited','visited_at'):
@@ -815,7 +822,7 @@ class RunState:
                 original=saved.get('remembered_type')
                 was_revealed=bool(original and original!='林间空地' and not original.startswith('未知'))
                 was_here=node['id'] in (position,current.get('last_confirmed_current_node'),
-                    previous.get('last_confirmed_current_node') if previous and previous['template_id']==graph['template_id'] else None)
+                    prior_position)
                 if saved.get('visited') or was_revealed or was_here:
                     node['visited'] = True
                     if not saved.get('visited'):
@@ -896,11 +903,23 @@ class RunState:
             notice=notice.replace('持续累积并保存','持续累积')+'\n'+self.persistence_notice()
         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
-        names=[operator_profiles()[key]['name']+('（在场状态未确认，保留记录）' if record_flag(member,'present') is None else
-                '（已离队，保留记录）' if record_flag(member,'present') is False else '')
-               +('（已进阶）' if record_flag(member,'present') is not None and 'advanced' not in metadata_mask(member) and member.get('advanced') else '')
-               +('（应急雇佣，仅一次作战）' if record_flag(member,'present') is not None and 'recruitment_kind' not in metadata_mask(member) and member.get('recruitment_kind')=='emergency_hire' else '')
-               for key,member in state['operators'].items()]
+        names = []
+        present = 0
+        for key, member in state['operators'].items():
+            name = operator_profiles()[key]['name']
+            presence = record_flag(member, 'present')
+            present += presence is True
+            if presence is None:
+                name += '（在场状态未确认，保留记录）'
+            else:
+                if presence is False:
+                    name += '（已离队，保留记录）'
+                unconfirmed = metadata_mask(member)
+                if 'advanced' not in unconfirmed and member.get('advanced'):
+                    name += '（已进阶）'
+                if 'recruitment_kind' not in unconfirmed and member.get('recruitment_kind') == 'emergency_hire':
+                    name += '（应急雇佣，仅一次作战）'
+            names.append(name)
         from .relics import mechanics
         labels={'numeric':'有数值规则','conditional':'需条件','partial':'部分机制','pending':'机制待接入','non_output':'无输出加成'}
         relics=[catalog()['relics'][rid]['name']+('【'+state['relics'][rid]['icon_evidence']['tier_label']+'】'
@@ -914,7 +933,6 @@ class RunState:
             time.strftime('%H:%M:%S',time.localtime(record['captured_at']))+
             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
             for key,record in state.get('resources',{}).items())
-        present=sum(active_record(member,'present') for member in state['operators'].values())
         config=state['config']
         from .run_config import difficulty_value
         difficulty_record=config.get('difficulty',{})
