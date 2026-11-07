@@ -1,8 +1,9 @@
 """Current exact Elbert/independent Firebrand reader; no game or chat operations."""
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon,QPixmap
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,
                               QComboBox,QPushButton,QPlainTextEdit,QTabWidget)
+from .battle_enemy_readers import EnemyMechanismDialog, enemy_portrait, show_enemy_portrait
 from . import current_elbert_reference as model
 from .branch_choice import BranchChoice,OVERVIEW
 from .boss_hunt_view import _technical_json
@@ -52,13 +53,15 @@ class CurrentElbertPanel(QWidget):
         key=self.entity_combo.currentData()if keep else None
         if self._initial:key=self.entry_key;self._initial=False
         self.base=fresh;self.source_identity=fresh['source_identity']
+        pictures = {}
         groups=[]
         for kind,label in(('boss','本关首领'),('fire','独立火种')):
             items=[]
             for row in fresh['entities']:
                 if row['kind']!=kind:continue
-                pix=QPixmap();icon=QIcon();raw=model.battle.picture_bytes(fresh['portraits'][self.stage_id].get(row['key']))
-                if raw and pix.loadFromData(raw,'PNG'):icon=QIcon(pix)
+                picture = enemy_portrait(fresh['portraits'][self.stage_id].get(row['key']))
+                pictures[row['key']] = picture
+                icon = QIcon(picture) if not picture.isNull() else QIcon()
                 items.append((row['name'],row['key'],icon))
             groups.append((label,items))
         blocked=self.entity_combo.blockSignals(True)
@@ -68,9 +71,9 @@ class CurrentElbertPanel(QWidget):
             self.entities.set_groups(groups,emit=False)
             if key is not None:self.entities.select_value(key,emit=False)
         finally:self.entity_combo.blockSignals(blocked)
-        self._entity_changed(preserve=keep);return True
+        self._entity_changed(preserve=keep, pictures=pictures);return True
 
-    def _entity_changed(self,*_,preserve=False):
+    def _entity_changed(self,*_,preserve=False, pictures=None):
         if self.base is None:return
         key=self.entity_combo.currentData();keep=preserve and key==self.selected_key
         old_topic=self.topic.currentData()if keep else None;row=model.entity(self.base,key)
@@ -84,11 +87,12 @@ class CurrentElbertPanel(QWidget):
         related=model.related_entities(self.base,key,prepared_entity=row);self.related_request=related[0]if len(related)==1 else None
         self.related_button.setVisible(self.related_request is not None);self.related_button.setEnabled(self.related_request is not None)
         if self.related_request:self.related_button.setText('查看本关的'+self.related_request['name'])
-        self.portrait.clear();self.portrait.setVisible(row is not None)
+        self.portrait.setVisible(row is not None)
         if row:
-            pix=QPixmap();raw=model.battle.picture_bytes(self.base['portraits'][self.stage_id].get(row['key']))
-            if raw and pix.loadFromData(raw,'PNG'):self.portrait.setPixmap(pix.scaled(70,70,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
-            else:self.portrait.setText('本关这只敌人的独立图片尚未取得；不借用同名敌人或其它图标。')
+            picture = pictures[row['key']] if pictures is not None else enemy_portrait(self.base['portraits'][self.stage_id].get(row['key']))
+            show_enemy_portrait(self.portrait, picture, '本关这只敌人的独立图片尚未取得；不借用同名敌人或其它图标。')
+        else:
+            self.portrait.clear()
         self.status.clear();self._topic_changed(prepared_entity=row)
 
     def _topic_changed(self,*_,prepared_entity=...):
@@ -119,7 +123,6 @@ class CurrentElbertPanel(QWidget):
         return self.entities.select_value(target['enemy_key'])
 
 
-from .battle_enemy_readers import EnemyMechanismDialog
 
 
 class CurrentElbertDialog(EnemyMechanismDialog):

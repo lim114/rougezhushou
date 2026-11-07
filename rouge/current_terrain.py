@@ -81,6 +81,14 @@ _GENERAL = {
 }
 
 
+_PARAMETERS_BY_TILE = {
+    'tile_healing': {'HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO'},
+    'tile_infection': {'damage', 'duration', 'atk', 'attack_speed'},
+    'tile_bigforce': {'base_force_level'},
+    'tile_volcano': {'damage', 'cd_min', 'cd_max'},
+}
+
+
 def _number(value):
     if type(value) not in (int, float):
         return False
@@ -146,13 +154,13 @@ def terrain_info(tile):
     ``source_refs`` names documentary sources, not a claim of live verification.
     """
     key = tile.get('tileKey') if type(tile) is dict else None
-    known = type(key) is str and key in _TYPES
-    name, short, color, kind = _TYPES[key] if known else (
+    descriptor = _TYPES.get(key) if type(key) is str else None
+    name, short, color, kind = descriptor or (
         '未识别的地形', '未知', '#85858e', 'unknown')
     result = {'name': name, 'short_label': short, 'color': color, 'kind': kind,
               'effects': [], 'unknowns': [], 'source_refs': [NOTES]}
     effects, unknowns = result['effects'], result['unknowns']
-    if not known:
+    if descriptor is None:
         unknowns.append('这份地形名称或格式尚未取得准确对应，不借用相似名称或其它地块的效果。')
         return result
     if key == 'tile_pollution_roadf':
@@ -173,12 +181,7 @@ def terrain_info(tile):
     if key == 'tile_ftstart':
         unknowns.append('是否释放敌人、转化条件和当前状态没有由单个地块记录证明。')
 
-    expected = {
-        'tile_healing': {'HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO'},
-        'tile_infection': {'damage', 'duration', 'atk', 'attack_speed'},
-        'tile_bigforce': {'base_force_level'},
-        'tile_volcano': {'damage', 'cd_min', 'cd_max'},
-    }.get(key, set())
+    expected = _PARAMETERS_BY_TILE.get(key, ())
     values = _parameters(tile, expected, unknowns)
     if expected:
         result['source_refs'].append(FORMAT)

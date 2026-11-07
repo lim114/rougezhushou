@@ -1,8 +1,9 @@
 """Current exact enemy entry into four existing full documentary workflows."""
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QPushButton, QComboBox, QTabWidget, QPlainTextEdit)
+from .battle_enemy_readers import EnemyMechanismDialog, enemy_portrait, show_enemy_portrait
 from . import current_boss_documents as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -71,16 +72,18 @@ class CurrentBossDocumentsPanel(QWidget):
         selected = self.enemy_combo.currentData() if keep else None
         if self._initial: selected = self.entry_key; self._initial = False
         self.result = fresh
+        pictures = {}
         entries = []
         for row in fresh['rows']:
-            icon = QIcon(); picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-            if raw and picture.loadFromData(raw, 'PNG'): icon = QIcon(picture)
+            picture = enemy_portrait(row['enemy']['portrait'])
+            pictures[row['enemy_key']] = picture
+            icon = QIcon(picture) if not picture.isNull() else QIcon()
             entries.append((row['enemy']['name'], row['enemy_key'], icon))
         block = self.enemy_combo.blockSignals(True)
         self.enemies.set_groups([(model.LABELS[fresh['family']], entries)], emit=False)
         if selected is not None: self.enemies.select_value(selected, emit=False)
         else: self.enemy_combo.setCurrentIndex(0)
-        self.enemy_combo.blockSignals(block); self._enemy_changed(preserve=keep, prepared_reference=fresh)
+        self.enemy_combo.blockSignals(block); self._enemy_changed(preserve=keep, prepared_reference=fresh, pictures=pictures)
         if self.map_dialog is not None:
             mapped = model.map_reference(fresh, prepared_reference=fresh)
             if mapped is None: self._close_map(); self.status.setText('这关固定地图无法重新核对，旧地图已关闭；文献仍可阅读。')
@@ -89,7 +92,7 @@ class CurrentBossDocumentsPanel(QWidget):
                 self._close_map(); self.status.setText('地图重新读取的资料与本关不一致，旧地图已清除；完整文献仍可阅读。')
         return True
 
-    def _enemy_changed(self, *_, preserve=False, prepared_reference=...):
+    def _enemy_changed(self, *_, preserve=False, prepared_reference=..., pictures=None):
         key = self.enemy_combo.currentData(); keep = preserve and key == self.selected_key
         old_topic = self.topic.currentData() if keep else None
         old_related = self.related.currentData() if keep else None
@@ -107,12 +110,12 @@ class CurrentBossDocumentsPanel(QWidget):
         self.related.setCurrentIndex(max(0, self.related.findData(old_related))); self.related.blockSignals(block)
         self.related_button.setEnabled(self.related.count() > 1)
         self.map_button.setEnabled(self.result is not None)
-        self.portrait.clear(); self.portrait.setVisible(row is not None)
+        self.portrait.setVisible(row is not None)
         if row is not None:
-            picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-            if raw and picture.loadFromData(raw, 'PNG'):
-                self.portrait.setPixmap(picture.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-            else: self.portrait.setText('这份准确敌人条目没有可核对图片，不替换成同名图。')
+            picture = pictures[row['enemy_key']] if pictures is not None else enemy_portrait(row['enemy']['portrait'])
+            show_enemy_portrait(self.portrait, picture, '这份准确敌人条目没有可核对图片，不替换成同名图。')
+        else:
+            self.portrait.clear()
         self.status.clear(); self._render(prepared_entity=row, prepared_reference=prepared_reference)
 
     def _render(self, *_, prepared_entity=..., prepared_reference=...):
@@ -159,7 +162,6 @@ class CurrentBossDocumentsPanel(QWidget):
         self.clear_reference(); super().closeEvent(event)
 
 
-from .battle_enemy_readers import EnemyMechanismDialog
 
 
 class CurrentBossDocumentsDialog(EnemyMechanismDialog):

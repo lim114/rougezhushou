@@ -1,8 +1,9 @@
 """Manual exact-entity Hanko reader with owned state and separate source text."""
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QPlainTextEdit, QTabWidget)
+from .battle_enemy_readers import EnemyMechanismDialog, enemy_portrait, show_enemy_portrait
 from . import current_hanko as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -59,23 +60,25 @@ class CurrentHankoPanel(QWidget):
         key = self.entity_combo.currentData() if keep else None
         if self._initial: key = self.entry_key; self._initial = False
         self.result = fresh
+        pictures = {}
         groups = []
         for actor_kind, label in (('boss', '本关首领'), ('smoke', '独立烟雾实体')):
             target_kind = actor_kind == 'smoke'
             items = []
             for row in fresh['rows']:
                 if (row['actor'] == 'smoke') != target_kind: continue
-                icon = QIcon(); picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-                if raw and picture.loadFromData(raw, 'PNG'): icon = QIcon(picture)
+                picture = enemy_portrait(row['enemy']['portrait'])
+                pictures[row['key']] = picture
+                icon = QIcon(picture) if not picture.isNull() else QIcon()
                 items.append((row['enemy']['name'] + ' · 引用' + str(row['reference_index'] + 1), row['key'], icon))
             groups.append((label, items))
         block = self.entity_combo.blockSignals(True); self.entities.set_groups(groups, emit=False)
         if key is not None: self.entities.select_value(key, emit=False)
         self.entity_combo.blockSignals(block)
-        self._entity_changed(preserve=keep)
+        self._entity_changed(preserve=keep, pictures=pictures)
         return True
 
-    def _entity_changed(self, *_, preserve=False):
+    def _entity_changed(self, *_, preserve=False, pictures=None):
         key = self.entity_combo.currentData(); keep = preserve and key == self.selected_key
         old_topic = self.topic.currentData() if keep else None
         old_related = self.related.currentData() if keep else None
@@ -90,12 +93,12 @@ class CurrentHankoPanel(QWidget):
         self.related.setCurrentIndex(max(0, self.related.findData(old_related)))
         for control in (self.topic, self.related): control.blockSignals(False)
         self.related_button.setEnabled(key is not None and self.related.count() > 1)
-        self.portrait.clear(); self.portrait.setVisible(row is not None)
+        self.portrait.setVisible(row is not None)
         if row:
-            picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-            if raw and picture.loadFromData(raw, 'PNG'):
-                self.portrait.setPixmap(picture.scaled(74, 74, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-            else: self.portrait.setText('这份准确辅助实体没有独立图片；不借用其它图标。' if row['actor'] == 'smoke' else '此准确引用的图片无法核对。')
+            picture = pictures[row['key']] if pictures is not None else enemy_portrait(row['enemy']['portrait'])
+            show_enemy_portrait(self.portrait, picture, '这份准确辅助实体没有独立图片；不借用其它图标。' if row['actor'] == 'smoke' else '此准确引用的图片无法核对。', edge=74)
+        else:
+            self.portrait.clear()
         self.status.clear(); self._topic_changed(prepared_entity=row)
 
     def _topic_changed(self, *_, prepared_entity=...):
@@ -124,7 +127,6 @@ class CurrentHankoPanel(QWidget):
         return self.entities.select_value(target['enemy_key'])
 
 
-from .battle_enemy_readers import EnemyMechanismDialog
 
 
 class CurrentHankoDialog(EnemyMechanismDialog):

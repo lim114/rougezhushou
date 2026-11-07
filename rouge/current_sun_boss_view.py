@@ -1,8 +1,9 @@
 """Manual form/document reading and an exact fixed-terrain child window."""
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QTabWidget, QPlainTextEdit)
+from .battle_enemy_readers import EnemyMechanismDialog, enemy_portrait, show_enemy_portrait
 from . import current_sun_boss as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -74,20 +75,22 @@ class CurrentSunBossPanel(QWidget):
         if self._initial: key = self.entry_key; self._initial = False
         self.result = fresh
         self.topic.setEnabled(True); self.related.setEnabled(True)
+        pictures = {}
         groups = []
         for kind, label in (('normal', '起始形态资料'), ('other', '转变形态资料（不是新增敌人）')):
             target_kind = kind == 'normal'
             entries = []
             for row in fresh['rows']:
                 if (row['form'] == 'normal') != target_kind: continue
-                icon = QIcon(); picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-                if raw and picture.loadFromData(raw, 'PNG'): icon = QIcon(picture)
+                picture = enemy_portrait(row['enemy']['portrait'])
+                pictures[row['key']] = picture
+                icon = QIcon(picture) if not picture.isNull() else QIcon()
                 entries.append((row['enemy']['name'], row['key'], icon))
             groups.append((label, entries))
         block = self.form_combo.blockSignals(True); self.forms.set_groups(groups, emit=False)
         if key is not None: self.forms.select_value(key, emit=False)
         else: self.form_combo.setCurrentIndex(0)
-        self.form_combo.blockSignals(block); self._form_changed(preserve=keep)
+        self.form_combo.blockSignals(block); self._form_changed(preserve=keep, pictures=pictures)
         if self.map_dialog is not None:
             mapped = model.map_reference(fresh, prepared_reference=fresh)
             if mapped is None: self._close_map(); self.status.setText('固定地图来源无法核对，旧地图窗口已关闭；机制文献仍可阅读。')
@@ -96,7 +99,7 @@ class CurrentSunBossPanel(QWidget):
                 self._close_map(); self.status.setText('地图重新读取的资料与本关不一致，旧地图已清除；机制文献仍可阅读。')
         return True
 
-    def _form_changed(self, *_, preserve=False):
+    def _form_changed(self, *_, preserve=False, pictures=None):
         key = self.form_combo.currentData(); keep = preserve and key == self.selected_key
         old_card = self.card.currentData() if keep else None
         old_related = self.related.currentData() if keep else None
@@ -113,12 +116,12 @@ class CurrentSunBossPanel(QWidget):
         self.related.setCurrentIndex(max(0, self.related.findData(old_related)))
         for control in (self.card, self.related): control.blockSignals(False)
         self.related_button.setEnabled(key is not None and self.related.count() > 1)
-        self.portrait.clear(); self.portrait.setVisible(row is not None)
+        self.portrait.setVisible(row is not None)
         if row:
-            picture = QPixmap(); raw = model.battle.picture_bytes(row['enemy']['portrait'])
-            if raw and picture.loadFromData(raw, 'PNG'):
-                self.portrait.setPixmap(picture.scaled(70, 70, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-            else: self.portrait.setText('这份准确形态资料没有可核对的图片，不替换为同名图。')
+            picture = pictures[row['key']] if pictures is not None else enemy_portrait(row['enemy']['portrait'])
+            show_enemy_portrait(self.portrait, picture, '这份准确形态资料没有可核对的图片，不替换为同名图。')
+        else:
+            self.portrait.clear()
         self.status.clear(); self._render(prepared_entity=row)
 
     def _render(self, *_, prepared_entity=...):
@@ -174,7 +177,6 @@ class CurrentSunBossPanel(QWidget):
         self.clear_reference(); super().closeEvent(event)
 
 
-from .battle_enemy_readers import EnemyMechanismDialog
 
 
 class CurrentSunBossDialog(EnemyMechanismDialog):

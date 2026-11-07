@@ -1,3 +1,7 @@
+## 维护 · 敌人图标与头像复用本次解码，地形按固定参数表读取（2026-11-06）
+
+四页在同一次刷新复用每个条目的图片，独立切换敌人重新读图。汉科头像保留74像素，其余三页保留70像素。地形复用固定参数表。最终57项定向通过。 原280组完成259、余21。 [回执](verification/maintenance/code-constraints-portrait-and-terrain-reuse-20261106/summary.json)。
+
 ## 维护 · 培养比较和补充技能复用已核验信赖与等级范围（2026-11-06）
 
 D121、D125完成。培养比较与补充技能直接使用入口核验后的信赖，等级范围和潜能按各入口契约核验一次。D119补充技能出口收窄，主技能准备仍待核对。最终40项定向通过。 原280组完成256、余24。 [回执](verification/maintenance/code-constraints-cultivation-validation-20261106/summary.json)。

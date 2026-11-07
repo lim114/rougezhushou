@@ -1,8 +1,26 @@
 """Shared lifecycle for the seven existing exact-enemy mechanism readers."""
 from dataclasses import dataclass
 from importlib import import_module
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from . import current_battle_reference as battle
 from .player_window_frame import PlayerDialog
+
+
+def enemy_portrait(source):
+    picture = QPixmap()
+    raw = battle.picture_bytes(source)
+    if raw:
+        picture.loadFromData(raw, 'PNG')
+    return picture
+
+
+def show_enemy_portrait(label, picture, missing_text, *, edge=70):
+    if picture.isNull():
+        label.setText(missing_text)
+    else:
+        label.setPixmap(picture.scaled(edge, edge, Qt.AspectRatioMode.KeepAspectRatio,
+                                       Qt.TransformationMode.SmoothTransformation))
 
 
 class EnemyMechanismDialog(PlayerDialog):
