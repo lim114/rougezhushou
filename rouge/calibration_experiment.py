@@ -78,7 +78,9 @@ def _timing_value(data, channel, model, calculation):
 
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
-    from .calibration import panel_layers, _cultivated, _panel_components, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
+    from .calibration import panel_layers, _cultivated, _calculate_prepared, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
+    from .damage import _damage_selection, _prepare_effects, SkillSelectionError
+    from .condition_inputs import RunConditionError
     from .catalog import CultivationInputError
     from .timing_calibration import LABELS as TIMING_LABELS
     allowed = {'id', 'hypothesis', 'operator', 'channel', 'control_scenario', 'varying_fields',
@@ -156,16 +158,18 @@ def calibration_experiment(experiment):
                 cult = _cultivated(scenario)
             except (TypeError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
+            selection = _damage_selection(deepcopy(scenario), cult)
             try:
-                inputs, calculation = _panel_components(scenario, cult)
+                prepared = _prepare_effects(*selection)
+                calculation = _calculate_prepared(scenario, deepcopy(prepared))
             except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
-        except (CalibrationScenarioError, CultivationInputError) as error:
+        except (CalibrationScenarioError, CultivationInputError, SkillSelectionError, RunConditionError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
             rows.append(result)
             continue
-        model = _panel_snapshot(*context, *inputs, calculation)
+        model = _panel_snapshot(*context, cult, prepared, calculation)
         current = model['context']['scenario']
         result['declared_scenario'] = deepcopy(current)
         result['model_source'] = deepcopy(model['source'])

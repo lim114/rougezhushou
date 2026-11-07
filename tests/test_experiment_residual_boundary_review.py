@@ -62,6 +62,23 @@ class ExperimentResidualBoundaryTests(TestCase):
                 with self.assertRaisesRegex(fault, 'cultivation defect'):
                     model.calibration_experiment(**payload)
 
+    def test_skill_selection_separates_bad_input_from_internal_defects(self):
+        from rouge import damage
+        payload = model.public_experiment_payload()
+        selected = damage._damage_selection
+        for kind in (ValueError, TypeError, KeyError, IndexError, OverflowError):
+            def broken(scenario, cultivated):
+                if scenario['level'] == 75:
+                    raise kind('skill selection defect')
+                return selected(scenario, cultivated)
+            with self.subTest(kind=kind), patch.object(damage, '_damage_selection', side_effect=broken):
+                with self.assertRaisesRegex(kind, 'skill selection defect'):
+                    model.calibration_experiment(**payload)
+        payload['experiment']['records'][0]['data']['scenario']['skill'] = False
+        report = model.calibration_experiment(**payload)
+        self.assertIn('record_validation_error', report['records'][0]['blocking_reasons'])
+        self.assertEqual(report['records'][1]['state'], 'evaluable')
+
     def test_bad_trust_blocks_only_its_own_record(self):
         for trust in ('100', None, {}, 10**1000, -1):
             payload = model.public_experiment_payload()
@@ -73,9 +90,12 @@ class ExperimentResidualBoundaryTests(TestCase):
     def test_unknown_skill_attack_has_no_numeric_delta(self):
         from rouge import calibration
         scenario = calibration._scenario({'operator': 'mechanist'})
-        inputs, calculation = calibration._panel_components(scenario, calibration._cultivated(scenario))
+        cult = calibration._cultivated(scenario)
+        prepared = calibration._prepare_damage(scenario, cultivated_attributes=cult)
+        from copy import deepcopy
+        calculation = calibration._calculate_prepared(scenario, deepcopy(prepared))
         calculation['estimate']['skill']['skill_attack'] = None
-        snapshot = calibration._panel_snapshot(*calibration._panel_context(scenario), *inputs, calculation)
+        snapshot = calibration._panel_snapshot(*calibration._panel_context(scenario), cult, prepared, calculation)
         attack = next(row for row in snapshot['rows'] if row['field'] == 'attack')
         self.assertIsNone(attack['stages'][-1]['value'])
         self.assertIsNone(attack['stages'][-1]['delta_from_previous'])

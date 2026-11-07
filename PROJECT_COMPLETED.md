@@ -1,3 +1,7 @@
+## 维护 · 校准实验的技能选择只接收明确输入错误（2026-11-07）
+
+技能选择移出宽异常处理，非法输入只阻止本行，5类内部错误直接上报。44项定向通过，18份实验完整结果一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-skill-selection-20261107/summary.json)。
+
 ## 维护 · 校准实验单独处理培养输入，培养来源缺陷直接上报（2026-11-07）
 
 D110 部分完成。培养阶段普通 ValueError、KeyError、IndexError 不再误报为坏记录，已定义的培养输入异常仍只影响本行。39项定向通过，6份完整实验报告一致。D349待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-cultivation-experiment-boundary-20261107/summary.json)。

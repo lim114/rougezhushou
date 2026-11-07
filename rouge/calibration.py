@@ -75,14 +75,10 @@ def _panel_calculation(scenario):
 
 
 def _normalized_panel_calculation(s):
-    inputs, result = _panel_components(s, _cultivated(s))
-    return _panel_snapshot(*_panel_context(s), *inputs, result), result
-
-
-def _panel_components(s, cult):
+    cult = _cultivated(s)
     prepared = _prepare_damage(deepcopy(s), cultivated_attributes=cult)
     result = _calculate_prepared(s, deepcopy(prepared))
-    return (cult, prepared), result
+    return _panel_snapshot(*_panel_context(s), cult, prepared, result), result
 
 
 def _panel_context(s):

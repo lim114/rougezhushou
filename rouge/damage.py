@@ -232,6 +232,10 @@ def _skill_damage_base(scenario: dict) -> dict:
 
 
 def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
+    return _prepare_effects(*_damage_selection(scenario, cultivated_attributes))
+
+
+def _damage_selection(scenario, cultivated_attributes):
     from .catalog import operator_attributes
     scenario=dict(scenario)
     profile=catalog()['operators'][scenario['operator']]
@@ -270,6 +274,10 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     for field in declared_counts.get((scenario['operator'],skill),()):
         if isinstance(scenario.get(field),bool):
             raise RunConditionError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+    return scenario, profile, attributes
+
+
+def _prepare_effects(scenario, profile, attributes):
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
