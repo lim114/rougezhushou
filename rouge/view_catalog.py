@@ -27,8 +27,9 @@ def portrait_record(kind,identity):
         return data['images'].get(entry.get('image'))
     group={'operator':'operators','enemy':'enemies'}.get(kind)
     if group is None:return None
-    entry=view_catalog()[group].get(identity) or {}
-    return view_catalog()['images'].get(entry.get('portrait'))
+    catalog = view_catalog()
+    entry = catalog[group].get(identity) or {}
+    return catalog['images'].get(entry.get('portrait'))
 
 
 @lru_cache(maxsize=256)
@@ -63,12 +64,16 @@ def relic_icon_note(identity):
 
 def relic_icon(identity):
     """Exact relic/part files first; only declared references fill missing art."""
-    path=DATA/'relic-icons'/(identity+'.png')
-    if not path.is_file():path=DATA/'part-icons'/(identity+'.png')
-    if not path.is_file():
-        record=relic_display_records().get(identity)
-        if record:path=DATA/record['file']
-    return QIcon(str(path)) if path.is_file() else QIcon()
+    for folder in ('relic-icons', 'part-icons'):
+        path = DATA / folder / (identity + '.png')
+        if path.is_file():
+            return QIcon(str(path))
+    record = relic_display_records().get(identity)
+    if record:
+        path = DATA / record['file']
+        if path.is_file():
+            return QIcon(str(path))
+    return QIcon()
 
 
 @lru_cache(maxsize=1)
@@ -128,22 +133,39 @@ def operator_groups(profiles,implemented):
 
 def stage_groups(stages):
     from .stage_floor_reference import sixth_floor_reference, sixth_floor_sources
-    metadata=view_catalog()['stages'];groups=[]
-    metadata={sid:dict(record) for sid,record in metadata.items()}
+    metadata = view_catalog()['stages']
+    context = context_data()['stages']
     sources = sixth_floor_sources() if stages else None
-    for sid,stage in stages.items():
+    kinds = ('event', 'shop_challenge', 'duel', 'resident_stronghold',
+             'roaming_resident', 'special_challenge')
+    order = [(group, None) for group in STAGE_GROUPS if group != 'unconfirmed']
+    order.insert(5, ('floor_6', None))
+    order.extend(('unconfirmed', kind) for kind in (*kinds, 'other'))
+    buckets = {}
+    labels = {}
+    for sid, stage in stages.items():
+        record = metadata[sid]
         reference = sixth_floor_reference(sid, stage, sources=sources)
-        if reference:metadata[sid].update(group='floor_6',label=reference['label'],floor=6)
-    order=[(group,None) for group in STAGE_GROUPS if group!='unconfirmed']
-    order.insert(5,('floor_6',None))
-    context=context_data()['stages']
-    order.extend(('unconfirmed',kind) for kind in ('event','shop_challenge','duel',
-        'resident_stronghold','roaming_resident','special_challenge','other'))
-    for group,kind in order:
-        entries=[(sid,s) for sid,s in stages.items() if metadata[sid]['group']==group
-            and (kind is None or context.get(sid,{}).get('group')==kind
-                 or kind=='other' and context.get(sid,{}).get('group') not in
-                 ('event','shop_challenge','duel','resident_stronghold','roaming_resident','special_challenge'))]
+        group = 'floor_6' if reference else record['group']
+        label = reference['label'] if reference else record['label']
+        kind = None
+        if group == 'unconfirmed':
+            entry = context.get(sid, {})
+            kind = entry.get('group')
+            if kind in kinds:
+                label = entry['label'] + ('（入口层条件有引用）' if entry['conditions'] else '（层数未知）')
+            else:
+                kind = 'other'
+        key = (group, kind)
+        buckets.setdefault(key, []).append((sid, stage))
+        labels.setdefault(key, label)
+
+    groups = []
+    for key in order:
+        entries = buckets.get(key)
+        if not entries:
+            continue
+        label = labels[key]
         totals={}
         for _,s in entries:
             key=(s['name'],s['difficulty']);totals[key]=totals.get(key,0)+1
@@ -153,12 +175,7 @@ def stage_groups(stages):
             title=s['name']+' · '+('紧急' if s['difficulty']=='FOUR_STAR' else '普通')
             if totals[key]>1:title+=' · 同名资料'+str(seen[key])
             items.append((title,sid,QIcon()))
-        if entries:
-            label=metadata[entries[0][0]]['label']
-            if kind not in (None,'other'):
-                reference=context[entries[0][0]]
-                label=reference['label']+('（入口层条件有引用）' if reference['conditions'] else '（层数未知）')
-            groups.append((label,items))
+        groups.append((label,items))
     return groups
 
 

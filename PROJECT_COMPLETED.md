@@ -1,3 +1,7 @@
+## 维护 · 关卡分类一次遍历，藏品原图一次路径检查（2026-11-06）
+
+105关目录遍历由15次降为1次，原图存在样例文件检查由3次降为1次。45项定向通过；D345待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-stage-group-artwork-20261106/summary.json)。
+
 ## 维护 · 重复藏品共用一次图标读取，保留副本选择及悬停位置（2026-11-06）
 
 每种藏品只取一次列表图标和说明，重绘时交换入口只核对一次。数量变化后保留副本选择，悬停对应原序号或最后剩余的一件。46项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-inventory-copy-render-20261106/summary.json)。
