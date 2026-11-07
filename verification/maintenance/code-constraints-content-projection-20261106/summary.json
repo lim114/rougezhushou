@@ -1,0 +1,70 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases"
+  ],
+  "title": "最近节点复用标题契约与旧记录投影核验",
+  "base_commit": "8b613b427043ce2fc611817b8162a8c490360f12",
+  "changed_sources": [
+    "rouge/player_context.py"
+  ],
+  "source_sha256": {
+    "rouge/player_context.py": "6d137a3f31ab023254d86919307440d9a0c7a842111c57d261a07a087144d467",
+    "rouge/record_flags.py": "74809742678b8966a5d6b9eb6c447b4581d20ac3d2ad41c98f9118a46289948d",
+    "rouge/run_state.py": "fee369a8904d34eb1ac4e91f935276d2b4ad894c92a39161b93d20e73b27430e",
+    "rouge/node_events.py": "32602228b0cc9f5288402d0687deabd6629f79ca4dab71d101dbf8bed8a6e8e3"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D49",
+    "D59",
+    "D60"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_record_projection_contract_review tests.test_player_context_385",
+        "tests_run": 7,
+        "tests_passed": 7,
+        "seconds": 0.035
+      },
+      {
+        "command": "python -m unittest tests.test_retained_presence_122.RetainedPresence122Tests.test_projection_distinguishes_exact_bool_missing_and_every_raw_json_kind tests.test_retained_presence_122.RetainedPresence122Tests.test_healthy_metadata_identity_and_labels_stay_byte_exact",
+        "tests_run": 2,
+        "tests_passed": 2,
+        "seconds": 0.043
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior approval rejection."
+  },
+  "review": {
+    "standards": "D49 title type guaranteed at saved-content boundary and live node-content producer; remove inner type fallback and duplicate default dictionary. Normal absent/empty content remains unread. D59/D60 are approved legacy tri-state/read-only projections for opaque fields not validated by run load. No catch, helper or new defense added.",
+    "requirements": "Bad saved title rejected at load; missing internal required title exposes KeyError. Projection distinguishes absent/boolean/unknown and masks malformed metadata without changing originals. Valid qualified positives and healthy object identity preserved."
+  },
+  "partially_implemented_decisions": []
+}

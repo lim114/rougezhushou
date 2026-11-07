@@ -1,3 +1,7 @@
+## 当前断点：最近节点复用标题契约与旧记录投影核验（2026-11-06）
+
+D49删除最近节点标题的内部类型兜底；D59/D60按批准保留旧格式三态及只读未知投影，核验不修改原件。7+2项定向通过。原280组完成213、剩67；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-content-projection-20261106/summary.json`。
+
 ## 当前断点：时序必需资料缺失明确上报（2026-11-06）
 
 D101完成：删除必需时序资料缺失时的空目录默认值，直接读取并明确上报；失败不缓存，恢复文件后可再次读取。16项定向通过。原280组完成210、剩70；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-required-timing-data-20261106/summary.json`。

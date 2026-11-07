@@ -3,8 +3,8 @@ from PySide6.QtWidgets import QToolBar,QLabel,QPushButton,QWidget,QVBoxLayout,QT
 from PySide6.QtCore import Qt
 
 def recent_content(state):
-    row=state.get('last_node_content')or{};title=row.get('title')
-    return title if isinstance(title,str)else''
+    row=state.get('last_node_content')
+    return row['title'] if row else ''
 
 class ContextBar(QToolBar):
     def __init__(self,run,open_content,parent=None):
