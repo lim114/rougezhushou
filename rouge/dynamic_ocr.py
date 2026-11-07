@@ -23,6 +23,12 @@ class DynamicOCR:
         self.image=image.copy();self.raw=deepcopy(raw or [])
         self.regions=None;self.age=0
 
+    def _read_regions(self,image,regions):
+        for x0,y0,x1,y1 in regions:
+            local,_=self.engine(image[y0:y1,x0:x1])
+            for box,text,score in local or []:
+                yield [[[float(x)+x0,float(y)+y0] for x,y in box],text,score]
+
     def __call__(self, image, *, regions=None, seed_from_full=False, force_discovery=False,
                  guard_outside=False):
         """Optional current-frame visual regions never carry page facts.
@@ -96,32 +102,36 @@ class DynamicOCR:
                     ('inferred_text_rows','reused_text_rows','detected_boxes','full_detection',
                      'complete_current_texts') if key in discovery_metrics})
             else:
-                raw=[]
-                for x0,y0,x1,y1 in domain:
-                    local,_=self.engine(image[y0:y1,x0:x1])
-                    for box,text,score in local or []:
-                        raw.append([[[float(x)+x0,float(y)+y0] for x,y in box],text,score])
+                raw=list(self._read_regions(image,domain))
                 self.metrics={'mode':'page_discovery',
                     'pixels':sum((r[2]-r[0])*(r[3]-r[1]) for r in domain),'regions':len(domain)}
             self.age=0
         else:
-            retained = self.raw
             if domain is not None or rects:
-                retained = (record for record, box in zip(self.raw, boxes)
-                            if (domain is None or any(contains(area, box) for area in domain))
-                            and not any(intersects(box, rect) for rect in rects))
-            raw = [deepcopy(record) for record in retained]
-            for x0,y0,x1,y1 in rects:
-                local,_=self.engine(image[y0:y1,x0:x1])
-                for box,text,score in local or []:
-                    raw.append([[[float(x)+x0,float(y)+y0] for x,y in box],text,score])
+                raw = [record for record, box in zip(self.raw, boxes)
+                       if (domain is None or any(contains(area, box) for area in domain))
+                       and not any(intersects(box, rect) for rect in rects)]
+                raw.extend(self._read_regions(image,rects))
+            else:
+                raw = self.raw
             self.age+=1
             self.metrics={'mode':'page_dirty_regions' if domain is not None else 'dirty_regions',
                           'pixels':covered_pixels,
                           'requested_pixels':sum((r[2]-r[0])*(r[3]-r[1]) for r in rects),
                           'regions':len(rects)}
         if outside_changed:self.metrics['outside_page_regions_changed']=True
-        self.image=image.copy();self.raw=deepcopy(raw);self.regions=domain
+        # A full-domain uint8 comparison with no dirty rectangle already proves
+        # the stored image is current. A focused read still snapshots all pixels.
+        if rects != [] or domain is not None or image.dtype != np.uint8:
+            self.image=image.copy()
+        if rects is None:
+            # The discovery engine and its caller may retain this result.
+            self.raw=deepcopy(raw)
+        else:
+            # Retained rows already belong to this reader. Detach the output once.
+            self.raw=raw
+            raw=[deepcopy(record) for record in raw]
+        self.regions=domain
         return raw,None
 
 
@@ -172,20 +182,22 @@ def normalize_regions(regions,shape):
 
 def merge_rectangular(rects):
     """Merge only rectangular unions; never fill an L-shaped excluded corner."""
+    def area(r):
+        return max(0,r[2]-r[0])*max(0,r[3]-r[1])
     result=[]
     for rect in rects:
         rect=list(rect)
         while True:
-            found=None
-            for candidate in result:
+            rect_area=area(rect)
+            for index,candidate in enumerate(result):
                 box=[min(rect[0],candidate[0]),min(rect[1],candidate[1]),
                      max(rect[2],candidate[2]),max(rect[3],candidate[3])]
                 overlap=intersection(rect,candidate)
-                area=lambda r:max(0,r[2]-r[0])*max(0,r[3]-r[1])
-                if area(box)==area(rect)+area(candidate)-area(overlap):
-                    found=candidate;break
-            if found is None:break
-            result.remove(found);rect=box
+                if area(box)==rect_area+area(candidate)-area(overlap):
+                    del result[index]
+                    rect=box
+                    break
+            else:break
         result.append(rect)
     return result
 
@@ -199,9 +211,12 @@ def merge(rects):
     result=[]
     for rect in rects:
         while True:
-            found=next((r for r in result if intersects(r,rect)),None)
-            if found is None:break
-            result.remove(found)
-            rect=[min(rect[0],found[0]),min(rect[1],found[1]),max(rect[2],found[2]),max(rect[3],found[3])]
+            for index,existing in enumerate(result):
+                if intersects(existing,rect):
+                    del result[index]
+                    rect=[min(rect[0],existing[0]),min(rect[1],existing[1]),
+                          max(rect[2],existing[2]),max(rect[3],existing[3])]
+                    break
+            else:break
         result.append(rect)
     return result

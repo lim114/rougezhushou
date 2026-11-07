@@ -10,6 +10,50 @@ from unittest.mock import patch
 
 
 class OCRCacheReviewTests(unittest.TestCase):
+    def test_disabled_row_cache_never_serializes_normalized_rows(self):
+        from rouge import page_ocr
+        class UnserializedTensor(np.ndarray):
+            def tobytes(self,*args,**kwargs):
+                raise AssertionError('Disabled row cache serialized its input')
+        provider=_Provider()
+        reader=PageOCR(provider,cache_enabled=False,reuse_text_rows=True)
+        tensor,ratios,maximum=page_ocr._batch_input(provider.text_rec,provider.crops)
+        with patch.object(page_ocr,'_batch_input',return_value=(tensor.view(UnserializedTensor),ratios,maximum)):
+            result,_,reused=reader._recognize_batch(provider.crops)
+        self.assertEqual(len(result),len(provider.crops))
+        self.assertFalse(reused)
+        self.assertEqual(reader.metrics['reused_text_rows'],0)
+        self.assertEqual(reader.metrics['inferred_text_rows'],len(result))
+
+    def test_unchanged_full_frame_keeps_owned_image_and_returns_detached_text(self):
+        from rouge.dynamic_ocr import DynamicOCR
+        image=np.zeros((160,200,3),np.uint8)
+        source=[[[[2,2],[10,2],[10,8],[2,8]],'原文',.99]]
+        reader=DynamicOCR(lambda frame:(source,None))
+        reader(image)
+        snapshot=reader.image
+        second,_=reader(image.copy())
+        self.assertIs(reader.image,snapshot)
+        second[0][0][0][0]=90
+        second[0][1]='改写'
+        third,_=reader(image)
+        self.assertEqual(third,source)
+        image[0,0]=200
+        self.assertEqual(snapshot[0,0].tolist(),[0,0,0])
+
+    def test_focused_read_snapshots_changed_exterior_even_without_local_ocr(self):
+        from rouge.dynamic_ocr import DynamicOCR
+        frame=np.zeros((160,200,3),np.uint8)
+        reader=DynamicOCR(lambda crop:([],None))
+        region=[(0,0,50,40)]
+        reader(frame,regions=region)
+        frame[-1,-1]=255
+        reader(frame,regions=region)
+        self.assertEqual(reader.metrics['regions'],0)
+        self.assertEqual(reader.image[-1,-1].tolist(),[255,255,255])
+        reader(frame,regions=region,guard_outside=True)
+        self.assertEqual(reader.metrics['mode'],'page_dirty_regions')
+
     def test_public_screen_read_rejects_empty_input_before_engine_initialization(self):
         for image in(None,np.zeros((0,40,3),np.uint8)):
             reader=ScreenReader()

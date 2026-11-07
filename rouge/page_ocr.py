@@ -96,9 +96,9 @@ class PageOCR:
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
 
     def _recognize_batch(self, crops, *, force_discovery=False):
-        if self.reuse_text_rows:
+        if self.reuse_text_rows and self.cache_enabled:
             return self._recognize_rows(crops,force_discovery=force_discovery)
-        key = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes())
+        key = tuple((a.shape, a.dtype.str, a.tobytes(order='C'))
                     for a in crops) if self.cache_enabled else None
         entry = self._cache.get(key) if self.cache_enabled else None
         if not force_discovery and entry is not None:
@@ -124,6 +124,9 @@ class PageOCR:
                 while self._bytes > self.max_bytes or len(self._cache) > self.max_entries:
                     _, old = self._cache.popitem(last=False)
                     self._bytes -= old[1]
+        elif self.reuse_text_rows:
+            self.metrics['inferred_text_rows']=self.metrics.get('inferred_text_rows',0)+len(crops)
+            self.metrics.setdefault('reused_text_rows',0)
         return result, elapsed, False
 
     def _recognize_rows(self, crops, *, force_discovery=False):
@@ -137,8 +140,7 @@ class PageOCR:
         tensor, ratios, maximum = _batch_input(r, crops)
         keys=[('normalized_row',row.shape,row.dtype.str,ratios[i],maximum,row.tobytes())
               for i,row in enumerate(tensor)]
-        records=[self._cache.get(key) if self.cache_enabled and not force_discovery else None
-                 for key in keys]
+        records=[None]*len(crops) if force_discovery else [self._cache.get(key) for key in keys]
         missing=[i for i,entry in enumerate(records) if entry is None]
         result=[deepcopy(entry[0]) if entry is not None else None for entry in records]
         elapsed=0.
@@ -152,7 +154,7 @@ class PageOCR:
             for i,value in zip(missing,values):
                 result[i]=value
                 key=keys[i];size=len(key[-1])
-                if self.cache_enabled and size<=self.max_bytes:
+                if size<=self.max_bytes:
                     old=self._cache.pop(key,None)
                     if old is not None:self._bytes-=old[1]
                     self._cache[key]=(deepcopy(value),size);self._bytes+=size
@@ -161,7 +163,7 @@ class PageOCR:
         while self._bytes>self.max_bytes or len(self._cache)>self.max_entries:
             _,old=self._cache.popitem(last=False);self._bytes-=old[1]
         self.metrics['inferred_text_rows']=self.metrics.get('inferred_text_rows',0)+len(missing)
-        self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(keys)-len(missing)
+        self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(crops)-len(missing)
         return result,elapsed,not missing
 
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
@@ -237,8 +239,9 @@ class PageOCR:
             rec_elapsed += elapsed
             self.metrics['reused_batches' if reused else 'recognized_batches'] += 1
             self.metrics['recognized_boxes'] += 0 if reused else len(batch)
-        self.metrics.update(detected_boxes=len(crops), page_boxes=sum(inside),
-                            guard_boxes=len(crops)-sum(inside), cache_bytes=self._bytes)
+        page_boxes=sum(inside)
+        self.metrics.update(detected_boxes=len(crops), page_boxes=page_boxes,
+                            guard_boxes=len(crops)-page_boxes, cache_bytes=self._bytes)
         result = p.get_final_res(origin, cls_result, rec_result,
                                  det_elapsed, cls_elapsed, rec_elapsed)
         self._current_frame = current if isinstance(current, np.ndarray) else None

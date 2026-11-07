@@ -164,3 +164,7 @@ finite_nonnegative 捕获 math.isfinite 遇到超大整数时的 OverflowError�
 ## D370 · 出场时间转换的额外异常捕获
 
 local_sequence 对 Decimal 转浮点额外捕获 OverflowError 和 ValueError。已通过入口的有限参数在本机相乘超出范围时转为 inf，后续非有限结果检查已覆盖。建议只删除这层捕获，保留结果检查；替代为保留现状。尚未更改。
+
+## D371 · 页面 OCR 的可用版本检查
+
+PageOCR._supported 捕获 ImportError 和 PackageNotFoundError。读不到 RapidOCR 或包版本时，由原引擎处理整帧，诊断保留未验证覆盖状态。建议保留；替代为直接上报读取错误。实机发生率未知，等待决定，当前处理不变。
