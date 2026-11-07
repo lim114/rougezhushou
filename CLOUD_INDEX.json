@@ -2844,10 +2844,10 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "46d259c0efb9b2f5f317fc6cb63c45670ae13afa9c30a125b0648ff1b0476578",
+    "DEVELOPMENT_CHECKPOINT.json": "0c100050296f81af029c5d75b6ee202e8a2fb94fe6be972d4da29b810b9d512d",
     "PROJECT_PROGRESS.md": "580bf41d804893d1b1ef0af2b714d0b08163c037cda9533234eb45f959369727",
-    "WORK_IN_PROGRESS.md": "b21662c72d270955a2415753449c0fcb7853515f7a9616181c405861d70b6ae2",
-    "PROJECT_COMPLETED.md": "a587958c29e07a9b3de143f0ede83873ce718def3f5deb9b47b75fb7e9142881",
+    "WORK_IN_PROGRESS.md": "e24f090a4262aac146f103700a67922b76feb706bf96a14aa88d075d18480711",
+    "PROJECT_COMPLETED.md": "1272cf5d6669b39720b71a92d37d6fd20e3931c187b8e0387c0c9b7c21bac50d",
     "AGENTS.md": "2a954dbc42df5a29c844c7dc831b12096465b912af962fad595a567bfc800f86",
     "PROJECT_REQUIREMENTS.md": "75f55769f3cbafa6a33fb284e9c2db70934693524c35d3c246f9b1f765f1013f",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
@@ -2876,12 +2876,12 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance": {
-    "title": "地图文字补读按名称复用已读中心，实测两种OCR路径",
-    "receipt": "verification/maintenance/code-constraints-map-tile-overlap-20261107/summary.json",
+    "title": "文字框边界与批次优先级只算一次，定位局部OCR模型耗时",
+    "receipt": "verification/maintenance/code-constraints-page-ocr-stage-profile-20261107/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/code-constraints-image-energy-and-frame-age-20261107/summary.json",
+    "previous_implementation_receipt": "verification/maintenance/code-constraints-map-tile-overlap-20261107/summary.json",
     "defense_decisions": "docs/decisions/2026-11-04-existing-defense-review.md",
     "pending_decisions": [
       "D319",
@@ -3199,7 +3199,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "定向剖析地图补读的文字检测、方向分类、行识别与缓存命中，优先处理重复的模型推理。",
-    "receipt_sha256": "890e1440f2e20db8be77bf372ae78ab69a5da61aa3cca81eaed701e44e6f4be8"
+    "next_batch_focus": "继续评估长文字行批次的推理耗时，用相同输入和独立实例验证可复现的提速，并核对短页与整帧结果。",
+    "receipt_sha256": "7da286986e80242dfa181b361ee9fb5af2876ac4a80b888d207962e23e7fd44a"
   }
 }

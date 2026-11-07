@@ -25,7 +25,7 @@ def frame_signature(image):
     if not isinstance(image, np.ndarray):
         return None
     return {'shape': list(image.shape), 'dtype': image.dtype.str,
-            'sha256': hashlib.sha256(np.ascontiguousarray(image).tobytes()).digest().hex()}
+            'sha256': hashlib.sha256(np.ascontiguousarray(image)).digest().hex()}
 
 
 def _callable_identity(value):
@@ -205,20 +205,26 @@ class PageOCR:
         if p.use_cls:
             crops, cls_result, cls_elapsed = p.text_cls(crops)
         origin = p._get_origin_points(boxes, operations, raw_h, raw_w)
-        inside = [bool(domain and any(positive_overlap(bounds(box), area) for area in domain))
-                  for box in origin]
+        inside = [False] * len(origin)
+        if domain:
+            for index, box in enumerate(origin):
+                box_bounds = bounds(box)
+                inside[index] = any(positive_overlap(box_bounds, area) for area in domain)
         ratios = [a.shape[1] / float(a.shape[0]) for a in crops]
         indices = np.argsort(np.array(ratios))
         batch_size = p.text_rec.rec_batch_num
-        batches = [list(indices[start:start+batch_size])
-                   for start in range(0, len(crops), batch_size)]
-        # Stable partition changes execution order only. Tensor row order,
-        # maximum ratio and original final detector order stay unchanged.
-        ordered = sorted(enumerate(batches),
-                         key=lambda item: (not any(inside[i] for i in item[1]), item[0]))
+        # Prioritize whole original batches without changing their padding or row order.
+        page_batches, other_batches = [], []
+        for start in range(0, len(crops), batch_size):
+            batch = indices[start:start+batch_size]
+            if any(inside[i] for i in batch):
+                page_batches.append(batch)
+            else:
+                other_batches.append(batch)
+        self.metrics['page_first_batches'] = len(page_batches)
         rec_result = [('', 0.0)] * len(crops)
         rec_elapsed = 0.0
-        for _, batch in ordered:
+        for batch in (*page_batches, *other_batches):
             result, elapsed, reused = self._recognize_batch([crops[i] for i in batch],
                                                            force_discovery=force_discovery)
             for index, value in zip(batch, result):
@@ -226,7 +232,6 @@ class PageOCR:
             rec_elapsed += elapsed
             self.metrics['reused_batches' if reused else 'recognized_batches'] += 1
             self.metrics['recognized_boxes'] += 0 if reused else len(batch)
-            self.metrics['page_first_batches'] += int(any(inside[i] for i in batch))
         self.metrics.update(detected_boxes=len(crops), page_boxes=sum(inside),
                             guard_boxes=len(crops)-sum(inside), cache_bytes=self._bytes)
         result = p.get_final_res(origin, cls_result, rec_result,
