@@ -19,7 +19,12 @@ def _data():
     return data,original
 
 def choice_reference(event_id,choice):
-    (data,_original)=_data();row=data['community_choices'].get(choice['key'])
+    data, _ = _data()
+    return _choice_reference(data, event_id, choice)
+
+
+def _choice_reference(data, event_id, choice):
+    row=data['community_choices'].get(choice['key'])
     if row is None:return None
     if (row['event_id']!=event_id or row['choice_title']!=choice['title'] or row['description']!=choice['description']):
         raise ValueError('持有门参考与所选原目录条目不相符，不能仅按组编号复用。')

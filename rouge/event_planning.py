@@ -106,8 +106,9 @@ def _quantity_inventory_complete_for(context,item_ids):
     return not any(key not in quantities and key in presence and presence[key] is not False for key in item_ids)
 
 
-def _named_item(name):
-    matches=_reference()['named_required_items'].get(name,[])
+def _named_item(name, *, reference=None):
+    if reference is None:reference = _reference()
+    matches=reference['named_required_items'].get(name,[])
     return matches[0] if len(matches)==1 else None
 
 
@@ -116,8 +117,7 @@ def _event_id(title):
     return matches[0] if len(matches)==1 else None
 
 
-def _history(context,title,field):
-    key=_event_id(title)
+def _history(context,key,field):
     return None if key is None else context.get('event_history',{}).get(key,{}).get(field)
 
 
@@ -130,8 +130,8 @@ def _status(checks):
     return 'excluded' if False in values else 'unknown' if None in values or not values else 'matched'
 
 
-def _result(**values):
-    data=_reference()
+def _result(*, prepared_reference=None, **values):
+    data = _reference() if prepared_reference is None else prepared_reference
     return {'sources':deepcopy(data['sources']),'scope':'documented_rules_in_declared_context',
             'actual_server_eligible':None,'game_entry_script_verified':False,'inventory_updated':False,
             'matched_meaning':'仅已列出的资料条件相符，不表示当前必然生成或选项必然可选。',
@@ -167,8 +167,9 @@ def _event_checks(event,context):
     for scene in event['scenes']:
         for note in scene['edesc_texts']:
             if note=='本事件仅在遭遇沉寂之屋事件后有概率出现。':
-                checks.append(_check('encountered_prior_event',_history(context,'沉寂之屋','encountered'),note,
-                                     required_event_id=_event_id('沉寂之屋'),history_field='encountered'))
+                prior = _event_id('沉寂之屋')
+                checks.append(_check('encountered_prior_event',_history(context,prior,'encountered'),note,
+                                     required_event_id=prior,history_field='encountered'))
     return checks
 
 
@@ -194,13 +195,27 @@ def qualified_events(context=None,include_indirect=True):
 
 
 def choice_eligibility(event_id,scene_key,context=None):
-    context=_context(context);event=catalog._event(event_id);scene=catalog._scene(event_id,scene_key)
-    base=_event_checks(event,context);rows=[];original=_reference()['original_choices']
+    context = _context(context)
+    event = catalog._event(event_id)
+    scene = catalog._event_scene(event, scene_key)
+    reference = _reference()
+    rows = _choice_rows(event, scene, context, reference)
+    return _result(prepared_reference=reference, event=catalog._summary(event),
+                   scene_key=scene_key, rows=rows, context=context)
+
+
+def _choice_rows(event, scene, context, reference):
+    event_id, scene_key = event['id'], scene['key']
+    base = _event_checks(event, context)
+    original = reference['original_choices']
+    rows = []
+    if not scene['choices']:return rows
+    held_data, _ = choice_held_requirements._data()
     for choice in scene['choices']:
         text=choice['conditional'] or '';checks=deepcopy(base);parsed=[]
         owned=re.fullmatch(r'仅在持有(?:【([^】]+)】|(.+?))时出现',text)
         if owned and not text.startswith('仅在持有超过'):
-            name=owned.group(1) or owned.group(2);item_id=_named_item(name)
+            name=owned.group(1) or owned.group(2);item_id=_named_item(name, reference=reference)
             parsed.append(_check('required_owned_item',None if item_id is None else _owned(context,item_id),text,
                                  required_item_name=name,required_item_id=item_id))
         gold=re.fullmatch(r'仅在持有超过(\d+)源石锭时出现',text)
@@ -209,13 +224,14 @@ def choice_eligibility(event_id,scene_key,context=None):
             parsed.append(_check('gold_strictly_greater',None if value is None else value>minimum,text,
                                  threshold=minimum,comparison='>',gold_declared=value))
         if text=='若同时持有【沙盘α】和【沙盘β】或访问过【窥视箱中】，则不会出现此选项':
-            alpha,beta=_named_item('沙盘α'),_named_item('沙盘β')
+            alpha,beta=_named_item('沙盘α', reference=reference),_named_item('沙盘β', reference=reference)
             pair=_and(None if alpha is None else _owned(context,alpha),None if beta is None else _owned(context,beta))
-            visited=_history(context,'窥视箱中','visited')
+            prior = _event_id('窥视箱中')
+            visited=_history(context,prior,'visited')
             parsed.append(_check('excluded_by_sandbox_pair_or_visited_box',_not(_or(pair,visited)),text,
                                  simultaneous_pair_matches=pair,visited_box_matches=visited,
-                                 required_item_ids=[alpha,beta],excluded_event_id=_event_id('窥视箱中'),history_field='visited'))
-        owned_reference=choice_held_requirements.choice_reference(event_id,choice)
+                                 required_item_ids=[alpha,beta],excluded_event_id=prior,history_field='visited'))
+        owned_reference=choice_held_requirements._choice_reference(held_data,event_id,choice)
         if owned_reference:
             item_id=owned_reference['required_item_id']
             existing=next((row for row in parsed if row['key']=='required_owned_item' and row['required_item_id']==item_id),None)
@@ -251,23 +267,25 @@ def choice_eligibility(event_id,scene_key,context=None):
                      'source_origin_scene_binding_verified':False,'edition_warnings':edition_warnings,
                      **({'recruitment_result_reference':recruitment} if recruitment is not None else {}),
                      **({'movement_result_reference':movement} if movement is not None else {})})
-    return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,context=context)
+    return rows
 
 
 def event_battle_links(event_id,scene_key=None,choice_key=None,context=None):
     """Keep every exact page-linked stage ID and group aliases by original level file."""
     context=_context(context);event=catalog._event(event_id)
-    if scene_key is not None:catalog._scene(event_id,scene_key)
+    if scene_key is not None:catalog._event_scene(event,scene_key)
     choices={c['key']:(s,c) for s in event['scenes'] for c in s['choices']}
     if choice_key is not None and choice_key not in choices:raise ValueError('战斗选项引用不属于所选事件。')
     if choice_key is not None and scene_key is not None and choices[choice_key][0]['key']!=scene_key:
         raise ValueError('战斗选项引用不属于所选场景。')
     rows=[]
-    for record in _reference()['battle_links']:
+    reference = _reference()
+    for record in reference['battle_links']:
         if record['event_id']!=event_id or (scene_key is not None and record['scene_key']!=scene_key) or (choice_key is not None and record['choice_key']!=choice_key):continue
-        choice=choices[record['choice_key']][1]
-        if choice['title']!=record['choice_title']:raise ValueError('选项标题与固定链接原件不符，需要重新绑定。')
-        eligibility=next(r for r in choice_eligibility(event_id,record['scene_key'],context)['rows'] if r['choice_key']==record['choice_key'])
+        scene, choice = choices[record['choice_key']]
+        if scene['key'] != record['scene_key'] or choice['title'] != record['choice_title']:
+            raise ValueError('选项场景或标题与固定链接原件不符，需要重新绑定。')
+        eligibility=next(r for r in _choice_rows(event, scene, context, reference) if r['choice_key']==record['choice_key'])
         result=deepcopy(record);links=[]
         emergency=record['conditional_text']=='升级为紧急作战'
         for link in record['stage_page_links']:
@@ -296,7 +314,7 @@ def event_battle_links(event_id,scene_key=None,choice_key=None,context=None):
                 'fixed_named_pool':pool,'server_pool_complete':False,'actual_choice':None,
                 'special_region_next_main_floor_rule_verified':False}
         rows.append(result)
-    return _result(event=catalog._summary(event),rows=rows,scene_key=scene_key,choice_key=choice_key,
+    return _result(prepared_reference=reference,event=catalog._summary(event),rows=rows,scene_key=scene_key,choice_key=choice_key,
                    context=context,all_actual_stage_instances_verified=False)
 
 

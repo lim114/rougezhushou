@@ -32,8 +32,11 @@ def _event(event_id):
     if e is None:raise ValueError('事件引用不存在；同名事件需要选择各自资料分组。')
     return e
 def _scene(event_id,scene_key):
+    return _event_scene(_event(event_id), scene_key)
+
+def _event_scene(event, scene_key):
     _text(scene_key,'场景引用')
-    s=next((s for s in _event(event_id)['scenes'] if s['key']==scene_key),None)
+    s=next((s for s in event['scenes'] if s['key']==scene_key),None)
     if s is None:raise ValueError('场景不属于所选事件。')
     return s
 def _result(rows,**extra):

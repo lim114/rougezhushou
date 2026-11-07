@@ -24,6 +24,29 @@ def source_rows(title,ctx):
         if any(check.get('description_condition_reference') for check in row['parsed_special_requirements'])]
 
 class ChoiceHeldRequirementsTests(unittest.TestCase):
+    def test_scene_choices_share_source_checks_and_next_query_rechecks(self):
+        from unittest.mock import patch
+        item = event('愈创之心')
+        scene = next(s for s in c._event(item['id'])['scenes'] if len(s['choices']) > 1)
+        with patch.object(held, '_data', wraps=held._data) as source, patch.object(
+                p, '_reference', wraps=p._reference) as planning:
+            report = p.choice_eligibility(item['id'], scene['key'])
+            self.assertEqual(len(report['rows']), len(scene['choices']))
+            source.assert_called_once()
+            planning.assert_called_once()
+            source.side_effect = ValueError('changed source')
+            with self.assertRaisesRegex(ValueError, 'changed source'):
+                p.choice_eligibility(item['id'], scene['key'])
+
+    def test_battle_links_resolve_event_and_declared_context_once(self):
+        from unittest.mock import patch
+        item = event('思乡心切')
+        with patch.object(c, '_event', wraps=c._event) as lookup, patch.object(
+                p, '_context', wraps=p._context) as normalize:
+            self.assertTrue(p.event_battle_links(item['id'])['rows'])
+            lookup.assert_called_once_with(item['id'])
+            normalize.assert_called_once()
+
     def test_regenerate_every_current_choice_identity_and_original_owned_record(self):
         from scripts.build_choice_held_reference import build
         data=held.reference_data();self.assertEqual(build(ROOT),data)
