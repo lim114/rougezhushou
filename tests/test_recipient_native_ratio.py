@@ -158,6 +158,47 @@ class RecipientNativeRatioTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 native_positive_ratio_division(hp, maximum)
 
+    def test_raw_source_missing_or_changed_bytes_are_unavailable(self):
+        from rouge import recipient_native_ratio as model
+        load = model._source.__wrapped__
+        with patch.object(Path, 'read_bytes', side_effect=FileNotFoundError):
+            self.assertIsNone(load())
+        with patch.object(Path, 'read_bytes', return_value=b'{}'):
+            self.assertIsNone(load())
+
+    def test_valid_module_id_missing_from_fixed_profile_reports_catalog_error(self):
+        from rouge import recipient_native_ratio as model
+        profiles = model.operator_profiles()
+        for operator in OPERATORS:
+            query = public_recipient_ratio_payload(operator)
+            profile = dict(profiles[operator], modules=[])
+            with self.subTest(operator=operator), patch.object(model, 'operator_profiles', return_value={operator:profile}):
+                with self.assertRaisesRegex(ValueError, '当前固定培养资料缺少所选模组'):
+                    recipient_native_ratio_diagnostic(query)
+
+    def test_changed_trait_resource_or_parameters_cannot_enable_healing_factor(self):
+        from rouge import recipient_native_ratio as model
+        profiles = model.operator_profiles()
+        for operator in OPERATORS:
+            query = public_recipient_ratio_payload(operator)
+            identity = query['cultivation']['module_id']
+            for field in ('resKey', 'heal_scale', 'hp_ratio'):
+                profile = copy.deepcopy(profiles[operator])
+                module = next(m for m in profile['modules'] if m['id'] == identity)
+                for part in module['levels'][0]['parts']:
+                    if field == 'resKey':
+                        part['resKey'] = 'changed'
+                    else:
+                        for candidate in (part.get('overrideTraitDataBundle') or {}).get('candidates', []):
+                            for term in candidate['blackboard']:
+                                if term['key'] == field:
+                                    term['value'] += 1
+                with self.subTest(operator=operator, field=field), patch.object(model, 'operator_profiles', return_value={operator:profile}):
+                    result = recipient_native_ratio_diagnostic(query)
+                    self.assertFalse(result['cultivation']['matching_source_trait_selected'])
+                    self.assertTrue(all(row['conditional_direct_healing_factor_from_declared_post_ratio'] is None
+                                        for row in result['rows']))
+
     def test_source_unavailable_returns_unknown_quotient_and_post_gate_without_defaulting(self):
         with patch('rouge.recipient_native_ratio._source', return_value=None):
             result = recipient_native_ratio_diagnostic(public_recipient_ratio_payload())

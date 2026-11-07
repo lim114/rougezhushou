@@ -1,7 +1,6 @@
 """Distinct current GUA-X recipient gates, only for fixed offline references."""
 import math
-from .catalog import resolve_cultivation
-from .susuro_healing import FP_ONE,FP_LARGE_EPS_RAW
+from .susuro_healing import FP_ONE, FP_LARGE_EPS_RAW, matching_healing_trait
 
 BINDINGS={
  'char_196_sunbr':('古米','uniequip_002_sunbr','sunbr','LT','set_heal_scale_by_hpratio'),
@@ -13,27 +12,12 @@ def selected_trait(profile,scenario,*,cultivation=None):
     binding=BINDINGS.get(profile['id'])
     if binding is None or scenario.get('operator')!=profile['id']:return None
     name,identity,prefix,comparison,template=binding
-    if cultivation is None:
-        module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==identity),None)
-        elite,level=resolve_cultivation(profile,scenario)
-        stage=scenario.get('module_level',0)
-        if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
-    else:
-        module,elite,level,stage=cultivation
-        if module is None or module['id']!=identity:return None
-    expected=prefix+'_equip_1_'+str(stage)+'_p1'
-    for part in module['levels'][stage-1]['parts']:
-        if part.get('isToken') or part.get('target')!='TRAIT' or part.get('resKey')!=expected:continue
-        for candidate in (part.get('overrideTraitDataBundle') or {}).get('candidates') or []:
-            gate=candidate['unlockCondition']
-            phase=int(gate['phase'][-1])
-            if phase>elite or phase==elite and gate['level']>level or candidate.get('requiredPotentialRank',0)>scenario.get('potential',1)-1:continue
-            board={x['key']:x['value'] for x in candidate.get('blackboard') or []}
-            if board.get('heal_scale')==1.15 and board.get('hp_ratio')==.5:
-                return {'operator_id':profile['id'],'operator_name':name,'module_id':identity,'module_level':stage,
-                    'res_key':expected,'heal_scale':board['heal_scale'],'hp_ratio_threshold':board['hp_ratio'],
-                    'comparison':comparison,'template':template}
-    return None
+    trait = matching_healing_trait(profile, scenario, cultivation, identity, prefix)
+    if trait is None:
+        return None
+    return {'operator_id': profile['id'], 'operator_name': name, **trait,
+            'comparison': comparison, 'template': template}
+
 
 def reference(profile,scenario,*,cultivation=None):
     trait=selected_trait(profile,scenario,cultivation=cultivation)

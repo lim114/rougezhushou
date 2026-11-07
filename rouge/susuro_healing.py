@@ -11,25 +11,39 @@ EVIDENCE='research/p2-susuro-healing-composition-current/receipt.json'
 
 def selected_trait(profile,scenario,*,cultivation=None):
     if profile['id']!=OPERATOR or scenario.get('operator')!=OPERATOR:return None
+    return matching_healing_trait(profile, scenario, cultivation, MODULE, 'susuro')
+
+
+def matching_healing_trait(profile, scenario, cultivation, module_id, prefix):
+    """Resolve the matching healing trait for an already selected operator."""
     if cultivation is None:
-        module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')==MODULE),None)
-        elite,level=resolve_cultivation(profile,scenario)
-        stage=scenario.get('module_level',0)
-        if not module or elite<module['unlock_elite'] or level<module['unlock_level'] or stage not in (1,2,3):return None
+        selected_id = scenario.get('module_id')
+        module = next((m for m in profile['modules'] if m['id'] == selected_id == module_id), None)
+        elite, level = resolve_cultivation(profile, scenario)
+        stage = scenario.get('module_level', 0)
+        if (not module or elite < module['unlock_elite'] or level < module['unlock_level']
+                or stage not in (1, 2, 3)):
+            return None
     else:
-        module,elite,level,stage=cultivation
-        if module is None or module['id']!=MODULE:return None
-    expected='susuro_equip_1_'+str(stage)+'_p1'
-    for part in module['levels'][stage-1]['parts']:
-        if part.get('isToken') or part.get('target')!='TRAIT' or part.get('resKey')!=expected:continue
-        for candidate in (part.get('overrideTraitDataBundle') or {}).get('candidates') or []:
-            gate=candidate['unlockCondition']
-            phase=int(gate['phase'][-1])
-            if phase>elite or phase==elite and gate['level']>level or candidate.get('requiredPotentialRank',0)>scenario.get('potential',1)-1:continue
-            board={x['key']:x['value'] for x in candidate.get('blackboard') or []}
-            if board.get('heal_scale')==1.15 and board.get('hp_ratio')==.5:
-                return {'module_id':MODULE,'module_level':stage,'res_key':expected,
-                    'heal_scale':board['heal_scale'],'hp_ratio_threshold':board['hp_ratio']}
+        module, elite, level, stage = cultivation
+        if module is None or module['id'] != module_id:
+            return None
+
+    expected = f'{prefix}_equip_1_{stage}_p1'
+    for part in module['levels'][stage - 1]['parts']:
+        if part.get('isToken') or part.get('target') != 'TRAIT' or part.get('resKey') != expected:
+            continue
+        candidates = (part.get('overrideTraitDataBundle') or {}).get('candidates') or []
+        for candidate in candidates:
+            gate = candidate['unlockCondition']
+            phase = int(gate['phase'][-1])
+            if (phase > elite or phase == elite and gate['level'] > level
+                    or candidate.get('requiredPotentialRank', 0) > scenario.get('potential', 1) - 1):
+                continue
+            board = {term['key']: term['value'] for term in candidate.get('blackboard') or []}
+            if board.get('heal_scale') == 1.15 and board.get('hp_ratio') == 0.5:
+                return {'module_id': module_id, 'module_level': stage, 'res_key': expected,
+                        'heal_scale': board['heal_scale'], 'hp_ratio_threshold': board['hp_ratio']}
     return None
 
 

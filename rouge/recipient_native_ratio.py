@@ -13,7 +13,12 @@ import json
 from rouge.catalog import operator_profiles
 
 
-OPERATORS = ('char_196_sunbr', 'char_2025_shu', 'char_298_susuro')
+MODULE_IDS = {
+    'char_196_sunbr': 'uniequip_002_sunbr',
+    'char_2025_shu': 'uniequip_002_shu',
+    'char_298_susuro': 'uniequip_002_susuro',
+}
+OPERATORS = tuple(MODULE_IDS)
 ONE = 1 << 32
 MAX_RAW = (1 << 63) - 1
 MAX_INTEGER_HP = (1 << 31) - 1
@@ -98,14 +103,13 @@ def _cultivation(operator, value, source):
     level = _integer(value['level'], '等级', 1, profile['phases'][elite]['max_level'])
     _integer(value['potential'], '潜能', 1, 6)
     stage = _integer(value['module_level'], '模组阶段', 0, 3)
-    expected = 'uniequip_002_' + {'char_196_sunbr': 'sunbr', 'char_2025_shu': 'shu', 'char_298_susuro': 'susuro'}[operator]
     identity = value['module_id']
     if identity is None:
         if stage != 0:
             raise ValueError('无模组需要module_id=null和module_level=0。')
         eligible = False
     else:
-        if type(identity) is not str or identity != expected or stage == 0:
+        if type(identity) is not str or identity != MODULE_IDS[operator] or stage == 0:
             raise ValueError('模组身份必须与当前已证干员对应，阶段需要1–3。')
         module = next((m for m in profile['modules'] if m['id'] == identity), None)
         if module is None:
@@ -241,11 +245,10 @@ def recipient_native_ratio_diagnostic(payload, *, append_observation=None, expec
 def public_recipient_ratio_payload(operator='char_196_sunbr'):
     if operator not in OPERATORS:
         raise ValueError('公开参考需要古米、黍或苏苏洛。')
-    suffix = {'char_196_sunbr': 'sunbr', 'char_2025_shu': 'shu', 'char_298_susuro': 'susuro'}[operator]
     boundary = ONE // 2 + (42950 if operator != 'char_196_sunbr' else -42950)
     evidence = {'kind': 'formula_reference', 'source': '公开FP除法与严格门算术参考；非游戏采样'}
     return {'operator': operator, 'cultivation': {'elite': 2, 'level': 60 if operator == 'char_2025_shu' else 40,
-        'potential': 1, 'module_id': 'uniequip_002_' + suffix, 'module_level': 1},
+        'potential': 1, 'module_id': MODULE_IDS[operator], 'module_level': 1},
         'observations': [
             {'label': '整数HP低于门参考', 'hp': 49998, 'max_hp': 100000, 'unit': 'integer_hp',
              'post_clamp_ratio_raw': None, 'evidence': deepcopy(evidence)},

@@ -1,3 +1,7 @@
+## 当前断点 · 三名干员共用受疗模组特性核验（2026-11-06）
+
+D146、D148、D149完成。三名干员共用特性筛选，局外算例与诊断复用同一模组编号表。九种参数或编号变更均撤下倍率，缺少所选模组有明确提示。46项定向通过。 原280组完成237、余43。 [回执](verification/maintenance/code-constraints-healing-trait-binding-20261106/summary.json)。
+
 ## 当前断点 · 破屏窗口小计保留未知，梅模组复用目录部件序号（2026-11-06）
 
 D104、D141完成。明确零窗口或目标零生命期返回零，未定窗口与未定结束时间保留未知。梅目录原件使用已知序号，外部副本仍按首个完整相等项核对。D142尚待D325决定。最终48项定向通过。 原280组完成234、余46。 [回执](verification/maintenance/code-constraints-shield-window-and-mei-parts-20261106/summary.json)。
