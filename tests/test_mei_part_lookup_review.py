@@ -6,6 +6,24 @@ from tests.test_mei_airborne_module_reference import scenario
 
 
 class MeiPartLookupTests(TestCase):
+    def test_missing_module_has_no_reference_and_catalogue_parts_are_read_once(self):
+        class Parts(list):
+            scans = 0
+            def __iter__(self):
+                self.scans += 1
+                return super().__iter__()
+
+        profile = deepcopy(catalog()['operators']['char_133_mm'])
+        module = next(m for m in profile['modules'] if m['id'] == 'uniequip_002_mm')
+        stage = module['levels'][0]
+        parts = stage['parts'] = Parts(stage['parts'])
+        result, returned = reference(profile, scenario())
+        self.assertIs(returned, parts)
+        self.assertIsNotNone(result)
+        self.assertEqual(parts.scans, 1)
+        profile['modules'] = []
+        self.assertEqual(reference(profile, scenario()), (None, ()))
+
     def test_equal_copied_part_keeps_first_source_index(self):
         profile=deepcopy(catalog()['operators']['char_133_mm'])
         module=next(m for m in profile['modules'] if m['id']=='uniequip_002_mm')

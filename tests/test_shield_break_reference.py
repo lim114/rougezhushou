@@ -46,6 +46,15 @@ class ShieldBreakReferenceTests(unittest.TestCase):
             self.assertNotIn('times_seconds',c)
             self.assertFalse(r['timing']['resource_and_damage_shared_clock'])
 
+    def test_unspecified_live_window_preserves_unknown_ordinary_subtotal(self):
+        for mode in ('frames', 'continuous'):
+            result = evaluate(timing_mode=mode)
+            subtotal = result['known_damage_subtotals']
+            self.assertIsNone(subtotal['window_damage'])
+            self.assertIsNone(subtotal['window_dps'])
+            gone = evaluate(timing_mode=mode, timing={'target_disappears_seconds': 0})
+            self.assertEqual(gone['known_damage_subtotals']['window_damage'], 0)
+
     def test_manual_end_preserves_old_ordinary_cast_phase_and_cycle_subtotals(self):
         for mode in ('frames','continuous'):
             plain=evaluate(timing_mode=mode,skill_duration_seconds=20,shield_break_count=0)

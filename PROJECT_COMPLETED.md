@@ -1,3 +1,7 @@
+## 维护 · 破屏窗口小计保留未知，梅模组复用目录部件序号（2026-11-06）
+
+D104、D141完成。明确零窗口或目标零生命期返回零，未定窗口与未定结束时间保留未知。梅目录原件使用已知序号，外部副本仍按首个完整相等项核对。D142尚待D325决定。最终48项定向通过。 原280组完成234、余46。 [回执](verification/maintenance/code-constraints-shield-window-and-mei-parts-20261106/summary.json)。
+
 ## 维护 · 水壶数量与库存摘要共用持有标记（2026-11-06）
 
 D61完成。库存摘要、合并显示和水壶计算复用同次读取的持有标记。24项定向通过，3840组模拟状态逐项与旧实现相同。 原280组完成232、余48。 [回执](verification/maintenance/code-constraints-kettle-held-flags-20261106/summary.json)。

@@ -18,8 +18,9 @@ def reference(profile, scenario, module_parts=Ellipsis, *, module=None):
         return None, ()
     catalog_parts = module['levels'][stage - 1]['parts']
     selected_parts = catalog_parts if module_parts is Ellipsis else module_parts or ()
-    for part in selected_parts:
-        part_index = next((i for i, original in enumerate(catalog_parts) if original == part), None)
+    for part_index, part in enumerate(selected_parts):
+        if selected_parts is not catalog_parts:
+            part_index = next((i for i, original in enumerate(catalog_parts) if original == part), None)
         if (part_index is None or part.get('target') != 'TRAIT'
                 or part.get('isToken') or part.get('validInGameTag') is not None
                 or part.get('validInMapTag') is not None):

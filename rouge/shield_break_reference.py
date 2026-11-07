@@ -32,13 +32,11 @@ def finish_shield_break_reference(scenario, result):
             return max(0, value - excluded) if alive else 0
         subtotal = {key: ordinary(key) for key in
             ('total_damage', 'phase_damage', 'cycle_damage')}
-        subtotal['window_damage'] = ordinary('window_damage')
-        if subtotal['window_damage'] is None:
-            subtotal['window_damage'] = 0
+        subtotal['window_damage'] = 0 if empty or not alive else ordinary('window_damage')
         cycle = skill.get('cycle_seconds')
         window = skill.get('window_seconds')
         subtotal['cycle_dps'] = subtotal['cycle_damage'] / cycle if cycle and subtotal['cycle_damage'] is not None else None
-        subtotal['window_dps'] = subtotal['window_damage'] / window if window else None
+        subtotal['window_dps'] = subtotal['window_damage'] / window if window and subtotal['window_damage'] is not None else None
         result['known_damage_subtotals'] = subtotal
         for key in ('total_damage', 'phase_damage', 'cycle_damage', 'cycle_dps'):
             skill[key] = None if pending else subtotal[key]
