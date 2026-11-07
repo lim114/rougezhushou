@@ -1,3 +1,7 @@
+## 当前断点 · 校准记录区分面板输出缺陷，未知数值保留未知差值（2026-11-06）
+
+D110部分推进。模型结果缺少base_stats时内部错误直接上报；坏记录仍保留错误并继续其他记录。面板相邻层含未知值时差值未知。计算准备和执行的异常契约仍待核实。 原280组完成270、余10。 [回执](verification/maintenance/code-constraints-calibration-panel-projection-20261106/summary.json)。
+
 ## 当前断点 · 藏品数量换算共用同一操作数，面板转换区分数值错误（2026-11-06）
 
 D105完成。名义面板和藏品累计共用数量乘积，内部普通ValueError直接上报。独立转换与部署费用用例41通过、8跳过；旧面板来源校验基线7失败1错误仍在。D328待审。 原280组完成270、余10。 [回执](verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json)。

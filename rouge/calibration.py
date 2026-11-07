@@ -67,21 +67,37 @@ def _panel_calculation(scenario):
 
 
 def _normalized_panel_calculation(s):
-    cult=_cultivated(s)
-    prepared=_prepare_damage(deepcopy(s),cultivated_attributes=cult);resolved,rune,_,_=prepared
-    result=_calculate_prepared(s,deepcopy(prepared));base=result['estimate']['base_stats']
+    inputs, result = _panel_components(s)
+    return _panel_snapshot(*inputs, result), result
+
+
+def _panel_components(s):
+    cult = _cultivated(s)
+    prepared = _prepare_damage(deepcopy(s), cultivated_attributes=cult)
+    result = _calculate_prepared(s, deepcopy(prepared))
+    ctx = {'scenario': deepcopy(s), 'source_commit': catalog()['source']['commit']}
+    token = sha256(json.dumps(ctx, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    return (ctx, token, cult, prepared), result
+
+
+def _panel_snapshot(ctx, token, cult, prepared, result):
+    s = ctx['scenario']
+    resolved, rune, _, _ = prepared
+    base = result['estimate']['base_stats']
     skill=result['estimate']['skill']
     stages=[('培养与模组',cult),('藏品与分队符文写回',rune),('已覆盖常态天赋与效果',base),
             ('技能期间参考',{'attack':skill.get('skill_attack'),
               'attack_speed':skill.get('skill_attack_speed_reference')})]
     rows=[]
     for field,label in LABELS.items():
-        values=[{'stage':name,'value':stats.get(field),'delta_from_previous':
-                 None if i==0 or field not in stats or field not in stages[i-1][1]
-                 else stats[field]-stages[i-1][1][field]} for i,(name,stats) in enumerate(stages)]
+        values = []
+        previous = None
+        for name, stats in stages:
+            value = stats.get(field)
+            delta = value - previous if value is not None and previous is not None else None
+            values.append({'stage': name, 'value': value, 'delta_from_previous': delta})
+            previous = value
         if any(v['value'] is not None for v in values):rows.append({'field':field,'label':label,'stages':values})
-    ctx={'scenario':deepcopy(s),'source_commit':catalog()['source']['commit']}
-    token=sha256(json.dumps(ctx,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
     profile=catalog()['operators'][s['operator']]
     panel={'operator':profile['name'],'operator_key':s['operator'],'operator_id':profile['id'],
             'selected_operator':{'key':s['operator'],'id':profile['id'],'name':profile['name']},'context':ctx,
@@ -92,7 +108,7 @@ def _normalized_panel_calculation(s):
             'warnings':deepcopy(result.get('warnings',[])),'native_verified':False,
             'notes':[BOUNDARY,'相邻层差值用于定位偏差，不代表把跨层效果相加即可重新得到结果。',
                      '技能面板仅列当前模型已输出的攻击与攻速；未覆盖的技能生命、防御变化没有伪造数值。']}
-    return panel, result
+    return panel
 
 COMMANDS={'panel':panel_layers}
 

@@ -26,15 +26,38 @@ class ExperimentResidualBoundaryTests(TestCase):
     def test_missing_model_context_is_an_internal_failure(self):
         from rouge import calibration
         payload=model.public_experiment_payload()
-        real=calibration.panel_layers;count=0
-        def panel(scenario):
+        real=calibration._panel_snapshot;count=0
+        def panel(*args):
             nonlocal count
             count+=1
-            result=real(scenario)
+            result=real(*args)
             if count==2:result.pop('context')
             return result
-        with patch.object(calibration,'panel_layers',side_effect=panel):
+        with patch.object(calibration,'_panel_snapshot',side_effect=panel):
             with self.assertRaises(KeyError):model.calibration_experiment(**payload)
+
+    def test_missing_calculated_panel_field_is_an_internal_failure(self):
+        from rouge import calibration
+        payload = model.public_experiment_payload()
+        calculate = calibration._calculate_prepared
+        def missing_field(scenario, prepared):
+            result = calculate(scenario, prepared)
+            if scenario['level'] == 75:
+                del result['estimate']['base_stats']
+            return result
+        with patch.object(calibration, '_calculate_prepared', side_effect=missing_field):
+            with self.assertRaisesRegex(KeyError, 'base_stats'):
+                model.calibration_experiment(**payload)
+
+    def test_unknown_skill_attack_has_no_numeric_delta(self):
+        from rouge import calibration
+        inputs, calculation = calibration._panel_components(calibration._scenario({'operator': 'mechanist'}))
+        calculation['estimate']['skill']['skill_attack'] = None
+        snapshot = calibration._panel_snapshot(*inputs, calculation)
+        attack = next(row for row in snapshot['rows'] if row['field'] == 'attack')
+        self.assertIsNone(attack['stages'][-1]['value'])
+        self.assertIsNone(attack['stages'][-1]['delta_from_previous'])
+        self.assertIsNotNone(attack['stages'][-2]['value'])
 
     def test_bad_scenario_stays_a_record_error_without_losing_other_records(self):
         payload=model.public_experiment_payload()

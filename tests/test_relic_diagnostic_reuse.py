@@ -13,7 +13,7 @@ class RelicDiagnosticReuseTests(unittest.TestCase):
         original = deepcopy(scenario)
         for count, expected in ((1, 2), (2, 4), (3, 8)):
             with self.subTest(audited=count):
-                with patch.object(calibration, 'panel_layers', wraps=calibration.panel_layers) as predict:
+                with patch.object(calibration, '_calculate_prepared', wraps=calibration._calculate_prepared) as predict:
                     first = relic_panel_diagnostics(scenario, ids[:count])
                     self.assertEqual(predict.call_count, expected)
                     combinations = [tuple(call.args[0]['relic_ids']) for call in predict.call_args_list]

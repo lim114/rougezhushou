@@ -78,7 +78,7 @@ def _timing_value(data, channel, model, calculation):
 
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
-    from .calibration import panel_layers, _panel_calculation, OPERATORS, LABELS
+    from .calibration import panel_layers, _panel_components, _panel_snapshot, _scenario, OPERATORS, LABELS
     from .timing_calibration import LABELS as TIMING_LABELS
     allowed = {'id', 'hypothesis', 'operator', 'channel', 'control_scenario', 'varying_fields',
                'evidence_kind', 'evidence_version', 'records'}
@@ -149,15 +149,13 @@ def calibration_experiment(experiment):
                 raise ValueError('独立记录结构不正确。')
             observation = data['observation']
             result.update(source=observation.get('source'), context_token=observation.get('context_token'))
-            if channel['kind'] == 'panel':
-                model = panel_layers(data['scenario'])
-            else:
-                model, calculation = _panel_calculation(data['scenario'])
+            inputs, calculation = _panel_components(_scenario(data['scenario'], all_operators=True))
         except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
             rows.append(result)
             continue
+        model = _panel_snapshot(*inputs, calculation)
         current = model['context']['scenario']
         result['declared_scenario'] = deepcopy(current)
         result['model_source'] = deepcopy(model['source'])

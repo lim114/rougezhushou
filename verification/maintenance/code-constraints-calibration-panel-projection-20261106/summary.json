@@ -1,0 +1,74 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "校准记录区分面板输出缺陷，未知数值保留未知差值",
+  "base_commit": "286a54cea56fe6f84de024fae66c2854212fd9f2",
+  "changed_sources": [
+    "rouge/calibration.py",
+    "rouge/calibration_experiment.py"
+  ],
+  "source_sha256": {
+    "rouge/calibration.py": "d543b7ae95069191214ba3dd46054e7cc4cabd8cdb67c6094694054d5f0e3161",
+    "rouge/calibration_experiment.py": "f03214fc334129ec28160539fbe3089438f54616f8edc2242e997e5302effed6"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_run": 34,
+        "subtest_failures": 3,
+        "seconds": 1.073
+      },
+      {
+        "phase": "old spy reproduced using HEAD calibration and original test",
+        "tests_run": 1,
+        "subtest_failures": 3
+      },
+      {
+        "phase": "final",
+        "tests_passed": 63,
+        "seconds": 1.654,
+        "command": "python -m unittest tests.test_calibration_experiment tests.test_experiment_residual_boundary_review tests.test_relic_diagnostic_reuse tests.test_experiment_timing_prediction_review tests.test_timing_prediction_review tests.test_timing_calibration"
+      }
+    ],
+    "live_window": "Qt offscreen, original test window restart outstanding after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Record model projection now executes outside the per-record input handler. Normalized panel calculations and record projections share the same components. Adjacent differences read each stage value once. Kept the record failure handler around mixed model evaluation pending concrete contracts for its inputs.",
+    "requirements": "Baseline synthetic missing base_stats was mislabeled record_validation_error; now KeyError propagates from projection. Missing/invalid user scenarios and malformed observations still block only their record. None value no longer causes subtraction of a non-number. Repaired an existing stale test spy using actual damage calculation calls, verified expected 2/4/8 distinct combinations."
+  },
+  "partially_implemented_decisions": [
+    "D110"
+  ]
+}
