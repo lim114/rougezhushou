@@ -1,0 +1,63 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases"
+  ],
+  "title": "两套地图标记复用资料包读取流程",
+  "base_commit": "9584eb7fd825aeb3a5b0df5ae98605d377935f55",
+  "changed_sources": [
+    "rouge/current_map_markers.py",
+    "rouge/boss_map_markers.py",
+    "rouge/marker_packet.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_markers.py": "265206da5965df040e9fc30aeff07e7b6f27e7b30dc1f1d78211c28f2a14e698",
+    "rouge/boss_map_markers.py": "fa178504f423fd80010e27e9345ff07998fec9075f952e4a5eea18dfcbb2b042",
+    "rouge/marker_packet.py": "155e9e48c4f65c82d1e2b313ed457cee8030cca800d220760bf177f632bd4905"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_current_map_markers_337 tests.test_boss_map_markers_348 tests.test_marker_geometry_reuse_review",
+        "tests_run": 18,
+        "tests_passed": 18,
+        "seconds": 87.334
+      }
+    ],
+    "live_window": "Original test window update remains pending after earlier approval rejection."
+  },
+  "review": {
+    "standards": "D269 approved same-process manifest flow reuse. Two package wrappers declare distinct member/schema/stage contracts and delegate actual I/O to one loader. Existing catches/path guards unchanged; no recovery or threshold added. New helper has two production callers and hides coherent pinned-package loading responsibility.",
+    "requirements": "Both complete configurations, exact geometry/image/source binding, damaged member rejection, original scope preservation and mutation isolation targeted tests pass. Public mapping input boundaries remain; D269 not closed."
+  },
+  "partially_implemented_decisions": [
+    "D269"
+  ]
+}
