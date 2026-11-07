@@ -41,23 +41,23 @@ def stage_reference(stage_id, *, prepared_packet=...):
     grid=level['mapData']['map'];tiles=level['mapData']['tiles']
     if not grid or not grid[0]or any(len(row)!=len(grid[0])or any(type(i)is not int or not 0<=i<len(tiles)for i in row)for row in grid):return None
     mapping=deepcopy(ref['data']['compatible_stages'].get(stage_id));points=mapping['points']if mapping else[]
-    identity=ref['source_identity']
+    identity=ref['source_identity'];mapping_verified=False
     from . import current_map_markers as symbols
     if stage_id in symbols.STAGES:
         observed=symbols.mapping_for(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
-        mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
+        mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity']);mapping_verified=True
     from . import boss_map_markers as boss_symbols
     if stage_id in boss_symbols.STAGES:
         observed=boss_symbols.mapping_for(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
-        mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
+        mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity']);mapping_verified=True
     from . import observed_map_symbols as extra_symbols
     if mapping is None and stage_id in extra_symbols.STAGES:
         observed=extra_symbols.mapping_for(stage_id,ref['current'])
         if observed is not None:
             mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
-    if mapping:
+    if mapping and not mapping_verified:
         envelope={k:level[k]for k in ref['data']['geometry_keys']};digest=sha256(json.dumps(envelope,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         if mapping['current_level_key']!=key or mapping['image']!=image or mapping['full_selected_geometry_sha256']!=digest:return None
     return {'stage_id':stage_id,'stage_name':stage['name'],'is_elite':stage['isElite'],'rows':len(grid),'cols':len(grid[0]),'map':deepcopy(grid),'tiles':deepcopy(tiles),'complete_current_geometry':{k:deepcopy(level[k])for k in ref['data']['geometry_keys']},'current_level_key':key,'image':deepcopy(image),'points':points,'mapping_evidence':mapping,'source_identity':identity,'full_map_projection_verified':False,'supports_inverse':False,'supports_segments':False,'actual_combat_positions_verified':False,'run_updated':False}

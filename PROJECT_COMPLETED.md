@@ -5502,3 +5502,7 @@ D264/D265完成：合法路线/运动/坐标边界及失效撤下按授权保留
 
 ### 维护：地图来源边界核对（2026-11-06）
 D257完成：地形证据、地图兼容清单和当前关卡来源独立核验按授权保留；3项资料损坏、图片身份及完整几何定向通过。回执 `verification/maintenance/code-constraints-map-source-retention-20261106/summary.json`。
+
+
+### 维护：地图标记绑定复用（2026-11-06）
+D270完成：固定完整几何与摘要约定核实后合并两层重复绑定；关卡文件检查下移，旧映射及首层补充仍完整核验。25项定向通过，无新位置。回执 `verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json`。

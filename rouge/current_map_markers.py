@@ -36,8 +36,12 @@ def mapping_for(stage_id,current):
     d=ref['data'];row=d['bindings'][stage_id];version=current['version']
     if d['game_commit']!=NEW_COMMIT:return None
     if row['expected_stage']!=version['current']['details']['stages'][stage_id]or row['image']!=version['images']['images'][stage_id]:return None
-    level=current['inputs']['levels'][row['current_level_key']]
-    if {k:level[k]for k in d['geometry_keys']}!=row['full_selected_geometry']:return None
+    key='levels/'+version['current']['details']['stages'][stage_id]['levelId'].lower()+'.json'
+    if row['current_level_key']!=key:return None
+    level=current['inputs']['levels'][key]
+    geometry={k:level[k]for k in d['geometry_keys']}
+    digest=sha256(json.dumps(geometry,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    if digest!=row['full_selected_geometry_sha256']:return None
     for p in row['points']:
         if level['mapData']['tiles'][level['mapData']['map'][p['row']][p['col']]]['tileKey']!=p['tile_key']:return None
     return {'mapping':deepcopy(row),'source_identity':ref['source_identity'],'absolute_accuracy_verified':False,'actual_spawn_position':None}

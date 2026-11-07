@@ -1,0 +1,75 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "地图标记绑定一次核验并复用结果",
+  "base_commit": "55b68275af2ae19fbe7e20924509710933c28d49",
+  "changed_sources": [
+    "rouge/current_map_position.py",
+    "rouge/current_map_markers.py",
+    "rouge/boss_map_markers.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_position.py": "767084b9bc225cc8c21746a2b5c607af576184f84376b45190130f59973c287d",
+    "rouge/current_map_markers.py": "1ca8d4a66bb70503428c76704ccf8628c8c74ab369b35ef6b4b22c130c260eef",
+    "rouge/boss_map_markers.py": "fb30f83906f465840efbebf0c7a10ba7a8858e0b25ee2ce8c7fb2acc16a30c1f"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D270"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "initial edit attempt",
+        "result": "Stopped at byte-pattern assertion after current_map_markers edit because boss module used different line endings; inspected partial change and completed exact edit; no test run claimed."
+      },
+      {
+        "command": "python -m unittest tests.test_current_map_markers_337 tests.test_boss_map_markers_348",
+        "tests_run": 15,
+        "tests_passed": 15,
+        "seconds": 87.333
+      },
+      {
+        "command": "python -m unittest tests.test_marker_geometry_reuse_review tests.test_current_map_position_319.CurrentMapPosition319Tests.test_new_dlc_identity_can_map_only_by_full_geometry_and_exact_pixels",
+        "tests_run": 4,
+        "tests_passed": 4,
+        "seconds": 0.862
+      },
+      {
+        "command": "python -m unittest tests.test_observed_map_symbols_472",
+        "tests_run": 6,
+        "tests_passed": 6,
+        "seconds": 7.278
+      }
+    ],
+    "live_window": "Original test window update pending after earlier automatic approval rejection; no native game acceptance."
+  },
+  "review": {
+    "standards": "D270 approved relocation: marker binders own exact stage/image/level-key/full geometry digest binding. Pinned full-geometry rows were verified equal to their canonical digest, using identical builder serialization and all four geometry fields. Parent reuses complete binder success only for current/boss modules; legacy and extra symbols retain parent verification. No new helper or catch.",
+    "requirements": "25 targeted checks pass, including corrupt source/image/stage/geometry, direct binder use, preserved legacy and first-floor markers, one geometry serialization per qualified binder, and all supported marker positions. Existing level-key gate moved from parent to binder, not removed. No new projection points."
+  }
+}

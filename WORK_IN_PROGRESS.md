@@ -1,3 +1,7 @@
+## 当前断点：地图标记绑定复用（2026-11-06）
+
+D270完成：两个标记模块统一完成关卡/图片/文件/几何摘要绑定，父层复用；其它路径原核验保留。25项定向通过；原280组完成183、剩97。原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json`。
+
 ## 当前断点：地图来源边界核对（2026-11-06）
 
 D257按授权保留，3项资料损坏/图片/几何定向通过；产品源码未改。原280组完成182、剩98。D270四类几何字段列表一致，完整内容与摘要约定仍需核对后合并，未删除核验。回执 `verification/maintenance/code-constraints-map-source-retention-20261106/summary.json`。

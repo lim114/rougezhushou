@@ -2674,7 +2674,7 @@
     },
     {
       "file": "rouge/current_map_position.py",
-      "sha256": "c99fb3853c493606f53a72f419ea7e0901090752cf332ddc96c4573b5dbc2ec3",
+      "sha256": "767084b9bc225cc8c21746a2b5c607af576184f84376b45190130f59973c287d",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Map point membership computed once per query; validation boundaries pending D259",
@@ -2706,6 +2706,10 @@
         {
           "receipt": "verification/maintenance/code-constraints-map-source-retention-20261106/summary.json",
           "scope": "D257 retained; D270 geometry/hash overlap still pending"
+        },
+        {
+          "receipt": "verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json",
+          "scope": "D270 duplicate binding consolidated; full module not certified"
         }
       ]
     },
@@ -2823,7 +2827,7 @@
     },
     {
       "file": "rouge/current_map_markers.py",
-      "sha256": "4bbdf0d8c20105f3b853fb0867d8f1ca528b41206e895871fbc42a397840cf07",
+      "sha256": "1ca8d4a66bb70503428c76704ccf8628c8c74ab369b35ef6b4b22c130c260eef",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Repeated owner geometry and stage qualification plus parallel manifest loops pending D267-D270",
@@ -2842,11 +2846,17 @@
         ],
         "receipt": "verification/maintenance/code-constraints-marker-packets-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json",
+          "scope": "D270 duplicate binding consolidated; full module not certified"
+        }
+      ]
     },
     {
       "file": "rouge/boss_map_markers.py",
-      "sha256": "8778b9520fc8867a6b8687d2ad0021247139fea601ea984ef555e03cbbb3d618",
+      "sha256": "fb30f83906f465840efbebf0c7a10ba7a8858e0b25ee2ce8c7fb2acc16a30c1f",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Repeated owner geometry and stage qualification plus parallel manifest loops pending D267-D270",
@@ -2865,7 +2875,13 @@
         ],
         "receipt": "verification/maintenance/code-constraints-marker-packets-20261106/summary.json",
         "full_module_review_complete": false
-      }
+      },
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-marker-binding-reuse-20261106/summary.json",
+          "scope": "D270 duplicate binding consolidated; full module not certified"
+        }
+      ]
     },
     {
       "file": "rouge/reference_copy.py",
