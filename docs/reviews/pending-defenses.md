@@ -84,3 +84,7 @@ related_exchanges 将 ValueError、KeyError、TypeError、AttributeError 同时�
 ## D343 · 完整资料页的来源时区
 
 ArchivePanel.render_members 将没有时区的时间按本机时区换算；悬停卡显示来源时间未知。建议两处仅对带明确时区的有效时间换算，其他显示待确认。已询问；D340 的异常捕获范围另行确认。
+
+## D344 · 旧版图鉴补充资料错误出口
+
+public_compendium.complete 对补充文件读取、解析、来源字段及内部错误一并回退到基础目录。建议保留可核实的来源失败行为，仅收窄异常范围。等待用户决定。

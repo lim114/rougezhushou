@@ -55,9 +55,14 @@ def fetch():
         values[kind]=json.loads(raw);proof[kind]={'url':url,'sha256':sha256(raw).hexdigest(),'bytes':len(raw)}
     return normalize(values['archive'],values['events'],proof)
 
-def load(path=DEFAULT):
+def decode(raw):
     from .public_compendium import complete
-    return complete(validate(json.loads(Path(path).read_text('utf8'))))
+    data = validate(json.loads(raw))
+    return data if 'versioned_collectibles' in data else complete(data)
+
+
+def load(path=DEFAULT):
+    return decode(Path(path).read_text('utf8'))
 
 def pool_rows(data,version,query=''):
     from .public_compendium import resolve,item

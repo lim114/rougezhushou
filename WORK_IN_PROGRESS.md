@@ -1,3 +1,7 @@
+## 当前断点 · 藏品目录一次构建与筛选，公开图鉴同次读取只核验一次（2026-11-06）
+
+移除建索引前的重复整包验证以及同次刷新中的额外筛选。新版包图鉴核验一次；旧版补充摘要仍独立核验。51项定向通过。D344待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-inventory-decode-refresh-20261106/summary.json)。
+
 ## 当前断点 · 公开资料跨版本定位一次刷新目标池（2026-11-06）
 
 跨版本带搜索词跳转只生成一次池目录和一次目标成员表；37项定向通过。D343待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-exact-archive-selection-20261106/summary.json)。

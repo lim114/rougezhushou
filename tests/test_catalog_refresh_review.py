@@ -26,9 +26,11 @@ class CatalogRefreshReviewTests(unittest.TestCase):
                         if panel.entries.item(i).data(inventory.Qt.ItemDataRole.UserRole) == identity)
         panel.entries.setCurrentItem(selected)
         before = deepcopy(run.state)
-        with patch.object(inventory, 'inventory_rows', wraps=inventory.inventory_rows) as read:
+        with patch.object(inventory, '_catalog_rows', wraps=inventory._catalog_rows) as read, \
+             patch.object(inventory, '_filter_rows', wraps=inventory._filter_rows) as filtered:
             panel.refresh()
         self.assertEqual(read.call_count, 1)
+        self.assertEqual(filtered.call_count, 1)
         self.assertIs(panel.entries.currentItem(), selected)
         self.assertEqual(run.state, before)
         run.state['relics'][identity] = {'held': True}

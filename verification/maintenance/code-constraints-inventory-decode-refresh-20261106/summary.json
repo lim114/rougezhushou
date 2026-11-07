@@ -1,0 +1,72 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 76,
+    "structural_only": 250,
+    "selected_paths_only": 193,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision"
+  ],
+  "title": "藏品目录一次构建与筛选，公开图鉴同次读取只核验一次",
+  "base_commit": "897a1cea854688334d757d82f29412e2379cd223",
+  "changed_sources": [
+    "rouge/public_archive.py",
+    "rouge/public_archive_view.py",
+    "rouge/player_inventory.py"
+  ],
+  "source_sha256": {
+    "rouge/public_archive.py": "e9cba4dd415f74dc73715290a0a8225322c44ee6b528912ce0c8dc4b9d5be503",
+    "rouge/public_archive_view.py": "00148cd402ba05d4eed56a8e89b364ba6ccfa96c99b493f2b2479f0be358dca7",
+    "rouge/player_inventory.py": "1456796cb2a2da477fb55e12ec5bb3804f7dbb304ceec8d8dfc719296669af40"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 51,
+    "seconds": 8.683,
+    "modules": [
+      "tests.test_player_inventory_386",
+      "tests.test_player_compendium_413",
+      "tests.test_player_item_sources_394",
+      "tests.test_catalog_refresh_review",
+      "tests.test_shared_archive_461"
+    ],
+    "additional": "Current complete catalog validated once; corrupted supplement digest leaves only base archive. Refresh test counts one producer and one filter.",
+    "live_window": "Qt offscreen only; original desktop window not updated."
+  },
+  "review": {
+    "standards": "Share decoded archive validation between file reader and view. ItemSourceIndex owns inventory read validation. Use one shared private row producer for standalone and UI queries, with only one user filter. Build search text only for nonempty query. No mutable snapshot reused across refresh.",
+    "requirements": "Preserved public inventory_rows API, versioned supplement identity and unavailable behavior, held state, selection and source reloads. Existing old compendium supplement catch unchanged awaiting D344."
+  },
+  "partially_implemented_decisions": []
+}

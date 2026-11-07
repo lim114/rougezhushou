@@ -1,4 +1,5 @@
 """Read-only picture inventory, with held facts distinct from source descriptions."""
+import json
 from pathlib import Path
 from PySide6.QtCore import Qt,QSize,Signal,QTimer,QEvent
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QFormLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
@@ -19,6 +20,11 @@ def source_nodes(public_data,version):
 
 def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,public_data=None,version=None,category=None,access=None,source_node=None,packet=...):
     packet=reference.packet() if packet is ... else packet
+    result = _catalog_rows(public_data, version, packet)
+    return _filter_rows(result,state,query,held_only,rarity=rarity,exchange=exchange,kind=kind,category=category,access=access,source_node=source_node)
+
+
+def _catalog_rows(public_data, version, packet):
     if packet is None:return None
     from .public_compendium import resolve,effect_text
     docs=resolve(public_data,version,packet) if public_data is not None else {}
@@ -32,7 +38,7 @@ def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kin
         doc=docs.get(identity);usage=effect_text(doc.get('effect') if doc else item.get('usage'))
         result.append({'id':identity,'name':reference._plain(item.get('name'))or'未命名效果条目','usage':usage,
             'icon':item.get('iconId'),'exchange':item.get('canSacrifice'),'rarity':item.get('rarity'),'kind':item.get('type'),'compendium':doc,'category':(doc or{}).get('category'),'source_nodes':nodes.get(identity,[])})
-    return _filter_rows(result,state,query,held_only,rarity=rarity,exchange=exchange,kind=kind,category=category,access=access,source_node=source_node)
+    return result
 
 
 def _filter_rows(rows,state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,category=None,access=None,source_node=None):
@@ -43,9 +49,11 @@ def _filter_rows(rows,state,query='',held_only=True,*,rarity=None,exchange=None,
         doc=row['compendium']
         if category is not None and row['category']!=category:continue
         if held_only and row['id']not in held:continue
-        search_text=row['name']+' '+row['usage']
-        if doc:search_text+=' '+reference._plain(doc.get('unlockConditionText'))+' '+reference._plain(doc.get('obtainMethod'))
-        if q and q not in search_text.casefold():continue
+        if q:
+            search_text = row['name'] + ' ' + row['usage']
+            if doc:
+                search_text += ' ' + reference._plain(doc.get('unlockConditionText')) + ' ' + reference._plain(doc.get('obtainMethod'))
+            if q not in search_text.casefold():continue
         if access=='unlock'and not(doc and(doc.get('unlockConditional')is True or reference._plain(doc.get('unlockConditionText')).strip())):continue
         if access=='special'and not(doc and(doc.get('specialAccess')is True or reference._plain(doc.get('obtainMethod')).strip())):continue
         if access=='uncovered'and doc is not None:continue
@@ -129,7 +137,10 @@ class InventoryPanel(QWidget):
         self.source_stamp=stamp;self.hover_card.dismiss();self.source_index=None;self.source_signature=None
         try:
             from hashlib import sha256
-            raw=path.read_bytes();data=public_archive.validate(__import__('json').loads(raw));self.source_index=ItemSourceIndex(data);self.source_signature=sha256(raw).hexdigest()
+            raw = path.read_bytes()
+            self.source_index = ItemSourceIndex(json.loads(raw))
+            data = self.source_index.data
+            self.source_signature = sha256(raw).hexdigest()
         except(OSError,ValueError,TypeError,KeyError,AttributeError):data=None
         selected=self.version.currentData();self.version.blockSignals(True);self.version.clear()
         if data:
@@ -140,10 +151,9 @@ class InventoryPanel(QWidget):
         self.version.blockSignals(False)
     def refresh(self,*_):
         self.reload_sources()
-        from .public_compendium import complete
-        data=complete(self.source_index.data) if self.source_index else None
+        data = self.source_index.data if self.source_index else None
         packet=reference.packet()
-        available=inventory_rows({},held_only=False,public_data=data,version=self.version.currentData(),packet=packet)
+        available = _catalog_rows(data, self.version.currentData(), packet)
         nodes=list(dict.fromkeys(n for row in available or[]for n in row['source_nodes']))
         if [self.source_node.itemData(i)for i in range(1,self.source_node.count())]!=nodes:
             prior=self.source_node.currentData();self.source_node.blockSignals(True);self.source_node.clear();self.source_node.addItem('全部关联节点',None)

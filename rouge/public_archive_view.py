@@ -47,8 +47,7 @@ class ArchivePanel(QWidget):
         try:
             raw=path.read_bytes();signature=(str(path),sha256(raw).hexdigest())
             if signature==self.source_signature:return True
-            from .public_compendium import complete
-            self.data=complete(model.validate(json.loads(raw)));self.loaded_path=path;self.source_signature=signature
+            self.data=model.decode(raw);self.loaded_path=path;self.source_signature=signature
         except(OSError,ValueError,KeyError,TypeError,AttributeError):self.data=None;self.source_signature=None
         self.install()
         return True
