@@ -98,6 +98,22 @@ class ObservationTimelineTests(unittest.TestCase):
         while buffer.stats()['pending']:history.append(buffer.take()['seq'])
         self.assertEqual(history,list(range(1,8)));self.assertEqual(buffer.stats()['overflow'],0)
 
+    def test_appending_while_an_older_capture_is_pending_reduces_only_the_new_row(self):
+        rows = self.observations()
+        first = ObservationTimeline(self.run,self.account).prepare(rows[1],2,1)
+        applied = []
+        original = RunState.apply
+        def track(model, observation, at):
+            applied.append(at)
+            return original(model, observation, at)
+        with patch.object(RunState, 'apply', track):
+            latest = first.prepare(rows[2],3,1)
+        self.assertEqual(applied, [rows[2]['captured_at']])
+        self.assertEqual(set(latest.pending), {2,3})
+        self.assertEqual(set(first.pending), {2})
+        self.assertEqual(first.run.state['last_read'], rows[1]['captured_at'])
+        self.assertEqual(latest.run.state['last_read'], rows[2]['captured_at'])
+
     def test_repeated_sequence_cannot_duplicate_already_committed_events(self):
         timeline=ObservationTimeline(self.run,self.account);row=self.observations()[1]
         first=timeline.prepare(row,2,None);second=first.prepare(row,2,None)

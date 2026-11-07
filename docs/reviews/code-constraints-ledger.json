@@ -4431,22 +4431,26 @@
     },
     {
       "file": "rouge/observation_timeline.py",
-      "sha256": "5fa35e3e0a01723407e30a1cb4a7efec04e5c19275d506201d17c8abc6222453",
+      "sha256": "5b68e8a139a29a7beb3eff53af151d57fb60082a70dad982e92ea250a304c57c",
       "ordinary_rules_review_complete": true,
-      "full_module_review_complete": false,
-      "rule1": "Resource candidates/centers/scales/templates reused; timeline copies compacted base only at last eligible observation",
-      "rule2": "gold_template is cached asset loader; memory_model used across constructor/replay/baseline, retains IO-free domain reducer boundary",
-      "rule3": [
-        "D299"
-      ],
-      "evidence": "Both full modules and reducers/callers checked; seven timeline tests pass; baseline snapshot/result equality and copy calls10to4; final12 resource equivalence cases",
+      "full_module_review_complete": true,
+      "rule1": "reviewed_clear",
+      "rule2": "reviewed_clear",
+      "rule3": "approved_scope_D299",
+      "evidence": "Read constructor and all methods, app dispatch, reducers and prior approval. Copy mutable domain state before applying new input; reuse the completed reduction only for strict tail append with no intermediate checkpoint. Preserve base/model/commit independence, monotonic prefix, private protection OR. memory_model supplies separate IO-free snapshots at multiple callers. No new defenses.",
       "scoped_reviews": [
         {
           "receipt": "verification/maintenance/code-constraints-timeline-account-protection-20261106/summary.json",
           "scope": "D299 both-source protection",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-timeline-append-review-20261107/summary.json",
+          "scope": "Whole observation timeline including snapshot copying, prefix compaction, prepare and commit."
         }
-      ]
+      ],
+      "full_review_receipt": "verification/maintenance/code-constraints-timeline-append-review-20261107/summary.json"
     },
     {
       "file": "rouge/technology.py",

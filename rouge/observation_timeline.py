@@ -25,16 +25,25 @@ class ObservationTimeline:
         candidate=copy(self);candidate.pending=dict(self.pending)
         if seq>self.committed_seq:
             candidate.pending[seq]=(deepcopy(observation.get('run')),deepcopy(observation.get('operator')),observation['captured_at'])
-        run=memory_model(self.base_run,('state',));account=memory_model(self.base_account,('records','issues'))
         commit_through=max((key for key in candidate.pending if oldest_pending is None or key<oldest_pending),default=None)
-        for key,(run_read,operator_read,at)in sorted(candidate.pending.items()):
+        # The last published reduction already includes every pending row.
+        # An insertion or a checkpoint inside those rows needs the original base.
+        if self.pending and seq > max(self.pending) and commit_through in (None, seq):
+            run_start, account_start = self.run, self.account
+            replay = [(seq, candidate.pending[seq])]
+        else:
+            run_start, account_start = self.base_run, self.base_account
+            replay = sorted(candidate.pending.items())
+        run = memory_model(run_start, ('state',))
+        account = memory_model(account_start, ('records', 'issues'))
+        for key,(run_read,operator_read,at) in replay:
             if run_read:run.apply(run_read,at)
             if operator_read:account.observe(operator_read,at)
             if key==commit_through:
                 candidate.base_run=memory_model(run,('state',))
                 candidate.base_account=memory_model(account,('records','issues'))
                 candidate.committed_seq=key
-        candidate.pending={key:value for key,value in candidate.pending.items()if key>candidate.committed_seq}
+                candidate.pending = {seq: row for seq, row in candidate.pending.items() if seq > commit_through}
         candidate.run=run;candidate.account=account
         return candidate
 
