@@ -78,7 +78,7 @@ def _timing_value(data, channel, model, calculation):
 
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
-    from .calibration import panel_layers, _panel_components, _panel_snapshot, _scenario, OPERATORS, LABELS
+    from .calibration import panel_layers, _panel_components, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
     from .timing_calibration import LABELS as TIMING_LABELS
     allowed = {'id', 'hypothesis', 'operator', 'channel', 'control_scenario', 'varying_fields',
                'evidence_kind', 'evidence_version', 'records'}
@@ -146,16 +146,21 @@ def calibration_experiment(experiment):
         try:
             data = raw['data']
             if not isinstance(data, dict) or set(data) != {'scenario', 'observation'} or not isinstance(data['observation'], dict):
-                raise ValueError('独立记录结构不正确。')
+                raise CalibrationScenarioError('独立记录结构不正确。')
             observation = data['observation']
             result.update(source=observation.get('source'), context_token=observation.get('context_token'))
-            inputs, calculation = _panel_components(_scenario(data['scenario'], all_operators=True))
-        except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+            scenario = _scenario(data['scenario'], all_operators=True)
+            context = _panel_context(scenario)
+            try:
+                inputs, calculation = _panel_components(scenario)
+            except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+                raise CalibrationScenarioError(str(error)) from error
+        except CalibrationScenarioError as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
             rows.append(result)
             continue
-        model = _panel_snapshot(*inputs, calculation)
+        model = _panel_snapshot(*context, *inputs, calculation)
         current = model['context']['scenario']
         result['declared_scenario'] = deepcopy(current)
         result['model_source'] = deepcopy(model['source'])

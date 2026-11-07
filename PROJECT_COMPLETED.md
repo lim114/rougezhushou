@@ -1,3 +1,7 @@
+## 维护 · 校准记录单独核对情景与条件标识，内部来源错误直接上报（2026-11-06）
+
+D110部分推进。已将记录结构、干员情景与上下文指纹移出模型计算的宽异常捕获。合法算例不变；坏输入只阻止本行，内部来源错误上报。63项定向通过，6份完整报告与旧版一致。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-context-boundary-20261106/summary.json)。
+
 ## 维护 · 培养方案区分技能条件与准备缺陷，消失时刻只解析一次（2026-11-06）
 
 D119完成。已知未解锁、数值、时序及本局条件错误仍保留培养属性；内部普通ValueError从准备阶段直接上报。文本消失时刻不再重复解析。43项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-core-skill-preparation-20261106/summary.json)。

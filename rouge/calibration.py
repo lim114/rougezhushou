@@ -34,16 +34,24 @@ def _integer(value, name, maximum):
         raise ValueError(name+'需要规定范围内的整数。')
     return value
 
+class CalibrationScenarioError(ValueError):
+    """The submitted scenario cannot be normalized or encoded as calibration input."""
+
+
 def _scenario(scenario, *, all_operators=False):
-    if not isinstance(scenario,dict):raise ValueError('scenario需要JSON对象。')
+    if not isinstance(scenario,dict):raise CalibrationScenarioError('scenario需要JSON对象。')
     out=deepcopy(scenario)
-    allowed=catalog()['operators'] if all_operators else OPERATORS
-    if out.get('operator') not in allowed:raise ValueError('此查询仅支持固定资料中已适配干员。' if all_operators else '校准工具仅支持首批三名干员。')
-    if any(str(key).startswith('_') for key in out):raise ValueError('校准输入不能注入内部字段。')
+    operator = out.get('operator')
+    profiles = catalog()['operators']
+    allowed = profiles if all_operators else OPERATORS
+    if not isinstance(operator, str) or operator not in allowed:
+        raise CalibrationScenarioError('此查询仅支持固定资料中已适配干员。' if all_operators else '校准工具仅支持首批三名干员。')
+    if any(str(key).startswith('_') for key in out):raise CalibrationScenarioError('校准输入不能注入内部字段。')
     out.setdefault('skill',1);out.setdefault('skill_rank',10)
-    out.setdefault('elite',2)
+    elite = out.setdefault('elite',2)
     if 'level' not in out:
-        out['level']=catalog()['operators'][out['operator']]['phases'][out['elite']]['max_level'] if isinstance(out['elite'],int) and not isinstance(out['elite'],bool) and 0<=out['elite']<=2 else None
+        phases = profiles[operator]['phases']
+        out['level'] = phases[elite]['max_level'] if isinstance(elite, int) and not isinstance(elite, bool) and 0<=elite<len(phases) else None
     out.setdefault('trust',100);out.setdefault('potential',1)
     out.setdefault('module_id',None);out.setdefault('module_level',0)
     out.setdefault('timing_mode','frames')
@@ -68,16 +76,24 @@ def _panel_calculation(scenario):
 
 def _normalized_panel_calculation(s):
     inputs, result = _panel_components(s)
-    return _panel_snapshot(*inputs, result), result
+    return _panel_snapshot(*_panel_context(s), *inputs, result), result
 
 
 def _panel_components(s):
     cult = _cultivated(s)
     prepared = _prepare_damage(deepcopy(s), cultivated_attributes=cult)
     result = _calculate_prepared(s, deepcopy(prepared))
+    return (cult, prepared), result
+
+
+def _panel_context(s):
     ctx = {'scenario': deepcopy(s), 'source_commit': catalog()['source']['commit']}
-    token = sha256(json.dumps(ctx, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
-    return (ctx, token, cult, prepared), result
+    try:
+        encoded = json.dumps(ctx, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+    except (ValueError, TypeError) as error:
+        raise CalibrationScenarioError(str(error)) from error
+    return ctx, sha256(encoded).hexdigest()
+
 
 
 def _panel_snapshot(ctx, token, cult, prepared, result):

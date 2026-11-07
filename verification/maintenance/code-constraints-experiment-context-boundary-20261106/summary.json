@@ -1,0 +1,73 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "校准记录单独核对情景与条件标识，内部来源错误直接上报",
+  "base_commit": "34489c33006584970c3e76e3ca47c3ed88120fbd",
+  "changed_sources": [
+    "rouge/calibration.py",
+    "rouge/calibration_experiment.py"
+  ],
+  "source_sha256": {
+    "rouge/calibration.py": "ed0099ea4089facbba672571731afcfb204de01984d73f45687aa3febc024323",
+    "rouge/calibration_experiment.py": "97062d544d5c8ca759679193036f3121f858355495a8ca7b9cbc2c92c57c2fe1"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_passed": 35,
+        "seconds": 1.023
+      },
+      {
+        "phase": "final",
+        "tests_passed": 63,
+        "seconds": 1.634,
+        "command": "python -m unittest tests.test_calibration_experiment tests.test_experiment_residual_boundary_review tests.test_timing_prediction_review tests.test_timing_calibration tests.test_relic_diagnostic_reuse"
+      },
+      {
+        "phase": "HEAD differential",
+        "complete_reports": 6,
+        "all_equal": true
+      }
+    ],
+    "live_window": "Qt offscreen. Original desktop test window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Resolve profile table once and use its actual phase count for default level lookup. Reuse the normalized scenario to encode calibration context. Only errors from JSON encoding are translated into context input errors. Record model preparation/evaluation retains its legacy compatibility boundary, explicitly not closed. Standalone model entry and experiment use the same context/snapshot functions.",
+    "requirements": "Invalid operator list and nonfinite extra condition are blocked without losing other records. Internal KeyError injected at scenario normalization and context construction propagates. Full output equality for the three initial operators across panel and timing public experiments."
+  },
+  "partially_implemented_decisions": [
+    "D110"
+  ]
+}

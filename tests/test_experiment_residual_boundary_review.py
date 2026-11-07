@@ -51,13 +51,34 @@ class ExperimentResidualBoundaryTests(TestCase):
 
     def test_unknown_skill_attack_has_no_numeric_delta(self):
         from rouge import calibration
-        inputs, calculation = calibration._panel_components(calibration._scenario({'operator': 'mechanist'}))
+        scenario = calibration._scenario({'operator': 'mechanist'})
+        inputs, calculation = calibration._panel_components(scenario)
         calculation['estimate']['skill']['skill_attack'] = None
-        snapshot = calibration._panel_snapshot(*inputs, calculation)
+        snapshot = calibration._panel_snapshot(*calibration._panel_context(scenario), *inputs, calculation)
         attack = next(row for row in snapshot['rows'] if row['field'] == 'attack')
         self.assertIsNone(attack['stages'][-1]['value'])
         self.assertIsNone(attack['stages'][-1]['delta_from_previous'])
         self.assertIsNotNone(attack['stages'][-2]['value'])
+
+    def test_invalid_operator_and_unencodable_condition_only_block_their_row(self):
+        for change in ({'operator': []}, {'unused': float('nan')}):
+            payload = model.public_experiment_payload()
+            payload['experiment']['records'][0]['data']['scenario'].update(change)
+            result = model.calibration_experiment(**payload)
+            self.assertIn('record_validation_error', result['records'][0]['blocking_reasons'])
+            self.assertEqual(result['records'][1]['state'], 'evaluable')
+
+    def test_internal_context_or_normalization_failure_is_not_an_invalid_record(self):
+        from rouge import calibration
+        payload = model.public_experiment_payload()
+        for name in ('_scenario', '_panel_context'):
+            real = getattr(calibration, name)
+            def broken(scenario, **kwargs):
+                if scenario.get('level') == 75: raise KeyError('missing source field')
+                return real(scenario, **kwargs)
+            with self.subTest(name=name), patch.object(calibration, name, side_effect=broken):
+                with self.assertRaisesRegex(KeyError, 'missing source field'):
+                    model.calibration_experiment(**payload)
 
     def test_bad_scenario_stays_a_record_error_without_losing_other_records(self):
         payload=model.public_experiment_payload()
