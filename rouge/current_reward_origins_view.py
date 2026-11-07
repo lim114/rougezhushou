@@ -39,19 +39,21 @@ class CurrentRewardOriginsPanel(QWidget):
             item = QListWidgetItem(row['event_title'] + ' · ' + row['choice']['title']); item.setData(Qt.ItemDataRole.UserRole, row['key']); self.entries.addItem(item)
             if row['key'] == selected: self.entries.setCurrentItem(item)
         if selected is None: self.entries.setCurrentRow(-1)
-        self.entries.blockSignals(blocked); self._render(selected, same)
+        self.entries.blockSignals(blocked); self._render(same)
         if selected is None: self.player.setFocus(Qt.FocusReason.OtherFocusReason)
         if same and self.event_dialog is not None and self.event_dialog.isVisible(): self.event_dialog.panel.refresh_reference()
         return True
 
-    def _render(self, key, preserve):
-        row = next((r for r in self.result['rows'] if r['key'] == key), None)
+    def _render(self, preserve):
+        rows = self.result['rows']
+        index = self.entries.currentRow()
+        row = rows[index] if index >= 0 else None
         self.open_button.setEnabled(row is not None)
-        replace_text(self.player, model.player_text(self.result, key, row=row), preserve=preserve)
+        replace_text(self.player, model.player_text(self.result, row=row), preserve=preserve)
         replace_text(self.technical, json.dumps(row or {'scope': model.NOTICE}, ensure_ascii=False, indent=2), preserve=preserve)
 
     def _selected(self, item, *_):
-        self._close_event(); self._render(item.data(Qt.ItemDataRole.UserRole) if item else None, False)
+        self._close_event(); self._render(False)
 
     def open_event(self):
         old = self.result

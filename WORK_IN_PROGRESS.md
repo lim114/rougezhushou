@@ -1,3 +1,7 @@
+## 当前断点 · 奖励详情刷新与切换共用列表位置（2026-11-07）
+
+普通、具名、关键奖励详情刷新或选择时直接复用同快照列表行，27项定向检查通过。下批优先排查图像识别。在同段本地画面区分队列等待、页面路由、OCR与更新耗时，定位重复工作，改前后对照字段正确性与短页捕获。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-reward-list-selection-20261107/summary.json)。
+
 ## 当前断点 · 完成灵知模组、治疗藏品与奖励详情入口三模块回顾（2026-11-07）
 
 三模块完成回顾，累计79/559。灵知整次技能和观察窗口各读取一次可生效标记，奖励详情入口用已核验资料直接匹配完整条目。51项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-healing-gnosis-reward-closeout-20261107/summary.json)。

@@ -25,7 +25,7 @@ class RewardRenderSelectionTests(unittest.TestCase):
             with self.subTest(item_id=item_id):
                 result = model.reference('relics', item_id)
                 self.assertIsNotNone(result)
-                keys = [None, 'missing-key', *(row['key'] for row in result['rows'])]
+                keys = [row['key'] for row in result['rows']] + [None]
                 expected = {key: model.player_text(result, key) for key in keys}
                 counted = CountedRows(result['rows'])
                 counted.iterations = 0
@@ -33,12 +33,12 @@ class RewardRenderSelectionTests(unittest.TestCase):
                 with patch.object(model, 'reference', return_value=result):
                     panel = CurrentRewardOriginsPanel('relics', item_id)
                 self.addCleanup(panel.close)
-                for key in keys:
+                for index, key in enumerate(keys):
                     with self.subTest(key=key):
                         counted.iterations = 0
-                        panel._render(key, False)
-                        self.assertEqual(counted.iterations, 1)
-                        self.assertEqual(panel.open_button.isEnabled(), key not in (None, 'missing-key'))
+                        panel.entries.setCurrentRow(index if key is not None else -1)
+                        self.assertEqual(counted.iterations, 0)
+                        self.assertEqual(panel.open_button.isEnabled(), key is not None)
                         self.assertEqual(panel.player.toPlainText(), expected[key])
 
     def test_packet_parses_the_data_bytes_it_has_already_verified(self):
