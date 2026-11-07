@@ -84,7 +84,6 @@ def resolve_owned_icons(icons,cards):
 
 @lru_cache(maxsize=3)
 def templates(height):
-    folder=Path(__file__).parent/'data'
     result=[]
     for entry in reference_entries():
         rgba=_artwork(entry['file'])
@@ -180,7 +179,9 @@ class EnergyScreen:
     minimum_ratio = ((2.14 - np.sqrt(2.14 ** 2 - 4)) / 2) ** 2
 
     def __init__(self, pixels):
-        self.integral = cv2.integral(np.sum(pixels.astype(np.float64) ** 2, axis=2))
+        # BGR byte channels have an exactly representable sum of squares in float32.
+        self.energy_image = np.sum(np.square(pixels, dtype=np.result_type(pixels, np.float32)), axis=2)
+        self.integral = cv2.integral(self.energy_image, sdepth=cv2.CV_64F)
         self.ceilings = {}
 
     def possible(self, shape, template_energy):
@@ -306,10 +307,10 @@ def _refined_matches(roi, ordered):
 def _match_bar(roi,h,w,x0,y0):
     if not np.any(roi):return []
     pixels=roi.astype(np.float32)
-    energy_image=np.sum(pixels*pixels,axis=2)
     energy_screen=EnergyScreen(pixels)
     projection_screen=ProjectionScreen(pixels,energy_screen)
     found=[];near_misses=[];coarse_hits=[]
+    rx=max(1,round(.025*w));ry=max(1,round(.04*h))
     def collect(differences,rid,tw,th,refine=False):
         # Match physical slots, including repeated artwork in separate slots.
         for _ in range(64):
@@ -322,14 +323,13 @@ def _match_bar(roi,h,w,x0,y0):
                 found.append(record)
                 if refine:coarse_hits.append((record,max(tw,th)))
             else:near_misses.append((record,max(tw,th)))
-            rx=max(1,round(.025*w));ry=max(1,round(.04*h))
             differences[max(0,py-ry):py+ry+1,max(0,px-rx):px+rx+1]=10
     for rid,template,mask,screen_template,screen_mask,energy,*projection in prepared_templates(h):
         th,tw=template.shape[:2]
         if th>=roi.shape[0] or tw>=roi.shape[1]:continue
         if not energy_screen.possible((th,tw),energy):continue
         if not projection_screen.possible(screen_template,screen_mask,energy,*projection):continue
-        if not _can_match(pixels,energy_image,screen_template,screen_mask,energy):continue
+        if not _can_match(pixels,energy_screen.energy_image,screen_template,screen_mask,energy):continue
         # Keep original OpenCV scores/locations for every plausible reference.
         # Screening can never supply a confirmed identity or an ambiguity score.
         differences=cv2.matchTemplate(roi,template,cv2.TM_SQDIFF_NORMED,mask=mask)

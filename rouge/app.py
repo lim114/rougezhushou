@@ -696,10 +696,12 @@ class MainWindow(QMainWindow):
                         self.visual_reader=VisualReader()
                     reader=self.visual_reader
                 else:reader=self.reader
+                age_at_read_ms = (time.time() - selected['captured_at']) * 1000
                 observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context)
                 observation['capture_ms']=capture_ms
                 observation['captured_at'] = selected['captured_at']
                 observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
+                observation['_sampling']['age_at_read_ms'] = age_at_read_ms
                 observation['_sampling']['recognition_attempts']=1
                 observation['_sampling']['lane']='current' if preferred else 'history'
                 fold_start=time.perf_counter()

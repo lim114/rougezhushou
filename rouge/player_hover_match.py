@@ -11,7 +11,7 @@ def _locate(image,point,*,cancelled=lambda:False,difficulty=None):
     radius=max(32,round(h*.15));x0=max(0,int(x-radius));y0=max(0,int(y-radius));x1=min(w,int(x+radius+1));y1=min(h,int(y+radius+1))
     roi=np.ascontiguousarray(image[y0:y1,x0:x1]);px,py=x-x0,y-y0
     if not roi.size or not np.any(roi):return None
-    pixels=roi.astype(np.float32);energy_image=np.sum(pixels*pixels,axis=2)
+    pixels=roi.astype(np.float32)
     energy=icons.EnergyScreen(pixels);projection=icons.ProjectionScreen(pixels,energy);candidates={};near={}
     def verify(rid,template,mask):
         th,tw=template.shape[:2]
@@ -36,7 +36,7 @@ def _locate(image,point,*,cancelled=lambda:False,difficulty=None):
             th,tw=template.shape[:2]
             if th>roi.shape[0]or tw>roi.shape[1]:continue
             if not energy.possible((th,tw),norm)or not projection.possible(screen_template,screen_mask,norm,*projected):continue
-            if not icons._can_match(pixels,energy_image,screen_template,screen_mask,norm):continue
+            if not icons._can_match(pixels,energy.energy_image,screen_template,screen_mask,norm):continue
             verify(rid,template,mask)
     # Refine only plausible identities, with the same mask/colour verifier.
     for rid,sizes in list(near.items()):
