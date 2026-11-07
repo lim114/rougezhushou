@@ -8,7 +8,9 @@ import win32api
 import win32con
 import ctypes
 from ctypes import wintypes
+from functools import lru_cache
 from .frame_buffer import FrameBuffer
+from .windows_dpi import physical_pixels, thread_dpi_api
 
 def process_names():
     class Entry(ctypes.Structure):
@@ -58,25 +60,30 @@ def list_game_windows():
     win32gui.EnumWindows(visit, None)
     return windows
 
+@lru_cache(maxsize=1)
+def _window_attribute_api():
+    read=ctypes.WinDLL('dwmapi').DwmGetWindowAttribute
+    read.argtypes=[wintypes.HWND,wintypes.DWORD,ctypes.c_void_p,wintypes.DWORD]
+    return read
+
 def frame_client_rect(hwnd,image):
     """Physical client bounds for this frame, with thread-local DPI awareness."""
-    user=ctypes.WinDLL('user32',use_last_error=True)
-    user.SetThreadDpiAwarenessContext.argtypes=[ctypes.c_void_p]
-    user.SetThreadDpiAwarenessContext.restype=ctypes.c_void_p
-    previous=user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
+    with physical_pixels():
+        geometry=_frame_geometry(hwnd,image)
+    return geometry[0] if geometry is not None else None
+
+def _frame_geometry(hwnd,image):
+    """Read the client bounds and screen origin of one frame in physical pixels."""
     try:
         rect=wintypes.RECT()
-        dwm=ctypes.WinDLL('dwmapi')
-        dwm.DwmGetWindowAttribute.argtypes=[wintypes.HWND,wintypes.DWORD,ctypes.c_void_p,wintypes.DWORD]
-        if dwm.DwmGetWindowAttribute(hwnd,9,ctypes.byref(rect),ctypes.sizeof(rect))!=0:return None
+        if _window_attribute_api()(hwnd,9,ctypes.byref(rect),ctypes.sizeof(rect))!=0:return None
         h,w=image.shape[:2]
         if (rect.right-rect.left,rect.bottom-rect.top)!=(w,h):return None
         x,y=win32gui.ClientToScreen(hwnd,(0,0));_,_,cw,ch=win32gui.GetClientRect(hwnd)
         bounds=[x-rect.left,y-rect.top,x-rect.left+cw,y-rect.top+ch]
-        if 0<=bounds[0]<bounds[2]<=w and 0<=bounds[1]<bounds[3]<=h:return bounds
+        if 0<=bounds[0]<bounds[2]<=w and 0<=bounds[1]<bounds[3]<=h:
+            return bounds,(rect.left,rect.top)
     except (OSError,win32gui.error):return None
-    finally:
-        if previous:user.SetThreadDpiAwarenessContext(previous)
 
 class GameCapture:
     def __init__(self):
@@ -92,15 +99,14 @@ class GameCapture:
     def connect(self, target):
         self.close()
         known = {w['hwnd']: w for w in list_game_windows()}
-        if target['hwnd'] not in known or known[target['hwnd']]['pid'] != target['pid']:
+        window=known.get(target['hwnd'])
+        if window is None or window['pid'] != target['pid']:
             raise RuntimeError('游戏窗口已关闭或变化，请刷新窗口列表。')
         from windows_capture import WindowsCapture
         from .software_pointer import SoftwarePointer
         pointer=SoftwarePointer()
-        dpi_user=ctypes.WinDLL('user32',use_last_error=True)
-        dpi_user.SetThreadDpiAwarenessContext.argtypes=[ctypes.c_void_p]
-        dpi_user.SetThreadDpiAwarenessContext.restype=ctypes.c_void_p
-        self.target = known[target['hwnd']]
+        thread_dpi_api()  # Resolve the native entry before starting the capture worker.
+        self.target = window
         self.closed = False
         session = self._session
         target = dict(self.target)
@@ -113,17 +119,14 @@ class GameCapture:
                 # Native mapped pixels expire after this callback. The buffer owns
                 # retained candidates; expensive recognition runs on another worker.
                 image=frame.frame_buffer[:,:,:3]
-                client_rect=frame_client_rect(target['hwnd'],image)
-                point=None;may_learn=False
-                if client_rect is not None:
-                    prior=dpi_user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
-                    try:
+                client_rect=None;point=None;may_learn=False
+                with physical_pixels():
+                    geometry=_frame_geometry(target['hwnd'],image)
+                    if geometry is not None:
+                        client_rect,frame_origin=geometry
                         flags,handle,position=win32gui.GetCursorInfo()
                         may_learn=not flags
-                        origin=win32gui.ClientToScreen(target['hwnd'],(0,0))
-                        point=(position[0]-origin[0]+client_rect[0],position[1]-origin[1]+client_rect[1])
-                    finally:
-                        if prior:dpi_user.SetThreadDpiAwarenessContext(prior)
+                        point=(position[0]-frame_origin[0],position[1]-frame_origin[1])
                 pointer_bounds=pointer.locate(image,point,may_learn=may_learn)
                 self.buffer.offer(image,time.time(),client_rect,target,pointer_bounds=pointer_bounds)
         @self._capture.event
@@ -134,8 +137,9 @@ class GameCapture:
 
     def set_collecting(self, enabled):
         with self._lock:
-            if self._collecting != bool(enabled):
-                self._collecting = bool(enabled)
+            enabled = bool(enabled)
+            if self._collecting != enabled:
+                self._collecting = enabled
                 self.buffer.clear()
 
     def discard_pending(self):

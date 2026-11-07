@@ -1,0 +1,116 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 243,
+    "selected_paths_only": 192,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 560
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision",
+    "Section 286 frozen non-rendering battle preview AST differs from both base and current source; historical assertion preserved."
+  ],
+  "title": "采样队列转交已出队图像，窗口与光标共用当帧几何",
+  "base_commit": "85ef4c5a7d760ba7889dedd133ba0aae39732394",
+  "changed_sources": [
+    "rouge/frame_buffer.py",
+    "rouge/capture.py",
+    "rouge/player_game_binding.py",
+    "rouge/windows_dpi.py"
+  ],
+  "source_sha256": {
+    "rouge/frame_buffer.py": "a2557e7c62c509c40671270e1a17c6a3bb1ee5d111613c8e407744b5e10d3585",
+    "rouge/capture.py": "1cedf5322833c5beb5c2b1720b6c360ad981bc556f6a8681060e461a0d5b11bb",
+    "rouge/player_game_binding.py": "1bb384731eb57c226ae8fd1be676781391f680ce1995893aa223b19f8f72860e",
+    "rouge/windows_dpi.py": "ace4a6286d39856520a4b2d5ac2696c68f1b0a125900f81962dca9a556a6a37d"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 60,
+    "full_suite_run": false,
+    "runs": [
+      {
+        "platform": "offscreen",
+        "run": 60,
+        "passed": 59,
+        "skipped": 1,
+        "seconds": 29.291
+      },
+      {
+        "platform": "Windows Qt",
+        "run": 1,
+        "passed": 1,
+        "seconds": 0.122,
+        "test": "BindingTests.test_owned_native_identity_and_geometry (the previously skipped case)"
+      }
+    ],
+    "modules": [
+      "test_frame_buffer",
+      "test_capture_queue",
+      "test_observation_timeline",
+      "test_sampling_flow",
+      "test_current_sync_ui",
+      "test_new_run_capture_view_112",
+      "test_player_feature_416"
+    ],
+    "comparison": {
+      "operations": 1600,
+      "windows_budgets": 4,
+      "exported_frames": 407,
+      "copied_image_bytes": [
+        136782000,
+        128628000
+      ],
+      "novelty_resizes": [
+        1037,
+        283
+      ],
+      "native_assistant_rect_and_cursor_formula_equal": true
+    },
+    "iteration": "Initial targeted run had four errors: the fake HWND in test_capture_queue reached real ClientToScreen. Share the already measured frame origin in the callback and provide deterministic native geometry and cursor data in the fixture. Verify actual physical-pixel behavior separately on Windows.",
+    "live_window": "Previous assistant exited normally. New project pythonw -m rouge.app toolbar visible, on screen, not minimized or cloaked; WM_NULL responded."
+  },
+  "review": {
+    "standards": "Each accepted offer owns one image; the only shared retained frame is the latest at the tail. Transferring an older popped image is safe while retained/manual/latest images remain copied under the lock. Count unique retained images without constructing an identity dict and subtract each trimmed image once. Compute and memoize novelty only in actual comparable overload pairs. Native API signatures are process-wide; each read still enters and restores thread-local DPI. Origin used for cursor and client rectangle comes from one DWM frame measurement. D372 shape guard, D373 exception handling and D374 restore behavior untouched.",
+    "requirements": "Differential offers, forced and current-first takes, latest, resets, stale offers, multiple sizes, grayscale/color, one-frame and byte overload. After export mutate the returned image and compare the next read and every statistic. Native Windows comparison on the assistant window checked old/new client bounds and cursor formula and restoration of thread DPI. No game actions; no continuous live session measured. New module is a shared native implementation and is included in the review denominator."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D372",
+    "D373",
+    "D374"
+  ]
+}

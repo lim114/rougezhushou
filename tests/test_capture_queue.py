@@ -26,12 +26,22 @@ class CaptureQueueTests(unittest.TestCase):
         self.target={'hwnd':12,'pid':123,'title':'Arknights'}
         for p in (patch('rouge.capture.list_game_windows',return_value=[self.target]),
                   patch('windows_capture.WindowsCapture',FakeWGC),
-                  patch('rouge.capture.frame_client_rect',return_value=[0,0,80,60]),
+                  patch('rouge.capture._frame_geometry',return_value=([0,0,80,60],(-100,40))),
+                  patch('rouge.capture.win32gui.GetCursorInfo',return_value=(1,0,(-80,50))),
                   patch('rouge.capture.win32gui.IsWindow',return_value=True),
                   patch('rouge.capture.win32gui.IsIconic',return_value=False)):
             p.start();self.addCleanup(p.stop)
         self.capture=GameCapture();self.capture.connect(self.target)
         self.addCleanup(self.capture.close)
+
+    def test_pointer_position_uses_screen_origin_of_this_frame(self):
+        with patch('rouge.software_pointer.SoftwarePointer.locate',return_value=(18,8,23,14)) as locate:
+            FakeWGC.instances[-1].push(100)
+        self.assertEqual(locate.call_args.args[1],(20,10))
+        self.assertFalse(locate.call_args.kwargs['may_learn'])
+        frame=self.capture.next_frame(force=True)
+        self.assertEqual(frame['pointer_bounds'],(18,8,23,14))
+        self.assertEqual(frame['client_rect'],[0,0,80,60])
 
     def test_capture_retains_short_pages_while_consumer_is_busy(self):
         native=FakeWGC.instances[-1]

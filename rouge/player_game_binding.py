@@ -1,18 +1,10 @@
 """Read-only native window identity/geometry and non-activating companion following."""
-import ctypes,time
-from contextlib import contextmanager
+import time
 from PySide6.QtCore import QObject,QTimer,QPoint,QRect,Qt,QEvent
 from PySide6.QtWidgets import QApplication,QDialog
 from shiboken6 import isValid
+from .windows_dpi import physical_pixels
 
-@contextmanager
-def physical_pixels():
-    user=ctypes.WinDLL('user32',use_last_error=True)
-    user.SetThreadDpiAwarenessContext.argtypes=[ctypes.c_void_p];user.SetThreadDpiAwarenessContext.restype=ctypes.c_void_p
-    prior=user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
-    try:yield
-    finally:
-        if prior:user.SetThreadDpiAwarenessContext(prior)
 
 def logical_rect(client,monitor,logical_origin,scale):
     if not isinstance(scale,(int,float)) or not .5<=scale<=8:raise ValueError('无法核对屏幕缩放。')

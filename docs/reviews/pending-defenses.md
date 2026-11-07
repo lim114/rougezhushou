@@ -168,3 +168,15 @@ local_sequence 对 Decimal 转浮点额外捕获 OverflowError 和 ValueError。
 ## D371 · 页面 OCR 的可用版本检查
 
 PageOCR._supported 捕获 ImportError 和 PackageNotFoundError。读不到 RapidOCR 或包版本时，由原引擎处理整帧，诊断保留未验证覆盖状态。建议保留；替代为直接上报读取错误。实机发生率未知，等待决定，当前处理不变。
+
+## D372 · 队列缩略图尺寸二次核对
+
+FrameBuffer._similar 已比较含原始 shape 的帧身份；缩略图由同一确定性缩放生成。建议删除随后重复的缩略图形状分支，替代为保留；严格像素及差异阈值仍有效。尚未更改。
+
+## D373 · 窗口消失时的几何读取出口
+
+当前帧的窗口几何查询捕获 OSError、win32gui.error 时返回未知。建议保留；替代为让错误离开采样回调。此次仅共享几何读数，未变更异常类型或未知语义。实机发生率未知。
+
+## D374 · 线程 DPI 旧模式为空
+
+Windows 返回有效旧模式时，physical_pixels 在 finally 中恢复；返回空值时，现有判断跳过恢复。建议保留；若需另一处理策略，另行确定。采样和窗口绑定已共用原行为，当前未改动这一判断。

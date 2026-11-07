@@ -16,10 +16,11 @@ import numpy as np
 class FrameBuffer:
     def __init__(self, max_bytes=96 * 1024 * 1024, max_frames=16,
                  settle_seconds=.12):
-        if int(max_bytes) <= 0 or int(max_frames) <= 0 or settle_seconds < 0:
+        if ((byte_limit := int(max_bytes)) <= 0 or (frame_limit := int(max_frames)) <= 0
+                or settle_seconds < 0):
             raise ValueError('Frame buffer limits must be positive.')
-        self.max_bytes = int(max_bytes)
-        self.max_frames = int(max_frames)
+        self.max_bytes = byte_limit
+        self.max_frames = frame_limit
         self.settle_seconds = float(settle_seconds)
         self._lock = threading.Lock()
         self._pending = deque()
@@ -86,35 +87,37 @@ class FrameBuffer:
         return float(blocks.max(initial=0)) <= 2.5
 
     @staticmethod
-    def _export(frame):
-        return dict(image=frame['image'].copy(), captured_at=frame['captured_at'],
+    def _export(frame, *, copy_pixels):
+        return dict(image=frame['image'].copy() if copy_pixels else frame['image'], captured_at=frame['captured_at'],
                     client_rect=(list(frame['client_rect'])
                                  if frame['client_rect'] is not None else None),
                     target=dict(frame['target']), seq=frame['seq'],
                     generation=frame['generation'],pointer_bounds=frame['pointer_bounds'])
 
     def _retained(self):
-        retained = {id(frame['image']): frame['image'] for frame in self._pending}
-        if self._latest is not None:
-            retained[id(self._latest['image'])] = self._latest['image']
-        return len(retained), sum(image.nbytes for image in retained.values())
+        count = len(self._pending)
+        size = sum(frame['image'].nbytes for frame in self._pending)
+        # Every offer owns its pixels. Only the queue tail can also be latest.
+        if self._latest is not None and (not count or self._pending[-1] is not self._latest):
+            count += 1
+            size += self._latest['image'].nbytes
+        return count, size
 
     def _trim(self):
-        while self._pending:
-            count, size = self._retained()
-            if count <= self.max_frames and size <= self.max_bytes:
-                break
+        count, size = self._retained()
+        while self._pending and (count > self.max_frames or size > self.max_bytes):
             duplicate_index = None
             # Keep the latest occurrence of a repeated page. Its sequence stays
             # in its original position, so surviving pages remain chronological.
             frames = list(self._pending)
-            for index, candidate in enumerate(frames[:-1]):
-                if any(self._similar(candidate, later)
-                       for later in reversed(frames[index + 1:])):
+            for index in range(len(frames)-1):
+                candidate = frames[index]
+                if any(self._similar(candidate, frames[j])
+                       for j in range(len(frames)-1, index, -1)):
                     duplicate_index = index
                     break
             if duplicate_index is not None:
-                del self._pending[duplicate_index]
+                drop_index = duplicate_index
                 self._counts['overflow_duplicates'] += 1
             else:
                 # Under sustained animation, preserve boundaries between
@@ -131,10 +134,14 @@ class FrameBuffer:
                     previous_distance = distance
                 choice = min(choices) if choices else None
                 if choice is not None and choice[0] <= .04:
-                    del self._pending[choice[1]]
+                    drop_index = choice[1]
                     self._counts['overflow_low_novelty'] += 1
                 else:
-                    self._pending.popleft()
+                    drop_index = 0
+            # All eviction choices precede the latest frame, which fits alone.
+            size -= frames[drop_index]['image'].nbytes
+            count -= 1
+            del self._pending[drop_index]
             self._counts['overflow'] += 1
             if not self._pending and self._latest['seq'] > self._last_taken_seq:
                 # A one-frame budget may evict a sharper earlier representative
@@ -145,6 +152,14 @@ class FrameBuffer:
     def _distance(left, right):
         if left['key'] != right['key']:
             return 1.
+        for frame in (left, right):
+            if 'novelty' not in frame:
+                thumb = frame['thumb']
+                height, width = thumb.shape[:2]
+                scale = min(1., 96. / max(height, width))
+                frame['novelty'] = cv2.resize(thumb, (max(1, round(width * scale)),
+                                                      max(1, round(height * scale))),
+                                              interpolation=cv2.INTER_AREA)
         return float(cv2.absdiff(left['novelty'], right['novelty']).mean()) / 255.
 
     def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None):
@@ -178,11 +193,6 @@ class FrameBuffer:
                 return seq
             self._last_time = timestamp
             thumb, quality, summary = self._thumbnail(image)
-            thumb_height, thumb_width = thumb.shape[:2]
-            novelty_scale = min(1., 96. / max(thumb_height, thumb_width))
-            novelty = cv2.resize(thumb, (max(1, round(thumb_width * novelty_scale)),
-                                         max(1, round(thumb_height * novelty_scale))),
-                                interpolation=cv2.INTER_AREA)
             identity = dict(target or {})
             rect = tuple(client_rect) if client_rect is not None else None
             frame = dict(image=image.copy(), captured_at=timestamp,
@@ -190,7 +200,7 @@ class FrameBuffer:
                          client_rect=rect, target=identity, seq=seq,
                          generation=self._generation,
                          key=(image.shape, rect, identity.get('hwnd'), identity.get('pid')),
-                         thumb=thumb, quality=quality, summary=summary, novelty=novelty,
+                         thumb=thumb, quality=quality, summary=summary,
                          ready_at=time.monotonic() + self.settle_seconds)
             self._latest = frame
             if self._reference is not None and self._similar(self._reference, frame):
@@ -231,12 +241,14 @@ class FrameBuffer:
             else:
                 return None
             self._last_taken_seq = max(self._last_taken_seq, frame['seq'])
-            return self._export(frame)
+            # An older popped frame has no retained pixel owner. The manual
+            # latest-frame fallback still owns its pixels and needs a copy.
+            return self._export(frame, copy_pixels=frame is self._latest)
 
     def latest(self):
         """Return a copy for diagnostics; recognition should use take()."""
         with self._lock:
-            return self._export(self._latest) if self._latest is not None else None
+            return self._export(self._latest, copy_pixels=True) if self._latest is not None else None
 
     def clear(self):
         """Invalidate a capture/run generation without reusing sequence IDs."""

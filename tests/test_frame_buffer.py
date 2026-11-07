@@ -15,6 +15,26 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_take_transfers_only_the_popped_older_image(self):
+        copies=[]
+        class TrackedImage(np.ndarray):
+            def copy(self,*args,**kwargs):
+                copies.append(self.nbytes)
+                return super().copy(*args,**kwargs)
+        buffer=FrameBuffer(settle_seconds=0)
+        first=page(30).view(TrackedImage)
+        last=page(130).view(TrackedImage)
+        buffer.offer(first,1);buffer.offer(last,2)
+        self.assertEqual(len(copies),2)
+        result=buffer.take()
+        self.assertEqual(len(copies),2)
+        result['image'][:]=0
+        self.assertTrue(first.any())
+        result=buffer.take()
+        self.assertEqual(len(copies),3)
+        result['image'][:]=0
+        np.testing.assert_array_equal(buffer.take(force=True)['image'],last)
+
     def test_pointer_exclusion_belongs_to_retained_frame_not_latest_mouse(self):
         buffer=FrameBuffer(settle_seconds=0);bounds=[4,8,28,40]
         buffer.offer(page(30),1,pointer_bounds=bounds)

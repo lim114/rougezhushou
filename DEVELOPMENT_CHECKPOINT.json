@@ -10426,12 +10426,12 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance_save": {
-    "title": "复用完全相同的识别快照，关闭行缓存时跳过像素序列化",
-    "receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
+    "title": "采样队列转交已出队图像，窗口与光标共用当帧几何",
+    "receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/code-constraints-spawn-selection-timing-20261107/summary.json",
+    "previous_implementation_receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
     "defense_decisions": "docs/decisions/2026-11-04-existing-defense-review.md",
     "pending_decisions": [
       "D319",
@@ -10453,7 +10453,10 @@
       "D368",
       "D369",
       "D370",
-      "D371"
+      "D371",
+      "D372",
+      "D373",
+      "D374"
     ],
     "resolved_decisions": [
       "D317",
@@ -10768,7 +10771,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "继续独立逐模块回顾与识别链路核对，D358/D371保留统一待审清单。"
+    "next_batch_focus": "继续独立模块回顾；D372–D374与其余未决防御集中保留。"
   },
   "branch_transition": {
     "active_branch": "main",

@@ -2844,10 +2844,10 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "a22baa1910335b709566e3d2c24e59128a7c1710bc683d10bddf01edfc305194",
+    "DEVELOPMENT_CHECKPOINT.json": "10be248f0da81ee95a0a64a75333b5f4292244de449d4b7af67c1f1351618685",
     "PROJECT_PROGRESS.md": "580bf41d804893d1b1ef0af2b714d0b08163c037cda9533234eb45f959369727",
-    "WORK_IN_PROGRESS.md": "8ebf5a74ed56845eba0c9991789dcd0cd261f440329a26ed53fbe7ea8e500a36",
-    "PROJECT_COMPLETED.md": "043c963b0c0a57d151ed423adf5d8b437eb8b9953f1903bb14f2ae946a50d55b",
+    "WORK_IN_PROGRESS.md": "bb250f4e6a77f0d9a81d9a74f4988b6ab2c6d29a470d25d36354dd198e015895",
+    "PROJECT_COMPLETED.md": "1107ad23584445711cb9749a298d4edb7a1d0b3d3ef3eb920567f335ceb925af",
     "AGENTS.md": "2a954dbc42df5a29c844c7dc831b12096465b912af962fad595a567bfc800f86",
     "PROJECT_REQUIREMENTS.md": "75f55769f3cbafa6a33fb284e9c2db70934693524c35d3c246f9b1f765f1013f",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
@@ -2876,12 +2876,12 @@
     "short_page_coverage_accepted": false
   },
   "current_maintenance": {
-    "title": "复用完全相同的识别快照，关闭行缓存时跳过像素序列化",
-    "receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
+    "title": "采样队列转交已出队图像，窗口与光标共用当帧几何",
+    "receipt": "verification/maintenance/code-constraints-frame-ownership-20261107/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/code-constraints-spawn-selection-timing-20261107/summary.json",
+    "previous_implementation_receipt": "verification/maintenance/code-constraints-ocr-owned-snapshots-20261107/summary.json",
     "defense_decisions": "docs/decisions/2026-11-04-existing-defense-review.md",
     "pending_decisions": [
       "D319",
@@ -2903,7 +2903,10 @@
       "D368",
       "D369",
       "D370",
-      "D371"
+      "D371",
+      "D372",
+      "D373",
+      "D374"
     ],
     "resolved_decisions": [
       "D317",
@@ -3218,7 +3221,7 @@
     "rank_error_approval": "docs/decisions/2026-11-06-skill-rank-errors.md",
     "supplemental_budget_opening_approval": "docs/decisions/2026-11-06-supplemental-budget-opening-errors.md",
     "choice_document_error_approval": "docs/decisions/2026-11-06-choice-document-error-boundaries.md",
-    "next_batch_focus": "继续独立逐模块回顾与识别链路核对，D358/D371保留统一待审清单。",
-    "receipt_sha256": "58ddeeaf26f15c5f2d1de342fc608e5a3fcddf8367c0e8e9ba28443f787a69af"
+    "next_batch_focus": "继续独立模块回顾；D372–D374与其余未决防御集中保留。",
+    "receipt_sha256": "292925e539ce0b69341627b2c90798118d45eaa676653cd4e420dc63505cd9bf"
   }
 }
