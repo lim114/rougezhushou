@@ -1,3 +1,7 @@
+## 维护 · 公开资料跨版本定位一次刷新目标池（2026-11-06）
+
+跨版本带搜索词跳转只生成一次池目录和一次目标成员表；37项定向通过。D343待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-exact-archive-selection-20261106/summary.json)。
+
 ## 维护 · 交换提供物切换只绘制一次，事件检索复用查询词（2026-11-06）
 
 切换提供物后仅绘制新选择一次，同物品更新保留选择。144组事件筛选与旧版相同，结果前置列表与来源隔离。16项定向通过。D342待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-exchange-refresh-event-search-20261106/summary.json)。

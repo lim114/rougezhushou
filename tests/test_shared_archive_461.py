@@ -43,6 +43,18 @@ class SharedArchiveTests(unittest.TestCase):
         self.assertTrue(self.owner.open_archive_pool(version,identity));self.assertEqual(self.p.version.currentData(),version);self.assertEqual(self.p.pools.currentItem().data(Qt.ItemDataRole.UserRole),identity)
         self.assertFalse(self.owner.open_archive_pool('missing-version',identity));self.assertIsNone(self.p.pools.currentItem());self.assertEqual(self.p.members.rowCount(),0)
         self.assertFalse(self.owner.open_archive_pool(version,'missing-pool'));self.assertIsNone(self.p.pools.currentItem());self.assertEqual(self.p.members.rowCount(),0)
+    def test_switch_version_with_active_search_builds_only_target_members(self):
+        self.p.version.setCurrentIndex(self.p.version.findData('base'))
+        self.p.pool_search.setText('报废轮子')
+        pool = next(row for row in self.p.data['versions']['dlc1'] if row['collectibles'])
+        with patch.object(model, 'pool_rows', wraps=model.pool_rows) as pool_rows, \
+             patch.object(model, 'members', wraps=model.members) as members:
+            self.assertTrue(self.p.select_exact_pool('dlc1', pool['id']))
+        pool_rows.assert_called_once_with(self.p.data, 'dlc1', '')
+        self.assertEqual(members.call_count, 1)
+        self.assertIs(members.call_args.args[1], pool)
+        self.assertEqual(self.p.members.rowCount(), len(pool['collectibles']))
+
     def test_pool_without_statistics_displays_items_and_effects_without_empty_numeric_columns(self):
         pool=self.p.data['versions']['base'][0];self.owner.open_archive_pool('base',pool['id'])
         self.assertGreater(self.p.members.rowCount(),0);self.assertFalse(self.p.sources.isVisible());self.assertTrue(self.p.members.isColumnHidden(1));self.assertTrue(self.p.members.isColumnHidden(2));self.assertFalse(self.p.members.isColumnHidden(0));self.assertFalse(self.p.members.isColumnHidden(3))

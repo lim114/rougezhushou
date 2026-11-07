@@ -80,3 +80,7 @@ public_archive.members 收到 occurrenceRate=10**1000 时，math.isfinite 抛出
 ## D342 · 交换资料读取错误出口
 
 related_exchanges 将 ValueError、KeyError、TypeError、AttributeError 同时当作无交换记录。建议先核实来源错误契约，将其与已验证资料上的内部异常分开；D317 已批准的来源身份要求继续保留。等待用户决定。
+
+## D343 · 完整资料页的来源时区
+
+ArchivePanel.render_members 将没有时区的时间按本机时区换算；悬停卡显示来源时间未知。建议两处仅对带明确时区的有效时间换算，其他显示待确认。已询问；D340 的异常捕获范围另行确认。

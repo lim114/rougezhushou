@@ -4,7 +4,7 @@ from threading import Thread
 from datetime import datetime,timezone,timedelta
 from hashlib import sha256
 import json,os
-from PySide6.QtCore import Signal,Qt,QUrl,QTimer
+from PySide6.QtCore import Signal,Qt,QUrl,QTimer,QSignalBlocker
 from PySide6.QtGui import QDesktopServices
 from .view_catalog import relic_icon,relic_icon_note
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QListWidget,QListWidgetItem,QTableWidget,QTableWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QCheckBox,QSizePolicy,QHeaderView,QAbstractItemView
@@ -60,19 +60,25 @@ class ArchivePanel(QWidget):
             self.status.setText('路标档案馆 · 本机资料');self.scope_note.setText(self.data['version_applicability'])
         else:self.status.setText('暂无公开资料，可点击更新');self.scope_note.clear()
         self.version.blockSignals(False);self.render_pools();self.render_events()
-    def render_pools(self,*_):
-        current=self.pools.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current and self.selection_version==self.version.currentData()else None
-        rows=model.pool_rows(self.data,self.version.currentData(),self.pool_search.text())if self.data else[];self.pool_by_id={r['id']:r for r in rows};self.selection_version=self.version.currentData()
+    def render_pools(self, *_, selected=...):
+        version = self.version.currentData()
+        current = self.pools.currentItem()
+        same_version = self.selection_version == version
+        if selected is ...:
+            selected = current.data(Qt.ItemDataRole.UserRole) if current is not None and same_version else None
+        rows = model.pool_rows(self.data, version, self.pool_search.text()) if self.data else []
+        self.pool_by_id = {row['id']: row for row in rows}
+        self.selection_version = version
         self.pools.blockSignals(True);self.pools.clear()
         for row in rows:
             bindings='、'.join(b['nodeName']for b in row.get('nodeBindings',[])if b.get('nodeName'))
             item=QListWidgetItem(row['name']+(' · '+bindings if bindings else'')+f" · {len(row['collectibles'])}种资料成员");item.setData(Qt.ItemDataRole.UserRole,row['id']);self.pools.addItem(item)
             if row['id']==selected:self.pools.setCurrentItem(item)
         if selected not in self.pool_by_id:self.pools.setCurrentRow(-1)
-        self.pools.blockSignals(False);self.select_pool()
-    def select_pool(self,*_):
+        self.pools.blockSignals(False);self.select_pool(keep_source=same_version)
+    def select_pool(self, *_, keep_source=True):
         item=self.pools.currentItem();row=self.pool_by_id.get(item.data(Qt.ItemDataRole.UserRole))if item else None
-        old=self.sources.currentData();self.sources.blockSignals(True);self.sources.clear()
+        old=self.sources.currentData() if keep_source else None;self.sources.blockSignals(True);self.sources.clear()
         for key,label,_ in model.distributions(row)if row else[]:self.sources.addItem(label,key)
         self.sources.setCurrentIndex(max(0,self.sources.findData(old)));self.sources.blockSignals(False);self.sources.setVisible(self.sources.count()>0)
         if row and not self.busy:self.status.setText('路标档案馆 · 本机资料')
@@ -82,21 +88,28 @@ class ArchivePanel(QWidget):
         current=self.pools.currentItem()
         if self.version.currentData()==version and current is not None and current.data(Qt.ItemDataRole.UserRole)==identity:return True
         index=self.version.findData(version)
-        if index<0:
-            self.pools.setCurrentRow(-1);self.select_pool();self.status.setText('暂无所选范围的藏品池资料');return False
-        self.version.setCurrentIndex(index);self.pool_search.clear();self.render_pools()
-        for row in range(self.pools.count()):
-            item=self.pools.item(row)
-            if item.data(Qt.ItemDataRole.UserRole)==identity:self.pools.setCurrentItem(item);return True
-        self.pools.setCurrentRow(-1);self.select_pool();self.status.setText('暂无所选藏品池资料');return False
+        if index < 0:
+            self.pools.setCurrentRow(-1)
+            self.status.setText('暂无所选范围的藏品池资料')
+            return False
+        with QSignalBlocker(self.version), QSignalBlocker(self.pool_search):
+            self.version.setCurrentIndex(index)
+            self.pool_search.clear()
+        self.render_pools(selected=identity)
+        if identity in self.pool_by_id:
+            return True
+        self.status.setText('暂无所选藏品池资料')
+        return False
     def render_members(self,*_):
         item=self.pools.currentItem();pool=self.pool_by_id.get(item.data(Qt.ItemDataRole.UserRole))if item else None
-        context=(self.version.currentData(),pool['id']if pool else None,self.sources.currentData());same=context==self.member_context
+        version = self.version.currentData()
+        source = self.sources.currentData()
+        context=(version,pool['id']if pool else None,source);same=context==self.member_context
         current=self.members.currentItem();selected=self.members.item(current.row(),0).data(Qt.ItemDataRole.UserRole)if same and current else None
         column=current.column()if same and current else 0;vertical=self.members.verticalScrollBar().value()if same else 0;horizontal=self.members.horizontalScrollBar().value()if same else 0
         self.members.setRowCount(0);self.member_context=context
         if pool is None:self.pool_note.clear();return
-        distribution=next((d for k,_,d in model.distributions(pool)if k==self.sources.currentData()),None)
+        distribution=next((d for k,_,d in model.distributions(pool)if k==source),None)
         notes=['统计口径：候选出现频率，各来源分别展示。']
         updated=(distribution or{}).get('updatedAt')
         try:updated=datetime.fromisoformat(updated.replace('Z','+00:00')).astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M')if updated else'来源未记录'
@@ -104,17 +117,17 @@ class ArchivePanel(QWidget):
         if distribution:notes += ['统计记录：'+str(distribution.get('sampleCount','未说明'))+'；更新时间：'+updated,'适用口径：'+str(distribution.get('scopeLabel')or distribution.get('observationSource')or'来源未说明'),str(distribution.get('notes')or'')]
         else:notes+=['该池暂无可核对的出现频率，概率未知。']
         replace_text(self.pool_note,'\n'.join(notes).replace('archive累计','归档累计').replace('观测边际分布','按候选出现次数统计的比例').replace('同局相关性','同一局内结果的关联'),preserve=same)
-        rows=model.members(self.data,pool,distribution,version=self.version.currentData());has_statistics=any(row['rate']is not None for row in rows)
+        rows=model.members(self.data,pool,distribution,version=version);has_statistics=any(row['rate']is not None for row in rows)
         self.members.setColumnHidden(1,not has_statistics);self.members.setColumnHidden(2,not has_statistics)
         for row in rows:
             i=self.members.rowCount();self.members.insertRow(i)
             values=[row['name'],f"{row['rate']:.2%}"if row['rate']is not None else'未知',f"{row['count']}／{row['total']}"if row['rate']is not None else'未核对',row['effect']]
             for j,value in enumerate(values):cell=QTableWidgetItem(value);cell.setToolTip(value);self.members.setItem(i,j,cell)
-            icon=row.get('icon')or'';self.members.item(i,0).setIcon(relic_icon(icon))
-            self.members.item(i,0).setData(Qt.ItemDataRole.UserRole,row['id'])
+            icon=row.get('icon')or'';name_cell=self.members.item(i,0);name_cell.setIcon(relic_icon(icon))
+            name_cell.setData(Qt.ItemDataRole.UserRole,row['id'])
             if row['id']==selected:self.members.setCurrentCell(i,column)
             note=relic_icon_note(icon)
-            if note:self.members.item(i,0).setToolTip(row['name']+'\n'+note)
+            if note:name_cell.setToolTip(row['name']+'\n'+note)
         self.member_resize.start();self.members.verticalScrollBar().setValue(vertical);self.members.horizontalScrollBar().setValue(horizontal)
     def render_events(self,*_):
         current=self.events.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
