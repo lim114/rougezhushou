@@ -1248,12 +1248,19 @@
     },
     {
       "file": "rouge/timing.py",
-      "sha256": "49e28b01e3a2d9cf4a9b61ab45b3a6ab4abd38cd33620d95f96f8dcceb669030",
+      "sha256": "85718b99ac9f02ca8fcda4500a0d86579b352ebba0674f5c7b38f029ae2fee31",
       "rule1": "selected_summary_paths_reviewed_remainder_pending",
       "rule2": "shared_helpers_have_multiple_real_consumers",
       "rule3": "pending_remainder_D101_timing_D103_relic_factors",
       "full_module_review_complete": false,
-      "evidence": "annotate_result previously evaluated AttackTimeline(scenario).output as an eager setdefault argument even if computed timing existed. Now builds only when timing is missing; existing timing identity and notes preserved. Baseline constructor-count test failed once; final existing-clock zero calls and missing-clock one call pass. Other functions/classes and all raise/try nodes unchanged. Timing remains partially reviewed, D101 unchanged."
+      "evidence": "annotate_result previously evaluated AttackTimeline(scenario).output as an eager setdefault argument even if computed timing existed. Now builds only when timing is missing; existing timing identity and notes preserved. Baseline constructor-count test failed once; final existing-clock zero calls and missing-clock one call pass. Other functions/classes and all raise/try nodes unchanged. Timing remains partially reviewed, D101 unchanged.",
+      "scoped_reviews": [
+        {
+          "receipt": "verification/maintenance/code-constraints-required-timing-data-20261106/summary.json",
+          "scope": "D101 required profiles file",
+          "full_module_review_complete": false
+        }
+      ]
     },
     {
       "file": "rouge/sp_events.py",

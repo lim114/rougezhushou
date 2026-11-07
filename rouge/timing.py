@@ -91,7 +91,7 @@ def periodic_charge_seconds(scenario,required,increment,interval,speed,offset=0,
 @lru_cache(maxsize=1)
 def profiles():
     path=Path(__file__).with_name('data')/'timing-profiles.json'
-    return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'operators':{}}
+    return json.loads(path.read_text(encoding='utf-8'))
 
 @lru_cache(maxsize=1)
 def impact_delays():

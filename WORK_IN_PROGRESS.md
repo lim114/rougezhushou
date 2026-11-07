@@ -1,3 +1,7 @@
+## 当前断点：时序必需资料缺失明确上报（2026-11-06）
+
+D101完成：删除必需时序资料缺失时的空目录默认值，直接读取并明确上报；失败不缓存，恢复文件后可再次读取。16项定向通过。原280组完成210、剩70；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-required-timing-data-20261106/summary.json`。
+
 ## 当前断点：区分本局与归档入口并删除队伍重复检查（2026-11-06）
 
 D65删除队伍重复字典检查；D62/D77归档入口过滤按授权保留并验证。19项定向18通过、1项旧文案断言失败；本局/归档与队伍8项通过。原280组完成209、剩71；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-run-archive-boundaries-20261106/summary.json`。
