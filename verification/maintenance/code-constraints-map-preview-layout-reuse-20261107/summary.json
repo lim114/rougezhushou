@@ -1,0 +1,91 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 246,
+    "selected_paths_only": 188,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "地图预览复用节点布局与查找清单",
+  "base_commit": "3e910d732765c02ac58d64dac93df37673a962c7",
+  "changed_sources": [
+    "rouge/player_map.py"
+  ],
+  "source_sha256": {
+    "rouge/player_map.py": "015c8ac6eed7819ffd051cfb5458ab74c12a37a06b313f430c08e30d3b0a8642"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 70,
+    "seconds": 29.103,
+    "full_suite_run": false,
+    "modules": [
+      "test_map_refresh_geometry_review",
+      "test_map_finder_entry_review",
+      "test_player_feature_437",
+      "test_map_layout_review",
+      "test_history_reader_review",
+      "test_node_card_source_review",
+      "test_node_card_visual_review",
+      "test_public_event_samples_450",
+      "test_source_nodes_445",
+      "test_route_information_scope"
+    ],
+    "comparison": {
+      "rendered_images": 24,
+      "hit_positions": 2952,
+      "layout_calls_in_400_hits": [
+        400,
+        1
+      ],
+      "median_ms_per_400_warm_hits": [
+        11.26,
+        4.7
+      ]
+    },
+    "comparison_scope": "Two stored map fixtures, three widget sizes, two margin configurations, current vs historical filtered preview, Qt offscreen. Warm timing is the median of eight alternating rounds, each 400 hit tests.",
+    "live_window": "Previous project instance closed through normal WM_CLOSE. New project pythonw -m rouge.app toolbar on screen, not minimized or cloaked, native response verified."
+  },
+  "review": {
+    "standards": "Cache the preview positions and both displayed sizes together. Rebuild on each set_map and on changes to widget size/content rectangle. Use the same layout for drawing and mouse hit tests. Pick the current graph before deep-copying the display snapshot, preserve selected floor through a table of tab indexes, and only rebuild the node finder on map refresh. Search and evidence-filter signals use the existing finder, independent explicit refresh reconstructs it. No new exception handlers or speculative defensive rules.",
+    "requirements": "Old and new rasters compared byte-for-byte, and hit identities checked across graph, size, margin, historical/current scope and candidate overlay combinations. Readable selections and refresh after history change covered through the real MapPanel. Preserve all existing endpoint checks pending D81 decision. No game interaction."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": []
+}

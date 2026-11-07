@@ -1,6 +1,6 @@
 """Whole-floor player map: game artwork, recorded floors and local node dossiers."""
 from pathlib import Path
-from functools import lru_cache
+from functools import lru_cache, partial
 from copy import deepcopy
 import json
 from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
@@ -63,6 +63,7 @@ class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
     def __init__(self):
         super().__init__();self.background=QImage();self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(0,0)
+        self._layout_key=None
     def sprite_for(self,kind):
         return node_sprite(kind)
     def set_type_filter(self,kind):
@@ -72,7 +73,9 @@ class PreviewMapView(MapView):
         _,floor=zone_info(graph)
         # Decoration only. Exact zone/topology remains in the graph, not inferred from artwork.
         name=f'area-{floor+1}.png'if floor and floor<6 else'area-1.png'if floor==6 else'blindness.png'
-        self.background=QImage(str(ART/name));super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
+        self.background=QImage(str(ART/name))
+        self._layout_key=None
+        super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
     def _positions(self):
         canvas=QRectF(self.contentsRect()).adjusted(min(38,self.width()*.08),min(64,self.height()*.18),-min(38,self.width()*.08),-min(72,self.height()*.2));points={}
         if self.graph:
@@ -84,6 +87,13 @@ class PreviewMapView(MapView):
     def icon_size(self,points):
         xs=sorted({round(p.x(),2)for p in points.values()})
         return min(60,max(28,min((b-a for a,b in zip(xs,xs[1:])),default=85)*.66))
+    def _node_layout(self):
+        key=(self.size(),self.contentsRect())
+        if key!=self._layout_key:
+            _,points=self._positions()
+            self._layout_data=(points,self.icon_size(points),max(46,min(112,self._badge_width(points))))
+            self._layout_key=key
+        return self._layout_data
     def paintEvent(self,event):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         outline=QPainterPath();outline.addRoundedRect(QRectF(self.rect()),12,12);p.setClipPath(outline)
@@ -91,7 +101,7 @@ class PreviewMapView(MapView):
         if not self.background.isNull():p.drawImage(QRectF(self.rect()),self.background);p.fillRect(self.rect(),QColor(0,0,0,85))
         if not self.graph:
             p.setPen(QColor('#eff4f4'));p.drawText(self.rect(),Qt.AlignmentFlag.AlignCenter,'尚无本局地图记录\n后台读到地图后会自动显示');return
-        _,points=self._positions();size=self.icon_size(points)
+        points,size,width=self._node_layout()
         for a,b in self.graph.get('edges',[]):
             if a not in points or b not in points:continue
             path=QPainterPath(points[a]);mid=(points[a]+points[b])/2
@@ -99,7 +109,7 @@ class PreviewMapView(MapView):
             p.setPen(QPen(QColor(135,143,136,90),7,Qt.PenStyle.SolidLine,Qt.PenCapStyle.RoundCap));p.drawPath(path)
             p.setPen(QPen(QColor(183,189,179,135),1.5));p.drawPath(path)
         font=self.font();font.setPointSize(9);p.setFont(font)
-        width=max(46,min(112,self._badge_width(points)));current=self.graph.get('current_node');last=self.graph.get('last_confirmed_current_node')or current
+        current=self.graph.get('current_node');last=self.graph.get('last_confirmed_current_node')or current
         for node in self.graph['nodes']:
             point=points[node['id']];kind,note,evidence=node_style(node);overlay=self.overlay.get(node['id'],{});match=overlay.get('match')
             image_kind=self.filter_kind if match=='candidate'else kind;icon=self.sprite_for(image_kind)
@@ -132,7 +142,7 @@ class PreviewMapView(MapView):
                 row=overlay.get('frequency');label=f"历史 {row['frequency']:.1%}"if row else'历史比例未知'
                 badge.translate(0,20);p.fillRect(badge,QColor(13,42,35,220));p.setPen(QColor('#bef6e3'));p.drawText(badge,Qt.AlignmentFlag.AlignCenter,label)
     def _hit(self,point):
-        _,points=self._positions();size=self.icon_size(points)
+        points,size,_=self._node_layout()
         hits=[((p-point).manhattanLength(),key)for key,p in points.items()if QRectF(p.x()-size/2-5,p.y()-size/2-7,size+10,size+35).contains(point)]
         return min(hits)[1]if hits else None
     def mouseMoveEvent(self,event):
@@ -159,11 +169,11 @@ class MapPanel(QWidget):
         for control in(self.zoom,self.details_toggle,self.latest_position,self.scope_toggle):tools.addWidget(control)
         finder.addWidget(controls)
         find=QFormLayout();find.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows);find.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
-        self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');self.node_results=QComboBox();self.node_results.setMinimumContentsLength(10);self.node_results.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon);self.find_node=QPushButton('定位节点');found=QWidget();found_row=QHBoxLayout(found);found_row.setContentsMargins(0,0,0,0);found_row.addWidget(self.node_results,1);found_row.addWidget(self.find_node);find.addRow(self.node_query,found);finder.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
+        self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');self.node_results=QComboBox();self.node_results.setMinimumContentsLength(10);self.node_results.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon);self.find_node=QPushButton('定位节点');found=QWidget();found_row=QHBoxLayout(found);found_row.setContentsMargins(0,0,0,0);found_row.addWidget(self.node_results,1);found_row.addWidget(self.find_node);find.addRow(self.node_query,found);finder.addLayout(find);self.find_node.clicked.connect(self.locate_found_node)
         self.information=QWidget();information=QVBoxLayout(self.information);information.setContentsMargins(0,0,0,0);self.status=QLabel();self.status.setWordWrap(True);information.addWidget(self.status);self.information.hide();self.scope_toggle.toggled.connect(self.information.setVisible)
         read_row=QFormLayout();read_row.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows);self.read_scope=QComboBox()
         for label,key in(('查找全部记录',None),('只查已读或历史类型','read'),('只查模板固定类型','fixed'),('只查尚待确认类型','unknown')):self.read_scope.addItem(label,key)
-        self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addRow(self.read_scope,self.coverage_notice);finder.addLayout(read_row);self.read_scope.currentIndexChanged.connect(self.update_node_finder)
+        self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addRow(self.read_scope,self.coverage_notice);finder.addLayout(read_row)
         from .player_resource_strip import ResourceStrip
         self.resources=ResourceStrip(owner.run.state);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);information.addWidget(self.floor_resources);self.context_notice=QLabel();self.context_notice.setWordWrap(True);body.addWidget(self.context_notice)
@@ -197,6 +207,9 @@ class MapPanel(QWidget):
             companion.game_overlay.kindChanged.connect(self.set_type_filter)
             self.set_type_filter(companion.game_overlay.kind)
         self.refresh()
+        apply_search=partial(self.update_node_finder,rebuild=False)
+        self.node_query.textChanged.connect(apply_search)
+        self.read_scope.currentIndexChanged.connect(apply_search)
     def refresh_statistics(self):
         if self.isVisible():self.refresh()
     def set_type_filter(self,kind):
@@ -247,20 +260,26 @@ class MapPanel(QWidget):
         if epoch!=self.epoch:
             self.close_reference()
             self.floor_selections.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
-        self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
-        if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
+        graphs=dict(self.owner.run.state.get('maps',{}));original=self.owner.map_view
+        if original.graph and original.graph.get('template_id')==(graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):
+            graphs[original.graph['zone_id']]=original.graph
+        self.graphs=deepcopy(graphs)
         self.latest_position.setEnabled(self.latest_position_key()is not None)
         finder=self.update_node_finder();self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
+        floor_indices={}
         for key,graph,name,floor in finder.zones:
             i=self.floors.addTab('第'+'一二三四五六'[floor-1]+'层'if floor else name);self.floors.setTabData(i,key);self.floors.setTabToolTip(i,name)
-        keys=[self.floors.tabData(i)for i in range(self.floors.count())];wanted=old_key if old_key in keys else(original.graph or{}).get('zone_id')
-        self.floors.setCurrentIndex(keys.index(wanted)if wanted in keys else 0 if keys else-1);self.floors.blockSignals(False);self.show_floor()
-    def update_node_finder(self,*_):
+            floor_indices[key]=i
+        current=floor_indices.get((original.graph or{}).get('zone_id'),0 if floor_indices else -1)
+        self.floors.setCurrentIndex(floor_indices.get(old_key,current));self.floors.blockSignals(False);self.show_floor()
+    def update_node_finder(self,*_,rebuild=True):
         from .player_map_find import NodeFinder
         previous=self.node_results.currentData();self.node_results.blockSignals(True);self.node_results.clear()
-        finder=NodeFinder(self.graphs)
-        c=finder.counts;self.coverage_notice.setText(f"本局已保存{len(self.graphs)}个区域：已读或历史类型{c['read']}处，模板固定{c['fixed']}处，尚待确认{c['unknown']}处。只筛查找列表，不改变地图候选。")
+        if rebuild:
+            self.node_finder=NodeFinder(self.graphs)
+            c=self.node_finder.counts;self.coverage_notice.setText(f"本局已保存{len(self.graphs)}个区域：已读或历史类型{c['read']}处，模板固定{c['fixed']}处，尚待确认{c['unknown']}处。只筛查找列表，不改变地图候选。")
+        finder=self.node_finder
         for row in finder.find(self.node_query.text(),self.read_scope.currentData()):self.node_results.addItem(row['label'],row['key'])
         i=self.node_results.findData(previous)
         if i>=0:self.node_results.setCurrentIndex(i)

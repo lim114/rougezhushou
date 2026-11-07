@@ -1,3 +1,7 @@
+## 维护 · 地图预览复用节点布局与查找清单（2026-11-07）
+
+24张完整预览图逐像素一致，2952个鼠标位置命中结果一致。固定布局400次命中计算只生成一次布局；查询和筛选复用已读节点清单。70项定向通过，原助手已更新。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-preview-layout-reuse-20261107/summary.json)。
+
 ## 维护 · 历史节点与事件持有条件复用读数，非商店条目跳过商店扫描（2026-11-07）
 
 800组历史节点和800组持有条件与旧版一致。选中非商店节点不扫描商店历史；53项定向通过。D54/D306/D307保留缺口，D81补充门槛等待确认。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-event-history-qualification-20261107/summary.json)。
