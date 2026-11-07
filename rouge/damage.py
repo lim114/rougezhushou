@@ -146,8 +146,10 @@ def _skill_damage_base(scenario: dict, profile, skill_profile) -> dict:
         components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
         stacks = int(scenario.get('deployment_stacks', 0))
         if stacks:
+            if 'companion_attack' not in scenario:
+                raise RunConditionError('请提供受益干员攻击力。')
             if companion_is_bool:raise ValueError('companion_attack 不接受布尔值；请使用数值。')
-            recipient = float(scenario['companion_attack']) * bb['atk_scale']
+            recipient = scenario['companion_attack'] * bb['atk_scale']
             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
             components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
         return {'attack': attack, 'total_damage': sum(c['total'] for c in components), 'components': components, 'inapplicable_relics': inapplicable, **status}

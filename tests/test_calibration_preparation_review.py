@@ -20,6 +20,27 @@ class PreparationReuseTests(unittest.TestCase):
         self.assertEqual(result['panels']['藏品与分队符文写回']['attack'], 716)
         self.assertAlmostEqual(result['panels']['技能期间参考']['attack'], 2720.8)
 
+    def test_matching_window_reuses_skill_but_distinct_cast_conditions_recalculate(self):
+        for scenario, expected in (
+                ({'operator':'mechanist','skill':1}, 1),
+                ({'operator':'mechanist','skill':1,'window_seconds':8}, 2),
+                ({'operator':'mechanist','skill':3,'charge_count':1}, 2),
+                ({'operator':'silverash','skill':2,'deployment_stacks':1,'companion_attack':500}, 2)):
+            with self.subTest(scenario=scenario), patch.object(damage, '_skill_damage_base',
+                                                              wraps=damage._skill_damage_base) as compute:
+                damage.calculate_damage(scenario)
+                self.assertEqual(compute.call_count, expected)
+
+    def test_silverash_deployment_needs_companion_attack_only_for_positive_stacks(self):
+        from rouge.condition_inputs import RunConditionError
+        scenario = {'operator': 'silverash', 'skill': 2, 'deployment_stacks': 0}
+        self.assertEqual(len(damage.calculate_damage(scenario)['components']), 1)
+        scenario['deployment_stacks'] = 1
+        with self.assertRaisesRegex(RunConditionError, '请提供受益干员攻击力'):
+            damage.calculate_damage(scenario)
+        scenario['companion_attack'] = 0
+        self.assertEqual(damage.calculate_damage(scenario)['components'][1]['total'], 0)
+
     def test_overlapping_references_copy_the_group_cell_once(self):
         cell = {'row': 1, 'col': 2}
         references = [{'cell': cell, 'name': name, 'reference_id': name} for name in ('甲', '乙')]

@@ -1,5 +1,6 @@
 """Attribute and repeat-cycle estimates, with explicit conditions and unknowns."""
 import math
+from copy import deepcopy
 from .condition_inputs import read_continuous_attacks
 from .catalog import catalog
 from .enemy_environment import damage_factor
@@ -106,15 +107,22 @@ def build_estimate(scenario, result, attributes, compute_skill, *, selection=Non
             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
         else:notes.append('攻击回复缺少持续攻击条件，初动与回转未知。')
     else:notes.append('缺少可用技力恢复条件，初动与回转未知。')
-    full_scenario={k:v for k,v in scenario.items() if k!='window_seconds'}
     if operator=='silverash' and skill_index==1:
         notes.append('周旋的谋略提供费用/屏障，单次直接伤害与治疗为 0；屏障不作为治疗。')
-    if operator=='silverash' and skill_index==2:
-        full_scenario.update(activation_count=1,deployment_stacks=0)
-        notes.append('御敌的锋锐单次技能仅计本体一次；受益干员部署触发在情景分项中另列。')
-    if operator=='mechanist' and skill_index==3:
-        full_scenario['charge_count']=0  # Collision time and full-cast count are unverified.
-    full=compute_skill(full_scenario)
+    separate_activation = operator == 'silverash' and skill_index == 2
+    separate_charge = operator == 'mechanist' and skill_index == 3
+    if 'window_seconds' in scenario or separate_activation or separate_charge or selection is None:
+        full_scenario = dict(scenario)
+        full_scenario.pop('window_seconds', None)
+        if separate_activation:
+            full_scenario.update(activation_count=1, deployment_stacks=0)
+            notes.append('御敌的锋锐单次技能仅计本体一次；受益干员部署触发在情景分项中另列。')
+        if separate_charge:
+            full_scenario['charge_count'] = 0
+        full = compute_skill(full_scenario)
+    else:
+        # Later shield and timing adjustments write to the full-cast result.
+        full = deepcopy(result)
     damage=full['total_damage']
     healing=0
     duration=max(0,skill['duration'])

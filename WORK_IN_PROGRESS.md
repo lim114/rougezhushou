@@ -1,3 +1,7 @@
+## 当前断点 · 相同技能窗口复用结果，明确银灰部署叠层的必需输入（2026-11-07）
+
+D352 已批准并落实。普通同条件技能只计算一次，显式窗口、银灰二技能和机械师三技能保持单独计算。100项定向通过，144组改前后对照一致，新增提示单独验收。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-full-cast-result-20261107/summary.json)。
+
 ## 当前断点 · 首批三名干员的窗口与整次技能计算共用等级资料（2026-11-07）
 
 首批三名的9个技能按当次选择共用同一份等级资料；90组完整结果或错误与旧版一致，95项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-skill-profile-reuse-20261107/summary.json)。
