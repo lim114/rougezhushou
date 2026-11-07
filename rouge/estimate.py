@@ -97,11 +97,14 @@ def build_estimate(scenario, result, attributes, compute_skill, *, selection=Non
             notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
         else:
             notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
+    attack_recovery = skill['sp_type'] == 'INCREASE_WHEN_ATTACK'
+    continuous_attacks = attack_recovery and read_continuous_attacks(scenario)
+    can_charge_on_attack = attack_recovery and (continuous_attacks or has_periodic_sp(scenario))
     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
-    elif skill['sp_type']=='INCREASE_WHEN_ATTACK':
-        if read_continuous_attacks(scenario) or has_periodic_sp(scenario):
+    elif attack_recovery:
+        if can_charge_on_attack:
             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
             initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
@@ -186,13 +189,14 @@ def build_estimate(scenario, result, attributes, compute_skill, *, selection=Non
         if duration is not None:duration=frame_time(duration)/FPS
         lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))
         if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')
-        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(scenario) or has_periodic_sp(scenario)):
+        if duration is not None and can_charge_on_attack:
             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))
-        if recharge is not None:recharge=frame_time(recharge+lockout)/FPS
-        if recharge is not None:recharge=max(recharge,math.ceil(finite(scenario.get('timing',{}).get('post_skill_lock_frames',0),'技能结束硬直帧'))/FPS)
+        if recharge is not None:
+            recharge=frame_time(recharge+lockout)/FPS
+            recharge=max(recharge,math.ceil(finite(scenario.get('timing',{}).get('post_skill_lock_frames',0),'技能结束硬直帧'))/FPS)
     from .sp_events import has_event_sp,charge as event_charge
-    if scenario.get('timing_mode','frames')=='continuous' and duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and any(
+    if scenario.get('timing_mode','frames')=='continuous' and duration is not None and attack_recovery and any(
             r['kind']=='deployment_attack_speed' or r['kind']=='periodic_sp' and r.get('clock')=='deployment'
             for r in scenario.get('_relic_rules',[])):
         lockout=finite(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0),'额外阻回秒数',3600)
@@ -230,7 +234,7 @@ def build_estimate(scenario, result, attributes, compute_skill, *, selection=Non
         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
         normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
             target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
-        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not read_continuous_attacks(scenario):
+        if attack_recovery and not continuous_attacks:
             normal_hits=0
             normal.streams=[]
         normal_damage=normal_healing=0

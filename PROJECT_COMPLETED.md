@@ -1,3 +1,7 @@
+## 维护 · 攻击回复条件在同一次技能估算中只读取一次（2026-11-07）
+
+攻击回复的初动、回转与充能期普攻共用当次条件；酒类单独供技力时仍可回转。108项定向检查通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-attack-charge-condition-20261107/summary.json)。
+
 ## 维护 · 相同技能窗口复用结果，明确银灰部署叠层的必需输入（2026-11-07）
 
 D352 已批准并落实。普通同条件技能只计算一次，显式窗口、银灰二技能和机械师三技能保持单独计算。100项定向通过，144组改前后对照一致，新增提示单独验收。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-full-cast-result-20261107/summary.json)。
