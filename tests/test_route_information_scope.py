@@ -141,6 +141,16 @@ class RouteInformationScopeTests(unittest.TestCase):
         self.assertEqual(self.window.map_view.graph['edges'], graph['edges'])
         self.assertEqual(self.window.map_view.selected, 'd')
 
+    def test_selection_renders_the_same_connections_once_for_summary_and_detail(self):
+        from rouge import map_reporting
+        self.install_graph()
+        with patch.object(map_reporting, '_connection_text', wraps=map_reporting._connection_text) as render:
+            self.window.map_view.select_node('d')
+        render.assert_called_once()
+        summary=self.window.map_route.text()
+        self.assertIn('【模板相邻节点】',summary)
+        self.assertIn(summary,self.window.map_detail.toPlainText())
+
     def test_connections_report_all_adjacent_nodes_without_selecting_one_path(self):
         graph = public_information_graph(); before = deepcopy(graph)
         text = format_connections(graph, 'a')

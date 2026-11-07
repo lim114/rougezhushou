@@ -1,3 +1,7 @@
+## 维护 · 地图节点摘要与详情共用相邻连线文字（2026-11-07）
+
+608组报告逐字相同，普通选点的连线文字从生成2次减至1次。87项定向通过，原测试窗口已更新；D365、D366进入统一待审清单。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-report-selection-20261107/summary.json)。
+
 ## 维护 · 地图预览复用节点布局与查找清单（2026-11-07）
 
 24张完整预览图逐像素一致，2952个鼠标位置命中结果一致。固定布局400次命中计算只生成一次布局；查询和筛选复用已读节点清单。70项定向通过，原助手已更新。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-map-preview-layout-reuse-20261107/summary.json)。

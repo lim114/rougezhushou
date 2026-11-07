@@ -140,3 +140,11 @@ dynamic_ocr.normalize_regions 将坐标解析的 ValueError、TypeError、Overfl
 ## D359 · 纯视觉整帧缓存标识的异常范围
 
 VisualReader.read 的 TypeError、ValueError、AttributeError 捕获目前覆盖上下文取值、confirmed_config、ORB 设置与 JSON 序列化。隔离样本在额外记录含集合时连续两帧都跳过整帧缓存。建议仅处理 JSON 序列化的 TypeError/ValueError，配置提取或设置读取错误正常上报。替代为保留原范围。实机触发率未知，尚未改动这处异常处理。
+
+## D365 · 地图选中回调与节点目录的构造顺序
+
+MainWindow 先建地图页并连接选中信号，之后才创建 node_catalog。map_node_selected 每次用 hasattr 跳过目录尚未创建的情形。建议在目录就绪后连接相关选中回调，再直接访问目录；替代为保留现状。启动阶段发生率未知，待决定。
+
+## D366 · 相邻节点文字报告的缺端点提示
+
+连接信息查不到相邻端点时显示一行“连接端点位置未确认”，继续列出其他邻居。建议保留；替代为只略去该行。普通及历史报告保留原语义，已在隔离图复现，真实频率未知。D81 是画线出口，授权分别记录。

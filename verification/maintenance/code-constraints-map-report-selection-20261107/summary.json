@@ -1,0 +1,86 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 85,
+    "structural_only": 245,
+    "selected_paths_only": 189,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "地图节点摘要与详情共用相邻连线文字",
+  "base_commit": "bd1e2fe7ae7d9e7cca477a8e53176ca521403112",
+  "changed_sources": [
+    "rouge/map_reporting.py",
+    "rouge/app.py"
+  ],
+  "source_sha256": {
+    "rouge/map_reporting.py": "8e87ed5fb97b478b513e3d8a83c05260c5f58875a8fbe9d9fa50059b44a13fe2",
+    "rouge/app.py": "b1db3a6608180b6304f30df7582a2c5f5b45ceb29137121d74b595d99c7d7538"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "tests_passed": 87,
+    "seconds": 26.194,
+    "full_suite_run": false,
+    "modules": [
+      "test_readable_map_047",
+      "test_exploration_routes_049",
+      "test_route_information_scope",
+      "test_node_content",
+      "test_map_refresh_geometry_review",
+      "test_run_state_reliability"
+    ],
+    "comparison": {
+      "equal_text_pairs": 608,
+      "connection_generation_per_player_selection": [
+        2,
+        1
+      ]
+    },
+    "live_window": "Previous assistant closed normally; project pythonw -m rouge.app started. Verified visible, on-screen, responsive toolbar. No game operations or live game latency measured."
+  },
+  "review": {
+    "standards": "Use the same selected node and rendered connection text for normal summary and details. Whole-map node positions reused for references and labels; diagnostics resolve requested positions in one pass and compact reports stop after their summary. Single-use naming wrappers removed; group candidate names and technical IDs processed together. Individual format_node and format_connections callers retain their entry behavior. No new exception or speculative recovery. D365 and D366 left unchanged for approval.",
+    "requirements": "608 output pairs compared against fixed base including missing selection, historical and current graphs, invalid edge, repeated ID, empty nodes, compact and detailed reports. MainWindow Qt selection checked for exactly one connection render and identical summary inside detail. Route diagnostics are opt-in. Source graph copies compared after reads."
+  },
+  "partially_implemented_decisions": [],
+  "new_pending_decisions": [
+    "D365",
+    "D366"
+  ]
+}

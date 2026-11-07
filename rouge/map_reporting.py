@@ -5,15 +5,6 @@ from .run_config import config_data
 from .exploration_routes import route_reference
 
 
-def _candidate_name(candidate):
-    name = candidate.get('name')
-    if name and name.startswith('空分支'):
-        return '不生成对象'
-    if name:
-        return name
-    return '名称未确认的对象' if candidate.get('entity_id') else '不生成对象'
-
-
 def format_rewards(content, *, technical=False):
     """Use named conditional rewards and spawn candidates without a guessed rate."""
     if not content:
@@ -44,10 +35,18 @@ def format_rewards(content, *, technical=False):
         lines.append('关卡：'+variant['name']+'（'+label+'）')
         for field, label in (('battle_chest_groups','宝箱生成候选'),('rare_enemy_groups','特殊敌人生成候选')):
             for index, group in enumerate(variant[field], 1):
-                names = list(dict.fromkeys(_candidate_name(c) for c in group['candidates']))
+                names = {}
+                for candidate in group['candidates']:
+                    name = candidate.get('name')
+                    entity = candidate.get('entity_id')
+                    if not name:
+                        name = '名称未确认的对象' if entity else '不生成对象'
+                    elif name.startswith('空分支'):
+                        name = '不生成对象'
+                    names[name] = None
+                    if technical and entity:
+                        technical_candidates.append(str(entity))
                 lines.append(f'  {label}组{index}：'+' / '.join(names))
-                if technical:
-                    technical_candidates.extend(str(c['entity_id']) for c in group['candidates'] if c.get('entity_id'))
         lines.append('  生成条件和概率未核验；生成候选不等于击破奖励或结算掉落。')
         sources.append(variant['level_evidence']['url'])
     lines.extend(['', '【尚未核验】'])
@@ -75,22 +74,6 @@ def location(node, rows):
     return f"{row} · 第{node['col']+1}列"
 
 
-def _map_position(graph, node_id):
-    node = next((n for n in graph.get('nodes', []) if n['id'] == node_id), None)
-    return location(node, graph['grid']['rows']) if node else '位置未确认'
-
-
-def _zone_name(zone_id):
-    return config_data()['zones'].get(zone_id, {}).get('name') or '区域名称未确认'
-
-
-def _variant_label(content):
-    stage = catalog()['stages'].get(content.get('variant_id'))
-    if not stage or stage.get('name') != content.get('title'):
-        return '未唯一确认；普通/紧急可能同名'
-    return {'FOUR_STAR': '紧急作战', 'NORMAL': '普通作战'}.get(stage.get('difficulty'), '关卡难度未确认')
-
-
 def format_route(graph, node_id, *, historical=False, technical=False, compact=False):
     route = route_reference(graph, node_id, historical=historical)
     if route['status'] == 'unavailable':
@@ -105,6 +88,12 @@ def format_route(graph, node_id, *, historical=False, technical=False, compact=F
         return '当前已在所选位置；移动距离为0。重新进入可重复节点通常另耗1行动力，不计为免费进入。'
     path = route['topology']; corridor = route['corridor']
     lines = [f"从当前确认位置出发：模板最短连线 {path['steps']} 步。"]
+    if compact:
+        summary = (f"途中类型符合穿越条件的路线：{corridor['steps']} 步，普通徒步基础 {corridor['base_walking_ap']} 行动力。"
+                   if corridor else '橙色虚线仅作拓扑参考，尚未确认可直接徒步。')
+        return lines[0]+'\n'+summary+'实际阻碍和当前行动力尚未确认；详见节点报告。'
+    referenced=set(route['display_path']).union(path['unconfirmed_intermediate_nodes'])
+    positions = {n['id']:location(n,graph['grid']['rows']) for n in graph['nodes'] if n['id'] in referenced}
     if path['equal_shortest_paths'] > 1:
         lines.append(f"同长拓扑路线 {path['equal_shortest_paths']} 条。"+
                      ('图上展示其中一条参考。' if not corridor or corridor['steps']==path['steps']
@@ -118,13 +107,9 @@ def format_route(graph, node_id, *, historical=False, technical=False, compact=F
         if not route['target_revealed']:
             lines.append('目标尚未在本帧明确揭示；模板或历史名称不证明现在可进入。')
         if path['unconfirmed_intermediate_nodes']:
-            lines.append('途中通过情况未确认：'+'、'.join(_map_position(graph,key)
+            lines.append('途中通过情况未确认：'+'、'.join(positions.get(key,'位置未确认')
                          for key in path['unconfirmed_intermediate_nodes'])+'。已揭示节点仍可能需要先完成。')
-    if compact:
-        summary = (f"途中类型符合穿越条件的路线：{corridor['steps']} 步，普通徒步基础 {corridor['base_walking_ap']} 行动力。"
-                   if corridor else '橙色虚线仅作拓扑参考，尚未确认可直接徒步。')
-        return lines[0]+'\n'+summary+'实际阻碍和当前行动力尚未确认；详见节点报告。'
-    lines.append('图上路线：'+' → '.join(_map_position(graph,key) for key in route['display_path']))
+    lines.append('图上路线：'+' → '.join(positions.get(key,'位置未确认') for key in route['display_path']))
     lines.append('住民占领、弥散虚雾、完成标志及当前行动力未完整读取；连线尚未独立核验，不保证可出发。基础消耗未计羽瞰点返还与其他修正；结局和难度收益未参与比较。')
     if technical:
         lines.append('徒步规则来源：PRTS《沉沦者的黑流树海》；当前页面观察及原文哈希见本批路线证据。')
@@ -134,11 +119,16 @@ def format_route(graph, node_id, *, historical=False, technical=False, compact=F
 
 def format_connections(graph,node_id, *, historical=False):
     node=next((n for n in (graph or {}).get('nodes',[]) if n['id']==node_id),None)
+    return _connection_text(graph,node,historical)
+
+
+def _connection_text(graph,node,historical):
     if node is None:return '请选择地图节点查看位置与相邻连接。'
-    neighbors=[]
+    node_id=node['id']
+    neighbors={}
     for a,b in graph.get('edges',[]):
         other=b if a==node_id else a if b==node_id else None
-        if other is not None and other not in neighbors:neighbors.append(other)
+        if other is not None:neighbors[other]=None
     positions={n['id']:n for n in graph['nodes']}
     lines=[('历史位置：' if historical else '所选位置：')+location(node,graph['grid']['rows']), '【模板相邻节点】']
     for key in neighbors:
@@ -158,10 +148,24 @@ def format_connections(graph,node_id, *, historical=False):
     return '\n'.join(lines)
 
 
+def node_reports(graph, node_id, *, historical=False, technical=False):
+    """Build the player's connection summary and detail from the same selected node."""
+    node=next((n for n in graph['nodes'] if n['id']==node_id),None) if graph else None
+    connections=_connection_text(graph,node,historical)
+    return connections, _node_details(graph,node,historical,technical,connections) if node is not None else ''
+
+
 def format_node(graph, node_id, *, historical=False, technical=False, include_historical_route_diagnostics=False):
+    if not include_historical_route_diagnostics:
+        return node_reports(graph,node_id,historical=historical,technical=technical)[1]
     node = next((n for n in graph['nodes'] if n['id']==node_id), None) if graph else None
     if node is None:
         return ''
+    return _node_details(graph,node,historical,technical,None)
+
+
+def _node_details(graph,node,historical,technical,connections):
+    node_id=node['id']
     lines = [location(node, graph['grid']['rows']), '', '【节点状态】']
     if historical:
         lines.append('历史参考；不代表本帧状态。')
@@ -182,7 +186,11 @@ def format_node(graph, node_id, *, historical=False, technical=False, include_hi
         lines.extend(['', '【具体内容】'])
         lines.append(('本局内容记录：' if historical or not node.get('content') else '具体内容：')+content['title'])
         if content.get('kind')=='battle':
-            lines.append('关卡变体：'+_variant_label(content))
+            stage=catalog()['stages'].get(content.get('variant_id'))
+            variant='未唯一确认；普通/紧急可能同名'
+            if stage and stage.get('name')==content.get('title'):
+                variant={'FOUR_STAR':'紧急作战','NORMAL':'普通作战'}.get(stage.get('difficulty'),'关卡难度未确认')
+            lines.append('关卡变体：'+variant)
         elif content.get('scene_candidates'):
             lines.append(f"流程阶段候选：{len(content['scene_candidates'])}个；标题和描述可能重复，不按名称强行唯一。")
         if content.get('visible_options'):
@@ -199,13 +207,13 @@ def format_node(graph, node_id, *, historical=False, technical=False, include_hi
         if prediction.get('notice'): lines.append(prediction['notice'])
         if prediction.get('evidence')!='visible_history':
             lines.append('候选没有统计概率，也不表示游戏已揭示。')
-    if include_historical_route_diagnostics:
+    if connections is None:
         lines.extend(['', '【路线参考】', f"距初始起点最短 {node['distance']} 步（沿模板连线；不是从当前位置出发）"])
         lines.append(format_route(graph,node_id,historical=historical,technical=technical))
     else:
-        lines.extend(['',format_connections(graph,node_id,historical=historical)])
+        lines.extend(['',connections])
     budget=graph.get('generation_budget',{})
-    counts=[name for name in (node.get('prediction') or {}).get('candidates',[]) if name in budget]
+    counts=[name for name in (prediction or {}).get('candidates',[]) if name in budget]
     if counts:
         lines.append('类型预算（固定格与已知格去重；不是概率）：')
         for name in counts:
@@ -237,15 +245,21 @@ def format_map(current, remembered, *, technical=False):
                 lines.append(f'布局候选：{len(choices)}种；尚未唯一确认。')
                 if technical: lines.append('布局引用：'+'、'.join(t['id'] for t in choices))
         return '\n'.join(lines)
-    lines.extend(['', '【地图概况】', '区域：'+_zone_name(graph.get('zone_id')),
-        f"节点 {len(graph['nodes'])} · 连线 {len(graph['edges'])} · 当前节点：{_map_position(graph, graph.get('current_node'))}",
+    positioned=[(node,location(node,graph['grid']['rows'])) for node in graph['nodes']]
+    current_id=graph.get('current_node')
+    current_label=next((label for node,label in positioned if node['id']==current_id),'位置未确认')
+    zone_name=config_data()['zones'].get(graph.get('zone_id'),{}).get('name') or '区域名称未确认'
+    lines.extend(['', '【地图概况】', '区域：'+zone_name,
+        f"节点 {len(positioned)} · 连线 {len(graph['edges'])} · 当前节点：{current_label}",
         '步数由沿模板连线从初始起点的最短路径计算；固定位置来自模板，不冒充当前已揭示。', ''])
-    if not graph.get('current_node') and graph.get('last_confirmed_current_node'):
-        lines.append('最近确认位置：'+_map_position(graph, graph['last_confirmed_current_node'])+'（历史；本帧标记未读到）')
+    last_id=graph.get('last_confirmed_current_node')
+    if not current_id and last_id:
+        last_label=next((label for node,label in positioned if node['id']==last_id),'位置未确认')
+        lines.append('最近确认位置：'+last_label+'（历史；本帧标记未读到）')
     lines.extend(['', '【节点列表】'])
-    for node in graph['nodes']:
+    for node,position in positioned:
         observed = node.get('observed_type') or ('类型未读到' if node.get('visible') else '本帧未观察到')
-        text = f"{location(node, graph['grid']['rows'])} · 距初始起点最短{node['distance']}步 · 可见：{observed}"
+        text = f"{position} · 距初始起点最短{node['distance']}步 · 可见：{observed}"
         if node.get('remembered_type'): text += ' · 本局已揭示记录：'+node['remembered_type']
         if node.get('template_type'): text += ' · 模板固定：'+node['template_type']
         prediction = node.get('prediction')
@@ -266,7 +280,7 @@ def format_map(current, remembered, *, technical=False):
     if technical:
         lines.extend(['', '【地图技术引用】', '区域引用：'+str(graph.get('zone_id')),
                       '模板引用：'+str(graph.get('template_id')), '来源：'+graph['source']['url']])
-        lines.extend('节点引用：'+str(node['id'])+' → '+location(node, graph['grid']['rows']) for node in graph['nodes'])
+        lines.extend('节点引用：'+str(node['id'])+' → '+position for node,position in positioned)
         if graph.get('constraint_conflicts'):
             lines.append('冲突引用：'+','.join(graph['constraint_conflicts']))
     return '\n'.join(lines)

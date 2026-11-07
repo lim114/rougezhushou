@@ -26,7 +26,7 @@ from .estimate import format_estimate
 from .reporting import format_report
 from .animation_reference import choices as animation_choices, label as animation_label
 from .recognition import ScreenReader
-from .map_reporting import format_map, format_node, format_rewards, format_route, format_connections, location
+from .map_reporting import format_map, format_node, format_rewards, format_route, node_reports, location
 from .map_view import MapView
 from .battle_view import BattlePreviewPanel
 from .chat import ProviderConfig, stream_chat
@@ -488,16 +488,16 @@ class MainWindow(QMainWindow):
 
     def map_node_selected(self, node_id, *, update_catalog=True):
         graph=self.map_view.graph or {}
+        historical=self.map_view.historical
+        technical=self.map_technical.isChecked()
         if self.include_historical_route_diagnostics:
-            self.map_route.setText(format_route(self.map_view.graph,node_id,historical=self.map_view.historical,compact=True)
-                                   if node_id else '请选择地图上的节点查看路线。')
+            summary=format_route(graph,node_id,historical=historical,compact=True) if node_id else '请选择地图上的节点查看路线。'
+            detail=format_node(graph,node_id,historical=historical,technical=technical,include_historical_route_diagnostics=True)
         else:
-            self.map_route.setText(format_connections(self.map_view.graph,node_id,historical=self.map_view.historical))
-        key=(graph.get('zone_id'),graph.get('template_id'),node_id,self.map_technical.isChecked())
-        replace_text(self.map_detail,format_node(self.map_view.graph,node_id,historical=self.map_view.historical,
-                     technical=self.map_technical.isChecked(),
-                     include_historical_route_diagnostics=self.include_historical_route_diagnostics),
-                     preserve=self.map_detail_key==key)
+            summary,detail=node_reports(graph,node_id,historical=historical,technical=technical)
+        self.map_route.setText(summary)
+        key=(graph.get('zone_id'),graph.get('template_id'),node_id,technical)
+        replace_text(self.map_detail,detail,preserve=self.map_detail_key==key)
         self.map_detail_key=key
         if hasattr(self,'node_catalog'):
             # Viewing availability follows the latest map selection, without binding its dossier.
