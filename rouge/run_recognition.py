@@ -100,7 +100,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
-    held=anchors.get('收藏品') or next(iter(sorted([t for t in texts if t['text']=='收起' and t['confidence']>=.9],key=lambda t:center(t)[0])),None)
+    held=anchors.get('收藏品') or min((t for t in texts if t['text']=='收起' and t['confidence']>=.9),key=lambda t:center(t)[0],default=None)
     if not held:return None
     cards=read_owned_cards(texts,held) if held['text']=='收起' else []
     if cards and '零件箱' not in anchors:
@@ -120,24 +120,28 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
     if not (is_map or is_roster):return None
     if not is_map:cards=[]
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
-    crew=anchors.get('干员')
-    crew_count=near_number(image,texts,crew,engine,side='right') if crew else None
+    crew = anchors.get('干员')
     if is_roster:
-        crew=next((t for t in texts if t['text']=='收起' and t['confidence']>=.9 and center(t)[0]>center(held)[0]),None)
-        if crew:crew_count=near_number(image,texts,crew,engine,side='right')
-    ids=[];tool_ids=[]
-    if held['text']=='收起' and is_map:
-        for card in cards:
-            if not card['confirmed']:continue
-            (tool_ids if card['id'] in tactical_tools() else ids).append(card['id'])
+        held_x = center(held)[0]
+        crew = next((t for t in texts if t['text']=='收起' and t['confidence']>=.9
+                     and center(t)[0]>held_x), crew)
+    crew_count=near_number(image,texts,crew,engine,side='right') if crew else None
+    ids, tool_ids = set(), set()
+    for card in cards:
+        if card['confirmed']:
+            (tool_ids if card['id'] in tactical_tools() else ids).add(card['id'])
     from .run_config import confirmed_config
     known=confirmed_config(run_context)
     fresh=read_config(image,texts,held,engine=engine,known_config=known) if is_map else {}
     config={**known,**fresh}
     icons=resolve_difficulty_icons(resolve_owned_icons(match_held_icons(image,held,count,cache=icon_cache),cards),config.get('difficulty'))
     if count==0 and icons:count=None
-    ids=sorted(set(ids+[record['id'] for record in icons if record['confirmed'] and record['id'] in catalog()['relics']]))
-    tool_ids=sorted(set(tool_ids+[record['id'] for record in icons if record['confirmed'] and record['id'] in tactical_tools()]))
+    icon_ids = {icon['id'] for icon in icons if icon['confirmed']}
+    if icon_ids:
+        relics = catalog()['relics']
+        tools = tactical_tools()
+        ids.update(rid for rid in icon_ids if rid in relics)
+        tool_ids.update(rid for rid in icon_ids if rid in tools)
     members=read_roster(image,texts,engine) if normal_roster else []
     selected=read_selected_member(image,texts,engine) if normal_roster else popup_member
     recipient_buffs=read_recipient_buffs(image,texts,selected,engine=engine) if selected else None
@@ -182,9 +186,9 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
             resources.pop('parts_count')
             limitations.append('悲伤的红计数与零件箱数值冲突；本帧不更新零件数，保留最近确认记录。')
     return {'page':'run_roster' if is_roster else 'run_map','relics':{
-        'ids':ids,'count':count,'icons':icons,'cards':cards,'counters':counters,
+        'ids':sorted(ids),'count':count,'icons':icons,'cards':cards,'counters':counters,
         'unbound_counters':unbound_counters,'source':'held_bar'},
-        'tactical_tools':{'ids':sorted(set(tool_ids)),'source':'held_bar_or_cards'},
+        'tactical_tools':{'ids':sorted(tool_ids),'source':'held_bar_or_cards'},
         'crew_count':crew_count,'operators':members,'selected_operator':selected['id'] if selected else None,
         'resources':resources,
         'config':config,
@@ -194,9 +198,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
         'limitations':limitations}
 
 
-def read_owned_cards(texts,held):
-    """Keep the public identity contract while grouping cards in two dimensions."""
-    return read_held_cards(texts,held)
+read_owned_cards = read_held_cards
 
 
 def expanded_held_page(anchors,held,cards):

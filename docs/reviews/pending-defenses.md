@@ -112,3 +112,15 @@ preview_environment 沿用原 enemy_preview 的 ValueError、KeyError 捕获，�
 ## D350 · 分队效果列表输入错误
 
 已确认分队合并效果时，effects 为 null 会在 list 转换处产生 TypeError。建议仅在转换点归为 RunConditionError，以取消实验对整段设置的 TypeError 捕获。直接调用者的异常类型会变化；已询问，待决定。
+
+## D354 · 藏品文字框坐标解析
+
+held_cards._bounds 捕获坐标元素读取或 float 转换时的 TypeError、ValueError、IndexError。错误文字框返回 None，调用者跳过该行；错误的页脚框使本页无法确认持有。建议保留这一解析出口；替代为让错误直接上报。实机触发率未知，等候决定。
+
+## D355 · 藏品文字行置信度解析
+
+held_cards._observed_lines 捕获 float 转换的 TypeError、ValueError，随后跳过该行。建议保留，使其他行仍可参与识别；替代为上报本次识别失败。实机触发率未知，等候决定。
+
+## D356 · 藏品页脚置信度解析
+
+held_cards.held_card_regions 捕获“收起”按钮置信度转换的 TypeError、ValueError，返回空卡片列表。建议保留这一入口处理；替代为上报本次识别失败。实机触发率未知，等候决定。

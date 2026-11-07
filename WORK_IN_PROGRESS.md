@@ -1,3 +1,7 @@
+## 当前断点 · 队伍人数只补读最终页脚，合并已确认藏品身份（2026-11-07）
+
+同帧出现两个人数入口时只读最终选定的一个。5张原生客户端截图结果相同，74项定向通过。D354–D356 待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-held-summary-single-read-20261107/summary.json)。
+
 ## 当前断点 · 修正局部裁图越界，模组选择与潜能模板复用当帧信息（2026-11-07）
 
 D353已按用户决定实施并销项。800个裁图交集对照相同，完全越界不进入资源数字OCR。4种缩放的模组页、12种潜能样本及292种文字变体与基准一致。65项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-module-arrows-and-local-crop-20261107/summary.json)。

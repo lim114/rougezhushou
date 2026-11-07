@@ -92,6 +92,22 @@ class HeldIntegrationTests(unittest.TestCase):
         for t in texts:t['box']=[[x*.65+.12,y*.7+.05] for x,y in t['box']]
         self.assertTrue(expanded_held_page(*self.parts(texts)))
 
+    def test_roster_count_reads_only_the_selected_footer(self):
+        def label(name, x):
+            return {'text':name, 'confidence':.99, 'box':[[x,.9],[x+.05,.9],[x+.05,.93],[x,.93]]}
+        held, crew, roster_crew = label('收起',.05), label('干员',.45), label('收起',.75)
+        base = [held, crew, label('技能',.30), label('分支+',.50)]
+        for texts, expected in ((base, crew), (base+[roster_crew], roster_crew)):
+            with self.subTest(x=expected['box'][0][0]), \
+                    patch('rouge.run_recognition.near_number', return_value=4) as number, \
+                    patch('rouge.run_recognition.match_held_icons', return_value=[]), \
+                    patch('rouge.run_recognition.read_roster', return_value=[]), \
+                    patch('rouge.run_recognition.read_selected_member', return_value=None):
+                result = read_run(self.image,texts,lambda *a,**k:([],0))
+                self.assertEqual(result['crew_count'],4)
+                number.assert_called_once()
+                self.assertEqual(number.call_args.args[2], expected)
+
     def test_non_map_roster_does_not_leak_held_card_candidates(self):
         def label(name,x):return {'text':name,'confidence':.99,
             'box':[[x,.9],[x+.05,.9],[x+.05,.93],[x,.93]]}
