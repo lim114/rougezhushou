@@ -19,12 +19,14 @@ class ExchangePanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.open_button=QPushButton('查看这个换入集合的完整来源与统计');body.addWidget(self.open_button)
         self.choices.currentIndexChanged.connect(self.choose);self.entries.currentItemChanged.connect(self.selected);self.open_button.clicked.connect(self.open_output)
     def bind(self,data,version,identity,signature):
-        if (version,identity)!=(self.version,self.identity):self.key=None;self.choices.setCurrentIndex(-1)
-        self.version=version;self.identity=identity;self.refresh_source(data,signature)
-    def refresh_source(self,data,signature):
+        keep_choice = (version, identity) == (self.version, self.identity)
+        self.version = version
+        self.identity = identity
+        self.refresh_source(data, signature, keep_choice=keep_choice)
+    def refresh_source(self, data, signature, *, keep_choice=True):
         key=(self.version,self.identity,signature)
         if key==self.key:return
-        self.key=key;old=self.choices.currentData();self.links=related_exchanges(data,self.version,self.identity)if signature is not None else[]
+        self.key=key;old=self.choices.currentData() if keep_choice else None;self.links=related_exchanges(data,self.version,self.identity)if signature is not None else[]
         self.choices.blockSignals(True);self.choices.clear();self.choices.addItem('请选择一条有明确依据的交换对应关系',None)
         for link in self.links:self.choices.addItem(exchange_label(link),link['output_id'])
         index=self.choices.findData(old);self.choices.setCurrentIndex(max(0,index));self.choices.blockSignals(False)
@@ -32,7 +34,9 @@ class ExchangePanel(QWidget):
         self.title.setText('提供物资料：'+(item.get('name')or'名称未核对'))
         self.notice.setText('当前范围未找到可核对的明确对应关系，旧候选已清除。不能据此认定本次无法交换。'if not self.links else '对应关系来自路标公开资料中的明确提供物与输出说明。当前DLC完整适用性未核验；本局资格与实际领取仍未知。')
         self.choose()
-    def current_link(self):return next((link for link in self.links if link['output_id']==self.choices.currentData()),None)
+    def current_link(self):
+        selected = self.choices.currentData()
+        return next((link for link in self.links if link['output_id'] == selected), None)
     def choose(self,*_):
         link=self.current_link();old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.rows={r['id']:r for r in link['members']}if link else{}
         for row in self.rows.values():

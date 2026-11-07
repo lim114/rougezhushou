@@ -1,3 +1,7 @@
+## 维护 · 交换提供物切换只绘制一次，事件检索复用查询词（2026-11-06）
+
+切换提供物后仅绘制新选择一次，同物品更新保留选择。144组事件筛选与旧版相同，结果前置列表与来源隔离。16项定向通过。D342待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-exchange-refresh-event-search-20261106/summary.json)。
+
 ## 维护 · 单件藏品来源统计按编号读取，省去整池成员渲染（2026-11-06）
 
 公开资料427组完整成员列表与旧版一致，9849个单件统计逐项一致。47项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-single-member-frequency-20261106/summary.json)。

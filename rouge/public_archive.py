@@ -138,9 +138,12 @@ def event_rows(data,floor,treehole=False,query='',node_type=None):
         if not layer:return []
         rows=[(r,'本层资料候选，仍需满足具体出现条件')for rs in layer['eventsByNodeType'].values()for r in rs]
         rows += [(r,'仅在生成对应节点且满足事件条件时可能出现'if r.get('floorRule')=='nodeTypeAvailable'else'探索开始奖励，不是普通节点候选')for r in layer.get('conditionalEvents',[])]
+    needle = query.strip().casefold()
     for row,condition in rows:
         if node_type and row.get('classification')!=node_type:continue
-        if query.strip().casefold()not in(row['name']+' '+row['classification']).casefold():continue
+        if needle not in (row['name']+' '+row['classification']).casefold():continue
         scenes=row.get('sceneIds',[]);identity=next((i for i in scenes if i.endswith('_enter')),scenes[0]if scenes else row['name'])
-        result.append({**deepcopy(row),'id':identity,'condition':condition,'prerequisites':row.get('prerequisiteEventIds',[]),'actual_eligible':None})
+        entry = deepcopy(row)
+        entry.update(id=identity, condition=condition, prerequisites=deepcopy(entry.get('prerequisiteEventIds', [])), actual_eligible=None)
+        result.append(entry)
     return result

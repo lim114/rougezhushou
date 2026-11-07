@@ -76,3 +76,7 @@ ItemSourceIndex.describe_pool 对解析、时区换算及文字展示合并捕�
 ## D341 · 公开频率超大整数
 
 public_archive.members 收到 occurrenceRate=10**1000 时，math.isfinite 抛出 OverflowError。隔离样例已复现；本次公开数据逐池比对均可完成。建议在该频率入口先拒绝范围外数值，保留原始次数、分母和其他成员。已询问，待决定。
+
+## D342 · 交换资料读取错误出口
+
+related_exchanges 将 ValueError、KeyError、TypeError、AttributeError 同时当作无交换记录。建议先核实来源错误契约，将其与已验证资料上的内部异常分开；D317 已批准的来源身份要求继续保留。等待用户决定。
