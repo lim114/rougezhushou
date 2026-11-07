@@ -94,16 +94,14 @@ def _writes(target,source):
 
 
 def enemy_records(level,ref):
-    results=[];data=ref['inputs']
-    for index,binding in enumerate(level['enemyDbRefs']):
-        identity={};versions=data['enemy_definitions'].get(binding['id'],[])
-        exact=any(v['level']==binding['level']for v in versions)
-        if binding['useDb']is True:
-            for row in sorted(versions,key=lambda v:v['level']):
-                if row['level']<=binding['level']:_writes(identity,row['enemyData'])
-        _writes(identity,binding.get('overwrittenData')or{})
-        handbook=data['handbook'].get(binding['id'])if binding['useDb']is True else None
-        handbook=handbook or{}
+    from .current_enemy_traits import binding_sources, declarations_from_sources
+    results = []
+    for index, binding in enumerate(level['enemyDbRefs']):
+        exact, inherited, handbook = binding_sources(binding, ref)
+        identity = {}
+        for row in inherited:
+            _writes(identity, row['enemyData'])
+        _writes(identity, binding.get('overwrittenData') or {})
         name=identity.get('name')or handbook.get('name')or'未命名关联实体'
         tier=identity.get('levelType')or handbook.get('enemyLevel')
         prefab=identity.get('prefabKey')
@@ -111,14 +109,13 @@ def enemy_records(level,ref):
         # An image named exactly as the reference is independently identifiable,
         # but a same-name handbook enemy or stripped suffix is never substituted.
         if portrait is None:portrait=ref['portraits']['images'].get(binding['id'])
-        from .current_enemy_traits import declarations
         results.append({'key':str(index),'reference_index':index,'id':binding['id'],'level':binding['level'],
             'name':plain(name),'tier':tier if tier in TIERS else None,'prefab_key':prefab,
             'portrait':deepcopy(portrait),'description':plain(identity.get('description')or handbook.get('description')),
             'abilities':[plain(a['text'])for a in handbook.get('abilityList')or[]if a.get('text')],
             'handbook_applied':bool(handbook),'exact_database_level_present':exact,'use_db':binding['useDb'],
             'raw_binding':deepcopy(binding),'expected_stats':None,'actual_count':None,
-            'declared_traits':declarations(binding,ref)})
+            'declared_traits':declarations_from_sources(binding, exact, inherited, handbook)})
     return results
 
 
@@ -144,16 +141,21 @@ def stage_reference(stage_id, *, prepared_packet=...):
     stage=stages[stage_id];key='levels/'+stage['levelId'].lower()+'.json'
     level=ref['inputs']['levels'].get(key)
     if level is None:return None
-    enemies=enemy_records(level,ref);all_queues=list(queues(level));actions=[]
+    enemies = enemy_records(level, ref)
+    by_id = {}
+    for enemy in enemies:
+        by_id.setdefault(enemy['id'], []).append(enemy)
+    actions = []
     aliases={}
     for c in('predefines','hardPredefines'):
         for field in('characterInsts','tokenInsts'):
             for i,row in enumerate((level.get(c)or{}).get(field)or[]):
                 if row.get('alias'):aliases.setdefault(row['alias'],[]).append({'source_selector':f'$.{c}.{field}[{i}]','raw':deepcopy(row)})
-    for queue in all_queues:
+    for queue in queues(level):
+        metadata = {k: v for k, v in queue.items() if k != 'actions'}
         for i,raw in enumerate(queue['actions']):
-            matches=[e for e in enemies if e['id']==raw.get('key')]if raw.get('actionType')=='SPAWN'else[]
-            actions.append({'key':str(len(actions)),'queue':{k:v for k,v in queue.items()if k!='actions'},
+            matches = by_id.get(raw.get('key'), []) if raw.get('actionType') == 'SPAWN' else []
+            actions.append({'key':str(len(actions)),'queue':metadata.copy(),
                 'action_index':i+1,'source_selector':queue['source_selector']+f'.actions[{i}]','raw':deepcopy(raw),
                 'enemy_candidates':deepcopy(matches),'predefined_candidates':deepcopy(aliases.get(raw.get('key'),[]))if raw.get('actionType')=='ACTIVATE_PREDEFINED'else[],
                 'absolute_time':None,'actual_occurrence':None,'position_on_original':None,'probability':None})

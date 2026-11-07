@@ -37,6 +37,26 @@ class CurrentBattleReference314Tests(unittest.TestCase):
                 self.assertEqual(r['image'],ref['version']['images']['images'][sid]);self.assertFalse(r['map_projection_verified'])
         self.assertEqual(build(ROOT),(ROOT/model.MANIFEST).read_bytes())
 
+    def test_duplicate_spawn_id_keeps_both_references_in_order_and_independent(self):
+        ref = model.packet()
+        stage_id = 'ro6_n_1_2'
+        original = model.stage_reference(stage_id, prepared_packet=ref)
+        spawn = next(a for a in original['actions'] if a['enemy_candidates'])
+        identity = spawn['raw']['key']
+        level = deepcopy(original['level'])
+        refs = level['enemyDbRefs']
+        duplicate = deepcopy(next(row for row in refs if row['id'] == identity))
+        refs.append(duplicate)
+        inputs = ref['inputs']
+        packet = {**ref, 'inputs': {**inputs, 'levels': {**inputs['levels'], original['level_key']: level}}}
+        stage = model.stage_reference(stage_id, prepared_packet=packet)
+        action = stage['actions'][int(spawn['key'])]
+        expected = [e for e in stage['enemies'] if e['id'] == identity]
+        self.assertGreaterEqual(len(expected), 2)
+        self.assertEqual(action['enemy_candidates'], expected)
+        action['enemy_candidates'][-1]['name'] = 'changed in this action'
+        self.assertNotEqual(expected[-1]['name'], 'changed in this action')
+
     def test_normal_elite_and_dlc_same_name_stay_exact_separate_and_difficulty_retained(self):
         a=model.stage_reference('ro6_n_4_1');b=model.stage_reference('ro6_n_4_1_dlc1');c=model.stage_reference('ro6_e_4_1_dlc1')
         self.assertEqual(a['name'],b['name']);self.assertNotEqual(a['level_key'],b['level_key'])

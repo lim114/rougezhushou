@@ -17,15 +17,26 @@ DAMAGE = {'PHYSIC': '物理伤害', 'MAGIC': '法术伤害', 'HEAL': '治疗',
           'NO_DAMAGE': '图鉴未列常规伤害', 'TRUE': '真实伤害'}
 
 
+def binding_sources(binding, reference):
+    definitions = reference['inputs']['enemy_definitions'].get(binding['id'], [])
+    level = binding['level']
+    exact = any(row['level'] == level for row in definitions)
+    inherited = []
+    handbook = {}
+    if binding['useDb'] is True:
+        inherited = sorted((row for row in definitions if row['level'] <= level),
+                           key=lambda row: row['level'])
+        handbook = reference['inputs']['handbook'].get(binding['id']) or {}
+    return exact, inherited, handbook
+
+
 def declarations(binding, reference):
-    """Apply only defined writes; an absent exact DB level is not invented."""
-    rows = reference['inputs']['enemy_definitions'].get(binding['id'], [])
-    exact = any(row['level'] == binding['level'] for row in rows)
-    sources = []
-    if binding['useDb'] is True and exact:
-        sources.extend((f"数据库等级{row['level']}", row['enemyData'])
-                       for row in sorted(rows, key=lambda row: row['level'])
-                       if row['level'] <= binding['level'])
+    return declarations_from_sources(binding, *binding_sources(binding, reference))
+
+
+def declarations_from_sources(binding, exact, inherited, handbook):
+    """Traits require an exact database level before applying inherited writes."""
+    sources = [(f"数据库等级{row['level']}", row['enemyData']) for row in inherited] if exact else []
     sources.append(('本关明确覆盖', binding.get('overwrittenData') or {}))
     values, provenance, core = {}, {}, {}
     for label, data in sources:
@@ -48,9 +59,7 @@ def declarations(binding, reference):
                 provenance[key] = {'source': label, 'path':
                                    ('attributes.' if key in IMMUNITIES else '') + key}
     # A handbook entry describes its database identity, never an independent constructor.
-    handbook = (reference['inputs']['handbook'].get(binding['id']) or {}
-                if binding['useDb'] is True and exact else {})
-    raw_damage = handbook.get('damageType')
+    raw_damage = handbook.get('damageType') if exact else None
     damage = list(raw_damage) if isinstance(raw_damage, list) and all(
         type(value) is str for value in raw_damage) else None
     return {'values': values, 'provenance': provenance, 'handbook_damage_types': damage,
