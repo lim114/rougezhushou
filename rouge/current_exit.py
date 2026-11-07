@@ -47,14 +47,16 @@ def reference(event_id='exit', action_points=None, gold=None, difficulty=None, s
     if type(event_id) is not str or event_id != 'exit': return None
     if any(v is not None and (type(v) is not int or v < 0) for v in (action_points, gold)): return None
     if difficulty is not None and (type(difficulty) is not int or not 0 <= difficulty <= 16): return None
+    if source_request is not None and (
+            type(source_request) is not dict or source_request.keys() != {'category', 'key'}
+            or type(source_request['category']) is not str or type(source_request['key']) is not str
+            or source_request['category'] not in ('scenes', 'choices', 'relics')):
+        return None
     p = packet() if source is None else source
     if p is None: return None
     d = p['data']; targets = []
     if source_request is not None:
-        if type(source_request) is not dict or set(source_request) != {'category', 'key'}: return None
-        cat, key = source_request['category'], source_request['key']
-        if type(cat) is not str or type(key) is not str: return None
-        targets = _targets(d, cat, key)
+        targets = _targets(d, source_request['category'], source_request['key'])
         if not targets: return None
     return {**p, 'event': deepcopy(d['event']), 'scenes': deepcopy(d['scenes']), 'choices': deepcopy(d['choices']),
             'declared': {'action_points': action_points, 'gold': gold, 'difficulty': difficulty},
@@ -62,7 +64,7 @@ def reference(event_id='exit', action_points=None, gold=None, difficulty=None, s
             'actual_received': None, 'actual_consumed': None, 'actual_transition': None, 'actual_recruited': None}
 
 def locate(category, key, *, source=None):
-    if type(category) is not str or type(key) is not str: return None
+    if type(category) is not str or type(key) is not str or category not in ('scenes', 'choices', 'relics'): return None
     p = packet() if source is None else source
     if p is None or not _targets(p['data'], category, key): return None
     return {'event_id': 'exit', 'source_request': {'category': category, 'key': key}}

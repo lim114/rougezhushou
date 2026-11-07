@@ -9,6 +9,29 @@ from rouge.catalog import catalog
 
 
 class MeiReferenceReuseReviewTests(unittest.TestCase):
+    def test_unusable_stage_key_cannot_bind_an_equally_unusable_trait(self):
+        scenario = {'operator':'char_133_mm', 'skill':1, 'elite':2, 'level':40,
+                    'module_id':'uniequip_002_mm', 'module_level':1,
+                    reference.FLAG:True, 'relic_context':{reference.MOTION:'fly'}}
+        for key in (None, '', 7):
+            profile = deepcopy(catalog()['operators']['char_133_mm'])
+            module = next(m for m in profile['modules'] if m['id'] == scenario['module_id'])
+            for part in module['levels'][0]['parts']:
+                if part['target'] == 'TRAIT':
+                    if key is None:
+                        part.pop('resKey', None)
+                    else:
+                        part['resKey'] = key
+            stages = {} if key is None else {'1':key}
+            with self.subTest(key=key), patch.object(reference, 'catalog', return_value={'operators':{'char_133_mm':profile}}), patch.object(reference, 'rule', return_value={'stages':stages}):
+                eligibility = reference.qualification(scenario)
+                self.assertTrue(eligibility['cultivation_qualified'])
+                self.assertFalse(eligibility['native_trait_resource_bound'])
+                self.assertFalse(eligibility['qualified'])
+                result = calculate_damage(scenario)
+                self.assertIsNone(result['mei_airborne_module_reference']['actual_conditional_damage'])
+                self.assertNotIn('mei_module_static_reference', result)
+
     def test_standalone_qualification_resolves_module_once(self):
         class Modules(list):
             scans=0

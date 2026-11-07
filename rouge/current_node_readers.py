@@ -48,19 +48,46 @@ def matches_current(row,reference):
     scenes={k:v for k,v in reference['data']['originals']['scenes'].items()if v['title']==row['title']}
     return same(identity,row['current_source_identity'])and same(reference['event'],row['current_event'])and same(scenes,row['current_original_scenes'])
 
+_DOCUMENTED_GROUPS = {
+    'community_group_019': ('current_peace', 'peace343', '和平守卫者'),
+    'community_group_023': ('current_resting', 'resting345', '安眠一隅'),
+}
+
+
+def _documented_binding(record):
+    group_id = record['id']
+    module_name, reader, title = _DOCUMENTED_GROUPS[group_id]
+    module = importlib.import_module('.' + module_name, __package__)
+    packet = module.packet()
+    if packet is None:
+        return None
+    data = packet['data']
+    binding = data['catalogue_binding']
+    if any(key not in record or not same(record[key], value)
+           for key, value in binding['expected_summary'].items()):
+        return None
+    legacy = binding['expected_legacy_event']
+    if 'scenes' in record and not same(record['scenes'], legacy['scenes']):
+        return None
+    if not same(node_catalog._event(group_id), legacy):
+        return None
+    identity = json.loads(json.dumps(packet['source_identity']))
+    return {**deepcopy(binding), 'legacy_event_id': group_id, 'title': title, 'reader': reader,
+            'current_event': deepcopy(data['event']), 'current_original_scenes': deepcopy(data['originals']['scenes']),
+            'current_source_identity': identity, 'source_identity': (module.MANIFEST_SHA256, deepcopy(identity)),
+            'reference_only': True, 'actual_node_version_confirmed': False,
+            'actual_scene': None, 'actual_choice': None, 'run_updated': False}
+
+
 def binding_for(record):
     if type(record)is not dict or type(record.get('id'))is not str or not record['id'].startswith('community_group_'):return None
     if record['id']=='community_group_010':
         from .current_shadow import catalogue_binding
         return catalogue_binding(record)
-    if record['id']=='community_group_023':
-        from .current_resting import catalogue_binding
-        return catalogue_binding(record)
+    if record['id'] in _DOCUMENTED_GROUPS:
+        return _documented_binding(record)
     if record['id']=='community_group_025':
         from .current_reconstruction import catalogue_binding
-        return catalogue_binding(record)
-    if record['id']=='community_group_019':
-        from .current_peace import catalogue_binding
         return catalogue_binding(record)
     if record['id']=='community_group_024':
         from .current_scout import catalogue_binding

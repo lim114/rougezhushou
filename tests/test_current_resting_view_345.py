@@ -18,6 +18,20 @@ class CurrentRestingView345Tests(unittest.TestCase):
         d=CurrentRestingDialog(target);d.show();self.qt.processEvents();self.addCleanup(d.close);return d
     def choose(self,p,cid):
         p.scene.setCurrentIndex(p.scene.findData(p.result['choices'][cid]['scene_id']));p.choices.setCurrentRow(next(i for i in range(p.choices.count())if p.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid));self.qt.processEvents()
+    def test_conflict_click_reuses_checked_parent_and_child_refresh_failure_closes(self):
+        panel = self.dialog().panel
+        self.choose(panel, 'reward:gold99')
+        with patch.object(model, 'packet', wraps=model.packet) as load:
+            self.assertTrue(panel.open_original())
+            self.assertEqual(load.call_count, 2)
+        child = panel.original_dialog
+        with patch.object(model, 'packet', side_effect=AssertionError('nested popup has no action')):
+            self.assertFalse(child.panel.open_original())
+        with patch.object(child.panel, 'refresh_reference', return_value=False):
+            self.assertTrue(panel.refresh_reference())
+        self.assertIsNone(panel.original_dialog)
+        self.assertFalse(child.isVisible())
+
     def test_default_no_reward_popup_or_unrelated_resource_controls(self):
         p=self.dialog().panel;self.assertIsNone(p.choice_id);self.assertEqual(p.choices.count(),1);self.assertTrue(p.reward_card.isHidden());self.assertTrue(p.original_button.isHidden());self.assertFalse(any(hasattr(p,k)for k in('naturals','gold','offer','difficulty','operator','action_points')))
     def test_seven_document_paths_and_legacy_scope_stop_without_added_menu(self):

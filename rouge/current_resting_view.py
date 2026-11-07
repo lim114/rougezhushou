@@ -35,8 +35,8 @@ class CurrentRestingPanel(DocumentedEventFlowPanel):
         else:self.next_button.setText('查看后续情景')
         if self.original_dialog is not None and(not available or not self.original_dialog.panel.refresh_reference()):self.original_dialog.close();self.original_dialog=None
     def open_original(self):
-        if not self._recheck()or not self.allow_original_popup:return False
-        target=model.conflicting_original_target(self.result,self.scene_id,self.choice_id)
+        if not self.allow_original_popup or not self._recheck():return False
+        target=model.conflicting_original_target(self.result,self.scene_id,self.choice_id,source=self.result)
         if target is None:return False
         self._close_battle();self.original_dialog=CurrentRestingDialog(target,self,allow_original_popup=False);self.original_dialog.show();return True
 

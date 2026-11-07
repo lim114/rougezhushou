@@ -112,18 +112,7 @@ def icon_bytes():
     return raw if len(raw)==r['bytes']and sha256(raw).hexdigest()==r['sha256']and raw.startswith(b'\x89PNG\r\n\x1a\n')else None
 
 def catalogue_binding(record):
-    if type(record) is not dict or record.get('id')!='community_group_019':return None
-    from .current_node_readers import same
-    from . import node_catalog
-    r=reference()
-    if r is None:return None
-    row=r['data']['catalogue_binding']
-    if any(k not in record or not same(record[k],v)for k,v in row['expected_summary'].items()):return None
-    if 'scenes'in record and not same(record['scenes'],row['expected_legacy_event']['scenes']):return None
-    if not same(node_catalog._event(record['id']),row['expected_legacy_event']):return None
-    identity=json.loads(json.dumps(r['source_identity']))
-    return {**deepcopy(row),'legacy_event_id':record['id'],'title':'和平守卫者','reader':'peace343',
-            'current_event':deepcopy(r['event']),'current_original_scenes':deepcopy(r['data']['originals']['scenes']),
-            'current_source_identity':identity,
-            'source_identity':(MANIFEST_SHA256,deepcopy(identity)),'reference_only':True,
-            'actual_node_version_confirmed':False,'actual_scene':None,'actual_choice':None,'run_updated':False}
+    if type(record) is not dict or record.get('id') != 'community_group_019':
+        return None
+    from .current_node_readers import _documented_binding
+    return _documented_binding(record)

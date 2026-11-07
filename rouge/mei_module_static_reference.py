@@ -30,7 +30,8 @@ def _qualification(scenario, parts, ref):
     stage = scenario.get('module_level', 0)
     skill = scenario.get('skill')
     reskey = rule()['stages'].get(str(stage))
-    bound = bool(ref and any(p.get('resKey') == reskey and p.get('target') == 'TRAIT' for p in parts))
+    bound = bool(ref and isinstance(reskey, str) and reskey
+                 and any(p.get('resKey') == reskey and p.get('target') == 'TRAIT' for p in parts))
     valid_skill = type(skill) is int and skill in (1, 2)
     return {'qualified': bound and valid_skill,
             'cultivation_qualified': bool(ref), 'native_trait_resource_bound': bound,

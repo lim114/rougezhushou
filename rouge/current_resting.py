@@ -37,13 +37,17 @@ def packet():
 
 def reference(event_id='resting',source_request=None):
     if type(event_id)is not str or event_id!='resting':return None
+    if source_request is not None and (
+            type(source_request) is not dict or source_request.keys() != {'category', 'key'}
+            or type(source_request['category']) is not str or type(source_request['key']) is not str
+            or source_request['category'] not in ('scenes', 'choices')):
+        return None
     p=packet()
     if p is None:return None
     d=p['data'];event=deepcopy(d['event']);scenes=deepcopy(d['scenes']);choices=deepcopy(d['choices']);original=None
     if source_request is not None:
-        if type(source_request)is not dict or set(source_request)!={'category','key'}or type(source_request['category'])is not str or type(source_request['key'])is not str:return None
         category,key=source_request['category'],source_request['key']
-        if category not in('scenes','choices')or key not in d['originals'][category]:return None
+        if key not in d['originals'][category]:return None
         original=deepcopy(d['originals'][category][key])
         if category=='scenes':scenes['source-scene']={'id':'source-scene','label':'从原对话打开 · 后续未确认','description':original['description'],'source_scene_ids':[key],'choice_ids':[],'scope':'original'}
         else:
@@ -70,10 +74,10 @@ def choice_reference(result,sid,cid):
     if not s or not c or cid not in s['choice_ids']:return None
     return deepcopy(c)
 
-def conflicting_original_target(result,sid,cid,*,choice=...):
+def conflicting_original_target(result,sid,cid,*,choice=...,source=None):
     c=choice_reference(result,sid,cid) if choice is ... else choice
     if not c or c['source_only']or not c['explicit_next_conflict']or not c['conflicting_original_id']:return None
-    return locate('choices',c['conflicting_original_id'])
+    return locate('choices',c['conflicting_original_id'],source=source)
 
 def shows_reward(result,sid,cid,*,choice=...):
     c=choice_reference(result,sid,cid) if choice is ... else choice;return bool(c and c['role']=='named_item')
@@ -141,18 +145,7 @@ def icon_bytes():
     return raw if len(raw)==r['bytes']and sha256(raw).hexdigest()==r['sha256']and raw.startswith(b'\x89PNG\r\n\x1a\n')else None
 
 def catalogue_binding(record):
-    if type(record) is not dict or record.get('id')!='community_group_023':return None
-    from .current_node_readers import same
-    from . import node_catalog
-    r=reference()
-    if r is None:return None
-    row=r['data']['catalogue_binding']
-    if any(k not in record or not same(record[k],v)for k,v in row['expected_summary'].items()):return None
-    if 'scenes'in record and not same(record['scenes'],row['expected_legacy_event']['scenes']):return None
-    if not same(node_catalog._event(record['id']),row['expected_legacy_event']):return None
-    identity=json.loads(json.dumps(r['source_identity']))
-    return {**deepcopy(row),'legacy_event_id':record['id'],'title':'安眠一隅','reader':'resting345',
-            'current_event':deepcopy(r['event']),'current_original_scenes':deepcopy(r['data']['originals']['scenes']),
-            'current_source_identity':identity,
-            'source_identity':(MANIFEST_SHA256,deepcopy(identity)),'reference_only':True,
-            'actual_node_version_confirmed':False,'actual_scene':None,'actual_choice':None,'run_updated':False}
+    if type(record) is not dict or record.get('id') != 'community_group_023':
+        return None
+    from .current_node_readers import _documented_binding
+    return _documented_binding(record)

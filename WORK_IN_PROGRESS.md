@@ -1,3 +1,7 @@
+## 当前断点 · 梅模组缺资源编号时停用公式，事件入口复用已核验资料（2026-11-06）
+
+梅模组按D325授权修复，D142销项。事件请求格式先校验，两个目录共用来源比对，已核验父页复用定位结果，原件子窗独立核验。梅相关35项和事件相关51项通过。 原280组完成249、余31。 [回执](verification/maintenance/code-constraints-event-entries-mei-binding-20261106/summary.json)。
+
 ## 当前断点 · 奖励详情复用所选行，核实取得选项与同名物品绑定（2026-11-06）
 
 D157、D166、D171完成。奖励点击复核后直接取所选行，缺少有效行时关闭打开入口。六条奖励核实事件与场景归属，十一条具名奖励核实物品指向或唯一全名。 原280组完成243、余37。 [回执](verification/maintenance/code-constraints-reward-selection-binding-20261106/summary.json)。

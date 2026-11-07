@@ -59,6 +59,16 @@ class CurrentExit339Tests(unittest.TestCase):
             target=model.locate(cat,key);self.assertIsNotNone(target);out=self.result(source_request=target['source_request']);self.assertTrue(out['source_targets']);self.assertEqual(out['source_request'],{'category':cat,'key':key})
         self.assertEqual(len(self.result(source_request={'category':'choices','key':'choice_ro6_final1_1'})['source_targets']),2)
         self.assertEqual(len(self.result(source_request={'category':'scenes','key':'scene_ro6_final1_3'})['source_targets']),2)
+    def test_invalid_source_request_is_refused_before_loading_a_packet(self):
+        from rouge import current_resting
+        for reader in (model, current_resting):
+            with patch.object(reader, 'packet', side_effect=AssertionError('invalid input read source')):
+                for request in ({}, {'category':[], 'key':'x'}, {'category':'choices','key':False},
+                                {'category':'other','key':'x'}, {'category':'choices','key':'x','extra':1}):
+                    with self.subTest(reader=reader.__name__, request=request):
+                        self.assertIsNone(reader.reference(source_request=request))
+                self.assertIsNone(reader.locate('other','x'))
+
     def test_bad_inputs_and_foreign_same_names_rejected(self):
         for field,value in [('gold',True),('gold',-1),('action_points',1.5),('difficulty',True),('difficulty',17),('difficulty',-1)]:self.assertIsNone(self.result(**{field:value}))
         for cat,key in [('relics','谒日之祈'),('choices','说服同伴'),('scrap','rogue_6_relic_final_7'),('scenes','scene_ro6_final1_enter_2')]:self.assertIsNone(model.locate(cat,key))
