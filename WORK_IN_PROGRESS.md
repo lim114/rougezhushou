@@ -1,3 +1,7 @@
+## 当前断点：候选来源与展示边界（2026-11-06）
+
+D234/D235/D251/D253按授权保留并核验，9项定向通过；未改产品源码。头像为独立显示职责，来源与选择检查为不同边界；D254已消除同次重读。原280组完成198、剩82。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-candidate-boundaries-20261106/summary.json`。
+
 ## 当前断点：候选位置同快照复用（2026-11-06）
 
 D254完成，候选与地图共用关卡资料；界面不再预先重复解析成员，单次选择包装已内联。7项定向通过，补强界面单次解析断言后1项复验通过。原280组完成194、剩86；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-candidate-position-snapshot-20261106/summary.json`。

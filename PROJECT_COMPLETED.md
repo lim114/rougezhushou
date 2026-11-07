@@ -5539,3 +5539,8 @@ D249完成，移除重复关卡读取及已核验格子的再次完整查询；7
 ## 维护：出怪候选位置同快照（2026-11-06）
 
 D254完成：候选成员和地图使用同一关卡快照，删除界面的重复解析与单次选择包装；完整身份拒绝仍保留。7项定向及补强后1项复验通过，Qt为离屏验证。回执 `verification/maintenance/code-constraints-candidate-position-snapshot-20261106/summary.json`。不增加功能节数。
+
+
+## 维护：候选来源与失效展示（2026-11-06）
+
+D234/D235/D251/D253按授权核验：摘要与关系投影分别保护来源和转换，独立入口与点击后的选择复核保留；头像是独立显示职责，坏图不清有效文字；位置失败只通知一次并撤下旧选择。9项定向通过，未改产品源码、未作实机声明。回执 `verification/maintenance/code-constraints-candidate-boundaries-20261106/summary.json`。

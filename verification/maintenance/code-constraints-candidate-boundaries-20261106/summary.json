@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "候选来源、入口与失效展示核验",
+  "base_commit": "24fb73ebfb22b07004b0f379bccfe796fa59b9e2",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/current_spawn_candidates.py": "84e120b8c5be36ca4a1f0e994c0a997bc0771f5459bd9e080ba2adfa0eab249e",
+    "rouge/current_spawn_candidates_view.py": "9aec21de91d9cd858d211f2ec9a28923cd3317009f2b73bc4f2df9a55411f694"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D234",
+    "D235",
+    "D251",
+    "D253"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_candidate_boundaries_retention_review plus four exact source/selection loss cases",
+        "tests_run": 9,
+        "tests_passed": 9,
+        "seconds": 1.433,
+        "environment": "Qt offscreen; only temporary public source copies"
+      }
+    ],
+    "live_window": "No runtime changes; no restart. Earlier original test-window update gap remains."
+  },
+  "review": {
+    "standards": "D251 file byte identity and stage/projection identity protect different boundaries. D253 public query inputs and post-user-choice snapshot identity remain separate; D254 removed shared-call reload. D234 portrait function retains coherent resource decode/render responsibility, not a forwarding wrapper. D235 failure cleanup runs once and repeated clear does not repeat invalidation. No new production defenses or catches.",
+    "requirements": "All five manifest/member files reject changed bytes; relation projection mismatch rejects. Invalid public inputs stop before source I/O; foreign relation/action and forged result reject. Missing/bad PNG clears old picture while keeping text; non-applicable/ambiguous portraits do not load. Failed position clears selection and emits no jump; source loss/recovery and action failure pass. No whole-module or native acceptance claimed."
+  }
+}
