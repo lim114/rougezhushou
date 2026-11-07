@@ -1,3 +1,7 @@
+## 维护：地图标记分派后不再重复校验关卡（2026-11-06）
+
+D269完成：地图已分派关卡直接绑定，独立公开入口仍自行校验；复用上批加载器整理。7项定向通过。原280组完成217、剩63；原测试窗口更新待补。回执 `verification/maintenance/code-constraints-marker-dispatch-20261106/summary.json`。
+
 ## 维护已完成范围：两套地图标记复用资料包读取流程（2026-11-06）
 
 D269部分推进：两套标记清单读取、路径与摘要流程合并，独立资料身份及映射条件保持。18项定向通过；其他入口重复边界仍待核验，不销项。原280组仍完成216、剩64。原测试窗口更新待补。回执 `verification/maintenance/code-constraints-marker-loader-reuse-20261106/summary.json`。

@@ -1,0 +1,67 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases"
+  ],
+  "title": "地图标记分派后不再重复校验关卡",
+  "base_commit": "165820c90c220aefcd5d85ac2fb9710552505a42",
+  "changed_sources": [
+    "rouge/current_map_markers.py",
+    "rouge/boss_map_markers.py",
+    "rouge/current_map_position.py"
+  ],
+  "source_sha256": {
+    "rouge/current_map_markers.py": "9662d6eb75802a5c201d6e62e126cafeef72293f15e288d19eeb4fb5f79b68c2",
+    "rouge/boss_map_markers.py": "472d884019b71540214470662fcb73c1244d470fe61e2826e39111b3cf0b6dd3",
+    "rouge/current_map_position.py": "36299f7a080244f5f2cc5fb381acfb7fd6c2e8a3710e0338aaff645a81187e9a"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D269"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_marker_dispatch_entry_review tests.test_marker_geometry_reuse_review tests.test_current_map_markers_337.CurrentMapMarkers337Tests.test_complete_geometry_camera_image_and_same_name_are_not_substitutes tests.test_boss_map_markers_348.BossMapMarkers348Tests.test_exact_geometry_image_and_stage_identity_each_checked_not_shared_title",
+        "tests_run": 7,
+        "tests_passed": 7,
+        "seconds": 55.244
+      }
+    ],
+    "reused_evidence": {
+      "receipt": "verification/maintenance/code-constraints-marker-loader-reuse-20261106/summary.json",
+      "scope": "Unchanged marker_packet.py loader implementation; prior 18 tests including file corruption checks."
+    },
+    "live_window": "Original test-window update remains pending after prior approval rejection."
+  },
+  "review": {
+    "standards": "Parent validates string and dispatches by package STAGES; now calls internal binding directly. Independent public mapping_for validates then delegates to the same body. Boundary wrapper has real validation responsibility and both paths use shared implementation. No new catches or defenses.",
+    "requirements": "Invalid public identifiers never reach binding; parent binds exactly once with identical mapping/source. Full geometry, level key, image and stage rejection tests pass. Loader consolidation from prior batch retained; D269 complete within listed scope."
+  },
+  "partially_implemented_decisions": []
+}

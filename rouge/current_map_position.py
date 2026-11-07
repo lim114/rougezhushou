@@ -44,12 +44,12 @@ def stage_reference(stage_id, *, prepared_packet=...):
     identity=ref['source_identity'];mapping_verified=False
     from . import current_map_markers as symbols
     if stage_id in symbols.STAGES:
-        observed=symbols.mapping_for(stage_id,ref['current'])
+        observed=symbols._mapping_for_stage(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
         mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity']);mapping_verified=True
     from . import boss_map_markers as boss_symbols
     if stage_id in boss_symbols.STAGES:
-        observed=boss_symbols.mapping_for(stage_id,ref['current'])
+        observed=boss_symbols._mapping_for_stage(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
         mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity']);mapping_verified=True
     from . import observed_map_symbols as extra_symbols

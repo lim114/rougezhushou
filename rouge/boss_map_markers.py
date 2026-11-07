@@ -14,6 +14,10 @@ def packet():
 
 def mapping_for(stage_id,current):
     if type(stage_id)is not str or stage_id not in STAGES:return None
+    return _mapping_for_stage(stage_id,current)
+
+def _mapping_for_stage(stage_id,current):
+    """Bind a stage already selected from this package by the caller."""
     p=packet()
     if p is None:return None
     d=p['data'];row=d['bindings'][stage_id];v=current['version']
