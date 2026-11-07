@@ -78,7 +78,8 @@ def _timing_value(data, channel, model, calculation):
 
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
-    from .calibration import panel_layers, _panel_components, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
+    from .calibration import panel_layers, _cultivated, _panel_components, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
+    from .catalog import CultivationInputError
     from .timing_calibration import LABELS as TIMING_LABELS
     allowed = {'id', 'hypothesis', 'operator', 'channel', 'control_scenario', 'varying_fields',
                'evidence_kind', 'evidence_version', 'records'}
@@ -152,10 +153,14 @@ def calibration_experiment(experiment):
             scenario = _scenario(data['scenario'], all_operators=True)
             context = _panel_context(scenario)
             try:
-                inputs, calculation = _panel_components(scenario)
+                cult = _cultivated(scenario)
+            except (TypeError, OverflowError) as error:
+                raise CalibrationScenarioError(str(error)) from error
+            try:
+                inputs, calculation = _panel_components(scenario, cult)
             except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
-        except CalibrationScenarioError as error:
+        except (CalibrationScenarioError, CultivationInputError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)
             rows.append(result)

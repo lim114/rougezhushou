@@ -104,3 +104,7 @@ current_battle_reference.packet 对文件读取、来源解析和内部结构错
 ## D348 · 敌人环境分项错误出口
 
 preview_environment 沿用原 enemy_preview 的 ValueError、KeyError 捕获，生成本局环境无法确认提示。建议先区分实际条件/来源失败与内部错误，再收窄。已询问，等待决定。
+
+## D349 · 培养入口的信赖错误类型
+
+旧公共入口用 math.isfinite(trust) 读取信赖，文字或空值产生 TypeError，浮点范围外的整数产生 OverflowError。D110 已将培养步骤与后续计算拆开，内部普通 ValueError、KeyError、IndexError 直接上报。是否在数值转换处将两种非法信赖异常归为 CultivationInputError，待用户决定；涉及直接调用者的异常类型。

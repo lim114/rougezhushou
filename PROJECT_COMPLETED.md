@@ -1,3 +1,7 @@
+## 维护 · 校准实验单独处理培养输入，培养来源缺陷直接上报（2026-11-07）
+
+D110 部分完成。培养阶段普通 ValueError、KeyError、IndexError 不再误报为坏记录，已定义的培养输入异常仍只影响本行。39项定向通过，6份完整实验报告一致。D349待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-cultivation-experiment-boundary-20261107/summary.json)。
+
 ## 维护 · 固定敌人面板复用字段来源，目标匹配只取一次身份（2026-11-06）
 
 1087个固定绑定与旧版完整结果一致，含1028个数据库引用和59个独立构造；59项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-enemy-panel-writes-20261106/summary.json)。

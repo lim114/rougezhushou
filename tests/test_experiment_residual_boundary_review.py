@@ -49,10 +49,31 @@ class ExperimentResidualBoundaryTests(TestCase):
             with self.assertRaisesRegex(KeyError, 'base_stats'):
                 model.calibration_experiment(**payload)
 
+    def test_corrupt_cultivation_source_is_not_a_record_error(self):
+        from rouge import calibration
+        payload = model.public_experiment_payload()
+        original = calibration._cultivated
+        for fault in (KeyError, IndexError, ValueError):
+            def broken(scenario, **overrides):
+                if scenario.get('level') == 75:
+                    raise fault('cultivation defect')
+                return original(scenario, **overrides)
+            with self.subTest(fault=fault), patch.object(calibration, '_cultivated', side_effect=broken):
+                with self.assertRaisesRegex(fault, 'cultivation defect'):
+                    model.calibration_experiment(**payload)
+
+    def test_bad_trust_blocks_only_its_own_record(self):
+        for trust in ('100', None, {}, 10**1000, -1):
+            payload = model.public_experiment_payload()
+            payload['experiment']['records'][0]['data']['scenario']['trust'] = trust
+            report = model.calibration_experiment(**payload)
+            self.assertIn('record_validation_error', report['records'][0]['blocking_reasons'])
+            self.assertEqual(report['records'][1]['state'], 'evaluable')
+
     def test_unknown_skill_attack_has_no_numeric_delta(self):
         from rouge import calibration
         scenario = calibration._scenario({'operator': 'mechanist'})
-        inputs, calculation = calibration._panel_components(scenario)
+        inputs, calculation = calibration._panel_components(scenario, calibration._cultivated(scenario))
         calculation['estimate']['skill']['skill_attack'] = None
         snapshot = calibration._panel_snapshot(*calibration._panel_context(scenario), *inputs, calculation)
         attack = next(row for row in snapshot['rows'] if row['field'] == 'attack')
