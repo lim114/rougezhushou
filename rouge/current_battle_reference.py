@@ -17,6 +17,52 @@ def plain(value):
     return re.sub(r'<\$[^>]+>','',version._plain(value))
 
 
+def same_record(left, right):
+    """Compare source rows without equating booleans, integers or sequence types."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return left.keys() == right.keys() and all(same_record(left[k], right[k]) for k in left)
+    if type(left) in (list, tuple):
+        return len(left) == len(right) and all(same_record(a, b) for a, b in zip(left, right))
+    return left == right
+
+
+def document_files(manifest_name, digest, schema, expected):
+    """Read one pinned documentary manifest and its exact set of public files."""
+    try:
+        path = version._file(manifest_name)
+    except ValueError:
+        return None
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != digest:
+        return None
+    manifest = json.loads(raw)
+    if (manifest['schema'] != schema or manifest['game_commit'] != version.NEW_COMMIT
+            or set(manifest['files']) != expected):
+        return None
+    blobs = {}
+    for name, pin in manifest['files'].items():
+        try:
+            path = version._file(name)
+        except ValueError:
+            return None
+        content = path.read_bytes()
+        if (type(pin['bytes']) is not int or len(content) != pin['bytes']
+                or sha256(content).hexdigest() != pin['sha256']):
+            return None
+        blobs[name] = content
+    return blobs
+
+
+def original_rows_match(originals, stages, inputs):
+    for name in ('stages', 'levels', 'enemy_definitions', 'handbook'):
+        current = stages if name == 'stages' else inputs[name]
+        if any(not same_record(row, current.get(key)) for key, row in originals[name].items()):
+            return False
+    return True
+
+
 def packet():
     try:
         manifest_raw=(ROOT/MANIFEST).read_bytes()

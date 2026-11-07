@@ -1,9 +1,9 @@
 """Current exact Sun-boss form references, without battle-state prediction."""
 from copy import deepcopy
-from hashlib import sha256
 import json
 import re
 from . import current_battle_reference as battle
+from .current_battle_reference import same_record as _same
 
 PACK = 'research/p3-current-sun-boss-368'
 MANIFEST = PACK + '/runtime-manifest.json'
@@ -17,34 +17,13 @@ NOTICE = ('这是同一首领的三种形态资料，不是三名同时出场的
 UNAVAILABLE = '熄日首领资料无法核对，旧形态、招式、图片和地形入口已清除；恢复后请重新选择。'
 
 
-def _same(a, b):
-    if type(a) is not type(b): return False
-    if type(a) is dict: return a.keys() == b.keys() and all(_same(a[k], b[k]) for k in a)
-    if type(a) in (tuple, list): return len(a) == len(b) and all(_same(x, y) for x, y in zip(a, b))
-    return a == b
-
-
 def packet():
+    expected = {PACK + '/' + name for name in ('reference-data.json', 'source-materials.json',
+        'source-notes.json', 'related-id-absence-proof.json', 'sun-boss-complete.html',
+        'altar-complete.html', 'http-source-record.json', 'altar-source-record.json')}
     try:
-        try: path = battle.version._file(MANIFEST)
-        except ValueError: return None
-        raw = path.read_bytes()
-        if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
-        manifest = json.loads(raw)
-        expected = {PACK + '/' + name for name in ('reference-data.json', 'source-materials.json',
-            'source-notes.json', 'related-id-absence-proof.json', 'sun-boss-complete.html',
-            'altar-complete.html', 'http-source-record.json', 'altar-source-record.json')}
-        if (manifest['schema'] != 'current_sun_boss_368_manifest_v1'
-                or manifest['game_commit'] != battle.version.NEW_COMMIT
-                or set(manifest['files']) != expected): return None
-        blobs = {}
-        for name, pin in manifest['files'].items():
-            try: path = battle.version._file(name)
-            except ValueError: return None
-            content = path.read_bytes()
-            if (type(pin['bytes']) is not int or len(content) != pin['bytes']
-                    or sha256(content).hexdigest() != pin['sha256']): return None
-            blobs[name] = content
+        blobs = battle.document_files(MANIFEST, MANIFEST_SHA256, 'current_sun_boss_368_manifest_v1', expected)
+        if blobs is None: return None
         data = json.loads(blobs[PACK + '/reference-data.json'])
         materials = json.loads(blobs[PACK + '/source-materials.json'])
     except (OSError, UnicodeError, json.JSONDecodeError):
@@ -53,9 +32,7 @@ def packet():
     if current is None or data['schema'] != 'current_sun_boss_368_v1': return None
     if tuple(data['bindings']) != STAGES or set(data['originals']['enemy_definitions']) != set(FORMS): return None
     stages = current['version']['current']['details']['stages']; inputs = current['inputs']
-    if any(not _same(row, stages.get(key)) for key, row in data['originals']['stages'].items()): return None
-    for table in ('levels', 'enemy_definitions', 'handbook'):
-        if any(not _same(row, inputs[table].get(key)) for key, row in data['originals'][table].items()): return None
+    if not battle.original_rows_match(data['originals'], stages, inputs): return None
     if set(materials['forms']) != set(FORMS.values()): return None
     for sid in STAGES:
         selected = data['bindings'][sid]; level = inputs['levels'][selected['level_key']]

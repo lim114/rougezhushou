@@ -1,3 +1,7 @@
+## 维护 · 三类首领资料共用清单核验，验证每次打开只读取一次底层资料（2026-11-06）
+
+D286、D291完成。三套资料共用清单和原件核对，保留各自的文件集、敌人绑定与允许变更；实测每次独立打开读一次底层资料，后续来源失效时停止返回文献。 原280组完成267、余13。 [回执](verification/maintenance/code-constraints-boss-document-packets-20261106/summary.json)。
+
 ## 维护 · 共享天赋解锁条件，按已知基准计算召唤物差值（2026-11-06）
 
 D130、D315完成。共用候选解锁判断，同一部件目录直接遍历，外部部件仍核对归属。无基准的数量差值留空，生命与费用直接计算。 原280组完成265、余15。 [回执](verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json)。

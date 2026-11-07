@@ -2,10 +2,20 @@ import json
 from pathlib import Path
 from unittest.mock import patch
 import unittest
-from rouge import current_hanko, current_sun_boss
+from rouge import current_boss_documents, current_hanko, current_sun_boss
 
 
 class DocumentaryErrorBoundaryTests(unittest.TestCase):
+    def test_each_reference_reads_one_battle_packet_and_rechecks_on_next_open(self):
+        for model in (current_hanko, current_sun_boss, current_boss_documents):
+            with self.subTest(model=model.__name__), patch.object(
+                    model.battle, 'packet', wraps=model.battle.packet) as read:
+                self.assertIsNotNone(model.reference(model.STAGES[0]))
+                self.assertEqual(read.call_count, 1)
+                read.return_value = None
+                self.assertIsNone(model.reference(model.STAGES[0]))
+                self.assertEqual(read.call_count, 2)
+
     def test_dependency_errors_propagate(self):
         for model in (current_hanko, current_sun_boss):
             for cls in (ValueError, TypeError, KeyError, IndexError, AttributeError, RecursionError, OSError):

@@ -4,9 +4,9 @@ This is a qualified documentary migration, not a new numeric/phase model. The
 legacy readers retain their genuine old identities and complete source guards.
 """
 from copy import deepcopy
-from hashlib import sha256
 import json
 from . import current_battle_reference as battle
+from .current_battle_reference import same_record as _same
 
 PACK = 'research/p3-current-boss-documents-369'
 MANIFEST = PACK + '/runtime-manifest.json'
@@ -36,13 +36,6 @@ NOTICE = ('查看这关敌人的形态、招式、特殊循环与退场条件。
 UNAVAILABLE = '当前敌人的完整机制资料无法核对，旧选择、说明、图片与入口已清除；资料恢复后请手动重新选择。'
 
 
-def _same(a, b):
-    if type(a) is not type(b): return False
-    if type(a) is dict: return a.keys() == b.keys() and all(_same(a[k], b[k]) for k in a)
-    if type(a) in (tuple, list): return len(a) == len(b) and all(_same(x, y) for x, y in zip(a, b))
-    return a == b
-
-
 def _legacy(family):
     if family == 'phase':
         from . import boss_phase_reference as module
@@ -60,25 +53,11 @@ def _legacy(family):
 
 
 def packet():
+    expected = {PACK + '/' + n for n in ('qualified-current-records.json', 'source-notes.json', 'web-check-record.json')}
+    expected.update(n for pair in SOURCE_FILES.values() for n in pair)
     try:
-        try: path = battle.version._file(MANIFEST)
-        except ValueError: return None
-        raw = path.read_bytes()
-        if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
-        manifest = json.loads(raw)
-        expected = {PACK + '/' + n for n in ('qualified-current-records.json', 'source-notes.json', 'web-check-record.json')}
-        expected.update(n for pair in SOURCE_FILES.values() for n in pair)
-        if (manifest['schema'] != 'current_boss_documents_369_manifest_v1'
-                or manifest['game_commit'] != battle.version.NEW_COMMIT
-                or set(manifest['files']) != expected): return None
-        blobs = {}
-        for name, pin in manifest['files'].items():
-            try: path = battle.version._file(name)
-            except ValueError: return None
-            content = path.read_bytes()
-            if (type(pin['bytes']) is not int or len(content) != pin['bytes']
-                    or sha256(content).hexdigest() != pin['sha256']): return None
-            blobs[name] = content
+        blobs = battle.document_files(MANIFEST, MANIFEST_SHA256, 'current_boss_documents_369_manifest_v1', expected)
+        if blobs is None: return None
         data = json.loads(blobs[PACK + '/qualified-current-records.json'])
     except (OSError, UnicodeError, json.JSONDecodeError):
         return None
@@ -89,9 +68,7 @@ def packet():
     declared = tuple((r['stage_id'], r['enemy_key'], r['enemy_id'], r['level'], r['family']) for r in data['targets'])
     if not _same(declared, TARGETS): return None
     stages = current['version']['current']['details']['stages']; inputs = current['inputs']
-    if any(not _same(v, stages.get(k)) for k, v in data['originals']['stages'].items()): return None
-    for table in ('levels', 'enemy_definitions', 'handbook'):
-        if any(not _same(v, inputs[table].get(k)) for k, v in data['originals'][table].items()): return None
+    if not battle.original_rows_match(data['originals'], stages, inputs): return None
     for spec in data['families'].values():
         for row in spec['level_qualification']:
             old = data['old_levels'][row['stage_id']]; new = inputs['levels'][row['level_key']]
