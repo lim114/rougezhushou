@@ -1422,7 +1422,7 @@
     },
     {
       "file": "rouge/calibration_experiment.py",
-      "sha256": "3cfce0738cb329da35b7dd3f5564f376722524813e2ab5571ef84f264f60d8a6",
+      "sha256": "d53178e21f29c054bd0a6ac756fc296b5bce2b81f2a07bcbffe73fc6e94d2a1f",
       "rule1": "ordinary_paths_reviewed_shared_prediction_pending_listed_defenses",
       "rule2": "reused_domain_operations_and_parsers_no_unneeded_single_use_wrapper_identified",
       "rule3": "pending_scoped_approvals_unchanged",
@@ -1438,7 +1438,15 @@
         "decision": "D111",
         "evidence": "verification/maintenance/code-constraints-calibration-boundaries-review-20261106/summary.json",
         "result": "78 targeted tests pass; no whole-module certification."
-      }
+      },
+      "scoped_reviews": [
+        {
+          "file": "rouge/calibration_experiment.py",
+          "receipt": "verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json",
+          "scope": "D110 partial; residual and result updates no longer swallowed; preparation/parsing pending",
+          "sha256": "d53178e21f29c054bd0a6ac756fc296b5bce2b81f2a07bcbffe73fc6e94d2a1f"
+        }
+      ]
     },
     {
       "file": "rouge/timing_calibration.py",

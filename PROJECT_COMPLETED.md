@@ -5554,3 +5554,8 @@ D120完成：复用既有错误类型区分非法培养及已知生命缺口，�
 ## 维护：三类资料入口与来源边界（2026-11-06）
 
 D239/D242/D244/D247/D248完成：来源摘要、当前关卡归属、公开入口与点击后快照核对分属不同边界；D240/D245/D249已去除同次重读。7项故障注入及精确选择检查通过，未改产品源码。回执 `verification/maintenance/code-constraints-battle-reader-boundaries-20261106/summary.json`。
+
+
+## 维护：培养实验残差出口（2026-11-06）
+
+完成D110中的残差与结果组装部分：内部异常直接上报；坏读数仍逐条提示，27项定向通过。D110整体未销项。回执 `verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json`。

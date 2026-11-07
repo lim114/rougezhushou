@@ -1,0 +1,58 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation/observation parsing still in broad record handler"
+  ],
+  "title": "培养实验残差计算退出输入错误捕获",
+  "base_commit": "a83284c9def80db05f69afd7921efcac46edf0e9",
+  "changed_sources": [
+    "rouge/calibration_experiment.py"
+  ],
+  "source_sha256": {
+    "rouge/calibration_experiment.py": "d53178e21f29c054bd0a6ac756fc296b5bce2b81f2a07bcbffe73fc6e94d2a1f"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_experiment_residual_boundary_review tests.test_calibration_experiment tests.test_experiment_timing_prediction_review",
+        "tests_run": 27,
+        "tests_passed": 27,
+        "seconds": 4.269,
+        "environment": "local fixed public cases; no game samples"
+      }
+    ],
+    "live_window": "Original test-window update remains pending after prior automatic approval rejection; no native acceptance claimed."
+  },
+  "review": {
+    "standards": "D110 partial narrowing: residual calculation and result assembly now in try/else, outside record validation handler. No new checks, retries or helpers. Original input isolation remains pending for model preparation and observation analysis.",
+    "requirements": "Five internal error types from residual now propagate instead of record_validation_error. Invalid descending readings remain per-record blocked and never reach residual. Existing panel/timing experiments, held-out conflicts and context checks pass. No fabricated calibration result or broader accuracy claim."
+  },
+  "partially_implemented_decisions": [
+    "D110"
+  ]
+}

@@ -135,3 +135,6 @@ D318已另获授权并完成两处商店时间范围整改；决定见 `docs/dec
 - D307剩余：持有条件对照缺少必需字段时是否拒绝匹配，已发起补充确认。同次原件重复读取已修正。
 
 - D321：浮游单元非法等级被默认满级，待用户决定后实施；见 `docs/reviews/pending-defenses.md`。
+
+
+D110剩余：模型准备、条件比较和观察解析仍处于记录级宽捕获；残差计算及结果更新已移出，后续继续划清输入异常契约。回执 `verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json`。

@@ -171,6 +171,10 @@ def calibration_experiment(experiment):
             if raw['evidence_version'] != version:
                 result['blocking_reasons'].append('caller_evidence_version_mismatch')
             reading, expected, reason, detail = (_panel_value(data, channel, model) if channel['kind'] == 'panel' else _timing_value(data, channel, model, calculation))
+        except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+            result['blocking_reasons'].append('record_validation_error')
+            result['validation_error'] = str(error)
+        else:
             result.update(observed_interval=reading, model_reference=expected,
                 residual_interval=_residual(reading, expected), comparison_detail=detail,
                 declared_observation=deepcopy(observation))
@@ -178,9 +182,6 @@ def calibration_experiment(experiment):
                 result['blocking_reasons'].append(reason)
             if not result['blocking_reasons']:
                 result['state'] = 'evaluable'
-        except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
-            result['blocking_reasons'].append('record_validation_error')
-            result['validation_error'] = str(error)
         rows.append(result)
     for record in rows:
         if record['context_token']:

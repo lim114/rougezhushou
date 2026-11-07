@@ -1,3 +1,7 @@
+## 当前断点：实验残差异常出口（2026-11-06）
+
+D110部分推进：残差计算及结果更新移出输入错误捕获；27项定向通过。模型准备/观察解析仍待拆清，D110不销项。原280组仍完成204、剩76；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-experiment-residual-errors-20261106/summary.json`。
+
 ## 当前断点：三类资料入口边界（2026-11-06）
 
 D239/D242/D244/D247/D248核验完成；7项定向通过，未改产品源码。来源与独立选择身份检查按批准保留，内部缺字段直接上报，已有同快照复用继续有效。原280组完成204、剩76；D110实验捕获仍待处理，原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-battle-reader-boundaries-20261106/summary.json`。
