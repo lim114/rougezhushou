@@ -1,3 +1,7 @@
+## 当前断点 · 技能等级对照复用基准和训练资料，按批准范围提示逐行错误（2026-11-06）
+
+D331完成，D100普通技能等级对照已验证。基准等级不重复计算；每次对照只绑定一次训练资料。53项定向通过，8组完整结果与旧实现一致。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-skill-rank-comparison-20261106/summary.json)。
+
 ## 当前断点 · 破屏时序按窗口复用弹药累计，区分声明和计算错误（2026-11-06）
 
 D100机械师S2破屏对照窗口已整改。每个不同窗口各算一次普通伤害，每次破屏只累计一次；按声明顺序输出独立行。12组完整结果与改前相同，38项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-shield-window-projection-20261106/summary.json)。

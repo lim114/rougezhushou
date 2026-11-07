@@ -4,6 +4,49 @@ from rouge.skill_upgrade_comparison import compare_skill_upgrades, format_skill_
 from rouge.damage import calculate_damage
 
 class SkillUpgradeTests(unittest.TestCase):
+    def test_baseline_and_training_source_are_each_resolved_once(self):
+        from unittest.mock import patch
+        from rouge import skill_upgrade_comparison as model
+        for scenario in ({'operator':'mechanist','skill':3,'skill_rank':7},
+                         {'operator':'mechanist','skill':3}):
+            with self.subTest(scenario=scenario), patch.object(
+                    model, 'calculate_damage', wraps=calculate_damage) as calculate, patch.object(
+                    model, '_training_source', wraps=model._training_source) as source:
+                comparison = compare_skill_upgrades(scenario, {'ranks':[10, 7, 1]})
+                base_rank = scenario.get('skill_rank', 10)
+                self.assertEqual(sorted(call.args[0].get('skill_rank', 10) for call in calculate.call_args_list),
+                                 [1, 7, 10])
+                source.assert_called_once()
+                self.assertEqual([row['rank'] for row in comparison['rows']], [10, 7, 1])
+                baseline = next(row for row in comparison['rows'] if row['rank'] == base_rank)
+                self.assertEqual(baseline['delta_window_damage'], 0)
+
+    def test_player_dialog_reports_rank_input_and_propagates_internal_row_errors(self):
+        import json
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QApplication, QWidget
+        from rouge import skill_upgrade_comparison as model
+        from rouge.app import MainWindow
+        qt = QApplication.instance() or QApplication([])
+        owner = QWidget()
+        self.addCleanup(owner.close)
+        owner.damage_result = {'scenario': {'operator':'mechanist','skill':2,'elite':1,'skill_rank':7}}
+        MainWindow.show_skill_upgrades(owner)
+        dialog = owner.skill_upgrade_dialog
+        self.assertIn('未开放', dialog.result['rows'][-1]['error'])
+        dialog.editor.setPlainText(json.dumps({'ranks':[True]}))
+        dialog.calculate()
+        self.assertIsNone(dialog.result)
+        self.assertIn('整数等级', dialog.notice.toPlainText())
+        dialog.editor.setPlainText(json.dumps({'ranks':[7, 6]}))
+        def broken_row(scenario):
+            if scenario['skill_rank'] == 6: raise ValueError('internal row failure')
+            return calculate_damage(scenario)
+        with patch.object(model, 'calculate_damage', side_effect=broken_row):
+            with self.assertRaisesRegex(ValueError, 'internal row failure'):
+                dialog.calculate()
+        qt.processEvents()
+
     def test_same_scenario_baseline_and_differences(self):
         scenario={'operator':'mechanist','skill':3,'base_attack':1000,'skill_rank':7,'window_seconds':10,'enemy_resistance':50}
         before=deepcopy(scenario);result=compare_skill_upgrades(scenario,{'ranks':[7,10]})

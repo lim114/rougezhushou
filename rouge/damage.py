@@ -7,6 +7,10 @@ from .timing import AttackTimeline
 from .enemy_environment import damage_factor
 
 
+class SkillSelectionError(ValueError):
+    """The selected skill or rank is invalid or locked at this elite phase."""
+
+
 def _skill_damage(scenario: dict) -> dict:
     result=_skill_damage_base(scenario)
     if not any(r['kind']=='first_damage_scale' for r in scenario.get('_relic_rules',[])):return result
@@ -233,9 +237,9 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     profile=catalog()['operators'][scenario['operator']]
     skill=scenario.get('skill');rank=scenario.get('skill_rank',10)
     if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
-        raise ValueError('请选择该干员的有效技能。')
+        raise SkillSelectionError('请选择该干员的有效技能。')
     if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
-        raise ValueError('技能等级需要为1–10的整数。')
+        raise SkillSelectionError('技能等级需要为1–10的整数。')
     attributes=cultivated_attributes
     if attributes is None:
         attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),
@@ -244,7 +248,7 @@ def _prepare_damage(scenario: dict, *, cultivated_attributes=None):
     scenario.setdefault('base_attack',attributes['attack'])
     elite=scenario.get('elite',2)
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
-        raise ValueError('当前精英阶段尚未开放所选技能或专精。')
+        raise SkillSelectionError('当前精英阶段尚未开放所选技能或专精。')
     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
         raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('cooperative'),str):

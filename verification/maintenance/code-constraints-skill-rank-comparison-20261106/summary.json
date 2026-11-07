@@ -1,0 +1,79 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "技能等级对照复用基准和训练资料，按批准范围提示逐行错误",
+  "base_commit": "05e35baedc11600ab9ea152778c623cd4d8859ba",
+  "changed_sources": [
+    "rouge/app.py",
+    "rouge/damage.py",
+    "rouge/skill_cultivation.py",
+    "rouge/skill_upgrade_comparison.py"
+  ],
+  "source_sha256": {
+    "rouge/app.py": "d8b12a0ae8154e11bf23dd4d26d06c96d28359d14cc10a42a59bce7ee122ceb2",
+    "rouge/damage.py": "5ffb4aa4f78b8ec2ac24b93cb6d4fde0d6e10d056979c7139497f1a9c62449cc",
+    "rouge/skill_cultivation.py": "7d2e12c1c8380ef04ee6efbc6cb94a354c8d2977ae1df993cdbcf6179e8c7f62",
+    "rouge/skill_upgrade_comparison.py": "191a8a332801ef539bc00890a56dfa23a0b6fd80a202bed4077f1b290324f1fc"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D331"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_passed": 23,
+        "seconds": 0.387
+      },
+      {
+        "phase": "final",
+        "tests_passed": 53,
+        "seconds": 1.612,
+        "command": "python -m unittest tests.test_skill_upgrade_comparison_133 tests.test_skill_cultivation_118 tests.test_cultivation_comparison_140 tests.test_calibration_experiment"
+      },
+      {
+        "phase": "HEAD differential",
+        "cases": 8,
+        "all_outputs_equal": true
+      }
+    ],
+    "live_window": "Offscreen Qt. Original desktop test window restart outstanding after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Typed skill selection error is raised by the existing three selection checks. No new guard, no catch for general engine ValueError in rank rows. Reuses baseline calculation and binds original operator/skill source once per query; each rank receives its own training gate. Damage/healing applicability resolved once. Independent cultivation explanation still validates source.",
+    "requirements": "Locked elite-1 masteries are reported per row, bad list clears old UI result, internal row error propagates. Verified one calculation per distinct requested rank including explicit and implicit baseline, preserved requested order and unknown deltas. Full results equal in eight differential cases."
+  },
+  "partially_implemented_decisions": [
+    "D100"
+  ]
+}

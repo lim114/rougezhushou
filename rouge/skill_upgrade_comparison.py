@@ -2,24 +2,31 @@
 import json
 from copy import deepcopy
 from .catalog import catalog
-from .damage import calculate_damage
-from .skill_cultivation import explanation, format_explanation
+from .damage import SkillSelectionError, calculate_damage
+from .skill_cultivation import _training_source, _rank_explanation, format_explanation
 from .reporting import has_damage, has_healing
 
 
+class RankListError(ValueError):
+    """The requested list of comparison ranks is invalid."""
+
+
 def compare_skill_upgrades(scenario, preview):
-    if set(preview) != {'ranks'}: raise ValueError('需要ranks等级列表。')
+    if set(preview) != {'ranks'}: raise RankListError('需要ranks等级列表。')
     ranks = preview['ranks']
     if (not isinstance(ranks,list) or not 1 <= len(ranks) <= 10 or
             any(type(r) is not int or not 1 <= r <= 10 for r in ranks) or len(set(ranks)) != len(ranks)):
-        raise ValueError('ranks需要1–10个不重复的1–10整数等级。')
+        raise RankListError('ranks需要1–10个不重复的1–10整数等级。')
     baseline = calculate_damage(deepcopy(scenario))
     profile = catalog()['operators'][scenario['operator']]; skill = scenario['skill']; elite = scenario.get('elite',2)
     base_metrics = baseline['estimate']['skill']; rows = []
+    base_rank = scenario.get('skill_rank', 10)
+    documents, training_original = _training_source(scenario['operator'], profile)
+    damage = has_damage(scenario['operator'], skill)
+    healing = has_healing(scenario['operator'], skill)
     for rank in ranks:
-        proposed = deepcopy(scenario); proposed['skill_rank'] = rank
-        source = explanation(scenario['operator'],profile,skill,elite,
-            {'rank':rank,'source':'preview_unconfirmed','manual_reference_applied':False})
+        source = _rank_explanation(scenario['operator'],profile,skill,elite,
+            {'rank':rank,'source':'preview_unconfirmed','manual_reference_applied':False}, documents, training_original)
         parameter = profile['skills'][skill-1]['levels'][rank-1]
         row = {'rank':rank,'label':f'等级{rank}' if rank<=7 else f'专精{rank-7}',
             'status':'待测算','error':None,'original_training_reference':deepcopy(source),
@@ -28,13 +35,19 @@ def compare_skill_upgrades(scenario, preview):
             'window_damage':None,'window_healing':None,'delta_window_damage':None,'delta_window_healing':None,
             'known_window_damage':None,'known_window_healing':None,'cycle_damage':None,'cycle_healing':None,
             'warnings':[],'calculation_notes':[]}
-        for field in ('window_damage','delta_window_damage'):
-            row[field+'_applicable'] = has_damage(scenario['operator'],skill)
-        for field in ('window_healing','delta_window_healing'):
-            row[field+'_applicable'] = has_healing(scenario['operator'],skill)
-        try: modeled = calculate_damage(proposed)
-        except ValueError as error:
-            row.update(status='不可测算',error=str(error)); rows.append(row); continue
+        row.update(window_damage_applicable=damage, delta_window_damage_applicable=damage,
+                   window_healing_applicable=healing, delta_window_healing_applicable=healing)
+        if rank == base_rank:
+            modeled = baseline
+        else:
+            proposed = deepcopy(scenario)
+            proposed['skill_rank'] = rank
+            try:
+                modeled = calculate_damage(proposed)
+            except SkillSelectionError as error:
+                row.update(status='不可测算', error=str(error))
+                rows.append(row)
+                continue
         metrics = modeled['estimate']['skill']; row['status'] = '已计参考' if modeled['complete'] else '部分参考'
         for key in ('window_damage','window_healing','cycle_damage','cycle_healing'): row[key] = metrics.get(key)
         for key in ('window_damage','window_healing'):
@@ -44,7 +57,7 @@ def compare_skill_upgrades(scenario, preview):
         row['known_window_healing'] = modeled.get('known_healing_subtotals',{}).get('window_healing')
         row['warnings'] = deepcopy(modeled['warnings']); row['calculation_notes'] = deepcopy(modeled['estimate']['notes'])
         rows.append(row)
-    return {'scenario':deepcopy(scenario),'baseline_rank':scenario.get('skill_rank',10),'rows':rows,
+    return {'scenario':deepcopy(scenario),'baseline_rank':base_rank,'rows':rows,
         'baseline_metrics':deepcopy(base_metrics),
         'notes':['每行仅替换技能等级，培养、模组、目标、藏品及观察条件使用打开时的同一情景。',
                  '原训练条件只作升级门参考，不确认账户已培养或肉鸽受限形态的使用资格；不可测算的等级明确保留原因。',

@@ -1449,7 +1449,8 @@ class MainWindow(QMainWindow):
     def show_skill_upgrades(self):
         if not self.damage_result:return
         from copy import deepcopy
-        from .skill_upgrade_comparison import compare_skill_upgrades,format_skill_upgrades
+        from .skill_upgrade_comparison import RankListError, compare_skill_upgrades, format_skill_upgrades
+        from .damage import SkillSelectionError
         from .reference_dialog import ReferenceDialog
         scenario=deepcopy(self.damage_result['scenario'])
         previous=getattr(self,'skill_upgrade_dialog',None)
@@ -1458,7 +1459,7 @@ class MainWindow(QMainWindow):
             '选择要比较的公共等级1–7或专精8–10。只替换等级，账号和本局不变；不可测算的等级列出原因。',
             {'ranks':list(range(1,11))},lambda preview:compare_skill_upgrades(scenario,preview),format_skill_upgrades,
             [('label','等级'),('status','测算状态'),('duration_parameter','持续参数/秒'),('sp_cost_parameter','技力参数'),
-             ('window_damage','窗口总伤'),('delta_window_damage','相对基准伤害'),('window_healing','窗口治疗'),('delta_window_healing','相对基准治疗')],self)
+             ('window_damage','窗口总伤'),('delta_window_damage','相对基准伤害'),('window_healing','窗口治疗'),('delta_window_healing','相对基准治疗')],self,input_errors=(RankListError, SkillSelectionError))
         self.skill_upgrade_dialog.show()
 
     def show_healing_budget(self):

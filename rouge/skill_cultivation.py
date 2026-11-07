@@ -101,8 +101,11 @@ def explanation(operator, profile, skill, elite, selection):
     """
     if profile is None or selection['rank'] is None:
         return None
-    rank = selection['rank']
-    selected = profile['skills'][skill - 1]
+    source, original = _training_source(operator, profile)
+    return _rank_explanation(operator, profile, skill, elite, selection, source, original)
+
+
+def _training_source(operator, profile):
     source = _source_data()
     original = source['operators'].get(operator)
     bound = bool(original and original['native_id'] == profile['id'] and
@@ -110,12 +113,18 @@ def explanation(operator, profile, skill, elite, selection):
                  all(raw['skillId'] == current['id'] and
                      int(raw['unlockCond']['phase'][-1]) == current.get('unlock_elite', index)
                      for index, (raw, current) in enumerate(zip(original['skills'], profile['skills']))))
+    return source, original if bound else None
+
+
+def _rank_explanation(operator, profile, skill, elite, selection, source, original):
+    rank = selection['rank']
+    selected = profile['skills'][skill - 1]
     training = None
-    if bound and type(rank) is int and 2 <= rank <= 7:
+    if original is not None and type(rank) is int and 2 <= rank <= 7:
         training = {'kind': 'common_upgrade',
                     'path': f'{original["native_id"]}.allSkillLvlup[{rank - 2}].unlockCond',
                     'raw': dict(original['allSkillLvlup'][rank - 2]['unlockCond'])}
-    elif bound and type(rank) is int and 8 <= rank <= 10:
+    elif original is not None and type(rank) is int and 8 <= rank <= 10:
         training = {'kind': 'mastery_upgrade',
                     'path': f'{original["native_id"]}.skills[{skill - 1}].levelUpCostCond[{rank - 8}].unlockCond',
                     'raw': dict(original['skills'][skill - 1]['levelUpCostCond'][rank - 8]['unlockCond'])}
@@ -125,8 +134,8 @@ def explanation(operator, profile, skill, elite, selection):
     return {'operator': operator, 'skill': skill, 'rank': rank, 'elite': elite,
             'rank_source': selection['source'], 'manual_reference_applied': selection['manual_reference_applied'],
             'model_gate_met': policy_met, 'skill_unlock_elite': selected.get('unlock_elite', skill - 1),
-            'original_source_status': 'located' if bound else 'missing',
-            'skill_original_gate': dict(original['skills'][skill - 1]['unlockCond']) if bound else None,
+            'original_source_status': 'located' if original is not None else 'missing',
+            'skill_original_gate': dict(original['skills'][skill - 1]['unlockCond']) if original is not None else None,
             'training_requirement': training,
             'topic': 'rogue_6', 'recruit_upper_bounds': {
                 key: dict(value) for key, value in source['recruit_upper_bounds']['rogue_6'].items()},
