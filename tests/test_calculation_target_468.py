@@ -30,6 +30,13 @@ class CalculationTargetTests(unittest.TestCase):
   w=self.window;self.target();page=self.opened();w.compact_window.open_full(w.damage_page);w.calculation_scope.setCurrentIndex(w.calculation_scope.findData('archive'));host=w.compact_window.reference_window;host.navigate(host.cursor-1);self.assertNotIn(page,host.history);self.assertEqual(self.opened().link_context[-1],'archive')
  def test_legacy_stage_entry_uses_its_own_source_without_overwriting_calculator_target(self):
   w=self.window;self.target();target=w.target_stage.currentData();before=deepcopy(w.damage_result);w.battle_preview.set_stage('ro6_n_1_1');w.battle_preview.current_reference_button.click();host=w.compact_window.reference_window;page=host.pages.currentWidget();self.assertEqual(page.panel.stage_id,'ro6_n_1_1');self.assertEqual(w.target_stage.currentData(),target);self.assertEqual(w.damage_result,before)
+ def test_rejected_parent_navigation_does_not_construct_a_reader(self):
+  w=self.window;self.target();w.show_compact();before=deepcopy(w.damage_result)
+  with patch.object(w.compact_window, 'open_full', return_value=False), patch.object(route, 'make_reader') as factory:
+   self.assertFalse(w.open_calculation_target())
+   factory.assert_not_called()
+  self.assertEqual(w.damage_result,before)
+
  def test_missing_stage_keeps_calculation_and_shows_short_notice(self):
   w=self.window;self.target();before=deepcopy(w.damage_result)
   with patch.object(model,'stage_reference',return_value=None):self.assertFalse(w.open_calculation_target())

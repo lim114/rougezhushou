@@ -366,8 +366,9 @@ class CurrentBattlePanel(QWidget):
             picture=QPixmap();raw=model.picture_for_enemy(enemy)
             self._enemy_icons[enemy['key']]=QIcon(picture) if raw and picture.loadFromData(raw,'PNG') else QIcon()
         if not keep:
-            from .current_enemy_forecast import forecasts
-            self.enemy_forecasts=forecasts(fresh,self.run_config)
+            from .current_enemy_forecast import _forecasts
+            from .current_enemy_environment import stage_environment_reference
+            self.enemy_forecasts = _forecasts(fresh, self.run_config, stage_environment_reference)
         from .current_event_battles import stage_has_reference
         has_origins = stage_has_reference(self.stage_id)
         self.event_origins_button.setVisible(has_origins)

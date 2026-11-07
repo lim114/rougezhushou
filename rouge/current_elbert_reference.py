@@ -125,12 +125,25 @@ def reference(stage_id,enemy_key=None,card=None):
     if card is not None and type(card)is not str:return None
     result=packet()
     if result is None:return None
-    stage=result['data']['stages'][stage_id];selected=next((r for r in stage['entities']if r['key']==enemy_key),None)
-    if enemy_key is not None and selected is None:return None
-    if card is not None and(selected is None or card not in dict(CARDS[selected['kind']])):return None
-    return{**result,'stage_id':stage_id,'stage_name':stage['stage']['name'],'stage':deepcopy(stage),
-           'entities':deepcopy(stage['entities']),'selected':deepcopy(selected),'card':card,
-           'actual_source_entity':None}
+    stage = result['data']['stages'][stage_id]
+    row = _find_entity(stage['entities'], enemy_key)
+    fields = _selection_fields(row, enemy_key, card)
+    if fields is None:
+        return None
+    return {**result, 'stage_id': stage_id, 'stage_name': stage['stage']['name'], 'stage': deepcopy(stage),
+            'entities': deepcopy(stage['entities']), **fields, 'actual_source_entity': None}
+
+
+def _find_entity(rows, key):
+    return next((row for row in rows if row['key'] == key), None)
+
+
+def _selection_fields(row, enemy_key, card):
+    if enemy_key is not None and row is None:
+        return None
+    if card is not None and (row is None or card not in dict(CARDS[row['kind']])):
+        return None
+    return {'selected': deepcopy(row), 'card': card}
 
 
 def locate(stage_id,enemy_key):
@@ -140,7 +153,7 @@ def locate(stage_id,enemy_key):
 
 def entity(result,enemy_key):
     if result is None or type(enemy_key)is not str:return None
-    return next((row for row in result['entities']if row['key']==enemy_key),None)
+    return _find_entity(result['entities'], enemy_key)
 
 
 def related_entities(result,enemy_key,*,prepared_entity=...):
@@ -152,9 +165,13 @@ def related_entities(result,enemy_key,*,prepared_entity=...):
 
 
 def resolve_related(result,enemy_key,request):
-    if type(request)is not dict or request not in related_entities(result,enemy_key):return None
-    fresh=reference(result['stage_id'],enemy_key)
-    if fresh is None or fresh['source_identity']!=result['source_identity']or fresh['stage']!=result['stage']:return None
+    if result is None or type(request) is not dict:
+        return None
+    fresh = reference(result['stage_id'], enemy_key)
+    if fresh is None or fresh['source_identity'] != result['source_identity'] or fresh['stage'] != result['stage']:
+        return None
+    if request not in related_entities(fresh, enemy_key, prepared_entity=fresh['selected']):
+        return None
     return {'stage_id':fresh['stage_id'],'enemy_key':request['enemy_key']}
 
 
@@ -165,11 +182,13 @@ def selected_card(result,enemy_key,*,prepared_entity=...):
 
 def view_result(result,enemy_key,card=None,*,prepared_entity=...):
     """A local read projection; it does not silently refresh or choose an entity."""
-    if card is not None and type(card)is not str:return None
-    row=entity(result,enemy_key) if prepared_entity is ... else prepared_entity
-    if result is None or(enemy_key is not None and row is None):return None
-    if card is not None and(row is None or card not in dict(CARDS[row['kind']])):return None
-    return{**result,'selected':deepcopy(row),'card':card}
+    if result is None or (card is not None and type(card) is not str):
+        return None
+    row = prepared_entity
+    if row is ...:
+        row = _find_entity(result['entities'], enemy_key) if type(enemy_key) is str else None
+    fields = _selection_fields(row, enemy_key, card)
+    return {**result, **fields} if fields is not None else None
 
 
 def player_text(result):

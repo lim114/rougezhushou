@@ -12,11 +12,12 @@ def component_numbers(forecast):
 
 
 def forecasts(result, config):
-    """The caller supplies an already verified current stage and local conditions.
+    from .current_enemy_environment import qualify_current
+    return _forecasts(result, config, qualify_current)
 
-    Unqualified declarations stay unknown. No frame, game action, relic state
-    or hidden phase is inferred, and no old numerical formula is rewritten.
-    """
+
+def _forecasts(result, config, current_environment):
+    """Use the current-source check appropriate to this stage's provenance."""
     if not config or result is None:
         return {}
     grade=difficulty_value(config.get('difficulty'))
@@ -32,8 +33,7 @@ def forecasts(result, config):
     current_reference=None
     if legacy is None or legacy['level_source']['sha256']!=result['source']['sha256']:
         if reason is None:
-            from .current_enemy_environment import qualify_current
-            current_reference=qualify_current(result)
+            current_reference = current_environment(result)
             if current_reference is None:
                 reason='此关的当前关卡与敌人属性来源无法核对，未借用旧计算。'
     zone=config.get('zone')or{}
@@ -42,6 +42,7 @@ def forecasts(result, config):
     label='保密等级 '+str(raw_grade if raw_grade is not None else'未确认')+' · '+zone_name
     difficulty_reference=({'profiles':result['difficulty_reference'],'source':result['difficulty_source']}
                           if current is not None and old_profile is None else None)
+    conditions = {key: config[key] for key in ('difficulty', 'zone') if key in config}
     output={}
     for enemy in result['enemies']:
         item={'environment_component':None,'complete_current_total':None,'pending':[reason]if reason else[],
@@ -77,7 +78,7 @@ def forecasts(result, config):
         # Only the enemy-facing difficulty/zone inputs belong to this subtotal.
         # Operator squad benefits are not enemy attributes, and relic effects
         # remain a separately unfinished component of the complete total.
-        conditions={key:deepcopy(config[key])for key in('difficulty','zone')if key in config}
+
         prediction=enemy_preview(result['id'],enemy['id'],enemy['level'],conditions,difficulty_reference=difficulty_reference)
         environment=prediction['environment']
         if environment is not None:

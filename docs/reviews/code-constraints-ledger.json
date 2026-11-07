@@ -383,13 +383,20 @@
     },
     {
       "file": "rouge/current_battle_view.py",
-      "sha256": "01c805c9f745f20b23db8437481f02b3d8ccd035dfd37fffd91fd5de3583316c",
+      "sha256": "f3438b7740c0376acc9c2b430960d1d0b23ee84922717a1b814dd139257a9aa6",
       "rule1": "Caller filters kind once, then applies group/focus to the same rows; source validators under D52 unchanged",
       "rule2": "Shared grouping/filter functions retained; record_text owns domain formatting; no new wrapper",
       "rule3": "D231_D232_pending_unchanged",
       "evidence": "Entire player_spawn_filters and caller _actions_changed/focus_action inspected; action_rows does not mutate inputs; 16 targeted tests passed13.405s; other current_battle_view methods not certified",
       "ordinary_rules_review_complete": false,
-      "full_module_review_complete": false
+      "full_module_review_complete": false,
+      "scoped_reviews": [
+        {
+          "decision": "D296, D305, D311",
+          "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
+          "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
+        }
+      ]
     },
     {
       "file": "rouge/player_note_style.py",
@@ -3826,7 +3833,7 @@
     },
     {
       "file": "rouge/current_elbert_reference.py",
-      "sha256": "b0b94f9b5fd9fe144f2cdcb9e2665dffe07406893db85e820e992c02b042e962",
+      "sha256": "2694b2de9805c03e275aed76446687f57c9c79be98470102bd6ede9fc636abd5",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Removed equality to same assigned database object; guard/source/entity duplication pending",
@@ -3877,6 +3884,11 @@
           "receipt": "verification/maintenance/code-constraints-related-empty-entry-20261106/summary.json",
           "scope": "D296 partial missing-source rejection reused",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D296, D305, D311",
+          "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
+          "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
         }
       ]
     },
@@ -4064,7 +4076,7 @@
     },
     {
       "file": "rouge/current_enemy_environment.py",
-      "sha256": "c62583806ad13cc6d6ce8c7fb767fe9c4647b50860bbf55dd8c026c0dd6e6b37",
+      "sha256": "3fefeeedd26887398e54b1f6d85b60803b03edb800e310b135871bf2be6be26f",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Four validated exact int/float attributes copied into new mapping without redundant deepcopy; gold record read once; sorted allowed IDs once with independent output list copy",
@@ -4072,7 +4084,14 @@
       "rule3": [
         "D305"
       ],
-      "evidence": "Four full modules and callers reviewed;33 initial passes plus corrected stale UI-copy test1pass; old source reproduces original wording failure"
+      "evidence": "Four full modules and callers reviewed;33 initial passes plus corrected stale UI-copy test1pass; old source reproduces original wording failure",
+      "scoped_reviews": [
+        {
+          "decision": "D296, D305, D311",
+          "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
+          "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
+        }
+      ]
     },
     {
       "file": "rouge/event_run_context.py",
@@ -4382,7 +4401,7 @@
     },
     {
       "file": "rouge/player_calculation_target.py",
-      "sha256": "106004e169bc77e395e6afd65b8ef5a2014cac93b6fa30ff2f2d2f9d2f47de02",
+      "sha256": "995cc712e44e3447c7c6f5c04dc06d29916f2fd51dd72626dbf65c0fd82b12fd",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "Complete body reviewed; reuse crop minimum, loop coordinates, constructor flag and offline item membership; declared unknowns/recognition thresholds retained",
@@ -4390,7 +4409,14 @@
       "rule3": [
         "D311"
       ],
-      "evidence": "Seven full bodies, source/consumer contracts and related checks;17 targeted tests;319 old/new comparisons; details in receipt"
+      "evidence": "Seven full bodies, source/consumer contracts and related checks;17 targeted tests;319 old/new comparisons; details in receipt",
+      "scoped_reviews": [
+        {
+          "decision": "D296, D305, D311",
+          "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
+          "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
+        }
+      ]
     },
     {
       "file": "rouge/level_panel_view.py",
@@ -4961,6 +4987,13 @@
       "decision": "D275, D278, D282",
       "receipt": "verification/maintenance/code-constraints-portrait-and-terrain-reuse-20261106/summary.json",
       "scope": "Four mechanism readers list icon and selected portrait lifecycles plus terrain_info interpretation of fixed supported tile structure and parameter bounds."
+    },
+    {
+      "file": "rouge/current_enemy_forecast.py",
+      "sha256": "78dab48dd78b7cee58d993e4dce66743b22d0151923b6f558b373b3a5fdf7f60",
+      "decision": "D296, D305, D311",
+      "receipt": "verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json",
+      "scope": "Elbert selection/related request qualification, current enemy environment source and attribute extraction, calculator target reader. D326 remains pending."
     }
   ]
 }

@@ -1,3 +1,7 @@
+## 维护 · 敌人环境复用本次关卡来源，关联跳转核对当前实体（2026-11-06）
+
+D296、D305、D311完成。刷新当次使用已核验的关卡，之后改变难度重新核对。埃尔伯特关联跳转拒绝伪造编号，计算页保留唯一敌人身份选择。36项定向通过。新增D326待审。 原280组完成262、余18。 [回执](verification/maintenance/code-constraints-enemy-environment-targets-20261106/summary.json)。
+
 ## 维护 · 敌人图标与头像复用本次解码，地形按固定参数表读取（2026-11-06）
 
 四页在同一次刷新复用每个条目的图片，独立切换敌人重新读图。汉科头像保留74像素，其余三页保留70像素。地形复用固定参数表。最终57项定向通过。 原280组完成259、余21。 [回执](verification/maintenance/code-constraints-portrait-and-terrain-reuse-20261106/summary.json)。

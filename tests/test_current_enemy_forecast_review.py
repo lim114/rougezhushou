@@ -19,6 +19,21 @@ class CurrentEnemyForecastReviewTests(unittest.TestCase):
     def config(self,grade=15,zone='zone_1'):
         return {'difficulty':{'value':grade},'zone':{'id':zone}}
 
+    def test_fresh_stage_uses_its_own_environment_basis_and_later_context_requalifies(self):
+        from rouge import current_enemy_environment as source
+        panel = CurrentBattlePanel('ro6_n_2_6')
+        self.addCleanup(panel.close)
+        panel.set_context(self.config())
+        expected = forecasts(panel.result, self.config())
+        panel.source_identity = None
+        with patch.object(source, 'qualify_current', wraps=source.qualify_current) as recheck:
+            self.assertTrue(panel.refresh_reference())
+            recheck.assert_not_called()
+            self.assertEqual(panel.enemy_forecasts, expected)
+            panel.set_context(self.config(grade=14))
+            recheck.assert_called_once_with(panel.result)
+        self.assertEqual(panel.enemy_forecasts, forecasts(panel.result, self.config(grade=14)))
+
     def test_qualified_four_attributes_use_existing_model_and_keep_full_total_unknown(self):
         result=forecasts(self.stage,self.config())
         duck=next(e for e in self.stage['enemies']if e['id']=='enemy_2001_duckmi')

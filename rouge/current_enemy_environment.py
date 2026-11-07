@@ -22,9 +22,15 @@ def qualify_current(result):
             or result['difficulty_reference'] != profiles or result['difficulty_source'] != difficulty_source
             or result['enemies'] != model.enemy_records(level, packet)):
         return None
-    return {'stage': stage, 'preview': {'runes': level.get('runes') or [],
-            'global_buffs': level.get('globalBuffs') or [], 'possible_enemies': result['enemies']},
-            'difficulty_profiles': result['difficulty_reference']}
+    return stage_environment_reference(result)
+
+
+def stage_environment_reference(stage):
+    """Project a freshly source-qualified stage into the environment calculator."""
+    level = stage['level']
+    return {'stage': stage['stage'], 'preview': {'runes': level.get('runes') or [],
+            'global_buffs': level.get('globalBuffs') or [], 'possible_enemies': stage['enemies']},
+            'difficulty_profiles': stage['difficulty_reference']}
 
 
 def environment(reference, enemy, config, grade):
@@ -34,11 +40,12 @@ def environment(reference, enemy, config, grade):
         return None, '这份当前引用缺少精确数据库等级，不借用其它等级。'
     values = enemy['declared_traits']['explicit_core_attributes']
     keys = ('maxHp', 'atk', 'def', 'magicResistance')
-    if any(type(values.get(key)) not in (int, float) or not math.isfinite(values[key])
-           or values[key] < 0 for key in keys):
+    stats = {key: values.get(key) for key in keys}
+    if any(type(value) not in (int, float) or not math.isfinite(value) or value < 0
+           for value in stats.values()):
         return None, '这份当前引用尚无完整的四项明确属性，缺项不填零。'
     component = {'enemy_id': enemy['id'], 'level_type': enemy['tier'],
-                 'stats': {key: values[key] for key in keys},
+                 'stats': stats,
                  'steps': [], 'pending': [], 'damage_factor': 1}
     apply_fixed_environment(component, reference['stage'], reference['preview'],
         {'value': grade}, config.get('zone'), difficulty_profiles=reference['difficulty_profiles'])

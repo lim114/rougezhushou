@@ -24,7 +24,7 @@ def open_target(window, *, source='calculator'):
     status.hide()
     def create(page_owner):
         stage,target,_scope=context()
-        page=make_reader('battle',{'id':stage,'title':'计算目标'},window,
+        page=make_reader('battle',{'id':stage},window,
                          historical=True,page_owner=page_owner)
         if page is None:
             status.setText('该关卡暂无作战资料。');status.show()

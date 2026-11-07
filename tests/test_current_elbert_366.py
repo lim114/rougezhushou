@@ -92,6 +92,14 @@ class CurrentElbert366Tests(unittest.TestCase):
                 self.assertIsNone(model.resolve_related(result,'0',changed))
             self.assertIsNone(model.locate('ro6_b_3',1));self.assertIsNone(model.locate('狂热敬虔','0'))
 
+    def test_locally_changed_entity_list_cannot_authorize_an_unrelated_target(self):
+        result = self.reference('ro6_b_3', '0')
+        forged = deepcopy(result)
+        forged['entities'][1]['key'] = 'foreign-key'
+        request, = model.related_entities(forged, '0')
+        with patch.object(model, 'packet', return_value=deepcopy(self.base)):
+            self.assertIsNone(model.resolve_related(forged, '0', request))
+
     def test_unknown_or_unrelated_entity_has_no_foreign_special_topics(self):
         self.assertIsNone(self.reference('ro6_b_3','999'));self.assertIsNone(self.reference('ro6_b_1','0'))
         self.assertIsNone(self.reference('ro6_b_3','1','staff'));self.assertIsNone(self.reference('ro6_b_3','0','configuration'))

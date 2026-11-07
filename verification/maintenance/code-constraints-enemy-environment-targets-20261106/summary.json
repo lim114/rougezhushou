@@ -1,0 +1,89 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "敌人环境复用本次关卡来源，关联跳转核对当前实体",
+  "base_commit": "43060ae45fffeb4c57ac23980259b054d18f4d99",
+  "changed_sources": [
+    "rouge/current_enemy_environment.py",
+    "rouge/current_enemy_forecast.py",
+    "rouge/current_battle_view.py",
+    "rouge/current_elbert_reference.py",
+    "rouge/player_calculation_target.py"
+  ],
+  "source_sha256": {
+    "rouge/current_enemy_environment.py": "3fefeeedd26887398e54b1f6d85b60803b03edb800e310b135871bf2be6be26f",
+    "rouge/current_enemy_forecast.py": "78dab48dd78b7cee58d993e4dce66743b22d0151923b6f558b373b3a5fdf7f60",
+    "rouge/current_battle_view.py": "f3438b7740c0376acc9c2b430960d1d0b23ee84922717a1b814dd139257a9aa6",
+    "rouge/current_elbert_reference.py": "2694b2de9805c03e275aed76446687f57c9c79be98470102bd6ede9fc636abd5",
+    "rouge/player_calculation_target.py": "995cc712e44e3447c7c6f5c04dc06d29916f2fd51dd72626dbf65c0fd82b12fd"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D296",
+    "D305",
+    "D311"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial targeted",
+        "tests_passed": 23,
+        "seconds": 51.437
+      },
+      {
+        "phase": "Elbert pre-fix",
+        "tests_run": 1,
+        "failures": 1,
+        "seconds": 0.399,
+        "failure": "Modified display entities yielded foreign-key even though the checked stage had no such target."
+      },
+      {
+        "phase": "three specific checks",
+        "tests_passed": 3,
+        "seconds": 4.189
+      },
+      {
+        "phase": "final",
+        "tests_run": 36,
+        "tests_passed": 36,
+        "seconds": 57.698,
+        "command": "python -m unittest tests.test_current_enemy_forecast_review tests.test_forecast_config_reuse tests.test_current_elbert_366 tests.test_calculation_target_468"
+      }
+    ],
+    "live_window": "Qt offscreen; original test-window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Public forecasts requalify the caller-owned stage; synchronous CurrentBattlePanel refresh uses the projection of the stage just constructed by stage_reference. Legacy/current branches preserve independent conditions. Four numeric attributes read once and reused. Legacy enemy_preview copies conditions on entry, so avoid repeated caller-side copies. Public Elbert projection and reference share membership/selection fields. Related request matched with freshly resolved entities after source and stage checks. Calculation target drops unused factory title, retains rejection/unavailability and unique ID+level gate; context checks span navigation and later actions.",
+    "requirements": "Same-stage current-basis projection equals independent full qualification, later difficulty change calls the source check. Forged display-only enemy key previously returned a target and is now refused. Rejected parent navigation does not construct a reader. Missing stages/ambiguous or unmatched enemies, unchanged calculator state, environment subtotal and unknown complete totals covered. D326 isolated RunState file reproduced last_read overflow; no runtime change to that path."
+  },
+  "partially_implemented_decisions": []
+}
