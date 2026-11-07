@@ -1522,12 +1522,19 @@
     },
     {
       "file": "rouge/damage.py",
-      "sha256": "7faeeb8f06efadc5d7bca98a4a376cec6638b793750d1699e82cc1b5ebc0ad21",
+      "sha256": "e0150ce9bf77e3a3be1fb676365763f6061a85555c55c235483f24f584624f95",
       "rule1": "selected_cultivation_and_rune_repeated_work_removed",
       "rule2": "shared_term_helper_has_multiple_uses_no_new_one_use_wrapper",
       "rule3": "existing_raise_try_nodes_unchanged_pending_remaining_review",
       "full_module_review_complete": false,
-      "evidence": "_prepare_damage accepts trusted cultivated_attributes from calibration; ordinary calculate_damage still resolves cultivation at its existing entry. No validation, raise or catch removed. This explicit prepared-input mode is not error recovery. Whole damage module remains under review."
+      "evidence": "_prepare_damage accepts trusted cultivated_attributes from calibration; ordinary calculate_damage still resolves cultivation at its existing entry. No validation, raise or catch removed. This explicit prepared-input mode is not error recovery. Whole damage module remains under review.",
+      "scoped_reviews": [
+        {
+          "decision": "D119 partial",
+          "receipt": "verification/maintenance/code-constraints-cultivation-skill-inputs-20261106/summary.json",
+          "scope": "Seven pinned supplemental operators in cultivation comparison, amount errors, core prepared skill rank. Core preparation ValueError classification remains pending."
+        }
+      ]
     },
     {
       "file": "rouge/estimate.py",
@@ -1770,7 +1777,7 @@
     },
     {
       "file": "rouge/cultivation_comparison.py",
-      "sha256": "a3ceb333277f0a0be86e85031c4ce3b12fd7876223e6aedfeffb17f6c5462fe6",
+      "sha256": "c0bbf535e4be061b8d22ec4a70461626b240b94998058822ffa8a6e3e974300a",
       "rule1": "equipped_stage_owned_by_attribute_entry_no_module_pair_owned_by_comparison",
       "rule2": "no_new_helper_or_single_use_wrapper",
       "rule3": "D118_D119_D121_unchanged",
@@ -1797,6 +1804,11 @@
           "decision": "D121, D125, D119 partial",
           "receipt": "verification/maintenance/code-constraints-cultivation-validation-20261106/summary.json",
           "scope": "Shared phase/level resolution and qualified attribute arithmetic, exact supplemental integer policy, D119 supplemental preparation caught only as typed input error; core preparation pending."
+        },
+        {
+          "decision": "D119 partial",
+          "receipt": "verification/maintenance/code-constraints-cultivation-skill-inputs-20261106/summary.json",
+          "scope": "Seven pinned supplemental operators in cultivation comparison, amount errors, core prepared skill rank. Core preparation ValueError classification remains pending."
         }
       ]
     },
@@ -1898,7 +1910,7 @@
     },
     {
       "file": "rouge/supplemental_skills.py",
-      "sha256": "b65c0656f655ba986137a73ef7934d185233acfe4c4c74bfe7440b84f76c7fcf",
+      "sha256": "dd03d3be9f77f6ffea692a2c0340896f1918b28ecaf8be246fab27e8d0246ebe",
       "rule1": "candidate_unlock_rank_once",
       "rule2": "no_new_helper_reused_row_builder_retained",
       "rule3": "D125_D126_pending_unchanged",
@@ -1926,6 +1938,11 @@
           "decision": "D121, D125, D119 partial",
           "receipt": "verification/maintenance/code-constraints-cultivation-validation-20261106/summary.json",
           "scope": "Shared phase/level resolution and qualified attribute arithmetic, exact supplemental integer policy, D119 supplemental preparation caught only as typed input error; core preparation pending."
+        },
+        {
+          "decision": "D119 partial",
+          "receipt": "verification/maintenance/code-constraints-cultivation-skill-inputs-20261106/summary.json",
+          "scope": "Seven pinned supplemental operators in cultivation comparison, amount errors, core prepared skill rank. Core preparation ValueError classification remains pending."
         }
       ]
     },
@@ -5110,6 +5127,13 @@
       "decision": "D105",
       "receipt": "verification/maintenance/code-constraints-panel-rune-operand-20261106/summary.json",
       "scope": "Native number conversion and shared count-scaled rune operand only. D328 and frozen source manifest mismatch remain open."
+    },
+    {
+      "file": "rouge/healing_budget.py",
+      "sha256": "dce38aec983a0bd3fb4b48facb7ed4d3fdd74fa948117a18712045a83b354825",
+      "decision": "D119 partial",
+      "receipt": "verification/maintenance/code-constraints-cultivation-skill-inputs-20261106/summary.json",
+      "scope": "Seven pinned supplemental operators in cultivation comparison, amount errors, core prepared skill rank. Core preparation ValueError classification remains pending."
     }
   ]
 }

@@ -3,8 +3,8 @@ import json
 from copy import deepcopy
 from .catalog import catalog,operator_profiles,_attribute_level,_attribute_values,CultivationInputError
 from .damage import _prepare_damage, _calculate_prepared
-from .healing_budget import _amount
-from .supplemental_skills import defaults,_cultivated_stats,_skill_reference,supplemental_profiles
+from .healing_budget import AmountInputError, _amount
+from .supplemental_skills import defaults,_skill_conditions,_skill_reference,supplemental_profiles
 
 
 def compare_cultivation(scenario,preview):
@@ -15,6 +15,7 @@ def compare_cultivation(scenario,preview):
     if type(proposals) is not list or not 1<=len(proposals)<=12: raise ValueError('培养方案需要1–12项，第一项作为差值基准。')
     core_skill=identity in catalog()['operators']
     supplemental_skill=not core_skill and identity in supplemental_profiles()['operators']
+    profile = profiles[identity]
     seen=set();rows=[]
     required={'name','elite','level','trust','potential','module_id','module_level'}
     for proposal in proposals:
@@ -32,7 +33,7 @@ def compare_cultivation(scenario,preview):
         conditions={k:v for k,v in proposal.items() if k!='name'}
         try:
             conditions['trust']=_amount(conditions['trust'],'信赖',100)
-        except ValueError as error:
+        except AmountInputError as error:
             row.update(status='不可测算',error=str(error));continue
         try:
             mid=conditions['module_id'];ml=conditions['module_level']
@@ -40,7 +41,6 @@ def compare_cultivation(scenario,preview):
             if ((mid is not None and type(mid) is not str) or
                     (not mid and (type(ml) is not int or (mid is None and ml!=0)))):
                 raise CultivationInputError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
-            profile = profiles[identity]
             elite = conditions['elite']
             phase, level = _attribute_level(profile, elite, conditions['level'])
             attributes, _, row['module_applied'] = _attribute_values(
@@ -52,27 +52,29 @@ def compare_cultivation(scenario,preview):
         row['status']='基础属性参考'
         if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
-        if supplemental_skill:
-            supplied = defaults(identity)
-            for key in supplied:
-                if key in proposed:
-                    supplied[key] = proposed[key]
-            supplied.update(count=1, missing_hp=0)
-        preparation_error = ValueError if core_skill else CultivationInputError
-        try:
-            if core_skill:
-                prepared = _prepare_damage(proposed, cultivated_attributes=attributes)
-            elif supplemental_skill:
-                supplemental_stats = _cultivated_stats(supplied)
-        except preparation_error as error:
-            row['error']=str(error);row['status']='仅属性；技能不可测算';continue
         if core_skill:
+            try:
+                prepared = _prepare_damage(proposed, cultivated_attributes=attributes)
+            except ValueError as error:
+                row['error']=str(error);row['status']='仅属性；技能不可测算';continue
             modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']
             row.update(status='技能已计参考' if modeled['complete'] else '技能部分参考',
                        window_damage=metrics.get('window_damage'),window_healing=metrics.get('window_healing'))
             row['notes'].extend(modeled['estimate']['notes'])
         elif supplemental_skill:
-            row['skill_reference']=_skill_reference(supplied,supplemental_stats);row['status']='单次技能参考'
+            supplied = defaults(identity)
+            for key in supplied:
+                if key in proposed:
+                    supplied[key] = proposed[key]
+            supplied.update(count=1, missing_hp=0)
+            try:
+                _skill_conditions(supplied)
+                for key in ('elite', 'level', 'potential'):
+                    if type(supplied[key]) is not int:
+                        raise CultivationInputError(key+'需要整数。')
+            except CultivationInputError as error:
+                row['error']=str(error);row['status']='仅属性；技能不可测算';continue
+            row['skill_reference']=_skill_reference(supplied,attributes);row['status']='单次技能参考'
         else:row['notes'].append('该干员技能数值尚未接入，只比较基础培养属性。')
     baseline=rows[0]
     if baseline['attributes'] is None:raise ValueError('基准培养方案不可测算：'+baseline['error'])

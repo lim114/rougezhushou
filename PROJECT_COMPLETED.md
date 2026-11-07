@@ -1,3 +1,7 @@
+## 维护 · 补充干员技能复用方案培养属性，区分信赖输入和计算错误（2026-11-06）
+
+D119部分推进。7名补充干员各两档培养的技能结果与独立计算一致，不再重复计算培养属性。保留补充技能的严格整数条件，核心技能已核验的等级不再重复转浮点校验。60项定向通过。 原280组完成270、余10。 [回执](verification/maintenance/code-constraints-cultivation-skill-inputs-20261106/summary.json)。
+
 ## 维护 · 校准记录区分面板输出缺陷，未知数值保留未知差值（2026-11-06）
 
 D110部分推进。模型结果缺少base_stats时内部错误直接上报；坏记录仍保留错误并继续其他记录。面板相邻层含未知值时差值未知。计算准备和执行的异常契约仍待核实。 原280组完成270、余10。 [回执](verification/maintenance/code-constraints-calibration-panel-projection-20261106/summary.json)。

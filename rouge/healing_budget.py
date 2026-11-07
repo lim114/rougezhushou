@@ -5,11 +5,15 @@ from .damage import calculate_damage
 from .charge_timeline import _seconds
 
 
+class AmountInputError(ValueError):
+    """A declared amount has the wrong type or is outside the supported range."""
+
+
 def _amount(value, label, maximum=10000000):
-    if type(value) not in (int,float): raise ValueError(label+'需要有限非负数值。')
+    if type(value) not in (int,float): raise AmountInputError(label+'需要有限非负数值。')
     try: value = float(value)
-    except OverflowError: raise ValueError(label+'超出范围。') from None
-    if not math.isfinite(value) or not 0 <= value <= maximum: raise ValueError(label+'超出范围。')
+    except OverflowError: raise AmountInputError(label+'超出范围。') from None
+    if not math.isfinite(value) or not 0 <= value <= maximum: raise AmountInputError(label+'超出范围。')
     return value
 
 

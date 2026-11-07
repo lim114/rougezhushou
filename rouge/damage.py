@@ -40,7 +40,7 @@ def _skill_damage_base(scenario: dict) -> dict:
         if not math.isfinite(value) or value<0 or (field=='enemy_resistance' and value>100):
             raise ValueError(f'{field} 需要有限非负数；法抗范围为 0–100。')
         scenario[field]=value
-    for field in ('skill_rank','activation_count','deployment_stacks','shield_break_count','charge_count'):
+    for field in ('activation_count','deployment_stacks','shield_break_count','charge_count'):
         if field not in scenario:continue
         value=float(scenario[field])
         if not math.isfinite(value) or not value.is_integer() or value<0 or (field=='deployment_stacks' and value>2):
@@ -54,7 +54,7 @@ def _skill_damage_base(scenario: dict) -> dict:
     healing = scenario.get('operator') == 'kaltsit' and scenario.get('skill') in (1,3)
     utility=scenario.get('operator')=='silverash' and scenario.get('skill')==1
     base_attack = float(scenario['base_attack'])
-    rank = int(scenario.get('skill_rank', 10))
+    rank = scenario.get('skill_rank', 10)
     skill_profile = profile['skills'][scenario['skill']-1]['levels'][rank-1]
     bb = skill_profile['values']
     attack_bonus = bb.get('atk', 0)
