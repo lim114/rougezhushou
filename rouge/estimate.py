@@ -6,11 +6,14 @@ from .enemy_environment import damage_factor
 from .timing import AttackTimeline,charge_seconds,frame_time,FPS,finite,phase_totals,has_periodic_sp
 
 
-def build_estimate(scenario,result,attributes,compute_skill):
+def build_estimate(scenario, result, attributes, compute_skill, *, selection=None):
     operator=scenario['operator']
-    profile=catalog()['operators'][operator]
-    skill_index=scenario['skill']
-    skill=profile['skills'][skill_index-1]['levels'][int(scenario.get('skill_rank',10))-1]
+    skill_index = scenario['skill']
+    if selection is None:
+        profile = catalog()['operators'][operator]
+        skill = profile['skills'][skill_index-1]['levels'][int(scenario.get('skill_rank',10))-1]
+    else:
+        profile, skill = selection
     from .relics import effective_skill,recharge_requirement
     skill=effective_skill(skill,scenario)
     effects=result['applied_effects']

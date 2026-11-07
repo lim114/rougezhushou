@@ -1,5 +1,6 @@
 """Deterministic, inspectable damage calculations; no model-generated numbers."""
 import math
+from functools import partial
 from .condition_inputs import RunConditionError, validate_continuous_attacks
 from .attribute_limits import effective_attack_speed
 from .catalog import catalog
@@ -11,8 +12,8 @@ class SkillSelectionError(ValueError):
     """The selected skill or rank is invalid or locked at this elite phase."""
 
 
-def _skill_damage(scenario: dict) -> dict:
-    result=_skill_damage_base(scenario)
+def _skill_damage(scenario: dict, *, profile, skill_profile) -> dict:
+    result = _skill_damage_base(scenario, profile, skill_profile)
     if not any(r['kind']=='first_damage_scale' for r in scenario.get('_relic_rules',[])):return result
     from .relic_events import first_damage,DAMAGE
     components=result.get('components')
@@ -30,14 +31,13 @@ def _skill_damage(scenario: dict) -> dict:
     return result
 
 
-def _skill_damage_base(scenario: dict) -> dict:
+def _skill_damage_base(scenario: dict, profile, skill_profile) -> dict:
     """Internal skill consumer; _prepare_damage owns skill/rank validation.
 
     build_estimate reuses that same selection for its full-window calculation.
     """
     scenario=dict(scenario)
     companion_is_bool=isinstance(scenario.get('companion_attack'),bool)
-    profile=catalog()['operators'][scenario['operator']]
     for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds','companion_attack'):
         if field not in scenario:continue
         value=float(scenario[field])
@@ -50,16 +50,16 @@ def _skill_damage_base(scenario: dict) -> dict:
         if not math.isfinite(value) or not value.is_integer() or value<0 or (field=='deployment_stacks' and value>2):
             raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
         scenario[field]=int(value)
-    mechanist = scenario.get('operator') == 'mechanist' and scenario.get('skill') == 1
-    silver = scenario.get('operator') == 'silverash' and scenario.get('skill') == 3
-    bombard = scenario.get('operator') == 'mechanist' and scenario.get('skill') == 3
-    shield = scenario.get('operator') == 'mechanist' and scenario.get('skill') == 2
-    frost = scenario.get('operator') == 'silverash' and scenario.get('skill') == 2
-    healing = scenario.get('operator') == 'kaltsit' and scenario.get('skill') in (1,3)
-    utility=scenario.get('operator')=='silverash' and scenario.get('skill')==1
-    base_attack = float(scenario['base_attack'])
-    rank = scenario.get('skill_rank', 10)
-    skill_profile = profile['skills'][scenario['skill']-1]['levels'][rank-1]
+    operator = scenario['operator']
+    number = scenario['skill']
+    mechanist = operator == 'mechanist' and number == 1
+    silver = operator == 'silverash' and number == 3
+    bombard = operator == 'mechanist' and number == 3
+    shield = operator == 'mechanist' and number == 2
+    frost = operator == 'silverash' and number == 2
+    healing = operator == 'kaltsit' and number in (1, 3)
+    utility = operator == 'silverash' and number == 1
+    base_attack = scenario['base_attack']
     bb = skill_profile['values']
     attack_bonus = bb.get('atk', 0)
     effects = list(scenario.get('effects', []))
@@ -310,8 +310,11 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         combat=Combat(scenario,attributes)
         result=combat.calculate()
     else:
-        result=_skill_damage(scenario)
-        result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+        profile = catalog()['operators'][scenario['operator']]
+        skill = profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
+        compute_skill = partial(_skill_damage, profile=profile, skill_profile=skill)
+        result = compute_skill(scenario)
+        result['estimate'] = build_estimate(scenario, result, attributes, compute_skill, selection=(profile, skill))
     from .charge_reference import finish_charge_reference
     finish_charge_reference(scenario,result)
     from .shield_break_reference import finish_shield_break_reference

@@ -1,3 +1,7 @@
+## 当前断点 · 首批三名干员的窗口与整次技能计算共用等级资料（2026-11-07）
+
+首批三名的9个技能按当次选择共用同一份等级资料；90组完整结果或错误与旧版一致，95项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-skill-profile-reuse-20261107/summary.json)。
+
 ## 当前断点 · 伤害计算末尾沿用当次天赋选择，按原顺序核对文本条件（2026-11-07）
 
 文本条件使用本次计算已选天赋，多个错误仍按原优先级上报。64组改前后结果或异常一致，72项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-late-talent-conditions-20261107/summary.json)。
