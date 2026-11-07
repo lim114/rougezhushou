@@ -1,0 +1,144 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 79,
+    "structural_only": 250,
+    "selected_paths_only": 190,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval",
+    "D338 settings save error boundary awaiting decision",
+    "D339 malformed node bindings in source cards awaiting decision",
+    "D340 source timestamp error scope awaiting decision",
+    "D341 oversized reported public frequency awaiting decision",
+    "D342 exchange source error boundary awaiting decision",
+    "D343 archive timestamps without a source timezone awaiting decision",
+    "D344 legacy compendium supplement error scope awaiting decision",
+    "D345 missing relic artwork mapping file visibility awaiting decision",
+    "D346 battle packet error boundary awaiting decision",
+    "D347 malformed defined enemy trait fields awaiting decision",
+    "D348 enemy environment calculation error scope awaiting decision",
+    "D349 public trust input error contract awaiting decision",
+    "D350 invalid squad effects collection error contract awaiting decision"
+  ],
+  "title": "按实录定位识别耗时，精简画面裁边与节点标题测量",
+  "base_commit": "4cfeaee204d9a10380c1aee50c4f0fdc8841b54f",
+  "changed_sources": [
+    "rouge/viewport.py",
+    "rouge/recognition.py"
+  ],
+  "source_sha256": {
+    "rouge/viewport.py": "daad6650d11f4e909d2496a18027a2a731c0e29c95480864082bae3f36d7e8de",
+    "rouge/recognition.py": "f41fb1df16bbd3ce5edbcb25dffc8fbfb3eb1cfdab3930c1349bbd315d6b55fb"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "tests_passed": 57,
+    "modules": [
+      "frame_buffer",
+      "image_geometry_review",
+      "interpret_lookup_review",
+      "recognition_059",
+      "overlay_display"
+    ],
+    "viewport_median_p95_ms": {
+      "old": [
+        40.11,
+        43.46
+      ],
+      "new": [
+        10.54,
+        11.43
+      ]
+    },
+    "viewport_samples_per_version": 24,
+    "recognition_total_ms_by_version": [
+      [
+        6206,
+        5132,
+        5392,
+        3068
+      ],
+      [
+        5258,
+        5110,
+        5472,
+        3328
+      ]
+    ],
+    "new_stage_ms_by_frame": [
+      {
+        "page_features": 108,
+        "full_ocr": 1925,
+        "run": 2849,
+        "map": 54
+      },
+      {
+        "page_features": 94,
+        "full_ocr": 1975,
+        "run": 1037,
+        "map": 1989
+      },
+      {
+        "page_features": 89,
+        "full_ocr": 2039,
+        "run": 1060,
+        "map": 2270
+      },
+      {
+        "page_features": 90,
+        "full_ocr": 1199,
+        "run": 1057,
+        "map": 968
+      }
+    ],
+    "same_semantic_outputs": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "historical_game_session": {
+      "exploration": {
+        "n": 16,
+        "ui_ms": 344.33,
+        "residual_s": 22.96
+      },
+      "node_detail": {
+        "n": 32,
+        "ui_ms": 536.73,
+        "residual_s": 41.58
+      }
+    },
+    "residual_definition": "Historical sample timestamp minus capture, recognition and measured UI work. Includes scheduling and other uninstrumented time; not direct current queue measurement.",
+    "live_window": "Original game session and UI not retested; offline replay only."
+  },
+  "review": {
+    "standards": "Calculate the per-pixel dark predicate across up to three channels directly; refine detail title placement once per current refined text set. Preserve cutoffs, source coordinate mapping, OCR and queue policy. No new helpers or defense.",
+    "requirements": "Local replay of four independently decoded client crops through baseline and current ScreenReader. Compared every returned field except timestamp and performance. Black padding edge cases incl alpha and recrop; capture queue preserves one inserted transient between matching map frames."
+  },
+  "partially_implemented_decisions": []
+}

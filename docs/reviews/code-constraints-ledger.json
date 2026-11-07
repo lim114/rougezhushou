@@ -4402,7 +4402,7 @@
     },
     {
       "file": "rouge/viewport.py",
-      "sha256": "befcd7273a271a978bc17d29a1e987f3ec7c556fc8df6e0e88c150343dd652a5",
+      "sha256": "daad6650d11f4e909d2496a18027a2a731c0e29c95480864082bae3f36d7e8de",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": true,
       "rule1": "Reject invalid client rectangle and undersized detected content at frame entry. Normal edge discovery preserved; coordinate mapping reuses established viewport.",
@@ -4410,7 +4410,14 @@
       "rule3": [
         "D298 approved and implemented"
       ],
-      "evidence": "Full source and both OCR/visual callers read.10 targeted tests,27 marker and18 viewport valid-input old/new comparisons. Existing app sample_error handles ValueError; no additional catch/retry."
+      "evidence": "Full source and both OCR/visual callers read.10 targeted tests,27 marker and18 viewport valid-input old/new comparisons. Existing app sample_error handles ValueError; no additional catch/retry.",
+      "scoped_reviews": [
+        {
+          "decision": "",
+          "receipt": "verification/maintenance/code-constraints-vision-viewport-replay-20261107/summary.json",
+          "scope": "Current frame black-border mask and per-frame refined node title geometry."
+        }
+      ]
     },
     {
       "file": "rouge/resource_recognition.py",
@@ -6021,6 +6028,13 @@
       "decision": "D110 partial",
       "receipt": "verification/maintenance/code-constraints-target-selectors-relic-skill-20261107/summary.json",
       "scope": "D351 complete. D110 selected-target TypeError no longer caught; relic preparation deduplication."
+    },
+    {
+      "file": "rouge/recognition.py",
+      "sha256": "f41fb1df16bbd3ce5edbcb25dffc8fbfb3eb1cfdab3930c1349bbd315d6b55fb",
+      "decision": "",
+      "receipt": "verification/maintenance/code-constraints-vision-viewport-replay-20261107/summary.json",
+      "scope": "Current frame black-border mask and per-frame refined node title geometry."
     }
   ]
 }

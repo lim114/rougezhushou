@@ -304,18 +304,17 @@ class ScreenReader:
         if result['map'] and result['map']['status']=='insufficient' and len(nodes)>=3:
             refined=refine_map_texts(image,texts,nodes,self._engine)
             found=[]
+            title = next((t for t in refined if t['text'] == stage['name']), None) if stage and detail else None
+            if title:
+                tx, ty = (sum(p[i] for p in title['box']) / 4 for i in (0, 1))
+                ux, uy = units(image, title, 35.2)
             for t in refined:
                 name={'未知的凶房':'未知的凶戾','未知的诡利':'未知的诡秘'}.get(t['text'],t['text'])
                 if name in known_nodes and t['confidence']>=.7:
                     n={'type':name,'box':t['box'],'confidence':t['confidence'],
                        'hidden':name.startswith('未知'),'prediction':None}
-                    if stage and detail:
-                        title=next((v for v in refined if v['text']==stage['name']),None)
-                        if title:
-                            tx=sum(p[0] for p in title['box'])/4;ty=sum(p[1] for p in title['box'])/4
-                            ux,uy=units(image,title,35.2)
-                            if abs(sum(p[0] for p in t['box'])/4-tx)<.20*ux and 0<ty-sum(p[1] for p in t['box'])/4<.10*uy:
-                                n['detail_panel_label']=True
+                    if title and abs(sum(p[0] for p in t['box'])/4-tx)<.20*ux and 0<ty-sum(p[1] for p in t['box'])/4<.10*uy:
+                        n['detail_panel_label']=True
                     found.append(n)
             refined_map=read_map(image,refined,found,run)
             if refined_map['status']=='matched':

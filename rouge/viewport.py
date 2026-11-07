@@ -13,7 +13,9 @@ def prepare_frame(image,client_rect=None):
     ch,cw=image.shape[:2]
     # Only contiguous, almost entirely black outer padding is removed. Dark
     # interior panels are not candidates. Thin game borders remain untouched.
-    dark=np.max(image[:,:,:3],axis=2)<=3
+    dark = image[:, :, 0] <= 3
+    for channel in range(1, min(3, image.shape[2])):
+        dark &= image[:, :, channel] <= 3
     rows=np.mean(dark,axis=1)>=.999
     cols=np.mean(dark,axis=0)>=.999
     def edges(mask,length):
