@@ -1,3 +1,7 @@
+## 当前断点：敌人来源与精确绑定核对（2026-11-06）
+
+D237/D238按授权保留，8项定向通过；未修改产品源码。原280组完成191、剩89。D239入口问题和原测试窗口更新缺口仍保留。回执 `verification/maintenance/code-constraints-enemy-identity-retention-20261106/summary.json`。
+
 ## 当前断点：敌人位置同快照复用（2026-11-06）
 
 D240完成：一份资料包、一次关卡构建，动作归属和位置共用；11项定向通过。D239其它入口仍待审查。原280组完成189、剩91；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-enemy-position-snapshot-20261106/summary.json`。

@@ -5522,3 +5522,7 @@ D233/D276/D277完成：出怪列表与首领页信号恢复、计算批次释放
 
 ### 维护：敌人位置同快照复用（2026-11-06）
 D240完成，动作与位置共用同一关卡快照，完整快照归属核对保留；11项定向通过，原地图失效检查测试迁移到实际入口。回执 `verification/maintenance/code-constraints-enemy-position-snapshot-20261106/summary.json`。
+
+
+### 维护：敌人来源与精确绑定核对（2026-11-06）
+D237/D238完成，固定来源及完整快照/候选核对按授权保留；8项定向通过，不延伸认证底层路径模块。回执 `verification/maintenance/code-constraints-enemy-identity-retention-20261106/summary.json`。
