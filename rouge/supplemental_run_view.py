@@ -2,6 +2,8 @@
 from copy import deepcopy
 from PySide6.QtWidgets import QPushButton,QGridLayout
 from .reference_dialog import ReferenceDialog
+from .catalog import CultivationInputError
+from .condition_inputs import RunConditionError
 from .supplemental_skills import supplemental_profiles, MissingHpExceedsMaximum
 from .supplemental_run import run_skill_reference,format_run_reference
 from .supplemental_comparison import _compare_ranks, format_comparison
@@ -29,7 +31,8 @@ class SupplementalRunDialog(ReferenceDialog):
             '；'.join(k+'（'+v['name']+'）' for k,v in profiles.items()),preview,
             lambda p:run_skill_reference(p,self.environment),format_run_reference,
             [('name','分项'),('base_value','不含本局修正'),('value','计入本局属性'),
-             ('delta','差值'),('unit','单位'),('declared_total','声明次数合计')],parent,defer_initial_calculation=True)
+             ('delta','差值'),('unit','单位'),('declared_total','声明次数合计')],parent,defer_initial_calculation=True,
+            input_errors=(CultivationInputError, RunConditionError, MissingHpExceedsMaximum, EnemyReferenceError))
         self.refresh_button=QPushButton('更新本局条件')
         self.tools_layout=QGridLayout();self.layout().insertLayout(2,self.tools_layout)
         self.tools_layout.addWidget(self.refresh_button,0,0)

@@ -3,6 +3,7 @@ from functools import lru_cache
 import json
 import math
 from .attribute_limits import effective_attack_speed
+from .condition_inputs import RunConditionError
 from pathlib import Path
 
 BASE_KINDS={'attack_pct','hp_pct','defense_pct','resistance_flat','attack_speed','sp_recovery','damage_taken'}
@@ -32,7 +33,7 @@ def context_value(effect,scenario):
     condition=effect.get('condition')
     if not condition:return 1
     context=scenario.get('relic_context',{})
-    if not isinstance(context,dict):raise ValueError('藏品条件需要JSON对象。')
+    if not isinstance(context,dict):raise RunConditionError('藏品条件需要JSON对象。')
     if condition=='emergency_hire':
         kind=scenario.get('recruitment_kind')
         if type(kind) is not str or kind not in ('non_emergency','emergency_hire'):return None
@@ -40,19 +41,19 @@ def context_value(effect,scenario):
     value=context.get(condition,scenario.get(condition) if condition=='current_hp_ratio' else None)
     if value is None:return None
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<0:
-        raise ValueError('藏品条件 '+condition+'需要有限非负数。')
+        raise RunConditionError('藏品条件 '+condition+'需要有限非负数。')
     if effect.get('condition_type')=='flag':
-        if value not in (0,1):raise ValueError('藏品条件 '+condition+'需要0（未生效）或1（生效）。')
+        if value not in (0,1):raise RunConditionError('藏品条件 '+condition+'需要0（未生效）或1（生效）。')
         return value
     if effect.get('condition_type')=='ratio':
-        if value>1:raise ValueError('藏品条件 '+condition+'需要0–1的生命比例。')
+        if value>1:raise RunConditionError('藏品条件 '+condition+'需要0–1的生命比例。')
         return value
     if 'hp_curve_min' in effect:
-        if value>1:raise ValueError('当前生命比例需要0–1。')
+        if value>1:raise RunConditionError('当前生命比例需要0–1。')
         return min(1,(1-value)/(1-effect['hp_curve_min']))
     if effect.get('condition_type')=='seconds':
-        if value>3600:raise ValueError('藏品时间 '+condition+'需要0–3600秒。')
-    elif not float(value).is_integer() or value>10000:raise ValueError('藏品计数 '+condition+'需要0–10000的整数。')
+        if value>3600:raise RunConditionError('藏品时间 '+condition+'需要0–3600秒。')
+    elif not float(value).is_integer() or value>10000:raise RunConditionError('藏品计数 '+condition+'需要0–10000的整数。')
     if effect.get('predicate')=='positive':return int(value>0)
     if effect.get('predicate')=='equals_one':return int(value==1)
     if effect.get('predicate')=='at_least':return int(value>=effect['threshold'])
@@ -67,30 +68,30 @@ def prepare(scenario,profile):
     inputs=[(rid,mechanics()['relics'].get(rid),False) for rid in selected]
     bound=scenario.get('char_buff_ids',[])
     if not isinstance(bound,list) or not all(isinstance(b,str) for b in bound):
-        raise ValueError('干员定向强化需要已确认的ID列表。')
+        raise RunConditionError('干员定向强化需要已确认的ID列表。')
     absent=scenario.get('char_buff_absent_ids',[])
     if (not isinstance(absent,list) or not all(isinstance(b,str) and b in mechanics()['char_buffs'] for b in absent)
             or set(absent)&set(bound)):
-        raise ValueError('已确认未领取的个人强化需要有效ID列表，且不能与已领取列表冲突。')
+        raise RunConditionError('已确认未领取的个人强化需要有效ID列表，且不能与已领取列表冲突。')
     uncertain=scenario.get('char_buff_pending_ids',[])
     if (not isinstance(uncertain,list) or not all(isinstance(b,str) and b in mechanics()['char_buffs'] for b in uncertain)
             or set(uncertain)&(set(bound)|set(absent)) or uncertain and scenario.get('char_buffs_complete') is True):
-        raise ValueError('待更新的个人强化需要有效ID列表，且不能与已确认领取、未领取或完整列表冲突。')
+        raise RunConditionError('待更新的个人强化需要有效ID列表，且不能与已确认领取、未领取或完整列表冲突。')
     for bid in dict.fromkeys(uncertain):
         buff=mechanics()['char_buffs'][bid]
         if buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|'):
-            raise ValueError('待更新的个人强化与当前干员职业不符。')
+            raise RunConditionError('待更新的个人强化与当前干员职业不符。')
         if buff['relic_id'] not in selected:
             warnings.append(buff['name']+'：本局个人强化归属仍待更新；当前持有清单不能排除已领取效果，未计入该项。')
     if 'char_buffs_complete' in scenario and type(scenario['char_buffs_complete']) is not bool:
-        raise ValueError('个人强化列表完整性必须为布尔值。')
+        raise RunConditionError('个人强化列表完整性必须为布尔值。')
     if 'char_buffs_complete' in scenario and 'char_buff_ids' not in scenario:
-        raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
+        raise RunConditionError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
     for bid in dict.fromkeys(bound):
         data=mechanics()['char_buffs'].get(bid)
-        if data is None:raise ValueError('未知干员定向强化 '+bid+'，不能计算。')
+        if data is None:raise RunConditionError('未知干员定向强化 '+bid+'，不能计算。')
         if data['required_profession'] and profile['profession'] not in data['required_profession'].split('|'):
-            raise ValueError(data['name']+'与当前干员职业不符，请核对强化归属。')
+            raise RunConditionError(data['name']+'与当前干员职业不符，请核对强化归属。')
         inputs.append((bid,data,True))
     for rid,data,is_bound in inputs:
         if data is None:
@@ -148,10 +149,10 @@ def prepare(scenario,profile):
                 pending.append('计算尚未接入:'+e['kind']);continue
             if e.get('unit_condition') and token_ids:
                 contexts=(scenario.get('relic_context') or {}).get('token_conditions',{})
-                if not isinstance(contexts,dict):raise ValueError('召唤物藏品条件需要按召唤物ID分组的JSON对象。')
+                if not isinstance(contexts,dict):raise RunConditionError('召唤物藏品条件需要按召唤物ID分组的JSON对象。')
                 for tid in token_ids:
                     context=contexts.get(tid,{})
-                    if not isinstance(context,dict):raise ValueError('召唤物 '+tid+' 的条件需要JSON对象。')
+                    if not isinstance(context,dict):raise RunConditionError('召唤物 '+tid+' 的条件需要JSON对象。')
                     factor=context_value(e,{**scenario,'relic_context':context})
                     if factor is None:
                         missing.append('token_conditions.'+tid+'.'+e['condition']);continue
@@ -160,7 +161,7 @@ def prepare(scenario,profile):
                 token=False
                 if not own:continue
             if e['kind']=='skill_forbidden':
-                raise ValueError(data['name']+'禁止开启技能（含自动技能）；当前技能输出、初动和回转不可用。')
+                raise RunConditionError(data['name']+'禁止开启技能（含自动技能）；当前技能输出、初动和回转不可用。')
             if e['kind']=='periodic_sp':
                 selected_skill=profile['skills'][scenario['skill']-1]['levels'][scenario.get('skill_rank',10)-1]
                 if selected_skill['sp_type'] not in ('INCREASE_WHEN_ATTACK','INCREASE_WHEN_TAKEN_DAMAGE'):

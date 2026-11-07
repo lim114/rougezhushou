@@ -11,6 +11,44 @@ def environment(ids=()):
 
 
 class SupplementalRun141Tests(unittest.TestCase):
+    def test_main_dialog_reports_declared_errors_and_propagates_model_defects(self):
+        import json
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QApplication
+        from rouge import supplemental_run as model
+        from rouge.supplemental_run_view import SupplementalRunDialog
+        qt = QApplication.instance() or QApplication([])
+        preview = defaults()
+        env = environment()
+        dialog = SupplementalRunDialog(preview, lambda: env)
+        self.addCleanup(dialog.close)
+        self.assertIsNotNone(dialog.result)
+        for changes, message in (({'skill_rank': False}, '整数'), ({'trust': -1}, '信赖')):
+            dialog.editor.setPlainText(json.dumps({**preview, **changes}))
+            dialog.calculate()
+            self.assertIsNone(dialog.result)
+            self.assertIn(message, dialog.notice.toPlainText())
+        dialog.editor.setPlainText(json.dumps(preview))
+        env['run_config'] = {'difficulty': {'value': 18}}
+        dialog.refresh_environment()
+        self.assertIsNone(dialog.result)
+        self.assertIn('保密等级', dialog.notice.toPlainText())
+        env['run_config'] = {}
+        env['operator_metadata'] = {preview['operator']: {'char_buff_ids': 'bad'}}
+        dialog.refresh_environment()
+        self.assertIsNone(dialog.result)
+        self.assertIn('强化', dialog.notice.toPlainText())
+        env['operator_metadata'] = {}
+        dialog.refresh_environment()
+        self.assertIsNotNone(dialog.result)
+        for error in (ValueError, TypeError, KeyError):
+            with self.subTest(error=error.__name__), patch.object(model, '_skill_reference', side_effect=error('internal')):
+                with self.assertRaises(error):
+                    dialog.calculate()
+                self.assertIsNone(dialog.result)
+                self.assertFalse(dialog.copy_button.isEnabled())
+        qt.processEvents()
+
     def test_seven_unchanged_references_without_runes(self):
         for identity in supplemental_profiles()['operators']:
             with self.subTest(identity=identity):

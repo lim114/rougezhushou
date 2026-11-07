@@ -1,6 +1,10 @@
-"""Defer text-only condition errors until an isolated core has finished."""
+"""Input errors for run conditions and deferred continuous-attack checks."""
 from contextvars import ContextVar
 from functools import wraps
+
+
+class RunConditionError(ValueError):
+    """Declared run settings, relics or recipient conditions cannot be applied."""
 
 
 _pending = ContextVar('continuous_attacks_text_pending', default=None)

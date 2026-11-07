@@ -1,5 +1,6 @@
 """Current-run modifiers sourced from pinned raw squad buffs."""
 from .run_config import config_data
+from .condition_inputs import RunConditionError
 
 def prepare_run(scenario,*,enemy_panel_only=False,difficulty_reference=None):
     """Resolve user conditions once; an alternate profile packet is trusted,
@@ -9,18 +10,19 @@ def prepare_run(scenario,*,enemy_panel_only=False,difficulty_reference=None):
     if type(enemy_panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     scenario=dict(scenario);config=scenario.get('run_config')
     if config is None:config={}
-    if not isinstance(config,dict):raise ValueError('本局配置需要对象。')
+    if not isinstance(config,dict):raise RunConditionError('本局配置需要对象。')
     for field,label in (('squad','分队'),('difficulty','保密等级')):
         if config.get(field) is not None and not isinstance(config[field],dict):
-            raise ValueError('本局'+label+'配置需要对象或空值。')
-    resolution={'source':config_data()['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}
+            raise RunConditionError('本局'+label+'配置需要对象或空值。')
+    data = config_data()
+    resolution={'source':data['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}
     squad=config.get('squad')
     if squad:
         if 'effect_verified' in squad and type(squad['effect_verified']) is not bool:
-            raise ValueError('分队效果确认标记需要布尔值。')
-        if not isinstance(squad.get('id'),str):raise ValueError('本局分队身份与固定档案不符。')
-        record=config_data()['squads'].get(squad.get('id'))
-        if not record or squad.get('name',record['name'])!=record['name']:raise ValueError('本局分队身份与固定档案不符。')
+            raise RunConditionError('分队效果确认标记需要布尔值。')
+        if not isinstance(squad.get('id'),str):raise RunConditionError('本局分队身份与固定档案不符。')
+        record=data['squads'].get(squad.get('id'))
+        if not record or squad.get('name',record['name'])!=record['name']:raise RunConditionError('本局分队身份与固定档案不符。')
         resolution['squad']={**squad,'name':record['name']}
         from .squad_unlock_reference import squad_unlock_reference
         reference=squad_unlock_reference(record['id'])
@@ -46,11 +48,11 @@ def prepare_run(scenario,*,enemy_panel_only=False,difficulty_reference=None):
     if difficulty:
         for field in ('modeDifficulty','mode'):
             if field in difficulty and difficulty[field]!='NORMAL':
-                raise ValueError('当前保密等级数值计算仅支持NORMAL模式，其他模式不能套用常规难度修正。')
+                raise RunConditionError('当前保密等级数值计算仅支持NORMAL模式，其他模式不能套用常规难度修正。')
         value=difficulty.get('value')
-        profiles=config_data()['difficulties'] if difficulty_reference is None else difficulty_reference['profiles']
+        profiles=data['difficulties'] if difficulty_reference is None else difficulty_reference['profiles']
         if isinstance(value,bool) or not isinstance(value,int) or str(value) not in profiles:
-            raise ValueError('本局保密等级需要0–15的整数。'if difficulty_reference is None else'所选保密等级不在这份固定难度资料中。')
+            raise RunConditionError('本局保密等级需要0–15的整数。'if difficulty_reference is None else'所选保密等级不在这份固定难度资料中。')
         record=profiles[str(value)]
         resolution['difficulty']={**difficulty,'mode':record['modeDifficulty'],'rule':record['ruleDesc'],'extra':record['addDesc']}
         if difficulty_reference is not None:

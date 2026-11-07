@@ -283,12 +283,19 @@
     },
     {
       "file": "rouge/condition_inputs.py",
-      "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808",
+      "sha256": "83c107674bdb7ec89bc60fdd798be4db3b986984c450b94d62f513616d710377",
       "rule1": "reviewed_clear",
       "rule2": "shared_helpers_have_multiple_real_consumers",
       "rule3": "reviewed_clear_no_low_probability_defense_identified",
       "evidence": "Entire unchanged module and real callsites reviewed. read_continuous_attacks serves multiple calculators; observe also has an independent post-ready call in sp_events. The decorator creates an isolated evaluation scope and validates once at its exit; consumer observations mark actual branch use rather than repeated input validation. Callable active predicates preserve lazy relevance, and finally resets required ContextVar lifetime (not speculative exception recovery). Required decorator wrapper and shared helpers retained. Eight existing tests cover ignored inputs, prior-error precedence, caller immutability, nesting, threads and standalone/tail consumers. No unapproved low-probability fallback found in this module. Caller duplicate rule scans remain separate work.",
-      "full_module_review_complete": true
+      "full_module_review_complete": true,
+      "scoped_reviews": [
+        {
+          "decision": "D100",
+          "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+          "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
+        }
+      ]
     },
     {
       "file": "rouge/public_node_statistics.py",
@@ -1385,7 +1392,7 @@
     },
     {
       "file": "rouge/reference_dialog.py",
-      "sha256": "fd1afd9c6b6b87be7b17d7180a4935f6de258d00285e87d27da823200a03c8d0",
+      "sha256": "343c3eb94db38fb9f74fe96e5fbef4624e027fbbc65875e066f8ed08e9fb352f",
       "rule1": "ordinary_cleanup_complete_scoped_defenses_pending",
       "rule2": "reviewed_clear",
       "rule3": "pending_user_review_D100",
@@ -1396,6 +1403,11 @@
           "decision": "D100 partial",
           "receipt": "verification/maintenance/code-constraints-healing-budget-input-20261106/summary.json",
           "scope": "Main healing budget editor, manual JSON parsing boundary, shared scalar event times. Unmigrated evaluators retain prior errors."
+        },
+        {
+          "decision": "D100",
+          "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+          "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
         }
       ]
     },
@@ -1891,7 +1903,7 @@
     },
     {
       "file": "rouge/supplemental_run.py",
-      "sha256": "415fe83f8091091976bcc18a9bfbaa979c590ad166ec82f271b2fef2d1d071a1",
+      "sha256": "69153376c42cd50dd7f531e3380dcc2b1b56ae765306cd7c4353a9e5aa553902",
       "rule1": "consume_classified_runes_once_and_sum_ordinary_token_effects_once",
       "rule2": "obsolete_filter_wrapper_removed_no_new_helper",
       "rule3": "existing_defenses_unchanged_D128_D129_registered",
@@ -1908,6 +1920,11 @@
           "decision": "D100 partial",
           "receipt": "verification/maintenance/code-constraints-supplemental-rank-inputs-20261106/summary.json",
           "scope": "Supplemental rank comparison dialog, frozen baseline and same-comparison fixed profile/environment checks."
+        },
+        {
+          "decision": "D100",
+          "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+          "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
         }
       ]
     },
@@ -2044,7 +2061,7 @@
     },
     {
       "file": "rouge/relics.py",
-      "sha256": "aa3e15ac7cc71b2e958db2ff4a8a5b326ebff8c08f39699fba35e3b60ca4c794",
+      "sha256": "460388901e21a5064d72a63c48395e044fe907f4eb653d89df159ce852986262",
       "rule1": "manual_stat_scope_filtered_once_then_per_token_ids",
       "rule2": "single_product_logic_inlined_no_test_only_wrapper_retained",
       "rule3": "D129_unchanged",
@@ -2060,6 +2077,11 @@
           "receipt": "verification/maintenance/code-constraints-unknown-regeneration-20261106/summary.json",
           "scope": "D129 unknown regeneration semantics",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D100",
+          "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+          "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
         }
       ]
     },
@@ -5357,6 +5379,20 @@
       "decision": "D100 partial",
       "receipt": "verification/maintenance/code-constraints-supplemental-budget-snapshot-20261106/summary.json",
       "scope": "Supplemental declared healing and damage budgets. Approved D332 on initial default creation."
+    },
+    {
+      "file": "rouge/run_modifiers.py",
+      "sha256": "09df9d333d208e4908e8dbd9952377d6dfe15dde84f516d8210c28bec8211d39",
+      "decision": "D100",
+      "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+      "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
+    },
+    {
+      "file": "rouge/supplemental_run_view.py",
+      "sha256": "771b4ea69cedc9ba0447bde02bcbb97444251e4a4e59b05409efed2c84dd4674",
+      "decision": "D100",
+      "receipt": "verification/maintenance/code-constraints-dialog-input-boundaries-20261106/summary.json",
+      "scope": "D100 evaluator/input boundary in reference dialogs, including final SupplementalRunDialog. Deeper core preparation and calibration isolation remain separate D119/D110."
     }
   ]
 }

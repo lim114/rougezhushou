@@ -3,6 +3,7 @@ import json
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
+from .condition_inputs import RunConditionError
 from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
                                   supplemental_profiles,format_reference,MissingHpExceedsMaximum)
@@ -48,17 +49,17 @@ def _run_skill_reference(preview,environment,stats,*,target_enemy=None):
 
 def _run_inputs(identity, environment):
     if type(environment) is not dict or set(environment)!=ENVIRONMENT_KEYS:
-        raise ValueError('本局条件需要relic_ids、run_config、relic_context、inventory_status、operator_metadata；不能传入已处理的属性或效果。')
+        raise RunConditionError('本局条件需要relic_ids、run_config、relic_context、inventory_status、operator_metadata；不能传入已处理的属性或效果。')
     ids=environment['relic_ids'];metadata=environment['operator_metadata']
     if type(ids) is not list or not all(type(rid) is str for rid in ids):
-        raise ValueError('藏品需要ID列表。')
+        raise RunConditionError('藏品需要ID列表。')
     for key in ('relic_context','inventory_status','operator_metadata'):
-        if type(environment[key]) is not dict:raise ValueError(key+'需要对象。')
+        if type(environment[key]) is not dict:raise RunConditionError(key+'需要对象。')
     complete=environment['inventory_status'].get('complete')
     if complete is not None and type(complete) is not bool:
-        raise ValueError('藏品读取完整性需要布尔值。')
+        raise RunConditionError('藏品读取完整性需要布尔值。')
     member=metadata.get(identity,{})
-    if type(member) is not dict:raise ValueError('当前干员的本局强化条件需要对象。')
+    if type(member) is not dict:raise RunConditionError('当前干员的本局强化条件需要对象。')
     # The adapter supplies original selectors and original skill type fields.
     # Account archive labels alone do not identify a branch selector.
     profile={**operator_profiles()[identity],**selectors()['operators'][identity],'tokens':{}}
@@ -83,7 +84,7 @@ def _calculate_run_skill(preview, environment, stats, inputs, *, target_enemy=No
             not {'stage_id','enemy_id','level'}<=set(target_enemy)<= {'stage_id','enemy_id','level','orb_mode'} or
             type(target_enemy['stage_id']) is not str or type(target_enemy['enemy_id']) is not str or
             type(target_enemy['level']) is not int):
-            raise ValueError('绑定目标需固定stage_id、enemy_id及整数level，可选orb_mode。')
+            raise RunConditionError('绑定目标需固定stage_id、enemy_id及整数level，可选orb_mode。')
         scenario['target_enemy']=deepcopy(target_enemy)
     # Identity-specific metadata must never follow a different selection.
     for key in ('recruitment_kind','char_buff_ids','char_buffs_complete',

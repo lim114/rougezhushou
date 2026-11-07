@@ -1,0 +1,82 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "计算对照窗口只处理明确输入错误，补充干员主入口完成",
+  "base_commit": "03f4bc799bc4fa90f52f4bb848d7ba2a810c07b3",
+  "changed_sources": [
+    "rouge/condition_inputs.py",
+    "rouge/reference_dialog.py",
+    "rouge/relics.py",
+    "rouge/run_modifiers.py",
+    "rouge/supplemental_run.py",
+    "rouge/supplemental_run_view.py"
+  ],
+  "source_sha256": {
+    "rouge/condition_inputs.py": "83c107674bdb7ec89bc60fdd798be4db3b986984c450b94d62f513616d710377",
+    "rouge/reference_dialog.py": "343c3eb94db38fb9f74fe96e5fbef4624e027fbbc65875e066f8ed08e9fb352f",
+    "rouge/relics.py": "460388901e21a5064d72a63c48395e044fe907f4eb653d89df159ce852986262",
+    "rouge/run_modifiers.py": "09df9d333d208e4908e8dbd9952377d6dfe15dde84f516d8210c28bec8211d39",
+    "rouge/supplemental_run.py": "69153376c42cd50dd7f531e3380dcc2b1b56ae765306cd7c4353a9e5aa553902",
+    "rouge/supplemental_run_view.py": "771b4ea69cedc9ba0447bde02bcbb97444251e4a4e59b05409efed2c84dd4674"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D100"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "initial",
+        "tests_passed": 35,
+        "seconds": 0.422
+      },
+      {
+        "phase": "supplemental and environment",
+        "tests_passed": 60,
+        "seconds": 5.815,
+        "command": "python -m unittest tests.test_supplemental_run_141 tests.test_supplemental_enemies_149 tests.test_supplemental_comparison_147 tests.test_supplemental_cultivation_148 tests.test_supplemental_budget_150 tests.test_recipient_binding_050 tests.test_enemy_environment"
+      },
+      {
+        "phase": "main calculation dialogs",
+        "tests_passed": 35,
+        "seconds": 0.641,
+        "command": "python -m unittest tests.test_cultivation_stage_boundary_review tests.test_skill_upgrade_comparison_133 tests.test_shield_timeline_131 tests.test_damage_budget_139 tests.test_healing_budget_132"
+      }
+    ],
+    "live_window": "Qt offscreen. Original desktop test window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Common dialog parser keeps JSON input handling separate from the evaluator. Evaluator default catches no exceptions; active player callers select their allowed types. Classify explicit environment, squad, difficulty and relic condition errors at their existing validation points. Source-mechanics integrity and internal panel-only flag checks stay generic. Single config lookup per run-modifier preparation.",
+    "requirements": "Verified invalid skill rank, trust, bad difficulty and malformed recipient data show errors in the live Qt class; correcting them restores the result. Injected plain ValueError/TypeError/KeyError propagate while result and copy action invalidate. Audited reference dialog production constructors and sole subclass. Existing D119/D110 inner calculation paths not counted here."
+  },
+  "partially_implemented_decisions": []
+}

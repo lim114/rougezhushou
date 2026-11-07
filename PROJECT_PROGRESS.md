@@ -1,6 +1,6 @@
 ## 当前审批状态（2026-11-06）
 
-原登记280组中，尚有8组待实施或核实。编号见 DEVELOPMENT_CHECKPOINT.json 的 approved_decisions_pending_implementation。新增待审事项见 [统一清单](docs/reviews/pending-defenses.md)。
+原登记280组中，尚有7组待实施或核实。编号见 DEVELOPMENT_CHECKPOINT.json 的 approved_decisions_pending_implementation。新增待审事项见 [统一清单](docs/reviews/pending-defenses.md)。
 
 
 

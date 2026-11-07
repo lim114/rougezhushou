@@ -6,7 +6,7 @@ from .manual_scenario import parse_preview_object
 
 
 class ReferenceDialog(QDialog):
-    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None, *, defer_initial_calculation=False, input_errors=(ValueError, KeyError, TypeError)):
+    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None, *, defer_initial_calculation=False, input_errors=()):
         super().__init__(parent)
         self.input_errors = input_errors
         self.result = None; self.evaluator = evaluator; self.formatter = formatter; self.columns = columns
