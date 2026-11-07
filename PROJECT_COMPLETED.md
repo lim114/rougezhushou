@@ -1,3 +1,7 @@
+## 维护 · 模组未核验费用和阻挡显示待确认，保留已证培养属性（2026-11-06）
+
+D107固定档案属性已整改。1497个模组阶段逐字段比对，27个费用、15个阻挡阶段改为待确认，其余数值一致。27项定向通过。后续技能分项依赖策略D333待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-unsupported-training-fields-20261106/summary.json)。
+
 ## 维护 · 校准记录单独核对情景与条件标识，内部来源错误直接上报（2026-11-06）
 
 D110部分推进。已将记录结构、干员情景与上下文指纹移出模型计算的宽异常捕获。合法算例不变；坏输入只阻止本行，内部来源错误上报。63项定向通过，6份完整报告与旧版一致。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-context-boundary-20261106/summary.json)。

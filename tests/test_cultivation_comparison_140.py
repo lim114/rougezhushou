@@ -10,6 +10,35 @@ def proposal(name,elite=1,level=54,trust=100,potential=1,module_id=None,module_l
 
 
 class Cultivation140Tests(unittest.TestCase):
+    def test_unverified_potential_keeps_only_affected_attribute_unknown(self):
+        from rouge.catalog import _attribute_values
+        profile = deepcopy(operator_profiles()['char_253_greyy'])
+        phase = profile['phases'][2]
+        profile['potential_bonuses'] = [[{'attributeType':'ATK', 'formulaItem':'MULTIPLIER', 'value':2}],
+                                        [{'attributeType':'ATK', 'formulaItem':'ADDITION', 'value':1}]]
+        baseline = _attribute_values(profile, phase, 2, 70, 100, 1, None, 0)[0]
+        selected = _attribute_values(profile, phase, 2, 70, 100, 3, None, 0)[0]
+        self.assertIsNotNone(baseline['attack'])
+        self.assertIsNone(selected['attack'])
+        self.assertEqual(baseline['hp'], selected['hp'])
+
+    def test_unverified_module_fields_do_not_show_the_unmodified_base_total(self):
+        cases = [('char_253_greyy', 'uniequip_002_greyy', 'deployment_cost', '部署费用'),
+                 ('char_199_yak', 'uniequip_002_yak', 'block_count', '阻挡数')]
+        for identity, module, field, label in cases:
+            with self.subTest(operator=identity):
+                choices = {'proposals':[proposal('基础', elite=2, level=70),
+                                        proposal('装备', elite=2, level=70, module_id=module, module_level=1),
+                                        proposal('未解锁', elite=1, level=54, module_id=module, module_level=1)]}
+                report = compare_cultivation({'operator':identity}, choices)
+                base, equipped, locked = report['rows']
+                self.assertIsNotNone(base['attributes'][field])
+                self.assertIsNone(equipped['attributes'][field])
+                self.assertIsNotNone(locked['attributes'][field])
+                self.assertGreater(equipped['hp'], base['hp'])
+                self.assertEqual(equipped['status'], '部分属性参考')
+                self.assertIn(label + '的培养加成尚未核验', format_cultivation(report))
+
     def test_talent_breakpoint_and_potential(self):
         s={'operator':'char_124_kroos','skill':1,'skill_rank':7}
         p={'proposals':[proposal('54级'),proposal('55级',level=55,potential=5)]};before=deepcopy(p)

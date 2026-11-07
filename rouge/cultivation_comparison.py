@@ -53,6 +53,12 @@ def compare_cultivation(scenario,preview):
         row['attributes']=attributes
         for key in ('attack','hp','defense'):row[key]=attributes[key]
         row['status']='基础属性参考'
+        missing = [key for key, value in attributes.items() if value is None]
+        if missing:
+            from .calibration import LABELS
+            names = '、'.join(LABELS.get(key, key) for key in missing)
+            row['notes'].append(names + '的培养加成尚未核验，完整数值待确认。')
+            row['status'] = '部分属性参考'
         if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
         if core_skill:

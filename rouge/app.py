@@ -1839,7 +1839,8 @@ class MainWindow(QMainWindow):
         if not hasattr(self,'attack'):return
         from .catalog import operator_attributes
         values=operator_attributes(self.operator.currentData(),**self.training_conditions())
-        self.attack.setText(f'{values["attack"]:g}（自动计算）')
+        attack = values["attack"]
+        self.attack.setText(f'{attack:g}（自动计算）' if attack is not None else '待确认')
 
     def update_skill_options(self):
         if not hasattr(self,'cooperative'):

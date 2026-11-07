@@ -4,6 +4,18 @@ from functools import lru_cache
 from pathlib import Path
 
 
+POTENTIAL_FIELDS = {
+    'ATK': 'attack', 'MAX_HP': 'hp', 'DEF': 'defense', 'MAGIC_RESISTANCE': 'resistance',
+    'RESPAWN_TIME': 'redeploy_seconds', 'ATTACK_SPEED': 'attack_speed',
+    'BLOCK_CNT': 'block_count', 'COST': 'deployment_cost',
+}
+MODULE_FIELDS = {
+    'atk': 'attack', 'def': 'defense', 'max_hp': 'hp', 'magic_resistance': 'resistance',
+    'attack_speed': 'attack_speed', 'respawn_time': 'redeploy_seconds',
+}
+UNRESOLVED_MODULE_FIELDS = {'block_cnt': 'block_count', 'cost': 'deployment_cost'}
+
+
 class CultivationInputError(ValueError):
     """Cultivation or equipment selection is outside the supported input range."""
 
@@ -89,12 +101,15 @@ def _attribute_values(profile, phase, elite, level, trust, potential, module_id,
     stats={field:first[field]+fraction*(last[field]-first[field]) for field in last if field!='level'}
     for field in ('hp','attack','defense'):
         stats[field]=math.floor(stats[field]+.5)+math.floor(profile['trust_stats'][field]*trust/100+.5)
-    mapping={'ATK':'attack','MAX_HP':'hp','DEF':'defense','MAGIC_RESISTANCE':'resistance',
-             'RESPAWN_TIME':'redeploy_seconds','ATTACK_SPEED':'attack_speed','BLOCK_CNT':'block_count','COST':'deployment_cost'}
+    unresolved = set()
     for modifiers in profile['potential_bonuses'][:potential-1]:
         for modifier in modifiers:
-            field=mapping.get(modifier['attributeType'])
-            if field and modifier['formulaItem']=='ADDITION':stats[field]+=modifier['value']
+            key = modifier['attributeType']
+            field = POTENTIAL_FIELDS.get(key)
+            if field is not None and modifier['formulaItem'] == 'ADDITION':
+                stats[field] += modifier['value']
+            else:
+                unresolved.add(field or key)
     module=None
     module_applied=False
     if module_id:
@@ -104,7 +119,11 @@ def _attribute_values(profile, phase, elite, level, trust, potential, module_id,
         module_applied=elite>=module['unlock_elite'] and level>=module['unlock_level']
         if module_applied:
             for attr,value in module['levels'][module_level-1]['attributes'].items():
-                field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed',
-                       'respawn_time':'redeploy_seconds'}.get(attr)
-                if field:stats[field]+=value
+                field = MODULE_FIELDS.get(attr)
+                if field is None:
+                    unresolved.add(UNRESOLVED_MODULE_FIELDS.get(attr, attr))
+                else:
+                    stats[field] += value
+    for field in sorted(unresolved):
+        stats[field] = None
     return stats,module,module_applied
