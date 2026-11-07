@@ -339,38 +339,31 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     finish_native_panels(scenario,result)
     from .reporting import build_report
     result['report']=build_report(scenario,result)
-    # Validate the processed neural scenario after preserving legacy errors.
-    if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):
-        for field in ('enemy_is_boss','enemy_in_neural_break'):
-            if isinstance(scenario.get(field),str):
-                raise ValueError(field+' 不接受文本条件；请使用布尔值。')
-    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
-        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
-    if (scenario['operator']=='char_1048_orchd2' and
-            isinstance(scenario.get('near_previous_deployment'),str)):
-        from .operator_engine import selected_talents
-        talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
-        if any(t.get('name')=='翔虫机动' for t in talents):
-            raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')
-    # Keep legacy calculation/finisher/report errors before text-only conditions.
-    op=scenario['operator'];number=scenario['skill']
-    conditions={
-        'char_4228_closur':('reinforcement_blocks_target',),
-        'char_206_gnosis':('frozen_at_skill_end',) if number==3 else (),
-        'char_4087_ines':('ines_first_deployment',) if number==3 else (),
-        'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),
-        'char_1035_wisdel':('overload',) if number==2 else (),
-    }.get(op,())
+    # Check text-only conditions after calculation and reporting to preserve error order.
+    op = scenario['operator']
+    number = scenario['skill']
+    conditions = {
+        'char_1042_phatm2': ('enemy_is_boss', 'enemy_in_neural_break'),
+        'char_4204_mantra': ('enemy_is_boss', 'enemy_in_neural_break'),
+        'char_4202_haruka': ('haruka_repeat',) if number == 2 else (),
+        'char_4228_closur': ('reinforcement_blocks_target',),
+        'char_206_gnosis': ('frozen_at_skill_end',) if number == 3 else (),
+        'char_4087_ines': ('ines_first_deployment',) if number == 3 else (),
+        'char_1041_angel2': ('steal_success',) if number == 2 else ('delivery_coordinate',) if number == 3 else (),
+        'char_1035_wisdel': ('overload',) if number == 2 else (),
+    }.get(op, ())
     if op=='char_4182_oblvns':
         conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())
         if number==2:conditions+=('organ_mode','fever')
-    if op in ('char_437_mizuki','char_1048_orchd2'):
-        field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')
-        if isinstance(scenario.get(field),str):
-            from .operator_engine import selected_talents
-            talents,_=selected_talents(catalog()['operators'][op],scenario)
-            if any(t.get('name')==talent for t in talents):conditions+=(field,)
-        if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)
+    if op == 'char_437_mizuki' and '反移情' in combat.tv:
+        conditions += ('enemy_below_half',)
+    if op == 'char_1048_orchd2':
+        if '翔虫机动' in combat.tv:
+            conditions += ('near_previous_deployment',)
+        if '强击瓶专家' in combat.tv:
+            conditions += ('power_coating',)
+        if number == 1:
+            conditions += ('double_charge',)
     for field in conditions:
         if isinstance(scenario.get(field),str):
             raise ValueError(field+' 不接受文本条件；请使用布尔值。')

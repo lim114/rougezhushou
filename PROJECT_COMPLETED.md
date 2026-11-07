@@ -1,3 +1,7 @@
+## 维护 · 伤害计算末尾沿用当次天赋选择，按原顺序核对文本条件（2026-11-07）
+
+文本条件使用本次计算已选天赋，多个错误仍按原优先级上报。64组改前后结果或异常一致，72项定向通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-late-talent-conditions-20261107/summary.json)。
+
 ## 维护 · 校准部署时钟的结果错误直接上报（2026-11-07）
 
 缩小记录错误处理到单次引擎执行，部署初动读取和二次计算后的整理移出。68项定向通过，18份实验报告及9个酒类情景与前版一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-deployment-clock-20261107/summary.json)。
