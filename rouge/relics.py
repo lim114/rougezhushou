@@ -65,20 +65,24 @@ def prepare(scenario,profile):
     scenario=dict(scenario)
     selected=list(dict.fromkeys(scenario.get('relic_ids',[])))
     rules=[];records=[];warnings=[];effects=[];token_effects=[];inapplicable=[];timing_unresolved=False;ammo_unresolved=False;ammo_sources=set()
-    inputs=[(rid,mechanics()['relics'].get(rid),False) for rid in selected]
+    source = mechanics()
+    buffs = source['char_buffs']
+    inputs = [(rid, source['relics'].get(rid), False) for rid in selected]
     bound=scenario.get('char_buff_ids',[])
     if not isinstance(bound,list) or not all(isinstance(b,str) for b in bound):
         raise RunConditionError('干员定向强化需要已确认的ID列表。')
+    bound_ids = set(bound)
     absent=scenario.get('char_buff_absent_ids',[])
-    if (not isinstance(absent,list) or not all(isinstance(b,str) and b in mechanics()['char_buffs'] for b in absent)
-            or set(absent)&set(bound)):
+    if (not isinstance(absent,list) or not all(isinstance(b,str) and b in buffs for b in absent)
+            or not bound_ids.isdisjoint(absent)):
         raise RunConditionError('已确认未领取的个人强化需要有效ID列表，且不能与已领取列表冲突。')
+    absent_ids = set(absent)
     uncertain=scenario.get('char_buff_pending_ids',[])
-    if (not isinstance(uncertain,list) or not all(isinstance(b,str) and b in mechanics()['char_buffs'] for b in uncertain)
-            or set(uncertain)&(set(bound)|set(absent)) or uncertain and scenario.get('char_buffs_complete') is True):
+    if (not isinstance(uncertain,list) or not all(isinstance(b,str) and b in buffs for b in uncertain)
+            or not bound_ids.isdisjoint(uncertain) or not absent_ids.isdisjoint(uncertain) or uncertain and scenario.get('char_buffs_complete') is True):
         raise RunConditionError('待更新的个人强化需要有效ID列表，且不能与已确认领取、未领取或完整列表冲突。')
     for bid in dict.fromkeys(uncertain):
-        buff=mechanics()['char_buffs'][bid]
+        buff=buffs[bid]
         if buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|'):
             raise RunConditionError('待更新的个人强化与当前干员职业不符。')
         if buff['relic_id'] not in selected:
@@ -88,7 +92,7 @@ def prepare(scenario,profile):
     if 'char_buffs_complete' in scenario and 'char_buff_ids' not in scenario:
         raise RunConditionError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
     for bid in dict.fromkeys(bound):
-        data=mechanics()['char_buffs'].get(bid)
+        data=buffs.get(bid)
         if data is None:raise RunConditionError('未知干员定向强化 '+bid+'，不能计算。')
         if data['required_profession'] and profile['profession'] not in data['required_profession'].split('|'):
             raise RunConditionError(data['name']+'与当前干员职业不符，请核对强化归属。')
@@ -102,11 +106,15 @@ def prepare(scenario,profile):
         binding=data.get('recipient_binding')
         recipient_binding=None
         if binding and not is_bound:
-            applicable=[bid for bid in binding['char_buff_ids'] if not mechanics()['char_buffs'][bid]['required_profession']
-                        or profile['profession'] in mechanics()['char_buffs'][bid]['required_profession'].split('|')]
-            confirmed=sorted(set(applicable)&set(bound))
-            recipient_state=('confirmed' if confirmed else 'absent' if not applicable or scenario.get('char_buffs_complete') is True or set(applicable)<=set(absent)
-                             else 'unknown')
+            applicable = set()
+            for bid in binding['char_buff_ids']:
+                required = buffs[bid]['required_profession']
+                if not required or profile['profession'] in required.split('|'):
+                    applicable.add(bid)
+            confirmed = sorted(applicable & bound_ids)
+            recipient_state = ('confirmed' if confirmed else
+                               'absent' if scenario.get('char_buffs_complete') is True or applicable <= absent_ids else
+                               'unknown')
             recipient_binding={'state':recipient_state,'char_buff_ids':confirmed,'scope':'current_operator_only'}
             if recipient_state=='unknown':missing.append('当前干员强化归属')
         # Some unfinished mechanics exist only with another held relic and
@@ -296,7 +304,7 @@ def prepare(scenario,profile):
         if any(e['kind']=='enemy_hp_factor' and (
             e.get('condition') in record['missing_conditions'] or
             e.get('enemy_level') and 'enemy_level_type' in record['missing_conditions'])
-            for e in mechanics()['relics'].get(record['id'],{}).get('effects',[])):
+            for e in source['relics'].get(record['id'],{}).get('effects',[])):
             unresolved_hp_sources.add(record['id'])
     unresolved_hp_sources.difference_update(r['relic_id'] for r in resident)
     verified_final_hp=[r for r in other_hp if r.get('hp_composition')=='final_scaler_verified']
@@ -341,7 +349,7 @@ def prepare(scenario,profile):
         'weight_delta':sum(r['value'] for r in rules if r['kind']=='enemy_weight_delta')}
     resolution={'records':records,'warnings':warnings,'inapplicable':inapplicable,'rules':rules,
         'calculation_scope':'offline_stable_effects','combat_effects_reference_only':True,
-        'source_commit':mechanics()['commit'],'complete':not warnings,'enemy_effects':scenario['_relic_enemy_effects'],
+        'source_commit':source['commit'],'complete':not warnings,'enemy_effects':scenario['_relic_enemy_effects'],
         'token_effects':token_effects,'context':scenario.get('relic_context',{}),
         'context_source':scenario.get('relic_context_source','明确提供的计算情景'),'timing_unresolved':timing_unresolved}
     if damage_composition_unresolved:resolution['damage_composition_unresolved']=True

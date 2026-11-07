@@ -1,3 +1,7 @@
+## 维护 · 藏品强化归属复用本次机制表和领取记录（2026-11-07）
+
+15种定向强化、75组归属输入与前版一致，97项定向通过。另复现 D110 的两种目标查询类型错误，D351待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-recipient-mechanics-lookup-20261107/summary.json)。
+
 ## 维护 · 校准实验将手动重量与已选目标资料错误分开（2026-11-07）
 
 已选目标的固定面板普通数值和溢出错误直接上报；真实输入错误仍只影响本行。87项定向通过，18份完整实验报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-target-source-20261107/summary.json)。
