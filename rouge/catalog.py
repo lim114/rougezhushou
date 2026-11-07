@@ -27,6 +27,15 @@ def operator_profiles():
 def stage_previews():
     return json.loads((Path(__file__).parent / 'data' / 'previews.json').read_text(encoding='utf-8'))['stages']
 
+def talent_candidate_eligible(candidate, elite, level, potential_rank):
+    condition = candidate.get('unlockCondition')
+    phase = int(condition['phase'][-1]) if condition else candidate['phase']
+    minimum = condition['level'] if condition else candidate['level']
+    rank = candidate.get('requiredPotentialRank', candidate.get('potential_rank', 0))
+    return (phase <= elite and (phase < elite or minimum <= level)
+            and rank <= potential_rank)
+
+
 def resolve_cultivation(profile,scenario):
     """Resolve operator level at a standalone reference entry."""
     elite=scenario.get('elite',2)

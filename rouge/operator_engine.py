@@ -4,9 +4,10 @@ Each emitted hit is mitigated separately. Conditional events are scenario inputs
 never inferred from a character's name or from another operator's controls.
 """
 import math
+from functools import partial
 from .condition_inputs import read_continuous_attacks
 from .attribute_limits import effective_attack_speed
-from .catalog import catalog,resolve_cultivation
+from .catalog import catalog,resolve_cultivation,talent_candidate_eligible
 from .enemy_environment import damage_factor
 from .timing import AttackTimeline,charge_seconds,mixed_charge_seconds,frame_time,FPS,finite,has_periodic_sp,periodic_charge_seconds
 
@@ -20,12 +21,7 @@ def _selected_talent_reference(profile, scenario):
     """Share the selected equipment and cultivation with Combat's trait consumers."""
     elite,level=resolve_cultivation(profile,scenario)
     potential=scenario.get('potential',1)-1
-    def eligible(candidate):
-        condition=candidate.get('unlockCondition')
-        phase=int(condition['phase'][-1]) if condition else candidate['phase']
-        minimum=condition['level'] if condition else candidate['level']
-        rank=candidate.get('requiredPotentialRank',candidate.get('potential_rank',0))
-        return phase<=elite and (phase<elite or minimum<=level) and rank<=potential
+    eligible = partial(talent_candidate_eligible, elite=elite, level=level, potential_rank=potential)
     talents={}
     for i,candidates in enumerate(profile['talents']):
         candidates=[t for t in candidates if eligible(t)]

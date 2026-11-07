@@ -1408,7 +1408,7 @@
     },
     {
       "file": "rouge/operator_engine.py",
-      "sha256": "c4b5e1cc5077089450873051c447ff64afb6c48ae2ec08ad85491b081c18b7be",
+      "sha256": "ad64d6076ab5331e8960e1e8e0a2633de826a9aa5e7c26cb9369b0cc4eaaa20b",
       "rule1": "reuse_talent_equipment_elite_level_and_unlock_selection",
       "rule2": "shared_selector_core_has_legacy_API_and_Combat_callers",
       "rule3": "existing_pending_defenses_unchanged_no_new_rare_defense",
@@ -1420,6 +1420,11 @@
           "receipt": "verification/maintenance/code-constraints-reference-level-defaults-20261106/summary.json",
           "scope": "D135/D138/D144 level defaults and shared resolver relocation",
           "full_module_review_complete": false
+        },
+        {
+          "decision": "D130, D315",
+          "receipt": "verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json",
+          "scope": "Shared candidate eligibility, catalog list provenance, isolated same-cultivation token module differences."
         }
       ]
     },
@@ -1567,7 +1572,7 @@
     },
     {
       "file": "rouge/catalog.py",
-      "sha256": "91b4845d1ebc72234aeab960a0209c37327cd96ca6c750e8d21ca7b58ba309ef",
+      "sha256": "ae679baf492b7da6a654593b5e541dbb2fd90691ee2d7a5aafaa2496b88822de",
       "rule1": "reuse_resolved_module_and_applied_state_from_attribute_entry",
       "rule2": "existing_attribute_core_shared_by_public_attributes_budget_and_cultivation_comparison",
       "rule3": "D107_D108_D118_D119_D121_D133_unchanged",
@@ -1594,6 +1599,11 @@
           "decision": "D121, D125, D119 partial",
           "receipt": "verification/maintenance/code-constraints-cultivation-validation-20261106/summary.json",
           "scope": "Shared phase/level resolution and qualified attribute arithmetic, exact supplemental integer policy, D119 supplemental preparation caught only as typed input error; core preparation pending."
+        },
+        {
+          "decision": "D130, D315",
+          "receipt": "verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json",
+          "scope": "Shared candidate eligibility, catalog list provenance, isolated same-cultivation token module differences."
         }
       ]
     },
@@ -1954,13 +1964,20 @@
     },
     {
       "file": "rouge/token_module_comparison.py",
-      "sha256": "c3c0913f2463f031ec1eb2a157e89b7780f5632b02fb00ba8631ca0a4be54482",
+      "sha256": "a60de9ece3294878cb38310af143db4ee7292c27b0c3973115a56e6c889d371a",
       "rule1": "all_stages_and_tokens_share_one_cultivation_pair",
       "rule2": "no_new_helper_prepared_input_used_by_product_callers",
       "rule3": "D130_unchanged",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
-      "evidence": "After existing normalization, one cultivation pair feeds base/upgrade attributes, module/cost references and count references. Wang comparison descendant elite/level reads fall from 11 each to 0; normalization still happens at the caller. Source conditions and result copies unchanged. Module membership is still resolved separately by downstream reference helpers; ordinary remaining boundary work."
+      "evidence": "After existing normalization, one cultivation pair feeds base/upgrade attributes, module/cost references and count references. Wang comparison descendant elite/level reads fall from 11 each to 0; normalization still happens at the caller. Source conditions and result copies unchanged. Module membership is still resolved separately by downstream reference helpers; ordinary remaining boundary work.",
+      "scoped_reviews": [
+        {
+          "decision": "D130, D315",
+          "receipt": "verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json",
+          "scope": "Shared candidate eligibility, catalog list provenance, isolated same-cultivation token module differences."
+        }
+      ]
     },
     {
       "file": "rouge/token_budget.py",
@@ -4517,7 +4534,7 @@
     },
     {
       "file": "rouge/drone_traits.py",
-      "sha256": "b1350852cbee0df7cf84700fabcbd20a88c24942c930f44849d15c6c5562f2b8",
+      "sha256": "f03a1d2edac49d1f11a1426addc5db33561ec199bc10a089177296b6235a93f4",
       "ordinary_rules_review_complete": true,
       "full_module_review_complete": false,
       "rule1": "Elite/level/potential computed once at selected_drone_trait entry and passed to both eligibility loops; same values reused by module unlock gate",
@@ -4525,6 +4542,13 @@
       "evidence": "Both actual operator_engine callers use catalog profiles;18 targeted tests;288 old/new outputs;all If tests AST unchanged;sample cultivation gets3/3/2 to1/1/1",
       "rule3": [
         "D315"
+      ],
+      "scoped_reviews": [
+        {
+          "decision": "D130, D315",
+          "receipt": "verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json",
+          "scope": "Shared candidate eligibility, catalog list provenance, isolated same-cultivation token module differences."
+        }
       ]
     },
     {

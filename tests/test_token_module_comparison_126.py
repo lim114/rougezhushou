@@ -1,5 +1,6 @@
 import copy
 import unittest
+from unittest.mock import patch
 
 from rouge.token_module_comparison import compare_token_module
 from rouge.catalog import catalog
@@ -24,6 +25,19 @@ class TokenModuleComparison126Tests(unittest.TestCase):
             self.assertIsNone(stage['values']['attack'])
         self.assertAlmostEqual(stages[3]['differences']['hp'],302.4)
         self.assertIsNone(r['tokens'][0]['actual_presence'])
+
+    def test_missing_base_concurrent_limit_only_omits_its_difference(self):
+        from rouge.summons import module_rules
+        rules = copy.deepcopy(module_rules())
+        for rule in rules.values():
+            if rule['operator'] == D:
+                rule['concurrent_limit_verified'] = False
+        with patch('rouge.summons.module_rules', return_value=rules):
+            stages = compare_token_module(D, {'elite': 2, 'level': 70}, DM)['tokens'][0]['stages']
+        self.assertIsNone(stages[0]['values']['concurrent_limit'])
+        self.assertEqual(stages[1]['values']['concurrent_limit'], 7)
+        self.assertNotIn('concurrent_limit', stages[1]['differences'])
+        self.assertEqual(stages[1]['differences']['deployment_cost'], -2)
 
     def test_wang_known_cost_and_count_limits_leave_unknown_module_hp_separate(self):
         stages=compare_token_module(W,{'elite':2,'level':80},WM)['tokens'][0]['stages']

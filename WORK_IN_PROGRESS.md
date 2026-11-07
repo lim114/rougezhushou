@@ -1,3 +1,7 @@
+## 当前断点 · 共享天赋解锁条件，按已知基准计算召唤物差值（2026-11-06）
+
+D130、D315完成。共用候选解锁判断，同一部件目录直接遍历，外部部件仍核对归属。无基准的数量差值留空，生命与费用直接计算。 原280组完成265、余15。 [回执](verification/maintenance/code-constraints-drone-token-differences-20261106/summary.json)。
+
 ## 当前断点 · 开局奖励复用当次资料，固定地图复用已核验图片（2026-11-06）
 
 D199完成。D258默认窗口每次刷新读取一次图片；预载资料和自定义加载路径仍待核对。 原280组完成263、余17。 [回执](verification/maintenance/code-constraints-map-image-startup-20261106/summary.json)。

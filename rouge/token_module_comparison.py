@@ -50,18 +50,25 @@ def _compare_token_module(operator,profile,training,module_id,module):
             counts=token_count_reference(profile,scenario,identity,cultivation=cultivation) if unlocked else None
             # Known effects are a partial projection. Do not treat a missing
             # rule as zero effect or inherit an operator's equipment stats.
-            verified=set()
-            if reference:verified.update(('hp','deployment_cost','held_limit','concurrent_limit'))
-            if cost_reference:verified.add('deployment_cost')
-            if counts:verified.update(('held_limit','concurrent_limit'))
-            values={k:None for k in base}
-            for key in verified:
-                values[key]=((counts or reference)['held_limit'] if key=='held_limit' else
-                    (counts or reference)['concurrent_limit'] if key=='concurrent_limit' else stats[key])
+            verified = {}
+            if reference:
+                verified['hp'] = stats['hp']
+            if reference or cost_reference:
+                verified['deployment_cost'] = stats['deployment_cost']
+            differences = {key: value - base[key] for key, value in verified.items()}
+            limits = counts or reference
+            if limits:
+                for key in ('held_limit', 'concurrent_limit'):
+                    value = limits[key]
+                    verified[key] = value
+                    if base[key] is not None and value is not None:
+                        differences[key] = value - base[key]
+            values = dict.fromkeys(base)
+            values.update(verified)
             state='locked' if not unlocked else 'partial_reference' if verified else 'unverified'
             stages.append({'module_level':level,'state':state,'values':values,
                 'verified_fields':sorted(verified),
-                'differences':{k:values[k]-base[k] for k in verified if base[k] is not None and values[k] is not None},
+                'differences':differences,
                 'source':deepcopy(reference or cost_reference),'count_reference':deepcopy(counts)})
         tokens.append({'token_id':identity,'name':token['name'],'stages':stages,
                        'actual_presence':None,'actual_alive_seconds':None})

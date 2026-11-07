@@ -4,20 +4,13 @@ These values feed the existing offline warmup reference. They establish no
 independent drone timing, target ownership or hidden module activation script.
 """
 
+from .catalog import talent_candidate_eligible
+
+
 REVIEWED_MODULES = {
     'char_328_cammou': 'uniequip_002_cammou',
     'char_1038_whitw2': 'uniequip_002_whitw2',
 }
-
-
-def _eligible(candidate, elite, level, potential_rank):
-    """Use the same phase, level and potential rules as selected_talents."""
-    condition = candidate.get('unlockCondition')
-    phase = int(condition['phase'][-1]) if condition else candidate['phase']
-    minimum = condition['level'] if condition else candidate['level']
-    rank = candidate.get('requiredPotentialRank', candidate.get('potential_rank', 0))
-    return (phase <= elite and (phase < elite or minimum <= level)
-            and rank <= potential_rank)
 
 
 def _values(candidate):
@@ -37,7 +30,7 @@ def selected_drone_trait(profile, scenario, module_parts):
     potential_rank = scenario.get('potential', 1) - 1
     candidates = (profile.get('trait') or {}).get('candidates') or []
     candidates = [candidate for candidate in candidates
-                  if _eligible(candidate, elite, level, potential_rank)]
+                  if talent_candidate_eligible(candidate, elite, level, potential_rank)]
     values = _values(candidates[-1]) if candidates else {}
     operator = scenario.get('operator')
     module_id = REVIEWED_MODULES.get(operator)
@@ -51,13 +44,14 @@ def selected_drone_trait(profile, scenario, module_parts):
         return values
     catalog_parts = module['levels'][stage - 1]['parts']
     for part in module_parts or ():
-        if (part not in catalog_parts or part.get('target') != 'TRAIT_DATA_ONLY'
+        if ((module_parts is not catalog_parts and part not in catalog_parts)
+                or part.get('target') != 'TRAIT_DATA_ONLY'
                 or part.get('isToken') or part.get('validInGameTag') is not None
                 or part.get('validInMapTag') is not None):
             continue
         overrides = (part.get('overrideTraitDataBundle') or {}).get('candidates') or []
         overrides = [candidate for candidate in overrides
-                     if _eligible(candidate, elite, level, potential_rank)]
+                     if talent_candidate_eligible(candidate, elite, level, potential_rank)]
         if overrides:
             # Both reviewed bundles provide the complete warmup parameters.
             values = _values(overrides[-1])
