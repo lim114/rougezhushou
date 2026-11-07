@@ -1,3 +1,7 @@
+## 当前断点 · 事件跳转复用本次核验，统一目录构建（2026-11-06）
+
+D93/D95/D96完成。一次目录点击核验一次，独立打开时重核，21类阅读器准确跳转。39份目录与固定资料相同，38个来源分组保留。最终32项定向通过。 原280组完成228、余52。 [回执](verification/maintenance/code-constraints-event-directory-navigation-20261106/summary.json)。
+
 ## 当前断点：来源导航入口边界核验与关联窗口关闭分支合并（2026-11-06）
 
 D41导航边界按授权保留并核验；D218关联窗口两个分支共用一次关闭代码。5项新增定向通过；初轮14项既有检查通过及1项测试加载错误原样保留。原280组完成225、剩55。D324四处旧文献异常捕获待审核、未改。回执 `verification/maintenance/code-constraints-source-navigation-20261106/summary.json`。

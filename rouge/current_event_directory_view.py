@@ -10,15 +10,17 @@ DIRECTORY_READERS = {**READERS, 'flows321': ('documented_event_flow_view', 'Docu
 
 
 def make_event_dialog(target, parent=None, *, page_owner=None):
-    row = target['event']; reader = row['reader']; eid = row['event_id']
-    fresh = model.reference(row.get('id'))
-    if fresh is None or not model.same(row, fresh['selected']): return None
-    key = target.get('entry_key'); entry = next((e for e in row['entries'] if e['key'] == key), None)
-    if key is not None and entry is None: return None
-    expected = {'event': row, 'entry_key': key,
-                'scene_id': entry['scene_id'] if entry else row['event']['entry_scene_id'],
-                'choice_id': entry['choice_id'] if entry else None, 'actual_eligible': None, 'run_updated': False}
+    fresh = model.reference(target['event'].get('id'))
+    if fresh is None or fresh['selected'] is None: return None
+    expected = model.event_target(fresh['selected'], target.get('entry_key'))
     if not model.same(target, expected): return None
+    return _dialog_for_resolved_event(expected, parent, page_owner)
+
+
+def _dialog_for_resolved_event(target, parent, page_owner):
+    row = target['event']
+    reader = row['reader']
+    eid = row['event_id']
     if reader not in DIRECTORY_READERS: return None
     module, cls = DIRECTORY_READERS[reader]
     positional = (eid,) if reader in EVENT_ARGUMENT_READERS or reader == 'flows321' else ()
@@ -144,9 +146,10 @@ class CurrentEventDirectoryPanel(QWidget):
         if not preserve: self.tabs.setCurrentIndex(0)
 
     def open_event(self):
+        self._close_event()
         target = model.resolve(self.result, self.entry_key)
         if target is None: self.clear_reference(); return False
-        self._close_event(); self.event_dialog = make_event_dialog(target, self)
+        self.event_dialog = _dialog_for_resolved_event(target, self, None)
         if self.event_dialog is None: self.clear_reference(); return False
         self.event_dialog.show(); return True
 

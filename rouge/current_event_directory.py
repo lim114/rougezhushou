@@ -112,31 +112,27 @@ def _entries(row, ref, provider):
 
 
 def derive(catalogue, bindings, modules):
-    rows = []; by_pair = {}
+    groups_by_event = {}
     for summary in catalogue:
         binding = bindings[summary['id']]
         if binding is None: raise ValueError('Every existing catalogue group must retain its exact current reader')
         pair = (binding['reader'], binding['current_event_id'])
-        if pair in by_pair:
-            row = by_pair[pair]; row['catalogue_groups'].append(deepcopy(summary)); continue
-        ref = modules[pair[0]].reference(pair[1])
-        if ref is None: raise ValueError('Current event source unavailable')
-        snapshot = _snapshot(ref['data'], pair[1])
-        row = {'id': pair[0] + ':' + pair[1], 'reader': pair[0], 'event_id': pair[1],
-               'title': ref['event']['title'], 'catalogue_groups': [deepcopy(summary)],
-               'reader_source_identity': json.loads(json.dumps(ref['source_identity'])), **snapshot}
-        row['entries'] = _entries(row, ref, modules[pair[0]])
-        rows.append(row); by_pair[pair] = row
-    for event_id in ('button', 'blueprint', 'revive'):
-        ref = modules['flows321'].reference(event_id)
-        if ref is None: raise ValueError('Current extra event source unavailable')
-        row = {'id': 'flows321:' + event_id, 'reader': 'flows321', 'event_id': event_id,
-                     'title': ref['event']['title'], 'catalogue_groups': [],
-                     'reader_source_identity': json.loads(json.dumps(ref['source_identity'])),
-                     **_snapshot(ref['data'], event_id)}
-        row['entries'] = _entries(row, ref, modules['flows321'])
+        groups_by_event.setdefault(pair, []).append(summary)
+
+    events = list(groups_by_event.items())
+    events.extend((('flows321', eid), []) for eid in ('button', 'blueprint', 'revive'))
+    rows = []
+    for (reader, event_id), groups in events:
+        provider = modules[reader]
+        ref = provider.reference(event_id)
+        if ref is None:
+            raise ValueError('Current event source unavailable' if groups else 'Current extra event source unavailable')
+        row = {'id': reader + ':' + event_id, 'reader': reader, 'event_id': event_id,
+               'title': ref['event']['title'], 'catalogue_groups': deepcopy(groups),
+               'reader_source_identity': json.loads(json.dumps(ref['source_identity'])),
+               **_snapshot(ref['data'], event_id)}
+        row['entries'] = _entries(row, ref, provider)
         rows.append(row)
-    for row in rows:
         entries = row['entries']
         row['node_types'] = list(dict.fromkeys(t for group in row['catalogue_groups'] for t in group['node_types']))
         row['topics'] = [topic for topic, _ in TOPICS if any(topic in e['topics'] for e in entries)]
@@ -171,7 +167,9 @@ def packet():
     d = json.loads(blobs[DATA]); source_data = {key: json.loads(blobs[path]) for key, path in notes['provider_data_files'].items()}
     if (d['schema'] != 'current_event_directory_372_v1' or set(source_data) != set(PROVIDERS)
             or set(notes['provider_source_identities']) != set(PROVIDERS)): return None
-    catalogue = json.loads(blobs['rouge/data/node-catalog.json'])['events']
+    catalogue_by_id = {}
+    for event in json.loads(blobs['rouge/data/node-catalog.json'])['events']:
+        catalogue_by_id.setdefault(event['id'], event)
     ids = set()
     for row in d['rows']:
         if row['id'] in ids: return None
@@ -180,7 +178,7 @@ def packet():
         snap = _snapshot(source_data[row['reader']], row['event_id'])
         if any(not same(row[key], value) for key, value in snap.items()): return None
         for group in row['catalogue_groups']:
-            old = next((e for e in catalogue if e['id'] == group['id']), None)
+            old = catalogue_by_id.get(group['id'])
             if old is None or any(not same(group[k], old[k]) for k in group): return None
     if len(d['rows']) != 39 or sum(len(r['catalogue_groups']) for r in d['rows']) != 38: return None
     return {'data': d, 'source_identity': (MANIFEST_SHA256, tuple((k, identity) for k, identity in notes['provider_source_identities'].items())),
@@ -222,7 +220,11 @@ def resolve(result, entry_key=None):
     except QueryTooLong:
         return None
     if fresh is None or not same(fresh, result): return None
-    row = fresh['selected']; entry = None
+    return event_target(fresh['selected'], entry_key)
+
+
+def event_target(row, entry_key):
+    entry = None
     if entry_key is not None:
         if type(entry_key) is not str: return None
         entry = next((e for e in row['entries'] if e['key'] == entry_key), None)

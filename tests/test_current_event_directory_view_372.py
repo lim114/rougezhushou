@@ -35,9 +35,19 @@ class CurrentEventDirectoryViewTests(TestCase):
     def test_exact_selected_dialogue_not_name_based(self):
         p = CurrentEventDirectoryPanel(); select(p.events, 'memory336:memorytree')
         row = p.result['selected']; entry = next(e for e in row['entries'] if e['choice_id'] == 'choice_ro6_normal5_3')
-        select(p.entries, entry['key']); self.assertTrue(p.open_event())
+        select(p.entries, entry['key'])
+        with patch.object(model, 'reference', wraps=model.reference) as read:
+            self.assertTrue(p.open_event())
+            read.assert_called_once_with(row['id'], **p.result['filters'])
         self.assertEqual((p.event_dialog.panel.scene_id, p.event_dialog.panel.choice_id), (entry['scene_id'], entry['choice_id']))
         self.assertIsNone(p.event_dialog.panel.result['declared']['source_key'])
+
+    def test_independent_dialog_rechecks_target_and_rejects_changed_choice(self):
+        result = model.reference('memory336:memorytree')
+        target = model.resolve(result, result['selected']['entries'][0]['key'])
+        with patch.object(model, 'reference', wraps=model.reference) as read:
+            self.assertIsNone(make_event_dialog(dict(target, choice_id='foreign-choice')))
+            read.assert_called_once_with(result['selected']['id'])
 
     def test_all21_reader_classes_support_exact_document_target(self):
         seen = set()

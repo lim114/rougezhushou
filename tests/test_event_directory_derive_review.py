@@ -28,5 +28,21 @@ class EventDirectoryDeriveReview(unittest.TestCase):
         self.assertEqual(labels, expected_labels)
 
 
+    def test_build_stops_at_missing_binding_source_event_or_groups(self):
+        group = {'id': 'group'}
+        with self.assertRaisesRegex(ValueError, 'retain its exact current reader'):
+            model.derive([group], {'group': None}, {})
+        provider = SimpleNamespace(reference=Mock(return_value=None))
+        binding = {'group': {'reader':'flows321', 'current_event_id':'missing'}}
+        with self.assertRaisesRegex(ValueError, 'Current event source unavailable'):
+            model.derive([group], binding, {'flows321':provider})
+        with self.assertRaisesRegex(ValueError, 'Current extra event source unavailable'):
+            model.derive([], {}, {'flows321':provider})
+        with self.assertRaisesRegex(ValueError, 'Exact current event required'):
+            model._snapshot({'events':{}}, 'missing')
+        with self.assertRaisesRegex(ValueError, '38 source groups'):
+            model.derive([], {}, model.providers())
+
+
 if __name__ == '__main__':
     unittest.main()
