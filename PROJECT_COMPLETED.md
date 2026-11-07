@@ -1,3 +1,7 @@
+## 维护：无基准差值语义与基准字段复用核验（2026-11-06）
+
+D123完成：按已批准语义保留无基准差值未知，三类实际比较均复用基准字段；13项定向通过，未改产品代码。原280组完成220、剩60。回执 `verification/maintenance/code-constraints-comparison-baseline-20261106/summary.json`。
+
 ## 维护：库存统计分母边界核验及布局退出定位（2026-11-06）
 
 D67保留并核验库存分母边界，6项定向通过，未改产品代码。布局异常定位到offscreen下ToolPopover加入内容时的FlowLayout原生访问冲突；普通QWidget容器通过，根因待查。原280组完成219、剩61。回执 `verification/maintenance/code-constraints-statistics-inventory-20261106/summary.json`。
