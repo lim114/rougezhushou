@@ -82,7 +82,9 @@ def rows(result,query='',kind=None,link=None):
     return[deepcopy(r)for r in result['entries']if(not wanted or wanted in r['name'].casefold())and(kind is None or kind==r['kind'])and(link is None or bool(r['activation_actions'])==(link=='linked'))]
 def resolve(result,key,action_key=None):
     if type(result)is not dict or type(key)is not str or(action_key is not None and type(action_key)is not str):return None
-    fresh=stage_reference(result.get('stage_id'))
+    return _resolve(result,key,action_key,stage_reference(result.get('stage_id')))
+
+def _resolve(result,key,action_key,fresh):
     if fresh is None or not same(fresh,result):return None
     row=next((r for r in fresh['entries']if r['key']==key),None)
     if row is None:return None
@@ -90,11 +92,16 @@ def resolve(result,key,action_key=None):
     if action_key is not None and action is None:return None
     return{'reference':fresh,'row':deepcopy(row),'action':deepcopy(action),'run_updated':False}
 def position_reference(result,key):
-    chosen=resolve(result,key)
-    if chosen is None or chosen['row']['kind']!='instance':return None
+    if type(result)is not dict or type(key)is not str:return None
     from . import current_map_position as positions
-    grid=positions.stage_reference(result['stage_id'])
-    if grid is None or grid['current_level_key']!=result['level_key']:return None
+    packet=positions.packet()
+    if packet is None:return None
+    current=battle.stage_reference(result.get('stage_id'),prepared_packet=packet['current'])
+    if current is None:return None
+    chosen=_resolve(result,key,None,from_battle(current))
+    if chosen is None or chosen['row']['kind']!='instance':return None
+    grid=positions.stage_reference(current['id'],prepared_packet=packet)
+    if grid is None:return None
     cell=display_cell(chosen['row']['raw'].get('position'),grid['rows'],grid['cols'])
     if cell is None:return None
     point=next((p for p in grid['points']if p['row']==cell['row']and p['col']==cell['col']),None)

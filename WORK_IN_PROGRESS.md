@@ -1,3 +1,7 @@
+## 当前断点：物件位置同快照复用（2026-11-06）
+
+D245完成，物件声明和地图共用一份核验资料及关卡，完整快照拒绝保留。9项定向通过（其中2项Qt离屏）。原280组完成192、剩88；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-object-position-snapshot-20261106/summary.json`。
+
 ## 当前断点：敌人来源与精确绑定核对（2026-11-06）
 
 D237/D238按授权保留，8项定向通过；未修改产品源码。原280组完成191、剩89。D239入口问题和原测试窗口更新缺口仍保留。回执 `verification/maintenance/code-constraints-enemy-identity-retention-20261106/summary.json`。
