@@ -1,3 +1,7 @@
+## 当前断点：行程位置同快照复用（2026-11-06）
+
+D249完成，行程与地图同包同关卡，复用已核验环节格子；7项定向通过。旧跨重读测试调整为独立入口边界检查，历史回执保留。原280组完成193、剩87；原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-itinerary-snapshot-20261106/summary.json`。
+
 ## 当前断点：物件位置同快照复用（2026-11-06）
 
 D245完成，物件声明和地图共用一份核验资料及关卡，完整快照拒绝保留。9项定向通过（其中2项Qt离屏）。原280组完成192、剩88；原测试窗口更新仍待完成。回执 `verification/maintenance/code-constraints-object-position-snapshot-20261106/summary.json`。

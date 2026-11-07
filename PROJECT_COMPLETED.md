@@ -5530,3 +5530,7 @@ D237/D238完成，固定来源及完整快照/候选核对按授权保留；8项
 
 ### 维护：物件位置同快照复用（2026-11-06）
 D245完成，复用既有from_battle，移除两次关卡读取，精确物件及完整快照核对保留；9项定向通过。回执 `verification/maintenance/code-constraints-object-position-snapshot-20261106/summary.json`。
+
+
+### 维护：行程位置同快照复用（2026-11-06）
+D249完成，移除重复关卡读取及已核验格子的再次完整查询；7项定向通过，等待/伪造拒绝保留。回执 `verification/maintenance/code-constraints-itinerary-snapshot-20261106/summary.json`。

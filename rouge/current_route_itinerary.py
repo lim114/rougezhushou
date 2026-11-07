@@ -50,10 +50,12 @@ def _derive(current,source_identity):
         if a['raw'].get('actionType')=='SPAWN'and a['key']not in bound:
             unassigned.append({'action':deepcopy(a),'reason':'条件分支采用哪组路线尚未确认'if a['queue']['kind']=='branch'else'基础路线编号无效或未取得','actual_route':None})
     return{'stage_id':current['id'],'stage_name':current['name'],'entries':entries,'unassigned_actions':unassigned,'level_key':current['level_key'],'original_level_source':deepcopy(current['source']),'battle_source_identity':current['source_identity'],'source_identity':(source_identity,current['source_identity']),'actual_path':None,'absolute_time':None,'actual_server_verified':False,'run_updated':False}
-def stage_reference(stage_id):
+def stage_reference(stage_id,*,prepared_current=...):
     if type(stage_id)is not str:return None
-    current=battle.stage_reference(stage_id);ref=packet()
-    if current is None or ref is None or ref['inventory']['battle_identity']!=current['source_identity']:return None
+    current=battle.stage_reference(stage_id) if prepared_current is ... else prepared_current
+    if current is None:return None
+    ref=packet()
+    if ref is None or ref['inventory']['battle_identity']!=current['source_identity']:return None
     selected=ref['inventory']['stages'].get(stage_id)
     if selected is None or selected['level_key']!=current['level_key']or selected['original_source']!=current['source']:return None
     return _derive(current,ref['identity'])
@@ -63,7 +65,9 @@ def routes(result,query='',scope=None):
     return[deepcopy(r)for r in result['entries']if(scope is None or r['scope']==scope)and(not q or q in(r['label']+' '+' '.join(r['enemy_names'])).casefold())]
 def resolve(result,route_key=None,step_key=None,action_key=None):
     if type(result)is not dict or any(v is not None and type(v)is not str for v in(route_key,step_key,action_key)):return None
-    fresh=stage_reference(result.get('stage_id'))
+    return _resolve(result,route_key,step_key,action_key,stage_reference(result.get('stage_id')))
+
+def _resolve(result,route_key,step_key,action_key,fresh):
     if fresh is None or not same(fresh,result):return None
     route=next((r for r in fresh['entries']if r['key']==route_key),None)if route_key is not None else None
     if route_key is not None and route is None:return None
@@ -75,14 +79,20 @@ def resolve(result,route_key=None,step_key=None,action_key=None):
     if route is None and action is None:return None
     return{'reference':fresh,'route':deepcopy(route),'step':deepcopy(step),'action':deepcopy(action),'actual_route':None,'run_updated':False}
 def position_reference(result,route_key,step_key):
-    selected=resolve(result,route_key,step_key)
-    if selected is None or selected['step']is None or not selected['step']['spatial_reference_permitted']:return None
+    if type(result)is not dict or any(v is not None and type(v)is not str for v in(route_key,step_key)):return None
     from . import current_map_position as positions
-    grid=positions.stage_reference(result['stage_id'])
-    if grid is None or grid['current_level_key']!=result['level_key']:return None
-    cell=selected['step']['cell'];point=positions.cell_reference(grid,**cell)
-    if point is None:return None
-    return{'stage_id':result['stage_id'],'route':selected['route'],'step':selected['step'],'cell':cell,'center':deepcopy(point['point']),'grid':grid,'source_identity':(result['source_identity'],grid['source_identity']),'actual_time':None,'actual_position':None,'actual_path':None,'run_updated':False}
+    packet=positions.packet()
+    if packet is None:return None
+    current=battle.stage_reference(result.get('stage_id'),prepared_packet=packet['current'])
+    if current is None:return None
+    fresh=stage_reference(current['id'],prepared_current=current)
+    selected=_resolve(result,route_key,step_key,None,fresh)
+    if selected is None or selected['step']is None or not selected['step']['spatial_reference_permitted']:return None
+    grid=positions.stage_reference(current['id'],prepared_packet=packet)
+    if grid is None:return None
+    cell=selected['step']['cell'];point=next((p for p in grid['points']if p['row']==cell['row']and p['col']==cell['col']),None)
+    return{'stage_id':result['stage_id'],'route':selected['route'],'step':selected['step'],'cell':cell,'center':deepcopy(point),'grid':grid,'source_identity':(result['source_identity'],grid['source_identity']),'actual_time':None,'actual_position':None,'actual_path':None,'run_updated':False}
+
 def step_label(step):
     text=('第'+str(int(step['key']))+'处：'if step['kind']not in('START','END')else'')+step['name'];cell=step['cell']
     if cell is not None:text+=f" · 第{cell['row']+1}行第{cell['col']+1}列"
