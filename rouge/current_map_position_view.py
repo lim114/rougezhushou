@@ -151,16 +151,18 @@ class FixedPositionPanel(QWidget):
 
 
 class CurrentMapPositionPanel(QWidget):
-    def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None,initial_reference=...):
+    def __init__(self,stage_id,parent=None,*,defer_load=False,reference_loader=None,initial_reference=...,image_loader=None,initial_image=None):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None
         self.reference_loader=reference_loader
+        self.image_loader=image_loader
         layout=QVBoxLayout(self);self.notice=QLabel('点选原图编号或格子，查看对应位置。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         bar=QHBoxLayout();self.combo=QComboBox();self.combo.setAccessibleName('已核对的格子中心');self.refresh_button=QPushButton('刷新位置');self.marker_toggle=QCheckBox('位置标记');self.marker_toggle.setChecked(True);bar.addWidget(self.combo,1);bar.addWidget(self.marker_toggle);bar.addWidget(self.refresh_button);layout.addLayout(bar)
         terrain_bar=QHBoxLayout();self.terrain_kind=QComboBox();self.terrain_kind.setAccessibleName('本图地形类型');self.terrain_cells=QComboBox();self.terrain_cells.setAccessibleName('按地形定位格子');terrain_bar.addWidget(QLabel('查找地形'));terrain_bar.addWidget(self.terrain_kind);terrain_bar.addWidget(self.terrain_cells,1);layout.addLayout(terrain_bar)
         split=self.map_split=QSplitter();self._map_sizes={};self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);split.setSizes([500,650]);layout.addWidget(split,2)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'格子与位置说明');self.tabs.addTab(self.technical,'地形与核对依据');layout.addWidget(self.tabs,1)
         self.grid.cellSelected.connect(self.select_cell);self.combo.currentIndexChanged.connect(lambda _:self._combo_selected(self.combo));self.refresh_button.clicked.connect(self.refresh_reference)
-        if not defer_load:self.refresh_reference(prepared_reference=initial_reference)
+        if initial_image is not None:self.display_map(*initial_image)
+        elif not defer_load:self.refresh_reference(prepared_reference=initial_reference)
         self.original.markerSelected.connect(lambda key:self.combo.setCurrentIndex(self.combo.findData(key)));self.marker_toggle.toggled.connect(self.original.set_markers_visible)
         self.terrain_kind.currentIndexChanged.connect(self._terrain_changed);self.terrain_cells.currentIndexChanged.connect(lambda _:self._combo_selected(self.terrain_cells))
     def clear_reference(self):
@@ -170,10 +172,15 @@ class CurrentMapPositionPanel(QWidget):
         self.result=None;self.selected=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.blockSignals(blocked);self.combo.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
     def refresh_reference(self, *, prepared_reference=...):
         if prepared_reference is ... and self.reference_loader is None:
-            fresh, raw = model.stage_reference_with_image(self.stage_id)
+            load = self.image_loader or model.stage_reference_with_image
+            fresh, raw = load(self.stage_id)
         else:
             fresh = self.reference_loader(self.stage_id) if prepared_reference is ... else prepared_reference
             raw = model.battle.version.image_bytes(fresh['image']) if fresh is not None else None
+        return self.display_map(fresh, raw)
+
+    def display_map(self, fresh, raw):
+        """Display the map and image verified together by the current load."""
         if raw is None:
             self.clear_reference()
             return False
@@ -232,7 +239,7 @@ from .player_window_frame import PlayerDialog
 
 
 class CurrentMapPositionDialog(PlayerDialog):
-    def __init__(self,stage_id,parent=None,*,initial_reference=...):
-        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self,initial_reference=initial_reference);layout.addWidget(self.panel)
+    def __init__(self,stage_id,parent=None,*,initial_reference=...,initial_image=None):
+        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self,initial_reference=initial_reference,initial_image=initial_image);layout.addWidget(self.panel)
         from .player_map_reader import prepare_reference_window
         prepare_reference_window(self,960,640)

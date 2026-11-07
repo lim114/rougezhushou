@@ -133,7 +133,7 @@ class CurrentBossDocuments369Tests(unittest.TestCase):
         result = self.references['ro6_b_6']
         broken = {'stage_id': result['stage_id'], 'current_level_key': result['level_key'],
                   'source_identity': 'wrong', 'complete_current_geometry': {'mapData': {}}}
-        with patch.object(maps, 'stage_reference', return_value=broken): self.assertIsNone(model.map_reference(result))
+        with patch.object(maps, 'stage_reference_with_image', return_value=(broken, None)): self.assertIsNone(model.map_reference(result))
 
     def test_current_stage_exact_enemy_binding_cannot_be_swapped(self):
         good = model.battle.stage_reference('ro6_b_6'); broken = deepcopy(good)

@@ -119,19 +119,21 @@ def resolve_form(result, enemy_key, request):
             'source_identity': deepcopy(fresh['source_identity']), 'actual_form': None, 'run_updated': False}
 
 
-def map_reference(result, *, prepared_reference=...):
+def map_reference(result, *, prepared_reference=..., with_image=False):
+    unavailable = (None, None) if with_image else None
     if prepared_reference is ...:
-        if type(result) is not dict: return None
+        if type(result) is not dict: return unavailable
         fresh = reference(result.get('stage_id'), result.get('selected_key'))
-        if fresh is None or not _same(fresh, result): return None
+        if fresh is None or not _same(fresh, result): return unavailable
     else:
         fresh = prepared_reference
     from . import current_map_position as maps
-    mapped = maps.stage_reference(fresh['stage_id'])
+    mapped, raw = maps.stage_reference_with_image(fresh['stage_id'])
     original = fresh['data']['originals']['levels'][fresh['level_key']]
     if (type(mapped) is not dict or mapped.get('stage_id') != fresh['stage_id']
             or mapped.get('current_level_key') != fresh['level_key']
-            or not _same((mapped.get('complete_current_geometry') or {}).get('mapData'), original['mapData'])): return None
+            or not _same((mapped.get('complete_current_geometry') or {}).get('mapData'), original['mapData'])): return unavailable
+    if with_image: return mapped, raw
     return {'stage_id': fresh['stage_id'], 'source_identity': deepcopy(fresh['source_identity']),
             'map_source_identity': deepcopy(mapped['source_identity']), 'map': mapped,
             'actual_second_phase_terrain': None, 'actual_altar_cells': None, 'run_updated': False}

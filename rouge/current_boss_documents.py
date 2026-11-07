@@ -171,15 +171,17 @@ def resolve_entity(result, enemy_key, request):
             'source_identity': deepcopy(fresh['source_identity']), 'run_updated': False}
 
 
-def map_reference(result, *, prepared_reference=...):
+def map_reference(result, *, prepared_reference=..., with_image=False):
+    unavailable = (None, None) if with_image else None
     fresh = _fresh(result) if prepared_reference is ... else prepared_reference
-    if fresh is None: return None
+    if fresh is None: return unavailable
     from . import current_map_position as maps
-    mapped = maps.stage_reference(fresh['stage_id'])
+    mapped, raw = maps.stage_reference_with_image(fresh['stage_id'])
     if (type(mapped) is not dict or mapped.get('stage_id') != fresh['stage_id']
             or mapped.get('current_level_key') != fresh['level_key']
             or not _same((mapped.get('complete_current_geometry') or {}).get('mapData'),
-                         fresh['complete_current_level']['mapData'])): return None
+                         fresh['complete_current_level']['mapData'])): return unavailable
+    if with_image: return mapped, raw
     return {'stage_id': fresh['stage_id'], 'map_source_identity': deepcopy(mapped['source_identity']),
             'map': mapped, 'actual_phase': None, 'actual_entity_position': None, 'run_updated': False}
 

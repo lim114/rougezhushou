@@ -25,5 +25,5 @@ class DocumentMapSnapshotTests(unittest.TestCase):
         from rouge import current_map_position as maps
         for model, stage in ((current_sun_boss, 'ro6_b_7'), (current_boss_documents, 'ro6_b_5')):
             result = model.reference(stage)
-            with patch.object(maps, 'stage_reference', return_value={'stage_id':'wrong'}):
+            with patch.object(maps, 'stage_reference_with_image', return_value=({'stage_id':'wrong'}, None)):
                 self.assertIsNone(model.map_reference(result, prepared_reference=result))

@@ -92,10 +92,10 @@ class CurrentSunBossPanel(QWidget):
         else: self.form_combo.setCurrentIndex(0)
         self.form_combo.blockSignals(block); self._form_changed(preserve=keep, pictures=pictures)
         if self.map_dialog is not None:
-            mapped = model.map_reference(fresh, prepared_reference=fresh)
+            mapped, raw = model.map_reference(fresh, prepared_reference=fresh, with_image=True)
             if mapped is None: self._close_map(); self.status.setText('固定地图来源无法核对，旧地图窗口已关闭；机制文献仍可阅读。')
-            elif not self.map_dialog.panel.refresh_reference(prepared_reference=mapped['map']): self._close_map()
-            elif self.map_dialog.panel.result != mapped['map']:
+            elif not self.map_dialog.panel.display_map(mapped, raw): self._close_map()
+            elif self.map_dialog.panel.result != mapped:
                 self._close_map(); self.status.setText('地图重新读取的资料与本关不一致，旧地图已清除；机制文献仍可阅读。')
         return True
 
@@ -161,14 +161,14 @@ class CurrentSunBossPanel(QWidget):
         from .player_reference_links import open_fixed_map
         opened=open_fixed_map(self,self.stage_id,
             context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.result['level_key']),
-            reference_loader=lambda _stage_id:None if (fresh:=model.map_reference(self.result)) is None else fresh['map'])
+            image_loader=lambda _stage_id:model.map_reference(self.result, with_image=True))
         if opened is not None:return opened
-        mapped = model.map_reference(self.result)
+        mapped, raw = model.map_reference(self.result, with_image=True)
         if mapped is None:
             self.status.setText('这份准确固定地图暂时无法核对，旧地图已关闭；不借用同名熄日。'); return False
         from .current_map_position_view import CurrentMapPositionDialog
-        child = CurrentMapPositionDialog(mapped['stage_id'], self, initial_reference=mapped['map'])
-        if child.panel.result is None or child.panel.result != mapped['map']:
+        child = CurrentMapPositionDialog(mapped['stage_id'], self, initial_image=(mapped, raw))
+        if child.panel.result is None or child.panel.result != mapped:
             child.panel.clear_reference(); child.close(); return False
         child.finished.connect(lambda _result: self._map_finished(child))
         self.map_dialog = child; self.status.clear(); child.show(); return True

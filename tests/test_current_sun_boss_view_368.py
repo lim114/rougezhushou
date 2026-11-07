@@ -73,7 +73,7 @@ class CurrentSunBossView368Tests(unittest.TestCase):
     def test_map_source_failure_closes_only_old_map_and_never_borrows_same_name(self):
         self.select('normal'); self.topic('terrain'); self.assertTrue(self.panel.open_map())
         child = self.panel.map_dialog
-        with patch.object(model, 'map_reference', return_value=None): self.panel.refresh_reference()
+        with patch.object(model, 'map_reference', return_value=(None, None)): self.panel.refresh_reference()
         self.app.processEvents(); self.assertFalse(child.isVisible()); self.assertIsNotNone(self.panel.result)
         self.assertIn('旧地图窗口已关闭', self.panel.status.text())
 
@@ -111,7 +111,7 @@ class CurrentSunBossView368Tests(unittest.TestCase):
         self.select('normal'); self.topic('terrain'); self.assertTrue(self.panel.open_map())
         child = self.panel.map_dialog; child.panel.result = copy.deepcopy(child.panel.result)
         child.panel.result['source_identity'] = ('foreign-map-source',)
-        with patch.object(child.panel, 'refresh_reference', return_value=True):
+        with patch.object(child.panel, 'display_map', return_value=True):
             self.assertTrue(self.panel.refresh_reference())
         self.assertIsNotNone(self.panel.result); self.assertIsNone(self.panel.map_dialog)
         self.assertFalse(child.isVisible()); self.assertIsNone(child.panel.result)

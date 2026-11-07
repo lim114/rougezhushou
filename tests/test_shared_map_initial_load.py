@@ -27,14 +27,14 @@ class SharedMapInitialLoadTests(unittest.TestCase):
 
     def test_first_open_and_later_reopen_each_load_once(self):
         for _ in range(2):
-            with patch.object(maps.model, 'stage_reference', wraps=maps.model.stage_reference) as read:
+            with patch.object(maps.model, 'stage_reference_with_image', wraps=maps.model.stage_reference_with_image) as read:
                 self.assertTrue(self.open())
                 read.assert_called_once_with('ro6_b_7')
             self.assertIsNotNone(self.host.pages.currentWidget().panel.result)
             self.host.present(self.source)
 
     def test_failed_load_does_not_show_empty_page(self):
-        with patch.object(maps.model, 'stage_reference', return_value=None) as read:
+        with patch.object(maps.model, 'stage_reference_with_image', return_value=(None, None)) as read:
             self.assertFalse(self.open())
             read.assert_called_once()
         self.assertIs(self.host.pages.currentWidget(), self.source)
@@ -42,7 +42,7 @@ class SharedMapInitialLoadTests(unittest.TestCase):
 
     def test_source_rejection_precedes_loading(self):
         self.source.prepare = lambda: False
-        with patch.object(maps.model, 'stage_reference') as read:
+        with patch.object(maps.model, 'stage_reference_with_image') as read:
             self.assertFalse(self.open())
             read.assert_not_called()
         self.assertFalse(self.host.linked_pages)

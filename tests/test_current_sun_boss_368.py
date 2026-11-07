@@ -90,14 +90,14 @@ class CurrentSunBoss368Tests(unittest.TestCase):
         fixed = {'stage_id': 'ro6_b_7', 'current_level_key': result['level_key'], 'source_identity': 'test_map',
                  'complete_current_geometry': {'mapData': copy.deepcopy(geometry['mapData'])}}
         with patch.object(model, 'reference', return_value=copy.deepcopy(result)):
-            with patch.object(maps, 'stage_reference', return_value=fixed):
+            with patch.object(maps, 'stage_reference_with_image', return_value=(fixed, None)):
                 resolved = model.map_reference(result)
                 self.assertEqual(resolved['stage_id'], 'ro6_b_7'); self.assertIsNone(resolved['actual_second_phase_terrain'])
                 self.assertIsNone(resolved['actual_altar_cells'])
             changed = copy.deepcopy(fixed); changed['complete_current_geometry']['mapData']['map'][0][0] = 99
-            with patch.object(maps, 'stage_reference', return_value=changed): self.assertIsNone(model.map_reference(result))
-            with patch.object(maps, 'stage_reference', return_value=fixed | {'stage_id': 'ro6_b_7_b'}): self.assertIsNone(model.map_reference(result))
-            with patch.object(maps, 'stage_reference', return_value=None): self.assertIsNone(model.map_reference(result))
+            with patch.object(maps, 'stage_reference_with_image', return_value=(changed, None)): self.assertIsNone(model.map_reference(result))
+            with patch.object(maps, 'stage_reference_with_image', return_value=(fixed | {'stage_id': 'ro6_b_7_b'}, None)): self.assertIsNone(model.map_reference(result))
+            with patch.object(maps, 'stage_reference_with_image', return_value=(None, None)): self.assertIsNone(model.map_reference(result))
 
     def test_current_database_and_stage_change_invalidate_reading(self):
         base = model.battle.packet(); changed = copy.deepcopy(base)

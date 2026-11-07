@@ -18,15 +18,17 @@ class DocumentSharedMapPreflightTests(unittest.TestCase):
                 panel = cls(stage, '0'); source = ToolPage('source', panel, owner)
                 self.addCleanup(owner.close); self.addCleanup(host.close)
                 self.assertTrue(host.present(source))
-                with patch.object(view.model, 'map_reference', wraps=view.model.map_reference) as read, patch.object(maps, 'stage_reference', wraps=maps.stage_reference) as map_read:
+                with patch.object(view.model, 'map_reference', wraps=view.model.map_reference) as read, patch.object(maps, 'stage_reference_with_image', wraps=maps.stage_reference_with_image) as map_read, patch.object(maps.battle.version, "image_bytes", wraps=maps.battle.version.image_bytes) as image_read:
                     self.assertTrue(panel.open_map())
-                    read.assert_called_once_with(panel.result)
+                    read.assert_called_once_with(panel.result, with_image=True)
                     map_read.assert_called_once_with(stage)
+                    map_files = [call.args[0]['file'] for call in image_read.call_args_list]
+                    self.assertEqual(map_files.count(host.pages.currentWidget().panel.result['image']['file']), 1)
                 self.assertEqual(host.pages.currentWidget().panel.result['stage_id'], stage)
                 host.present(source)
-                with patch.object(view.model, 'map_reference', return_value=None) as read:
+                with patch.object(view.model, 'map_reference', return_value=(None, None)) as read:
                     self.assertFalse(panel.open_map())
-                    read.assert_called_once_with(panel.result)
+                    read.assert_called_once_with(panel.result, with_image=True)
                 self.assertIs(host.pages.currentWidget(), source)
                 self.assertFalse(host.linked_pages)
                 host.close(); owner.close()

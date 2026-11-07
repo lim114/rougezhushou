@@ -90,7 +90,7 @@ class CurrentBossDocumentsView369Tests(unittest.TestCase):
         self.panel = CurrentBossDocumentsPanel('ro6_b_5', '0'); self.assertTrue(self.panel.open_map())
         child = self.panel.map_dialog; child.panel.result = deepcopy(child.panel.result)
         child.panel.result['source_identity'] = ('foreign-map-source',)
-        with patch.object(child.panel, 'refresh_reference', return_value=True):
+        with patch.object(child.panel, 'display_map', return_value=True):
             self.assertTrue(self.panel.refresh_reference())
         self.assertIsNotNone(self.panel.result); self.assertIsNone(self.panel.map_dialog)
         self.assertFalse(child.isVisible()); self.assertIsNone(child.panel.result)

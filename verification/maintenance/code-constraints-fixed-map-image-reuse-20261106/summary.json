@@ -1,0 +1,82 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "两类首领地图复用核验图片，打开与刷新各读一次",
+  "base_commit": "9c41ee00cc1373fc4ddd93c7bc6d143fe9afb319",
+  "changed_sources": [
+    "rouge/current_boss_documents.py",
+    "rouge/current_boss_documents_view.py",
+    "rouge/current_map_position_view.py",
+    "rouge/current_sun_boss.py",
+    "rouge/current_sun_boss_view.py",
+    "rouge/player_reference_links.py"
+  ],
+  "source_sha256": {
+    "rouge/current_boss_documents.py": "82df57c4c7745f81adee54f5b5742951814140dad0069276e9dae25c2ed0d9b6",
+    "rouge/current_boss_documents_view.py": "e836b7fe4e0df283b86d86189cadf14a9c47307c6de92c2988380dc2a27abb3e",
+    "rouge/current_map_position_view.py": "710758d17f21c3de7c4f37919e2875e938ffe8fa8c9162d0f7ecdb0bd452ebf8",
+    "rouge/current_sun_boss.py": "c452f6f133a0ffa94bf9d0ee602c4fc0c2f44b706fad94d218635b7fbe3e397b",
+    "rouge/current_sun_boss_view.py": "5274af4ef4bf09ec987495d5ff3b76b29aa8d144af16d53c9a551575ebd27e4d",
+    "rouge/player_reference_links.py": "3d18e560db202df9125c5a6d3d052b063eb2b2860e06c24d8e24e395c476de23"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D258"
+  ],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "baseline HEAD instrumented",
+        "result": "2 target image reads in each of four owned-dialog cases"
+      },
+      {
+        "phase": "initial",
+        "tests_run": 66,
+        "failures": 2,
+        "seconds": 56.965,
+        "detail": "Foreign-result test doubles patched the previous refresh method instead of the new display method; switched to actual consumer, retaining the same stale-content assertions."
+      },
+      {
+        "phase": "final",
+        "tests_passed": 66,
+        "seconds": 56.424,
+        "command": "python -m unittest tests.test_document_map_child_reuse tests.test_document_shared_map_preflight tests.test_document_map_snapshot tests.test_shared_map_initial_load tests.test_current_map_position_view_319 tests.test_current_boss_documents_369 tests.test_current_sun_boss_368 tests.test_current_sun_boss_view_368 tests.test_current_boss_documents_view_369"
+      }
+    ],
+    "live_window": "Qt offscreen; original desktop test window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Each current document map validates source, stage, level key and geometry before supplying bytes verified by stage_reference_with_image. Display receives that exact pair. Regular document queries still return the metadata dictionary, and existing metadata-only loaders validate their bytes at display. No persistent cache or fallback added.",
+    "requirements": "Old source from HEAD measured two image_bytes calls for the same PNG on open and refresh at ro6_b_7 and ro6_b_5. Both document models now read it once on each operation in the isolated Qt tests, including shared map entry. Failed or foreign map removed while parent document stays readable. User state not edited."
+  },
+  "partially_implemented_decisions": []
+}
