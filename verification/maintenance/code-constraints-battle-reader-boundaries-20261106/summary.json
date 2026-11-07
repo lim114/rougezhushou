@@ -1,0 +1,60 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 200,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 558
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval"
+  ],
+  "title": "出怪、物件与行程独立入口和来源边界核验",
+  "base_commit": "d84ba9bdf97a31a9c84de87b091d1161209a752c",
+  "changed_sources": [],
+  "source_sha256": {
+    "rouge/current_enemy_spawns.py": "5f672770bcf0caa54014e0ad82bfbc55c9b9d5f0f502c1e5e1ae37caea63b87f",
+    "rouge/current_stage_objects.py": "0faf364d4d9ee55d31e993f9b6ba67980c07d9264fa1f1c8df66c522cd197333",
+    "rouge/current_route_itinerary.py": "b1456bfd5edbb210136b6254ae6f523719fb1bf9849b87614378aa948eea8b46"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [
+    "D239",
+    "D242",
+    "D244",
+    "D247",
+    "D248"
+  ],
+  "product_source_changed": false,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "command": "python -m unittest tests.test_battle_reader_boundaries_review plus exact object/enemy and forged itinerary selection cases",
+        "tests_run": 7,
+        "tests_passed": 7,
+        "seconds": 3.757,
+        "environment": "local public source copies; no game data"
+      }
+    ],
+    "live_window": "No product source change; no restart. Earlier original test-window update gap remains."
+  },
+  "review": {
+    "standards": "D239/D244/D248 public selector shape gates and later fresh identity checks are distinct entry and user-choice boundaries. Trusted row traversal does not swallow missing entries. Same-operation battle/map reload already removed under D240/D245/D249. D242/D247 manifest bytes and current stage binding protect different sources; preserved as approved. No new helper, runtime catch or defense.",
+    "requirements": "Every pinned member in both packs rejects changed bytes. Inventory identity, stage membership, level key and original source mismatches stop before derivation. Invalid selector shape stops before lookup; missing external stage selection returns unavailable. Normal empty results remain empty, missing internal entries raises KeyError. Exact/forged selection tests pass. D110 broad experiment isolation remains unresolved; no claims of full-module certification."
+  }
+}

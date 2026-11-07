@@ -1,3 +1,7 @@
+## 当前断点：三类资料入口边界（2026-11-06）
+
+D239/D242/D244/D247/D248核验完成；7项定向通过，未改产品源码。来源与独立选择身份检查按批准保留，内部缺字段直接上报，已有同快照复用继续有效。原280组完成204、剩76；D110实验捕获仍待处理，原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-battle-reader-boundaries-20261106/summary.json`。
+
 ## 当前断点：补充培养异常出口（2026-11-06）
 
 D120完成：仅明确培养输入错误及生命缺口超限形成不可测算行，内部计算异常直接上报；11项定向通过。原280组完成199、剩81。原测试窗口更新缺口保留。回执 `verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json`。

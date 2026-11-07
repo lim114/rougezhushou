@@ -5549,3 +5549,8 @@ D234/D235/D251/D253按授权核验：摘要与关系投影分别保护来源和�
 ## 维护：补充培养异常出口（2026-11-06）
 
 D120完成：复用既有错误类型区分非法培养及已知生命缺口，删除每方案通用ValueError/TypeError/KeyError兜底；数字解析之外的内部错误直接上报。11项定向通过，含七名无藏品原结果及方案隔离、Qt入口。回执 `verification/maintenance/code-constraints-supplemental-cultivation-errors-20261106/summary.json`。
+
+
+## 维护：三类资料入口与来源边界（2026-11-06）
+
+D239/D242/D244/D247/D248完成：来源摘要、当前关卡归属、公开入口与点击后快照核对分属不同边界；D240/D245/D249已去除同次重读。7项故障注入及精确选择检查通过，未改产品源码。回执 `verification/maintenance/code-constraints-battle-reader-boundaries-20261106/summary.json`。
