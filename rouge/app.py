@@ -1462,19 +1462,21 @@ class MainWindow(QMainWindow):
     def show_healing_budget(self):
         if not self.damage_result:return
         from copy import deepcopy
-        from .healing_budget import healing_sources,healing_budget,format_healing_budget
+        from .healing_budget import healing_sources, _healing_budget, format_healing_budget, HealingBudgetInputError
+        from .charge_timeline import DeclaredTimeError
         from .reference_dialog import ReferenceDialog
         scenario=deepcopy(self.damage_result['scenario'])
         sources=healing_sources(self.damage_result['result'])
         if not sources:return
+        snapshot = sources, deepcopy(self.damage_result['result']['estimate']['notes'])
         previous=getattr(self,'healing_budget_dialog',None)
         if previous is not None:previous.close();previous.deleteLater()
         self.healing_budget_dialog=ReferenceDialog('逐友方有效治疗 · 局外生命预算',
             '下方友方生命是可修改的示例。events填写治疗heal（source选下方来源ID）或生命减少loss（amount填写减少量）；同刻按输入顺序。',
             {'recipients':[{'id':'示例友方','max_hp':3000,'hp':1000}],'events':[]},
-            lambda preview:healing_budget(scenario,preview),format_healing_budget,
+            lambda preview:_healing_budget(scenario, preview, snapshot=snapshot),format_healing_budget,
             [('at_seconds','声明秒数'),('recipient','友方'),('kind','事件'),('hp_before','此前生命'),
-             ('amount_reference','单次量'),('effective_healing','有效治疗'),('overhealing','过量治疗'),('hp_after','之后生命')],self)
+             ('amount_reference','单次量'),('effective_healing','有效治疗'),('overhealing','过量治疗'),('hp_after','之后生命')],self,input_errors=(HealingBudgetInputError, DeclaredTimeError))
         self.healing_budget_dialog.show()
 
     def show_shield_timeline(self):

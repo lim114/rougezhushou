@@ -3,7 +3,7 @@ import json
 from copy import deepcopy
 from .damage import calculate_damage
 from .healing_budget import _amount
-from .charge_timeline import _seconds
+from .charge_timeline import event_seconds
 
 
 def damage_sources(result):
@@ -53,7 +53,7 @@ def _damage_budget(scenario,preview,calculator):
         if type(identity) is not str or identity not in states: raise ValueError('事件需指定已声明目标。')
         source_map={s['id']:s for s in references[identity]['sources']}
         if type(source) is not str or source not in source_map: raise ValueError('source需选择该目标下已有的单次伤害分项。')
-        time=_seconds([event['at_seconds']],'事件时刻',1)[0]
+        time=event_seconds(event['at_seconds'],'事件时刻')
         parsed.append((time,order,deepcopy(event),source_map[source]['per_hit']))
     rows=[]
     for time,order,event,amount in sorted(parsed):

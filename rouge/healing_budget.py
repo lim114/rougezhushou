@@ -2,10 +2,14 @@
 import json, math
 from copy import deepcopy
 from .damage import calculate_damage
-from .charge_timeline import _seconds
+from .charge_timeline import event_seconds
 
 
-class AmountInputError(ValueError):
+class HealingBudgetInputError(ValueError):
+    """Invalid recipient, source or event in a declared healing budget."""
+
+
+class AmountInputError(HealingBudgetInputError):
     """A declared amount has the wrong type or is outside the supported range."""
 
 
@@ -32,38 +36,42 @@ def healing_sources(result):
 
 
 def healing_budget(scenario, preview):
-    return _healing_budget(scenario,preview,calculate_damage)
+    return _healing_budget(scenario, preview)
 
 
-def _healing_budget(scenario,preview,calculator):
+def _healing_budget(scenario, preview, *, snapshot=None):
     """Shared declared-budget arithmetic; the caller owns the reference model."""
-    if set(preview) != {'recipients','events'}: raise ValueError('需要recipients和events。')
-    reference = calculator(deepcopy(scenario)); sources = healing_sources(reference)
-    if not sources: raise ValueError('当前技能没有已接入的单次治疗参考。生命回复与伤害不自动当作治疗。')
+    if set(preview) != {'recipients','events'}: raise HealingBudgetInputError('需要recipients和events。')
+    if snapshot is None:
+        reference = calculate_damage(deepcopy(scenario))
+        sources, notes = healing_sources(reference), reference['estimate']['notes']
+    else:
+        sources, notes = snapshot
+    if not sources: raise HealingBudgetInputError('当前技能没有已接入的单次治疗参考。生命回复与伤害不自动当作治疗。')
     source_map = {source['id']:source for source in sources}
     recipients = preview['recipients']
-    if not isinstance(recipients,list) or not 1 <= len(recipients) <= 20: raise ValueError('友方声明需要1–20项。')
+    if not isinstance(recipients,list) or not 1 <= len(recipients) <= 20: raise HealingBudgetInputError('友方声明需要1–20项。')
     states = {}
     for recipient in recipients:
-        if not isinstance(recipient,dict) or set(recipient) != {'id','max_hp','hp'}: raise ValueError('每位友方需要id、max_hp、hp。')
+        if not isinstance(recipient,dict) or set(recipient) != {'id','max_hp','hp'}: raise HealingBudgetInputError('每位友方需要id、max_hp、hp。')
         identity = recipient['id']
         if (type(identity) is not str or not 1 <= len(identity) <= 60 or
                 any(ord(c)<32 or 0xd800<=ord(c)<=0xdfff for c in identity) or identity in states):
-            raise ValueError('友方id需要唯一的1–60字符名称。')
+            raise HealingBudgetInputError('友方id需要唯一的1–60字符名称。')
         maximum = _amount(recipient['max_hp'],'最大生命'); hp = _amount(recipient['hp'],'当前生命')
-        if maximum == 0 or hp > maximum: raise ValueError('最大生命必须为正，当前生命不能超过最大生命。')
+        if maximum == 0 or hp > maximum: raise HealingBudgetInputError('最大生命必须为正，当前生命不能超过最大生命。')
         states[identity] = {'id':identity,'max_hp':maximum,'initial_hp':hp,'hp':hp,'effective_healing':0.,'overhealing':0.}
     events = preview['events']
-    if not isinstance(events,list) or len(events)>1000: raise ValueError('声明事件最多1000项。')
+    if not isinstance(events,list) or len(events)>1000: raise HealingBudgetInputError('声明事件最多1000项。')
     parsed = []
     for order,event in enumerate(events):
-        if not isinstance(event,dict) or event.get('kind') not in ('heal','loss'): raise ValueError('事件kind需要heal或loss。')
+        if not isinstance(event,dict) or event.get('kind') not in ('heal','loss'): raise HealingBudgetInputError('事件kind需要heal或loss。')
         keys = {'at_seconds','recipient','kind','source'} if event['kind']=='heal' else {'at_seconds','recipient','kind','amount'}
-        if set(event) != keys: raise ValueError('治疗事件需要source；生命减少事件需要amount。')
-        if type(event['recipient']) is not str or event['recipient'] not in states: raise ValueError('事件需指定已声明的友方。')
-        time = _seconds([event['at_seconds']],'事件时刻',1)[0]
+        if set(event) != keys: raise HealingBudgetInputError('治疗事件需要source；生命减少事件需要amount。')
+        if type(event['recipient']) is not str or event['recipient'] not in states: raise HealingBudgetInputError('事件需指定已声明的友方。')
+        time = event_seconds(event['at_seconds'],'事件时刻')
         if event['kind']=='heal':
-            if type(event['source']) is not str or event['source'] not in source_map: raise ValueError('治疗source需选用当前单次治疗来源。')
+            if type(event['source']) is not str or event['source'] not in source_map: raise HealingBudgetInputError('治疗source需选用当前单次治疗来源。')
             amount = source_map[event['source']]['per_heal_reference']
         else: amount = _amount(event['amount'],'声明生命减少')
         parsed.append((time,order,deepcopy(event),amount))
@@ -77,7 +85,7 @@ def _healing_budget(scenario,preview,calculator):
         rows.append({'at_seconds':time,'input_order':order,'recipient':event['recipient'],'kind':event['kind'],
             'source':event.get('source'),'hp_before':before,'amount_reference':amount,'effective_healing':effective,
             'overhealing':overheal,'hp_after':state['hp']})
-    return {'scenario':deepcopy(scenario),'preview':deepcopy(preview),'sources':sources,'rows':rows,
+    return {'scenario':deepcopy(scenario),'preview':deepcopy(preview),'sources':deepcopy(sources),'rows':rows,
         'recipients':list(states.values()),'effective_healing':sum(s['effective_healing'] for s in states.values()),
         'overhealing':sum(s['overhealing'] for s in states.values()),'actual_acquisition_verified':False,
         'notes':['每次治疗使用打开时的单次治疗参数；友方生命与事件均由用户声明，不自动读取友方或生成治疗时钟。',
@@ -85,7 +93,7 @@ def _healing_budget(scenario,preview,calculator):
                  '事件按秒数排序，同刻按输入顺序；这只是声明的预算顺序，不证明游戏的同帧结算。',
                  '附近范围、生命阈值、多目标人数、充能及治疗快照仍按实际机制待核验；声明事件不授权技能获取。',
                  '生命回复、伤转疗的动态伤害来源和多来源叠加不自动加入预算；不会改写本局或原治疗估算。'],
-        'calculation_notes':deepcopy(reference['estimate']['notes'])}
+        'calculation_notes':deepcopy(notes)}
 
 
 def format_healing_budget(result):

@@ -6,21 +6,26 @@ import math
 from .damage import calculate_damage
 
 
+class DeclaredTimeError(ValueError):
+    """A declared event time falls outside the supported input range."""
+
+
+def event_seconds(value, label):
+    if type(value) not in (int, float):
+        raise DeclaredTimeError(label + '需要有限非负JSON数值，不能使用布尔值或文本。')
+    try:
+        seconds = float(value)
+    except OverflowError:
+        raise DeclaredTimeError(label + '需要0–3600秒内的有限数值。') from None
+    if not math.isfinite(seconds) or not 0 <= seconds <= 3600:
+        raise DeclaredTimeError(label + '需要0–3600秒内的有限数值。')
+    return seconds
+
+
 def _seconds(values, label, limit):
     if not isinstance(values, list) or len(values) > limit:
-        raise ValueError(f'{label}需要最多{limit}项的JSON列表。')
-    parsed = []
-    for value in values:
-        if type(value) not in (int, float):
-            raise ValueError(label + '需要有限非负JSON数值，不能使用布尔值或文本。')
-        try:
-            seconds = float(value)
-        except OverflowError:
-            raise ValueError(label + '需要0–3600秒内的有限数值。') from None
-        if not math.isfinite(seconds) or not 0 <= seconds <= 3600:
-            raise ValueError(label + '需要0–3600秒内的有限数值。')
-        parsed.append(seconds)
-    return parsed
+        raise DeclaredTimeError(f'{label}需要最多{limit}项的JSON列表。')
+    return [event_seconds(value, label) for value in values]
 
 
 def compare_charge_windows(scenario, hit_times_seconds, windows_seconds):

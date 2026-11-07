@@ -1,0 +1,84 @@
+{
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "full_program_remediation_complete": false,
+  "coverage": {
+    "full_modules_certified": 68,
+    "structural_only": 250,
+    "selected_paths_only": 201,
+    "exception_equivalence_only": 40,
+    "total_runtime_modules": 559
+  },
+  "remaining": [
+    "D319/D320 user decisions",
+    "Other modules",
+    "Native panel catalog digest mismatch",
+    "Original test window update",
+    "Existing event view scroll fixture failure",
+    "Combined Elbert model+Qt run abnormal exit unexplained",
+    "Existing ReferenceWindow width test expects850 but isolated screen constrains776",
+    "D307 missing required field behavior awaiting user choice",
+    "D321 drone level default requires user decision",
+    "D322 event_picture TypeError fallback awaiting user decision",
+    "D323 oversized recorded history timestamp awaiting approval",
+    "D110 model preparation still needs typed input boundary",
+    "D81 missing-edge endpoint display policy awaiting user decision",
+    "Existing shop comparison test expects removed disclaimer phrases",
+    "History statistics layout isolated test exits1 without traceback; two runs retained",
+    "D324 four legacy boss packet exception boundaries awaiting approval"
+  ],
+  "title": "治疗预算沿用打开时的治疗来源，事件时刻只解析一次",
+  "base_commit": "96a63231a83d1314c0aece5be304f82a53907b60",
+  "changed_sources": [
+    "rouge/app.py",
+    "rouge/charge_timeline.py",
+    "rouge/damage_budget.py",
+    "rouge/healing_budget.py",
+    "rouge/reference_dialog.py",
+    "rouge/shield_timeline.py",
+    "rouge/supplemental_budget.py"
+  ],
+  "source_sha256": {
+    "rouge/app.py": "b8cd6fdd9e80d04d2a03786f57f1b9b48c9a7bac63954499380b040d4e00bcff",
+    "rouge/charge_timeline.py": "527cca8de2785e77f14b358a3f78956979085e85054a3f2e0d5d577414de2848",
+    "rouge/damage_budget.py": "e7fd0a7c61f4e238bceb19185189a9bdbc3a79fecd9a67d514044a5619880691",
+    "rouge/healing_budget.py": "399212d02a67d480f55b3b71b2e6ce2e7f811ff32e860096edd664a00c1ce58c",
+    "rouge/reference_dialog.py": "fd1afd9c6b6b87be7b17d7180a4935f6de258d00285e87d27da823200a03c8d0",
+    "rouge/shield_timeline.py": "4736884a7080c333f9e0ba3fcae6679f08449124f3210075b0f11e26008dc18c",
+    "rouge/supplemental_budget.py": "17ee95f0ada5ef6526b6ec28e320d530e15a560ed75754beef778dd5f1eca696"
+  },
+  "module_delta": "module-delta.json",
+  "implemented_decisions": [],
+  "product_source_changed": true,
+  "validation": {
+    "full_suite_run": false,
+    "runs": [
+      {
+        "phase": "prior narrow budget checks",
+        "tests_passed": 14,
+        "seconds": 0.319
+      },
+      {
+        "phase": "expanded",
+        "tests_run": 35,
+        "errors": 5,
+        "reason": "Shield bulk window parsing still needs _seconds import."
+      },
+      {
+        "phase": "after restoring bulk window parser",
+        "tests_passed": 35,
+        "seconds": 0.628,
+        "command": "python -m unittest tests.test_healing_budget_132 tests.test_supplemental_budget_150 tests.test_charge_timeline_127 tests.test_damage_budget_139 tests.test_shield_timeline_131"
+      }
+    ],
+    "live_window": "Offscreen Qt. Original desktop window restart remains pending after prior automatic approval rejection."
+  },
+  "review": {
+    "standards": "Captured healing result reused across recipient/event edits with independent public healing_budget still resolving its scenario. Supplemental reference passed as data without a dummy calculator. Scalar event time conversion shared across three consumers and the list parser. Parser and evaluator error exits separate, only the migrated main healing dialog narrows evaluator exceptions.",
+    "requirements": "Real MainWindow method opened in an isolated Qt owner. Editing after original owner result is cleared still produces the independently computed result, with calculate_damage forbidden during dialog use. Invalid JSON and negative time report input problems, internal ValueError/TypeError/KeyError propagate. Distinct target mitigation in damage budget retained."
+  },
+  "partially_implemented_decisions": [
+    "D100"
+  ]
+}

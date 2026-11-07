@@ -6,8 +6,9 @@ from .manual_scenario import parse_preview_object
 
 
 class ReferenceDialog(QDialog):
-    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None, *, defer_initial_calculation=False):
+    def __init__(self, title, description, defaults, evaluator, formatter, columns, parent=None, *, defer_initial_calculation=False, input_errors=(ValueError, KeyError, TypeError)):
         super().__init__(parent)
+        self.input_errors = input_errors
         self.result = None; self.evaluator = evaluator; self.formatter = formatter; self.columns = columns
         self.setWindowTitle(title); self.resize(1050,700)
         layout = QVBoxLayout(self)
@@ -30,8 +31,16 @@ class ReferenceDialog(QDialog):
 
     def calculate(self):
         self.invalidate()
-        try: result = self.evaluator(parse_preview_object(self.editor.toPlainText(),'对照条件'))
-        except (ValueError,KeyError,TypeError) as error: self.notice.setPlainText(str(error)); return
+        try:
+            preview = parse_preview_object(self.editor.toPlainText(), '对照条件')
+        except ValueError as error:
+            self.notice.setPlainText(str(error))
+            return
+        try:
+            result = self.evaluator(preview)
+        except self.input_errors as error:
+            self.notice.setPlainText(str(error))
+            return
         self.result = result; self.table.setRowCount(len(result['rows']))
         for i,row in enumerate(result['rows']):
             for j,(key,_) in enumerate(self.columns):

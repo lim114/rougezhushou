@@ -1,3 +1,7 @@
+## 维护 · 治疗预算沿用打开时的治疗来源，事件时刻只解析一次（2026-11-06）
+
+D100部分推进。普通治疗预算按打开时的来源和说明计算；计算器输入错误仍可见，内部普通异常直接上报。治疗、伤害、护盾事件时刻不再包装为一次性列表。35项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-healing-budget-input-20261106/summary.json)。
+
 ## 维护 · 区分未知节点和缺图，超大面板数值单字段标未知（2026-11-06）
 
 D80、另行批准的D328完成。23种已登记节点正常图像逐像素一致；未知类型不读图集，缺图保留类型。面板超大整数仅该字段未知。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-node-sprite-panel-number-20261106/summary.json)。

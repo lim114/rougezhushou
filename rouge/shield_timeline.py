@@ -1,7 +1,7 @@
 """Declared breaks and collisions remain separate from ammunition/end clocks."""
 import json
 from copy import deepcopy
-from .charge_timeline import _seconds
+from .charge_timeline import _seconds, event_seconds
 from .damage import calculate_damage
 from .barrier_ammo import BarrierAmmoProjection
 
@@ -18,8 +18,8 @@ def compare_shield_windows(scenario, preview):
             raise ValueError('每项需要source、break_seconds、hit_seconds；未命中可将hit_seconds设为null。')
         if type(event['source']) is not str or event['source'] not in ('owner','structure'):
             raise ValueError('source需要owner或structure。')
-        broke = _seconds([event['break_seconds']],'破屏时刻',1)[0]
-        hit = None if event['hit_seconds'] is None else _seconds([event['hit_seconds']],'爆炸命中时刻',1)[0]
+        broke = event_seconds(event['break_seconds'],'破屏时刻')
+        hit = None if event['hit_seconds'] is None else event_seconds(event['hit_seconds'],'爆炸命中时刻')
         if hit is not None and hit < broke: raise ValueError('声明命中不能早于本次破屏。')
         validated.append({'source':event['source'],'break_seconds':broke,'hit_seconds':hit})
     windows = _seconds(preview['windows_seconds'],'观察窗口',12)

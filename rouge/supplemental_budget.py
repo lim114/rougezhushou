@@ -54,7 +54,7 @@ def declared_healing_budget(operator_preview,environment,preview):
             recipients[0].get('id')!='自身' or type(recipients[0].get('max_hp')) not in (int,float) or
             recipients[0]['max_hp']!=maximum):
             raise ValueError('卡缇仅可对自身建立预算，id需为自身，max_hp需为本次计算的最大生命。')
-    result=_healing_budget(deepcopy(operator_preview),preview,lambda p:reference)
+    result=_healing_budget(operator_preview, preview, snapshot=(healing_sources(reference), reference['estimate']['notes']))
     result['environment']=frozen
     result['notes'].append('持续生命回复不当作单次治疗；卡缇仅对自身，芙蓉友方生命为局外声明，不判断真实受疗资格。')
     return result

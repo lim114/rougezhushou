@@ -8,6 +8,41 @@ def preview():return {'recipients':[{'id':'甲','max_hp':3000,'hp':2000},{'id':'
 def heal(friend='甲',time=1):return {'recipient':friend,'at_seconds':time,'kind':'heal','source':'healing_0'}
 
 class HealingBudgetTests(unittest.TestCase):
+    def test_player_dialog_uses_opening_snapshot_and_only_reports_input_errors(self):
+        import json
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QApplication, QWidget
+        from rouge.app import MainWindow
+        from rouge import healing_budget as model
+        qt = QApplication.instance() or QApplication([])
+        owner = QWidget()
+        self.addCleanup(owner.close)
+        owner.damage_result = {'scenario': deepcopy(BASE), 'result': calculate_damage(BASE)}
+        data = preview()
+        data['events'] = [heal()]
+        expected = healing_budget(BASE, data)
+        with patch.object(model, 'calculate_damage', side_effect=AssertionError('repeat calculation')):
+            MainWindow.show_healing_budget(owner)
+            dialog = owner.healing_budget_dialog
+            owner.damage_result.clear()
+            dialog.editor.setPlainText(json.dumps(data))
+            dialog.calculate()
+            self.assertEqual(dialog.result, expected)
+            data['events'][0]['at_seconds'] = -1
+            dialog.editor.setPlainText(json.dumps(data))
+            dialog.calculate()
+            self.assertIsNone(dialog.result)
+            self.assertIn('3600', dialog.notice.toPlainText())
+            dialog.editor.setPlainText('{')
+            dialog.calculate()
+            self.assertIn('JSON', dialog.notice.toPlainText())
+            dialog.editor.setPlainText(json.dumps(preview()))
+            for error in (ValueError, TypeError, KeyError):
+                with self.subTest(error=error.__name__), patch.object(dialog, 'evaluator', side_effect=error('internal')):
+                    with self.assertRaises(error):
+                        dialog.calculate()
+        qt.processEvents()
+
     def test_individual_caps_effective_and_overheal(self):
         data=preview();data['events']=[heal(),heal('乙')]
         result=healing_budget(BASE,data)
