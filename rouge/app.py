@@ -1347,16 +1347,19 @@ class MainWindow(QMainWindow):
         self.charge_timeline_dialog=dialog;dialog.show()
 
     def show_cultivation_comparison(self):
-        from .catalog import operator_profiles
+        from .catalog import CultivationInputError, operator_profiles
         from .cultivation_comparison import compare_cultivation,format_cultivation
         from .reference_dialog import ReferenceDialog
         from copy import deepcopy
-        identity=self.operator.currentData();profile=operator_profiles()[identity]
         scenario=deepcopy(self.damage_result['scenario']) if self.damage_result else {
-            'operator':identity,'skill':self.skill.currentData() or 1,'skill_rank':7,
+            'operator':self.operator.currentData(),'skill':self.skill.currentData() or 1,'skill_rank':7,
             'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value()}
+        profile = operator_profiles()[scenario['operator']]
         elite=scenario.get('elite',len(profile['phases'])-1)
-        proposal={'name':'当前预览基准','elite':elite,'level':scenario.get('level') or profile['phases'][elite]['max_level'],
+        level = scenario.get('level')
+        if level is None:
+            level = profile['phases'][elite]['max_level']
+        proposal={'name':'当前预览基准','elite':elite,'level':level,
             'trust':scenario.get('trust',100),'potential':scenario.get('potential',1),
             'module_id':scenario.get('module_id'),'module_level':scenario.get('module_level',0)}
         previous=getattr(self,'cultivation_comparison_dialog',None)
@@ -1366,7 +1369,7 @@ class MainWindow(QMainWindow):
             {'proposals':[proposal]},lambda preview:compare_cultivation(scenario,preview),format_cultivation,
             [('name','方案'),('status','状态'),('attack','基础攻击'),('delta_attack','攻击差'),
              ('hp','基础生命'),('delta_hp','生命差'),('defense','基础防御'),
-             ('window_damage','窗口伤害'),('delta_window_damage','伤害差')],self)
+             ('window_damage','窗口伤害'),('delta_window_damage','伤害差')],self,input_errors=(CultivationInputError,))
         self.cultivation_comparison_dialog.show()
 
     def show_damage_budget(self):

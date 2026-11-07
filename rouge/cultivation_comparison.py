@@ -8,11 +8,11 @@ from .supplemental_skills import defaults,_skill_conditions,_skill_reference,sup
 
 
 def compare_cultivation(scenario,preview):
-    if type(preview) is not dict or set(preview)!={'proposals'}: raise ValueError('需要proposals培养方案列表。')
+    if type(preview) is not dict or set(preview)!={'proposals'}: raise CultivationInputError('需要proposals培养方案列表。')
     proposals=preview['proposals'];identity=scenario.get('operator')
     profiles=operator_profiles()
-    if type(identity) is not str or identity not in profiles: raise ValueError('需要有效干员。')
-    if type(proposals) is not list or not 1<=len(proposals)<=12: raise ValueError('培养方案需要1–12项，第一项作为差值基准。')
+    if type(identity) is not str or identity not in profiles: raise CultivationInputError('需要有效干员。')
+    if type(proposals) is not list or not 1<=len(proposals)<=12: raise CultivationInputError('培养方案需要1–12项，第一项作为差值基准。')
     core_skill=identity in catalog()['operators']
     supplemental_skill=not core_skill and identity in supplemental_profiles()['operators']
     profile = profiles[identity]
@@ -20,10 +20,10 @@ def compare_cultivation(scenario,preview):
     required={'name','elite','level','trust','potential','module_id','module_level'}
     for proposal in proposals:
         if type(proposal) is not dict or set(proposal)!=required:
-            raise ValueError('每个方案需要name、elite、level、trust、potential、module_id、module_level。')
+            raise CultivationInputError('每个方案需要name、elite、level、trust、potential、module_id、module_level。')
         name=proposal['name']
         if (type(name) is not str or not 1<=len(name)<=60 or name in seen or
-            any(ord(c)<32 or 0xd800<=ord(c)<=0xdfff for c in name)): raise ValueError('方案名称需要唯一的1–60字符名称。')
+            any(ord(c)<32 or 0xd800<=ord(c)<=0xdfff for c in name)): raise CultivationInputError('方案名称需要唯一的1–60字符名称。')
         seen.add(name)
         row={'name':name,'status':'待计算','error':None,'proposal':deepcopy(proposal),'attributes':None,
              'attack':None,'hp':None,'defense':None,'delta_attack':None,'delta_hp':None,'delta_defense':None,
@@ -77,15 +77,18 @@ def compare_cultivation(scenario,preview):
             row['skill_reference']=_skill_reference(supplied,attributes);row['status']='单次技能参考'
         else:row['notes'].append('该干员技能数值尚未接入，只比较基础培养属性。')
     baseline=rows[0]
-    if baseline['attributes'] is None:raise ValueError('基准培养方案不可测算：'+baseline['error'])
+    if baseline['attributes'] is None:raise CultivationInputError('基准培养方案不可测算：'+baseline['error'])
     base={r['name']:r['value'] for r in baseline['skill_reference']['rows']} if baseline['skill_reference'] else {}
     for row in rows:
         for key in ('attack','hp','defense','window_damage','window_healing'):
             a=row[key];b=baseline[key];row['delta_'+key]=a-b if a is not None and b is not None else None
         if row['skill_reference'] and baseline['skill_reference']:
-            row['skill_differences']={r['name']:r['value']-base[r['name']] if r['value'] is not None and base.get(r['name']) is not None else None for r in row['skill_reference']['rows']}
+            for metric in row['skill_reference']['rows']:
+                name, value = metric['name'], metric['value']
+                previous = base.get(name)
+                row['skill_differences'][name] = value - previous if value is not None and previous is not None else None
     return {'scenario':deepcopy(scenario),'preview':deepcopy(preview),'rows':rows,'baseline_name':baseline['name'],
-            'operator_name':profiles[identity]['name'],
+            'operator_name':profile['name'],
             'notes':['第一方案为差值基准；每行只替换培养及模组条件，技能、目标与其他计算条件沿用打开时预览。',
                      '基础属性列未叠加天赋/技能；已接入技能另行重算天赋门和模组门，未知输出或差值保留未知。',
                      '补充技能只比较单次分项；未接入的干员仍可比较培养属性。未提供材料成本或自动培养建议。',

@@ -6,6 +6,32 @@ from tests.test_cultivation_comparison_140 import proposal
 
 
 class CultivationStageBoundaryReviewTests(unittest.TestCase):
+    def test_player_proposal_uses_frozen_operator_and_only_defaults_missing_level(self):
+        from PySide6.QtWidgets import QApplication, QComboBox, QWidget
+        from rouge.app import MainWindow
+        qt = QApplication.instance() or QApplication([])
+        owner = QWidget()
+        self.addCleanup(owner.close)
+        owner.operator = QComboBox(owner)
+        owner.operator.addItem('玫兰莎', 'char_208_melan')
+        scenario = {'operator':'mechanist','elite':2,'skill':1,'skill_rank':7}
+        owner.damage_result = {'scenario':scenario}
+        MainWindow.show_cultivation_comparison(owner)
+        dialog = owner.cultivation_comparison_dialog
+        maximum = comparison.operator_profiles()['mechanist']['phases'][2]['max_level']
+        self.assertEqual(dialog.result['rows'][0]['proposal']['level'], maximum)
+        with patch.object(comparison, '_calculate_prepared', side_effect=ValueError('internal calculation')):
+            with self.assertRaisesRegex(ValueError, 'internal calculation'):
+                dialog.calculate()
+        for invalid in (0, False, ''):
+            with self.subTest(level=invalid):
+                scenario['level'] = invalid
+                MainWindow.show_cultivation_comparison(owner)
+                dialog = owner.cultivation_comparison_dialog
+                self.assertIsNone(dialog.result)
+                self.assertIn('基准培养方案不可测算', dialog.notice.toPlainText())
+        qt.processEvents()
+
     def test_supplemental_skill_uses_the_computed_proposal_attributes(self):
         from rouge import supplemental_skills as skills
         profiles = comparison.operator_profiles()

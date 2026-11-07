@@ -1,3 +1,7 @@
+## 维护 · 普通培养对照按冻结干员取等级，区分方案错误与内部计算异常（2026-11-06）
+
+D100普通培养入口已验证。缺等级按冻结干员阶段取满级，0/False/空串不再自动补满；内部计算异常直接上报。9个直接构造点均明确异常范围，补充干员主计算入口仍待核对。24项定向通过。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-cultivation-dialog-source-20261106/summary.json)。
+
 ## 维护 · 补充预算复用打开时的单次来源，区分无来源和内部错误（2026-11-06）
 
 D332已实施。补充干员伤害和治疗预算复用打开时来源；生命变化不重算治疗，目标防御变化单独重算。36项定向通过。D100仍有其他入口。 原280组完成272、余8。 [回执](verification/maintenance/code-constraints-supplemental-budget-snapshot-20261106/summary.json)。
