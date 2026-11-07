@@ -1,3 +1,7 @@
+## 维护 · 关卡属性修正在每次预计面板查询中只解析一次（2026-11-06）
+
+184个关卡、4120个敌人及难度组合的环境输出与旧版一致。定向37项通过。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-stage-modifier-reuse-20261106/summary.json)。
+
 ## 维护 · 敌人环境分项直接复用固定面板，按编号及等级核对引用（2026-11-06）
 
 只查环境分项时直接使用已核对的固定面板，省去整份详细预览构建。4关×4档的188份结果与前版相同，28项定向通过。D348待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-forecast-environment-only-20261106/summary.json)。

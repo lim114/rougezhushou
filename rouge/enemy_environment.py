@@ -16,32 +16,48 @@ def difficulty_rules():
 def damage_factor(scenario,dtype):
     return scenario.get('_run_damage_factor',1)*scenario.get('_enemy_type_factors',{}).get(dtype,1)
 
-def apply_fixed_environment(enemy,stage,preview,difficulty,zone,*,difficulty_profiles=None):
+def fixed_stage_modifiers(stage, preview):
+    modifiers = []
+    known_ids = None
+    for rune in preview['runes']:
+        if rune['difficultyMask'] not in (stage['difficulty'],'ALL'):continue
+        if rune['key']=='enemy_attribute_mul':
+            if rune['professionMask']!=1023 or rune['buildableMask']!='ALL':
+                modifiers.append((None, None, '关卡属性修正的目标范围尚未覆盖。'));continue
+            selectors=[b for b in rune['blackboard'] if b['key']=='enemy']
+            selector = None
+            if selectors:
+                selector=selectors[0].get('valueStr') if len(selectors)==1 else None
+                if known_ids is None:
+                    known_ids = {e['id'] for e in preview['possible_enemies']}
+                if not isinstance(selector,str) or selector not in known_ids:
+                    modifiers.append((None, None, '关卡属性修正的敌人选择器尚未覆盖。'));continue
+            keys={'atk':'atk','def':'def','max_hp':'maxHp','magic_resistance':'magicResistance'}
+            values={keys[b['key']]:b['value'] for b in rune['blackboard'] if b['key'] in keys}
+            note = '关卡存在未覆盖的属性修正字段。' if len(values) != len(rune['blackboard']) - len(selectors) else None
+            modifiers.append((selector, values, note))
+        elif rune['key'] != 'level_hidden_group_enable':
+            modifiers.append((None, None, '关卡脚本修正待核验：'+rune['key']))
+    if preview['global_buffs']:
+        modifiers.append((None, None, '关卡全局脚本效果尚未逐项计算。'))
+    return modifiers
+
+def apply_fixed_environment(enemy,stage,preview,difficulty,zone,*,difficulty_profiles=None,stage_modifiers=None):
     """Apply the shared documented fixed modifiers to an already qualified enemy."""
     stats=enemy['stats'];record={'id':enemy['enemy_id'],'level_type':enemy['level_type']}
     def multiply(label,values):
         for key,value in values.items():
             if stats.get(key) is not None:stats[key]*=value
         enemy['steps'].append({'label':label,'factors':values})
-    for rune in preview['runes']:
-        if rune['difficultyMask'] not in (stage['difficulty'],'ALL'):continue
-        if rune['key']=='enemy_attribute_mul':
-            if rune['professionMask']!=1023 or rune['buildableMask']!='ALL':
-                enemy['pending'].append('关卡属性修正的目标范围尚未覆盖。');continue
-            selectors=[b for b in rune['blackboard'] if b['key']=='enemy']
-            if selectors:
-                selector=selectors[0].get('valueStr') if len(selectors)==1 else None
-                known_ids={e['id'] for e in preview['possible_enemies']}
-                if not isinstance(selector,str) or selector not in known_ids:
-                    enemy['pending'].append('关卡属性修正的敌人选择器尚未覆盖。');continue
-                if selector!=record['id']:continue
-            keys={'atk':'atk','def':'def','max_hp':'maxHp','magic_resistance':'magicResistance'}
-            values={keys[b['key']]:b['value'] for b in rune['blackboard'] if b['key'] in keys}
-            if len(values)!=len(rune['blackboard'])-len(selectors):enemy['pending'].append('关卡存在未覆盖的属性修正字段。')
-            multiply('关卡 '+stage['difficulty'],values)
-        elif rune['key']!='level_hidden_group_enable':
-            enemy['pending'].append('关卡脚本修正待核验：'+rune['key'])
-    if preview['global_buffs']:enemy['pending'].append('关卡全局脚本效果尚未逐项计算。')
+    if stage_modifiers is None:
+        stage_modifiers = fixed_stage_modifiers(stage, preview)
+    for selector, factors, note in stage_modifiers:
+        if selector is not None and selector != enemy['enemy_id']:
+            continue
+        if note:
+            enemy['pending'].append(note)
+        if factors is not None:
+            multiply('关卡 '+stage['difficulty'], dict(factors))
     if difficulty:
         grade=difficulty['value']
         rules=difficulty_rules()

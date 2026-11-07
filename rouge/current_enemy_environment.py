@@ -1,7 +1,7 @@
 """Current snapshot declarations, qualified before shared environment arithmetic."""
 import math
 from . import current_battle_reference as model
-from .enemy_environment import apply_fixed_environment
+from .enemy_environment import apply_fixed_environment, fixed_stage_modifiers
 
 
 def qualify_current(result):
@@ -28,8 +28,10 @@ def qualify_current(result):
 def stage_environment_reference(stage):
     """Project a freshly source-qualified stage into the environment calculator."""
     level = stage['level']
-    return {'stage': stage['stage'], 'preview': {'runes': level.get('runes') or [],
-            'global_buffs': level.get('globalBuffs') or [], 'possible_enemies': stage['enemies']},
+    preview = {'runes': level.get('runes') or [], 'global_buffs': level.get('globalBuffs') or [],
+               'possible_enemies': stage['enemies']}
+    return {'stage': stage['stage'], 'preview': preview,
+            'stage_modifiers': fixed_stage_modifiers(stage['stage'], preview),
             'difficulty_profiles': stage['difficulty_reference']}
 
 
@@ -48,5 +50,6 @@ def environment(reference, enemy, config, grade):
                  'stats': stats,
                  'steps': [], 'pending': [], 'damage_factor': 1}
     apply_fixed_environment(component, reference['stage'], reference['preview'],
-        {'value': grade}, config.get('zone'), difficulty_profiles=reference['difficulty_profiles'])
+        {'value': grade}, config.get('zone'), difficulty_profiles=reference['difficulty_profiles'],
+        stage_modifiers=reference['stage_modifiers'])
     return component, None

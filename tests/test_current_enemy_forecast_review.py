@@ -34,6 +34,17 @@ class CurrentEnemyForecastReviewTests(unittest.TestCase):
             recheck.assert_called_once_with(panel.result)
         self.assertEqual(panel.enemy_forecasts, forecasts(panel.result, self.config(grade=14)))
 
+    def test_one_set_of_stage_rules_per_query_and_new_read_on_next_query(self):
+        from rouge import current_enemy_environment as source
+        stage = model.stage_reference('ro6_n_2_6')
+        with patch.object(source, 'fixed_stage_modifiers', wraps=source.fixed_stage_modifiers) as read:
+            first = forecasts(stage, self.config())
+            read.assert_called_once()
+            second = forecasts(stage, self.config())
+            self.assertEqual(read.call_count, 2)
+        self.assertEqual(first, second)
+        self.assertGreater(len(first), 1)
+
     def test_qualified_four_attributes_use_existing_model_and_keep_full_total_unknown(self):
         result=forecasts(self.stage,self.config())
         duck=next(e for e in self.stage['enemies']if e['id']=='enemy_2001_duckmi')
