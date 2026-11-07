@@ -20,6 +20,28 @@ class ReplayLayoutReviewTests(unittest.TestCase):
         root=Path(self.enterContext(TemporaryDirectory(prefix='rouge-replay-layout-')))
         self.run=RunState(root/'run.json');self.run.state['id']='public-current'
         self.panel=ReplayPanel(self.run);self.addCleanup(self.panel.close)
+    def test_content_only_change_rechecks_selected_history_without_reopening_old_context(self):
+        from rouge import player_recorded_scene
+        from tests.test_player_feature_430 import scene_state
+        state = scene_state()
+        self.run.state.update(history=state['history'], node_contents=state['node_contents'])
+        panel = self.panel
+        panel.refresh()
+        panel.entries.setCurrentRow(0)
+        self.assertFalse(panel.scene_button.isHidden())
+        with patch.object(player_recorded_scene, 'recorded_context',
+                          wraps=player_recorded_scene.recorded_context) as resolve:
+            self.assertTrue(panel.open_selected_scene())
+            resolve.assert_called_once()
+        self.run.state['node_contents'].append({**state['node_contents'][0], 'event_id':'conflicting'})
+        panel.refresh()
+        self.assertTrue(panel.scene_button.isHidden())
+        self.assertIsNone(panel.scene_popup)
+        self.assertFalse(panel.open_selected_scene())
+        self.run.state['node_contents'].pop()
+        panel.refresh()
+        self.assertFalse(panel.scene_button.isHidden())
+
     def archive(self,identity='public-old'):
         state,template,ids=old.history_example();state['id']=identity;state['started_at']=100
         self.panel.history_store.archive(state);reload_history(self.panel)

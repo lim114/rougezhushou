@@ -471,7 +471,7 @@
     },
     {
       "file": "rouge/player_recorded_scene.py",
-      "sha256": "dbeb29b6d250c6851c03c3e7e2c47da4e705eeb90fad781706df0425999842bf",
+      "sha256": "78b5d45c13b9ba5277021e4a7c0e134fe531db0e2c5ce253774ab21a378afc2d",
       "rule1": "selected_paths_reviewed_followup_remaining",
       "rule2": "callbacks_and_shared_domain_helpers_retained",
       "rule3": "see_pending_decisions_or_remaining_scope",
@@ -485,6 +485,11 @@
           "decision": "D55 retained",
           "receipt": "verification/maintenance/code-constraints-tile-history-retention-20261106/summary.json",
           "scope": "approved entry/identity constraints; other paths not certified"
+        },
+        {
+          "decision": "D54 partial, D306 partial",
+          "receipt": "verification/maintenance/code-constraints-historical-event-context-20261106/summary.json",
+          "scope": "Recorded scene projection and replay selection refresh, same-run event presence and gold extraction; D323 and D326 time-range decisions remain open."
         }
       ]
     },
@@ -4339,7 +4344,7 @@
     },
     {
       "file": "rouge/event_run_context.py",
-      "sha256": "8c02663da9d8fdf3ec99750b7b0c35f21c898dfce6a9306d57af2e8a2fb6ede3",
+      "sha256": "2fac0535be721698763f70588ce7ec3c7bc7e7850b2d6c44f4ed9e6f7450063c",
       "ordinary_rules_review_complete": false,
       "full_module_review_complete": false,
       "rule1": "Four validated exact int/float attributes copied into new mapping without redundant deepcopy; gold record read once; sorted allowed IDs once with independent output list copy",
@@ -4347,7 +4352,14 @@
       "rule3": [
         "D306"
       ],
-      "evidence": "Four full modules and callers reviewed;33 initial passes plus corrected stale UI-copy test1pass; old source reproduces original wording failure"
+      "evidence": "Four full modules and callers reviewed;33 initial passes plus corrected stale UI-copy test1pass; old source reproduces original wording failure",
+      "scoped_reviews": [
+        {
+          "decision": "D54 partial, D306 partial",
+          "receipt": "verification/maintenance/code-constraints-historical-event-context-20261106/summary.json",
+          "scope": "Recorded scene projection and replay selection refresh, same-run event presence and gold extraction; D323 and D326 time-range decisions remain open."
+        }
+      ]
     },
     {
       "file": "rouge/choice_held_requirements.py",
@@ -5452,6 +5464,13 @@
       "decision": "D119",
       "receipt": "verification/maintenance/code-constraints-core-skill-preparation-20261106/summary.json",
       "scope": "Core cultivation proposal skill preparation and declared timing, animation, FP, run and enemy errors. Supplemental row preparation already narrowed."
+    },
+    {
+      "file": "rouge/player_replay.py",
+      "sha256": "d64f7c8fd716f35623047b7ec95ca934019ded9b669b3a6758a1c0db86ddce2e",
+      "decision": "D54 partial, D306 partial",
+      "receipt": "verification/maintenance/code-constraints-historical-event-context-20261106/summary.json",
+      "scope": "Recorded scene projection and replay selection refresh, same-run event presence and gold extraction; D323 and D326 time-range decisions remain open."
     }
   ]
 }

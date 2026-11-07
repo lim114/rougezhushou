@@ -10,10 +10,20 @@ from tests.test_event_planning import event,context
 class EventRunContextTests(unittest.TestCase):
     def fixture(self,records,complete=False):
         state={'id':'public-run','started_at':100,'last_read':120,
-               'relics':deepcopy(records),'tactical_tools':{}}
-        return SimpleNamespace(state=state,calculation_resources=lambda:{'gold':{'value':51,'captured_at':119}},
+               'relics':deepcopy(records),'tactical_tools':{},
+               'resources':{'gold':{'value':51,'captured_at':119}}}
+        return SimpleNamespace(state=state,
             inventory_status=lambda:{'complete':complete,'recognized':sum(r.get('held') is True for r in records.values()),
                 'recognized_tools':0,'confirmed_at':119})
+
+    def test_reading_gold_does_not_scan_unrelated_resource_history(self):
+        from unittest.mock import Mock
+        run = self.fixture({})
+        run.calculation_resources = Mock(side_effect=AssertionError('unrelated resource scan'))
+        context = observed_event_context(run)
+        self.assertEqual(context['gold'], 51)
+        self.assertEqual(context['condition_sources']['gold']['captured_at'], 119)
+        run.calculation_resources.assert_not_called()
 
     def test_presence_answers_ownership_without_fabricating_item_count(self):
         identity=p._named_item('沙盘α')

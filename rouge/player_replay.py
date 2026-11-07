@@ -157,8 +157,10 @@ class ReplayPanel(QWidget):
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))
         if key == self.key:
             self.snapshot=state
+            item = self.entries.currentItem()
+            context = self.sync_scene_button(item.data(Qt.ItemDataRole.UserRole) if item else None)
             if self.scene_popup is not None and self.scene_popup.isVisible():self.scene_popup.panel.refresh()
-            return
+            return context
         self.key = key
         self.nodes.refresh(state)
         self.resources.refresh(state)
@@ -179,24 +181,31 @@ class ReplayPanel(QWidget):
                 self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset)
         self.entries.blockSignals(False)
-        self.selected()
+        context = self.selected()
         if self.scene_popup is not None and self.scene_popup.isVisible():self.scene_popup.panel.refresh()
         from .player_replay_archive import snapshot_notice
         self.notice.setText(snapshot_notice(self,len(self.rows),state))
+        return context
 
     def selected(self, *_):
         item = self.entries.currentItem()
         row = self.rows.get(item.data(Qt.ItemDataRole.UserRole)) if item else None
         from .player_shop_memory import recorded_shops
         self.shop_button.setVisible(bool(row and any(index==row['index']for index,_ in recorded_shops(self.snapshot or{}))))
-        from .player_recorded_scene import recorded_context
-        context=recorded_context(self.snapshot or{},row['index'])if row else None
-        self.scene_button.setVisible(context is not None)
-        binding=(self.sessions.currentData(),row['index'],repr(context))if context and row else None
-        if binding!=self.scene_binding:self.close_scene()
+        context = self.sync_scene_button(row['index'] if row else None)
         text = event_text(row) if row else '选择一条记录查看；读取时间不等于游戏动作发生时间。'
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)
+
+        return context
+
+    def sync_scene_button(self, index):
+        from .player_recorded_scene import recorded_context
+        context = recorded_context(self.snapshot, index) if index is not None else None
+        self.scene_button.setVisible(context is not None)
+        binding = (self.sessions.currentData(), index, repr(context)) if context else None
+        if binding != self.scene_binding:self.close_scene()
+        return context
 
     def open_selected_shop(self):
         self.refresh();item=self.entries.currentItem();index=item.data(Qt.ItemDataRole.UserRole)if item else None
@@ -208,15 +217,14 @@ class ReplayPanel(QWidget):
         self.scene_binding=None
 
     def open_selected_scene(self):
-        self.refresh();item=self.entries.currentItem();index=item.data(Qt.ItemDataRole.UserRole)if item else None
-        from .player_recorded_scene import recorded_context
-        context=recorded_context(self.snapshot or{},index)
-        if context is None:self.close_scene();return False
+        context = self.refresh()
+        if context is None:return False
+        index = self.entries.currentItem().data(Qt.ItemDataRole.UserRole)
         self.close_scene()
         from types import SimpleNamespace
         from .player_recent_scene import RecentScenePanel
         from .player_compact import ToolPopover
-        reading=SimpleNamespace(state={'id':self.snapshot.get('id'),'last_node_content':deepcopy(context)})
+        reading=SimpleNamespace(state={'id':self.snapshot.get('id'),'last_node_content':context})
         panel=RecentScenePanel(reading,historical=True);panel.noteRequested.connect(self.noteRequested)
         self.scene_popup=ToolPopover('这条历史记录的节点资料',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
         self.scene_binding=(self.sessions.currentData(),index,repr(context));self.scene_popup.show();return True

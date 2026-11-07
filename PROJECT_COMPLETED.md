@@ -1,3 +1,7 @@
+## 维护 · 历史节点按最新快照撤下歧义资料，事件金币直接读取（2026-11-06）
+
+D54、D306部分推进。回放同次刷新与打开共用节点确认结果，页面只变已存内容时也能撤下歧义入口；事件金币不遍历无关计数历史。43项定向通过。超大时间策略仍待D323、D326审核。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-historical-event-context-20261106/summary.json)。
+
 ## 维护 · 模组未核验费用和阻挡显示待确认，保留已证培养属性（2026-11-06）
 
 D107固定档案属性已整改。1497个模组阶段逐字段比对，27个费用、15个阻挡阶段改为待确认，其余数值一致。27项定向通过。后续技能分项依赖策略D333待审。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-unsupported-training-fields-20261106/summary.json)。
