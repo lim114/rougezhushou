@@ -1,3 +1,7 @@
+## 当前断点 · 校准实验的相位结果汇总错误直接上报（2026-11-07）
+
+单条记录的旧捕获仅覆盖效果准备和逐次计算，已移出相位结果汇总。67项最终定向通过，18份报告一致。D110未销项。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-experiment-phase-aggregation-20261107/summary.json)。
+
 ## 当前断点 · 完成D351目标输入整改，藏品技能资料按需读取一次（2026-11-07）
 
 D351已批准实施，已选目标的内部类型缺陷直接上报。272种藏品的4896组准备输出与前版一致。137项定向通过。D110仍待继续。 原280组完成274、余6。 [回执](verification/maintenance/code-constraints-target-selectors-relic-skill-20261107/summary.json)。

@@ -76,6 +76,15 @@ def _timing_value(data, channel, model, calculation):
     return reading, expected, reason, result
 
 
+def _evaluate_record(prepared, phase=None):
+    from .calibration import CalibrationScenarioError
+    from .damage import _evaluate_damage
+    try:
+        return _evaluate_damage(prepared, phase)
+    except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+        raise CalibrationScenarioError(str(error)) from error
+
+
 def calibration_experiment(experiment):
     """Validate controlled records, intersect training residuals, check held-out data."""
     from .calibration import panel_layers, _cultivated, _calculate_prepared, _panel_context, _panel_snapshot, _scenario, CalibrationScenarioError, OPERATORS, LABELS
@@ -175,9 +184,9 @@ def calibration_experiment(experiment):
                     raise CalibrationScenarioError(str(error)) from error
             try:
                 prepared = _prepare_effects(resolved, profile, attributes, run_resolution)
-                calculation = _calculate_prepared(scenario, deepcopy(prepared))
             except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
                 raise CalibrationScenarioError(str(error)) from error
+            calculation = _calculate_prepared(scenario, deepcopy(prepared), evaluate=_evaluate_record)
         except (CalibrationScenarioError, CultivationInputError, SkillSelectionError, RunConditionError, EnemyReferenceError) as error:
             result['blocking_reasons'].append('record_validation_error')
             result['validation_error'] = str(error)

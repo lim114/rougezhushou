@@ -426,11 +426,13 @@ def calculate_damage(scenario: dict) -> dict:
     return _calculate_prepared(scenario,_prepare_damage(scenario))
 
 
-def _calculate_prepared(scenario,prepared) -> dict:
+def _calculate_prepared(scenario, prepared, *, evaluate=None) -> dict:
     """Consume one qualified preparation; callers keep display snapshots separate."""
     from copy import deepcopy
+    if evaluate is None:
+        evaluate = _evaluate_damage
     wines=[r for r in prepared[2]['rules'] if r['kind']=='periodic_sp']
-    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+    if len(wines)!=1 or wines[0].get('clock')=='deployment':return evaluate(prepared)
     from .timing import frame_time
     from .reporting import build_report
     # Each possible 30-Hz phase, including immediate and full-period first tick.
@@ -442,15 +444,15 @@ def _calculate_prepared(scenario,prepared) -> dict:
     for phase in range(phases):
         # Copy together to preserve aliases between rules and resolution records.
         # Never share a finisher's mutations with another phase or request.
-        result=_evaluate_damage(deepcopy(prepared),phase)
-        for key,bounds in skill_bounds.items():bounds.include(result['estimate']['skill'][key])
+        result=evaluate(deepcopy(prepared),phase)
+        skill = result['estimate']['skill']
+        for key,bounds in skill_bounds.items():bounds.include(skill[key])
         metrics={(b['id'],m['key']):m['value'] for b in result['report']['sections'] for m in b['metrics']}
         for key,value in metrics.items():
             if key not in metric_bounds:metric_bounds[key]=_PhaseBounds()
             metric_bounds[key].include(value)
     skill=result['estimate']['skill']
-    for key in keys:
-        bounds=skill_bounds[key]
+    for key, bounds in skill_bounds.items():
         if not bounds.known:
             skill[key]=None
             continue

@@ -40,8 +40,8 @@ class ExperimentResidualBoundaryTests(TestCase):
         from rouge import calibration
         payload = model.public_experiment_payload()
         calculate = calibration._calculate_prepared
-        def missing_field(scenario, prepared):
-            result = calculate(scenario, prepared)
+        def missing_field(scenario, prepared, **options):
+            result = calculate(scenario, prepared, **options)
             if scenario['level'] == 75:
                 del result['estimate']['base_stats']
             return result
@@ -138,6 +138,38 @@ class ExperimentResidualBoundaryTests(TestCase):
                     result = model.calibration_experiment(**payload)
                     self.assertEqual(result['records'][0]['validation_error'], str(caught.exception))
                     self.assertEqual(result['records'][1]['state'], 'evaluable')
+
+    def test_internal_result_aggregation_errors_escape_the_record_input_boundary(self):
+        from rouge import calibration
+        payload = model.public_experiment_payload()
+        original = calibration._calculate_prepared
+        for fault in (ValueError, TypeError, KeyError, IndexError, OverflowError):
+            def aggregate(scenario, prepared, **options):
+                if scenario.get('level') == 75:
+                    raise fault('phase result defect')
+                return original(scenario, prepared, **options)
+            with self.subTest(fault=fault), patch.object(calibration, '_calculate_prepared', side_effect=aggregate):
+                with self.assertRaisesRegex(fault, 'phase result defect'):
+                    model.calibration_experiment(**payload)
+
+    def test_missing_internal_phase_metric_is_not_an_invalid_observation(self):
+        from rouge import damage
+        payload = model.public_experiment_payload()
+        prepare = damage._prepare_effects
+        def unknown_clock(scenario, *args):
+            prepared = prepare(scenario, *args)
+            if scenario.get('level') == 75:
+                prepared[2]['rules'].append({'kind': 'periodic_sp', 'interval': 0.1})
+            return prepared
+        def incomplete(prepared, phase=None):
+            if phase is not None:
+                return {'estimate': {'skill': {}}}
+            return evaluate(prepared)
+        evaluate = damage._evaluate_damage
+        with patch.object(damage, '_prepare_effects', side_effect=unknown_clock), \
+             patch.object(damage, '_evaluate_damage', side_effect=incomplete):
+            with self.assertRaisesRegex(KeyError, 'initial_seconds'):
+                model.calibration_experiment(**payload)
 
     def test_bad_trust_blocks_only_its_own_record(self):
         for trust in ('100', None, {}, 10**1000, -1):
