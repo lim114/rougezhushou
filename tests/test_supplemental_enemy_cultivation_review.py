@@ -14,7 +14,7 @@ class EnemyCultivationReviewTests(unittest.TestCase):
         selection=enemies.enemy_defaults(env)
         selection.update(enemies=selection['enemies'][:2],grades=[4,5])
         original=deepcopy((preview,env,selection))
-        with patch.object(skills,'operator_attributes',wraps=skills.operator_attributes) as resolve:
+        with patch.object(skills,'_attribute_values',wraps=skills._attribute_values) as resolve:
             result=enemies.compare_fixed_enemies(preview,env,selection)
         self.assertEqual(resolve.call_count,1)
         self.assertEqual((preview,env,selection),original)

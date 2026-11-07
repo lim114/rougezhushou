@@ -11,7 +11,7 @@ from tests.test_supplemental_run_141 import environment
 
 class SupplementalBaselineMetricsReviewTests(unittest.TestCase):
     def test_rank_variants_share_identical_cultivated_attributes(self):
-        with patch.object(skills,'operator_attributes',wraps=skills.operator_attributes) as attributes:
+        with patch.object(skills,'_attribute_values',wraps=skills._attribute_values) as attributes:
             result=comparison.compare_ranks(defaults(),environment(),{'ranks':list(range(1,8))})
         self.assertEqual(attributes.call_count,1)
         self.assertEqual(len(result['variants']),7)

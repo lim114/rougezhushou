@@ -12,8 +12,8 @@ class CultivationStageBoundaryReviewTests(unittest.TestCase):
                 preview = {'proposals': [proposal('基准', elite=2, level=70),
                     proposal('模组方案', elite=2, level=70,
                              module_id='uniequip_002_nights', module_level=stage)]}
-                with patch.object(comparison, '_operator_attribute_reference',
-                                  wraps=comparison._operator_attribute_reference) as attributes:
+                with patch.object(comparison, '_attribute_values',
+                                  wraps=comparison._attribute_values) as attributes:
                     result = comparison.compare_cultivation({'operator': 'char_141_nights'}, preview)
                 self.assertEqual(attributes.call_count, 2)
                 self.assertEqual(result['rows'][1]['status'], '不可测算')
@@ -24,8 +24,8 @@ class CultivationStageBoundaryReviewTests(unittest.TestCase):
             with self.subTest(stage=stage):
                 preview = {'proposals': [proposal('基准', elite=2, level=70),
                     proposal('无模组', elite=2, level=70, module_level=stage)]}
-                with patch.object(comparison, '_operator_attribute_reference',
-                                  wraps=comparison._operator_attribute_reference) as attributes:
+                with patch.object(comparison, '_attribute_values',
+                                  wraps=comparison._attribute_values) as attributes:
                     result = comparison.compare_cultivation({'operator': 'char_141_nights'}, preview)
                 self.assertEqual(attributes.call_count, 1)
                 self.assertEqual(result['rows'][1]['status'], '不可测算')

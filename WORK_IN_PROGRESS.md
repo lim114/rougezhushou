@@ -1,3 +1,7 @@
+## 当前断点 · 培养比较和补充技能复用已核验信赖与等级范围（2026-11-06）
+
+D121、D125完成。培养比较与补充技能直接使用入口核验后的信赖，等级范围和潜能按各入口契约核验一次。D119补充技能出口收窄，主技能准备仍待核对。最终40项定向通过。 原280组完成256、余24。 [回执](verification/maintenance/code-constraints-cultivation-validation-20261106/summary.json)。
+
 ## 当前断点 · 事件跳转共用点击复核，物件与行程位置共用原图刷新（2026-11-06）
 
 D225、D226、D227、D229、D231完成。作战和对话点击共用事件复核，固定位置页共用图像与格子生命周期。旧滚动测试前提已修复并复验。 原280组完成254、余26。 [回执](verification/maintenance/code-constraints-battle-entry-position-readers-20261106/summary.json)。

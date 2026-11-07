@@ -1,7 +1,7 @@
 """Independent cultivation proposals; recompute attributes and supported skills."""
 import json
 from copy import deepcopy
-from .catalog import catalog,operator_profiles,_operator_attribute_reference,CultivationInputError
+from .catalog import catalog,operator_profiles,_attribute_level,_attribute_values,CultivationInputError
 from .damage import _prepare_damage, _calculate_prepared
 from .healing_budget import _amount
 from .supplemental_skills import defaults,_cultivated_stats,_skill_reference,supplemental_profiles
@@ -40,7 +40,11 @@ def compare_cultivation(scenario,preview):
             if ((mid is not None and type(mid) is not str) or
                     (not mid and (type(ml) is not int or (mid is None and ml!=0)))):
                 raise CultivationInputError('无模组需module_id=null及module_level=0；模组需有效身份及整数等级。')
-            attributes,_,row['module_applied']=_operator_attribute_reference(identity,**conditions)
+            profile = profiles[identity]
+            elite = conditions['elite']
+            phase, level = _attribute_level(profile, elite, conditions['level'])
+            attributes, _, row['module_applied'] = _attribute_values(
+                profile, phase, elite, level, conditions['trust'], conditions['potential'], mid, ml)
         except CultivationInputError as error:
             row.update(status='不可测算',error=str(error));continue
         row['attributes']=attributes
@@ -48,17 +52,19 @@ def compare_cultivation(scenario,preview):
         row['status']='基础属性参考'
         if mid and not row['module_applied']:row['notes'].append('当前培养未满足所选模组解锁门，未加入模组属性或技能效果。')
         proposed={**deepcopy(scenario),**conditions};proposed.pop('base_attack',None)
+        if supplemental_skill:
+            supplied = defaults(identity)
+            for key in supplied:
+                if key in proposed:
+                    supplied[key] = proposed[key]
+            supplied.update(count=1, missing_hp=0)
+        preparation_error = ValueError if core_skill else CultivationInputError
         try:
             if core_skill:
-                prepared=_prepare_damage(proposed,cultivated_attributes=attributes)
+                prepared = _prepare_damage(proposed, cultivated_attributes=attributes)
             elif supplemental_skill:
-                supplied=defaults(identity)
-                for key in supplied:
-                    if key in proposed:supplied[key]=proposed[key]
-                # Supplemental budget is a one-event parameter comparison.
-                supplied.update(count=1,missing_hp=0)
-                supplemental_stats=_cultivated_stats(supplied)
-        except ValueError as error:
+                supplemental_stats = _cultivated_stats(supplied)
+        except preparation_error as error:
             row['error']=str(error);row['status']='仅属性；技能不可测算';continue
         if core_skill:
             modeled=_calculate_prepared(proposed,prepared);metrics=modeled['estimate']['skill']

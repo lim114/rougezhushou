@@ -46,13 +46,34 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
 def _operator_attribute_reference(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
     """Return attributes, resolved equipment and its applied/unlocked state."""
     profile = operator_profiles()[operator]
-    if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):
+    phase, level = _attribute_level(profile, elite, level)
+    if not math.isfinite(trust) or not 0 <= trust <= 100:
+        raise CultivationInputError('等级或信赖超出范围（信赖按加成进度 0–100%）。')
+    return _attribute_values(profile, phase, elite, level, trust, potential, module_id, module_level)
+
+
+def _training_in_range(value, low, high, field, exact):
+    if exact:
+        if type(value) is not int:
+            raise CultivationInputError(field + '需要整数。')
+    elif not isinstance(value, int) or isinstance(value, bool):
+        return False
+    return low <= value <= high
+
+
+def _attribute_level(profile, elite, level, *, exact=False):
+    if not _training_in_range(elite, 0, len(profile['phases']) - 1, 'elite', exact):
         raise CultivationInputError('精英阶段需要为 0、1 或 2。')
     phase = profile['phases'][elite]
-    level = phase['max_level'] if level is None else level
-    if not isinstance(level,int) or isinstance(level,bool) or not 1 <= level <= phase['max_level'] or not math.isfinite(trust) or not 0 <= trust <= 100:
+    if level is None and not exact:
+        level = phase['max_level']
+    if not _training_in_range(level, 1, phase['max_level'], 'level', exact):
         raise CultivationInputError('等级或信赖超出范围（信赖按加成进度 0–100%）。')
-    if not isinstance(potential,int) or isinstance(potential,bool) or not 1<=potential<=6:
+    return phase, level
+
+
+def _attribute_values(profile, phase, elite, level, trust, potential, module_id, module_level, *, exact=False):
+    if not _training_in_range(potential, 1, 6, 'potential', exact):
         raise CultivationInputError('潜能需要为 1–6。')
     first, last = phase['frames'][0], phase['frames'][-1]
     fraction = (level - first['level']) / (last['level'] - first['level']) if last['level'] != first['level'] else 0

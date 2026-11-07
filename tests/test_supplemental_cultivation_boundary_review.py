@@ -6,6 +6,19 @@ from tests.test_supplemental_run_141 import environment
 
 
 class SupplementalCultivationBoundaryTests(TestCase):
+    def test_strict_training_keeps_exact_integers_and_catalog_keeps_legacy_inputs(self):
+        from rouge.catalog import operator_attributes
+        class TrainedInt(int):
+            pass
+        preview = skills.defaults()
+        for field in ('elite','level','potential'):
+            with self.subTest(field=field), self.assertRaisesRegex(CultivationInputError, field + '需要整数'):
+                skills._cultivated_stats({**preview, field:TrainedInt(preview[field])})
+        with self.assertRaisesRegex(CultivationInputError, 'level需要整数'):
+            skills._cultivated_stats({**preview, 'level':None})
+        self.assertEqual(operator_attributes(preview['operator'], TrainedInt(1), None, True),
+                         operator_attributes(preview['operator'], 1, None, 1))
+
     def test_bad_cultivation_is_local_to_proposal(self):
         for field,value in [('elite',False),('level','55'),('level',999),('potential',7),('trust',False),('trust',10**1000)]:
             preview=skills.defaults();choices=model.cultivation_defaults(preview,environment())
@@ -30,7 +43,7 @@ class SupplementalCultivationBoundaryTests(TestCase):
                 with self.assertRaises(type(error)):model.compare_cultivation(preview,environment(),choices)
 
     def test_attribute_implementation_error_is_not_relabelled(self):
-        with patch.object(skills,'operator_attributes',side_effect=ValueError('attribute implementation')):
+        with patch.object(skills,'_attribute_values',side_effect=ValueError('attribute implementation')):
             with self.assertRaises(ValueError) as caught:skills._cultivated_stats(skills.defaults())
         self.assertNotIsInstance(caught.exception,CultivationInputError)
 

@@ -3,7 +3,7 @@ import json
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
-from .catalog import operator_attributes,CultivationInputError
+from .catalog import operator_profiles, _attribute_level, _attribute_values, CultivationInputError
 from .healing_budget import _amount
 
 
@@ -26,7 +26,7 @@ def _cultivated_stats(preview):
         raise CultivationInputError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count、missing_hp。')
     data=supplemental_profiles(); identity=preview['operator']
     if type(identity) is not str or identity not in data['operators']: raise CultivationInputError('干员未接入补充技能参考。')
-    for key in ('elite','level','potential','skill_rank','count'):
+    for key in ('skill_rank','count'):
         if type(preview[key]) is not int: raise CultivationInputError(key+'需要整数。')
     if not 1<=preview['skill_rank']<=7: raise CultivationInputError('技能参数等级需要1–7。')
     if not 0<=preview['count']<=1000: raise CultivationInputError('声明次数需要0–1000。')
@@ -37,7 +37,11 @@ def _cultivated_stats(preview):
         _amount(preview['missing_hp'],'声明生命缺口')
     except ValueError as error:
         raise CultivationInputError(str(error)) from error
-    return operator_attributes(identity,preview['elite'],preview['level'],trust,preview['potential'])
+    profile = operator_profiles()[identity]
+    elite = preview['elite']
+    phase, level = _attribute_level(profile, elite, preview['level'], exact=True)
+    stats, _, _ = _attribute_values(profile, phase, elite, level, trust, preview['potential'], None, 0, exact=True)
+    return stats
 
 
 def skill_reference(preview):
