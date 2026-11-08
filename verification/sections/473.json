@@ -1,0 +1,31 @@
+{
+  "section": 473,
+  "kind": "functional",
+  "title": "探索地图类型开关、历史频率与节点小卡",
+  "new_capability": "玩家可在游戏地图左侧切换类型，点白色历史频率或节点名称查看小卡，并从作战卡打开敌方情报和关卡地图。作战图标交给游戏。",
+  "passed": true,
+  "passed_scope": "大窗口普通玩家路径；本轮用户确认数字、名称均首击打开小卡，图标打开游戏详情。",
+  "tested_commit": "f8e1198fac887944510a10b56ccefcd08d626a5b",
+  "previous_receipts": [
+    "verification/maintenance/overlay473-pointer-caption-20261107/summary.json",
+    "verification/maintenance/overlay473-closeout-20261103/README.md"
+  ],
+  "live": {
+    "card_pressed": 5,
+    "card_painted_ms_from_handler": [
+      387.18,
+      66.34,
+      25.41,
+      16.29,
+      21.46
+    ],
+    "close_button": 5,
+    "listener_start": 5,
+    "listener_stop": 5,
+    "detail_samples": 2,
+    "icon_evidence": "用户确认，另有节点详情页历史补读。轮询未捕获游戏进程的按下事件，无法绑定具体一次点击。",
+    "caption_evidence": "记录按节点登记点击，未编码数字/原名称差异；二者的首击结果由用户确认。"
+  },
+  "remaining": "持续负载、短页覆盖、缩放恢复和低分辨率留在连续体验门禁。",
+  "full_suite_rerun": false
+}

@@ -42,7 +42,7 @@
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": false,
-    "new_functional_sections_paused": true,
+    "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -89,7 +89,7 @@
     "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 472,
+  "completed_sections": 473,
   "sections": [
     {
       "number": 1,
@@ -2910,10 +2910,16 @@
       "completion_ref": "player-section-472",
       "topic": "首层四图的入口与保护目标标记",
       "verification": "verification/sections/472.json"
+    },
+    {
+      "number": 473,
+      "completion_ref": "player-section-473",
+      "topic": "探索地图类型开关、历史频率与节点小卡",
+      "verification": "verification/sections/473.json"
     }
   ],
-  "next_section": 473,
-  "next_action": "PRTS正文和最终截图已完成，无需重复用户测试；源a392247c0，当前v25/N保持运行。本项结束。后续按WORK_IN_PROGRESS顶部衔接快速光标/间歇名称穿透问题，保留所有早前失败。第473节仍未销项；本次纯验收归档不改代码、不全量、不重启或操作游戏。",
+  "next_section": 474,
+  "next_action": "Gate 0 继续正常流程的录像与日志对照，补转场和缩放遮挡。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3030,14 +3036,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 472,
-    "verification": "verification/sections/472.json",
+    "section": 473,
+    "verification": "verification/sections/473.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 472,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "d4a8fa33a648abae6a176917913a8b4ff008caef",
     "proof": "verification/sections/472-publication.json",
@@ -3288,7 +3294,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
+  "batch_status": "GATE0_SESSION_PAIRING_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3500,14 +3506,14 @@
     "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
-    "completed_sections": 472,
-    "next_section": 473,
-    "next_section_started": true,
+    "status": "GATE0_SESSION_PAIRING_PENDING",
+    "completed_sections": 473,
+    "next_section": 474,
+    "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
-    "receipt": "verification/sections/472.json",
-    "scope": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域；等待真实连续点击复测。"
+    "receipt": "verification/sections/473.json",
+    "scope": "Gate 0 继续正常流程的录像与日志对照，补转场和缩放遮挡。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10407,7 +10413,7 @@
   "execution_track": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING",
+    "status": "GATE0_SESSION_PAIRING_PENDING",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -10424,14 +10430,6 @@
     "latest_live_validation": "verification/maintenance/map-overlay-display-20261103/summary.json",
     "actual_game_latency_measured": true,
     "short_page_coverage_accepted": false
-  },
-  "current_maintenance_save": {
-    "title": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域",
-    "receipt": "verification/maintenance/overlay473-pointer-caption-20261107/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_incremented": false,
-    "acceptance_complete": false,
-    "previous_implementation_receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json"
   },
   "branch_transition": {
     "active_branch": "main",
@@ -10830,5 +10828,13 @@
     "functional_section_incremented": false,
     "acceptance_complete": false,
     "previous_implementation_receipt": "verification/maintenance/code-constraints-initialization-20261104/summary.json"
+  },
+  "previous_overlay473_pointer_save": {
+    "title": "第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域",
+    "receipt": "verification/maintenance/overlay473-pointer-caption-20261107/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "acceptance_complete": false,
+    "previous_implementation_receipt": "verification/maintenance/overlay473-closeout-20261103/summary.json"
   }
 }

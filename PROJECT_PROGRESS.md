@@ -1,9 +1,5 @@
 # 黑流树海助手 · 未完成事项
 
-## 第473节实机复测
-
-快速从类型栏移回节点名称及百分比，核对小卡是否首击打开、图标是否仍交给游戏。采样负载与未覆盖画面继续记录。[本轮回执](verification/maintenance/overlay473-pointer-caption-20261107/summary.json)。
-
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
 更新：2026-11-04。工作仓库为 GitHub `lim114/rougezhushou`；后续改动统一在 `main` 主分支实现并普通推送，本机与远端保持同一版本。当前按已确认的连续体验门禁推进，P3/P2/P1作为需求分类保留；同一问题连续三次未解决则搁置并保留恢复条件；OCR及识别覆盖、适配、准确率与耗时与功能同步推进，包含已有实现。面向玩家先展示结果、用途和必要条件，使用游戏内中文和清晰分组；来源、校验过程与详细限制按需展开，避免重复警告。本清单只列尚未完成的工作；部分完成的项目只保留剩余缺口。完成项与历史验收见 [PROJECT_COMPLETED.md](PROJECT_COMPLETED.md)。

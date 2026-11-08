@@ -1,17 +1,15 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第472节 + 首层四图的入口与保护目标标记
+# 当前云端续接索引 · 第473节 + 探索地图类型开关、历史频率与节点小卡
 
-实际完成的改动：猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。
+实际完成的改动：玩家可在游戏地图左侧切换类型，点白色历史频率或节点名称查看小卡，并从作战卡打开敌方情报和关卡地图。作战图标交给游戏。
 
-[本节验收回执](verification/sections/472.json)。
+[本节验收回执](verification/sections/473.json)。
 
-已完成至472，后续473；本批状态 `EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING`。推进终点：未指定数字终点。全量检查机制已取消；仅在用户明确要求后恢复。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至473，后续474；本批状态 `GATE0_SESSION_PAIRING_PENDING`。推进终点：未指定数字终点。全量检查机制已取消；仅在用户明确要求后恢复。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `main`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：Gate 0 → Gate 1 → Gate 2 → Gate 3；先记录真实体验，再按实测决定修复范围；P3/P2/P1保留为需求分类。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
-最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `EXPLORATION_OVERLAY_473_LIVE_RETEST_PENDING`。已采集1场，完成录像对照0场。
-
-当前实现维护：第473节恢复快速跨窗后的残留光标识别，补上百分比点击区域；回执 `verification/maintenance/overlay473-pointer-caption-20261107/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `GATE0_SESSION_PAIRING_PENDING`。已采集1场，完成录像对照0场。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
