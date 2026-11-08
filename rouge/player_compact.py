@@ -193,6 +193,22 @@ class CompactAssistant(QDialog):
                 host.move(position)
             else:host.move(x,max(screen.top(),y))
         return True
+    def visible_current_resource_strips(self):
+        strips = []
+        if self.inventory_popup and self.inventory_popup.resources.isVisible():
+            strips.append(self.inventory_popup.resources)
+        if self.map_popup:
+            panel = self.map_popup.panel
+            if panel.resources.isVisible() and not (panel.view.graph and panel.view.historical):
+                strips.append(panel.resources)
+        return strips
+
+    def update_current_hud(self, resources):
+        from .player_resource_facts import hud_rows
+        rows = {row['key']: row for row in hud_rows(resources)}
+        for strip in self.visible_current_resource_strips():
+            strip.set_rows([rows.get(row['key'], row) for row in strip.rows])
+
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         from .player_resource_facts import inventory_summary, resource_rows

@@ -97,7 +97,7 @@ def near_number(image,texts,anchor,engine,*,side='above'):
     return None
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -120,6 +120,14 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
     is_roster=normal_roster or popup_member is not None
     if not (is_map or is_roster):return None
     if not is_map:cards=[]
+    resources = None
+    if is_map and on_hud is not None:
+        resources = read_resources(image, texts, engine)
+        # Parts and held-card counters still require the inventory cross-check below.
+        from .relic_counter_semantics import HUD_RESOURCE_LABELS
+        hud = {key: value for key, value in resources.items() if key in HUD_RESOURCE_LABELS or key == 'gold'}
+        if hud:
+            on_hud(hud)
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
     crew = anchors.get('干员')
     if is_roster:
@@ -163,7 +171,8 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
             ranks=read_card_masteries(image,*member['card_position'],len(operator_profiles()[member['id']]['skills']),space=member.get('card_scale',(1,1)))
             member['skill_ranks']={**member['skill_ranks'],**ranks}
             if ranks:member['sources']['skill_ranks']='本局卡片各技能三个亮起专精标记分别确认'
-    resources=read_resources(image,texts,engine) if is_map else {}
+    if resources is None:
+        resources=read_resources(image,texts,engine) if is_map else {}
     counters=[];unbound_counters=[];counter_performance={}
     if held['text']=='收起' and is_map:
         badges,regions,counter_performance,_=read_local_counter_badges(image,texts,held,engine)

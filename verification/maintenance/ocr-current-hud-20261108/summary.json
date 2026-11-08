@@ -1,0 +1,171 @@
+{
+  "title": "地图与藏品面板提前显示本帧资源读数",
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "baseline": "6511d40cfd1d854d9e6c16e17f8b963d547d0eb2",
+  "functional_section_incremented": false,
+  "gate0_changed": false,
+  "acceptance_500ms": false,
+  "change": "On current OCR samples with a visible current resource strip, publish confirmed HUD values from the run-page resource reader on the Qt event queue before inventory matching and map refinement. Persistence, history and calculation still consume the complete observation. Parts are excluded pending held-counter reconciliation.",
+  "prior_recording_context": {
+    "current_lane_n": 117,
+    "median_age_at_read_ms_rounded": 94,
+    "median_reader_ms_rounded": 1639,
+    "median_ui_ms_rounded": 72,
+    "source_receipt": "verification/maintenance/gate0-normal-repeat-20261108/summary.json"
+  },
+  "windows_replay": {
+    "surface": "visible inventory panel life chip, native Qt, isolated state, manual sample from production capture buffer. Timing starts at replay injection and ends at the first Paint event where the expected current life is displayed. No physical screen scanout or scene-to-capture timing. Final time includes processing queued UI events.",
+    "input": "Three public reference video frames, visually checked life 12/12, 6/6 and 12/12 at 44, 60 and 95 s respectively. First shows an illustrative HUD, 60 s shows a map and 95 s shows a window with partial occlusion. Each arm uses a new reader. Four sequential runs in baseline / early / early / baseline order. Baseline uses the original complete-observation display path.",
+    "columns": [
+      "mode",
+      "public_video_second",
+      "first_life_paint_ms",
+      "sample_and_ui_done_ms"
+    ],
+    "rows": [
+      [
+        "baseline",
+        44,
+        16062,
+        16081
+      ],
+      [
+        "baseline",
+        60,
+        11103,
+        11112
+      ],
+      [
+        "baseline",
+        95,
+        8804,
+        8826
+      ],
+      [
+        "early",
+        44,
+        7271,
+        11764
+      ],
+      [
+        "early",
+        60,
+        3081,
+        10596
+      ],
+      [
+        "early",
+        95,
+        4146,
+        9154
+      ],
+      [
+        "early",
+        44,
+        7427,
+        11959
+      ],
+      [
+        "early",
+        60,
+        4892,
+        12851
+      ],
+      [
+        "early",
+        95,
+        4843,
+        11126
+      ],
+      [
+        "baseline",
+        44,
+        12484,
+        12504
+      ],
+      [
+        "baseline",
+        60,
+        12906,
+        12912
+      ],
+      [
+        "baseline",
+        95,
+        8315,
+        8340
+      ]
+    ],
+    "first_paint_median_ms": {
+      "baseline": 11793.5,
+      "early": 4867.5
+    },
+    "under_500ms": {
+      "early": 0,
+      "trials": 6
+    }
+  },
+  "parity": {
+    "comparison": "Independent ScreenReader using Git baseline recognition and run_recognition vs current early callback with identical fixed run context. All observation fields compared except observed_at, elapsed_ms and performance. Verified every emitted value, source and capacity against final resource. Exact repeat takes existing fast path.",
+    "columns": [
+      "second",
+      "callback_count",
+      "resource_count"
+    ],
+    "rows": [
+      [
+        44,
+        1,
+        2
+      ],
+      [
+        60,
+        1,
+        4
+      ],
+      [
+        60.1,
+        1,
+        4
+      ],
+      [
+        95,
+        1,
+        5
+      ],
+      [
+        95,
+        0,
+        0
+      ]
+    ]
+  },
+  "checks": {
+    "passed": 201,
+    "selected_modules": [
+      "sampling_flow",
+      "hud_resources_441",
+      "player_resource_strip",
+      "ocr_text_row_reuse",
+      "page_ocr_056",
+      "page_ocr_058",
+      "page_ocr_seed_bridge",
+      "interpret_lookup_review",
+      "map_ocr_tile_overlap",
+      "overlay_display",
+      "recognition_reuse",
+      "recognition_057",
+      "ui_refresh_045",
+      "cloud_index_sync",
+      "hybrid_safety_058"
+    ],
+    "failure_coverage": "Window shows 0/8 before completion without modifying saved resources; worker failure restores committed values. Old epoch, generation, run identity and old frame excluded. Historical floor excluded, incomplete region coverage withheld.",
+    "initial_failures": [
+      "First native replay offered a second manual sample before resuming collection. Entering collection cleared the queue and timed out. Repeated after enabling collection before frame injection.",
+      "Initial suite had twelve errors from test substitutes using the previous private interpreter signature. Updated substitutes and reran affected scope."
+    ]
+  },
+  "live_window": "Closed original completed recording session normally after checking session_end, opened ordinary updated product with ongoing read-only sampling, and verified native toolbar visible and responsive. No new recording started.",
+  "remaining": "Live game change-to-visible end-to-end p95, more independent gameplay transitions, resource accuracy against ground truth beyond the three life fields, and other hardware remain unverified."
+}

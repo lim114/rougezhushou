@@ -62,7 +62,7 @@ class ScreenReader:
         self._last_context = None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
 
-    def read(self, image, *, client_rect=None,run_context=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -85,7 +85,7 @@ class ScreenReader:
             return result
         icon_hits = self._icon_cache.hits if self._icon_cache else 0
         ocr_hits = self._engine.cache.hits if isinstance(self._engine,CachedOCR) else 0
-        result = self._read(image, client_rect=client_rect,run_context=run_context)
+        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud)
         result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
@@ -101,7 +101,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -202,7 +202,9 @@ class ScreenReader:
                 self._frame_ocr.metrics.get('outside_page_regions_changed') else 'page_changed_area_full')
             routing.update(strategy='full_discovery',fallback_reason=reason)
         elapsed('full_ocr')
-        result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context)
+        complete = self._page_ocr.metrics.get('complete_current_texts') is True if page_batches else regions is None
+        result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,
+                               on_hud=on_hud if complete else None)
         page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
             result['performance']['ocr']=dict(self._page_ocr.metrics)
@@ -225,14 +227,14 @@ class ScreenReader:
             if isinstance(self._frame_ocr,DynamicOCR):raw,_=self._frame_ocr(image,regions=None,force_discovery=True)
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
-            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context)
+            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud)
             page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
         self._page_verified_identity = page_identity if page_matches else None
         result['performance']['routing']=routing
         return result
 
-    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None):
+    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None):
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
@@ -284,7 +286,7 @@ class ScreenReader:
             operator=read_module_page(image,texts)
             if operator:page='operator_module'
         elapsed('operator')
-        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context)
+        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,on_hud=on_hud)
         elapsed('run')
         from .player_shop_hover import shop_snapshot
         shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)

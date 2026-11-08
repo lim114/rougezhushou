@@ -68,7 +68,13 @@ def resource_rows(state, *, inventory=None):
     rows.append({'key': 'crew', 'name': '干员', 'value': crew_value,
         'note': f'已确认在队{crew}名；' + (f'已读队伍总数{crew_total}名。' if crew_total is not None else '队伍总数未读。')
                 + '不是可携带或可部署人数；点击查看本局队伍。'})
+    rows.extend(hud_rows(resources))
+    return rows
+
+
+def hud_rows(resources):
     from .relic_counter_semantics import RESOURCE_LABELS
+    rows = []
     for key in ('life', 'shield', 'command', 'hope', 'gold', 'action', 'valuation'):
         record = resources.get(key) or {}
         amount = record.get('value')

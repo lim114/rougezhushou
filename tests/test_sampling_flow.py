@@ -68,6 +68,57 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
         self.assertEqual(self.window.capture.stats()['pending'],0)
 
+    def test_current_hud_paints_while_worker_busy_and_failure_restores_committed_read(self):
+        window = self.window
+        window.show_compact()
+        window.compact_window.open_inventory()
+        chip = window.compact_window.inventory_popup.resources.chips['life']
+        original = chip.accessibleName()
+        before = dict(window.run.state['resources'])
+
+        def read(image, *, on_hud, **options):
+            on_hud({'life': {'value': 0, 'capacity': 8}})
+            self.release.wait(8)
+            raise ValueError('test incomplete observation')
+
+        window.reader.read = read
+        self.offer(20)
+        with patch.object(window, 'show_error'):
+            window.sample_now()
+            try:
+                self.wait_for(lambda: chip.accessibleName() == '目标生命 0/8')
+                self.assertTrue(window.busy)
+                self.assertEqual(window.run.state['resources'], before)
+            finally:
+                self.release.set()
+            self.wait_for(lambda: not window.busy)
+        self.assertEqual(chip.accessibleName(), original)
+        self.assertEqual(window.run.state['resources'], before)
+
+    def test_hud_rejects_old_sources_and_excludes_a_historical_floor(self):
+        window = self.window
+        window.show_compact()
+        bar = window.compact_window
+        bar.open_map()
+        panel = bar.map_popup.panel
+        self.qt.processEvents()
+        self.assertIn(panel.resources, bar.visible_current_resource_strips())
+        with patch.object(panel.view, 'graph', {'zone_id': 'old'}), patch.object(panel.view, 'historical', True):
+            self.assertNotIn(panel.resources, bar.visible_current_resource_strips())
+        window.busy = True
+        epoch, generation, run_id = window.sample_epoch, window.capture.stats()['generation'], window.run.state['id']
+        at = time.time()
+        window.last_sample_at, window.last_sample_seq = at, 4
+        with patch.object(bar, 'update_current_hud') as show:
+            for marker, stamp, seq in [
+                ((epoch+1, generation, run_id), at+1, 5),
+                ((epoch, generation+1, run_id), at+1, 5),
+                ((epoch, generation, 'other-run'), at+1, 5),
+                ((epoch, generation, run_id), at, 3),
+            ]:
+                window.show_sample_hud((marker, stamp, seq, {'shield': {'value': 1}}))
+            show.assert_not_called()
+
     def test_overlay_reference_keeps_pointer_bounds_from_its_recognized_frame(self):
         self.release.set();image=np.full((120,180,3),60,dtype=np.uint8)
         self.window.capture.buffer.offer(image,time.time(),pointer_bounds=[20,30,50,80])

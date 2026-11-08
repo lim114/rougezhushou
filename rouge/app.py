@@ -65,6 +65,7 @@ def apply_relic_history_notice(scenario,result):
 class Events(QObject):
     sample = Signal(object)
     sample_error = Signal(object)
+    hud_read = Signal(object)
     error = Signal(str, str)
     chunk = Signal(str)
     chat_done = Signal(bool)
@@ -155,6 +156,8 @@ class MainWindow(QMainWindow):
         self.desktop = DesktopBackend(ROOT/'.local/desktop-chat',self.events.desktop_state.emit)
         self.events.sample.connect(self.sample_received)
         self.events.sample_error.connect(self.sample_failed)
+        self.events.hud_read.connect(self.show_sample_hud)
+        self.sample_hud_visible = False
         self.events.error.connect(self.show_error)
         self.events.chunk.connect(self.chat_chunk)
         self.events.chat_done.connect(self.chat_finished)
@@ -611,6 +614,7 @@ class MainWindow(QMainWindow):
         else:
             self.timer.stop()
             self.sample_epoch += 1
+            self.restore_committed_hud()
             self.capture.set_collecting(False)
             self.capture_status.setText('自动采样已暂停；保留上次观测。')
 
@@ -624,6 +628,7 @@ class MainWindow(QMainWindow):
 
     def change_recognition_mode(self):
         self.sample_epoch += 1
+        self.restore_committed_hud()
         self.capture.discard_pending()
         if self.auto.isChecked():QTimer.singleShot(0,lambda:self.sample_now(automatic=True))
 
@@ -679,6 +684,8 @@ class MainWindow(QMainWindow):
         self.capture_status.setText('正在提取已捕获页面；后台仍继续采集…')
         mode=self.recognition_mode.currentData()
         run_context=(timeline.base_run if frame and frame['captured_at']<self.last_sample_at else self.run).recognition_context()
+        show_hud = (preferred and mode != 'visual' and self.compact_window is not None
+                    and bool(self.compact_window.visible_current_resource_strips()))
         self.recognition_mode.setEnabled(False)
         def work():
             try:
@@ -697,7 +704,12 @@ class MainWindow(QMainWindow):
                     reader=self.visual_reader
                 else:reader=self.reader
                 age_at_read_ms = (time.time() - selected['captured_at']) * 1000
-                observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context)
+                options = {}
+                if show_hud:
+                    def publish(hud):
+                        self.events.hud_read.emit((marker, selected['captured_at'], selected['seq'], hud))
+                    options['on_hud'] = publish
+                observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context,**options)
                 observation['capture_ms']=capture_ms
                 observation['captured_at'] = selected['captured_at']
                 observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
@@ -713,7 +725,24 @@ class MainWindow(QMainWindow):
                 self.events.sample_error.emit((epoch,generation,str(error)))
         threading.Thread(target=work,daemon=True).start()
 
+    def show_sample_hud(self, payload):
+        marker, at, seq, hud = payload
+        if (self.closing or not self.busy or marker != (self.sample_epoch, self.capture.stats()['generation'], self.run.state['id'])
+                or at < max(self.run.state['started_at'], self.run.state.get('last_read') or 0)
+                or (at, seq) <= (self.last_sample_at, self.last_sample_seq)):
+            return
+        resources = dict(self.run.state['resources'])
+        resources.update({key: {**record, 'captured_at': at} for key, record in hud.items()})
+        self.compact_window.update_current_hud(resources)
+        self.sample_hud_visible = True
+
+    def restore_committed_hud(self):
+        if self.sample_hud_visible:
+            self.compact_window.update_current_hud(self.run.state['resources'])
+            self.sample_hud_visible = False
+
     def finish_sample(self):
+        self.restore_committed_hud()
         self.busy=False
         self.recognition_mode.setEnabled(True)
         self.sample_button.setEnabled(True)

@@ -1,3 +1,7 @@
+## 图像识别专项 · 地图与藏品面板提前显示本帧资源读数
+
+本机 Windows 回放的6次目标生命首次绘制中位数从11.79秒降至4.87秒。5对完整输出一致，201项定向检查通过。[回执](verification/maintenance/ocr-current-hud-20261108/summary.json)。
+
 ## Gate 0 · 正常游玩录像与十分钟日志完整配对
 
 已完整配对1场，剩转场和缩放遮挡。已区分当前更新与历史补记。[回执](verification/maintenance/gate0-normal-repeat-20261108/summary.json)。
