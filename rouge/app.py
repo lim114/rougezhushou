@@ -803,8 +803,7 @@ class MainWindow(QMainWindow):
         valid=not marker or (marker['epoch']==self.sample_epoch and marker['generation']==self.capture.stats()['generation'])
         if valid and marker is not None:
             run = observation.get('run') or {}
-            gold_map = (observation.get('page') in ('exploration', 'node_detail') and run.get('page') == 'run_map'
-                        and 'gold' in run.get('resources', {}))
+            gold_map = run.get('page') == 'run_map' and 'gold' in run.get('resources', {})
             self.busy_gold.complete((marker['epoch'], marker['generation'], self.run.state['id']),
                                     marker.get('seq') or 0, map_read=gold_map)
         self.finish_sample()

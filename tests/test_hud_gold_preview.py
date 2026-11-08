@@ -88,6 +88,23 @@ class GoldPreviewTests(unittest.TestCase):
             self.assertIsNone(read_gold_preview(image, self.prior, self.seed,
                                                 {**self.view, 'content_rect': [1, 0, 480, 200]}, engine))
 
+    def test_reward_and_shop_require_verified_hud_and_ignore_off_header_price(self):
+        from copy import deepcopy
+        price = deepcopy(self.seed['texts'][-1])
+        price['box'] = (corners(40, 120, 75, 142)/[480, 200]).tolist()
+        self.seed['texts'].append(price)
+        def read():
+            return read_gold_preview(number_frame('22'), self.prior, self.seed, self.view, Mock())
+        with patch('rouge.hud_gold_preview.find_gold_icon', return_value=(.97, .76, .15)):
+            for page in ('shop', 'unknown'):
+                self.seed['page'] = page
+                self.assertEqual(read()['value'], 22)
+            self.seed['run']['page'] = 'run_roster'
+            self.assertIsNone(read())
+            self.seed['run']['page'] = 'run_map'
+            price['box'] = (corners(40, 20, 75, 40)/[480, 200]).tolist()
+            self.assertIsNone(read())
+
     def test_seed_follows_window_and_run_not_learned_difficulty(self):
         reader = ScreenReader()
         observation = {'page': 'exploration', 'performance': {}}

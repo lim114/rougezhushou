@@ -129,7 +129,7 @@ class ScreenReader:
         source_image = image
         image,viewport=prepare_frame(image,client_rect)
         elapsed('viewport')
-        if gold_seed is not None and gold_seed.get('page') in ('exploration', 'node_detail'):
+        if gold_seed is not None:
             from .hud_gold_preview import read_gold_preview
             gold = read_gold_preview(source_image, self._last_frame, gold_seed, viewport, self._engine)
             if gold is not None:
@@ -304,13 +304,10 @@ class ScreenReader:
         elapsed('operator')
         expanded = any(t['text'] == '收起' and t['confidence'] >= .9 for t in texts)
         map_reference = None
-        if on_gold_reference is not None and page in ('exploration', 'node_detail') and not expanded:
+        if on_gold_reference is not None and not expanded:
             def map_reference(gold):
                 from copy import copy
                 from .hud_gold_preview import LABELS
-                from .player_shop_hover import shop_target
-                if shop_target(raw, {}, (-1, -1), image.shape)[1]:
-                    return
                 wanted = (*LABELS, str(gold['value']))
                 seed = {'page': page, 'viewport': viewport,
                         'texts': deepcopy([row for row in texts if row['text'] in wanted]),

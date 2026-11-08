@@ -29,6 +29,14 @@ def units(image, anchor, reference_font):
     scale = height / reference_font
     return scale * 2052 / w, scale * 1127 / h
 
+def header_span(life_label, scale=1.):
+    """Vertical span of the resource icons, relative to the observed life label."""
+    ys = [point[1] for point in life_label['box']]
+    top, bottom = min(ys), max(ys)
+    height = (bottom - top) * scale
+    return top*scale - height, bottom*scale + 2*height
+
+
 def crop(image, bounds):
     h, w = image.shape[:2]
     x0, y0, x1, y1 = bounds

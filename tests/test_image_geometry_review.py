@@ -6,6 +6,27 @@ from rouge.anchors import crop
 from rouge.viewport import map_evidence, prepare_frame
 
 class ImageGeometryReviewTests(unittest.TestCase):
+    def test_gold_icon_between_coarse_scales_and_shop_prices_below_header(self):
+        import cv2
+        from rouge.resource_recognition import gold_template, read_resources
+
+        h, w = 360, 960
+        image = np.zeros((h, w, 3), np.uint8)
+        icon = cv2.cvtColor(gold_template(), cv2.COLOR_GRAY2BGR)
+        ih, iw = icon.shape[:2]
+        image[5:5+ih, 600:600+iw] = icon
+        image[190:190+ih, 600:600+iw] = icon
+
+        def text(name, x, y, width, height):
+            return {'text': name, 'confidence': .99, 'box': [
+                [a/w, b/h] for a,b in ((x,y),(x+width,y),(x+width,y+height),(x,y+height))]}
+
+        rows = [text('目标生命值', 20, 10, 85, 26),
+                text('22', 763, 30, 32, 22), text('6', 763, 215, 18, 22)]
+        self.assertEqual(read_resources(image, rows)['gold']['value'], 22)
+        image[:70] = 0
+        self.assertNotIn('gold', read_resources(image, rows))
+
     def test_gold_search_needs_both_life_label_and_numeric_candidate(self):
         from unittest.mock import patch
         from rouge.resource_recognition import read_resources

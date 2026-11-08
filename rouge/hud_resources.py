@@ -4,7 +4,7 @@ from pathlib import Path
 import re
 import cv2
 import numpy as np
-from .anchors import crop
+from .anchors import crop, header_span
 from .operator_recognition import center
 
 
@@ -74,7 +74,8 @@ def read_hud_resources(image, texts, engine):
     # remembered screen quadrant. Their own bounds locate their counter.
     y0, y1 = life_bounds
     font = (y1-y0)*h
-    top, bottom = max(0, int(y0*h-font)), min(h, int(y1*h+2*font))
+    top_y, bottom_y = header_span(labels['目标生命值'], h)
+    top, bottom = max(0, int(top_y)), min(h, int(bottom_y))
     gray = cv2.cvtColor(image[top:bottom], cv2.COLOR_BGR2GRAY)
     for key, template in _icons().items():
         matches = []

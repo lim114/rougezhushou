@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 
-from .anchors import units
+from .anchors import header_span, units
 from .operator_recognition import center
 from .resource_recognition import find_gold_icon, gold_reading
 
@@ -27,7 +27,7 @@ def digit_shapes(gray):
 
 
 def read_gold_preview(image, prior_image, previous, viewport, engine):
-    if previous['page'] not in ('exploration', 'node_detail') or previous['viewport'] != viewport:
+    if previous.get('viewport') != viewport:
         return None
     run = previous.get('run') or {}
     gold = run.get('resources', {}).get('gold')
@@ -36,6 +36,7 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
     number = str(gold['value'])
     wanted = (*LABELS, number)
     anchors = {}
+    amounts = []
     # Previous observations have source-normalized boxes, including any
     # window border. Work entirely inside the current verified content rect.
     source_size = np.array(viewport['source_size'])
@@ -46,23 +47,32 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
         name = text['text']
         if name not in wanted or text['confidence'] < (.95 if name == number else .9):
             continue
-        if name in anchors:
-            return None
         points = (np.asarray(text['box']) * source_size - (x0, y0)) / (w, h)
-        anchors[name] = {**text, 'box': points.tolist()}
-    if len(anchors) != len(wanted):
+        record = {**text, 'box': points.tolist()}
+        if name == number:
+            amounts.append(record)
+        elif name in anchors:
+            return None
+        else:
+            anchors[name] = record
+    if len(anchors) != len(LABELS):
         return None
+    header = header_span(anchors[LABELS[0]])
+    slots = [row for row in amounts if header[0] <= center(row)[1] <= header[1]]
+    if len(slots) != 1:
+        return None
+    amount = slots[0]
 
     ux, uy = units(frame, anchors[LABELS[0]], 27.9678)
-    nx, ny = center(anchors[number])
-    icon = find_gold_icon(frame, [(nx, ny)], ux, uy)
+    nx, ny = center(amount)
+    icon = find_gold_icon(frame, [(nx, ny)], ux, uy, header=header)
     if icon is None:
         return None
 
     # Learn shapes from the complete read's actual number, then look across
     # the whole right-aligned four-digit field, including space for width changes.
     prior = prior_image[y0:y1, x0:x1]
-    number_box = np.array(anchors[number]['box']) * (w, h)
+    number_box = np.array(amount['box']) * (w, h)
     reading = match_digits(frame, prior, number_box, number, icon[1], ux)
     if reading is None:
         return None

@@ -122,14 +122,16 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     if not is_map:cards=[]
     resources = None
     if is_map and on_hud is not None:
-        resources = read_resources(image, texts, engine)
+        def publish_gold(gold):
+            on_hud({'gold': gold})
+            if on_map_gold is not None and not is_roster:
+                on_map_gold(gold)
+        resources = read_resources(image, texts, engine, on_gold=publish_gold)
         # Parts and held-card counters still require the inventory cross-check below.
         from .relic_counter_semantics import HUD_RESOURCE_LABELS
         hud = {key: value for key, value in resources.items() if key in HUD_RESOURCE_LABELS or key == 'gold'}
-        if hud:
+        if any(key in HUD_RESOURCE_LABELS for key in hud):
             on_hud(hud)
-            if on_map_gold is not None and not is_roster and 'gold' in hud:
-                on_map_gold(hud['gold'])
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
     crew = anchors.get('干员')
     if is_roster:
