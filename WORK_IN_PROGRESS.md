@@ -1,3 +1,7 @@
+## Gate 0 · 正常游玩录像与十分钟日志完整配对
+
+已完整配对1场，剩转场和缩放遮挡。已区分当前更新与历史补记。[回执](verification/maintenance/gate0-normal-repeat-20261108/summary.json)。
+
 ## 图像识别专项 · 加速 OCR 检测输入的逐像素归一化
 
 已核对自动采样与商店读字入口。下一步测量页面当前字段从变化到首次正确显示的延迟，补齐排队、显示与错归属证据。[回执](verification/maintenance/ocr-detector-input-20261108/summary.json)。
