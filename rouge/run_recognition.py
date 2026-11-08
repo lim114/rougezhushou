@@ -97,7 +97,7 @@ def near_number(image,texts,anchor,engine,*,side='above'):
     return None
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -128,6 +128,8 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None):
         hud = {key: value for key, value in resources.items() if key in HUD_RESOURCE_LABELS or key == 'gold'}
         if hud:
             on_hud(hud)
+            if on_map_gold is not None and not is_roster and 'gold' in hud:
+                on_map_gold(hud['gold'])
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
     crew = anchors.get('干员')
     if is_roster:

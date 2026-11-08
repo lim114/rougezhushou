@@ -1,0 +1,127 @@
+{
+  "title": "整帧识别期间提前更新最新源石锭",
+  "kind": "maintenance",
+  "baseline": "d76bbcc0ed2b69af9ce29167468ba76a84a55a2b",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "implementation": "On a verified automatic current map HUD, publish the gold evidence after current OCR/semantic qualification, before inventory matching. While the full sampler is occupied, at most one thread peeks at a new latest frame without consuming it. Reuse the original icon, label, viewport and exact digit checks. Only current resource strips use this temporary reading. Keep order by capture time and sequence; the chronological reducer and history still take full observations.",
+  "limits": "Requires visible current map/inventory resource strip, automatic OCR sampling, bound native window, matching physical client geometry, a qualified reference and an unambiguous known glyph. Continuous live gameplay p95, FPS, cold entry, new glyphs, other resources and other hardware remain unverified.",
+  "baseline_reproduced_ms": 10801,
+  "native_windows_replay": {
+    "timing": "Real recorded client crops offered to the production frame buffer while the initial full worker was demonstrably busy. Physical client rect supplied, capture/window provider isolated, native Qt inventory gold label observed on its Paint event. One repeated known-glyph change, not independent gameplay sessions or physical display scanout. Each run continued through canonical state update.",
+    "single_arrivals": [
+      {
+        "paint_ms": 215,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3
+      },
+      {
+        "paint_ms": 179,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3
+      },
+      {
+        "paint_ms": 161,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3
+      },
+      {
+        "paint_ms": 202,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3
+      }
+    ],
+    "burst": {
+      "paint_ms": 362,
+      "early_commit_is_new": false,
+      "pending_at_paint": 7,
+      "injection_ms": [
+        0,
+        102,
+        203,
+        301,
+        403,
+        500,
+        601,
+        700,
+        800,
+        901,
+        1003,
+        1102
+      ],
+      "paint_history_after_first_correct": [
+        true,
+        true,
+        true
+      ]
+    },
+    "burst_scope": "Twelve separately decoded frames from a recorded one-second interval, one changed amount; timing refers to the first correct paint. Current gold persisted at all subsequent observed paint events."
+  },
+  "paired_cost_replay": {
+    "trials": [
+      {
+        "paint_ms": 8662,
+        "early_commit_is_new": false,
+        "pending_at_paint": 0,
+        "later_paints": 2,
+        "full_ms": 19515,
+        "cpu_s": 79.69,
+        "rss_delta_mib": 356.7,
+        "mode": "off"
+      },
+      {
+        "paint_ms": 218,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3,
+        "full_ms": 19884,
+        "cpu_s": 81.17,
+        "rss_delta_mib": 349.5,
+        "mode": "on"
+      },
+      {
+        "paint_ms": 220,
+        "early_commit_is_new": false,
+        "pending_at_paint": 1,
+        "later_paints": 3,
+        "full_ms": 19681,
+        "cpu_s": 81.22,
+        "rss_delta_mib": 352.3,
+        "mode": "on"
+      },
+      {
+        "paint_ms": 8980,
+        "early_commit_is_new": false,
+        "pending_at_paint": 0,
+        "later_paints": 2,
+        "full_ms": 20289,
+        "cpu_s": 82.2,
+        "rss_delta_mib": 349.4,
+        "mode": "off"
+      }
+    ],
+    "scope": "Final build, same two-frame automatic replay, disabling the busy poll only for control. Order off/on/on/off. CPU is process CPU seconds across cores, RSS is endpoint delta including model startup, not peak memory. No game FPS metric or stable cross-hardware overhead estimate."
+  },
+  "parity": {
+    "paired_complete_reads": 5,
+    "reference_callbacks": [
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    "compared": "Git baseline recognition and run reader, same ordered input and fixed context. Equal full observed fields excluding performance, elapsed_ms and observed_at, and equal main HUD callbacks. Included nonmap negative; each emitted reference matched final resource."
+  },
+  "tests": {
+    "passed": 267,
+    "scope": "Bounded latest-only preview and unchanged pending count, source/generation/run loss, minimize and invalidation, incomplete coverage, missing glyph, historical surfaces, same-time sequence ordering, unrelated HUD fields, older canonical completion and repaint, timeline, OCR, compact UI and index.",
+    "initial_failure": "First combined run had two compact toolbar fixtures without the map-overlay reference. Provided missing empty owner state in the fixtures and reran the targeted scope."
+  },
+  "window": "Original test launcher closed normally; updated native toolbar opened, visible and responding. Game inputs, chats sent, new recordings: zero."
+}

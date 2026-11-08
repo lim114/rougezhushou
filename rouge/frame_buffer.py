@@ -243,10 +243,12 @@ class FrameBuffer:
             # latest-frame fallback still owns its pixels and needs a copy.
             return self._export(frame, copy_pixels=frame is self._latest)
 
-    def latest(self):
-        """Return a copy for diagnostics; recognition should use take()."""
+    def latest(self, *, after_seq=None):
+        """Peek at a newer frame without consuming a historical candidate."""
         with self._lock:
-            return self._export(self._latest, copy_pixels=True) if self._latest is not None else None
+            if self._latest is None or (after_seq is not None and self._latest['seq'] <= after_seq):
+                return None
+            return self._export(self._latest, copy_pixels=True)
 
     def clear(self):
         """Invalidate a capture/run generation without reusing sequence IDs."""

@@ -1,5 +1,5 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
-from PySide6.QtCore import Qt,QPoint
+from PySide6.QtCore import Qt,QPoint,Signal
 from PySide6.QtGui import QRegion
 from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget,QTabBar,QScrollArea
 from .player_overview import overview_facts
@@ -24,6 +24,8 @@ from .player_map import MapPanel
 from .player_reference_window import ReferenceWindow, ToolPage, NotesPage
 
 class CompactAssistant(QDialog):
+    resources_refreshed = Signal()
+
     def __init__(self,owner,hotkey_path=None):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.setWindowTitle('黑流树海助手')
@@ -238,6 +240,8 @@ class CompactAssistant(QDialog):
         if self.exchange_popup and self.exchange_popup.isVisible():
             source=self.inventory_popup.panel;source.reload_sources()
             self.exchange_popup.panel.refresh_source(source.source_index.data if source.source_index else None,source.source_signature)
+        self.resources_refreshed.emit()
+
     def open_exchange(self,version,identity):
         if self.inventory_popup is None:self.open_inventory()
         source=self.inventory_popup.panel;source.reload_sources()

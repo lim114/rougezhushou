@@ -63,7 +63,7 @@ class ScreenReader:
         self._last_hud_source = None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -91,7 +91,8 @@ class ScreenReader:
         gold_seed = None
         if on_hud is not None and same_source and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
             gold_seed = self._last_result
-        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed)
+        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
+                            on_gold_reference=on_gold_reference)
         result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
@@ -108,7 +109,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -218,7 +219,7 @@ class ScreenReader:
         elapsed('full_ocr')
         complete = self._page_ocr.metrics.get('complete_current_texts') is True if page_batches else regions is None
         result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,
-                               on_hud=on_hud if complete else None)
+                               on_hud=on_hud if complete else None, on_gold_reference=on_gold_reference if complete else None)
         page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
             result['performance']['ocr']=dict(self._page_ocr.metrics)
@@ -241,14 +242,15 @@ class ScreenReader:
             if isinstance(self._frame_ocr,DynamicOCR):raw,_=self._frame_ocr(image,regions=None,force_discovery=True)
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
-            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud)
+            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud,
+                                   on_gold_reference=on_gold_reference)
             page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
         self._page_verified_identity = page_identity if page_matches else None
         result['performance']['routing']=routing
         return result
 
-    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None):
+    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
@@ -300,7 +302,26 @@ class ScreenReader:
             operator=read_module_page(image,texts)
             if operator:page='operator_module'
         elapsed('operator')
-        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,on_hud=on_hud)
+        expanded = any(t['text'] == '收起' and t['confidence'] >= .9 for t in texts)
+        map_reference = None
+        if on_gold_reference is not None and page in ('exploration', 'node_detail') and not expanded:
+            def map_reference(gold):
+                from copy import copy
+                from .hud_gold_preview import LABELS
+                from .player_shop_hover import shop_target
+                if shop_target(raw, {}, (-1, -1), image.shape)[1]:
+                    return
+                wanted = (*LABELS, str(gold['value']))
+                seed = {'page': page, 'viewport': viewport,
+                        'texts': deepcopy([row for row in texts if row['text'] in wanted]),
+                        'run': {'page': 'run_map', 'resources': {'gold': dict(gold)}}}
+                map_evidence(seed['texts'], viewport)
+                # The preview uses the upright line recognizer and its existing
+                # model session, without sharing the full reader's result caches.
+                provider = self._engine.engine if isinstance(self._engine, CachedOCR) else self._engine
+                on_gold_reference(seed, copy(provider))
+        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
+                     on_hud=on_hud,on_map_gold=map_reference)
         elapsed('run')
         from .player_shop_hover import shop_snapshot
         shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
@@ -308,7 +329,7 @@ class ScreenReader:
             run=run or {'page':'shop','operators':[],'relics':{'ids':[],'icons':[],'count':None,'source':'unread'}}
             run['shop']=shop;page='shop'
         if run and run['page']=='run_roster':page='run_roster'
-        elif run and any(t['text']=='收起' and t['confidence']>=.9 for t in texts):page='run_relics'
+        elif run and expanded:page='run_relics'
         content=read_node_content(image,texts,page,stage,nodes)
         if content and content['kind']=='event' and page=='unknown':page='node_event'
         if content and run is None:

@@ -122,6 +122,7 @@ class MainWindow(QMainWindow):
         self.sample_epoch = 0
         self.last_sample_at = 0
         self.last_sample_seq = 0
+        self.active_sample_seq = 0
         self.observation_timeline = None
         self.timeline_marker = None
         self.prefer_current_capture = True
@@ -156,8 +157,11 @@ class MainWindow(QMainWindow):
         self.desktop = DesktopBackend(ROOT/'.local/desktop-chat',self.events.desktop_state.emit)
         self.events.sample.connect(self.sample_received)
         self.events.sample_error.connect(self.sample_failed)
+        from .busy_gold import BusyGold
+        self.busy_gold = BusyGold(self)
         self.events.hud_read.connect(self.show_sample_hud)
-        self.sample_hud_visible = False
+        self.sample_hud = {}
+        self.sample_hud_seq = 0
         self.events.error.connect(self.show_error)
         self.events.chunk.connect(self.chat_chunk)
         self.events.chat_done.connect(self.chat_finished)
@@ -318,7 +322,9 @@ class MainWindow(QMainWindow):
 
     def show_compact(self):
         from .player_compact import CompactAssistant
-        if self.compact_window is None:self.compact_window=CompactAssistant(self,ROOT/'.local/player-shortcut.json')
+        if self.compact_window is None:
+            self.compact_window=CompactAssistant(self,ROOT/'.local/player-shortcut.json')
+            self.compact_window.resources_refreshed.connect(self.reapply_sample_hud)
         if self.compact_window.hidden_windows is not None:self.compact_window.toggle_visibility()
         self.compact_window.refresh();self.compact_window.show();self.hide()
 
@@ -614,6 +620,7 @@ class MainWindow(QMainWindow):
         else:
             self.timer.stop()
             self.sample_epoch += 1
+            self.busy_gold.clear()
             self.restore_committed_hud()
             self.capture.set_collecting(False)
             self.capture_status.setText('自动采样已暂停；保留上次观测。')
@@ -628,6 +635,7 @@ class MainWindow(QMainWindow):
 
     def change_recognition_mode(self):
         self.sample_epoch += 1
+        self.busy_gold.clear()
         self.restore_committed_hud()
         self.capture.discard_pending()
         if self.auto.isChecked():QTimer.singleShot(0,lambda:self.sample_now(automatic=True))
@@ -635,7 +643,11 @@ class MainWindow(QMainWindow):
     def sample_now(self, checked=False, *, automatic=False):
         if automatic and not self.auto.isChecked():return
         self.update_sampling_status()
-        if self.busy or self.closing:
+        if self.closing:
+            return
+        if automatic:
+            self.busy_gold.poll()
+        if self.busy:
             return
         if automatic and time.monotonic()<self.next_capture_attempt:return
         self.capture.set_collecting(True)
@@ -679,6 +691,7 @@ class MainWindow(QMainWindow):
         timeline=self.observation_timeline
         oldest_pending=stats.get('oldest_seq')
         self.busy = True
+        self.active_sample_seq = frame['seq'] if frame is not None else 0
         self.sample_button.setEnabled(False)
         self.connect_button.setEnabled(False)
         self.capture_status.setText('正在提取已捕获页面；后台仍继续采集…')
@@ -712,6 +725,12 @@ class MainWindow(QMainWindow):
                     def publish(hud):
                         self.events.hud_read.emit((marker, selected['captured_at'], selected['seq'], hud))
                     options['on_hud'] = publish
+                    if automatic and selected['image'].nbytes <= 32*1024*1024:
+                        def provide_reference(observation, line_reader):
+                            from .busy_gold import GoldReference
+                            reference = GoldReference(marker, selected, observation, line_reader)
+                            self.busy_gold.reference_ready.emit(reference)
+                        options['on_gold_reference'] = provide_reference
                 observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context,**options)
                 observation['capture_ms']=capture_ms
                 observation['captured_at'] = selected['captured_at']
@@ -734,15 +753,27 @@ class MainWindow(QMainWindow):
                 or at < max(self.run.state['started_at'], self.run.state.get('last_read') or 0)
                 or (at, seq) <= (self.last_sample_at, self.last_sample_seq)):
             return
-        resources = dict(self.run.state['resources'])
-        resources.update({key: {**record, 'captured_at': at} for key, record in hud.items()})
+        self.sample_hud = {key: {**record, 'captured_at': at} for key, record in hud.items()}
+        self.sample_hud_seq = seq
+        self.refresh_display_hud()
+
+    def reapply_sample_hud(self):
+        if self.sample_hud or self.busy_gold.shown is not None:
+            self.refresh_display_hud()
+
+    def refresh_display_hud(self):
+        resources = {**self.run.state['resources'], **self.sample_hud}
+        preview = self.busy_gold.shown
+        gold_seq = self.sample_hud_seq if 'gold' in self.sample_hud else self.last_sample_seq
+        if preview is not None and (preview[1]['captured_at'], preview[0]) > (
+                resources.get('gold', {}).get('captured_at', 0), gold_seq):
+            resources['gold'] = preview[1]
         self.compact_window.update_current_hud(resources)
-        self.sample_hud_visible = True
 
     def restore_committed_hud(self):
-        if self.sample_hud_visible:
-            self.compact_window.update_current_hud(self.run.state['resources'])
-            self.sample_hud_visible = False
+        if self.sample_hud:
+            self.sample_hud = {}
+            self.refresh_display_hud()
 
     def finish_sample(self):
         self.restore_committed_hud()
@@ -757,6 +788,7 @@ class MainWindow(QMainWindow):
     def sample_failed(self, result):
         if self.closing:return
         epoch,generation,message=result
+        self.busy_gold.complete((epoch,generation,self.run.state['id']),self.active_sample_seq,map_read=False)
         valid=epoch==self.sample_epoch and generation==self.capture.stats()['generation']
         self.finish_sample()
         if valid:
@@ -769,6 +801,12 @@ class MainWindow(QMainWindow):
         image, observation = result
         marker=observation.get('_sampling')
         valid=not marker or (marker['epoch']==self.sample_epoch and marker['generation']==self.capture.stats()['generation'])
+        if valid and marker is not None:
+            run = observation.get('run') or {}
+            gold_map = (observation.get('page') in ('exploration', 'node_detail') and run.get('page') == 'run_map'
+                        and 'gold' in run.get('resources', {}))
+            self.busy_gold.complete((marker['epoch'], marker['generation'], self.run.state['id']),
+                                    marker.get('seq') or 0, map_read=gold_map)
         self.finish_sample()
         prepared=observation.pop('_timeline_result',None)
         seq=(marker or{}).get('seq')or 0
@@ -1841,6 +1879,8 @@ class MainWindow(QMainWindow):
                 from .player_file_messages import file_issue
                 self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
             self.sample_epoch += 1
+            self.busy_gold.clear()
+            self.restore_committed_hud()
             self.capture.discard_pending()
             self.run.reset()
             self.clear_skill_rank_reference()
@@ -2587,6 +2627,7 @@ class MainWindow(QMainWindow):
         if self.public_statistics is not None:self.public_statistics.close()
         if self.public_archive is not None:self.public_archive.close()
         self.closing=True
+        self.busy_gold.clear()
         if self.compact_window is not None:self.compact_window.close()
         self.node_catalog._close_current_event_reference()
         self.node_catalog._close_shop_vault()

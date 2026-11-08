@@ -29,7 +29,7 @@ class PlayerUrgentExperienceTests(unittest.TestCase):
         self.assertIsNone(outside_position(QRect(0,0,1920,1040),QRect(0,0,1920,1040),QSize(278,36)))
 
     def test_stationary_hover_and_click_keep_all_icon_centers_fixed(self):
-        owner=QWidget();owner.run=SimpleNamespace(state={});owner.closing=True
+        owner=QWidget();owner.run=SimpleNamespace(state={});owner.closing=True;owner.map_overlay_reference=None;owner.session_recorder=None
         owner.open_scene_notes=lambda:None;owner.open_public_statistics=lambda:None;owner.node_statistics_source=lambda:None
         bar=CompactAssistant(owner);self.addCleanup(owner.deleteLater);self.addCleanup(bar.close)
         bar.show();self.app.processEvents();before=[b.mapToGlobal(b.rect().center())for b in bar.tool_buttons]

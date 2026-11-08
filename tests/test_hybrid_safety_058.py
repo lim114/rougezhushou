@@ -105,7 +105,7 @@ class HybridIntegrationSafetyTests(unittest.TestCase):
                 return [[[[20,20],[70,20],[70,50],[20,50]],'current-name',.99],
                     [[[790,440],[850,440],[850,470],[790,470]],'current-exterior-'+value,.98]],None
         reader._page_router=Router();reader._page_ocr=Page()
-        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None):
+        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
             result=self.observation(complete=complete)
             result['current_texts']=[r[1] for r in raw or []]
             if raw and raw[0][1]=='legacy-current':
@@ -129,12 +129,13 @@ class HybridIntegrationSafetyTests(unittest.TestCase):
             callbacks = []
 
             def observe(*args, **kwargs):
-                callbacks.append(kwargs['on_hud'])
+                callbacks.append((kwargs['on_hud'], kwargs['on_gold_reference']))
                 return interpret(*args, **kwargs)
 
             reader._interpret = observe
-            reader._read(image, on_hud=callbacks.append)
-            self.assertEqual(callbacks, [callbacks.append if coverage else None])
+            reader._read(image, on_hud=callbacks.append, on_gold_reference=callbacks.append)
+            expected = callbacks.append if coverage else None
+            self.assertEqual(callbacks, [(expected, expected)])
 
     def test_exterior_current_overlay_updates_on_same_page_without_legacy_text(self):
         reader,image,calls=self.reader();reader._read(image)

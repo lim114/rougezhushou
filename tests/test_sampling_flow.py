@@ -119,6 +119,33 @@ class SamplingFlowTests(unittest.TestCase):
                 window.show_sample_hud((marker, stamp, seq, {'shield': {'value': 1}}))
             show.assert_not_called()
 
+    def test_busy_gold_preserves_other_partial_fields_through_refresh_and_older_commit(self):
+        from rouge.busy_gold import GoldReference
+        window = self.window
+        window.show_compact()
+        bar = window.compact_window
+        bar.open_inventory()
+        chips = bar.inventory_popup.resources.chips
+        probe = window.busy_gold
+        marker = probe.current_marker()
+        ref = GoldReference(marker, {'seq': 1, 'target': window.capture.target, 'client_rect': [0, 0, 360, 200]}, {}, Mock())
+        at = time.time()
+        window.busy = True
+        with patch.object(window.auto, 'isChecked', return_value=True):
+            probe.accept_reference(ref)
+            window.show_sample_hud((marker, at, 1, {'life': {'value': 6}, 'gold': {'value': 20}}))
+            probe.accept_result((ref, at, 2, {'value': 22}))
+            bar.refresh()
+            self.assertEqual(chips['life'].accessibleName(), '目标生命 6')
+            self.assertEqual(chips['gold'].accessibleName(), '源石锭 22')
+            window.run.state['resources']['gold'] = {'value': 20, 'captured_at': at}
+            probe.complete(marker, 1, map_read=True)
+            window.restore_committed_hud()
+            bar.refresh()
+            self.assertEqual(chips['gold'].accessibleName(), '源石锭 22')
+            probe.complete(marker, 2, map_read=False)
+            self.assertEqual(chips['gold'].accessibleName(), '源石锭 20')
+
     def test_overlay_reference_keeps_pointer_bounds_from_its_recognized_frame(self):
         self.release.set();image=np.full((120,180,3),60,dtype=np.uint8)
         self.window.capture.buffer.offer(image,time.time(),pointer_bounds=[20,30,50,80])
