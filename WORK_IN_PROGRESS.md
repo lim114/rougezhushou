@@ -1,3 +1,7 @@
+## Gate 0 · 首场正常流程录像与采样日志的局部对照
+
+按录像容器时间和日志起点估算，共同时段约4分53秒；已核对可见切页和部分样本，仍需完整配对的新场次。[回执](verification/maintenance/gate0-first-recording-pairing/summary.json)。
+
 ## 第473节 · 探索地图类型开关、历史频率与节点小卡（实机验收通过）
 
 数字和名称均首击打开小卡，作战图标打开游戏详情。五次小卡已绘出并通过 × 关闭。下一主线为 Gate 0 录像与日志配对。[验收回执](verification/sections/473.json)。
