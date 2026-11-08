@@ -1,0 +1,93 @@
+{
+  "title": "地图源石锭按已核对字形提前显示",
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "baseline": "022f49a3ce053bb510c342b81d15fc1929015edb",
+  "functional_section_incremented": false,
+  "acceptance_500ms": false,
+  "change": "While a current resource strip is visible, a previous complete map read supplies digit examples and search locations. Requalify the icon, current labels, number alignment and full glyph shapes in the current frame. Publish only on an unambiguous match. Whole-page OCR and the persistent reducer still run on the original image.",
+  "rejected_trial": "Direct regional OCR produced a confident wrong amount when a digit was partially covered. A detector/recognizer tile sheet also retained variable runtime. Neither is a standalone source of the displayed early amount.",
+  "native_replay": {
+    "scope": "Two rounds of four real recorded client crops per version on native Windows, production frame buffer and isolated inventory panel. First Qt Paint with visually independently checked gold; capture injection excludes acquisition before the queue and physical display scanout. The fourth crop intentionally replays an earlier scene. No video, OCR text, session IDs or private game values included.",
+    "case_order": [
+      "initial_full",
+      "new_combination",
+      "unseen_digit",
+      "known_combination_reordered"
+    ],
+    "baseline_first_paint_ms": [
+      11244,
+      2268,
+      3621,
+      2813,
+      7731,
+      2558,
+      2387,
+      4177
+    ],
+    "final_first_paint_ms": [
+      7932,
+      155,
+      1770,
+      216,
+      8369,
+      178,
+      2175,
+      233
+    ],
+    "baseline_through_ui_ms": [
+      27288,
+      5975,
+      5942,
+      5345,
+      19221,
+      5012,
+      4185,
+      6445
+    ],
+    "final_through_ui_ms": [
+      19938,
+      4109,
+      3297,
+      5001,
+      19167,
+      4676,
+      4796,
+      5881
+    ],
+    "under_500ms": {
+      "baseline": 0,
+      "final": 4,
+      "per_arm": 8
+    },
+    "complete_observations_equal_pairs": 8,
+    "comparison": "Compared full observations under a fixed test run identity, excluding performance, elapsed_ms, observed_at, captured_at, capture_ms and sampling metadata.",
+    "busy_replay": "Automatic mode, next changed frame injected while worker was busy after its first HUD notification. Timer starts at injection. Latest frame remained dependent on completion of previous sample.",
+    "busy_final_ms": 13041
+  },
+  "counterexamples": "Controlled font fixtures for one through four digits, adjacent extra ink, partial/dark occlusion, an unseen glyph, an ambiguous reference, a shifted line, stale or uncertain anchors, content and window geometry, and run/window switches. On a real two-digit crop, seven occlusion variants abstained. The edited single-digit real crop also abstained; digit-count changes do not guarantee a fast result.",
+  "targeted_suite": {
+    "passed": 218,
+    "modules": [
+      "hud_gold_preview",
+      "sampling_flow",
+      "hud_resources_441",
+      "player_resource_strip",
+      "ocr_text_row_reuse",
+      "page_ocr_056",
+      "page_ocr_058",
+      "page_ocr_seed_bridge",
+      "interpret_lookup_review",
+      "map_ocr_tile_overlap",
+      "overlay_display",
+      "recognition_reuse",
+      "recognition_057",
+      "ui_refresh_045",
+      "cloud_index_sync",
+      "hybrid_safety_058",
+      "ocr_cache_review"
+    ]
+  },
+  "window": "Original exact product launcher closed normally and updated toolbar verified visible and responding. No game input and no new recording.",
+  "remaining": "End-to-end live p95 and field accuracy across layouts remain open. Preview still waits for the one sampling worker on busy arrivals. Other fields and newly seen glyphs still depend on a full read."
+}

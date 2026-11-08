@@ -1,3 +1,7 @@
+## 图像识别专项 · 地图源石锭按已核对字形提前显示
+
+上帧已确认字形可用于源石锭当前读数。两轮共8对整帧观察一致，8次中4次低于500毫秒。[回执](verification/maintenance/ocr-local-gold-20261108/summary.json)。
+
 ## 图像识别专项 · 地图与藏品面板提前显示本帧资源读数
 
 本机 Windows 回放的6次目标生命首次绘制中位数从11.79秒降至4.87秒。5对完整输出一致，201项定向检查通过。[回执](verification/maintenance/ocr-current-hud-20261108/summary.json)。

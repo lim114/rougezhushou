@@ -60,9 +60,10 @@ class ScreenReader:
         self._page_verified_identity=None
         self._last_frame = self._last_rect = self._last_result = None
         self._last_context = None
+        self._last_hud_source = None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -74,10 +75,12 @@ class ScreenReader:
             context=json.dumps({'run_id':run_context.get('run_id'),
                 'config':{key:{k:v for k,v in record.items() if k in fields}
                           for key,record in confirmed_config(run_context).items()}},sort_keys=True,ensure_ascii=False)
+        hud_identity = (hud_source, (run_context or {}).get('run_id'))
         previous = self._last_frame
-        if (self.cache_enabled and previous is not None and rect == self._last_rect and context==self._last_context
-                and image.shape == previous.shape and image.dtype == previous.dtype
-                and np.array_equal(image, previous)):
+        same_source = (self.cache_enabled and previous is not None and rect == self._last_rect
+                       and hud_identity == self._last_hud_source and image.shape == previous.shape
+                       and image.dtype == previous.dtype)
+        if same_source and context == self._last_context and np.array_equal(image, previous):
             result = deepcopy(self._last_result)
             result['observed_at'] = time.time()
             result['performance'] = {'reuse': 'exact_frame', 'total_ms': (time.perf_counter()-started)*1000,
@@ -85,7 +88,10 @@ class ScreenReader:
             return result
         icon_hits = self._icon_cache.hits if self._icon_cache else 0
         ocr_hits = self._engine.cache.hits if isinstance(self._engine,CachedOCR) else 0
-        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud)
+        gold_seed = None
+        if on_hud is not None and same_source and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
+            gold_seed = self._last_result
+        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed)
         result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
@@ -95,13 +101,14 @@ class ScreenReader:
             self._last_frame = image.copy()
             self._last_rect = rect
             self._last_context = context
+            self._last_hud_source = hud_identity
             self._last_result = deepcopy(result)
         else:
             self._last_frame = self._last_rect = self._last_result = None
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -118,8 +125,15 @@ class ScreenReader:
                 self._discovery_ocr=PageOCR(self._engine,reuse_text_rows=True,max_entries=256)
             self._frame_ocr=DynamicOCR(self._engine,discovery_engine=self._discovery_ocr) if self.cache_enabled else self._engine
         elapsed('initialization')
+        source_image = image
         image,viewport=prepare_frame(image,client_rect)
         elapsed('viewport')
+        if gold_seed is not None and gold_seed.get('page') in ('exploration', 'node_detail'):
+            from .hud_gold_preview import read_gold_preview
+            gold = read_gold_preview(source_image, self._last_frame, gold_seed, viewport, self._engine)
+            if gold is not None:
+                on_hud({'gold': gold})
+            elapsed('local_gold')
         routing={'strategy':'full_discovery','candidates':[],'visual_ms':0.,
                  'fallback_reason':'disabled' if not self.page_routing_enabled else None}
         regions=None;page_identity=None;force_discovery=False;page_batches=False

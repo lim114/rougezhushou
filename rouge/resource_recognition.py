@@ -12,7 +12,7 @@ def gold_template():
     return cv2.imdecode(np.fromfile(Path(__file__).with_name('data')/'ui-icons/gold-counter.png',dtype=np.uint8),cv2.IMREAD_GRAYSCALE)
 
 def read_resources(image,texts,engine=None):
-    h,w=image.shape[:2];resources={}
+    resources={}
     if engine is not None:
         from .hud_resources import read_hud_resources
         resources.update(read_hud_resources(image,texts,engine))
@@ -32,12 +32,31 @@ def read_resources(image,texts,engine=None):
     numbers=[(int(t['text']),*center(t)) for t in texts if t['confidence']>=.95 and re.fullmatch(r'\d{1,4}',t['text'])]
     if not numbers:return resources
     ux,uy=units(image,anchor,27.9678)
+    match=find_gold_icon(image, ((nx,ny) for _,nx,ny in numbers), ux, uy)
+    if match is not None:
+        gold = gold_reading(match, numbers, ux, uy)
+        if gold is not None:
+            resources['gold'] = gold
+    return resources
+
+
+def gold_reading(match, numbers, ux, uy):
+    score,x,y = match
+    values = {value for value,nx,ny in numbers if
+              .035*ux < nx-x < .13*ux and abs(ny-y) < .027*uy}
+    if len(values) == 1:
+        return {'value': next(iter(values)), 'source': '源石锭三角图标右侧数量', 'icon_score': float(score)}
+    return None
+
+
+def find_gold_icon(image, centers, ux, uy):
+    h,w=image.shape[:2]
     template=gold_template();gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
     matches=[]
     icon_scale=h*uy/1127
     scales=(icon_scale*.85,icon_scale,icon_scale*1.15)
     templates=[cv2.resize(template,None,fx=scale,fy=scale) for scale in scales]
-    for _,nx,ny in numbers:
+    for nx,ny in centers:
         x0=max(0,round((nx-.18*ux)*w));x1=min(w,round((nx-.02*ux)*w))
         y0=max(0,round((ny-.05*uy)*h));y1=min(h,round((ny+.05*uy)*h))
         roi=gray[y0:y1,x0:x1]
@@ -47,9 +66,4 @@ def read_resources(image,texts,engine=None):
             score=cv2.matchTemplate(roi,ref,cv2.TM_CCOEFF_NORMED)
             _,best,_,point=cv2.minMaxLoc(score)
             if best>=.91:matches.append((best,(x0+point[0]+ref.shape[1]/2)/w,(y0+point[1]+ref.shape[0]/2)/h))
-    if matches:
-        score,x,y=max(matches)
-        values={value for value,nx,ny in numbers if
-            .035*ux<nx-x<.13*ux and abs(ny-y)<.027*uy}
-        if len(values)==1:resources['gold']={'value':next(iter(values)),'source':'源石锭三角图标右侧数量','icon_score':float(score)}
-    return resources
+    return max(matches) if matches else None

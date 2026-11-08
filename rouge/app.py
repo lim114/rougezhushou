@@ -705,6 +705,9 @@ class MainWindow(QMainWindow):
                 else:reader=self.reader
                 age_at_read_ms = (time.time() - selected['captured_at']) * 1000
                 options = {}
+                if mode != 'visual':
+                    target = selected.get('target') or {}
+                    options['hud_source'] = (epoch, target.get('hwnd'), target.get('pid'))
                 if show_hud:
                     def publish(hud):
                         self.events.hud_read.emit((marker, selected['captured_at'], selected['seq'], hud))
