@@ -148,8 +148,8 @@ class ShopNameReader:
     def __init__(self,engine=None):self.engine=engine;self.is_shop=False;self.cached=None
     def ocr(self,image):
         if self.engine is None:
-            from rapidocr_onnxruntime import RapidOCR
-            self.engine=RapidOCR(intra_op_num_threads=4,inter_op_num_threads=2)
+            from .ocr_engine import create_engine
+            self.engine=create_engine()
         raw,_=self.engine(image,use_cls=False);return raw or[]
     def identify(self,image,point):
         packet=expansion_reference.packet()

@@ -1,0 +1,282 @@
+{
+  "title": "加速 OCR 检测输入的逐像素归一化",
+  "kind": "maintenance",
+  "binding": "enclosing_commit",
+  "baseline": "7b05a227973dea3a8b8fb80b2771e5e99902cf1d",
+  "functional_section_incremented": false,
+  "method": "RapidOCR 1.4.4 detector resize and channel permutation retained. For uint8 use a 256-entry per-channel table from the provider normalization; preserve non-byte handling and produce the same float32 tensor. Shared by automatic sampling and shop hover.",
+  "preprocess_ms": {
+    "2400x1108": {
+      "old": [
+        152.23,
+        132.43,
+        168.6,
+        152.41,
+        194.07,
+        139.79,
+        156.29,
+        150.45,
+        150.95,
+        144.63,
+        132.69,
+        156.37
+      ],
+      "new": [
+        31.46,
+        31.3,
+        38.15,
+        35.92,
+        43.54,
+        25.46,
+        24.15,
+        32.58,
+        34.22,
+        27.55,
+        27.19,
+        35.46
+      ]
+    },
+    "1365x720": {
+      "old": [
+        55.38,
+        54.8,
+        59.46,
+        55.08,
+        56.11,
+        52.5,
+        64.1,
+        52.3,
+        60.19,
+        59.96,
+        53.92,
+        57.2
+      ],
+      "new": [
+        22.05,
+        12.88,
+        12.27,
+        15.63,
+        10.63,
+        10.39,
+        11.79,
+        12.75,
+        14.97,
+        13.13,
+        11.23,
+        15.99
+      ]
+    },
+    "1100x430": {
+      "old": [
+        78.65,
+        76.98,
+        95.44,
+        84.05,
+        73.58,
+        82.21,
+        58.05,
+        66.08,
+        66.91,
+        69.22,
+        79.2,
+        75.16
+      ],
+      "new": [
+        16.09,
+        22.23,
+        24.43,
+        20.45,
+        18.25,
+        14.59,
+        15.83,
+        19.12,
+        20.31,
+        13.55,
+        14.36,
+        15.62
+      ]
+    },
+    "120x40": {
+      "old": [
+        85.07,
+        91.85,
+        77.77,
+        87.13,
+        75.73,
+        78.07,
+        78.55,
+        79.32,
+        88.08,
+        82.02,
+        71.54,
+        82.76
+      ],
+      "new": [
+        15.98,
+        20.9,
+        14.43,
+        19.48,
+        21.82,
+        20.13,
+        18.73,
+        17.45,
+        16.65,
+        13.2,
+        15.24,
+        14.09
+      ]
+    }
+  },
+  "preprocess_conditions": "12 alternating pairs per geometry after warmup. Seeded uint8 inputs; exact uint32 views compared on every pair.",
+  "full_reader_video": {
+    "seconds": [
+      60,
+      60.1,
+      60.2,
+      95,
+      95.1
+    ],
+    "orders": [
+      "before/after",
+      "after/before"
+    ],
+    "pairs_ms": [
+      [
+        15153,
+        14374
+      ],
+      [
+        5486,
+        5439
+      ],
+      [
+        5015,
+        5516
+      ],
+      [
+        8700,
+        8387
+      ],
+      [
+        7096,
+        6619
+      ],
+      [
+        16949,
+        15650
+      ],
+      [
+        7178,
+        7880
+      ],
+      [
+        5549,
+        7782
+      ],
+      [
+        13489,
+        12375
+      ],
+      [
+        7000,
+        6180
+      ]
+    ],
+    "equal_pairs": 10,
+    "compared": "all result fields excluding observed_at, elapsed_ms and performance; includes positions, candidates and confidences"
+  },
+  "client_frame_reader_pairs_ms": [
+    [
+      4975,
+      4391
+    ],
+    [
+      2787,
+      2540
+    ],
+    [
+      4787,
+      4989
+    ],
+    [
+      2737,
+      2600
+    ]
+  ],
+  "saved_client_frames": 2,
+  "client_equal_pairs": 4,
+  "shop_raw_equal_frames": 2,
+  "raw_ocr_pairs_ms": [
+    [
+      {
+        "old": 1631,
+        "new": 1878
+      },
+      {
+        "new": 1820,
+        "old": 1573
+      },
+      {
+        "old": 1815,
+        "new": 1789
+      },
+      {
+        "new": 1725,
+        "old": 2205
+      }
+    ],
+    [
+      {
+        "old": 1793,
+        "new": 1685
+      },
+      {
+        "new": 1677,
+        "old": 2052
+      },
+      {
+        "old": 2468,
+        "new": 1578
+      },
+      {
+        "new": 1901,
+        "old": 1945
+      }
+    ],
+    [
+      {
+        "old": 2167,
+        "new": 1763
+      },
+      {
+        "new": 1871,
+        "old": 1849
+      },
+      {
+        "old": 1733,
+        "new": 1715
+      },
+      {
+        "new": 1967,
+        "old": 1777
+      }
+    ]
+  ],
+  "raw_ocr_method": "Two saved client frames and one video frame. Same warm engine alternating detector input adapter. All raw results equal across twelve pairs.",
+  "rejected_trial": "Map tile OCR with a separate normalized-row cache. Ten full output pairs agreed, elapsed gains varied and additional memory would be retained. Not integrated.",
+  "targeted_tests": {
+    "passed": 116,
+    "selectors": [
+      "test_ocr_detector_input",
+      "test_ocr_text_row_reuse",
+      "test_page_ocr_056",
+      "test_page_ocr_058",
+      "test_map_ocr_tile_overlap",
+      "test_player_feature_417",
+      "test_shop_prices_443",
+      "test_cloud_index_sync"
+    ]
+  },
+  "desktop": "Isolated native MainWindow visible, responding, sample control enabled; closed after check. Existing desktop session started before the source change and was recording, so it was left running.",
+  "limits": "Local desktop background load varied. Live change-to-paint latency, accuracy versus human ground truth, other hardware and game FPS not measured. No 500ms acceptance. No model, threshold or recognition coverage changes."
+}

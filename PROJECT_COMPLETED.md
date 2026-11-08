@@ -1,3 +1,7 @@
+## 图像识别专项 · 加速 OCR 检测输入的逐像素归一化
+
+4种尺寸逐位一致，14对完整读取观察一致，116项定向检查通过。实机显示延迟仍待验收。[回执](verification/maintenance/ocr-detector-input-20261108/summary.json)。
+
 ## Gate 0 · 首场正常流程录像与采样日志的局部对照
 
 按录像容器时间和日志起点估算，共同时段约4分53秒；已核对可见切页和部分样本，仍需完整配对的新场次。[回执](verification/maintenance/gate0-first-recording-pairing/summary.json)。

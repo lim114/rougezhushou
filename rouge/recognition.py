@@ -110,8 +110,8 @@ class ScreenReader:
             timings[name] = timings.get(name,0.0)+(now-mark)*1000
             mark = now
         if self._engine is None:
-            from rapidocr_onnxruntime import RapidOCR
-            self._engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)
+            from .ocr_engine import create_engine
+            self._engine = create_engine()
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
             if self.cache_enabled and self.page_ocr_enabled:
                 from .page_ocr import PageOCR
