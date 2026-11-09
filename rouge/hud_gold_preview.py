@@ -3,27 +3,9 @@ import cv2
 import numpy as np
 
 from .anchors import header_span, units
+from .gold_counter import HUD_LABELS as LABELS, digit_shapes, read_single_gold
 from .operator_recognition import center
 from .resource_recognition import find_gold_icon, gold_reading
-
-
-LABELS = ('目标生命值', '指挥等级', '零件箱', '收藏品')
-
-
-def digit_shapes(gray):
-    """Split bright HUD glyphs at blank columns without resizing their strokes."""
-    _, mask = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-    columns = np.any(mask, axis=0)
-    if columns[0] or columns[-1] or np.any(mask[[0, -1]]):
-        return []
-    edges = np.flatnonzero(np.diff(columns.astype(np.int8))) + 1
-    shapes = []
-    for left, right in edges.reshape(-1, 2):
-        glyph = mask[:, left:right]
-        rows = np.flatnonzero(glyph.any(axis=1))
-        top, bottom = rows[0], rows[-1]+1
-        shapes.append((left, top, right, bottom, glyph[top:bottom].tobytes()))
-    return shapes
 
 
 def read_gold_preview(image, prior_image, previous, viewport, engine):
@@ -41,6 +23,7 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
     # window border. Work entirely inside the current verified content rect.
     source_size = np.array(viewport['source_size'])
     x0, y0, x1, y1 = viewport['content_rect']
+    prior = prior_image[y0:y1, x0:x1]
     frame = image[y0:y1, x0:x1]
     h, w = frame.shape[:2]
     for text in previous['texts']:
@@ -59,26 +42,23 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
         return None
     header = header_span(anchors[LABELS[0]])
     slots = [row for row in amounts if header[0] <= center(row)[1] <= header[1]]
-    if len(slots) != 1:
-        return None
-    amount = slots[0]
-
-    ux, uy = units(frame, anchors[LABELS[0]], 27.9678)
-    nx, ny = center(amount)
-    icon = find_gold_icon(frame, [(nx, ny)], ux, uy, header=header)
-    if icon is None:
-        return None
-
-    # Learn shapes from the complete read's actual number, then look across
-    # the whole right-aligned four-digit field, including space for width changes.
-    prior = prior_image[y0:y1, x0:x1]
-    number_box = np.array(amount['box']) * (w, h)
-    reading = match_digits(frame, prior, number_box, number, icon[1], ux)
-    if reading is None:
-        return None
-    gold = gold_reading(icon, [reading], ux, uy)
+    gold = None
+    # Only learn old digit masks from an unambiguous prior text box. The
+    # current plate reader locates its own icon and never uses those boxes.
+    if len(slots) == 1:
+        amount = slots[0]
+        ux, uy = units(frame, anchors[LABELS[0]], 27.9678)
+        nx, ny = center(amount)
+        icon = find_gold_icon(frame, [(nx, ny)], ux, uy, header=header)
+        if icon is not None:
+            number_box = np.array(amount['box']) * (w, h)
+            reading = match_digits(frame, prior, number_box, number, icon[1], ux)
+            if reading is not None:
+                gold = gold_reading(icon, [reading], ux, uy)
     if gold is None:
-        return None
+        gold = read_single_gold(frame, anchors[LABELS[0]], engine)
+        if gold is None:
+            return None
 
     # These fixed labels must all still be readable in their own positions.
     # Identical label pixels retain the full reader's qualification.

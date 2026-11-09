@@ -11,7 +11,7 @@
 
 最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前主线：[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)；状态 `GATE0_SESSION_PAIRING_PENDING`。已采集2场，完成录像对照1场。
 
-当前实现维护：奖励和商店界面按顶部资源栏确认源石锭；回执 `verification/maintenance/ocr-gold-header-coverage-20261108/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+当前实现维护：完整源石锭数值栏补读个位数；回执 `verification/maintenance/ocr-single-gold-20261109/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->

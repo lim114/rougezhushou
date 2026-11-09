@@ -1,19 +1,18 @@
 """Identify resource labels/icons before accepting any numeric counter."""
-from functools import lru_cache
-from pathlib import Path
 import re
 import cv2
-import numpy as np
 from .operator_recognition import center
 from .anchors import units, header_span
-
-@lru_cache(maxsize=1)
-def gold_template():
-    return cv2.imdecode(np.fromfile(Path(__file__).with_name('data')/'ui-icons/gold-counter.png',dtype=np.uint8),cv2.IMREAD_GRAYSCALE)
+from .gold_counter import HUD_LABELS, ICON_SCALES, ICON_THRESHOLD, gold_reading, gold_template, read_single_gold
 
 def read_resources(image,texts,engine=None, *, on_gold=None):
     resources={}
     gold = read_gold(image, texts)
+    if gold is None and engine is not None:
+        labels = [row for row in texts if row['confidence'] >= .9 and row['text'] in HUD_LABELS]
+        if len(labels) == len(HUD_LABELS) and {row['text'] for row in labels} == set(HUD_LABELS):
+            life = next(row for row in labels if row['text'] == '目标生命值')
+            gold = read_single_gold(image, life, engine, texts=texts)
     if gold is not None and on_gold is not None:
         on_gold(gold)
     if engine is not None:
@@ -49,15 +48,6 @@ def read_gold(image, texts):
     return None
 
 
-def gold_reading(match, numbers, ux, uy):
-    score,x,y = match
-    values = {value for value,nx,ny in numbers if
-              .035*ux < nx-x < .13*ux and abs(ny-y) < .027*uy}
-    if len(values) == 1:
-        return {'value': next(iter(values)), 'source': '源石锭三角图标右侧数量', 'icon_score': float(score)}
-    return None
-
-
 def find_gold_icon(image, centers, ux, uy, *, header=None):
     h,w=image.shape[:2]
     template=gold_template();gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -72,7 +62,7 @@ def find_gold_icon(image, centers, ux, uy, *, header=None):
     icon_scale = h*uy/1127
     # Preserve all coarse matches first. If those miss, sample the middle of
     # each original scale interval with the same confidence requirement.
-    for factors in ((.85, 1., 1.15), (.925, 1.075)):
+    for factors in ICON_SCALES:
         matches = []
         for factor in factors:
             ref = cv2.resize(template, None, fx=icon_scale*factor, fy=icon_scale*factor)
@@ -83,7 +73,7 @@ def find_gold_icon(image, centers, ux, uy, *, header=None):
                 scores = cv2.matchTemplate(roi, ref, cv2.TM_CCOEFF_NORMED)
                 _, best, _, point = cv2.minMaxLoc(scores)
                 center_y = (y0+point[1]+th/2)/h
-                if best >= .91 and (header is None or header[0] <= center_y <= header[1]):
+                if best >= ICON_THRESHOLD and (header is None or header[0] <= center_y <= header[1]):
                     matches.append((best, (x0+point[0]+tw/2)/w, center_y))
         if matches:
             return max(matches)
