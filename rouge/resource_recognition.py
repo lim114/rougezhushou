@@ -5,7 +5,7 @@ from .operator_recognition import center
 from .anchors import units, header_span
 from .gold_counter import HUD_LABELS, ICON_SCALES, ICON_THRESHOLD, gold_reading, gold_template, read_single_gold
 
-def read_resources(image,texts,engine=None, *, on_gold=None):
+def read_resources(image,texts,engine=None, *, on_gold=None,native_content=None):
     resources={}
     gold = read_gold(image, texts)
     if gold is None and engine is not None:
@@ -13,6 +13,10 @@ def read_resources(image,texts,engine=None, *, on_gold=None):
         if len(labels) == len(HUD_LABELS) and {row['text'] for row in labels} == set(HUD_LABELS):
             life = next(row for row in labels if row['text'] == '目标生命值')
             gold = read_single_gold(image, life, engine, texts=texts)
+            if gold is None and native_content is not None:
+                # OCR boxes are normalized to this same content rectangle.
+                # Cubic enlargement can add dark halos to intact bright digits.
+                gold = read_single_gold(native_content, life, engine, texts=texts)
     if gold is not None and on_gold is not None:
         on_gold(gold)
     if engine is not None:

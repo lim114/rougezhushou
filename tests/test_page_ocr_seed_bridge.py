@@ -12,7 +12,7 @@ FLAGS=('full_frame_input','full_detection','full_text_coverage','complete_curren
 class PageOCRSeedBridgeTests(unittest.TestCase):
     def reader(self, mutate=None):
         image=np.full((480,900,3),17,np.uint8);calls=[]
-        self.enterContext(patch('rouge.recognition.prepare_frame',side_effect=lambda im,rect:(im,{})))
+        self.enterContext(patch('rouge.recognition.prepare_frame',side_effect=lambda im,rect:(im,{'scale':1.})))
         reader=ScreenReader()
         def engine(current):calls.append(current.shape);return [[[[1,1],[9,1],[9,9],[1,9]],'current-local',.99]],None
         reader._engine=engine;reader._frame_ocr=DynamicOCR(engine)

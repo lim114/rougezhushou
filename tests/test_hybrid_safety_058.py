@@ -78,7 +78,7 @@ class HybridIntegrationSafetyTests(unittest.TestCase):
         image=np.full((480,900,3),17,np.uint8);calls=[]
         # These are orchestration tests. Viewport transforms have independent
         # coverage; keep current pixel coordinates explicit for the fake OCR.
-        self.enterContext(patch('rouge.recognition.prepare_frame',side_effect=lambda image,rect:(image,{})))
+        self.enterContext(patch('rouge.recognition.prepare_frame',side_effect=lambda image,rect:(image,{'scale':1.})))
         reader=ScreenReader()
         def engine(current):
             calls.append(('legacy',current.shape))
@@ -105,7 +105,7 @@ class HybridIntegrationSafetyTests(unittest.TestCase):
                 return [[[[20,20],[70,20],[70,50],[20,50]],'current-name',.99],
                     [[[790,440],[850,440],[850,470],[790,470]],'current-exterior-'+value,.98]],None
         reader._page_router=Router();reader._page_ocr=Page()
-        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
+        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None):
             result=self.observation(complete=complete)
             result['current_texts']=[r[1] for r in raw or []]
             if raw and raw[0][1]=='legacy-current':

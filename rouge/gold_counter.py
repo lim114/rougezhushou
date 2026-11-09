@@ -1,5 +1,6 @@
 """Read the complete amount field attached to the current gold icon."""
 from functools import lru_cache
+from math import ceil
 from pathlib import Path
 
 import cv2
@@ -99,8 +100,14 @@ def _visible_plate(image, icon):
     # 155x36 backing starting 71 px right and 19 px down from its top left.
     scale = height/36
     tolerance = max(1, round(2*scale))
-    if (abs(width-155*scale) > tolerance or abs(x-cx-42*scale) > tolerance
-            or abs(y-cy+6.5*scale) > tolerance):
+    if abs(width-155*scale) > tolerance:
+        # Losing one pixel from the 36 px edge moves the predicted far edge
+        # by over four pixels. Check the longer ruler against the icon itself.
+        scale = width/155
+        if abs(height-36*scale) > 1 or abs(tw-58*scale) > 1:
+            return None
+        tolerance = ceil(2*scale)
+    if abs(x-cx-42*scale) > tolerance or abs(y-cy+6.5*scale) > tolerance:
         return None
     plate = image[y:y+height, x:x+width]
     return plate, x, y, scale, background
@@ -123,7 +130,8 @@ def _matches_counter_glyph(binary, digit):
         return left[0] < right[0] and max(left[1], right[1]) < min(left[1]+left[3], right[1]+right[3])
     if digit == '8' and len(holes) == 2:
         upper, lower = sorted(holes, key=lambda rect: rect[1])
-        return upper[1] + upper[3] <= lower[1]
+        # Contour boxes include the one-pixel ink boundary of each cavity.
+        return upper[1] + upper[3] - 1 <= lower[1] + 1
     return False
 
 
@@ -160,7 +168,7 @@ def read_plate_gold(image, life_label, engine, *, texts=(), include_pairs=False)
     shapes = digit_shapes(gray)
     if len(shapes) != 1 and not (include_pairs and len(shapes) == 2):
         return None
-    tolerance = max(1, round(2*scale))
+    tolerance = ceil(2*scale)
     right = shapes[-1][2]
     if abs(plate.shape[1]-right-1-23*scale) > tolerance:
         return None
@@ -196,7 +204,11 @@ def read_plate_gold(image, life_label, engine, *, texts=(), include_pairs=False)
         return None
     supported = '023456' if len(amount) == 1 else '01238'
     for digit, binary in zip(amount, masks):
-        value = _upright_digits(engine, cv2.cvtColor(binary, cv2.COLOR_GRAY2BGR), 0, 1)
+        ocr_mask = binary
+        if binary.shape[0] < 25:
+            ratio = 25/binary.shape[0]
+            ocr_mask = cv2.resize(binary, None, fx=ratio, fy=ratio, interpolation=cv2.INTER_LINEAR)
+        value = _upright_digits(engine, cv2.cvtColor(ocr_mask, cv2.COLOR_GRAY2BGR), 0, 1)
         if value != digit or digit not in supported or not _matches_counter_glyph(binary, digit):
             return None
         if len(amount) == 2:

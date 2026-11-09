@@ -68,6 +68,26 @@ class SingleGoldTests(unittest.TestCase):
             reading = read_single_gold(self.image, self.life, engine)
             self.assertEqual((reading or {}).get('value'), expected)
 
+    def test_reduced_client_reads_complete_plate_and_rejects_clipped_plate(self):
+        small = cv2.resize(self.image, (533, 213), interpolation=cv2.INTER_AREA)
+        engine = Mock(return_value=([('0', .99)], None))
+        result = read_single_gold(small, self.life, engine)
+        self.assertEqual((result or {}).get('value'), 0)
+        cropped = small.copy()
+        cropped[:, 435:445] = 8
+        self.assertIsNone(read_single_gold(cropped, self.life, engine))
+
+    def test_enlarged_analysis_can_verify_missing_amount_on_same_native_content(self):
+        small = cv2.resize(self.image, (533, 213), interpolation=cv2.INTER_AREA)
+        enlarged = cv2.resize(small, (800, 320), interpolation=cv2.INTER_CUBIC)
+        engine = Mock(return_value=([('0', .99)], None))
+        with patch('rouge.hud_resources.read_hud_resources', return_value={}):
+            self.assertNotIn('gold', read_resources(enlarged, self.labels, engine))
+            result = read_resources(enlarged, self.labels, engine, native_content=small)
+            self.assertEqual(result['gold']['value'], 0)
+            conflict = self.label('8', 625, 43, 645, 66)
+            self.assertIsNone(read_single_gold(small, self.life, engine, texts=[conflict]))
+
     def test_two_prior_amount_candidates_only_allow_an_independent_current_read(self):
         view = {'source_size': [800, 320], 'content_rect': [0, 0, 800, 320]}
         old = self.image.copy()

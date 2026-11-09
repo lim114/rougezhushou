@@ -174,7 +174,7 @@ class SemanticRoutingTests(unittest.TestCase):
                 return {'candidates':[{'page':'operator_detail','regions':[[100,100,900,800]]}],
                         'specialized':True,'elapsed_ms':0.,'fallback_reason':''}
         reader._page_router=Router()
-        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
+        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None):
             return deepcopy(result_from_crop if raw[0][1]=='crop' else self.observation())
         reader._interpret=interpret
         if warm:
@@ -227,7 +227,7 @@ class SemanticRoutingTests(unittest.TestCase):
 
     def test_failed_pass_time_is_preserved_in_stage_metrics(self):
         reader,image,calls=self.reader(self.observation(complete=False),warm=True)
-        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
+        def interpret(current,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None):
             elapsed('semantic')
             result=self.observation(complete=raw[0][1]=='full')
             result['performance']['stages_ms']=timings

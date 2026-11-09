@@ -1,0 +1,332 @@
+{
+  "title": "小窗口源石锭按原始客户区像素识别",
+  "kind": "maintenance",
+  "baseline": "f782dde761822f078b6b034021c8ec6580cfd1f5",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "A one-pixel short-edge quantization error in the backing predicts a four-pixel error at its far edge. Full OCR can enlarge the source using cubic interpolation, introducing dark undershoot near bright strokes. Previous scaled-field check used this enlarged path. The 1440-wide raw preview already worked on the baseline.",
+  "implementation": "Retain the original height estimate when consistent. When it conflicts with the backing width, estimate from the long edge and require agreement with the independently matched icon and short edge. Round fractional glyph placement tolerance outward. Normalize a segmented small glyph to native 25-pixel height for line OCR and check topology on its original pixels. Count ink boundaries when comparing the two cavities of 8. After an enlarged full read lacks a qualified single digit, recheck the same normalized label boxes in the original client crop. No whole-image rescaling on the preview lane.",
+  "replay": {
+    "method": "Same 15 sustained changes from one local 1920x1200 recording. First half-second sample and preceding references in chronological order. Downscale with area interpolation; 2304 matrix uses cubic enlargement. Isolated Windows inventory chip Paint, clock from injection in production capture buffer. The 1920 baseline is in the preceding receipt.",
+    "timings": {
+      "before-1280": {
+        "changes": 15,
+        "correct_final": 9,
+        "paint_ms": [
+          1270,
+          1542,
+          1592,
+          1636,
+          1870,
+          1328,
+          2459,
+          2215,
+          2009,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "under_500ms": 0,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 4936
+      },
+      "candidate-1280": {
+        "changes": 15,
+        "correct_final": 15,
+        "paint_ms": [
+          201,
+          156,
+          97,
+          167,
+          127,
+          212,
+          245,
+          243,
+          196,
+          360,
+          203,
+          224,
+          193,
+          184,
+          105
+        ],
+        "under_500ms": 15,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 6095
+      },
+      "final-1280": {
+        "changes": 15,
+        "correct_final": 15,
+        "paint_ms": [
+          210,
+          163,
+          85,
+          218,
+          172,
+          168,
+          143,
+          146,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "under_500ms": 8,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 4070
+      },
+      "observed-1280": {
+        "changes": 15,
+        "correct_final": 15,
+        "paint_ms": [
+          188,
+          192,
+          108,
+          198,
+          126,
+          154,
+          231,
+          200,
+          180,
+          189,
+          159,
+          160,
+          116,
+          94,
+          139
+        ],
+        "under_500ms": 15,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 5244
+      },
+      "final-1600": {
+        "changes": 15,
+        "correct_final": 15,
+        "paint_ms": [
+          201,
+          194,
+          130,
+          237,
+          162,
+          153,
+          163,
+          214,
+          1806,
+          184,
+          207,
+          186,
+          121,
+          141,
+          108
+        ],
+        "under_500ms": 14,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 4639
+      },
+      "final-1920": {
+        "changes": 15,
+        "correct_final": 15,
+        "paint_ms": [
+          126,
+          198,
+          124,
+          279,
+          154,
+          178,
+          165,
+          182,
+          203,
+          150,
+          192,
+          175,
+          185,
+          97,
+          148
+        ],
+        "under_500ms": 15,
+        "wrong_new_paints": 0,
+        "median_full_frame_ms": 4532
+      }
+    },
+    "repeat_note": "1280 repeat recorded 15 correct final observations but seven changes did not produce a new chip Paint. The displayed accessible value stayed at the previous value. This run did not log panel visibility; counted as seven missing paints. The additional instrumented replay requires the inventory chip visible before every input."
+  },
+  "windows_graphics_capture": {
+    "method": "A separate non-activating native test window displayed the resized 1280x800 frames. Only that HWND was registered in the isolated test process. Normal production Windows Graphics Capture callback, frame queue, automatic sampler at its default 100ms period, reader and inventory chip Paint. Timer starts before changing the source widget, checks first exact current amount-region pixels in a captured client frame, and finishes on first correct chip paint. One initial confirmed amount; six changes spaced until worker idle. Millisecond-rounded values, no monitor scanout. No live game target detected; no game FPS, input, or live-game acceptance.",
+    "before": {
+      "source_to_matching_capture_ms": [
+        108,
+        119,
+        114,
+        82,
+        62,
+        76
+      ],
+      "capture_to_chip_ms": [
+        1480,
+        1315,
+        2245,
+        1959,
+        2064,
+        1564
+      ],
+      "total_ms": [
+        1588,
+        1434,
+        2359,
+        2041,
+        2126,
+        1640
+      ],
+      "under_500ms": 0
+    },
+    "after": [
+      {
+        "source_to_matching_capture_ms": [
+          101,
+          34,
+          89,
+          58,
+          98,
+          22
+        ],
+        "capture_to_chip_ms": [
+          399,
+          315,
+          354,
+          336,
+          318,
+          330
+        ],
+        "total_ms": [
+          500,
+          349,
+          443,
+          394,
+          416,
+          352
+        ],
+        "under_500ms": 5
+      },
+      {
+        "source_to_matching_capture_ms": [
+          28,
+          114,
+          22,
+          109,
+          54,
+          49
+        ],
+        "capture_to_chip_ms": [
+          381,
+          351,
+          391,
+          348,
+          290,
+          365
+        ],
+        "total_ms": [
+          409,
+          465,
+          413,
+          457,
+          344,
+          414
+        ],
+        "under_500ms": 6
+      }
+    ],
+    "initial_rehearsal_total_ms": [
+      500,
+      442,
+      380,
+      433,
+      378,
+      389
+    ]
+  },
+  "validation": {
+    "targeted_tests_passed": 341,
+    "full_observations_unchanged_except_new_gold": {
+      "1280": {
+        "pairs": 11,
+        "intended_new_gold": 4
+      },
+      "1920": {
+        "pairs": 11,
+        "intended_new_gold": 0
+      }
+    },
+    "original_window": "original test window closed normally, updated native toolbar visible and responding",
+    "field_comparison": {
+      "scope": "Six single-digit and eight two-digit crops per width; before and after same label geometry. Raw = real preview coordinates. Prepared = enlarged analysis pixels only, excludes newly added canonical fallback to the raw source.",
+      "baseline": {
+        "raw": {
+          "1280": 0,
+          "1440": 14,
+          "1600": 0,
+          "1920": 14,
+          "2304": 0
+        },
+        "prepared": {
+          "1280": 0,
+          "1440": 0,
+          "1600": 0,
+          "1920": 14,
+          "2304": 0
+        }
+      },
+      "after": {
+        "raw": {
+          "1280": 14,
+          "1440": 14,
+          "1600": 14,
+          "1920": 14,
+          "2304": 0
+        },
+        "prepared": {
+          "1280": 0,
+          "1440": 0,
+          "1600": 0,
+          "1920": 14,
+          "2304": 0
+        }
+      }
+    },
+    "natural": {
+      "trials": 405,
+      "outputs": 218,
+      "wrong": 0
+    },
+    "occlusion": {
+      "trials": 6720,
+      "outputs": 1832,
+      "wrong": 0
+    },
+    "challenge_method": "81 previously reviewed natural crop representatives x five scales, and 14 labeled frames x four scales x 120 seeded translucent/opaque rectangles. Same recording; repeated trials are correlated. Erasure indistinguishable from actual background remains unresolved.",
+    "subroutine_cost": {
+      "method": "Three alternating passes over 14 identical 1280-wide inputs on baseline and current code, one warmup, OCR result caching disabled. Process CPU includes model workers. Measures the independent plate reader only.",
+      "timings": {
+        "before": {
+          "trials": 42,
+          "correct": 0,
+          "median_wall_ms": 5.63,
+          "median_cpu_ms": 0.0
+        },
+        "after": {
+          "trials": 42,
+          "correct": 42,
+          "median_wall_ms": 42.62,
+          "median_cpu_ms": 179.69
+        }
+      }
+    }
+  },
+  "next": "Verify real game capture, game FPS/CPU under load, higher-density native renderings, faded/occluded transitions and other HUD information. A 2304-wide synthetic cubic enlargement continues to abstain."
+}

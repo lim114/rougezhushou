@@ -133,6 +133,10 @@ class ScreenReader:
         elapsed('initialization')
         source_image = image
         image,viewport=prepare_frame(image,client_rect)
+        native_content = None
+        if viewport['scale'] > 1:
+            left, top, right, bottom = viewport['content_rect']
+            native_content = source_image[top:bottom, left:right]
         elapsed('viewport')
         if gold_seed is not None:
             from .hud_gold_preview import read_gold_preview
@@ -224,7 +228,7 @@ class ScreenReader:
             routing.update(strategy='full_discovery',fallback_reason=reason)
         elapsed('full_ocr')
         complete = self._page_ocr.metrics.get('complete_current_texts') is True if page_batches else regions is None
-        result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,
+        result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,native_content=native_content,
                                on_hud=on_hud if complete else None, on_gold_reference=on_gold_reference if complete else None)
         page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
@@ -248,7 +252,7 @@ class ScreenReader:
             if isinstance(self._frame_ocr,DynamicOCR):raw,_=self._frame_ocr(image,regions=None,force_discovery=True)
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
-            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud,
+            result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud,native_content=native_content,
                                    on_gold_reference=on_gold_reference)
             page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
@@ -256,7 +260,7 @@ class ScreenReader:
         result['performance']['routing']=routing
         return result
 
-    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None):
+    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None):
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
@@ -324,7 +328,7 @@ class ScreenReader:
                 provider = self._engine.engine if isinstance(self._engine, CachedOCR) else self._engine
                 on_gold_reference(seed, copy(provider))
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
-                     on_hud=on_hud,on_map_gold=map_reference)
+                     on_hud=on_hud,on_map_gold=map_reference,native_content=native_content)
         elapsed('run')
         from .player_shop_hover import shop_snapshot
         shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
