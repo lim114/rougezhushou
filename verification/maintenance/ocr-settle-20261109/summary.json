@@ -1,0 +1,211 @@
+{
+  "title": "在候选帧等待期间提前读取源石锭",
+  "kind": "maintenance",
+  "baseline": "c1907ba426dba00954b812e192df93eef70be1c8",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "When a single chronological candidate was waiting for a sharper representative, idle polling could not start the current HUD preview. The full sampler kept its 120ms settling period and selected on a subsequent automatic check. In the baseline 15-change run, median matching capture to full queue take was 202.3ms; median qualified signal to chip paint was 12.4ms.",
+  "implementation": "Share the settling predicate under the frame-buffer lock. A current gold preview may peek at the latest frame during that waiting interval when a current resource strip is visible and its source reference is qualified. If the full candidate is ready or there is no pending candidate, the idle probe does no OCR. The chronological reader still selects its own representative and commits the observation.",
+  "wgc": {
+    "method": "Controlled nonactivating 1280x800 source window with frames resized from one local session. Windows Graphics Capture with the isolated test HWND, production FrameBuffer, automatic sampler at 100ms, verified source crop and native inventory chip Paint. Sixteen input frames give one confirmed initial amount followed by fifteen distinct changes spaced until the prior full observation committed. Identical input order across runs; the 30 after samples are two repeats of 15 events. Time starts before changing the source widget. CPU is aggregate process time through full commit, not game CPU or FPS. Physical scanout not measured.",
+    "before": {
+      "correct": 15,
+      "paint_ms": [
+        449,
+        409,
+        490,
+        517,
+        408,
+        399,
+        417,
+        412,
+        485,
+        449,
+        514,
+        468,
+        389,
+        286,
+        491
+      ],
+      "under_500ms": 13,
+      "source_to_correct_paint_ms": {
+        "min": 286,
+        "median": 449,
+        "max": 517
+      },
+      "source_to_matching_capture_ms": {
+        "min": 24,
+        "median": 69,
+        "max": 114
+      },
+      "capture_to_full_queue_take_ms": {
+        "min": 129.9,
+        "median": 202.3,
+        "max": 231.0
+      },
+      "capture_to_correct_paint_ms": {
+        "min": 236,
+        "median": 380,
+        "max": 435
+      },
+      "qualified_signal_to_paint_ms": {
+        "min": 1.9,
+        "median": 12.4,
+        "max": 14.0
+      },
+      "median_full_commit_wall_ms": 5791,
+      "median_process_cpu_to_commit_ms": 24156,
+      "preview_worker_calls": 15,
+      "reversions_after_first_correct_paint": 0
+    },
+    "after": [
+      {
+        "correct": 15,
+        "paint_ms": [
+          380,
+          358,
+          360,
+          371,
+          306,
+          309,
+          302,
+          301,
+          317,
+          288,
+          243,
+          264,
+          250,
+          179,
+          274
+        ],
+        "under_500ms": 15,
+        "source_to_correct_paint_ms": {
+          "min": 179,
+          "median": 302,
+          "max": 380
+        },
+        "source_to_matching_capture_ms": {
+          "min": 28,
+          "median": 85,
+          "max": 124
+        },
+        "capture_to_full_queue_take_ms": {
+          "min": 134.7,
+          "median": 170.2,
+          "max": 236.1
+        },
+        "capture_to_correct_paint_ms": {
+          "min": 140,
+          "median": 209,
+          "max": 290
+        },
+        "qualified_signal_to_paint_ms": {
+          "min": 0.3,
+          "median": 12.1,
+          "max": 13.6
+        },
+        "median_full_commit_wall_ms": 5583,
+        "median_process_cpu_to_commit_ms": 23906,
+        "preview_worker_calls": 15,
+        "reversions_after_first_correct_paint": 0
+      },
+      {
+        "correct": 15,
+        "paint_ms": [
+          368,
+          385,
+          282,
+          262,
+          246,
+          353,
+          313,
+          329,
+          316,
+          361,
+          319,
+          337,
+          286,
+          191,
+          332
+        ],
+        "under_500ms": 15,
+        "source_to_correct_paint_ms": {
+          "min": 191,
+          "median": 319,
+          "max": 385
+        },
+        "source_to_matching_capture_ms": {
+          "min": 17,
+          "median": 64,
+          "max": 115
+        },
+        "capture_to_full_queue_take_ms": {
+          "min": 146.6,
+          "median": 187.3,
+          "max": 217.4
+        },
+        "capture_to_correct_paint_ms": {
+          "min": 127,
+          "median": 246,
+          "max": 292
+        },
+        "qualified_signal_to_paint_ms": {
+          "min": 11.4,
+          "median": 12.4,
+          "max": 13.9
+        },
+        "median_full_commit_wall_ms": 5434,
+        "median_process_cpu_to_commit_ms": 23672,
+        "preview_worker_calls": 15,
+        "reversions_after_first_correct_paint": 0
+      }
+    ]
+  },
+  "verified": {
+    "targeted_tests_passed": 342,
+    "complete_observation_pairs": 6,
+    "comparison": "Six complete observations from the automatic queue compared by digest with identical input pixels and capture timestamps, excluding observation timestamps and performance measurements. An initial comparison used separate wall-clock capture times and differed in the two run configuration capture timestamps. Replaying with identical timestamps matched. Source changes also rechecked in Windows capture through full commit. Busy lane, repeated polls, invisible panels, empty/settled queues and queue ordering exercised.",
+    "busy": {
+      "paint_ms": 318,
+      "early_commit_is_new": false,
+      "pending_at_paint": 1,
+      "later_paints": 3
+    },
+    "burst": {
+      "paint_ms": 300,
+      "early_commit_is_new": false,
+      "pending_at_paint": 10,
+      "injection_ms": [
+        0,
+        102,
+        200,
+        304,
+        403,
+        501,
+        603,
+        703,
+        802,
+        903,
+        1002,
+        1102
+      ],
+      "paint_history_after_first_correct": [
+        true,
+        true,
+        true
+      ]
+    },
+    "native_window": "original test window closed normally, updated native toolbar visible and responding"
+  },
+  "rejected_experiment": {
+    "method": "Per-reference byte-exact cache on the side preview line reader; isolated trial on six changes. No eligible cache hits in 42 model calls. Not included in the implementation.",
+    "measurement": {
+      "attempts": 6,
+      "calls": 42,
+      "eligible_hits": 0,
+      "bytes": 22911
+    }
+  },
+  "scope": "Settled HUD updates only. The prior intermittent no-paint run did not recur during the visible-panel benchmark and its cause remains unconfirmed. Cold start, a real running game, other fields and other render scales remain outside this acceptance. No live game window detected."
+}

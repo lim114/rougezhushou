@@ -218,6 +218,9 @@ class FrameBuffer:
             self._trim()
             return seq
 
+    def _settling(self):
+        return len(self._pending) == 1 and time.monotonic() < self._pending[0]['ready_at']
+
     def take(self, force=False, *, prefer_latest=False):
         """Take one candidate; current-first removes only that candidate, never the rest.
 
@@ -228,8 +231,7 @@ class FrameBuffer:
             if self._pending:
                 # Once a different page follows, preserve the preceding page
                 # immediately, including pages visible for only one frame.
-                if (not force and len(self._pending) == 1 and
-                        time.monotonic() < self._pending[0]['ready_at']):
+                if not force and self._settling():
                     return None
                 frame = self._pending.pop() if prefer_latest else self._pending.popleft()
                 self._counts['taken'] += 1
@@ -243,9 +245,11 @@ class FrameBuffer:
             # latest-frame fallback still owns its pixels and needs a copy.
             return self._export(frame, copy_pixels=frame is self._latest)
 
-    def latest(self, *, after_seq=None):
-        """Peek at a newer frame without consuming a historical candidate."""
+    def latest(self, *, after_seq=None, settling_only=False):
+        """Peek without consuming. An idle preview yields to a ready full read."""
         with self._lock:
+            if settling_only and not self._settling():
+                return None
             if self._latest is None or (after_seq is not None and self._latest['seq'] <= after_seq):
                 return None
             return self._export(self._latest, copy_pixels=True)

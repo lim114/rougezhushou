@@ -91,13 +91,16 @@ class FrameBufferTests(unittest.TestCase):
         buffer = FrameBuffer(settle_seconds=.12)
         with patch('rouge.frame_buffer.time.monotonic', return_value=1):
             buffer.offer(page(), 10)
+            self.assertEqual(buffer.latest(settling_only=True)['captured_at'], 10)
             self.assertIsNone(buffer.take())
         with patch('rouge.frame_buffer.time.monotonic', return_value=1.13):
+            self.assertIsNone(buffer.latest(settling_only=True))
             self.assertEqual(buffer.take()['captured_at'], 10)
         # A following distinct page makes the preceding candidate ready now.
         with patch('rouge.frame_buffer.time.monotonic', return_value=2):
             buffer.offer(page(90), 11)
             buffer.offer(page(160), 11.1)
+            self.assertIsNone(buffer.latest(settling_only=True))
             self.assertEqual(buffer.take()['captured_at'], 11)
 
     def test_same_page_sharper_representative_preserves_fifo(self):

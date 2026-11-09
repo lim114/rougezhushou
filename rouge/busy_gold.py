@@ -1,4 +1,4 @@
-"""Current-window gold previews while the chronological sampler is occupied."""
+"""Current-window gold previews while the full sampler is busy or waiting for a sharper frame."""
 from dataclasses import dataclass
 from threading import Thread
 
@@ -62,9 +62,10 @@ class BusyGold(QObject):
         if not self.source_available(reference):
             self.clear()
             return
-        if not w.busy or not w.compact_window.visible_current_resource_strips():
+        if not w.compact_window.visible_current_resource_strips():
             return
-        frame = w.capture.buffer.latest(after_seq=max(self.checked_seq, w.last_sample_seq))
+        frame = w.capture.buffer.latest(after_seq=max(self.checked_seq, w.last_sample_seq),
+                                        settling_only=not w.busy)
         if frame is None:
             return
         self.checked_seq = frame['seq']

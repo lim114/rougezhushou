@@ -78,6 +78,30 @@ class BusyGoldTests(unittest.TestCase):
             self.probe.complete(self.ref.marker, 4, map_read=True)
             self.assertIsNone(self.probe.shown)
 
+    def test_idle_pending_candidate_previews_before_full_sampler_selects_it(self):
+        self.w.busy = False
+        self.buffer.take(force=True)
+        self.offer(22)
+        with patch('rouge.busy_gold.read_gold_preview', return_value={'value': 22}) as read:
+            self.w.compact_window.visible_current_resource_strips.return_value = []
+            self.probe.poll()
+            self.wait_idle()
+            read.assert_not_called()
+            self.w.compact_window.visible_current_resource_strips.return_value = [object()]
+            self.probe.poll()
+            self.wait_idle()
+            self.assertIsNotNone(self.probe.shown)
+            self.assertEqual(self.probe.shown[1]['value'], 22)
+            self.assertEqual(self.buffer.stats()['pending'], 1)
+            self.probe.poll()
+            read.assert_called_once()
+            self.buffer.take(force=True)
+            self.offer(22)
+            self.assertEqual(self.buffer.stats()['pending'], 0)
+            self.probe.poll()
+            self.wait_idle()
+            read.assert_called_once()
+
     def test_inflight_result_after_reset_minimize_or_canonical_commit_is_ignored(self):
         payload = (self.ref, time.time(), 2, {'value': 22})
         self.w.sample_epoch += 1
