@@ -21,6 +21,23 @@ def prepared(rid, template, mask):
 
 
 class ProjectionScreen029Tests(unittest.TestCase):
+    def test_projected_error_matches_direct_sum_at_all_valid_offsets(self):
+        rng = np.random.default_rng(2910)
+        for height, width in ((9, 15), (12, 17), (15, 20), (7, 1), (1, 7)):
+            image = rng.integers(0, 256, (height, width, 3), dtype=np.uint8)
+            bound = screen(image)
+            # Use the same bar for different shapes, including a full-size mask.
+            for h, w in ((min(4, height), min(7, width)), (min(2, height), min(3, width)), (height, width)):
+                template = rng.integers(0, 256, (h, w, 3), dtype=np.uint8)
+                mask = (rng.random((h, w)) < .6).astype(np.float32)
+                scalar = image.astype(np.float32).sum(axis=2) / np.sqrt(np.float32(3))
+                projected = template.astype(np.float32).sum(axis=2) * mask / np.sqrt(np.float32(3))
+                energy = np.sum(projected.astype(np.float64)**2)
+                expected = [[np.sum((scalar[y:y+h, x:x+w].astype(np.float64)*mask-projected)**2)
+                             for x in range(width-w+1)] for y in range(height-h+1)]
+                np.testing.assert_allclose(bound.projected_ssd(mask, projected, energy),
+                                           expected, rtol=1e-10, atol=1e-6)
+
     def test_necessary_bound_is_no_larger_than_true_normalized_rgb_error(self):
         rng = np.random.default_rng(2901)
         for shape in ((3, 5), (7, 4), (13, 17)):
@@ -169,8 +186,9 @@ class ProjectionScreen029Tests(unittest.TestCase):
         before = screen(image)
         image[:] = 200
         after = screen(image)
-        self.assertFalse(np.any(before.scalar))
-        self.assertTrue(np.all(after.scalar > 0))
+        _, _, _, t, m, energy = prepared('current', image[:10,:10], np.full((10,10), 255, np.uint8))
+        self.assertFalse(before.possible(t, m, energy))
+        self.assertTrue(after.possible(t, m, energy))
         self.assertTrue(np.all(after.window_energy((10, 10)) > before.window_energy((10, 10))))
 
     def test_bad_energy_and_nonfinite_correlations_fall_back_to_verifier(self):
@@ -179,7 +197,7 @@ class ProjectionScreen029Tests(unittest.TestCase):
         mask = np.ones((5, 7), np.float32)
         for energy in (0, -1, np.nan, np.inf):
             self.assertTrue(bound.possible(template, mask, energy))
-        with patch.object(icons.cv2, 'matchTemplate', return_value=np.full((26, 54), np.nan, np.float32)):
+        with patch.object(bound, 'projected_ssd', return_value=np.full((26, 54), np.nan)):
             self.assertTrue(bound.possible(template, mask, 10000))
 
 

@@ -1,0 +1,236 @@
+{
+  "title": "持有栏筛选复用当前画面频谱",
+  "kind": "maintenance",
+  "baseline": "ceccd75a4636341c2f43fc72c9d786fcdfb40486",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "In a new reader on one recorded 1280x800 frame, total read was 6.19s, engine initialization 0.57s and held bar matcher 1.34s including reference preparation despite no verified icon. Prior projection screening called two independent correlations per eligible template on the same live bar.",
+  "implementation": "Transform current scalar pixels and their squares once per bar. For each reference, combine both correlations in frequency space, then inverse-transform their difference and retain fully contained translations. Use double precision and bound the old numerical cancellation guard using the rectangular RGB energy. Final masked RGB scores, threshold and refinement order are unchanged. Each ProjectionScreen owns its scratch and spectra; no cross-frame template-spectra cache.",
+  "local_measurement": {
+    "method": "Four warmed alternating baseline/candidate pairs on the same nonblack 79x562 source bar, full matcher with no result caching. CPU is process time.",
+    "median_wall_ms": {
+      "before": 887.0,
+      "after": 512.7
+    },
+    "wall_and_cpu_pairs_ms": {
+      "before": [
+        [
+          889.77,
+          859.38
+        ],
+        [
+          885.21,
+          875.0
+        ],
+        [
+          881.89,
+          828.12
+        ],
+        [
+          888.81,
+          859.38
+        ]
+      ],
+      "after": [
+        [
+          511.97,
+          515.62
+        ],
+        [
+          515.81,
+          500.0
+        ],
+        [
+          513.38,
+          515.62
+        ],
+        [
+          511.12,
+          484.38
+        ]
+      ]
+    },
+    "scope": "The cold 1.34s includes reference preparation, unlike these warmed figures."
+  },
+  "wgc": {
+    "method": "Separate fresh processes in baseline/new/new/baseline order. Same five page transitions at 1280x800 from an isolated Windows source window via production Windows Graphics Capture and automatic sampling. Initial entry cold; before four warm reentries an operator page was captured and committed. Start just before source repaint, finish on the first correct inventory chip Paint and full commit separately. Two repeats of the same cases; no live game available, no game FPS or scanout measurement.",
+    "rounds": {
+      "base": [
+        {
+          "first_correct_paint_ms": [
+            1199,
+            412,
+            453,
+            405,
+            391
+          ],
+          "source_to_full_commit_ms": [
+            7390,
+            3332,
+            7043,
+            6960,
+            4252
+          ],
+          "process_cpu_to_full_commit_ms": [
+            33578,
+            19531,
+            31484,
+            30609,
+            21422
+          ]
+        },
+        {
+          "first_correct_paint_ms": [
+            1040,
+            504,
+            423,
+            382,
+            445
+          ],
+          "source_to_full_commit_ms": [
+            7483,
+            3793,
+            7200,
+            7112,
+            4223
+          ],
+          "process_cpu_to_full_commit_ms": [
+            34453,
+            20875,
+            32000,
+            30000,
+            20844
+          ]
+        }
+      ],
+      "after": [
+        {
+          "first_correct_paint_ms": [
+            1041,
+            380,
+            360,
+            373,
+            467
+          ],
+          "source_to_full_commit_ms": [
+            6766,
+            3329,
+            6998,
+            5788,
+            4229
+          ],
+          "process_cpu_to_full_commit_ms": [
+            33797,
+            19734,
+            32312,
+            27594,
+            21188
+          ]
+        },
+        {
+          "first_correct_paint_ms": [
+            1030,
+            457,
+            449,
+            408,
+            422
+          ],
+          "source_to_full_commit_ms": [
+            7235,
+            3732,
+            6606,
+            6426,
+            3998
+          ],
+          "process_cpu_to_full_commit_ms": [
+            35391,
+            20906,
+            31312,
+            29500,
+            20562
+          ]
+        }
+      ]
+    },
+    "mean_full_commit_ms": {
+      "before": 5878.8,
+      "after": 5510.7
+    },
+    "mean_cpu_to_full_commit_ms": {
+      "base": 27479.6,
+      "after": 27229.6
+    }
+  },
+  "initialization": {
+    "method": "Three new processes measured library import and individual model constructors with the same pinned config. Elapsed milliseconds after importing the project adapter, excludes Windows capture and UI. No initialization change shipped.",
+    "trials_ms": [
+      {
+        "import": 233.3,
+        "TextDetector": 99.4,
+        "TextClassifier": 48.3,
+        "TextRecognizer": 131.1,
+        "total": 515.3
+      },
+      {
+        "import": 202.2,
+        "TextDetector": 99.5,
+        "TextClassifier": 45.8,
+        "TextRecognizer": 135.2,
+        "total": 485.2
+      },
+      {
+        "import": 206.1,
+        "TextDetector": 103.0,
+        "TextClassifier": 46.0,
+        "TextRecognizer": 135.6,
+        "total": 493.1
+      }
+    ]
+  },
+  "validation": {
+    "targeted_tests_passed": 370,
+    "paired_equal_full_observations": 14,
+    "full_comparison": "Five HUD frames alternating with four operator screens plus five archived frames. Whole observations compared by digest excluding clocks and performance metadata, including gold and held-icon candidates, exact scores and positions.",
+    "paired_equal_bar_results": 14,
+    "nonempty_results": 12,
+    "variants": "Original captures, resized, translated, black and obscured bar. Direct SSD oracle covers all valid translations for odd/even, non-square and one-column/row inputs. A failing single-column OpenCV transform found during review was fixed with two-column padding.",
+    "original_window": "original test window closed normally, updated native toolbar visible and responding"
+  },
+  "next": "Whole-page OCR detection and recognition still dominate. Measure the full-frame and cropped inference calls separately without sacrificing output parity, and verify CPU/FPS in real game co-run. The first amount is still limited by loading and capture; a faster held-bar screen does not accelerate model initialization.",
+  "single_frame_inference_probe": {
+    "method": "One 1280x800 input with model kind, exact input signature and stage recorded around ONNX inference only. Capture queue and preprocessing excluded.",
+    "calls": 29,
+    "identical_model_tensor_repeats": 0,
+    "by_stage_model": {
+      "discovery_cls": {
+        "calls": 5,
+        "sum_ms": 20.13
+      },
+      "discovery_det": {
+        "calls": 1,
+        "sum_ms": 983.99
+      },
+      "discovery_rec": {
+        "calls": 5,
+        "sum_ms": 674.72
+      },
+      "early_gold_rec": {
+        "calls": 7,
+        "sum_ms": 84.52
+      },
+      "interpret_cls": {
+        "calls": 1,
+        "sum_ms": 1.6
+      },
+      "interpret_det": {
+        "calls": 4,
+        "sum_ms": 1675.53
+      },
+      "interpret_rec": {
+        "calls": 6,
+        "sum_ms": 170.6
+      }
+    }
+  }
+}

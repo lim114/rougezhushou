@@ -215,11 +215,35 @@ class ProjectionScreen:
     max_cache_entries = 32
 
     def __init__(self, pixels, energy_screen):
-        self.scalar = np.sum(pixels, axis=2) / np.sqrt(np.float32(3))
-        self.square = self.scalar * self.scalar
         self.integral = energy_screen.integral
         self.windows = OrderedDict()
         self.cache_bytes = 0
+        h, w = pixels.shape[:2]
+        # OpenCV's nonzeroRows transform needs at least two columns, even
+        # when only a one-pixel sliver of the bar is inside the viewport.
+        shape = cv2.getOptimalDFTSize(h), cv2.getOptimalDFTSize(max(2, w))
+        self.scratch = np.zeros(shape, np.float64)
+        scalar = (np.sum(pixels, axis=2) / np.sqrt(np.float32(3))).astype(np.float64)
+        self.image_spectrum = self._spectrum(scalar)
+        self.square_spectrum = self._spectrum(scalar * scalar)
+
+    def _spectrum(self, values):
+        h, w = values.shape
+        self.scratch.fill(0)
+        self.scratch[:h, :w] = values
+        return cv2.dft(self.scratch, nonzeroRows=h)
+
+    def projected_ssd(self, mask, projected, template_energy):
+        """Combine both correlations before inverting, reusing this bar's spectra."""
+        local = cv2.mulSpectrums(self.square_spectrum, self._spectrum(mask), 0, conjB=True)
+        cross = cv2.mulSpectrums(self.image_spectrum, self._spectrum(projected), 0, conjB=True)
+        h, w = self.integral.shape
+        rows, cols = h-mask.shape[0], w-mask.shape[1]
+        # Only fully contained translations are valid. Circular wraparound
+        # affects the discarded rows/columns, so padding to bar size suffices.
+        diff = cv2.idft(cv2.addWeighted(local, 1., cross, -2., 0),
+                        flags=cv2.DFT_SCALE | cv2.DFT_REAL_OUTPUT, nonzeroRows=rows)
+        return diff[:rows, :cols] + template_energy
 
     def window_energy(self, shape):
         if shape in self.windows:
@@ -245,15 +269,14 @@ class ProjectionScreen:
             template_energy = float(np.sum(projected.astype(np.float64) ** 2))
         else:
             projected,template_energy=projection
-        local = cv2.matchTemplate(self.square, mask, cv2.TM_CCORR)
-        cross = cv2.matchTemplate(self.scalar, projected, cv2.TM_CCORR)
-        lower = local + template_energy - 2 * cross
+        lower = self.projected_ssd(mask, projected, template_energy)
         if not np.all(np.isfinite(lower)):
             return True
-        ceiling = self.limit * np.sqrt(np.maximum(self.window_energy(mask.shape) * energy, 0))
-        # Correlations use float32 internally. Keep a generous cancellation
-        # guard as well as the .02 score guard; neither can confirm an icon.
-        error = 1e-4 * (np.abs(local) + template_energy + 2 * np.abs(cross)) + 4
+        rectangle = self.window_energy(mask.shape)
+        ceiling = self.limit * np.sqrt(np.maximum(rectangle * energy, 0))
+        # Masked scalar energy <= rectangular RGB energy; 2*abs(cross)
+        # <= local + template_energy. This bounds the old cancellation guard.
+        error = 2e-4 * (rectangle + template_energy) + 4
         return not np.all(np.isfinite(ceiling)) or bool(np.any(lower <= ceiling + error))
 
 
