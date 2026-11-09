@@ -90,7 +90,7 @@ class ScreenReader:
         icon_hits = self._icon_cache.hits if self._icon_cache else 0
         ocr_hits = self._engine.cache.hits if isinstance(self._engine,CachedOCR) else 0
         gold_seed = None
-        if on_hud is not None and same_source and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
+        if on_hud is not None and same_source:
             gold_seed = self._gold_layout or self._last_result
         result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
                             on_gold_reference=on_gold_reference)
@@ -138,10 +138,14 @@ class ScreenReader:
             left, top, right, bottom = viewport['content_rect']
             native_content = source_image[top:bottom, left:right]
         elapsed('viewport')
-        if gold_seed is not None:
-            from .hud_gold_preview import read_gold_preview
-            prior = None if gold_seed is self._gold_layout else self._last_frame
-            gold = read_gold_preview(source_image, prior, gold_seed, viewport, self._engine)
+        if on_hud is not None and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
+            from .hud_gold_preview import read_gold_preview, read_initial_gold
+            previous_run = (gold_seed or {}).get('run') or {}
+            if gold_seed is not None and (gold_seed is self._gold_layout or previous_run.get('page') == 'run_map'):
+                prior = None if gold_seed is self._gold_layout else self._last_frame
+                gold = read_gold_preview(source_image, prior, gold_seed, viewport, self._engine)
+            else:
+                gold = read_initial_gold(image if native_content is None else native_content, self._engine)
             if gold is not None:
                 on_hud({'gold': gold})
             elapsed('local_gold')

@@ -1,0 +1,241 @@
+{
+  "title": "首次进入资源页时提前核对源石锭",
+  "kind": "maintenance",
+  "baseline": "369d26d926dfaf3a58d20a5d1be8395fbf5bf64e",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "Profiled an initial 1280x800 crop with a new reader: 633ms for OCR initialization and 1834ms for full-screen text OCR before the first gold callback at 2710ms. A separate stage after the first update reads additional HUD and inventory facts. Earlier fast previews required a qualified previous resource HUD.",
+  "implementation": "A visible current resource strip may request a preview on a fresh source or on entry from a non-map observation. Scan native client pixels for a unique cyan component with the reference currency icon size-to-inset relationship. Its measured scale and viewport edges propose four label crops. All four must be read from current pixels at confidence >=0.90. Reuse the existing unique icon, complete neutral backing, whole-amount and per-glyph checks. The full observation and persistence path still runs.",
+  "reference_geometry": "Closed HUD label extents and icon proportions measured from local reference captures and the packaged gold-counter source record; proposals scale on the current frame. The four regions alone never identify a HUD. Missing or ambiguous evidence abstains.",
+  "wgc": {
+    "method": "Nonactivating 1280x800 native replay window and Windows Graphics Capture with production automatic sampling, a visible inventory chip and isolated state. Timed from before source repaint to first correct chip Paint, every displayed update verified through the full commit. First counted change in each fresh process used an uninitialized reader. Before each of four further HUD entries, an actual operator screen was captured and committed, with its non-map identity checked. Same five entry cases repeated, not independent sessions. Does not measure monitor scanout or game FPS. No live game target was available.",
+    "before": [
+      {
+        "cold_process_first_paint_ms": 3634,
+        "ocr_initialization_ms": 591,
+        "warm_reentry_paints_ms": [
+          1973,
+          2895,
+          2647,
+          1673
+        ],
+        "source_to_matching_capture_ms": [
+          117,
+          74,
+          51,
+          79,
+          125
+        ],
+        "first_preview_stage_ms": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "source_to_full_commit_ms": [
+          7058,
+          3356,
+          7089,
+          6159,
+          3761
+        ],
+        "process_cpu_through_commit_ms": [
+          32328,
+          18844,
+          30641,
+          26219,
+          18109
+        ],
+        "reversions_after_correct_paint": 0
+      },
+      {
+        "cold_process_first_paint_ms": 3770,
+        "ocr_initialization_ms": 638,
+        "warm_reentry_paints_ms": [
+          1950,
+          2968,
+          2921,
+          1745
+        ],
+        "source_to_matching_capture_ms": [
+          114,
+          114,
+          69,
+          66,
+          115
+        ],
+        "first_preview_stage_ms": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "source_to_full_commit_ms": [
+          7252,
+          3303,
+          7188,
+          6661,
+          4176
+        ],
+        "process_cpu_through_commit_ms": [
+          32531,
+          17938,
+          30844,
+          27703,
+          19109
+        ],
+        "reversions_after_correct_paint": 0
+      }
+    ],
+    "after": [
+      {
+        "cold_process_first_paint_ms": 1051,
+        "ocr_initialization_ms": 637,
+        "warm_reentry_paints_ms": [
+          444,
+          444,
+          402,
+          479
+        ],
+        "source_to_matching_capture_ms": [
+          20,
+          117,
+          66,
+          118,
+          69
+        ],
+        "first_preview_stage_ms": [
+          173,
+          138,
+          173,
+          80,
+          140
+        ],
+        "source_to_full_commit_ms": [
+          7617,
+          3699,
+          7081,
+          6826,
+          4343
+        ],
+        "process_cpu_through_commit_ms": [
+          35656,
+          20391,
+          31969,
+          29891,
+          21500
+        ],
+        "reversions_after_correct_paint": 0
+      },
+      {
+        "cold_process_first_paint_ms": 1140,
+        "ocr_initialization_ms": 622,
+        "warm_reentry_paints_ms": [
+          393,
+          490,
+          400,
+          565
+        ],
+        "source_to_matching_capture_ms": [
+          107,
+          43,
+          90,
+          77,
+          116
+        ],
+        "first_preview_stage_ms": [
+          170,
+          130,
+          160,
+          136,
+          198
+        ],
+        "source_to_full_commit_ms": [
+          7739,
+          3694,
+          7056,
+          7009,
+          4318
+        ],
+        "process_cpu_through_commit_ms": [
+          35719,
+          20578,
+          31781,
+          30484,
+          20312
+        ],
+        "reversions_after_correct_paint": 0
+      },
+      {
+        "cold_process_first_paint_ms": 1260,
+        "ocr_initialization_ms": 700,
+        "warm_reentry_paints_ms": [
+          436,
+          471,
+          370,
+          403
+        ],
+        "source_to_matching_capture_ms": [
+          111,
+          64,
+          81,
+          76,
+          49
+        ],
+        "first_preview_stage_ms": [
+          193,
+          142,
+          139,
+          126,
+          152
+        ],
+        "source_to_full_commit_ms": [
+          7868,
+          3755,
+          7488,
+          6927,
+          4184
+        ],
+        "process_cpu_through_commit_ms": [
+          36250,
+          20859,
+          33047,
+          29672,
+          21078
+        ],
+        "reversions_after_correct_paint": 0
+      }
+    ],
+    "warm_after_under_500ms": 11,
+    "warm_after_total": 12
+  },
+  "verification": {
+    "targeted_tests_passed": 343,
+    "full_observation_pairs": 9,
+    "comparison": "Full observation digests identical for five HUD images alternating with four non-HUD inputs, excluding observed timestamps and performance. Verified only expected values on all preview callbacks.",
+    "natural": {
+      "cases": 243,
+      "outputs": 131,
+      "wrong": 0,
+      "scope": "81 previously visually reviewed natural crops at 1280, 1600 and 1920 widths; correlated resampled inputs."
+    },
+    "full_label_icon_or_amount_erasures": 72,
+    "erased_outputs": 0,
+    "bordered_current_content_cases": 12,
+    "archived_native_frames": 20,
+    "native_outputs_visually_verified": 7,
+    "native_outputs_wrong": 0,
+    "non_hud_operator_module_crop_probe_ms": [
+      3.1,
+      3.29,
+      3.19,
+      3.39,
+      5.09
+    ],
+    "native_window": "original test window closed normally, updated native toolbar visible and responding"
+  },
+  "limits": "Includes extra local OCR work on first entry. Full submission times and process CPU costs given separately. Engine startup still exceeds the 500ms target in these end-to-end runs. Other layouts, entry under game load, wider digit coverage, and other fields not accepted. Complete overpainting by identical background can remain visually indistinguishable."
+}

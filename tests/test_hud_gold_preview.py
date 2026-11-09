@@ -30,6 +30,22 @@ def corners(left, top, right, bottom):
 
 
 class GoldPreviewTests(unittest.TestCase):
+    def test_first_entry_requires_current_labels_and_the_real_amount_field(self):
+        from rouge.hud_gold_preview import read_initial_gold
+        image = np.zeros((800, 1280, 3), np.uint8)
+        # A cyan component proposes a layout but cannot authorize a reading.
+        image[7:38, 1111:1147] = (175, 211, 2)
+        good = [([(name, .99)], None) for name in LABELS]
+        self.assertIsNone(read_initial_gold(image, Mock(side_effect=good)))
+        with patch('rouge.hud_gold_preview.read_plate_gold', return_value={'value': 0}) as plate:
+            self.assertEqual(read_initial_gold(image, Mock(side_effect=good)), {'value': 0})
+            plate.assert_called_once()
+            for bad in [([('商品', .99)], None), ([('收藏品', .89)], None)]:
+                self.assertIsNone(read_initial_gold(image, Mock(side_effect=[*good[:-1], bad])))
+            image[47:78, 1111:1147] = (175, 211, 2)
+            self.assertIsNone(read_initial_gold(image, Mock()))
+            plate.assert_called_once()
+
     def setUp(self):
         self.prior = number_frame('28')
         self.box = corners(404, 20, 432, 40)

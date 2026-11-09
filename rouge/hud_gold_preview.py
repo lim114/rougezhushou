@@ -1,4 +1,4 @@
-"""Read the current gold counter before whole-screen OCR on a familiar map HUD."""
+"""Read a qualified current gold counter before whole-screen OCR."""
 import cv2
 import numpy as np
 
@@ -6,6 +6,47 @@ from .anchors import header_span, units
 from .gold_counter import HUD_LABELS as LABELS, digit_shapes, read_plate_gold
 from .operator_recognition import center
 from .resource_recognition import find_gold_icon, gold_reading
+
+
+def _reads_label(engine, line, name):
+    rows, _ = engine(line, use_det=False, use_cls=False)
+    return bool(rows and len(rows) == 1 and rows[0][0].replace(' ', '') == name and rows[0][1] >= .9)
+
+
+def read_initial_gold(frame, engine):
+    """Locate a candidate HUD from current icon ink, then read its four labels."""
+    height, width = frame.shape[:2]
+    mask = cv2.inRange(frame, (105, 140, 0), (225, 255, 55))
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    location = None
+    for contour in contours:
+        x, y, ink_width, ink_height = cv2.boundingRect(contour)
+        # The cyan part of gold-counter.png spans about 54 x 46 reference
+        # pixels. Its right-side inset gives a longer ruler for label crops.
+        scale = (width-x)/254
+        tolerance = max(1.5, 2*scale)
+        if ink_width >= 5 and abs(ink_width-54*scale) <= tolerance and abs(ink_height-46*scale) <= tolerance:
+            if location is not None:
+                return None
+            location = y, scale
+    if location is None:
+        return None
+    y, s = location
+    # Reference label extents on the closed HUD. Top labels track icon Y,
+    # parts tracks the bottom right corner, and collectibles the bottom left.
+    boxes = ((238*s, y+2*s, 349*s, y+30*s), (482*s, y+s, 576*s, y+31*s),
+             (width-720*s, height-92*s, width-644*s, height-60*s),
+             (198*s, height-53*s, 293*s, height-14*s))
+    for name, box in zip(LABELS, boxes):
+        left, top, right, bottom = map(round, box)
+        if not (0 <= left < right <= width and 0 <= top < bottom <= height):
+            return None
+        if not _reads_label(engine, frame[top:bottom, left:right], name):
+            return None
+        if name == '目标生命值':
+            life = {'text': name, 'box': [[left/width, top/height], [right/width, top/height],
+                                         [right/width, bottom/height], [left/width, bottom/height]]}
+    return read_plate_gold(frame, life, engine, include_pairs=True)
 
 
 def layout_across_partial_hud(previous, current):
@@ -86,11 +127,7 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
         line = frame[top:bottom, left:right]
         if prior is not None and np.array_equal(line, prior[top:bottom, left:right]):
             continue
-        lines, _ = engine(line, use_det=False, use_cls=False)
-        if not lines or len(lines) != 1:
-            return None
-        text, score = lines[0]
-        if text.replace(' ', '') != name or score < .9:
+        if not _reads_label(engine, line, name):
             return None
     return gold
 
