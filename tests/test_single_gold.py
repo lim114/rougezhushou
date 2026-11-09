@@ -89,3 +89,54 @@ class SingleGoldTests(unittest.TestCase):
         with patch('rouge.hud_resources.read_hud_resources', return_value={}):
             self.assertNotIn('gold', read_resources(self.image, self.labels[:-1], engine))
             self.assertEqual(read_resources(self.image, self.labels, engine)['gold']['value'], 0)
+
+    def test_preview_reads_tens_and_units_from_current_plate(self):
+        self.plate[:] = 49
+        ink = (245, 245, 245)
+        cv2.line(self.plate, (103, 8), (103, 30), ink, 2)
+        cv2.line(self.plate, (98, 13), (103, 8), ink, 2)
+        cv2.line(self.plate, (98, 30), (107, 30), ink, 2)
+        cv2.rectangle(self.plate, (115, 8), (129, 30), ink, 2)
+        cv2.line(self.plate, (115, 18), (129, 18), ink, 2)
+        view = {'source_size': [800, 320], 'content_rect': [0, 0, 800, 320]}
+        prev = {'viewport': view, 'texts': self.labels,
+                'run': {'page': 'run_map', 'resources': {'gold': {'value': 23}}}}
+        for rows, expected in [(['18', '1', '8'], 18), (['18', '1', '0'], None),
+                               (['8'], None)]:
+            engine = Mock(side_effect=[([(s, .99)], None) for s in rows])
+            result = read_gold_preview(self.image, self.image.copy(), prev, view, engine)
+            self.assertEqual((result or {}).get('value'), expected)
+        # The same faint green cast qualifies only at the icon-facing edge.
+        for col, expected in [(1, 18), (25, None)]:
+            tinted = self.image.copy()
+            tinted[40:68, 511+col] = (48, 53, 39)
+            engine = Mock(side_effect=[([(s, .99)], None) for s in ('18', '1', '8')])
+            result = read_gold_preview(tinted, self.image, prev, view, engine)
+            self.assertEqual((result or {}).get('value'), expected)
+        # A complete third glyph or a displaced leading price cannot become
+        # the tens digit just because the last glyph is right-aligned.
+        for shift in (False, True):
+            extra = self.image.copy()
+            plate = extra[37:73, 511:666]
+            plate[:, 70:84] = plate[:, 96:110]
+            if shift:
+                plate[:, 96:110] = 49
+            engine = Mock()
+            self.assertIsNone(read_gold_preview(extra, self.image, prev, view, engine))
+            engine.assert_not_called()
+        # Removing the left wall opens both loops of the 8. An OCR claim
+        # of 3 still contradicts the surviving upper right stroke.
+        self.plate[12:26, 113:119] = 49
+        engine = Mock(side_effect=[([(s, .99)], None) for s in ('13', '1', '3')])
+        self.assertIsNone(read_gold_preview(self.image, self.image.copy(), prev, view, engine))
+
+    def test_layout_only_requires_all_four_current_label_reads(self):
+        view = {'source_size': [800, 320], 'content_rect': [0, 0, 800, 320]}
+        seed = {'texts': self.labels, 'viewport': view}
+        names = [r['text'] for r in self.labels]
+        for last, expected in [('收藏品', 0), ('商品', None)]:
+            reads = ['0', '0', *names[:-1], last]
+            engine = Mock(side_effect=[([(s, .99)], None) for s in reads])
+            result = read_gold_preview(self.image, None, seed, view, engine)
+            self.assertEqual((result or {}).get('value'), expected)
+            self.assertEqual(engine.call_count, 6)

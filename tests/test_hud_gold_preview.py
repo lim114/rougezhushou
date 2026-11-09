@@ -119,3 +119,18 @@ class GoldPreviewTests(unittest.TestCase):
         self.assertIsNotNone(take((1, 2, 3), 'a', {'difficulty': {'value': 4}}))
         self.assertIsNone(take((2, 3, 4), 'a', {}))
         self.assertIsNone(take((2, 3, 4), 'b', {}))
+
+    def test_partial_hud_keeps_only_one_layout_for_current_frame_recheck(self):
+        from copy import deepcopy
+        reader = ScreenReader()
+        partial = {'viewport': self.view, 'texts': [r for r in self.seed['texts']
+                   if r['text'] in ('目标生命值', '指挥等级', '收藏品')]}
+        calls = []
+        def read(image, **kwargs):
+            calls.append(kwargs['gold_seed'])
+            return {**deepcopy(self.seed if len(calls) == 1 else partial), 'performance': {}}
+        reader._read = read
+        for i in range(4):
+            reader.read(self.prior+i, on_hud=Mock(), hud_source=(1, 2, 3))
+        self.assertEqual({r['text'] for r in calls[2]['texts']}, set(LABELS))
+        self.assertEqual(calls[3]['texts'], partial['texts'])

@@ -1,0 +1,193 @@
+{
+  "title": "按当前数值栏提前显示两位源石锭",
+  "kind": "maintenance",
+  "baseline": "102dac5bcb627daa0b63d63071a6fb7253ca3041",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "Previously the independent preview accepted one glyph only. On the nine original two-digit change frames a two-glyph crop was readable. A partial HUD on the immediately preceding distinct observation also removed the page qualification twice. On two transition midpoints respectively the parts label was unreadable in its expected location and the fade had dark pixels within the amount field.",
+  "implementation": "Keep the normal full-observation reader. For a familiar current HUD, read the complete right-aligned two-digit amount in color, then read each segmented glyph upright in binary. Check scale, spacing, baseline, width and shape. The verified pair alphabet is 0, 1, 2, 3, 8. After one partial HUD with its parts label absent, retain only the last confirmed label locations for the same source. All four labels and the amount must be freshly recognized on recovery. No extra frame image retained. Measured green video chroma bleed at the icon-facing first inner column caused a wrong rollback during a 12-frame burst. Only chroma in that column is excluded for pairs. Its luminance and the full digit area continue to be checked.",
+  "native_replay": {
+    "scope": "Same 15 changes stable at two successive half-second samples of one local recording. Chronological preceding references, raw 1920x1200 client crops, production capture buffer and Windows inventory chip Paint event. First and middle samples are separate replays of the same events. Clock starts at injection; excludes preceding capture/sampling, game load and physical scanout. Baseline replay results from the frozen baseline receipt.",
+    "first_sample": {
+      "before": {
+        "correct_final": 15,
+        "new_value_paints_ms": [
+          105,
+          1197,
+          1364,
+          1611,
+          1820,
+          1296,
+          1983,
+          2232,
+          1793,
+          194,
+          193,
+          171,
+          172,
+          121,
+          146
+        ],
+        "correct_under_500ms": 7,
+        "wrong_new_paints": 0,
+        "median_whole_sample_ms": 4221
+      },
+      "after": {
+        "correct_final": 15,
+        "new_value_paints_ms": [
+          119,
+          227,
+          141,
+          236,
+          162,
+          159,
+          183,
+          165,
+          206,
+          163,
+          196,
+          206,
+          149,
+          112,
+          150
+        ],
+        "correct_under_500ms": 15,
+        "wrong_new_paints": 0,
+        "median_whole_sample_ms": 4477
+      }
+    },
+    "middle_sample": {
+      "before": {
+        "correct_final": 15,
+        "new_value_paints_ms": [
+          1493,
+          1378,
+          1617,
+          1935,
+          1852,
+          1583,
+          1936,
+          2650,
+          1792,
+          216,
+          172,
+          217,
+          126,
+          127,
+          157
+        ],
+        "correct_under_500ms": 6,
+        "wrong_new_paints": 0,
+        "median_whole_sample_ms": 4161
+      },
+      "after": {
+        "correct_final": 15,
+        "new_value_paints_ms": [
+          1629,
+          193,
+          203,
+          203,
+          196,
+          160,
+          2255,
+          245,
+          207,
+          228,
+          160,
+          226,
+          131,
+          122,
+          161
+        ],
+        "correct_under_500ms": 13,
+        "wrong_new_paints": 0,
+        "median_whole_sample_ms": 4560
+      }
+    },
+    "busy_unfamiliar_pair": {
+      "paint_ms": 264,
+      "early_commit_is_new": false,
+      "pending_at_paint": 1,
+      "later_paints": 3
+    },
+    "burst_unfamiliar_pair": {
+      "paint_ms": 281,
+      "early_commit_is_new": false,
+      "pending_at_paint": 10,
+      "injection_ms": [
+        0,
+        101,
+        201,
+        300,
+        401,
+        500,
+        602,
+        703,
+        801,
+        901,
+        1002,
+        1100
+      ],
+      "paint_history_after_first_correct": [
+        true,
+        true,
+        true
+      ]
+    }
+  },
+  "preview_cost": {
+    "method": "Eight original two-digit frames crossed with one common qualified prior screen. Three alternating runs without OCR result caching after warmup. Process CPU time includes worker threads. Subroutine costs only; live game CPU/FPS not measured.",
+    "results": {
+      "before": {
+        "trials": 24,
+        "correct": 3,
+        "median_wall_ms": 20.02,
+        "median_process_cpu_ms": 62.5
+      },
+      "after": {
+        "trials": 24,
+        "correct": 24,
+        "median_wall_ms": 108.01,
+        "median_process_cpu_ms": 437.5
+      }
+    }
+  },
+  "verification": {
+    "targeted_tests_passed": 339,
+    "complete_observation_pairs": 11,
+    "comparison": "11 paired full observations equal including gold, excluding observation timestamps and performance fields; compared frozen baseline digests to changed reader.",
+    "challenges": {
+      "random": {
+        "trials": 1760,
+        "outputs": 273,
+        "wrong": 0
+      },
+      "independent": {
+        "trials": 1760,
+        "outputs": 544,
+        "wrong": 0
+      },
+      "holdout": {
+        "trials": 243,
+        "outputs": 85,
+        "wrong": 0
+      }
+    },
+    "challenge_method": "random: 1760 seeded solid partial rectangles on eight real double-digit crops. independent: separate 1760 placements with random opacity. First candidate made nine wrong updates in the first set when damaged 8 was read as 3. Current gate checks the upper diagonal of 3. holdout: 81 reviewed natural crop representatives crossed with three qualified prior screens. One originally unlabeled representative was checked again at full plate width and clearly showed 30; two preview outputs correspond to it. Correlated cases from one recording.",
+    "counterexample": "Completely overwriting a leading digit with the exact backing color can leave pixels identical to a genuine shorter amount. Occlusion where no distinguishing pixels survive remains unresolved.",
+    "native_window": "original test window closed normally, updated native toolbar visible and responding",
+    "resampling": {
+      "method": "Eight pairs resized to five 16:10 widths, then passed through viewport preparation and the current plate reader with a confirmed life-label box. Synthetic resampling only.",
+      "correct_by_client_width": {
+        "1280": 0,
+        "1440": 0,
+        "1600": 0,
+        "1920": 8,
+        "2304": 0
+      },
+      "wrong": 0
+    }
+  },
+  "next": "Validate other window scales and live capture-to-paint, first entry, obscured labels, fading counters, other HUD fields and game CPU/FPS and CPU use during repeated pair previews."
+}

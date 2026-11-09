@@ -3,27 +3,42 @@ import cv2
 import numpy as np
 
 from .anchors import header_span, units
-from .gold_counter import HUD_LABELS as LABELS, digit_shapes, read_single_gold
+from .gold_counter import HUD_LABELS as LABELS, digit_shapes, read_plate_gold
 from .operator_recognition import center
 from .resource_recognition import find_gold_icon, gold_reading
+
+
+def layout_across_partial_hud(previous, current):
+    """Keep label locations across one frame where the parts box disappeared."""
+    if current.get('run') is not None or previous.get('viewport') != current.get('viewport'):
+        return None
+    run = previous.get('run') or {}
+    if run.get('page') != 'run_map' or run.get('resources', {}).get('gold') is None:
+        return None
+    visible = {r['text'] for r in current['texts'] if r['text'] in LABELS and r['confidence'] >= .9}
+    if visible == set(LABELS) - {'零件箱'}:
+        return {'viewport': previous['viewport'], 'texts': [r for r in previous['texts'] if r['text'] in LABELS]}
+    return None
 
 
 def read_gold_preview(image, prior_image, previous, viewport, engine):
     if previous.get('viewport') != viewport:
         return None
-    run = previous.get('run') or {}
-    gold = run.get('resources', {}).get('gold')
-    if run.get('page') != 'run_map' or gold is None:
-        return None
-    number = str(gold['value'])
-    wanted = (*LABELS, number)
+    number = None
+    if prior_image is not None:
+        run = previous.get('run') or {}
+        gold = run.get('resources', {}).get('gold')
+        if run.get('page') != 'run_map' or gold is None:
+            return None
+        number = str(gold['value'])
+    wanted = LABELS if number is None else (*LABELS, number)
     anchors = {}
     amounts = []
     # Previous observations have source-normalized boxes, including any
     # window border. Work entirely inside the current verified content rect.
     source_size = np.array(viewport['source_size'])
     x0, y0, x1, y1 = viewport['content_rect']
-    prior = prior_image[y0:y1, x0:x1]
+    prior = None if prior_image is None else prior_image[y0:y1, x0:x1]
     frame = image[y0:y1, x0:x1]
     h, w = frame.shape[:2]
     for text in previous['texts']:
@@ -56,7 +71,7 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
             if reading is not None:
                 gold = gold_reading(icon, [reading], ux, uy)
     if gold is None:
-        gold = read_single_gold(frame, anchors[LABELS[0]], engine)
+        gold = read_plate_gold(frame, anchors[LABELS[0]], engine, include_pairs=True)
         if gold is None:
             return None
 
@@ -69,7 +84,7 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
         if not (0 <= left < right <= w and 0 <= top < bottom <= h):
             return None
         line = frame[top:bottom, left:right]
-        if np.array_equal(line, prior[top:bottom, left:right]):
+        if prior is not None and np.array_equal(line, prior[top:bottom, left:right]):
             continue
         lines, _ = engine(line, use_det=False, use_cls=False)
         if not lines or len(lines) != 1:

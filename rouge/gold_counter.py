@@ -1,4 +1,4 @@
-"""Read the complete single-digit field attached to the current gold icon."""
+"""Read the complete amount field attached to the current gold icon."""
 from functools import lru_cache
 from pathlib import Path
 
@@ -107,11 +107,11 @@ def _visible_plate(image, icon):
 
 
 def _matches_counter_glyph(binary, digit):
-    """Check the enclosed strokes of the six verified single counter digits."""
+    """Check enclosed strokes in the verified counter font."""
     contours, hierarchy = cv2.findContours(binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
     holes = [cv2.boundingRect(contour) for contour, item in zip(contours, hierarchy[0])
              if item[3] >= 0]
-    if digit in '235':
+    if digit in '1235':
         return not holes
     if digit in '46' and len(holes) == 1:
         _, y, _, height = holes[0]
@@ -121,11 +121,26 @@ def _matches_counter_glyph(binary, digit):
         # The slash leaves two side-by-side cavities with overlapping heights.
         left, right = sorted(holes)
         return left[0] < right[0] and max(left[1], right[1]) < min(left[1]+left[3], right[1]+right[3])
+    if digit == '8' and len(holes) == 2:
+        upper, lower = sorted(holes, key=lambda rect: rect[1])
+        return upper[1] + upper[3] <= lower[1]
     return False
 
 
-def read_single_gold(image, life_label, engine, *, texts=()):
-    """Require a complete plate, one complete glyph and two agreeing .95 reads."""
+def _upright_digits(engine, crop, background, length):
+    height = crop.shape[0]
+    pad_x, pad_y = max(1, round(height*.08)), max(1, round(height*.24))
+    padded = cv2.copyMakeBorder(crop, pad_y, pad_y, pad_x, pad_x, cv2.BORDER_CONSTANT, value=background)
+    rows, _ = engine(padded, use_det=False, use_cls=False)
+    if rows and len(rows) == 1:
+        value, score = rows[0]
+        if len(value) == length and value.isascii() and value.isdigit() and score >= .95:
+            return value
+    return None
+
+
+def read_plate_gold(image, life_label, engine, *, texts=(), include_pairs=False):
+    """Read the natural amount together and check each segmented glyph separately."""
     h, w = image.shape[:2]
     ux, uy = units(image, life_label, 27.9678)
     icon = _header_icon(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), header_span(life_label), h*uy/1127)
@@ -143,42 +158,67 @@ def read_single_gold(image, life_label, engine, *, texts=()):
     if int(gray.min()) < background_y-4:
         return None
     shapes = digit_shapes(gray)
-    if len(shapes) != 1:
+    if len(shapes) != 1 and not (include_pairs and len(shapes) == 2):
         return None
-    l, t, r, b, pixels = shapes[0]
     tolerance = max(1, round(2*scale))
-    if (abs(t+1-7*scale) > tolerance or abs(plate.shape[1]-r-1-23*scale) > tolerance
-            or abs(b-t-25*scale) > tolerance):
+    right = shapes[-1][2]
+    if abs(plate.shape[1]-right-1-23*scale) > tolerance:
         return None
-    binary = np.frombuffer(pixels, np.uint8).reshape(b-t, r-l)
+    if len(shapes) == 2:
+        # Fixed-pitch centers stay 19 native pixels apart, including narrow '1'.
+        tens, ones = shapes
+        pitch = (ones[0]+ones[2]-tens[0]-tens[2])/2
+        if abs(pitch - 19*scale) > tolerance:
+            return None
     backdrop = np.ones(gray.shape, dtype=bool)
-    margin = max(1, round(2*scale))
-    backdrop[max(0, t-margin):b+margin, max(0, l-margin):r+margin] = False
-    if ((np.abs(gray[backdrop].astype(np.int16) - background_y) > 4).any()
-            or (np.abs(inner[backdrop].astype(np.int16) - background) > 8).any()):
-        return None
-    if cv2.connectedComponents(binary)[0] != 2:
-        return None
-    pad_x, pad_y = max(1, round((b-t)*.08)), max(1, round((b-t)*.24))
-    digit = None
-    for view, color in ((inner[t:b, l:r], background), (cv2.cvtColor(binary, cv2.COLOR_GRAY2BGR), 0)):
-        padded = cv2.copyMakeBorder(view, pad_y, pad_y, pad_x, pad_x, cv2.BORDER_CONSTANT, value=color)
-        rows, _ = engine(padded, use_det=False, use_cls=False)
-        if not rows or len(rows) != 1:
+    masks = []
+    for l, t, r, b, pixels in shapes:
+        if abs(t+1-7*scale) > tolerance or abs(b-t-25*scale) > tolerance:
             return None
-        value, score = rows[0]
-        if len(value) != 1 or value not in '0123456789' or score < .95 or (digit is not None and value != digit):
+        binary = np.frombuffer(pixels, np.uint8).reshape(b-t, r-l)
+        if cv2.connectedComponents(binary)[0] != 2:
             return None
-        digit = value
-
-    if not _matches_counter_glyph(binary, digit):
+        masks.append(binary)
+        backdrop[max(0, t-tolerance):b+tolerance, max(0, l-tolerance):r+tolerance] = False
+    if (np.abs(gray[backdrop].astype(np.int16) - background_y) > 4).any():
         return None
+    if len(shapes) == 2:
+        # Green icon chroma bleeds into the leftmost backing column in video.
+        # Its luminance was checked above; both glyph cells are farther right.
+        backdrop[:, 0] = False
+    if (np.abs(inner[backdrop].astype(np.int16) - background) > 8).any():
+        return None
+    left = shapes[0][0]
+    top = min(s[1] for s in shapes)
+    bottom = max(s[3] for s in shapes)
+    amount = _upright_digits(engine, inner[top:bottom, left:right], background, len(shapes))
+    if amount is None or (len(amount) == 2 and amount.startswith('0')):
+        return None
+    supported = '023456' if len(amount) == 1 else '01238'
+    for digit, binary in zip(amount, masks):
+        value = _upright_digits(engine, cv2.cvtColor(binary, cv2.COLOR_GRAY2BGR), 0, 1)
+        if value != digit or digit not in supported or not _matches_counter_glyph(binary, digit):
+            return None
+        if len(amount) == 2:
+            height, width = binary.shape
+            if abs(width - (11 if digit == '1' else 17)*scale) > tolerance:
+                return None
+            # An erased left loop turns 8 into an OCR-confident 3. The
+            # printed 3 has an inward diagonal across its upper third.
+            if digit == '3':
+                stroke = np.flatnonzero(binary[height//3])
+                if not len(stroke) or stroke[0] < width//4 or stroke[-1] >= width-width//4:
+                    return None
 
     for row in texts:
         x, y = center(row)
         if (row['confidence'] >= .95 and px <= x*w < px+plate.shape[1]
-                and py <= y*h < py+plate.shape[0] and row['text'] != digit):
+                and py <= y*h < py+plate.shape[0] and row['text'] != amount):
             return None
     score, cx, cy, _, _ = icon
-    nx, ny = (px+1+(l+r)/2)/w, (py+1+(t+b)/2)/h
-    return gold_reading((score, cx/w, cy/h), [(int(digit), nx, ny)], ux, uy)
+    nx, ny = (px+1+(left+right)/2)/w, (py+1+(top+bottom)/2)/h
+    return gold_reading((score, cx/w, cy/h), [(int(amount), nx, ny)], ux, uy)
+
+
+# Existing complete-observation callers use the single-digit default.
+read_single_gold = read_plate_gold

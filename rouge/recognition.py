@@ -61,6 +61,7 @@ class ScreenReader:
         self._last_frame = self._last_rect = self._last_result = None
         self._last_context = None
         self._last_hud_source = None
+        self._gold_layout = None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
 
     def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None):
@@ -90,13 +91,17 @@ class ScreenReader:
         ocr_hits = self._engine.cache.hits if isinstance(self._engine,CachedOCR) else 0
         gold_seed = None
         if on_hud is not None and same_source and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
-            gold_seed = self._last_result
+            gold_seed = self._gold_layout or self._last_result
         result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
                             on_gold_reference=on_gold_reference)
         result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
+        self._gold_layout = None
         if self.cache_enabled and image.nbytes <= 32*1024*1024:
+            if same_source and on_hud is not None:
+                from .hud_gold_preview import layout_across_partial_hud
+                self._gold_layout = layout_across_partial_hud(self._last_result, result)
             # One frame only; the source client rectangle is part of identity.
             # No approximate hashes or timestamps stand in for pixel equality.
             self._last_frame = image.copy()
@@ -131,7 +136,8 @@ class ScreenReader:
         elapsed('viewport')
         if gold_seed is not None:
             from .hud_gold_preview import read_gold_preview
-            gold = read_gold_preview(source_image, self._last_frame, gold_seed, viewport, self._engine)
+            prior = None if gold_seed is self._gold_layout else self._last_frame
+            gold = read_gold_preview(source_image, prior, gold_seed, viewport, self._engine)
             if gold is not None:
                 on_hud({'gold': gold})
             elapsed('local_gold')
