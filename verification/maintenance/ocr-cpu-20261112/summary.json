@@ -1,0 +1,556 @@
+{
+  "title": "整页识别使用CPU FP32推理并核对真实切页延迟",
+  "kind": "maintenance",
+  "date": "2026-11-12",
+  "baseline": "01ea6205de9200bf3af8c834d063833516e52809",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "scope": "User confirmed both late map/relic page updates and late same-page resources. This batch measures complete page painting, including queueing, and changes CPU model execution. Current/history scheduling remains sequential and is still a latency gap.",
+  "diagnosis": {
+    "sampling_interval_ms": 100,
+    "settle_ms": 120,
+    "single_full_reader": "sample_now returns while busy; only the separate gold preview can read newer pixels. Finishing the old page precedes starting the next complete page. Final map reading also follows run/inventory recognition.",
+    "remaining": "Even warm return pages take about 0.49-0.67s to read in the Windows replay and wait roughly 0.37-0.47s before reading, plus capture and UI dispatch. This is not an all-fields sub-500ms implementation."
+  },
+  "implementation": {
+    "platform": "Windows x64; other platforms retain ONNX Runtime",
+    "runtime": "OpenVINO 2025.4.1 CPU FP32, four inference threads and one stream per model; NumPy 2.3.5",
+    "weights": "Use RapidOCR 1.4.4 original Det/Cls/Rec model paths. Preprocessing, dictionary loaded from original ONNX metadata, decoder, thresholds and pixel caches are unchanged. No model quantization, reduced detector resolution or screenshots substituted for live evidence.",
+    "concurrency": "Compiled weights are shared; each calling thread owns an InferRequest. Outputs are copied before returning so the HUD and full reader do not overwrite each other. No global monkeypatch in production.",
+    "startup_cost": "RapidOCR initializes its original sessions and dictionary before the three inference callables are replaced. Initialization remains lazy, measured separately; avoiding this initialization cost is not claimed."
+  },
+  "environment": {
+    "cpu": "Intel Core Ultra 5 125H",
+    "gpu": "Intel Arc Graphics; not used by adopted backend",
+    "python": "3.12.14",
+    "onnxruntime": "1.30.0 retained",
+    "opencv": "4.14.0.94",
+    "dependency_check": "pip check passed; no global Python, system PATH or graphics driver changes",
+    "local_rollback": "Prior NumPy wheel retained locally; no personal state backed up or restored"
+  },
+  "wgc": {
+    "method": "Actual Windows Graphics Capture of a 2052x1128 isolated source window, auto-sampler, timeline commit and visible map/inventory Qt Paint event after matching fresh observation and rendered data. Each scenario resets only temporary test run state, so unchanged held rows and preserved floor selection cannot masquerade as latency. Paint event time excludes display scanout. First page cold, two new pages with model loaded, then three previously read pages arriving while an operator page is busy. Cache-enabled production settings. Fresh process order ONNX/OpenVINO/OpenVINO/ONNX. No game input.",
+    "aggregates": {
+      "onnx": {
+        "cold_paint_ms": [
+          10119.32,
+          8516.06
+        ],
+        "new_page_paint_ms": [
+          5628.74,
+          4879.52,
+          4673.59,
+          4545.14
+        ],
+        "busy_return_paint_ms": [
+          2239.89,
+          2315.01,
+          2031.6,
+          2042.59,
+          2012.22,
+          2027.12
+        ],
+        "mean_process_cpu_ms": 21207.03
+      },
+      "openvino": {
+        "cold_paint_ms": [
+          5858.49,
+          4355.43
+        ],
+        "new_page_paint_ms": [
+          2293.64,
+          1941.74,
+          2603.49,
+          1696.42
+        ],
+        "busy_return_paint_ms": [
+          1289.26,
+          1265.22,
+          1156.69,
+          1243.89,
+          1324.34,
+          1179.56
+        ],
+        "mean_process_cpu_ms": 4623.7
+      }
+    },
+    "rounds": {
+      "onnx": [
+        [
+          {
+            "case": 0,
+            "busy": false,
+            "paint_ms": 10119.32,
+            "capture_ms": 117.1,
+            "queue_ms": 225.71,
+            "read_ms": 9600.27,
+            "cpu_ms": 42875.0,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": false,
+            "paint_ms": 5628.74,
+            "capture_ms": 100.82,
+            "queue_ms": 238.61,
+            "read_ms": 5078.67,
+            "cpu_ms": 22328.12,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": false,
+            "paint_ms": 4879.52,
+            "capture_ms": 81.52,
+            "queue_ms": 238.08,
+            "read_ms": 4418.6,
+            "cpu_ms": 31734.38,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 0,
+            "busy": true,
+            "paint_ms": 2239.89,
+            "capture_ms": 63.63,
+            "queue_ms": 858.49,
+            "read_ms": 1179.39,
+            "cpu_ms": 10953.12,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": true,
+            "paint_ms": 2315.01,
+            "capture_ms": 31.77,
+            "queue_ms": 952.53,
+            "read_ms": 1089.57,
+            "cpu_ms": 11468.75,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": true,
+            "paint_ms": 2031.6,
+            "capture_ms": 122.63,
+            "queue_ms": 742.06,
+            "read_ms": 1011.7,
+            "cpu_ms": 11156.25,
+            "visible": true,
+            "correct": true
+          }
+        ],
+        [
+          {
+            "case": 0,
+            "busy": false,
+            "paint_ms": 8516.06,
+            "capture_ms": 44.41,
+            "queue_ms": 176.41,
+            "read_ms": 8181.98,
+            "cpu_ms": 39890.62,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": false,
+            "paint_ms": 4673.59,
+            "capture_ms": 29.84,
+            "queue_ms": 166.48,
+            "read_ms": 4317.59,
+            "cpu_ms": 19859.38,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": false,
+            "paint_ms": 4545.14,
+            "capture_ms": 81.1,
+            "queue_ms": 240.19,
+            "read_ms": 4101.18,
+            "cpu_ms": 30828.12,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 0,
+            "busy": true,
+            "paint_ms": 2042.59,
+            "capture_ms": 102.14,
+            "queue_ms": 712.55,
+            "read_ms": 1096.98,
+            "cpu_ms": 11359.38,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": true,
+            "paint_ms": 2012.22,
+            "capture_ms": 132.7,
+            "queue_ms": 780.88,
+            "read_ms": 887.06,
+            "cpu_ms": 11171.88,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": true,
+            "paint_ms": 2027.12,
+            "capture_ms": 78.46,
+            "queue_ms": 776.49,
+            "read_ms": 1011.06,
+            "cpu_ms": 10859.38,
+            "visible": true,
+            "correct": true
+          }
+        ]
+      ],
+      "openvino": [
+        [
+          {
+            "case": 0,
+            "busy": false,
+            "paint_ms": 5858.49,
+            "capture_ms": 85.7,
+            "queue_ms": 265.47,
+            "read_ms": 5368.67,
+            "cpu_ms": 11000.0,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": false,
+            "paint_ms": 2293.64,
+            "capture_ms": 74.69,
+            "queue_ms": 175.02,
+            "read_ms": 1852.01,
+            "cpu_ms": 3593.75,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": false,
+            "paint_ms": 1941.74,
+            "capture_ms": 81.03,
+            "queue_ms": 183.5,
+            "read_ms": 1560.81,
+            "cpu_ms": 4312.5,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 0,
+            "busy": true,
+            "paint_ms": 1289.26,
+            "capture_ms": 62.48,
+            "queue_ms": 430.16,
+            "read_ms": 669.22,
+            "cpu_ms": 2921.88,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": true,
+            "paint_ms": 1265.22,
+            "capture_ms": 136.01,
+            "queue_ms": 380.14,
+            "read_ms": 485.2,
+            "cpu_ms": 3734.38,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": true,
+            "paint_ms": 1156.69,
+            "capture_ms": 90.98,
+            "queue_ms": 368.36,
+            "read_ms": 573.84,
+            "cpu_ms": 3312.5,
+            "visible": true,
+            "correct": true
+          }
+        ],
+        [
+          {
+            "case": 0,
+            "busy": false,
+            "paint_ms": 4355.43,
+            "capture_ms": 60.27,
+            "queue_ms": 170.92,
+            "read_ms": 4015.91,
+            "cpu_ms": 10078.12,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": false,
+            "paint_ms": 2603.49,
+            "capture_ms": 37.0,
+            "queue_ms": 212.34,
+            "read_ms": 2156.29,
+            "cpu_ms": 3437.5,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": false,
+            "paint_ms": 1696.42,
+            "capture_ms": 24.44,
+            "queue_ms": 199.65,
+            "read_ms": 1363.23,
+            "cpu_ms": 4093.75,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 0,
+            "busy": true,
+            "paint_ms": 1243.89,
+            "capture_ms": 129.26,
+            "queue_ms": 329.42,
+            "read_ms": 665.84,
+            "cpu_ms": 3015.62,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 1,
+            "busy": true,
+            "paint_ms": 1324.34,
+            "capture_ms": 93.49,
+            "queue_ms": 466.23,
+            "read_ms": 504.59,
+            "cpu_ms": 2953.12,
+            "visible": true,
+            "correct": true
+          },
+          {
+            "case": 2,
+            "busy": true,
+            "paint_ms": 1179.56,
+            "capture_ms": 75.77,
+            "queue_ms": 442.16,
+            "read_ms": 544.7,
+            "cpu_ms": 3031.25,
+            "visible": true,
+            "correct": true
+          }
+        ]
+      ]
+    }
+  },
+  "gold": {
+    "method": "Actual WGC at1280x800; six successive source value changes per run without waiting for the full worker to become idle. Fresh source ROI bytes and visible resource Paint verified. Two OpenVINO rounds; one same-harness ONNX comparison. This is not every resource or every gameplay layout.",
+    "openvino_capture_read_paint_ms": [
+      [
+        95,
+        128,
+        223
+      ],
+      [
+        74,
+        199,
+        273
+      ],
+      [
+        123,
+        437,
+        560
+      ],
+      [
+        74,
+        213,
+        287
+      ],
+      [
+        92,
+        143,
+        235
+      ],
+      [
+        63,
+        152,
+        215
+      ],
+      [
+        66,
+        144,
+        210
+      ],
+      [
+        59,
+        179,
+        238
+      ],
+      [
+        23,
+        213,
+        236
+      ],
+      [
+        99,
+        469,
+        568
+      ],
+      [
+        48,
+        253,
+        301
+      ],
+      [
+        125,
+        164,
+        289
+      ]
+    ],
+    "onnx_capture_read_paint_ms": [
+      [
+        71,
+        188,
+        259
+      ],
+      [
+        19,
+        248,
+        267
+      ],
+      [
+        63,
+        271,
+        334
+      ],
+      [
+        43,
+        319,
+        362
+      ],
+      [
+        102,
+        354,
+        456
+      ],
+      [
+        67,
+        337,
+        404
+      ]
+    ],
+    "correct": 12,
+    "under_500ms": 10,
+    "max_ms": 568,
+    "tail_status": "Two values painted at560/568ms; the six-case ONNX run had no500ms exceedance. Different cases exceeded across repeats; tail is not accepted as solved or as proven improved."
+  },
+  "parity": {
+    "complete_observations": 14,
+    "field_changes": 0,
+    "comparison": "Production default engine against saved current-code ONNX complete observations, excluding timing. Text, OCR boxes, resources, inventory facts, map topology and page attribution agree. This establishes parity on the retained cases, not universal ground-truth accuracy.",
+    "confidence_changes": 533,
+    "geometry_float_changes": 20,
+    "max_geometry_delta": 5.551115123125783e-17,
+    "float_note": "One map has machine-precision least-squares coordinate changes after the NumPy version change; all differences retained locally."
+  },
+  "rejected_trials": [
+    {
+      "backend": "DirectML1.24.4",
+      "whole_detector_first_ms": 13986.4,
+      "warm_ms": [
+        171.4,
+        169.4
+      ],
+      "reason": "First dynamic shape stalls and same-session concurrency restriction; not adopted."
+    },
+    {
+      "backend": "OpenVINO GPU EP",
+      "whole_detector_first_ms": 26117.6,
+      "warm_ms": [
+        7255.9,
+        5300.7
+      ],
+      "reason": "Dynamic image sizes kept compiling; not adopted."
+    },
+    {
+      "backend": "ONNX Runtime force_spinning_stop",
+      "reason": "CPU time decreased in some cases but complete latency did not demonstrate stable improvement; not adopted."
+    },
+    {
+      "backend": "OpenVINO EP CPU",
+      "reason": "Promising14-case parity. Production uses native CPU API instead of replacing the ONNX package or globally patching RapidOCR provider selection."
+    }
+  ],
+  "validation": {
+    "targeted_tests": 112,
+    "new_tests": "Actual original/optimized detector, orientation, upright line parity; eighteen concurrent line calls with independent stable outputs. Backend entry initially absent failed; original latency reproduced separately through WGC.",
+    "dependency_check": true,
+    "native_window": "Original test process closed normally and relaunched with updated project runtime. Toolbar is visible in a Windows-MCP desktop crop and responds to Win32 health checks. Three private settings/state file hashes unchanged. Startup verification helper failed after launch due to its import path; recovered the same process without a second launch.",
+    "full_suite_run": false,
+    "live_game_performance_measured": false,
+    "private_data_published": false,
+    "cloud_index_tests": 33,
+    "eligible_live_game_windows": 0
+  },
+  "constraints": {
+    "rule1": "Backend selection validated once at create_engine; normalized model tensors and model metadata reused internally. No duplicated input checks or new exception suppression.",
+    "rule2": "CPUInference owns compilation and per-thread request/output lifetime; use_cpu_inference owns pinned model/config binding. No speculative backend registry.",
+    "rule3": "No low-probability recovery, guard or exception handler added/removed/changed in product code. Existing recognition uncertainty and prior D353 handling untouched."
+  },
+  "limitations": [
+    "Whole-page sub500ms remains unmet; cold start4.36-5.86s, new pages1.70-2.60s, busy cached returns1.16-1.32s in this replay.",
+    "Game co-running, other CPUs, other resolutions and animation/occlusion remain unverified.",
+    "Other resource fields still depend on complete label discovery. Current page processing still waits for the busy full reader; retaining short historical pages must remain correct when this is changed.",
+    "The first page-paint harness reused identical inventory and selected floor state and produced a false22s timing and assertion failure. Those results were rejected; corrected isolation results are above."
+  ],
+  "sources": [
+    {
+      "url": "https://docs.openvino.ai/2025/api/ie_python_api/_autosummary/openvino.CompiledModel.html",
+      "use": "Dedicated InferRequest API and copied outputs; avoid shared callable request."
+    },
+    {
+      "url": "https://onnxruntime.ai/docs/execution-providers/OpenVINO-ExecutionProvider.html",
+      "use": "Initial EP trial version matching and CPU precision/thread settings."
+    },
+    {
+      "url": "https://onnxruntime.ai/docs/execution-providers/DirectML-ExecutionProvider.html",
+      "use": "Dynamic-shape and session-concurrency constraints for rejected GPU trial."
+    }
+  ],
+  "packages": [
+    {
+      "file": "openvino-2025.4.1-20426-cp312-cp312-win_amd64.whl",
+      "sha256": "c50293d1463698012eaa526dcc83f841b85a3f4952eea4c9445c83e0346f8e80",
+      "license": "Apache-2.0",
+      "source": "Official PyPI wheel metadata and embedded license inspected; no .pth startup injection. Runtime code uses Core/inference only; telemetry API is not invoked."
+    },
+    {
+      "file": "numpy-2.3.5-cp312-cp312-win_amd64.whl",
+      "sha256": "86945f2ee6d10cdfd67bcb4069c1662dd711f7e2a4343db5cecec06b87cf31aa",
+      "license": "BSD-3-Clause and bundled third-party notices",
+      "source": "Official PyPI wheel metadata and embedded license inspected; no .pth startup injection. Runtime code uses Core/inference only; telemetry API is not invoked."
+    },
+    {
+      "file": "openvino_telemetry-2025.2.0-py3-none-any.whl",
+      "sha256": "bcb667e83a44f202ecf4cfa49281715c6d7e21499daec04ff853b7f964833599",
+      "license": "Apache-2.0",
+      "source": "Official PyPI wheel metadata and embedded license inspected; no .pth startup injection. Runtime code uses Core/inference only; telemetry API is not invoked."
+    }
+  ],
+  "review": {
+    "spec": "Both requested latency categories measured. Full-page model work reduced without dropping fields or historical frames;500ms gate remains false. Same-page gold tail not declared improved. Game co-running remains unverified.",
+    "code": "Reviewed adapter, factory, requirement markers and tests separately from latency outcome: per-thread requests, copied outputs, pinned default model binding and no exception swallowing. Existing preprocessing branches unchanged.",
+    "scope": "No AGENTS.md, .agents files, private recording, account/run state or settings included."
+  }
+}

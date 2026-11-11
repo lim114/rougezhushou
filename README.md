@@ -146,6 +146,8 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m rouge.app
 ```
 
+Windows x64 的图像识别使用 OpenVINO 2025.4.1 的 CPU FP32 推理，模型、文字阈值和本局识别规则沿用 RapidOCR 1.4.4。更新已有环境时也须执行上面的依赖安装；该版本要求 NumPy 小于 2.4。其它平台使用原 ONNX Runtime。性能对比可显式调用 `create_engine(backend='onnx')`；不需要更换 ONNX Runtime 包或安装显卡驱动。当前整页更新仍未达到 0.5 秒，实测条件和剩余瓶颈见[当前维护回执](verification/maintenance/ocr-cpu-20261112/summary.json)。
+
 ## 可以测试
 
 - **历史0.40 · 逐次生成计划**：105关卡保留原图与出生格，条目内生成序号可切到首/末及中间项，显示片段/阶段队列开始后的名义偏移。5,314主计划+334条件计划不等于必定出场数量；绝对时间、可见入场和299分支位置仍未知。敌人移速基础值不再直接标格/秒，关卡倍率及仅基础×关卡参考单列；不推算移动时间。359当前回归、732旧计算精确不变及4,764次界面序号选择通过。见 [BATCH_0.40.md](BATCH_0.40.md) 和 [项目进度](PROJECT_PROGRESS.md)。
