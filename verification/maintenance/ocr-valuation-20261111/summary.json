@@ -1,0 +1,238 @@
+{
+  "title": "总估价按当前绿色数字整行回读",
+  "kind": "maintenance",
+  "baseline": "36a7c0f8a00e36e0c3b4852544c89d5f6a66d4ed",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "cropped_detector_callers": [
+      "hud_resources._number: valuation",
+      "run_recognition.near_number: colour held-count crop",
+      "run_recognition.near_number: normalized held-count crop",
+      "run_badges.read_badge_grade"
+    ],
+    "detector_input_shapes": [
+      [
+        1,
+        3,
+        736,
+        1408
+      ],
+      [
+        1,
+        3,
+        736,
+        1792
+      ],
+      [
+        1,
+        3,
+        736,
+        1792
+      ],
+      [
+        1,
+        3,
+        736,
+        832
+      ]
+    ],
+    "warm_profile": "Five detector calls including discovery took 1.770s; ONNX run self time 1.656s. Postprocessing was not the dominant cost. The small numeric crops are enlarged to minimum side736.",
+    "accuracy_finding": "Manual review of new local recording crops confirmed one baseline truncated two-digit valuation. Old OCR had detected and accepted only its first digit. The source recordings, labels, timestamps and values remain local."
+  },
+  "rejected": {
+    "trial": "Minimum detector side480 only in three numeric callers; no production resize change adopted.",
+    "complete_observations": 14,
+    "changed_observations": 2,
+    "reason": "One previously visible valuation disappeared; another change corrected the independently confirmed truncated value. Mixed accuracy, so whole numeric resizing was rejected. A separate side384 crop also dropped below the unchanged confidence threshold."
+  },
+  "implementation": "Only when full-frame OCR has no confident numeric candidate for the current valuation label, select its green digit components by colour and label-relative height and submit all selected digits as one line to the existing recognizer. Reuse the existing crop validation, numeric decoding, confidence and original detector fallback. Other numeric fields, full-page detection and engine settings are unchanged.",
+  "local_measurement": {
+    "method": "Five manually inspected actual crop inputs, three alternating warmed pairs each, same engine without image-result caching. Local timing excludes capture and full-page label discovery.",
+    "pairs": 15,
+    "median_ms": {
+      "base": 180.85,
+      "after": 12.06
+    },
+    "scale_variants": 20,
+    "scale_variants_correct": 20,
+    "scales": [
+      0.75,
+      1.0,
+      1.25,
+      1.5
+    ]
+  },
+  "wgc": {
+    "method": "Four page entries, first cold then three warm entries separated by a committed operator page; fresh processes in baseline/new/new/baseline order. Actual Windows Graphics Capture, automatic sampler and resource-chip Paint, 1280x800 isolated source window. Paint counted only after HUD evidence from a capture newer than the source repaint, so retained values cannot count as current success.",
+    "rounds": {
+      "base": [
+        {
+          "paint": 4265,
+          "full": 7588,
+          "cpu": 36297,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 3755,
+          "full": 7344,
+          "cpu": 33953,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 3356,
+          "full": 5832,
+          "cpu": 26641,
+          "correct": false,
+          "visible": true
+        },
+        {
+          "paint": 2489,
+          "full": 3694,
+          "cpu": 19734,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 3964,
+          "full": 7034,
+          "cpu": 34734,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 3563,
+          "full": 7053,
+          "cpu": 33438,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 3745,
+          "full": 6241,
+          "cpu": 28906,
+          "correct": false,
+          "visible": true
+        },
+        {
+          "paint": 2768,
+          "full": 4107,
+          "cpu": 21250,
+          "correct": true,
+          "visible": true
+        }
+      ],
+      "after": [
+        {
+          "paint": 3938,
+          "full": 6881,
+          "cpu": 33625,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 2806,
+          "full": 6386,
+          "cpu": 28469,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 2862,
+          "full": 5330,
+          "cpu": 24062,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 1869,
+          "full": 3113,
+          "cpu": 16344,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 4038,
+          "full": 7136,
+          "cpu": 34641,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 2798,
+          "full": 6053,
+          "cpu": 28438,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 2961,
+          "full": 5200,
+          "cpu": 24234,
+          "correct": true,
+          "visible": true
+        },
+        {
+          "paint": 2001,
+          "full": 3287,
+          "cpu": 16594,
+          "correct": true,
+          "visible": true
+        }
+      ]
+    },
+    "means": {
+      "base": {
+        "full": 6111.62,
+        "cpu": 29369.12
+      },
+      "after": {
+        "full": 5423.25,
+        "cpu": 25800.88
+      }
+    },
+    "correct_before": 6,
+    "correct_after": 8,
+    "baseline_paint_caveat": "Two baseline Paint values were wrong; these times are not time-to-correct-result. Complete commit timings include all four entries in both rounds.",
+    "new_warm_correct_paint_range_ms": [
+      1869,
+      2961
+    ],
+    "real_game_or_fps_verified": false
+  },
+  "validation": {
+    "targeted_tests_passed": 101,
+    "regression_red": "Final six-test suite against frozen baseline fails six assertions/subtests, including the partial fallback detector reproduction; candidate passes. Raw logs retained locally.",
+    "complete_comparison": {
+      "cases": 14,
+      "unchanged": 13,
+      "independently_verified_correction": 1,
+      "all_other_fields_equal": true
+    },
+    "native_window": "Original process closed normally and restarted. Native toolbar is responsive and has a rendered WGC frame; frame visually inspected. Windows-MCP desktop crops did not show the toolbar, so unobscured desktop visibility is not claimed.",
+    "full_suite_run": false,
+    "eligible_live_game_windows": 0,
+    "cloud_index_tests_passed": 33
+  },
+  "constraints": {
+    "rule1": "Valuation segmentation consumes the nonempty crop already validated by _number; no duplicate empty-image boundary added. Existing confident full-frame candidates skip both crop and model.",
+    "rule2": "_valuation owns colour segmentation and whole-line construction; _number retains shared numeric decoding. No single-call forwarding wrapper.",
+    "rule3": "No exception boundary or low-probability defense added, removed or changed. Existing D353 clipped-empty crop handling retained in its existing _number path."
+  },
+  "failed_attempts": [
+    "Initial profiling script name shadowed stdlib profile; renamed before measuring.",
+    "First size-trial hook targeted an imported name at the wrong module; corrected before collecting results.",
+    "First WGC harness expected a fresh Paint for an unchanged amount; no Paint occurred. Kept failed attempt and measured four distinct entry readings, gated by current HUD evidence.",
+    "First desktop crop used logical instead of physical coordinates; corrected DPI coordinates still did not establish unobscured desktop visibility. Exact-window WGC rendering and responsiveness checked."
+  ],
+  "limits": [
+    "Small local sample set, not overall accuracy proof; unusual colours, occlusion and other game renderings still need independent coverage.",
+    "A confident but wrong full-frame numeric candidate is outside this fallback-only change.",
+    "Valuation still waits for whole-page text discovery and is not within500ms; cold model loading and game co-run cost remain open.",
+    "Private screenshots, recordings, recognition values and live state were not published."
+  ],
+  "next": "Reuse or recheck current valuation-label evidence before whole-page discovery, with same-frame geometry and source freshness, to reduce the remaining visible wait. Continue collection-count and badge-grade inference analysis without adopting the rejected global numeric resize."
+}

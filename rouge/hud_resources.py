@@ -8,12 +8,16 @@ from .anchors import crop, header_span
 from .operator_recognition import center
 
 
-def _number(image, candidates, box, engine, *, ratio=False, segmented=False):
+def _number(image, candidates, box, engine, *, ratio=False, segmented=False, valuation_font=None):
     values = {text for text,x,y in candidates if box[0] <= x <= box[2] and box[1] <= y <= box[3]}
     if not values:
         current = crop(image, box)
         if not current.size:
             return None
+        if valuation_font is not None:
+            value = _valuation(current, valuation_font, engine)
+            if value is not None:
+                return value
         current = cv2.copyMakeBorder(current, 5, 5, 5, 5, cv2.BORDER_CONSTANT, value=0)
         raw, _ = engine(cv2.resize(current, None, fx=2, fy=2), use_cls=False, use_det=not segmented)
         pattern = r'\d+/\d+' if ratio else r'\d+'
@@ -33,6 +37,22 @@ def _icons():
     root = Path(__file__).with_name('data') / 'ui-icons'
     return {name: cv2.imdecode(np.fromfile(root / ('hud-' + name + '.png'), dtype=np.uint8), 0)
             for name in ('shield', 'hope')}
+
+
+def _valuation(current, font, engine):
+    """Read the green amount as one line, excluding grey icon highlights."""
+    mask = cv2.inRange(cv2.cvtColor(current, cv2.COLOR_BGR2HSV),
+                       (65, 120, 140), (100, 255, 255))
+    _, groups, stats, _ = cv2.connectedComponentsWithStats(mask)
+    selected = [(i, x, y, x+width, y+height)
+                for i, (x, y, width, height, _) in enumerate(stats[1:], 1)
+                if font*.55 <= height <= font*1.6]
+    if not selected:
+        return None
+    ids, lefts, tops, rights, bottoms = zip(*selected)
+    glyphs = np.isin(groups[min(tops):max(bottoms), min(lefts):max(rights)], ids).astype(np.uint8)*255
+    digits = cv2.cvtColor(glyphs, cv2.COLOR_GRAY2BGR)
+    return _number(digits, [], (0., 0., 1., 1.), engine, segmented=True)
 
 
 def read_hud_resources(image, texts, engine):
@@ -65,7 +85,8 @@ def read_hud_resources(image, texts, engine):
             box = (x0 - .5*dx, y1, x1 + .8*dx, y1 + 4.5*dy)
         else:
             box = (x0 - .5*dx, y1, x1 + 1.2*dx, y1 + 2.4*dy)
-        value = _number(image, ratios if key == 'life' else counts, box, engine, ratio=key == 'life')
+        value = _number(image, ratios if key == 'life' else counts, box, engine, ratio=key == 'life',
+                        valuation_font=dy*h if key == 'valuation' else None)
         if value is not None:
             resources[key] = {**value, 'source': label + '当前标签对应数值'}
     if life_bounds is None:

@@ -1,3 +1,7 @@
+## 图像识别专项 · 总估价按当前绿色数字整行回读
+
+当前标签对应的绿色总估价整行回读，修正已核对的两位数截断。隔离Windows捕获回放整页提交平均6.11→5.42秒；该字段热进页仍需1.87–2.96秒，下一步缩短等待整页标签发现的时间。[回执](verification/maintenance/ocr-valuation-20261111/summary.json)。
+
 ## 图像识别专项 · 持有栏筛选复用当前画面频谱
 
 同一组Windows捕获回放，整页提交平均5.88→5.51秒。下一步拆分整屏与局部OCR推理开销，继续核对首次加载及游戏同跑的CPU与帧率。[回执](verification/maintenance/ocr-complete-20261109/summary.json)。
