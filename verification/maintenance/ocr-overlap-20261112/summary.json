@@ -1,0 +1,106 @@
+{
+  "title": "核对整页排队与并发读取的收益及合并边界",
+  "kind": "maintenance",
+  "scope": "diagnostic benchmark only",
+  "baseline": "0d13b4d462f9502c4a9929ab7f0bc9d373b616b7",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": false,
+  "all_fields_500ms_accepted": false,
+  "method": "Two warmed ScreenReaders; next page arrives100ms after previous read starts. Serial reader retains previous-page caches; parallel reader has its own warmed cache. Measures complete arrangement, excluding capture, UI and engine startup. Local images and raw observations remain local. Third case is a static-frame-cache control, not evidence of queue savings.",
+  "first_round": [
+    {
+      "case": 0,
+      "mode": "serial",
+      "current_read_ms": 4510.04,
+      "combined_cpu_ms": 8328.12
+    },
+    {
+      "case": 0,
+      "mode": "parallel",
+      "current_read_ms": 1774.11,
+      "combined_cpu_ms": 8375.0
+    },
+    {
+      "case": 1,
+      "mode": "serial",
+      "current_read_ms": 3255.44,
+      "combined_cpu_ms": 7781.25
+    },
+    {
+      "case": 1,
+      "mode": "parallel",
+      "current_read_ms": 2791.47,
+      "combined_cpu_ms": 9031.25
+    },
+    {
+      "case": 2,
+      "mode": "serial",
+      "current_read_ms": 1620.5,
+      "combined_cpu_ms": 4078.12
+    },
+    {
+      "case": 2,
+      "mode": "parallel",
+      "current_read_ms": 1372.0,
+      "combined_cpu_ms": 3750.0
+    }
+  ],
+  "repeat": [
+    {
+      "case": 0,
+      "mode": "serial",
+      "current_read_ms": 4073.08,
+      "combined_cpu_ms": 8375.0
+    },
+    {
+      "case": 0,
+      "mode": "parallel",
+      "current_read_ms": 1841.78,
+      "combined_cpu_ms": 8531.25,
+      "fact_difference_count": 0
+    },
+    {
+      "case": 1,
+      "mode": "serial",
+      "current_read_ms": 3573.49,
+      "combined_cpu_ms": 8546.88
+    },
+    {
+      "case": 1,
+      "mode": "parallel",
+      "current_read_ms": 2804.44,
+      "combined_cpu_ms": 8718.75,
+      "fact_difference_count": 0
+    },
+    {
+      "case": 2,
+      "mode": "serial",
+      "current_read_ms": 1659.08,
+      "combined_cpu_ms": 3828.12
+    },
+    {
+      "case": 2,
+      "mode": "parallel",
+      "current_read_ms": 1443.65,
+      "combined_cpu_ms": 3593.75,
+      "fact_difference_count": 0
+    }
+  ],
+  "parity": "No fact differences across three cases in either round, excluding timing/confidence/counter timing. Not an independent accuracy oracle.",
+  "rejected": "Creating a new thread versus reusing a thread did not increase detector time consistently; no request-lifetime change adopted.",
+  "state_merge": "Isolated reproduction: independently preparing two timeline snapshots and committing newer then older loses the latest resource. Preparing each completion against the latest timeline preserves it. This is a risk of naive concurrent integration, not a claimed bug in current sequential production.",
+  "validation": {
+    "timeline_tests_passed": 10,
+    "benchmark_script_executed": true,
+    "live_game_tested": false,
+    "product_restarted": false
+  },
+  "next": "Keep latest-page and historical reads separate, serialize completion reduction against the newest timeline, include in-flight older frames in compaction watermark, and verify pause/reset/close and short-page retention before native capture/UI comparison. Do not simply duplicate the current worker closure.",
+  "limits": [
+    "No production latency improvement shipped in this batch.",
+    "Only two page-switch pairs plus a cached control, two rounds; no p95 claim.",
+    "CPU cost can increase; memory and game co-running are unmeasured.",
+    "Current/history priority and chronological commit remain pending."
+  ]
+}
