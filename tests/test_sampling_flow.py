@@ -342,7 +342,8 @@ class SamplingFlowTests(unittest.TestCase):
         chips = bar.inventory_popup.resources.chips
         probe = window.busy_gold
         marker = probe.current_marker()
-        ref = GoldReference(marker, {'seq': 1, 'target': window.capture.target, 'client_rect': [0, 0, 360, 200]}, {}, Mock())
+        ref = GoldReference(marker, {'seq': 1, 'target': window.capture.target, 'client_rect': [0, 0, 360, 200],
+                                    'image': np.zeros((200, 360, 3), np.uint8)}, {}, Mock())
         at = time.time()
         window.busy = True
         with patch.object(window.auto, 'isChecked', return_value=True):

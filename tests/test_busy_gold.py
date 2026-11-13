@@ -48,6 +48,72 @@ class BusyGoldTests(unittest.TestCase):
         self.probe.accept_reference(self.ref)
         self.assertIs(self.probe.reference, newer)
 
+    def test_reference_refresh_keeps_newer_inflight_read_and_does_not_repeat_frame(self):
+        started,release=threading.Event(),threading.Event()
+        def check(frame,*args):
+            started.set();release.wait(3)
+            return {'value':int(frame[0,0,0])}
+        self.offer(22);reference_frame=self.buffer.latest()
+        self.offer(32);reading_frame=self.buffer.latest()
+        with patch('rouge.busy_gold.read_gold_preview',side_effect=check) as read:
+            self.probe.poll();self.assertTrue(started.wait(2))
+            try:
+                updated=GoldReference(self.ref.marker,reference_frame,{},Mock())
+                self.probe.accept_reference(updated)
+            finally:release.set()
+            self.wait_idle()
+            self.assertIsNotNone(self.probe.shown)
+            self.assertEqual(self.probe.shown[0],reading_frame['seq'])
+            self.assertEqual(self.probe.shown[1]['value'],32)
+            self.probe.poll();self.wait_idle()
+            self.assertEqual(read.call_count,1)
+
+    def test_newer_reference_and_changed_geometry_still_reject_prior_result(self):
+        self.offer(22);reading_frame=self.buffer.latest()
+        self.offer(32);newest=self.buffer.latest()
+        self.probe.accept_reference(GoldReference(self.ref.marker,newest,{},Mock()))
+        self.probe.accept_result((self.ref,reading_frame['captured_at'],reading_frame['seq'],{'value':22}))
+        self.assertIsNone(self.probe.shown)
+        for change in ({'client_rect':[0,0,720,400]},
+                       {'image':np.zeros((100,180,3),np.uint8)}):
+            with self.subTest(change=list(change)):
+                self.probe.reference=self.ref
+                changed=GoldReference(self.ref.marker,{**self.ref.frame,**change},{},Mock())
+                self.probe.accept_reference(changed)
+                self.probe.accept_result((self.ref,newest['captured_at'],newest['seq'],{'value':32}))
+                self.assertIsNone(self.probe.shown)
+
+    def test_cleared_reference_discards_inflight_result(self):
+        self.offer(22);frame=self.buffer.latest()
+        self.probe.clear()
+        self.probe.accept_result((self.ref,frame['captured_at'],frame['seq'],{'value':22}))
+        self.assertIsNone(self.probe.shown)
+
+    def test_refreshed_reference_can_retry_a_failed_read_of_the_same_frame(self):
+        started,release=threading.Event(),threading.Event()
+        def check(frame,prior,observation,*args):
+            if not observation:
+                started.set();release.wait(3);return None
+            return {'value':32}
+        self.offer(22);reference_frame=self.buffer.latest()
+        self.offer(32)
+        with patch('rouge.busy_gold.read_gold_preview',side_effect=check) as read:
+            self.probe.poll();self.assertTrue(started.wait(2))
+            self.probe.accept_reference(GoldReference(self.ref.marker,reference_frame,{'new_labels':True},Mock()))
+            release.set();self.wait_idle()
+            self.probe.poll();self.wait_idle()
+            self.assertIsNotNone(self.probe.shown)
+            self.assertEqual(self.probe.shown[1]['value'],32)
+            self.assertEqual(read.call_count,2)
+
+    def test_refresh_after_success_keeps_checked_frame(self):
+        self.offer(22);reference_frame=self.buffer.latest()
+        self.offer(32);frame=self.buffer.latest()
+        self.probe.accept_result((self.ref,frame['captured_at'],frame['seq'],{'value':32}))
+        self.probe.accept_reference(GoldReference(self.ref.marker,reference_frame,{},Mock()))
+        with patch('rouge.busy_gold.read_gold_preview') as read:
+            self.probe.poll();self.wait_idle();read.assert_not_called()
+
     def wait_idle(self):
         deadline = time.monotonic() + 3
         while self.probe.running and time.monotonic() < deadline:

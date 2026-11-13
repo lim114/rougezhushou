@@ -15,6 +15,12 @@ class GoldReference:
     observation: dict
     line_reader: object
 
+    def same_source(self, other):
+        """A refreshed reference may describe the same capture source and geometry."""
+        return (self.marker == other.marker and self.frame['target'] == other.frame['target']
+                and self.frame['client_rect'] == other.frame['client_rect']
+                and self.frame['image'].shape == other.frame['image'].shape)
+
 
 class BusyGold(QObject):
     reference_ready = Signal(object)
@@ -52,8 +58,12 @@ class BusyGold(QObject):
                 or (self.reference is not None and reference.frame['seq'] < self.reference.frame['seq'])
                 or reference.frame['target'] != w.capture.target):
             return
+        same_source = self.reference is not None and reference.same_source(self.reference)
         self.reference = reference
-        self.checked_seq = reference.frame['seq']
+        # Preserve successful current readings. A failed attempt may become
+        # readable using the refreshed label locations and must remain eligible.
+        self.checked_seq = (max(self.shown[0], reference.frame['seq'])
+                            if same_source and self.shown is not None else reference.frame['seq'])
 
     def poll(self):
         w = self.owner
@@ -98,7 +108,12 @@ class BusyGold(QObject):
         self.running = False
         reference, at, seq, gold = result
         w = self.owner
-        if (w.closing or reference is not self.reference
+        current = self.reference
+        # A full read may refresh the reference while this newer frame is being
+        # verified. That revision does not invalidate its freshly checked labels
+        # and digits. A later reference frame or a different source still does.
+        if (w.closing or current is None or not reference.same_source(current)
+                or seq < current.frame['seq']
                 or (at, seq) <= (w.last_sample_at, w.last_sample_seq)
                 or not w.auto.isChecked()):
             return
@@ -108,6 +123,7 @@ class BusyGold(QObject):
         if gold is None:
             self.withdraw()
             return
+        self.checked_seq = max(self.checked_seq, seq)
         self.shown = (seq, {**gold, 'captured_at': at})
         w.refresh_display_hud()
 

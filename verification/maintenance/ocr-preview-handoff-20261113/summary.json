@@ -1,0 +1,379 @@
+{
+  "title": "参考画面更新时保留已验证的新帧读数",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "509c9511632bff9ae2062f6867a4f5b1dc0f0231",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "confirmed_cause": "The full reader refreshed GoldReference while a newer frame was still being read by BusyGold. Object identity rejection discarded freshly verified current digits; resetting checked_seq then reread that same frame.",
+    "actual_trace_ms": {
+      "first_read_finished": 330,
+      "first_gui_result_received": 341,
+      "first_result_displayed": false,
+      "second_read_started": 406,
+      "second_gui_result_received": 547,
+      "correct_paint": 561
+    },
+    "scope": "Real1280x800 WGC replay; timing trace is diagnostic and includes instrumentation. Raw observations stay local.",
+    "other_costs": "Full OCR and HUD line reads can contend; later accepted HUD-to-Paint gaps also occurred. Their independent causes remain unproven. This batch does not change inference scheduling."
+  },
+  "implementation": [
+    "Reference revision is distinguished from capture-source identity: run/epoch/generation marker, target, client rectangle and image shape must match.",
+    "A completed preview survives a same-source reference refresh only when its frame is not older than that new reference and is newer than the committed view. Current source health, auto state and close checks still apply.",
+    "Successful displayed/read frames keep the checked sequence across refresh; failed reads remain eligible to use refreshed label geometry. No speculative value or old pixels substituted.",
+    "Newer reference frames, cleared references, reset, target/geometry changes and stale committed frames still discard old results.",
+    "OCR algorithms, thresholds, model precision, image matching and full-page scheduler unchanged."
+  ],
+  "method": {
+    "gold": "Two final paired rounds of six known updates, source switches scheduled1s apart. Real WGC to correct visible gold-chip Paint. All final source-switch lateness values below100ms, recorded separately.",
+    "source_boundary": "Isolated image-source and assistant share the test Qt process; this is not a continuously running real game.",
+    "baseline": "Only busy_gold restored from509c95116; all other source and installed models identical.",
+    "full_pages": "One final paired round,2052x1128 WGC, old page already reading at switch; empty config tied to each isolated run id. Cases: inventory to map and map to inventory.",
+    "accuracy": "Final two full observations exactly equal, excluding timing/capture metadata and random fixture run id only. Actual digits checked against known source values.",
+    "limits": "Small sample, no p95 claim. Source-controlled phases and system load affect timing. No inference of universal500ms from12 correct sub500ms updates."
+  },
+  "gold": {
+    "capture_processing_total_ms": {
+      "serial-g": [
+        [
+          15,
+          107,
+          122
+        ],
+        [
+          10,
+          104,
+          114
+        ],
+        [
+          13,
+          103,
+          116
+        ],
+        [
+          16,
+          175,
+          191
+        ],
+        [
+          19,
+          196,
+          215
+        ],
+        [
+          15,
+          333,
+          348
+        ]
+      ],
+      "fixed-g": [
+        [
+          18,
+          97,
+          115
+        ],
+        [
+          17,
+          215,
+          232
+        ],
+        [
+          16,
+          359,
+          375
+        ],
+        [
+          18,
+          206,
+          224
+        ],
+        [
+          16,
+          254,
+          270
+        ],
+        [
+          13,
+          364,
+          377
+        ]
+      ],
+      "serial-h": [
+        [
+          11,
+          174,
+          185
+        ],
+        [
+          16,
+          130,
+          146
+        ],
+        [
+          17,
+          141,
+          158
+        ],
+        [
+          11,
+          399,
+          410
+        ],
+        [
+          12,
+          178,
+          190
+        ],
+        [
+          14,
+          256,
+          270
+        ]
+      ],
+      "fixed-h": [
+        [
+          21,
+          190,
+          211
+        ],
+        [
+          16,
+          163,
+          179
+        ],
+        [
+          17,
+          156,
+          173
+        ],
+        [
+          30,
+          226,
+          256
+        ],
+        [
+          23,
+          149,
+          172
+        ],
+        [
+          15,
+          123,
+          138
+        ]
+      ]
+    },
+    "baseline": {
+      "count": 12,
+      "correct": 12,
+      "below_500ms": 12,
+      "min_ms": 114,
+      "max_ms": 410,
+      "mean_ms": 205.42
+    },
+    "candidate": {
+      "count": 12,
+      "correct": 12,
+      "below_500ms": 12,
+      "min_ms": 115,
+      "max_ms": 377,
+      "mean_ms": 226.83
+    },
+    "switch_lateness_ms": {
+      "serial-g": [
+        9.56,
+        5.45,
+        2.38,
+        0.51,
+        5.21,
+        0.94
+      ],
+      "fixed-g": [
+        6.98,
+        9.1,
+        0.95,
+        9.59,
+        3.07,
+        3.8
+      ],
+      "serial-h": [
+        5.19,
+        9.64,
+        0.46,
+        6.49,
+        5.45,
+        4.94
+      ],
+      "fixed-h": [
+        8.67,
+        9.29,
+        8.97,
+        1.89,
+        9.51,
+        1.48
+      ]
+    },
+    "conclusion": "Both final baseline and candidate12/12 below500ms. The functional duplicate-read defect is fixed; stable average latency improvement is not established."
+  },
+  "windows_capture_paint": {
+    "serial-final": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1364.78,
+        "capture_ms": 75.16,
+        "queue_ms": 247.44,
+        "read_ms": 893.7,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 0.85,
+        "stages": {
+          "initialization": 0.001800013706088066,
+          "viewport": 8.56949994340539,
+          "local_gold": 101.82820004411042,
+          "page_features": 91.35450003668666,
+          "full_ocr": 419.78700004983693,
+          "visible_labels": 0.08509994950145483,
+          "operator": 0.04910002462565899
+        },
+        "cpu_ms": 3875.0,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9453.12,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1334.79,
+          "WorkingSetSize": 1298.93
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2958.6,
+        "capture_ms": 91.23,
+        "queue_ms": 239.39,
+        "read_ms": 2334.46,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.41,
+        "stages": {
+          "initialization": 0.00200001522898674,
+          "viewport": 10.277600027620792,
+          "local_gold": 93.90350000467151,
+          "page_features": 136.99419994372874,
+          "full_ocr": 694.3056000163779,
+          "visible_labels": 0.17929996829479933,
+          "operator": 0.10599999222904444,
+          "run": 1395.4205999616534,
+          "node_content": 0.002300017513334751,
+          "map": 0.003800028935074806,
+          "evidence": 0.17719995230436325
+        },
+        "cpu_ms": 7671.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 10156.25,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1759.78,
+          "WorkingSetSize": 1671.42
+        }
+      }
+    ],
+    "stage-final": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1414.43,
+        "capture_ms": 17.85,
+        "queue_ms": 203.2,
+        "read_ms": 1029.56,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 2.4,
+        "stages": {
+          "initialization": 0.00200001522898674,
+          "viewport": 9.65880008880049,
+          "local_gold": 169.4802000420168,
+          "page_features": 93.76329998485744,
+          "full_ocr": 473.552200011909,
+          "visible_labels": 0.09549991227686405,
+          "operator": 0.05430006422102451
+        },
+        "cpu_ms": 4062.5,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9250.0,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1327.38,
+          "WorkingSetSize": 1292.42
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2395.77,
+        "capture_ms": 20.73,
+        "queue_ms": 195.59,
+        "read_ms": 1933.18,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.45,
+        "stages": {
+          "initialization": 0.0011998927220702171,
+          "viewport": 7.198299979791045,
+          "local_gold": 60.9235999872908,
+          "page_features": 158.46990002319217,
+          "full_ocr": 656.875399989076,
+          "visible_labels": 0.1330999657511711,
+          "operator": 0.09850005153566599,
+          "run": 1046.7319000745192,
+          "node_content": 0.00400003045797348,
+          "map": 0.00500003807246685,
+          "evidence": 0.20969996694475412
+        },
+        "cpu_ms": 6515.62,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9625.0,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1758.02,
+          "WorkingSetSize": 1674.93
+        }
+      }
+    ]
+  },
+  "validation": {
+    "targeted_tests": 34,
+    "targeted_result": "pass",
+    "cloud_index_tests": 33,
+    "final_full_observations": 2,
+    "fact_differences": 0,
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "private_files_unchanged": true,
+    "eligible_live_game_windows": 0
+  },
+  "rejected_or_limited_evidence": [
+    "Original asynchronous reference-refresh behavior reproduced by a failing live worker test before changes.",
+    "First test run exposed a sampling-flow GoldReference double missing the production image field; corrected the fixture without changing its assertions.",
+    "First candidate preserved every attempted sequence, suppressing a legitimate retry after refreshed labels. A new failing test caught it; final code preserves successful reads only.",
+    "An isolated HUD-priority prototype produced no stable timing improvement; not shipped.",
+    "Reactive source changes immediately after prior Paint produced mixed averages and remaining537/581ms tails in an early candidate. Those rounds do not establish final performance.",
+    "One baseline fixed-cadence round had a source switch136.92ms late and failed its100ms harness bound; raw evidence retained and excluded from final paired acceptance.",
+    "Earlier provisional fixed-cadence candidate12/12 below500ms preceded the failed-read retry correction. Final version measured separately above.",
+    "Provisional full-page measurements were mixed; no full-page speedup claimed. Latest actual final measurements retained without replacing failures."
+  ],
+  "review": {
+    "spec": "Current verified values survive normal in-flight reference refresh; completed successful frames are not reread; failed current reads can retry with new labels. Tests retain reset, close, source-health, changed geometry, newer reference and committed-view rejection.",
+    "code": "Source equality has one domain responsibility in GoldReference; result checks occur after async work/state changes. No broad catch, hidden retries, guessed values or speculative recovery added. Replaced object-revision cancellation for a measured normal update race; existing source-validity boundaries retained.",
+    "publication": "Explicit source/tests/receipt/continuation only. Unrelated AGENTS.md, .agents, video, settings, run/account data, raw traces and samples excluded."
+  },
+  "remaining": [
+    "Map and inventory whole-page500ms remain unmet; this batch fixes one extra preview delay rather than lowering the full OCR workload.",
+    "Average/tail improvements under live game contention are not established. CPU inference contention, capture cadence and GUI delivery-to-Paint gaps need separate attribution.",
+    "Other resources, unknown digits, changed layouts, weaker hardware, startup and continuous real-game transitions remain unaccepted."
+  ]
+}
