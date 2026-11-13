@@ -1,0 +1,588 @@
+{
+  "title": "藏品图标分批并行核对，旧页在批次间让出计算",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "ae7f1452455eb9398e31e6d42d7bfaeba825d0ef",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "duplicate_artwork": "956 prepared templates,952 distinct exact pixels/masks; only4 duplicates. Not the principal cost; no deduplication implemented.",
+    "serial_screening": "Projection,RGB screening and coarse verification still ran one reference at a time. Same measured79x562 bar warm baseline734-747ms; two-worker prototype521-531ms, all output facts exact.",
+    "prototype_measurements": [
+      {
+        "mode": "base",
+        "round": 0,
+        "ms": 1121.7610000167042,
+        "cpu_ms": 1156.25,
+        "equal": true
+      },
+      {
+        "mode": "parallel",
+        "round": 0,
+        "ms": 534.5248999074101,
+        "cpu_ms": 843.75,
+        "equal": true
+      },
+      {
+        "mode": "base",
+        "round": 1,
+        "ms": 734.0423999121413,
+        "cpu_ms": 781.25,
+        "equal": true
+      },
+      {
+        "mode": "parallel",
+        "round": 1,
+        "ms": 531.2497999984771,
+        "cpu_ms": 828.125,
+        "equal": true
+      },
+      {
+        "mode": "base",
+        "round": 2,
+        "ms": 746.9597000163049,
+        "cpu_ms": 796.875,
+        "equal": true
+      },
+      {
+        "mode": "parallel",
+        "round": 2,
+        "ms": 520.7394999451935,
+        "cpu_ms": 828.125,
+        "equal": true
+      }
+    ],
+    "scope": "Microbenchmark is diagnostic; acceptance uses current full Windows capture-to-Paint comparisons below. No precision, threshold, reference inventory or final scoring changes."
+  },
+  "implementation": [
+    "Two workers screen independent reference batches and run the original masked RGB verifier; caller consumes results in original reference order, preserving score ties and ambiguity.",
+    "Worker-owned energy-window cache, projection scratch and image spectra are local to one bar. Both workers read shared pixels without mutation. No cross-frame correlation cache.",
+    "At most32 pending matrices within8MiB, geometry-derived batches; small catalogs/large matrices use sequential execution. Consumed batch lists released. Native scratch, consumer matrix and two existing8MiB window caches are additional.",
+    "Between completed batches the calling full reader cooperatively yields to a newer page. No queued coarse work remains at that boundary; pool closes before refined matching.",
+    "Existing template validation, thresholds, nonfinite handling and refined matching remain unchanged. No new dependencies or hidden recovery."
+  ],
+  "method": {
+    "capture": "Real WGC of isolated2052x1128 source window; source switch to correct Qt Paint with the production sampler.",
+    "baseline_source": "Only relic_recognition restored from ae7f14524 for baseline. Map early publication/current-frame priority remain enabled in both versions. Legacy serial labels refer only to baseline coarse matcher.",
+    "context": "Two sequential paired rounds, neutral warm-up, old page reading when current page changes; same empty confirmed config tied to each actual isolated run id. No model tests in parallel.",
+    "accuracy": "14 complete real observations and4 WGC observations exactly equal to baseline after excluding timing/capture metadata and fixture run ids. Original text confidence, positions, resources, relic candidates/scores and maps retained.",
+    "limits": "Historical image fixtures, not real continuous game co-running. Two rounds are not p95 evidence."
+  },
+  "windows_capture_paint": {
+    "serial-a": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1234.32,
+        "capture_ms": 17.33,
+        "queue_ms": 208.2,
+        "read_ms": 850.86,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 2.19,
+        "stages": {
+          "initialization": 0.001700012944638729,
+          "viewport": 10.301799979060888,
+          "local_gold": 136.45789993461221,
+          "page_features": 94.62749992962927,
+          "full_ocr": 352.3660000646487,
+          "visible_labels": 0.07790001109242439,
+          "operator": 0.043599982745945454
+        },
+        "cpu_ms": 3750.0,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 7859.38,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1319.28,
+          "WorkingSetSize": 1280.45
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2464.92,
+        "capture_ms": 25.76,
+        "queue_ms": 196.13,
+        "read_ms": 1959.8,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.52,
+        "stages": {
+          "initialization": 0.00200001522898674,
+          "viewport": 9.605600032955408,
+          "local_gold": 78.3715998986736,
+          "page_features": 124.64189995080233,
+          "full_ocr": 537.0957999257371,
+          "visible_labels": 0.09499990846961737,
+          "operator": 0.06350001785904169,
+          "run": 1205.811299965717,
+          "node_content": 0.002600019797682762,
+          "map": 0.003600027412176132,
+          "evidence": 0.18390000332146883
+        },
+        "cpu_ms": 5687.5,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8046.88,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1753.39,
+          "WorkingSetSize": 1669.09
+        }
+      }
+    ],
+    "stage-a": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1271.48,
+        "capture_ms": 21.19,
+        "queue_ms": 195.25,
+        "read_ms": 896.3,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 3.05,
+        "stages": {
+          "initialization": 0.00209989957511425,
+          "viewport": 12.22149992827326,
+          "local_gold": 154.51999998185784,
+          "page_features": 107.12709999643266,
+          "full_ocr": 382.14409991633147,
+          "visible_labels": 0.076299998909235,
+          "operator": 0.043500098399817944
+        },
+        "cpu_ms": 4515.62,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9203.12,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1330.05,
+          "WorkingSetSize": 1294.05
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2134.56,
+        "capture_ms": 19.99,
+        "queue_ms": 198.07,
+        "read_ms": 1676.69,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.35,
+        "stages": {
+          "initialization": 0.0031999079510569572,
+          "viewport": 9.729199926368892,
+          "local_gold": 82.94590003788471,
+          "page_features": 141.4500999962911,
+          "full_ocr": 550.9199999505654,
+          "visible_labels": 0.09029998909682035,
+          "operator": 0.06560003384947777,
+          "run": 888.1619999883696,
+          "node_content": 0.002800021320581436,
+          "map": 0.003600027412176132,
+          "evidence": 0.2402999671176076
+        },
+        "cpu_ms": 5796.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8156.25,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1762.2,
+          "WorkingSetSize": 1675.85
+        }
+      }
+    ],
+    "serial-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1338.21,
+        "capture_ms": 21.53,
+        "queue_ms": 199.7,
+        "read_ms": 966.83,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 1.95,
+        "stages": {
+          "initialization": 0.001800013706088066,
+          "viewport": 11.636000010184944,
+          "local_gold": 170.28599989134818,
+          "page_features": 92.69099996890873,
+          "full_ocr": 421.4733000844717,
+          "visible_labels": 0.0798000255599618,
+          "operator": 0.0464998884126544
+        },
+        "cpu_ms": 4296.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9421.88,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1332.61,
+          "WorkingSetSize": 1291.55
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2570.72,
+        "capture_ms": 17.36,
+        "queue_ms": 195.05,
+        "read_ms": 2079.03,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.69,
+        "stages": {
+          "initialization": 0.001500011421740055,
+          "viewport": 8.878400083631277,
+          "local_gold": 71.76759990397841,
+          "page_features": 208.13500008080155,
+          "full_ocr": 561.625299975276,
+          "visible_labels": 0.10349997319281101,
+          "operator": 0.06550003308802843,
+          "run": 1224.8071999056265,
+          "node_content": 0.003100023604929447,
+          "map": 0.004300032742321491,
+          "evidence": 0.21229998674243689
+        },
+        "cpu_ms": 7109.38,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9375.0,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1760.48,
+          "WorkingSetSize": 1673.79
+        }
+      }
+    ],
+    "stage-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1384.93,
+        "capture_ms": 127.49,
+        "queue_ms": 215.85,
+        "read_ms": 897.31,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 2.66,
+        "stages": {
+          "initialization": 0.001800013706088066,
+          "viewport": 8.021200075745583,
+          "local_gold": 83.93079997040331,
+          "page_features": 88.4323000209406,
+          "full_ocr": 440.74580003507435,
+          "visible_labels": 0.07670000195503235,
+          "operator": 0.044199987314641476
+        },
+        "cpu_ms": 4312.5,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9015.62,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1327.44,
+          "WorkingSetSize": 1293.04
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2383.65,
+        "capture_ms": 22.85,
+        "queue_ms": 196.31,
+        "read_ms": 1904.83,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.36,
+        "stages": {
+          "initialization": 0.0011998927220702171,
+          "viewport": 8.919399930164218,
+          "local_gold": 59.47109998669475,
+          "page_features": 144.2932999925688,
+          "full_ocr": 716.1092000314966,
+          "visible_labels": 0.09580003097653389,
+          "operator": 0.06719992961734533,
+          "run": 972.2470999695361,
+          "node_content": 0.0031999079510569572,
+          "map": 0.004200031980872154,
+          "evidence": 0.25749998167157173
+        },
+        "cpu_ms": 6671.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8890.62,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1762.68,
+          "WorkingSetSize": 1676.03
+        }
+      }
+    ]
+  },
+  "summary_ms": {
+    "map": {
+      "before": [
+        1234.32,
+        1338.21
+      ],
+      "after": [
+        1271.48,
+        1384.93
+      ]
+    },
+    "inventory": {
+      "before": [
+        2464.92,
+        2570.72
+      ],
+      "after": [
+        2134.56,
+        2383.65
+      ]
+    }
+  },
+  "gold": {
+    "method": "1280x800 WGC, six consecutive known changes to correct gold-chip Paint. Initial candidate two rounds followed by two baseline/candidate pairs to investigate one679ms tail.",
+    "capture_processing_total_ms": {
+      "icons-a": [
+        [
+          78,
+          113,
+          191
+        ],
+        [
+          120,
+          102,
+          222
+        ],
+        [
+          115,
+          278,
+          393
+        ],
+        [
+          41,
+          170,
+          211
+        ],
+        [
+          35,
+          298,
+          333
+        ],
+        [
+          105,
+          212,
+          317
+        ]
+      ],
+      "icons-b": [
+        [
+          119,
+          180,
+          299
+        ],
+        [
+          110,
+          160,
+          270
+        ],
+        [
+          54,
+          182,
+          236
+        ],
+        [
+          32,
+          180,
+          212
+        ],
+        [
+          113,
+          566,
+          679
+        ],
+        [
+          41,
+          207,
+          248
+        ]
+      ],
+      "serial-c": [
+        [
+          125,
+          170,
+          295
+        ],
+        [
+          107,
+          183,
+          290
+        ],
+        [
+          73,
+          228,
+          301
+        ],
+        [
+          114,
+          548,
+          662
+        ],
+        [
+          100,
+          376,
+          476
+        ],
+        [
+          81,
+          205,
+          286
+        ]
+      ],
+      "icons-c": [
+        [
+          115,
+          193,
+          308
+        ],
+        [
+          18,
+          214,
+          232
+        ],
+        [
+          114,
+          246,
+          360
+        ],
+        [
+          110,
+          518,
+          628
+        ],
+        [
+          33,
+          149,
+          182
+        ],
+        [
+          114,
+          345,
+          459
+        ]
+      ],
+      "serial-d": [
+        [
+          51,
+          104,
+          155
+        ],
+        [
+          112,
+          95,
+          207
+        ],
+        [
+          108,
+          220,
+          328
+        ],
+        [
+          100,
+          229,
+          329
+        ],
+        [
+          84,
+          527,
+          611
+        ],
+        [
+          109,
+          166,
+          275
+        ]
+      ],
+      "icons-d": [
+        [
+          118,
+          193,
+          311
+        ],
+        [
+          36,
+          225,
+          261
+        ],
+        [
+          102,
+          262,
+          364
+        ],
+        [
+          118,
+          421,
+          539
+        ],
+        [
+          55,
+          214,
+          269
+        ],
+        [
+          122,
+          404,
+          526
+        ]
+      ]
+    },
+    "initial_candidate": {
+      "count": 12,
+      "below_500ms": 11,
+      "min_ms": 191,
+      "max_ms": 679,
+      "mean_ms": 300.92
+    },
+    "paired_baseline": {
+      "count": 12,
+      "below_500ms": 10,
+      "min_ms": 155,
+      "max_ms": 662,
+      "mean_ms": 351.25
+    },
+    "paired_candidate": {
+      "count": 12,
+      "below_500ms": 9,
+      "min_ms": 182,
+      "max_ms": 628,
+      "mean_ms": 369.92
+    },
+    "limit": "All observed values correct. Small samples cannot prove no tail regression;500ms for every update remains unaccepted."
+  },
+  "validation": {
+    "targeted_tests": 81,
+    "targeted_result": "pass",
+    "cloud_index_tests": 33,
+    "full_observations": 14,
+    "wgc_final_observations": 4,
+    "fact_differences": 0,
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "private_files_unchanged": true,
+    "eligible_live_game_windows": 0
+  },
+  "review": {
+    "spec": "Actual _match_bar test failed on serial reference blocking before the fix, then passed. Tests retain exact original matrices, tie candidates/order, changed-frame recomputation, per-thread scratch ownership, caller-thread priority yields,8MiB dispatch budget and worker cleanup/failure propagation.",
+    "code": "Single recognition module reviewed for qualification, exception boundaries and abstraction. Existing reference checks moved unchanged to the worker; no additional repeated validation. New private generator owns parallel execution and lifetime, no wrapper-only abstraction. Batch size/small-work branches are performance and resource policy, not speculative fallback. No existing low-probability protection changed.",
+    "publication": "Explicit source/test/receipt/continuation files only. User AGENTS.md, .agents, video, private settings/run/account data, raw observations and samples stay local."
+  },
+  "remaining": [
+    "Inventory still2.13-2.38s; map1.27-1.38s with no measured improvement. Neither reaches500ms.",
+    "First useful page output still waits for complete text detection/recognition and resource/config reads; coarse matching speedup alone cannot remove the perceived delay.",
+    "Two-worker microbenchmark used more CPU time despite less wall time; full replay CPU varied. Actual game frame-rate cost, weaker hardware, continuous short pages and all-field latency remain unaccepted.",
+    "Gold tail exceeds500ms in both baseline and candidate paired replay; more precise attribution requires capture/worker/GUI trace around slow updates."
+  ]
+}

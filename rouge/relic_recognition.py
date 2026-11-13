@@ -327,11 +327,52 @@ def _refined_matches(roi, ordered):
             yield from pool.map(match,ordered[start:start+batch_size])
 
 
+def _coarse_matches(roi, references):
+    """Screen independent references on two workers, consuming original order.
+
+    Each worker owns its projection scratch and energy-window cache for this
+    bar only. Up to 32 matrices fit in the 8 MiB pending-output budget; native
+    scratch and the two screening caches are separate. Between batches the
+    calling reader yields to a newer page, with no queued matcher work left.
+    """
+    from threading import local
+    from .recognition_priority import yield_to_current
+    pixels=roi.astype(np.float32)
+    state=local()
+    def initialize():
+        state.energy=EnergyScreen(pixels)
+        state.projection=ProjectionScreen(pixels,state.energy)
+    def match_batch(items):
+        result=[]
+        for rid,template,mask,screen_template,screen_mask,energy,*projection in items:
+            th,tw=template.shape[:2]
+            if th>=roi.shape[0] or tw>=roi.shape[1]:continue
+            if not state.energy.possible((th,tw),energy):continue
+            if not state.projection.possible(screen_template,screen_mask,energy,*projection):continue
+            if not _can_match(pixels,state.energy.energy_image,screen_template,screen_mask,energy):continue
+            differences=cv2.matchTemplate(roi,template,cv2.TM_SQDIFF_NORMED,mask=mask)
+            result.append((rid,tw,th,np.nan_to_num(differences,nan=10,posinf=10,neginf=10)))
+        return result
+    matrix_bytes=max(1,roi.shape[0]*roi.shape[1]*np.dtype(np.float32).itemsize)
+    batch_size=min(16,(8*1024*1024)//(2*matrix_bytes))
+    if len(references)<32 or batch_size<1:
+        initialize()
+        for item in references:
+            yield_to_current()
+            yield from match_batch([item])
+        return
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=2,initializer=initialize,thread_name_prefix='rouge-relic-coarse') as pool:
+        for start in range(0,len(references),2*batch_size):
+            yield_to_current()
+            batches=[references[start:start+batch_size],references[start+batch_size:start+2*batch_size]]
+            for rows in pool.map(match_batch,batches):
+                yield from rows
+                del rows
+
+
 def _match_bar(roi,h,w,x0,y0):
     if not np.any(roi):return []
-    pixels=roi.astype(np.float32)
-    energy_screen=EnergyScreen(pixels)
-    projection_screen=ProjectionScreen(pixels,energy_screen)
     found=[];near_misses=[];coarse_hits=[]
     rx=max(1,round(.025*w));ry=max(1,round(.04*h))
     def collect(differences,rid,tw,th,refine=False):
@@ -347,16 +388,9 @@ def _match_bar(roi,h,w,x0,y0):
                 if refine:coarse_hits.append((record,max(tw,th)))
             else:near_misses.append((record,max(tw,th)))
             differences[max(0,py-ry):py+ry+1,max(0,px-rx):px+rx+1]=10
-    for rid,template,mask,screen_template,screen_mask,energy,*projection in prepared_templates(h):
-        th,tw=template.shape[:2]
-        if th>=roi.shape[0] or tw>=roi.shape[1]:continue
-        if not energy_screen.possible((th,tw),energy):continue
-        if not projection_screen.possible(screen_template,screen_mask,energy,*projection):continue
-        if not _can_match(pixels,energy_screen.energy_image,screen_template,screen_mask,energy):continue
+    for rid,tw,th,differences in _coarse_matches(roi,prepared_templates(h)):
         # Keep original OpenCV scores/locations for every plausible reference.
         # Screening can never supply a confirmed identity or an ambiguity score.
-        differences=cv2.matchTemplate(roi,template,cv2.TM_SQDIFF_NORMED,mask=mask)
-        differences=np.nan_to_num(differences,nan=10,posinf=10,neginf=10)
         collect(differences,rid,tw,th,refine=True)
     # The four coarse sizes are seeds, not supported display resolutions.
     # A near miss may sit between them after resizing/antialiasing; test each
