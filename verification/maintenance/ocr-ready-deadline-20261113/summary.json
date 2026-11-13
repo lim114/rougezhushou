@@ -1,0 +1,157 @@
+{
+  "title": "稳定等待到期后及时启动识别",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "f79d5b44913a47e0352d065a6c1e1edec2fdbb7a",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "confirmed": "After FrameBuffer refused a still-settling frame, automatic recognition only waited for the next regular100ms polling tick. Readiness expiry itself did not wake sampling. A real Qt scheduling test with regular polling stopped failed to read the ready frame on baseline and succeeds with the new wakeup.",
+    "preserved": "The existing120ms settling window, frame quality choice, short-page queue, candidate retention and model inputs are unchanged."
+  },
+  "implementation": [
+    "FrameBuffer statistics expose remaining settling time under the existing buffer lock.",
+    "MainWindow schedules a single-shot precise Qt timer for the remaining wait, rounded upward. It re-enters the existing automatic sample entry and fetches current buffer state; it does not retain a frame or bypass validity/chronological checks.",
+    "Pausing automatic sampling cancels the deadline timer. A normal/manual read that consumes a frame also cancels it. Empty buffers do not create deadline wakeups.",
+    "Existing regular polling still handles new captures, unavailable windows and busy readers. No change to OCR thresholds, settled-frame acceptance, cache identity or user sampling interval."
+  ],
+  "method": {
+    "windows": "Two final alternating baseline/candidate pairs, each8 switches,2052x1128 actual WGC to checked visible Qt Paint. Baseline restores app.py fromf79d5b449 into the actual module globals so fixture patches bind correctly; the stats-only FrameBuffer field does not affect baseline selection.",
+    "endpoint": "Established fixture requests a repaint after acceptance when retained equal facts would otherwise require no new Paint; source and assistant share an isolated Qt process.",
+    "context": "Same isolated run within each replay, actual confirmed config evolves. Index0 includes model initialization; index2 first map return misses the cache after config confirmation. Both remain recorded separately from exact-cache cases.",
+    "privacy": "Each final replay verifies class/module binding before window construction, asserts its run file lives in its temporary directory before changing state, and checks the three original private file hashes afterward.",
+    "limits": "Static controlled returns only; no p95, live-game contention or universal500ms acceptance. First-entry total improvements cannot be attributed solely to this scheduling change because inference load varied."
+  },
+  "all_return_paint": {
+    "base": {
+      "count": 12,
+      "min_ms": 375.61,
+      "max_ms": 994.61,
+      "mean_ms": 519.03,
+      "correct": 12,
+      "below_500ms": 10
+    },
+    "fixed": {
+      "count": 12,
+      "min_ms": 357.12,
+      "max_ms": 885.61,
+      "mean_ms": 458.45,
+      "correct": 12,
+      "below_500ms": 10
+    }
+  },
+  "exact_return_paint": {
+    "base": {
+      "count": 10,
+      "min_ms": 375.61,
+      "max_ms": 485.79,
+      "mean_ms": 426.91,
+      "correct": 10,
+      "below_500ms": 10
+    },
+    "fixed": {
+      "count": 10,
+      "min_ms": 357.12,
+      "max_ms": 479.12,
+      "mean_ms": 384.52,
+      "correct": 10,
+      "below_500ms": 10
+    }
+  },
+  "exact_return_capture_to_read": {
+    "base": {
+      "count": 10,
+      "min_ms": 154.74,
+      "max_ms": 267.44,
+      "mean_ms": 204.74
+    },
+    "fixed": {
+      "count": 10,
+      "min_ms": 146.54,
+      "max_ms": 174.86,
+      "mean_ms": 161.56
+    }
+  },
+  "paired_paint_ms": {
+    "base": [
+      [
+        3261.62,
+        1931.65,
+        964.69,
+        485.79,
+        406.5,
+        375.61,
+        455.28,
+        402.51
+      ],
+      [
+        2932.08,
+        1959.33,
+        994.61,
+        438.26,
+        376.43,
+        396.27,
+        479.16,
+        453.25
+      ]
+    ],
+    "fixed": [
+      [
+        3427.31,
+        1856.86,
+        885.61,
+        375.54,
+        384.28,
+        378.66,
+        479.12,
+        371.57
+      ],
+      [
+        2884.04,
+        1625.15,
+        770.63,
+        370.26,
+        361.28,
+        357.12,
+        405.61,
+        361.73
+      ]
+    ]
+  },
+  "validation": {
+    "targeted_tests": 65,
+    "new_scheduling_tests": 5,
+    "existing_settling_test_extended": true,
+    "result": "pass",
+    "cloud_index_tests": 33,
+    "wgc_full_observations": 16,
+    "fact_differences": 0,
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "final_private_files_match_original_bytes": true,
+    "four_final_replays_private_hashes_unchanged": true,
+    "eligible_live_game_windows": 0
+  },
+  "execution_incident": {
+    "occurred": true,
+    "cause": "Initial baseline harness evaluated old app code in a copied globals dictionary. Test patches then did not redirect RunState to the temporary path, so one baseline replay wrote the real current-run file. This was an execution error, not a product regression.",
+    "impact": "Current-run file changed; settings and account-record hashes were unchanged. No private data was committed or uploaded.",
+    "response": "Stopped that replay sequence, disclosed the error, left the original assistant running and performed read-only inspection. No matching file copy existed. Reconstructed the original run file from the original live process and verified exact equality to its previously recorded SHA-256.",
+    "approval_and_recovery": "User explicitly approved writing those verified original bytes back. Atomic replacement completed and all three original private hashes were verified; no private backup created. Original process was restarted only after restoration and final replay hash checks.",
+    "data_exclusion": "Initial base-a results are invalid and excluded from all performance/fact claims. Final accepted pairs are base-b/fixed-b/base-c/fixed-c after harness correction.",
+    "prevention": "Corrected module binding, explicit temporary-path assertion before replay changes, and before/after private hash checks in the local harness."
+  },
+  "review": {
+    "spec": "Tests preserve the120ms settling condition and verify deadline-only wakeup, pause cancellation, empty-buffer behavior, cancellation after normal consumption and fresh-buffer use after generation clear. Existing capture queue, busy-HUD, new-run view and concurrent historical sampling checks pass.",
+    "code": "One scalar scheduling hint in the trusted buffer snapshot; one owned timer in the existing GUI scheduler. Current state is rechecked after the asynchronous wait through the existing entry. No broad catch, guessed observation, added retry policy or weakened defense.",
+    "publication": "Two product modules, two test files, aggregate receipt and continuation/index only. Private observations, recovery scripts/addresses, configs, current-run/account records and unrelated AGENTS/.agents/video excluded."
+  },
+  "remaining": [
+    "First-entry map/inventory, new configuration and changed pixels remain above500ms. Two first map returns in final candidate were885.61/770.63ms.",
+    "Intentional settling still costs120ms plus frame preparation. Main-thread load and capture latency can still delay timers; this is not a hard real-time guarantee.",
+    "Further gains require evidence on transition recognition, first-page OCR and map rendering under real-game load."
+  ]
+}

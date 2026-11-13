@@ -274,6 +274,8 @@ class FrameBuffer:
         with self._lock:
             count, size = self._retained()
             return dict(self._counts, pending=len(self._pending),
+                        settle_remaining_ms=(max(0., (self._pending[0]['ready_at']-time.monotonic())*1000)
+                                             if len(self._pending)==1 else 0.),
                         retained_frames=count, bytes=size,
                         max_bytes=self.max_bytes, max_frames=self.max_frames,
                         generation=self._generation, seq=self._seq,

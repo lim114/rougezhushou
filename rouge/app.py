@@ -278,6 +278,10 @@ class MainWindow(QMainWindow):
         self.battle_preview.set_stage(self.target_stage.currentData())
         self.timer = QTimer(self)
         self.timer.timeout.connect(lambda:self.sample_now(automatic=True))
+        self.ready_timer = QTimer(self)
+        self.ready_timer.setSingleShot(True)
+        self.ready_timer.setTimerType(Qt.TimerType.PreciseTimer)
+        self.ready_timer.timeout.connect(lambda:self.sample_now(automatic=True))
         self.auto.toggled.connect(self.toggle_auto)
         self.refresh_windows()
         selected=self.run.state.get('selected_operator')
@@ -624,6 +628,7 @@ class MainWindow(QMainWindow):
             self.sample_now(automatic=True)
         else:
             self.timer.stop()
+            self.ready_timer.stop()
             self.sample_epoch += 1
             self.busy_gold.clear()
             self.restore_committed_hud()
@@ -691,7 +696,11 @@ class MainWindow(QMainWindow):
         except Exception as error:
             self.show_error('capture',str(error))
             return
-        if frame is None and automatic:return
+        if frame is None and automatic:
+            remaining = self.capture.stats()['settle_remaining_ms']
+            if remaining > 0:self.ready_timer.start(int(remaining)+1)
+            return
+        self.ready_timer.stop()
         epoch=self.sample_epoch
         stats=self.capture.stats();generation=stats['generation']
         if frame is not None:self.prefer_current_capture=not preferred if stats['pending'] else True
