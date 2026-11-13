@@ -49,6 +49,7 @@ class BusyGold(QObject):
         w = self.owner
         if (w.closing or not w.auto.isChecked() or reference.marker != self.current_marker()
                 or reference.frame['seq'] < w.last_sample_seq or reference.frame['client_rect'] is None
+                or (self.reference is not None and reference.frame['seq'] < self.reference.frame['seq'])
                 or reference.frame['target'] != w.capture.target):
             return
         self.reference = reference

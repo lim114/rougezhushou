@@ -41,6 +41,13 @@ class BusyGoldTests(unittest.TestCase):
         image = np.full((200, 360, 3), value, np.uint8)
         self.buffer.offer(image, time.time(), [0, 0, 360, 200], target or self.w.capture.target)
 
+    def test_late_old_full_reader_cannot_replace_newer_preview_reference(self):
+        self.offer(22)
+        newer = GoldReference(self.probe.current_marker(), self.buffer.latest(), {}, Mock())
+        self.probe.accept_reference(newer)
+        self.probe.accept_reference(self.ref)
+        self.assertIs(self.probe.reference, newer)
+
     def wait_idle(self):
         deadline = time.monotonic() + 3
         while self.probe.running and time.monotonic() < deadline:

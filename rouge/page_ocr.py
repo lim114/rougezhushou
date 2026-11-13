@@ -18,6 +18,7 @@ import numpy as np
 
 from .dynamic_ocr import bounds, normalize_regions, positive_overlap
 from .recognition_cache import CachedOCR
+from .recognition_priority import yield_to_current
 
 
 def frame_signature(image):
@@ -145,6 +146,7 @@ class PageOCR:
         result=[deepcopy(entry[0]) if entry is not None else None for entry in records]
         elapsed=0.
         if missing:
+            yield_to_current()
             started=time.perf_counter()
             inputs = tensor if len(missing) == len(crops) else tensor[missing]
             predictions=r.session(inputs)[0]
@@ -167,6 +169,7 @@ class PageOCR:
         return result,elapsed,not missing
 
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
+        yield_to_current()
         self._current_frame = None
         if kwargs or not self._supported():
             self._cache.clear()

@@ -1,6 +1,7 @@
 """Bounded in-memory reuse, requiring byte equality as well as geometry."""
 from collections import OrderedDict
 from copy import deepcopy
+from .recognition_priority import yield_to_current
 
 
 class ExactImageCache:
@@ -43,4 +44,5 @@ class CachedOCR:
         self.cache = ExactImageCache(max_bytes=24*1024*1024, max_entries=48)
 
     def __call__(self, image, **kwargs):
+        yield_to_current()
         return self.cache.call(image, tuple(sorted(kwargs.items())), lambda: self.engine(image, **kwargs))

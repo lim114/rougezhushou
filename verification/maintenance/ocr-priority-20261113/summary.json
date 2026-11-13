@@ -1,0 +1,696 @@
+{
+  "title": "当前帧优先识别，旧页让出计算并按时间补记",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "211861792530b2fb051efcb9d0580626fcc6a713",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "implementation": [
+    "At most two full readers; while busy, only a newer capture can start in the spare slot. Historical candidates stay queued.",
+    "A completed reader seeds an independent cache and mutable OCR/page state. Native model sessions share weights; requests and outputs remain owned per thread. No second model initialization.",
+    "Older readers cooperatively yield at OCR/stage boundaries while a newer sequence reads. Current processing finishes before historical continuation; failures release the waiting reader.",
+    "GUI completion folds against the newest timeline and includes all in-flight and queued older sequences in compaction. Old completions do not replace the current page, HUD or gold reference.",
+    "Pause, reset, mode change and close invalidate old results; one failure does not mark another worker idle. Visual/manual reads retain single-reader behavior."
+  ],
+  "method": {
+    "capture": "Windows.Graphics.Capture of an isolated 2052x1128 source window, automatic production sampler, timer to correct Qt Paint.",
+    "cases": [
+      "expanded inventory to map",
+      "map to expanded inventory"
+    ],
+    "baseline_source": "Original MainWindow loaded from baseline commit; same installed OCR, sample images, capture and Qt fixture.",
+    "context": "Both versions receive the same empty confirmed-config context with their actual isolated run id. Models warm on neutral page; old page starts before current source changes. Two rounds executed sequentially without model tests in parallel.",
+    "accuracy": "Four complete current observations compared; excludes timings, capture timestamps and random isolated run id only. OCR confidence/text/boxes, resources, relics, config values and maps have zero differences.",
+    "limits": "Independent historical page fixtures, not a continuous real game. No p95 or game-frame-rate claim. Each output checked after old reader also drains."
+  },
+  "windows_capture_paint": {
+    "serial-fixed-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 3636.01,
+        "capture_ms": 58.14,
+        "queue_ms": 2262.49,
+        "read_ms": 1169.9,
+        "fork_ms": 0,
+        "fold_ms": 2.7,
+        "stages": {
+          "initialization": 0.00100000761449337,
+          "viewport": 6.125699961557984,
+          "local_gold": 0.03470003139227629,
+          "page_features": 82.1181999053806,
+          "full_ocr": 355.45819997787476,
+          "visible_labels": 0.07889990229159594,
+          "operator": 0.04509999416768551,
+          "run": 672.3788999952376,
+          "node_content": 1.788900000974536,
+          "map": 49.63629995472729,
+          "evidence": 0.25939999613910913
+        },
+        "cpu_ms": 8593.75,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8625.0,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1333.3,
+          "WorkingSetSize": 1267.68
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 3349.11,
+        "capture_ms": 28.18,
+        "queue_ms": 1419.45,
+        "read_ms": 1700.25,
+        "fork_ms": 0,
+        "fold_ms": 1.2,
+        "stages": {
+          "initialization": 0.001400010660290718,
+          "viewport": 5.285299965180457,
+          "local_gold": 72.93650007341057,
+          "page_features": 83.89539993368089,
+          "full_ocr": 473.9514000248164,
+          "visible_labels": 0.1846000086516142,
+          "operator": 0.0657000346109271,
+          "run": 1061.30599998869,
+          "node_content": 0.3488999791443348,
+          "map": 0.00409991480410099,
+          "evidence": 0.21710002329200506
+        },
+        "cpu_ms": 7234.38,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 7234.38,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1720.84,
+          "WorkingSetSize": 1682.93
+        }
+      }
+    ],
+    "priority-fixed-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 2187.23,
+        "capture_ms": 48.37,
+        "queue_ms": 161.86,
+        "read_ms": 1819.35,
+        "fork_ms": 0,
+        "fold_ms": 4.07,
+        "stages": {
+          "initialization": 0.006299931555986404,
+          "viewport": 10.861899936571717,
+          "local_gold": 132.85020005423576,
+          "page_features": 101.83369996957481,
+          "full_ocr": 365.4708999674767,
+          "visible_labels": 0.07700000423938036,
+          "operator": 0.04610000178217888,
+          "run": 1159.670599969104,
+          "node_content": 1.6838000155985355,
+          "map": 43.83039998356253,
+          "evidence": 0.18339999951422215
+        },
+        "cpu_ms": 6218.75,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8343.75,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1356.11,
+          "WorkingSetSize": 1283.66
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2338.1,
+        "capture_ms": 131.93,
+        "queue_ms": 192.21,
+        "read_ms": 1784.26,
+        "fork_ms": 0,
+        "fold_ms": 0.65,
+        "stages": {
+          "initialization": 0.00100000761449337,
+          "viewport": 5.599700030870736,
+          "local_gold": 37.20180003438145,
+          "page_features": 86.96250000502914,
+          "full_ocr": 513.1914999801666,
+          "visible_labels": 0.09739992674440145,
+          "operator": 0.06510003004223108,
+          "run": 1137.8574999980628,
+          "node_content": 0.5973000079393387,
+          "map": 0.005800044164061546,
+          "evidence": 0.24309998843818903
+        },
+        "cpu_ms": 5843.75,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 7828.12,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1741.34,
+          "WorkingSetSize": 1658.35
+        }
+      }
+    ],
+    "serial-fixed-c": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 4149.88,
+        "capture_ms": 106.63,
+        "queue_ms": 2633.62,
+        "read_ms": 1273.35,
+        "fork_ms": 0,
+        "fold_ms": 2.42,
+        "stages": {
+          "initialization": 0.0010998919606208801,
+          "viewport": 5.259500001557171,
+          "local_gold": 0.03450002986937761,
+          "page_features": 99.59770005661994,
+          "full_ocr": 390.73749992530793,
+          "visible_labels": 0.0801000278443098,
+          "operator": 0.0415000831708312,
+          "run": 727.408199920319,
+          "node_content": 1.9302000291645527,
+          "map": 45.99069990217686,
+          "evidence": 0.28979999478906393
+        },
+        "cpu_ms": 8125.0,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8140.62,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1334.64,
+          "WorkingSetSize": 1268.62
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 4304.52,
+        "capture_ms": 29.27,
+        "queue_ms": 1837.04,
+        "read_ms": 2210.38,
+        "fork_ms": 0,
+        "fold_ms": 1.37,
+        "stages": {
+          "initialization": 0.001300009898841381,
+          "viewport": 5.843600025400519,
+          "local_gold": 80.37740003783256,
+          "page_features": 97.14539989363402,
+          "full_ocr": 687.8588000545278,
+          "visible_labels": 0.3533000126481056,
+          "operator": 0.09830005001276731,
+          "run": 1335.6297999853268,
+          "node_content": 0.34639996010810137,
+          "map": 0.003400025889277458,
+          "evidence": 0.13180007226765156
+        },
+        "cpu_ms": 9703.12,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9703.12,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1715.17,
+          "WorkingSetSize": 1677.37
+        }
+      }
+    ],
+    "priority-fixed-c": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 2381.96,
+        "capture_ms": 88.74,
+        "queue_ms": 253.58,
+        "read_ms": 1875.18,
+        "fork_ms": 0,
+        "fold_ms": 4.39,
+        "stages": {
+          "initialization": 0.001400010660290718,
+          "viewport": 7.516699959523976,
+          "local_gold": 86.96620003320277,
+          "page_features": 100.46049999073148,
+          "full_ocr": 410.528999986127,
+          "visible_labels": 0.08949998300522566,
+          "operator": 0.05119992420077324,
+          "run": 1222.213500062935,
+          "node_content": 1.626600045710802,
+          "map": 42.833999963477254,
+          "evidence": 0.2004000125452876
+        },
+        "cpu_ms": 5984.38,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8734.38,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1354.31,
+          "WorkingSetSize": 1281.73
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2478.18,
+        "capture_ms": 33.8,
+        "queue_ms": 186.17,
+        "read_ms": 1990.85,
+        "fork_ms": 0,
+        "fold_ms": 0.38,
+        "stages": {
+          "initialization": 0.003600027412176132,
+          "viewport": 13.195800012908876,
+          "local_gold": 69.72250004764646,
+          "page_features": 134.2358998954296,
+          "full_ocr": 559.2376999557018,
+          "visible_labels": 0.13369997031986713,
+          "operator": 0.06210000719875097,
+          "run": 1209.933599922806,
+          "node_content": 0.31729997135698795,
+          "map": 0.003600027412176132,
+          "evidence": 0.17589994240552187
+        },
+        "cpu_ms": 6406.25,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8218.75,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1745.34,
+          "WorkingSetSize": 1666.0
+        }
+      }
+    ]
+  },
+  "warm_return_control": {
+    "before": [
+      {
+        "case": 0,
+        "busy": false,
+        "paint_ms": 7976.13,
+        "capture_ms": 47.91,
+        "queue_ms": 186.66,
+        "read_ms": 7578.08,
+        "stages": {
+          "initialization": 4541.855500079691,
+          "viewport": 7.727199932560325,
+          "local_gold": 128.8664999883622,
+          "page_features": 383.11480008997023,
+          "full_ocr": 533.6174999829382,
+          "visible_labels": 0.09590003173798323,
+          "operator": 1.1439999798312783,
+          "run": 1788.5046999435872,
+          "node_content": 11.162100010551512,
+          "map": 181.6415999783203,
+          "evidence": 0.26000000070780516
+        },
+        "cpu_ms": 9937.5,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 1,
+        "busy": false,
+        "paint_ms": 2008.55,
+        "capture_ms": 128.52,
+        "queue_ms": 157.22,
+        "read_ms": 1530.67,
+        "stages": {
+          "initialization": 0.001700012944638729,
+          "viewport": 6.14150008186698,
+          "local_gold": 21.200799965299666,
+          "page_features": 79.30510002188385,
+          "full_ocr": 473.45269995275885,
+          "visible_labels": 0.17819995991885662,
+          "operator": 2.8712000930681825,
+          "run": 943.7695000087842,
+          "node_content": 0.33879990223795176,
+          "map": 0.00400003045797348,
+          "evidence": 0.1308000646531582
+        },
+        "cpu_ms": 3171.88,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 2,
+        "busy": false,
+        "paint_ms": 1608.23,
+        "capture_ms": 101.67,
+        "queue_ms": 163.16,
+        "read_ms": 1219.15,
+        "stages": {
+          "initialization": 0.001200009137392044,
+          "viewport": 5.852699978277087,
+          "local_gold": 70.40139997843653,
+          "page_features": 84.66769999358803,
+          "full_ocr": 330.80080000218004,
+          "visible_labels": 0.07830001413822174,
+          "operator": 0.04069996066391468,
+          "run": 677.6729000266641,
+          "node_content": 0.368500011973083,
+          "map": 46.8941000290215,
+          "evidence": 0.18559989985078573
+        },
+        "cpu_ms": 4140.62,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1071.27,
+        "capture_ms": 24.09,
+        "queue_ms": 357.18,
+        "read_ms": 556.57,
+        "stages": {
+          "initialization": 0.0011998927220702171,
+          "viewport": 6.008199998177588,
+          "local_gold": 32.18440001364797,
+          "page_features": 89.05449998565018,
+          "full_ocr": 210.39570006541908,
+          "visible_labels": 0.11340004857629538,
+          "operator": 0.05309993866831064,
+          "run": 141.183799947612,
+          "node_content": 0.2587001072242856,
+          "map": 74.66980000026524,
+          "evidence": 0.31599996145814657
+        },
+        "cpu_ms": 2671.88,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 1118.72,
+        "capture_ms": 27.15,
+        "queue_ms": 431.23,
+        "read_ms": 422.56,
+        "stages": {
+          "initialization": 0.001400010660290718,
+          "viewport": 5.5368999019265175,
+          "local_gold": 3.98870010394603,
+          "page_features": 84.61779996287078,
+          "full_ocr": 211.68119995854795,
+          "visible_labels": 0.1191999763250351,
+          "operator": 0.06640003994107246,
+          "run": 113.37230005301535,
+          "node_content": 0.33760000951588154,
+          "map": 0.0028999056667089462,
+          "evidence": 0.1218999968841672
+        },
+        "cpu_ms": 3187.5,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 2,
+        "busy": true,
+        "paint_ms": 1176.62,
+        "capture_ms": 26.45,
+        "queue_ms": 511.27,
+        "read_ms": 519.15,
+        "stages": {
+          "initialization": 0.001300009898841381,
+          "viewport": 5.728199961595237,
+          "local_gold": 39.05210003722459,
+          "page_features": 85.53839998785406,
+          "full_ocr": 206.31779998075217,
+          "visible_labels": 0.08739996701478958,
+          "operator": 0.043899985030293465,
+          "run": 132.68720009364188,
+          "node_content": 0.22879999596625566,
+          "map": 45.95749999862164,
+          "evidence": 0.18869992345571518
+        },
+        "cpu_ms": 2828.12,
+        "visible": true,
+        "correct": true
+      }
+    ],
+    "after": [
+      {
+        "case": 0,
+        "busy": false,
+        "paint_ms": 4155.17,
+        "capture_ms": 93.11,
+        "queue_ms": 250.0,
+        "read_ms": 3666.91,
+        "fork_ms": 12.12,
+        "fold_ms": 4.18,
+        "stages": {
+          "initialization": 1412.840300006792,
+          "viewport": 5.475100013427436,
+          "local_gold": 86.80219994857907,
+          "page_features": 190.14100008644164,
+          "full_ocr": 511.7228999733925,
+          "visible_labels": 0.1221999991685152,
+          "operator": 1.0922999354079366,
+          "run": 1387.7029999857768,
+          "node_content": 3.1946999952197075,
+          "map": 67.39280000329018,
+          "evidence": 0.256399973295629
+        },
+        "cpu_ms": 9953.12,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 1,
+        "busy": false,
+        "paint_ms": 2283.84,
+        "capture_ms": 120.01,
+        "queue_ms": 250.97,
+        "read_ms": 1713.44,
+        "fork_ms": 9.86,
+        "fold_ms": 0.48,
+        "stages": {
+          "initialization": 0.0017998972907662392,
+          "viewport": 5.60050003696233,
+          "local_gold": 22.628200007602572,
+          "page_features": 94.78779998607934,
+          "full_ocr": 576.4289000071585,
+          "visible_labels": 0.1012999564409256,
+          "operator": 0.07930002175271511,
+          "run": 1011.3201999338344,
+          "node_content": 0.3011999651789665,
+          "map": 0.0031999079510569572,
+          "evidence": 0.12480001896619797
+        },
+        "cpu_ms": 3156.25,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 2,
+        "busy": false,
+        "paint_ms": 1653.54,
+        "capture_ms": 73.95,
+        "queue_ms": 247.27,
+        "read_ms": 1204.92,
+        "fork_ms": 11.7,
+        "fold_ms": 1.32,
+        "stages": {
+          "initialization": 0.001800013706088066,
+          "viewport": 5.3035999881103635,
+          "local_gold": 69.693100056611,
+          "page_features": 80.32900001853704,
+          "full_ocr": 341.709699947387,
+          "visible_labels": 0.0841999426484108,
+          "operator": 0.04349998198449612,
+          "run": 662.7647000132129,
+          "node_content": 0.3272000467404723,
+          "map": 42.468200088478625,
+          "evidence": 0.1962999813258648
+        },
+        "cpu_ms": 3265.62,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 991.26,
+        "capture_ms": 23.54,
+        "queue_ms": 209.61,
+        "read_ms": 577.99,
+        "fork_ms": 0,
+        "fold_ms": 1.17,
+        "stages": {
+          "initialization": 0.001100008375942707,
+          "viewport": 9.12659999448806,
+          "local_gold": 44.03310001362115,
+          "page_features": 112.2981000225991,
+          "full_ocr": 217.68410003278404,
+          "visible_labels": 0.11639995500445366,
+          "operator": 0.051900045946240425,
+          "run": 124.62549994233996,
+          "node_content": 0.24930003564804792,
+          "map": 69.18260001111776,
+          "evidence": 0.43080002069473267
+        },
+        "cpu_ms": 2671.88,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 1041.53,
+        "capture_ms": 77.13,
+        "queue_ms": 343.77,
+        "read_ms": 396.97,
+        "fork_ms": 14.02,
+        "fold_ms": 0.51,
+        "stages": {
+          "initialization": 0.001400010660290718,
+          "viewport": 6.8283999571576715,
+          "local_gold": 3.707599942572415,
+          "page_features": 81.60259993746877,
+          "full_ocr": 193.51740006823093,
+          "visible_labels": 0.10579999070614576,
+          "operator": 0.06470002699643373,
+          "run": 108.35650004446507,
+          "node_content": 0.5527000175788999,
+          "map": 0.005600042641162872,
+          "evidence": 0.22199994418770075
+        },
+        "cpu_ms": 2125.0,
+        "visible": true,
+        "correct": true
+      },
+      {
+        "case": 2,
+        "busy": true,
+        "paint_ms": 893.22,
+        "capture_ms": 26.77,
+        "queue_ms": 206.67,
+        "read_ms": 458.68,
+        "fork_ms": 0,
+        "fold_ms": 1.11,
+        "stages": {
+          "initialization": 0.001200009137392044,
+          "viewport": 7.528299931436777,
+          "local_gold": 44.17949996422976,
+          "page_features": 85.20850003696978,
+          "full_ocr": 187.14399996679276,
+          "visible_labels": 0.11640007141977549,
+          "operator": 0.04270009230822325,
+          "run": 95.18919989932328,
+          "node_content": 0.25319994892925024,
+          "map": 38.569899974390864,
+          "evidence": 0.19339995924383402
+        },
+        "cpu_ms": 3000.0,
+        "visible": true,
+        "correct": true
+      }
+    ],
+    "scope": "Six-case one-round cold/first-entry/hot-return control. Cold timings vary and are not claimed improved."
+  },
+  "gold": {
+    "method": "1280x800 real WGC, two rounds of six consecutive known changes, correct visible gold chip Paint.",
+    "capture_processing_total_ms": [
+      [
+        55,
+        134,
+        189
+      ],
+      [
+        71,
+        185,
+        256
+      ],
+      [
+        20,
+        196,
+        216
+      ],
+      [
+        117,
+        275,
+        392
+      ],
+      [
+        103,
+        184,
+        287
+      ],
+      [
+        22,
+        131,
+        153
+      ],
+      [
+        119,
+        174,
+        293
+      ],
+      [
+        115,
+        158,
+        273
+      ],
+      [
+        112,
+        226,
+        338
+      ],
+      [
+        21,
+        488,
+        509
+      ],
+      [
+        104,
+        349,
+        453
+      ],
+      [
+        121,
+        210,
+        331
+      ]
+    ],
+    "correct": 12,
+    "below_500ms": 11,
+    "min_ms": 153,
+    "max_ms": 509,
+    "limit": "One509ms update; no guarantee for other resources, unknown glyphs or real game contention."
+  },
+  "validation": {
+    "targeted_tests": 124,
+    "targeted_result": "pass",
+    "force_frame_filter_recheck": "pass",
+    "full_observation_comparisons": 4,
+    "fact_differences": 0,
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "private_files_unchanged": true,
+    "eligible_live_game_windows": 0,
+    "cloud_index_tests": 33
+  },
+  "rejected_or_incomplete_evidence": [
+    "Direct independent second reader caused a hot return to regress from1.07s to3.25s due to initialization/cache loss; not shipped.",
+    "Shared-model unrestricted concurrency reduced queue age but caused CPU competition; map2.6-3.0s read and inventory3.1-4.0s read in early trials. Replaced by cooperative priority.",
+    "Independent compiled models with copied caches did not improve the competing full-page arrangement; not shipped.",
+    "Early mixed-session fixtures reused different difficulty/squad context in the serial baseline. Their latency ranges are diagnostic only; final comparison fixes context identically.",
+    "One same-session fixture control timed out awaiting an inventory Paint under the serial baseline. Cause remains unverified; it is not counted as successful end-to-end coverage.",
+    "First two fixed-context trial harnesses used a run id different from the isolated actual run, so map display qualification failed. Corrected before accepted rounds.",
+    "First concurrency UI test used a stub spare reader; rejected. Final native harness starts with the production empty spare and real reader forks.",
+    "Initial targeted pass exposed externally supplied samples without scheduled timeline; retain the existing direct-sample path, fold scheduled job completions only. Final124 pass."
+  ],
+  "review": {
+    "spec": "Current frame can commit before an older blocked read; chronological state/history and newer UI survive late completion. Tests cover two-read reset/pause/mode/close, bounded dispatch and one-worker failure. Real-game short-page coverage remains pending.",
+    "code": "Reviewed scheduling/completion separately from OCR snapshots/priority. No hidden retries, fallback models or exception swallowing added. Ordering checks implement normal out-of-order completion, not speculative low-probability defenses. Existing protective categories and D353 untouched.",
+    "publication": "Only explicit source/tests/public receipts and continuation pointers; user AGENTS changes, .agents, videos, settings, run/account records and samples excluded."
+  },
+  "remaining": [
+    "Full-page update still exceeds500ms; current page OCR/run refinement remains about1.8-2.0s in accepted first-entry comparisons.",
+    "Cold startup, other resource fields, real game co-running CPU/frame rate, lower hardware and continuous short-page retention remain unaccepted.",
+    "Reader snapshots add bounded cache memory; old-page completion is intentionally deferred. GUI snapshot copy and timeline merge are measured locally, not a universal responsiveness guarantee."
+  ]
+}

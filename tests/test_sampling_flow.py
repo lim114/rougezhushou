@@ -13,6 +13,11 @@ import rouge.app as module
 from rouge.app import MainWindow
 
 
+class StubReader:
+    def __init__(self, read):self.read = read
+    def fork(self):return StubReader(self.read)
+
+
 class SamplingFlowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -40,7 +45,8 @@ class SamplingFlowTests(unittest.TestCase):
                 self.entered.set();self.release.wait(5)
             return {'page':'operator','nodes':[],
                     'operator':{'id':'kaltsit','fields':{'level':level},'scope':'account'}}
-        self.window.reader=Mock(read=read)
+        self.window.reader=StubReader(read)
+        self.window.secondary_reader=StubReader(read)
 
     def offer(self,level,at=None):
         image=np.full((120,180,3),level*2,dtype=np.uint8)
@@ -67,6 +73,144 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(self.window.observation['operator']['fields']['level'],80)
         self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
         self.assertEqual(self.window.capture.stats()['pending'],0)
+
+    def test_current_page_commits_before_old_read_finishes_and_history_is_retained(self):
+        from copy import deepcopy
+        from rouge.observation_timeline import memory_model
+        window = self.window
+        at = time.time()
+        rows = {
+            20: {'page': 'operator', 'nodes': [], 'captured_at': at,
+                 'run': {'resources': {'gold': {'value': 2}}},
+                 'operator': {'id': 'kaltsit', 'scope': 'account', 'fields': {'level': 20, 'potential': 3}}},
+            80: {'page': 'operator', 'nodes': [], 'captured_at': at + 1,
+                 'run': {'resources': {'gold': {'value': 9}}},
+                 'operator': {'id': 'kaltsit', 'scope': 'account', 'fields': {'level': 80}}},
+        }
+        expected_run = memory_model(window.run, ('state',))
+        expected_account = memory_model(window.account_cache, ('records', 'issues'))
+        for row in rows.values():
+            expected_run.apply(row['run'], row['captured_at'])
+            expected_account.observe(row['operator'], row['captured_at'])
+        def read(image, **kwargs):
+            level = int(image[0, 0, 0])
+            self.seen.append(level)
+            if level == 20:
+                self.entered.set();self.release.wait(8)
+            return deepcopy(rows[level])
+        window.reader.read = window.secondary_reader.read = read
+        self.offer(20, at);window.auto.setChecked(True)
+        self.wait_for(self.entered.is_set)
+        self.offer(80, at + 1)
+        try:
+            self.wait_for(lambda: window.last_sample_seq == 2, timeout=2)
+            self.assertTrue(window.busy)
+            self.assertEqual(window.run.state['resources']['gold']['value'], 9)
+            self.assertEqual(window.observation_timeline.committed_seq, 0)
+        finally:
+            self.release.set()
+        self.wait_for(lambda: not window.busy)
+        self.assertEqual(window.run.state, expected_run.state)
+        self.assertEqual(window.account_cache.records, expected_account.records)
+        self.assertEqual(window.observation['operator']['fields']['level'], 80)
+        self.assertEqual(window.observation_timeline.committed_seq, 2)
+
+    def test_two_inflight_reads_bound_concurrency_and_reset_invalidates_both(self):
+        second_entered = threading.Event()
+        def read(image, **kwargs):
+            level = int(image[0, 0, 0]);self.seen.append(level)
+            (self.entered if level == 20 else second_entered).set()
+            self.release.wait(8)
+            return {'page': 'operator', 'nodes': [],
+                    'operator': {'id': 'kaltsit', 'scope': 'account', 'fields': {'level': level}}}
+        self.window.reader.read = self.window.secondary_reader.read = read
+        self.offer(20);self.window.auto.setChecked(True)
+        self.wait_for(self.entered.is_set);self.offer(50)
+        try:
+            self.wait_for(second_entered.is_set, timeout=2)
+            self.offer(80)
+            self.window.sample_now(automatic=True)
+            self.assertEqual(self.seen, [20, 50])
+            self.assertEqual(self.window.capture.stats()['pending'], 1)
+            self.window.reset_run()
+        finally:
+            self.release.set()
+        self.wait_for(lambda: not self.window.busy)
+        self.assertFalse(self.window.operator_observations)
+        self.assertIsNone(self.window.observation)
+
+    def test_old_failure_does_not_finish_new_reader_or_replace_its_hud(self):
+        window = self.window
+        window.show_compact();window.compact_window.open_inventory()
+        chip = window.compact_window.inventory_popup.resources.chips['life']
+        current_entered = threading.Event();current_release = threading.Event()
+        self.addCleanup(current_release.set)
+        def old_read(image, *, on_hud, **kwargs):
+            self.entered.set();self.release.wait(8)
+            on_hud({'life': {'value': 2}})
+            raise ValueError('older page failed')
+        def new_read(image, *, on_hud, **kwargs):
+            on_hud({'life': {'value': 8}});current_entered.set();current_release.wait(8)
+            return {'page': 'operator', 'nodes': [], 'run': {'resources': {'life': {'value': 8}}}}
+        window.reader.read = old_read;window.secondary_reader.read = new_read
+        self.offer(20);window.auto.setChecked(True);self.wait_for(self.entered.is_set)
+        self.offer(80)
+        try:
+            self.wait_for(current_entered.is_set, timeout=2)
+            self.wait_for(lambda: chip.accessibleName() == '目标生命 8')
+            with patch.object(window, 'show_error', wraps=window.show_error) as error:
+                self.release.set()
+                self.wait_for(lambda: error.call_count == 1)
+                self.assertTrue(window.busy)
+                self.assertFalse(window.sample_button.isEnabled())
+                self.assertEqual(chip.accessibleName(), '目标生命 8')
+        finally:
+            self.release.set();current_release.set()
+        self.wait_for(lambda: not window.busy)
+        self.assertEqual(window.run.state['resources']['life']['value'], 8)
+
+    def test_pause_and_mode_change_discard_both_inflight_results(self):
+        second_entered = threading.Event()
+        def read(image, **kwargs):
+            level = int(image[0, 0, 0])
+            (self.entered if level == 20 else second_entered).set();self.release.wait(8)
+            return {'page': 'operator', 'nodes': [],
+                    'operator': {'id': 'kaltsit', 'scope': 'account', 'fields': {'level': level}}}
+        self.window.reader.read = self.window.secondary_reader.read = read
+        self.offer(20);self.window.auto.setChecked(True);self.wait_for(self.entered.is_set)
+        self.offer(50)
+        try:
+            self.wait_for(second_entered.is_set, timeout=2)
+            self.window.auto.setChecked(False)
+            self.window.change_recognition_mode()
+        finally:self.release.set()
+        self.wait_for(lambda: not self.window.busy)
+        self.assertFalse(self.window.operator_observations)
+        self.assertEqual(self.window.capture.stats()['pending'], 0)
+        self.window.auto.setChecked(True);self.offer(80)
+        self.wait_for(lambda: bool(self.window.operator_observations) and not self.window.busy)
+        self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'], 80)
+
+    def test_close_during_two_reads_returns_and_does_not_apply_late_results(self):
+        second_entered = threading.Event();finished = []
+        def read(image, **kwargs):
+            level = int(image[0, 0, 0])
+            (self.entered if level == 20 else second_entered).set();self.release.wait(8)
+            finished.append(level)
+            return {'page': 'operator', 'nodes': [],
+                    'operator': {'id': 'kaltsit', 'scope': 'account', 'fields': {'level': level}}}
+        self.window.reader.read = self.window.secondary_reader.read = read
+        self.offer(20);self.window.auto.setChecked(True);self.wait_for(self.entered.is_set)
+        self.offer(50)
+        try:
+            self.wait_for(second_entered.is_set, timeout=2)
+            self.window.close()
+            self.assertTrue(self.window.closing)
+        finally:self.release.set()
+        self.wait_for(lambda: len(finished) == 2)
+        self.qt.processEvents()
+        self.assertFalse(self.window.operator_observations)
+        self.assertIsNone(self.window.observation)
 
     def test_current_hud_paints_while_worker_busy_and_failure_restores_committed_read(self):
         window = self.window

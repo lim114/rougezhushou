@@ -111,6 +111,11 @@ class MainWindow(QMainWindow):
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
+        self.secondary_reader = None
+        self.sample_jobs = {}
+        self.next_sample_job = 0
+        from .recognition_priority import ReadPriority
+        self.read_priority = ReadPriority()
         self.visual_reader = None
         self.events = Events()
         self.busy = False
@@ -647,7 +652,9 @@ class MainWindow(QMainWindow):
             return
         if automatic:
             self.busy_gold.poll()
-        if self.busy:
+        if self.busy and (not automatic or self.recognition_mode.currentData() == 'visual'
+                          or self.secondary_reader is None or len(self.sample_jobs) >= 2
+                          or any(job['seq'] == 0 for job in self.sample_jobs.values())):
             return
         if automatic and time.monotonic()<self.next_capture_attempt:return
         self.capture.set_collecting(True)
@@ -675,8 +682,12 @@ class MainWindow(QMainWindow):
                                  and reference['observation'].get('page')in('exploration','node_detail')
                                  and(reference['observation'].get('map')or{}).get('status')=='matched'
                                  and time.time()-reference['captured_at']>=20)
-            preferred=not automatic or self.prefer_current_capture
-            frame=self.capture.next_frame(force=not automatic or refresh_overlay,prefer_latest=preferred)
+            preferred=self.busy or not automatic or self.prefer_current_capture
+            # While an older read runs, reserve the other reader for newer pixels.
+            # Historical candidates remain queued until a reader is available.
+            after_seq=max(self.last_sample_seq, *(job['seq'] for job in self.sample_jobs.values())) if self.sample_jobs else None
+            frame=self.capture.next_frame(force=not automatic or (refresh_overlay and not self.busy),
+                                          prefer_latest=preferred,after_seq=after_seq)
         except Exception as error:
             self.show_error('capture',str(error))
             return
@@ -689,7 +700,10 @@ class MainWindow(QMainWindow):
             from .observation_timeline import ObservationTimeline
             self.observation_timeline=ObservationTimeline(self.run,self.account_cache);self.timeline_marker=marker
         timeline=self.observation_timeline
-        oldest_pending=stats.get('oldest_seq')
+        slot=next(slot for slot in (0,1) if all(job['slot'] != slot for job in self.sample_jobs.values()))
+        self.next_sample_job += 1
+        job_id=self.next_sample_job
+        self.sample_jobs[job_id]={'slot':slot,'seq':frame['seq'] if frame is not None else 0,'marker':marker}
         self.busy = True
         self.active_sample_seq = frame['seq'] if frame is not None else 0
         self.sample_button.setEnabled(False)
@@ -715,7 +729,7 @@ class MainWindow(QMainWindow):
                         from .visual_recognition import VisualReader
                         self.visual_reader=VisualReader()
                     reader=self.visual_reader
-                else:reader=self.reader
+                else:reader=self.reader if slot == 0 else self.secondary_reader
                 age_at_read_ms = (time.time() - selected['captured_at']) * 1000
                 options = {}
                 if mode != 'visual':
@@ -731,27 +745,28 @@ class MainWindow(QMainWindow):
                             reference = GoldReference(marker, selected, observation, line_reader)
                             self.busy_gold.reference_ready.emit(reference)
                         options['on_gold_reference'] = provide_reference
-                observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context,**options)
+                self.read_priority.register(job_id,selected['seq'])
+                with self.read_priority.read(job_id):
+                    observation = reader.read(selected['image'],client_rect=selected.get('client_rect'),run_context=run_context,**options)
                 observation['capture_ms']=capture_ms
                 observation['captured_at'] = selected['captured_at']
-                observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
+                observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq'),'job_id':job_id}
                 observation['_sampling']['age_at_read_ms'] = age_at_read_ms
                 observation['_sampling']['recognition_attempts']=1
                 observation['_sampling']['lane']='current' if preferred else 'history'
-                fold_start=time.perf_counter()
-                observation['_timeline_result']=timeline.prepare(observation,selected['seq'],oldest_pending)
-                observation.setdefault('performance',{})['state_fold_ms']=(time.perf_counter()-fold_start)*1000
+                if mode != 'visual':observation['_completed_reader']=reader
                 observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),'target':selected.get('target'),'captured_at':selected['captured_at'],'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
                 self.events.sample.emit((selected['image'],observation))
             except Exception as error:
-                self.events.sample_error.emit((epoch,generation,str(error)))
+                self.events.sample_error.emit((epoch,generation,str(error),job_id,selected['seq'] if selected is not None else 0))
         threading.Thread(target=work,daemon=True).start()
 
     def show_sample_hud(self, payload):
         marker, at, seq, hud = payload
         if (self.closing or not self.busy or marker != (self.sample_epoch, self.capture.stats()['generation'], self.run.state['id'])
                 or at < max(self.run.state['started_at'], self.run.state.get('last_read') or 0)
-                or (at, seq) <= (self.last_sample_at, self.last_sample_seq)):
+                or (at, seq) <= (self.last_sample_at, self.last_sample_seq)
+                or seq < self.sample_hud_seq):
             return
         self.sample_hud = {key: {**record, 'captured_at': at} for key, record in hud.items()}
         self.sample_hud_seq = seq
@@ -775,22 +790,23 @@ class MainWindow(QMainWindow):
             self.sample_hud = {}
             self.refresh_display_hud()
 
-    def finish_sample(self):
-        self.restore_committed_hud()
-        self.busy=False
-        self.recognition_mode.setEnabled(True)
-        self.sample_button.setEnabled(True)
-        self.connect_button.setEnabled(True)
+    def finish_sample(self, job_id=None, seq=0):
+        if job_id is not None:del self.sample_jobs[job_id]
+        if seq >= self.sample_hud_seq:self.restore_committed_hud()
+        self.busy=bool(self.sample_jobs)
+        self.recognition_mode.setEnabled(not self.busy)
+        self.sample_button.setEnabled(not self.busy)
+        self.connect_button.setEnabled(not self.busy)
         if self.auto.isChecked():
             QTimer.singleShot(0,lambda:self.sample_now(automatic=True))
-        else:self.capture.set_collecting(False)
+        elif not self.busy:self.capture.set_collecting(False)
 
     def sample_failed(self, result):
         if self.closing:return
-        epoch,generation,message=result
-        self.busy_gold.complete((epoch,generation,self.run.state['id']),self.active_sample_seq,map_read=False)
+        epoch,generation,message,job_id,seq=result
+        self.busy_gold.complete((epoch,generation,self.run.state['id']),seq,map_read=False)
         valid=epoch==self.sample_epoch and generation==self.capture.stats()['generation']
-        self.finish_sample()
+        self.finish_sample(job_id,seq)
         if valid:
             self.show_error('capture',message)
 
@@ -806,9 +822,26 @@ class MainWindow(QMainWindow):
             gold_map = run.get('page') == 'run_map' and 'gold' in run.get('resources', {})
             self.busy_gold.complete((marker['epoch'], marker['generation'], self.run.state['id']),
                                     marker.get('seq') or 0, map_read=gold_map)
-        self.finish_sample()
-        prepared=observation.pop('_timeline_result',None)
         seq=(marker or{}).get('seq')or 0
+        self.finish_sample((marker or {}).get('job_id'),seq)
+        completed_reader=observation.pop('_completed_reader',None)
+        if completed_reader is not None and not self.busy:
+            fork_start=time.perf_counter()
+            if completed_reader is self.reader:self.secondary_reader=completed_reader.fork()
+            else:self.reader=completed_reader.fork()
+            observation.setdefault('performance',{})['reader_fork_ms']=(time.perf_counter()-fork_start)*1000
+        prepared=None
+        if valid and marker is not None and 'job_id' in marker and observation['captured_at'] >= self.run.state['started_at']:
+            # All completions fold against the latest timeline on the GUI thread.
+            # In-flight frames have left the capture buffer but still hold back
+            # compaction, so late historical facts can be inserted chronologically.
+            current_marker=(marker['epoch'],marker['generation'],self.run.state['id'])
+            pending=[job['seq'] for job in self.sample_jobs.values() if job['marker']==current_marker]
+            oldest=self.capture.stats().get('oldest_seq')
+            if oldest is not None:pending.append(oldest)
+            fold_start=time.perf_counter()
+            prepared=self.observation_timeline.prepare(observation,seq,min(pending) if pending else None)
+            observation.setdefault('performance',{})['state_fold_ms']=(time.perf_counter()-fold_start)*1000
         current_frame=(observation['captured_at'],seq)>=(self.last_sample_at,self.last_sample_seq)
         if not valid or observation.get('captured_at',0)<self.run.state['started_at'] or (prepared is None and not current_frame):
             if self.session_recorder is not None:
@@ -2587,10 +2620,10 @@ class MainWindow(QMainWindow):
             if self.session_recorder is not None:self.session_recorder.event('sample_failure',reason='capture_or_recognition',message=message)
             self.next_capture_attempt=time.monotonic()+1
             if not self.auto.isChecked():self.capture.set_collecting(False)
-            self.recognition_mode.setEnabled(True)
-            self.busy=False
-            self.sample_button.setEnabled(True)
-            self.connect_button.setEnabled(True)
+            self.busy=bool(self.sample_jobs)
+            self.recognition_mode.setEnabled(not self.busy)
+            self.sample_button.setEnabled(not self.busy)
+            self.connect_button.setEnabled(not self.busy)
             if self.capture.closed or (self.capture.target and not win32gui.IsWindow(self.capture.target['hwnd'])):
                 self.capture.close()
             stamp = time.strftime('%H:%M:%S',time.localtime(self.observation['captured_at'])) if self.observation else '无'

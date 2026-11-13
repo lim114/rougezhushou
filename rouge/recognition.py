@@ -12,6 +12,7 @@ from .recognition_cache import ExactImageCache,CachedOCR
 from .node_events import read_node_content,annotate_map_content
 from .dynamic_ocr import DynamicOCR,normalize_regions
 from .anchors import units
+from .recognition_priority import yield_to_current
 
 def node_names():
     return {'未知的凶戾', '未知的诡秘'} | {
@@ -63,6 +64,28 @@ class ScreenReader:
         self._last_hud_source = None
         self._gold_layout = None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
+
+    def fork(self):
+        """Copy a completed reader; only inference sessions share model weights.
+
+        Called by the scheduler after completion, never while this reader runs.
+        Native sessions own their concurrent requests. Page state, thresholds,
+        preprocessors, decoded results and all mutable caches remain independent.
+        """
+        memo = {}
+        if self._engine is not None:
+            provider = self._engine.engine if isinstance(self._engine, CachedOCR) else self._engine
+            for session in (provider.text_det.infer, provider.text_cls.infer, provider.text_rec.session):
+                memo[id(session)] = session
+        if self._page_router is not None:
+            memo[id(self._page_router.matcher)] = self._page_router.matcher.clone()
+        result = deepcopy(self, memo)
+        # A clone has new Python object identities but the exact same model,
+        # preprocessing and decoding configuration as its completed source.
+        for page in (result._page_ocr, result._discovery_ocr):
+            if page is not None and page._context is not None:
+                page._context = page._configuration()
+        return result
 
     def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None):
         started = time.perf_counter()
@@ -121,7 +144,8 @@ class ScreenReader:
             nonlocal mark
             now = time.perf_counter()
             timings[name] = timings.get(name,0.0)+(now-mark)*1000
-            mark = now
+            yield_to_current()
+            mark = time.perf_counter()
         if self._engine is None:
             from .ocr_engine import create_engine
             self._engine = create_engine()

@@ -15,6 +15,17 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_newer_only_take_leaves_historical_candidates_for_the_other_reader(self):
+        buffer = FrameBuffer(settle_seconds=0)
+        for i in range(3):buffer.offer(page(30 + i * 50), i)
+        self.assertEqual(buffer.take(prefer_latest=True)['seq'], 3)
+        self.assertIsNone(buffer.take(prefer_latest=True, after_seq=3))
+        self.assertEqual(buffer.stats()['pending'], 2)
+        buffer.offer(page(200), 4)
+        self.assertEqual(buffer.take(prefer_latest=True, after_seq=3)['seq'], 4)
+        self.assertEqual([buffer.take()['seq'], buffer.take()['seq']], [1, 2])
+        self.assertIsNone(buffer.take(force=True, after_seq=4))
+
     def test_dedup_tracks_source_shape_across_sizes_and_color_modes(self):
         # The first two sizes produce the same resized width and height.
         buffer = FrameBuffer(settle_seconds=0)

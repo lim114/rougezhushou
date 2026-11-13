@@ -221,14 +221,17 @@ class FrameBuffer:
     def _settling(self):
         return len(self._pending) == 1 and time.monotonic() < self._pending[0]['ready_at']
 
-    def take(self, force=False, *, prefer_latest=False):
+    def take(self, force=False, *, prefer_latest=False, after_seq=None):
         """Take one candidate; current-first removes only that candidate, never the rest.
 
         With no pending candidate, force returns the latest observation. Normal
         polling does not repeatedly re-recognize an unchanged static page.
+        after_seq leaves older candidates queued for the historical reader.
         """
         with self._lock:
             if self._pending:
+                if after_seq is not None and self._pending[-1 if prefer_latest else 0]['seq'] <= after_seq:
+                    return None
                 # Once a different page follows, preserve the preceding page
                 # immediately, including pages visible for only one frame.
                 if not force and self._settling():
@@ -236,6 +239,8 @@ class FrameBuffer:
                 frame = self._pending.pop() if prefer_latest else self._pending.popleft()
                 self._counts['taken'] += 1
             elif force and self._latest is not None:
+                if after_seq is not None and self._latest['seq'] <= after_seq:
+                    return None
                 frame = self._latest
                 self._counts['manual_repeats'] += 1
             else:
