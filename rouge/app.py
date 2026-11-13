@@ -735,6 +735,15 @@ class MainWindow(QMainWindow):
                 if mode != 'visual':
                     target = selected.get('target') or {}
                     options['hud_source'] = (epoch, target.get('hwnd'), target.get('pid'))
+                    def publish_map(observation):
+                        observation['captured_at']=selected['captured_at']
+                        observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected['seq'],
+                                                  'job_id':job_id,'phase':'map','age_at_read_ms':age_at_read_ms}
+                        observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),
+                            'target':selected.get('target'),'captured_at':selected['captured_at'],
+                            'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
+                        self.events.sample.emit((selected['image'],observation))
+                    options['on_map']=publish_map
                 if show_hud:
                     def publish(hud):
                         self.events.hud_read.emit((marker, selected['captured_at'], selected['seq'], hud))
@@ -765,7 +774,9 @@ class MainWindow(QMainWindow):
         marker, at, seq, hud = payload
         if (self.closing or not self.busy or marker != (self.sample_epoch, self.capture.stats()['generation'], self.run.state['id'])
                 or at < max(self.run.state['started_at'], self.run.state.get('last_read') or 0)
-                or (at, seq) <= (self.last_sample_at, self.last_sample_seq)
+                or (at, seq) < (self.last_sample_at, self.last_sample_seq)
+                or ((at, seq) == (self.last_sample_at, self.last_sample_seq)
+                    and (self.observation or {}).get('_sampling',{}).get('phase') != 'map')
                 or seq < self.sample_hud_seq):
             return
         self.sample_hud = {key: {**record, 'captured_at': at} for key, record in hud.items()}
@@ -816,14 +827,15 @@ class MainWindow(QMainWindow):
         ui_start=time.perf_counter()
         image, observation = result
         marker=observation.get('_sampling')
+        map_progress=(marker or {}).get('phase')=='map'
         valid=not marker or (marker['epoch']==self.sample_epoch and marker['generation']==self.capture.stats()['generation'])
-        if valid and marker is not None:
+        if valid and marker is not None and not map_progress:
             run = observation.get('run') or {}
             gold_map = run.get('page') == 'run_map' and 'gold' in run.get('resources', {})
             self.busy_gold.complete((marker['epoch'], marker['generation'], self.run.state['id']),
                                     marker.get('seq') or 0, map_read=gold_map)
         seq=(marker or{}).get('seq')or 0
-        self.finish_sample((marker or {}).get('job_id'),seq)
+        if not map_progress:self.finish_sample((marker or {}).get('job_id'),seq)
         completed_reader=observation.pop('_completed_reader',None)
         if completed_reader is not None and not self.busy:
             fork_start=time.perf_counter()
@@ -934,7 +946,7 @@ class MainWindow(QMainWindow):
         self.capture_status.setText(f'画面{stamp}（{age:.1f}秒前） · {width}×{height} · {observation["page"]} · {len(observation["nodes"])} 个可见标签。'+backend+capture_timing+timing+ui_timing+reuse)
         self.update_sampling_status()
         if self.session_recorder is not None:
-            self.session_recorder.sample(observation,self.run.state,applied=True,reason='applied',ui_ms=(time.perf_counter()-ui_start)*1000)
+            self.session_recorder.sample(observation,self.run.state,applied=True,reason='map_ready' if map_progress else 'applied',ui_ms=(time.perf_counter()-ui_start)*1000)
 
     def make_damage_tab(self):
         tab = QWidget()
@@ -2627,7 +2639,8 @@ class MainWindow(QMainWindow):
             if self.capture.closed or (self.capture.target and not win32gui.IsWindow(self.capture.target['hwnd'])):
                 self.capture.close()
             stamp = time.strftime('%H:%M:%S',time.localtime(self.observation['captured_at'])) if self.observation else '无'
-            self.capture_status.setText(message+f' 上次观测时间：{stamp}；未更新。'+(' 自动采样继续监测。' if self.auto.isChecked() else ''))
+            status='地图已确认，其余信息尚未读完。' if (self.observation or {}).get('_sampling',{}).get('phase')=='map' else '未更新。'
+            self.capture_status.setText(message+f' 上次观测时间：{stamp}；'+status+(' 自动采样继续监测。' if self.auto.isChecked() else ''))
         else:
             self.chat_status.setText(message)
 

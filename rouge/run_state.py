@@ -503,33 +503,9 @@ class RunState:
                 record['qualified_char_buff_ids']=[]
         return prior
 
-    def apply(self,observed,captured_at):
-        if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
-        reused_run=observed.get('config_reuse',{}).get('run_id')
-        if reused_run and reused_run!=self.state['id']:return False
-        from .relics import mechanics
-        for member in observed.get('operators',[]):
-            if 'char_buffs_complete' in member:
-                if type(member['char_buffs_complete']) is not bool:
-                    raise ValueError('个人强化列表完整性必须为布尔值。')
-                if 'char_buff_ids' not in member:
-                    raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
-            if 'char_buff_ids' not in member:continue
-            ids=member['char_buff_ids'];profile=operator_profiles()[member['id']]
-            if member.get('scope')!='run' or not isinstance(ids,list) or not all(isinstance(b,str) for b in ids):
-                raise ValueError('强化绑定必须来自本局干员记录，且包含有效ID列表。')
-            for bid in ids:
-                buff=mechanics()['char_buffs'].get(bid)
-                if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):
-                    raise ValueError('强化ID或领取干员职业不符。')
-        self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
-        state=self.state;history_start=len(state['history'])
-        if observed.get('shop'):
-            from .player_shop_memory import record_shop
-            record_shop(state,observed['shop'],captured_at)
-        relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
-        if isinstance(count,bool):
-            count=None;relics['count']=None
+    def _apply_map_observation(self,observed,captured_at):
+        """Apply qualified map/config/content without touching unread inventory or resources."""
+        state=self.state
         from .run_config import config_data,difficulty_value
         for key,record in observed.get('config',{}).items():
             # Reused records retain their original timestamp and never replace
@@ -576,6 +552,35 @@ class RunState:
                 state['node_contents'].append(record)
                 state['history'].append({'at':captured_at,'kind':'node_content_seen','title':content['title'],'location':location})
             state['last_node_content']=record
+
+    def apply(self,observed,captured_at):
+        if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
+        reused_run=observed.get('config_reuse',{}).get('run_id')
+        if reused_run and reused_run!=self.state['id']:return False
+        from .relics import mechanics
+        for member in observed.get('operators',[]):
+            if 'char_buffs_complete' in member:
+                if type(member['char_buffs_complete']) is not bool:
+                    raise ValueError('个人强化列表完整性必须为布尔值。')
+                if 'char_buff_ids' not in member:
+                    raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
+            if 'char_buff_ids' not in member:continue
+            ids=member['char_buff_ids'];profile=operator_profiles()[member['id']]
+            if member.get('scope')!='run' or not isinstance(ids,list) or not all(isinstance(b,str) for b in ids):
+                raise ValueError('强化绑定必须来自本局干员记录，且包含有效ID列表。')
+            for bid in ids:
+                buff=mechanics()['char_buffs'].get(bid)
+                if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):
+                    raise ValueError('强化ID或领取干员职业不符。')
+        self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
+        state=self.state;history_start=len(state['history'])
+        if observed.get('shop'):
+            from .player_shop_memory import record_shop
+            record_shop(state,observed['shop'],captured_at)
+        relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
+        if isinstance(count,bool):
+            count=None;relics['count']=None
+        self._apply_map_observation(observed,captured_at)
         prior_icons=state.get('relic_icon_memory')
         prior_inventory_verified=_inventory_confirmation_flag(state['inventory_verified'])
         previously_held_or_unknown={rid for rid,record in state['relics'].items()

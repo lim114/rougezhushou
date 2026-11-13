@@ -1,0 +1,425 @@
+{
+  "title": "地图充分匹配后先显示，藏品与资源继续补读",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "3844f045134b39c929fefc7d2ac2914d30c39f05",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "finding": "Qualified maps previously waited for resource rereads and held-icon matching before becoming visible.",
+    "profile": "Three 2052x1128 samples: run recognition 933-1603ms, held icons 467-765ms; complete OCR403-570ms. Diagnostic stage timings are not end-to-end latency.",
+    "change": "Read map configuration first on qualified map pages, publish the matched map immediately, then finish existing resource and inventory work.",
+    "remaining": "Complete text discovery and map configuration still precede map output; capture queue and painting add time. Inventory full recognition is unchanged."
+  },
+  "implementation": [
+    "Early maps require complete current text coverage, a qualified run map, matched topology, and neither a shop nor an expanded inventory page. Insufficient maps retain normal refinement.",
+    "The map stage carries current config and node content. Its reducer only applies those fields, leaving unread inventory/resources and their confirmation times untouched.",
+    "The in-flight frame remains pending. The complete result replaces its map stage at the same sequence; chronological replay retains one final history and prevents older pages replacing the current UI.",
+    "Same-frame HUD updates may follow a map stage. A later inventory failure retains the qualified map without inventing unread fields. Reset invalidates both stages.",
+    "Session recording labels partial map events as map_ready. No new model, dependency, speculative recovery or exception suppression."
+  ],
+  "method": {
+    "capture": "Real Windows.Graphics.Capture of isolated2052x1128 image-source window; elapsed source switch to correct Qt Paint.",
+    "cases": [
+      "expanded inventory to map",
+      "map to expanded inventory"
+    ],
+    "baseline_source": "All five changed production modules loaded from3844f0451 for baseline; prior current-frame-priority scheduler remains enabled. Legacy serial-a/b file labels do not mean single-worker execution.",
+    "context": "Empty confirmed-config context tied to each isolated actual run id. Neutral-page warm-up, old page already reading at switch. Two paired rounds sequentially, no competing model tests.",
+    "accuracy": "Complete observations compared after both readers drain. Only timings, capture timestamps and fixture run id excluded; texts, confidence, boxes, inventory, resources, config and maps compared.",
+    "limits": "Historical independent page fixtures; not continuous real gameplay. Two rounds do not establish p95 or a universal500ms guarantee."
+  },
+  "windows_capture_paint": {
+    "serial-a": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 2311.73,
+        "capture_ms": 23.85,
+        "queue_ms": 194.79,
+        "read_ms": 1910.73,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 4.82,
+        "stages": {
+          "initialization": 0.002399901859462261,
+          "viewport": 10.48970001284033,
+          "local_gold": 136.4659999962896,
+          "page_features": 95.9214000031352,
+          "full_ocr": 369.965499965474,
+          "visible_labels": 0.1362999901175499,
+          "operator": 0.0439999857917428,
+          "run": 1240.4473000206053,
+          "node_content": 1.854600035585463,
+          "map": 52.59810003917664,
+          "evidence": 0.18149998504668474
+        },
+        "cpu_ms": 5734.38,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8125.0,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1363.39,
+          "WorkingSetSize": 1293.79
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2420.9,
+        "capture_ms": 19.07,
+        "queue_ms": 212.31,
+        "read_ms": 1923.43,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.63,
+        "stages": {
+          "initialization": 0.001300009898841381,
+          "viewport": 8.16219998523593,
+          "local_gold": 72.15430005453527,
+          "page_features": 147.3532000090927,
+          "full_ocr": 552.1173999877647,
+          "visible_labels": 0.2280999906361103,
+          "operator": 0.09930005762726068,
+          "run": 1139.5010999403894,
+          "node_content": 0.6017000414431095,
+          "map": 0.007200054824352264,
+          "evidence": 0.3448000643402338
+        },
+        "cpu_ms": 6046.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8187.5,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1755.86,
+          "WorkingSetSize": 1680.03
+        }
+      }
+    ],
+    "stage-a": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1341.57,
+        "capture_ms": 22.93,
+        "queue_ms": 192.66,
+        "read_ms": 940.68,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 2.53,
+        "stages": {
+          "initialization": 0.002200016751885414,
+          "viewport": 11.652600020170212,
+          "local_gold": 154.54700007103384,
+          "page_features": 117.70629999227822,
+          "full_ocr": 400.27220000047237,
+          "visible_labels": 0.08400005754083395,
+          "operator": 0.04979991354048252
+        },
+        "cpu_ms": 4140.62,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8468.75,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1328.62,
+          "WorkingSetSize": 1289.5
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2378.4,
+        "capture_ms": 21.78,
+        "queue_ms": 194.01,
+        "read_ms": 1919.51,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.39,
+        "stages": {
+          "initialization": 0.001400010660290718,
+          "viewport": 6.0801999643445015,
+          "local_gold": 74.14000004064292,
+          "page_features": 139.91160003934056,
+          "full_ocr": 554.4026999268681,
+          "visible_labels": 0.08719996549189091,
+          "operator": 0.062000006437301636,
+          "run": 1142.3423999221995,
+          "node_content": 0.0028999056667089462,
+          "map": 0.004300032742321491,
+          "evidence": 0.2012000186368823
+        },
+        "cpu_ms": 5843.75,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8265.62,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1756.75,
+          "WorkingSetSize": 1670.99
+        }
+      }
+    ],
+    "serial-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 2431.97,
+        "capture_ms": 18.4,
+        "queue_ms": 196.34,
+        "read_ms": 2039.64,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 4.61,
+        "stages": {
+          "initialization": 0.001800013706088066,
+          "viewport": 14.315500040538609,
+          "local_gold": 184.78429992683232,
+          "page_features": 94.15599994827062,
+          "full_ocr": 399.46820004843175,
+          "visible_labels": 0.0771000050008297,
+          "operator": 0.04549999721348286,
+          "run": 1293.3180999243632,
+          "node_content": 1.7727999947965145,
+          "map": 48.58619999140501,
+          "evidence": 0.19209994934499264
+        },
+        "cpu_ms": 6765.62,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9140.62,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1369.66,
+          "WorkingSetSize": 1298.6
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2526.75,
+        "capture_ms": 131.63,
+        "queue_ms": 225.54,
+        "read_ms": 1904.32,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.75,
+        "stages": {
+          "initialization": 0.00200001522898674,
+          "viewport": 8.396500023081899,
+          "local_gold": 59.118399978615344,
+          "page_features": 105.01160006970167,
+          "full_ocr": 552.2130000172183,
+          "visible_labels": 0.10279996786266565,
+          "operator": 0.07319997530430555,
+          "run": 1176.584200002253,
+          "node_content": 0.3326000878587365,
+          "map": 0.003600027412176132,
+          "evidence": 0.1580000389367342
+        },
+        "cpu_ms": 6046.88,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8484.38,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1759.59,
+          "WorkingSetSize": 1680.04
+        }
+      }
+    ],
+    "stage-b": [
+      {
+        "case": 0,
+        "busy": true,
+        "paint_ms": 1494.07,
+        "capture_ms": 43.47,
+        "queue_ms": 192.59,
+        "read_ms": 1130.7,
+        "phase": "map",
+        "fork_ms": 0,
+        "fold_ms": 2.24,
+        "stages": {
+          "initialization": 0.002500019036233425,
+          "viewport": 11.256800033152103,
+          "local_gold": 167.79860004317015,
+          "page_features": 120.86979998275638,
+          "full_ocr": 547.2722001140937,
+          "visible_labels": 0.08429994340986013,
+          "operator": 0.047900015488266945
+        },
+        "cpu_ms": 4500.0,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 9656.25,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1330.48,
+          "WorkingSetSize": 1290.4
+        }
+      },
+      {
+        "case": 1,
+        "busy": true,
+        "paint_ms": 2496.51,
+        "capture_ms": 17.94,
+        "queue_ms": 199.79,
+        "read_ms": 1988.65,
+        "phase": "complete",
+        "fork_ms": 0,
+        "fold_ms": 0.55,
+        "stages": {
+          "initialization": 0.001700012944638729,
+          "viewport": 7.577800075523555,
+          "local_gold": 88.24429998639971,
+          "page_features": 152.44440000969917,
+          "full_ocr": 566.170800011605,
+          "visible_labels": 0.10330008808523417,
+          "operator": 0.08080003317445517,
+          "run": 1171.326500014402,
+          "node_content": 0.002600019797682762,
+          "map": 0.003600027412176132,
+          "evidence": 0.19049993716180325
+        },
+        "cpu_ms": 6484.38,
+        "visible": true,
+        "correct": true,
+        "combined_cpu_ms": 8984.38,
+        "memory_mib": {
+          "PeakWorkingSetSize": 1756.92,
+          "WorkingSetSize": 1672.06
+        }
+      }
+    ]
+  },
+  "summary_ms": {
+    "map_before": [
+      2311.73,
+      2431.97
+    ],
+    "map_after": [
+      1341.57,
+      1494.07
+    ],
+    "inventory_before": [
+      2420.9,
+      2526.75
+    ],
+    "inventory_after": [
+      2378.4,
+      2496.51
+    ]
+  },
+  "gold": {
+    "method": "1280x800 real WGC and visible gold-chip Paint; two rounds of six consecutive known changes.",
+    "capture_processing_total_ms": [
+      [
+        34,
+        145,
+        179
+      ],
+      [
+        51,
+        272,
+        323
+      ],
+      [
+        93,
+        261,
+        354
+      ],
+      [
+        110,
+        467,
+        577
+      ],
+      [
+        38,
+        131,
+        169
+      ],
+      [
+        88,
+        265,
+        353
+      ],
+      [
+        121,
+        174,
+        295
+      ],
+      [
+        107,
+        145,
+        252
+      ],
+      [
+        74,
+        129,
+        203
+      ],
+      [
+        106,
+        235,
+        341
+      ],
+      [
+        113,
+        261,
+        374
+      ],
+      [
+        62,
+        194,
+        256
+      ]
+    ],
+    "correct": 12,
+    "below_500ms": 11,
+    "min_ms": 169,
+    "max_ms": 577
+  },
+  "validation": {
+    "targeted_tests": 160,
+    "targeted_result": "pass",
+    "cloud_index_tests": 33,
+    "whole_observation_samples": 14,
+    "whole_observation_differences": 0,
+    "wgc_final_observations": 4,
+    "wgc_final_differences": 0,
+    "partial_final_equality": [
+      {
+        "fixture_index": 0,
+        "map_equal": true,
+        "config_equal": true,
+        "content_equal": true
+      },
+      {
+        "fixture_index": 2,
+        "map_equal": true,
+        "config_equal": true,
+        "content_equal": true
+      }
+    ],
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "private_files_unchanged": true,
+    "eligible_live_game_windows": 0
+  },
+  "review": {
+    "spec": "Early map appears while inventory remains blocked; all six valid two-frame map/full interleavings equal full-only final state/history. Failed inventory leaves only qualified map facts. Late map/full after reset discarded.",
+    "code": "Reviewed producer, reducer, timeline and GUI lifecycle separately. Existing config/map qualification is shared at one internal reducer; original public full-state validation remains. Callback owns a deep copy. Ordering and phase checks implement normal two-stage delivery. Existing speculative protections untouched; no new low-probability fallback.",
+    "publication": "Explicit production/tests/records only; unrelated AGENTS.md, .agents, video, raw game images, private state and local logs excluded."
+  },
+  "failed_or_limited_evidence": [
+    "Behavior test first reproduced map waiting for inventory before the implementation.",
+    "First broad targeted run exposed12 outdated private _interpret test doubles without on_map; signatures updated without weakening assertions. Final160 passed.",
+    "One-round cold/hot control varied: initial map improved, hot returns did not. No startup or hot-cache speedup claimed.",
+    "First normal WM_CLOSE targeted compact toolbar, opening the full assistant without exiting. Then verified owning main window received normal close; updated original app reopened. No process killed or private record replaced.",
+    "Source gold round includes one577ms update. No guarantee for all resource updates.",
+    "Combined CPU over both reads increased in these small paired runs; early publication reduces waiting, not total computation. Game co-running frame-rate cost remains unmeasured."
+  ],
+  "remaining": [
+    "Map still1.34-1.49s and expanded inventory2.38-2.50s in accepted comparisons; neither meets500ms.",
+    "Next targets: remove full text discovery from first useful map output where correctness permits, reduce icon matching work for first inventory output, and measure queue/GUI overhead.",
+    "No accepted real-game co-running, cold-start, lower-hardware, continuous short-page or all-resource500ms coverage."
+  ]
+}

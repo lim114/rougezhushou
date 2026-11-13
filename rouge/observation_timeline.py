@@ -2,7 +2,8 @@
 
 The capture queue owns images. This journal owns interpreted observations only.
 Existing reducers decide values and lifecycle. Replay has no file IO; the GUI
-installs one complete result. Prefixes before every queued capture are compacted.
+installs a qualified map or a complete result. A full result replaces the map
+stage at the same sequence. Prefixes before every queued capture are compacted.
 """
 from copy import copy,deepcopy
 
@@ -24,7 +25,11 @@ class ObservationTimeline:
     def prepare(self,observation,seq,oldest_pending):
         candidate=copy(self);candidate.pending=dict(self.pending)
         if seq>self.committed_seq:
-            candidate.pending[seq]=(deepcopy(observation.get('run')),deepcopy(observation.get('operator')),observation['captured_at'])
+            map_progress=({'map':observation.get('map'),'config':observation.get('map_config',{}),
+                           'node_content':observation.get('node_content')}
+                          if observation.get('_sampling',{}).get('phase')=='map' else None)
+            candidate.pending[seq]=(deepcopy(observation.get('run')),deepcopy(observation.get('operator')),
+                                    observation['captured_at'],deepcopy(map_progress))
         commit_through=max((key for key in candidate.pending if oldest_pending is None or key<oldest_pending),default=None)
         # The last published reduction already includes every pending row.
         # An insertion or a checkpoint inside those rows needs the original base.
@@ -36,8 +41,9 @@ class ObservationTimeline:
             replay = sorted(candidate.pending.items())
         run = memory_model(run_start, ('state',))
         account = memory_model(account_start, ('records', 'issues'))
-        for key,(run_read,operator_read,at) in replay:
-            if run_read:run.apply(run_read,at)
+        for key,(run_read,operator_read,at,map_progress) in replay:
+            if map_progress is not None:run._apply_map_observation(map_progress,at)
+            elif run_read:run.apply(run_read,at)
             if operator_read:account.observe(operator_read,at)
             if key==commit_through:
                 candidate.base_run=memory_model(run,('state',))

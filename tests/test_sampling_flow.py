@@ -115,6 +115,76 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(window.observation['operator']['fields']['level'], 80)
         self.assertEqual(window.observation_timeline.committed_seq, 2)
 
+    def test_map_updates_while_inventory_is_still_reading_then_replaces_same_frame(self):
+        from copy import deepcopy
+        from rouge.player_map_acceptance import fixtures
+        from rouge.observation_timeline import memory_model
+        graph = deepcopy(fixtures()[0][0]);graph['status'] = 'matched'
+        at = time.time();window = self.window
+        expected = memory_model(window.run, ('state',))
+        config = {'difficulty': {'value': 5}}
+        complete = {'page': 'exploration', 'nodes': [], 'map': graph,
+                    'run': {'map': graph, 'config': config, 'resources': {'gold': {'value': 9}}}}
+        expected.apply(complete['run'], at)
+        window.show_compact();window.compact_window.open_map()
+        def read(image, **options):
+            options['on_map']({'page': 'exploration', 'nodes': [], 'map': deepcopy(graph),
+                               'map_config': config, 'run': None, 'operator': None})
+            options['on_hud']({'life': {'value': 8}})
+            self.entered.set();self.release.wait(8)
+            return deepcopy(complete)
+        window.reader.read = read
+        self.offer(20, at);window.sample_now()
+        try:
+            self.wait_for(lambda: bool(window.run.state['maps']), timeout=2)
+            self.assertTrue(window.busy)
+            self.assertEqual(window.compact_window.map_popup.panel.view.graph['template_id'], graph['template_id'])
+            self.assertEqual(window.run.state['resources'], {})
+            self.assertEqual(window.run.state['config']['difficulty']['value'], 5)
+            self.assertEqual(window.sample_hud['life']['value'], 8)
+            self.assertIsNone(window.run.state['inventory_confirmed_at'])
+            self.assertEqual(window.observation_timeline.committed_seq, 0)
+        finally:self.release.set()
+        self.wait_for(lambda: not window.busy)
+        self.assertEqual(window.run.state, expected.state)
+        self.assertEqual(window.observation_timeline.committed_seq, 1)
+
+    def test_failed_inventory_does_not_invent_resources_or_remove_confirmed_map(self):
+        from copy import deepcopy
+        from rouge.player_map_acceptance import fixtures
+        graph=deepcopy(fixtures()[0][0]);graph['status']='matched'
+        def read(image, **options):
+            options['on_map']({'page':'exploration','nodes':[],'map':deepcopy(graph),'run':None,'operator':None})
+            self.entered.set();self.release.wait(8)
+            raise ValueError('inventory incomplete')
+        window=self.window;window.reader.read=read
+        self.offer(20)
+        with patch.object(window,'show_error') as error:
+            window.sample_now()
+            try:
+                self.wait_for(lambda:bool(window.run.state['maps']),timeout=2)
+                self.assertTrue(window.busy)
+            finally:self.release.set()
+            self.wait_for(lambda:not window.busy)
+        self.assertEqual(error.call_count,1)
+        self.assertIn(graph['zone_id'],window.run.state['maps'])
+        self.assertFalse(window.run.state['resources'])
+        self.assertIsNone(window.run.state['inventory_confirmed_at'])
+
+    def test_map_progress_arriving_after_reset_is_discarded_with_the_full_read(self):
+        from copy import deepcopy
+        from rouge.player_map_acceptance import fixtures
+        graph=deepcopy(fixtures()[0][0]);graph['status']='matched'
+        def read(image, **options):
+            self.entered.set();self.release.wait(8)
+            options['on_map']({'page':'exploration','nodes':[],'map':deepcopy(graph),'run':None,'operator':None})
+            return {'page':'exploration','nodes':[],'map':graph,'run':{'map':graph}}
+        window=self.window;window.reader.read=read
+        self.offer(20);window.sample_now();self.wait_for(self.entered.is_set)
+        window.reset_run();self.release.set();self.wait_for(lambda:not window.busy)
+        self.assertFalse(window.run.state['maps'])
+        self.assertIsNone(window.observation)
+
     def test_two_inflight_reads_bound_concurrency_and_reset_invalidates_both(self):
         second_entered = threading.Event()
         def read(image, **kwargs):

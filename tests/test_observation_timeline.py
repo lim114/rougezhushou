@@ -14,6 +14,26 @@ import numpy as np
 
 
 class ObservationTimelineTests(unittest.TestCase):
+    def test_map_progress_and_full_completions_in_all_orders_equal_full_only_reduction(self):
+        from rouge.player_map_acceptance import fixtures
+        graph=deepcopy(fixtures()[0][0]);graph['status']='matched'
+        complete=[{'captured_at':self.at+i,'run':{'map':graph,'config':{'difficulty':{'value':5}},
+                    'resources':{'gold':{'value':2+i}}}} for i in range(2)]
+        expected=memory_model(self.run,('state',))
+        for row in complete:expected.apply(row['run'],row['captured_at'])
+        for order in permutations(('map1','full1','map2','full2')):
+            if any(order.index('map'+str(i))>order.index('full'+str(i)) for i in (1,2)):continue
+            timeline=ObservationTimeline(self.run,self.account);inflight={1,2}
+            for step in order:
+                seq=int(step[-1]);row=complete[seq-1]
+                if step.startswith('map'):
+                    row={'captured_at':row['captured_at'],'map':graph,'map_config':row['run']['config'],
+                         '_sampling':{'phase':'map'}}
+                else:inflight.remove(seq)
+                timeline=timeline.prepare(row,seq,min(inflight) if inflight else None)
+            self.assertEqual(timeline.run.state,expected.state,order)
+            self.assertFalse(timeline.pending)
+
     def setUp(self):
         self.temp=TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.folder=Path(self.temp.name)
         self.run=RunState(self.folder/'run.json');self.account=AccountCache(self.folder/'account.json',operator_profiles(),catalog()['operators'])

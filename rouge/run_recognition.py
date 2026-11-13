@@ -97,7 +97,7 @@ def near_number(image,texts,anchor,engine,*,side='above'):
     return None
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -120,6 +120,12 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     is_roster=normal_roster or popup_member is not None
     if not (is_map or is_roster):return None
     if not is_map:cards=[]
+    from .run_config import confirmed_config
+    known=confirmed_config(run_context)
+    fresh=None
+    if on_map_config is not None and is_map and not is_roster:
+        fresh=read_config(image,texts,held,engine=engine,known_config=known)
+        on_map_config({**known,**fresh})
     resources = None
     if is_map and on_hud is not None:
         def publish_gold(gold):
@@ -143,9 +149,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     for card in cards:
         if card['confirmed']:
             (tool_ids if card['id'] in tactical_tools() else ids).add(card['id'])
-    from .run_config import confirmed_config
-    known=confirmed_config(run_context)
-    fresh=read_config(image,texts,held,engine=engine,known_config=known) if is_map else {}
+    if fresh is None:fresh=read_config(image,texts,held,engine=engine,known_config=known) if is_map else {}
     config={**known,**fresh}
     icons=resolve_difficulty_icons(resolve_owned_icons(match_held_icons(image,held,count,cache=icon_cache),cards),config.get('difficulty'))
     if count==0 and icons:count=None

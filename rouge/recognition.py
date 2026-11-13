@@ -87,7 +87,7 @@ class ScreenReader:
                 page._context = page._configuration()
         return result
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -115,8 +115,11 @@ class ScreenReader:
         gold_seed = None
         if on_hud is not None and same_source:
             gold_seed = self._gold_layout or self._last_result
+        def map_ready(observation):
+            observation['performance']['total_ms']=(time.perf_counter()-started)*1000
+            on_map(observation)
         result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
-                            on_gold_reference=on_gold_reference)
+                            on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None)
         result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
@@ -137,7 +140,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -257,7 +260,8 @@ class ScreenReader:
         elapsed('full_ocr')
         complete = self._page_ocr.metrics.get('complete_current_texts') is True if page_batches else regions is None
         result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,native_content=native_content,
-                               on_hud=on_hud if complete else None, on_gold_reference=on_gold_reference if complete else None)
+                               on_hud=on_hud if complete else None, on_gold_reference=on_gold_reference if complete else None,
+                               on_map=on_map if complete else None)
         page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
             result['performance']['ocr']=dict(self._page_ocr.metrics)
@@ -281,14 +285,14 @@ class ScreenReader:
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
             result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud,native_content=native_content,
-                                   on_gold_reference=on_gold_reference)
+                                   on_gold_reference=on_gold_reference,on_map=on_map)
             page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
         self._page_verified_identity = page_identity if page_matches else None
         result['performance']['routing']=routing
         return result
 
-    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None):
+    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None,on_map=None):
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
@@ -355,11 +359,26 @@ class ScreenReader:
                 # model session, without sharing the full reader's result caches.
                 provider = self._engine.engine if isinstance(self._engine, CachedOCR) else self._engine
                 on_gold_reference(seed, copy(provider))
-        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
-                     on_hud=on_hud,on_map_gold=map_reference,native_content=native_content)
-        elapsed('run')
         from .player_shop_hover import shop_snapshot
         shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
+        early_map=None
+        def publish_map(config):
+            nonlocal early_map
+            early_map=read_map(image,texts,nodes,{'config':config})
+            if early_map['status']!='matched':return
+            content=read_node_content(image,texts,page,stage,nodes)
+            progress=deepcopy({'page':page,'size':viewport['source_size'],'texts':texts,'nodes':nodes,
+                'stage':stage,'map':early_map,'map_config':config,'run':None,'operator':None,'node_content':content,'limitations':[]})
+            annotate_map_content(progress['map'],progress['node_content'])
+            map_evidence(progress,viewport)
+            progress['viewport']=dict(viewport)
+            progress['performance']={'stages_ms':dict(timings)}
+            on_map(progress)
+        early=(on_map is not None and not expanded and not shop and page in ('exploration','node_detail'))
+        run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
+                     on_hud=on_hud,on_map_gold=map_reference,native_content=native_content,
+                     on_map_config=publish_map if early else None)
+        elapsed('run')
         if shop:
             run=run or {'page':'shop','operators':[],'relics':{'ids':[],'icons':[],'count':None,'source':'unread'}}
             run['shop']=shop;page='shop'
@@ -374,7 +393,7 @@ class ScreenReader:
         result={'observed_at': time.time(), 'page': page, 'size': viewport['source_size'], 'texts': texts,
                 'nodes': nodes, 'stage': stage, 'drop_estimate': None,'operator':operator,'run':run,'node_content':content,
                 'limitations': ['隐藏节点尚未预测；掉落概率尚未计算。', '战斗地图视觉识别待开发；敌人列表是本地关卡候选，属性未套用本局修正。']}
-        result['map'] = read_map(image, texts, nodes, run) if page in ('exploration','node_detail') else None
+        result['map'] = (early_map if early_map is not None else read_map(image, texts, nodes, run)) if page in ('exploration','node_detail') else None
         if result['map'] and result['map']['status']=='insufficient' and len(nodes)>=3:
             refined=refine_map_texts(image,texts,nodes,self._engine)
             found=[]
