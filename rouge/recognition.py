@@ -63,6 +63,7 @@ class ScreenReader:
         self._last_context = None
         self._last_hud_source = None
         self._gold_layout = None
+        self._page_results = ExactImageCache(max_bytes=32*1024*1024, max_entries=3) if cache_enabled else None
         self._icon_cache = ExactImageCache(max_bytes=2*1024*1024,max_entries=8) if cache_enabled else None
 
     def fork(self):
@@ -118,9 +119,20 @@ class ScreenReader:
         def map_ready(observation):
             observation['performance']['total_ms']=(time.perf_counter()-started)*1000
             on_map(observation)
-        result = self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
-                            on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None)
-        result['performance'].update(reuse='none',total_ms=(time.perf_counter()-started)*1000,
+        def recognize():
+            return self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
+                              on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None)
+        page_return = False
+        if self.cache_enabled and image.nbytes <= self._page_results.max_bytes:
+            hits = self._page_results.hits
+            result = self._page_results.call(image, (rect, hud_identity, context), recognize)
+            page_return = self._page_results.hits > hits
+        else:
+            result = recognize()
+        if page_return:
+            result['observed_at'] = time.time()
+            result['performance'] = {'stages_ms': {}}
+        result['performance'].update(reuse='exact_page_return' if page_return else 'none',total_ms=(time.perf_counter()-started)*1000,
             icon_cache_hits=self._icon_cache.hits-icon_hits if self._icon_cache else 0,
             ocr_cache_hits=self._engine.cache.hits-ocr_hits if isinstance(self._engine,CachedOCR) else 0)
         self._gold_layout = None
@@ -128,8 +140,8 @@ class ScreenReader:
             if same_source and on_hud is not None:
                 from .hud_gold_preview import layout_across_partial_hud
                 self._gold_layout = layout_across_partial_hud(self._last_result, result)
-            # One frame only; the source client rectangle is part of identity.
-            # No approximate hashes or timestamps stand in for pixel equality.
+            # HUD previews always compare against the most recently returned
+            # page, including an exact return from the bounded page cache.
             self._last_frame = image.copy()
             self._last_rect = rect
             self._last_context = context
