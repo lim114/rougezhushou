@@ -229,7 +229,14 @@ class CompactAssistant(QDialog):
             popup.navigation.setTabToolTip(1,'本局已确认持有的战术道具；不代表当前可用。')
             popup.navigation.setTabText(2,'零件箱 '+facts['parts']['value']);popup.navigation.setTabToolTip(2,facts['parts']['note']+'这是数量，不是库存成员名单。')
             popup.crew_button.setText('干员 '+facts['crew']['value']);popup.crew_button.setToolTip(facts['crew']['note'])
-            self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
+            current = popup.pages.currentWidget()
+            if current is popup.parts:
+                popup.panel.reload_sources()
+            current.refresh()
+            if current is popup.parts:popup.parts.refresh_exchange()
+            # Independently open source cards still need current source data.
+            if current is not popup.panel and popup.panel.hover_card.isVisible():popup.panel.refresh()
+            if current is not popup.shop and popup.shop.source_card.isVisible():popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
         if self.archive_popup is not None and self.archive_popup.isVisible():self.archive_popup.panel.reload_local()
@@ -331,6 +338,7 @@ class CompactAssistant(QDialog):
             self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
             self.inventory_popup.resources=resources
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop
+            pages.currentChanged.connect(lambda _: self.refresh())
             area=self.screen().availableGeometry();self.inventory_popup.resize(min(1200,area.width()-40),min(540,area.height()-60))
         return self.present(self.inventory_popup)
     def open_map(self):

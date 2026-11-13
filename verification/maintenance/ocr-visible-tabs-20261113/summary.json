@@ -1,0 +1,190 @@
+{
+  "title": "识别提交时只刷新当前可见的藏品分页",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-13",
+  "baseline": "3c763c4bd05f1095475c19f1a6eef92924ff418d",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": {
+    "confirmed": "CompactAssistant.refresh refreshed all four inventory tabs on every accepted observation, even with tools/parts/shop hidden. Profile attributed repeat public packet reads/parsing to those hidden tabs. Regression reproduced calls[1,1,1,1] instead of[1,0,0,0].",
+    "profile_scope": "cProfile run locates the work but its233-320ms cache-return GUI times include profiler overhead and are not performance acceptance.",
+    "other_costs": "Latest-frame buffering/settling and polling remain153-271ms in these return samples. Capture and map rendering still contribute. No settling/recognition thresholds changed."
+  },
+  "implementation": [
+    "Refresh current inventory tab and shared resource/navigation header; hidden tab models still receive all normal observations through the existing run-state path.",
+    "Tab change refreshes the newly selected page from current state/source before the next Paint; normal window reopening retains its existing on_show refresh.",
+    "Parts view reloads its exchange source before refresh; independently visible inventory/shop source cards continue refreshing. Search, reading state and source-unavailable clearing use existing panel logic.",
+    "OCR, complete-result caches, capture, settling, sampling interval and chronological observation merge are unchanged."
+  ],
+  "method": {
+    "windows": "Two alternating baseline/candidate runs, each8 switches,2052x1128 WGC to checked visible Qt Paint. Baseline restores only player_compact.py from3c763c4bd.",
+    "endpoint": "Same previously established harness: widget.update requested after sample acceptance if unchanged facts would otherwise skip Paint. This is actual repaint after accepted current source, not proof that old retained facts were incorrect.",
+    "context": "One isolated run per replay, confirmed settings evolve normally. Index0 includes model initialization; index2 first map return misses the exact cache after new settings confirmation, and stays in all-return totals.",
+    "ui_measurement": "Second paired round uses identical lightweight wall-clock wrappers for worker completion, sample delivery and sample_received. Both original raw traces retained. First baseline round had no wrapper; first candidate had it, so that pair alone is not used for UI attribution.",
+    "limits": "Image source and assistant share a Qt process; no live-game animation/contention, no broad accuracy or p95 claim."
+  },
+  "all_return_switches": {
+    "base": {
+      "count": 12,
+      "correct": 12,
+      "below_500ms": 7,
+      "min_ms": 386.22,
+      "max_ms": 944.17,
+      "mean_ms": 550.41
+    },
+    "fixed": {
+      "count": 12,
+      "correct": 12,
+      "below_500ms": 10,
+      "min_ms": 381.14,
+      "max_ms": 841.66,
+      "mean_ms": 492.67
+    }
+  },
+  "exact_cache_return_switches": {
+    "base": {
+      "count": 10,
+      "correct": 10,
+      "below_500ms": 7,
+      "min_ms": 386.22,
+      "max_ms": 579.56,
+      "mean_ms": 474.73
+    },
+    "fixed": {
+      "count": 10,
+      "correct": 10,
+      "below_500ms": 10,
+      "min_ms": 381.14,
+      "max_ms": 473.16,
+      "mean_ms": 423.39
+    }
+  },
+  "inventory_cache_returns": {
+    "base": {
+      "count": 6,
+      "correct": 6,
+      "below_500ms": 3,
+      "min_ms": 430.72,
+      "max_ms": 579.56,
+      "mean_ms": 504.41
+    },
+    "fixed": {
+      "count": 6,
+      "correct": 6,
+      "below_500ms": 6,
+      "min_ms": 393.43,
+      "max_ms": 440.98,
+      "mean_ms": 423.56
+    }
+  },
+  "wall_clock_gui_measurement": {
+    "base": {
+      "inventory_ui_ms": [
+        146.32,
+        153.47,
+        205.91
+      ],
+      "inventory_mean_ms": 168.57,
+      "all_cache_return_delivery_ms": [
+        0.24,
+        7.74,
+        8.51,
+        10.61,
+        8.83
+      ]
+    },
+    "fixed": {
+      "inventory_ui_ms": [
+        77.19,
+        84.8,
+        79.62
+      ],
+      "inventory_mean_ms": 80.54,
+      "all_cache_return_delivery_ms": [
+        1.9,
+        1.03,
+        0.37,
+        0.24,
+        0.84
+      ]
+    }
+  },
+  "paired_paint_ms": {
+    "base": [
+      [
+        3013.7,
+        1799.07,
+        913.52,
+        545.92,
+        386.22,
+        430.72,
+        440.02,
+        579.56
+      ],
+      [
+        3073.15,
+        1684.71,
+        944.17,
+        539.21,
+        493.47,
+        433.96,
+        401.09,
+        497.11
+      ]
+    ],
+    "fixed": [
+      [
+        3154.95,
+        1675.34,
+        836.42,
+        393.43,
+        381.14,
+        427.88,
+        449.14,
+        440.98
+      ],
+      [
+        2995.54,
+        1697.75,
+        841.66,
+        410.16,
+        389.15,
+        436.95,
+        473.16,
+        431.94
+      ]
+    ]
+  },
+  "validation": {
+    "targeted_tests": 49,
+    "native_windows_reference_tests": 6,
+    "result": "pass",
+    "cloud_index_tests": 33,
+    "wgc_full_observations": 16,
+    "fact_differences": 0,
+    "new_regression_tests": 7,
+    "native_window_visible": true,
+    "native_window_responsive": true,
+    "toolbar_pixels_checked_with_windows_mcp": true,
+    "private_files_unchanged": true,
+    "eligible_live_game_windows": 0
+  },
+  "rejected_or_limited_evidence": [
+    "Initial regression run had3 expected failures on original code; imported fixture class also collected its21 tests. Final test module imports fixture as a module to avoid duplicate test discovery.",
+    "Initial combined55-test offscreen run failed one existing reference-window assertion:800px virtual screen clamps850px requested width to776px. Baseline reproduced the identical failure. The unchanged6-test reference module passes using native Windows; remaining49 tests pass offscreen.",
+    "First-entry inventory candidate1675/1698ms still exceeds500ms; initial map including model start2996/3155ms. No first-entry success claimed.",
+    "First map return after configuration confirmation remains836/842ms. The10/10 sub500ms finding applies to exact cached returns, not all12 return operations."
+  ],
+  "review": {
+    "spec": "Seven targeted scenarios cover no hidden-tab work, latest tool holdings on switch with search retained, unavailable parts sources cleared on switch, current part count/exchange source, shop opening without a new sample, and both visible source-card paths. Existing sampling timeline and native back/forward/reading state checks pass.",
+    "code": "Existing refresh entry chooses visible work; currentChanged connects after all popup members exist. Reuses existing state/source validation at each newly visible entry; no source checks removed, no speculative fallback, retry, broad catch or new abstraction. No low-probability defensive policy changed.",
+    "publication": "One product module, one new test module, aggregate receipt and continuation/index only. Raw game/source frames, observations, private settings/state and unrelated AGENTS/.agents/video excluded."
+  },
+  "remaining": [
+    "Stable universal sub500ms remains unaccepted. First-entry pages, changing pixels, new configuration and live-game load still require work.",
+    "Further separate intentional120ms frame-settling cost from100ms polling and capture; do not remove stabilization without transition/short-page correctness evidence.",
+    "Map rendering, reader fork tails and hidden technical preview updates remain separate potential GUI costs, not proven fixed by this batch."
+  ]
+}
