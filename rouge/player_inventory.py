@@ -88,6 +88,10 @@ class InventoryPanel(QWidget):
         self.source_node=QComboBox();self.source_node.addItem('全部关联节点',None);self.source_node.setToolTip('所选资料明确关联的节点，不是当前地图的可取得保证；未列不表示无法取得。');filters.addWidget(self.source_node,2,1)
         body.addWidget(self.filter_box);self.filter_box.hide();self.more.toggled.connect(self.filter_box.setVisible)
         self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary)
+        self.current_names = QLabel()
+        self.current_names.setWordWrap(True)
+        self.current_names.hide()
+        body.addWidget(self.current_names)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status);self.status.hide();self.scope.toggled.connect(self.status.setVisible)
         from .player_catalog_grid import CatalogGrid
         self.entries=CatalogGrid(descriptions=True);self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
@@ -286,5 +290,6 @@ class InventoryPanel(QWidget):
         if event.type()==QEvent.Type.Leave:self.hover_timer.stop();self.leave_timer.start()
         return super().eventFilter(obj,event)
     def hideEvent(self,event):
+        self.current_names.hide()
         self.hover_timer.stop();self.leave_timer.stop();self.hover_card.hide();super().hideEvent(event)
     def closeEvent(self,event):self.hover_card.dismiss();super().closeEvent(event)

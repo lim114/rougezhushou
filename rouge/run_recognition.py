@@ -97,7 +97,7 @@ def near_number(image,texts,anchor,engine,*,side='above'):
     return None
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -120,6 +120,10 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     is_roster=normal_roster or popup_member is not None
     if not (is_map or is_roster):return None
     if not is_map:cards=[]
+    if on_held_names is not None and cards and not is_roster:
+        names = tuple(dict.fromkeys(card['title'] for card in cards if card['confirmed']))
+        if names:
+            on_held_names(names)
     from .run_config import confirmed_config
     known=confirmed_config(run_context)
     fresh=None

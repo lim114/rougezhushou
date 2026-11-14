@@ -309,6 +309,43 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(chip.accessibleName(), original)
         self.assertEqual(window.run.state['resources'], before)
 
+    def test_confirmed_card_names_visible_before_completion_then_withdrawn_on_failure(self):
+        from copy import deepcopy
+        window = self.window
+        window.show_compact()
+        window.compact_window.open_inventory()
+        panel = window.compact_window.inventory_popup.panel
+        state = deepcopy(window.run.state)
+
+        def read(image, *, on_held_names, **options):
+            on_held_names(('薄行囊', '竞技场贵宾券'))
+            self.release.wait(8)
+            raise ValueError('incomplete inventory')
+
+        window.reader.read = read
+        self.offer(20)
+        with patch.object(window, 'show_error'):
+            window.sample_now()
+            try:
+                self.wait_for(lambda: panel.current_names.isVisible())
+                self.assertIn('薄行囊、竞技场贵宾券', panel.current_names.text())
+                self.assertTrue(window.busy)
+                self.assertEqual(window.run.state, state)
+                job = window.held_names_job
+                marker = window.sample_jobs[job]['marker']
+                for stale_job, stale_marker, at in (
+                    (job + 1, marker, time.time()),
+                    (job, (marker[0], marker[1], 'another run'), time.time()),
+                    (job, marker, window.run.state['started_at'] - 1),
+                ):
+                    window.show_held_names((stale_job, stale_marker, at, 1, ('旧页',)))
+                self.assertNotIn('旧页', panel.current_names.text())
+            finally:
+                self.release.set()
+            self.wait_for(lambda: not window.busy)
+        self.assertFalse(panel.current_names.isVisible())
+        self.assertEqual(window.run.state, state)
+
     def test_hud_rejects_old_sources_and_excludes_a_historical_floor(self):
         window = self.window
         window.show_compact()

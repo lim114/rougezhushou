@@ -66,6 +66,7 @@ class Events(QObject):
     sample = Signal(object)
     sample_error = Signal(object)
     hud_read = Signal(object)
+    held_names_read = Signal(object)
     error = Signal(str, str)
     chunk = Signal(str)
     chat_done = Signal(bool)
@@ -165,6 +166,8 @@ class MainWindow(QMainWindow):
         from .busy_gold import BusyGold
         self.busy_gold = BusyGold(self)
         self.events.hud_read.connect(self.show_sample_hud)
+        self.events.held_names_read.connect(self.show_held_names)
+        self.held_names_job = None
         self.sample_hud = {}
         self.sample_hud_seq = 0
         self.events.error.connect(self.show_error)
@@ -629,6 +632,7 @@ class MainWindow(QMainWindow):
         else:
             self.timer.stop()
             self.ready_timer.stop()
+            self.clear_held_names()
             self.sample_epoch += 1
             self.busy_gold.clear()
             self.restore_committed_hud()
@@ -644,6 +648,7 @@ class MainWindow(QMainWindow):
             +(f" · 超出单帧预算{stats['oversized']}帧" if stats.get('oversized') else ''))
 
     def change_recognition_mode(self):
+        self.clear_held_names()
         self.sample_epoch += 1
         self.busy_gold.clear()
         self.restore_committed_hud()
@@ -722,6 +727,12 @@ class MainWindow(QMainWindow):
         run_context=(timeline.base_run if frame and frame['captured_at']<self.last_sample_at else self.run).recognition_context()
         show_hud = (preferred and mode != 'visual' and self.compact_window is not None
                     and bool(self.compact_window.visible_current_resource_strips()))
+        if preferred:
+            self.clear_held_names()
+            popup = self.compact_window.inventory_popup if self.compact_window else None
+            if mode != 'visual' and popup and popup.panel.isVisible():
+                self.held_names_job = job_id
+        show_names = self.held_names_job == job_id
         self.recognition_mode.setEnabled(False)
         def work():
             try:
@@ -753,6 +764,10 @@ class MainWindow(QMainWindow):
                             'run_id':run_context['run_id'],'pointer_bounds':selected.get('pointer_bounds')}
                         self.events.sample.emit((selected['image'],observation))
                     options['on_map']=publish_map
+                if show_names:
+                    def publish_names(names):
+                        self.events.held_names_read.emit((job_id, marker, selected['captured_at'], selected['seq'], names))
+                    options['on_held_names'] = publish_names
                 if show_hud:
                     def publish(hud):
                         self.events.hud_read.emit((marker, selected['captured_at'], selected['seq'], hud))
@@ -778,6 +793,23 @@ class MainWindow(QMainWindow):
             except Exception as error:
                 self.events.sample_error.emit((epoch,generation,str(error),job_id,selected['seq'] if selected is not None else 0))
         threading.Thread(target=work,daemon=True).start()
+
+    def clear_held_names(self):
+        if self.held_names_job is not None:
+            self.compact_window.inventory_popup.panel.current_names.hide()
+            self.held_names_job = None
+
+    def show_held_names(self, payload):
+        job_id, marker, captured_at, seq, names = payload
+        if (self.closing or job_id != self.held_names_job
+                or marker != (self.sample_epoch, self.capture.stats()['generation'], self.run.state['id'])
+                or captured_at < max(self.run.state['started_at'], self.run.state.get('last_read') or 0)
+                or (captured_at, seq) < (self.last_sample_at, self.last_sample_seq)):
+            return
+        panel = self.compact_window.inventory_popup.panel
+        if panel.isVisible():
+            panel.current_names.setText('本页已读到 ' + '、'.join(names))
+            panel.current_names.show()
 
     def show_sample_hud(self, payload):
         marker, at, seq, hud = payload
@@ -811,6 +843,8 @@ class MainWindow(QMainWindow):
             self.refresh_display_hud()
 
     def finish_sample(self, job_id=None, seq=0):
+        if job_id == self.held_names_job:
+            self.clear_held_names()
         if job_id is not None:del self.sample_jobs[job_id]
         if seq >= self.sample_hud_seq:self.restore_committed_hud()
         self.busy=bool(self.sample_jobs)
@@ -1932,6 +1966,7 @@ class MainWindow(QMainWindow):
                 from .player_file_messages import file_issue
                 self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
             self.sample_epoch += 1
+            self.clear_held_names()
             self.busy_gold.clear()
             self.restore_committed_hud()
             self.capture.discard_pending()

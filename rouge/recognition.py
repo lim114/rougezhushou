@@ -88,7 +88,7 @@ class ScreenReader:
                 page._context = page._configuration()
         return result
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None,on_held_names=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -121,7 +121,8 @@ class ScreenReader:
             on_map(observation)
         def recognize():
             return self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
-                              on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None)
+                              on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None,
+                              on_held_names=on_held_names)
         page_return = False
         if self.cache_enabled and image.nbytes <= self._page_results.max_bytes:
             hits = self._page_results.hits
@@ -152,7 +153,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -273,7 +274,7 @@ class ScreenReader:
         complete = self._page_ocr.metrics.get('complete_current_texts') is True if page_batches else regions is None
         result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,native_content=native_content,
                                on_hud=on_hud if complete else None, on_gold_reference=on_gold_reference if complete else None,
-                               on_map=on_map if complete else None)
+                               on_map=on_map if complete else None, on_held_names=on_held_names if complete else None)
         page_matches = page_identity is not None and specialized_observation_valid(result, page_identity[0])
         if page_batches:
             result['performance']['ocr']=dict(self._page_ocr.metrics)
@@ -297,14 +298,14 @@ class ScreenReader:
             else:raw,_=self._frame_ocr(image)
             elapsed('fallback_full_ocr')
             result=self._interpret(image,viewport,raw,elapsed,timings,run_context=run_context,on_hud=on_hud,native_content=native_content,
-                                   on_gold_reference=on_gold_reference,on_map=on_map)
+                                   on_gold_reference=on_gold_reference,on_map=on_map,on_held_names=on_held_names)
             page_matches = specialized_observation_valid(result, page_identity[0])
         self._page_route_age=self._page_route_age+1 if routing['strategy']=='page_regions' else 0
         self._page_verified_identity = page_identity if page_matches else None
         result['performance']['routing']=routing
         return result
 
-    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None,on_map=None):
+    def _interpret(self,image,viewport,raw,elapsed,timings,*,run_context=None,on_hud=None,on_gold_reference=None,native_content=None,on_map=None,on_held_names=None):
         h, w = image.shape[:2]
         texts = [{'text': text.replace(' ', ''), 'confidence': float(score),
                   'box': [[float(x)/w, float(y)/h] for x,y in box]} for box,text,score in (raw or [])]
@@ -389,7 +390,8 @@ class ScreenReader:
         early=(on_map is not None and not expanded and not shop and page in ('exploration','node_detail'))
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
                      on_hud=on_hud,on_map_gold=map_reference,native_content=native_content,
-                     on_map_config=publish_map if early else None)
+                     on_map_config=publish_map if early else None,
+                     on_held_names=on_held_names if expanded and not shop else None)
         elapsed('run')
         if shop:
             run=run or {'page':'shop','operators':[],'relics':{'ids':[],'icons':[],'count':None,'source':'unread'}}

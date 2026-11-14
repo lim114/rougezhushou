@@ -1,0 +1,143 @@
+{
+  "title": "藏品页先显示已核对的卡片名称",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-15",
+  "baseline": "b2dfdbc5a9764d062089aced69fa36b6e76bb0ac",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "On the first map-to-inventory baseline, card text was already parsed at 1082 ms and the list painted at 2173 ms. The existing run reader had confirmed card identities long before the resource, icon and counter checks completed.",
+  "behavior": "The visible inventory panel shows a temporary line of currently confirmed card titles after page and ownership checks. Relics and tactical tools can both appear. The worker returns only deduplicated titles, and the existing full read commits the inventory and quantities. The preview is removed on job completion, error, superseding current job, pause, reset or mode change; leaving the panel hides it.",
+  "paired_windows_replays": [
+    {
+      "from": "map_with_previously_known_items",
+      "base": {
+        "card_text_parsed_ms": 1082.37,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 2172.81,
+        "cpu_to_final_list_ms": 3968.75,
+        "full_text_ms": 629.79,
+        "queue_ms": 156.97
+      },
+      "fixed": {
+        "card_text_parsed_ms": 945.3,
+        "name_preview_paint_ms": 961.41,
+        "final_list_paint_ms": 1804.49,
+        "cpu_to_final_list_ms": 3359.38,
+        "full_text_ms": 531.07,
+        "queue_ms": 165.48
+      }
+    },
+    {
+      "from": "map_with_previously_known_items",
+      "base": {
+        "card_text_parsed_ms": 854.63,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 1602.37,
+        "cpu_to_final_list_ms": 3531.25,
+        "full_text_ms": 476.74,
+        "queue_ms": 155.76
+      },
+      "fixed": {
+        "card_text_parsed_ms": 980.55,
+        "name_preview_paint_ms": 996.0,
+        "final_list_paint_ms": 1759.69,
+        "cpu_to_final_list_ms": 3203.12,
+        "full_text_ms": 601.72,
+        "queue_ms": 163.53
+      }
+    },
+    {
+      "from": "cold_inventory",
+      "base": {
+        "card_text_parsed_ms": 2275.78,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 3906.15,
+        "cpu_to_final_list_ms": 9859.38,
+        "full_text_ms": 606.99,
+        "queue_ms": 164.45
+      },
+      "fixed": {
+        "card_text_parsed_ms": 2277.54,
+        "name_preview_paint_ms": 2300.66,
+        "final_list_paint_ms": 3834.94,
+        "cpu_to_final_list_ms": 9812.5,
+        "full_text_ms": 597.17,
+        "queue_ms": 151.59
+      }
+    },
+    {
+      "from": "cold_inventory",
+      "base": {
+        "card_text_parsed_ms": 2249.62,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 3826.86,
+        "cpu_to_final_list_ms": 9718.75,
+        "full_text_ms": 613.79,
+        "queue_ms": 157.97
+      },
+      "fixed": {
+        "card_text_parsed_ms": 2316.03,
+        "name_preview_paint_ms": 2336.22,
+        "final_list_paint_ms": 3853.52,
+        "cpu_to_final_list_ms": 9796.88,
+        "full_text_ms": 685.28,
+        "queue_ms": 153.03
+      }
+    },
+    {
+      "from": "empty_run_after_operator",
+      "base": {
+        "card_text_parsed_ms": 1020.31,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 2585.17,
+        "cpu_to_final_list_ms": 4750.0,
+        "full_text_ms": 593.67,
+        "queue_ms": 158.44
+      },
+      "fixed": {
+        "card_text_parsed_ms": 1128.78,
+        "name_preview_paint_ms": 1152.88,
+        "final_list_paint_ms": 3121.17,
+        "cpu_to_final_list_ms": 4812.5,
+        "full_text_ms": 700.17,
+        "queue_ms": 170.07
+      }
+    },
+    {
+      "from": "empty_run_after_operator",
+      "base": {
+        "card_text_parsed_ms": 1077.53,
+        "name_preview_paint_ms": null,
+        "final_list_paint_ms": 3004.15,
+        "cpu_to_final_list_ms": 6109.38,
+        "full_text_ms": 676.3,
+        "queue_ms": 186.52
+      },
+      "fixed": {
+        "card_text_parsed_ms": 1069.81,
+        "name_preview_paint_ms": 1090.1,
+        "final_list_paint_ms": 2640.43,
+        "cpu_to_final_list_ms": 4750.0,
+        "full_text_ms": 620.95,
+        "queue_ms": 171.59
+      }
+    }
+  ],
+  "method": "2052x1128 WGC of a static source Qt window, isolated temporary run and account paths asserted before MainWindow construction. New process for each replay. First baseline used the parent implementation. Remaining baselines disabled only the newly added title callback. Caption measured through its own visible Qt paint event and checked against all three expected names. Final grid paint measured after the accepted full observation. Source and test assistant share a Qt process. Replays compare all final non-timing facts. Both map warmups already retained inventory, so a separate operator warmup asserted an empty held inventory and empty grid before switching. CPU time is process-wide through full grid paint.",
+  "limits": "Only one three-card inventory layout in timed comparisons. No game co-running or general 500 ms claim. Final-list time varies in both directions. Confirmed names appear in the caption, rows and counts still await full verification.",
+  "review": {
+    "spec": "Complete OCR coverage gates the callback. The run reader excludes roster and the outer reader excludes shop. Cards require existing independent held-page evidence and unique name/usage identity. No partial observation enters run or account history.",
+    "code": "UI subscribes only for preferred reads of the visible inventory. Qt signal carries immutable titles and job/source/run/sequence context; only the current job owns the caption. No new OCR request, model, cache or worker."
+  },
+  "validation": {
+    "targeted_tests": 158,
+    "index_tests": 33,
+    "complete_observation_pairs_equal": 10,
+    "isolated_replays": 12,
+    "native_window_visible_and_responsive": true,
+    "private_files_unchanged": true
+  },
+  "remaining": "After operator warmup the full text step alone takes 621–700 ms in these two candidate runs. Earlier correct row/region recognition and real game testing remain open."
+}
