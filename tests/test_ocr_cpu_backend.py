@@ -24,6 +24,25 @@ class CPUBackendTests(unittest.TestCase):
             result.append(line)
         return result
 
+    def test_cold_compiles_overlap_and_keep_model_roles(self):
+        from pathlib import Path
+        from threading import Barrier
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from rouge.ocr_cpu_inference import use_cpu_inference
+
+        all_started = Barrier(3, timeout=3)
+        def compile_model(core, path):
+            all_started.wait()
+            return Path(path).name
+        engine = SimpleNamespace(text_det=SimpleNamespace(), text_cls=SimpleNamespace(),
+                                 text_rec=SimpleNamespace())
+        with patch('rouge.ocr_cpu_inference.CPUInference', side_effect=compile_model):
+            use_cpu_inference(engine)
+        self.assertIn('_det_', engine.text_det.infer)
+        self.assertIn('_cls_', engine.text_cls.infer)
+        self.assertIn('_rec_', engine.text_rec.session)
+
     def test_upright_lines_match_original_without_changing_threshold(self):
         for image in self.lines():
             expected, _ = self.original(image, use_det=False, use_cls=False)

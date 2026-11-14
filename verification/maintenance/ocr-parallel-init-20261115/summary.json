@@ -1,0 +1,144 @@
+{
+  "title": "首次识别并行编译三个独立模型",
+  "date_Beijing": "2026-11-15",
+  "kind": "maintenance",
+  "baseline": "0e781d31dd3e5643bb83f14e5aafd54beece908d",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "finding": "The first read waits for three independent OpenVINO model compilations. Previously they ran in sequence. A transient three-worker pool compiles the same paths on the same Core, joins and installs sessions in the original role order. Inference configuration, thresholds, caches, ONNX backend and subsequent frame processing are unchanged.",
+  "paired_wgc": [
+    {
+      "first_page": "map",
+      "base": {
+        "first_paint_ms": 7253.48,
+        "first_init_ms": 5345.1,
+        "cpu_to_first_paint_ms": 9640.62,
+        "next_two_paint_ms": [
+          2508.64,
+          1181.06
+        ]
+      },
+      "fixed": {
+        "first_paint_ms": 2676.18,
+        "first_init_ms": 1283.27,
+        "cpu_to_first_paint_ms": 8421.88,
+        "next_two_paint_ms": [
+          1735.99,
+          863.86
+        ]
+      }
+    },
+    {
+      "first_page": "inventory",
+      "base": {
+        "first_paint_ms": 4296.68,
+        "first_init_ms": 1505.75,
+        "cpu_to_first_paint_ms": 10046.88,
+        "next_two_paint_ms": [
+          1294.64,
+          896.33
+        ]
+      },
+      "fixed": {
+        "first_paint_ms": 4120.27,
+        "first_init_ms": 1410.65,
+        "cpu_to_first_paint_ms": 10312.5,
+        "next_two_paint_ms": [
+          983.0,
+          815.65
+        ]
+      }
+    },
+    {
+      "first_page": "map",
+      "base": {
+        "first_paint_ms": 3470.51,
+        "first_init_ms": 1766.78,
+        "cpu_to_first_paint_ms": 8562.5,
+        "next_two_paint_ms": [
+          1869.34,
+          916.16
+        ]
+      },
+      "fixed": {
+        "first_paint_ms": 3007.27,
+        "first_init_ms": 1433.2,
+        "cpu_to_first_paint_ms": 9296.88,
+        "next_two_paint_ms": [
+          2308.65,
+          875.71
+        ]
+      }
+    },
+    {
+      "first_page": "inventory",
+      "base": {
+        "first_paint_ms": 4728.15,
+        "first_init_ms": 1541.0,
+        "cpu_to_first_paint_ms": 10515.62,
+        "next_two_paint_ms": [
+          1010.99,
+          778.19
+        ]
+      },
+      "fixed": {
+        "first_paint_ms": 4307.98,
+        "first_init_ms": 1315.73,
+        "cpu_to_first_paint_ms": 10359.38,
+        "next_two_paint_ms": [
+          1039.48,
+          820.88
+        ]
+      }
+    }
+  ],
+  "method": "Fresh assistant test process for each run, real Windows Graphics Capture of a staged 2052x1128 Qt window and correct map graph or inventory row paint. Two rounds start on map, two on inventory. Map paint can precede completion of secondary fields. Capture source and UI share the isolated Qt process. Sequence: baseline/candidate, candidate/baseline, baseline/candidate, baseline/candidate. Final observations match after excluding timing and runtime metadata.",
+  "limits": "All four cold first paints exceed 500 ms. The first baseline has unusually slow initialization (5.35 s); the other three first-paint paired gains are 176-463 ms. No warm-page or live-game improvement claimed. Tests on one 14-core Windows CPU.",
+  "resource_process_measurements": {
+    "base": [
+      {
+        "wall_ms": 1371.84,
+        "cpu_ms": 4765.62,
+        "peak_MiB": 172.89,
+        "retained_MiB": 158.16
+      },
+      {
+        "wall_ms": 1351.61,
+        "cpu_ms": 4796.88,
+        "peak_MiB": 175.95,
+        "retained_MiB": 160.15
+      }
+    ],
+    "fixed": [
+      {
+        "wall_ms": 984.86,
+        "cpu_ms": 4718.75,
+        "peak_MiB": 193.98,
+        "retained_MiB": 170.3
+      },
+      {
+        "wall_ms": 951.4,
+        "cpu_ms": 4781.25,
+        "peak_MiB": 196.04,
+        "retained_MiB": 172.01
+      }
+    ]
+  },
+  "resource_scope": "Fresh processes constructing the real engine; CPU is process time and working set is process-wide, not just the model weights. Parallel compilation trades about 20-21 MiB additional observed peak memory for shorter wall time; no persistent model disk cache introduced.",
+  "alternatives": "The sampled inventory bar had only four identical masked references among 956; simple deduplication was not implemented. Static disk compile cache trial improved subsequent launches but required writing about 16 MiB and did not improve the first compilation, so not adopted here. RapidOCR still creates ONNX sessions before the OpenVINO substitution; decoder dictionary compatibility remains relevant for any future replacement.",
+  "validation": {
+    "targeted_tests": 97,
+    "index_tests": 33,
+    "complete_paired_observations": 12,
+    "native_window_visible_and_responsive": true,
+    "private_settings_account_run_hashes_unchanged": true,
+    "live_game_acceptance": false
+  },
+  "review": {
+    "behavior": "The compile-overlap barrier test failed on serial baseline and passes with role mapping; actual backend tests exercise detector, recognition, classification and concurrent output ownership. No weakened accuracy gates.",
+    "implementation": "Only cold OpenVINO construction changed. Threads bounded by three existing model roles, initialized within existing sampling worker; pool scoped to construction. No global monkey patches, new dependencies or new failure suppression in the shipped code."
+  },
+  "remaining": "Prioritize the first-inventory full text and icon verification, first map discovery and live-game contention. Cold compilation is only one part of first-frame latency."
+}

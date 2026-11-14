@@ -22,6 +22,7 @@ class CPUInference:
 
 
 def use_cpu_inference(engine):
+    from concurrent.futures import ThreadPoolExecutor
     from openvino import Core
     from rapidocr_onnxruntime.main import DEFAULT_CFG_PATH
     from rapidocr_onnxruntime.utils import read_yaml, update_model_path
@@ -30,6 +31,11 @@ def use_cpu_inference(engine):
     core = Core()
     # RapidOCR has already loaded its character dictionary from ONNX metadata.
     # Keep its preprocessing, classifier, decoder and thresholds unchanged.
-    engine.text_det.infer = CPUInference(core, config['Det']['model_path'])
-    engine.text_cls.infer = CPUInference(core, config['Cls']['model_path'])
-    engine.text_rec.session = CPUInference(core, config['Rec']['model_path'])
+    # The three models have independent graphs. Join all three before installing
+    # their sessions; the temporary workers are gone before the first read.
+    def compile_role(role):
+        return CPUInference(core, config[role]['model_path'])
+
+    with ThreadPoolExecutor(max_workers=3, thread_name_prefix='rouge-ocr-init') as pool:
+        engine.text_det.infer, engine.text_cls.infer, engine.text_rec.session = pool.map(
+            compile_role, ('Det', 'Cls', 'Rec'))
