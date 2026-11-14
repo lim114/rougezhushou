@@ -179,6 +179,10 @@ class FrameBuffer:
             if image.nbytes > self.max_bytes:
                 self._counts['oversized'] += 1
                 return seq
+            # WGC exposes three BGR channels at a four-byte pixel stride.
+            # Pack the owned snapshot once so validation and thumbnailing
+            # read the same contiguous pixels that the queue will retain.
+            image = image.copy()
             if image.max() <= 4:
                 self._counts['invalid'] += 1
                 return seq
@@ -193,7 +197,7 @@ class FrameBuffer:
             thumb, quality, summary = self._thumbnail(image)
             identity = dict(target or {})
             rect = tuple(client_rect) if client_rect is not None else None
-            frame = dict(image=image.copy(), captured_at=timestamp,
+            frame = dict(image=image, captured_at=timestamp,
                          pointer_bounds=tuple(pointer_bounds)if pointer_bounds is not None else None,
                          client_rect=rect, target=identity, seq=seq,
                          generation=self._generation,

@@ -10,6 +10,7 @@ full discovery. No operator or run values come from these visual plans.
 from __future__ import annotations
 
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from io import BytesIO
 import hashlib
@@ -31,21 +32,29 @@ def _scene_features(gray):
     # Edge contrast gives the pale module headings the same feature budget as
     # black attribute rows. The later grayscale control check is independent.
     feature_image = cv2.Canny(gray, 18, 48)
-    orb = cv2.ORB_create(nfeatures=1000, scaleFactor=1.15, nlevels=8,
-                         edgeThreshold=5, patchSize=19, fastThreshold=5)
+    def detect_tile(position):
+        top, left = position
+        orb = cv2.ORB_create(nfeatures=1000, scaleFactor=1.15, nlevels=8,
+                             edgeThreshold=5, patchSize=19, fastThreshold=5)
+        right, bottom = min(w, left+260), min(h, top+190)
+        x0, y0, x1, y1 = max(0, left-36), max(0, top-36), min(w, right+36), min(h, bottom+36)
+        kps, desc = orb.detectAndCompute(feature_image[y0:y1, x0:x1], None)
+        if desc is None:
+            return None
+        xy = cv2.KeyPoint_convert(kps).astype(np.float64) + (x0, y0)
+        keep = (xy[:, 0] >= left) & (xy[:, 0] < right) & (xy[:, 1] >= top) & (xy[:, 1] < bottom)
+        return xy[keep], desc[keep]
+
+    positions = ((top, left) for top in range(0, h, 190) for left in range(0, w, 260))
     points, descriptions = [], []
-    for top in range(0, h, 190):
-        for left in range(0, w, 260):
-            right, bottom = min(w, left+260), min(h, top+190)
-            x0, y0, x1, y1 = max(0, left-36), max(0, top-36), min(w, right+36), min(h, bottom+36)
-            kps, desc = orb.detectAndCompute(feature_image[y0:y1, x0:x1], None)
-            if desc is None:
-                continue
-            # Keep Python's original double-precision offset/edge comparisons;
-            # convert the selected coordinates to float32 only at the end.
-            xy = cv2.KeyPoint_convert(kps).astype(np.float64) + (x0, y0)
-            keep = (xy[:, 0] >= left) & (xy[:, 0] < right) & (xy[:, 1] >= top) & (xy[:, 1] < bottom)
-            points.append(xy[keep]); descriptions.append(desc[keep])
+    # Descriptor order breaks matching ties. Consume in image order even when
+    # a later tile finishes first.
+    with ThreadPoolExecutor(max_workers=4, thread_name_prefix='rouge-page-tile') as pool:
+        for result in pool.map(detect_tile, positions):
+            if result is not None:
+                xy, desc = result
+                points.append(xy)
+                descriptions.append(desc)
     selected = np.concatenate(points).astype(np.float32) if points else np.asarray([], np.float32)
     return (selected, np.concatenate(descriptions)) if selected.size else (np.asarray([], np.float32), None)
 

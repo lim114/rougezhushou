@@ -1,0 +1,459 @@
+{
+  "title": "加快采集帧入队和判页特征提取",
+  "date_Beijing": "2026-11-15",
+  "kind": "maintenance",
+  "baseline": "227610660b3deeb594b7654ffe9f1b866b6899ad",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "diagnosis": "Discovery of a new inventory frame spends most isolated OCR time on character recognition, then text detection. Inference thread counts and batch sizes were varied on the installed Windows CPU. More inference threads did not improve this input, and all three alternative recognition batch sizes changed one text. Production keeps original model configuration.",
+  "implementation": [
+    "Evaluate independent overlapping ORB tiles concurrently with up to four temporary workers per router call, sharing read-only Canny output and consuming original tile order. Matching parameters and control checks preserved.",
+    "Pack the buffer-owned BGR frame after geometry/dtype and byte budget checks, before scanning or making thumbnails. Native BGRA stride previously incurred conversions across the pixel scan, thumbnail and final retention. Valid frames still require only one owned image copy. Black or stale frames within budget now incur that copy before rejection."
+  ],
+  "isolated_inventory_ocr_medians_ms": {
+    "1": {
+      "total": 1369.4,
+      "det": 400.3,
+      "cls": 35.1,
+      "rec": 915.3,
+      "cpu": 1359.4,
+      "different_texts": 0
+    },
+    "2": {
+      "total": 785.1,
+      "det": 233.2,
+      "cls": 25.0,
+      "rec": 518.3,
+      "cpu": 1484.4,
+      "different_texts": 0
+    },
+    "3": {
+      "total": 609.6,
+      "det": 182.1,
+      "cls": 21.9,
+      "rec": 392.5,
+      "cpu": 1562.5,
+      "different_texts": 0
+    },
+    "4": {
+      "total": 474.2,
+      "det": 146.0,
+      "cls": 21.4,
+      "rec": 294.7,
+      "cpu": 1484.4,
+      "different_texts": 0
+    },
+    "6": {
+      "total": 554.2,
+      "det": 164.3,
+      "cls": 25.3,
+      "rec": 353.4,
+      "cpu": 2203.1,
+      "different_texts": 0
+    },
+    "8": {
+      "total": 529.0,
+      "det": 150.8,
+      "cls": 27.7,
+      "rec": 339.2,
+      "cpu": 2625.0,
+      "different_texts": 0
+    },
+    "batch1": {
+      "total": 476.2,
+      "det": 138.0,
+      "cls": 20.6,
+      "rec": 306.9,
+      "cpu": 1468.8,
+      "different_texts": 1
+    },
+    "batch12": {
+      "total": 509.1,
+      "det": 144.3,
+      "cls": 21.5,
+      "rec": 332.5,
+      "cpu": 1609.4,
+      "different_texts": 1
+    },
+    "batch3": {
+      "total": 463.5,
+      "det": 141.8,
+      "cls": 20.5,
+      "rec": 289.5,
+      "cpu": 1468.8,
+      "different_texts": 1
+    },
+    "core4": {
+      "total": 492.2,
+      "det": 146.4,
+      "cls": 22.3,
+      "rec": 314.3,
+      "cpu": 1468.8,
+      "different_texts": 0
+    },
+    "noht4": {
+      "total": 501.1,
+      "det": 143.4,
+      "cls": 21.8,
+      "rec": 323.9,
+      "cpu": 1468.8,
+      "different_texts": 0
+    },
+    "p3": {
+      "total": 617.8,
+      "det": 180.8,
+      "cls": 24.3,
+      "rec": 407.6,
+      "cpu": 1453.1,
+      "different_texts": 0
+    },
+    "p4": {
+      "total": 473.2,
+      "det": 136.7,
+      "cls": 21.1,
+      "rec": 302.7,
+      "cpu": 1375.0,
+      "different_texts": 0
+    }
+  },
+  "strided_frame_offer_median_ms": {
+    "base": 29.517200018744916,
+    "early": 13.41139990836382,
+    "late": 20.348449994344264,
+    "native": 6.922049971763045
+  },
+  "capture_probe_method": "32 measured offers after one warmup per variant on the same 2052x1128 BGRA-strided BGR view. Early copy was adopted. The native trial using cvtColor in front of the old buffer was faster on accepted frames, but allocated a second frame and converted before the existing size budget check; not adopted.",
+  "feature_trial": {
+    "22_inputs_equal": true,
+    "identical_ordered_features": 260847,
+    "inputs": "20 available local native-client samples and two synthetic blank/noisy frames. Coordinates and descriptor arrays equal in order.",
+    "isolated_serial_vs_four_ms": [
+      57.89,
+      19.09
+    ]
+  },
+  "windows_method": "Real WGC and visible Qt Paint of a controlled source and assistant in same isolated process, 2052x1128. Current inventory caption must contain all three expected names. After the grid paint all completed non-timing fields compared. Fresh starts on an operator page with empty inventory and warm OCR. Map starts cold, then switches to inventory; some items previously known. Each baseline swaps only the original measured functions. No benchmark model or thread setting override beyond selecting the production OpenVINO backend.",
+  "visual_only_pairs": {
+    "fresh1": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1038.8,
+          "paint_ms": 3016.25,
+          "cpu_ms": 5781.25,
+          "queue_ms": 164.25,
+          "visual_ms": 89.86,
+          "ocr_ms": 586.63
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 897.1,
+          "paint_ms": 2384.55,
+          "cpu_ms": 4375.0,
+          "queue_ms": 146.36,
+          "visual_ms": 46.95,
+          "ocr_ms": 517.76
+        }
+      ]
+    },
+    "fresh2": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 990.83,
+          "paint_ms": 2508.87,
+          "cpu_ms": 4796.88,
+          "queue_ms": 167.29,
+          "visual_ms": 81.53,
+          "ocr_ms": 550.88
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 947.02,
+          "paint_ms": 2405.57,
+          "cpu_ms": 4343.75,
+          "queue_ms": 174.17,
+          "visual_ms": 47.52,
+          "ocr_ms": 548.51
+        }
+      ]
+    },
+    "map1": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2502.43,
+          "cpu_ms": 8015.62,
+          "queue_ms": 161.14,
+          "visual_ms": 181.56,
+          "ocr_ms": 509.68
+        },
+        {
+          "case": 1,
+          "preview_ms": 888.8,
+          "paint_ms": 1709.57,
+          "cpu_ms": 3796.88,
+          "queue_ms": 157.63,
+          "visual_ms": 84.03,
+          "ocr_ms": 488.64
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2545.84,
+          "cpu_ms": 8375.0,
+          "queue_ms": 163.32,
+          "visual_ms": 135.32,
+          "ocr_ms": 533.05
+        },
+        {
+          "case": 1,
+          "preview_ms": 951.7,
+          "paint_ms": 1704.57,
+          "cpu_ms": 3609.38,
+          "queue_ms": 170.8,
+          "visual_ms": 56.52,
+          "ocr_ms": 547.58
+        }
+      ]
+    },
+    "map2": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2731.98,
+          "cpu_ms": 8031.25,
+          "queue_ms": 165.55,
+          "visual_ms": 189.49,
+          "ocr_ms": 630.42
+        },
+        {
+          "case": 1,
+          "preview_ms": 920.09,
+          "paint_ms": 1715.61,
+          "cpu_ms": 3390.62,
+          "queue_ms": 159.62,
+          "visual_ms": 87.03,
+          "ocr_ms": 514.27
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2561.2,
+          "cpu_ms": 8265.62,
+          "queue_ms": 160.28,
+          "visual_ms": 140.9,
+          "ocr_ms": 551.36
+        },
+        {
+          "case": 1,
+          "preview_ms": 904.41,
+          "paint_ms": 1727.99,
+          "cpu_ms": 3468.75,
+          "queue_ms": 172.5,
+          "visual_ms": 49.24,
+          "ocr_ms": 519.54
+        }
+      ]
+    }
+  },
+  "final_pairs": {
+    "fresh1": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1026.85,
+          "paint_ms": 2535.78,
+          "cpu_ms": 4312.5,
+          "queue_ms": 158.72,
+          "visual_ms": 83.84,
+          "ocr_ms": 583.96
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 896.29,
+          "paint_ms": 2362.16,
+          "cpu_ms": 4390.62,
+          "queue_ms": 131.99,
+          "visual_ms": 45.37,
+          "ocr_ms": 528.0
+        }
+      ]
+    },
+    "fresh2": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1000.55,
+          "paint_ms": 2477.03,
+          "cpu_ms": 4640.62,
+          "queue_ms": 164.57,
+          "visual_ms": 84.12,
+          "ocr_ms": 555.22
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 934.1,
+          "paint_ms": 2498.17,
+          "cpu_ms": 4453.12,
+          "queue_ms": 148.03,
+          "visual_ms": 47.43,
+          "ocr_ms": 538.43
+        }
+      ]
+    },
+    "fresh3": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1009.26,
+          "paint_ms": 2529.8,
+          "cpu_ms": 4796.88,
+          "queue_ms": 158.39,
+          "visual_ms": 90.05,
+          "ocr_ms": 561.93
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 966.04,
+          "paint_ms": 2528.43,
+          "cpu_ms": 4750.0,
+          "queue_ms": 154.54,
+          "visual_ms": 47.76,
+          "ocr_ms": 579.99
+        }
+      ]
+    },
+    "map1": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2549.37,
+          "cpu_ms": 7953.12,
+          "queue_ms": 180.66,
+          "visual_ms": 180.85,
+          "ocr_ms": 513.17
+        },
+        {
+          "case": 1,
+          "preview_ms": 932.39,
+          "paint_ms": 1899.56,
+          "cpu_ms": 4062.5,
+          "queue_ms": 175.88,
+          "visual_ms": 87.12,
+          "ocr_ms": 503.96
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2385.12,
+          "cpu_ms": 7953.12,
+          "queue_ms": 128.47,
+          "visual_ms": 154.45,
+          "ocr_ms": 519.09
+        },
+        {
+          "case": 1,
+          "preview_ms": 873.97,
+          "paint_ms": 1672.39,
+          "cpu_ms": 3765.62,
+          "queue_ms": 137.93,
+          "visual_ms": 53.39,
+          "ocr_ms": 512.55
+        }
+      ]
+    },
+    "map2": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2526.79,
+          "cpu_ms": 7984.38,
+          "queue_ms": 158.22,
+          "visual_ms": 181.35,
+          "ocr_ms": 556.53
+        },
+        {
+          "case": 1,
+          "preview_ms": 909.24,
+          "paint_ms": 1727.34,
+          "cpu_ms": 3765.62,
+          "queue_ms": 149.84,
+          "visual_ms": 89.98,
+          "ocr_ms": 517.34
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 2437.89,
+          "cpu_ms": 8250.0,
+          "queue_ms": 163.48,
+          "visual_ms": 150.87,
+          "ocr_ms": 561.39
+        },
+        {
+          "case": 1,
+          "preview_ms": 864.09,
+          "paint_ms": 1693.59,
+          "cpu_ms": 3562.5,
+          "queue_ms": 140.43,
+          "visual_ms": 50.74,
+          "ocr_ms": 520.42
+        }
+      ]
+    }
+  },
+  "final_inventory_medians": {
+    "base": {
+      "preview_ms": 1000.55,
+      "paint_ms": 2477.03,
+      "cpu_ms": 4312.5,
+      "queue_ms": 158.72,
+      "visual_ms": 87.12,
+      "ocr_ms": 555.22
+    },
+    "fixed": {
+      "preview_ms": 896.29,
+      "paint_ms": 2362.16,
+      "cpu_ms": 4390.62,
+      "queue_ms": 140.43,
+      "visual_ms": 47.76,
+      "ocr_ms": 528.0
+    }
+  },
+  "validation": {
+    "targeted_recognition_checks": 100,
+    "targeted_capture_checks": 58,
+    "cloud_index_checks": 33,
+    "complete_final_observation_pairs": 7,
+    "additional_visual_only_observation_pairs": 6,
+    "private_files_unchanged": true,
+    "original_window_visible_and_responsive": true
+  },
+  "review": "Existing ownership, byte cap, source checks, queue selection and 120 ms settling window retained. No new persistent model, executor or dependency. Four ORB workers per active reader can compete with the game. Five controlled inventory switches on one layout and one host provide no live-game or tail-latency acceptance.",
+  "remaining": "First name paint still exceeds 500 ms. Full text recognition remains the largest measured pre-name step; earlier region-based reads need independent ownership/page evidence and complete result comparisons."
+}
