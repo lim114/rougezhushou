@@ -50,6 +50,35 @@ class CPUBackendTests(unittest.TestCase):
             self.assertEqual([r[0] for r in actual], [r[0] for r in expected])
             np.testing.assert_allclose([r[1] for r in actual], [r[1] for r in expected], atol=2e-5, rtol=0)
 
+    def test_gpu_trial_routes_only_the_compiled_shape(self):
+        from unittest.mock import Mock
+        from rouge.ocr_cpu_inference import FixedShapeGPU
+
+        core, cpu = Mock(), Mock()
+        shape = (6, 3, 48, 320)
+        model = core.compile_model.return_value
+        model.outputs = ['text']
+        request = model.create_infer_request.return_value
+        request.infer.return_value = {'text': 'current GPU output'}
+        session = FixedShapeGPU(core, 'rec.onnx', shape, cpu, 'model-cache')
+        tensor = np.zeros(shape, np.float32)
+        self.assertEqual(session(tensor), ['current GPU output'])
+        request.infer.assert_called_once_with(tensor, share_inputs=True, share_outputs=False)
+        for other in (tensor[:1], tensor[:, :, :, :319]):
+            self.assertIs(session(other), cpu.return_value)
+            self.assertIs(cpu.call_args.args[0], other)
+        self.assertEqual(request.infer.call_count, 1)
+
+    def test_app_gpu_flag_is_scoped_to_one_launch(self):
+        from unittest.mock import patch
+        from rouge import app
+
+        with patch.object(app, 'QApplication'), patch.object(app, 'MainWindow') as window:
+            for args, backend in ((['rouge.app', '--gpu-ocr'], 'openvino-gpu'), (['rouge.app'], None)):
+                with patch.object(app.sys, 'argv', args), self.assertRaises(SystemExit):
+                    app.main()
+                window.assert_called_with(ocr_backend=backend)
+
     def test_shared_recognizer_concurrent_requests_own_their_outputs(self):
         recognizer = self.optimized.text_rec
         tensors = [recognizer.resize_norm_img(line, 320 / 48)[None].astype(np.float32)

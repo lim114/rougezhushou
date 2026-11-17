@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         self.offline_tools.select_query('calibration','explosion-values')
         self.workspace.setCurrentWidget(self.offline_tools,explicit_tool=True)
 
-    def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None, session_recorder=None):
+    def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None, session_recorder=None, ocr_backend=None):
         if diagnostic_layout is not None and type(diagnostic_layout) is not bool:
             raise ValueError('诊断布局需要明确的开关。')
         super().__init__()
@@ -111,7 +111,7 @@ class MainWindow(QMainWindow):
         if self.diagnostic_layout:self.setWindowTitle(self.windowTitle()+' · 历史布局诊断')
         self.resize(1050, 830)
         self.capture = GameCapture()
-        self.reader = ScreenReader()
+        self.reader = ScreenReader(backend=ocr_backend)
         self.secondary_reader = None
         self.sample_jobs = {}
         self.next_sample_job = 0
@@ -2731,8 +2731,9 @@ class MainWindow(QMainWindow):
         if self.compact_window is not None:QApplication.instance().quit()
 
 def main():
+    backend = 'openvino-gpu' if '--gpu-ocr' in sys.argv[1:] else None
     app=QApplication(sys.argv)
-    window=MainWindow()
+    window=MainWindow(ocr_backend=backend)
     window.show_compact()
     window.auto.setChecked(True)
     sys.exit(app.exec())

@@ -1,0 +1,897 @@
+{
+  "title": "以固定尺寸核显推理加快整页文字发现",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-18",
+  "baseline": "73e68668c660b6bd2c23da8fa69f0eef797f02bd",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "choice": "User selected GPU for the current test assistant only. Standard launch and local settings keep their prior behavior. Added process-only --gpu-ocr switch for the sampling reader.",
+  "device": "Intel Core Ultra 5 125H / Intel Arc integrated GPU, OpenVINO 2025.4.1, FP32.",
+  "method": "The CPU and GPU trial use the same full frame, text detector, classifier, crop ordering, paddings, codebook, thresholds, and page qualification. The GPU has one fixed detector graph [1,3,1088,1984] and one graph for the recognizer configuration default batch [6,3,48,320]. All other tensor shapes go straight to existing CPU inference. Each reader thread owns its native requests. Returned dense arrays remain independently owned.",
+  "model_startup": {
+    "local_model_cache_bytes": 22753911,
+    "cache_blobs": 2,
+    "production_factory_first_empty_cache_ms": 16231,
+    "note": "Machine-specific compiled model blobs stay local; changes of driver/device or model may incur first compilation again."
+  },
+  "original_diagnosis": {
+    "inventory_shapes_and_inference_ms": [
+      [
+        "det",
+        [
+          1,
+          3,
+          1088,
+          1984
+        ],
+        177.1
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        61.2
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        45.3
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        52.4
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        49.0
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        51.6
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        36.3
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          320
+        ],
+        35.6
+      ],
+      [
+        "rec",
+        [
+          6,
+          3,
+          48,
+          546
+        ],
+        76.1
+      ],
+      [
+        "rec",
+        [
+          1,
+          3,
+          48,
+          552
+        ],
+        23.3
+      ]
+    ],
+    "isolated_same_shape_probe": [
+      {
+        "device": "CPU",
+        "static": false,
+        "top": false,
+        "precision": "f32",
+        "init_ms": 364,
+        "calls": 7,
+        "times": [
+          414.51,
+          394.21,
+          395.18
+        ],
+        "idx_diff": 0,
+        "max_prob_diff": 0
+      },
+      {
+        "device": "CPU",
+        "static": false,
+        "top": true,
+        "precision": "f32",
+        "init_ms": 440,
+        "calls": 7,
+        "times": [
+          375.55,
+          336.65,
+          361.33
+        ],
+        "idx_diff": 0,
+        "max_prob_diff": 0
+      },
+      {
+        "device": "CPU",
+        "static": true,
+        "top": true,
+        "precision": "f32",
+        "init_ms": 549,
+        "calls": 7,
+        "times": [
+          389.22,
+          341.15,
+          345.4
+        ],
+        "idx_diff": 0,
+        "max_prob_diff": 1.8298625946044922e-05
+      },
+      {
+        "device": "GPU",
+        "static": true,
+        "top": true,
+        "precision": "f32",
+        "init_ms": 13530,
+        "calls": 7,
+        "times": [
+          84.56,
+          72.95,
+          74.17
+        ],
+        "idx_diff": 0,
+        "max_prob_diff": 2.1636486053466797e-05
+      },
+      {
+        "device": "GPU",
+        "static": true,
+        "top": true,
+        "precision": "f16",
+        "init_ms": 13750,
+        "calls": 7,
+        "times": [
+          75.31,
+          72.91,
+          72.42
+        ],
+        "idx_diff": 6,
+        "max_prob_diff": 0.320270299911499
+      }
+    ],
+    "note": "Top-1 microbenchmark times cover seven same-shape recognition batches; production retains the original dense outputs. FP16 changed token indices and was rejected."
+  },
+  "parity": {
+    "production_2052x1128": {
+      "samples": 20,
+      "text_rows": 713,
+      "identical_texts_boxes_and_order": true,
+      "maximum_confidence_delta": 1.5020370483398438e-05,
+      "three_card_ms": {
+        "base": {
+          "ms": [
+            566.53,
+            550.08,
+            549.56
+          ],
+          "cpu_ms": [
+            1562.5,
+            1640.62,
+            1687.5
+          ]
+        },
+        "gpu": {
+          "ms": [
+            330.66,
+            333.81,
+            330.36
+          ],
+          "cpu_ms": [
+            875.0,
+            593.75,
+            640.62
+          ]
+        }
+      }
+    },
+    "rec_only_experiment": {
+      "samples": 20,
+      "text_rows": 713,
+      "identical_texts_boxes_and_order": true,
+      "maximum_confidence_delta": 1.5020370483398438e-05,
+      "three_card_ms": {
+        "base": {
+          "ms": [
+            952.8,
+            894.77,
+            861.73
+          ],
+          "cpu_ms": [
+            2171.88,
+            2078.12,
+            1687.5
+          ]
+        },
+        "gpu": {
+          "ms": [
+            564.56,
+            561.29,
+            593.97
+          ],
+          "cpu_ms": [
+            968.75,
+            921.88,
+            1062.5
+          ]
+        }
+      }
+    },
+    "det_and_rec_experiment": {
+      "samples": 20,
+      "text_rows": 713,
+      "identical_texts_boxes_and_order": true,
+      "maximum_confidence_delta": 1.5020370483398438e-05,
+      "three_card_ms": {
+        "base": {
+          "ms": [
+            1099.65,
+            1074.66,
+            1034.48
+          ],
+          "cpu_ms": [
+            2515.62,
+            2046.88,
+            2046.88
+          ]
+        },
+        "gpu": {
+          "ms": [
+            421.72,
+            428.02,
+            481.82
+          ],
+          "cpu_ms": [
+            718.75,
+            656.25,
+            609.38
+          ]
+        }
+      }
+    },
+    "other_geometry": {
+      "pages": [
+        {
+          "source": "run-relic-multicard",
+          "size": [
+            1280,
+            720
+          ],
+          "rows": 47,
+          "matching": true,
+          "max_conf_delta": 3.4372011820105186e-06
+        },
+        {
+          "source": "run-relic-multicard",
+          "size": [
+            1600,
+            900
+          ],
+          "rows": 47,
+          "matching": true,
+          "max_conf_delta": 2.3663043975830078e-05
+        },
+        {
+          "source": "run-relic-multicard",
+          "size": [
+            2052,
+            1127
+          ],
+          "rows": 48,
+          "matching": true,
+          "max_conf_delta": 7.808208465576172e-06
+        },
+        {
+          "source": "run-roster",
+          "size": [
+            1280,
+            720
+          ],
+          "rows": 16,
+          "matching": true,
+          "max_conf_delta": 1.7881393432617188e-06
+        },
+        {
+          "source": "run-roster",
+          "size": [
+            1600,
+            900
+          ],
+          "rows": 19,
+          "matching": true,
+          "max_conf_delta": 5.7220458984375e-06
+        },
+        {
+          "source": "run-roster",
+          "size": [
+            2052,
+            1127
+          ],
+          "rows": 20,
+          "matching": true,
+          "max_conf_delta": 9.953975677490234e-06
+        },
+        {
+          "source": "run-map-closed",
+          "size": [
+            1280,
+            720
+          ],
+          "rows": 31,
+          "matching": true,
+          "max_conf_delta": 3.039836883544922e-06
+        },
+        {
+          "source": "run-map-closed",
+          "size": [
+            1600,
+            900
+          ],
+          "rows": 30,
+          "matching": true,
+          "max_conf_delta": 4.76837158203125e-06
+        },
+        {
+          "source": "run-map-closed",
+          "size": [
+            2052,
+            1127
+          ],
+          "rows": 30,
+          "matching": true,
+          "max_conf_delta": 7.808208465576172e-06
+        }
+      ],
+      "concurrent_gpu_outputs": 6
+    }
+  },
+  "controlled_window_method": "Each pair shows static local replay in a 2052x1128 WGC source. The real Qt panel must paint all three correct current names and then the inventory IDs. Fresh cases start with an operator page and an empty isolated run; map cases start with a cold reader, followed by an inventory switch. No game automation or live game FPS measurement. Six full observations per comparison including subsequent completed map observations. For inventory OCR stages, use the last tracked full-page call before that paint; wall-clock stage medians are independent.",
+  "prototype_windows": {
+    "paired": {
+      "fresh1": {
+        "cpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 971.24,
+            "paint_ms": 2719.17,
+            "cpu_ms": 4343.75,
+            "capture_ms": 94.69,
+            "queue_ms": 131.88,
+            "ocr_ms": 588.45,
+            "ocr_stages_ms": {
+              "det": 165.83,
+              "cls": 32.94,
+              "rec": 373.68
+            },
+            "card_read_to_name_paint_ms": 19.8
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 685.13,
+            "paint_ms": 2231.34,
+            "cpu_ms": 3468.75,
+            "capture_ms": 38.6,
+            "queue_ms": 151.53,
+            "ocr_ms": 346.03,
+            "ocr_stages_ms": {
+              "det": 89.46,
+              "cls": 35.12,
+              "rec": 208.51
+            },
+            "card_read_to_name_paint_ms": 18.34
+          }
+        ]
+      },
+      "fresh2": {
+        "cpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1220.36,
+            "paint_ms": 3306.54,
+            "cpu_ms": 5234.38,
+            "capture_ms": 54.24,
+            "queue_ms": 142.28,
+            "ocr_ms": 816.67,
+            "ocr_stages_ms": {
+              "det": 261.5,
+              "cls": 40.53,
+              "rec": 497.92
+            },
+            "card_read_to_name_paint_ms": 23.92
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 764.81,
+            "paint_ms": 2645.93,
+            "cpu_ms": 3968.75,
+            "capture_ms": 57.42,
+            "queue_ms": 145.02,
+            "ocr_ms": 399.13,
+            "ocr_stages_ms": {
+              "det": 88.82,
+              "cls": 41.45,
+              "rec": 256.74
+            },
+            "card_read_to_name_paint_ms": 23.17
+          }
+        ]
+      },
+      "map1": {
+        "cpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2310.83,
+            "cpu_ms": 8000.0,
+            "capture_ms": 90.77,
+            "queue_ms": 145.23,
+            "ocr_ms": 562.36,
+            "ocr_stages_ms": {
+              "det": 206.76,
+              "cls": 48.14,
+              "rec": 295.52
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1319.61,
+            "paint_ms": 2519.89,
+            "cpu_ms": 4484.38,
+            "capture_ms": 117.45,
+            "queue_ms": 156.2,
+            "ocr_ms": 883.05,
+            "ocr_stages_ms": {
+              "det": 336.45,
+              "cls": 57.4,
+              "rec": 470.83
+            },
+            "card_read_to_name_paint_ms": 17.43
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2573.69,
+            "cpu_ms": 7468.75,
+            "capture_ms": 127.12,
+            "queue_ms": 134.29,
+            "ocr_ms": 280.96,
+            "ocr_stages_ms": {
+              "det": 86.64,
+              "cls": 50.99,
+              "rec": 129.81
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 936.18,
+            "paint_ms": 1707.0,
+            "cpu_ms": 3343.75,
+            "capture_ms": 73.26,
+            "queue_ms": 144.52,
+            "ocr_ms": 563.99,
+            "ocr_stages_ms": {
+              "det": 115.54,
+              "cls": 39.05,
+              "rec": 390.32
+            },
+            "card_read_to_name_paint_ms": 20.84
+          }
+        ]
+      },
+      "map2": {
+        "cpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 3289.99,
+            "cpu_ms": 10656.25,
+            "capture_ms": 97.77,
+            "queue_ms": 145.94,
+            "ocr_ms": 771.12,
+            "ocr_stages_ms": {
+              "det": 300.5,
+              "cls": 66.47,
+              "rec": 387.55
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1077.92,
+            "paint_ms": 2215.73,
+            "cpu_ms": 4531.25,
+            "capture_ms": 55.98,
+            "queue_ms": 154.16,
+            "ocr_ms": 670.26,
+            "ocr_stages_ms": {
+              "det": 210.98,
+              "cls": 42.73,
+              "rec": 398.34
+            },
+            "card_read_to_name_paint_ms": 18.26
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 3586.72,
+            "cpu_ms": 9296.88,
+            "capture_ms": 97.71,
+            "queue_ms": 169.28,
+            "ocr_ms": 342.34,
+            "ocr_stages_ms": {
+              "det": 123.88,
+              "cls": 58.39,
+              "rec": 143.75
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1053.55,
+            "paint_ms": 2438.06,
+            "cpu_ms": 4343.75,
+            "capture_ms": 39.58,
+            "queue_ms": 152.0,
+            "ocr_ms": 704.14,
+            "ocr_stages_ms": {
+              "det": 107.63,
+              "cls": 63.76,
+              "rec": 515.77
+            },
+            "card_read_to_name_paint_ms": 15.98
+          }
+        ]
+      }
+    },
+    "differences_outside_runtime_metadata": {
+      "fresh1-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 2.2649765014648438e-06
+      },
+      "fresh2-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 2.2649765014648438e-06
+      },
+      "map1-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 1.2636184691938723e-06
+      },
+      "map1-1": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 5.563100179406533e-07
+      },
+      "map2-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 1.2636184691938723e-06
+      },
+      "map2-1": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 5.563100179406533e-07
+      }
+    }
+  },
+  "production_windows": {
+    "paired": {
+      "fresh1": {
+        "cpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1043.71,
+            "paint_ms": 2466.92,
+            "cpu_ms": 4296.88,
+            "capture_ms": 125.54,
+            "queue_ms": 160.06,
+            "ocr_ms": 604.86,
+            "ocr_stages_ms": {
+              "det": 183.43,
+              "cls": 34.74,
+              "rec": 373.58
+            },
+            "card_read_to_name_paint_ms": 24.55
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 687.13,
+            "paint_ms": 2301.11,
+            "cpu_ms": 3406.25,
+            "capture_ms": 81.8,
+            "queue_ms": 131.52,
+            "ocr_ms": 331.1,
+            "ocr_stages_ms": {
+              "det": 80.38,
+              "cls": 34.32,
+              "rec": 204.88
+            },
+            "card_read_to_name_paint_ms": 18.26
+          }
+        ]
+      },
+      "fresh2": {
+        "cpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 895.46,
+            "paint_ms": 2340.03,
+            "cpu_ms": 4281.25,
+            "capture_ms": 20.73,
+            "queue_ms": 147.66,
+            "ocr_ms": 584.78,
+            "ocr_stages_ms": {
+              "det": 156.6,
+              "cls": 33.61,
+              "rec": 381.56
+            },
+            "card_read_to_name_paint_ms": 16.84
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "inventory",
+            "name_paint_ms": 715.15,
+            "paint_ms": 2212.76,
+            "cpu_ms": 3828.12,
+            "capture_ms": 121.13,
+            "queue_ms": 131.15,
+            "ocr_ms": 331.54,
+            "ocr_stages_ms": {
+              "det": 77.77,
+              "cls": 34.95,
+              "rec": 207.17
+            },
+            "card_read_to_name_paint_ms": 13.68
+          }
+        ]
+      },
+      "map1": {
+        "cpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2420.89,
+            "cpu_ms": 8281.25,
+            "capture_ms": 73.65,
+            "queue_ms": 152.02,
+            "ocr_ms": 551.8,
+            "ocr_stages_ms": {
+              "det": 201.35,
+              "cls": 43.13,
+              "rec": 293.74
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 900.39,
+            "paint_ms": 1552.48,
+            "cpu_ms": 3437.5,
+            "capture_ms": 110.2,
+            "queue_ms": 145.68,
+            "ocr_ms": 502.21,
+            "ocr_stages_ms": {
+              "det": 144.68,
+              "cls": 32.22,
+              "rec": 313.49
+            },
+            "card_read_to_name_paint_ms": 14.03
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2156.77,
+            "cpu_ms": 7562.5,
+            "capture_ms": 38.09,
+            "queue_ms": 158.78,
+            "ocr_ms": 264.69,
+            "ocr_stages_ms": {
+              "det": 83.46,
+              "cls": 45.48,
+              "rec": 122.5
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 834.81,
+            "paint_ms": 1798.63,
+            "cpu_ms": 3125.0,
+            "capture_ms": 80.78,
+            "queue_ms": 137.67,
+            "ocr_ms": 478.92,
+            "ocr_stages_ms": {
+              "det": 93.64,
+              "cls": 43.12,
+              "rec": 329.09
+            },
+            "card_read_to_name_paint_ms": 20.92
+          }
+        ]
+      },
+      "map2": {
+        "cpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2381.37,
+            "cpu_ms": 8625.0,
+            "capture_ms": 122.23,
+            "queue_ms": 147.39,
+            "ocr_ms": 553.15,
+            "ocr_stages_ms": {
+              "det": 199.68,
+              "cls": 45.56,
+              "rec": 292.03
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 1036.4,
+            "paint_ms": 1915.17,
+            "cpu_ms": 3546.88,
+            "capture_ms": 142.23,
+            "queue_ms": 146.81,
+            "ocr_ms": 618.97,
+            "ocr_stages_ms": {
+              "det": 168.57,
+              "cls": 39.59,
+              "rec": 394.33
+            },
+            "card_read_to_name_paint_ms": 18.0
+          }
+        ],
+        "gpu": [
+          {
+            "screen": "map",
+            "name_paint_ms": null,
+            "paint_ms": 2163.0,
+            "cpu_ms": 7140.62,
+            "capture_ms": 87.11,
+            "queue_ms": 140.11,
+            "ocr_ms": 277.47,
+            "ocr_stages_ms": {
+              "det": 85.95,
+              "cls": 47.08,
+              "rec": 130.28
+            },
+            "card_read_to_name_paint_ms": null
+          },
+          {
+            "screen": "inventory",
+            "name_paint_ms": 921.26,
+            "paint_ms": 1670.54,
+            "cpu_ms": 2875.0,
+            "capture_ms": 129.66,
+            "queue_ms": 148.12,
+            "ocr_ms": 497.16,
+            "ocr_stages_ms": {
+              "det": 87.95,
+              "cls": 45.93,
+              "rec": 348.66
+            },
+            "card_read_to_name_paint_ms": 25.28
+          }
+        ]
+      }
+    },
+    "differences_outside_runtime_metadata": {
+      "fresh1-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 2.2649765014648438e-06
+      },
+      "fresh2-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 2.2649765014648438e-06
+      },
+      "map1-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 1.2636184691938723e-06
+      },
+      "map1-1": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 5.563100179406533e-07
+      },
+      "map2-0": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 1.2636184691938723e-06
+      },
+      "map2-1": {
+        ".texts[].confidence": 1.5020370483398438e-05,
+        ".nodes[].confidence": 5.563100179406533e-07
+      }
+    }
+  },
+  "production_inventory_medians_ms": {
+    "cpu": {
+      "name_paint_ms": 968.39,
+      "paint_ms": 2127.6,
+      "capture_ms": 117.87,
+      "queue_ms": 147.24,
+      "ocr_ms": 594.82,
+      "card_read_to_name_paint_ms": 17.42,
+      "cpu_ms": 3914.07,
+      "det": 162.58,
+      "cls": 34.17,
+      "rec": 377.57
+    },
+    "gpu": {
+      "name_paint_ms": 774.98,
+      "paint_ms": 2005.7,
+      "capture_ms": 101.47,
+      "queue_ms": 134.59,
+      "ocr_ms": 405.23,
+      "card_read_to_name_paint_ms": 19.59,
+      "cpu_ms": 3265.62,
+      "det": 84.16,
+      "cls": 39.03,
+      "rec": 268.13
+    }
+  },
+  "validation": {
+    "targeted_tests": 76,
+    "gpu_flag_on_real_toolbar_process": true,
+    "toolbar_visible_responsive": true,
+    "private_state_hashes_unchanged_during_restart_and_replay": true,
+    "native_live_game_verified": false
+  },
+  "remaining": "All four production inventory name paints exceeded 500 ms. Stable interactive 500 ms and game frame-rate impact remain open. One complete grid pair regressed. Local retries on variable-width and partial recognition batches still run on CPU, including both tail batches on the sampled inventory."
+}

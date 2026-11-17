@@ -10,12 +10,12 @@ def create_engine(*, backend=None):
 
     if backend is None:
         backend = 'openvino' if sys.platform == 'win32' and platform.machine() == 'AMD64' else 'onnx'
-    if backend not in ('onnx', 'openvino'):
+    if backend not in ('onnx', 'openvino', 'openvino-gpu'):
         raise ValueError('Unknown OCR inference backend: ' + str(backend))
     engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)
-    if backend == 'openvino':
+    if backend in ('openvino', 'openvino-gpu'):
         from .ocr_cpu_inference import use_cpu_inference
-        use_cpu_inference(engine)
+        use_cpu_inference(engine, accelerate_gpu=backend == 'openvino-gpu')
     engine.inference_backend = backend
     original_factory = engine.text_det.get_preprocess
     levels = np.repeat(np.arange(256, dtype=np.uint8)[:, None, None], 3, axis=2)

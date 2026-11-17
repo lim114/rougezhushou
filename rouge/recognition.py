@@ -49,7 +49,8 @@ def refine_map_texts(image,texts,nodes,engine):
     return kept+extra
 
 class ScreenReader:
-    def __init__(self, *, cache_enabled=True,page_routing_enabled=True,page_ocr_enabled=True):
+    def __init__(self, *, cache_enabled=True,page_routing_enabled=True,page_ocr_enabled=True,backend=None):
+        self.backend = backend
         self._engine = None
         self._frame_ocr = None
         self.cache_enabled = cache_enabled
@@ -164,7 +165,7 @@ class ScreenReader:
             mark = time.perf_counter()
         if self._engine is None:
             from .ocr_engine import create_engine
-            self._engine = create_engine()
+            self._engine = create_engine(backend=self.backend)
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
             if self.cache_enabled and self.page_ocr_enabled:
                 from .page_ocr import PageOCR
