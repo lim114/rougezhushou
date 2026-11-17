@@ -21,6 +21,19 @@ def prepared(rid, template, mask):
 
 
 class ProjectionScreen029Tests(unittest.TestCase):
+    def test_restricted_projection_includes_every_plausible_translation(self):
+        template = np.full((7, 9, 3), 200, np.uint8)
+        _, _, _, pixels, mask, energy = prepared('icon', template, np.ones((7, 9), np.uint8))
+        for x in (0, 15, 16, 17, 23, 24, 25, 40):
+            image = np.zeros((13, 49, 3), np.float32)
+            image[2:9, x:x+9] = template
+            screen = icons.BarProjection(image, icons.EnergyScreen(image))
+            self.assertTrue(screen.possible(pixels, mask, energy), x)
+            if x in (0, 40):
+                self.assertIsNotNone(screen.half)
+            if x in (16, 17, 23):
+                self.assertIsNone(screen.half)
+
     def test_projected_error_matches_direct_sum_at_all_valid_offsets(self):
         rng = np.random.default_rng(2910)
         for height, width in ((9, 15), (12, 17), (15, 20), (7, 1), (1, 7)):

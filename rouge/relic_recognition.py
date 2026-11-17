@@ -280,6 +280,36 @@ class ProjectionScreen:
         return not np.all(np.isfinite(ceiling)) or bool(np.any(lower <= ceiling + error))
 
 
+class BarProjection:
+    """Use a smaller correlation only when the norm bound excludes every other placement."""
+
+    def __init__(self, pixels, energy):
+        self.full = ProjectionScreen(pixels, energy)
+        self.middle = pixels.shape[1] // 2
+        sums = energy.integral[-1]
+        self.use_left = sums[self.middle] >= sums[-1] / 2
+        self.half_pixels = pixels[:, :self.middle] if self.use_left else pixels[:, self.middle:]
+        self.half = None
+        self.exterior_max = {}
+        # The two views share the previous per-worker window cache budget.
+        self.full.max_cache_bytes //= 2
+
+    def possible(self, template, mask, energy, *projection):
+        width = mask.shape[1]
+        if width <= self.half_pixels.shape[1] and self.middle > 0:
+            if mask.shape not in self.exterior_max:
+                windows = self.full.window_energy(mask.shape)
+                # Include windows straddling the split; they belong to the exterior too.
+                exterior = windows[:, self.middle-width+1:] if self.use_left else windows[:, :self.middle]
+                self.exterior_max[mask.shape] = float(np.max(exterior))
+            if self.exterior_max[mask.shape] + 1 < energy * EnergyScreen.minimum_ratio:
+                if self.half is None:
+                    self.half = ProjectionScreen(self.half_pixels, EnergyScreen(self.half_pixels))
+                    self.half.max_cache_bytes = self.full.max_cache_bytes
+                return self.half.possible(template, mask, energy, *projection)
+        return self.full.possible(template, mask, energy, *projection)
+
+
 def match_held_icons(image,anchor,count,*,cache=None):
     h,w=image.shape[:2];x,y=center(anchor)
     ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 34.2)
@@ -341,7 +371,7 @@ def _coarse_matches(roi, references):
     state=local()
     def initialize():
         state.energy=EnergyScreen(pixels)
-        state.projection=ProjectionScreen(pixels,state.energy)
+        state.projection=BarProjection(pixels,state.energy)
     def match_batch(items):
         result=[]
         for rid,template,mask,screen_template,screen_mask,energy,*projection in items:

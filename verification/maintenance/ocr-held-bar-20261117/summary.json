@@ -1,0 +1,436 @@
+{
+  "title": "按当前持有栏像素缩小图标匹配范围",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-18",
+  "baseline": "37aaf841538ef47aece64eb8b30bd2c2e42f40ec",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "change": "Use the existing per-template norm bound to exclude positions outside the more energetic half of the current bar. Windows crossing the midpoint are counted in the exterior. If the bound cannot exclude the entire exterior, retain full-bar projection. Original masked RGB verification, ordering, ties, and slot resolution continue on the whole bar. The two views share the previous 8 MiB window-sum budget per worker. The additional half-view uses native scratch and spectra when eligible.",
+  "region_experiment": {
+    "method": "Each crop was read as a single standalone OCR call on prepared native captures. One observation per layout/scale; these timings exclude WGC, page qualification, queue and rendering. Results below contain confirmed name counts only.",
+    "samples": [
+      [
+        "run-relic-multicard",
+        0,
+        1,
+        {
+          "ms": 952.7,
+          "names": 3
+        }
+      ],
+      [
+        "run-relic-multicard",
+        0.64,
+        1,
+        {
+          "ms": 601.6,
+          "names": 3
+        }
+      ],
+      [
+        "run-relic-multicard",
+        0.64,
+        0.67,
+        {
+          "ms": 558.3,
+          "names": 3
+        }
+      ],
+      [
+        "run-relic-multicard",
+        0.5,
+        0.8,
+        {
+          "ms": 439.8,
+          "names": 3
+        }
+      ],
+      [
+        "run-relic-open",
+        0,
+        1,
+        {
+          "ms": 452.3,
+          "names": 1
+        }
+      ],
+      [
+        "run-relic-open",
+        0.64,
+        1,
+        {
+          "ms": 399.0,
+          "names": 1
+        }
+      ],
+      [
+        "run-relic-open",
+        0.64,
+        0.67,
+        {
+          "ms": 386.7,
+          "names": 1
+        }
+      ],
+      [
+        "run-relic-open",
+        0.5,
+        0.8,
+        {
+          "ms": 310.8,
+          "names": 1
+        }
+      ],
+      [
+        "run-roster",
+        0,
+        1,
+        {
+          "ms": 385.2,
+          "names": 0
+        }
+      ],
+      [
+        "run-roster",
+        0.64,
+        1,
+        {
+          "ms": 349.4,
+          "names": 0
+        }
+      ],
+      [
+        "run-roster",
+        0.64,
+        0.67,
+        {
+          "ms": 346.9,
+          "names": 0
+        }
+      ],
+      [
+        "run-roster",
+        0.5,
+        0.8,
+        {
+          "ms": 246.6,
+          "names": 0
+        }
+      ],
+      [
+        "run-info-trade",
+        0,
+        1,
+        {
+          "ms": 546.8,
+          "names": 0
+        }
+      ],
+      [
+        "run-info-trade",
+        0.64,
+        1,
+        {
+          "ms": 488.6,
+          "names": 0
+        }
+      ],
+      [
+        "run-info-trade",
+        0.64,
+        0.67,
+        {
+          "ms": 471.6,
+          "names": 0
+        }
+      ],
+      [
+        "run-info-trade",
+        0.5,
+        0.8,
+        {
+          "ms": 399.2,
+          "names": 0
+        }
+      ],
+      [
+        "operator-kaltsit",
+        0,
+        1,
+        {
+          "ms": 453.8,
+          "names": 0
+        }
+      ],
+      [
+        "operator-kaltsit",
+        0.64,
+        1,
+        {
+          "ms": 344.7,
+          "names": 0
+        }
+      ],
+      [
+        "operator-kaltsit",
+        0.64,
+        0.67,
+        {
+          "ms": 334.0,
+          "names": 0
+        }
+      ],
+      [
+        "operator-kaltsit",
+        0.5,
+        0.8,
+        {
+          "ms": 395.7,
+          "names": 0
+        }
+      ]
+    ],
+    "qualification": {
+      "inventory": {
+        "names": 3,
+        "full_roster_header": false,
+        "full_shop": false,
+        "reward_label": false
+      },
+      "roster_plus_inventory_lower": {
+        "names": 3,
+        "full_roster_header": true,
+        "full_shop": false,
+        "reward_label": false
+      },
+      "shop_video": {
+        "names": 0,
+        "full_roster_header": false,
+        "full_shop": true,
+        "reward_label": false
+      },
+      "reward_text_video": {
+        "names": 0,
+        "full_roster_header": false,
+        "full_shop": false,
+        "reward_label": true
+      },
+      "footer_occluded": {
+        "names": 0,
+        "full_roster_header": false,
+        "full_shop": false,
+        "reward_label": false
+      }
+    },
+    "decision": "Unchanged lower pixels produce three owned-looking titles on a constructed conflicting roster frame. Real shop and reward-text frames and a masked footer produced none. Reject lower-only publication."
+  },
+  "bar_benchmark_ms": {
+    "native": {
+      "base": [
+        697.84,
+        1283.82,
+        1294.8
+      ],
+      "fixed": [
+        600.39,
+        885.7,
+        1031.37
+      ]
+    },
+    "flipped": {
+      "base": [
+        1184.18,
+        1245.38,
+        1416.13
+      ],
+      "fixed": [
+        874.31,
+        834.47,
+        967.32
+      ]
+    },
+    "dense": {
+      "base": [
+        1364.49,
+        1255.94,
+        1206.77
+      ],
+      "fixed": [
+        1266.78,
+        1366.19,
+        1289.39
+      ]
+    },
+    "narrow": {
+      "base": [
+        240.12,
+        241.31,
+        256.72
+      ],
+      "fixed": [
+        256.46,
+        245.23,
+        230.71
+      ]
+    },
+    "both_edges": {
+      "base": [
+        1385.21,
+        1454.6,
+        1501.81
+      ],
+      "fixed": [
+        1294.43,
+        1346.17,
+        1462.03
+      ]
+    }
+  },
+  "bar_method": "Three timed calls per mode on the same warm arrays, alternating order. One recorded bar and four controlled transformations: mirror image, tiled dense content, narrow cut and content on both edges. All returned fields compared to original full-bar matching on each input. Native result also compared to the previously recorded reference.",
+  "wgc_paired_windows_ms": {
+    "fresh1": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1503.32,
+          "paint_ms": 6301.31,
+          "capture_ms": 52.03,
+          "queue_ms": 150.95,
+          "cpu_ms": 9296.88,
+          "full_ocr_ms": 1099.64
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 2621.79,
+          "paint_ms": 5920.99,
+          "capture_ms": 84.09,
+          "queue_ms": 160.3,
+          "cpu_ms": 9593.75,
+          "full_ocr_ms": 2035.09
+        }
+      ]
+    },
+    "map1": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 4042.86,
+          "capture_ms": 139.52,
+          "queue_ms": 171.01,
+          "cpu_ms": 10765.62,
+          "full_ocr_ms": 857.58
+        },
+        {
+          "case": 1,
+          "preview_ms": 1138.14,
+          "paint_ms": 2894.21,
+          "capture_ms": 83.14,
+          "queue_ms": 156.86,
+          "cpu_ms": 5937.5,
+          "full_ocr_ms": 741.9
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 4383.55,
+          "capture_ms": 62.96,
+          "queue_ms": 164.44,
+          "cpu_ms": 11140.62,
+          "full_ocr_ms": 815.01
+        },
+        {
+          "case": 1,
+          "preview_ms": 1377.96,
+          "paint_ms": 2893.37,
+          "capture_ms": 119.79,
+          "queue_ms": 166.98,
+          "cpu_ms": 5171.88,
+          "full_ocr_ms": 896.77
+        }
+      ]
+    },
+    "fresh2": {
+      "base": [
+        {
+          "case": 1,
+          "preview_ms": 1308.42,
+          "paint_ms": 4346.07,
+          "capture_ms": 81.8,
+          "queue_ms": 146.14,
+          "cpu_ms": 7296.88,
+          "full_ocr_ms": 881.55
+        }
+      ],
+      "fixed": [
+        {
+          "case": 1,
+          "preview_ms": 1336.18,
+          "paint_ms": 4795.05,
+          "capture_ms": 48.95,
+          "queue_ms": 152.77,
+          "cpu_ms": 7546.88,
+          "full_ocr_ms": 952.49
+        }
+      ]
+    },
+    "map2": {
+      "base": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 4471.2,
+          "capture_ms": 100.95,
+          "queue_ms": 159.87,
+          "cpu_ms": 10578.12,
+          "full_ocr_ms": 1048.21
+        },
+        {
+          "case": 1,
+          "preview_ms": 1609.87,
+          "paint_ms": 3428.21,
+          "capture_ms": 153.7,
+          "queue_ms": 166.42,
+          "cpu_ms": 6500.0,
+          "full_ocr_ms": 1071.97
+        }
+      ],
+      "fixed": [
+        {
+          "case": 0,
+          "preview_ms": null,
+          "paint_ms": 3824.83,
+          "capture_ms": 74.34,
+          "queue_ms": 150.91,
+          "cpu_ms": 10781.25,
+          "full_ocr_ms": 895.5
+        },
+        {
+          "case": 1,
+          "preview_ms": 1262.8,
+          "paint_ms": 2641.97,
+          "capture_ms": 64.43,
+          "queue_ms": 164.75,
+          "cpu_ms": 5328.12,
+          "full_ocr_ms": 835.78
+        }
+      ]
+    }
+  },
+  "wgc_method": "Same 2052x1128 static source displayed in a native window, captured via WGC. Real player inventory panel required all three current names at first paint and all observed IDs present for grid paint. Fresh starts from an operator page without prior held items. Map starts cold and then switches to inventory. Eight isolated processes; baseline replaces only BarProjection with original full-width ProjectionScreen. Other system load not standardized. No live game input. Six paired complete observations agree excluding timing and runtime metadata.",
+  "conclusion": "Four inventory switches: full list median 3887 to 3844 ms. Paired changes varied from 786 ms faster to 449 ms slower. First names: 1406 to 1357 ms, no causal speedup claimed because icon screening follows name recognition. New first-name range 1263–2622 ms. All cases above 500 ms. A sub-500 ms standalone OCR call does not establish sub-500 ms display.",
+  "validation": {
+    "targeted_recognition_tests": 69,
+    "complete_observation_pairs": 6,
+    "normal_window_visible_responsive": true,
+    "private_files_unchanged": true,
+    "live_game_verified": false
+  },
+  "remaining": "Current full-page OCR before first names took 836–2035 ms on four candidate WGC inventory switches. Need faster whole-frame page qualification and text discovery under realistic CPU load. Dense and narrow bar timings show small regressions; the local benchmark and four WGC pairs do not establish general improvement."
+}
