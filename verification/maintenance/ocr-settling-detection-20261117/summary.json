@@ -1,0 +1,461 @@
+{
+  "title": "在选帧等待期间提前检测整页文字框",
+  "kind": "maintenance",
+  "date_Beijing": "2026-11-18",
+  "baseline": "bce6e36fe9a4e737b684699e7ac0d7dedc09bd41",
+  "binding": "enclosing_commit",
+  "functional_section_incremented": false,
+  "implementation_changed": true,
+  "all_fields_500ms_accepted": false,
+  "implementation": "In the opted-in GPU test process, an idle, initialized OCR reader can prepare detector boxes for one pending capture during the original 120 ms selection window. The worker owns the captured copy and a separate detector preprocessing instance; native sessions keep per-thread requests. One task at a time. Actual reads still use the buffer-selected generation and sequence. Only a ready result with the same provider, dtype, geometry and exact detector input pixels can supply boxes. Recognition, page qualification and publication remain on the selected-frame path. CPU default launch, cold first frame and busy sampling retain their prior scheduling.",
+  "controlled_replay": "Native Windows WGC capture and real Qt Paint events at 2052x1128 in an isolated run. Both arms use FP32 GPU OCR. Production baseline disables only settling prefetch. Fresh: operator page then three-card inventory, no prior held IDs. Map: cold map then inventory. Alternating order across trials. Complete non-runtime fields including confidence compared for every pair. No live game FPS or accuracy estimate.",
+  "prototype_pairs": {
+    "fresh1": {
+      "before": [
+        {
+          "case": 1,
+          "capture_ms": 125.52,
+          "queue_ms": 146.59,
+          "preview_ms": 1046.16,
+          "paint_ms": 3578.09,
+          "cpu_ms": 4984.38,
+          "ocr_ms": 582.12,
+          "detector": {}
+        }
+      ],
+      "after": [
+        {
+          "case": 1,
+          "capture_ms": 84.99,
+          "queue_ms": 128.65,
+          "preview_ms": 642.65,
+          "paint_ms": 2805.42,
+          "cpu_ms": 4953.12,
+          "ocr_ms": 298.5,
+          "detector": {}
+        }
+      ]
+    },
+    "fresh2": {
+      "before": [
+        {
+          "case": 1,
+          "capture_ms": 91.32,
+          "queue_ms": 130.61,
+          "preview_ms": 684.05,
+          "paint_ms": 2196.61,
+          "cpu_ms": 3828.12,
+          "ocr_ms": 336.78,
+          "detector": {}
+        }
+      ],
+      "after": [
+        {
+          "case": 1,
+          "capture_ms": 106.63,
+          "queue_ms": 137.83,
+          "preview_ms": 654.43,
+          "paint_ms": 2214.24,
+          "cpu_ms": 3609.38,
+          "ocr_ms": 259.8,
+          "detector": {}
+        }
+      ]
+    },
+    "map1": {
+      "before": [
+        {
+          "case": 0,
+          "capture_ms": 90.04,
+          "queue_ms": 137.98,
+          "preview_ms": null,
+          "paint_ms": 2395.18,
+          "cpu_ms": 7687.5,
+          "ocr_ms": 282.06,
+          "detector": {}
+        },
+        {
+          "case": 1,
+          "capture_ms": 42.95,
+          "queue_ms": 147.76,
+          "preview_ms": 878.65,
+          "paint_ms": 1550.28,
+          "cpu_ms": 2593.75,
+          "ocr_ms": 557.03,
+          "detector": {}
+        }
+      ],
+      "after": [
+        {
+          "case": 0,
+          "capture_ms": 81.19,
+          "queue_ms": 154.2,
+          "preview_ms": null,
+          "paint_ms": 2625.99,
+          "cpu_ms": 8828.12,
+          "ocr_ms": 326.76,
+          "detector": {}
+        },
+        {
+          "case": 1,
+          "capture_ms": 85.09,
+          "queue_ms": 147.52,
+          "preview_ms": 881.54,
+          "paint_ms": 1673.75,
+          "cpu_ms": 2578.12,
+          "ocr_ms": 500.05,
+          "detector": {}
+        }
+      ]
+    },
+    "map2": {
+      "before": [
+        {
+          "case": 0,
+          "capture_ms": 109.12,
+          "queue_ms": 135.83,
+          "preview_ms": null,
+          "paint_ms": 2438.18,
+          "cpu_ms": 8000.0,
+          "ocr_ms": 296.13,
+          "detector": {}
+        },
+        {
+          "case": 1,
+          "capture_ms": 45.88,
+          "queue_ms": 135.83,
+          "preview_ms": 764.38,
+          "paint_ms": 1480.3,
+          "cpu_ms": 2843.75,
+          "ocr_ms": 442.08,
+          "detector": {}
+        }
+      ],
+      "after": [
+        {
+          "case": 0,
+          "capture_ms": 95.61,
+          "queue_ms": 141.9,
+          "preview_ms": null,
+          "paint_ms": 2526.34,
+          "cpu_ms": 8265.62,
+          "ocr_ms": 300.93,
+          "detector": {}
+        },
+        {
+          "case": 1,
+          "capture_ms": 90.93,
+          "queue_ms": 152.4,
+          "preview_ms": 751.66,
+          "paint_ms": 1494.39,
+          "cpu_ms": 3375.0,
+          "ocr_ms": 382.93,
+          "detector": {}
+        }
+      ]
+    }
+  },
+  "production_pairs": {
+    "fresh1": {
+      "before": [
+        {
+          "case": 1,
+          "capture_ms": 63.24,
+          "queue_ms": 134.3,
+          "preview_ms": 752.51,
+          "paint_ms": 2631.56,
+          "cpu_ms": 4171.88,
+          "ocr_ms": 408.28,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 91.06
+          }
+        }
+      ],
+      "after": [
+        {
+          "case": 1,
+          "capture_ms": 32.75,
+          "queue_ms": 151.45,
+          "preview_ms": 656.84,
+          "paint_ms": 2677.74,
+          "cpu_ms": 4281.25,
+          "ocr_ms": 317.49,
+          "detector": {
+            "prepared": true,
+            "reused": true,
+            "ms": 2.55
+          }
+        }
+      ]
+    },
+    "fresh2": {
+      "before": [
+        {
+          "case": 1,
+          "capture_ms": 72.23,
+          "queue_ms": 147.3,
+          "preview_ms": 878.09,
+          "paint_ms": 3397.68,
+          "cpu_ms": 4781.25,
+          "ocr_ms": 486.4,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 92.5
+          }
+        }
+      ],
+      "after": [
+        {
+          "case": 1,
+          "capture_ms": 44.35,
+          "queue_ms": 141.7,
+          "preview_ms": 716.74,
+          "paint_ms": 3164.56,
+          "cpu_ms": 4828.12,
+          "ocr_ms": 347.48,
+          "detector": {
+            "prepared": true,
+            "reused": true,
+            "ms": 3.23
+          }
+        }
+      ]
+    },
+    "fresh3": {
+      "before": [
+        {
+          "case": 1,
+          "capture_ms": 63.34,
+          "queue_ms": 139.48,
+          "preview_ms": 761.57,
+          "paint_ms": 2860.55,
+          "cpu_ms": 5046.88,
+          "ocr_ms": 395.78,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 86.96
+          }
+        }
+      ],
+      "after": [
+        {
+          "case": 1,
+          "capture_ms": 40.46,
+          "queue_ms": 146.4,
+          "preview_ms": 725.55,
+          "paint_ms": 2790.44,
+          "cpu_ms": 4421.88,
+          "ocr_ms": 357.35,
+          "detector": {
+            "prepared": true,
+            "reused": true,
+            "ms": 2.67
+          }
+        }
+      ]
+    },
+    "map1": {
+      "before": [
+        {
+          "case": 0,
+          "capture_ms": 61.76,
+          "queue_ms": 161.96,
+          "preview_ms": null,
+          "paint_ms": 2908.42,
+          "cpu_ms": 8296.88,
+          "ocr_ms": 345.41,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 99.61
+          }
+        },
+        {
+          "case": 1,
+          "capture_ms": 116.44,
+          "queue_ms": 147.21,
+          "preview_ms": 999.28,
+          "paint_ms": 2068.66,
+          "cpu_ms": 3937.5,
+          "ocr_ms": 565.66,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 97.83
+          }
+        }
+      ],
+      "after": [
+        {
+          "case": 0,
+          "capture_ms": 58.18,
+          "queue_ms": 142.68,
+          "preview_ms": null,
+          "paint_ms": 2778.54,
+          "cpu_ms": 8093.75,
+          "ocr_ms": 331.34,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 104.89
+          }
+        },
+        {
+          "case": 1,
+          "capture_ms": 117.41,
+          "queue_ms": 151.53,
+          "preview_ms": 939.96,
+          "paint_ms": 1960.76,
+          "cpu_ms": 3921.88,
+          "ocr_ms": 487.49,
+          "detector": {
+            "prepared": true,
+            "reused": true,
+            "ms": 2.87
+          }
+        }
+      ]
+    },
+    "map2": {
+      "before": [
+        {
+          "case": 0,
+          "capture_ms": 84.43,
+          "queue_ms": 137.56,
+          "preview_ms": null,
+          "paint_ms": 2623.22,
+          "cpu_ms": 8109.38,
+          "ocr_ms": 309.71,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 92.55
+          }
+        },
+        {
+          "case": 1,
+          "capture_ms": 81.37,
+          "queue_ms": 138.26,
+          "preview_ms": 913.95,
+          "paint_ms": 1979.78,
+          "cpu_ms": 4046.88,
+          "ocr_ms": 527.74,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 90.42
+          }
+        }
+      ],
+      "after": [
+        {
+          "case": 0,
+          "capture_ms": 87.9,
+          "queue_ms": 132.52,
+          "preview_ms": null,
+          "paint_ms": 2651.27,
+          "cpu_ms": 7937.5,
+          "ocr_ms": 316.48,
+          "detector": {
+            "prepared": false,
+            "reused": false,
+            "ms": 90.09
+          }
+        },
+        {
+          "case": 1,
+          "capture_ms": 104.09,
+          "queue_ms": 149.26,
+          "preview_ms": 982.26,
+          "paint_ms": 1932.85,
+          "cpu_ms": 4359.38,
+          "ocr_ms": 516.84,
+          "detector": {
+            "prepared": true,
+            "reused": true,
+            "ms": 2.52
+          }
+        }
+      ]
+    }
+  },
+  "production_inventory_medians_ms": {
+    "before": {
+      "capture_ms": 72.23,
+      "queue_ms": 139.48,
+      "preview_ms": 878.09,
+      "paint_ms": 2631.56,
+      "cpu_ms": 4171.88,
+      "ocr_ms": 486.4,
+      "detector_on_critical_path_ms": 91.06,
+      "preview_range_ms": [
+        752.51,
+        999.28
+      ]
+    },
+    "after": {
+      "capture_ms": 44.35,
+      "queue_ms": 149.26,
+      "preview_ms": 725.55,
+      "paint_ms": 2677.74,
+      "cpu_ms": 4359.38,
+      "ocr_ms": 357.35,
+      "detector_on_critical_path_ms": 2.67,
+      "preview_range_ms": [
+        656.84,
+        982.26
+      ]
+    }
+  },
+  "paired_inventory_name_ms_saved": [
+    95.67,
+    161.35,
+    36.02,
+    59.32,
+    -68.31
+  ],
+  "median_paired_ms_saved": 59.32,
+  "production_transitions": [
+    {
+      "case": "held",
+      "page": "run_relics",
+      "name_callbacks": 1,
+      "names": 3,
+      "facts_match": true
+    },
+    {
+      "case": "roster_transition",
+      "page": "run_roster",
+      "name_callbacks": 0,
+      "names": 0,
+      "facts_match": true
+    },
+    {
+      "case": "conflicting_upper_panel",
+      "page": "run_roster",
+      "name_callbacks": 0,
+      "names": 0,
+      "facts_match": true
+    },
+    {
+      "case": "restored",
+      "page": "run_relics",
+      "name_callbacks": 0,
+      "names": 0,
+      "facts_match": true
+    }
+  ],
+  "validation": {
+    "targeted_tests": 125,
+    "complete_window_observation_pairs": 7,
+    "gpu_trial_window_visible_responsive": true,
+    "private_state_hashes_unchanged": true,
+    "live_game_verified": false
+  },
+  "limits": "Lookahead can spend GPU time on a replaced frame. New sequence numbers, even if visually similar, are never interchangeable. At most one pending task and a completed detector-input snapshot can remain retained between reads, plus native scratch on the worker. No system-wide game or GPU contention measurements. The complete grid median regressed and one of five name paints regressed. Cold map and lingering CPU recognition still exceed 500 ms.",
+  "verification_notes": "An initial sandbox run reported five temporary-directory cleanup errors. The full targeted set passed in a usable Windows temp directory. The isolated transition comparison initially mishandled integer map keys, then passed after fixing the comparison script."
+}

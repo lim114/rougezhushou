@@ -112,6 +112,10 @@ class MainWindow(QMainWindow):
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader(backend=ocr_backend)
+        self.settling_detection = None
+        if ocr_backend == 'openvino-gpu':
+            from .page_detection import SettlingDetection
+            self.settling_detection = SettlingDetection()
         self.secondary_reader = None
         self.sample_jobs = {}
         self.next_sample_job = 0
@@ -703,7 +707,11 @@ class MainWindow(QMainWindow):
             return
         if frame is None and automatic:
             remaining = self.capture.stats()['settle_remaining_ms']
-            if remaining > 0:self.ready_timer.start(int(remaining)+1)
+            if remaining > 0:
+                self.ready_timer.start(int(remaining)+1)
+                if (self.settling_detection is not None and not self.busy
+                        and self.recognition_mode.currentData() != 'visual' and self.reader._discovery_ocr is not None):
+                    self.settling_detection.offer(self.capture.buffer, self.reader._discovery_ocr.provider)
             return
         self.ready_timer.stop()
         epoch=self.sample_epoch
@@ -734,6 +742,8 @@ class MainWindow(QMainWindow):
                 self.held_names_job = job_id
         show_names = self.held_names_job == job_id
         self.recognition_mode.setEnabled(False)
+        detection = (self.settling_detection.for_frame(frame)
+                     if self.settling_detection is not None and mode != 'visual' else None)
         def work():
             try:
                 selected = frame
@@ -752,6 +762,8 @@ class MainWindow(QMainWindow):
                 else:reader=self.reader if slot == 0 else self.secondary_reader
                 age_at_read_ms = (time.time() - selected['captured_at']) * 1000
                 options = {}
+                if detection is not None:
+                    options['detection'] = detection
                 if mode != 'visual':
                     target = selected.get('target') or {}
                     options['hud_source'] = (epoch, target.get('hwnd'), target.get('pid'))
@@ -2716,6 +2728,7 @@ class MainWindow(QMainWindow):
         if self.public_statistics is not None:self.public_statistics.close()
         if self.public_archive is not None:self.public_archive.close()
         self.closing=True
+        if self.settling_detection is not None:self.settling_detection.close()
         self.busy_gold.clear()
         if self.compact_window is not None:self.compact_window.close()
         self.node_catalog._close_current_event_reference()

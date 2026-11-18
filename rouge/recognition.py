@@ -89,7 +89,7 @@ class ScreenReader:
                 page._context = page._configuration()
         return result
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None,on_held_names=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -123,7 +123,7 @@ class ScreenReader:
         def recognize():
             return self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
                               on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None,
-                              on_held_names=on_held_names)
+                              on_held_names=on_held_names, detection=detection)
         page_return = False
         if self.cache_enabled and image.nbytes <= self._page_results.max_bytes:
             hits = self._page_results.hits
@@ -154,7 +154,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -238,8 +238,9 @@ class ScreenReader:
                 routing['fallback_reason']='visual_unavailable:'+type(error).__name__
         if self._page_route_retry_after:self._page_route_retry_after-=1
         elapsed('page_features')
+        detection_options = {'detection': detection} if detection is not None else {}
         if page_batches:
-            raw,_=self._page_ocr.read(image,regions=regions)
+            raw,_=self._page_ocr.read(image,regions=regions,**detection_options)
             if isinstance(self._frame_ocr,DynamicOCR):
                 # PageOCR has current full-frame detection and exact original
                 # recognition batches. Preserve that complete baseline when
@@ -264,7 +265,7 @@ class ScreenReader:
             if callable(release):release()
         elif isinstance(self._frame_ocr,DynamicOCR):
             raw,_=self._frame_ocr(image,regions=regions,seed_from_full=True,
-                force_discovery=force_discovery,guard_outside=regions is not None)
+                force_discovery=force_discovery,guard_outside=regions is not None,**detection_options)
         else:raw,_=self._frame_ocr(image)
         if not page_batches and regions is not None and isinstance(self._frame_ocr,DynamicOCR) and self._frame_ocr.regions is None:
             regions=None

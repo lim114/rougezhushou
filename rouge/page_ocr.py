@@ -19,6 +19,7 @@ import numpy as np
 from .dynamic_ocr import bounds, normalize_regions, positive_overlap
 from .recognition_cache import CachedOCR
 from .recognition_priority import yield_to_current
+from .page_detection import detector_input, detect_boxes
 
 
 def frame_signature(image):
@@ -168,7 +169,7 @@ class PageOCR:
         self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(crops)-len(missing)
         return result,elapsed,not missing
 
-    def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
+    def __call__(self, image, *, regions=None, force_discovery=False, detection=None, **kwargs):
         yield_to_current()
         self._current_frame = None
         if kwargs or not self._supported():
@@ -203,10 +204,8 @@ class PageOCR:
         raw_h, raw_w = img.shape[:2]
         self.metrics['raw_frame_size'] = [raw_w, raw_h]
         domain = normalize_regions(regions, (raw_h, raw_w))
-        img, ratio_h, ratio_w = p.preprocess(img)
-        operations = {'preprocess': {'ratio_h': ratio_h, 'ratio_w': ratio_w}}
-        img, operations = p.maybe_add_letterbox(img, operations)
-        boxes, det_elapsed = p.auto_text_det(img)
+        img, operations = detector_input(p, img)
+        boxes, det_elapsed = detect_boxes(p, img, detection)
         if boxes is None:
             self._current_frame = current if isinstance(current, np.ndarray) else None
             return None, None
@@ -250,5 +249,5 @@ class PageOCR:
         self._current_frame = current if isinstance(current, np.ndarray) else None
         return result
 
-    def read(self, image, *, regions=None, force_discovery=False):
-        return self(image, regions=regions, force_discovery=force_discovery)
+    def read(self, image, *, regions=None, force_discovery=False, detection=None):
+        return self(image, regions=regions, force_discovery=force_discovery, detection=detection)
