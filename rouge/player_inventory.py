@@ -89,6 +89,7 @@ class InventoryPanel(QWidget):
         body.addWidget(self.filter_box);self.filter_box.hide();self.more.toggled.connect(self.filter_box.setVisible)
         self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary)
         self.current_names = QLabel()
+        self.preview_ids = set()
         self.current_names.setWordWrap(True)
         self.current_names.hide()
         body.addWidget(self.current_names)
@@ -176,8 +177,10 @@ class InventoryPanel(QWidget):
             self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
         flags = relic_flags(self.run.state)
-        rows=None if available is None else _filter_rows(available,flags,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
         inventory, self.kettle_quantity = inventory_reading(self.run.state, held_flags=flags)
+        new_ids = {rid for rid in self.preview_ids if flags.get(rid) is not True}
+        flags.update(dict.fromkeys(new_ids, True))
+        rows=None if available is None else _filter_rows(available,flags,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
         self.merge_kettles.setVisible(self.held.isChecked())
         render_key=repr((rows,self.kettle_quantity,self.merge_kettles.isChecked(),self.held.isChecked()))
         if render_key != self.render_key:
@@ -188,7 +191,7 @@ class InventoryPanel(QWidget):
             update_inventory_button(self)
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
-        complete=inventory['complete']
+        complete=inventory['complete'] and not new_ids
         self.summary.setText('暂无收藏品资料'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单待核对'))
         from .relic_quantities import KETTLE
         if rows is not None and self.held.isChecked()and KETTLE in self.rows:
@@ -290,6 +293,7 @@ class InventoryPanel(QWidget):
         if event.type()==QEvent.Type.Leave:self.hover_timer.stop();self.leave_timer.start()
         return super().eventFilter(obj,event)
     def hideEvent(self,event):
+        self.preview_ids.clear()
         self.current_names.hide()
         self.hover_timer.stop();self.leave_timer.stop();self.hover_card.hide();super().hideEvent(event)
     def closeEvent(self,event):self.hover_card.dismiss();super().closeEvent(event)

@@ -193,6 +193,9 @@ class MapPanel(QWidget):
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
         legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：待读取　比例：历史统计');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
+        self.pinned_floor = None
+        self.floors.tabBarClicked.connect(self.choose_floor)
+        self.floors.currentChanged.connect(self.choose_floor)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
         self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry)
         self.entry_search.textChanged.connect(lambda _text:self.selected(self.view.selected))
@@ -258,6 +261,7 @@ class MapPanel(QWidget):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
         if self.statistics_source is not None:self.view.frequencies=self.statistics_source.index
         if epoch!=self.epoch:
+            self.pinned_floor = None
             self.close_reference()
             self.floor_selections.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         graphs=dict(self.owner.run.state.get('maps',{}));original=self.owner.map_view
@@ -272,7 +276,14 @@ class MapPanel(QWidget):
             i=self.floors.addTab('第'+'一二三四五六'[floor-1]+'层'if floor else name);self.floors.setTabData(i,key);self.floors.setTabToolTip(i,name)
             floor_indices[key]=i
         current=floor_indices.get((original.graph or{}).get('zone_id'),0 if floor_indices else -1)
-        self.floors.setCurrentIndex(floor_indices.get(old_key,current));self.floors.blockSignals(False);self.show_floor()
+        if self.pinned_floor not in floor_indices:self.pinned_floor = None
+        preferred = self.pinned_floor or (old_key if not original.graph or original.historical else None)
+        self.floors.setCurrentIndex(floor_indices.get(preferred,current));self.floors.blockSignals(False);self.show_floor()
+
+    def choose_floor(self, index):
+        zone = self.floors.tabData(index)
+        current = (self.owner.map_view.graph or {}).get('zone_id')
+        self.pinned_floor = zone if zone != current else None
     def update_node_finder(self,*_,rebuild=True):
         from .player_map_find import NodeFinder
         previous=self.node_results.currentData();self.node_results.blockSignals(True);self.node_results.clear()
@@ -305,7 +316,9 @@ class MapPanel(QWidget):
         if not key:return False
         index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==key[0]),None)
         if index is None:return False
-        self.floors.setCurrentIndex(index);self.view.select_node(key[2]);return True
+        self.floors.setCurrentIndex(index);self.view.select_node(key[2])
+        self.pinned_floor = None
+        return True
     def show_floor(self,*_):
         if self.view.graph:
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.floor_selections[old]=self.view.selected
@@ -348,6 +361,7 @@ class MapPanel(QWidget):
             for bar,factor in((self.scroll.horizontalScrollBar(),self.view.width()/old.width()),(self.scroll.verticalScrollBar(),self.view.height()/old.height())):
                 bar.setValue(int(factor*bar.value()+(factor-1)*bar.pageStep()/2))
     def select_interactive(self,node_id):
+        if node_id:self.pinned_floor = self.selected_zone
         self.selected(node_id)
         if node_id:self.details_toggle.setChecked(True)
     def selected(self,node_id):

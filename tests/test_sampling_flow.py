@@ -329,6 +329,11 @@ class SamplingFlowTests(unittest.TestCase):
             try:
                 self.wait_for(lambda: panel.current_names.isVisible())
                 self.assertIn('薄行囊、竞技场贵宾券', panel.current_names.text())
+                self.assertEqual({row['name'] for row in panel.rows.values()}, {'薄行囊', '竞技场贵宾券'})
+                panel.entries.setCurrentRow(0)
+                self.assertTrue(panel.detail.toPlainText())
+                panel.search.setText('竞技场')
+                self.assertEqual([row['name'] for row in panel.rows.values()], ['竞技场贵宾券'])
                 self.assertTrue(window.busy)
                 self.assertEqual(window.run.state, state)
                 job = window.held_names_job
@@ -344,6 +349,8 @@ class SamplingFlowTests(unittest.TestCase):
                 self.release.set()
             self.wait_for(lambda: not window.busy)
         self.assertFalse(panel.current_names.isVisible())
+        self.wait_for(lambda: not panel.rows)
+        self.assertEqual(panel.search.text(), '竞技场')
         self.assertEqual(window.run.state, state)
 
     def test_hud_rejects_old_sources_and_excludes_a_historical_floor(self):

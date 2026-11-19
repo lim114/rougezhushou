@@ -30,7 +30,7 @@ class DynamicOCR:
                 yield [[[float(x)+x0,float(y)+y0] for x,y in box],text,score]
 
     def __call__(self, image, *, regions=None, seed_from_full=False, force_discovery=False,
-                 guard_outside=False, detection=None):
+                 guard_outside=False, detection=None, prepared_text=None):
         """Optional current-frame visual regions never carry page facts.
 
         A verified page may seed its first focused read from the immediately
@@ -95,13 +95,16 @@ class DynamicOCR:
             if seed_from_full and domain is not None:
                 domain=None
             if domain is None:
-                raw,_=self.discovery_engine(image, detection=detection) if detection is not None else self.discovery_engine(image)
+                if prepared_text is not None:
+                    raw,_=self.discovery_engine.read_prepared(image, prepared_text, detection)
+                else:
+                    raw,_=self.discovery_engine(image, detection=detection) if detection is not None else self.discovery_engine(image)
                 raw=raw or []
                 self.metrics={'mode':'full_discovery','pixels':h*w,'regions':1}
                 discovery_metrics=getattr(self.discovery_engine,'metrics',{})
                 self.metrics.update({key:discovery_metrics[key] for key in
                     ('inferred_text_rows','reused_text_rows','detected_boxes','full_detection',
-                     'complete_current_texts') if key in discovery_metrics})
+                     'complete_current_texts','settling_text_reused') if key in discovery_metrics})
             else:
                 raw=list(self._read_regions(image,domain))
                 self.metrics={'mode':'page_discovery',

@@ -1,0 +1,284 @@
+{
+  "baseline": "003b945cb",
+  "method": "Windows WGC capture of an owned 2052x1128 replay window through the production sampler, OCR, run timeline and real visible Qt panel Paint event. Timer starts immediately before changing the source pixmap. No synthetic update() requests. First entries start with the model warm and the requested panel open. No live game was available. Speculative OCR runs in parallel with the capture queue and foreground stages; do not sum these intervals. Paint is Qt paint dispatch, not monitor scan-out.",
+  "aoci_files": [
+    "rouge/capture.py",
+    "rouge/frame_buffer.py",
+    "rouge/recognition.py",
+    "rouge/page_ocr.py",
+    "rouge/relic_recognition.py",
+    "rouge/app.py",
+    "rouge/player_map.py",
+    "rouge/player_inventory.py"
+  ],
+  "unseen_inventory_from_other_map": {
+    "before": [
+      {
+        "capture_ms": 131.94,
+        "capture_to_main_read_ms": 109.97,
+        "native_page_ocr_ms": 501.97,
+        "classifier_ms": 33.18,
+        "recognizer_ms": 347.88,
+        "icon_match_ms": 985.5,
+        "name_paint_ms": 1049.32,
+        "inventory_row_paint_ms": 2517.15,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 2517.16,
+        "full_gui_applied_ms": 2499.93,
+        "full_gui_handler_ms": 145.9
+      },
+      {
+        "capture_ms": 142.96,
+        "capture_to_main_read_ms": 145.51,
+        "native_page_ocr_ms": 713.06,
+        "classifier_ms": 103.64,
+        "recognizer_ms": 566.63,
+        "icon_match_ms": 1215.7,
+        "name_paint_ms": 1519.6,
+        "inventory_row_paint_ms": 3378.56,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3378.59,
+        "full_gui_applied_ms": 3355.54,
+        "full_gui_handler_ms": 213.61
+      },
+      {
+        "capture_ms": 51.36,
+        "capture_to_main_read_ms": 161.54,
+        "native_page_ocr_ms": 717.44,
+        "classifier_ms": 65.75,
+        "recognizer_ms": 610.41,
+        "icon_match_ms": 1291.0,
+        "name_paint_ms": 1409.49,
+        "inventory_row_paint_ms": 3446.16,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3446.19,
+        "full_gui_applied_ms": 3418.17,
+        "full_gui_handler_ms": 262.83
+      }
+    ],
+    "after": [
+      {
+        "capture_ms": 75.08,
+        "capture_to_main_read_ms": 158.43,
+        "native_page_ocr_ms": 427.11,
+        "classifier_ms": 83.55,
+        "recognizer_ms": 317.44,
+        "icon_match_ms": 1179.4,
+        "name_paint_ms": 808.35,
+        "inventory_row_paint_ms": 809.06,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 2627.41,
+        "full_gui_applied_ms": 2542.1,
+        "full_gui_handler_ms": 227.07
+      },
+      {
+        "capture_ms": 129.15,
+        "capture_to_main_read_ms": 155.73,
+        "native_page_ocr_ms": 543.37,
+        "classifier_ms": 104.51,
+        "recognizer_ms": 407.61,
+        "icon_match_ms": 1371.2,
+        "name_paint_ms": 1009.36,
+        "inventory_row_paint_ms": 1009.99,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3115.14,
+        "full_gui_applied_ms": 3015.5,
+        "full_gui_handler_ms": 242.85
+      },
+      {
+        "capture_ms": 120.75,
+        "capture_to_main_read_ms": 162.33,
+        "native_page_ocr_ms": 782.92,
+        "classifier_ms": 166.36,
+        "recognizer_ms": 562.89,
+        "icon_match_ms": 1169.3,
+        "name_paint_ms": 1307.84,
+        "inventory_row_paint_ms": 1309.21,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3309.5,
+        "full_gui_applied_ms": 3226.39,
+        "full_gui_handler_ms": 201.72
+      }
+    ]
+  },
+  "warm_map_first_paint_ms": {
+    "before": [
+      1062.72,
+      887.43,
+      1502.25,
+      1100.19
+    ],
+    "after": [
+      753.15,
+      789.18,
+      601.61,
+      885.47,
+      959.31,
+      930.22
+    ]
+  },
+  "floor_transition": {
+    "before": {
+      "recognized": "zone_3/3j",
+      "painted": "zone_2/2a",
+      "recognized_map_applied_ms": 1005.42,
+      "correct_floor_painted_within_5000ms": false
+    },
+    "after": {
+      "capture_ms": 117.96,
+      "capture_to_main_read_ms": 163.85,
+      "native_page_ocr_ms": 350.0,
+      "classifier_ms": 97.2,
+      "recognizer_ms": 193.95,
+      "icon_match_ms": 999.2,
+      "name_paint_ms": null,
+      "inventory_row_paint_ms": null,
+      "map_paint_ms": 1173.02,
+      "full_inventory_paint_ms": null,
+      "full_gui_applied_ms": 2744.74,
+      "full_gui_handler_ms": 269.69
+    },
+    "manual_history": "targeted Qt test covers explicit history, return to current and subsequent floor change"
+  },
+  "unchanged_return": {
+    "map_exact_return_paint_ms": 383.05,
+    "already_visible_inventory": "No fresh viewport Paint on one unchanged return; not assigned zero latency or counted as a new paint."
+  },
+  "cpu_default": {
+    "before": {
+      "operator_to_unseen_inventory": {
+        "capture_ms": 95.35,
+        "capture_to_main_read_ms": 147.15,
+        "native_page_ocr_ms": 811.83,
+        "classifier_ms": 43.44,
+        "recognizer_ms": 471.84,
+        "icon_match_ms": 1125.4,
+        "name_paint_ms": 1263.64,
+        "inventory_row_paint_ms": 3080.21,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3080.22,
+        "full_gui_applied_ms": 3061.78,
+        "full_gui_handler_ms": 144.46
+      },
+      "inventory_to_map": {
+        "capture_ms": 103.38,
+        "capture_to_main_read_ms": 144.95,
+        "native_page_ocr_ms": 535.6,
+        "classifier_ms": 38.92,
+        "recognizer_ms": 261.29,
+        "icon_match_ms": 809.0,
+        "name_paint_ms": null,
+        "inventory_row_paint_ms": null,
+        "map_paint_ms": 1098.97,
+        "full_inventory_paint_ms": null,
+        "full_gui_applied_ms": 2349.89,
+        "full_gui_handler_ms": 169.87
+      },
+      "operator_to_map": {
+        "capture_ms": 109.86,
+        "capture_to_main_read_ms": 138.03,
+        "native_page_ocr_ms": 699.43,
+        "classifier_ms": 44.97,
+        "recognizer_ms": 418.75,
+        "icon_match_ms": 1111.3,
+        "name_paint_ms": null,
+        "inventory_row_paint_ms": null,
+        "map_paint_ms": 1584.18,
+        "full_inventory_paint_ms": null,
+        "full_gui_applied_ms": 3272.75,
+        "full_gui_handler_ms": 118.19
+      }
+    },
+    "after": {
+      "operator_to_unseen_inventory": {
+        "capture_ms": 74.88,
+        "capture_to_main_read_ms": 138.98,
+        "native_page_ocr_ms": 751.81,
+        "classifier_ms": 48.79,
+        "recognizer_ms": 477.03,
+        "icon_match_ms": 1480.0,
+        "name_paint_ms": 1217.23,
+        "inventory_row_paint_ms": 1217.9,
+        "map_paint_ms": null,
+        "full_inventory_paint_ms": 3419.35,
+        "full_gui_applied_ms": 3362.54,
+        "full_gui_handler_ms": 142.58
+      },
+      "inventory_to_map": {
+        "capture_ms": 121.84,
+        "capture_to_main_read_ms": 146.54,
+        "native_page_ocr_ms": 558.46,
+        "classifier_ms": 41.75,
+        "recognizer_ms": 322.38,
+        "icon_match_ms": 842.0,
+        "name_paint_ms": null,
+        "inventory_row_paint_ms": null,
+        "map_paint_ms": 1112.84,
+        "full_inventory_paint_ms": null,
+        "full_gui_applied_ms": 2365.98,
+        "full_gui_handler_ms": 165.83
+      },
+      "operator_to_map": {
+        "capture_ms": 83.93,
+        "capture_to_main_read_ms": 143.33,
+        "native_page_ocr_ms": 652.48,
+        "classifier_ms": 53.07,
+        "recognizer_ms": 368.69,
+        "icon_match_ms": 1246.4,
+        "name_paint_ms": null,
+        "inventory_row_paint_ms": null,
+        "map_paint_ms": 1627.43,
+        "full_inventory_paint_ms": null,
+        "full_gui_applied_ms": 3505.44,
+        "full_gui_handler_ms": 130.22
+      }
+    }
+  },
+  "regression": {
+    "raw_ocr": {
+      "sample_frames": 20,
+      "text_boxes": 713,
+      "texts_and_positions_equal": true,
+      "confidence_changed": 182,
+      "max_confidence_delta": 1.5020370483398438e-05
+    },
+    "paired_full_observations": 11,
+    "largest_full_observation_confidence_delta": 1.5020370483398438e-05,
+    "other_semantic_fields_equal": true,
+    "page_conflict_and_transition": [
+      {
+        "case": "held",
+        "page": "run_relics",
+        "name_callbacks": 1,
+        "names": 3,
+        "facts_match": true
+      },
+      {
+        "case": "roster_transition",
+        "page": "run_roster",
+        "name_callbacks": 0,
+        "names": 0,
+        "facts_match": true
+      },
+      {
+        "case": "conflicting_upper_panel",
+        "page": "run_roster",
+        "name_callbacks": 0,
+        "names": 0,
+        "facts_match": true
+      },
+      {
+        "case": "restored",
+        "page": "run_relics",
+        "name_callbacks": 0,
+        "names": 0,
+        "facts_match": true
+      }
+    ],
+    "targeted_tests_passed": 172,
+    "test_window_gpu_visible_responsive": true,
+    "real_game_windows": 0,
+    "private_byte_checks_unchanged": true
+  },
+  "limitations": "Controlled clips and small samples, no cold-start timing in this batch, no game contention, no monitor or input-device latency measurement. Known items from the previous page are excluded from the unseen-inventory comparison. One separate unchanged-return run timed out waiting for an unnecessary repaint. First test launch encountered sandbox temp cleanup errors and one missing test module; corrected suite passed."
+}

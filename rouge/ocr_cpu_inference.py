@@ -39,6 +39,13 @@ class FixedShapeGPU(InferenceSession):
         # Match model input dimensions exactly, preserving original pixels and batch padding.
         if tensor.shape == self.shape:
             return super().__call__(tensor)
+        # Recognition rows are independent images. Fill spare batch slots
+        # without changing a real line's width, pixels or decoder input.
+        if tensor.shape[1:] == self.shape[1:] and 1 < len(tensor) < self.shape[0]:
+            import numpy as np
+            batch = np.zeros(self.shape, dtype=tensor.dtype)
+            batch[:len(tensor)] = tensor
+            return [output[:len(tensor)] for output in super().__call__(batch)]
         return self.cpu(tensor)
 
 

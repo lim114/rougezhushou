@@ -89,6 +89,7 @@ class GameCapture:
     def __init__(self):
         self._lock = threading.Lock()
         self.buffer = FrameBuffer()
+        self.on_settling = None
         self._session = 0
         self._collecting = True
         self._control = None
@@ -129,6 +130,8 @@ class GameCapture:
                         point=(position[0]-frame_origin[0],position[1]-frame_origin[1])
                 pointer_bounds=pointer.locate(image,point,may_learn=may_learn)
                 self.buffer.offer(image,time.time(),client_rect,target,pointer_bounds=pointer_bounds)
+            if self.on_settling is not None and self.buffer.stats()['settle_remaining_ms'] > 0:
+                self.on_settling()
         @self._capture.event
         def on_closed():
             with self._lock:

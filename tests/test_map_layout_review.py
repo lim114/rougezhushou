@@ -22,6 +22,21 @@ class MapLayoutReview(unittest.TestCase):
  def test_compact_floor_names_retain_full_zone_names_and_identity(self):
   p,r,graphs=self.panel();self.assertEqual([p.floors.tabText(i)for i in range(2)],['第一层','第二层'])
   for i,g in enumerate(graphs):self.assertEqual(p.floors.tabData(i),g['zone_id']);self.assertEqual(p.floors.tabToolTip(i),zone_info(g)[0])
+ def test_newly_recognized_floor_follows_until_player_browses_history(self):
+  panel, _, (first, second) = self.panel()
+  current = panel.owner.map_view
+  panel.floors.setCurrentIndex(1)
+  current.set_map(first)
+  panel.refresh()
+  self.assertEqual(panel.view.graph['zone_id'], first['zone_id'])
+  panel.floors.setCurrentIndex(1)
+  panel.refresh()
+  self.assertEqual(panel.view.graph['zone_id'], second['zone_id'])
+  self.assertTrue(panel.view.historical)
+  panel.floors.setCurrentIndex(0)
+  current.set_map(second)
+  panel.refresh()
+  self.assertEqual(panel.view.graph['zone_id'], second['zone_id'])
  def test_historical_chips_use_only_that_map_snapshot_and_capacity(self):
   p,r,g=self.panel();self.assertTrue(p.view.historical);rows={x['key']:x for x in p.resources.rows};self.assertEqual(rows['gold']['value'],'7');self.assertEqual(rows['hope']['value'],'1/8');self.assertEqual(set(rows),{'gold','hope'});self.assertIn('历史地图',p.context_notice.text());self.assertTrue(all('不是入层'in x['note']for x in rows.values()))
  def test_wrong_template_snapshot_does_not_replace_matching_map_resources(self):

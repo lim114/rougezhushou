@@ -89,7 +89,7 @@ class ScreenReader:
                 page._context = page._configuration()
         return result
 
-    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None):
+    def read(self, image, *, client_rect=None,run_context=None,on_hud=None,hud_source=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None,prepared_text=None):
         started = time.perf_counter()
         if image is None or image.size == 0:
             raise ValueError('没有有效画面。')
@@ -123,7 +123,7 @@ class ScreenReader:
         def recognize():
             return self._read(image, client_rect=client_rect, run_context=run_context, on_hud=on_hud, gold_seed=gold_seed,
                               on_gold_reference=on_gold_reference,on_map=map_ready if on_map is not None else None,
-                              on_held_names=on_held_names, detection=detection)
+                              on_held_names=on_held_names, detection=detection,prepared_text=prepared_text)
         page_return = False
         if self.cache_enabled and image.nbytes <= self._page_results.max_bytes:
             hits = self._page_results.hits
@@ -154,7 +154,7 @@ class ScreenReader:
             self._last_context = None
         return result
 
-    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None):
+    def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None,prepared_text=None):
         timings = {}
         mark = time.perf_counter()
         def elapsed(name):
@@ -264,6 +264,7 @@ class ScreenReader:
             release=getattr(self._page_ocr,'release_frame_snapshot',None)
             if callable(release):release()
         elif isinstance(self._frame_ocr,DynamicOCR):
+            if prepared_text is not None:detection_options['prepared_text']=prepared_text
             raw,_=self._frame_ocr(image,regions=regions,seed_from_full=True,
                 force_discovery=force_discovery,guard_outside=regions is not None,**detection_options)
         else:raw,_=self._frame_ocr(image)

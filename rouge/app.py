@@ -63,6 +63,7 @@ def apply_relic_history_notice(scenario,result):
         if warning not in status['warnings']:status['warnings'].append(warning)
 
 class Events(QObject):
+    settling = Signal()
     sample = Signal(object)
     sample_error = Signal(object)
     hud_read = Signal(object)
@@ -171,6 +172,9 @@ class MainWindow(QMainWindow):
         self.busy_gold = BusyGold(self)
         self.events.hud_read.connect(self.show_sample_hud)
         self.events.held_names_read.connect(self.show_held_names)
+        if self.settling_detection is not None:
+            self.events.settling.connect(self.prepare_settling_page, Qt.ConnectionType.QueuedConnection)
+            self.capture.on_settling = self.events.settling.emit
         self.held_names_job = None
         self.sample_hud = {}
         self.sample_hud_seq = 0
@@ -659,6 +663,18 @@ class MainWindow(QMainWindow):
         self.capture.discard_pending()
         if self.auto.isChecked():QTimer.singleShot(0,lambda:self.sample_now(automatic=True))
 
+    def prepare_settling_page(self):
+        if (self.closing or self.busy or not self.auto.isChecked()
+                or self.recognition_mode.currentData() == 'visual'):
+            return
+        discovery = self.reader._discovery_ocr
+        if discovery is not None:
+            bar = self.compact_window
+            page_visible = bar and any(popup and popup.panel.isVisible()
+                for popup in (bar.inventory_popup, bar.map_popup))
+            self.settling_detection.offer(self.capture.buffer, discovery.provider,
+                discovery=discovery if page_visible else None, previous=self.reader._last_frame)
+
     def sample_now(self, checked=False, *, automatic=False):
         if automatic and not self.auto.isChecked():return
         self.update_sampling_status()
@@ -709,9 +725,6 @@ class MainWindow(QMainWindow):
             remaining = self.capture.stats()['settle_remaining_ms']
             if remaining > 0:
                 self.ready_timer.start(int(remaining)+1)
-                if (self.settling_detection is not None and not self.busy
-                        and self.recognition_mode.currentData() != 'visual' and self.reader._discovery_ocr is not None):
-                    self.settling_detection.offer(self.capture.buffer, self.reader._discovery_ocr.provider)
             return
         self.ready_timer.stop()
         epoch=self.sample_epoch
@@ -744,6 +757,10 @@ class MainWindow(QMainWindow):
         self.recognition_mode.setEnabled(False)
         detection = (self.settling_detection.for_frame(frame)
                      if self.settling_detection is not None and mode != 'visual' else None)
+        prepared_text = None
+        if detection is not None and slot == 0:
+            prepared_text = self.settling_detection.text_future
+            self.settling_detection.text_future = None
         def work():
             try:
                 selected = frame
@@ -764,6 +781,8 @@ class MainWindow(QMainWindow):
                 options = {}
                 if detection is not None:
                     options['detection'] = detection
+                if prepared_text is not None:
+                    options['prepared_text'] = prepared_text
                 if mode != 'visual':
                     target = selected.get('target') or {}
                     options['hud_source'] = (epoch, target.get('hwnd'), target.get('pid'))
@@ -808,7 +827,13 @@ class MainWindow(QMainWindow):
 
     def clear_held_names(self):
         if self.held_names_job is not None:
-            self.compact_window.inventory_popup.panel.current_names.hide()
+            panel = self.compact_window.inventory_popup.panel
+            panel.current_names.hide()
+            if panel.preview_ids:
+                panel.preview_ids.clear()
+                # A successful full read commits in this same signal handler.
+                # Refresh afterwards to keep selection through the handover.
+                QTimer.singleShot(0, panel.refresh)
             self.held_names_job = None
 
     def show_held_names(self, payload):
@@ -820,8 +845,14 @@ class MainWindow(QMainWindow):
             return
         panel = self.compact_window.inventory_popup.panel
         if panel.isVisible():
+            from .held_cards import held_item_index
+            _, identities = held_item_index()
+            relics = catalog()['relics']
+            panel.preview_ids = {ids[0] for name in names if len(ids := identities.get(name, ())) == 1
+                                 and ids[0] in relics}
             panel.current_names.setText('本页已读到 ' + '、'.join(names))
             panel.current_names.show()
+            panel.refresh()
 
     def show_sample_hud(self, payload):
         marker, at, seq, hud = payload

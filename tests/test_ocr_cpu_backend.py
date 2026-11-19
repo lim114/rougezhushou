@@ -68,6 +68,14 @@ class CPUBackendTests(unittest.TestCase):
             self.assertIs(session(other), cpu.return_value)
             self.assertIs(cpu.call_args.args[0], other)
         self.assertEqual(request.infer.call_count, 1)
+        output = np.arange(6, dtype=np.float32).reshape(6, 1, 1)
+        request.infer.return_value = {'text': output}
+        tensor[:3] = 1
+        [actual] = session(tensor[:3])
+        batch = request.infer.call_args.args[0]
+        np.testing.assert_array_equal(batch[:3], tensor[:3])
+        self.assertFalse(batch[3:].any())
+        np.testing.assert_array_equal(actual, output[:3])
 
     def test_app_gpu_flag_is_scoped_to_one_launch(self):
         from unittest.mock import patch

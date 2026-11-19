@@ -10,6 +10,28 @@ from rouge.page_detection import SettlingDetection, detect_boxes
 
 
 class SettlingDetectionTests(unittest.TestCase):
+    def test_prepared_text_requires_same_model_and_every_viewport_pixel(self):
+        from rouge.page_ocr import PageOCR
+        image = np.zeros((30, 40, 3), np.uint8)
+        prepared = PageOCR(Mock())
+        prepared._current_frame = image.copy()
+        prepared.metrics = {'complete_current_texts': True}
+        future = Future()
+        rows = ([('current text',)], None)
+        future.set_result(('original', prepared, rows))
+        class Selected(PageOCR):
+            configuration = 'original'
+            def _configuration(self):return self.configuration
+            def __call__(self, image, *, detection):return 'fresh OCR'
+        reader = Selected(Mock())
+        self.assertIs(reader.read_prepared(image.copy(), future, None), rows)
+        self.assertTrue(reader.metrics['settling_text_reused'])
+        reader.configuration = 'other'
+        self.assertEqual(reader.read_prepared(image, future, None), 'fresh OCR')
+        reader.configuration = 'original'
+        image[-1, -1, -1] = 1
+        self.assertEqual(reader.read_prepared(image, future, None), 'fresh OCR')
+
     def test_current_detector_input_must_match_and_unfinished_work_never_blocks(self):
         provider = Mock()
         image = np.zeros((20, 30, 3), np.uint8)

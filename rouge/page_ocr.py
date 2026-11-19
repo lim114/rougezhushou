@@ -9,7 +9,7 @@ and coordinate conversion follow the installed RapidOCR 1.4.4 implementation.
 from __future__ import annotations
 
 from collections import OrderedDict
-from copy import deepcopy
+from copy import copy, deepcopy
 import hashlib
 from importlib.metadata import PackageNotFoundError, version
 import time
@@ -77,6 +77,31 @@ class PageOCR:
 
     def release_frame_snapshot(self):
         self._current_frame = None
+
+    def fork_for_preparation(self):
+        # Only compiled sessions and immutable cache entries are shared. Each
+        # worker has its own provider settings, ordered cache and metrics.
+        provider = copy(self.provider)
+        provider.text_det = copy(provider.text_det)
+        provider.text_cls = copy(provider.text_cls)
+        provider.text_rec = copy(provider.text_rec)
+        page = PageOCR(provider, cache_enabled=self.cache_enabled, max_bytes=self.max_bytes,
+                       max_entries=self.max_entries, reuse_text_rows=self.reuse_text_rows)
+        if self._context == self._configuration():
+            page._cache = self._cache.copy()
+            page._bytes = self._bytes
+            page._context = page._configuration()
+        return page
+
+    def read_prepared(self, image, future, detection):
+        configuration, prepared, result = future.result()
+        if configuration == self._configuration() and prepared.complete_frame_matches(image):
+            self._cache, self._bytes = prepared._cache, prepared._bytes
+            self._context = configuration
+            self.metrics = dict(prepared.metrics, settling_text_reused=True)
+            self._current_frame = prepared._current_frame
+            return result
+        return self(image, detection=detection)
 
     def _supported(self):
         try:

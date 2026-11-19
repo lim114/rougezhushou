@@ -37,7 +37,7 @@ def _bounds(text):
 
 
 @lru_cache(maxsize=1)
-def _inventory():
+def held_item_index():
     items = {**catalog()["relics"], **tactical_tools()}
     names = {}
     for rid, item in items.items():
@@ -83,7 +83,7 @@ def held_card_regions(texts, held):
             return []
     except (TypeError, ValueError):
         return []
-    items, names = _inventory()
+    items, names = held_item_index()
     lines = _observed_lines(texts)
     footer_y = (held_box[1] + held_box[3]) / 2
     titles = [line for line in lines if line["confidence"] >= .9
