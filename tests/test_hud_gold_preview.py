@@ -57,6 +57,17 @@ class GoldPreviewTests(unittest.TestCase):
         self.seed = {'page': 'exploration', 'viewport': self.view, 'texts': texts,
                      'run': {'page': 'run_map', 'resources': {'gold': {'value': 28}}}}
 
+    def test_open_inventory_rejects_old_layout_before_reading_gold(self):
+        image = self.prior.copy()
+        image[8, 165] = 255  # The former collectibles label now belongs to the open panel.
+        engine = Mock(return_value=([['收起', .99]], None))
+        with patch('rouge.hud_gold_preview.read_plate_gold') as digits, \
+             patch('rouge.hud_gold_preview.find_gold_icon') as icon:
+            self.assertIsNone(read_gold_preview(image, self.prior, self.seed, self.view, engine))
+        self.assertEqual(engine.call_count, 1)
+        digits.assert_not_called()
+        icon.assert_not_called()
+
     def test_new_combinations_keep_all_digits_and_alignment(self):
         for number in ('2', '22', '828', '2882'):
             with self.subTest(number=number):

@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品首次显示仍超过 0.5 秒。需要缩短整页文字识别并验证游戏同跑时的切页首绘与帧率。[回执](verification/maintenance/ocr-visible-page-20261118/summary.json)。
+地图和藏品首绘仍超过 0.5 秒。核显回放中，整页读字、地图提交绘制和藏品图标核对仍占时。需分别缩短新楼层首绘、新藏品首绘及完整清单更新，并实测游戏同跑时延与帧率。[回执](verification/maintenance/ocr-page-critical-path-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

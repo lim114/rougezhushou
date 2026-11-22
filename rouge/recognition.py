@@ -193,7 +193,13 @@ class ScreenReader:
         routing={'strategy':'full_discovery','candidates':[],'visual_ms':0.,
                  'fallback_reason':'disabled' if not self.page_routing_enabled else None}
         regions=None;page_identity=None;force_discovery=False;page_batches=False
-        if self.page_routing_enabled:
+        if prepared_text is not None and isinstance(self._frame_ocr, DynamicOCR):
+            # Full-frame OCR is already running for the selected capture. A
+            # visual region plan cannot reduce that work. read_prepared checks
+            # the model configuration and exact pixels before using its rows.
+            force_discovery = True
+            routing['strategy'] = 'settling_full_discovery'
+        elif self.page_routing_enabled:
             from .page_features import PageFeatureRouter
             try:
                 if self._page_router is None:self._page_router=PageFeatureRouter()

@@ -96,6 +96,21 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
             anchors[name] = record
     if len(anchors) != len(LABELS):
         return None
+    # Opening the inventory replaces the collectibles label. Check it before
+    # reading the other labels or looking for digits on the old HUD.
+    # Identical label pixels retain the full reader's qualification.
+    for name in reversed(LABELS):
+        points = np.array(anchors[name]['box']) * (w, h)
+        left, top = np.floor(points.min(axis=0)).astype(int)
+        right, bottom = np.ceil(points.max(axis=0)).astype(int)
+        if not (0 <= left < right <= w and 0 <= top < bottom <= h):
+            return None
+        line = frame[top:bottom, left:right]
+        if prior is not None and np.array_equal(line, prior[top:bottom, left:right]):
+            continue
+        if not _reads_label(engine, line, name):
+            return None
+
     header = header_span(anchors[LABELS[0]])
     slots = [row for row in amounts if header[0] <= center(row)[1] <= header[1]]
     gold = None
@@ -113,22 +128,6 @@ def read_gold_preview(image, prior_image, previous, viewport, engine):
                 gold = gold_reading(icon, [reading], ux, uy)
     if gold is None:
         gold = read_plate_gold(frame, anchors[LABELS[0]], engine, include_pairs=True)
-        if gold is None:
-            return None
-
-    # These fixed labels must all still be readable in their own positions.
-    # Identical label pixels retain the full reader's qualification.
-    for name in LABELS:
-        points = np.array(anchors[name]['box']) * (w, h)
-        left, top = np.floor(points.min(axis=0)).astype(int)
-        right, bottom = np.ceil(points.max(axis=0)).astype(int)
-        if not (0 <= left < right <= w and 0 <= top < bottom <= h):
-            return None
-        line = frame[top:bottom, left:right]
-        if prior is not None and np.array_equal(line, prior[top:bottom, left:right]):
-            continue
-        if not _reads_label(engine, line, name):
-            return None
     return gold
 
 

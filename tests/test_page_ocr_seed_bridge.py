@@ -40,6 +40,21 @@ class PageOCRSeedBridgeTests(unittest.TestCase):
         reader._page_ocr.raw[0][1]='caller-change';image[30,30]=98
         self.assertEqual(reader._frame_ocr.raw[0][1],'current-full-text');self.assertEqual(reader._frame_ocr.image[30,30,0],17)
 
+    def test_prepared_full_text_skips_region_planning_and_replaces_prior_rows(self):
+        from unittest.mock import Mock
+        reader, image, _ = self.reader()
+        reader._read(image)
+        prepared = object()
+        discovery = Mock(metrics={})
+        discovery.read_prepared.return_value = ([], None)
+        reader._frame_ocr.discovery_engine = discovery
+        with patch.object(reader._page_router, 'classify') as classify:
+            result = reader._read(image, prepared_text=prepared)
+        classify.assert_not_called()
+        discovery.read_prepared.assert_called_once_with(image, prepared, None)
+        self.assertEqual(result['current_texts'], [])
+        self.assertEqual(reader._frame_ocr.raw, [])
+
     def test_every_complete_coverage_flag_requires_literal_true(self):
         for key in FLAGS:
             for value in (False,None,1,np.bool_(True)):

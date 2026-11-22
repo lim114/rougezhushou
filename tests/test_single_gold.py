@@ -153,10 +153,16 @@ class SingleGoldTests(unittest.TestCase):
     def test_layout_only_requires_all_four_current_label_reads(self):
         view = {'source_size': [800, 320], 'content_rect': [0, 0, 800, 320]}
         seed = {'texts': self.labels, 'viewport': view}
-        names = [r['text'] for r in self.labels]
+        # Give each synthetic label its own ink so the OCR double responds to
+        # the supplied crop independently of the order in which it is read.
+        for ink, row in enumerate(self.labels, 1):
+            (x, y), _, (right, bottom), _ = np.rint(np.array(row['box']) * (800, 320)).astype(int)
+            self.image[y:bottom, x:right] = ink
         for last, expected in [('收藏品', 0), ('商品', None)]:
-            reads = ['0', '0', *names[:-1], last]
-            engine = Mock(side_effect=[([(s, .99)], None) for s in reads])
+            labels = {1: '目标生命值', 2: '指挥等级', 3: '零件箱', 4: last}
+            def read(line, **kwargs):
+                return [(labels.get(int(np.median(line)), '0'), .99)], None
+            engine = Mock(side_effect=read)
             result = read_gold_preview(self.image, None, seed, view, engine)
             self.assertEqual((result or {}).get('value'), expected)
-            self.assertEqual(engine.call_count, 6)
+            self.assertEqual(engine.call_count, 6 if expected is not None else 1)
