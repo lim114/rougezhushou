@@ -5,11 +5,14 @@ import platform
 import sys
 
 
+def default_backend():
+    return 'openvino' if sys.platform == 'win32' and platform.machine() == 'AMD64' else 'onnx'
+
+
 def create_engine(*, backend=None):
     from rapidocr_onnxruntime import RapidOCR
-
     if backend is None:
-        backend = 'openvino' if sys.platform == 'win32' and platform.machine() == 'AMD64' else 'onnx'
+        backend = default_backend()
     if backend not in ('onnx', 'openvino', 'openvino-gpu'):
         raise ValueError('Unknown OCR inference backend: ' + str(backend))
     engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)

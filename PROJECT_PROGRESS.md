@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品切页到助手窗口首显仍待实机稳定低于 500 毫秒。隔离快速预览缩短了首显，地图六次仍有两次超时，完整藏品读数变慢；需验证密集藏品、地图预览的本局写入边界及同游戏竞争核显时的表现。[回执](verification/maintenance/ocr-current-page-preview-study-20261122/summary.json)。
+地图和藏品切页至助手窗口首显仍待实机稳定低于 500 毫秒。已将整页预读接入常规 CPU 的空闲切页与核显的忙时切页。首显仍受整页文字推理和图形显示影响，完整藏品清单另受图标及资源核验影响。[回执](verification/maintenance/ocr-busy-page-settling-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

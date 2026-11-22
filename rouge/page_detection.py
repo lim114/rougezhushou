@@ -23,10 +23,12 @@ def _prepare(provider, frame):
 
 
 class SettlingDetection:
-    def __init__(self):
+    def __init__(self, *, whole_page_only=False):
+        self.whole_page_only = whole_page_only
         self.worker = ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-settling-det')
         self.future = None
         self.text_future = None
+        self.text_provider = None
         self.seq = None
         self.generation = None
 
@@ -37,15 +39,21 @@ class SettlingDetection:
         frame = buffer.latest(after_seq=self.seq, settling_only=True)
         if frame is not None:
             self.seq, self.generation = frame['seq'], frame['generation']
-            self.future = self.worker.submit(_prepare, provider, frame)
             self.text_future = None
+            self.text_provider = None
             current = frame['image']
             # A coarse change only budgets speculative work. Reuse still requires
             # the selected sequence and exact prepared viewport pixels.
-            if discovery is not None and previous is not None and (
+            prepare_page = discovery is not None and previous is not None and (
                     previous.shape != current.shape or
-                    np.mean(previous[::16, ::16] != current[::16, ::16]) > .20):
+                    np.mean(previous[::16, ::16] != current[::16, ::16]) > .20)
+            if self.whole_page_only and not prepare_page:
+                self.future = None
+                return
+            self.future = self.worker.submit(_prepare, provider, frame)
+            if prepare_page:
                 page = discovery.fork_for_preparation()
+                self.text_provider = discovery.provider
                 self.text_future = self.worker.submit(
                     _prepare_text, discovery._configuration(), page, frame, self.future, inventory_visible)
 
@@ -54,10 +62,20 @@ class SettlingDetection:
             return self.future
         return None
 
+    def take_text(self, discovery):
+        # A previous job may finish and replace the idle reader between offer
+        # and selection. Only its original owner may wait on this preparation.
+        if discovery is None or discovery.provider is not self.text_provider:
+            return None
+        future = self.text_future
+        self.text_future = self.text_provider = None
+        return future
+
     def close(self):
         self.worker.shutdown(wait=False, cancel_futures=True)
         self.future = None
         self.text_future = None
+        self.text_provider = None
 
 
 def _prepare_text(configuration, page, frame, detection, inventory_visible=False):

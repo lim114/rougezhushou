@@ -115,9 +115,11 @@ class MainWindow(QMainWindow):
         self.capture = GameCapture()
         self.reader = ScreenReader(backend=ocr_backend)
         self.settling_detection = None
-        if ocr_backend == 'openvino-gpu':
+        from .ocr_engine import default_backend
+        backend = default_backend() if ocr_backend is None else ocr_backend
+        if backend in ('openvino', 'openvino-gpu'):
             from .page_detection import SettlingDetection
-            self.settling_detection = SettlingDetection()
+            self.settling_detection = SettlingDetection(whole_page_only=backend == 'openvino')
         self.secondary_reader = None
         self.sample_jobs = {}
         self.next_sample_job = 0
@@ -665,16 +667,26 @@ class MainWindow(QMainWindow):
         if self.auto.isChecked():QTimer.singleShot(0,lambda:self.sample_now(automatic=True))
 
     def prepare_settling_page(self):
-        if (self.closing or self.busy or not self.auto.isChecked()
+        if (self.closing or not self.auto.isChecked()
                 or self.recognition_mode.currentData() == 'visual'):
             return
-        discovery = self.reader._discovery_ocr
+        bar = self.compact_window
+        page_visible = bar and any(popup and popup.panel.isVisible()
+            for popup in (bar.inventory_popup, bar.map_popup))
+        if self.settling_detection.whole_page_only and (self.busy or not page_visible):
+            return
+        reader = self.reader
+        if self.busy:
+            if not page_visible or len(self.sample_jobs) != 1 or self.secondary_reader is None:
+                return
+            job, = self.sample_jobs.values()
+            if not job['seq']:
+                return
+            reader = self.secondary_reader if job['slot'] == 0 else self.reader
+        discovery = reader._discovery_ocr
         if discovery is not None:
-            bar = self.compact_window
-            page_visible = bar and any(popup and popup.panel.isVisible()
-                for popup in (bar.inventory_popup, bar.map_popup))
             self.settling_detection.offer(self.capture.buffer, discovery.provider,
-                discovery=discovery if page_visible else None, previous=self.reader._last_frame,
+                discovery=discovery if page_visible else None, previous=reader._last_frame,
                 inventory_visible=bool(bar and bar.inventory_popup and bar.active_popup is bar.inventory_popup
                                        and bar.inventory_popup.panel.isVisible()))
 
@@ -761,9 +773,9 @@ class MainWindow(QMainWindow):
         detection = (self.settling_detection.for_frame(frame)
                      if self.settling_detection is not None and mode != 'visual' else None)
         prepared_text = None
-        if detection is not None and slot == 0:
-            prepared_text = self.settling_detection.text_future
-            self.settling_detection.text_future = None
+        if detection is not None:
+            selected_reader = self.reader if slot == 0 else self.secondary_reader
+            prepared_text = self.settling_detection.take_text(selected_reader._discovery_ocr)
         def work():
             try:
                 selected = frame
