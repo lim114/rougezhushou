@@ -129,7 +129,8 @@ class GameCapture:
                         may_learn=not flags
                         point=(position[0]-frame_origin[0],position[1]-frame_origin[1])
                 pointer_bounds=pointer.locate(image,point,may_learn=may_learn)
-                self.buffer.offer(image,time.time(),client_rect,target,pointer_bounds=pointer_bounds)
+                self.buffer.offer(frame.frame_buffer,time.time(),client_rect,target,
+                                  pointer_bounds=pointer_bounds,source_bgra=True)
             if self.on_settling is not None and self.buffer.stats()['settle_remaining_ms'] > 0:
                 self.on_settling()
         @self._capture.event

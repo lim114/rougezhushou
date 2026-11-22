@@ -15,6 +15,45 @@ class TextRowReuseTests(unittest.TestCase):
         reader._supported=lambda:True
         return reader,provider
 
+    def test_inventory_prefetch_uses_wide_cpu_batch_and_preserves_cache_order(self):
+        import threading
+        from unittest.mock import Mock
+        from rouge.ocr_cpu_inference import FixedShapeGPU
+
+        frame = np.zeros((50, 120, 3), np.uint8)
+        for limit in (2, 64):
+            with self.subTest(cache_entries=limit):
+                serial, baseline = self.reader(max_entries=limit)
+                reader, provider = self.reader(max_entries=limit)
+                calls = []
+                infer = provider.text_rec.session
+                def observe(tensor):
+                    calls.append((threading.current_thread().name, tensor.shape))
+                    return infer(tensor)
+                session = Mock(spec=FixedShapeGPU, side_effect=observe)
+                session.shape = (2, 3, 4, 8)
+                provider.text_rec.session = session
+                # The next full page retains one wide row from an earlier read.
+                # Two short rows evict it only under the smaller LRU budget.
+                for page, source in ((reader, provider), (serial, baseline)):
+                    page._context = page._configuration()
+                    page._recognize_batch([source.crops[2], source.crops[4]])
+                    source.crops[4][:] = 77
+                calls.clear()
+                actual = reader(frame, overlap_wide=True)[0]
+                expected = serial(frame)[0]
+                self.assertEqual(actual, expected)
+                self.assertEqual(list(reader._cache), list(serial._cache))
+                self.assertTrue(any(name.startswith('rouge-wide-text') and shape == (1, 3, 4, 16)
+                                    for name, shape in calls))
+                replayed = any(not name.startswith('rouge-wide-text') and shape == (2, 3, 4, 16)
+                               for name, shape in calls)
+                self.assertEqual(replayed, limit == 2)
+                if limit == 64:
+                    calls.clear()
+                    self.assertEqual(reader(frame, overlap_wide=True)[0], expected)
+                    self.assertFalse(calls)
+
     def test_changed_line_does_not_reinfer_unchanged_batch_neighbour(self):
         reader,p=self.reader();frame=np.zeros((50,120,3),np.uint8)
         reader(frame);p.crops[2][:]=67

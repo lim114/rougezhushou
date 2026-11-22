@@ -15,6 +15,23 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_native_bgra_budget_and_ownership_with_padded_rows(self):
+        mapped = np.full((30, 48, 4), 255, np.uint8)[:, :40]
+        mapped[:, :, :3] = [30, 40, 50]
+        bgr_bytes = 30 * 40 * 3
+        buffer = FrameBuffer(max_bytes=bgr_bytes)
+        buffer.offer(mapped, 1, source_bgra=True)
+        mapped[:] = 0
+        frame = buffer.take(force=True)
+        self.assertEqual(frame['image'].shape, (30, 40, 3))
+        self.assertTrue(np.all(frame['image'] == [30, 40, 50]))
+        mapped[:, :, 3] = 255
+        buffer.offer(mapped, 2, source_bgra=True)
+        self.assertEqual(buffer.stats()['invalid'], 1)
+        smaller = FrameBuffer(max_bytes=bgr_bytes - 1)
+        smaller.offer(mapped, 1, source_bgra=True)
+        self.assertEqual(smaller.stats()['oversized'], 1)
+
     def test_newer_only_take_leaves_historical_candidates_for_the_other_reader(self):
         buffer = FrameBuffer(settle_seconds=0)
         for i in range(3):buffer.offer(page(30 + i * 50), i)

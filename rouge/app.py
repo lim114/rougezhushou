@@ -674,7 +674,9 @@ class MainWindow(QMainWindow):
             page_visible = bar and any(popup and popup.panel.isVisible()
                 for popup in (bar.inventory_popup, bar.map_popup))
             self.settling_detection.offer(self.capture.buffer, discovery.provider,
-                discovery=discovery if page_visible else None, previous=self.reader._last_frame)
+                discovery=discovery if page_visible else None, previous=self.reader._last_frame,
+                inventory_visible=bool(bar and bar.inventory_popup and bar.active_popup is bar.inventory_popup
+                                       and bar.inventory_popup.panel.isVisible()))
 
     def sample_now(self, checked=False, *, automatic=False):
         if automatic and not self.auto.isChecked():return

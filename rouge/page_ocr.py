@@ -9,6 +9,8 @@ and coordinate conversion follow the installed RapidOCR 1.4.4 implementation.
 from __future__ import annotations
 
 from collections import OrderedDict
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import ExitStack
 from copy import copy, deepcopy
 import hashlib
 from importlib.metadata import PackageNotFoundError, version
@@ -44,6 +46,24 @@ def _batch_input(recognizer, crops):
     max_ratio = max(width / height, *ratios)
     tensor = np.stack([recognizer.resize_norm_img(crop, max_ratio) for crop in crops])
     return tensor.astype(np.float32, copy=False), ratios, max_ratio
+
+
+class _TextRows:
+    """The exact inputs and decoder widths of one original RapidOCR batch."""
+
+    def __init__(self, recognizer, crops):
+        self.tensor, self.ratios, self.maximum = _batch_input(recognizer, crops)
+        self.keys = [('normalized_row', row.shape, row.dtype.str, ratio, self.maximum, row.tobytes())
+                     for row, ratio in zip(self.tensor, self.ratios)]
+
+    def recognize(self, recognizer, missing):
+        inputs = self.tensor if len(missing) == len(self.keys) else self.tensor[missing]
+        start = time.perf_counter()
+        predictions = recognizer.session(inputs)[0]
+        elapsed = time.perf_counter() - start
+        values = recognizer.postprocess_op(predictions, False,
+            wh_ratio_list=[self.ratios[i] for i in missing], max_wh_ratio=self.maximum)
+        return values, elapsed
 
 
 class PageOCR:
@@ -122,9 +142,9 @@ class PageOCR:
                 bool(p.use_cls), _callable_identity(p.text_cls), float(p.max_side_len),
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
 
-    def _recognize_batch(self, crops, *, force_discovery=False):
+    def _recognize_batch(self, crops, *, force_discovery=False, prepared=None):
         if self.reuse_text_rows and self.cache_enabled:
-            return self._recognize_rows(crops,force_discovery=force_discovery)
+            return self._recognize_rows(crops, force_discovery=force_discovery, prepared=prepared)
         key = tuple((a.shape, a.dtype.str, a.tobytes(order='C'))
                     for a in crops) if self.cache_enabled else None
         entry = self._cache.get(key) if self.cache_enabled else None
@@ -156,7 +176,33 @@ class PageOCR:
             self.metrics.setdefault('reused_text_rows',0)
         return result, elapsed, False
 
-    def _recognize_rows(self, crops, *, force_discovery=False):
+    def _prepare_wide_batch(self, work, batches, crops, ratios, force_discovery):
+        from .ocr_cpu_inference import FixedShapeGPU
+        rec = self.provider.text_rec
+        if not self.reuse_text_rows or not self.cache_enabled or not isinstance(rec.session, FixedShapeGPU):
+            return None, None
+        height, width = rec.session.shape[-2:]
+        # Preparation has no region hint, so the narrow GPU batches come first.
+        # A wider input runs on the CPU under the same FP32 model and padding.
+        candidates = []
+        for index, batch in enumerate(batches):
+            batch_width = int(height * max(ratios[i] for i in batch))
+            if batch_width > width:
+                if index == 0:
+                    return None, None
+                candidates.append((len(batch) * batch_width, index))
+        if not candidates:
+            return None, None
+        _, index = max(candidates)
+        batch = batches[index]
+        rows = _TextRows(rec, [crops[i] for i in batch])
+        missing = [i for i, key in enumerate(rows.keys) if force_discovery or key not in self._cache]
+        if not missing:
+            return None, None
+        worker = work.enter_context(ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-wide-text'))
+        return batch, (rows, missing, worker.submit(rows.recognize, rec, missing))
+
+    def _recognize_rows(self, crops, *, force_discovery=False, prepared=None):
         """Reuse exact normalized model inputs, retaining original batch padding.
 
         RapidOCR's original width ordering and maximum ratio still determine
@@ -164,21 +210,20 @@ class PageOCR:
         current detector boxes and classifier transforms are never cached here.
         """
         r=self.provider.text_rec
-        tensor, ratios, maximum = _batch_input(r, crops)
-        keys=[('normalized_row',row.shape,row.dtype.str,ratios[i],maximum,row.tobytes())
-              for i,row in enumerate(tensor)]
+        rows = prepared[0] if prepared is not None else _TextRows(r, crops)
+        keys = rows.keys
         records=[None]*len(crops) if force_discovery else [self._cache.get(key) for key in keys]
         missing=[i for i,entry in enumerate(records) if entry is None]
         result=[deepcopy(entry[0]) if entry is not None else None for entry in records]
         elapsed=0.
         if missing:
             yield_to_current()
-            started=time.perf_counter()
-            inputs = tensor if len(missing) == len(crops) else tensor[missing]
-            predictions=r.session(inputs)[0]
-            elapsed=time.perf_counter()-started
-            values=r.postprocess_op(predictions,False,wh_ratio_list=[ratios[i] for i in missing],
-                                   max_wh_ratio=maximum)
+            # Earlier batches may have changed the LRU. Consume a prepared result
+            # only for the exact original rows, in the same native batch arrangement.
+            if prepared is not None and missing == prepared[1]:
+                values, elapsed = prepared[2].result()
+            else:
+                values, elapsed = rows.recognize(r, missing)
             for i,value in zip(missing,values):
                 result[i]=value
                 key=keys[i];size=len(key[-1])
@@ -194,7 +239,7 @@ class PageOCR:
         self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(crops)-len(missing)
         return result,elapsed,not missing
 
-    def __call__(self, image, *, regions=None, force_discovery=False, detection=None, **kwargs):
+    def __call__(self, image, *, regions=None, force_discovery=False, detection=None, overlap_wide=False, **kwargs):
         yield_to_current()
         self._current_frame = None
         if kwargs or not self._supported():
@@ -258,14 +303,19 @@ class PageOCR:
         self.metrics['page_first_batches'] = len(page_batches)
         rec_result = [('', 0.0)] * len(crops)
         rec_elapsed = 0.0
-        for batch in (*page_batches, *other_batches):
-            result, elapsed, reused = self._recognize_batch([crops[i] for i in batch],
-                                                           force_discovery=force_discovery)
-            for index, value in zip(batch, result):
-                rec_result[index] = value
-            rec_elapsed += elapsed
-            self.metrics['reused_batches' if reused else 'recognized_batches'] += 1
-            self.metrics['recognized_boxes'] += 0 if reused else len(batch)
+        batches = [*page_batches, *other_batches]
+        with ExitStack() as work:
+            early, prepared = (self._prepare_wide_batch(work, batches, crops, ratios, force_discovery)
+                               if overlap_wide else (None, None))
+            for batch in batches:
+                group = [crops[i] for i in batch]
+                result, elapsed, reused = self._recognize_batch(
+                    group, force_discovery=force_discovery, prepared=prepared if batch is early else None)
+                for index, value in zip(batch, result):
+                    rec_result[index] = value
+                rec_elapsed += elapsed
+                self.metrics['reused_batches' if reused else 'recognized_batches'] += 1
+                self.metrics['recognized_boxes'] += 0 if reused else len(batch)
         page_boxes=sum(inside)
         self.metrics.update(detected_boxes=len(crops), page_boxes=page_boxes,
                             guard_boxes=len(crops)-page_boxes, cache_bytes=self._bytes)

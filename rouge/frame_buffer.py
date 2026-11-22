@@ -160,8 +160,8 @@ class FrameBuffer:
                                               interpolation=cv2.INTER_AREA)
         return float(cv2.absdiff(left['novelty'], right['novelty']).mean()) / 255.
 
-    def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None):
-        """Offer a BGR uint8 frame; even rejected offers consume a unique seq.
+    def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None, source_bgra=False):
+        """Offer BGR pixels or a native BGRA mapping; even rejected offers consume a unique seq.
 
         Near-identical consecutive observations share a recognition candidate.
         The sharper representative is retained; the exact latest observation is
@@ -171,18 +171,18 @@ class FrameBuffer:
             self._seq += 1
             seq = self._seq
             self._counts['received'] += 1
-            if (not isinstance(image, np.ndarray) or image.dtype != np.uint8 or
-                    image.ndim not in (2, 3) or image.size == 0 or
-                    (image.ndim == 3 and image.shape[2] != 3)):
+            if (not isinstance(image, np.ndarray) or image.dtype != np.uint8 or image.size == 0
+                    or not (image.ndim == 2 and not source_bgra
+                            or image.ndim == 3 and image.shape[2] == (4 if source_bgra else 3))):
                 self._counts['invalid'] += 1
                 return seq
-            if image.nbytes > self.max_bytes:
+            stored_bytes = image.shape[0] * image.shape[1] * 3 if source_bgra else image.nbytes
+            if stored_bytes > self.max_bytes:
                 self._counts['oversized'] += 1
                 return seq
-            # WGC exposes three BGR channels at a four-byte pixel stride.
-            # Pack the owned snapshot once so validation and thumbnailing
-            # read the same contiguous pixels that the queue will retain.
-            image = image.copy()
+            # Both paths produce one owned snapshot. OpenCV packs the BGRA mapping
+            # directly into final BGR storage, including mappings with row padding.
+            image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR) if source_bgra else image.copy()
             if image.max() <= 4:
                 self._counts['invalid'] += 1
                 return seq

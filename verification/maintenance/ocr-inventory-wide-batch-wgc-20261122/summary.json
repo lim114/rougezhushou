@@ -1,0 +1,591 @@
+{
+  "baseline": "88a9a022a",
+  "method": "Warm 2052x1128 owned Windows WGC source. Start before the source window changes. Inventory endpoint requires new interactive entries; map requires a new matched floor/template, distinct from the preceding floor. Independent processes in counterbalanced order. Component medians include overlapping work and are not additive. Run data isolated; ordinary startup uses CPU and current test assistant uses opt-in iGPU FP32.",
+  "implementation": "Speculative reading for the visible active inventory panel starts one wide CPU-bound FP32 recognition batch while earlier narrow batches execute. Original tensors, batch membership, per-row decoder ratios and cache order are preserved. If earlier operations change the exact missing-row set the reader computes that batch normally. Native BGRA input is packed once into owned BGR storage with row pitch preserved. Same chronological buffer limits, selection and invalid-frame rules.",
+  "gpu": {
+    "trials_per_version": 6,
+    "before_after_medians_ms": {
+      "inventory_ms": [
+        625.38,
+        483.23
+      ],
+      "new_map_ms": [
+        589.25,
+        581.55
+      ],
+      "full_inventory_ms": [
+        2006.88,
+        1883.41
+      ],
+      "inventory_from_capture_ms": [
+        550.48,
+        407.22
+      ],
+      "map_from_capture_ms": [
+        508.18,
+        490.8
+      ],
+      "inventory_ocr_ms": [
+        373.64,
+        258.94
+      ],
+      "inventory_proof_ms": [
+        591.13,
+        451.0
+      ],
+      "process_cpu_ms_to_full": [
+        3109.37,
+        3187.5
+      ],
+      "inventory_capture_ms": [
+        84.35,
+        76.84
+      ],
+      "map_capture_ms": [
+        77.94,
+        78.25
+      ]
+    },
+    "under_500ms_inventory_map_before_after": [
+      [
+        0,
+        0
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "trials_inventory_map_full_ms": [
+      [
+        [
+          682.64,
+          671.73,
+          2118.7
+        ],
+        [
+          673.13,
+          612.61,
+          1938.14
+        ],
+        [
+          581.59,
+          542.79,
+          1995.44
+        ],
+        [
+          612.32,
+          549.19,
+          1887.02
+        ],
+        [
+          638.44,
+          634.28,
+          2127.65
+        ],
+        [
+          562.77,
+          565.88,
+          2018.32
+        ]
+      ],
+      [
+        [
+          482.55,
+          606.53,
+          1869.71
+        ],
+        [
+          500.02,
+          551.75,
+          2053.57
+        ],
+        [
+          551.9,
+          650.09,
+          2144.75
+        ],
+        [
+          455.05,
+          570.47,
+          1768.03
+        ],
+        [
+          446.17,
+          592.63,
+          1694.14
+        ],
+        [
+          483.91,
+          549.39,
+          1897.11
+        ]
+      ]
+    ],
+    "observations_equal": 12
+  },
+  "cpu": {
+    "trials_per_version": 2,
+    "before_after_medians_ms": {
+      "inventory_ms": [
+        920.86,
+        922.75
+      ],
+      "new_map_ms": [
+        919.82,
+        985.87
+      ],
+      "full_inventory_ms": [
+        1817.82,
+        1828.59
+      ],
+      "inventory_from_capture_ms": [
+        859.17,
+        863.87
+      ],
+      "map_from_capture_ms": [
+        848.05,
+        916.04
+      ],
+      "inventory_ocr_ms": [
+        599.42,
+        610.98
+      ],
+      "inventory_proof_ms": [
+        888.54,
+        891.45
+      ],
+      "process_cpu_ms_to_full": [
+        3734.38,
+        3914.07
+      ],
+      "inventory_capture_ms": [
+        61.68,
+        58.89
+      ],
+      "map_capture_ms": [
+        71.78,
+        69.83
+      ]
+    },
+    "under_500ms_inventory_map_before_after": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "trials_inventory_map_full_ms": [
+      [
+        [
+          889.06,
+          939.45,
+          1826.66
+        ],
+        [
+          952.65,
+          900.19,
+          1808.98
+        ]
+      ],
+      [
+        [
+          910.45,
+          979.76,
+          1821.27
+        ],
+        [
+          935.06,
+          991.97,
+          1835.91
+        ]
+      ]
+    ],
+    "observations_equal": 4
+  },
+  "composited_window_check": {
+    "method": "A second 16 ms Windows Graphics Capture session observed only the owned assistant reference window. Both newly confirmed visible relic tile rectangles or the central diagram of the correct zone_3/3j graph were registered in a later window capture using the Qt widget references. The timing endpoint matches both visible tile regions at distinct locations or the changed map diagram directly against the Qt pixel references in each half-resolution grayscale frame. Gaussian-smoothed normalized squared difference must be below 0.015 for every required region, tested at 0.98, 1.00 and 1.02 scale after calibration on separate pilot runs. All pre-switch windows were negative (>0.03). A fixed-position exact-pixel control was later than actual tile appearance in one pilot when the banner disappeared and moved the tiles. Callback time includes WGC delivery and is an upper bound on compositor availability, not physical monitor scan-out. Additional observer is present for both versions.",
+    "order": "before1 after1 after2 before2 before3 after3",
+    "trial_format": "per case [Qt paint, captured assistant pixels], inventory then map",
+    "trials": [
+      [
+        [
+          [
+            523.45,
+            541.09
+          ],
+          [
+            601.63,
+            625.01
+          ]
+        ],
+        [
+          [
+            613.34,
+            628.55
+          ],
+          [
+            534.98,
+            571.85
+          ]
+        ],
+        [
+          [
+            567.68,
+            596.24
+          ],
+          [
+            608.58,
+            642.99
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            463.62,
+            495.04
+          ],
+          [
+            580.12,
+            622.37
+          ]
+        ],
+        [
+          [
+            465.75,
+            501.94
+          ],
+          [
+            625.91,
+            656.69
+          ]
+        ],
+        [
+          [
+            517.65,
+            534.35
+          ],
+          [
+            589.7,
+            621.07
+          ]
+        ]
+      ]
+    ],
+    "medians_window_pixels_inventory_map_ms": [
+      [
+        596.24,
+        625.01
+      ],
+      [
+        501.94,
+        622.37
+      ]
+    ],
+    "under_500ms_inventory_map": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  "isolated_last_batch": {
+    "trials_per_version": 6,
+    "before_after_medians_ms": {
+      "inventory_ms": [
+        564.77,
+        585.05
+      ],
+      "new_map_ms": [
+        629.35,
+        630.33
+      ],
+      "full_inventory_ms": [
+        2025.82,
+        2034.67
+      ],
+      "inventory_from_capture_ms": [
+        523.22,
+        480.29
+      ],
+      "map_from_capture_ms": [
+        559.58,
+        517.86
+      ],
+      "inventory_ocr_ms": [
+        350.57,
+        323.26
+      ],
+      "inventory_proof_ms": [
+        531.11,
+        555.35
+      ],
+      "process_cpu_ms_to_full": [
+        3039.06,
+        3195.32
+      ],
+      "inventory_capture_ms": [
+        41.95,
+        93.78
+      ],
+      "map_capture_ms": [
+        86.28,
+        83.01
+      ]
+    },
+    "under_500ms_inventory_map_before_after": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "trials_inventory_map_full_ms": [
+      [
+        [
+          597.96,
+          686.17,
+          2030.86
+        ],
+        [
+          532.42,
+          662.74,
+          1822.67
+        ],
+        [
+          546.14,
+          586.62,
+          1997.34
+        ],
+        [
+          583.4,
+          595.95,
+          2020.79
+        ],
+        [
+          723.35,
+          664.75,
+          2210.71
+        ],
+        [
+          518.3,
+          548.82,
+          2133.31
+        ]
+      ],
+      [
+        [
+          633.92,
+          621.84,
+          1911.57
+        ],
+        [
+          649.03,
+          710.14,
+          2050.23
+        ],
+        [
+          588.26,
+          642.8,
+          2064.17
+        ],
+        [
+          545.17,
+          638.81,
+          2176.72
+        ],
+        [
+          576.23,
+          594.02,
+          1813.9
+        ],
+        [
+          581.83,
+          517.47,
+          2019.11
+        ]
+      ]
+    ],
+    "observations_equal": 12
+  },
+  "isolated_largest_wide_batch": {
+    "trials_per_version": 6,
+    "before_after_medians_ms": {
+      "inventory_ms": [
+        615.74,
+        542.54
+      ],
+      "new_map_ms": [
+        606.29,
+        653.83
+      ],
+      "full_inventory_ms": [
+        2248.01,
+        1921.44
+      ],
+      "inventory_from_capture_ms": [
+        518.84,
+        444.47
+      ],
+      "map_from_capture_ms": [
+        517.05,
+        584.82
+      ],
+      "inventory_ocr_ms": [
+        340.32,
+        270.84
+      ],
+      "inventory_proof_ms": [
+        577.66,
+        507.21
+      ],
+      "process_cpu_ms_to_full": [
+        3171.88,
+        3312.5
+      ],
+      "inventory_capture_ms": [
+        88.0,
+        103.17
+      ],
+      "map_capture_ms": [
+        72.27,
+        83.91
+      ]
+    },
+    "under_500ms_inventory_map_before_after": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "trials_inventory_map_full_ms": [
+      [
+        [
+          708.53,
+          674.19,
+          2370.17
+        ],
+        [
+          612.5,
+          608.57,
+          2215.83
+        ],
+        [
+          586.68,
+          737.14,
+          2280.18
+        ],
+        [
+          618.97,
+          533.91,
+          2503.94
+        ],
+        [
+          605.55,
+          604.0,
+          2116.33
+        ],
+        [
+          624.2,
+          550.34,
+          2078.58
+        ]
+      ],
+      [
+        [
+          560.02,
+          648.65,
+          1995.76
+        ],
+        [
+          512.41,
+          686.97,
+          1947.3
+        ],
+        [
+          551.53,
+          604.67,
+          1770.76
+        ],
+        [
+          533.55,
+          659.01,
+          2192.72
+        ],
+        [
+          559.38,
+          615.52,
+          1895.59
+        ],
+        [
+          478.59,
+          698.1,
+          1769.03
+        ]
+      ]
+    ],
+    "observations_equal": 12
+  },
+  "capture_component": {
+    "frames": 42,
+    "warm_median_ms": [
+      14.96,
+      7.03
+    ],
+    "shape": [
+      1128,
+      2052,
+      4
+    ],
+    "row_pitch": 8320
+  },
+  "page_ocr_parity": {
+    "pages": 20,
+    "text_boxes": 713,
+    "exact": [
+      "text",
+      "confidence",
+      "coordinates",
+      "LRU key order"
+    ]
+  },
+  "fixed_shape_upper_bound": {
+    "enabled": false,
+    "trials": 4,
+    "first_inventory_ms": [
+      434.96,
+      470.64,
+      470.77,
+      482.59
+    ],
+    "comparison_median_ms": 590.24,
+    "source": "Two exact real model input shapes selected from this inventory sample; no resizing, padding, retraining or precision reduction. This is an in-sample upper-bound experiment. A few OCR confidence values differed, with identical words, boxes, map and inventory facts in these trials.",
+    "first_compile_seconds": 21.061,
+    "isolated_disk_cache_bytes": 28456139,
+    "wide_calls": 22,
+    "distinct_wide_shapes": 22,
+    "other_sample_pages_hitting_either_shape": 0
+  },
+  "validation": {
+    "tests_run": 206,
+    "skipped": 0,
+    "visible_responsive_test_helper": true,
+    "private_state_unchanged": true
+  },
+  "limitations": "Small warm replay cohorts. CPU timing and frame content were observed, not game FPS, physical display latency or live-game correctness. The 0.5 s requirement for both pages remains open."
+}

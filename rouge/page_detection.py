@@ -30,7 +30,7 @@ class SettlingDetection:
         self.seq = None
         self.generation = None
 
-    def offer(self, buffer, provider, *, discovery=None, previous=None):
+    def offer(self, buffer, provider, *, discovery=None, previous=None, inventory_visible=False):
         pending = self.text_future or self.future
         if pending is not None and not pending.done():
             return
@@ -47,7 +47,7 @@ class SettlingDetection:
                     np.mean(previous[::16, ::16] != current[::16, ::16]) > .20):
                 page = discovery.fork_for_preparation()
                 self.text_future = self.worker.submit(
-                    _prepare_text, discovery._configuration(), page, frame, self.future)
+                    _prepare_text, discovery._configuration(), page, frame, self.future, inventory_visible)
 
     def for_frame(self, frame):
         if frame is not None and (frame['seq'], frame['generation']) == (self.seq, self.generation):
@@ -60,12 +60,12 @@ class SettlingDetection:
         self.text_future = None
 
 
-def _prepare_text(configuration, page, frame, detection):
+def _prepare_text(configuration, page, frame, detection, inventory_visible=False):
     image, _ = prepare_frame(frame['image'], frame['client_rect'])
     _, pixels, boxes = detection.result()
     local_detection = Future()
     local_detection.set_result((page.provider, pixels, boxes))
-    result = page(image, detection=local_detection)
+    result = page(image, detection=local_detection, overlap_wide=inventory_visible)
     return configuration, page, result
 
 
