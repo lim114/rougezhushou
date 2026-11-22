@@ -6,6 +6,14 @@ from rouge.anchors import crop
 from rouge.viewport import map_evidence, prepare_frame
 
 class ImageGeometryReviewTests(unittest.TestCase):
+    def test_single_edge_at_dark_fraction_cutoff_still_trims(self):
+        image = np.full((240, 1000, 3), 60, np.uint8)
+        image[:8] = 3
+        image[:8, 0, 1] = 4
+        self.assertEqual(prepare_frame(image)[1]['content_rect'], [0, 8, 1000, 240])
+        image[:8, 1, 1] = 4
+        self.assertEqual(prepare_frame(image)[1]['content_rect'], [0, 0, 1000, 240])
+
     def test_gold_icon_between_coarse_scales_and_shop_prices_below_header(self):
         import cv2
         from rouge.resource_recognition import gold_template, read_resources

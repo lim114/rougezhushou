@@ -2,17 +2,15 @@
 import cv2
 import numpy as np
 
-def prepare_frame(image,client_rect=None):
-    h,w=image.shape[:2]
-    origin_x=origin_y=0
-    if client_rect is not None:
-        x0,y0,x1,y1=map(int,client_rect)
-        if not (0<=x0<x1<=w and 0<=y0<y1<=h and x1-x0>=320 and y1-y0>=180):
-            raise ValueError('本次采样的客户区无效或小于320×180。')
-        image=image[y0:y1,x0:x1];origin_x,origin_y=x0,y0
-    ch,cw=image.shape[:2]
-    # Only contiguous, almost entirely black outer padding is removed. Dark
-    # interior panels are not candidates. Thin game borders remain untouched.
+def _content_bounds(image):
+    height, width = image.shape[:2]
+    # Only consecutive dark rows/columns touching an edge can be padding.
+    # A non-dark outer line on all four sides rules out cropping exactly.
+    if image.dtype == np.uint8 and height and width and all(
+        np.mean(np.all(line[:, :3] <= 3, axis=1)) < .999
+        for line in (image[0], image[-1], image[:, 0], image[:, -1])
+    ):
+        return 0, height, 0, width
     if image.dtype == np.uint8 and image.size:
         dark = cv2.inRange(image[:, :, :3], (0, 0, 0, 0), (3, 3, 3, 3)) != 0
     else:
@@ -28,7 +26,21 @@ def prepare_frame(image,client_rect=None):
         threshold=max(4,round(length*.005))
         return (a if a>=threshold else 0,
                 b if length-b>=threshold else length)
-    top,bottom=edges(rows,ch);left,right=edges(cols,cw)
+    top, bottom = edges(rows, height)
+    left, right = edges(cols, width)
+    return top, bottom, left, right
+
+def prepare_frame(image,client_rect=None):
+    h,w=image.shape[:2]
+    origin_x=origin_y=0
+    if client_rect is not None:
+        x0,y0,x1,y1=map(int,client_rect)
+        if not (0<=x0<x1<=w and 0<=y0<y1<=h and x1-x0>=320 and y1-y0>=180):
+            raise ValueError('本次采样的客户区无效或小于320×180。')
+        image=image[y0:y1,x0:x1];origin_x,origin_y=x0,y0
+    # Only contiguous, almost entirely black outer padding is removed. Dark
+    # interior panels are not candidates. Thin game borders remain untouched.
+    top, bottom, left, right = _content_bounds(image)
     if right-left<320 or bottom-top<180:
         raise ValueError('本次采样的有效画面小于320×180。')
     content=image[top:bottom,left:right]

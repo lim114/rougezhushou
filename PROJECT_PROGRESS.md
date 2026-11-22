@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品首绘仍超过 0.5 秒，完整清单约 2 秒。长文字和整页读字仍影响首屏，轻量模型出现资源漏读；需在保持页面证据的前提下进一步提速并验证游戏同跑。[回执](verification/maintenance/ocr-map-rim-inventory-refresh-20261122/summary.json)。
+地图和藏品切页首绘仍超过 0.5 秒。新藏品首显主要等整页文字，完整清单另有约 1 秒的图标匹配；核对长文字与短批并行的适用条件，以及真实游戏同跑负载、首显尾延迟与错读。[回执](verification/maintenance/ocr-map-inventory-pixel-path-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

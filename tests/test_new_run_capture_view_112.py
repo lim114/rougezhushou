@@ -46,6 +46,14 @@ class NewRunCaptureView112Tests(unittest.TestCase):
     def stamp(self):
         return max(time.time(),self.window.run.state['started_at']+.001,self.window.last_sample_at+.001)
 
+    def test_displayed_frame_owns_the_color_pixels_from_a_strided_capture(self):
+        self.image = self.image[:, ::-1]
+        self.image[5, 7] = [20, 80, 140]
+        self.sample({'page': 'unknown', 'nodes': [], 'captured_at': self.stamp()})
+        self.image[5, 7] = 0
+        color = self.window.map_frame.pixelColor(7, 5)
+        self.assertEqual(color.getRgb(), (140, 80, 20, 255))
+
     def sample(self,observation):
         before=deepcopy(observation);self.window.sample_received((self.image,observation));self.qt.processEvents()
         self.assertEqual(observation,before)

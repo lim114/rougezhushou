@@ -4,6 +4,7 @@ import os
 import sys
 import threading
 import time
+import numpy as np
 import win32gui
 from pathlib import Path
 from PySide6.QtCore import QObject, Signal, Qt, QTimer,QSize,QSignalBlocker
@@ -998,9 +999,10 @@ class MainWindow(QMainWindow):
             elif current_frame:
                 self.capture_operator_picture.set_subject(None,None,'')
                 replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
-        rgb = image[:,:,::-1].copy()
-        height,width,_ = rgb.shape
-        qimage = QImage(rgb.data,width,height,rgb.strides[0],QImage.Format.Format_RGB888).copy()
+        pixels = np.ascontiguousarray(image)
+        height, width = pixels.shape[:2]
+        qimage = QImage(pixels.data, width, height, pixels.strides[0],
+                        QImage.Format.Format_BGR888).convertToFormat(QImage.Format.Format_RGB888)
         if not current_frame:
             graph=observation.get('map')or{};remembered=self.run.state['maps'].get(graph.get('zone_id'))
             if remembered and seq>=self.map_frame_sequences.get(graph.get('zone_id'),0) and (graph.get('template_id'),observation['captured_at'])==(remembered.get('template_id'),remembered.get('captured_at')):
