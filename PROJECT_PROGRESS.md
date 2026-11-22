@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品切页至助手窗口首显仍待实机稳定低于 500 毫秒。已将整页预读接入常规 CPU 的空闲切页与核显的忙时切页。首显仍受整页文字推理和图形显示影响，完整藏品清单另受图标及资源核验影响。[回执](verification/maintenance/ocr-busy-page-settling-20261122/summary.json)。
+地图和藏品实际首显仍需稳定低于 500 毫秒并验证游戏同跑。下一步应缩短当前页确证所需的逐行识别及地图绘制等待。INT8 实测会改变地图与队伍判读。[回执](verification/maintenance/ocr-fp32-detector-input-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

@@ -1,0 +1,3495 @@
+{
+  "tested_base_commit": "ebaaa2c85",
+  "detector_thread_decision": "Eight detector threads improve idle medians but regress the CPU-contention replay. Six threads were also tested against four. Both are experiments, and four FP32 CPU detector threads remain the default.",
+  "method": "Intel Core Ultra 5 125H, native Windows, warmed 2052x1128 source window, 100 ms source WGC cadence and a separate 16 ms WGC witness of the assistant. Each pair used both implementations in alternating order. A changed floor must register its new map. Inventory requires two newly clickable item rows to register in nonoverlapping locations absent before the source change. Whole-page settling overlaps frame selection. Medians of disjoint segments need not sum to the median endpoint. cpu_ms is process CPU time up through sampled Qt paint, not game FPS or CPU load.",
+  "source_chain": [
+    "GameCapture Windows Graphics Capture and FrameBuffer.offer",
+    "MainWindow.prepare_settling_page and sample_now",
+    "SettlingDetection.offer and take_text",
+    "PageOCR.detect_boxes, orientation classifier, sorted normalized recognition batches",
+    "ScreenReader._interpret and read_run",
+    "MainWindow.show_held_names or map-phase sample_received",
+    "Qt paint of new clickable items or changed floor",
+    "independent WGC registration of matching assistant pixels"
+  ],
+  "first_visible_goal_ms": 500,
+  "paired_eight_thread_detector": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "previouscpu_100": {
+        "rows": [
+          [
+            1258.22,
+            1216.5,
+            2332.2,
+            1141.4,
+            1019.5,
+            41.68,
+            121.95
+          ],
+          [
+            1327.72,
+            1207.8,
+            2326.7,
+            1171.61,
+            1067.9,
+            119.87,
+            103.73
+          ],
+          [
+            1348.78,
+            1244.7,
+            2276.13,
+            1062.1,
+            1005.7,
+            104.04,
+            56.39
+          ],
+          [
+            1275.06,
+            1175.5,
+            2494.69,
+            942.64,
+            837.8,
+            99.57,
+            104.85
+          ]
+        ],
+        "medians": [
+          1301.4,
+          1212.2,
+          2329.4,
+          1101.8,
+          1012.6,
+          101.8,
+          104.3
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 101.8,
+          "queue_ms": 140.1,
+          "complete_receive_ms": 2305.0,
+          "cpu_ms": 4085.9,
+          "median_full_page_ocr_batch_time_ms": 727.1,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 121.8,
+            "full_detector": 326.6,
+            "crop_and_dispatch_to_orientation": 17.6,
+            "orientation": 40.0,
+            "orientation_end_to_last_canonical_batch": 727.5,
+            "last_batch_to_correct_qt_paint": 43.4,
+            "qt_paint_to_registered_visible_pixels": 36.9
+          },
+          "per_pair_segments_ms": [
+            [
+              56.9,
+              322.4,
+              19.8,
+              36.9,
+              734.2,
+              40.6,
+              47.5
+            ],
+            [
+              133.5,
+              330.9,
+              18.4,
+              44.5,
+              743.3,
+              43.1,
+              14.0
+            ],
+            [
+              127.4,
+              356.7,
+              16.8,
+              40.6,
+              720.8,
+              44.1,
+              42.4
+            ],
+            [
+              116.1,
+              321.2,
+              15.5,
+              39.5,
+              707.8,
+              43.6,
+              31.4
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 104.3,
+          "queue_ms": 137.5,
+          "complete_receive_ms": 2038.0,
+          "cpu_ms": 1859.4,
+          "median_full_page_ocr_batch_time_ms": 417.2,
+          "map_phase_ui_handler_median_ms": 65.9,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 121.2,
+            "full_detector": 317.5,
+            "crop_and_dispatch_to_orientation": 16.0,
+            "orientation": 41.8,
+            "orientation_end_to_last_canonical_batch": 417.6,
+            "last_batch_to_correct_qt_paint": 162.5,
+            "qt_paint_to_registered_visible_pixels": 34.8
+          },
+          "per_pair_segments_ms": [
+            [
+              139.7,
+              317.9,
+              16.2,
+              42.0,
+              412.9,
+              177.6,
+              35.1
+            ],
+            [
+              120.5,
+              335.3,
+              14.6,
+              41.6,
+              468.1,
+              157.9,
+              33.6
+            ],
+            [
+              76.9,
+              312.1,
+              16.4,
+              42.6,
+              422.4,
+              157.3,
+              34.4
+            ],
+            [
+              122.0,
+              317.1,
+              15.8,
+              32.1,
+              241.4,
+              167.1,
+              47.1
+            ]
+          ]
+        }
+      },
+      "optimizedcpu_100": {
+        "rows": [
+          [
+            1244.11,
+            1127.2,
+            2609.28,
+            827.24,
+            796.9,
+            116.86,
+            30.37
+          ],
+          [
+            922.12,
+            880.7,
+            2092.05,
+            916.73,
+            882.6,
+            41.44,
+            34.09
+          ],
+          [
+            1104.01,
+            1042.5,
+            2064.69,
+            977.38,
+            904.4,
+            61.48,
+            72.95
+          ],
+          [
+            1177.38,
+            1100.1,
+            2122.74,
+            957.35,
+            882.8,
+            77.26,
+            74.57
+          ]
+        ],
+        "medians": [
+          1140.7,
+          1071.3,
+          2107.4,
+          937.0,
+          882.7,
+          69.4,
+          53.5
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 69.4,
+          "queue_ms": 146.2,
+          "complete_receive_ms": 2084.3,
+          "cpu_ms": 5226.6,
+          "median_full_page_ocr_batch_time_ms": 709.1,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 88.2,
+            "full_detector": 206.7,
+            "crop_and_dispatch_to_orientation": 20.6,
+            "orientation": 36.9,
+            "orientation_end_to_last_canonical_batch": 709.5,
+            "last_batch_to_correct_qt_paint": 46.1,
+            "qt_paint_to_registered_visible_pixels": 43.6
+          },
+          "per_pair_segments_ms": [
+            [
+              143.2,
+              206.8,
+              22.0,
+              36.4,
+              752.2,
+              44.0,
+              39.5
+            ],
+            [
+              59.5,
+              211.2,
+              20.9,
+              37.2,
+              501.8,
+              43.8,
+              47.7
+            ],
+            [
+              85.0,
+              200.6,
+              19.6,
+              36.6,
+              701.8,
+              48.3,
+              12.1
+            ],
+            [
+              91.4,
+              206.6,
+              20.4,
+              37.8,
+              717.3,
+              53.8,
+              50.0
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 53.5,
+          "queue_ms": 137.7,
+          "complete_receive_ms": 1919.8,
+          "cpu_ms": 2851.6,
+          "median_full_page_ocr_batch_time_ms": 378.4,
+          "map_phase_ui_handler_median_ms": 72.2,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 73.7,
+            "full_detector": 216.1,
+            "crop_and_dispatch_to_orientation": 20.1,
+            "orientation": 35.8,
+            "orientation_end_to_last_canonical_batch": 378.8,
+            "last_batch_to_correct_qt_paint": 178.6,
+            "qt_paint_to_registered_visible_pixels": 32.5
+          },
+          "per_pair_segments_ms": [
+            [
+              47.7,
+              226.1,
+              20.3,
+              30.8,
+              285.3,
+              178.1,
+              39.0
+            ],
+            [
+              59.0,
+              238.0,
+              20.9,
+              40.9,
+              349.3,
+              179.0,
+              29.6
+            ],
+            [
+              88.3,
+              204.4,
+              19.8,
+              34.4,
+              415.9,
+              179.1,
+              35.5
+            ],
+            [
+              99.9,
+              206.1,
+              18.9,
+              37.1,
+              408.2,
+              159.8,
+              27.4
+            ]
+          ]
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "differences_after": []
+    }
+  },
+  "detector_pilot": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "det4cpu_100": {
+        "rows": [
+          [
+            1191.38,
+            1085.1,
+            2208.24,
+            1069.29,
+            1021.2,
+            106.24,
+            48.12
+          ],
+          [
+            1240.94,
+            1185.9,
+            2168.65,
+            967.08,
+            876.3,
+            55.06,
+            90.81
+          ],
+          [
+            1184.75,
+            1149.5,
+            2491.74,
+            1236.64,
+            1133.6,
+            35.21,
+            103.03
+          ],
+          [
+            1208.59,
+            1179.3,
+            2227.34,
+            1056.25,
+            1012.3,
+            29.26,
+            43.99
+          ]
+        ],
+        "medians": [
+          1200.0,
+          1164.4,
+          2217.8,
+          1062.8,
+          1016.8,
+          45.1,
+          69.5
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 45.1,
+          "queue_ms": 140.6,
+          "complete_receive_ms": 2193.4,
+          "cpu_ms": 4046.9,
+          "median_full_page_ocr_batch_time_ms": 698.9
+        },
+        "map": {
+          "capture_ms": 69.5,
+          "queue_ms": 144.6,
+          "complete_receive_ms": 2258.1,
+          "cpu_ms": 2117.2,
+          "median_full_page_ocr_batch_time_ms": 437.8,
+          "map_phase_ui_handler_median_ms": 67.8
+        }
+      },
+      "det8cpu_100": {
+        "rows": [
+          [
+            953.09,
+            854.2,
+            1956.79,
+            966.73,
+            848.8,
+            98.94,
+            117.98
+          ],
+          [
+            1096.35,
+            1059.5,
+            2018.64,
+            899.84,
+            814.4,
+            36.82,
+            85.47
+          ],
+          [
+            1008.32,
+            965.2,
+            2275.18,
+            824.73,
+            772.6,
+            43.17,
+            52.16
+          ],
+          [
+            1168.18,
+            1074.4,
+            2108.85,
+            1068.14,
+            1006.1,
+            93.75,
+            62.05
+          ]
+        ],
+        "medians": [
+          1052.3,
+          1012.4,
+          2063.7,
+          933.3,
+          831.6,
+          68.5,
+          73.8
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 68.5,
+          "queue_ms": 135.8,
+          "complete_receive_ms": 2039.0,
+          "cpu_ms": 5031.2,
+          "median_full_page_ocr_batch_time_ms": 595.7
+        },
+        "map": {
+          "capture_ms": 73.8,
+          "queue_ms": 139.7,
+          "complete_receive_ms": 1980.5,
+          "cpu_ms": 2882.8,
+          "median_full_page_ocr_batch_time_ms": 343.1,
+          "map_phase_ui_handler_median_ms": 68.6
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "differences_after": []
+    }
+  },
+  "experimental_int8_windows": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "basecpu_100": {
+        "rows": [
+          [
+            1274.5,
+            1193.1,
+            2367.79,
+            1262.34,
+            1134.9,
+            81.4,
+            127.45
+          ],
+          [
+            1217.15,
+            1186.5,
+            2274.68,
+            1093.19,
+            991.7,
+            30.67,
+            101.49
+          ],
+          [
+            1222.37,
+            1176.3,
+            2102.46,
+            1024.96,
+            964.1,
+            46.03,
+            60.89
+          ],
+          [
+            1174.86,
+            1139.6,
+            2183.98,
+            1112.52,
+            1032.3,
+            35.29,
+            80.19
+          ]
+        ],
+        "medians": [
+          1219.8,
+          1181.4,
+          2229.3,
+          1102.9,
+          1012.0,
+          40.7,
+          90.8
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 40.7,
+          "queue_ms": 126.7,
+          "complete_receive_ms": 2205.3,
+          "cpu_ms": 3937.5,
+          "median_full_page_ocr_batch_time_ms": 697.1
+        },
+        "map": {
+          "capture_ms": 90.8,
+          "queue_ms": 135.0,
+          "complete_receive_ms": 1978.3,
+          "cpu_ms": 1695.3,
+          "median_full_page_ocr_batch_time_ms": 426.5,
+          "map_phase_ui_handler_median_ms": 68.0
+        }
+      },
+      "quantcpu_100": {
+        "rows": [
+          [
+            1300.43,
+            1264.6,
+            2382.64,
+            991.9,
+            931.1,
+            35.83,
+            60.82
+          ],
+          [
+            1209.13,
+            1153.1,
+            2242.08,
+            1067.24,
+            939.0,
+            56.05,
+            128.29
+          ],
+          [
+            1241.01,
+            1142.2,
+            2377.07,
+            828.84,
+            774.5,
+            98.81,
+            54.36
+          ],
+          [
+            1141.72,
+            1116.8,
+            2158.95,
+            960.39,
+            926.6,
+            24.88,
+            33.78
+          ]
+        ],
+        "medians": [
+          1225.1,
+          1147.7,
+          2309.6,
+          976.1,
+          928.9,
+          45.9,
+          57.6
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 45.9,
+          "queue_ms": 143.7,
+          "complete_receive_ms": 2286.5,
+          "cpu_ms": 4023.4,
+          "median_full_page_ocr_batch_time_ms": 659.1
+        },
+        "map": {
+          "capture_ms": 57.6,
+          "queue_ms": 131.3,
+          "complete_receive_ms": 2061.9,
+          "cpu_ms": 1859.4,
+          "median_full_page_ocr_batch_time_ms": 320.4,
+          "map_phase_ui_handler_median_ms": 74.1
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [
+      [
+        1,
+        0,
+        "nodes"
+      ],
+      [
+        1,
+        0,
+        "texts"
+      ],
+      [
+        1,
+        1,
+        "run"
+      ],
+      [
+        1,
+        1,
+        "nodes"
+      ],
+      [
+        1,
+        1,
+        "texts"
+      ],
+      [
+        2,
+        0,
+        "nodes"
+      ],
+      [
+        2,
+        0,
+        "texts"
+      ],
+      [
+        2,
+        1,
+        "run"
+      ],
+      [
+        2,
+        1,
+        "nodes"
+      ],
+      [
+        2,
+        1,
+        "texts"
+      ],
+      [
+        3,
+        0,
+        "nodes"
+      ],
+      [
+        3,
+        0,
+        "texts"
+      ],
+      [
+        3,
+        1,
+        "run"
+      ],
+      [
+        3,
+        1,
+        "nodes"
+      ],
+      [
+        3,
+        1,
+        "texts"
+      ],
+      [
+        4,
+        0,
+        "nodes"
+      ],
+      [
+        4,
+        0,
+        "texts"
+      ],
+      [
+        4,
+        1,
+        "run"
+      ],
+      [
+        4,
+        1,
+        "nodes"
+      ],
+      [
+        4,
+        1,
+        "texts"
+      ]
+    ],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "differences_after": [
+        [
+          1,
+          0,
+          [
+            "history",
+            "resources"
+          ]
+        ],
+        [
+          2,
+          0,
+          [
+            "history",
+            "resources"
+          ]
+        ],
+        [
+          3,
+          0,
+          [
+            "history",
+            "resources"
+          ]
+        ],
+        [
+          4,
+          0,
+          [
+            "history",
+            "resources"
+          ]
+        ]
+      ]
+    }
+  },
+  "paired_detector_with_cpu_contention": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "previousloadcpu_100": {
+        "rows": [
+          [
+            1116.19,
+            984.4,
+            2596.2,
+            1033.34,
+            924.8,
+            131.78,
+            108.54
+          ],
+          [
+            1234.59,
+            1187.4,
+            2638.25,
+            998.23,
+            877.9,
+            47.19,
+            120.29
+          ],
+          [
+            1510.86,
+            1460.1,
+            2998.37,
+            1078.65,
+            995.2,
+            50.79,
+            83.48
+          ],
+          [
+            1292.71,
+            1164.8,
+            2832.77,
+            1223.52,
+            1130.0,
+            127.92,
+            93.5
+          ]
+        ],
+        "medians": [
+          1263.7,
+          1176.1,
+          2735.5,
+          1056.0,
+          960.0,
+          89.4,
+          101.0
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 89.4,
+          "queue_ms": 145.7,
+          "complete_receive_ms": 2705.6,
+          "cpu_ms": 5757.8,
+          "median_full_page_ocr_batch_time_ms": 621.7,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 159.6,
+            "full_detector": 341.3,
+            "crop_and_dispatch_to_orientation": 35.2,
+            "orientation": 64.5,
+            "orientation_end_to_last_canonical_batch": 622.6,
+            "last_batch_to_correct_qt_paint": 44.0,
+            "qt_paint_to_registered_visible_pixels": 23.8
+          },
+          "per_pair_segments_ms": [
+            [
+              151.4,
+              317.8,
+              20.6,
+              40.8,
+              508.1,
+              45.2,
+              32.3
+            ],
+            [
+              82.4,
+              344.4,
+              36.2,
+              67.0,
+              615.0,
+              51.2,
+              38.4
+            ],
+            [
+              265.2,
+              406.6,
+              34.2,
+              69.5,
+              678.9,
+              41.2,
+              15.3
+            ],
+            [
+              167.7,
+              338.2,
+              37.9,
+              62.0,
+              630.2,
+              42.9,
+              13.8
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 101.0,
+          "queue_ms": 143.8,
+          "complete_receive_ms": 2319.6,
+          "cpu_ms": 2617.2,
+          "median_full_page_ocr_batch_time_ms": 357.8,
+          "map_phase_ui_handler_median_ms": 81.4,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 124.3,
+            "full_detector": 292.3,
+            "crop_and_dispatch_to_orientation": 22.6,
+            "orientation": 37.8,
+            "orientation_end_to_last_canonical_batch": 358.2,
+            "last_batch_to_correct_qt_paint": 197.8,
+            "qt_paint_to_registered_visible_pixels": 35.1
+          },
+          "per_pair_segments_ms": [
+            [
+              130.5,
+              305.9,
+              18.0,
+              32.9,
+              326.9,
+              177.7,
+              41.5
+            ],
+            [
+              150.0,
+              234.0,
+              20.0,
+              39.8,
+              329.3,
+              193.5,
+              31.7
+            ],
+            [
+              108.8,
+              278.7,
+              25.3,
+              35.9,
+              387.2,
+              205.2,
+              37.6
+            ],
+            [
+              118.2,
+              347.6,
+              32.0,
+              61.2,
+              429.9,
+              202.0,
+              32.6
+            ]
+          ]
+        }
+      },
+      "optimizedloadcpu_100": {
+        "rows": [
+          [
+            945.88,
+            859.0,
+            2397.19,
+            1036.19,
+            931.6,
+            86.85,
+            104.61
+          ],
+          [
+            1326.92,
+            1201.5,
+            2780.37,
+            1307.51,
+            1213.4,
+            125.4,
+            94.07
+          ],
+          [
+            1327.58,
+            1206.8,
+            2783.36,
+            1234.68,
+            1181.7,
+            120.82,
+            53.0
+          ],
+          [
+            1286.5,
+            1169.9,
+            2629.54,
+            1142.48,
+            1069.0,
+            116.63,
+            73.49
+          ]
+        ],
+        "medians": [
+          1306.7,
+          1185.7,
+          2705.0,
+          1188.6,
+          1125.3,
+          118.7,
+          83.8
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 118.7,
+          "queue_ms": 146.7,
+          "complete_receive_ms": 2673.6,
+          "cpu_ms": 6929.7,
+          "median_full_page_ocr_batch_time_ms": 613.9,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 151.3,
+            "full_detector": 354.2,
+            "crop_and_dispatch_to_orientation": 32.8,
+            "orientation": 63.3,
+            "orientation_end_to_last_canonical_batch": 614.8,
+            "last_batch_to_correct_qt_paint": 43.9,
+            "qt_paint_to_registered_visible_pixels": 26.1
+          },
+          "per_pair_segments_ms": [
+            [
+              108.3,
+              204.2,
+              17.8,
+              36.2,
+              517.8,
+              43.7,
+              17.9
+            ],
+            [
+              160.2,
+              350.7,
+              29.5,
+              69.7,
+              634.8,
+              42.4,
+              39.7
+            ],
+            [
+              157.3,
+              382.4,
+              36.3,
+              67.6,
+              622.6,
+              44.0,
+              17.4
+            ],
+            [
+              145.3,
+              357.8,
+              36.0,
+              59.0,
+              606.9,
+              47.1,
+              34.4
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 83.8,
+          "queue_ms": 142.4,
+          "complete_receive_ms": 2504.8,
+          "cpu_ms": 4000.0,
+          "median_full_page_ocr_batch_time_ms": 411.2,
+          "map_phase_ui_handler_median_ms": 94.3,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 112.1,
+            "full_detector": 334.8,
+            "crop_and_dispatch_to_orientation": 29.9,
+            "orientation": 51.0,
+            "orientation_end_to_last_canonical_batch": 411.7,
+            "last_batch_to_correct_qt_paint": 229.3,
+            "qt_paint_to_registered_visible_pixels": 35.9
+          },
+          "per_pair_segments_ms": [
+            [
+              130.4,
+              237.6,
+              22.4,
+              36.5,
+              336.0,
+              227.9,
+              45.4
+            ],
+            [
+              123.2,
+              368.5,
+              31.4,
+              59.9,
+              461.4,
+              230.7,
+              32.4
+            ],
+            [
+              82.8,
+              368.7,
+              36.1,
+              56.4,
+              432.2,
+              223.9,
+              34.6
+            ],
+            [
+              101.0,
+              301.1,
+              28.5,
+              45.6,
+              391.2,
+              238.0,
+              37.1
+            ]
+          ]
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [],
+      "differences_after": []
+    },
+    "method": "Four concurrent independent background processes repeatedly ran 20,000 SHA256 PBKDF2 iterations each. Work units per second cover the entire replay process, including initialization and witness processing. This is an artificial CPU contention check. Game FPS and player experience were not measured.",
+    "background_work_units_per_second": [
+      [
+        "previousloadcpu_100-inv1",
+        466.4
+      ],
+      [
+        "optimizedloadcpu_100-inv1",
+        445.1
+      ],
+      [
+        "optimizedloadcpu_100-inv2",
+        414.7
+      ],
+      [
+        "previousloadcpu_100-inv2",
+        419.0
+      ],
+      [
+        "previousloadcpu_100-inv3",
+        403.8
+      ],
+      [
+        "optimizedloadcpu_100-inv3",
+        417.2
+      ],
+      [
+        "optimizedloadcpu_100-inv4",
+        417.5
+      ],
+      [
+        "previousloadcpu_100-inv4",
+        415.2
+      ]
+    ]
+  },
+  "six_thread_idle": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "previous6cpu_100": {
+        "rows": [
+          [
+            1186.48,
+            1058.8,
+            2501.28,
+            1136.99,
+            1009.5,
+            127.7,
+            127.54
+          ],
+          [
+            1293.79,
+            1190.9,
+            2628.5,
+            1059.49,
+            1020.8,
+            102.89,
+            38.65
+          ],
+          [
+            1235.32,
+            1163.1,
+            2363.86,
+            995.07,
+            898.9,
+            72.2,
+            96.17
+          ],
+          [
+            1266.87,
+            1209.3,
+            2258.35,
+            1045.69,
+            1013.4,
+            57.54,
+            32.27
+          ]
+        ],
+        "medians": [
+          1251.1,
+          1177.0,
+          2432.6,
+          1052.6,
+          1011.5,
+          87.5,
+          67.4
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 87.5,
+          "queue_ms": 131.1,
+          "complete_receive_ms": 2402.6,
+          "cpu_ms": 4078.1,
+          "median_full_page_ocr_batch_time_ms": 688.1,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 108.3,
+            "full_detector": 328.3,
+            "crop_and_dispatch_to_orientation": 19.6,
+            "orientation": 40.6,
+            "orientation_end_to_last_canonical_batch": 688.6,
+            "last_batch_to_correct_qt_paint": 44.8,
+            "qt_paint_to_registered_visible_pixels": 33.2
+          },
+          "per_pair_segments_ms": [
+            [
+              143.5,
+              327.8,
+              21.3,
+              37.7,
+              594.3,
+              44.9,
+              17.0
+            ],
+            [
+              120.2,
+              328.8,
+              18.0,
+              45.2,
+              706.4,
+              58.0,
+              17.2
+            ],
+            [
+              96.4,
+              310.2,
+              21.4,
+              40.9,
+              676.0,
+              41.2,
+              49.2
+            ],
+            [
+              74.5,
+              339.7,
+              16.4,
+              40.4,
+              701.2,
+              44.7,
+              50.0
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 67.4,
+          "queue_ms": 128.0,
+          "complete_receive_ms": 2217.9,
+          "cpu_ms": 1820.3,
+          "median_full_page_ocr_batch_time_ms": 392.7,
+          "map_phase_ui_handler_median_ms": 71.3,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 88.9,
+            "full_detector": 310.6,
+            "crop_and_dispatch_to_orientation": 19.5,
+            "orientation": 39.2,
+            "orientation_end_to_last_canonical_batch": 393.1,
+            "last_batch_to_correct_qt_paint": 174.6,
+            "qt_paint_to_registered_visible_pixels": 37.6
+          },
+          "per_pair_segments_ms": [
+            [
+              144.6,
+              344.8,
+              21.1,
+              52.7,
+              364.8,
+              170.3,
+              38.7
+            ],
+            [
+              65.1,
+              302.0,
+              17.2,
+              37.7,
+              421.4,
+              179.6,
+              36.5
+            ],
+            [
+              112.8,
+              319.1,
+              21.9,
+              40.6,
+              317.5,
+              157.0,
+              26.2
+            ],
+            [
+              45.4,
+              294.2,
+              17.8,
+              34.0,
+              427.6,
+              178.9,
+              47.8
+            ]
+          ]
+        }
+      },
+      "sixcpu_100": {
+        "rows": [
+          [
+            1194.6,
+            1125.1,
+            2229.71,
+            816.77,
+            793.1,
+            69.52,
+            23.67
+          ],
+          [
+            1201.94,
+            1123.4,
+            2614.28,
+            852.25,
+            813.0,
+            78.54,
+            39.29
+          ],
+          [
+            1118.08,
+            1063.0,
+            2171.97,
+            1034.09,
+            932.1,
+            55.11,
+            101.95
+          ],
+          [
+            1000.54,
+            895.2,
+            2801.73,
+            1106.08,
+            1068.8,
+            105.3,
+            37.31
+          ]
+        ],
+        "medians": [
+          1156.3,
+          1093.2,
+          2422.0,
+          943.2,
+          872.5,
+          74.0,
+          38.3
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 74.0,
+          "queue_ms": 136.5,
+          "complete_receive_ms": 2397.3,
+          "cpu_ms": 5062.5,
+          "median_full_page_ocr_batch_time_ms": 630.0,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 102.2,
+            "full_detector": 244.6,
+            "crop_and_dispatch_to_orientation": 18.4,
+            "orientation": 40.9,
+            "orientation_end_to_last_canonical_batch": 630.5,
+            "last_batch_to_correct_qt_paint": 45.9,
+            "qt_paint_to_registered_visible_pixels": 44.9
+          },
+          "per_pair_segments_ms": [
+            [
+              88.7,
+              244.1,
+              18.1,
+              44.0,
+              707.4,
+              48.0,
+              44.2
+            ],
+            [
+              115.7,
+              356.7,
+              25.9,
+              43.4,
+              565.3,
+              49.4,
+              45.5
+            ],
+            [
+              79.5,
+              230.0,
+              16.6,
+              38.4,
+              695.7,
+              43.8,
+              14.0
+            ],
+            [
+              122.0,
+              245.0,
+              18.7,
+              31.6,
+              493.3,
+              42.2,
+              47.7
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 38.3,
+          "queue_ms": 150.9,
+          "complete_receive_ms": 2018.2,
+          "cpu_ms": 2703.1,
+          "median_full_page_ocr_batch_time_ms": 341.3,
+          "map_phase_ui_handler_median_ms": 67.5,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 61.0,
+            "full_detector": 249.2,
+            "crop_and_dispatch_to_orientation": 17.8,
+            "orientation": 36.6,
+            "orientation_end_to_last_canonical_batch": 341.6,
+            "last_batch_to_correct_qt_paint": 166.5,
+            "qt_paint_to_registered_visible_pixels": 41.4
+          },
+          "per_pair_segments_ms": [
+            [
+              47.6,
+              239.4,
+              18.6,
+              28.0,
+              281.6,
+              160.9,
+              40.7
+            ],
+            [
+              61.6,
+              249.5,
+              17.3,
+              33.4,
+              282.9,
+              170.4,
+              37.1
+            ],
+            [
+              122.8,
+              249.0,
+              17.0,
+              40.3,
+              400.3,
+              162.6,
+              42.1
+            ],
+            [
+              60.5,
+              254.9,
+              18.2,
+              39.9,
+              506.1,
+              182.1,
+              44.4
+            ]
+          ]
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "differences_after": []
+    }
+  },
+  "six_thread_cpu_contention": {
+    "n": 4,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "previous6loadcpu_100": {
+        "rows": [
+          [
+            1144.03,
+            1033.6,
+            2572.75,
+            928.68,
+            805.1,
+            110.42,
+            123.57
+          ],
+          [
+            1240.8,
+            1201.8,
+            2782.84,
+            1262.95,
+            1164.9,
+            39.01,
+            98.1
+          ],
+          [
+            1251.82,
+            1160.7,
+            2726.75,
+            1249.57,
+            1148.8,
+            91.09,
+            100.81
+          ],
+          [
+            1316.7,
+            1253.0,
+            2802.69,
+            1078.9,
+            967.8,
+            63.74,
+            111.1
+          ]
+        ],
+        "medians": [
+          1246.3,
+          1181.2,
+          2754.8,
+          1164.2,
+          1058.3,
+          77.4,
+          106.0
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 77.4,
+          "queue_ms": 144.6,
+          "complete_receive_ms": 2722.6,
+          "cpu_ms": 5984.4,
+          "median_full_page_ocr_batch_time_ms": 612.9,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 114.6,
+            "full_detector": 355.1,
+            "crop_and_dispatch_to_orientation": 34.5,
+            "orientation": 60.2,
+            "orientation_end_to_last_canonical_batch": 613.8,
+            "last_batch_to_correct_qt_paint": 47.4,
+            "qt_paint_to_registered_visible_pixels": 42.9
+          },
+          "per_pair_segments_ms": [
+            [
+              129.4,
+              259.6,
+              18.7,
+              38.0,
+              600.0,
+              49.8,
+              48.6
+            ],
+            [
+              72.9,
+              376.8,
+              32.0,
+              66.4,
+              609.8,
+              44.8,
+              38.1
+            ],
+            [
+              129.5,
+              349.1,
+              36.9,
+              56.3,
+              617.7,
+              45.8,
+              16.5
+            ],
+            [
+              99.7,
+              361.0,
+              40.4,
+              64.1,
+              654.8,
+              49.0,
+              47.7
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 106.0,
+          "queue_ms": 146.6,
+          "complete_receive_ms": 2435.4,
+          "cpu_ms": 2906.2,
+          "median_full_page_ocr_batch_time_ms": 360.7,
+          "map_phase_ui_handler_median_ms": 79.1,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 136.1,
+            "full_detector": 331.6,
+            "crop_and_dispatch_to_orientation": 28.2,
+            "orientation": 54.9,
+            "orientation_end_to_last_canonical_batch": 361.2,
+            "last_batch_to_correct_qt_paint": 197.1,
+            "qt_paint_to_registered_visible_pixels": 33.3
+          },
+          "per_pair_segments_ms": [
+            [
+              142.9,
+              218.1,
+              16.5,
+              35.6,
+              308.4,
+              173.9,
+              33.3
+            ],
+            [
+              129.7,
+              355.5,
+              37.4,
+              60.0,
+              439.4,
+              207.6,
+              33.3
+            ],
+            [
+              136.5,
+              392.1,
+              29.7,
+              64.9,
+              406.1,
+              186.7,
+              33.5
+            ],
+            [
+              135.6,
+              307.6,
+              26.7,
+              49.7,
+              316.4,
+              211.3,
+              31.6
+            ]
+          ]
+        }
+      },
+      "sixloadcpu_100": {
+        "rows": [
+          [
+            1406.58,
+            1333.4,
+            2856.7,
+            1248.89,
+            1155.5,
+            73.16,
+            93.36
+          ],
+          [
+            1423.54,
+            1359.7,
+            2887.75,
+            1083.85,
+            1044.6,
+            63.8,
+            39.23
+          ],
+          [
+            1430.69,
+            1384.7,
+            2903.26,
+            1507.91,
+            1376.5,
+            45.97,
+            131.4
+          ],
+          [
+            1372.2,
+            1245.7,
+            2857.62,
+            1404.86,
+            1334.7,
+            126.54,
+            70.12
+          ]
+        ],
+        "medians": [
+          1415.1,
+          1346.6,
+          2872.7,
+          1326.9,
+          1245.1,
+          68.5,
+          81.7
+        ],
+        "under500": [
+          0,
+          0
+        ],
+        "inventory": {
+          "capture_ms": 68.5,
+          "queue_ms": 154.9,
+          "complete_receive_ms": 2841.8,
+          "cpu_ms": 7109.4,
+          "median_full_page_ocr_batch_time_ms": 658.1,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 115.6,
+            "full_detector": 451.0,
+            "crop_and_dispatch_to_orientation": 35.0,
+            "orientation": 66.4,
+            "orientation_end_to_last_canonical_batch": 659.0,
+            "last_batch_to_correct_qt_paint": 46.9,
+            "qt_paint_to_registered_visible_pixels": 38.2
+          },
+          "per_pair_segments_ms": [
+            [
+              118.4,
+              466.1,
+              38.7,
+              70.6,
+              638.6,
+              43.2,
+              31.0
+            ],
+            [
+              112.7,
+              447.3,
+              31.8,
+              75.0,
+              679.3,
+              47.8,
+              29.6
+            ],
+            [
+              79.3,
+              454.6,
+              38.2,
+              58.2,
+              702.8,
+              47.7,
+              49.9
+            ],
+            [
+              169.5,
+              403.1,
+              31.2,
+              62.3,
+              614.7,
+              46.0,
+              45.5
+            ]
+          ]
+        },
+        "map": {
+          "capture_ms": 81.7,
+          "queue_ms": 153.8,
+          "complete_receive_ms": 2599.7,
+          "cpu_ms": 4015.6,
+          "median_full_page_ocr_batch_time_ms": 406.5,
+          "map_phase_ui_handler_median_ms": 72.6,
+          "segment_medians_ms": {
+            "source_switch_to_detector_start": 116.8,
+            "full_detector": 431.1,
+            "crop_and_dispatch_to_orientation": 30.9,
+            "orientation": 51.6,
+            "orientation_end_to_last_canonical_batch": 406.9,
+            "last_batch_to_correct_qt_paint": 178.9,
+            "qt_paint_to_registered_visible_pixels": 36.9
+          },
+          "per_pair_segments_ms": [
+            [
+              129.0,
+              420.7,
+              33.0,
+              53.6,
+              424.6,
+              160.9,
+              27.1
+            ],
+            [
+              73.1,
+              354.2,
+              25.5,
+              43.6,
+              362.6,
+              185.6,
+              39.3
+            ],
+            [
+              155.8,
+              672.8,
+              28.7,
+              49.6,
+              389.2,
+              172.3,
+              39.5
+            ],
+            [
+              104.7,
+              441.5,
+              38.6,
+              65.5,
+              478.7,
+              241.4,
+              34.5
+            ]
+          ]
+        }
+      }
+    },
+    "different_observation_fields_by_pair_and_page": [],
+    "state_comparison": {
+      "isolated_states_compared": 8,
+      "differences_before_normalizing_same_timestamp_confirmation_order": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "differences_after": []
+    },
+    "background_work_units_per_second": [
+      [
+        "previous6loadcpu_100-inv1",
+        445.4
+      ],
+      [
+        "sixloadcpu_100-inv1",
+        414.7
+      ],
+      [
+        "sixloadcpu_100-inv2",
+        413.4
+      ],
+      [
+        "previous6loadcpu_100-inv2",
+        399.1
+      ],
+      [
+        "previous6loadcpu_100-inv3",
+        411.5
+      ],
+      [
+        "sixloadcpu_100-inv3",
+        418.2
+      ],
+      [
+        "sixloadcpu_100-inv4",
+        422.7
+      ],
+      [
+        "previous6loadcpu_100-inv4",
+        403.7
+      ]
+    ]
+  },
+  "fp32_text_equivalence": {
+    "checks": 26,
+    "text_boxes": 953,
+    "by_image_size": {
+      "2052x1128": 20,
+      "1280x720": 3,
+      "1920x1080": 3
+    },
+    "exact_comparison": "All ordered words, raw scores and quadrilateral coordinates serialized identically."
+  },
+  "fixed_short_rows": {
+    "batches": 114,
+    "rows": 669,
+    "three_interleaved_runs_per_backend": true,
+    "compile_seconds": {
+      "CPU": {
+        "seconds": 0.28
+      },
+      "NPU": {
+        "seconds": 6.74
+      }
+    },
+    "sum_of_batch_medians_ms": {
+      "dynamic": 5749,
+      "CPU": 5879,
+      "NPU": 11708
+    },
+    "different_strings": {
+      "dynamic": 0,
+      "CPU": 0,
+      "NPU": 8
+    },
+    "max_score_drift": {
+      "dynamic": 0.0,
+      "CPU": 7.02e-06,
+      "NPU": 0.37597656
+    }
+  },
+  "experimental_int8": {
+    "recognizer_onnx_sha256": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+    "runtime": "2025.4.1-20426-82bbf0292c5-releases/2025/4",
+    "calibration_toolkit": "NNCF 2.19.0, mixed PTQ, CPU target",
+    "calibration": {
+      "video_frames": 20,
+      "unique_batches": 108,
+      "rows": 584,
+      "widths": [
+        320,
+        326,
+        332,
+        345,
+        435,
+        452,
+        552,
+        568,
+        581,
+        582,
+        622,
+        630,
+        642,
+        644,
+        1031,
+        1131,
+        1188,
+        1276,
+        1529
+      ]
+    },
+    "evaluation_pages": 20,
+    "row_batches": 136,
+    "evaluation_rows": 760,
+    "identical_calibration_row_tensor_overlaps": 0,
+    "different_strings": 88,
+    "different_strings_with_int8_score_at_least_0_90": 18,
+    "sum_of_batch_medians_ms": {
+      "fp32": 5944,
+      "int8": 5189
+    },
+    "score_threshold_crossings": {
+      "0.5": 24,
+      "0.7": 26,
+      "0.8": 35,
+      "0.9": 49,
+      "0.95": 103
+    },
+    "pages_with_different_interpreted_fields": 10,
+    "pages_changed_by_interpreted_field": {
+      "page": 2,
+      "map": 1,
+      "node_types": 1,
+      "owned_ids": 2,
+      "tool_ids": 2,
+      "operators": 2,
+      "operator": 0,
+      "resources": 8
+    },
+    "examples": [
+      "Two roster pages became unknown.",
+      "A matched floor template on a node-detail page became insufficient.",
+      "The command resource present in the exploration reference was absent after quantization."
+    ],
+    "reference": "Differences against the normal FP32 reader, not independent manual ground truth. The calibration recording and native screenshots may share game content even with distinct normalized row bytes."
+  },
+  "detector_preprocessing": {
+    "method": "Image resizing and lookup values use the same pinned provider. A single uint8 scratch plane supplies the model input one channel at a time. Warm single-image benchmark alternated the order across 18 calls per method for each shape; the first three per method were omitted. Every candidate tensor matched exactly.",
+    "fields": [
+      "input_height",
+      "input_width",
+      "medians_ms_in_order_interleaved_then_cv_split_then_single_plane"
+    ],
+    "rows": [
+      [
+        1128,
+        2052,
+        [
+          15.416,
+          9.754,
+          9.237
+        ]
+      ],
+      [
+        720,
+        1280,
+        [
+          7.381,
+          3.924,
+          4.597
+        ]
+      ],
+      [
+        1080,
+        1920,
+        [
+          14.316,
+          8.56,
+          8.241
+        ]
+      ],
+      [
+        64,
+        220,
+        [
+          12.97,
+          7.657,
+          6.937
+        ]
+      ],
+      [
+        170,
+        700,
+        [
+          14.654,
+          8.518,
+          7.623
+        ]
+      ],
+      [
+        47,
+        160,
+        [
+          12.786,
+          7.834,
+          7.443
+        ]
+      ]
+    ],
+    "full_page_outputs": {
+      "openvino": {
+        "checks": 26,
+        "boxes_with_identical_words_position_and_score": 953
+      },
+      "openvino-gpu": {
+        "checks": 26,
+        "boxes_with_identical_words_position_and_score": 953
+      }
+    },
+    "deployment": "Not deployed. Less preprocessing work in isolation did not reliably improve first visible content. In the four-worker CPU contention comparison both endpoints regressed.",
+    "fp32_cpu_windows": {
+      "n": 4,
+      "fields": [
+        "new_inventory_pixels_ms",
+        "inventory_after_capture_ms",
+        "full_inventory_qt_ms",
+        "new_map_pixels_ms",
+        "map_after_capture_ms",
+        "inventory_capture_ms",
+        "map_capture_ms"
+      ],
+      "cohorts": {
+        "oldbufpaircpu_100": {
+          "rows": [
+            [
+              1240.07,
+              1172.2,
+              2264.38,
+              1148.92,
+              1105.5,
+              67.88,
+              43.46
+            ],
+            [
+              1122.2,
+              1082.9,
+              2188.11,
+              1109.23,
+              1004.1,
+              39.28,
+              105.08
+            ],
+            [
+              1278.54,
+              1210.6,
+              2420.07,
+              880.04,
+              796.0,
+              67.93,
+              84.03
+            ],
+            [
+              1210.38,
+              1149.4,
+              2418.82,
+              1007.98,
+              971.9,
+              61.0,
+              36.06
+            ]
+          ],
+          "medians": [
+            1225.2,
+            1160.8,
+            2341.6,
+            1058.6,
+            988.0,
+            64.4,
+            63.7
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 64.4,
+            "queue_ms": 135.1,
+            "complete_receive_ms": 2314.9,
+            "cpu_ms": 3656.2,
+            "median_full_page_ocr_batch_time_ms": 700.9,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 78.4,
+              "full_detector": 324.6,
+              "crop_and_dispatch_to_orientation": 21.8,
+              "orientation": 39.1,
+              "orientation_end_to_last_canonical_batch": 701.5,
+              "last_batch_to_correct_qt_paint": 41.3,
+              "qt_paint_to_registered_visible_pixels": 17.1
+            },
+            "per_pair_segments_ms": [
+              [
+                85.4,
+                331.7,
+                23.7,
+                34.9,
+                708.1,
+                41.3,
+                15.0
+              ],
+              [
+                62.5,
+                299.3,
+                20.4,
+                36.7,
+                647.3,
+                41.3,
+                14.7
+              ],
+              [
+                85.5,
+                336.5,
+                23.1,
+                41.5,
+                703.5,
+                43.8,
+                44.7
+              ],
+              [
+                71.4,
+                317.6,
+                20.1,
+                45.2,
+                699.6,
+                37.3,
+                19.2
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 63.7,
+            "queue_ms": 138.0,
+            "complete_receive_ms": 2056.6,
+            "cpu_ms": 2125.0,
+            "median_full_page_ocr_batch_time_ms": 395.8,
+            "map_phase_ui_handler_median_ms": 66.2,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 84.5,
+              "full_detector": 300.9,
+              "crop_and_dispatch_to_orientation": 19.5,
+              "orientation": 37.1,
+              "orientation_end_to_last_canonical_batch": 396.2,
+              "last_batch_to_correct_qt_paint": 162.8,
+              "qt_paint_to_registered_visible_pixels": 39.4
+            },
+            "per_pair_segments_ms": [
+              [
+                67.8,
+                308.4,
+                18.9,
+                37.3,
+                500.3,
+                181.2,
+                35.0
+              ],
+              [
+                130.8,
+                323.2,
+                21.7,
+                37.0,
+                395.6,
+                163.0,
+                37.9
+              ],
+              [
+                101.3,
+                194.9,
+                20.2,
+                37.0,
+                321.6,
+                162.6,
+                42.4
+              ],
+              [
+                58.5,
+                293.5,
+                16.2,
+                49.4,
+                396.8,
+                152.7,
+                40.9
+              ]
+            ]
+          }
+        },
+        "bufferpaircpu_100": {
+          "rows": [
+            [
+              1232.05,
+              1181.7,
+              2212.18,
+              1109.84,
+              1027.1,
+              50.31,
+              82.75
+            ],
+            [
+              1258.45,
+              1141.6,
+              2233.72,
+              937.48,
+              891.3,
+              116.81,
+              46.22
+            ],
+            [
+              1235.82,
+              1140.1,
+              2219.79,
+              1013.07,
+              977.8,
+              95.73,
+              35.29
+            ],
+            [
+              1283.76,
+              1182.3,
+              2278.84,
+              999.94,
+              951.7,
+              101.42,
+              48.21
+            ]
+          ],
+          "medians": [
+            1247.1,
+            1161.7,
+            2226.8,
+            1006.5,
+            964.8,
+            98.6,
+            47.2
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 98.6,
+            "queue_ms": 139.6,
+            "complete_receive_ms": 2202.3,
+            "cpu_ms": 3601.6,
+            "median_full_page_ocr_batch_time_ms": 697.1,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 123.1,
+              "full_detector": 310.6,
+              "crop_and_dispatch_to_orientation": 19.4,
+              "orientation": 42.4,
+              "orientation_end_to_last_canonical_batch": 697.5,
+              "last_batch_to_correct_qt_paint": 42.5,
+              "qt_paint_to_registered_visible_pixels": 35.2
+            },
+            "per_pair_segments_ms": [
+              [
+                71.2,
+                310.8,
+                19.4,
+                42.7,
+                698.0,
+                40.2,
+                49.7
+              ],
+              [
+                134.7,
+                312.9,
+                16.9,
+                38.3,
+                697.1,
+                43.8,
+                14.8
+              ],
+              [
+                115.6,
+                299.3,
+                19.3,
+                42.0,
+                675.2,
+                44.8,
+                39.6
+              ],
+              [
+                130.6,
+                310.3,
+                21.4,
+                47.7,
+                701.7,
+                41.2,
+                30.8
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 47.2,
+            "queue_ms": 131.8,
+            "complete_receive_ms": 2075.2,
+            "cpu_ms": 1914.1,
+            "median_full_page_ocr_batch_time_ms": 399.6,
+            "map_phase_ui_handler_median_ms": 65.1,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 64.8,
+              "full_detector": 296.5,
+              "crop_and_dispatch_to_orientation": 16.8,
+              "orientation": 34.8,
+              "orientation_end_to_last_canonical_batch": 399.9,
+              "last_batch_to_correct_qt_paint": 161.9,
+              "qt_paint_to_registered_visible_pixels": 37.1
+            },
+            "per_pair_segments_ms": [
+              [
+                106.0,
+                297.5,
+                16.6,
+                34.3,
+                460.8,
+                152.9,
+                41.7
+              ],
+              [
+                63.7,
+                221.2,
+                17.0,
+                23.2,
+                420.3,
+                159.9,
+                32.2
+              ],
+              [
+                56.5,
+                328.6,
+                15.6,
+                47.6,
+                363.6,
+                166.5,
+                34.7
+              ],
+              [
+                65.9,
+                295.5,
+                20.3,
+                35.3,
+                379.5,
+                163.9,
+                39.5
+              ]
+            ]
+          }
+        }
+      },
+      "different_observation_fields_by_pair_and_page": [],
+      "state_comparison": {
+        "isolated_states_compared": 8,
+        "differences_before_normalizing_same_timestamp_confirmation_order": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "differences_after": []
+      }
+    },
+    "fp32_igpu_windows": {
+      "n": 4,
+      "fields": [
+        "new_inventory_pixels_ms",
+        "inventory_after_capture_ms",
+        "full_inventory_qt_ms",
+        "new_map_pixels_ms",
+        "map_after_capture_ms",
+        "inventory_capture_ms",
+        "map_capture_ms"
+      ],
+      "cohorts": {
+        "oldbufpairgpu_100": {
+          "rows": [
+            [
+              545.43,
+              499.4,
+              2041.38,
+              619.38,
+              546.2,
+              46.02,
+              73.22
+            ],
+            [
+              579.15,
+              483.9,
+              1949.42,
+              685.64,
+              566.0,
+              95.23,
+              119.65
+            ],
+            [
+              535.65,
+              491.9,
+              2146.44,
+              695.58,
+              646.7,
+              43.75,
+              48.84
+            ],
+            [
+              578.74,
+              512.3,
+              1837.65,
+              640.63,
+              610.9,
+              66.47,
+              29.71
+            ]
+          ],
+          "medians": [
+            562.1,
+            495.6,
+            1995.4,
+            663.1,
+            588.5,
+            56.2,
+            61.0
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 56.2,
+            "queue_ms": 142.7,
+            "complete_receive_ms": 1963.9,
+            "cpu_ms": 3273.4,
+            "median_full_page_ocr_batch_time_ms": 196.3,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 77.7,
+              "full_detector": 148.1,
+              "crop_and_dispatch_to_orientation": 20.6,
+              "orientation": 38.2,
+              "orientation_end_to_last_canonical_batch": 199.9,
+              "last_batch_to_correct_qt_paint": 45.3,
+              "qt_paint_to_registered_visible_pixels": 18.3
+            },
+            "per_pair_segments_ms": [
+              [
+                69.1,
+                152.8,
+                19.9,
+                37.1,
+                200.3,
+                47.5,
+                18.7
+              ],
+              [
+                115.2,
+                147.2,
+                23.3,
+                39.2,
+                196.3,
+                43.1,
+                14.8
+              ],
+              [
+                58.3,
+                148.9,
+                21.4,
+                41.6,
+                199.5,
+                48.0,
+                17.9
+              ],
+              [
+                86.2,
+                137.4,
+                17.7,
+                36.3,
+                227.9,
+                38.2,
+                35.0
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 61.0,
+            "queue_ms": 134.5,
+            "complete_receive_ms": 1921.1,
+            "cpu_ms": 1054.7,
+            "median_full_page_ocr_batch_time_ms": 169.2,
+            "map_phase_ui_handler_median_ms": 71.3,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 82.4,
+              "full_detector": 144.2,
+              "crop_and_dispatch_to_orientation": 20.9,
+              "orientation": 32.4,
+              "orientation_end_to_last_canonical_batch": 169.5,
+              "last_batch_to_correct_qt_paint": 167.8,
+              "qt_paint_to_registered_visible_pixels": 28.9
+            },
+            "per_pair_segments_ms": [
+              [
+                90.5,
+                138.5,
+                16.3,
+                30.8,
+                156.9,
+                159.6,
+                26.8
+              ],
+              [
+                143.5,
+                133.3,
+                20.6,
+                33.9,
+                163.0,
+                161.6,
+                29.8
+              ],
+              [
+                74.3,
+                151.3,
+                21.2,
+                30.7,
+                199.0,
+                191.2,
+                27.9
+              ],
+              [
+                47.4,
+                149.9,
+                23.8,
+                34.8,
+                176.0,
+                174.0,
+                34.8
+              ]
+            ]
+          }
+        },
+        "bufferpairgpu_100": {
+          "rows": [
+            [
+              607.85,
+              492.1,
+              1998.33,
+              726.08,
+              597.6,
+              115.73,
+              128.46
+            ],
+            [
+              630.27,
+              507.4,
+              2122.56,
+              624.5,
+              589.4,
+              122.86,
+              35.09
+            ],
+            [
+              597.63,
+              499.5,
+              2113.89,
+              688.79,
+              614.8,
+              98.12,
+              73.94
+            ],
+            [
+              577.28,
+              482.7,
+              1838.87,
+              628.43,
+              570.8,
+              94.58,
+              57.59
+            ]
+          ],
+          "medians": [
+            602.7,
+            495.8,
+            2056.1,
+            658.6,
+            593.5,
+            106.9,
+            65.8
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 106.9,
+            "queue_ms": 129.0,
+            "complete_receive_ms": 2025.7,
+            "cpu_ms": 3343.8,
+            "median_full_page_ocr_batch_time_ms": 205.8,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 124.8,
+              "full_detector": 138.2,
+              "crop_and_dispatch_to_orientation": 20.9,
+              "orientation": 40.2,
+              "orientation_end_to_last_canonical_batch": 209.9,
+              "last_batch_to_correct_qt_paint": 48.3,
+              "qt_paint_to_registered_visible_pixels": 16.4
+            },
+            "per_pair_segments_ms": [
+              [
+                132.0,
+                135.4,
+                24.5,
+                43.4,
+                212.1,
+                45.3,
+                15.2
+              ],
+              [
+                146.0,
+                148.7,
+                18.8,
+                37.3,
+                207.9,
+                54.7,
+                16.9
+              ],
+              [
+                117.6,
+                141.1,
+                21.9,
+                41.1,
+                211.9,
+                48.3,
+                15.8
+              ],
+              [
+                106.6,
+                132.3,
+                20.0,
+                39.4,
+                197.0,
+                48.3,
+                33.6
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 65.8,
+            "queue_ms": 143.7,
+            "complete_receive_ms": 1858.2,
+            "cpu_ms": 1101.6,
+            "median_full_page_ocr_batch_time_ms": 164.7,
+            "map_phase_ui_handler_median_ms": 66.0,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 82.3,
+              "full_detector": 142.6,
+              "crop_and_dispatch_to_orientation": 20.4,
+              "orientation": 34.7,
+              "orientation_end_to_last_canonical_batch": 165.0,
+              "last_batch_to_correct_qt_paint": 167.8,
+              "qt_paint_to_registered_visible_pixels": 35.7
+            },
+            "per_pair_segments_ms": [
+              [
+                152.8,
+                141.0,
+                19.1,
+                36.0,
+                170.2,
+                166.7,
+                40.3
+              ],
+              [
+                57.1,
+                156.5,
+                21.4,
+                32.9,
+                159.8,
+                165.7,
+                31.1
+              ],
+              [
+                91.7,
+                144.1,
+                21.6,
+                34.2,
+                171.9,
+                200.3,
+                25.0
+              ],
+              [
+                73.0,
+                132.3,
+                19.4,
+                35.2,
+                157.0,
+                168.8,
+                42.7
+              ]
+            ]
+          }
+        }
+      },
+      "different_observation_fields_by_pair_and_page": [],
+      "state_comparison": {
+        "isolated_states_compared": 8,
+        "differences_before_normalizing_same_timestamp_confirmation_order": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "differences_after": []
+      }
+    },
+    "fp32_cpu_contention_windows": {
+      "n": 4,
+      "fields": [
+        "new_inventory_pixels_ms",
+        "inventory_after_capture_ms",
+        "full_inventory_qt_ms",
+        "new_map_pixels_ms",
+        "map_after_capture_ms",
+        "inventory_capture_ms",
+        "map_capture_ms"
+      ],
+      "cohorts": {
+        "oldbufloadcpu_100": {
+          "rows": [
+            [
+              1012.22,
+              943.1,
+              2425.58,
+              1239.6,
+              1195.1,
+              69.17,
+              44.46
+            ],
+            [
+              1290.77,
+              1189.3,
+              2714.06,
+              1182.12,
+              1056.2,
+              101.47,
+              125.93
+            ],
+            [
+              1323.88,
+              1214.2,
+              2792.27,
+              1293.17,
+              1208.7,
+              109.7,
+              84.5
+            ],
+            [
+              1514.34,
+              1454.7,
+              3017.04,
+              1392.72,
+              1268.2,
+              59.67,
+              124.56
+            ]
+          ],
+          "medians": [
+            1307.3,
+            1201.8,
+            2753.2,
+            1266.4,
+            1201.9,
+            85.3,
+            104.5
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 85.3,
+            "queue_ms": 152.3,
+            "complete_receive_ms": 2723.2,
+            "cpu_ms": 5781.2,
+            "median_full_page_ocr_batch_time_ms": 617.9,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 118.1,
+              "full_detector": 360.1,
+              "crop_and_dispatch_to_orientation": 36.1,
+              "orientation": 59.5,
+              "orientation_end_to_last_canonical_batch": 618.7,
+              "last_batch_to_correct_qt_paint": 44.0,
+              "qt_paint_to_registered_visible_pixels": 31.2
+            },
+            "per_pair_segments_ms": [
+              [
+                87.8,
+                310.0,
+                20.9,
+                53.0,
+                488.3,
+                39.7,
+                12.5
+              ],
+              [
+                147.4,
+                361.5,
+                37.7,
+                56.1,
+                616.4,
+                42.3,
+                29.4
+              ],
+              [
+                154.1,
+                358.6,
+                34.7,
+                65.9,
+                621.0,
+                45.8,
+                43.8
+              ],
+              [
+                88.7,
+                613.6,
+                37.5,
+                62.9,
+                631.2,
+                47.4,
+                33.0
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 104.5,
+            "queue_ms": 155.4,
+            "complete_receive_ms": 2592.5,
+            "cpu_ms": 3265.6,
+            "median_full_page_ocr_batch_time_ms": 416.9,
+            "map_phase_ui_handler_median_ms": 82.7,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 145.3,
+              "full_detector": 368.5,
+              "crop_and_dispatch_to_orientation": 33.0,
+              "orientation": 53.0,
+              "orientation_end_to_last_canonical_batch": 417.4,
+              "last_batch_to_correct_qt_paint": 215.8,
+              "qt_paint_to_registered_visible_pixels": 30.9
+            },
+            "per_pair_segments_ms": [
+              [
+                79.6,
+                458.8,
+                29.0,
+                53.1,
+                367.9,
+                220.3,
+                30.9
+              ],
+              [
+                164.5,
+                329.6,
+                29.3,
+                52.9,
+                398.5,
+                176.5,
+                30.8
+              ],
+              [
+                126.8,
+                353.1,
+                36.8,
+                51.6,
+                436.3,
+                255.4,
+                33.2
+              ],
+              [
+                163.9,
+                383.9,
+                38.8,
+                64.1,
+                501.6,
+                211.3,
+                29.1
+              ]
+            ]
+          }
+        },
+        "bufferloadcpu_100": {
+          "rows": [
+            [
+              1369.47,
+              1226.2,
+              2908.45,
+              1392.2,
+              1339.5,
+              143.22,
+              52.69
+            ],
+            [
+              1215.77,
+              1082.1,
+              2670.62,
+              1379.89,
+              1255.9,
+              133.63,
+              123.96
+            ],
+            [
+              1397.78,
+              1281.4,
+              2830.22,
+              1287.5,
+              1157.0,
+              116.37,
+              130.55
+            ],
+            [
+              1437.16,
+              1341.7,
+              3257.15,
+              1410.2,
+              1310.4,
+              95.42,
+              99.79
+            ]
+          ],
+          "medians": [
+            1383.6,
+            1253.8,
+            2869.3,
+            1386.0,
+            1283.2,
+            125.0,
+            111.9
+          ],
+          "under500": [
+            0,
+            0
+          ],
+          "inventory": {
+            "capture_ms": 125.0,
+            "queue_ms": 150.8,
+            "complete_receive_ms": 2836.3,
+            "cpu_ms": 5937.5,
+            "median_full_page_ocr_batch_time_ms": 653.3,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 158.0,
+              "full_detector": 378.4,
+              "crop_and_dispatch_to_orientation": 39.8,
+              "orientation": 69.0,
+              "orientation_end_to_last_canonical_batch": 654.1,
+              "last_batch_to_correct_qt_paint": 47.0,
+              "qt_paint_to_registered_visible_pixels": 25.8
+            },
+            "per_pair_segments_ms": [
+              [
+                189.4,
+                365.2,
+                37.8,
+                62.0,
+                628.3,
+                45.1,
+                41.6
+              ],
+              [
+                168.3,
+                362.7,
+                34.1,
+                58.2,
+                510.2,
+                49.0,
+                33.2
+              ],
+              [
+                147.7,
+                391.6,
+                41.9,
+                76.1,
+                679.9,
+                44.1,
+                16.4
+              ],
+              [
+                125.1,
+                405.7,
+                42.2,
+                77.4,
+                719.2,
+                49.2,
+                18.4
+              ]
+            ]
+          },
+          "map": {
+            "capture_ms": 111.9,
+            "queue_ms": 150.5,
+            "complete_receive_ms": 2703.3,
+            "cpu_ms": 3218.8,
+            "median_full_page_ocr_batch_time_ms": 454.1,
+            "map_phase_ui_handler_median_ms": 83.0,
+            "segment_medians_ms": {
+              "source_switch_to_detector_start": 151.8,
+              "full_detector": 376.0,
+              "crop_and_dispatch_to_orientation": 34.8,
+              "orientation": 59.6,
+              "orientation_end_to_last_canonical_batch": 454.7,
+              "last_batch_to_correct_qt_paint": 203.1,
+              "qt_paint_to_registered_visible_pixels": 37.8
+            },
+            "per_pair_segments_ms": [
+              [
+                90.8,
+                435.8,
+                39.8,
+                114.6,
+                469.1,
+                203.9,
+                38.2
+              ],
+              [
+                164.1,
+                345.1,
+                35.0,
+                60.9,
+                535.8,
+                202.2,
+                36.8
+              ],
+              [
+                163.2,
+                383.2,
+                31.4,
+                55.7,
+                440.3,
+                176.4,
+                37.3
+              ],
+              [
+                140.5,
+                368.8,
+                34.6,
+                58.4,
+                428.9,
+                337.8,
+                41.2
+              ]
+            ]
+          }
+        }
+      },
+      "different_observation_fields_by_pair_and_page": [],
+      "state_comparison": {
+        "isolated_states_compared": 8,
+        "differences_before_normalizing_same_timestamp_confirmation_order": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "differences_after": []
+      },
+      "background_work_units_per_second": [
+        [
+          "oldbufloadcpu_100-inv1",
+          444.5
+        ],
+        [
+          "bufferloadcpu_100-inv1",
+          402.2
+        ],
+        [
+          "bufferloadcpu_100-inv2",
+          420.6
+        ],
+        [
+          "oldbufloadcpu_100-inv2",
+          426.8
+        ],
+        [
+          "oldbufloadcpu_100-inv3",
+          421.8
+        ],
+        [
+          "bufferloadcpu_100-inv3",
+          429.9
+        ],
+        [
+          "bufferloadcpu_100-inv4",
+          380.7
+        ],
+        [
+          "oldbufloadcpu_100-inv4",
+          396.3
+        ]
+      ]
+    }
+  },
+  "fp32_recognizer_thread_study": {
+    "run-relic-multicard": {
+      "sum_batch_medians_ms": {
+        "four": 376,
+        "two": 591,
+        "four_P": 380,
+        "eight": 399,
+        "twelve": 344,
+        "eight_P": 361
+      },
+      "four_thread_baseline_width320_ms": 290,
+      "four_thread_baseline_wider_ms": 86
+    },
+    "run-relic-multicard-closed": {
+      "sum_batch_medians_ms": {
+        "eight": 401,
+        "twelve": 364,
+        "eight_P": 338,
+        "four": 373,
+        "two": 566,
+        "four_P": 367
+      },
+      "four_thread_baseline_width320_ms": 373,
+      "four_thread_baseline_wider_ms": 0
+    }
+  },
+  "selected_positive_row_study": {
+    "method": "Counterfactual diagnostic only. Choose rows by the text already known from full inference. Time inference and decode of only those rows at the original normalized width, against all rows on the same image. Ground truth row locations, exclusion of overlays and page identity would still need independent current-frame verification for any real implementation. Missing anchor spellings and negative evidence were not recovered by this diagnostic. All named page facts remain with the ordinary reader.",
+    "rows": [
+      {
+        "backend": "openvino",
+        "page": "inventory",
+        "all_rows": 49,
+        "known_positive_rows": 7,
+        "distinct_positive_target_strings": 3,
+        "requested_target_strings": 3,
+        "positive_anchor_names_found": [
+          "指挥等级",
+          "收起",
+          "目标生命值",
+          "零件箱"
+        ],
+        "original_batches": 9,
+        "original_batch_indices_with_any_known_positive": [
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "compact_batches": 2,
+        "any_text_change": false,
+        "max_confidence_delta": 0.0,
+        "median_infer_decode_ms": {
+          "all": 357.2,
+          "selected": 61.9
+        }
+      },
+      {
+        "backend": "openvino",
+        "page": "map",
+        "all_rows": 44,
+        "known_positive_rows": 21,
+        "distinct_positive_target_strings": 11,
+        "requested_target_strings": 12,
+        "positive_anchor_names_found": [
+          "指挥等级",
+          "收藏品",
+          "目标生命值",
+          "零件箱"
+        ],
+        "original_batches": 8,
+        "original_batch_indices_with_any_known_positive": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "compact_batches": 4,
+        "any_text_change": false,
+        "max_confidence_delta": 0.0,
+        "median_infer_decode_ms": {
+          "all": 289.2,
+          "selected": 153.4
+        }
+      },
+      {
+        "backend": "openvino-gpu",
+        "page": "inventory",
+        "all_rows": 49,
+        "known_positive_rows": 7,
+        "distinct_positive_target_strings": 3,
+        "requested_target_strings": 3,
+        "positive_anchor_names_found": [
+          "指挥等级",
+          "收起",
+          "目标生命值",
+          "零件箱"
+        ],
+        "original_batches": 9,
+        "original_batch_indices_with_any_known_positive": [
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "compact_batches": 2,
+        "any_text_change": false,
+        "max_confidence_delta": 0.0,
+        "median_infer_decode_ms": {
+          "all": 293.6,
+          "selected": 38.5
+        }
+      },
+      {
+        "backend": "openvino-gpu",
+        "page": "map",
+        "all_rows": 44,
+        "known_positive_rows": 21,
+        "distinct_positive_target_strings": 11,
+        "requested_target_strings": 12,
+        "positive_anchor_names_found": [
+          "指挥等级",
+          "收藏品",
+          "目标生命值",
+          "零件箱"
+        ],
+        "original_batches": 8,
+        "original_batch_indices_with_any_known_positive": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "compact_batches": 4,
+        "any_text_change": false,
+        "max_confidence_delta": 0.0,
+        "median_infer_decode_ms": {
+          "all": 142.9,
+          "selected": 71.5
+        }
+      }
+    ]
+  },
+  "validation": {
+    "targeted_tests": 91,
+    "persistent_test_assistant": {
+      "visible": true,
+      "responsive": true,
+      "gpu_flag_verified": true,
+      "private_unchanged": true
+    },
+    "real_game_windows_when_checked": 0,
+    "tested_under_live_game_contention": false,
+    "targeted_tests_after_restoring_production": 91,
+    "restored_suite_first_attempt": "One earlier run of the same 91 checks raised KeyError life in test_map_updates_while_inventory_is_still_reading_then_replaces_same_frame. The isolated retry passed. The cause of the intermittent HUD timing failure is unverified."
+  },
+  "deployment": "Research batch. None of the investigated alternatives was enabled. The running test assistant was restarted from the original CPU/GPU source using its existing GPU flag. Private record digests matched across each replay and restart.",
+  "ui_profile": {
+    "method": "One separate instrumented map-phase iGPU replay of the planar-input candidate. Only the Qt sample handler and named map-refresh functions are reported, not work from overlapping recognition. Nested durations are inclusive and profiling affects timing. These figures are independent from the unprofiled paired medians.",
+    "times": [
+      {
+        "file": "app.py",
+        "func": "sample_received",
+        "calls": 1,
+        "exclusive_ms": 0.1,
+        "inclusive_ms": 54.6
+      },
+      {
+        "file": "app.py",
+        "func": "render_map",
+        "calls": 1,
+        "exclusive_ms": 0.0,
+        "inclusive_ms": 54.4
+      },
+      {
+        "file": "player_compact.py",
+        "func": "refresh",
+        "calls": 1,
+        "exclusive_ms": 0.0,
+        "inclusive_ms": 54.3
+      },
+      {
+        "file": "player_map.py",
+        "func": "refresh",
+        "calls": 1,
+        "exclusive_ms": 0.2,
+        "inclusive_ms": 54.2
+      }
+    ]
+  }
+}
