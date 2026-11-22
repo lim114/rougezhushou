@@ -112,7 +112,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('黑流树海助手 · 局外计算与节点测试')
         if self.diagnostic_layout:self.setWindowTitle(self.windowTitle()+' · 历史布局诊断')
         self.resize(1050, 830)
-        self.capture = GameCapture()
+        self.capture = GameCapture(pace_updates=True)
         self.reader = ScreenReader(backend=ocr_backend)
         self.settling_detection = None
         from .ocr_engine import default_backend

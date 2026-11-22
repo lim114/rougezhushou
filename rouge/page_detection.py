@@ -83,7 +83,8 @@ def _prepare_text(configuration, page, frame, detection, inventory_visible=False
     _, pixels, boxes = detection.result()
     local_detection = Future()
     local_detection.set_result((page.provider, pixels, boxes))
-    result = page(image, detection=local_detection, overlap_wide=inventory_visible)
+    result = page(image, detection=local_detection, overlap_wide=inventory_visible,
+                  overlap_orientation=not inventory_visible)
     return configuration, page, result
 
 

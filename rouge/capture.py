@@ -86,8 +86,10 @@ def _frame_geometry(hwnd,image):
     except (OSError,win32gui.error):return None
 
 class GameCapture:
-    def __init__(self):
+    def __init__(self, *, pace_updates=False):
         self._lock = threading.Lock()
+        self._pace_updates = pace_updates
+        self._pace_stop = None
         self.buffer = FrameBuffer()
         self.on_settling = None
         self._session = 0
@@ -111,10 +113,11 @@ class GameCapture:
         self.closed = False
         session = self._session
         target = dict(self.target)
+        stop = threading.Event() if self._pace_updates else None
+        self._pace_stop = stop
         self._capture = WindowsCapture(window_hwnd=self.target['hwnd'], cursor_capture=False,
-                                       draw_border=True, minimum_update_interval=100)
-        @self._capture.event
-        def on_frame_arrived(frame, capture_control):
+                                       draw_border=True, minimum_update_interval=33 if stop is not None else 100)
+        def collect(frame):
             with self._lock:
                 if session != self._session or not self._collecting:return
                 # Native mapped pixels expire after this callback. The buffer owns
@@ -133,6 +136,15 @@ class GameCapture:
                                   pointer_bounds=pointer_bounds,source_bgra=True)
             if self.on_settling is not None and self.buffer.stats()['settle_remaining_ms'] > 0:
                 self.on_settling()
+
+        @self._capture.event
+        def on_frame_arrived(frame, capture_control):
+            started = time.monotonic()
+            collect(frame)
+            if stop is not None:
+                # Deliver the first frame after an idle period immediately.
+                # Pace subsequent native callbacks outside the capture lock.
+                stop.wait(.1 - (time.monotonic() - started))
         @self._capture.event
         def on_closed():
             with self._lock:
@@ -187,6 +199,9 @@ class GameCapture:
         with self._lock:
             self._session += 1
             self.buffer.clear()
+            if self._pace_stop is not None:
+                self._pace_stop.set()
+                self._pace_stop = None
         if self._control is not None:
             self._control.stop()
             self._control = None

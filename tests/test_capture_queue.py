@@ -51,6 +51,29 @@ class CaptureQueueTests(unittest.TestCase):
         self.assertEqual([self.capture.next_frame(force=True)['image'][0,0,0]
                           for _ in range(3)],[40,100,200])
 
+    def test_paced_capture_offers_frame_before_wait_and_close_interrupts_wait(self):
+        import threading
+        capture = GameCapture(pace_updates=True)
+        capture.connect(self.target)
+        self.addCleanup(capture.close)
+        native = FakeWGC.instances[-1]
+        self.assertEqual(native.options['minimum_update_interval'], 33)
+        waiting = threading.Event()
+        stop = capture._pace_stop
+        def wait_for_close(delay):
+            self.assertLessEqual(delay, .1)
+            waiting.set()
+            return original_wait(2)
+        original_wait = stop.wait
+        with patch.object(stop, 'wait', side_effect=wait_for_close):
+            worker = threading.Thread(target=native.push, args=(100,))
+            worker.start()
+            self.assertTrue(waiting.wait(2))
+            self.assertEqual(capture.next_frame(force=True)['image'][0,0,0], 100)
+            capture.close()
+            worker.join(1)
+            self.assertFalse(worker.is_alive())
+
     def test_previous_session_callback_cannot_pollute_reconnected_window(self):
         old=FakeWGC.instances[-1];old.push(40)
         generation=self.capture.stats()['generation']

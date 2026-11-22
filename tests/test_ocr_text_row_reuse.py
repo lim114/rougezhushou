@@ -15,6 +15,38 @@ class TextRowReuseTests(unittest.TestCase):
         reader._supported=lambda:True
         return reader,provider
 
+    def test_map_preparation_overlaps_only_identically_grouped_orientation_batches(self):
+        import threading
+        from unittest.mock import Mock
+        from rouge.ocr_cpu_inference import FixedShapeGPU
+        from rapidocr_onnxruntime.ch_ppocr_cls.text_cls import TextClassifier
+
+        serial, baseline = self.reader()
+        reader, provider = self.reader()
+        calls = []
+        def directions(tensors):
+            calls.append((threading.current_thread().name, len(tensors)))
+            return [[('180' if value.item() == 12 else '0', 1.) for value in tensors]]
+        for source in (baseline, provider):
+            source.crops[2][-1, -1] = 87
+            classifier = TextClassifier.__new__(TextClassifier)
+            classifier.cls_batch_num = 2
+            classifier.cls_thresh = .9
+            classifier.resize_norm_img = lambda crop: crop[:1, :1, 0]
+            classifier.infer = directions
+            classifier.postprocess_op = lambda labels: labels
+            source.text_cls = classifier
+        session = Mock(spec=FixedShapeGPU, side_effect=provider.text_rec.session)
+        provider.text_rec.session = session
+        frame = np.zeros((50, 120, 3), np.uint8)
+        expected = serial(frame)[0]
+        calls.clear()
+        self.assertEqual(reader(frame, overlap_orientation=True)[0], expected)
+        self.assertEqual([size for _, size in calls], [2, 2, 1])
+        self.assertTrue(all(name.startswith('rouge-page-direction') for name, _ in calls))
+        self.assertEqual([row[1] for row in expected], ['10','11','87','13','14'])
+        self.assertEqual(list(reader._cache), list(serial._cache))
+
     def test_inventory_prefetch_uses_wide_cpu_batch_and_preserves_cache_order(self):
         import threading
         from unittest.mock import Mock

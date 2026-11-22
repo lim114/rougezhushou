@@ -1,5 +1,7 @@
 """Evidence from held-item bars and recruited-operator pages, never reward offers."""
 import re
+from concurrent.futures import ThreadPoolExecutor
+from contextvars import copy_context
 from functools import lru_cache
 from pathlib import Path
 import cv2
@@ -97,6 +99,20 @@ def near_number(image,texts,anchor,engine,*,side='above'):
     return None
 
 
+def _read_map_hud(image, texts, engine, native_content, on_hud, on_map_gold):
+    def publish_gold(gold):
+        on_hud({'gold': gold})
+        if on_map_gold is not None:
+            on_map_gold(gold)
+    resources = read_resources(image, texts, engine, on_gold=publish_gold, native_content=native_content)
+    # Parts and held-card counters still require the inventory cross-check.
+    from .relic_counter_semantics import HUD_RESOURCE_LABELS
+    hud = {key: value for key, value in resources.items() if key in HUD_RESOURCE_LABELS or key == 'gold'}
+    if any(key in HUD_RESOURCE_LABELS for key in hud):
+        on_hud(hud)
+    return resources
+
+
 def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
@@ -120,6 +136,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
     is_roster=normal_roster or popup_member is not None
     if not (is_map or is_roster):return None
     if not is_map:cards=[]
+    names = ()
     if on_held_names is not None and cards and not is_roster:
         names = tuple(dict.fromkeys(card['title'] for card in cards if card['confirmed']))
         if names:
@@ -131,17 +148,18 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
         fresh=read_config(image,texts,held,engine=engine,known_config=known)
         on_map_config({**known,**fresh})
     resources = None
+    raw_icons = None
     if is_map and on_hud is not None:
-        def publish_gold(gold):
-            on_hud({'gold': gold})
-            if on_map_gold is not None and not is_roster:
-                on_map_gold(gold)
-        resources = read_resources(image, texts, engine, on_gold=publish_gold, native_content=native_content)
-        # Parts and held-card counters still require the inventory cross-check below.
-        from .relic_counter_semantics import HUD_RESOURCE_LABELS
-        hud = {key: value for key, value in resources.items() if key in HUD_RESOURCE_LABELS or key == 'gold'}
-        if any(key in HUD_RESOURCE_LABELS for key in hud):
-            on_hud(hud)
+        gold_callback = None if is_roster else on_map_gold
+        if names and held['text'] == '收起':
+            # The expanded bar has no count to read first. Artwork needs only
+            # current pixels and its own icon cache; the reader keeps its OCR engine.
+            with ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-held-bar') as worker:
+                artwork = worker.submit(copy_context().run, match_held_icons, image, held, None, cache=icon_cache)
+                resources = _read_map_hud(image, texts, engine, native_content, on_hud, gold_callback)
+                raw_icons = artwork.result()
+        else:
+            resources = _read_map_hud(image, texts, engine, native_content, on_hud, gold_callback)
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
     crew = anchors.get('干员')
     if is_roster:
@@ -155,7 +173,9 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
             (tool_ids if card['id'] in tactical_tools() else ids).add(card['id'])
     if fresh is None:fresh=read_config(image,texts,held,engine=engine,known_config=known) if is_map else {}
     config={**known,**fresh}
-    icons=resolve_difficulty_icons(resolve_owned_icons(match_held_icons(image,held,count,cache=icon_cache),cards),config.get('difficulty'))
+    if raw_icons is None:
+        raw_icons = match_held_icons(image,held,count,cache=icon_cache)
+    icons=resolve_difficulty_icons(resolve_owned_icons(raw_icons,cards),config.get('difficulty'))
     if count==0 and icons:count=None
     icon_ids = {icon['id'] for icon in icons if icon['confirmed']}
     if icon_ids:

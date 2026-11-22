@@ -239,7 +239,8 @@ class PageOCR:
         self.metrics['reused_text_rows']=self.metrics.get('reused_text_rows',0)+len(crops)-len(missing)
         return result,elapsed,not missing
 
-    def __call__(self, image, *, regions=None, force_discovery=False, detection=None, overlap_wide=False, **kwargs):
+    def __call__(self, image, *, regions=None, force_discovery=False, detection=None,
+                 overlap_wide=False, overlap_orientation=False, **kwargs):
         yield_to_current()
         self._current_frame = None
         if kwargs or not self._supported():
@@ -281,7 +282,16 @@ class PageOCR:
             return None, None
         crops = p.get_crop_img_list(img, boxes)
         cls_result, cls_elapsed = None, 0.0
-        if p.use_cls:
+        # A 180-degree correction preserves aspect ratio. When both models use
+        # the same small batches, the next direction check can run on the CPU
+        # while the GPU transcribes the rows already oriented.
+        stream = False
+        if overlap_orientation and not overlap_wide and not domain and p.use_cls:
+            from rapidocr_onnxruntime.ch_ppocr_cls.text_cls import TextClassifier
+            from .ocr_cpu_inference import FixedShapeGPU
+            stream = (type(p.text_cls) is TextClassifier and isinstance(p.text_rec.session, FixedShapeGPU)
+                      and p.text_cls.cls_batch_num == p.text_rec.rec_batch_num <= 6)
+        if p.use_cls and not stream:
             crops, cls_result, cls_elapsed = p.text_cls(crops)
         origin = p._get_origin_points(boxes, operations, raw_h, raw_w)
         inside = [False] * len(origin)
@@ -305,10 +315,20 @@ class PageOCR:
         rec_elapsed = 0.0
         batches = [*page_batches, *other_batches]
         with ExitStack() as work:
+            if stream:
+                worker = work.enter_context(ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-page-direction'))
+                directions = worker.map(p.text_cls, ([crops[i] for i in batch] for batch in batches))
+                cls_result = [None] * len(crops)
             early, prepared = (self._prepare_wide_batch(work, batches, crops, ratios, force_discovery)
                                if overlap_wide else (None, None))
             for batch in batches:
-                group = [crops[i] for i in batch]
+                if stream:
+                    group, labels, duration = next(directions)
+                    cls_elapsed += duration
+                    for index, label in zip(batch, labels):
+                        cls_result[index] = label
+                else:
+                    group = [crops[i] for i in batch]
                 result, elapsed, reused = self._recognize_batch(
                     group, force_discovery=force_discovery, prepared=prepared if batch is early else None)
                 for index, value in zip(batch, result):

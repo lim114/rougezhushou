@@ -2,6 +2,7 @@
 import copy
 import json
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -53,6 +54,44 @@ class HeldIntegrationTests(unittest.TestCase):
         self.assertEqual(result['resources']['parts_count']['capacity'],18)
         self.assertEqual(result['resources']['parts_count']['counter_crosscheck']['value'],15)
         self.assertNotIn('char_buff_ids',result)
+
+    def test_visible_cards_and_hud_publish_while_artwork_is_still_running(self):
+        from rouge.recognition_priority import ReadPriority, yield_to_current
+        priority = ReadPriority()
+        priority.register(1, 10)
+        waits = []
+        wait_for = priority.condition.wait_for
+        def record_wait(predicate):
+            waits.append(threading.current_thread().name)
+            return wait_for(predicate)
+        icons_started = threading.Event()
+        hud_shown = threading.Event()
+        order = []
+
+        def artwork(*args, **kwargs):
+            icons_started.set()
+            self.assertTrue(hud_shown.wait(2))
+            yield_to_current()
+            order.append('icons')
+            return []
+
+        def resources(*args, **kwargs):
+            self.assertTrue(icons_started.wait(2))
+            return {'life': {'value': 3}}
+
+        def hud(values):
+            order.append('hud')
+            hud_shown.set()
+
+        with patch.object(priority.condition, 'wait_for', side_effect=record_wait), priority.read(1), \
+                patch('rouge.run_recognition.match_held_icons', side_effect=artwork), \
+                patch('rouge.run_recognition.read_resources', side_effect=resources), \
+                patch('rouge.run_recognition.read_config', return_value={}):
+            result = read_run(self.image, self.texts(), lambda *a, **k: ([], 0),
+                              on_held_names=lambda names: order.append('names'), on_hud=hud)
+        self.assertTrue(result['relics']['cards'])
+        self.assertEqual(order, ['names', 'hud', 'icons'])
+        self.assertTrue(any(thread.startswith('rouge-held-bar') for thread in waits))
 
     def test_original_three_card_holdout_unchanged(self):
         original=cv2.imdecode(np.fromfile(ROOT/'samples/native-client/run-relic-multicard.png',np.uint8),cv2.IMREAD_COLOR)

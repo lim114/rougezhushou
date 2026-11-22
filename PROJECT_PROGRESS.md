@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-切页首显仍须在真实游戏中稳定小于 500 毫秒。藏品盲读会在奖励面板遮挡时提前发布，地图仍需确认可见节点并减少首显前的读字和界面更新时间。[回执](verification/maintenance/ocr-blind-rows-and-capture-20261122/summary.json)。
+连续游戏录像切到地图时，用于首显的帧在地图清晰后约 503 毫秒才采到，再等约 556 毫秒进入识别。需要让当前页更早获得识别机会，并核对动画中变化的节点及历史短页。常规 CPU、藏品整页和真实游戏均未通过半秒目标。[回执](verification/maintenance/ocr-paced-capture-and-map-reading-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

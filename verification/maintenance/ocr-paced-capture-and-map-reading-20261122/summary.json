@@ -1,0 +1,988 @@
+{
+  "kind": "ocr_latency_maintenance",
+  "baseline": "26453fe305c23183918c8de600f275c7b1cbd1f7",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "measurement": {
+    "clock": "Source-window paint to Windows Graphics Capture delivery from the real assistant popup at 16 ms requested interval. The independent capture includes compositor and delivery latency. Native setting in both versions caps accepted work at about ten frames per second.",
+    "map": "First paint of current floor and template verified in Qt, then a matching diagram registered in the assistant window capture. Continuous recording also checks visible node IDs and types against the current observation.",
+    "held": "First two correct clickable current inventory tiles registered in assistant pixels. Complete checks both tiles in final positions after full recognition and excludes preview-only pixels.",
+    "comparisons": "Paired trials against frozen baseline using identical samples, fresh isolated state and real Windows capture, FP32 models and Qt. The busy and moving-lead-in cohorts exercise distinct conditions.",
+    "limits": "Repeated plays of one continuous reward-to-map transition on one Windows machine. No live game was attached. Full inventory latency on a naturally recorded contiguous transition remains unverified."
+  },
+  "shipped": [
+    "Main capture requests native updates every 33 ms and spaces full callback processing at 100 ms outside the lock; closing wakes its session.",
+    "Prepared GPU map OCR can overlap canonical direction batches on CPU with recognition of the previous batch, preserving corrections, row order and widths.",
+    "After current held-card names are confirmed, expanded-bar icon matching and resource OCR can overlap. Resource signals retain order and new-frame priority crosses the icon worker boundary."
+  ],
+  "continuous_reward_to_map": {
+    "prior": {
+      "rows": [
+        {
+          "from_first_map_blend_ms": 2079.8,
+          "from_clear_map_ms": 1940.6,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 504.3,
+          "selected_capture_to_read_ms": 894.97,
+          "read_to_map_observation_ms": 413.46,
+          "observation_to_qt_paint_ms": 108.8,
+          "qt_paint_to_wgc_pixels_ms": 19.0,
+          "whole_page_ocr_within_read_ms": 267.3,
+          "pending_at_verified_paint": 10
+        },
+        {
+          "from_first_map_blend_ms": 1918.2,
+          "from_clear_map_ms": 1779.9,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 422.7,
+          "selected_capture_to_read_ms": 842.65,
+          "read_to_map_observation_ms": 356.31,
+          "observation_to_qt_paint_ms": 123.9,
+          "qt_paint_to_wgc_pixels_ms": 34.3,
+          "whole_page_ocr_within_read_ms": 218.7,
+          "pending_at_verified_paint": 10
+        },
+        {
+          "from_first_map_blend_ms": 1873.9,
+          "from_clear_map_ms": 1732.1,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 441.6,
+          "selected_capture_to_read_ms": 777.04,
+          "read_to_map_observation_ms": 371.71,
+          "observation_to_qt_paint_ms": 106.3,
+          "qt_paint_to_wgc_pixels_ms": 35.4,
+          "whole_page_ocr_within_read_ms": 235.6,
+          "pending_at_verified_paint": 10
+        }
+      ],
+      "median_from_blend_ms": 1918.2,
+      "median_from_clear_ms": 1779.9,
+      "median_segments": {
+        "clear_to_selected_capture_ms": 441.6,
+        "selected_capture_to_read_ms": 842.6,
+        "read_to_map_observation_ms": 371.7,
+        "observation_to_qt_paint_ms": 108.8,
+        "qt_paint_to_wgc_pixels_ms": 34.3,
+        "whole_page_ocr_within_read_ms": 235.6,
+        "pending_at_verified_paint": 10
+      }
+    },
+    "ship": {
+      "rows": [
+        {
+          "from_first_map_blend_ms": 1808.2,
+          "from_clear_map_ms": 1684.7,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 465.0,
+          "selected_capture_to_read_ms": 628.49,
+          "read_to_map_observation_ms": 439.29,
+          "observation_to_qt_paint_ms": 117.6,
+          "qt_paint_to_wgc_pixels_ms": 34.3,
+          "whole_page_ocr_within_read_ms": 216.9,
+          "pending_at_verified_paint": 11
+        },
+        {
+          "from_first_map_blend_ms": 1788.8,
+          "from_clear_map_ms": 1646.8,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 503.1,
+          "selected_capture_to_read_ms": 555.48,
+          "read_to_map_observation_ms": 439.21,
+          "observation_to_qt_paint_ms": 116.0,
+          "qt_paint_to_wgc_pixels_ms": 33.0,
+          "whole_page_ocr_within_read_ms": 225.0,
+          "pending_at_verified_paint": 10
+        },
+        {
+          "from_first_map_blend_ms": 1761.1,
+          "from_clear_map_ms": 1636.3,
+          "observed_node_labels": 12,
+          "template": "1b",
+          "floor": "zone_1",
+          "source_frames_presented": 45,
+          "clear_to_selected_capture_ms": 503.8,
+          "selected_capture_to_read_ms": 503.73,
+          "read_to_map_observation_ms": 488.93,
+          "observation_to_qt_paint_ms": 114.3,
+          "qt_paint_to_wgc_pixels_ms": 25.5,
+          "whole_page_ocr_within_read_ms": 252.7,
+          "pending_at_verified_paint": 10
+        }
+      ],
+      "median_from_blend_ms": 1788.8,
+      "median_from_clear_ms": 1646.8,
+      "median_segments": {
+        "clear_to_selected_capture_ms": 503.1,
+        "selected_capture_to_read_ms": 555.5,
+        "read_to_map_observation_ms": 439.3,
+        "observation_to_qt_paint_ms": 116.0,
+        "qt_paint_to_wgc_pixels_ms": 33.0,
+        "whole_page_ocr_within_read_ms": 225.0,
+        "pending_at_verified_paint": 10
+      }
+    }
+  },
+  "offline_transition": {
+    "first_clear_map_has_same_node_ids_and_types_as_witness": false,
+    "sampled_frames_relative_to_first_clear": [
+      {
+        "offset_frames": -6,
+        "page": "unknown",
+        "floor": null,
+        "template": null,
+        "visible_node_count": 0,
+        "node_differences_from_final_window": 12
+      },
+      {
+        "offset_frames": -4,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": null,
+        "visible_node_count": 0,
+        "node_differences_from_final_window": 12
+      },
+      {
+        "offset_frames": -2,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": null,
+        "visible_node_count": 0,
+        "node_differences_from_final_window": 12
+      },
+      {
+        "offset_frames": 0,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": "1b",
+        "visible_node_count": 12,
+        "node_differences_from_final_window": 1
+      },
+      {
+        "offset_frames": 2,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": "1b",
+        "visible_node_count": 11,
+        "node_differences_from_final_window": 2
+      },
+      {
+        "offset_frames": 4,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": "1b",
+        "visible_node_count": 11,
+        "node_differences_from_final_window": 2
+      },
+      {
+        "offset_frames": 8,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": "1b",
+        "visible_node_count": 12,
+        "node_differences_from_final_window": 1
+      },
+      {
+        "offset_frames": 12,
+        "page": "exploration",
+        "floor": "zone_1",
+        "template": "1b",
+        "visible_node_count": 12,
+        "node_differences_from_final_window": 0
+      }
+    ],
+    "interpretation": "At the first visually clear frame the same floor and template are already legible. One observed node type still differs from the final window. Later sampled frames temporarily contain fewer labels. The clear-to-selected-capture interval includes real source animation and frame choice."
+  },
+  "paired_wgc": {
+    "gpu": {
+      "pairs": 6,
+      "cohorts": {
+        "priorgpu_100": {
+          "median_ms": {
+            "held_item_pixels": 518.1,
+            "held_after_capture": 428.1,
+            "held_complete_qt": 1790.1,
+            "map_pixels": 562.7,
+            "map_after_capture": 463.4,
+            "held_capture": 88.1,
+            "map_capture": 83.1,
+            "held_complete_pixels": 1801.9,
+            "held_icons_work": 820.9,
+            "held_resources_work": 354.3,
+            "held_to_names": 376.4,
+            "held_names_to_qt": 33.0
+          },
+          "under_500_ms": {
+            "held": 3,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 490.13,
+              "held_after_capture": 408.2,
+              "held_complete_qt": 1803.64,
+              "map_pixels": 506.28,
+              "map_after_capture": 442.7,
+              "held_capture": 81.97,
+              "map_capture": 63.62,
+              "held_complete_pixels": 1814.47,
+              "held_icons_work": 875.2,
+              "held_resources_work": 374.1,
+              "held_to_names": 359.15,
+              "held_names_to_qt": 30.81
+            },
+            {
+              "held_item_pixels": 472.21,
+              "held_after_capture": 432.4,
+              "held_complete_qt": 1989.07,
+              "map_pixels": 610.77,
+              "map_after_capture": 497.6,
+              "held_capture": 39.76,
+              "map_capture": 113.13,
+              "held_complete_pixels": 1996.98,
+              "held_icons_work": 964.3,
+              "held_resources_work": 477.3,
+              "held_to_names": 384.0,
+              "held_names_to_qt": 32.34
+            },
+            {
+              "held_item_pixels": 597.96,
+              "held_after_capture": 498.6,
+              "held_complete_qt": 1776.62,
+              "map_pixels": 562.42,
+              "map_after_capture": 446.4,
+              "held_capture": 99.39,
+              "map_capture": 116.04,
+              "held_complete_pixels": 1789.25,
+              "held_icons_work": 766.6,
+              "held_resources_work": 356.3,
+              "held_to_names": 435.22,
+              "held_names_to_qt": 33.58
+            },
+            {
+              "held_item_pixels": 568.12,
+              "held_after_capture": 473.9,
+              "held_complete_qt": 1976.65,
+              "map_pixels": 567.77,
+              "map_after_capture": 465.2,
+              "held_capture": 94.27,
+              "map_capture": 102.56,
+              "held_complete_pixels": 1993.66,
+              "held_icons_work": 1061.9,
+              "held_resources_work": 290.0,
+              "held_to_names": 417.39,
+              "held_names_to_qt": 29.46
+            },
+            {
+              "held_item_pixels": 463.72,
+              "held_after_capture": 423.9,
+              "held_complete_qt": 1649.51,
+              "map_pixels": 563.05,
+              "map_after_capture": 513.4,
+              "held_capture": 39.87,
+              "map_capture": 49.68,
+              "held_complete_pixels": 1655.34,
+              "held_icons_work": 739.6,
+              "held_resources_work": 352.3,
+              "held_to_names": 367.9,
+              "held_names_to_qt": 38.2
+            },
+            {
+              "held_item_pixels": 545.99,
+              "held_after_capture": 422.7,
+              "held_complete_qt": 1650.76,
+              "map_pixels": 500.49,
+              "map_after_capture": 461.7,
+              "held_capture": 123.31,
+              "map_capture": 38.82,
+              "held_complete_pixels": 1660.85,
+              "held_icons_work": 750.3,
+              "held_resources_work": 309.9,
+              "held_to_names": 368.74,
+              "held_names_to_qt": 35.84
+            }
+          ]
+        },
+        "shipgpu_100": {
+          "median_ms": {
+            "held_item_pixels": 499.8,
+            "held_after_capture": 452.8,
+            "held_complete_qt": 1498.4,
+            "map_pixels": 492.1,
+            "map_after_capture": 444.0,
+            "held_capture": 48.8,
+            "map_capture": 43.5,
+            "held_complete_pixels": 1515.9,
+            "held_icons_work": 953.6,
+            "held_resources_work": 399.8,
+            "held_to_names": 387.7,
+            "held_names_to_qt": 42.5
+          },
+          "under_500_ms": {
+            "held": 3,
+            "map": 5
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 465.4,
+              "held_after_capture": 417.1,
+              "held_complete_qt": 1357.43,
+              "map_pixels": 468.96,
+              "map_after_capture": 412.8,
+              "held_capture": 48.26,
+              "map_capture": 56.21,
+              "held_complete_pixels": 1372.19,
+              "held_icons_work": 839.7,
+              "held_resources_work": 310.8,
+              "held_to_names": 356.75,
+              "held_names_to_qt": 44.06
+            },
+            {
+              "held_item_pixels": 489.64,
+              "held_after_capture": 442.5,
+              "held_complete_qt": 1387.85,
+              "map_pixels": 498.16,
+              "map_after_capture": 452.7,
+              "held_capture": 47.17,
+              "map_capture": 45.42,
+              "held_complete_pixels": 1405.06,
+              "held_icons_work": 854.0,
+              "held_resources_work": 422.7,
+              "held_to_names": 388.2,
+              "held_names_to_qt": 40.46
+            },
+            {
+              "held_item_pixels": 504.17,
+              "held_after_capture": 450.9,
+              "held_complete_qt": 1563.5,
+              "map_pixels": 492.34,
+              "map_after_capture": 437.3,
+              "held_capture": 53.32,
+              "map_capture": 55.05,
+              "held_complete_pixels": 1586.22,
+              "held_icons_work": 1006.8,
+              "held_resources_work": 422.1,
+              "held_to_names": 387.19,
+              "held_names_to_qt": 41.75
+            },
+            {
+              "held_item_pixels": 503.79,
+              "held_after_capture": 454.6,
+              "held_complete_qt": 1715.5,
+              "map_pixels": 540.93,
+              "map_after_capture": 511.3,
+              "held_capture": 49.24,
+              "map_capture": 29.58,
+              "held_complete_pixels": 1731.91,
+              "held_icons_work": 1166.6,
+              "held_resources_work": 391.6,
+              "held_to_names": 375.6,
+              "held_names_to_qt": 47.65
+            },
+            {
+              "held_item_pixels": 495.87,
+              "held_after_capture": 459.2,
+              "held_complete_qt": 1433.25,
+              "map_pixels": 491.91,
+              "map_after_capture": 450.7,
+              "held_capture": 36.66,
+              "map_capture": 41.19,
+              "held_complete_pixels": 1445.54,
+              "held_icons_work": 900.4,
+              "held_resources_work": 304.5,
+              "held_to_names": 402.54,
+              "held_names_to_qt": 37.15
+            },
+            {
+              "held_item_pixels": 509.04,
+              "held_after_capture": 458.8,
+              "held_complete_qt": 1615.37,
+              "map_pixels": 476.27,
+              "map_after_capture": 434.7,
+              "held_capture": 50.22,
+              "map_capture": 41.6,
+              "held_complete_pixels": 1625.81,
+              "held_icons_work": 1051.6,
+              "held_resources_work": 408.0,
+              "held_to_names": 396.23,
+              "held_names_to_qt": 43.25
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    },
+    "cpu": {
+      "pairs": 3,
+      "cohorts": {
+        "priorcpu_100": {
+          "median_ms": {
+            "held_item_pixels": 1182.9,
+            "held_after_capture": 1091.0,
+            "held_complete_qt": 2108.4,
+            "map_pixels": 1044.0,
+            "map_after_capture": 952.8,
+            "held_capture": 102.3,
+            "map_capture": 91.2,
+            "held_complete_pixels": 2125.1,
+            "held_icons_work": 576.7,
+            "held_resources_work": 316.0,
+            "held_to_names": 1044.4,
+            "held_names_to_qt": 35.2
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 1182.91,
+              "held_after_capture": 1091.0,
+              "held_complete_qt": 2049.81,
+              "map_pixels": 906.63,
+              "map_after_capture": 811.8,
+              "held_capture": 91.9,
+              "map_capture": 94.87,
+              "held_complete_pixels": 2065.5,
+              "held_icons_work": 507.4,
+              "held_resources_work": 316.0,
+              "held_to_names": 1044.44,
+              "held_names_to_qt": 32.75
+            },
+            {
+              "held_item_pixels": 1000.07,
+              "held_after_capture": 872.3,
+              "held_complete_qt": 2108.37,
+              "map_pixels": 1059.53,
+              "map_after_capture": 977.4,
+              "held_capture": 127.74,
+              "map_capture": 82.14,
+              "held_complete_pixels": 2125.11,
+              "held_icons_work": 710.2,
+              "held_resources_work": 329.7,
+              "held_to_names": 818.27,
+              "held_names_to_qt": 36.7
+            },
+            {
+              "held_item_pixels": 1262.13,
+              "held_after_capture": 1159.9,
+              "held_complete_qt": 2155.11,
+              "map_pixels": 1043.98,
+              "map_after_capture": 952.8,
+              "held_capture": 102.27,
+              "map_capture": 91.19,
+              "held_complete_pixels": 2176.87,
+              "held_icons_work": 576.7,
+              "held_resources_work": 299.0,
+              "held_to_names": 1074.37,
+              "held_names_to_qt": 35.2
+            }
+          ]
+        },
+        "shipcpu_100": {
+          "median_ms": {
+            "held_item_pixels": 1180.8,
+            "held_after_capture": 1126.5,
+            "held_complete_qt": 2012.4,
+            "map_pixels": 950.3,
+            "map_after_capture": 914.7,
+            "held_capture": 51.9,
+            "map_capture": 36.2,
+            "held_complete_pixels": 2025.8,
+            "held_icons_work": 780.0,
+            "held_resources_work": 370.3,
+            "held_to_names": 1044.5,
+            "held_names_to_qt": 39.1
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 1130.87,
+              "held_after_capture": 1097.3,
+              "held_complete_qt": 1916.43,
+              "map_pixels": 950.3,
+              "map_after_capture": 914.7,
+              "held_capture": 33.56,
+              "map_capture": 35.64,
+              "held_complete_pixels": 1930.97,
+              "held_icons_work": 778.3,
+              "held_resources_work": 370.3,
+              "held_to_names": 1018.64,
+              "held_names_to_qt": 39.06
+            },
+            {
+              "held_item_pixels": 1230.63,
+              "held_after_capture": 1178.7,
+              "held_complete_qt": 2012.44,
+              "map_pixels": 994.17,
+              "map_after_capture": 958.0,
+              "held_capture": 51.92,
+              "map_capture": 36.2,
+              "held_complete_pixels": 2025.8,
+              "held_icons_work": 780.0,
+              "held_resources_work": 362.7,
+              "held_to_names": 1092.45,
+              "held_names_to_qt": 36.91
+            },
+            {
+              "held_item_pixels": 1180.81,
+              "held_after_capture": 1126.5,
+              "held_complete_qt": 2323.65,
+              "map_pixels": 906.84,
+              "map_after_capture": 866.6,
+              "held_capture": 54.33,
+              "map_capture": 40.28,
+              "held_complete_pixels": 2330.79,
+              "held_icons_work": 1034.8,
+              "held_resources_work": 392.0,
+              "held_to_names": 1044.55,
+              "held_names_to_qt": 41.39
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    },
+    "busy": {
+      "pairs": 3,
+      "cohorts": {
+        "priorbusy_100": {
+          "median_ms": {
+            "held_item_pixels": 579.9,
+            "held_after_capture": 498.3,
+            "held_complete_qt": 2033.2,
+            "map_pixels": 580.8,
+            "map_after_capture": 507.4,
+            "held_capture": 55.8,
+            "map_capture": 78.7,
+            "held_complete_pixels": 2054.4,
+            "held_icons_work": 1008.4,
+            "held_resources_work": 397.9,
+            "held_to_names": 448.4,
+            "held_names_to_qt": 33.6
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 579.85,
+              "held_after_capture": 498.3,
+              "held_complete_qt": 2033.22,
+              "map_pixels": 567.68,
+              "map_after_capture": 484.0,
+              "held_capture": 81.52,
+              "map_capture": 83.65,
+              "held_complete_pixels": 2054.41,
+              "held_icons_work": 1008.4,
+              "held_resources_work": 397.9,
+              "held_to_names": 448.38,
+              "held_names_to_qt": 36.17
+            },
+            {
+              "held_item_pixels": 523.55,
+              "held_after_capture": 474.3,
+              "held_complete_qt": 1923.7,
+              "map_pixels": 580.77,
+              "map_after_capture": 518.5,
+              "held_capture": 49.25,
+              "map_capture": 62.25,
+              "held_complete_pixels": 1938.37,
+              "held_icons_work": 947.0,
+              "held_resources_work": 428.5,
+              "held_to_names": 417.07,
+              "held_names_to_qt": 29.9
+            },
+            {
+              "held_item_pixels": 588.71,
+              "held_after_capture": 532.9,
+              "held_complete_qt": 2060.48,
+              "map_pixels": 586.12,
+              "map_after_capture": 507.4,
+              "held_capture": 55.84,
+              "map_capture": 78.7,
+              "held_complete_pixels": 2071.0,
+              "held_icons_work": 1069.0,
+              "held_resources_work": 340.0,
+              "held_to_names": 480.04,
+              "held_names_to_qt": 33.62
+            }
+          ]
+        },
+        "shipbusy_100": {
+          "median_ms": {
+            "held_item_pixels": 592.8,
+            "held_after_capture": 558.8,
+            "held_complete_qt": 1703.2,
+            "map_pixels": 528.3,
+            "map_after_capture": 488.3,
+            "held_capture": 34.0,
+            "map_capture": 40.0,
+            "held_complete_pixels": 1711.5,
+            "held_icons_work": 1030.4,
+            "held_resources_work": 347.7,
+            "held_to_names": 496.1,
+            "held_names_to_qt": 45.8
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 1
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 564.24,
+              "held_after_capture": 507.5,
+              "held_complete_qt": 1745.14,
+              "map_pixels": 545.43,
+              "map_after_capture": 516.9,
+              "held_capture": 56.77,
+              "map_capture": 28.52,
+              "held_complete_pixels": 1756.01,
+              "held_icons_work": 1160.6,
+              "held_resources_work": 347.7,
+              "held_to_names": 421.59,
+              "held_names_to_qt": 47.52
+            },
+            {
+              "held_item_pixels": 592.81,
+              "held_after_capture": 558.8,
+              "held_complete_qt": 1620.03,
+              "map_pixels": 528.31,
+              "map_after_capture": 488.3,
+              "held_capture": 34.05,
+              "map_capture": 40.03,
+              "held_complete_pixels": 1634.11,
+              "held_icons_work": 969.5,
+              "held_resources_work": 319.2,
+              "held_to_names": 496.13,
+              "held_names_to_qt": 45.82
+            },
+            {
+              "held_item_pixels": 646.9,
+              "held_after_capture": 618.1,
+              "held_complete_qt": 1703.25,
+              "map_pixels": 488.89,
+              "map_after_capture": 430.0,
+              "held_capture": 28.77,
+              "map_capture": 58.86,
+              "held_complete_pixels": 1711.52,
+              "held_icons_work": 1030.4,
+              "held_resources_work": 427.8,
+              "held_to_names": 535.08,
+              "held_names_to_qt": 40.64
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    },
+    "film": {
+      "pairs": 3,
+      "cohorts": {
+        "priorfilm_100": {
+          "median_ms": {
+            "held_item_pixels": 952.3,
+            "held_after_capture": 904.9,
+            "held_complete_qt": 2261.1,
+            "map_pixels": 792.1,
+            "map_after_capture": 763.9,
+            "held_capture": 47.4,
+            "map_capture": 47.3,
+            "held_complete_pixels": 2279.6,
+            "held_icons_work": 891.1,
+            "held_resources_work": 320.0,
+            "held_to_names": 847.0,
+            "held_names_to_qt": 28.2
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 798.07,
+              "held_after_capture": 739.5,
+              "held_complete_qt": 1949.02,
+              "map_pixels": 792.09,
+              "map_after_capture": 763.9,
+              "held_capture": 58.57,
+              "map_capture": 28.22,
+              "held_complete_pixels": 1961.32,
+              "held_icons_work": 702.6,
+              "held_resources_work": 375.0,
+              "held_to_names": 701.17,
+              "held_names_to_qt": 28.24
+            },
+            {
+              "held_item_pixels": 1009.88,
+              "held_after_capture": 979.1,
+              "held_complete_qt": 2261.09,
+              "map_pixels": 769.29,
+              "map_after_capture": 641.1,
+              "held_capture": 30.77,
+              "map_capture": 128.2,
+              "held_complete_pixels": 2279.62,
+              "held_icons_work": 891.1,
+              "held_resources_work": 320.0,
+              "held_to_names": 912.81,
+              "held_names_to_qt": 29.09
+            },
+            {
+              "held_item_pixels": 952.33,
+              "held_after_capture": 904.9,
+              "held_complete_qt": 2337.51,
+              "map_pixels": 975.35,
+              "map_after_capture": 928.1,
+              "held_capture": 47.4,
+              "map_capture": 47.26,
+              "held_complete_pixels": 2360.09,
+              "held_icons_work": 1043.2,
+              "held_resources_work": 272.9,
+              "held_to_names": 846.95,
+              "held_names_to_qt": 25.94
+            }
+          ]
+        },
+        "shipfilm_100": {
+          "median_ms": {
+            "held_item_pixels": 974.9,
+            "held_after_capture": 867.6,
+            "held_complete_qt": 1962.9,
+            "map_pixels": 854.4,
+            "map_after_capture": 824.7,
+            "held_capture": 107.3,
+            "map_capture": 29.8,
+            "held_complete_pixels": 1981.1,
+            "held_icons_work": 921.2,
+            "held_resources_work": 347.4,
+            "held_to_names": 808.9,
+            "held_names_to_qt": 41.3
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 974.91,
+              "held_after_capture": 867.6,
+              "held_complete_qt": 1962.92,
+              "map_pixels": 569.91,
+              "map_after_capture": 552.9,
+              "held_capture": 107.3,
+              "map_capture": 17.0,
+              "held_complete_pixels": 1981.07,
+              "held_icons_work": 921.2,
+              "held_resources_work": 347.4,
+              "held_to_names": 808.93,
+              "held_names_to_qt": 41.02
+            },
+            {
+              "held_item_pixels": 915.4,
+              "held_after_capture": 854.9,
+              "held_complete_qt": 1865.92,
+              "map_pixels": 854.42,
+              "map_after_capture": 824.7,
+              "held_capture": 60.54,
+              "map_capture": 29.75,
+              "held_complete_pixels": 1872.83,
+              "held_icons_work": 893.1,
+              "held_resources_work": 310.7,
+              "held_to_names": 795.48,
+              "held_names_to_qt": 41.28
+            },
+            {
+              "held_item_pixels": 1027.06,
+              "held_after_capture": 909.0,
+              "held_complete_qt": 2005.11,
+              "map_pixels": 898.32,
+              "map_after_capture": 835.2,
+              "held_capture": 118.01,
+              "map_capture": 63.07,
+              "held_complete_pixels": 2018.05,
+              "held_icons_work": 930.2,
+              "held_resources_work": 373.8,
+              "held_to_names": 845.88,
+              "held_names_to_qt": 41.98
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    }
+  },
+  "capture_pulses": {
+    "ref": {
+      "trials": 30,
+      "source_pulse_lengths_ms": [
+        65,
+        85,
+        105,
+        125,
+        155,
+        205
+      ],
+      "captured_pulses": 28,
+      "sampled_only_after_pulse_end": 1,
+      "final_frames": 30,
+      "median_pulse_ms": 73.4,
+      "median_final_ms": 74.9
+    },
+    "paced": {
+      "trials": 30,
+      "source_pulse_lengths_ms": [
+        65,
+        85,
+        105,
+        125,
+        155,
+        205
+      ],
+      "captured_pulses": 30,
+      "sampled_only_after_pulse_end": 0,
+      "final_frames": 30,
+      "median_pulse_ms": 38.0,
+      "median_final_ms": 36.9
+    }
+  },
+  "animation_capture_control": {
+    "ref": [
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 76,
+        "buffer_wall_ms_per_second": 100.9,
+        "callback_thread_cpu_ms_per_second": 85.9,
+        "process_cpu_ms_per_second_including_source": 572.2,
+        "queued_overflow": 64,
+        "selected": 76,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      },
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 76,
+        "buffer_wall_ms_per_second": 101.5,
+        "callback_thread_cpu_ms_per_second": 87.9,
+        "process_cpu_ms_per_second_including_source": 533.1,
+        "queued_overflow": 64,
+        "selected": 76,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      },
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 76,
+        "buffer_wall_ms_per_second": 107.1,
+        "callback_thread_cpu_ms_per_second": 80.1,
+        "process_cpu_ms_per_second_including_source": 501.9,
+        "queued_overflow": 64,
+        "selected": 76,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      }
+    ],
+    "paced": [
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 74,
+        "buffer_wall_ms_per_second": 99.3,
+        "callback_thread_cpu_ms_per_second": 82.0,
+        "process_cpu_ms_per_second_including_source": 431.6,
+        "queued_overflow": 61,
+        "selected": 74,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      },
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 74,
+        "buffer_wall_ms_per_second": 102.8,
+        "callback_thread_cpu_ms_per_second": 85.9,
+        "process_cpu_ms_per_second_including_source": 419.9,
+        "queued_overflow": 61,
+        "selected": 74,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      },
+      {
+        "seconds": 8.0,
+        "source_paints": 242,
+        "callbacks": 74,
+        "buffer_wall_ms_per_second": 97.9,
+        "callback_thread_cpu_ms_per_second": 70.3,
+        "process_cpu_ms_per_second_including_source": 437.5,
+        "queued_overflow": 62,
+        "selected": 74,
+        "max_frames": 16,
+        "consumer_ms_per_take": 1000
+      }
+    ]
+  },
+  "model_parity": {
+    "views": 40,
+    "row_inputs": 1574,
+    "rotations": 664,
+    "exact_matches": 40,
+    "median_serial_ms": 164.1,
+    "median_pipeline_ms": 156.5
+  },
+  "verification": {
+    "targeted_unittests": 171,
+    "passed": true,
+    "native_gpu_test_toolbar_visible_responsive": true,
+    "normal_cpu_startup_preserved": true,
+    "private_files_unchanged": true
+  },
+  "remaining": "The selected frame was often captured after the map was already legible. It then waited to enter the reader. No guarantee of sub-500 ms on either device. The full-page OCR interval is included in the read interval; stage medians are independent.",
+  "rejected": [
+    "Gating icon matching on first Qt paint did not reduce first visible latency consistently.",
+    "Pooled artwork screening retained too many candidates to justify its pass."
+  ],
+  "reserve_reader_experiment": {
+    "production": false,
+    "rule": "Locally keep the second reader free while new frame notifications continue within 140 ms. Existing historical candidates still queue.",
+    "rows": [
+      {
+        "clear_to_window_ms": 1233.3,
+        "selected_frame_age_at_read_ms": 152.9
+      },
+      {
+        "clear_to_window_ms": 1267.1,
+        "selected_frame_age_at_read_ms": 213.81
+      },
+      {
+        "clear_to_window_ms": 1175.6,
+        "selected_frame_age_at_read_ms": 153.77
+      }
+    ],
+    "median_clear_to_window_ms": 1233.3,
+    "limit": "Under a continuously animated source this timer can withhold the second reader for the entire animation. Short-page and historical coverage under continuous load have not passed acceptance."
+  }
+}
