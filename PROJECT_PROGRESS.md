@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-藏品首绘已有核显窗口回放低于 0.5 秒，但仍有超时；继续缩短地图切页至正确楼层的实际显示和完整持有栏核对，验证更多连续动画及游戏同跑负载。[回执](verification/maintenance/ocr-inventory-wide-batch-wgc-20261122/summary.json)。
+继续缩短切页至助手窗口出现已确认新楼层及藏品条目的实际时间。已提前解码楼层背景，整页文字检测、读取和采集等待仍占主要时间；待实机及持续动画复核。[回执](verification/maintenance/ocr-map-background-first-display-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

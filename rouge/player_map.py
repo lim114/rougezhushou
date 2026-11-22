@@ -3,7 +3,7 @@ from pathlib import Path
 from functools import lru_cache, partial
 from copy import deepcopy
 import json
-from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
+from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize,QThreadPool
 from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
     QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit,QFormLayout,QMessageBox)
@@ -59,11 +59,22 @@ def node_sprite(kind):
                 return icon.copy(int(xs.min()), int(ys.min()), int(xs.max()-xs.min()+1), int(ys.max()-ys.min()+1))
     return QImage(str(ART.parent / 'ui-icons' / 'missing-node-image.png'))
 
+# Three decoded images cover the current, previous and upcoming artwork.
+@lru_cache(maxsize=3)
+def floor_background(floor):
+    # The packaged sixth-floor artwork is named area-1.
+    name = f'area-{floor % 6 + 1}.png' if floor else 'blindness.png'
+    return QImage(str(ART / name))
+
+
 class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
     def __init__(self):
         super().__init__();self.background=QImage();self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(0,0)
         self._layout_key=None
+        self._art_floor = None
+        self._art_worker = QThreadPool(self)
+        self._art_worker.setMaxThreadCount(1)
     def sprite_for(self,kind):
         return node_sprite(kind)
     def set_type_filter(self,kind):
@@ -71,9 +82,12 @@ class PreviewMapView(MapView):
         self.filter_kind=kind;self.overlay=overlay_rows(self.graph,kind,self.frequencies)if kind else{};self.update()
     def set_map(self,graph,image=None,*,historical=False):
         _,floor=zone_info(graph)
-        # Decoration only. Exact zone/topology remains in the graph, not inferred from artwork.
-        name=f'area-{floor+1}.png'if floor and floor<6 else'area-1.png'if floor==6 else'blindness.png'
-        self.background=QImage(str(ART/name))
+        self.background = floor_background(floor)
+        if floor != self._art_floor:
+            self._art_floor = floor
+            if floor and floor < 6:
+                # Decode only the decoration. The observed graph still selects the floor.
+                self._art_worker.tryStart(partial(floor_background, floor + 1))
         self._layout_key=None
         super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
     def _positions(self):

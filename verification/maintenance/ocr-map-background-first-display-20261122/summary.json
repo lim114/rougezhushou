@@ -1,0 +1,769 @@
+{
+  "baseline": "d09bd677a",
+  "change": "The preview retains at most three decoded static floor backgrounds. When the displayed floor changes one idle worker may decode the next regular floor artwork. The caller selects only the actual current or explicitly pinned graph and its matching artwork. No model or inference changes. Approximate maximum cache payload is 17.14 MiB; other live images and decoder scratch are additional.",
+  "method": "Warm 2052x1128 local Windows game-image replay with a second Windows Graphics Capture session observing the owned assistant window only. Clock starts before the replay changes its pixels. Endpoint requires two newly recognized visible interactive inventory tiles at distinct positions or the correct changed floor (zone_2 to zone_3, template 3j), matching pixels against the actual diagram. All pre-switch frames are negative. Per-process isolation; alternated baseline/candidate ordering. WGC arrival includes delivery latency; no physical scan-out measurement or running game.",
+  "display_comparison": {
+    "paired_runs": 6,
+    "rows_ms": {
+      "ref-prod": [
+        {
+          "inventory_pixels": 454.78,
+          "inventory_capture": 37.29,
+          "inventory_after_capture": 417.49,
+          "inventory_qt": 440.84,
+          "map_pixels": 683.23,
+          "map_capture": 117.89,
+          "map_after_capture": 565.34,
+          "map_qt": 640.97,
+          "map_ui": 122.79,
+          "inventory_full_qt": 2026.85
+        },
+        {
+          "inventory_pixels": 498.72,
+          "inventory_capture": 65.49,
+          "inventory_after_capture": 433.23,
+          "inventory_qt": 478.93,
+          "map_pixels": 689.87,
+          "map_capture": 121.73,
+          "map_after_capture": 568.14,
+          "map_qt": 650.59,
+          "map_ui": 111.24,
+          "inventory_full_qt": 2116.67
+        },
+        {
+          "inventory_pixels": 577.75,
+          "inventory_capture": 51.76,
+          "inventory_after_capture": 525.99,
+          "inventory_qt": 545.84,
+          "map_pixels": 632.83,
+          "map_capture": 80.47,
+          "map_after_capture": 552.36,
+          "map_qt": 599.1,
+          "map_ui": 127.2,
+          "inventory_full_qt": 1993.75
+        },
+        {
+          "inventory_pixels": 565.46,
+          "inventory_capture": 118.63,
+          "inventory_after_capture": 446.83,
+          "inventory_qt": 535.03,
+          "map_pixels": 594.34,
+          "map_capture": 97.14,
+          "map_after_capture": 497.2,
+          "map_qt": 571.22,
+          "map_ui": 104.73,
+          "inventory_full_qt": 1782.69
+        },
+        {
+          "inventory_pixels": 478.08,
+          "inventory_capture": 41.63,
+          "inventory_after_capture": 436.45,
+          "inventory_qt": 439.24,
+          "map_pixels": 615.61,
+          "map_capture": 122.31,
+          "map_after_capture": 493.3,
+          "map_qt": 587.51,
+          "map_ui": 98.16,
+          "inventory_full_qt": 1808.47
+        },
+        {
+          "inventory_pixels": 455.51,
+          "inventory_capture": 32.56,
+          "inventory_after_capture": 422.95,
+          "inventory_qt": 435.89,
+          "map_pixels": 793.75,
+          "map_capture": 76.31,
+          "map_after_capture": 717.44,
+          "map_qt": 748.72,
+          "map_ui": 133.73,
+          "inventory_full_qt": 2071.35
+        }
+      ],
+      "prod": [
+        {
+          "inventory_pixels": 511.51,
+          "inventory_capture": 113.29,
+          "inventory_after_capture": 398.22,
+          "inventory_qt": 492.68,
+          "map_pixels": 612.55,
+          "map_capture": 88.66,
+          "map_after_capture": 523.89,
+          "map_qt": 581.61,
+          "map_ui": 68.23,
+          "inventory_full_qt": 1849.61
+        },
+        {
+          "inventory_pixels": 544.28,
+          "inventory_capture": 82.57,
+          "inventory_after_capture": 461.71,
+          "inventory_qt": 513.59,
+          "map_pixels": 704.61,
+          "map_capture": 85.47,
+          "map_after_capture": 619.14,
+          "map_qt": 662.66,
+          "map_ui": 156.66,
+          "inventory_full_qt": 1954.65
+        },
+        {
+          "inventory_pixels": 514.22,
+          "inventory_capture": 87.71,
+          "inventory_after_capture": 426.51,
+          "inventory_qt": 497.92,
+          "map_pixels": 524.7,
+          "map_capture": 43.62,
+          "map_after_capture": 481.08,
+          "map_qt": 499.6,
+          "map_ui": 73.16,
+          "inventory_full_qt": 2024.78
+        },
+        {
+          "inventory_pixels": 482.12,
+          "inventory_capture": 56.62,
+          "inventory_after_capture": 425.5,
+          "inventory_qt": 466.69,
+          "map_pixels": 602.28,
+          "map_capture": 44.04,
+          "map_after_capture": 558.24,
+          "map_qt": 573.4,
+          "map_ui": 82.55,
+          "inventory_full_qt": 1943.84
+        },
+        {
+          "inventory_pixels": 455.7,
+          "inventory_capture": 35.73,
+          "inventory_after_capture": 419.97,
+          "inventory_qt": 444.35,
+          "map_pixels": 576.15,
+          "map_capture": 73.55,
+          "map_after_capture": 502.6,
+          "map_qt": 538.16,
+          "map_ui": 74.76,
+          "inventory_full_qt": 1730.61
+        },
+        {
+          "inventory_pixels": 533.09,
+          "inventory_capture": 71.64,
+          "inventory_after_capture": 461.45,
+          "inventory_qt": 495.65,
+          "map_pixels": 598.02,
+          "map_capture": 123.7,
+          "map_after_capture": 474.32,
+          "map_qt": 569.59,
+          "map_ui": 57.56,
+          "inventory_full_qt": 1944.85
+        }
+      ]
+    },
+    "median_ms": {
+      "ref-prod": {
+        "inventory_pixels": 488.4,
+        "inventory_capture": 46.7,
+        "inventory_after_capture": 434.84,
+        "inventory_qt": 459.88,
+        "map_pixels": 658.03,
+        "map_capture": 107.52,
+        "map_after_capture": 558.85,
+        "map_qt": 620.04,
+        "map_ui": 117.02,
+        "inventory_full_qt": 2010.3
+      },
+      "prod": {
+        "inventory_pixels": 512.87,
+        "inventory_capture": 77.1,
+        "inventory_after_capture": 426.0,
+        "inventory_qt": 494.16,
+        "map_pixels": 600.15,
+        "map_capture": 79.51,
+        "map_after_capture": 513.25,
+        "map_qt": 571.5,
+        "map_ui": 73.96,
+        "inventory_full_qt": 1944.34
+      }
+    },
+    "under_500": {
+      "ref-prod": [
+        0,
+        4
+      ],
+      "prod": [
+        0,
+        2
+      ]
+    },
+    "identical_final_observation_pairs": 12
+  },
+  "stage_trace_format": "Two additional instrumented baseline runs. Pairs are [start from source transition, elapsed] milliseconds, single values are endpoints. Stages overlap; waiting for the stable frame includes detector and page OCR work.",
+  "stage_profiles": {
+    "map": [
+      {
+        "speculative_detection": [
+          77.43,
+          93.99
+        ],
+        "full_page_text": [
+          171.45,
+          198.37
+        ],
+        "orientation_within_text": [
+          195.19,
+          30.71
+        ],
+        "map_registration": [
+          377.71,
+          57.76
+        ],
+        "ui_map": [
+          443.81,
+          97.06
+        ],
+        "timeline_commit": [
+          446.98,
+          13.81
+        ],
+        "map_panel": [
+          496.9,
+          42.22
+        ],
+        "qt_paint": 569.03,
+        "assistant_window_capture": 603.41
+      },
+      {
+        "speculative_detection": [
+          105.75,
+          93.77
+        ],
+        "full_page_text": [
+          199.53,
+          195.24
+        ],
+        "orientation_within_text": [
+          212.9,
+          32.68
+        ],
+        "map_registration": [
+          402.38,
+          60.73
+        ],
+        "ui_map": [
+          470.42,
+          108.53
+        ],
+        "timeline_commit": [
+          473.51,
+          14.14
+        ],
+        "map_panel": [
+          528.44,
+          48.26
+        ],
+        "qt_paint": 614.08,
+        "assistant_window_capture": 657.26
+      }
+    ],
+    "inventory": [
+      {
+        "speculative_detection": [
+          100.48,
+          98.13
+        ],
+        "full_page_text": [
+          198.63,
+          246.29
+        ],
+        "orientation_within_text": [
+          214.87,
+          45.44
+        ],
+        "confirm_cards": [
+          450.05,
+          0.67
+        ],
+        "install_interactive_rows": [
+          458.25,
+          12.6
+        ],
+        "qt_paint": 485.41,
+        "assistant_window_capture": 520.5
+      },
+      {
+        "speculative_detection": [
+          129.78,
+          105.14
+        ],
+        "full_page_text": [
+          234.94,
+          247.63
+        ],
+        "orientation_within_text": [
+          251.96,
+          46.93
+        ],
+        "confirm_cards": [
+          490.29,
+          0.93
+        ],
+        "install_interactive_rows": [
+          499.04,
+          13.81
+        ],
+        "qt_paint": 528.19,
+        "assistant_window_capture": 571.19
+      }
+    ]
+  },
+  "forced_repaint_experiment": {
+    "paired_runs": 4,
+    "rows_ms": {
+      "ref": [
+        {
+          "inventory_pixels": 577.92,
+          "inventory_capture": 93.86,
+          "inventory_after_capture": 484.06,
+          "inventory_qt": 565.21,
+          "map_pixels": 662.85,
+          "map_capture": 53.52,
+          "map_after_capture": 609.33,
+          "map_qt": 634.5,
+          "map_ui": 109.04,
+          "inventory_full_qt": 1850.63
+        },
+        {
+          "inventory_pixels": 492.87,
+          "inventory_capture": 56.66,
+          "inventory_after_capture": 436.21,
+          "inventory_qt": 470.89,
+          "map_pixels": 564.58,
+          "map_capture": 57.67,
+          "map_after_capture": 506.91,
+          "map_qt": 540.16,
+          "map_ui": 98.55,
+          "inventory_full_qt": 1729.19
+        },
+        {
+          "inventory_pixels": 502.74,
+          "inventory_capture": 58.47,
+          "inventory_after_capture": 444.27,
+          "inventory_qt": 468.97,
+          "map_pixels": 563.16,
+          "map_capture": 57.49,
+          "map_after_capture": 505.67,
+          "map_qt": 538.64,
+          "map_ui": 104.18,
+          "inventory_full_qt": 1641.5
+        },
+        {
+          "inventory_pixels": 521.22,
+          "inventory_capture": 88.64,
+          "inventory_after_capture": 432.58,
+          "inventory_qt": 507.34,
+          "map_pixels": 573.29,
+          "map_capture": 62.68,
+          "map_after_capture": 510.61,
+          "map_qt": 546.92,
+          "map_ui": 106.38,
+          "inventory_full_qt": 1815.47
+        }
+      ],
+      "early": [
+        {
+          "inventory_pixels": 543.88,
+          "inventory_capture": 60.2,
+          "inventory_after_capture": 483.68,
+          "inventory_qt": 527.88,
+          "map_pixels": 810.29,
+          "map_capture": 38.12,
+          "map_after_capture": 772.17,
+          "map_qt": 652.99,
+          "map_ui": 146.68,
+          "inventory_full_qt": 1810.74
+        },
+        {
+          "inventory_pixels": 496.85,
+          "inventory_capture": 29.52,
+          "inventory_after_capture": 467.33,
+          "inventory_qt": 466.9,
+          "map_pixels": 685.68,
+          "map_capture": 85.91,
+          "map_after_capture": 599.77,
+          "map_qt": 561.97,
+          "map_ui": 116.81,
+          "inventory_full_qt": 1889.69
+        },
+        {
+          "inventory_pixels": 453.55,
+          "inventory_capture": 29.26,
+          "inventory_after_capture": 424.29,
+          "inventory_qt": 435.05,
+          "map_pixels": 685.84,
+          "map_capture": 70.93,
+          "map_after_capture": 614.91,
+          "map_qt": 557.38,
+          "map_ui": 145.56,
+          "inventory_full_qt": 1738.66
+        },
+        {
+          "inventory_pixels": 549.65,
+          "inventory_capture": 114.49,
+          "inventory_after_capture": 435.16,
+          "inventory_qt": 521.21,
+          "map_pixels": 578.66,
+          "map_capture": 46.59,
+          "map_after_capture": 532.07,
+          "map_qt": 456.87,
+          "map_ui": 126.93,
+          "inventory_full_qt": 1835.53
+        }
+      ]
+    },
+    "median_ms": {
+      "ref": {
+        "inventory_pixels": 511.98,
+        "inventory_capture": 73.56,
+        "inventory_after_capture": 440.24,
+        "inventory_qt": 489.12,
+        "map_pixels": 568.93,
+        "map_capture": 57.58,
+        "map_after_capture": 508.76,
+        "map_qt": 543.54,
+        "map_ui": 105.28,
+        "inventory_full_qt": 1772.33
+      },
+      "early": {
+        "inventory_pixels": 520.37,
+        "inventory_capture": 44.86,
+        "inventory_after_capture": 451.25,
+        "inventory_qt": 494.06,
+        "map_pixels": 685.76,
+        "map_capture": 58.76,
+        "map_after_capture": 607.34,
+        "map_qt": 559.67,
+        "map_ui": 136.25,
+        "inventory_full_qt": 1823.13
+      }
+    },
+    "under_500": {
+      "ref": [
+        0,
+        1
+      ],
+      "early": [
+        0,
+        2
+      ]
+    },
+    "identical_final_observation_pairs": 8
+  },
+  "initial_active_floor_only_prefetch": {
+    "paired_runs": 4,
+    "rows_ms": {
+      "ref-art": [
+        {
+          "inventory_pixels": 554.91,
+          "inventory_capture": 91.16,
+          "inventory_after_capture": 463.75,
+          "inventory_qt": 520.01,
+          "map_pixels": 698.92,
+          "map_capture": 83.73,
+          "map_after_capture": 615.19,
+          "map_qt": 664.14,
+          "map_ui": 109.05,
+          "inventory_full_qt": 2032.66
+        },
+        {
+          "inventory_pixels": 571.53,
+          "inventory_capture": 67.76,
+          "inventory_after_capture": 503.77,
+          "inventory_qt": 530.05,
+          "map_pixels": 579.71,
+          "map_capture": 81.81,
+          "map_after_capture": 497.9,
+          "map_qt": 553.6,
+          "map_ui": 99.29,
+          "inventory_full_qt": 2205.26
+        },
+        {
+          "inventory_pixels": 487.38,
+          "inventory_capture": 46.07,
+          "inventory_after_capture": 441.31,
+          "inventory_qt": 458.41,
+          "map_pixels": 602.89,
+          "map_capture": 28.99,
+          "map_after_capture": 573.9,
+          "map_qt": 572.05,
+          "map_ui": 110.59,
+          "inventory_full_qt": 1941.65
+        },
+        {
+          "inventory_pixels": 496.73,
+          "inventory_capture": 50.28,
+          "inventory_after_capture": 446.45,
+          "inventory_qt": 463.64,
+          "map_pixels": 617.23,
+          "map_capture": 66.95,
+          "map_after_capture": 550.28,
+          "map_qt": 591.83,
+          "map_ui": 107.21,
+          "inventory_full_qt": 1646.97
+        }
+      ],
+      "art": [
+        {
+          "inventory_pixels": 447.2,
+          "inventory_capture": 29.22,
+          "inventory_after_capture": 417.98,
+          "inventory_qt": 428.81,
+          "map_pixels": 561.56,
+          "map_capture": 39.17,
+          "map_after_capture": 522.39,
+          "map_qt": 533.13,
+          "map_ui": 113.72,
+          "inventory_full_qt": 1580.84
+        },
+        {
+          "inventory_pixels": 468.07,
+          "inventory_capture": 47.61,
+          "inventory_after_capture": 420.46,
+          "inventory_qt": 437.68,
+          "map_pixels": 624.77,
+          "map_capture": 111.08,
+          "map_after_capture": 513.69,
+          "map_qt": 592.77,
+          "map_ui": 100.82,
+          "inventory_full_qt": 1828.19
+        },
+        {
+          "inventory_pixels": 554.42,
+          "inventory_capture": 98.16,
+          "inventory_after_capture": 456.26,
+          "inventory_qt": 539.69,
+          "map_pixels": 653.98,
+          "map_capture": 125.52,
+          "map_after_capture": 528.46,
+          "map_qt": 613.61,
+          "map_ui": 107.02,
+          "inventory_full_qt": 1954.73
+        },
+        {
+          "inventory_pixels": 481.91,
+          "inventory_capture": 73.16,
+          "inventory_after_capture": 408.75,
+          "inventory_qt": 469.7,
+          "map_pixels": 593.99,
+          "map_capture": 94.68,
+          "map_after_capture": 499.31,
+          "map_qt": 554.23,
+          "map_ui": 104.62,
+          "inventory_full_qt": 1959.13
+        }
+      ]
+    },
+    "median_ms": {
+      "ref-art": {
+        "inventory_pixels": 525.82,
+        "inventory_capture": 59.02,
+        "inventory_after_capture": 455.1,
+        "inventory_qt": 491.82,
+        "map_pixels": 610.06,
+        "map_capture": 74.38,
+        "map_after_capture": 562.09,
+        "map_qt": 581.94,
+        "map_ui": 108.13,
+        "inventory_full_qt": 1987.16
+      },
+      "art": {
+        "inventory_pixels": 474.99,
+        "inventory_capture": 60.38,
+        "inventory_after_capture": 419.22,
+        "inventory_qt": 453.69,
+        "map_pixels": 609.38,
+        "map_capture": 102.88,
+        "map_after_capture": 518.04,
+        "map_qt": 573.5,
+        "map_ui": 105.82,
+        "inventory_full_qt": 1891.46
+      }
+    },
+    "under_500": {
+      "ref-art": [
+        0,
+        2
+      ],
+      "art": [
+        0,
+        3
+      ]
+    },
+    "identical_final_observation_pairs": 8
+  },
+  "previous_floor_may_be_historical_pilot": {
+    "paired_runs": 4,
+    "rows_ms": {
+      "ref-next": [
+        {
+          "inventory_pixels": 668.3,
+          "inventory_capture": 86.43,
+          "inventory_after_capture": 581.87,
+          "inventory_qt": 652.07,
+          "map_pixels": 564.59,
+          "map_capture": 43.91,
+          "map_after_capture": 520.68,
+          "map_qt": 537.82,
+          "map_ui": 105.23,
+          "inventory_full_qt": 1954.15
+        },
+        {
+          "inventory_pixels": 576.47,
+          "inventory_capture": 96.55,
+          "inventory_after_capture": 479.92,
+          "inventory_qt": 547.93,
+          "map_pixels": 613.13,
+          "map_capture": 77.21,
+          "map_after_capture": 535.92,
+          "map_qt": 583.67,
+          "map_ui": 107.34,
+          "inventory_full_qt": 1857.23
+        },
+        {
+          "inventory_pixels": 517.68,
+          "inventory_capture": 114.38,
+          "inventory_after_capture": 403.3,
+          "inventory_qt": 486.89,
+          "map_pixels": 625.11,
+          "map_capture": 65.56,
+          "map_after_capture": 559.55,
+          "map_qt": 590.15,
+          "map_ui": 121.07,
+          "inventory_full_qt": 1866.86
+        },
+        {
+          "inventory_pixels": 519.68,
+          "inventory_capture": 73.55,
+          "inventory_after_capture": 446.13,
+          "inventory_qt": 477.61,
+          "map_pixels": 570.24,
+          "map_capture": 90.99,
+          "map_after_capture": 479.25,
+          "map_qt": 548.09,
+          "map_ui": 99.58,
+          "inventory_full_qt": 1667.17
+        }
+      ],
+      "next": [
+        {
+          "inventory_pixels": 556.05,
+          "inventory_capture": 93.27,
+          "inventory_after_capture": 462.78,
+          "inventory_qt": 523.85,
+          "map_pixels": 591.61,
+          "map_capture": 101.83,
+          "map_after_capture": 489.78,
+          "map_qt": 567.3,
+          "map_ui": 63.61,
+          "inventory_full_qt": 1939.02
+        },
+        {
+          "inventory_pixels": 532.35,
+          "inventory_capture": 114.44,
+          "inventory_after_capture": 417.91,
+          "inventory_qt": 512.41,
+          "map_pixels": 586.6,
+          "map_capture": 96.7,
+          "map_after_capture": 489.9,
+          "map_qt": 555.5,
+          "map_ui": 66.58,
+          "inventory_full_qt": 1820.67
+        },
+        {
+          "inventory_pixels": 563.08,
+          "inventory_capture": 120.05,
+          "inventory_after_capture": 443.03,
+          "inventory_qt": 544.26,
+          "map_pixels": 561.52,
+          "map_capture": 59.9,
+          "map_after_capture": 501.62,
+          "map_qt": 534.55,
+          "map_ui": 72.99,
+          "inventory_full_qt": 1843.2
+        },
+        {
+          "inventory_pixels": 568.89,
+          "inventory_capture": 128.63,
+          "inventory_after_capture": 440.26,
+          "inventory_qt": 539.42,
+          "map_pixels": 546.61,
+          "map_capture": 54.33,
+          "map_after_capture": 492.28,
+          "map_qt": 516.53,
+          "map_ui": 69.51,
+          "inventory_full_qt": 2087.74
+        }
+      ]
+    },
+    "median_ms": {
+      "ref-next": {
+        "inventory_pixels": 548.08,
+        "inventory_capture": 91.49,
+        "inventory_after_capture": 463.02,
+        "inventory_qt": 517.41,
+        "map_pixels": 591.68,
+        "map_capture": 71.38,
+        "map_after_capture": 528.3,
+        "map_qt": 565.88,
+        "map_ui": 106.28,
+        "inventory_full_qt": 1862.05
+      },
+      "next": {
+        "inventory_pixels": 559.57,
+        "inventory_capture": 117.25,
+        "inventory_after_capture": 441.64,
+        "inventory_qt": 531.63,
+        "map_pixels": 574.06,
+        "map_capture": 78.3,
+        "map_after_capture": 491.09,
+        "map_qt": 545.02,
+        "map_ui": 68.05,
+        "inventory_full_qt": 1891.11
+      }
+    },
+    "under_500": {
+      "ref-next": [
+        0,
+        0
+      ],
+      "next": [
+        0,
+        0
+      ]
+    },
+    "identical_final_observation_pairs": 8
+  },
+  "validation": {
+    "targeted_tests": 96,
+    "test_window": {
+      "gpu_flag_verified": true,
+      "visible": true,
+      "responsive": true,
+      "private_unchanged": true
+    },
+    "live_game_windows_when_checked": 0
+  },
+  "limits": "Single map transition and inventory scene; timings vary with GPU load, WGC capture timing and window composition. New held rows are visible before the full inventory finishes. The 500 ms goal is still open.",
+  "source_chain": [
+    "rouge/capture.py GameCapture.connect WGC callback",
+    "rouge/frame_buffer.py FrameBuffer.offer",
+    "rouge/app.py MainWindow.prepare_settling_page and sample_now",
+    "rouge/page_detection.py SettlingDetection and _prepare_text",
+    "rouge/page_ocr.py PageOCR",
+    "rouge/recognition.py ScreenReader._interpret",
+    "rouge/run_recognition.py read_run",
+    "map: read_map -> on_map -> MainWindow.sample_received -> ObservationTimeline.prepare/commit -> render_map -> MapPanel.refresh -> PreviewMapView.set_map",
+    "inventory: confirmed cards -> on_held_names -> MainWindow.show_held_names -> inventory viewport paint",
+    "second WGC stream confirms assistant pixels"
+  ],
+  "background_decode_profile_ms": {
+    "unread_map": 40.1,
+    "previous_floor_2": 39.5,
+    "new_floor_3_cold": 36.7
+  },
+  "replay_case_order": "Inventory is measured first, before the map panel and its speculative artwork worker exist. Inventory timing variation cannot be attributed to this map-only change in this scenario."
+}

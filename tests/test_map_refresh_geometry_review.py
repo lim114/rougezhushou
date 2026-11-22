@@ -14,6 +14,33 @@ class MapGeometryReview(unittest.TestCase):
         graphs,*_=fixtures();self.view=player_map.PreviewMapView();self.addCleanup(self.view.close)
         self.view.resize(900,600);self.view.set_map(graphs[0])
 
+    def test_floor_art_prefetch_preserves_historical_and_skipped_floors(self):
+        from PySide6.QtGui import QImage
+        view = self.view
+        view._art_worker.waitForDone()
+        player_map.floor_background.cache_clear()
+        graph = deepcopy(view.graph)
+        with patch.object(view._art_worker, 'tryStart') as submit:
+            view.set_map(None)
+            self.assertEqual(view.background, QImage(str(player_map.ART/'blindness.png')))
+            graph['zone_id'] = 'zone_2'
+            view.set_map(graph, historical=True)
+            submit.assert_called_once()
+            submit.call_args.args[0]()
+            view.set_map(graph, historical=True)
+            submit.assert_called_once()
+            self.assertEqual(view.graph['zone_id'], 'zone_2')
+            self.assertTrue(view.historical)
+            hits = player_map.floor_background.cache_info().hits
+            graph['zone_id'] = 'zone_3'
+            view.set_map(graph)
+            self.assertEqual(player_map.floor_background.cache_info().hits, hits + 1)
+            self.assertEqual(view.background, QImage(str(player_map.ART/'area-4.png')))
+            graph['zone_id'] = 'zone_6'
+            view.set_map(graph)
+            self.assertEqual(view.graph['zone_id'], 'zone_6')
+            self.assertEqual(view.background, QImage(str(player_map.ART/'area-1.png')))
+
     def test_hit_reuses_current_positions(self):
         _,points=self.view._positions();identity=next(iter(points))
         with patch.object(self.view,'_positions',wraps=self.view._positions)as positions:
