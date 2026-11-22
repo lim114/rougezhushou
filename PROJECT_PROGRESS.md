@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品实际首显仍需稳定低于 500 毫秒并验证游戏同跑。下一步应缩短当前页确证所需的逐行识别及地图绘制等待。INT8 实测会改变地图与队伍判读。[回执](verification/maintenance/ocr-fp32-detector-input-20261122/summary.json)。
+切页首显仍须在真实游戏中稳定小于 500 毫秒。藏品盲读会在奖励面板遮挡时提前发布，地图仍需确认可见节点并减少首显前的读字和界面更新时间。[回执](verification/maintenance/ocr-blind-rows-and-capture-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

@@ -64,13 +64,13 @@ class FrameBuffer:
         if left['key'] != right['key']:
             return False
         a, b = left['thumb'], right['thumb']
-        if np.array_equal(a, b):
-            return True
         # A cheap necessary condition for the exact local difference below.
         # Mean(abs(A-B)) >= abs(mean(A)-mean(B)); rejecting here cannot discard
         # a pair that the full verifier would regard as near-identical.
         if float(np.max(np.abs(left['summary'] - right['summary']))) > 2.5:
             return False
+        if np.array_equal(a, b):
+            return True
         # Local blocks retain small labels that would vanish in a global mean.
         difference = cv2.absdiff(a, b)
         if difference.ndim == 3:
@@ -110,10 +110,19 @@ class FrameBuffer:
             frames = list(self._pending)
             for index in range(len(frames)-1):
                 candidate = frames[index]
-                if any(self._similar(candidate, frames[j])
-                       for j in range(len(frames)-1, index, -1)):
-                    duplicate_index = index
+                # Surviving thumbnails are immutable. A replacement always has
+                # a newer sequence, so only new arrivals need comparison.
+                checked = candidate.get('distinct_through', candidate['seq'])
+                for j in range(len(frames)-1, index, -1):
+                    other = frames[j]
+                    if other['seq'] <= checked:
+                        break
+                    if self._similar(candidate, other):
+                        duplicate_index = index
+                        break
+                if duplicate_index is not None:
                     break
+                candidate['distinct_through'] = frames[-1]['seq']
             if duplicate_index is not None:
                 drop_index = duplicate_index
                 self._counts['overflow_duplicates'] += 1

@@ -211,6 +211,15 @@ class FrameBufferTests(unittest.TestCase):
         self.assertGreater(buffer.stats()['overflow_low_novelty'], 0)
         self.assertLessEqual(buffer.stats()['retained_frames'], 4)
 
+    def test_overflow_rechecks_a_replaced_tail_against_earlier_survivors(self):
+        buffer = FrameBuffer(max_frames=3, settle_seconds=0)
+        # 100 and 102 are distinct. The first overflow compares them and
+        # removes 20. The next frame replaces 102 and is also similar to 100.
+        for timestamp, shade in enumerate((20, 100, 180, 102, 101, 235), 1):
+            buffer.offer(np.full((24, 24, 3), shade, np.uint8), timestamp)
+        self.assertEqual(buffer.stats()['overflow_duplicates'], 1)
+        self.assertEqual([buffer.take()['seq'] for _ in range(3)], [3, 5, 6])
+
     def test_one_frame_budget_still_automatically_exposes_latest_representative(self):
         buffer = FrameBuffer(max_frames=1, settle_seconds=0)
         sharper = np.full((240, 400, 3), 30, dtype=np.uint8)
