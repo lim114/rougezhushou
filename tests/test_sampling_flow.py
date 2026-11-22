@@ -74,6 +74,24 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(self.window.operator_observations['kaltsit']['fields']['level'],80)
         self.assertEqual(self.window.capture.stats()['pending'],0)
 
+    def test_burst_deadline_wakes_spare_reader_before_long_poll(self):
+        self.window.capture.buffer.prioritize_scene_changes = True
+        self.window.period.setValue(5)
+        self.offer(20)
+        self.window.auto.setChecked(True)
+        self.wait_for(self.entered.is_set)
+        try:
+            self.offer(23)
+            self.offer(25)
+            self.window.sample_now(automatic=True)
+            self.assertTrue(self.window.ready_timer.isActive())
+            self.wait_for(lambda: self.window.last_sample_seq == 3, timeout=2)
+            self.assertTrue(self.window.busy)
+        finally:
+            self.release.set()
+        self.wait_for(lambda: len(self.seen)==3 and not self.window.busy)
+        self.assertEqual(self.seen, [20, 25, 23])
+
     def test_current_page_commits_before_old_read_finishes_and_history_is_retained(self):
         from copy import deepcopy
         from rouge.observation_timeline import memory_model

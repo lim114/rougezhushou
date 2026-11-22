@@ -86,11 +86,11 @@ def _frame_geometry(hwnd,image):
     except (OSError,win32gui.error):return None
 
 class GameCapture:
-    def __init__(self, *, pace_updates=False):
+    def __init__(self, *, pace_updates=False, prioritize_scene_changes=False):
         self._lock = threading.Lock()
         self._pace_updates = pace_updates
         self._pace_stop = None
-        self.buffer = FrameBuffer()
+        self.buffer = FrameBuffer(prioritize_scene_changes=prioritize_scene_changes)
         self.on_settling = None
         self._session = 0
         self._collecting = True

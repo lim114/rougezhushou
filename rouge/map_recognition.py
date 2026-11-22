@@ -183,6 +183,52 @@ def _rings(image, labels):
     return points
 
 
+def _shows_trader(image, center, font_height):
+    from .map_art import trader_patterns
+    h, w = image.shape[:2]
+    x, y = round(center[0] * w), round(center[1] * h)
+    radius = round(1.73 * font_height)
+    if radius < 2 or x-radius < 0 or y-radius < 0 or x+radius > w or y+radius > h:
+        return False
+    icon = cv2.resize(image[y-radius:y+radius, x-radius:x+radius], (96, 96), interpolation=cv2.INTER_AREA)
+    blue, green, red = cv2.split(icon.astype(np.int16))
+    if np.count_nonzero((blue-red > 50) & (green-red > 60)) < 720:
+        return False
+    return any(cv2.minMaxLoc(cv2.matchTemplate(icon, pattern, cv2.TM_SQDIFF_NORMED))[0] < .04
+               for pattern in trader_patterns())
+
+
+def _visible_clearing_at(image, center, font_height):
+    """Verify a small clearing missed by the full-map circle detector."""
+    h, w = image.shape[:2]
+    x, y = round(center[0]*w), round(center[1]*h)
+    radius = round(font_height * 1.45)
+    if radius < 2 or x-radius < 0 or y-radius < 0 or x+radius >= w or y+radius >= h:
+        return False
+    crop = image[y-radius:y+radius+1, x-radius:x+radius+1]
+    tile = cv2.resize(crop, (93, 93), interpolation=cv2.INTER_AREA)
+    gray = cv2.cvtColor(tile, cv2.COLOR_BGR2GRAY)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1., 16, param1=80, param2=16,
+                               minRadius=10, maxRadius=21)
+    yy, xx = np.ogrid[:93, :93]
+    for cx, cy, r in (() if circles is None else circles[0]):
+        if np.hypot(cx-46, cy-46) > 15:
+            continue
+        radial = np.hypot(xx-cx, yy-cy) / r
+        if np.median(np.ptp(tile[radial < 1.], axis=1)) > 24:
+            continue
+        inner = np.median(gray[radial < .35])
+        sectors = ((np.arctan2(yy-cy, xx-cx) + np.pi) * (4/np.pi)).astype(int) % 8
+        for rim in (.7, .8, .9, 1.):
+            dark = (radial > rim) & (radial < rim+.15)
+            trough = np.median(gray[dark])
+            outer = np.median(gray[(radial > rim+.22) & (radial < rim+.42)])
+            if inner-trough >= 20 and outer-trough >= 15:
+                if sum(np.median(gray[dark & (sectors == i)]) + 12 < inner for i in range(8)) >= 7:
+                    return True
+    return False
+
+
 def read_map(image, texts, labels, run):
     config = (run or {}).get('config', {})
     zid = config.get('zone', {}).get('id')
@@ -251,20 +297,27 @@ def read_map(image, texts, labels, run):
     best, template = scored[0]
     base.update(status='matched', template_id=template['id'], edges=template['edges'],
         visible_fraction=best, reason='当前区域与网格节点占位匹配；连线取自来源模板。')
+    font_height = float(np.median([np.ptp([p[1] for p in label['box']]) for label in labels])) * image.shape[0]
     for node in template['nodes']:
         evidence = observed.get(node['id'], {})
+        center = [x0+node['col']*dx, y0+node['row']*dy]
+        observed_type = evidence.get('type')
+        source = 'visible_node_label' if observed_type else None
         clearing = evidence.get('source') == '可见空白圆环' and not evidence.get('type')
+        if not observed_type and _shows_trader(image, center, font_height):
+            observed_type, source = '诡意行商', 'visible_node_sprite'
+        elif clearing or (not evidence and _visible_clearing_at(image, center, font_height)):
+            observed_type, source = '林间空地', 'visible_clearing_ring'
         base['nodes'].append({'id': node['id'], 'row': node['row'], 'col': node['col'],
-            'center': [x0+node['col']*dx, y0+node['row']*dy], 'distance': node['distance'],
+            'center': center, 'distance': node['distance'],
             'template_type': node['fixed_type'],
             # The matched layout establishes the node's position; the current
             # frame's small ring establishes its visible clearing appearance.
             # Neither a missing label nor a template slot proves a clearing.
-            'observed_type': '林间空地' if clearing else evidence.get('type'),
+            'observed_type': observed_type,
             'label_box': evidence.get('label_box'),
-            'observation_source': 'visible_clearing_ring' if clearing else
-                'visible_node_label' if evidence.get('type') else None,
-            'visible': bool(evidence), 'prediction': None})
+            'observation_source': source,
+            'visible': bool(evidence) or source is not None, 'prediction': None})
     markers = [t for t in texts if t['text']=='YOUAREHERE' and t['confidence']>=.9]
     if not markers:
         heads=[t for t in texts if t['text'] in ('YOUAR','YOUARE') and t['confidence']>=.9]

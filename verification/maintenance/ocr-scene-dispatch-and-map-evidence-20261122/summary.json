@@ -1,0 +1,620 @@
+{
+  "baseline": "6da36c18a1d9a02ba96de2299597f7311af8e852",
+  "kind": "maintenance",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "scope": "GPU test assistant delays a moving near-repeat for the spare reader while preserving candidates, considers a new scene after its change slows, and dispatches under buffer pressure. Default CPU dispatch is unchanged. Both devices use current-frame evidence for the map.",
+  "truth": "Manual inspection of the original frames and magnified node patches. The pointer covers the trader label at the end while the turquoise emblem remains visible. A separate clearing stays visible beside the moving character. The old 1.647 s result measured an incorrect final node type.",
+  "visible_node_labels": {
+    "0,1": "未知的诡秘",
+    "0,2": "秘境行商",
+    "0,3": "林间空地",
+    "0,4": "险路尽头",
+    "1,0": "林间空地",
+    "1,1": "林间空地",
+    "1,2": "林间空地",
+    "1,3": "诡意行商",
+    "2,1": "林间空地",
+    "2,2": "林间空地",
+    "2,3": "林间空地",
+    "2,4": "险路尽头"
+  },
+  "retired_implementation": {
+    "window_matched_truth_in_8s": false,
+    "compared_map_paints": 5,
+    "incorrect_node_types": [
+      "林间空地"
+    ]
+  },
+  "measurement": "QPC from first clear source frame to independent Windows capture of assistant. Qt must show the manually checked floor, template and all 12 observed types. On the same assistant frame, chart normalized error must be below .015, and the changing node has to match the correct sprite below .03 and beat the erroneous clearing sprite by .005. The pre-transition chart must differ. After all captured candidates drain the current graph is checked again.",
+  "control": "Both cohorts use the repaired map reader. ctrl uses the frozen prior frame-buffer scheduler. live uses production source and true Windows capture. Runs use new isolated state. The second pair coincided with the targeted suite for one arm and is shown separately.",
+  "contiguous_reward_to_map": {
+    "live": {
+      "trials": 3,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 765.5,
+        "from_blend_ms": 906.6,
+        "last_source_paint_to_pixels_ms": 375.8,
+        "clear_to_selected_capture_ms": 190.3,
+        "selected_frame_queue_ms": 27.4,
+        "read_to_map_ms": 442.6,
+        "full_page_ocr_ms": 261.6,
+        "map_signal_to_qt_ms": 118.5,
+        "qt_to_wgc_ms": 23.5
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 765.5,
+          "from_blend_ms": 906.6,
+          "last_source_paint_to_pixels_ms": 375.8,
+          "clear_to_selected_capture_ms": 190.3,
+          "selected_frame_queue_ms": 27.39,
+          "read_to_map_ms": 420.56,
+          "full_page_ocr_ms": 247.9,
+          "map_signal_to_qt_ms": 109.7,
+          "qt_to_wgc_ms": 17.6,
+          "full_reads": 13,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        },
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 906.0,
+          "from_blend_ms": 1029.6,
+          "last_source_paint_to_pixels_ms": 500.0,
+          "clear_to_selected_capture_ms": 217.0,
+          "selected_frame_queue_ms": 37.49,
+          "read_to_map_ms": 492.97,
+          "full_page_ocr_ms": 302.9,
+          "map_signal_to_qt_ms": 129.2,
+          "qt_to_wgc_ms": 29.4,
+          "full_reads": 12,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        },
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 745.4,
+          "from_blend_ms": 884.3,
+          "last_source_paint_to_pixels_ms": 341.3,
+          "clear_to_selected_capture_ms": 144.7,
+          "selected_frame_queue_ms": 16.03,
+          "read_to_map_ms": 442.63,
+          "full_page_ocr_ms": 261.6,
+          "map_signal_to_qt_ms": 118.5,
+          "qt_to_wgc_ms": 23.5,
+          "full_reads": 14,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ],
+      "additional_pair_with_concurrent_suite": {
+        "accepted": true,
+        "clear_to_pixels_ms": 778.2,
+        "from_blend_ms": 918.3,
+        "last_source_paint_to_pixels_ms": 372.6,
+        "clear_to_selected_capture_ms": 135.2,
+        "selected_frame_queue_ms": 50.35,
+        "read_to_map_ms": 439.99,
+        "full_page_ocr_ms": 281.9,
+        "map_signal_to_qt_ms": 122.6,
+        "qt_to_wgc_ms": 30.0,
+        "full_reads": 14,
+        "observed_short_inventory": false,
+        "final_buffer_evictions": 0,
+        "source_paints": 45,
+        "current_node_labels": 12,
+        "chart_error": 0.005664,
+        "node_error": 0.00462,
+        "wrong_clearing_error": 0.45252
+      }
+    },
+    "ctrl": {
+      "trials": 3,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 1914.9,
+        "from_blend_ms": 2053.8,
+        "last_source_paint_to_pixels_ms": 1513.1,
+        "clear_to_selected_capture_ms": 457.6,
+        "selected_frame_queue_ms": 723.5,
+        "read_to_map_ms": 402.6,
+        "full_page_ocr_ms": 226.9,
+        "map_signal_to_qt_ms": 227.8,
+        "qt_to_wgc_ms": 22.8
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1651.8,
+          "from_blend_ms": 1791.0,
+          "last_source_paint_to_pixels_ms": 1264.2,
+          "clear_to_selected_capture_ms": 457.6,
+          "selected_frame_queue_ms": 555.38,
+          "read_to_map_ms": 392.08,
+          "full_page_ocr_ms": 226.9,
+          "map_signal_to_qt_ms": 227.8,
+          "qt_to_wgc_ms": 18.9,
+          "full_reads": 13,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        },
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1914.9,
+          "from_blend_ms": 2053.8,
+          "last_source_paint_to_pixels_ms": 1513.1,
+          "clear_to_selected_capture_ms": 490.3,
+          "selected_frame_queue_ms": 723.49,
+          "read_to_map_ms": 427.53,
+          "full_page_ocr_ms": 220.8,
+          "map_signal_to_qt_ms": 239.0,
+          "qt_to_wgc_ms": 34.5,
+          "full_reads": 14,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        },
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1954.3,
+          "from_blend_ms": 2093.9,
+          "last_source_paint_to_pixels_ms": 1546.2,
+          "clear_to_selected_capture_ms": 445.9,
+          "selected_frame_queue_ms": 855.5,
+          "read_to_map_ms": 402.63,
+          "full_page_ocr_ms": 227.7,
+          "map_signal_to_qt_ms": 227.5,
+          "qt_to_wgc_ms": 22.8,
+          "full_reads": 13,
+          "observed_short_inventory": false,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ],
+      "additional_pair_with_concurrent_suite": {
+        "accepted": true,
+        "clear_to_pixels_ms": 1770.8,
+        "from_blend_ms": 1895.4,
+        "last_source_paint_to_pixels_ms": 1365.3,
+        "clear_to_selected_capture_ms": 485.5,
+        "selected_frame_queue_ms": 531.65,
+        "read_to_map_ms": 514.25,
+        "full_page_ocr_ms": 288.7,
+        "map_signal_to_qt_ms": 216.7,
+        "qt_to_wgc_ms": 22.7,
+        "full_reads": 14,
+        "observed_short_inventory": false,
+        "final_buffer_evictions": 0,
+        "source_paints": 45,
+        "current_node_labels": 12,
+        "chart_error": 0.005664,
+        "node_error": 0.00462,
+        "wrong_clearing_error": 0.45252
+      }
+    }
+  },
+  "short_inventory": {
+    "live": {
+      "trials": 1,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 1540.8,
+        "from_blend_ms": 1679.2,
+        "last_source_paint_to_pixels_ms": 1151.4,
+        "clear_to_selected_capture_ms": 439.7,
+        "selected_frame_queue_ms": 521.4,
+        "read_to_map_ms": 387.7,
+        "full_page_ocr_ms": 217.9,
+        "map_signal_to_qt_ms": 174.9,
+        "qt_to_wgc_ms": 17.1
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1540.8,
+          "from_blend_ms": 1679.2,
+          "last_source_paint_to_pixels_ms": 1151.4,
+          "clear_to_selected_capture_ms": 439.7,
+          "selected_frame_queue_ms": 521.39,
+          "read_to_map_ms": 387.72,
+          "full_page_ocr_ms": 217.9,
+          "map_signal_to_qt_ms": 174.9,
+          "qt_to_wgc_ms": 17.1,
+          "full_reads": 12,
+          "observed_short_inventory": true,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ]
+    },
+    "ctrl": {
+      "trials": 1,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 1536.6,
+        "from_blend_ms": 1661.3,
+        "last_source_paint_to_pixels_ms": 1134.5,
+        "clear_to_selected_capture_ms": 530.5,
+        "selected_frame_queue_ms": 418.7,
+        "read_to_map_ms": 387.8,
+        "full_page_ocr_ms": 221.7,
+        "map_signal_to_qt_ms": 176.5,
+        "qt_to_wgc_ms": 23.2
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1536.6,
+          "from_blend_ms": 1661.3,
+          "last_source_paint_to_pixels_ms": 1134.5,
+          "clear_to_selected_capture_ms": 530.5,
+          "selected_frame_queue_ms": 418.66,
+          "read_to_map_ms": 387.77,
+          "full_page_ocr_ms": 221.7,
+          "map_signal_to_qt_ms": 176.5,
+          "qt_to_wgc_ms": 23.2,
+          "full_reads": 11,
+          "observed_short_inventory": true,
+          "final_buffer_evictions": 0,
+          "source_paints": 45,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ]
+    }
+  },
+  "busy_clip_with_short_inventory": {
+    "live": {
+      "trials": 1,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 1753.1,
+        "from_blend_ms": 1892.9,
+        "last_source_paint_to_pixels_ms": 1350.2,
+        "clear_to_selected_capture_ms": 487.0,
+        "selected_frame_queue_ms": 717.2,
+        "read_to_map_ms": 394.1,
+        "full_page_ocr_ms": 216.1,
+        "map_signal_to_qt_ms": 130.0,
+        "qt_to_wgc_ms": 24.9
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1753.1,
+          "from_blend_ms": 1892.9,
+          "last_source_paint_to_pixels_ms": 1350.2,
+          "clear_to_selected_capture_ms": 487.0,
+          "selected_frame_queue_ms": 717.17,
+          "read_to_map_ms": 394.06,
+          "full_page_ocr_ms": 216.1,
+          "map_signal_to_qt_ms": 130.0,
+          "qt_to_wgc_ms": 24.9,
+          "full_reads": 21,
+          "observed_short_inventory": true,
+          "final_buffer_evictions": 8,
+          "source_paints": 105,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ]
+    },
+    "ctrl": {
+      "trials": 1,
+      "under_500": 0,
+      "median_ms": {
+        "clear_to_pixels_ms": 1500.2,
+        "from_blend_ms": 1624.3,
+        "last_source_paint_to_pixels_ms": 1096.3,
+        "clear_to_selected_capture_ms": 516.2,
+        "selected_frame_queue_ms": 382.2,
+        "read_to_map_ms": 375.4,
+        "full_page_ocr_ms": 208.9,
+        "map_signal_to_qt_ms": 202.9,
+        "qt_to_wgc_ms": 23.5
+      },
+      "rows": [
+        {
+          "accepted": true,
+          "clear_to_pixels_ms": 1500.2,
+          "from_blend_ms": 1624.3,
+          "last_source_paint_to_pixels_ms": 1096.3,
+          "clear_to_selected_capture_ms": 516.2,
+          "selected_frame_queue_ms": 382.2,
+          "read_to_map_ms": 375.44,
+          "full_page_ocr_ms": 208.9,
+          "map_signal_to_qt_ms": 202.9,
+          "qt_to_wgc_ms": 23.5,
+          "full_reads": 21,
+          "observed_short_inventory": true,
+          "final_buffer_evictions": 10,
+          "source_paints": 105,
+          "current_node_labels": 12,
+          "chart_error": 0.005664,
+          "node_error": 0.00462,
+          "wrong_clearing_error": 0.45252
+        }
+      ]
+    }
+  },
+  "normal_cpu": {
+    "trials": 1,
+    "under_500": 0,
+    "median_ms": {
+      "clear_to_pixels_ms": 2154.8,
+      "from_blend_ms": 2293.6,
+      "last_source_paint_to_pixels_ms": 1750.7,
+      "clear_to_selected_capture_ms": 519.7,
+      "selected_frame_queue_ms": 876.7,
+      "read_to_map_ms": 605.1,
+      "full_page_ocr_ms": 446.0,
+      "map_signal_to_qt_ms": 128.7,
+      "qt_to_wgc_ms": 24.6
+    },
+    "rows": [
+      {
+        "accepted": true,
+        "clear_to_pixels_ms": 2154.8,
+        "from_blend_ms": 2293.6,
+        "last_source_paint_to_pixels_ms": 1750.7,
+        "clear_to_selected_capture_ms": 519.7,
+        "selected_frame_queue_ms": 876.71,
+        "read_to_map_ms": 605.08,
+        "full_page_ocr_ms": 446.0,
+        "map_signal_to_qt_ms": 128.7,
+        "qt_to_wgc_ms": 24.6,
+        "full_reads": 14,
+        "observed_short_inventory": false,
+        "final_buffer_evictions": 0,
+        "source_paints": 45,
+        "current_node_labels": 12,
+        "chart_error": 0.005664,
+        "node_error": 0.00462,
+        "wrong_clearing_error": 0.45252
+      }
+    ]
+  },
+  "inventory_and_map_replay": {
+    "static": {
+      "pairs": 1,
+      "cohorts": {
+        "ctrlreadystatic_100": {
+          "median_ms": {
+            "held_item_pixels": 457.7,
+            "held_after_capture": 424.1,
+            "held_complete_qt": 1485.7,
+            "map_pixels": 536.4,
+            "map_after_capture": 488.1,
+            "held_capture": 33.6,
+            "map_capture": 48.2,
+            "held_complete_pixels": 1491.0,
+            "held_icons_work": 974.5,
+            "held_resources_work": 392.4,
+            "held_to_names": 369.2,
+            "held_names_to_qt": 37.6
+          },
+          "under_500_ms": {
+            "held": 1,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 457.7,
+              "held_after_capture": 424.1,
+              "held_complete_qt": 1485.65,
+              "map_pixels": 536.37,
+              "map_after_capture": 488.1,
+              "held_capture": 33.56,
+              "map_capture": 48.24,
+              "held_complete_pixels": 1490.99,
+              "held_icons_work": 974.5,
+              "held_resources_work": 392.4,
+              "held_to_names": 369.17,
+              "held_names_to_qt": 37.56
+            }
+          ]
+        },
+        "livereadystatic_100": {
+          "median_ms": {
+            "held_item_pixels": 477.9,
+            "held_after_capture": 424.3,
+            "held_complete_qt": 1400.8,
+            "map_pixels": 494.1,
+            "map_after_capture": 445.8,
+            "held_capture": 53.6,
+            "map_capture": 48.4,
+            "held_complete_pixels": 1419.2,
+            "held_icons_work": 888.0,
+            "held_resources_work": 293.4,
+            "held_to_names": 367.8,
+            "held_names_to_qt": 39.0
+          },
+          "under_500_ms": {
+            "held": 1,
+            "map": 1
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 477.85,
+              "held_after_capture": 424.3,
+              "held_complete_qt": 1400.81,
+              "map_pixels": 494.12,
+              "map_after_capture": 445.8,
+              "held_capture": 53.56,
+              "map_capture": 48.35,
+              "held_complete_pixels": 1419.16,
+              "held_icons_work": 888.0,
+              "held_resources_work": 293.4,
+              "held_to_names": 367.78,
+              "held_names_to_qt": 38.97
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    },
+    "film": {
+      "pairs": 1,
+      "cohorts": {
+        "ctrlreadyfilm_100": {
+          "median_ms": {
+            "held_item_pixels": 858.0,
+            "held_after_capture": 731.5,
+            "held_complete_qt": 1977.0,
+            "map_pixels": 699.9,
+            "map_after_capture": 658.0,
+            "held_capture": 126.5,
+            "map_capture": 41.9,
+            "held_complete_pixels": 1989.5,
+            "held_icons_work": 1068.7,
+            "held_resources_work": 364.0,
+            "held_to_names": 646.2,
+            "held_names_to_qt": 45.4
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 858.05,
+              "held_after_capture": 731.5,
+              "held_complete_qt": 1977.04,
+              "map_pixels": 699.86,
+              "map_after_capture": 658.0,
+              "held_capture": 126.52,
+              "map_capture": 41.87,
+              "held_complete_pixels": 1989.55,
+              "held_icons_work": 1068.7,
+              "held_resources_work": 364.0,
+              "held_to_names": 646.24,
+              "held_names_to_qt": 45.4
+            }
+          ]
+        },
+        "livereadyfilm_100": {
+          "median_ms": {
+            "held_item_pixels": 762.4,
+            "held_after_capture": 634.7,
+            "held_complete_qt": 1853.8,
+            "map_pixels": 765.2,
+            "map_after_capture": 710.1,
+            "held_capture": 127.7,
+            "map_capture": 55.1,
+            "held_complete_pixels": 1881.9,
+            "held_icons_work": 1037.5,
+            "held_resources_work": 368.0,
+            "held_to_names": 569.9,
+            "held_names_to_qt": 45.3
+          },
+          "under_500_ms": {
+            "held": 0,
+            "map": 0
+          },
+          "individual_ms": [
+            {
+              "held_item_pixels": 762.39,
+              "held_after_capture": 634.7,
+              "held_complete_qt": 1853.75,
+              "map_pixels": 765.21,
+              "map_after_capture": 710.1,
+              "held_capture": 127.66,
+              "map_capture": 55.14,
+              "held_complete_pixels": 1881.93,
+              "held_icons_work": 1037.5,
+              "held_resources_work": 368.0,
+              "held_to_names": 569.94,
+              "held_names_to_qt": 45.26
+            }
+          ]
+        }
+      },
+      "final_observation_differences": [],
+      "normalized_state_differences": []
+    }
+  },
+  "sprite_check": {
+    "real_views": [
+      {
+        "scale": 0.75,
+        "frames": 13,
+        "trader_positive": 13,
+        "wrong_positive_nodes": 0,
+        "negative_nodes_checked": 143
+      },
+      {
+        "scale": 1.0,
+        "frames": 13,
+        "trader_positive": 13,
+        "wrong_positive_nodes": 0,
+        "negative_nodes_checked": 143
+      },
+      {
+        "scale": 1.25,
+        "frames": 13,
+        "trader_positive": 13,
+        "wrong_positive_nodes": 0,
+        "negative_nodes_checked": 143
+      }
+    ],
+    "atlas_composites": 180,
+    "atlas_positive": 6,
+    "atlas_positive_cases": 6,
+    "atlas_false_positives": []
+  },
+  "targeted_tests": {
+    "passed": true,
+    "count": 145
+  },
+  "native_gpu_test_toolbar": {
+    "visible": true,
+    "responsive": true,
+    "gpu_flag_verified": true,
+    "private_unchanged": true
+  },
+  "limitations": [
+    "Repeated play of one authentic contiguous transition on one computer. One added 7-frame inventory page is about 233 ms. The pressure composite splices 60 moving frames before the transition. Raw game recordings stay local.",
+    "Static inventory and motion-lead-in full-window timings have only one pair each. Window capture includes compositor delivery and does not measure physical monitor scan-out.",
+    "No live game was connected. Half-second acceptance is open, especially during ongoing animation and full inventory reads."
+  ]
+}

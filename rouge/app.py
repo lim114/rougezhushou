@@ -112,11 +112,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('黑流树海助手 · 局外计算与节点测试')
         if self.diagnostic_layout:self.setWindowTitle(self.windowTitle()+' · 历史布局诊断')
         self.resize(1050, 830)
-        self.capture = GameCapture(pace_updates=True)
         self.reader = ScreenReader(backend=ocr_backend)
         self.settling_detection = None
         from .ocr_engine import default_backend
         backend = default_backend() if ocr_backend is None else ocr_backend
+        self.capture = GameCapture(pace_updates=True, prioritize_scene_changes=backend == 'openvino-gpu')
         if backend in ('openvino', 'openvino-gpu'):
             from .page_detection import SettlingDetection
             self.settling_detection = SettlingDetection(whole_page_only=backend == 'openvino')
@@ -737,7 +737,8 @@ class MainWindow(QMainWindow):
             self.show_error('capture',str(error))
             return
         if frame is None and automatic:
-            remaining = self.capture.stats()['settle_remaining_ms']
+            timing = self.capture.stats()
+            remaining = max(timing['settle_remaining_ms'], timing['dispatch_remaining_ms'])
             if remaining > 0:
                 self.ready_timer.start(int(remaining)+1)
             return

@@ -1,9 +1,11 @@
 """Visible clearing nodes through the agreed ScreenReader / RunState seams."""
 import copy
+import json
 from functools import lru_cache
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import cv2
 import numpy as np
@@ -24,6 +26,65 @@ def original_read():
 
 
 class MapClearingTests(unittest.TestCase):
+    def test_missing_ring_requires_visible_pixels_at_the_matched_grid_slot(self):
+        from rouge.map_recognition import _visible_clearing_at
+        image = sample('exploration-map.png')
+        observation = original_read()
+        font = np.median([np.ptp([pt[1] for pt in node['box']]) for node in observation['nodes']]) * image.shape[0]
+        nodes = {n['id']: n for n in observation['map']['nodes']}
+        center = nodes['0,2']['center']
+        self.assertTrue(_visible_clearing_at(image, center, font))
+        self.assertFalse(_visible_clearing_at(image, nodes['1,3']['center'], font))
+        x, y = round(center[0] * image.shape[1]), round(center[1] * image.shape[0])
+        half = round(font * 2)
+        image[y-half:y+half, x-half:x+half] = 20
+        self.assertFalse(_visible_clearing_at(image, center, font))
+
+    def test_visible_merchant_emblem_wins_over_a_ring_when_its_label_is_covered(self):
+        from rouge.map_art import ART
+        from rouge.map_recognition import read_map
+
+        # Known 1b layout. The other node labels and the ring at the merchant
+        # are the detections supplied to the map reader, independent of OCR.
+        types = [['', '未知的诡秘', '秘境行商', '林间空地', '险路尽头'],
+                 ['林间空地', '林间空地', '林间空地', None, ''],
+                 ['', '林间空地', '林间空地', '林间空地', '险路尽头']]
+        image = np.full((900, 1500, 3), 30, np.uint8)
+        coords = lambda row, col: (.10 + .19 * col, .18 + .29 * row)
+        labels, rings = [], []
+        for row, line in enumerate(types):
+            for col, kind in enumerate(line):
+                x,y = coords(row, col)
+                if kind is None or kind == '林间空地':
+                    rings.append({'center':[x,y], 'source':'可见空白圆环'})
+                elif kind:
+                    y += (3 if kind == '险路尽头' else 1.8) * 24/900
+                    box = [[x-.03,y-12/900],[x+.03,y-12/900],[x+.03,y+12/900],[x-.03,y+12/900]]
+                    labels.append({'type':kind, 'box':box, 'confidence':1.})
+        assets = json.loads((ART/'sources.json').read_bytes())['sprites']
+        atlas = cv2.imdecode(np.fromfile(ART/'nodes.png',dtype=np.uint8),cv2.IMREAD_UNCHANGED)
+        cx,cy = coords(1,3)
+        for key in ('rogue-trader', 'secret-trader', 'unknown-mystery', 'combat'):
+            with self.subTest(art=key):
+                s = assets[key]
+                tile = atlas[s['y']:s['y']+s['height'],s['x']:s['x']+s['width']]
+                tile = cv2.resize(tile,(208,184),interpolation=cv2.INTER_AREA)
+                frame = image.copy()
+                left,top = round(cx*1500)-104,round(cy*900)-92
+                part = frame[top:top+184,left:left+208]
+                alpha = tile[:,:,3:4]/255
+                part[:] = part*(1-alpha) + tile[:,:,:3]*alpha
+                with patch('rouge.map_recognition._rings',return_value=copy.deepcopy(rings)):
+                    graph=read_map(frame, [], labels, {'config':{'zone':{'id':'zone_1'}}})
+                self.assertEqual(graph['template_id'], '1b')
+                nodes = {n['id']:n for n in graph['nodes']}
+                if key == 'rogue-trader':
+                    self.assertEqual(nodes['1,3']['observed_type'], '诡意行商')
+                    self.assertEqual(nodes['1,3']['observation_source'], 'visible_node_sprite')
+                    self.assertEqual(nodes['1,0']['observed_type'], '林间空地')
+                else:
+                    self.assertNotEqual(nodes['1,3']['observed_type'], '诡意行商')
+
     def test_visible_small_rings_are_clearings_without_requiring_text(self):
         graph=original_read()['map']
         self.assertEqual((graph['status'],graph['template_id']),('matched','1b'))

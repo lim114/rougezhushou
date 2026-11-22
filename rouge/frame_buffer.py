@@ -15,13 +15,14 @@ import numpy as np
 
 class FrameBuffer:
     def __init__(self, max_bytes=96 * 1024 * 1024, max_frames=16,
-                 settle_seconds=.12):
+                 settle_seconds=.12, *, prioritize_scene_changes=False):
         if ((byte_limit := int(max_bytes)) <= 0 or (frame_limit := int(max_frames)) <= 0
                 or settle_seconds < 0):
             raise ValueError('Frame buffer limits must be positive.')
         self.max_bytes = byte_limit
         self.max_frames = frame_limit
         self.settle_seconds = float(settle_seconds)
+        self.prioritize_scene_changes = prioritize_scene_changes
         self._lock = threading.Lock()
         self._pending = deque()
         self._latest = None
@@ -29,6 +30,8 @@ class FrameBuffer:
         self._seq = 0
         self._generation = 0
         self._last_taken_seq = 0
+        self._last_taken_view = None
+        self._dispatch_ready_at = 0.
         self._last_time = float('-inf')
         self._counts = self._new_counts()
 
@@ -156,18 +159,21 @@ class FrameBuffer:
                 self._pending.append(self._latest)
 
     @staticmethod
-    def _distance(left, right):
+    def _novelty(frame):
+        if 'novelty' not in frame:
+            thumb = frame['thumb']
+            height, width = thumb.shape[:2]
+            scale = min(1., 96. / max(height, width))
+            frame['novelty'] = cv2.resize(thumb, (max(1, round(width * scale)),
+                                                  max(1, round(height * scale))),
+                                          interpolation=cv2.INTER_AREA)
+        return frame['novelty']
+
+    @classmethod
+    def _distance(cls, left, right):
         if left['key'] != right['key']:
             return 1.
-        for frame in (left, right):
-            if 'novelty' not in frame:
-                thumb = frame['thumb']
-                height, width = thumb.shape[:2]
-                scale = min(1., 96. / max(height, width))
-                frame['novelty'] = cv2.resize(thumb, (max(1, round(width * scale)),
-                                                      max(1, round(height * scale))),
-                                              interpolation=cv2.INTER_AREA)
-        return float(cv2.absdiff(left['novelty'], right['novelty']).mean()) / 255.
+        return float(cv2.absdiff(cls._novelty(left), cls._novelty(right)).mean()) / 255.
 
     def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None, source_bgra=False):
         """Offer BGR pixels or a native BGRA mapping; even rejected offers consume a unique seq.
@@ -176,6 +182,7 @@ class FrameBuffer:
         The sharper representative is retained; the exact latest observation is
         independently available for an explicit manual sample.
         """
+        arrived = time.monotonic()
         with self._lock:
             self._seq += 1
             seq = self._seq
@@ -212,7 +219,8 @@ class FrameBuffer:
                          generation=self._generation,
                          key=(image.shape, rect, identity.get('hwnd'), identity.get('pid')),
                          thumb=thumb, quality=quality, summary=summary,
-                         ready_at=time.monotonic() + self.settle_seconds)
+                         ready_at=time.monotonic() + self.settle_seconds,
+                         quiet_at=arrived + max(.14, self.settle_seconds))
             self._latest = frame
             if self._reference is not None and self._similar(self._reference, frame):
                 self._counts['deduplicated'] += 1
@@ -242,6 +250,7 @@ class FrameBuffer:
         after_seq leaves older candidates queued for the historical reader.
         """
         with self._lock:
+            self._dispatch_ready_at = 0.
             if self._pending:
                 if after_seq is not None and self._pending[-1 if prefer_latest else 0]['seq'] <= after_seq:
                     return None
@@ -249,6 +258,22 @@ class FrameBuffer:
                 # immediately, including pages visible for only one frame.
                 if not force and self._settling():
                     return None
+                if (self.prioritize_scene_changes and not force and prefer_latest and after_seq == self._last_taken_seq
+                        and self._last_taken_view is not None and self.settle_seconds):
+                    # A second reader starting on a moving frame can block a
+                    # new page for a full read. Paced WGC sometimes leaves
+                    # gaps longer than 120 ms during a continuous transition.
+                    # Repeated representatives keep their original ready_at.
+                    newest = self._pending[-1]
+                    deadline = min(self._latest['quiet_at'], newest['ready_at'] + self.settle_seconds)
+                    if time.monotonic() < deadline:
+                        count, size = self._retained()
+                        if count < self.max_frames - 1 and size + newest['image'].nbytes <= self.max_bytes:
+                            change = self._distance(self._last_taken_view, newest)
+                            if change <= .04 or (len(self._pending) > 1 and
+                                    self._distance(self._pending[-2], newest) > change / 4):
+                                self._dispatch_ready_at = deadline
+                                return None
                 frame = self._pending.pop() if prefer_latest else self._pending.popleft()
                 self._counts['taken'] += 1
             elif force and self._latest is not None:
@@ -258,7 +283,10 @@ class FrameBuffer:
                 self._counts['manual_repeats'] += 1
             else:
                 return None
-            self._last_taken_seq = max(self._last_taken_seq, frame['seq'])
+            if frame['seq'] >= self._last_taken_seq:
+                self._last_taken_seq = frame['seq']
+                if self.prioritize_scene_changes:
+                    self._last_taken_view = dict(key=frame['key'], novelty=self._novelty(frame))
             # An older popped frame has no retained pixel owner. The manual
             # latest-frame fallback still owns its pixels and needs a copy.
             return self._export(frame, copy_pixels=frame is self._latest)
@@ -277,6 +305,8 @@ class FrameBuffer:
         with self._lock:
             self._generation += 1
             self._pending.clear()
+            self._dispatch_ready_at = 0.
+            self._last_taken_view = None
             self._latest = None
             self._reference = None
             self._last_time = float('-inf')
@@ -287,6 +317,7 @@ class FrameBuffer:
         with self._lock:
             count, size = self._retained()
             return dict(self._counts, pending=len(self._pending),
+                        dispatch_remaining_ms=max(0., (self._dispatch_ready_at-time.monotonic())*1000),
                         settle_remaining_ms=(max(0., (self._pending[0]['ready_at']-time.monotonic())*1000)
                                              if len(self._pending)==1 else 0.),
                         retained_frames=count, bytes=size,

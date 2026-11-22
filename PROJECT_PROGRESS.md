@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-连续游戏录像切到地图时，用于首显的帧在地图清晰后约 503 毫秒才采到，再等约 556 毫秒进入识别。需要让当前页更早获得识别机会，并核对动画中变化的节点及历史短页。常规 CPU、藏品整页和真实游戏均未通过半秒目标。[回执](verification/maintenance/ocr-paced-capture-and-map-reading-20261122/summary.json)。
+核显连续录像正确地图首显中位数 766 毫秒；藏品整页、持续动画和实机半秒目标仍待验证。用户要求本节结束即停止自动优化，保留测试窗口配合实测。[回执](verification/maintenance/ocr-scene-dispatch-and-map-evidence-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

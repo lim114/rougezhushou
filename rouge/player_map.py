@@ -1,5 +1,4 @@
 """Whole-floor player map: game artwork, recorded floors and local node dossiers."""
-from pathlib import Path
 from functools import lru_cache, partial
 from copy import deepcopy
 import json
@@ -10,8 +9,8 @@ from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
 from .node_catalog import NodeQueryError
 from .map_view import MapView
 from .run_config import config_data
+from .map_art import ART, art_manifest
 
-ART=Path(__file__).with_name('data')/'map-art'
 ICONS={'起点':'start','作战':'combat','紧急作战':'emergency-combat','险路恶敌':'danger-enemy',
  '不期而遇':'encounter','得偿所愿':'wish','失与得':'gain-loss','先行一步':'first-step',
  '狭路相逢':'narrow-meet','羽瞰点':'overlook','曲折密道':'winding-path',
@@ -34,9 +33,6 @@ def node_style(node):
     if node.get('template_type'):return node['template_type'],'模板固定','template'
     if observed in ICONS:return observed,'尚未揭示','unknown'
     return None,'类型未确认','unknown'
-
-@lru_cache(maxsize=1)
-def art_manifest():return json.loads((ART/'sources.json').read_text('utf8'))
 
 @lru_cache(maxsize=1)
 def node_atlas():return QImage(str(ART/'nodes.png'))

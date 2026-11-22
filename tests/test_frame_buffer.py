@@ -15,6 +15,51 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_spare_reader_waits_for_latest_candidate_and_preserves_short_pages(self):
+        buffer = FrameBuffer(settle_seconds=.12, prioritize_scene_changes=True)
+        with patch('rouge.frame_buffer.time.monotonic', return_value=10.) as now:
+            buffer.offer(page(40), 1)
+            first = buffer.take(force=True)
+            buffer.offer(page(45), 2)
+            current = page(48)
+            buffer.offer(current, 3)
+            self.assertIsNone(buffer.take(prefer_latest=True, after_seq=first['seq']))
+            now.return_value = 10.10
+            buffer.offer(current, 4)
+            now.return_value = 10.13
+            self.assertIsNone(buffer.take(prefer_latest=True, after_seq=first['seq']))
+            now.return_value = 10.20
+            buffer.offer(current, 5)
+            now.return_value = 10.25
+            self.assertEqual(buffer.take(prefer_latest=True, after_seq=first['seq'])['seq'], 5)
+            self.assertEqual(buffer.take()['seq'], 2)
+
+    def test_spare_reader_takes_moving_page_before_capture_budget_fills(self):
+        image = page(40)
+        for limits in ({'max_frames': 3}, {'max_bytes': 2 * image.nbytes}):
+            with self.subTest(limits=limits):
+                buffer = FrameBuffer(settle_seconds=10, prioritize_scene_changes=True, **limits)
+                buffer.offer(image, 1)
+                buffer.take(force=True)
+                buffer.offer(page(45), 2)
+                buffer.offer(page(48), 3)
+                self.assertEqual(buffer.take(prefer_latest=True, after_seq=1)['seq'], 3)
+                self.assertEqual(buffer.take(force=True)['seq'], 2)
+                self.assertEqual(buffer.stats()['overflow'], 0)
+
+    def test_new_scene_uses_spare_reader_while_small_animation_frames_remain_queued(self):
+        buffer = FrameBuffer(settle_seconds=10, prioritize_scene_changes=True)
+        buffer.offer(page(40), 1)
+        buffer.take(force=True)
+        buffer.offer(page(45), 2)
+        buffer.offer(page(48), 3)
+        self.assertIsNone(buffer.take(prefer_latest=True, after_seq=1))
+        buffer.offer(page(160), 4)
+        self.assertIsNone(buffer.take(prefer_latest=True, after_seq=1))
+        buffer.offer(page(166), 5)
+        self.assertEqual(buffer.take(prefer_latest=True, after_seq=1)['seq'], 5)
+        self.assertEqual([buffer.take(force=True)['seq'] for _ in range(3)], [2, 3, 4])
+
     def test_native_bgra_budget_and_ownership_with_padded_rows(self):
         mapped = np.full((30, 48, 4), 255, np.uint8)[:, :40]
         mapped[:, :, :3] = [30, 40, 50]
