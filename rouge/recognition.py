@@ -44,6 +44,8 @@ def refine_map_texts(image,texts,nodes,engine):
                 continue
             centers.append((cx,cy))
             extra.append(record)
+        if right == x1:
+            break
     kept=[t for t in texts if not (x0/w<sum(p[0] for p in t['box'])/4<x1/w
                                    and y0/h<sum(p[1] for p in t['box'])/4<y1/h)]
     return kept+extra

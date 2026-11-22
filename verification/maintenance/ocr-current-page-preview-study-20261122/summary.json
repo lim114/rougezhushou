@@ -1,0 +1,398 @@
+{
+  "baseline_commit": "981fdd119",
+  "production_change": "The sparse map refinement loop stops as soon as its last tile reaches the right boundary. The normal 100 px overlap between tiles that extend coverage is preserved.",
+  "edge_replay": {
+    "cases": 27,
+    "input_sizes": [
+      [
+        1920,
+        1080
+      ],
+      [
+        1600,
+        900
+      ],
+      [
+        1366,
+        768
+      ]
+    ],
+    "fixed_full_interpretations_completed": 27,
+    "old_successful_cases_with_equal_full_facts": 24,
+    "old_affected": [
+      {
+        "input_width": 1920,
+        "old_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1004
+          ],
+          [
+            896,
+            4
+          ]
+        ],
+        "new_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1004
+          ]
+        ],
+        "fixed_page": "exploration",
+        "fixed_map_status": "insufficient"
+      },
+      {
+        "input_width": 1600,
+        "old_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1004
+          ],
+          [
+            896,
+            4
+          ]
+        ],
+        "new_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1004
+          ]
+        ],
+        "fixed_page": "exploration",
+        "fixed_map_status": "insufficient"
+      },
+      {
+        "input_width": 1366,
+        "old_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1005
+          ],
+          [
+            896,
+            5
+          ]
+        ],
+        "new_tile_shapes_hw": [
+          [
+            896,
+            1100
+          ],
+          [
+            896,
+            1005
+          ]
+        ],
+        "fixed_page": "exploration",
+        "fixed_map_status": "insufficient"
+      }
+    ],
+    "observed_allocation_failure_bytes": 10920931552,
+    "method": "First 1080p pre-fix read failed in the OpenVINO CPU dynamic detector. For subsequent comparisons the old detector invocation was intercepted before processing very thin tiles to avoid repeating the huge allocation. The fixed loop ran the normal detector. Comparisons ignore instrumentation and wall-clock fields.",
+    "fixed_1080p_public_reader_cold": [
+      "exploration",
+      "insufficient",
+      3893.177599995397
+    ]
+  },
+  "experimental_preview": "Isolated iGPU only. Reuse full-frame detection boxes, batch words by width (160/320/640 px) without orientation classification for preview; require current header, inventory footer, map context and unobstructed board for held names. The canonical reader still runs. Approximate map evidence currently goes through a state-writing callback, so the preview is not deployed.",
+  "fixture": "Warm Windows replay with 2052x1128 source. Transition from a previous map to an expanded three-item inventory, then to a different map. Time from source-window switch to distinct new clickable items or the correct new floor registered in a separate Windows Graphics Capture stream of assistant pixels. No live game, cold-start or monitor scan-out measurement.",
+  "source_chain": [
+    "rouge/capture.py GameCapture.connect WGC callback",
+    "rouge/frame_buffer.py FrameBuffer.offer",
+    "rouge/app.py MainWindow.prepare_settling_page and sample_now",
+    "rouge/page_detection.py SettlingDetection and _prepare_text",
+    "rouge/page_ocr.py PageOCR",
+    "rouge/recognition.py ScreenReader._interpret",
+    "rouge/run_recognition.py read_run",
+    "map: read_map -> on_map -> MainWindow.sample_received -> ObservationTimeline.prepare/commit -> render_map -> MapPanel.refresh -> PreviewMapView.set_map",
+    "inventory: confirmed cards -> on_held_names -> MainWindow.show_held_names -> inventory viewport paint",
+    "second WGC stream confirms assistant pixels"
+  ],
+  "preview_comparison_before_tile_fix": {
+    "n": 6,
+    "fields": [
+      "new_inventory_pixels_ms",
+      "inventory_after_capture_ms",
+      "full_inventory_qt_ms",
+      "new_map_pixels_ms",
+      "map_after_capture_ms",
+      "inventory_capture_ms",
+      "map_capture_ms"
+    ],
+    "cohorts": {
+      "ctrlG": {
+        "rows": [
+          [
+            446.56,
+            399.7,
+            1706.39,
+            554.59,
+            464.3,
+            46.89,
+            90.26
+          ],
+          [
+            499.24,
+            415.6,
+            1894.28,
+            586.8,
+            485.3,
+            83.61,
+            101.49
+          ],
+          [
+            528.61,
+            433.3,
+            1776.84,
+            567.81,
+            474.8,
+            95.3,
+            93.0
+          ],
+          [
+            499.15,
+            408.1,
+            1749.22,
+            587.0,
+            471.7,
+            91.07,
+            115.26
+          ],
+          [
+            566.37,
+            470.7,
+            1940.87,
+            552.45,
+            472.7,
+            95.65,
+            79.8
+          ],
+          [
+            562.71,
+            448.8,
+            1854.85,
+            517.56,
+            490.3,
+            113.93,
+            27.24
+          ]
+        ],
+        "medians": [
+          513.9,
+          424.5,
+          1815.8,
+          561.2,
+          473.8,
+          93.2,
+          91.6
+        ],
+        "under500": [
+          3,
+          0
+        ]
+      },
+      "guard": {
+        "rows": [
+          [
+            423.94,
+            299.0,
+            2140.9,
+            506.14,
+            423.2,
+            124.96,
+            82.97
+          ],
+          [
+            409.7,
+            292.2,
+            2074.06,
+            539.52,
+            434.0,
+            117.51,
+            105.5
+          ],
+          [
+            382.15,
+            291.0,
+            1887.17,
+            477.89,
+            390.8,
+            91.19,
+            87.08
+          ],
+          [
+            390.15,
+            310.3,
+            1903.65,
+            482.14,
+            382.3,
+            79.83,
+            99.83
+          ],
+          [
+            415.94,
+            293.2,
+            2172.46,
+            467.25,
+            367.1,
+            122.73,
+            100.12
+          ],
+          [
+            386.24,
+            311.0,
+            2009.79,
+            495.93,
+            374.8,
+            75.28,
+            121.18
+          ]
+        ],
+        "medians": [
+          399.9,
+          296.1,
+          2041.9,
+          489.0,
+          386.6,
+          104.3,
+          100.0
+        ],
+        "under500": [
+          6,
+          4
+        ]
+      }
+    },
+    "full_observation_differences": []
+  },
+  "stage_medians_ms": {
+    "ctrlG": {
+      "inventory": {
+        "capture_ms": 93.2,
+        "queue_ms": 135.0,
+        "paint_ms": 1815.8,
+        "complete_receive_ms": 1788.2,
+        "match_held_icons": 865.5,
+        "read_resources": 392.9,
+        "whole_page_ocr": 255.1,
+        "orientation": 47.9,
+        "text_recognition": 183.2
+      },
+      "map": {
+        "capture_ms": 91.6,
+        "queue_ms": 138.1,
+        "paint_ms": 533.0,
+        "complete_receive_ms": 1707.3,
+        "match_held_icons": 825.4,
+        "read_resources": 194.2,
+        "whole_page_ocr": 171.2,
+        "orientation": 37.8,
+        "text_recognition": 117.0,
+        "ui_first_map_update": 67.9
+      }
+    },
+    "guard": {
+      "inventory": {
+        "capture_ms": 104.3,
+        "queue_ms": 142.4,
+        "paint_ms": 2041.9,
+        "complete_receive_ms": 2017.5,
+        "match_held_icons": 906.2,
+        "read_resources": 410.9,
+        "whole_page_ocr": 278.8,
+        "orientation": 61.3,
+        "text_recognition": 176.5
+      },
+      "map": {
+        "capture_ms": 100.0,
+        "queue_ms": 134.4,
+        "paint_ms": 457.3,
+        "complete_receive_ms": 1926.1,
+        "match_held_icons": 805.9,
+        "read_resources": 224.6,
+        "ui_first_map_update": 57.1
+      }
+    }
+  },
+  "stage_notes": "capture_ms is relative to source transition; queue_ms is age of selected frame at read start. Page pre-read overlaps stable-frame selection. paint_ms is full inventory or first map Qt paint. complete_receive_ms is when processing the full observation finishes on UI thread. Resource and icon times are measured within full run interpretation. These intervals overlap and medians are not additive.",
+  "settled_state_comparison": {
+    "isolated_states_compared": 12,
+    "differences_before_normalizing_same_timestamp_confirmation_order": [
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "differences_after": []
+  },
+  "scene_check": {
+    "cases": 50,
+    "method": "Comparison to canonical interpretation at the replay size; independent game truth is not available for every sample. The later clear-board requirement only narrows eligibility.",
+    "canonical_matched_maps": 10,
+    "candidate_full_graphs_equal_for_matched_maps": 9,
+    "extra_maps": 0,
+    "dense_inventories_deferred_to_canonical_item_counts": [
+      13,
+      17
+    ],
+    "central_overlay_cases": 12,
+    "premature_inventory_candidates_without_clear_board": 6,
+    "central_overlays_passing_final_gate": 0
+  },
+  "cross_resolution_preview_after_tile_fix": {
+    "cases": 27,
+    "baseline_map_progress": 14,
+    "eligible_map_progress": 13,
+    "preview_graph_and_map_config_equal": 13,
+    "eligible_held_inventories": 6
+  },
+  "unsuccessful_trials": [
+    "Initial test provider was deep-copied; that trial timed out before any measured switch and was excluded. Later runs use the test-owned session registry.",
+    "Sharing preview work and overlapping orientation did not establish a consistent win for both pages. Dense inventories can require normal OCR."
+  ],
+  "verification": {
+    "tests": 14,
+    "test_window": {
+      "visible": true,
+      "responsive": true,
+      "gpu_flag_verified": true,
+      "private_unchanged": true
+    },
+    "additional_preview_cache_bytes": 28369930,
+    "live_game_windows_when_checked": 0
+  }
+}

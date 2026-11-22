@@ -7,6 +7,18 @@ from rouge.recognition import refine_map_texts
 
 
 class MapTileOverlapTests(unittest.TestCase):
+    def test_right_edge_covered_by_first_tile_is_not_read_as_a_thin_strip(self):
+        image = np.zeros((400, 1004, 3), np.uint8)
+        nodes = [{'box': [(0, .4), (1, .4), (1, .5), (0, .5)]}]
+        widths = []
+
+        def read(roi):
+            widths.append(roi.shape[1])
+            return [], None
+
+        refine_map_texts(image, [], nodes, read)
+        self.assertEqual(widths, [1004])
+
     def test_first_read_is_kept_only_for_same_text_at_same_position(self):
         image = np.zeros((400, 1900, 3), np.uint8)
         nodes = [{'box': [(0, .4), (1, .4), (1, .5), (0, .5)]}]

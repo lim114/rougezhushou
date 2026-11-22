@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-继续缩短切页至助手窗口出现已确认新楼层及藏品条目的实际时间。已提前解码楼层背景，整页文字检测、读取和采集等待仍占主要时间；待实机及持续动画复核。[回执](verification/maintenance/ocr-map-background-first-display-20261122/summary.json)。
+地图和藏品切页到助手窗口首显仍待实机稳定低于 500 毫秒。隔离快速预览缩短了首显，地图六次仍有两次超时，完整藏品读数变慢；需验证密集藏品、地图预览的本局写入边界及同游戏竞争核显时的表现。[回执](verification/maintenance/ocr-current-page-preview-study-20261122/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
