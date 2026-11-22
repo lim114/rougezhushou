@@ -32,7 +32,11 @@ def _file(name):
     return path
 
 
-def packet():
+PACKET_UNCHANGED = object()
+
+
+def packet(*, if_changed_since=None):
+    """Read the pinned bundle, or acknowledge a previously read identity after checking every file."""
     try:
         raw=_file(MANIFEST).read_bytes()
         if sha256(raw).hexdigest()!=MANIFEST_SHA256:return None
@@ -40,10 +44,14 @@ def packet():
         if manifest['schema']!='expansion_313_source_manifest_v1' or manifest['baseline_commit']!=OLD_COMMIT or manifest['current_commit']!=NEW_COMMIT:return None
         expected={PACK+'/'+n for n in('baseline-topic.json','current-topic.json','sources.json','map-images.json')}
         if set(manifest['files'])!=expected:return None
+        unchanged = if_changed_since == MANIFEST_SHA256
         for name,pin in manifest['files'].items():
             raw=_file(name).read_bytes()
             if type(pin['bytes'])is not int or len(raw)!=pin['bytes']or sha256(raw).hexdigest()!=pin['sha256']:return None
-            objects[name]=json.loads(raw)
+            if not unchanged:
+                objects[name]=json.loads(raw)
+        if unchanged:
+            return PACKET_UNCHANGED
         old=objects[PACK+'/baseline-topic.json'];new=objects[PACK+'/current-topic.json']
         if set(old)!=set(new)or set(new)!={'topics','details','modules','customizeData'}:return None
         return {'baseline':old,'current':new,'images':objects[PACK+'/map-images.json'],

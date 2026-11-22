@@ -39,6 +39,15 @@ class SelectionGeometryTests(unittest.TestCase):
         mark_selected_node(image, graph)
         self.assertIsNone(graph['selected_node'])
 
+    def test_bright_rim_near_border_uses_only_visible_arc(self):
+        image, graph = self.scene()
+        graph['nodes'][0]['center'] = [.01, .5]
+        cv2.circle(image, (10, 300), 36, (255, 255, 255), 3)
+        cv2.circle(image, (500, 300), 36, (255, 255, 255), 3)
+        mark_selected_node(image, graph)
+        self.assertEqual(graph['selected_node'], '1')
+        self.assertEqual(graph['selection_evidence'], 'same_frame_bright_rim')
+
     def test_route_and_panel_circle_do_not_select_a_map_node(self):
         image, graph = self.scene()
         cv2.line(image, (250, 300), (750, 300), (255, 255, 255), 3)

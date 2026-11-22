@@ -3,9 +3,12 @@ from copy import deepcopy
 from types import SimpleNamespace
 from unittest.mock import patch
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 from rouge.player_inventory import InventoryPanel
+from rouge import expansion_reference as reference
 
 class InventoryLayoutReview(unittest.TestCase):
  @classmethod
@@ -21,6 +24,24 @@ class InventoryLayoutReview(unittest.TestCase):
   with patch('rouge.player_inventory.reference.packet',return_value=None):p.refresh()
   self.assertFalse(p.status.isVisible());self.assertIn('暂无收藏品资料',p.summary.text());self.assertFalse(p.reader.isVisible());self.assertEqual(p.entries.count(),0)
   p.refresh();self.assertGreater(p.entries.count(),0);self.assertIsNone(p.entries.currentItem());self.assertFalse(p.source_button.isVisible())
+ def test_reused_catalog_checks_current_bytes_even_when_file_size_matches(self):
+  panel,_ = self.panel()
+  original = panel.catalog_rows
+  panel.refresh()
+  self.assertIs(panel.catalog_rows, original)
+  with TemporaryDirectory() as directory:
+   name = reference.PACK + '/sources.json'
+   resolve = reference._file
+   changed = Path(directory) / 'sources.json'
+   raw = resolve(name).read_bytes()
+   changed.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+   with patch.object(reference, '_file', side_effect=lambda path: changed if path == name else resolve(path)):
+    panel.refresh()
+    self.assertEqual(panel.entries.count(), 0)
+    self.assertIsNone(panel.catalog_rows)
+  panel.refresh()
+  self.assertGreater(panel.entries.count(), 0)
+  self.assertIsNot(panel.catalog_rows, original)
  def test_complete_claim_uses_quantities_and_members_not_a_flag_alone(self):
   p,run=self.panel();identity=next(iter(p.rows));run.state={'inventory_verified':True,'relic_count':2,'relics':{identity:{}}};before=deepcopy(run.state);p.refresh()
   self.assertIn('持有清单待核对',p.summary.text());self.assertNotIn('本局收藏品已核对完整',p.status.text());self.assertEqual(run.state,before)

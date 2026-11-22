@@ -26,10 +26,12 @@ class CatalogRefreshReviewTests(unittest.TestCase):
                         if panel.entries.item(i).data(inventory.Qt.ItemDataRole.UserRole) == identity)
         panel.entries.setCurrentItem(selected)
         before = deepcopy(run.state)
-        with patch.object(inventory, '_catalog_rows', wraps=inventory._catalog_rows) as read, \
+        with patch.object(inventory.reference, 'packet', wraps=inventory.reference.packet) as verify, \
+             patch.object(inventory, '_catalog_rows', wraps=inventory._catalog_rows) as read, \
              patch.object(inventory, '_filter_rows', wraps=inventory._filter_rows) as filtered:
             panel.refresh()
-        self.assertEqual(read.call_count, 1)
+        verify.assert_called_once_with(if_changed_since=inventory.reference.MANIFEST_SHA256)
+        read.assert_not_called()
         self.assertEqual(filtered.call_count, 1)
         self.assertIs(panel.entries.currentItem(), selected)
         self.assertEqual(run.state, before)

@@ -90,6 +90,9 @@ class InventoryPanel(QWidget):
         self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary)
         self.current_names = QLabel()
         self.preview_ids = set()
+        self.catalog_source = None
+        self.catalog_packet_identity = None
+        self.catalog_rows = None
         self.current_names.setWordWrap(True)
         self.current_names.hide()
         body.addWidget(self.current_names)
@@ -158,8 +161,14 @@ class InventoryPanel(QWidget):
     def refresh(self,*_):
         self.reload_sources()
         data = self.source_index.data if self.source_index else None
-        packet=reference.packet()
-        available = _catalog_rows(data, self.version.currentData(), packet)
+        version = self.version.currentData()
+        source = (self.source_signature, version)
+        packet = reference.packet(if_changed_since=self.catalog_packet_identity if source == self.catalog_source else None)
+        if packet is not reference.PACKET_UNCHANGED:
+            self.catalog_rows = _catalog_rows(data, version, packet)
+            self.catalog_source = source
+            self.catalog_packet_identity = packet['source_identity'] if packet is not None else None
+        available = self.catalog_rows
         nodes=list(dict.fromkeys(n for row in available or[]for n in row['source_nodes']))
         if [self.source_node.itemData(i)for i in range(1,self.source_node.count())]!=nodes:
             prior=self.source_node.currentData();self.source_node.blockSignals(True);self.source_node.clear();self.source_node.addItem('全部关联节点',None)

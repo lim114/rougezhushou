@@ -86,20 +86,21 @@ def mark_selected_node(image,graph):
     hsv=cv2.cvtColor(small,cv2.COLOR_BGR2HSV)
     bright=(gray>160)&(hsv[:,:,1]<90)
     angles=np.linspace(0,2*np.pi,96,endpoint=False)
+    # All visible nodes use the same rings. Keep each radius's three offsets
+    # together so an angle still counts once if any of those pixels is bright.
+    radii = np.linspace(sh*.045, sh*.09, 16)[:, None, None] + np.array([-1, 0, 1])[:, None]
+    dx = radii * np.cos(angles)
+    dy = radii * np.sin(angles)
     hits=[]
     for node in graph['nodes']:
         if not node.get('visible'):continue
         x,y=node['center'][0]*sw,node['center'][1]*sh
-        best=0
-        for radius in np.linspace(sh*.045,sh*.09,16):
-            # A real selection is a broad arc, not the thin route or icon edge.
-            sectors=np.zeros(len(angles),dtype=bool)
-            for offset in (-1,0,1):
-                xx=np.rint(x+(radius+offset)*np.cos(angles)).astype(int)
-                yy=np.rint(y+(radius+offset)*np.sin(angles)).astype(int)
-                valid=(xx>=0)&(xx<sw)&(yy>=0)&(yy<sh)
-                sectors[valid]|=bright[yy[valid],xx[valid]]
-            best=max(best,float(sectors.mean()))
+        xx = np.rint(x + dx).astype(int)
+        yy = np.rint(y + dy).astype(int)
+        valid = (xx >= 0) & (xx < sw) & (yy >= 0) & (yy < sh)
+        samples = np.zeros_like(valid)
+        samples[valid] = bright[yy[valid], xx[valid]]
+        best = samples.any(axis=1).mean(axis=1).max()
         if best>=.65:hits.append((best,node['id']))
     evidence='same_frame_bright_rim'
     visible=[node for node in graph['nodes'] if node.get('visible')]
