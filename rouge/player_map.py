@@ -24,12 +24,13 @@ def zone_info(graph):
     icon=zone.get('zoneIconId');floor=next((i for i in range(1,7)if icon==f'zone_{i}'),None)
     return zone.get('name')or'区域未确认',floor
 
-def node_style(node):
-    """A single guessed candidate never becomes a revealed game icon."""
-    observed=node.get('observed_type');remembered=node.get('remembered_type')
+def node_style(node, *, include_history=False):
+    """Use the observed face on the chart. The saved-node finder also searches history."""
+    observed=node.get('observed_type');remembered=node.get('remembered_type') if include_history else None
     if observed=='林间空地':return observed,('原为'+remembered if remembered else'已读空地'),'history'if remembered else'observed'
     if observed and not observed.startswith(('未知','类型未确认')):return observed,'已读','observed'
     if remembered:return remembered,'本局记录','history'
+    if not include_history and observed in ICONS:return observed,'尚未揭示','unknown'
     if node.get('template_type'):return node['template_type'],'模板固定','template'
     if observed in ICONS:return observed,'尚未揭示','unknown'
     return None,'类型未确认','unknown'
@@ -141,9 +142,7 @@ class PreviewMapView(MapView):
                 p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+9,size/2+9)
                 p.drawText(QRectF(point.x()-55,point.y()-size/2-30,110,20),Qt.AlignmentFlag.AlignCenter,'最近位置'if self.historical or not current else'当前位置')
             label=kind or'类型未确认'
-            if kind=='林间空地'and node.get('remembered_type'):label='原·'+node['remembered_type']
             if evidence=='template':label+='·模板'
-            elif evidence=='history'and kind!='林间空地':label+='·记录'
             if match=='candidate':label='候选·'+self.filter_kind
             badge=QRectF(point.x()-width/2,point.y()+size/2+2,width,20)
             p.fillRect(badge,QColor(0,0,0,145));p.setPen(QColor('#ffdb9f')if evidence=='history'else QColor('#f4f5f0'))
@@ -202,7 +201,7 @@ class MapPanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);right.addWidget(self.detail,2)
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
-        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：待读取　比例：历史统计');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
+        legend=QLabel('实色：画面所见　半透明：模板固定　?：待读取　比例：历史统计。点节点查看本局记录。');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
         self.pinned_floor = None
         self.floors.tabBarClicked.connect(self.choose_floor)
         self.floors.currentChanged.connect(self.choose_floor)

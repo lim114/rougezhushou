@@ -1,0 +1,68 @@
+{
+  "kind": "maintenance",
+  "baseline": "89cd8473aa2c75356dc9bc8531ebf6085a8809a5",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "live_measurement": {
+    "clock": "同步采集真实游戏画面与独立资料窗。无可配对的点击，起点取可辨游戏画面。",
+    "first_window_to_current_position_ms": 1249,
+    "last_historical_position_ms": 610,
+    "whole_map": "当前节点仍被本局历史标签覆盖，整页正确终点缺失。",
+    "inventory": "仅见收藏品 0 和干员名单，无有效藏品切页。"
+  },
+  "map_change": "玩家与技术地图按当前帧展示未知节点、已读类型和空地，本局历史保留在详情与已保存节点检索。初读不足时沿用原分块补读，在资源快照之后、藏品核对之前提交合格地图。",
+  "replay_method": "独立 Windows 窗口按原节奏回放本机录像，另一窗口抓取助手。当前楼层、当前位置、所有可见类型通过校验，图上目标节点需区别于旧商人图标。计时从源窗口首张清晰地图至助手窗口正确像素。",
+  "full_map_12_nodes_ms": {
+    "baseline": [
+      1943,
+      1886
+    ],
+    "deferred": [
+      1908,
+      1652
+    ]
+  },
+  "full_map_attribution": "此片段初读已足，两组波动不能归因于补读优化。",
+  "clipped_map_11_visible_nodes_ms": {
+    "prior": [
+      3425,
+      3228
+    ],
+    "production": [
+      3022,
+      2248
+    ]
+  },
+  "clipped_map_scope": "另取地图右侧一格未显示类型的连续帧作为单独切页回放；不作为完整地图达标证据。前后两版使用相同的当前节点绘制。",
+  "normal_clip_baseline_stage_ms": {
+    "clear_to_selected_capture": [
+      187,
+      206
+    ],
+    "queued": [
+      25,
+      39
+    ],
+    "gold_preview": [
+      210,
+      169
+    ],
+    "page_detection": [
+      116,
+      142
+    ],
+    "full_ocr": [
+      575,
+      756
+    ]
+  },
+  "reader_parity": "最终生产读者和修改前读者在相同19帧上得到相同页面、地图、文字和节点标签。四张需要补读的图片上，生产版在同一次读取完成前982、1076、968、1075毫秒即可发布地图。",
+  "reset": "真实干员画面让精英徽章得分和分差成为 NumPy float64。归档拒绝非内置标量，按钮在开始新局前返回。保留数值精度，以内置 float 输出分数。三种精英徽章分别复现。",
+  "validation": {
+    "targeted_unittests": 125,
+    "isolated_real_frame_button_test": "在临时本局读入游戏画面后点击清空，新局身份改变，重开为空，旧局归档逐字段相等，账号文件字节一致。",
+    "window": "原测试助手核显启动、工具栏可见且响应；常规启动仍用 CPU。",
+    "live_after_update": "未进行新一轮真人切页或清空真实记录。",
+    "discarded_trial": "第一次裁边窗口试验的同机私人文件一致性检查未通过，该轮未纳入耗时。原测试助手正常关闭后重新成对试跑，每轮均核对一致。"
+  }
+}

@@ -54,3 +54,5 @@ class EliteDenominatorTests(unittest.TestCase):
                 found = model.card_elite(frame, .5, .5)
                 self.assertEqual(found['value'], elite)
                 self.assertEqual(found['score'], 1)
+                self.assertIs(type(found['score']), float)
+                self.assertIs(type(found['margin']), float)

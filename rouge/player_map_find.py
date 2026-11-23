@@ -8,7 +8,7 @@ class NodeFinder:
         self.zones=sorted(zones,key=lambda row:(row[3]or 99,row[0]))
         for zone,g,name,floor in self.zones:
             for n in g.get('nodes',[]):
-                kind,note,origin=node_style(n);category='read'if origin in('observed','history')else'fixed'if origin=='template'else'unknown';titles=[]
+                kind,note,origin=node_style(n,include_history=True);category='read'if origin in('observed','history')else'fixed'if origin=='template'else'unknown';titles=[]
                 self.counts[category]+=1
                 for content in [n.get('content'),n.get('remembered_content'),*(n.get('content_history')or[])]:
                     if not isinstance(content,dict)or content.get('source')!='same_frame_selected_node':continue

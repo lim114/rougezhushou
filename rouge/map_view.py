@@ -115,18 +115,16 @@ class MapView(QWidget):
             candidates = prediction.get('candidates', [])
             observed = node.get('observed_type')
             known = observed and not observed.startswith('未知')
-            if observed=='林间空地' and node.get('remembered_type'):
-                color=QColor('#ffcb75');label='已通过：'+node['remembered_type']
-            elif known:
+            if known:
                 color = QColor('#59d5f3'); label = '已读：'+observed
-            elif node.get('remembered_type'):
-                color = QColor('#ffcb75'); label = '记录：'+node['remembered_type']
-            elif candidates:
+            elif observed:
+                color = QColor('#cbd5df'); label = observed
+            elif candidates and prediction.get('evidence')!='visible_history':
                 color = QColor('#d5a4ff')
                 label = '候选：'+('/'.join(candidates) if len(candidates)<=2 else f'{len(candidates)}类')
             else:
                 color = QColor('#cbd5df'); label = observed or '类型未确认'
-            content=node.get('content') or node.get('remembered_content')
+            content=node.get('content')
             if content:
                 label=('内容：' if node.get('content') and not self.historical else '记录：')+content['title']
             painter.setPen(QPen(color, 2, Qt.PenStyle.SolidLine if node.get('visible') else Qt.PenStyle.DashLine))

@@ -113,7 +113,7 @@ def _read_map_hud(image, texts, engine, native_content, on_hud, on_map_gold):
     return resources
 
 
-def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None):
+def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,on_map_gold=None,native_content=None,on_map_config=None,on_held_names=None,after_map_hud=None):
     texts=recheck_run_names(image,texts,engine)
     texts=reconfirm_owned_popup_footer(image,texts,engine)
     anchors={t['text']:t for t in texts if t['confidence']>=.9}
@@ -160,6 +160,8 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None,on_hud=None,o
                 raw_icons = artwork.result()
         else:
             resources = _read_map_hud(image, texts, engine, native_content, on_hud, gold_callback)
+    if after_map_hud is not None and fresh is not None:
+        after_map_hud({**known,**fresh})
     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
     crew = anchors.get('干员')
     if is_roster:

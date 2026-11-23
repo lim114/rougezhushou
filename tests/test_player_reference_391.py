@@ -43,7 +43,10 @@ class MapPresentationTests(unittest.TestCase):
   self.assertEqual(node_style({'prediction':{'candidates':['诡意行商']}}),(None,'类型未确认','unknown'))
  def test_passed_node_keeps_original_record(self):
   from rouge.player_map import node_style
-  self.assertEqual(node_style({'observed_type':'林间空地','remembered_type':'不期而遇'}),('林间空地','原为不期而遇','history'))
+  self.assertEqual(node_style({'observed_type':'林间空地','remembered_type':'不期而遇'}),('林间空地','已读空地','observed'))
+  hidden={'observed_type':'未知的诡秘','remembered_type':'诡意行商','template_type':'秘境行商'}
+  self.assertEqual(node_style(hidden),('未知的诡秘','尚未揭示','unknown'))
+  self.assertEqual(node_style(hidden,include_history=True),('诡意行商','本局记录','history'))
  def test_fixed_icon_distinguished_from_observation(self):
   from rouge.player_map import node_style
   self.assertEqual(node_style({'template_type':'羽瞰点'})[2],'template')

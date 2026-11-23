@@ -46,4 +46,4 @@ def card_elite(image,x,y,space=(1,1)):
     margin = score - scores[1][0]
     if margin < .085:
         return None
-    return {'value':elite,'score':score,'margin':margin}
+    return {'value':elite,'score':float(score),'margin':float(margin)}

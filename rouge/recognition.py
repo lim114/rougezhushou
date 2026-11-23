@@ -385,23 +385,55 @@ class ScreenReader:
                 on_gold_reference(seed, copy(provider))
         from .player_shop_hover import shop_snapshot
         shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
-        early_map=None
-        def publish_map(config):
-            nonlocal early_map
-            early_map=read_map(image,texts,nodes,{'config':config})
-            if early_map['status']!='matched':return
+        def refine_graph(graph,map_run):
+            if graph['status']!='insufficient' or len(nodes)<3:
+                return graph,texts,nodes
+            refined=refine_map_texts(image,texts,nodes,self._engine)
+            found=[]
+            title = next((t for t in refined if t['text'] == stage['name']), None) if stage and detail else None
+            if title:
+                tx, ty = (sum(p[i] for p in title['box']) / 4 for i in (0, 1))
+                ux, uy = units(image, title, 35.2)
+            for t in refined:
+                name={'未知的凶房':'未知的凶戾','未知的诡利':'未知的诡秘'}.get(t['text'],t['text'])
+                if name in known_nodes and t['confidence']>=.7:
+                    n={'type':name,'box':t['box'],'confidence':t['confidence'],
+                       'hidden':name.startswith('未知'),'prediction':None}
+                    if title and abs(sum(p[0] for p in t['box'])/4-tx)<.20*ux and 0<ty-sum(p[1] for p in t['box'])/4<.10*uy:
+                        n['detail_panel_label']=True
+                    found.append(n)
+            refined_map=read_map(image,refined,found,map_run)
+            if refined_map['status']=='matched':
+                return refined_map,refined,found
+            return graph,texts,nodes
+        early_result=None
+        def publish_result(config):
+            early_map,map_texts,map_nodes=early_result
             content=read_node_content(image,texts,page,stage,nodes)
-            progress=deepcopy({'page':page,'size':viewport['source_size'],'texts':texts,'nodes':nodes,
+            progress=deepcopy({'page':page,'size':viewport['source_size'],'texts':map_texts,'nodes':map_nodes,
                 'stage':stage,'map':early_map,'map_config':config,'run':None,'operator':None,'node_content':content,'limitations':[]})
             annotate_map_content(progress['map'],progress['node_content'])
             map_evidence(progress,viewport)
             progress['viewport']=dict(viewport)
             progress['performance']={'stages_ms':dict(timings)}
             on_map(progress)
+        def publish_map(config):
+            nonlocal early_result
+            graph=read_map(image,texts,nodes,{'config':config})
+            early_result=(graph,texts,nodes)
+            if graph['status']=='matched':
+                publish_result(config)
+
+        def finish_sparse_map(config):
+            nonlocal early_result
+            if early_result[0]['status']=='insufficient':
+                early_result=refine_graph(early_result[0],{'config':config})
+                if early_result[0]['status']=='matched':
+                    publish_result(config)
         early=(on_map is not None and not expanded and not shop and page in ('exploration','node_detail'))
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context,
                      on_hud=on_hud,on_map_gold=map_reference,native_content=native_content,
-                     on_map_config=publish_map if early else None,
+                     on_map_config=publish_map if early else None,after_map_hud=finish_sparse_map if early else None,
                      on_held_names=on_held_names if expanded and not shop else None)
         elapsed('run')
         if shop:
@@ -418,27 +450,13 @@ class ScreenReader:
         result={'observed_at': time.time(), 'page': page, 'size': viewport['source_size'], 'texts': texts,
                 'nodes': nodes, 'stage': stage, 'drop_estimate': None,'operator':operator,'run':run,'node_content':content,
                 'limitations': ['隐藏节点尚未预测；掉落概率尚未计算。', '战斗地图视觉识别待开发；敌人列表是本地关卡候选，属性未套用本局修正。']}
-        result['map'] = (early_map if early_map is not None else read_map(image, texts, nodes, run)) if page in ('exploration','node_detail') else None
-        if result['map'] and result['map']['status']=='insufficient' and len(nodes)>=3:
-            refined=refine_map_texts(image,texts,nodes,self._engine)
-            found=[]
-            title = next((t for t in refined if t['text'] == stage['name']), None) if stage and detail else None
-            if title:
-                tx, ty = (sum(p[i] for p in title['box']) / 4 for i in (0, 1))
-                ux, uy = units(image, title, 35.2)
-            for t in refined:
-                name={'未知的凶房':'未知的凶戾','未知的诡利':'未知的诡秘'}.get(t['text'],t['text'])
-                if name in known_nodes and t['confidence']>=.7:
-                    n={'type':name,'box':t['box'],'confidence':t['confidence'],
-                       'hidden':name.startswith('未知'),'prediction':None}
-                    if title and abs(sum(p[0] for p in t['box'])/4-tx)<.20*ux and 0<ty-sum(p[1] for p in t['box'])/4<.10*uy:
-                        n['detail_panel_label']=True
-                    found.append(n)
-            refined_map=read_map(image,refined,found,run)
-            if refined_map['status']=='matched':
-                result.update(map=refined_map,texts=refined,nodes=found)
-                if isinstance(self._frame_ocr,DynamicOCR):
-                    self._frame_ocr.raw=[[[[p[0]*w,p[1]*h] for p in t['box']],t['text'],t['confidence']] for t in refined]
+        if page in ('exploration','node_detail'):
+            graph,map_texts,map_nodes=early_result if early_result is not None else refine_graph(read_map(image,texts,nodes,run),run)
+            result.update(map=graph,texts=map_texts,nodes=map_nodes)
+            if map_texts is not texts and isinstance(self._frame_ocr,DynamicOCR):
+                self._frame_ocr.raw=[[[[p[0]*w,p[1]*h] for p in t['box']],t['text'],t['confidence']] for t in map_texts]
+        else:
+            result['map']=None
         annotate_map_content(result['map'],content)
         elapsed('map')
         if result['map'] and result['map']['status']=='matched':
