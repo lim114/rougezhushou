@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图半秒目标仍未达到，整页读字及其前面的同步源石锭识别占用首显时间。藏品缺少有效真人切页样本，待保持资料窗打开并切入有藏品的页面实测。[回执](verification/maintenance/current-map-and-roster-reset-20261123/summary.json)。
+核显地图切页回放正确首显中位数 1299 毫秒，藏品条目 523 毫秒、整页 1719 毫秒，仍需核对真实非空藏品页与半秒目标。[回执](verification/maintenance/map-hud-and-squad-matching-20261123/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

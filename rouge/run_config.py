@@ -99,7 +99,10 @@ def read_config(image,texts,held,*,engine=None,known_config=None):
     need_difficulty = 'difficulty' not in result and 'difficulty' not in known
     if need_squad or need_difficulty:
         from .run_badges import find_squad_badge,read_badge_grade
-        badge=find_squad_badge(image,held)
+        from .recognition_cache import CachedOCR
+        provider = engine.engine if isinstance(engine, CachedOCR) else engine
+        parallel = getattr(provider, 'inference_backend', None) == 'openvino-gpu'
+        badge=find_squad_badge(image,held,parallel=parallel)
         if badge:
             if need_squad:
                 result['squad']={'id':badge['id'],'name':badge['name'],'level':None,

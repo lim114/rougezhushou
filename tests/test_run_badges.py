@@ -3,6 +3,8 @@ from pathlib import Path
 import tempfile
 import time
 import unittest
+from types import SimpleNamespace
+from unittest.mock import patch
 
 import cv2
 import numpy as np
@@ -18,6 +20,20 @@ def sample(name):
 
 
 class RunBadgeTests(unittest.TestCase):
+    def test_only_the_gpu_reader_uses_parallel_badge_search(self):
+        from rouge.recognition_cache import CachedOCR
+        from rouge.run_config import read_config
+        for backend in ('openvino', 'onnx', 'openvino-gpu'):
+            provider = SimpleNamespace(inference_backend=backend)
+            for engine in (provider, CachedOCR(provider)):
+                with self.subTest(backend=backend, engine=type(engine).__name__), patch(
+                    'rouge.run_badges.find_squad_badge', return_value=None
+                ) as find:
+                    image = np.zeros((100, 200, 3), np.uint8)
+                    anchor = {'text': '收藏品'}
+                    read_config(image, [], anchor, engine=engine)
+                    find.assert_called_once_with(image, anchor, parallel=backend == 'openvino-gpu')
+
     def test_exploration_badge_reads_trade_squad_and_grade_without_info_panel(self):
         result = ScreenReader().read(sample('exploration-map.png'))['run']['config']
         self.assertEqual(result['squad']['id'], 'rogue_6_band_19')

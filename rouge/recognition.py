@@ -156,6 +156,12 @@ class ScreenReader:
             self._last_context = None
         return result
 
+    def _classify_page(self, image):
+        from .page_features import PageFeatureRouter
+        if self._page_router is None:
+            self._page_router = PageFeatureRouter()
+        return self._page_router.classify(image)
+
     def _read(self, image, *, client_rect=None,run_context=None,on_hud=None,gold_seed=None,on_gold_reference=None,on_map=None,on_held_names=None,detection=None,prepared_text=None):
         timings = {}
         mark = time.perf_counter()
@@ -181,7 +187,7 @@ class ScreenReader:
             left, top, right, bottom = viewport['content_rect']
             native_content = source_image[top:bottom, left:right]
         elapsed('viewport')
-        if on_hud is not None and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
+        def preview_gold():
             from .hud_gold_preview import read_gold_preview, read_initial_gold
             previous_run = (gold_seed or {}).get('run') or {}
             if gold_seed is not None and (gold_seed is self._gold_layout or previous_run.get('page') == 'run_map'):
@@ -192,20 +198,30 @@ class ScreenReader:
             if gold is not None:
                 on_hud({'gold': gold})
             elapsed('local_gold')
+        # The visual router owns no OCR session. Publish gold on the reader
+        # thread while it locates controls in this same analysis frame.
+        visual_work = None
+        prepared = prepared_text is not None and isinstance(self._frame_ocr, DynamicOCR)
+        if on_hud is not None and image.ndim == 3 and image.shape[2] == 3 and image.dtype == np.uint8:
+            if self.backend == 'openvino-gpu' and self.page_routing_enabled and not prepared:
+                from concurrent.futures import ThreadPoolExecutor
+                with ThreadPoolExecutor(max_workers=1, thread_name_prefix='rouge-page-controls') as pool:
+                    visual_work = pool.submit(self._classify_page, image)
+                    preview_gold()
+            else:
+                preview_gold()
         routing={'strategy':'full_discovery','candidates':[],'visual_ms':0.,
                  'fallback_reason':'disabled' if not self.page_routing_enabled else None}
         regions=None;page_identity=None;force_discovery=False;page_batches=False
-        if prepared_text is not None and isinstance(self._frame_ocr, DynamicOCR):
+        if prepared:
             # Full-frame OCR is already running for the selected capture. A
             # visual region plan cannot reduce that work. read_prepared checks
             # the model configuration and exact pixels before using its rows.
             force_discovery = True
             routing['strategy'] = 'settling_full_discovery'
         elif self.page_routing_enabled:
-            from .page_features import PageFeatureRouter
             try:
-                if self._page_router is None:self._page_router=PageFeatureRouter()
-                plan=self._page_router.classify(image)
+                plan = visual_work.result() if visual_work is not None else self._classify_page(image)
                 routing.update(candidates=[c['page'] for c in plan['candidates']],
                     visual_ms=plan['elapsed_ms'],fallback_reason=plan['fallback_reason'])
                 routing['feature_reuse']=plan.get('feature_reuse','none')

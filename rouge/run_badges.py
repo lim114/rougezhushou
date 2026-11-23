@@ -1,5 +1,6 @@
 """Squad artwork localization at measured UI scale, independent of screen position."""
 from functools import lru_cache
+from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 import re
@@ -48,7 +49,7 @@ def _match(gray, identity, sizes, best=None):
     return best
 
 
-def find_squad_badge(image, anchor=None):
+def find_squad_badge(image, anchor=None, *, parallel=False):
     """Find one unambiguous badge; current text geometry only narrows the search.
 
     Without an anchor, use a coarse whole-frame search followed by local scale
@@ -79,7 +80,13 @@ def find_squad_badge(image, anchor=None):
     gray = cv2.cvtColor(area, cv2.COLOR_BGR2GRAY)
     if float(gray.std()) < 3:
         return None
-    candidates = [_match(gray, identity, sizes) for identity in references()]
+    identities = references()
+    if parallel and anchor:
+        # Keep reference order when gathering scores, including exact ties.
+        with ThreadPoolExecutor(max_workers=4, thread_name_prefix='rouge-squad-badge') as pool:
+            candidates = list(pool.map(lambda identity: _match(gray, identity, sizes), identities))
+    else:
+        candidates = [_match(gray, identity, sizes) for identity in identities]
     candidates = sorted((item for item in candidates if item), key=lambda item: item['score'], reverse=True)
     if not candidates or candidates[0]['score'] < .70:
         return None

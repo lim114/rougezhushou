@@ -1,4 +1,5 @@
 import unittest
+from threading import Event, get_ident
 from unittest.mock import Mock, patch
 
 import numpy as np
@@ -30,6 +31,28 @@ def corners(left, top, right, bottom):
 
 
 class GoldPreviewTests(unittest.TestCase):
+    def test_gpu_routes_current_pixels_while_gold_can_still_publish(self):
+        reader = ScreenReader(backend='openvino-gpu', cache_enabled=False)
+        reader._engine = Mock()
+        reader._frame_ocr = Mock(return_value=([], None))
+        reader._page_router = Mock()
+        started, published = Event(), Event()
+        caller = get_ident()
+        def classify(image):
+            started.set()
+            self.assertTrue(published.wait(2))
+            raise ValueError('unavailable controls')
+        def publish(hud):
+            self.assertEqual(get_ident(), caller)
+            self.assertEqual(hud['gold']['value'], 0)
+            self.assertTrue(started.wait(2))
+            published.set()
+        reader._page_router.classify.side_effect = classify
+        with patch('rouge.hud_gold_preview.read_initial_gold', return_value={'value': 0}):
+            result = reader.read(np.zeros((600, 1000, 3), np.uint8), on_hud=publish)
+        self.assertEqual(result['performance']['routing']['fallback_reason'], 'visual_unavailable:ValueError')
+        reader._frame_ocr.assert_called_once()
+
     def test_first_entry_requires_current_labels_and_the_real_amount_field(self):
         from rouge.hud_gold_preview import read_initial_gold
         image = np.zeros((800, 1280, 3), np.uint8)
