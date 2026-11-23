@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-核显地图切页回放正确首显中位数 1299 毫秒，藏品条目 523 毫秒、整页 1719 毫秒，仍需核对真实非空藏品页与半秒目标。[回执](verification/maintenance/map-hud-and-squad-matching-20261123/summary.json)。
+地图从转场开始到正确首显仍超半秒。快速预读的其他楼层、裁切、回退及藏品完整卡片待验证；当前暂缓真人实测。[回执](verification/maintenance/map-glyph-window-replay-20261123/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

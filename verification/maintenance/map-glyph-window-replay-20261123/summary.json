@@ -1,0 +1,396 @@
+{
+  "kind": "offline_performance_experiment",
+  "baseline_commit": "1146e4e11202bd305dcf9a003c1847d37dac0f97",
+  "acceptance_complete": false,
+  "target_ms": 500,
+  "runtime_delivery": "隔离回放候选，常规和核显测试启动均沿用现有产品实现。",
+  "candidate": "scripts/probe_map_glyph_preview.py",
+  "candidate_sha256": "3337fb4c2029309ae341622bb1a51686e05fca1d2805944993bf07a90960a49c",
+  "method": "同机核显、1920×1200、100毫秒WGC采样，独立播放同一段有24帧的转场录像。助手真实窗口由另一条WGC采集。验证全部12个节点、当前位置和易混淆的商人／未知节点画面。起点分别取回放源窗口开始切页和目标地图清晰可读的首帧，未记录物理点击。原始画面与本局数据留在本机。",
+  "implementation": "形态学提出文字行，仅用下三角定位可能的当前位置标记。原尺寸OCR仍须读出当前位置文字、区域名、四个地图控件及当前节点。已有几何识别器确认唯一布局、当前位置和每个格的可见类型。局部或遮挡导致证据不足时交回完整识别。",
+  "scheduler_experiment": "地图面板可见且引擎已就绪时，在当前画面大幅变化后留出上限750毫秒的预读时间。只保留最新采样，成功后立即恢复正常整页调度。最终候选每次转场首次成功后停止预读。 可复用入口 ReplayMapLane 限定独立回放窗口和临时本局目录。",
+  "cohorts_ms": {
+    "baseline": {
+      "n": 4,
+      "switch_to_display_ms": 2034.9,
+      "clear_to_display_ms": 1629.7,
+      "read_to_map_result_ms": 1196.7,
+      "clear_within_500": 0,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    },
+    "parallel": {
+      "n": 3,
+      "switch_to_display_ms": 1045.7,
+      "clear_to_display_ms": 639.9,
+      "read_to_map_result_ms": 257.3,
+      "clear_within_500": 0,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    },
+    "pointer": {
+      "n": 3,
+      "switch_to_display_ms": 1480.1,
+      "clear_to_display_ms": 1081.0,
+      "read_to_map_result_ms": 471.1,
+      "clear_within_500": 0,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    },
+    "priority": {
+      "n": 3,
+      "switch_to_display_ms": 1127.8,
+      "clear_to_display_ms": 720.3,
+      "read_to_map_result_ms": 352.4,
+      "clear_within_500": 0,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    },
+    "bounded_head_start": {
+      "n": 6,
+      "switch_to_display_ms": 849.0,
+      "clear_to_display_ms": 445.1,
+      "read_to_map_result_ms": 184.7,
+      "clear_within_500": 6,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 1
+    },
+    "once_per_transition": {
+      "n": 4,
+      "switch_to_display_ms": 795.2,
+      "clear_to_display_ms": 387.1,
+      "read_to_map_result_ms": 167.5,
+      "clear_within_500": 4,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    },
+    "packaged_replay_lane": {
+      "n": 4,
+      "switch_to_display_ms": 885.0,
+      "clear_to_display_ms": 480.4,
+      "read_to_map_result_ms": 212.9,
+      "clear_within_500": 2,
+      "switch_within_500": 0,
+      "runs_with_later_registration_loss": 0
+    }
+  },
+  "raw_timing_ms": {
+    "baseline": [
+      {
+        "switch_to_display_ms": 2033.2,
+        "clear_to_display_ms": 1622.2,
+        "clear_to_sample_ms": 177.0,
+        "sample_to_read_start_ms": 43.7,
+        "read_to_map_result_ms": 1179.42,
+        "remaining_to_window_ms": 222.1,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1812.7,
+        "clear_to_display_ms": 1402.2,
+        "clear_to_sample_ms": 165.5,
+        "sample_to_read_start_ms": 15.06,
+        "read_to_map_result_ms": 1000.49,
+        "remaining_to_window_ms": 221.2,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 2106.1,
+        "clear_to_display_ms": 1701.7,
+        "clear_to_sample_ms": 194.6,
+        "sample_to_read_start_ms": 27.38,
+        "read_to_map_result_ms": 1311.16,
+        "remaining_to_window_ms": 168.6,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 2036.6,
+        "clear_to_display_ms": 1637.1,
+        "clear_to_sample_ms": 199.8,
+        "sample_to_read_start_ms": 53.58,
+        "read_to_map_result_ms": 1214.01,
+        "remaining_to_window_ms": 169.7,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "parallel": [
+      {
+        "switch_to_display_ms": 977.6,
+        "clear_to_display_ms": 569.2,
+        "clear_to_sample_ms": 73.0,
+        "sample_to_read_start_ms": 78.02,
+        "read_to_map_result_ms": 223.83,
+        "remaining_to_window_ms": 194.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1045.7,
+        "clear_to_display_ms": 639.9,
+        "clear_to_sample_ms": 61.5,
+        "sample_to_read_start_ms": 104.52,
+        "read_to_map_result_ms": 257.26,
+        "remaining_to_window_ms": 216.6,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1619.0,
+        "clear_to_display_ms": 1212.2,
+        "clear_to_sample_ms": 534.0,
+        "sample_to_read_start_ms": 111.88,
+        "read_to_map_result_ms": 378.07,
+        "remaining_to_window_ms": 188.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "pointer": [
+      {
+        "switch_to_display_ms": 1369.7,
+        "clear_to_display_ms": 974.8,
+        "clear_to_sample_ms": 2.9,
+        "sample_to_read_start_ms": 31.29,
+        "read_to_map_result_ms": 734.83,
+        "remaining_to_window_ms": 205.8,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1480.1,
+        "clear_to_display_ms": 1081.0,
+        "clear_to_sample_ms": 453.6,
+        "sample_to_read_start_ms": 73.61,
+        "read_to_map_result_ms": 405.47,
+        "remaining_to_window_ms": 148.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1573.5,
+        "clear_to_display_ms": 1171.6,
+        "clear_to_sample_ms": 507.0,
+        "sample_to_read_start_ms": 45.04,
+        "read_to_map_result_ms": 471.15,
+        "remaining_to_window_ms": 148.4,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "priority": [
+      {
+        "switch_to_display_ms": 1127.8,
+        "clear_to_display_ms": 720.3,
+        "clear_to_sample_ms": 61.0,
+        "sample_to_read_start_ms": 61.44,
+        "read_to_map_result_ms": 429.09,
+        "remaining_to_window_ms": 168.8,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1141.0,
+        "clear_to_display_ms": 728.1,
+        "clear_to_sample_ms": 268.2,
+        "sample_to_read_start_ms": 115.06,
+        "read_to_map_result_ms": 202.32,
+        "remaining_to_window_ms": 142.5,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 964.2,
+        "clear_to_display_ms": 560.4,
+        "clear_to_sample_ms": 50.1,
+        "sample_to_read_start_ms": 9.83,
+        "read_to_map_result_ms": 352.42,
+        "remaining_to_window_ms": 148.0,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "bounded_head_start": [
+      {
+        "switch_to_display_ms": 843.8,
+        "clear_to_display_ms": 442.3,
+        "clear_to_sample_ms": 49.7,
+        "sample_to_read_start_ms": 36.58,
+        "read_to_map_result_ms": 187.66,
+        "remaining_to_window_ms": 168.4,
+        "later_failed_registrations": 4,
+        "after_first_latest_failure_ms": 8099
+      },
+      {
+        "switch_to_display_ms": 794.8,
+        "clear_to_display_ms": 384.9,
+        "clear_to_sample_ms": 44.9,
+        "sample_to_read_start_ms": 34.34,
+        "read_to_map_result_ms": 157.17,
+        "remaining_to_window_ms": 148.5,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 860.1,
+        "clear_to_display_ms": 448.0,
+        "clear_to_sample_ms": 40.2,
+        "sample_to_read_start_ms": 35.62,
+        "read_to_map_result_ms": 181.81,
+        "remaining_to_window_ms": 190.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 892.0,
+        "clear_to_display_ms": 490.4,
+        "clear_to_sample_ms": 79.1,
+        "sample_to_read_start_ms": 50.36,
+        "read_to_map_result_ms": 188.82,
+        "remaining_to_window_ms": 172.2,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 854.1,
+        "clear_to_display_ms": 448.1,
+        "clear_to_sample_ms": 69.8,
+        "sample_to_read_start_ms": 10.54,
+        "read_to_map_result_ms": 190.49,
+        "remaining_to_window_ms": 177.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 839.0,
+        "clear_to_display_ms": 425.0,
+        "clear_to_sample_ms": 49.1,
+        "sample_to_read_start_ms": 34.82,
+        "read_to_map_result_ms": 177.29,
+        "remaining_to_window_ms": 163.8,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "once_per_transition": [
+      {
+        "switch_to_display_ms": 800.5,
+        "clear_to_display_ms": 392.4,
+        "clear_to_sample_ms": 67.6,
+        "sample_to_read_start_ms": 11.66,
+        "read_to_map_result_ms": 164.2,
+        "remaining_to_window_ms": 149.0,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 790.0,
+        "clear_to_display_ms": 381.9,
+        "clear_to_sample_ms": 34.0,
+        "sample_to_read_start_ms": 19.14,
+        "read_to_map_result_ms": 170.78,
+        "remaining_to_window_ms": 158.1,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 839.8,
+        "clear_to_display_ms": 435.1,
+        "clear_to_sample_ms": 74.8,
+        "sample_to_read_start_ms": 22.56,
+        "read_to_map_result_ms": 176.04,
+        "remaining_to_window_ms": 161.7,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 769.4,
+        "clear_to_display_ms": 370.5,
+        "clear_to_sample_ms": 53.0,
+        "sample_to_read_start_ms": 42.12,
+        "read_to_map_result_ms": 152.15,
+        "remaining_to_window_ms": 123.2,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ],
+    "packaged_replay_lane": [
+      {
+        "switch_to_display_ms": 913.3,
+        "clear_to_display_ms": 507.4,
+        "clear_to_sample_ms": 50.4,
+        "sample_to_read_start_ms": 49.44,
+        "read_to_map_result_ms": 229.19,
+        "remaining_to_window_ms": 178.3,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 856.8,
+        "clear_to_display_ms": 453.5,
+        "clear_to_sample_ms": 56.0,
+        "sample_to_read_start_ms": 34.62,
+        "read_to_map_result_ms": 192.52,
+        "remaining_to_window_ms": 170.4,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 834.8,
+        "clear_to_display_ms": 436.6,
+        "clear_to_sample_ms": 46.6,
+        "sample_to_read_start_ms": 25.05,
+        "read_to_map_result_ms": 196.57,
+        "remaining_to_window_ms": 168.4,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      },
+      {
+        "switch_to_display_ms": 1203.6,
+        "clear_to_display_ms": 796.4,
+        "clear_to_sample_ms": 90.1,
+        "sample_to_read_start_ms": 97.31,
+        "read_to_map_result_ms": 387.31,
+        "remaining_to_window_ms": 221.7,
+        "later_failed_registrations": 0,
+        "after_first_latest_failure_ms": null
+      }
+    ]
+  },
+  "validation": {
+    "recorded_frames_checked": 43,
+    "distinct_frames_note": "19张先前分阶段取样和24张连续回放，两个集合可有重叠。",
+    "graphs_returned": 20,
+    "wrong_graphs_returned": 0,
+    "complete_film_frames": 12,
+    "checks_with_moved_marker_changed_label_and_occlusion": 9,
+    "negative_and_changed_inputs_passed": 9,
+    "first_verified_frame_after_source_starts_ms": 372,
+    "relevant_existing_tests_passed": 49
+  },
+  "inventory": {
+    "half_scale_verified_cards": 2,
+    "full_scale_verified_cards": 3,
+    "targeted_band_trials": 21,
+    "confirmed_on_positive": 0,
+    "positive_frame_to_names_ms": 829.9,
+    "partial_overlay_cases_returning_names": 0,
+    "note": "原分辨率补读卡片区域后，遮挡判定在完整正样本上也拒绝，未采用。正样本耗时到判定结束，未产生可点击条目。",
+    "last_verified_ui_ms": {
+      "clickable": 523,
+      "complete": 1719,
+      "receipt": "verification/maintenance/map-hud-and-squad-matching-20261123/summary.json"
+    }
+  },
+  "limitations": [
+    "多次播放同一转场，未覆盖独立对局或用户物理输入时刻。",
+    "整页让出的时间上限为750毫秒，未验证所有不适用页面的回退体验。",
+    "早期重复预读候选出现过首显后短暂回到旧楼层，单次预读候选另核对了后续窗口画面。",
+    "藏品整页半秒目标以及当前游戏与助手同跑的性能仍未验证。"
+  ],
+  "scheduler_path": "scripts/map_preview_replay_lane.py",
+  "scheduler_sha256": "c91288f45a8ad54e2b429090ba2869cb2990cf93e7bf1d08f664fefc580c89ab"
+}
