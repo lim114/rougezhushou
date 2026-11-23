@@ -181,6 +181,13 @@ class FrameBuffer:
             return 1.
         return float(cv2.absdiff(cls._novelty(left), cls._novelty(right)).mean()) / 255.
 
+    @classmethod
+    def closest_scene(cls, current, candidates):
+        """Select a similar in-flight scene for scheduling, never for result reuse."""
+        distance, job_id = min(((cls._distance(current, scene), job_id)
+                                for job_id, scene in candidates), default=(1., None))
+        return job_id if distance <= .04 else None
+
     def offer(self, image, captured_at, client_rect=None, target=None,*,pointer_bounds=None, source_bgra=False):
         """Offer BGR pixels or a native BGRA mapping; even rejected offers consume a unique seq.
 
@@ -248,13 +255,15 @@ class FrameBuffer:
     def _settling(self):
         return len(self._pending) == 1 and time.monotonic() < self._pending[0]['ready_at']
 
-    def take(self, force=False, *, prefer_latest=False, after_seq=None, scene_change_only=False):
+    def take(self, force=False, *, prefer_latest=False, after_seq=None, scene_change_only=False, regional_changes=False):
         """Take one candidate; current-first removes only that candidate, never the rest.
 
         With no pending candidate, force returns the latest observation. Normal
         polling does not repeatedly re-recognize an unchanged static page.
         after_seq leaves older candidates queued for the historical reader.
         scene_change_only takes only a new, visibly different latest candidate.
+        regional_changes exports a comparison thumbnail and includes a changed
+        region of a 4-by-4 grid when checking a reserved candidate.
         """
         prefer_latest = prefer_latest or scene_change_only
         with self._lock:
@@ -264,9 +273,15 @@ class FrameBuffer:
                     return None
                 if scene_change_only:
                     newest = self._pending[-1]
-                    if (newest['seq'] <= self._last_taken_seq or self._last_taken_view is None
-                            or self._distance(self._last_taken_view, newest) <= .04):
+                    if newest['seq'] <= self._last_taken_seq or self._last_taken_view is None:
                         return None
+                    if self._distance(self._last_taken_view, newest) <= .04:
+                        if not regional_changes:
+                            return None
+                        delta = cv2.absdiff(self._last_taken_view['novelty'], self._novelty(newest))
+                        regions = cv2.resize(delta, (4, 4), interpolation=cv2.INTER_AREA)
+                        if regions.reshape(16, -1).mean(axis=1).max() <= 255 * .04:
+                            return None
                 # Once a different page follows, preserve the preceding page
                 # immediately, including pages visible for only one frame.
                 if not force and self._settling():
@@ -302,7 +317,10 @@ class FrameBuffer:
                     self._last_taken_view = dict(key=frame['key'], novelty=self._novelty(frame))
             # An older popped frame has no retained pixel owner. The manual
             # latest-frame fallback still owns its pixels and needs a copy.
-            return self._export(frame, copy_pixels=frame is self._latest)
+            result = self._export(frame, copy_pixels=frame is self._latest)
+            if regional_changes:
+                result['scene'] = dict(key=frame['key'], novelty=self._novelty(frame).copy())
+            return result
 
     def latest(self, *, after_seq=None, settling_only=False):
         """Peek without consuming. An idle preview yields to a ready full read."""

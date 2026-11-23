@@ -15,6 +15,31 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_inventory_region_change_and_matching_history_use_distinct_thresholds(self):
+        buffer = FrameBuffer(settle_seconds=0, prioritize_scene_changes=True)
+        closed = page(60)
+        buffer.offer(closed, 1)
+        first = buffer.take(regional_changes=True)['scene']
+        buffer.offer(page(155), 2)
+        other = buffer.take(regional_changes=True)['scene']
+        buffer.offer(closed, 3)
+        buffer.take()
+        opened = closed.copy()
+        opened[180:, :100] = 155
+        buffer.offer(opened, 4)
+        self.assertIsNone(buffer.take(scene_change_only=True))
+        scene = buffer.take(scene_change_only=True, regional_changes=True)['scene']
+        self.assertEqual(buffer.closest_scene(scene, [(1, first), (2, other)]), 1)
+        self.assertIsNone(buffer.closest_scene(scene, [(2, other)]))
+        # Equal pixels at a different bound window cannot establish related work.
+        buffer.offer(opened, 5, target={'hwnd': 9})
+        moved = buffer.take(regional_changes=True)['scene']
+        self.assertIsNone(buffer.closest_scene(scene, [(3, moved)]))
+        small = opened.copy()
+        small[20:27, 25:33] = 255
+        buffer.offer(small, 6, target={'hwnd': 9})
+        self.assertIsNone(buffer.take(scene_change_only=True, regional_changes=True))
+
     def test_reserved_reader_only_takes_new_scene_and_preserves_previous_candidates(self):
         buffer = FrameBuffer(settle_seconds=0, prioritize_scene_changes=True)
         buffer.offer(page(40), 1)

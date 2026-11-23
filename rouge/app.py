@@ -703,6 +703,9 @@ class MainWindow(QMainWindow):
         if automatic:
             self.busy_gold.poll()
         competing = len(self.sample_jobs)
+        inventory = self.compact_window.inventory_popup if self.compact_window else None
+        inventory_scenes = bool(automatic and self.capture.buffer.prioritize_scene_changes
+                                and inventory and inventory.panel.isVisible())
         reserve_allowed = (self.busy and automatic and self.capture.buffer.prioritize_scene_changes
                            and whole_page_visible(self.compact_window))
         if self.busy and (not automatic or self.recognition_mode.currentData() == 'visual'
@@ -741,7 +744,8 @@ class MainWindow(QMainWindow):
             # Historical candidates remain queued until a reader is available.
             after_seq=max(self.last_sample_seq, *(job['seq'] for job in self.sample_jobs.values())) if self.sample_jobs else None
             frame=self.capture.next_frame(force=not automatic or (refresh_overlay and not self.busy),
-                                          prefer_latest=preferred,after_seq=after_seq,scene_change_only=competing == 2)
+                                          prefer_latest=preferred,after_seq=after_seq,scene_change_only=competing == 2,
+                                          regional_changes=inventory_scenes)
         except Exception as error:
             self.show_error('capture',str(error))
             return
@@ -768,7 +772,16 @@ class MainWindow(QMainWindow):
             self.reserve_reader = selected_reader.fork()
         self.next_sample_job += 1
         job_id=self.next_sample_job
-        self.sample_jobs[job_id]={'slot':slot,'seq':frame['seq'] if frame is not None else 0,'marker':marker}
+        scene = frame.pop('scene', None) if frame is not None else None
+        related_job = None
+        if scene is not None and competing == 2:
+            # The closed inventory can supply the count hidden by the expanded cards.
+            # Similar pixels select a worker only; it must still read its own page.
+            related_job = self.capture.buffer.closest_scene(scene, (
+                (older_id, job['scene']) for older_id, job in self.sample_jobs.items()
+                if job['marker'] == marker and job['scene'] is not None))
+        self.sample_jobs[job_id]={'slot':slot,'seq':frame['seq'] if frame is not None else 0,'marker':marker,
+                                  'scene':scene}
         self.busy = True
         self.active_sample_seq = frame['seq'] if frame is not None else 0
         self.sample_button.setEnabled(False)
@@ -827,6 +840,8 @@ class MainWindow(QMainWindow):
                 if show_names:
                     def publish_names(names):
                         self.events.held_names_read.emit((job_id, marker, selected['captured_at'], selected['seq'], names))
+                        if related_job is not None:
+                            self.read_priority.allow_history(job_id, related_job)
                     options['on_held_names'] = publish_names
                 if show_hud:
                     def publish(hud):

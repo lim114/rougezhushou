@@ -5,6 +5,42 @@ from rouge.recognition_priority import ReadPriority, yield_to_current
 
 
 class RecognitionPriorityTests(unittest.TestCase):
+    def test_related_page_can_resume_until_a_newer_frame_arrives(self):
+        priority = ReadPriority()
+        for job in (1, 2, 3):
+            priority.register(job, job)
+        started = threading.Event()
+        resume = threading.Event()
+        finished = threading.Event()
+
+        def history():
+            with priority.read(1):
+                started.set()
+                resume.wait(3)
+                yield_to_current()
+                finished.set()
+
+        worker = threading.Thread(target=history)
+        worker.start()
+        try:
+            with priority.read(3):
+                priority.allow_history(3, 1)
+                self.assertTrue(started.wait(2))
+                priority.register(4, 4)
+                resume.set()
+                with priority.read(4):
+                    self.assertFalse(finished.wait(.05))
+                # A late callback for the former current frame cannot restore the grant.
+                priority.allow_history(3, 1)
+                self.assertFalse(finished.wait(.05))
+            with priority.read(2):
+                self.assertFalse(finished.wait(.05))
+            self.assertTrue(finished.wait(2))
+        finally:
+            resume.set()
+            worker.join(3)
+        self.assertFalse(worker.is_alive())
+
     def test_current_read_precedes_old_continuation_and_failure_releases_it(self):
         for fails in (False, True):
             with self.subTest(fails=fails):

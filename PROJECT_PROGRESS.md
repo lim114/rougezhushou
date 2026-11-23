@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图和藏品首显仍超半秒；需缩短新页自身推理，并排查完整藏品卡片晚于可点击首显以及历史补记的影响。真人实测暂缓。[回执](verification/maintenance/ocr-saturated-page-switch-20261123/summary.json)。
+藏品可点击首显和正确完整列表仍超半秒，缺收起页证据时完整度未知。需缩短地图自身识别与藏品文字和图标核验；真人实测暂缓。[回执](verification/maintenance/ocr-related-inventory-20261123/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

@@ -1,0 +1,282 @@
+{
+  "title": "核显展开藏品页优先补读相近旧画面的持有证据",
+  "baseline_commit": "964ae5cadc4c67812859a430f7a9a9855f3a85ea",
+  "goal_ms": 500,
+  "acceptance_complete": false,
+  "method": "Windows 核显测试配置和独立 WGC 助手窗口录像。隔离状态。两个较早任务均已开始，再切到同一张展开藏品画面。收起页与干员页的顺序互换，每种顺序、每版各3次，轮换运行顺序。各一次空闲藏品、各一次动画地图用于检查。保留原100毫秒采集间隔。",
+  "cause": "展开页当前可见卡片证实两件藏品，但其持有总数未知。本例在旧收起页识别完成前，列表仍列出先前记录的第三件，且明确标待核对。收起页提供足够证据后列表才变为两件并标已核对完整。单测换窗、改变来源及新帧抢占。",
+  "behavior": "仅在核显测试、自动采样、藏品面板可见时比较区域变化。两个读者占用时，占画面局部的显著改变也可触发保留读者；读到当前持有卡名后最多放行一个相似旧页同时读。最近画面仍有优先权，下一张更新帧取消放行。旧识别结果由时间线按拍摄顺序归并。",
+  "definitions": {
+    "clickable_current_ms": "源切页至两个正确可点击条目在助手窗口出现，须位于当前页 Qt 读名或绘制之后；相似旧画面提前出现同名项不能计入。",
+    "final_cards_stable_ms": "两个目标卡片区域逐像素等于最终图像，且此后采到的帧均匹配。积压组亦核对最终恰有两项、完整标志和干员补记。空闲组没有用于完整判断的收起页，稳定仅指卡片像素。",
+    "target_frame_read_ms": "从目标展开页开始识别至整帧返回，含并发等待。",
+    "process_peak_private_mib": "每30毫秒采样的进程专用内存峰值，不含共享显存。"
+  },
+  "inventory": {
+    "before": {
+      "closed_then_operator": {
+        "n": 3,
+        "median": {
+          "clickable_current_ms": 814.8,
+          "final_cards_stable_ms": 4452.9,
+          "target_frame_queue_ms": 142.6,
+          "target_frame_read_ms": 1425.0,
+          "all_results_delivered_ms": 4428.3,
+          "process_peak_private_mib": 3104.6
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 750.35,
+            "final_cards_stable_ms": 4452.93,
+            "target_frame_queue_ms": 138.45,
+            "target_frame_read_ms": 1319.45,
+            "all_results_delivered_ms": 4428.3,
+            "process_peak_private_mib": 3096.6,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 814.83,
+            "final_cards_stable_ms": 4720.44,
+            "target_frame_queue_ms": 142.57,
+            "target_frame_read_ms": 1511.29,
+            "all_results_delivered_ms": 4699.1,
+            "process_peak_private_mib": 3104.6,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 826.56,
+            "final_cards_stable_ms": 4415.27,
+            "target_frame_queue_ms": 148.07,
+            "target_frame_read_ms": 1425.0,
+            "all_results_delivered_ms": 4385.1,
+            "process_peak_private_mib": 3104.9,
+            "final_summary_complete": true
+          }
+        ]
+      },
+      "operator_then_closed": {
+        "n": 3,
+        "median": {
+          "clickable_current_ms": 2487.6,
+          "final_cards_stable_ms": 3643.1,
+          "target_frame_queue_ms": 1758.8,
+          "target_frame_read_ms": 1556.4,
+          "all_results_delivered_ms": 3602.0,
+          "process_peak_private_mib": 3107.8
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 2084.09,
+            "final_cards_stable_ms": 3108.81,
+            "target_frame_queue_ms": 1412.44,
+            "target_frame_read_ms": 1543.74,
+            "all_results_delivered_ms": 3238.1,
+            "process_peak_private_mib": 3107.8,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 2565.51,
+            "final_cards_stable_ms": 3643.14,
+            "target_frame_queue_ms": 1874.4,
+            "target_frame_read_ms": 1556.42,
+            "all_results_delivered_ms": 3602.0,
+            "process_peak_private_mib": 3101.8,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 2487.63,
+            "final_cards_stable_ms": 3725.01,
+            "target_frame_queue_ms": 1758.8,
+            "target_frame_read_ms": 1808.62,
+            "all_results_delivered_ms": 4034.7,
+            "process_peak_private_mib": 3108.3,
+            "final_summary_complete": true
+          }
+        ]
+      },
+      "idle_no_closed_frame": {
+        "n": 1,
+        "median": {
+          "clickable_current_ms": 529.6,
+          "final_cards_stable_ms": 1441.8,
+          "target_frame_queue_ms": 131.8,
+          "target_frame_read_ms": 1152.8,
+          "all_results_delivered_ms": 1398.0,
+          "process_peak_private_mib": 2945.1
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 529.61,
+            "final_cards_stable_ms": 1441.82,
+            "target_frame_queue_ms": 131.82,
+            "target_frame_read_ms": 1152.78,
+            "all_results_delivered_ms": 1398.0,
+            "process_peak_private_mib": 2945.1,
+            "final_summary_complete": false
+          }
+        ]
+      }
+    },
+    "after": {
+      "closed_then_operator": {
+        "n": 3,
+        "median": {
+          "clickable_current_ms": 806.6,
+          "final_cards_stable_ms": 2669.5,
+          "target_frame_queue_ms": 142.3,
+          "target_frame_read_ms": 1838.5,
+          "all_results_delivered_ms": 3624.5,
+          "process_peak_private_mib": 3146.2
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 808.36,
+            "final_cards_stable_ms": 2669.53,
+            "target_frame_queue_ms": 142.27,
+            "target_frame_read_ms": 1929.1,
+            "all_results_delivered_ms": 3987.0,
+            "process_peak_private_mib": 3146.2,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 806.59,
+            "final_cards_stable_ms": 2705.19,
+            "target_frame_queue_ms": 138.99,
+            "target_frame_read_ms": 1838.47,
+            "all_results_delivered_ms": 3464.8,
+            "process_peak_private_mib": 3142.2,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 795.1,
+            "final_cards_stable_ms": 2645.69,
+            "target_frame_queue_ms": 144.87,
+            "target_frame_read_ms": 1818.79,
+            "all_results_delivered_ms": 3624.5,
+            "process_peak_private_mib": 3152.7,
+            "final_summary_complete": true
+          }
+        ]
+      },
+      "operator_then_closed": {
+        "n": 3,
+        "median": {
+          "clickable_current_ms": 819.1,
+          "final_cards_stable_ms": 2826.6,
+          "target_frame_queue_ms": 152.6,
+          "target_frame_read_ms": 1962.8,
+          "all_results_delivered_ms": 4181.3,
+          "process_peak_private_mib": 3145.0
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 910.0,
+            "final_cards_stable_ms": 2826.63,
+            "target_frame_queue_ms": 138.45,
+            "target_frame_read_ms": 2028.75,
+            "all_results_delivered_ms": 4725.4,
+            "process_peak_private_mib": 3134.3,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 798.12,
+            "final_cards_stable_ms": 2734.7,
+            "target_frame_queue_ms": 154.84,
+            "target_frame_read_ms": 1923.25,
+            "all_results_delivered_ms": 4181.3,
+            "process_peak_private_mib": 3145.0,
+            "final_summary_complete": true
+          },
+          {
+            "clickable_current_ms": 819.12,
+            "final_cards_stable_ms": 2860.81,
+            "target_frame_queue_ms": 152.55,
+            "target_frame_read_ms": 1962.75,
+            "all_results_delivered_ms": 2832.7,
+            "process_peak_private_mib": 3146.4,
+            "final_summary_complete": true
+          }
+        ]
+      },
+      "idle_no_closed_frame": {
+        "n": 1,
+        "median": {
+          "clickable_current_ms": 530.7,
+          "final_cards_stable_ms": 1484.9,
+          "target_frame_queue_ms": 146.2,
+          "target_frame_read_ms": 1181.3,
+          "all_results_delivered_ms": 1453.5,
+          "process_peak_private_mib": 2949.5
+        },
+        "runs": [
+          {
+            "clickable_current_ms": 530.74,
+            "final_cards_stable_ms": 1484.91,
+            "target_frame_queue_ms": 146.2,
+            "target_frame_read_ms": 1181.35,
+            "all_results_delivered_ms": 1453.5,
+            "process_peak_private_mib": 2949.5,
+            "final_summary_complete": false
+          }
+        ]
+      }
+    }
+  },
+  "map_control": {
+    "before": {
+      "switch_to_display_ms": 2242.0,
+      "clear_to_display_ms": 1835.0,
+      "clear_to_sample_ms": 519.4,
+      "sample_to_read_start_ms": 167.6,
+      "read_to_map_result_ms": 992.13,
+      "remaining_to_window_ms": 155.9,
+      "later_failed_registrations": 0,
+      "after_first_latest_failure_ms": null
+    },
+    "after": {
+      "switch_to_display_ms": 2417.8,
+      "clear_to_display_ms": 2008.1,
+      "clear_to_sample_ms": 495.3,
+      "sample_to_read_start_ms": 296.47,
+      "read_to_map_result_ms": 1030.53,
+      "remaining_to_window_ms": 185.9,
+      "later_failed_registrations": 0,
+      "after_first_latest_failure_ms": null
+    }
+  },
+  "alternative_matcher_experiment": {
+    "adopted": false,
+    "description": "在四种持有栏输入上按轮次交错比较原算法、跳过 RGB 预筛、按最大窗口能量先做排除，核对完整返回值。最大能量预筛在此组仅带来几十毫秒，未接入程序。",
+    "median_ms": {
+      "original": [
+        970.5,
+        841.2,
+        747.4,
+        484.8
+      ],
+      "direct": [
+        1083.5,
+        975.5,
+        810.7,
+        524.6
+      ],
+      "peaks": [
+        936.3,
+        786.3,
+        726.8,
+        472.2
+      ]
+    }
+  },
+  "validation": {
+    "targeted_tests": 77,
+    "private_state_hashes_unchanged": true,
+    "native_test_window_visible_and_responsive": true,
+    "all_older_reads_completed_in_saturated_trials": true
+  },
+  "limitations": [
+    "同一组留存画面，不能推断真人延迟分布。",
+    "当前帧与历史帧共享算力，积压组单帧识别更久。",
+    "纯地图对照每版只有一轮。真实游戏手动切页仍暂停。"
+  ]
+}
