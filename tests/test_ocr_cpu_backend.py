@@ -9,6 +9,27 @@ import numpy as np
 from rouge.ocr_engine import create_engine
 
 
+@unittest.skipUnless(find_spec('rapidocr_onnxruntime'), 'requires the pinned OCR provider')
+class TextRowCropTests(unittest.TestCase):
+    def test_mixed_boxes_preserve_provider_pixels_order_rotation_and_ownership(self):
+        from rapidocr_onnxruntime import RapidOCR
+        from rouge.ocr_engine import _crop_text_rows
+        image = np.random.default_rng(7).integers(0, 256, (70, 110, 3), dtype=np.uint8)[:, ::-1]
+        boxes = np.array([
+            [[80, 3], [110, 3], [110, 12], [80, 12]],
+            [[3, 5], [48, 2], [49, 24], [4, 27]],
+            [[3, 8], [11, 8], [11, 20], [3, 20]],
+            [[-2, 4], [9, 4], [9, 20], [-2, 20]],
+            [[10.5, 20], [56.5, 20], [56.5, 35], [10.5, 35]],
+        ], dtype=np.float32)
+        expected = RapidOCR.get_crop_img_list(None, image, boxes)
+        actual = _crop_text_rows(None, image, boxes)
+        self.assertEqual(len(actual), len(expected))
+        for crop, original in zip(actual, expected):
+            np.testing.assert_array_equal(crop, original)
+            self.assertFalse(np.shares_memory(crop, image))
+
+
 @unittest.skipUnless(find_spec('openvino'), 'OpenVINO is a Windows x64 runtime dependency')
 class CPUBackendTests(unittest.TestCase):
     @classmethod

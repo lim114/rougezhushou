@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图从转场开始到正确首显仍超半秒。快速预读的其他楼层、裁切、回退及藏品完整卡片待验证；当前暂缓真人实测。[回执](verification/maintenance/map-glyph-window-replay-20261123/summary.json)。
+地图和完整藏品从切页到正确首显仍超半秒；需在保留短页的前提下缩短整页识别和历史积压，真人实测暂缓。[回执](verification/maintenance/ocr-capture-pressure-20261123/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

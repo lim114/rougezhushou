@@ -51,16 +51,22 @@ class FrameBuffer:
                            interpolation=cv2.INTER_AREA)
         if thumb.ndim == 2:
             thumb = thumb[:, :, None]
-        gray = (cv2.cvtColor(thumb, cv2.COLOR_BGR2GRAY)
-                if thumb.shape[2] == 3 else thumb[:, :, 0])
-        quality = float(cv2.Laplacian(gray, cv2.CV_32F).var())
         height, width = thumb.shape[:2]
         padded = cv2.copyMakeBorder(thumb, 0, -height % 8, 0, -width % 8,
                                     cv2.BORDER_CONSTANT, value=0)
         summary = cv2.resize(padded.astype(np.float32),
                              (padded.shape[1] // 8, padded.shape[0] // 8),
                              interpolation=cv2.INTER_AREA)
-        return thumb, quality, summary
+        return thumb, summary
+
+    @staticmethod
+    def _quality(frame):
+        if 'quality' not in frame:
+            thumb = frame['thumb']
+            gray = (cv2.cvtColor(thumb, cv2.COLOR_BGR2GRAY)
+                    if thumb.shape[2] == 3 else thumb[:, :, 0])
+            frame['quality'] = float(cv2.Laplacian(gray, cv2.CV_32F).var())
+        return frame['quality']
 
     @staticmethod
     def _similar(left, right):
@@ -210,7 +216,7 @@ class FrameBuffer:
                 self._counts['out_of_order'] += 1
                 return seq
             self._last_time = timestamp
-            thumb, quality, summary = self._thumbnail(image)
+            thumb, summary = self._thumbnail(image)
             identity = dict(target or {})
             rect = tuple(client_rect) if client_rect is not None else None
             frame = dict(image=image, captured_at=timestamp,
@@ -218,7 +224,7 @@ class FrameBuffer:
                          client_rect=rect, target=identity, seq=seq,
                          generation=self._generation,
                          key=(image.shape, rect, identity.get('hwnd'), identity.get('pid')),
-                         thumb=thumb, quality=quality, summary=summary,
+                         thumb=thumb, summary=summary,
                          ready_at=time.monotonic() + self.settle_seconds,
                          quiet_at=arrived + max(.14, self.settle_seconds))
             self._latest = frame
@@ -226,8 +232,8 @@ class FrameBuffer:
                 self._counts['deduplicated'] += 1
                 if self._pending:
                     previous = self._pending[-1]
-                    if quality >= previous['quality'] * .98 and (
-                            previous['thumb'] is self._reference['thumb'] or self._similar(previous, frame)):
+                    if ((previous['thumb'] is self._reference['thumb'] or self._similar(previous, frame))
+                            and self._quality(frame) >= self._quality(previous) * .98):
                         frame['ready_at'] = previous['ready_at']
                         self._pending[-1] = frame
                 # The reference thumbnail stays fixed so a series of tiny
