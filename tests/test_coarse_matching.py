@@ -44,6 +44,25 @@ class CoarseMatchingTests(unittest.TestCase):
         np.testing.assert_array_equal(self.image,original)
         self.assertFalse(any(t.name.startswith('rouge-relic-coarse') for t in threading.enumerate()))
 
+    def test_local_rgb_gate_preserves_matches_at_edges_and_on_both_halves(self):
+        template = self.template
+        h, w = template.shape[:2]
+        for starts in ((0,), (155,), (0, 155)):
+            with self.subTest(starts=starts):
+                image = np.zeros((39, 155 + w, 3), np.uint8)
+                y = image.shape[0] - h
+                for x in starts:
+                    image[y:y + h, x:x + w] = template
+                expected = cv2.matchTemplate(image, template, cv2.TM_SQDIFF_NORMED, mask=self.mask)
+                expected = np.nan_to_num(expected, nan=10, posinf=10, neginf=10)
+                with patch.object(icons, '_can_match', wraps=icons._can_match) as rgb:
+                    row, = icons._coarse_matches(image, self.refs[:1])
+                np.testing.assert_array_equal(row[3], expected)
+                local, full = rgb.call_args_list
+                self.assertLess(local.args[0].size, image.size)
+                self.assertEqual(full.args[0].shape, image.shape)
+                self.assertGreater(local.args[-1], .12)
+
     def test_workers_own_their_projection_scratch_and_batches_yield_on_caller(self):
         bound_to_thread={};lock=threading.Lock();original=icons.ProjectionScreen.possible
         def possible(bound,*args):

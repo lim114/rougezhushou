@@ -148,7 +148,7 @@ def _refined_template(rid,size):
     return (resized[:,:,:3],mask) if np.count_nonzero(mask)>=20 else None
 
 
-def _can_match(pixels,energy_image,template,mask,energy):
+def _can_match(pixels,energy_image,template,mask,energy,limit=.12):
     """Screen distant references; final scores always use the original matcher.
 
     Binary-mask normalized SSD is (I² + T² - 2 I.T) / sqrt(I² T²).
@@ -164,7 +164,7 @@ def _can_match(pixels,energy_image,template,mask,energy):
     differences=np.divide(local_energy+energy-2*cross,denominator,
         out=np.full_like(local_energy,np.inf),where=denominator>0)
     minimum=float(np.min(differences))
-    return not np.isfinite(minimum) or minimum<=.12
+    return not np.isfinite(minimum) or minimum<=limit
 
 class EnergyScreen:
     """Reject references whose norm cannot fit anywhere in this bar.
@@ -215,6 +215,7 @@ class ProjectionScreen:
     max_cache_entries = 32
 
     def __init__(self, pixels, energy_screen):
+        self.candidate_rect = None
         self.integral = energy_screen.integral
         self.windows = OrderedDict()
         self.cache_bytes = 0
@@ -262,6 +263,7 @@ class ProjectionScreen:
         return value
 
     def possible(self, template, mask, energy, projection=None):
+        self.candidate_rect = None
         if not np.isfinite(energy) or energy <= 0:
             return True
         if projection is None:
@@ -277,7 +279,14 @@ class ProjectionScreen:
         # Masked scalar energy <= rectangular RGB energy; 2*abs(cross)
         # <= local + template_energy. This bounds the old cancellation guard.
         error = 2e-4 * (rectangle + template_energy) + 4
-        return not np.all(np.isfinite(ceiling)) or bool(np.any(lower <= ceiling + error))
+        if not np.all(np.isfinite(ceiling)):
+            return True
+        x, y, width, height = cv2.boundingRect((lower <= ceiling + error).view(np.uint8))
+        if width:
+            # The response indexes template origins. Include every source pixel
+            # covered by those placements, including the last template row/column.
+            self.candidate_rect = (x, y, width + mask.shape[1] - 1, height + mask.shape[0] - 1)
+        return width > 0
 
 
 class BarProjection:
@@ -296,6 +305,8 @@ class BarProjection:
 
     def possible(self, template, mask, energy, *projection):
         width = mask.shape[1]
+        screen = self.full
+        offset = 0
         if width <= self.half_pixels.shape[1] and self.middle > 0:
             if mask.shape not in self.exterior_max:
                 windows = self.full.window_energy(mask.shape)
@@ -306,8 +317,14 @@ class BarProjection:
                 if self.half is None:
                     self.half = ProjectionScreen(self.half_pixels, EnergyScreen(self.half_pixels))
                     self.half.max_cache_bytes = self.full.max_cache_bytes
-                return self.half.possible(template, mask, energy, *projection)
-        return self.full.possible(template, mask, energy, *projection)
+                screen = self.half
+                offset = 0 if self.use_left else self.middle
+        possible = screen.possible(template, mask, energy, *projection)
+        self.rgb_region = None
+        if screen.candidate_rect is not None:
+            x, y, w, h = screen.candidate_rect
+            self.rgb_region = (slice(y, y + h), slice(x + offset, x + offset + w))
+        return possible
 
 
 def match_held_icons(image,anchor,count,*,cache=None):
@@ -379,6 +396,11 @@ def _coarse_matches(roi, references):
             if th>=roi.shape[0] or tw>=roi.shape[1]:continue
             if not state.energy.possible((th,tw),energy):continue
             if not state.projection.possible(screen_template,screen_mask,energy,*projection):continue
+            region = state.projection.rgb_region
+            if region is not None and pixels[region].shape != pixels.shape:
+                if not _can_match(pixels[region], state.energy.energy_image[region], screen_template,
+                                  screen_mask, energy, ProjectionScreen.limit):
+                    continue
             if not _can_match(pixels,state.energy.energy_image,screen_template,screen_mask,energy):continue
             differences=cv2.matchTemplate(roi,template,cv2.TM_SQDIFF_NORMED,mask=mask)
             result.append((rid,tw,th,np.nan_to_num(differences,nan=10,posinf=10,neginf=10)))
