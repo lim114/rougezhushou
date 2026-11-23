@@ -1,0 +1,479 @@
+{
+  "title": "核显测试助手在两页识别占用时优先读取新场景",
+  "baseline_commit": "5f9b0a29e589cbaf00ed42694b6d35c546ce8100",
+  "capture_interval_ms": 100,
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "method": "Windows 原生窗口离线回放，核显测试配置。基线从同一提交加载原采集、选帧及调度代码。积压组先等到两个旧页实际开始识别，再切到两件藏品静帧或24帧地图转场。空闲组直接切页。每页每条件各跑三次，各轮顺序交替。第二路 WGC 独立捕获助手窗口。计时起点为回放切换，手动点击与真实游戏负载未纳入。",
+  "fields": {
+    "first_correct_window_ms": "地图需核对节点图、当前位置及混淆格；藏品需两件正确且可点击，在窗口图像中同时匹配。",
+    "target_read_to_result_ms": "本次目标帧，地图取阶段识别，藏品取整帧完成。含识别过程中的线程等待。",
+    "full_final_pixels_ms": "完整藏品两张卡片的区域与本轮最终显示逐像素相同。Qt 首次完整重绘另计。",
+    "complete_drain_ms": "最后一份历史结果送达，单位毫秒。",
+    "process_private_peak_mib": "采样间隔30ms的识别进程专用内存峰值，不含共享显存。"
+  },
+  "trials": {
+    "baseline_two_inventory": {
+      "runs": [
+        {
+          "first_correct_window_ms": 1995.1,
+          "capture_to_read_start_ms": 1344.91,
+          "target_read_to_result_ms": 1399.32,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 4181.5,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3106.2,
+          "target_full_reader_wall_ms": 1402.2,
+          "full_qt_paint_ms": 2880.59,
+          "full_final_pixels_ms": 4199.69
+        },
+        {
+          "first_correct_window_ms": 1937.2,
+          "capture_to_read_start_ms": 1335.81,
+          "target_read_to_result_ms": 1477.83,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 4257.5,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3093.5,
+          "target_full_reader_wall_ms": 1480.9,
+          "full_qt_paint_ms": 2970.74,
+          "full_final_pixels_ms": 4278.34
+        },
+        {
+          "first_correct_window_ms": 3255.9,
+          "capture_to_read_start_ms": 2487.23,
+          "target_read_to_result_ms": 1712.12,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 5621.8,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3107.8,
+          "target_full_reader_wall_ms": 1716.7,
+          "full_qt_paint_ms": 4370.59,
+          "full_final_pixels_ms": 5646.48
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 1995.1,
+        "capture_to_read_start_ms": 1344.9,
+        "target_read_to_result_ms": 1477.8,
+        "pending_at_qt_paint": 0,
+        "complete_drain_ms": 4257.5,
+        "concurrent_jobs_peak": 2,
+        "process_private_peak_mib": 3106.2,
+        "target_full_reader_wall_ms": 1480.9,
+        "full_qt_paint_ms": 2970.7,
+        "full_final_pixels_ms": 4278.3
+      },
+      "mean_target_read_to_result_ms": 1529.8,
+      "mean_target_full_reader_wall_ms": 1533.3
+    },
+    "baseline_two_map": {
+      "runs": [
+        {
+          "first_correct_window_ms": 2875.3,
+          "capture_to_read_start_ms": 1296.21,
+          "target_read_to_result_ms": 526.64,
+          "pending_at_qt_paint": 7,
+          "complete_drain_ms": 15321.6,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3501.0,
+          "target_full_reader_wall_ms": 1766.5,
+          "clear_map_to_window_ms": 2482.0,
+          "clear_map_to_selected_capture_ms": 493.8,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 3032.2,
+          "capture_to_read_start_ms": 1235.08,
+          "target_read_to_result_ms": 705.65,
+          "pending_at_qt_paint": 7,
+          "complete_drain_ms": 16756.6,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3527.6,
+          "target_full_reader_wall_ms": 2060.7,
+          "clear_map_to_window_ms": 2627.5,
+          "clear_map_to_selected_capture_ms": 502.7,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 3184.1,
+          "capture_to_read_start_ms": 1480.39,
+          "target_read_to_result_ms": 627.01,
+          "pending_at_qt_paint": 7,
+          "complete_drain_ms": 16564.3,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3522.5,
+          "target_full_reader_wall_ms": 1791.8,
+          "clear_map_to_window_ms": 2808.9,
+          "clear_map_to_selected_capture_ms": 528.0,
+          "later_registration_mismatches": 0
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 3032.2,
+        "capture_to_read_start_ms": 1296.2,
+        "target_read_to_result_ms": 627.0,
+        "pending_at_qt_paint": 7,
+        "complete_drain_ms": 16564.3,
+        "concurrent_jobs_peak": 2,
+        "process_private_peak_mib": 3522.5,
+        "target_full_reader_wall_ms": 1791.8,
+        "clear_map_to_window_ms": 2627.5,
+        "clear_map_to_selected_capture_ms": 502.7,
+        "later_registration_mismatches": 0
+      },
+      "mean_target_read_to_result_ms": 619.8,
+      "mean_target_full_reader_wall_ms": 1873.0
+    },
+    "baseline_idle_inventory": {
+      "runs": [
+        {
+          "first_correct_window_ms": 553.6,
+          "capture_to_read_start_ms": 128.49,
+          "target_read_to_result_ms": 1482.01,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1750.0,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2957.9,
+          "target_full_reader_wall_ms": 1486.2,
+          "full_qt_paint_ms": 1783.58,
+          "full_final_pixels_ms": 1812.41
+        },
+        {
+          "first_correct_window_ms": 496.5,
+          "capture_to_read_start_ms": 137.27,
+          "target_read_to_result_ms": 1102.67,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1337.6,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2956.4,
+          "target_full_reader_wall_ms": 1105.7,
+          "full_qt_paint_ms": 1362.81,
+          "full_final_pixels_ms": 1371.98
+        },
+        {
+          "first_correct_window_ms": 527.7,
+          "capture_to_read_start_ms": 137.79,
+          "target_read_to_result_ms": 1319.05,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1591.5,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2953.2,
+          "target_full_reader_wall_ms": 1321.9,
+          "full_qt_paint_ms": 1623.07,
+          "full_final_pixels_ms": 1634.88
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 527.7,
+        "capture_to_read_start_ms": 137.3,
+        "target_read_to_result_ms": 1319.0,
+        "pending_at_qt_paint": 0,
+        "complete_drain_ms": 1591.5,
+        "concurrent_jobs_peak": 1,
+        "process_private_peak_mib": 2956.4,
+        "target_full_reader_wall_ms": 1321.9,
+        "full_qt_paint_ms": 1623.1,
+        "full_final_pixels_ms": 1634.9
+      },
+      "mean_target_read_to_result_ms": 1301.2,
+      "mean_target_full_reader_wall_ms": 1304.6
+    },
+    "baseline_idle_map": {
+      "runs": [
+        {
+          "first_correct_window_ms": 1676.7,
+          "capture_to_read_start_ms": 28.29,
+          "target_read_to_result_ms": 864.49,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 15018.0,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3311.5,
+          "target_full_reader_wall_ms": 2039.0,
+          "clear_map_to_window_ms": 1268.6,
+          "clear_map_to_selected_capture_ms": 174.3,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 1654.7,
+          "capture_to_read_start_ms": 34.98,
+          "target_read_to_result_ms": 888.57,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 12556.8,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3388.4,
+          "target_full_reader_wall_ms": 2003.1,
+          "clear_map_to_window_ms": 1242.5,
+          "clear_map_to_selected_capture_ms": 158.4,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 1625.9,
+          "capture_to_read_start_ms": 39.19,
+          "target_read_to_result_ms": 851.17,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 12443.9,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3322.3,
+          "target_full_reader_wall_ms": 1908.2,
+          "clear_map_to_window_ms": 1215.3,
+          "clear_map_to_selected_capture_ms": 158.3,
+          "later_registration_mismatches": 0
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 1654.7,
+        "capture_to_read_start_ms": 35.0,
+        "target_read_to_result_ms": 864.5,
+        "pending_at_qt_paint": 6,
+        "complete_drain_ms": 12556.8,
+        "concurrent_jobs_peak": 2,
+        "process_private_peak_mib": 3322.3,
+        "target_full_reader_wall_ms": 2003.1,
+        "clear_map_to_window_ms": 1242.5,
+        "clear_map_to_selected_capture_ms": 158.4,
+        "later_registration_mismatches": 0
+      },
+      "mean_target_read_to_result_ms": 868.1,
+      "mean_target_full_reader_wall_ms": 1983.4
+    },
+    "candidate_two_inventory": {
+      "runs": [
+        {
+          "first_correct_window_ms": 975.8,
+          "capture_to_read_start_ms": 139.89,
+          "target_read_to_result_ms": 1756.28,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 5639.1,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3128.3,
+          "target_full_reader_wall_ms": 1763.2,
+          "full_qt_paint_ms": 2044.87,
+          "full_final_pixels_ms": 5670.51
+        },
+        {
+          "first_correct_window_ms": 780.4,
+          "capture_to_read_start_ms": 138.1,
+          "target_read_to_result_ms": 1569.74,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 3913.5,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3105.1,
+          "target_full_reader_wall_ms": 1573.0,
+          "full_qt_paint_ms": 1840.7,
+          "full_final_pixels_ms": 3929.91
+        },
+        {
+          "first_correct_window_ms": 848.8,
+          "capture_to_read_start_ms": 152.03,
+          "target_read_to_result_ms": 1723.74,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 5353.0,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3100.8,
+          "target_full_reader_wall_ms": 1727.9,
+          "full_qt_paint_ms": 2018.69,
+          "full_final_pixels_ms": 5369.62
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 848.8,
+        "capture_to_read_start_ms": 139.9,
+        "target_read_to_result_ms": 1723.7,
+        "pending_at_qt_paint": 0,
+        "complete_drain_ms": 5353.0,
+        "concurrent_jobs_peak": 3,
+        "process_private_peak_mib": 3105.1,
+        "target_full_reader_wall_ms": 1727.9,
+        "full_qt_paint_ms": 2018.7,
+        "full_final_pixels_ms": 5369.6
+      },
+      "mean_target_read_to_result_ms": 1683.3,
+      "mean_target_full_reader_wall_ms": 1688.0
+    },
+    "candidate_two_map": {
+      "runs": [
+        {
+          "first_correct_window_ms": 2299.1,
+          "capture_to_read_start_ms": 256.67,
+          "target_read_to_result_ms": 980.46,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 15431.2,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3604.8,
+          "target_full_reader_wall_ms": 1831.6,
+          "clear_map_to_window_ms": 1901.4,
+          "clear_map_to_selected_capture_ms": 485.7,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 2326.0,
+          "capture_to_read_start_ms": 340.84,
+          "target_read_to_result_ms": 941.12,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 14484.2,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3535.7,
+          "target_full_reader_wall_ms": 1948.4,
+          "clear_map_to_window_ms": 1912.1,
+          "clear_map_to_selected_capture_ms": 469.6,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 2476.6,
+          "capture_to_read_start_ms": 470.46,
+          "target_read_to_result_ms": 914.1,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 16031.6,
+          "concurrent_jobs_peak": 3,
+          "process_private_peak_mib": 3594.8,
+          "target_full_reader_wall_ms": 1977.5,
+          "clear_map_to_window_ms": 2077.7,
+          "clear_map_to_selected_capture_ms": 489.8,
+          "later_registration_mismatches": 0
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 2326.0,
+        "capture_to_read_start_ms": 340.8,
+        "target_read_to_result_ms": 941.1,
+        "pending_at_qt_paint": 6,
+        "complete_drain_ms": 15431.2,
+        "concurrent_jobs_peak": 3,
+        "process_private_peak_mib": 3594.8,
+        "target_full_reader_wall_ms": 1948.4,
+        "clear_map_to_window_ms": 1912.1,
+        "clear_map_to_selected_capture_ms": 485.7,
+        "later_registration_mismatches": 0
+      },
+      "mean_target_read_to_result_ms": 945.2,
+      "mean_target_full_reader_wall_ms": 1919.2
+    },
+    "candidate_idle_inventory": {
+      "runs": [
+        {
+          "first_correct_window_ms": 573.0,
+          "capture_to_read_start_ms": 140.27,
+          "target_read_to_result_ms": 1451.41,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1735.1,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2952.1,
+          "target_full_reader_wall_ms": 1456.4,
+          "full_qt_paint_ms": 1765.55,
+          "full_final_pixels_ms": 1787.92
+        },
+        {
+          "first_correct_window_ms": 531.1,
+          "capture_to_read_start_ms": 140.15,
+          "target_read_to_result_ms": 1294.46,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1562.2,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2948.6,
+          "target_full_reader_wall_ms": 1297.7,
+          "full_qt_paint_ms": 1591.72,
+          "full_final_pixels_ms": 1603.41
+        },
+        {
+          "first_correct_window_ms": 525.6,
+          "capture_to_read_start_ms": 144.45,
+          "target_read_to_result_ms": 1077.44,
+          "pending_at_qt_paint": 0,
+          "complete_drain_ms": 1336.3,
+          "concurrent_jobs_peak": 1,
+          "process_private_peak_mib": 2943.4,
+          "target_full_reader_wall_ms": 1079.6,
+          "full_qt_paint_ms": 1362.27,
+          "full_final_pixels_ms": 1375.66
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 531.1,
+        "capture_to_read_start_ms": 140.3,
+        "target_read_to_result_ms": 1294.5,
+        "pending_at_qt_paint": 0,
+        "complete_drain_ms": 1562.2,
+        "concurrent_jobs_peak": 1,
+        "process_private_peak_mib": 2948.6,
+        "target_full_reader_wall_ms": 1297.7,
+        "full_qt_paint_ms": 1591.7,
+        "full_final_pixels_ms": 1603.4
+      },
+      "mean_target_read_to_result_ms": 1274.4,
+      "mean_target_full_reader_wall_ms": 1277.9
+    },
+    "candidate_idle_map": {
+      "runs": [
+        {
+          "first_correct_window_ms": 2543.7,
+          "capture_to_read_start_ms": 80.35,
+          "target_read_to_result_ms": 1662.57,
+          "pending_at_qt_paint": 6,
+          "complete_drain_ms": 17256.4,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3311.4,
+          "target_full_reader_wall_ms": 3395.3,
+          "clear_map_to_window_ms": 2136.8,
+          "clear_map_to_selected_capture_ms": 200.2,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 1654.8,
+          "capture_to_read_start_ms": 35.77,
+          "target_read_to_result_ms": 843.31,
+          "pending_at_qt_paint": 5,
+          "complete_drain_ms": 11542.4,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3311.1,
+          "target_full_reader_wall_ms": 1753.6,
+          "clear_map_to_window_ms": 1255.7,
+          "clear_map_to_selected_capture_ms": 191.0,
+          "later_registration_mismatches": 0
+        },
+        {
+          "first_correct_window_ms": 1783.7,
+          "capture_to_read_start_ms": 54.41,
+          "target_read_to_result_ms": 961.84,
+          "pending_at_qt_paint": 5,
+          "complete_drain_ms": 12216.7,
+          "concurrent_jobs_peak": 2,
+          "process_private_peak_mib": 3303.3,
+          "target_full_reader_wall_ms": 2088.9,
+          "clear_map_to_window_ms": 1372.4,
+          "clear_map_to_selected_capture_ms": 179.8,
+          "later_registration_mismatches": 0
+        }
+      ],
+      "median": {
+        "first_correct_window_ms": 1783.7,
+        "capture_to_read_start_ms": 54.4,
+        "target_read_to_result_ms": 961.8,
+        "pending_at_qt_paint": 5,
+        "complete_drain_ms": 12216.7,
+        "concurrent_jobs_peak": 2,
+        "process_private_peak_mib": 3311.1,
+        "target_full_reader_wall_ms": 2088.9,
+        "clear_map_to_window_ms": 1372.4,
+        "clear_map_to_selected_capture_ms": 191.0,
+        "later_registration_mismatches": 0
+      },
+      "mean_target_read_to_result_ms": 1155.9,
+      "mean_target_full_reader_wall_ms": 2412.6
+    }
+  },
+  "validation": {
+    "targeted_tests": 75,
+    "two_older_pages_completed_in_all_saturated_trials": true,
+    "historical_operator_saved_in_isolated_inventory_pair_3": true,
+    "visible_responsive_test_toolbar": true,
+    "private_records_unchanged": true
+  },
+  "disposition": "仅在核显测试助手自动识别且地图或藏品面板可见时，准备一个临时实例。已有两个任务时，只有和上次派发画面明显不同的最新候选可以使用。普通动画和旧页由已有队列处理，忙碌期结束后回收。",
+  "limits": [
+    "同一地图动画和同一藏品样本，三次重复不能推断真人 P95。",
+    "积压时目标帧排队缩短，但目标帧识别用时增加，藏品最终像素中位耗时上升。",
+    "单个空闲地图轮较慢；不能据此断言空闲路径提速。依赖历史状态时，最终卡片与首批可点击内容需分别验收。",
+    "真人实测暂缓，半秒未达成。"
+  ]
+}

@@ -173,12 +173,13 @@ class GameCapture:
         if win32gui.IsIconic(hwnd):
             raise RuntimeError('游戏窗口已最小化，已捕获页面仍可处理；还原后继续取新画面。')
 
-    def next_frame(self, force=False, *, prefer_latest=False, after_seq=None):
+    def next_frame(self, force=False, *, prefer_latest=False, after_seq=None, scene_change_only=False):
         if force and not self.buffer.stats()['pending']:
             self.check_health()
             stats=self.buffer.stats()
             if not stats.get('latest_at') or time.time()-stats['latest_at']>=5:return None
-        frame=self.buffer.take(force=force,prefer_latest=prefer_latest,after_seq=after_seq)
+        frame=self.buffer.take(force=force,prefer_latest=prefer_latest,after_seq=after_seq,
+                               scene_change_only=scene_change_only)
         if frame is not None:return frame
         self.check_health()
         return None

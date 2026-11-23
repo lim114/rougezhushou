@@ -62,6 +62,82 @@ class SamplingFlowTests(unittest.TestCase):
             time.sleep(.01)
         self.fail('Timed out waiting for queued sampling')
 
+    def test_new_scene_can_run_while_two_older_pages_finish(self):
+        window = self.window
+        window.show_compact()
+        window.compact_window.open_inventory()
+        window.capture.buffer.prioritize_scene_changes = True
+        window.capture.buffer.settle_seconds = 0
+
+        def read(image, **options):
+            level = int(image[0, 0, 0])
+            self.seen.append(level)
+            if level < 80:
+                self.release.wait(8)
+            return {'page': 'operator', 'nodes': [],
+                    'operator': {'id': 'kaltsit', 'fields': {'level': level}, 'scope': 'account'}}
+
+        window.reader.read = window.secondary_reader.read = read
+        try:
+            self.offer(20)
+            window.auto.setChecked(True)
+            self.wait_for(lambda: 20 in self.seen)
+            self.offer(50)
+            window.sample_now(automatic=True)
+            self.wait_for(lambda: 50 in self.seen)
+            self.offer(80)
+            window.capture.buffer.prioritize_scene_changes = False
+            window.sample_now(automatic=True)
+            self.assertEqual(window.capture.stats()['pending'], 1)
+            window.capture.buffer.prioritize_scene_changes = True
+            with patch.object(module, 'whole_page_visible', return_value=False):
+                window.sample_now(automatic=True)
+            self.assertEqual(window.capture.stats()['pending'], 1)
+            window.sample_now(automatic=True)
+            self.wait_for(lambda: window.last_sample_seq == 3, timeout=2)
+            self.assertEqual(len(window.sample_jobs), 2)
+        finally:
+            self.release.set()
+        self.wait_for(lambda: not window.busy)
+        self.assertEqual(self.seen, [20, 50, 80])
+        self.assertEqual(window.operator_observations['kaltsit']['fields']['level'], 80)
+        self.assertEqual(window.observation_timeline.committed_seq, 3)
+        self.assertIsNone(window.reserve_reader)
+
+    def test_last_reserved_reader_supplies_both_idle_readers(self):
+        window = self.window
+        window.show_compact()
+        window.compact_window.open_map()
+        window.capture.buffer.prioritize_scene_changes = True
+        window.capture.buffer.settle_seconds = 0
+        current = threading.Event()
+
+        def read(image, **options):
+            level = int(image[0, 0, 0])
+            self.seen.append(level)
+            (current if level == 80 else self.release).wait(8)
+            return {'page': 'unknown', 'nodes': []}
+
+        window.reader.read = window.secondary_reader.read = read
+        try:
+            for level in (20, 50, 80):
+                self.offer(level)
+                window.auto.setChecked(True)
+                window.sample_now(automatic=True)
+                self.wait_for(lambda: level in self.seen)
+            reserve = window.reserve_reader
+            self.assertIsNotNone(reserve)
+            self.release.set()
+            self.wait_for(lambda: len(window.sample_jobs) == 1)
+        finally:
+            self.release.set()
+            current.set()
+        self.wait_for(lambda: not window.busy)
+        self.assertIsNone(window.reserve_reader)
+        self.assertIs(window.reader, reserve)
+        self.assertIsNot(window.secondary_reader, reserve)
+        self.assertIs(window.secondary_reader.read, reserve.read)
+
     def test_short_pages_are_drained_after_busy_reader_without_revisiting(self):
         self.offer(20)
         self.window.auto.setChecked(True)

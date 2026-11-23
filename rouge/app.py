@@ -81,6 +81,11 @@ def number(value=0, maximum=100000, decimals=2):
     control.setValue(value)
     return control
 
+def whole_page_visible(bar):
+    return bool(bar and any(popup and popup.panel.isVisible()
+                            for popup in (bar.inventory_popup, bar.map_popup)))
+
+
 class MainWindow(QMainWindow):
     def show_barrier_ledger(self):
         panel=self.offline_tools
@@ -121,6 +126,7 @@ class MainWindow(QMainWindow):
             from .page_detection import SettlingDetection
             self.settling_detection = SettlingDetection(whole_page_only=backend == 'openvino')
         self.secondary_reader = None
+        self.reserve_reader = None
         self.sample_jobs = {}
         self.next_sample_job = 0
         from .recognition_priority import ReadPriority
@@ -671,8 +677,7 @@ class MainWindow(QMainWindow):
                 or self.recognition_mode.currentData() == 'visual'):
             return
         bar = self.compact_window
-        page_visible = bar and any(popup and popup.panel.isVisible()
-            for popup in (bar.inventory_popup, bar.map_popup))
+        page_visible = whole_page_visible(bar)
         if self.settling_detection.whole_page_only and (self.busy or not page_visible):
             return
         reader = self.reader
@@ -697,8 +702,12 @@ class MainWindow(QMainWindow):
             return
         if automatic:
             self.busy_gold.poll()
+        competing = len(self.sample_jobs)
+        reserve_allowed = (self.busy and automatic and self.capture.buffer.prioritize_scene_changes
+                           and whole_page_visible(self.compact_window))
         if self.busy and (not automatic or self.recognition_mode.currentData() == 'visual'
-                          or self.secondary_reader is None or len(self.sample_jobs) >= 2
+                          or self.secondary_reader is None or competing >= 3
+                          or (competing == 2 and not (reserve_allowed and self.reserve_reader is not None))
                           or any(job['seq'] == 0 for job in self.sample_jobs.values())):
             return
         if automatic and time.monotonic()<self.next_capture_attempt:return
@@ -732,7 +741,7 @@ class MainWindow(QMainWindow):
             # Historical candidates remain queued until a reader is available.
             after_seq=max(self.last_sample_seq, *(job['seq'] for job in self.sample_jobs.values())) if self.sample_jobs else None
             frame=self.capture.next_frame(force=not automatic or (refresh_overlay and not self.busy),
-                                          prefer_latest=preferred,after_seq=after_seq)
+                                          prefer_latest=preferred,after_seq=after_seq,scene_change_only=competing == 2)
         except Exception as error:
             self.show_error('capture',str(error))
             return
@@ -751,7 +760,12 @@ class MainWindow(QMainWindow):
             from .observation_timeline import ObservationTimeline
             self.observation_timeline=ObservationTimeline(self.run,self.account_cache);self.timeline_marker=marker
         timeline=self.observation_timeline
-        slot=next(slot for slot in (0,1) if all(job['slot'] != slot for job in self.sample_jobs.values()))
+        slot=next(slot for slot in (0,1,2) if all(job['slot'] != slot for job in self.sample_jobs.values()))
+        selected_reader = (self.reader, self.secondary_reader, self.reserve_reader)[slot]
+        # Fork the idle reader before it starts its own job. Both older jobs
+        # can then yield in place without surrendering their frame or caches.
+        if reserve_allowed and competing == 1 and self.reserve_reader is None:
+            self.reserve_reader = selected_reader.fork()
         self.next_sample_job += 1
         job_id=self.next_sample_job
         self.sample_jobs[job_id]={'slot':slot,'seq':frame['seq'] if frame is not None else 0,'marker':marker}
@@ -775,7 +789,6 @@ class MainWindow(QMainWindow):
                      if self.settling_detection is not None and mode != 'visual' else None)
         prepared_text = None
         if detection is not None:
-            selected_reader = self.reader if slot == 0 else self.secondary_reader
             prepared_text = self.settling_detection.take_text(selected_reader._discovery_ocr)
         def work():
             try:
@@ -792,7 +805,7 @@ class MainWindow(QMainWindow):
                         from .visual_recognition import VisualReader
                         self.visual_reader=VisualReader()
                     reader=self.visual_reader
-                else:reader=self.reader if slot == 0 else self.secondary_reader
+                else:reader=selected_reader
                 age_at_read_ms = (time.time() - selected['captured_at']) * 1000
                 options = {}
                 if detection is not None:
@@ -907,6 +920,8 @@ class MainWindow(QMainWindow):
         if job_id is not None:del self.sample_jobs[job_id]
         if seq >= self.sample_hud_seq:self.restore_committed_hud()
         self.busy=bool(self.sample_jobs)
+        if not self.busy:
+            self.reserve_reader = None
         self.recognition_mode.setEnabled(not self.busy)
         self.sample_button.setEnabled(not self.busy)
         self.connect_button.setEnabled(not self.busy)
@@ -941,8 +956,11 @@ class MainWindow(QMainWindow):
         completed_reader=observation.pop('_completed_reader',None)
         if completed_reader is not None and not self.busy:
             fork_start=time.perf_counter()
-            if completed_reader is self.reader:self.secondary_reader=completed_reader.fork()
-            else:self.reader=completed_reader.fork()
+            if completed_reader is self.secondary_reader:
+                self.reader = completed_reader.fork()
+            else:
+                self.reader = completed_reader
+                self.secondary_reader = completed_reader.fork()
             observation.setdefault('performance',{})['reader_fork_ms']=(time.perf_counter()-fork_start)*1000
         prepared=None
         if valid and marker is not None and 'job_id' in marker and observation['captured_at'] >= self.run.state['started_at']:

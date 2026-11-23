@@ -15,6 +15,18 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_reserved_reader_only_takes_new_scene_and_preserves_previous_candidates(self):
+        buffer = FrameBuffer(settle_seconds=0, prioritize_scene_changes=True)
+        buffer.offer(page(40), 1)
+        buffer.take()
+        buffer.offer(page(45), 2)
+        self.assertIsNone(buffer.take(scene_change_only=True))
+        buffer.offer(page(160), 3)
+        self.assertEqual(buffer.take(scene_change_only=True)['seq'], 3)
+        self.assertIsNone(buffer.take(scene_change_only=True))
+        self.assertEqual(buffer.take()['seq'], 2)
+        self.assertIsNone(buffer.take(force=True, scene_change_only=True))
+
     def test_spare_reader_waits_for_latest_candidate_and_preserves_short_pages(self):
         buffer = FrameBuffer(settle_seconds=.12, prioritize_scene_changes=True)
         with patch('rouge.frame_buffer.time.monotonic', return_value=10.) as now:
