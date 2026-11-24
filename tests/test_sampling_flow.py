@@ -513,6 +513,8 @@ class SamplingFlowTests(unittest.TestCase):
         window.compact_window.open_inventory()
         panel = window.compact_window.inventory_popup.panel
         state = deepcopy(window.run.state)
+        self.qt.processEvents()
+        grid_top = panel.splitter.geometry().top()
 
         def read(image, *, on_held_names, **options):
             on_held_names(('薄行囊', '竞技场贵宾券'))
@@ -525,6 +527,9 @@ class SamplingFlowTests(unittest.TestCase):
             window.sample_now()
             try:
                 self.wait_for(lambda: panel.current_names.isVisible())
+                self.qt.processEvents()
+                self.assertEqual(panel.splitter.geometry().top(), grid_top)
+                self.assertGreater(panel.current_names.geometry().top(), grid_top)
                 self.assertIn('薄行囊、竞技场贵宾券', panel.current_names.text())
                 self.assertEqual({row['name'] for row in panel.rows.values()}, {'薄行囊', '竞技场贵宾券'})
                 panel.entries.setCurrentRow(0)

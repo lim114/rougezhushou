@@ -374,6 +374,24 @@ def _refined_matches(roi, ordered):
             yield from pool.map(match,ordered[start:start+batch_size])
 
 
+def _screening_bar(roi, widest):
+    """Keep every distinct horizontal window up to the widest reference."""
+    if roi.shape[1] <= widest:
+        return roi
+    changes = np.flatnonzero(np.any(roi[:, 1:] != roi[:, :-1], axis=(0, 2))) + 1
+    edges = np.r_[0, changes, roi.shape[1]]
+    long_runs = np.flatnonzero(np.diff(edges) > widest)
+    if not len(long_runs):
+        return roi
+    parts = []
+    start = 0
+    for run in long_runs:
+        parts.append(roi[:, start:edges[run] + widest])
+        start = edges[run + 1]
+    parts.append(roi[:, start:])
+    return np.concatenate(parts, axis=1)
+
+
 def _coarse_matches(roi, references):
     """Screen independent references on two workers, consuming original order.
 
@@ -384,10 +402,17 @@ def _coarse_matches(roi, references):
     """
     from threading import local
     from .recognition_priority import yield_to_current
-    pixels=roi.astype(np.float32)
+    # Equal columns need at most one template width for screening. The full
+    # bar still determines every accepted score, duplicate slot and position.
+    widest = max((item[1].shape[1] for item in references), default=roi.shape[1])
+    screening = _screening_bar(roi, widest)
+    full_pixels = roi.astype(np.float32)
+    pixels = full_pixels if screening is roi else screening.astype(np.float32)
+    full_energy = None if screening is roi else np.sum(np.square(full_pixels), axis=2)
     state=local()
     def initialize():
         state.energy=EnergyScreen(pixels)
+        state.full_energy = state.energy.energy_image if full_energy is None else full_energy
         state.projection=BarProjection(pixels,state.energy)
     def match_batch(items):
         result=[]
@@ -397,11 +422,11 @@ def _coarse_matches(roi, references):
             if not state.energy.possible((th,tw),energy):continue
             if not state.projection.possible(screen_template,screen_mask,energy,*projection):continue
             region = state.projection.rgb_region
-            if region is not None and pixels[region].shape != pixels.shape:
+            if region is not None and pixels[region].shape != full_pixels.shape:
                 if not _can_match(pixels[region], state.energy.energy_image[region], screen_template,
                                   screen_mask, energy, ProjectionScreen.limit):
                     continue
-            if not _can_match(pixels,state.energy.energy_image,screen_template,screen_mask,energy):continue
+            if not _can_match(full_pixels,state.full_energy,screen_template,screen_mask,energy):continue
             differences=cv2.matchTemplate(roi,template,cv2.TM_SQDIFF_NORMED,mask=mask)
             result.append((rid,tw,th,np.nan_to_num(differences,nan=10,posinf=10,neginf=10)))
         return result

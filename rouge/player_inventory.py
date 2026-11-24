@@ -95,10 +95,10 @@ class InventoryPanel(QWidget):
         self.catalog_rows = None
         self.current_names.setWordWrap(True)
         self.current_names.hide()
-        body.addWidget(self.current_names)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status);self.status.hide();self.scope.toggled.connect(self.status.setVisible)
         from .player_catalog_grid import CatalogGrid
         self.entries=CatalogGrid(descriptions=True);self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
+        body.addWidget(self.current_names)
         self.reader=QWidget();reader=QVBoxLayout(self.reader);reader.setContentsMargins(8,0,0,0)
         self.hide_reader=QPushButton('收起说明');reader.addWidget(self.hide_reader)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);reader.addWidget(self.detail,1)

@@ -11,6 +11,26 @@ from tests.test_projection_screen_029 import prepared
 
 
 class CoarseMatchingTests(unittest.TestCase):
+    def test_repeated_columns_retain_all_windows_and_full_resolution_scores(self):
+        rng = np.random.default_rng(2411)
+        chunks = [rng.integers(0, 256, (15, width, 3), dtype=np.uint8)
+                  for width in (1, 4, 1, 2)]
+        image = np.concatenate((np.repeat(chunks[0], 31, axis=1), chunks[1],
+                                np.repeat(chunks[2], 27, axis=1), chunks[3]), axis=1)
+        width = 7
+        compact = icons._screening_bar(image, width)
+        self.assertEqual(compact.shape[1], 2 * width + 6)
+        for span in range(1, width + 1):
+            def windows(bar):
+                return {bar[:, x:x + span].tobytes() for x in range(bar.shape[1] - span + 1)}
+            self.assertEqual(windows(compact), windows(image))
+        template = image[2:11, 33:40].copy()
+        mask = np.full(template.shape[:2], 255, np.uint8)
+        refs = [prepared('boundary', template, mask)]
+        _, _, _, matrix = next(icons._coarse_matches(image, refs))
+        expected = cv2.matchTemplate(image, template, cv2.TM_SQDIFF_NORMED, mask=mask)
+        np.testing.assert_array_equal(matrix, expected)
+
     def setUp(self):
         rng=np.random.default_rng(1311)
         self.image=rng.integers(0,256,(35,67,3),dtype=np.uint8)

@@ -1,0 +1,695 @@
+{
+  "title": "展开藏品已读卡片保持位置，压缩图标初筛的重复列",
+  "baseline_commit": "af56db8df",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "method": "Windows同机隔离回放，从将源窗口切换到展开藏品页起计时。先确认前一画面没有两张目标卡。两张同帧卡片在最终位置的灰度像素均一致，并在余下观测中保持时，记为稳定显示。整页另记助手最终刷新后的首个匹配窗口帧。核显交错对照各三轮，常规CPU各一轮。未进行真人切页。",
+  "changes": [
+    "藏品名称临时提示移到网格下方；同帧已读卡片维持位置，原有核对状态、选择与撤回沿用。",
+    "仅在初筛图像中把逐列字节完全相等的长区段缩至最宽模板的宽度，保留所有可能匹配的水平窗口。原图决定最终差异矩阵、分数、位置和重复格。"
+  ],
+  "inventory": {
+    "colprev": {
+      "runs": [
+        {
+          "stable_ms": 1552.44,
+          "first_visible_ms": 546.43,
+          "full_qt_ms": 1536.89,
+          "full_window_ms": 1552.44,
+          "preview_already_stable": false,
+          "capture_ms": 52.83,
+          "queue_ms": 142.65,
+          "read_ms": 1217.87,
+          "ocr_ms": 245.36,
+          "icons_ms": 931.9
+        },
+        {
+          "stable_ms": 1431.0,
+          "first_visible_ms": 490.14,
+          "full_qt_ms": 1418.85,
+          "full_window_ms": 1431.0,
+          "preview_already_stable": false,
+          "capture_ms": 49.05,
+          "queue_ms": 143.32,
+          "read_ms": 1123.56,
+          "ocr_ms": 202.2,
+          "icons_ms": 883.9
+        },
+        {
+          "stable_ms": 1453.96,
+          "first_visible_ms": 504.75,
+          "full_qt_ms": 1441.66,
+          "full_window_ms": 1453.96,
+          "preview_already_stable": false,
+          "capture_ms": 55.99,
+          "queue_ms": 142.46,
+          "read_ms": 1136.09,
+          "ocr_ms": 216.69,
+          "icons_ms": 885.3
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 1453.96,
+        "first_visible_ms": 504.75,
+        "full_qt_ms": 1441.66,
+        "full_window_ms": 1453.96,
+        "capture_ms": 52.83,
+        "queue_ms": 142.65,
+        "read_ms": 1136.09,
+        "ocr_ms": 216.69,
+        "icons_ms": 885.3
+      },
+      "under_500": 0
+    },
+    "colprod": {
+      "runs": [
+        {
+          "stable_ms": 1480.38,
+          "first_visible_ms": 552.13,
+          "full_qt_ms": 1463.99,
+          "full_window_ms": 1480.38,
+          "preview_already_stable": false,
+          "capture_ms": 32.23,
+          "queue_ms": 137.72,
+          "read_ms": 1163.62,
+          "ocr_ms": 260.59,
+          "icons_ms": 874.5
+        },
+        {
+          "stable_ms": 1455.8,
+          "first_visible_ms": 540.23,
+          "full_qt_ms": 1446.59,
+          "full_window_ms": 1455.8,
+          "preview_already_stable": false,
+          "capture_ms": 47.59,
+          "queue_ms": 131.87,
+          "read_ms": 1171.11,
+          "ocr_ms": 247.71,
+          "icons_ms": 888.0
+        },
+        {
+          "stable_ms": 1348.34,
+          "first_visible_ms": 499.53,
+          "full_qt_ms": 1338.35,
+          "full_window_ms": 1348.34,
+          "preview_already_stable": false,
+          "capture_ms": 41.35,
+          "queue_ms": 139.36,
+          "read_ms": 1061.66,
+          "ocr_ms": 223.13,
+          "icons_ms": 799.5
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 1455.8,
+        "first_visible_ms": 540.23,
+        "full_qt_ms": 1446.59,
+        "full_window_ms": 1455.8,
+        "capture_ms": 41.35,
+        "queue_ms": 137.72,
+        "read_ms": 1163.62,
+        "ocr_ms": 247.71,
+        "icons_ms": 874.5
+      },
+      "under_500": 0
+    },
+    "prefinal": {
+      "runs": [
+        {
+          "stable_ms": 1449.69,
+          "first_visible_ms": 467.45,
+          "full_qt_ms": 1439.27,
+          "full_window_ms": 1449.69,
+          "preview_already_stable": false,
+          "capture_ms": 25.18,
+          "queue_ms": 150.65,
+          "read_ms": 1149.92,
+          "ocr_ms": 204.08,
+          "icons_ms": 911.5
+        },
+        {
+          "stable_ms": 1332.86,
+          "first_visible_ms": 489.69,
+          "full_qt_ms": 1321.02,
+          "full_window_ms": 1332.86,
+          "preview_already_stable": false,
+          "capture_ms": 34.4,
+          "queue_ms": 139.12,
+          "read_ms": 1048.22,
+          "ocr_ms": 204.76,
+          "icons_ms": 807.0
+        },
+        {
+          "stable_ms": 1300.13,
+          "first_visible_ms": 478.08,
+          "full_qt_ms": 1284.2,
+          "full_window_ms": 1300.13,
+          "preview_already_stable": false,
+          "capture_ms": 28.18,
+          "queue_ms": 127.75,
+          "read_ms": 1043.84,
+          "ocr_ms": 226.57,
+          "icons_ms": 786.0
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 1332.86,
+        "first_visible_ms": 478.08,
+        "full_qt_ms": 1321.02,
+        "full_window_ms": 1332.86,
+        "capture_ms": 28.18,
+        "queue_ms": 139.12,
+        "read_ms": 1048.22,
+        "ocr_ms": 204.76,
+        "icons_ms": 807.0
+      },
+      "under_500": 0
+    },
+    "fixedfinal": {
+      "runs": [
+        {
+          "stable_ms": 477.19,
+          "first_visible_ms": 477.19,
+          "full_qt_ms": 1295.37,
+          "full_window_ms": 1303.77,
+          "preview_already_stable": true,
+          "capture_ms": 28.63,
+          "queue_ms": 136.19,
+          "read_ms": 1041.67,
+          "ocr_ms": 223.07,
+          "icons_ms": 786.8
+        },
+        {
+          "stable_ms": 462.29,
+          "first_visible_ms": 462.29,
+          "full_qt_ms": 1235.95,
+          "full_window_ms": 1246.29,
+          "preview_already_stable": true,
+          "capture_ms": 30.55,
+          "queue_ms": 144.53,
+          "read_ms": 960.13,
+          "ocr_ms": 190.62,
+          "icons_ms": 732.1
+        },
+        {
+          "stable_ms": 485.16,
+          "first_visible_ms": 485.16,
+          "full_qt_ms": 1308.16,
+          "full_window_ms": 1317.08,
+          "preview_already_stable": true,
+          "capture_ms": 27.27,
+          "queue_ms": 141.05,
+          "read_ms": 1040.97,
+          "ocr_ms": 219.95,
+          "icons_ms": 781.2
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 477.19,
+        "first_visible_ms": 477.19,
+        "full_qt_ms": 1295.37,
+        "full_window_ms": 1303.77,
+        "capture_ms": 28.63,
+        "queue_ms": 141.05,
+        "read_ms": 1040.97,
+        "ocr_ms": 219.95,
+        "icons_ms": 781.2
+      },
+      "under_500": 3
+    },
+    "prefinalcpu": {
+      "runs": [
+        {
+          "stable_ms": 2012.83,
+          "first_visible_ms": 1202.08,
+          "full_qt_ms": 1996.54,
+          "full_window_ms": 2012.83,
+          "preview_already_stable": false,
+          "capture_ms": 54.9,
+          "queue_ms": 128.63,
+          "read_ms": 1719.41,
+          "ocr_ms": 906.37,
+          "icons_ms": 773.5
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 2012.83,
+        "first_visible_ms": 1202.08,
+        "full_qt_ms": 1996.54,
+        "full_window_ms": 2012.83,
+        "capture_ms": 54.9,
+        "queue_ms": 128.63,
+        "read_ms": 1719.41,
+        "ocr_ms": 906.37,
+        "icons_ms": 773.5
+      },
+      "under_500": 0
+    },
+    "fixedfinalcpu": {
+      "runs": [
+        {
+          "stable_ms": 1248.05,
+          "first_visible_ms": 1248.05,
+          "full_qt_ms": 2133.22,
+          "full_window_ms": 2148.42,
+          "preview_already_stable": true,
+          "capture_ms": 55.84,
+          "queue_ms": 149.29,
+          "read_ms": 1830.65,
+          "ocr_ms": 942.13,
+          "icons_ms": 845.6
+        }
+      ],
+      "median_ms": {
+        "stable_ms": 1248.05,
+        "first_visible_ms": 1248.05,
+        "full_qt_ms": 2133.22,
+        "full_window_ms": 2148.42,
+        "capture_ms": 55.84,
+        "queue_ms": 149.29,
+        "read_ms": 1830.65,
+        "ocr_ms": 942.13,
+        "icons_ms": 845.6
+      },
+      "under_500": 0
+    }
+  },
+  "inventory_groups": "colprev/colprod只比较图标初筛，两组均为旧布局。prefinal与fixedfinal对照完整改动。cpu为默认后端，其他为核显。full_qt_ms是Qt绘制，full_window_ms另含窗口捕获交付。",
+  "map_experiments": {
+    "wakebase": {
+      "runs": [
+        {
+          "onset_ms": 768.92,
+          "clear_ms": 566.4,
+          "capture_after_onset_ms": 367.3,
+          "queue_ms": 51.92,
+          "read_to_graph_ms": 239.93,
+          "graph_to_window_ms": 109.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10478.26
+        },
+        {
+          "onset_ms": 763.3,
+          "clear_ms": 564.8,
+          "capture_after_onset_ms": 366.26,
+          "queue_ms": 45.57,
+          "read_to_graph_ms": 217.31,
+          "graph_to_window_ms": 134.2,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10584.25
+        },
+        {
+          "onset_ms": 665.44,
+          "clear_ms": 462.57,
+          "capture_after_onset_ms": 260.81,
+          "queue_ms": 58.76,
+          "read_to_graph_ms": 225.98,
+          "graph_to_window_ms": 119.9,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 11436.5
+        }
+      ],
+      "median_ms": {
+        "onset_ms": 763.3,
+        "clear_ms": 564.8,
+        "capture_after_onset_ms": 366.26,
+        "queue_ms": 51.92,
+        "read_to_graph_ms": 225.98,
+        "graph_to_window_ms": 119.9,
+        "full_jobs_elapsed_ms": 10584.25
+      },
+      "under_500": 0
+    },
+    "wakelive": {
+      "runs": [
+        {
+          "onset_ms": 538.59,
+          "clear_ms": 335.0,
+          "capture_after_onset_ms": 191.63,
+          "queue_ms": 46.55,
+          "read_to_graph_ms": 184.18,
+          "graph_to_window_ms": 116.2,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 9351.37
+        },
+        {
+          "onset_ms": 642.31,
+          "clear_ms": 441.11,
+          "capture_after_onset_ms": 217.16,
+          "queue_ms": 40.28,
+          "read_to_graph_ms": 253.24,
+          "graph_to_window_ms": 131.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 6,
+          "full_jobs_elapsed_ms": 8656.0
+        },
+        {
+          "onset_ms": 629.06,
+          "clear_ms": 429.11,
+          "capture_after_onset_ms": 232.11,
+          "queue_ms": 63.19,
+          "read_to_graph_ms": 210.33,
+          "graph_to_window_ms": 123.4,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10805.24
+        }
+      ],
+      "median_ms": {
+        "onset_ms": 629.06,
+        "clear_ms": 429.11,
+        "capture_after_onset_ms": 217.16,
+        "queue_ms": 46.55,
+        "read_to_graph_ms": 210.33,
+        "graph_to_window_ms": 123.4,
+        "full_jobs_elapsed_ms": 9351.37
+      },
+      "under_500": 0
+    },
+    "wakesame": {
+      "runs": [
+        {
+          "onset_ms": 675.16,
+          "clear_ms": 471.63,
+          "capture_after_onset_ms": 255.01,
+          "queue_ms": 47.13,
+          "read_to_graph_ms": 229.04,
+          "graph_to_window_ms": 144.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10803.36
+        },
+        {
+          "onset_ms": 675.76,
+          "clear_ms": 469.58,
+          "capture_after_onset_ms": 260.2,
+          "queue_ms": 69.05,
+          "read_to_graph_ms": 232.44,
+          "graph_to_window_ms": 114.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10701.67
+        },
+        {
+          "onset_ms": 644.0,
+          "clear_ms": 438.01,
+          "capture_after_onset_ms": 240.77,
+          "queue_ms": 65.12,
+          "read_to_graph_ms": 213.84,
+          "graph_to_window_ms": 124.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10498.61
+        }
+      ],
+      "median_ms": {
+        "onset_ms": 675.16,
+        "clear_ms": 469.58,
+        "capture_after_onset_ms": 255.01,
+        "queue_ms": 65.12,
+        "read_to_graph_ms": 229.04,
+        "graph_to_window_ms": 124.3,
+        "full_jobs_elapsed_ms": 10701.67
+      },
+      "under_500": 0
+    },
+    "wakeonly": {
+      "runs": [
+        {
+          "onset_ms": 773.77,
+          "clear_ms": 557.71,
+          "capture_after_onset_ms": 274.73,
+          "queue_ms": 65.43,
+          "read_to_graph_ms": 259.23,
+          "graph_to_window_ms": 174.4,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 8,
+          "full_jobs_elapsed_ms": 12527.03
+        },
+        {
+          "onset_ms": 692.24,
+          "clear_ms": 487.92,
+          "capture_after_onset_ms": 321.09,
+          "queue_ms": 52.32,
+          "read_to_graph_ms": 208.9,
+          "graph_to_window_ms": 109.9,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10256.96
+        },
+        {
+          "onset_ms": 618.97,
+          "clear_ms": 414.5,
+          "capture_after_onset_ms": 219.8,
+          "queue_ms": 57.44,
+          "read_to_graph_ms": 226.28,
+          "graph_to_window_ms": 115.5,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "full_jobs": 7,
+          "full_jobs_elapsed_ms": 10321.58
+        }
+      ],
+      "median_ms": {
+        "onset_ms": 692.24,
+        "clear_ms": 487.92,
+        "capture_after_onset_ms": 274.73,
+        "queue_ms": 57.44,
+        "read_to_graph_ms": 226.28,
+        "graph_to_window_ms": 115.5,
+        "full_jobs_elapsed_ms": 10321.58
+      },
+      "under_500": 0
+    }
+  },
+  "map_interpretation": "wakebase与wakelive对照早期标记、预读失败唤醒采集以及空闲时重查待采样帧的组合；wakesame与wakeonly对照单独唤醒。均只在隔离回放测试。后台任务允许并行，任务持续时间不相加。",
+  "validation": {
+    "tests": 81,
+    "mixed_frames": {
+      "frames": 28,
+      "identical_complete_observations_and_ordered_callbacks": {
+        "unknown": 1,
+        "exploration": 22,
+        "run_relics": 2,
+        "operator_detail": 1,
+        "run_roster": 2
+      },
+      "full_read_ms_by_input": [
+        [
+          1915.08,
+          1326.51
+        ],
+        [
+          1405.51,
+          1600.53
+        ],
+        [
+          1035.61,
+          1079.55
+        ],
+        [
+          1282.42,
+          1478.77
+        ],
+        [
+          946.79,
+          873.42
+        ],
+        [
+          891.04,
+          845.15
+        ],
+        [
+          1190.04,
+          1121.17
+        ],
+        [
+          1232.8,
+          1094.82
+        ],
+        [
+          1204.38,
+          1333.09
+        ],
+        [
+          1347.3,
+          1292.09
+        ],
+        [
+          937.41,
+          955.6
+        ],
+        [
+          999.83,
+          945.55
+        ],
+        [
+          850.48,
+          802.43
+        ],
+        [
+          456.02,
+          480.97
+        ],
+        [
+          1143.86,
+          1203.91
+        ],
+        [
+          1100.02,
+          902.0
+        ],
+        [
+          1034.97,
+          978.28
+        ],
+        [
+          922.4,
+          992.43
+        ],
+        [
+          908.37,
+          1072.95
+        ],
+        [
+          1453.57,
+          1595.81
+        ],
+        [
+          1162.36,
+          1102.84
+        ],
+        [
+          1177.17,
+          1128.73
+        ],
+        [
+          1648.13,
+          1546.19
+        ],
+        [
+          960.61,
+          1159.53
+        ],
+        [
+          928.32,
+          756.91
+        ],
+        [
+          921.44,
+          840.34
+        ],
+        [
+          1156.12,
+          1131.18
+        ],
+        [
+          2278.04,
+          2548.46
+        ]
+      ],
+      "warm_mean_ms": [
+        1132.4,
+        1143.1
+      ],
+      "warm_median_ms": [
+        1100.0,
+        1094.8
+      ]
+    },
+    "template_surfaces": [
+      {
+        "matrix_count": 6,
+        "matched_slots": 3
+      },
+      {
+        "matrix_count": 2,
+        "matched_slots": 2
+      },
+      {
+        "matrix_count": 5,
+        "matched_slots": 2
+      },
+      {
+        "matrix_count": 0,
+        "matched_slots": 0
+      },
+      {
+        "matrix_count": 4,
+        "matched_slots": 8
+      },
+      {
+        "matrix_count": 0,
+        "matched_slots": 0
+      },
+      {
+        "matrix_count": 31,
+        "matched_slots": 13
+      },
+      {
+        "matrix_count": 4,
+        "matched_slots": 2
+      }
+    ],
+    "bar_warm_median_ms": {
+      "normal": {
+        "base": 426.94,
+        "compact": 394.55
+      },
+      "reversed": {
+        "base": 381.11,
+        "compact": 357.98
+      },
+      "multiple": {
+        "base": 1414.43,
+        "compact": 797.02
+      },
+      "full": {
+        "base": 632.0,
+        "compact": 623.79
+      },
+      "bright": {
+        "base": 2263.2,
+        "compact": 1845.88
+      },
+      "random": {
+        "base": 821.51,
+        "compact": 805.77
+      }
+    },
+    "native_test_window_visible_and_responsive": true,
+    "private_state_unchanged": true
+  },
+  "limits": [
+    "单张或混合帧整页耗时不等同于切页到正确卡片可见。累计时钟存在重叠，不能相加。",
+    "模板对照用八种图面、每种956个模板及尺寸组合，录制样本与变体不能代表所有游戏画面。",
+    "藏品窗口测试从空闲读帧开始，未覆盖两个旧任务同时在跑。地图切页、CPU与真人表现未获稳定半秒验收。"
+  ]
+}

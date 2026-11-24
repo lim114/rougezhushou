@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-清晰直切地图已有三轮正确首显低于500毫秒，动画仍超时。原图首个完整可读帧约在转场后170毫秒，提前处理旧帧占位、读出至窗口的耗时和展开藏品整页仍待优化。常规CPU及真人切页未验。[回执](verification/maintenance/map-readable-frame-clock-20261124/summary.json)。
+同机热核显三轮对照，两张正确藏品卡在最终位置稳定显示的中位数由1333降至477毫秒，3/3轮低于500毫秒。完整结果窗口刷新中位数为1304毫秒。动画地图、藏品整页及积压场景仍超过半秒，CPU和真人切页仍待稳定验收。[回执](verification/maintenance/held-bar-column-screen-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
