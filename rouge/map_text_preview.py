@@ -170,6 +170,7 @@ def read_alongside_full_frame(frame, engine, context, publish):
 class CurrentMapPreview(QObject):
     """One active map read and at most the newest waiting frame, owned by the GUI."""
     finished = Signal()
+    candidate_ready = Signal(int, int, int)
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -177,7 +178,28 @@ class CurrentMapPreview(QObject):
         self.pool.setMaxThreadCount(1)
         self.running = False
         self.pending = None
+        self.last_probe_seq = 0
         self.finished.connect(self._finished, Qt.ConnectionType.QueuedConnection)
+
+    def probe_pending(self, buffer, epoch, last_sample_seq):
+        if self.running:
+            return
+        frame = buffer.latest(after_seq=max(last_sample_seq, self.last_probe_seq), pending_only=True)
+        if frame is None:
+            return
+        self.last_probe_seq = frame['seq']
+        key = epoch, frame['generation'], frame['seq']
+
+        def probe():
+            try:
+                image, _ = prepare_frame(frame['image'], frame['client_rect'])
+            except ValueError:
+                # A transitional crop can be too small for recognition.
+                return
+            if pointer_height(image, glyph_boxes(image)) is not None:
+                self.candidate_ready.emit(*key)
+
+        self.offer(key, lambda: True, probe)
 
     def offer(self, key, eligible, work):
         if self.pending is None or self.pending[0] < key:

@@ -65,6 +65,7 @@ def apply_relic_history_notice(scenario,result):
 
 class Events(QObject):
     settling = Signal()
+    pending_frame = Signal()
     sample = Signal(object)
     sample_error = Signal(object)
     hud_read = Signal(object)
@@ -185,6 +186,10 @@ class MainWindow(QMainWindow):
         self.busy_gold = BusyGold(self)
         self.events.hud_read.connect(self.show_sample_hud)
         self.events.held_names_read.connect(self.show_held_names)
+        if self.map_preview_pool is not None:
+            self.capture.on_pending_frame = self.events.pending_frame.emit
+            self.events.pending_frame.connect(self.probe_pending_map, Qt.ConnectionType.QueuedConnection)
+            self.map_preview_pool.candidate_ready.connect(self.take_map_candidate, Qt.ConnectionType.QueuedConnection)
         if self.settling_detection is not None:
             self.events.settling.connect(self.prepare_settling_page, Qt.ConnectionType.QueuedConnection)
             self.capture.on_settling = self.events.settling.emit
@@ -699,7 +704,23 @@ class MainWindow(QMainWindow):
                 inventory_visible=bool(bar and bar.inventory_popup and bar.active_popup is bar.inventory_popup
                                        and bar.inventory_popup.panel.isVisible()))
 
-    def sample_now(self, checked=False, *, automatic=False):
+    def waiting_for_current_map(self):
+        bar = self.compact_window
+        return (bar and bar.map_popup and bar.map_popup.panel.view.isVisible()
+                and ((self.observation or {}).get('map') or {}).get('status') != 'matched')
+
+    def probe_pending_map(self):
+        if (self.map_preview_pool is not None and not self.closing and self.auto.isChecked()
+                and self.recognition_mode.currentData() != 'visual' and self.waiting_for_current_map()
+                and self.reader._engine is not None and len(self.sample_jobs) < 3):
+            self.map_preview_pool.probe_pending(self.capture.buffer, self.sample_epoch, self.last_sample_seq)
+
+    def take_map_candidate(self, epoch, generation, seq):
+        if (epoch == self.sample_epoch and seq > self.last_sample_seq and self.waiting_for_current_map()
+                and self.recognition_mode.currentData() != 'visual'):
+            self.sample_now(automatic=True, ready_candidate=(generation, seq))
+
+    def sample_now(self, checked=False, *, automatic=False, ready_candidate=None):
         if automatic and not self.auto.isChecked():return
         self.update_sampling_status()
         if self.closing:
@@ -743,13 +764,19 @@ class MainWindow(QMainWindow):
                                  and reference['observation'].get('page')in('exploration','node_detail')
                                  and(reference['observation'].get('map')or{}).get('status')=='matched'
                                  and time.time()-reference['captured_at']>=20)
-            preferred=self.busy or not automatic or self.prefer_current_capture
+            preferred=self.busy or not automatic or self.prefer_current_capture or ready_candidate is not None
             # While an older read runs, reserve the other reader for newer pixels.
             # Historical candidates remain queued until a reader is available.
             after_seq=max(self.last_sample_seq, *(job['seq'] for job in self.sample_jobs.values())) if self.sample_jobs else None
-            frame=self.capture.next_frame(force=not automatic or (refresh_overlay and not self.busy),
-                                          prefer_latest=preferred,after_seq=after_seq,scene_change_only=competing == 2,
-                                          regional_changes=inventory_scenes)
+            if ready_candidate is not None:
+                frame = self.capture.buffer.take(ready_candidate=ready_candidate, after_seq=after_seq,
+                                                 scene_change_only=competing == 2)
+                if frame is None:
+                    return
+            else:
+                frame=self.capture.next_frame(force=not automatic or (refresh_overlay and not self.busy),
+                                              prefer_latest=preferred,after_seq=after_seq,scene_change_only=competing == 2,
+                                              regional_changes=inventory_scenes)
         except Exception as error:
             self.show_error('capture',str(error))
             return
@@ -819,9 +846,7 @@ class MainWindow(QMainWindow):
             self.events.sample.emit((selected['image'],observation))
 
         if (self.map_preview_pool is not None and automatic and mode != 'visual' and frame is not None
-                and frame['seq'] > self.last_sample_seq and self.compact_window and self.compact_window.map_popup
-                and self.compact_window.map_popup.panel.view.isVisible()
-                and ((self.observation or {}).get('map') or {}).get('status') != 'matched'):
+                and frame['seq'] > self.last_sample_seq and self.waiting_for_current_map()):
             engine = selected_reader._engine
             if engine is not None:
                 from .map_text_preview import read_alongside_full_frame

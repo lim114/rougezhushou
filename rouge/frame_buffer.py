@@ -255,7 +255,8 @@ class FrameBuffer:
     def _settling(self):
         return len(self._pending) == 1 and time.monotonic() < self._pending[0]['ready_at']
 
-    def take(self, force=False, *, prefer_latest=False, after_seq=None, scene_change_only=False, regional_changes=False):
+    def take(self, force=False, *, prefer_latest=False, after_seq=None, scene_change_only=False, regional_changes=False,
+             ready_candidate=None):
         """Take one candidate; current-first removes only that candidate, never the rest.
 
         With no pending candidate, force returns the latest observation. Normal
@@ -267,6 +268,12 @@ class FrameBuffer:
         """
         prefer_latest = prefer_latest or scene_change_only
         with self._lock:
+            if ready_candidate is not None:
+                if not self._pending or ready_candidate != (self._generation, self._pending[-1]['seq']):
+                    return None
+                # Only this verified candidate may skip settling. Older queued
+                # pages keep their positions, and scene/sequence limits still apply.
+                prefer_latest = force = True
             self._dispatch_ready_at = 0.
             if self._pending:
                 if after_seq is not None and self._pending[-1 if prefer_latest else 0]['seq'] <= after_seq:
@@ -322,14 +329,17 @@ class FrameBuffer:
                 result['scene'] = dict(key=frame['key'], novelty=self._novelty(frame).copy())
             return result
 
-    def latest(self, *, after_seq=None, settling_only=False):
+    def latest(self, *, after_seq=None, settling_only=False, pending_only=False):
         """Peek without consuming. An idle preview yields to a ready full read."""
         with self._lock:
             if settling_only and not self._settling():
                 return None
-            if self._latest is None or (after_seq is not None and self._latest['seq'] <= after_seq):
+            if pending_only and not self._pending:
                 return None
-            return self._export(self._latest, copy_pixels=True)
+            frame = self._pending[-1] if pending_only else self._latest
+            if frame is None or (after_seq is not None and frame['seq'] <= after_seq):
+                return None
+            return self._export(frame, copy_pixels=True)
 
     def clear(self):
         """Invalidate a capture/run generation without reusing sequence IDs."""

@@ -1,3 +1,7 @@
+## 图像识别专项 · 地图采集按预读空位派发同一张新帧
+
+动画切页正确地图首显中位数由745降至627毫秒；清晰直切由601变为622毫秒。新调度六轮均未达到500毫秒。[回执](verification/maintenance/map-same-frame-dispatch-20261124/summary.json)。
+
 ## 图像识别专项 · 地图预读按已读节点所在行查找空地圆环
 
 同机窗口动画切页的正确首显中位数由1362变为715毫秒，清晰直切由646变为641毫秒。112种输入中，新确认两帧完整地图，原有确认结果一致。[回执](verification/maintenance/map-label-row-search-20261124/summary.json)。

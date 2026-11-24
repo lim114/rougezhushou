@@ -88,6 +88,18 @@ class MapPreviewMarkerTests(unittest.TestCase):
 
 
 class MapPreviewQueueTests(unittest.TestCase):
+    def test_unreadable_pending_crop_does_not_schedule_a_map(self):
+        from PySide6.QtWidgets import QApplication
+        from rouge.frame_buffer import FrameBuffer
+        qt = QApplication.instance() or QApplication([])
+        reader = CurrentMapPreview(None)
+        buffer = FrameBuffer()
+        buffer.offer(np.zeros((100, 160, 3), np.uint8), 1.)
+        with patch.object(reader, 'offer', side_effect=lambda key, eligible, work: work()), \
+                patch('rouge.map_text_preview.glyph_boxes') as locate:
+            reader.probe_pending(buffer, 0, 0)
+            locate.assert_not_called()
+
     def test_busy_worker_coalesces_frames_and_checks_eligibility_before_reading(self):
         from PySide6.QtWidgets import QApplication
         qt = QApplication.instance() or QApplication([])

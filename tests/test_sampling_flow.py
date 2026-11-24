@@ -320,6 +320,36 @@ class SamplingFlowTests(unittest.TestCase):
         self.assertEqual(window.observation['page'], 'operator')
         self.assertFalse(window.run.state['maps'])
 
+    def test_map_hint_starts_an_ordinary_job_on_the_same_unsettled_frame(self):
+        from rouge.map_text_preview import CurrentMapPreview
+        window = self.window
+        window.show_compact()
+        window.compact_window.open_map()
+        window.reader._engine = object()
+        window.capture.buffer.settle_seconds = 30
+        window.period.setValue(5)
+        pool = CurrentMapPreview(window)
+        window.map_preview_pool = pool
+        pool.candidate_ready.connect(window.take_map_candidate)
+        previewed = []
+        def preview(frame, engine, context, publish):
+            previewed.append(frame['seq'])
+        pixels = np.full((240, 400, 3), 35, dtype=np.uint8)
+        seq = window.capture.buffer.offer(pixels, time.time())
+        with patch('rouge.map_text_preview.pointer_height', return_value=10), \
+                patch('rouge.map_text_preview.read_alongside_full_frame', preview):
+            window.auto.setChecked(True)
+            self.assertFalse(window.busy)
+            window.probe_pending_map()
+            try:
+                self.wait_for(lambda: self.entered.is_set() and previewed == [seq])
+                self.assertEqual(self.seen, [35])
+                self.assertEqual([job['seq'] for job in window.sample_jobs.values()], [seq])
+                self.assertEqual(window.capture.stats()['pending'], 0)
+            finally:
+                self.release.set()
+            self.wait_for(lambda: not window.busy)
+
     def test_inventory_view_does_not_schedule_a_map_preview(self):
         window = self.window
         window.map_preview_pool = Mock()
@@ -331,6 +361,8 @@ class SamplingFlowTests(unittest.TestCase):
         window.auto.setChecked(True)
         try:
             self.wait_for(self.entered.is_set)
+            window.probe_pending_map()
+            window.map_preview_pool.probe_pending.assert_not_called()
             window.map_preview_pool.offer.assert_not_called()
         finally:
             self.release.set()

@@ -1,0 +1,240 @@
+{
+  "title": "地图采集按预读空位派发同一张新帧",
+  "baseline_commit": "6e1058b61",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "scope": "已预热的核显测试助手、自动识别、地图可见且当前地图尚未确认。采集保留原节奏，识别空闲时对最新候选做几何检查。",
+  "dispatch": "几何命中只触发调度。缓冲区在锁内复核采集代次与队尾序号，整页任务和地图预读使用同帧。旧候选保留原有补录顺序和缓冲上限，显示仍要求读全节点、位置和唯一模板。",
+  "method": "Windows原生回放。相同输入、同机热模型与助手窗口，开关本次提前派发，交替各三轮。源窗口首次出现变化到助手窗口完整地图与当前位置像素匹配。动画12个节点，清晰直切13个节点。",
+  "groups": {
+    "ghbase": {
+      "runs": [
+        {
+          "onset_ms": 762.06,
+          "clear_ms": 560.76,
+          "capture_after_onset_ms": 357.17,
+          "queue_ms": 68.74,
+          "read_to_graph_ms": 221.33,
+          "graph_to_window_ms": 114.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 744.95,
+          "clear_ms": 542.96,
+          "capture_after_onset_ms": 384.97,
+          "queue_ms": 29.57,
+          "read_to_graph_ms": 205.4,
+          "graph_to_window_ms": 125.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 734.37,
+          "clear_ms": 532.51,
+          "capture_after_onset_ms": 375.73,
+          "queue_ms": 62.05,
+          "read_to_graph_ms": 203.6,
+          "graph_to_window_ms": 93.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ],
+      "medians_ms": {
+        "onset_ms": 744.95,
+        "clear_ms": 542.96,
+        "capture_after_onset_ms": 375.73,
+        "queue_ms": 62.05,
+        "read_to_graph_ms": 205.4,
+        "graph_to_window_ms": 114.8
+      },
+      "under_500": 0,
+      "full_jobs": 21,
+      "full_job_mean_elapsed_ms": 1721.48,
+      "full_jobs_per_second": 0.76,
+      "mean_preview_read_ms": 210.11
+    },
+    "ghnew": {
+      "runs": [
+        {
+          "onset_ms": 616.84,
+          "clear_ms": 413.84,
+          "capture_after_onset_ms": 244.84,
+          "queue_ms": 56.81,
+          "read_to_graph_ms": 203.87,
+          "graph_to_window_ms": 111.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 627.17,
+          "clear_ms": 425.14,
+          "capture_after_onset_ms": 257.25,
+          "queue_ms": 46.69,
+          "read_to_graph_ms": 217.44,
+          "graph_to_window_ms": 105.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 646.3,
+          "clear_ms": 445.42,
+          "capture_after_onset_ms": 264.9,
+          "queue_ms": 59.38,
+          "read_to_graph_ms": 219.67,
+          "graph_to_window_ms": 102.4,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ],
+      "medians_ms": {
+        "onset_ms": 627.17,
+        "clear_ms": 425.14,
+        "capture_after_onset_ms": 257.25,
+        "queue_ms": 56.81,
+        "read_to_graph_ms": 217.44,
+        "graph_to_window_ms": 105.8
+      },
+      "under_500": 0,
+      "full_jobs": 21,
+      "full_job_mean_elapsed_ms": 1775.01,
+      "full_jobs_per_second": 0.74,
+      "mean_preview_read_ms": 213.66
+    },
+    "layoutghbase": {
+      "runs": [
+        {
+          "onset_ms": 601.04,
+          "clear_ms": 601.04,
+          "capture_after_onset_ms": 156.9,
+          "queue_ms": 24.58,
+          "read_to_graph_ms": 300.5,
+          "graph_to_window_ms": 119.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 568.98,
+          "clear_ms": 568.98,
+          "capture_after_onset_ms": 144.72,
+          "queue_ms": 20.54,
+          "read_to_graph_ms": 284.74,
+          "graph_to_window_ms": 119.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 692.71,
+          "clear_ms": 692.71,
+          "capture_after_onset_ms": 157.59,
+          "queue_ms": 19.93,
+          "read_to_graph_ms": 403.07,
+          "graph_to_window_ms": 112.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ],
+      "medians_ms": {
+        "onset_ms": 601.04,
+        "clear_ms": 601.04,
+        "capture_after_onset_ms": 156.9,
+        "queue_ms": 20.54,
+        "read_to_graph_ms": 300.5,
+        "graph_to_window_ms": 119.0
+      },
+      "under_500": 0,
+      "full_jobs": 3,
+      "full_job_mean_elapsed_ms": 1471.08,
+      "full_jobs_per_second": 0.68,
+      "mean_preview_read_ms": 329.44
+    },
+    "layoutghnew": {
+      "runs": [
+        {
+          "onset_ms": 622.11,
+          "clear_ms": 622.11,
+          "capture_after_onset_ms": 152.98,
+          "queue_ms": 42.07,
+          "read_to_graph_ms": 305.96,
+          "graph_to_window_ms": 121.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 598.13,
+          "clear_ms": 598.13,
+          "capture_after_onset_ms": 156.2,
+          "queue_ms": 40.58,
+          "read_to_graph_ms": 287.23,
+          "graph_to_window_ms": 114.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        },
+        {
+          "onset_ms": 663.01,
+          "clear_ms": 663.01,
+          "capture_after_onset_ms": 158.84,
+          "queue_ms": 48.72,
+          "read_to_graph_ms": 351.44,
+          "graph_to_window_ms": 104.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0
+        }
+      ],
+      "medians_ms": {
+        "onset_ms": 622.11,
+        "clear_ms": 622.11,
+        "capture_after_onset_ms": 156.2,
+        "queue_ms": 42.07,
+        "read_to_graph_ms": 305.96,
+        "graph_to_window_ms": 114.1
+      },
+      "under_500": 0,
+      "full_jobs": 3,
+      "full_job_mean_elapsed_ms": 1478.6,
+      "full_jobs_per_second": 0.68,
+      "mean_preview_read_ms": 314.88
+    }
+  },
+  "legend": "ghbase/ghnew 为动画关/开；layoutghbase/layoutghnew 为清晰直切关/开。queue_ms 为首显用帧从采集到启动读取。窗口时间包含采集交付。各段单独取中位数。",
+  "full_jobs_measure": "回放开始之后全部正常整页任务，包含复用与并行。平均耗时从每个任务的开始到完成；吞吐量为任务总数除以三轮从首次登记到最后完成的累计时长。不同帧、窗口渲染和完整识别可重叠。",
+  "inventory": {
+    "heldhbase": {
+      "two_tiles_window_ms": 563.04,
+      "full_panel_qt_ms": 1427.41,
+      "final_tile_positions_in_window_ms": 1432.17,
+      "map_probes": 0,
+      "map_reads": 0
+    },
+    "heldhnew": {
+      "two_tiles_window_ms": 539.65,
+      "full_panel_qt_ms": 1404.07,
+      "final_tile_positions_in_window_ms": 1415.0,
+      "map_probes": 0,
+      "map_reads": 0
+    }
+  },
+  "inventory_method": "独立隔离切入展开藏品的窗口，开关各一次。记录两格藏品可见、整页Qt绘制、两格在最终位置像素稳定三个时点。",
+  "rejected": "孤立箭头在多类页面也出现。追加位置文字OCR调度试验的清晰直切各三轮，中位数从586变为607毫秒，本轮沿用原来的位置字形调度条件。",
+  "validation": {
+    "tests": 88,
+    "native_gpu_toolbar_visible_and_responsive": true,
+    "private_hashes_unchanged": true
+  },
+  "limitations": [
+    "同一录像与两张布局之间的重复对照，缺少真人切页及常规CPU路径计时。",
+    "藏品对照只作无地图任务抢占检查，样本不足以判定识别提速。"
+  ]
+}

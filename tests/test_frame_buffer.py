@@ -15,6 +15,23 @@ def page(value=30, shape=(240, 400, 3), label='PAGE'):
 
 
 class FrameBufferTests(unittest.TestCase):
+    def test_ready_candidate_can_only_take_its_own_newest_pending_frame(self):
+        buffer = FrameBuffer(settle_seconds=30, prioritize_scene_changes=True)
+        first = buffer.offer(page(30), 1)
+        snapshot = buffer.latest(pending_only=True)
+        generation = snapshot['generation']
+        self.assertIsNone(buffer.take())
+        second = buffer.offer(page(170), 2)
+        self.assertIsNone(buffer.take(ready_candidate=(generation, first)))
+        self.assertIsNone(buffer.take(ready_candidate=(generation + 1, second)))
+        self.assertIsNone(buffer.take(ready_candidate=(generation, second), after_seq=second))
+        self.assertEqual(buffer.take(ready_candidate=(generation, second))['seq'], second)
+        self.assertEqual(buffer.latest(pending_only=True)['seq'], first)
+        self.assertEqual(buffer.take(force=True)['seq'], first)
+        self.assertIsNone(buffer.latest(pending_only=True))
+        self.assertIsNone(buffer.take(ready_candidate=(generation, second)))
+        self.assertEqual(buffer.stats()['manual_repeats'], 0)
+
     def test_inventory_region_change_and_matching_history_use_distinct_thresholds(self):
         buffer = FrameBuffer(settle_seconds=0, prioritize_scene_changes=True)
         closed = page(60)

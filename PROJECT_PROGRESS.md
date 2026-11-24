@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-核显地图已减少跨行圆环误检。正式调度下，转场到第一张成功帧的等待、正确结果首绘及藏品完整首显仍需优化。先读最新帧与整页选帧的次序仍需对齐。常规CPU和真人切页尚待验证。[回执](verification/maintenance/map-label-row-search-20261124/summary.json)。
+核显动画切地图的正确首显中位数627毫秒，直接切入清晰地图622毫秒。剩余耗时包括有效帧出现、地图解码与窗口显示；直接切页及展开藏品仍需缩短识别与绘制。持续高负载的补录吞吐、常规CPU与真人切页尚待验证。[回执](verification/maintenance/map-same-frame-dispatch-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

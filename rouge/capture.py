@@ -92,6 +92,7 @@ class GameCapture:
         self._pace_stop = None
         self.buffer = FrameBuffer(prioritize_scene_changes=prioritize_scene_changes)
         self.on_settling = None
+        self.on_pending_frame = None
         self._session = 0
         self._collecting = True
         self._control = None
@@ -134,8 +135,12 @@ class GameCapture:
                 pointer_bounds=pointer.locate(image,point,may_learn=may_learn)
                 self.buffer.offer(frame.frame_buffer,time.time(),client_rect,target,
                                   pointer_bounds=pointer_bounds,source_bgra=True)
-            if self.on_settling is not None and self.buffer.stats()['settle_remaining_ms'] > 0:
-                self.on_settling()
+            if self.on_settling is not None or self.on_pending_frame is not None:
+                stats = self.buffer.stats()
+                if self.on_pending_frame is not None and stats['pending']:
+                    self.on_pending_frame()
+                if self.on_settling is not None and stats['settle_remaining_ms'] > 0:
+                    self.on_settling()
 
         @self._capture.event
         def on_frame_arrived(frame, capture_control):
