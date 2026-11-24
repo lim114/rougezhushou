@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-地图转场首次可见至正确窗口及积压藏品完整显示仍未稳定低于500毫秒。须缩短首次可读帧的取用及识别后的窗口等待，真人实测暂缓。[回执](verification/maintenance/map-transition-clock-20261124/summary.json)。
+地图优先绘制已接入常规程序；普通全页识别至地图确认及积压藏品完整显示仍未稳定低于500毫秒。实验地图预读还需跨页验收。真人实测暂缓。[回执](verification/maintenance/current-map-first-paint-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

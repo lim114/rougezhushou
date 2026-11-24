@@ -1010,6 +1010,19 @@ class MainWindow(QMainWindow):
             # capture time; payload still checks fresh pixels and the30s limit.
             if not retain_map:self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
             self.observation=observation
+        pixels = np.ascontiguousarray(image)
+        height, width = pixels.shape[:2]
+        qimage = QImage(pixels.data, width, height, pixels.strides[0],
+                        QImage.Format.Format_BGR888).convertToFormat(QImage.Format.Format_RGB888)
+        if current_frame:
+            self.map_frame=qimage;self.map_frame_seq=seq
+        popup = self.compact_window.map_popup if current_frame and map_progress and self.compact_window else None
+        paint_map_first = popup is not None and popup.panel.view.isVisible()
+        if paint_map_first:
+            # The committed graph and its source frame are ready. Paint the open
+            # player map before calculating other panels on this same GUI thread.
+            self.render_map()
+            popup.panel.view.repaint()
         with calculation_batch(self):
             stage=observation.get('stage')
             if current_frame and observation.get('page')=='node_detail' and stage:
@@ -1047,10 +1060,6 @@ class MainWindow(QMainWindow):
             elif current_frame:
                 self.capture_operator_picture.set_subject(None,None,'')
                 replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
-        pixels = np.ascontiguousarray(image)
-        height, width = pixels.shape[:2]
-        qimage = QImage(pixels.data, width, height, pixels.strides[0],
-                        QImage.Format.Format_BGR888).convertToFormat(QImage.Format.Format_RGB888)
         if not current_frame:
             graph=observation.get('map')or{};remembered=self.run.state['maps'].get(graph.get('zone_id'))
             if remembered and seq>=self.map_frame_sequences.get(graph.get('zone_id'),0) and (graph.get('template_id'),observation['captured_at'])==(remembered.get('template_id'),remembered.get('captured_at')):
@@ -1060,12 +1069,12 @@ class MainWindow(QMainWindow):
             self.capture_status.setText('已补记较早页面；当前画面与最新数值保持。')
             if self.session_recorder is not None:self.session_recorder.sample(observation,self.run.state,applied=True,reason='historical_backfill',ui_ms=(time.perf_counter()-ui_start)*1000)
             return
-        self.map_frame=qimage;self.map_frame_seq=seq
         self.preview.setPixmap(QPixmap.fromImage(qimage).scaled(self.preview.size(),Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         replace_text(self.observed_text,json.dumps(observation,ensure_ascii=False,indent=2))
         performance=observation.get('performance',{})
         timing=f" · 识别{performance['total_ms']/1000:.2f}秒" if 'total_ms' in performance else ''
-        self.render_map()
+        if not paint_map_first:
+            self.render_map()
         reuse=' · 静帧精确复用' if performance.get('reuse')=='exact_frame' else ''
         backend=' · 纯视觉' if performance.get('backend')=='visual' else ' · 动态OCR'
         if performance.get('feature_cache_hits',0):reuse+=' · 特征精确复用'

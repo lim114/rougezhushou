@@ -221,6 +221,18 @@ class SamplingFlowTests(unittest.TestCase):
                     'run': {'map': graph, 'config': config, 'resources': {'gold': {'value': 9}}}}
         expected.apply(complete['run'], at)
         window.show_compact();window.compact_window.open_map()
+        view = window.compact_window.map_popup.panel.view
+        order = []
+        repaint = view.repaint
+        refresh = window.refresh_run_observation
+        def paint_current():
+            order.append(('paint', view.graph['template_id'], window.map_frame_seq))
+            repaint()
+        def refresh_other_panels(*args, **kwargs):
+            order.append(('refresh',))
+            return refresh(*args, **kwargs)
+        self.enterContext(patch.object(view, 'repaint', paint_current))
+        self.enterContext(patch.object(window, 'refresh_run_observation', refresh_other_panels))
         def read(image, **options):
             options['on_map']({'page': 'exploration', 'nodes': [], 'map': deepcopy(graph),
                                'map_config': config, 'run': None, 'operator': None})
@@ -232,6 +244,7 @@ class SamplingFlowTests(unittest.TestCase):
         try:
             self.wait_for(lambda: bool(window.run.state['maps']), timeout=2)
             self.assertTrue(window.busy)
+            self.assertEqual(order[:2], [('paint', graph['template_id'], 1), ('refresh',)])
             self.assertEqual(window.compact_window.map_popup.panel.view.graph['template_id'], graph['template_id'])
             self.assertEqual(window.run.state['resources'], {})
             self.assertEqual(window.run.state['config']['difficulty']['value'], 5)

@@ -1,0 +1,390 @@
+{
+  "title": "已确认地图优先绘制到玩家窗口",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "baseline_commit": "aa9bb4c25",
+  "change": "已通过帧时序和本局校验且地图窗口可见时，提交识别状态和配套图像后立即刷新并绘制地图一次，其余面板和调试画面随后同步。历史补记、关闭或隐藏地图以及整页结果继续沿原显示顺序处理。",
+  "method": "源录制同一干员页切地图，先稳定干员页并等待后台读者完成。计时从源窗口实际绘制地图首次出现帧到正确的助手地图窗口像素。每轮核对12格和当前位置，检验读完后状态及私人文件。原版和候选调换先后，各三轮。普通产品核显路径独立于隔离实验预读运行。",
+  "groups": {
+    "profile_control": {
+      "n": 3,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 638.38,
+        "clear_to_window_ms": 437.68,
+        "capture_to_read_ms": 22.18,
+        "read_to_graph_ms": 177.38,
+        "graph_to_window_ms": 202.0
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 638.38,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 437.68,
+          "capture_to_read_ms": 26.02,
+          "read_to_graph_ms": 161.26,
+          "graph_to_window_ms": 202.0,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 638.38,
+            "clear_to_window": 437.68,
+            "target_queue": 26.02,
+            "recognition": 161.26,
+            "graph_to_gui": 14.97,
+            "gui_to_widget_paint": 144.96,
+            "widget_to_witness": 42.03,
+            "gui_total": 96.05,
+            "prepare": 2.68,
+            "commit": 14.97,
+            "refresh_run_observation": 5.64,
+            "render_map": 50.27
+          }
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 656.25,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 453.03,
+          "capture_to_read_ms": 22.18,
+          "read_to_graph_ms": 214.44,
+          "graph_to_window_ms": 203.1,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 656.25,
+            "clear_to_window": 453.03,
+            "target_queue": 22.18,
+            "recognition": 214.44,
+            "graph_to_gui": 13.46,
+            "gui_to_widget_paint": 150.04,
+            "widget_to_witness": 39.39,
+            "gui_total": 88.87,
+            "prepare": 3.92,
+            "commit": 11.33,
+            "refresh_run_observation": 3.38,
+            "render_map": 48.84
+          }
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 632.63,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 430.22,
+          "capture_to_read_ms": 14.89,
+          "read_to_graph_ms": 177.38,
+          "graph_to_window_ms": 182.8,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 632.63,
+            "clear_to_window": 430.22,
+            "target_queue": 14.89,
+            "recognition": 177.38,
+            "graph_to_gui": 0.36,
+            "gui_to_widget_paint": 148.65,
+            "widget_to_witness": 33.71,
+            "gui_total": 93.89,
+            "prepare": 2.08,
+            "commit": 13.89,
+            "refresh_run_observation": 3.06,
+            "render_map": 52.38
+          }
+        }
+      ]
+    },
+    "profile_priority": {
+      "n": 3,
+      "below_500": 1,
+      "median": {
+        "onset_to_window_ms": 548.06,
+        "clear_to_window_ms": 347.11,
+        "capture_to_read_ms": 22.58,
+        "read_to_graph_ms": 191.89,
+        "graph_to_window_ms": 95.4
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 548.06,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 347.11,
+          "capture_to_read_ms": 28.02,
+          "read_to_graph_ms": 167.15,
+          "graph_to_window_ms": 95.4,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 548.06,
+            "clear_to_window": 347.11,
+            "target_queue": 28.02,
+            "recognition": 167.15,
+            "graph_to_gui": 0.47,
+            "gui_to_widget_paint": 66.7,
+            "widget_to_witness": 27.15,
+            "gui_total": 103.35,
+            "prepare": 1.57,
+            "commit": 9.01,
+            "refresh_run_observation": 5.71,
+            "render_map": 48.77
+          }
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 582.01,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 378.24,
+          "capture_to_read_ms": 22.58,
+          "read_to_graph_ms": 191.89,
+          "graph_to_window_ms": 110.0,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 582.01,
+            "clear_to_window": 378.24,
+            "target_queue": 22.58,
+            "recognition": 191.89,
+            "graph_to_gui": 0.34,
+            "gui_to_widget_paint": 82.05,
+            "widget_to_witness": 27.73,
+            "gui_total": 115.6,
+            "prepare": 2.45,
+            "commit": 13.27,
+            "refresh_run_observation": 6.56,
+            "render_map": 57.64
+          }
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 473.22,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 273.5,
+          "capture_to_read_ms": 9.15,
+          "read_to_graph_ms": 195.5,
+          "graph_to_window_ms": 74.6,
+          "earlier_incomplete_paints": 0,
+          "gui": {
+            "onset_to_window": 473.22,
+            "clear_to_window": 273.5,
+            "target_queue": 9.15,
+            "recognition": 195.5,
+            "graph_to_gui": 0.39,
+            "gui_to_widget_paint": 48.69,
+            "widget_to_witness": 25.02,
+            "gui_total": 70.18,
+            "prepare": 1.57,
+            "commit": 6.96,
+            "refresh_run_observation": 2.15,
+            "render_map": 33.73
+          }
+        }
+      ]
+    },
+    "product_gpu_before": {
+      "n": 3,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 1608.02,
+        "clear_to_window_ms": 1405.67,
+        "capture_to_read_ms": 57.42,
+        "read_to_graph_ms": 871.68,
+        "graph_to_window_ms": 245.1,
+        "full_page_ocr_ms": 486.11
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1634.86,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1439.3,
+          "capture_to_read_ms": 66.79,
+          "read_to_graph_ms": 871.68,
+          "graph_to_window_ms": 301.0,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 486.11
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1608.02,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1405.67,
+          "capture_to_read_ms": 57.42,
+          "read_to_graph_ms": 921.02,
+          "graph_to_window_ms": 245.1,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 557.04
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1416.07,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1211.64,
+          "capture_to_read_ms": 44.0,
+          "read_to_graph_ms": 787.5,
+          "graph_to_window_ms": 217.3,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 438.19
+        }
+      ]
+    },
+    "product_gpu_after": {
+      "n": 3,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 1570.71,
+        "clear_to_window_ms": 1365.08,
+        "capture_to_read_ms": 33.18,
+        "read_to_graph_ms": 1032.32,
+        "graph_to_window_ms": 105.8,
+        "full_page_ocr_ms": 685.09
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1508.36,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1306.3,
+          "capture_to_read_ms": 33.18,
+          "read_to_graph_ms": 1008.61,
+          "graph_to_window_ms": 105.8,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 631.63
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1570.71,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1365.08,
+          "capture_to_read_ms": 68.94,
+          "read_to_graph_ms": 1032.32,
+          "graph_to_window_ms": 91.5,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 685.09
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1739.71,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1536.29,
+          "capture_to_read_ms": 28.96,
+          "read_to_graph_ms": 1207.87,
+          "graph_to_window_ms": 113.2,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 856.56
+        }
+      ]
+    },
+    "product_change_with_experimental_reader": {
+      "n": 3,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 674.67,
+        "clear_to_window_ms": 472.56,
+        "capture_to_read_ms": 33.9,
+        "read_to_graph_ms": 241.7,
+        "graph_to_window_ms": 102.6
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 674.67,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 472.56,
+          "capture_to_read_ms": 55.89,
+          "read_to_graph_ms": 241.7,
+          "graph_to_window_ms": 102.6,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 570.01,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 368.71,
+          "capture_to_read_ms": 33.9,
+          "read_to_graph_ms": 176.37,
+          "graph_to_window_ms": 73.0,
+          "earlier_incomplete_paints": 0
+        },
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 750.82,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 533.47,
+          "capture_to_read_ms": 10.52,
+          "read_to_graph_ms": 335.96,
+          "graph_to_window_ms": 135.5,
+          "earlier_incomplete_paints": 0
+        }
+      ]
+    }
+  },
+  "cpu_spot_checks": {
+    "oldcpu": {
+      "n": 1,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 3131.97,
+        "clear_to_window_ms": 2938.62,
+        "capture_to_read_ms": 1707.7,
+        "read_to_graph_ms": 616.59,
+        "graph_to_window_ms": 100.7,
+        "full_page_ocr_ms": 431.07
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 3131.97,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 2938.62,
+          "capture_to_read_ms": 1707.7,
+          "read_to_graph_ms": 616.59,
+          "graph_to_window_ms": 100.7,
+          "earlier_incomplete_paints": 2,
+          "full_page_ocr_ms": 431.07
+        }
+      ]
+    },
+    "newcpu": {
+      "n": 1,
+      "below_500": 0,
+      "median": {
+        "onset_to_window_ms": 1505.27,
+        "clear_to_window_ms": 1310.61,
+        "capture_to_read_ms": 21.58,
+        "read_to_graph_ms": 1176.74,
+        "graph_to_window_ms": 117.0,
+        "full_page_ocr_ms": 769.85
+      },
+      "runs": [
+        {
+          "onset_shown_frame": 6,
+          "onset_to_window_ms": 1505.27,
+          "clear_shown_frame": 12,
+          "clear_to_window_ms": 1310.61,
+          "capture_to_read_ms": 21.58,
+          "read_to_graph_ms": 1176.74,
+          "graph_to_window_ms": 117.0,
+          "earlier_incomplete_paints": 0,
+          "full_page_ocr_ms": 769.85
+        }
+      ]
+    }
+  },
+  "ocr_reduction": {
+    "batches": 17,
+    "warm_repeats": 34,
+    "baseline_mean_ms": 17.79,
+    "gpu_top1_mean_ms": 19.43,
+    "different_indices": 0,
+    "different_probabilities": 0,
+    "decision": "在同一FP32识别模型尾部取最大字符和概率，避免整份词表传回CPU；本机未加速，继续使用现有解码。"
+  },
+  "validation": {
+    "targeted_tests": 57,
+    "passed": 57,
+    "visible_and_responding": true,
+    "test_gpu_mode": true,
+    "private_bytes_unchanged": true
+  },
+  "limits": [
+    "单台机器、一个录制切页，没有真实点击时钟。",
+    "CPU仅前后各一次；不据此外推CPU延迟分布。",
+    "未接入实验地图读者，未重新测量藏品页，真人实测暂缓。"
+  ]
+}
