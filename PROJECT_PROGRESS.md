@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-同一动画三轮各派发7个整页任务；保留最新帧的逐组回放中，最少4项就能完全复原各轮本局及账号记录。独立预读单采集流实验将正确地图首显中位数由613变为592毫秒，仍未到500毫秒。定相短页暴露漏采，到期补交又失去首显收益，保留产品调度。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/map-frame-contributions-20261124/summary.json)。
+按整页实测耗时在积压时降频，核显动画地图三轮登记任务中位数由7降至3，正确地图首显由659变为1116毫秒。定相短页送达由13/16变为0/16。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/recognition-consumer-pacing-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
