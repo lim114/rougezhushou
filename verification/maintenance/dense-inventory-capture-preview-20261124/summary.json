@@ -1,0 +1,504 @@
+{
+  "title": "多排藏品按行预读、采集等待期间调度与画面遮挡对照",
+  "summary": "普通CPU隔离窗口三轮，对9件和14件藏品页，在采集等待期间预读后各有两张正确卡首次可见的中位数分别由1706降至524毫秒、由2097降至612毫秒。其他卡行被遮住的18组画面与原图送入预读OCR的像素完全一致，实验暂未启用。",
+  "baseline_commit": "59393d850",
+  "implementation_changed": false,
+  "acceptance_complete": false,
+  "target_ms": 500,
+  "method": "同机普通CPU，原生Windows隔离源窗口与助手窗口，地图切至两张留存的真实多排页。缩放并非真人原生分辨率。每个实验配同期对照，各三轮交错。选中行有三个已确认名称；助手网格末态可见其中两个。用晚期窗口上这两张卡的实际像素在所有采集帧中查找，转场前均不匹配。首显统计两张卡首次同时出现；完整刷新单独计刷新后首次匹配时刻。最终结构化字段逐轮对照，略去时间与性能诊断。本地私人状态文件逐轮散列核对。",
+  "diagnosis": [
+    {
+      "full_confirmed": 9,
+      "all_card_regions_confirmed": 9,
+      "lower_band_confirmed": 0,
+      "names_before_map_check": 9,
+      "names_after_map_check": 0,
+      "header_present": {
+        "目标生命值": false,
+        "指挥等级": false,
+        "收起": true,
+        "干员": true,
+        "编队": true,
+        "零件箱": true
+      },
+      "confirmed_title_top_fraction_range": [
+        0.0,
+        0.517
+      ]
+    },
+    {
+      "full_confirmed": 14,
+      "all_card_regions_confirmed": 14,
+      "lower_band_confirmed": 2,
+      "names_before_map_check": 14,
+      "names_after_map_check": 0,
+      "header_present": {
+        "目标生命值": false,
+        "指挥等级": false,
+        "收起": true,
+        "干员": true,
+        "编队": true,
+        "零件箱": true
+      },
+      "confirmed_title_top_fraction_range": [
+        0.094,
+        0.725
+      ]
+    }
+  ],
+  "candidates": {
+    "lookup": "从本帧绿色字迹找三列重复排布，用原分辨率的一行卡和页脚读名称、完整用途与控件。检测尺寸可减小，保留原分辨率文字转录。",
+    "stage": "选定帧后启动局部OCR，既有整页准备可同时占用CPU。",
+    "prefetch": "先在当前采集准备工作线程预读，再进行原有整页工作；只有选定帧与来源画面逐像素一致并且客户区相同才送达助手。两种实验均保留完整路径。"
+  },
+  "geometry_screen": {
+    "frames": 71,
+    "frames_proposing_grid": 3,
+    "median_ms": 8.91,
+    "source_groups": "21张参考图，以及50张原生、录像与合成遮挡输入。两张多排页均触发，另一个录像帧触发后未确认卡片。"
+  },
+  "offline": [
+    {
+      "page_cards": 9,
+      "scale": "stock",
+      "median_ms": 417.96,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 9,
+      "scale": "0.5",
+      "median_ms": 189.24,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 9,
+      "scale": "0.625",
+      "median_ms": 184.11,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 9,
+      "scale": "0.75",
+      "median_ms": 207.32,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 14,
+      "scale": "stock",
+      "median_ms": 462.93,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 14,
+      "scale": "0.5",
+      "median_ms": 222.3,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 14,
+      "scale": "0.625",
+      "median_ms": 203.63,
+      "matched_name_counts": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "extra_names": 0
+    },
+    {
+      "page_cards": 14,
+      "scale": "0.75",
+      "median_ms": 211.34,
+      "matched_name_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "extra_names": 0
+    }
+  ],
+  "window": {
+    "nine": {
+      "ref": {
+        "trials": [
+          {
+            "held_icon_ms": 1029.3,
+            "full_ocr_ms": 1179.53,
+            "first_visible_ms": 1465.7,
+            "after_complete_ms": 2558.93,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 995.8,
+            "full_ocr_ms": 1295.94,
+            "first_visible_ms": 1651.53,
+            "after_complete_ms": 2710.04,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1115.8,
+            "full_ocr_ms": 1053.89,
+            "first_visible_ms": 1328.05,
+            "after_complete_ms": 2511.7,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 1465.7,
+          "after_complete_ms": 2558.93,
+          "held_icon_ms": 1029.3,
+          "full_ocr_ms": 1179.53
+        },
+        "below_target": 0
+      },
+      "stage": {
+        "trials": [
+          {
+            "held_icon_ms": 956.0,
+            "full_ocr_ms": 590.74,
+            "first_visible_ms": 847.84,
+            "after_complete_ms": 2515.57,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 930.4,
+            "full_ocr_ms": 570.5,
+            "first_visible_ms": 899.82,
+            "after_complete_ms": 2549.7,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1009.9,
+            "full_ocr_ms": 643.08,
+            "first_visible_ms": 995.59,
+            "after_complete_ms": 2830.25,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 899.82,
+          "after_complete_ms": 2549.7,
+          "held_icon_ms": 956.0,
+          "full_ocr_ms": 590.74
+        },
+        "below_target": 0
+      },
+      "paired": {
+        "trials": [
+          {
+            "held_icon_ms": 981.9,
+            "full_ocr_ms": 1336.95,
+            "first_visible_ms": 1619.74,
+            "after_complete_ms": 2669.98,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1715.9,
+            "full_ocr_ms": 1519.79,
+            "first_visible_ms": 1820.07,
+            "after_complete_ms": 3580.98,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1241.3,
+            "full_ocr_ms": 1425.85,
+            "first_visible_ms": 1706.12,
+            "after_complete_ms": 3010.98,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 1706.12,
+          "after_complete_ms": 3010.98,
+          "held_icon_ms": 1241.3,
+          "full_ocr_ms": 1425.85
+        },
+        "below_target": 0
+      },
+      "prefetch": {
+        "trials": [
+          {
+            "held_icon_ms": 945.1,
+            "full_ocr_ms": 1457.47,
+            "first_visible_ms": 524.36,
+            "after_complete_ms": 2775.89,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1826.1,
+            "full_ocr_ms": 1826.36,
+            "first_visible_ms": 477.35,
+            "after_complete_ms": 4057.51,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 2056.3,
+            "full_ocr_ms": 1783.39,
+            "first_visible_ms": 553.87,
+            "after_complete_ms": 4226.92,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 524.36,
+          "after_complete_ms": 4057.51,
+          "held_icon_ms": 1826.1,
+          "full_ocr_ms": 1783.39
+        },
+        "below_target": 1
+      }
+    },
+    "fourteen": {
+      "ref": {
+        "trials": [
+          {
+            "held_icon_ms": 853.3,
+            "full_ocr_ms": 1396.79,
+            "first_visible_ms": 1673.17,
+            "after_complete_ms": 2623.72,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 730.1,
+            "full_ocr_ms": 1431.59,
+            "first_visible_ms": 1723.67,
+            "after_complete_ms": 2541.45,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 778.7,
+            "full_ocr_ms": 1464.81,
+            "first_visible_ms": 1740.44,
+            "after_complete_ms": 2614.78,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 1723.67,
+          "after_complete_ms": 2614.78,
+          "held_icon_ms": 778.7,
+          "full_ocr_ms": 1431.59
+        },
+        "below_target": 0
+      },
+      "stage": {
+        "trials": [
+          {
+            "held_icon_ms": 808.9,
+            "full_ocr_ms": 806.82,
+            "first_visible_ms": 1013.4,
+            "after_complete_ms": 2814.21,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 763.6,
+            "full_ocr_ms": 857.92,
+            "first_visible_ms": 1121.6,
+            "after_complete_ms": 2931.08,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 755.5,
+            "full_ocr_ms": 977.46,
+            "first_visible_ms": 916.64,
+            "after_complete_ms": 2783.18,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 1013.4,
+          "after_complete_ms": 2814.21,
+          "held_icon_ms": 763.6,
+          "full_ocr_ms": 857.92
+        },
+        "below_target": 0
+      },
+      "paired": {
+        "trials": [
+          {
+            "held_icon_ms": 784.2,
+            "full_ocr_ms": 1323.29,
+            "first_visible_ms": 1620.99,
+            "after_complete_ms": 2497.82,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1312.6,
+            "full_ocr_ms": 1795.74,
+            "first_visible_ms": 2096.74,
+            "after_complete_ms": 3489.05,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1522.1,
+            "full_ocr_ms": 1929.33,
+            "first_visible_ms": 2236.76,
+            "after_complete_ms": 3863.67,
+            "three_read_in_experiment": false,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 2096.74,
+          "after_complete_ms": 3489.05,
+          "held_icon_ms": 1312.6,
+          "full_ocr_ms": 1795.74
+        },
+        "below_target": 0
+      },
+      "prefetch": {
+        "trials": [
+          {
+            "held_icon_ms": 872.4,
+            "full_ocr_ms": 1697.81,
+            "first_visible_ms": 612.1,
+            "after_complete_ms": 2911.82,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1541.9,
+            "full_ocr_ms": 2243.12,
+            "first_visible_ms": 601.74,
+            "after_complete_ms": 4164.15,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          },
+          {
+            "held_icon_ms": 1120.9,
+            "full_ocr_ms": 2374.47,
+            "first_visible_ms": 620.78,
+            "after_complete_ms": 3857.15,
+            "three_read_in_experiment": true,
+            "visible_target_cards": 2,
+            "same_final_fields": true
+          }
+        ],
+        "median_ms": {
+          "first_visible_ms": 612.1,
+          "after_complete_ms": 3857.15,
+          "held_icon_ms": 1120.9,
+          "full_ocr_ms": 2243.12
+        },
+        "below_target": 0
+      }
+    }
+  },
+  "obstruction": {
+    "large_composites": 24,
+    "large_composites_with_name": 22,
+    "large_composite_arm": "原尺寸局部检测",
+    "outside_input_composites": 18,
+    "identical_ocr_input": 18,
+    "all_changed_actual_pixels": true,
+    "alternate_full_image_geometry": {
+      "clean": {
+        "total": 2,
+        "eligible": 2
+      },
+      "rectangle": {
+        "total": 24,
+        "eligible": 10
+      },
+      "unread_body": {
+        "total": 18,
+        "eligible": 5
+      }
+    }
+  },
+  "decision": "保持正式采集与识别路径。独立预读可与采集等待重叠，局部像素相同仍不足以判定整页。进一步提速需用当前全屏证据排除遮挡，并保留短时页面。",
+  "limits": [
+    "只有两张密集正页，同一来源。",
+    "两张正确卡可见不代表整页或其余藏品已显示。",
+    "合成遮挡验证提前输出的风险；未对真实游戏切页或带游戏负载验收。"
+  ]
+}

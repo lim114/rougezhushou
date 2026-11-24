@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-普通CPU三轮回放，结合地图文字核对的两卡首显中位数由1100降至940毫秒，整页由1758变为1857毫秒。仅先读底部会在商店或干员遮挡时误报。另两张真实多排页完整读取分别确认9件、14件，提前显示均未触发。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/cpu-inventory-first-rows-20261124/summary.json)。
+普通CPU隔离窗口三轮，对9件和14件藏品页，在采集等待期间预读后各有两张正确卡首次可见的中位数分别由1706降至524毫秒、由2097降至612毫秒。其他卡行被遮住的18组画面与原图送入预读OCR的像素完全一致，实验暂未启用。仍需覆盖局部区域之外的当前页面证据并验证完整显示时间。[回执](verification/maintenance/dense-inventory-capture-preview-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
