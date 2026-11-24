@@ -1,3 +1,7 @@
+## 图像识别专项 · 逐帧定位动画地图首个可读画面与识别积压
+
+动画开始约170毫秒的第11帧，当前识别器已能从原始像素读对全部12个节点及当前位置。带取帧追踪的窗口对照，100毫秒采集等待中位首显714毫秒，50毫秒为731毫秒。[回执](verification/maintenance/map-readable-frame-clock-20261124/summary.json)。
+
 ## 图像识别专项 · 地图位置文字分离时提前派发当前帧
 
 清晰直切的正确窗口首显中位数由616变为476毫秒，三轮中3轮低于500毫秒。动画切页由647变为657毫秒。[回执](verification/maintenance/map-detached-marker-dispatch-20261124/summary.json)。

@@ -1,0 +1,607 @@
+{
+  "title": "逐帧定位动画地图首个可读画面与识别积压",
+  "baseline_commit": "89e7ef1db",
+  "target_ms": 500,
+  "acceptance_complete": false,
+  "implementation_changed": false,
+  "method": "同机已预热核显与原生源/助手窗口。开始变化为源帧6，计时到助手窗口出现正确地图与位置。四种对照各开关三轮共24轮。每轮核对首次内容、之后的窗口、最终地图与三份私人文件哈希。ontrace/shortpace、controlboth/shortboth中按48×30缩图逐帧比较来源，带探针的数据仅作同组比较。",
+  "source": {
+    "count": 24,
+    "onset_frame": 6,
+    "first_correct_raw_frame": 11,
+    "first_correct_after_onset_ms": 169.9,
+    "last_incomplete": {
+      "frame": 10,
+      "offset_ms": 136.8,
+      "primary_marker": "YQUAREHERE",
+      "alternate_marker_score": 0.9232973277568817,
+      "remaining_cell": "1,2",
+      "finding": "位置文字局部锐化后精确读对，仍有一格叠着先前干员轮廓，当前帧圆环验证未通过。旧页混合像素分离在此录制可重建地图，未用作产品证据。"
+    },
+    "input_limits": "一段24帧动画，编号从0开始；最早可读指现有识别器在该录制上，不是普适信息界限。"
+  },
+  "groups": {
+    "ontrace": {
+      "runs": [
+        {
+          "onset_ms": 714.18,
+          "clear_ms": 512.77,
+          "capture_after_onset_ms": 261.72,
+          "queue_ms": 85.01,
+          "read_to_graph_ms": 244.87,
+          "graph_to_window_ms": 122.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 34.53,
+          "graph_to_qt_ms": 88.07,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 10360.0,
+          "first_correct_source_frame": 12,
+          "attempted_source_frames": [
+            9,
+            12
+          ]
+        },
+        {
+          "onset_ms": 831.43,
+          "clear_ms": 629.68,
+          "capture_after_onset_ms": 407.34,
+          "queue_ms": 71.69,
+          "read_to_graph_ms": 246.84,
+          "graph_to_window_ms": 105.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 15.6,
+          "graph_to_qt_ms": 90.0,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9152.5,
+          "first_correct_source_frame": 17,
+          "attempted_source_frames": [
+            10,
+            17
+          ]
+        },
+        {
+          "onset_ms": 627.35,
+          "clear_ms": 424.84,
+          "capture_after_onset_ms": 261.98,
+          "queue_ms": 73.55,
+          "read_to_graph_ms": 189.04,
+          "graph_to_window_ms": 102.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 17.06,
+          "graph_to_qt_ms": 85.74,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9190.5,
+          "first_correct_source_frame": 12,
+          "attempted_source_frames": [
+            9,
+            12
+          ]
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 714.18,
+        "clear_ms": 512.77,
+        "capture_after_onset_ms": 261.98,
+        "queue_ms": 73.55,
+        "read_to_graph_ms": 244.87,
+        "graph_to_window_ms": 105.6,
+        "qt_to_window_ms": 17.06,
+        "graph_to_qt_ms": 88.07,
+        "full_reads": 7,
+        "drain_after_first_registration_ms": 9190.5
+      }
+    },
+    "shortpace": {
+      "runs": [
+        {
+          "onset_ms": 816.21,
+          "clear_ms": 606.35,
+          "capture_after_onset_ms": 405.65,
+          "queue_ms": 47.5,
+          "read_to_graph_ms": 239.82,
+          "graph_to_window_ms": 123.2,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 30.13,
+          "graph_to_qt_ms": 93.07,
+          "full_reads": 12,
+          "drain_after_first_registration_ms": 15155.0,
+          "first_correct_source_frame": 17,
+          "attempted_source_frames": [
+            7,
+            10,
+            17
+          ]
+        },
+        {
+          "onset_ms": 730.98,
+          "clear_ms": 530.73,
+          "capture_after_onset_ms": 281.99,
+          "queue_ms": 141.95,
+          "read_to_graph_ms": 197.4,
+          "graph_to_window_ms": 109.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 16.79,
+          "graph_to_qt_ms": 92.81,
+          "full_reads": 12,
+          "drain_after_first_registration_ms": 16426.1,
+          "first_correct_source_frame": 13,
+          "attempted_source_frames": [
+            6,
+            10,
+            13
+          ]
+        },
+        {
+          "onset_ms": 700.75,
+          "clear_ms": 496.47,
+          "capture_after_onset_ms": 364.74,
+          "queue_ms": 52.05,
+          "read_to_graph_ms": 185.4,
+          "graph_to_window_ms": 98.6,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 21.28,
+          "graph_to_qt_ms": 77.32,
+          "full_reads": 12,
+          "drain_after_first_registration_ms": 15254.3,
+          "first_correct_source_frame": 15,
+          "attempted_source_frames": [
+            8,
+            10,
+            15
+          ]
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 730.98,
+        "clear_ms": 530.73,
+        "capture_after_onset_ms": 364.74,
+        "queue_ms": 52.05,
+        "read_to_graph_ms": 197.4,
+        "graph_to_window_ms": 109.6,
+        "qt_to_window_ms": 21.28,
+        "graph_to_qt_ms": 92.81,
+        "full_reads": 12,
+        "drain_after_first_registration_ms": 15254.3
+      }
+    },
+    "cohortbase": {
+      "runs": [
+        {
+          "onset_ms": 619.88,
+          "clear_ms": 414.99,
+          "capture_after_onset_ms": 265.26,
+          "queue_ms": 46.27,
+          "read_to_graph_ms": 188.25,
+          "graph_to_window_ms": 120.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 37.72,
+          "graph_to_qt_ms": 82.38,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9970.3
+        },
+        {
+          "onset_ms": 722.57,
+          "clear_ms": 516.58,
+          "capture_after_onset_ms": 370.72,
+          "queue_ms": 44.63,
+          "read_to_graph_ms": 189.68,
+          "graph_to_window_ms": 117.5,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 24.1,
+          "graph_to_qt_ms": 93.4,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9838.8
+        },
+        {
+          "onset_ms": 651.2,
+          "clear_ms": 449.88,
+          "capture_after_onset_ms": 251.32,
+          "queue_ms": 62.75,
+          "read_to_graph_ms": 217.29,
+          "graph_to_window_ms": 119.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 24.21,
+          "graph_to_qt_ms": 95.59,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9930.0
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 651.2,
+        "clear_ms": 449.88,
+        "capture_after_onset_ms": 265.26,
+        "queue_ms": 46.27,
+        "read_to_graph_ms": 189.68,
+        "graph_to_window_ms": 119.8,
+        "qt_to_window_ms": 24.21,
+        "graph_to_qt_ms": 93.4,
+        "full_reads": 7,
+        "drain_after_first_registration_ms": 9930.0
+      }
+    },
+    "cohortnew": {
+      "runs": [
+        {
+          "onset_ms": 664.28,
+          "clear_ms": 461.19,
+          "capture_after_onset_ms": 265.72,
+          "queue_ms": 55.89,
+          "read_to_graph_ms": 229.95,
+          "graph_to_window_ms": 112.7,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 31.25,
+          "graph_to_qt_ms": 81.45,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9409.4
+        },
+        {
+          "onset_ms": 621.68,
+          "clear_ms": 421.98,
+          "capture_after_onset_ms": 254.81,
+          "queue_ms": 51.56,
+          "read_to_graph_ms": 207.25,
+          "graph_to_window_ms": 108.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 14.02,
+          "graph_to_qt_ms": 94.08,
+          "full_reads": 8,
+          "drain_after_first_registration_ms": 10301.0
+        },
+        {
+          "onset_ms": 619.7,
+          "clear_ms": 416.51,
+          "capture_after_onset_ms": 272.66,
+          "queue_ms": 44.42,
+          "read_to_graph_ms": 186.52,
+          "graph_to_window_ms": 116.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 28.9,
+          "graph_to_qt_ms": 87.2,
+          "full_reads": 8,
+          "drain_after_first_registration_ms": 9977.4
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 621.68,
+        "clear_ms": 421.98,
+        "capture_after_onset_ms": 265.72,
+        "queue_ms": 51.56,
+        "read_to_graph_ms": 207.25,
+        "graph_to_window_ms": 112.7,
+        "qt_to_window_ms": 28.9,
+        "graph_to_qt_ms": 87.2,
+        "full_reads": 8,
+        "drain_after_first_registration_ms": 9977.4
+      }
+    },
+    "planebase": {
+      "runs": [
+        {
+          "onset_ms": 614.95,
+          "clear_ms": 412.2,
+          "capture_after_onset_ms": 262.13,
+          "queue_ms": 43.66,
+          "read_to_graph_ms": 193.81,
+          "graph_to_window_ms": 115.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 24.31,
+          "graph_to_qt_ms": 90.99,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9924.1
+        },
+        {
+          "onset_ms": 638.47,
+          "clear_ms": 437.36,
+          "capture_after_onset_ms": 241.98,
+          "queue_ms": 50.1,
+          "read_to_graph_ms": 224.36,
+          "graph_to_window_ms": 122.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 25.38,
+          "graph_to_qt_ms": 96.62,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 10816.7
+        },
+        {
+          "onset_ms": 642.59,
+          "clear_ms": 440.25,
+          "capture_after_onset_ms": 275.18,
+          "queue_ms": 51.7,
+          "read_to_graph_ms": 212.82,
+          "graph_to_window_ms": 102.9,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 17.65,
+          "graph_to_qt_ms": 85.25,
+          "full_reads": 8,
+          "drain_after_first_registration_ms": 10601.0
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 638.47,
+        "clear_ms": 437.36,
+        "capture_after_onset_ms": 262.13,
+        "queue_ms": 50.1,
+        "read_to_graph_ms": 212.82,
+        "graph_to_window_ms": 115.3,
+        "qt_to_window_ms": 24.31,
+        "graph_to_qt_ms": 90.99,
+        "full_reads": 7,
+        "drain_after_first_registration_ms": 10601.0
+      }
+    },
+    "planefirst": {
+      "runs": [
+        {
+          "onset_ms": 622.7,
+          "clear_ms": 420.15,
+          "capture_after_onset_ms": 275.16,
+          "queue_ms": 48.22,
+          "read_to_graph_ms": 165.59,
+          "graph_to_window_ms": 133.7,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 34.23,
+          "graph_to_qt_ms": 99.47,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 10006.0
+        },
+        {
+          "onset_ms": 650.36,
+          "clear_ms": 448.31,
+          "capture_after_onset_ms": 260.49,
+          "queue_ms": 71.48,
+          "read_to_graph_ms": 192.11,
+          "graph_to_window_ms": 126.3,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 26.31,
+          "graph_to_qt_ms": 99.99,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 10417.2
+        },
+        {
+          "onset_ms": 621.25,
+          "clear_ms": 418.64,
+          "capture_after_onset_ms": 276.99,
+          "queue_ms": 46.06,
+          "read_to_graph_ms": 180.81,
+          "graph_to_window_ms": 117.4,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 22.84,
+          "graph_to_qt_ms": 94.56,
+          "full_reads": 6,
+          "drain_after_first_registration_ms": 8756.1
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 622.7,
+        "clear_ms": 420.15,
+        "capture_after_onset_ms": 275.16,
+        "queue_ms": 48.22,
+        "read_to_graph_ms": 180.81,
+        "graph_to_window_ms": 126.3,
+        "qt_to_window_ms": 26.31,
+        "graph_to_qt_ms": 99.47,
+        "full_reads": 7,
+        "drain_after_first_registration_ms": 10006.0
+      }
+    },
+    "controlboth": {
+      "runs": [
+        {
+          "onset_ms": 945.11,
+          "clear_ms": 739.58,
+          "capture_after_onset_ms": 403.43,
+          "queue_ms": 70.6,
+          "read_to_graph_ms": 367.33,
+          "graph_to_window_ms": 103.7,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 18.66,
+          "graph_to_qt_ms": 85.04,
+          "full_reads": 6,
+          "drain_after_first_registration_ms": 8275.5,
+          "first_correct_source_frame": 17,
+          "attempted_source_frames": [
+            10,
+            17
+          ]
+        },
+        {
+          "onset_ms": 734.63,
+          "clear_ms": 533.45,
+          "capture_after_onset_ms": 375.28,
+          "queue_ms": 44.77,
+          "read_to_graph_ms": 196.8,
+          "graph_to_window_ms": 117.8,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 27.37,
+          "graph_to_qt_ms": 90.43,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 10192.4,
+          "first_correct_source_frame": 16,
+          "attempted_source_frames": [
+            10,
+            16
+          ]
+        },
+        {
+          "onset_ms": 760.57,
+          "clear_ms": 557.93,
+          "capture_after_onset_ms": 385.51,
+          "queue_ms": 62.84,
+          "read_to_graph_ms": 215.22,
+          "graph_to_window_ms": 97.0,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 16.16,
+          "graph_to_qt_ms": 80.84,
+          "full_reads": 7,
+          "drain_after_first_registration_ms": 9721.7,
+          "first_correct_source_frame": 16,
+          "attempted_source_frames": [
+            10,
+            16
+          ]
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 760.57,
+        "clear_ms": 557.93,
+        "capture_after_onset_ms": 385.51,
+        "queue_ms": 62.84,
+        "read_to_graph_ms": 215.22,
+        "graph_to_window_ms": 103.7,
+        "qt_to_window_ms": 18.66,
+        "graph_to_qt_ms": 85.04,
+        "full_reads": 7,
+        "drain_after_first_registration_ms": 9721.7
+      }
+    },
+    "shortboth": {
+      "runs": [
+        {
+          "onset_ms": 612.66,
+          "clear_ms": 411.54,
+          "capture_after_onset_ms": 230.11,
+          "queue_ms": 89.46,
+          "read_to_graph_ms": 195.92,
+          "graph_to_window_ms": 97.2,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 13.94,
+          "graph_to_qt_ms": 83.26,
+          "full_reads": 11,
+          "drain_after_first_registration_ms": 15525.4,
+          "first_correct_source_frame": 12,
+          "attempted_source_frames": [
+            7,
+            12
+          ]
+        },
+        {
+          "onset_ms": 657.99,
+          "clear_ms": 456.31,
+          "capture_after_onset_ms": 295.09,
+          "queue_ms": 50.07,
+          "read_to_graph_ms": 204.29,
+          "graph_to_window_ms": 108.5,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 24.85,
+          "graph_to_qt_ms": 83.65,
+          "full_reads": 13,
+          "drain_after_first_registration_ms": 17589.2,
+          "first_correct_source_frame": 14,
+          "attempted_source_frames": [
+            7,
+            10,
+            14
+          ]
+        },
+        {
+          "onset_ms": 780.9,
+          "clear_ms": 577.1,
+          "capture_after_onset_ms": 203.65,
+          "queue_ms": 84.66,
+          "read_to_graph_ms": 372.52,
+          "graph_to_window_ms": 120.1,
+          "preview_first": true,
+          "later_mismatches": 0,
+          "earlier_wrong": 0,
+          "qt_to_window_ms": 27.46,
+          "graph_to_qt_ms": 92.64,
+          "full_reads": 11,
+          "drain_after_first_registration_ms": 14289.1,
+          "first_correct_source_frame": 11,
+          "attempted_source_frames": [
+            9,
+            11
+          ]
+        }
+      ],
+      "under_500": 0,
+      "medians": {
+        "onset_ms": 657.99,
+        "clear_ms": 456.31,
+        "capture_after_onset_ms": 230.11,
+        "queue_ms": 84.66,
+        "read_to_graph_ms": 204.29,
+        "graph_to_window_ms": 108.5,
+        "qt_to_window_ms": 24.85,
+        "graph_to_qt_ms": 83.65,
+        "full_reads": 11,
+        "drain_after_first_registration_ms": 15525.4
+      }
+    }
+  },
+  "legend": {
+    "ontrace/shortpace": "当前捕获回调100或50毫秒等待预算，正常预读。帧到达间隔受原生回调及计算影响。",
+    "cohortbase/cohortnew": "100毫秒，原顺序或先读包含位置字样的原始OCR批次，位置词不足就停止该次预读。",
+    "planebase/planefirst": "两组均先读位置批次；后一组让同帧整页任务最多等待200毫秒供预读先使用计算。",
+    "controlboth/shortboth": "均带取帧跟踪，对照正常100毫秒与50毫秒加位置词优先。"
+  },
+  "batch_order": {
+    "input_variants": 112,
+    "unchanged": 112,
+    "confirmed": 43,
+    "incomplete_frame10_ms": [
+      109.4,
+      28.53
+    ],
+    "warning": "相同录制及截图的重叠帧与裁切变体，不等于独立对局；全局其他页面是否存在位置词落在另一批次尚未覆盖。"
+  },
+  "decision": "保留产品调度。加快采集会提前送入过渡页，缩短失败耗时不能直接换算为正确首显。整页让出计算也包含等待与吞吐成本。",
+  "limitations": [
+    "本组并未招募玩家进行实测。",
+    "本次未测藏品窗口和常规CPU。",
+    "同一输入每种仅三轮，数据不足以推断长期分位数。"
+  ]
+}

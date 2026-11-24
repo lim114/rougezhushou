@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-清晰直切的正确窗口首显中位数由616变为476毫秒，三轮中3轮低于500毫秒。动画切页由647变为657毫秒。两种场景尚未稳定低于半秒，展开藏品整页及后台积压仍待优化，常规CPU和真人验收尚待完成。[回执](verification/maintenance/map-detached-marker-dispatch-20261124/summary.json)。
+清晰直切地图已有三轮正确首显低于500毫秒，动画仍超时。原图首个完整可读帧约在转场后170毫秒，提前处理旧帧占位、读出至窗口的耗时和展开藏品整页仍待优化。常规CPU及真人切页未验。[回执](verification/maintenance/map-readable-frame-clock-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
