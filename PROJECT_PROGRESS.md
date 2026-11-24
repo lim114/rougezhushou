@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-同机热核显三轮对照，两张正确藏品卡在最终位置稳定显示的中位数由1333降至477毫秒，3/3轮低于500毫秒。完整结果窗口刷新中位数为1304毫秒。动画地图、藏品整页及积压场景仍超过半秒，CPU和真人切页仍待稳定验收。[回执](verification/maintenance/held-bar-column-screen-20261124/summary.json)。
+同一动画三轮各派发7个整页任务；保留最新帧的逐组回放中，最少4项就能完全复原各轮本局及账号记录。独立预读单采集流实验将正确地图首显中位数由613变为592毫秒，仍未到500毫秒。定相短页暴露漏采，到期补交又失去首显收益，保留产品调度。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/map-frame-contributions-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

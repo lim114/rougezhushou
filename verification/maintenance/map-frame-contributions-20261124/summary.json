@@ -1,0 +1,1244 @@
+{
+  "title": "逐帧核对地图转场积压、短页与独立预读",
+  "baseline_commit": "22c506b19",
+  "target_ms": 500,
+  "implementation_changed": false,
+  "acceptance_complete": false,
+  "summary": "同一动画三轮各派发7个整页任务；保留最新帧的逐组回放中，最少4项就能完全复原各轮本局及账号记录。独立预读单采集流实验将正确地图首显中位数由613变为592毫秒，仍未到500毫秒。",
+  "method": "同机热核显，真实原生回放源及助手窗口。按转场首个可见源帧到正确12格及当前位置首次显示计时，核对先前画面、之后的窗口、最终地图和私人文件。各方案与同组未改动代码交替各三轮。后台耗时从首个整页任务登记到最后完成。当前路径和实验均未使用真人或常规CPU。",
+  "state_method": "对实际进入时序合并的观察按采集顺序重放原本局及账号归并器，以最终本局状态、账号资料及问题列表完全相等为参照。分别移除单一序号；另在三轮未改产品回放中，固定转场以前的资料与最新帧，枚举中间整页采样的组合。统计为事后证据，不是可用于运行时的帧号或舍弃规则。",
+  "minimum_with_latest": [
+    {
+      "jobs": 7,
+      "min_jobs_with_latest": 4,
+      "solutions": 1,
+      "ordinals_in_every_solution": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "exact_baseline": true
+    },
+    {
+      "jobs": 7,
+      "min_jobs_with_latest": 4,
+      "solutions": 1,
+      "ordinals_in_every_solution": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "exact_baseline": true
+    },
+    {
+      "jobs": 7,
+      "min_jobs_with_latest": 4,
+      "solutions": 1,
+      "ordinals_in_every_solution": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "exact_baseline": true
+    }
+  ],
+  "groups": {
+    "audit": {
+      "runs": [
+        {
+          "onset_ms": 682.61,
+          "capture_ms": 275.81,
+          "queue_ms": 58.95,
+          "read_ms": 231.22,
+          "window_after_graph_ms": 116.6,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9415.22,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        },
+        {
+          "onset_ms": 647.01,
+          "capture_ms": 275.25,
+          "queue_ms": 63.06,
+          "read_ms": 198.02,
+          "window_after_graph_ms": 110.7,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8068.96,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        },
+        {
+          "onset_ms": 732.47,
+          "capture_ms": 375.16,
+          "queue_ms": 59.51,
+          "read_ms": 192.29,
+          "window_after_graph_ms": 105.5,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9049.72,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        }
+      ],
+      "medians": {
+        "onset_ms": 682.61,
+        "capture_ms": 275.81,
+        "queue_ms": 59.51,
+        "read_ms": 198.02,
+        "window_after_graph_ms": 110.7,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 9049.72
+      },
+      "below_500": 0
+    },
+    "reserved": {
+      "runs": [
+        {
+          "onset_ms": 838.51,
+          "capture_ms": 439.7,
+          "queue_ms": 33.49,
+          "read_ms": 231.92,
+          "window_after_graph_ms": 133.4,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 8750.24,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        },
+        {
+          "onset_ms": 626.89,
+          "capture_ms": 257.07,
+          "queue_ms": 56.73,
+          "read_ms": 192.71,
+          "window_after_graph_ms": 120.4,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9802.15,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        },
+        {
+          "onset_ms": 689.4,
+          "capture_ms": 361.38,
+          "queue_ms": 43.1,
+          "read_ms": 166.01,
+          "window_after_graph_ms": 118.9,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9280.29,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true
+        }
+      ],
+      "medians": {
+        "onset_ms": 689.4,
+        "capture_ms": 361.38,
+        "queue_ms": 43.1,
+        "read_ms": 192.71,
+        "window_after_graph_ms": 120.4,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 9280.29
+      },
+      "below_500": 0
+    },
+    "norm": {
+      "runs": [
+        {
+          "onset_ms": 610.84,
+          "capture_ms": 267.24,
+          "queue_ms": 48.69,
+          "read_ms": 177.57,
+          "window_after_graph_ms": 117.3,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8982.04,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 0,
+            "extra_accepted": 0,
+            "ordinary": 0
+          }
+        },
+        {
+          "onset_ms": 591.1,
+          "capture_ms": 243.47,
+          "queue_ms": 50.27,
+          "read_ms": 181.54,
+          "window_after_graph_ms": 115.8,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8797.66,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 0,
+            "extra_accepted": 0,
+            "ordinary": 0
+          }
+        },
+        {
+          "onset_ms": 647.99,
+          "capture_ms": 270.67,
+          "queue_ms": 60.65,
+          "read_ms": 197.13,
+          "window_after_graph_ms": 119.5,
+          "jobs": 6,
+          "redundant": 2,
+          "drain_ms": 8162.25,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 0,
+            "extra_accepted": 0,
+            "ordinary": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 610.84,
+        "capture_ms": 267.24,
+        "queue_ms": 50.27,
+        "read_ms": 181.54,
+        "window_after_graph_ms": 117.3,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 8797.66
+      },
+      "below_500": 0
+    },
+    "interim": {
+      "runs": [
+        {
+          "onset_ms": 657.83,
+          "capture_ms": 276.26,
+          "queue_ms": 85.79,
+          "read_ms": 186.6,
+          "window_after_graph_ms": 109.2,
+          "jobs": 8,
+          "redundant": 2,
+          "drain_ms": 12194.27,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 2,
+            "extra_accepted": 2,
+            "ordinary": 11
+          }
+        },
+        {
+          "onset_ms": 597.44,
+          "capture_ms": 246.24,
+          "queue_ms": 53.4,
+          "read_ms": 191.46,
+          "window_after_graph_ms": 106.3,
+          "jobs": 8,
+          "redundant": 3,
+          "drain_ms": 11973.3,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 2,
+            "extra_accepted": 2,
+            "ordinary": 11
+          }
+        },
+        {
+          "onset_ms": 686.77,
+          "capture_ms": 288.63,
+          "queue_ms": 54.22,
+          "read_ms": 221.01,
+          "window_after_graph_ms": 122.9,
+          "jobs": 6,
+          "redundant": 3,
+          "drain_ms": 7853.52,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "extra_checked": 0,
+            "extra_accepted": 0,
+            "ordinary": 11
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 657.83,
+        "capture_ms": 276.26,
+        "queue_ms": 54.22,
+        "read_ms": 191.46,
+        "window_after_graph_ms": 109.2,
+        "jobs": 8,
+        "redundant": 3,
+        "drain_ms": 11973.3
+      },
+      "below_500": 0
+    },
+    "reg": {
+      "runs": [
+        {
+          "onset_ms": 797.74,
+          "capture_ms": 404.06,
+          "queue_ms": 32.61,
+          "read_ms": 241.35,
+          "window_after_graph_ms": 119.7,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 8520.76,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 752.81,
+          "capture_ms": 393.59,
+          "queue_ms": 27.25,
+          "read_ms": 216.68,
+          "window_after_graph_ms": 115.3,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 8106.06,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 619.44,
+          "capture_ms": 260.77,
+          "queue_ms": 53.57,
+          "read_ms": 180.91,
+          "window_after_graph_ms": 124.2,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9035.1,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 752.81,
+        "capture_ms": 393.59,
+        "queue_ms": 32.61,
+        "read_ms": 216.68,
+        "window_after_graph_ms": 119.7,
+        "jobs": 7,
+        "redundant": 2,
+        "drain_ms": 8520.76
+      },
+      "below_500": 0
+    },
+    "maponly": {
+      "runs": [
+        {
+          "onset_ms": 601.9,
+          "capture_ms": 251.14,
+          "queue_ms": 23.18,
+          "read_ms": 219.42,
+          "window_after_graph_ms": 108.2,
+          "jobs": 5,
+          "redundant": 1,
+          "drain_ms": 6959.26,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 2,
+            "offered": 2,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 10
+          }
+        },
+        {
+          "onset_ms": 671.35,
+          "capture_ms": 310.99,
+          "queue_ms": 43.89,
+          "read_ms": 209.04,
+          "window_after_graph_ms": 107.4,
+          "jobs": 6,
+          "redundant": 3,
+          "drain_ms": 7294.88,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 11
+          }
+        },
+        {
+          "onset_ms": 642.6,
+          "capture_ms": 309.03,
+          "queue_ms": 49.96,
+          "read_ms": 168.3,
+          "window_after_graph_ms": 115.3,
+          "jobs": 6,
+          "redundant": 3,
+          "drain_ms": 8715.62,
+          "different_final_field_groups_vs_reference": [
+            "resources"
+          ],
+          "hope_matches_source": false,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 11
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 642.6,
+        "capture_ms": 309.03,
+        "queue_ms": 43.89,
+        "read_ms": 209.04,
+        "window_after_graph_ms": 108.2,
+        "jobs": 6,
+        "redundant": 3,
+        "drain_ms": 7294.88
+      },
+      "below_500": 0
+    },
+    "ownref": {
+      "runs": [
+        {
+          "onset_ms": 692.42,
+          "capture_ms": 379.72,
+          "queue_ms": 43.52,
+          "read_ms": 154.1,
+          "window_after_graph_ms": 115.1,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8621.83,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 596.16,
+          "capture_ms": 241.88,
+          "queue_ms": 59.27,
+          "read_ms": 172.48,
+          "window_after_graph_ms": 122.5,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9199.11,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 789.34,
+          "capture_ms": 411.03,
+          "queue_ms": 31.13,
+          "read_ms": 235.67,
+          "window_after_graph_ms": 111.5,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 7936.54,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 692.42,
+        "capture_ms": 379.72,
+        "queue_ms": 43.52,
+        "read_ms": 172.48,
+        "window_after_graph_ms": 115.1,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 8621.83
+      },
+      "below_500": 0
+    },
+    "ownread": {
+      "runs": [
+        {
+          "onset_ms": 664.38,
+          "capture_ms": 289.88,
+          "queue_ms": 50.24,
+          "read_ms": 229.58,
+          "window_after_graph_ms": 94.7,
+          "jobs": 6,
+          "redundant": 2,
+          "drain_ms": 6998.54,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 11
+          }
+        },
+        {
+          "onset_ms": 567.32,
+          "capture_ms": 191.88,
+          "queue_ms": 8.34,
+          "read_ms": 229.11,
+          "window_after_graph_ms": 138.0,
+          "jobs": 6,
+          "redundant": 2,
+          "drain_ms": 6955.9,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 7,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 11
+          }
+        },
+        {
+          "onset_ms": 606.77,
+          "capture_ms": 208.92,
+          "queue_ms": 8.52,
+          "read_ms": 229.91,
+          "window_after_graph_ms": 159.4,
+          "jobs": 6,
+          "redundant": 3,
+          "drain_ms": 6798.89,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 7,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 11
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 606.77,
+        "capture_ms": 208.92,
+        "queue_ms": 8.52,
+        "read_ms": 229.58,
+        "window_after_graph_ms": 138.0,
+        "jobs": 6,
+        "redundant": 2,
+        "drain_ms": 6955.9
+      },
+      "below_500": 0
+    },
+    "lref": {
+      "runs": [
+        {
+          "onset_ms": 530.45,
+          "capture_ms": 180.92,
+          "queue_ms": 49.78,
+          "read_ms": 185.52,
+          "window_after_graph_ms": 114.2,
+          "jobs": 7,
+          "redundant": 1,
+          "drain_ms": 7839.31,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 612.87,
+          "capture_ms": 256.89,
+          "queue_ms": 49.81,
+          "read_ms": 193.42,
+          "window_after_graph_ms": 112.8,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8896.33,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        },
+        {
+          "onset_ms": 630.15,
+          "capture_ms": 247.18,
+          "queue_ms": 61.8,
+          "read_ms": 205.05,
+          "window_after_graph_ms": 116.1,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8554.06,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 612.87,
+        "capture_ms": 247.18,
+        "queue_ms": 49.81,
+        "read_ms": 193.42,
+        "window_after_graph_ms": 114.2,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 8554.06
+      },
+      "below_500": 0
+    },
+    "fastlane": {
+      "runs": [
+        {
+          "onset_ms": 609.32,
+          "capture_ms": 207.88,
+          "queue_ms": 3.51,
+          "read_ms": 243.07,
+          "window_after_graph_ms": 154.9,
+          "jobs": 5,
+          "redundant": 2,
+          "drain_ms": 5973.51,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 8,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 10
+          }
+        },
+        {
+          "onset_ms": 521.77,
+          "capture_ms": 187.3,
+          "queue_ms": 12.51,
+          "read_ms": 206.05,
+          "window_after_graph_ms": 115.9,
+          "jobs": 5,
+          "redundant": 1,
+          "drain_ms": 6143.41,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 6,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 9
+          }
+        },
+        {
+          "onset_ms": 592.2,
+          "capture_ms": 287.69,
+          "queue_ms": 2.51,
+          "read_ms": 192.71,
+          "window_after_graph_ms": 109.3,
+          "jobs": 5,
+          "redundant": 1,
+          "drain_ms": 7277.91,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 6,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 10
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 592.2,
+        "capture_ms": 207.88,
+        "queue_ms": 3.51,
+        "read_ms": 206.05,
+        "window_after_graph_ms": 115.9,
+        "jobs": 5,
+        "redundant": 1,
+        "drain_ms": 6143.41
+      },
+      "below_500": 0
+    },
+    "sref": {
+      "runs": [
+        {
+          "onset_ms": 630.86,
+          "capture_ms": 277.28,
+          "queue_ms": 41.81,
+          "read_ms": 211.99,
+          "window_after_graph_ms": 99.8,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8472.98,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "out_of_order": 0
+          }
+        },
+        {
+          "onset_ms": 771.46,
+          "capture_ms": 432.42,
+          "queue_ms": 29.45,
+          "read_ms": 194.56,
+          "window_after_graph_ms": 115.0,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 8708.99,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "out_of_order": 0
+          }
+        },
+        {
+          "onset_ms": 598.85,
+          "capture_ms": 239.23,
+          "queue_ms": 51.43,
+          "read_ms": 189.0,
+          "window_after_graph_ms": 119.2,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9132.54,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "out_of_order": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 630.86,
+        "capture_ms": 277.28,
+        "queue_ms": 41.81,
+        "read_ms": 194.56,
+        "window_after_graph_ms": 115.0,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 8708.99
+      },
+      "below_500": 0
+    },
+    "twosource": {
+      "runs": [
+        {
+          "onset_ms": 580.89,
+          "capture_ms": 313.9,
+          "queue_ms": 6.5,
+          "read_ms": 164.61,
+          "window_after_graph_ms": 95.9,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 10653.25,
+          "different_final_field_groups_vs_reference": [
+            "relics",
+            "tactical"
+          ],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 5,
+            "offered": 5,
+            "read": 5,
+            "qualified": 1,
+            "published": 1,
+            "base": 13,
+            "out_of_order": 0
+          }
+        },
+        {
+          "onset_ms": 762.65,
+          "capture_ms": 320.62,
+          "queue_ms": 8.0,
+          "read_ms": 327.4,
+          "window_after_graph_ms": 106.6,
+          "jobs": 8,
+          "redundant": 3,
+          "drain_ms": 13853.72,
+          "different_final_field_groups_vs_reference": [
+            "relics",
+            "tactical"
+          ],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 4,
+            "offered": 4,
+            "read": 4,
+            "qualified": 1,
+            "published": 1,
+            "base": 14,
+            "out_of_order": 0
+          }
+        },
+        {
+          "onset_ms": 641.31,
+          "capture_ms": 294.5,
+          "queue_ms": 13.04,
+          "read_ms": 232.44,
+          "window_after_graph_ms": 101.3,
+          "jobs": 8,
+          "redundant": 3,
+          "drain_ms": 12600.52,
+          "different_final_field_groups_vs_reference": [
+            "relics",
+            "tactical"
+          ],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 5,
+            "offered": 5,
+            "read": 5,
+            "qualified": 1,
+            "published": 1,
+            "base": 13,
+            "out_of_order": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 641.31,
+        "capture_ms": 313.9,
+        "queue_ms": 8.0,
+        "read_ms": 232.44,
+        "window_after_graph_ms": 101.3,
+        "jobs": 8,
+        "redundant": 3,
+        "drain_ms": 12600.52
+      },
+      "below_500": 0
+    },
+    "tref": {
+      "runs": [
+        {
+          "onset_ms": 710.59,
+          "capture_ms": 391.69,
+          "queue_ms": 54.65,
+          "read_ms": 171.55,
+          "window_after_graph_ms": 92.7,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8585.54,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "flush": 0
+          }
+        },
+        {
+          "onset_ms": 591.65,
+          "capture_ms": 262.1,
+          "queue_ms": 48.93,
+          "read_ms": 172.33,
+          "window_after_graph_ms": 108.3,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9485.96,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "flush": 0
+          }
+        },
+        {
+          "onset_ms": 618.88,
+          "capture_ms": 252.75,
+          "queue_ms": 65.89,
+          "read_ms": 193.69,
+          "window_after_graph_ms": 106.6,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 8538.84,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 0,
+            "offered": 0,
+            "read": 0,
+            "qualified": 0,
+            "published": 0,
+            "base": 0,
+            "flush": 0
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 618.88,
+        "capture_ms": 262.1,
+        "queue_ms": 54.65,
+        "read_ms": 172.33,
+        "window_after_graph_ms": 106.6,
+        "jobs": 7,
+        "redundant": 3,
+        "drain_ms": 8585.54
+      },
+      "below_500": 0
+    },
+    "timedside": {
+      "runs": [
+        {
+          "onset_ms": 672.87,
+          "capture_ms": 220.21,
+          "queue_ms": 89.77,
+          "read_ms": 243.07,
+          "window_after_graph_ms": 119.8,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 9517.07,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 12,
+            "offered": 2,
+            "read": 2,
+            "qualified": 1,
+            "published": 0,
+            "base": 7,
+            "flush": 5
+          }
+        },
+        {
+          "onset_ms": 694.14,
+          "capture_ms": 320.97,
+          "queue_ms": 6.05,
+          "read_ms": 233.17,
+          "window_after_graph_ms": 133.9,
+          "jobs": 7,
+          "redundant": 2,
+          "drain_ms": 8193.85,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 10,
+            "offered": 2,
+            "read": 2,
+            "qualified": 1,
+            "published": 1,
+            "base": 8,
+            "flush": 4
+          }
+        },
+        {
+          "onset_ms": 599.73,
+          "capture_ms": 222.23,
+          "queue_ms": 11.52,
+          "read_ms": 197.7,
+          "window_after_graph_ms": 168.3,
+          "jobs": 7,
+          "redundant": 3,
+          "drain_ms": 9411.88,
+          "different_final_field_groups_vs_reference": [],
+          "hope_matches_source": true,
+          "side": {
+            "captured": 10,
+            "offered": 1,
+            "read": 1,
+            "qualified": 1,
+            "published": 1,
+            "base": 7,
+            "flush": 5
+          }
+        }
+      ],
+      "medians": {
+        "onset_ms": 672.87,
+        "capture_ms": 222.23,
+        "queue_ms": 11.52,
+        "read_ms": 233.17,
+        "window_after_graph_ms": 133.9,
+        "jobs": 7,
+        "redundant": 2,
+        "drain_ms": 9411.88
+      },
+      "below_500": 0
+    }
+  },
+  "comparisons": {
+    "audit/reserved": "地图待显示时，只给预读检测到的帧开放第三个整页位置，其他候选留队。",
+    "norm/interim": "常规两帧之间查找位置词笔画，命中则加一个整页候选。",
+    "reg/maponly": "额外帧只进与正常地图任务共享的预读线程；三轮均未发布额外帧的地图。",
+    "ownref/ownread": "额外帧只进一个独立预读线程；原识别闲位控制采集开关。",
+    "lref/fastlane": "一个采集流，地图待显示时允许独立预读，无需等待整页空位；额外帧不入整页队列。",
+    "sref/twosource": "保留普通采集，同时用第二原生采集流读地图；记录原生画面时间顺序和两类任务。",
+    "tref/timedside": "同一采集流把间隔中最后一张原始帧留到常规采样到期时交给整页，即使Windows不再通知也按期处理。另做与相位锁定相同的短页试验。"
+  },
+  "integrity": "已逐轮比较最终资源值及容量、分队和难度、干员与藏品标识、道具、编队数、地图位置与各节点类型。各时序反事实复原的是当轮实际记录，不证明该记录中所有识别均正确。希望原图为5/7，共享预读某轮保留为5/17。第二采集流有不同的藏品及道具记录。",
+  "short_page": {
+    "unphased": {
+      "baseA": {
+        "65": 4,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      },
+      "interimA": {
+        "65": 4,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      },
+      "interimB": {
+        "65": 4,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      },
+      "baseB": {
+        "65": 4,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      }
+    },
+    "phase_locked": {
+      "baseA": {
+        "65": 2,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      },
+      "interimA": {
+        "65": 0,
+        "105": 0,
+        "140": 0,
+        "220": 0
+      }
+    },
+    "unit": "每类每轮展示4次，数值为被整页采集入口收到次数。65/105/140/220为毫秒，定相组从已采到前一色块起分别等待约10/30/55/70毫秒再显示短页。颜色页只检查采样，不能证明识别结果。",
+    "phase_locked_deadline_flush": {
+      "short-baseA": {
+        "65": 2,
+        "105": 3,
+        "140": 4,
+        "220": 4
+      },
+      "short-interimA": {
+        "65": 3,
+        "105": 4,
+        "140": 4,
+        "220": 4
+      }
+    },
+    "original_vs_unflushed_note": "提前到来的帧只送地图预读时，画面若停止变化，Windows未必再通知整页采集。须按已收前一页定相，单纯在静置后显示短页会掩盖漏洞。"
+  },
+  "icon_screen": {
+    "per_shape": {
+      "expanded": {
+        "usable_energy": 941,
+        "usable_hist": 937,
+        "time_ms": 357.43,
+        "shapes": 172
+      },
+      "0": {
+        "usable_energy": 921,
+        "usable_hist": 868,
+        "time_ms": 115.24,
+        "shapes": 171
+      },
+      "1": {
+        "usable_energy": 941,
+        "usable_hist": 937,
+        "time_ms": 294.22,
+        "shapes": 172
+      }
+    },
+    "rank_blocks": {
+      "0": {
+        "True": {
+          "ms": [
+            7.26,
+            2.48,
+            2.41,
+            2.28
+          ],
+          "eligible": 921,
+          "surviving": 847
+        },
+        "False": {
+          "ms": [
+            4.23,
+            3.29,
+            3.49,
+            3.67
+          ],
+          "eligible": 921,
+          "surviving": 886
+        }
+      },
+      "1": {
+        "True": {
+          "ms": [
+            3.7,
+            3.04,
+            3.37,
+            3.35
+          ],
+          "eligible": 941,
+          "surviving": 941
+        },
+        "False": {
+          "ms": [
+            7.45,
+            7.63,
+            8.3,
+            7.49
+          ],
+          "eligible": 941,
+          "surviving": 939
+        }
+      }
+    },
+    "method": "闭合及展开持有栏用颜色分布下界提前排除模板，已有能量筛选后的候选数量与新增计算时间分别记录，未启用。"
+  },
+  "ring_rows": {
+    "cases": 47,
+    "sequential_and_parallel_warm_median_ms": [
+      7.95,
+      7.65
+    ],
+    "candidate_order_and_coordinates_equal": true
+  },
+  "source_hope": {
+    "by_field": {
+      "value": {
+        "5": 4
+      },
+      "capacity": {
+        "7": 4
+      }
+    },
+    "method": "独立读取留存转场原帧并另核顶部原像素。分割字形重读不等同于实时窗口缩放后的输入。",
+    "source_crosscheck": "留存源画面第12和第23帧的顶部均能看清黄色5和灰色7。原始逐帧局部数字检查在第10至13帧都读到5和7。"
+  },
+  "limitations": [
+    "同一回放中才可比较识别回调和状态；不同节奏可到达不同实际源画面。即使最终记录相同也不能证明每个瞬时页面都显示过。",
+    "暂无足够证据让全体用户启用该调度。地图动画、常规CPU及藏品整页的稳定半秒目标仍待验证。"
+  ],
+  "minimum_method_detail": "总数和最小值仅指转场后登记的整页序号；转场前记录固定，按序枚举保留最新整页的子集。同一序号最终整页覆盖早期地图；校验包括历史事件、证据时间、分数及账号问题。",
+  "decision": "保留普通采样。定相短页中对照捕获14/16，提前采样但不补交静止页面的方案捕获0/16。按普通节奏到期补交后捕获15/16，但地图正确首显中位由619变为673毫秒，完整任务数也没有下降。",
+  "held_icon_match_on_map": {
+    "current_audit_runs": [
+      {
+        "calls": 6,
+        "median_ms": 524.3,
+        "min_ms": 480.9,
+        "max_ms": 706.2
+      },
+      {
+        "calls": 6,
+        "median_ms": 483.85,
+        "min_ms": 426.4,
+        "max_ms": 532.0
+      },
+      {
+        "calls": 6,
+        "median_ms": 544.6,
+        "min_ms": 471.6,
+        "max_ms": 650.1
+      }
+    ],
+    "clock": "墙钟包含线程调度等待，回调可重叠。调度实验并未使图标扫描本身加快。"
+  },
+  "native_window_switches": 45
+}
