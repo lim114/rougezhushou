@@ -1,3 +1,7 @@
+## 图像识别专项 · 普通CPU藏品页逐模型计时与缩宽读字核验
+
+普通CPU展开藏品页的三轮中位数分别为文字检测225毫秒，九批方向判断34毫秒，九批文字转录504毫秒。缩短补白改变8/20张原图的玩家字段，含漏掉已核实的20枚源石锭。[回执](verification/maintenance/cpu-inventory-ocr-budget-20261124/summary.json)。
+
 ## 图像识别专项 · 按整页识别速度调节取帧的窗口对照
 
 按整页实测耗时在积压时降频，核显动画地图三轮登记任务中位数由7降至3，正确地图首显由659变为1116毫秒。定相短页送达由13/16变为0/16。[回执](verification/maintenance/recognition-consumer-pacing-20261124/summary.json)。

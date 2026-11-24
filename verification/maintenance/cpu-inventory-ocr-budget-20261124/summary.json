@@ -1,0 +1,452 @@
+{
+  "title": "普通CPU藏品页逐模型计时与缩宽读字核验",
+  "baseline_commit": "ef8e7336c",
+  "summary": "普通CPU展开藏品页的三轮中位数分别为文字检测225毫秒，九批方向判断34毫秒，九批文字转录504毫秒。缩短补白改变8/20张原图的玩家字段，含漏掉已核实的20枚源石锭。",
+  "implementation_changed": false,
+  "acceptance_complete": false,
+  "method": "同机Windows隔离源及助手窗口回放。时间从切换源窗口到两张正确卡片在最终位置稳定出现，另计完整结果刷新后的匹配窗口帧。普通启动为OpenVINO FP32 CPU。模型原生调用按角色计时，样本所涉的整页预读含一次检测、九批方向和九批识字；预读与等待可能重叠，不能与登记的整页OCR耗时相加。实验未进行真人切页。",
+  "thread_configurations": {
+    "cpu4t": {
+      "runs": [
+        {
+          "stable_ms": 904.83,
+          "full_ms": 1545.77,
+          "ocr_ms": 637,
+          "det_infer_ms": 225,
+          "cls_infer_ms": 20,
+          "rec_infer_ms": 450
+        },
+        {
+          "stable_ms": 1018.16,
+          "full_ms": 1761.13,
+          "ocr_ms": 715,
+          "det_infer_ms": 222,
+          "cls_infer_ms": 34,
+          "rec_infer_ms": 504
+        },
+        {
+          "stable_ms": 1160.79,
+          "full_ms": 1824.45,
+          "ocr_ms": 875,
+          "det_infer_ms": 246,
+          "cls_infer_ms": 36,
+          "rec_infer_ms": 643
+        }
+      ],
+      "median": {
+        "stable_ms": 1018.16,
+        "full_ms": 1761.13,
+        "ocr_ms": 715,
+        "det_infer_ms": 225,
+        "cls_infer_ms": 34,
+        "rec_infer_ms": 504
+      }
+    },
+    "cpu6t": {
+      "runs": [
+        {
+          "stable_ms": 1146.27,
+          "full_ms": 1832.54,
+          "ocr_ms": 840,
+          "det_infer_ms": 203,
+          "cls_infer_ms": 31,
+          "rec_infer_ms": 661
+        },
+        {
+          "stable_ms": 1210.84,
+          "full_ms": 1925.53,
+          "ocr_ms": 941,
+          "det_infer_ms": 194,
+          "cls_infer_ms": 30,
+          "rec_infer_ms": 756
+        },
+        {
+          "stable_ms": 1330.02,
+          "full_ms": 2095.2,
+          "ocr_ms": 1034,
+          "det_infer_ms": 197,
+          "cls_infer_ms": 31,
+          "rec_infer_ms": 848
+        }
+      ],
+      "median": {
+        "stable_ms": 1210.84,
+        "full_ms": 1925.53,
+        "ocr_ms": 941,
+        "det_infer_ms": 197,
+        "cls_infer_ms": 31,
+        "rec_infer_ms": 756
+      }
+    },
+    "cpu8t": {
+      "runs": [
+        {
+          "stable_ms": 1018.32,
+          "full_ms": 1695.94,
+          "ocr_ms": 741,
+          "det_infer_ms": 159,
+          "cls_infer_ms": 27,
+          "rec_infer_ms": 591
+        },
+        {
+          "stable_ms": 1196.33,
+          "full_ms": 1869.42,
+          "ocr_ms": 868,
+          "det_infer_ms": 164,
+          "cls_infer_ms": 33,
+          "rec_infer_ms": 695
+        },
+        {
+          "stable_ms": 1094.76,
+          "full_ms": 2025.97,
+          "ocr_ms": 795,
+          "det_infer_ms": 157,
+          "cls_infer_ms": 35,
+          "rec_infer_ms": 649
+        }
+      ],
+      "median": {
+        "stable_ms": 1094.76,
+        "full_ms": 1869.42,
+        "ocr_ms": 795,
+        "det_infer_ms": 159,
+        "cls_infer_ms": 33,
+        "rec_infer_ms": 649
+      }
+    },
+    "cpu2tmix": {
+      "runs": [
+        {
+          "stable_ms": 1030.54,
+          "full_ms": 1929.86,
+          "ocr_ms": 772,
+          "det_infer_ms": 161,
+          "cls_infer_ms": 28,
+          "rec_infer_ms": 606
+        },
+        {
+          "stable_ms": 1027.34,
+          "full_ms": 1760.96,
+          "ocr_ms": 774,
+          "det_infer_ms": 160,
+          "cls_infer_ms": 26,
+          "rec_infer_ms": 603
+        },
+        {
+          "stable_ms": 1146.64,
+          "full_ms": 1937.37,
+          "ocr_ms": 871,
+          "det_infer_ms": 159,
+          "cls_infer_ms": 31,
+          "rec_infer_ms": 698
+        }
+      ],
+      "median": {
+        "stable_ms": 1030.54,
+        "full_ms": 1929.86,
+        "ocr_ms": 774,
+        "det_infer_ms": 160,
+        "cls_infer_ms": 28,
+        "rec_infer_ms": 606
+      }
+    },
+    "cpu3tmix": {
+      "runs": [
+        {
+          "stable_ms": 1221.88,
+          "full_ms": 2066.73,
+          "ocr_ms": 898,
+          "det_infer_ms": 162,
+          "cls_infer_ms": 31,
+          "rec_infer_ms": 726
+        },
+        {
+          "stable_ms": 942.03,
+          "full_ms": 1675.3,
+          "ocr_ms": 661,
+          "det_infer_ms": 156,
+          "cls_infer_ms": 24,
+          "rec_infer_ms": 511
+        },
+        {
+          "stable_ms": 988.29,
+          "full_ms": 1805.34,
+          "ocr_ms": 729,
+          "det_infer_ms": 153,
+          "cls_infer_ms": 30,
+          "rec_infer_ms": 577
+        }
+      ],
+      "median": {
+        "stable_ms": 988.29,
+        "full_ms": 1805.34,
+        "ocr_ms": 729,
+        "det_infer_ms": 156,
+        "cls_infer_ms": 30,
+        "rec_infer_ms": 577
+      }
+    },
+    "cpu4tmix": {
+      "runs": [
+        {
+          "stable_ms": 998.79,
+          "full_ms": 1749.23,
+          "ocr_ms": 703,
+          "det_infer_ms": 164,
+          "cls_infer_ms": 28,
+          "rec_infer_ms": 540
+        },
+        {
+          "stable_ms": 1138.19,
+          "full_ms": 1871.1,
+          "ocr_ms": 845,
+          "det_infer_ms": 151,
+          "cls_infer_ms": 26,
+          "rec_infer_ms": 684
+        },
+        {
+          "stable_ms": 1234.32,
+          "full_ms": 2105.99,
+          "ocr_ms": 955,
+          "det_infer_ms": 167,
+          "cls_infer_ms": 52,
+          "rec_infer_ms": 752
+        }
+      ],
+      "median": {
+        "stable_ms": 1138.19,
+        "full_ms": 1871.1,
+        "ocr_ms": 845,
+        "det_infer_ms": 164,
+        "cls_infer_ms": 28,
+        "rec_infer_ms": 684
+      }
+    }
+  },
+  "thread_method": "cpu4t、6t、8t将三个模型统一分配4/6/8线程，每种三轮。mix将检测设为8、方向设为2，识字分别为2/3/4。两组按组内交错顺序测量。线程上限不等于所有可用CPU的持续利用率。",
+  "padding_trials": {
+    "32": {
+      "all_batches": 136,
+      "all_rows": 760,
+      "shortened_batches": 108,
+      "shortened_rows": 639,
+      "model_and_decode_sum_ms": [
+        6194.6,
+        4174.0
+      ],
+      "changed_text": 44,
+      "changed_confidence": 636,
+      "threshold_09": 27,
+      "different_text_with_candidate_confidence_at_least_09": 5
+    },
+    "64": {
+      "all_batches": 136,
+      "all_rows": 760,
+      "shortened_batches": 104,
+      "shortened_rows": 615,
+      "model_and_decode_sum_ms": [
+        6194.6,
+        4656.4
+      ],
+      "changed_text": 33,
+      "changed_confidence": 612,
+      "threshold_09": 20,
+      "different_text_with_candidate_confidence_at_least_09": 1
+    }
+  },
+  "padding_method": "来自20个原图的原生识字输入每种配置各交错计时两次。只在归一化后原宽320的输入上去掉连续零尾，保留32或64列余量，向上按16列取整，最小宽96。门槛跨越含两个方向。与原模型不同的高置信输出不能一概判错。",
+  "page_check": {
+    "original_pages": 20,
+    "page_fields_with_any_difference": 8,
+    "changed_by_field": {
+      "resources": 5,
+      "cards": 7
+    },
+    "held_callback_differences": 0,
+    "warm_full_read_mean_ms": [
+      1314.9,
+      1274.6
+    ],
+    "source_example": "独立查看地图原图，右上源石锭清晰为20；原宽识别记录20，保留32列余量时该字段缺失。",
+    "count_detail": "7张藏品字段有变化的原图均从数量0变为未知；本组对照中的藏品ID、卡片和图标列表相同。",
+    "method": "两份独立普通CPU识别器按相同20张原图顺序运行，交替先后。候选对识字模型所有输入使用同一裁宽策略，对照页种、干员名称、地图状态/当前位置/格子、藏品/战术道具身份与候选、计数、资源与关卡及藏品预读回调；不推定其他字段等价。"
+  },
+  "output_trials": {
+    "top_class": {
+      "corpus": {
+        "batches": 136,
+        "rows": 760,
+        "model_and_decode_sum_ms": [
+          5935.9,
+          5773.0
+        ],
+        "different_text": 0,
+        "different_confidence": 0,
+        "max_confidence_delta": 0.0
+      },
+      "windows": {
+        "refcpu": {
+          "runs": [
+            {
+              "stable_ms": 1106.84,
+              "full_ms": 1757.41,
+              "ocr_ms": 829.46
+            },
+            {
+              "stable_ms": 1102.14,
+              "full_ms": 1824.48,
+              "ocr_ms": 750.87
+            },
+            {
+              "stable_ms": 1150.77,
+              "full_ms": 1849.11,
+              "ocr_ms": 812.2
+            },
+            {
+              "stable_ms": 975.32,
+              "full_ms": 1753.4,
+              "ocr_ms": 666.23
+            },
+            {
+              "stable_ms": 1243.7,
+              "full_ms": 2130.58,
+              "ocr_ms": 954.27
+            },
+            {
+              "stable_ms": 1209.62,
+              "full_ms": 1967.39,
+              "ocr_ms": 904.27
+            }
+          ],
+          "median": {
+            "stable_ms": 1128.8,
+            "full_ms": 1836.8,
+            "ocr_ms": 820.83
+          },
+          "below_500": 0
+        },
+        "compactcpu": {
+          "runs": [
+            {
+              "stable_ms": 1152.77,
+              "full_ms": 1800.11,
+              "ocr_ms": 876.06
+            },
+            {
+              "stable_ms": 966.43,
+              "full_ms": 1649.13,
+              "ocr_ms": 697.99
+            },
+            {
+              "stable_ms": 1097.68,
+              "full_ms": 1896.53,
+              "ocr_ms": 805.75
+            },
+            {
+              "stable_ms": 1110.24,
+              "full_ms": 1884.84,
+              "ocr_ms": 820.63
+            },
+            {
+              "stable_ms": 1089.43,
+              "full_ms": 1736.95,
+              "ocr_ms": 762.45
+            },
+            {
+              "stable_ms": 1013.59,
+              "full_ms": 1831.31,
+              "ocr_ms": 700.6
+            }
+          ],
+          "median": {
+            "stable_ms": 1093.56,
+            "full_ms": 1815.71,
+            "ocr_ms": 784.1
+          },
+          "below_500": 0
+        }
+      }
+    },
+    "decode_in_request": {
+      "corpus": {
+        "batches": 136,
+        "rows": 760,
+        "model_and_decode_sum_ms": [
+          5483.6,
+          5245.5
+        ],
+        "different_text": 0,
+        "different_confidence": 0,
+        "max_confidence_delta": 0.0
+      },
+      "windows": {
+        "refcpu": {
+          "runs": [
+            {
+              "stable_ms": 1140.71,
+              "full_ms": 1860.38,
+              "ocr_ms": 851.59
+            },
+            {
+              "stable_ms": 1150.16,
+              "full_ms": 1947.87,
+              "ocr_ms": 840.43
+            },
+            {
+              "stable_ms": 972.36,
+              "full_ms": 1692.38,
+              "ocr_ms": 682.92
+            },
+            {
+              "stable_ms": 1218.62,
+              "full_ms": 2027.15,
+              "ocr_ms": 882.08
+            }
+          ],
+          "median": {
+            "stable_ms": 1145.43,
+            "full_ms": 1904.12,
+            "ocr_ms": 846.01
+          },
+          "below_500": 0
+        },
+        "compactcpu": {
+          "runs": [
+            {
+              "stable_ms": 1044.88,
+              "full_ms": 1726.01,
+              "ocr_ms": 743.67
+            },
+            {
+              "stable_ms": 1145.74,
+              "full_ms": 1897.55,
+              "ocr_ms": 793.6
+            },
+            {
+              "stable_ms": 1217.66,
+              "full_ms": 1936.23,
+              "ocr_ms": 847.97
+            },
+            {
+              "stable_ms": 1144.43,
+              "full_ms": 1815.1,
+              "ocr_ms": 817.86
+            }
+          ],
+          "median": {
+            "stable_ms": 1145.09,
+            "full_ms": 1856.32,
+            "ocr_ms": 805.73
+          },
+          "below_500": 0
+        }
+      }
+    }
+  },
+  "output_method": "在固定FP32模型上，把每个时间位置的最高概率和类别在图内取得，或在同一线程的专属请求输出有效期间同步完成CTC解码；均用原解码器。累计时间是逐批原生推理加解码，各臂独立交错计时。窗口只在原本读字的独立行路径使用实验实现；TopK原型额外编译了一份模型。两项比较使用各自同期对照。",
+  "decision": "保留当前CPU模型与线程数。裁宽虽降耗但影响已核实的资源数。两个保持原分数的候选仍需在波动下证明对完整显示有稳定收益。",
+  "limits": [
+    "20张留存原图的原始转录并非人工标注真值。0.9是代表性门槛，各字段另有上下文要求。",
+    "同机不同轮次可能受热状态和后台负载影响。局部实验收益不外推至所有 CPU、游戏负载或地图首显。"
+  ]
+}

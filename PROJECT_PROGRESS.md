@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-按整页实测耗时在积压时降频，核显动画地图三轮登记任务中位数由7降至3，正确地图首显由659变为1116毫秒。定相短页送达由13/16变为0/16。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/recognition-consumer-pacing-20261124/summary.json)。
+普通CPU展开藏品页的三轮中位数分别为文字检测225毫秒，九批方向判断34毫秒，九批文字转录504毫秒。缩短补白改变8/20张原图的玩家字段，含漏掉已核实的20枚源石锭。当前仍需在保住短页信息的同时降低完整识别开销；CPU与真人仍待稳定验收。[回执](verification/maintenance/cpu-inventory-ocr-budget-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 
