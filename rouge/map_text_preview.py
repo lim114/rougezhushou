@@ -57,8 +57,8 @@ def pointer_height(image, boxes):
     return heights[0] if len(heights) == 1 else None
 
 
-def detached_marker(image, reader):
-    """Read the word above an isolated arrow when its glyphs did not form one box."""
+def _detached_word_bounds(image):
+    """Locate the line above a unique downward arrow in this image."""
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     _, labels, components, centers = cv2.connectedComponentsWithStats(
         (gray >= 165).astype(np.uint8), connectivity=8)
@@ -84,6 +84,30 @@ def detached_marker(image, reader):
     top, bottom = max(0, round(y - 1.45*h)), max(0, round(y - .08*h))
     if top >= bottom:
         return None
+    return left, top, right, bottom, h
+
+
+def _has_marker_strokes(image, bounds):
+    """A word-like line can schedule a read. OCR still verifies the actual word."""
+    left, top, right, bottom, _ = bounds
+    line = cv2.resize(image[top:bottom, left:right], (110, 20), interpolation=cv2.INTER_LINEAR)
+    gray = cv2.cvtColor(line, cv2.COLOR_BGR2GRAY)
+    # Capitals show alternating light and dark vertical edges throughout the line.
+    dx = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
+    profile = dx[5:14].mean(axis=0)
+    for section in np.array_split(profile[18:99], 3):
+        signs = np.sign(section[np.abs(section) > 28])
+        if np.count_nonzero(signs[:-1] * signs[1:] < 0) < 3:
+            return False
+    return True
+
+
+def detached_marker(image, reader):
+    """Read the word above an isolated arrow when its glyphs did not form one box."""
+    bounds = _detached_word_bounds(image)
+    if bounds is None:
+        return None
+    left, top, right, bottom, h = bounds
     results, _ = reader.text_rec([image[top:bottom, left:right]])
     word, score = results[0]
     if word.replace(' ', '') != 'YOUAREHERE' or score < .9:
@@ -197,6 +221,10 @@ class CurrentMapPreview(QObject):
                 # A transitional crop can be too small for recognition.
                 return
             if pointer_height(image, glyph_boxes(image)) is not None:
+                self.candidate_ready.emit(*key)
+                return
+            bounds = _detached_word_bounds(image)
+            if bounds is not None and _has_marker_strokes(image, bounds):
                 self.candidate_ready.emit(*key)
 
         self.offer(key, lambda: True, probe)

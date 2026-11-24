@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-核显动画切地图的正确首显中位数627毫秒，直接切入清晰地图622毫秒。剩余耗时包括有效帧出现、地图解码与窗口显示；直接切页及展开藏品仍需缩短识别与绘制。持续高负载的补录吞吐、常规CPU与真人切页尚待验证。[回执](verification/maintenance/map-same-frame-dispatch-20261124/summary.json)。
+清晰直切的正确窗口首显中位数由616变为476毫秒，三轮中3轮低于500毫秒。动画切页由647变为657毫秒。两种场景尚未稳定低于半秒，展开藏品整页及后台积压仍待优化，常规CPU和真人验收尚待完成。[回执](verification/maintenance/map-detached-marker-dispatch-20261124/summary.json)。
 
 代码审查已按用户要求结束。[结束时的审查清单](https://github.com/lim114/rougezhushou/blob/571bd46b4/PROJECT_PROGRESS.md)。
 

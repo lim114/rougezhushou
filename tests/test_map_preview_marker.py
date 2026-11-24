@@ -86,6 +86,18 @@ class MapPreviewMarkerTests(unittest.TestCase):
         self.assertIsNone(detached_marker(self.image, self.reader))
         self.reader.text_rec.assert_not_called()
 
+    def test_early_marker_cue_requires_strokes_across_the_whole_line(self):
+        from rouge.map_text_preview import _detached_word_bounds, _has_marker_strokes
+        bounds = _detached_word_bounds(self.image)
+        self.assertIsNotNone(bounds)
+        self.assertFalse(_has_marker_strokes(self.image, bounds))
+        left, top, right, bottom, _ = bounds
+        for x in range(left, right, 5):
+            self.image[top:bottom, x:x+2] = 230
+        self.assertTrue(_has_marker_strokes(self.image, bounds))
+        self.image[top:bottom, (left+right)//2:right] = 0
+        self.assertFalse(_has_marker_strokes(self.image, bounds))
+
 
 class MapPreviewQueueTests(unittest.TestCase):
     def test_unreadable_pending_crop_does_not_schedule_a_map(self):
